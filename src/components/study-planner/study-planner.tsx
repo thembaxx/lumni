@@ -11,6 +11,7 @@ import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { downloadICal, exportToICal } from "@/lib/utils/calendar-export";
 import { AddExamModal } from "./sections/add-exam-modal";
 import { AddSessionModal } from "./sections/add-session-modal";
+import { CalendarView } from "./sections/calendar-view";
 import { StatsRow } from "./sections/stats-row";
 import { TodaySessionsCard } from "./sections/today-sessions-card";
 import { UpcomingExamsCard } from "./sections/upcoming-exams-card";
@@ -32,10 +33,12 @@ function StudyPlannerInner() {
 		upcomingExams,
 		stats,
 		addSession,
+		plan,
 		markComplete,
 		removeSession,
 		addExam,
 		removeExam,
+		updateSession,
 	} = useStudyPlanner();
 
 	const [showAddSession, setShowAddSession] = useState(false);
@@ -90,6 +93,8 @@ function StudyPlannerInner() {
 			</div>
 
 			<StatsRow stats={stats} />
+
+			<CalendarView sessions={plan.sessions} onUpdateSession={updateSession} />
 
 			<div className="grid gap-6 md:grid-cols-2">
 				<TodaySessionsCard

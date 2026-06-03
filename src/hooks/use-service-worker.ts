@@ -185,6 +185,13 @@ export function usePWAInstall(): {
 		const choice = await deferredPrompt.userChoice;
 		if (choice.outcome === "accepted") {
 			setIsInstallable(false);
+			import("@/lib/observability/events").then(({ trackEvent }) => {
+				trackEvent("pwa_install", "install_accepted");
+			});
+		} else {
+			import("@/lib/observability/events").then(({ trackEvent }) => {
+				trackEvent("pwa_install", "install_dismissed");
+			});
 		}
 		setDeferredPrompt(null);
 	}, [deferredPrompt]);

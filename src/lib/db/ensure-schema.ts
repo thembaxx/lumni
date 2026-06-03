@@ -233,330 +233,6 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 	},
 	study_plans: {
 		attributes: {
-			userId: { type: "string", size: 100, required: true },
-			planData: { type: "string", size: 100000 },
-			examDates: { type: "string", size: 50000 },
-			generatedAt: { type: "datetime" },
-			updatedAt: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_study_plans_userId", type: "key", attributes: ["userId"] },
-		],
-	},
-	question_flags: {
-		attributes: {
-			questionId: { type: "string", size: 100, required: true },
-			userId: { type: "string", size: 100, required: true },
-			reason: { type: "string", size: 50, required: true },
-			details: { type: "string", size: 2000 },
-			status: { type: "string", size: 20, required: true },
-			createdAt: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_flags_questionId", type: "key", attributes: ["questionId"] },
-			{ key: "idx_flags_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_flags_status", type: "key", attributes: ["status"] },
-		],
-	},
-	exam_dates: {
-		attributes: {
-			cacheKey: { type: "string", size: 255, required: true },
-			session: { type: "string", size: 20, required: true },
-			year: { type: "integer", required: true },
-			slots: { type: "string", size: 100000 },
-			updatedAt: { type: "datetime" },
-			source: { type: "string", size: 20 },
-		},
-		indexes: [
-			{
-				key: "idx_exam_dates_cacheKey",
-				type: "unique",
-				attributes: ["cacheKey"],
-			},
-			{ key: "idx_exam_dates_session", type: "key", attributes: ["session"] },
-			{ key: "idx_exam_dates_year", type: "key", attributes: ["year"] },
-		],
-	},
-	analytics: {
-		attributes: {
-			eventType: { type: "string", size: 50 },
-			userId: { type: "string", size: 100 },
-			subjectId: { type: "string", size: 100 },
-			metadata: { type: "string", size: 5000 },
-			timestamp: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_analytics_userId", type: "key", attributes: ["userId"] },
-			{
-				key: "idx_analytics_timestamp",
-				type: "key",
-				attributes: ["timestamp"],
-			},
-		],
-	},
-	teacher_students: {
-		attributes: {
-			teacherId: { type: "string", size: 100, required: true },
-			studentId: { type: "string", size: 100, required: true },
-			subjectId: { type: "string", size: 100 },
-			createdAt: { type: "datetime" },
-		},
-		indexes: [
-			{
-				key: "idx_teacher_students_teacherId",
-				type: "key",
-				attributes: ["teacherId"],
-			},
-			{
-				key: "idx_teacher_students_studentId",
-				type: "key",
-				attributes: ["studentId"],
-			},
-			{
-				key: "idx_teacher_students_pair",
-				type: "unique",
-				attributes: ["teacherId", "studentId"],
-			},
-		],
-	},
-	teacher_assignments: {
-		attributes: {
-			teacherId: { type: "string", size: 100, required: true },
-			topicIds: { type: "string", size: 2000, required: true },
-			status: { type: "string", size: 20, required: true },
-			createdAt: { type: "datetime" },
-			dueDate: { type: "string", size: 20 },
-		},
-		indexes: [
-			{
-				key: "idx_teacher_assignments_teacherId",
-				type: "key",
-				attributes: ["teacherId"],
-			},
-		],
-	},
-	assignment_submissions: {
-		attributes: {
-			assignmentId: { type: "string", size: 100, required: true },
-			studentId: { type: "string", size: 100, required: true },
-			score: { type: "integer", required: true },
-			maxScore: { type: "integer", required: true },
-			totalQuestions: { type: "integer", required: true },
-			correctCount: { type: "integer", required: true },
-			completedAt: { type: "datetime" },
-			teacherComment: { type: "string", size: 2000 },
-		},
-		indexes: [
-			{
-				key: "idx_assignment_submissions_assignmentId",
-				type: "key",
-				attributes: ["assignmentId"],
-			},
-			{
-				key: "idx_assignment_submissions_studentId",
-				type: "key",
-				attributes: ["studentId"],
-			},
-		],
-	},
-	parent_students: {
-		attributes: {
-			parentId: { type: "string", size: 100, required: true },
-			studentId: { type: "string", size: 100, required: true },
-			consentStatus: {
-				type: "string",
-				size: 20,
-				required: true,
-			},
-			canViewProgress: { type: "boolean" },
-			canViewScores: { type: "boolean" },
-			createdAt: { type: "datetime" },
-		},
-		indexes: [
-			{
-				key: "idx_parent_students_parentId",
-				type: "key",
-				attributes: ["parentId"],
-			},
-			{
-				key: "idx_parent_students_studentId",
-				type: "key",
-				attributes: ["studentId"],
-			},
-			{
-				key: "idx_parent_students_pair",
-				type: "unique",
-				attributes: ["parentId", "studentId"],
-			},
-		],
-	},
-	study_groups: {
-		attributes: {
-			name: { type: "string", size: 255, required: true },
-			description: { type: "string", size: 2000 },
-			subjectId: { type: "string", size: 100 },
-			inviteCode: { type: "string", size: 20, required: true },
-			createdBy: { type: "string", size: 100, required: true },
-			memberCount: { type: "integer" },
-			createdAt: { type: "datetime" },
-		},
-		indexes: [
-			{
-				key: "idx_groups_inviteCode",
-				type: "unique",
-				attributes: ["inviteCode"],
-			},
-			{ key: "idx_groups_createdBy", type: "key", attributes: ["createdBy"] },
-		],
-	},
-	group_members: {
-		attributes: {
-			groupId: { type: "string", size: 100, required: true },
-			userId: { type: "string", size: 100, required: true },
-			role: { type: "string", size: 20, required: true },
-			joinedAt: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_members_groupId", type: "key", attributes: ["groupId"] },
-			{ key: "idx_members_userId", type: "key", attributes: ["userId"] },
-			{
-				key: "idx_members_pair",
-				type: "unique",
-				attributes: ["groupId", "userId"],
-			},
-		],
-	},
-	group_invites: {
-		attributes: {
-			groupId: { type: "string", size: 100, required: true },
-			code: { type: "string", size: 20, required: true },
-			createdBy: { type: "string", size: 100, required: true },
-			status: { type: "string", size: 20, required: true },
-			expiresAt: { type: "datetime" },
-			createdAt: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_invites_groupId", type: "key", attributes: ["groupId"] },
-			{ key: "idx_invites_code", type: "key", attributes: ["code"] },
-		],
-	},
-	wrong_answers: {
-		attributes: {
-			userId: { type: "string", size: 100, required: true },
-			questionId: { type: "string", size: 255, required: true },
-			questionText: { type: "string", size: 65535, required: true },
-			subject: { type: "string", size: 128, required: true },
-			topic: { type: "string", size: 128 },
-			correctAnswer: { type: "string", size: 65535, required: true },
-			userAnswer: { type: "string", size: 65535, required: true },
-			explanation: { type: "string", size: 65535 },
-			errorType: { type: "string", size: 64 },
-			reviewed: { type: "boolean", required: true },
-			createdAt: { type: "datetime", required: true },
-		},
-		indexes: [
-			{ key: "idx_wrong_answers_userId", type: "key", attributes: ["userId"] },
-			{
-				key: "idx_wrong_answers_subject",
-				type: "key",
-				attributes: ["subject"],
-			},
-		],
-	},
-	bookmarks: {
-		attributes: {
-			userId: { type: "string", size: 100, required: true },
-			questionId: { type: "string", size: 255, required: true },
-			questionText: { type: "string", size: 65535, required: true },
-			subject: { type: "string", size: 128, required: true },
-			topic: { type: "string", size: 128 },
-			note: { type: "string", size: 65535 },
-			savedAt: { type: "datetime", required: true },
-		},
-		indexes: [
-			{ key: "idx_bookmarks_userId", type: "key", attributes: ["userId"] },
-			{
-				key: "idx_bookmarks_questionId",
-				type: "key",
-				attributes: ["questionId"],
-			},
-		],
-	},
-	notes: {
-		attributes: {
-			userId: { type: "string", size: 100 },
-			content: { type: "string", size: 65535, required: true },
-			subject: { type: "string", size: 128 },
-			topic: { type: "string", size: 128 },
-			createdAt: { type: "datetime", required: true },
-			updatedAt: { type: "datetime", required: true },
-		},
-		indexes: [
-			{ key: "idx_notes_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_notes_subject", type: "key", attributes: ["subject"] },
-		],
-	},
-	group_posts: {
-		attributes: {
-			groupId: { type: "string", size: 100, required: true },
-			userId: { type: "string", size: 100, required: true },
-			userName: { type: "string", size: 255 },
-			content: { type: "string", size: 65535, required: true },
-			questionText: { type: "string", size: 65535 },
-			subject: { type: "string", size: 128 },
-			topic: { type: "string", size: 128 },
-			createdAt: { type: "datetime", required: true },
-		},
-		indexes: [
-			{ key: "idx_posts_groupId", type: "key", attributes: ["groupId"] },
-			{ key: "idx_posts_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_posts_createdAt", type: "key", attributes: ["createdAt"] },
-		],
-	},
-	group_comments: {
-		attributes: {
-			postId: { type: "string", size: 100, required: true },
-			userId: { type: "string", size: 100, required: true },
-			userName: { type: "string", size: 255 },
-			content: { type: "string", size: 65535, required: true },
-			parentId: { type: "string", size: 100 },
-			createdAt: { type: "datetime", required: true },
-			updatedAt: { type: "datetime" },
-		},
-		indexes: [
-			{ key: "idx_comments_postId", type: "key", attributes: ["postId"] },
-			{ key: "idx_comments_userId", type: "key", attributes: ["userId"] },
-		],
-	},
-	group_reactions: {
-		attributes: {
-			postId: { type: "string", size: 100 },
-			commentId: { type: "string", size: 100 },
-			userId: { type: "string", size: 100, required: true },
-			emoji: { type: "string", size: 50, required: true },
-			createdAt: { type: "datetime", required: true },
-		},
-		indexes: [
-			{ key: "idx_reactions_postId", type: "key", attributes: ["postId"] },
-			{
-				key: "idx_reactions_commentId",
-				type: "key",
-				attributes: ["commentId"],
-			},
-			{ key: "idx_reactions_userId", type: "key", attributes: ["userId"] },
-		],
-	},
-	user_consents: {
-		attributes: {
-			userId: { type: "string", size: 100, required: true },
-			analytics: { type: "boolean", required: true },
-			marketing: { type: "boolean", required: true },
-			dataSharing: { type: "boolean", required: true },
-			tosVersion: { type: "string", size: 20 },
-			tosAcceptedAt: { type: "datetime" },
-			privacyVersion: { type: "string", size: 20 },
-			privacyAcknowledgedAt: { type: "datetime" },
-			updatedAt: { type: "datetime", required: true },
 			createdAt: { type: "datetime", required: true },
 		},
 		indexes: [
@@ -564,6 +240,29 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 				key: "idx_user_consents_userId",
 				type: "unique",
 				attributes: ["userId"],
+			},
+		],
+	},
+	shared_questions: {
+		attributes: {
+			id: { type: "string", size: 100, required: true },
+			question: { type: "string", size: 100000, required: true },
+			subject: { type: "string", size: 100, required: true },
+			topic: { type: "string", size: 100, required: true },
+			sharedById: { type: "string", size: 100, required: true },
+			sharedAt: { type: "datetime", required: true },
+			viewCount: { type: "integer" },
+		},
+		indexes: [
+			{
+				key: "idx_shared_questions_id",
+				type: "unique",
+				attributes: ["id"],
+			},
+			{
+				key: "idx_shared_questions_subject",
+				type: "key",
+				attributes: ["subject"],
 			},
 		],
 	},

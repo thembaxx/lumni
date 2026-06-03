@@ -7,6 +7,7 @@ const STATIC_ASSETS = [
   '/manifest.json',
   '/web-app-manifest-192x192.png',
   '/web-app-manifest-512x512.png',
+  '/offline',
 ];
 
 self.addEventListener('install', (event) => {
@@ -90,7 +91,7 @@ async function networkFirstHtml(request) {
   } catch (_error) {
     const cached = await caches.match(request, { ignoreSearch: true });
     if (cached) return cached;
-    const offline = await caches.match('/_offline');
+    const offline = await caches.match('/offline', { ignoreSearch: true });
     return offline || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
   }
 }

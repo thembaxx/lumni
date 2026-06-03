@@ -50,6 +50,7 @@ export const COLLECTIONS = {
 	GROUP_BADGES: "group_badges",
 	USER_CONSENTS: "user_consents",
 	ASSIGNMENT_SUBMISSIONS: "assignment_submissions",
+	SHARED_QUESTIONS: "shared_questions",
 } as const;
 
 export type Subject = {

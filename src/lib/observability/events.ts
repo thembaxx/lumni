@@ -10,7 +10,9 @@ export type EventType =
 	| "exam_complete"
 	| "study_plan_generate"
 	| "tts_play"
-	| "search";
+	| "search"
+	| "pwa_install"
+	| "offline_visit";
 
 export interface TrackEvent {
 	type: EventType;

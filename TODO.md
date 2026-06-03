@@ -409,21 +409,21 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 ## Strategy Roadmap (June 2026 — Product Strategy Assessment)
 
 ### Batch 1 (Foundation — parallel, independent)
-- [ ] **1.4 WAM + retention events** — `analyticsEvents` Dexie v27 table, `trackSession{Start,End}()`, `trackDayActive()`, admin cohort view with DAU/WAU chart
-- [ ] **1.3 AI cost observability v2** — `estimatedCost` in `AILatencyRecord`, admin cost summary chart, per-provider cost config
-- [ ] **1.6 Push notification preference expansion** — add `examAlerts` + `assignmentDue` toggles to `NotificationSettings` + `notifications-tab.tsx`
+- [x] **1.4 WAM + retention events** — `analyticsEvents` Dexie v27 table, `trackSession{Start,End}()`, `trackDayActive()`, admin cohort view with DAU/WAU chart
+- [x] **1.3 AI cost observability v2** — `estimatedCost` in `AILatencyRecord`, admin cost summary chart, per-provider cost config
+- [x] **1.6 Push notification preference expansion** — add `examAlerts` + `assignmentDue` toggles to `NotificationSettings` + `notifications-tab.tsx`
 
 ### Batch 2 (Learning loop tightening)
-- [ ] **1.2 Wrong-answer re-encounter loop** — `retentionRecurrence` Dexie table, auto-insert 3 wrong answers into next eligible quiz with "review" badge
-- [ ] **1.5 Per-paper competency split** — extend competency key from `topicId` to `topicId:paperId`, track P1 vs P2 separately
+- [x] **1.2 Wrong-answer re-encounter loop** — `retentionRecurrence` Dexie table, auto-insert 3 wrong answers into next eligible quiz with "review" badge
+- [x] **1.5 Per-paper competency split** — extend competency key from `topicId` to `topicId:paperId`, track P1 vs P2 separately
 
 ### Batch 3 (Highest impact — Next-best-action)
-- [ ] **1.1 Next-best-action card** — personalised dashboard suggestion card: time-of-day-aware, weakest-topic-first, 24h-dismiss cooldown
+- [x] **1.1 Next-best-action card** — personalised dashboard suggestion card: time-of-day-aware, weakest-topic-first, 24h-dismiss cooldown
 
 ### Batch 4 (B2B2C depth)
-- [ ] **2.1 Teacher assignment completion loop** — student submit → auto-grade → teacher comment
-- [ ] **2.2 Parent weekly digest push** — Sunday 18:00 SAST push with prior-week summary
-- [ ] **2.6 Assignment reminders** — push to student 24h before due
+- [x] **2.1 Teacher assignment completion loop** — student submit → auto-grade → teacher comment
+- [x] **2.2 Parent weekly digest push** — Sunday 18:00 SAST push with prior-week summary
+- [x] **2.6 Assignment reminders** — push to student 24h before due
 
 ### Batch 5 (Network/Defensibility)
 - [ ] **3.2 Public share-with-answer route** — `/q/[id]` public page, 5-star gated
