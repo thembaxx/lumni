@@ -9,6 +9,7 @@ import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
+import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 
 async function refreshPage(): Promise<void> {
 	window.location.reload();
@@ -231,6 +232,11 @@ export function DashboardContent({
 				{isAnonymous && (
 					<SectionReveal delay={0.09}>
 						<AnonymousUpsell />
+					</SectionReveal>
+				)}
+				{showPractice && !isAnonymous && (
+					<SectionReveal delay={0.095}>
+						<NextBestActionCard />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (

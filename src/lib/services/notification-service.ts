@@ -15,6 +15,10 @@ export interface NotificationSettings {
 	achievementNotifications: boolean;
 	weeklyProgress: boolean;
 	reminderHour: number;
+	examAlerts: boolean;
+	assignmentDue: boolean;
+	marketing: boolean;
+	dailyDigest: boolean;
 }
 
 const DEFAULT_SETTINGS: NotificationSettings = {
@@ -25,6 +29,10 @@ const DEFAULT_SETTINGS: NotificationSettings = {
 	achievementNotifications: true,
 	weeklyProgress: false,
 	reminderHour: 18,
+	examAlerts: true,
+	assignmentDue: true,
+	marketing: false,
+	dailyDigest: false,
 };
 
 export function getSettings(): NotificationSettings {
@@ -362,8 +370,19 @@ export async function scheduleWeeklyProgress(
 
 		const totalAttempts = attempts.length;
 		let totalScore = 0;
+		const subjectStats = new Map<
+			string,
+			{ count: number; totalScore: number }
+		>();
 		for (const a of attempts) {
 			totalScore += a.score;
+			const sub = a.odSubject;
+			if (sub) {
+				const prev = subjectStats.get(sub) ?? { count: 0, totalScore: 0 };
+				prev.count += 1;
+				prev.totalScore += a.score;
+				subjectStats.set(sub, prev);
+			}
 		}
 		const avgScore =
 			totalAttempts > 0 ? Math.round(totalScore / totalAttempts) : 0;
@@ -371,14 +390,75 @@ export async function scheduleWeeklyProgress(
 		const gamification = getGamificationData();
 		const streak = gamification?.currentStreak ?? 0;
 
-		sendLocalNotification(
-			"Weekly Progress",
-			`${totalAttempts} quiz attempts this week, ${avgScore}% avg accuracy. Streak: ${streak} days`,
-		);
+		const subjectLines = [...subjectStats.entries()]
+			.slice(0, 3)
+			.map(([sub, st]) => {
+				const subAvg = Math.round(st.totalScore / st.count);
+				return `${sub}: ${st.count} quiz, ${subAvg}%`;
+			})
+			.join(" · ");
+
+		const body = `${totalAttempts} quizzes, ${avgScore}% avg. ${subjectLines ? `${subjectLines}. ` : ""}Streak: ${streak}d`;
+
+		sendLocalNotification("Weekly Progress", body);
 
 		saveToStorage(WEEKLY_NOTIF_KEY, now);
 	} catch {
 		// Silently fail — Dexie may not be ready
+	}
+}
+
+const ASSIGNMENT_ALERT_KEY = "lumni_assignment_alerts";
+
+export async function scheduleAssignmentReminders(
+	settings = getSettings(),
+): Promise<void> {
+	if (!settings.enabled || !settings.assignmentDue) return;
+	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+	if (Notification.permission !== "granted") return;
+
+	try {
+		const res = await fetch("/api/student/assignments");
+		if (!res.ok) return;
+		const data = (await res.json()) as {
+			assignments: {
+				id: string;
+				topics: string[];
+				dueDate?: string;
+			}[];
+		};
+
+		const now = Date.now();
+		const existing = loadFromStorage<{ id: string; scheduledAt: number }[]>(
+			ASSIGNMENT_ALERT_KEY,
+			[],
+		);
+
+		for (const a of data.assignments) {
+			if (!a.dueDate) continue;
+			if (a.dueDate && new Date(a.dueDate).getTime() <= now) continue;
+
+			const alertTime = new Date(a.dueDate).getTime() - 24 * 60 * 60 * 1000;
+			if (alertTime <= now) continue;
+
+			if (existing.some((e) => e.id === a.id && e.scheduledAt === alertTime)) {
+				continue;
+			}
+
+			const delay = alertTime - now;
+			setTimeout(() => {
+				sendLocalNotification(
+					"Assignment Due Tomorrow!",
+					`Your assignment on ${a.topics.join(", ")} is due tomorrow. Complete it now!`,
+					"/dashboard",
+				);
+			}, delay);
+
+			existing.push({ id: a.id, scheduledAt: alertTime });
+			saveToStorage(ASSIGNMENT_ALERT_KEY, existing);
+		}
+	} catch {
+		// silent fail
 	}
 }
 
@@ -392,12 +472,16 @@ export function initializeNotificationSchedulers(): void {
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
 		scheduleWeeklyProgress(settings);
+		scheduleAssignmentReminders(settings);
 	}
 }
 
 export async function scheduleExamAlerts(
 	slots: { subject: string; date: string; startTime: string }[],
+	settings?: NotificationSettings,
 ): Promise<void> {
+	const prefs = settings ?? getSettings();
+	if (!prefs.enabled || !prefs.examAlerts) return;
 	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
 	if (Notification.permission !== "granted") return;
 

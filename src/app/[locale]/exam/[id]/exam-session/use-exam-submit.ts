@@ -23,7 +23,8 @@ interface SubmitDeps {
 	currentStreak: number;
 	totalQuestionsAnswered: number;
 	levelInfo: { level: number };
-	paperData?: { metadata: { subject: string } };
+	paperData?: { metadata: { subject: string; id?: string } };
+	paperId?: string;
 	addWrongAnswer: (data: {
 		questionId: string;
 		questionText: string;
@@ -115,6 +116,7 @@ export function useExamSubmit(deps: SubmitDeps) {
 					bloomLevel: "apply",
 					score: result.score,
 					maxScore,
+					paperId: deps.paperId,
 				}),
 			);
 
@@ -165,6 +167,7 @@ export function useExamSubmit(deps: SubmitDeps) {
 		levelInfo.level,
 		paperData,
 		addWrongAnswer,
+		deps.paperId,
 	]);
 
 	return { handleSubmit };

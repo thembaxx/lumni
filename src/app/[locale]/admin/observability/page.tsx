@@ -8,18 +8,31 @@ import {
 	clearAILatencyRecords,
 	getAILatencyStats,
 } from "@/lib/ai/latency-tracker";
-import { clearEvents, getEventSummary } from "@/lib/observability/events";
+import type { CohortStats } from "@/lib/observability/events";
+import {
+	clearEvents,
+	getCohortStats,
+	getEventSummary,
+} from "@/lib/observability/events";
 
 export default function ObservabilityPage() {
 	const [aiStats, setAiStats] = useState(() => getAILatencyStats());
 	const [eventSummary, setEventSummary] = useState(() => getEventSummary());
+	const [cohortStats, setCohortStats] = useState<CohortStats>({
+		dau: 0,
+		wau: 0,
+		totalActiveUsers: 0,
+		dailyCounts: [],
+	});
 
 	const refresh = useCallback(() => {
 		setAiStats(getAILatencyStats());
 		setEventSummary(getEventSummary());
+		getCohortStats(30).then(setCohortStats);
 	}, []);
 
 	useEffect(() => {
+		refresh();
 		const interval = setInterval(refresh, 5000);
 		return () => clearInterval(interval);
 	}, [refresh]);
@@ -31,7 +44,7 @@ export default function ObservabilityPage() {
 					<div>
 						<h1 className="font-bold text-2xl">Observability</h1>
 						<p className="text-muted-foreground text-sm">
-							AI latency and usage analytics (local device only)
+							AI latency, usage analytics, and cohort stats (local device only)
 						</p>
 					</div>
 					<Button variant="outline" size="sm" onClick={refresh}>
@@ -39,7 +52,7 @@ export default function ObservabilityPage() {
 					</Button>
 				</div>
 
-				<div className="grid gap-4 md:grid-cols-3">
+				<div className="grid gap-4 md:grid-cols-4">
 					<Card>
 						<CardHeader className="pb-2">
 							<CardTitle className="text-muted-foreground text-sm">
@@ -76,9 +89,21 @@ export default function ObservabilityPage() {
 							</p>
 						</CardContent>
 					</Card>
+					<Card>
+						<CardHeader className="pb-2">
+							<CardTitle className="text-muted-foreground text-sm">
+								Est. Cost (USD)
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="font-bold text-3xl tabular-nums">
+								${(aiStats.totalCostCents / 100).toFixed(4)}
+							</p>
+						</CardContent>
+					</Card>
 				</div>
 
-				<div className="grid gap-4 md:grid-cols-2">
+				<div className="grid gap-4 md:grid-cols-3">
 					<Card>
 						<CardHeader>
 							<CardTitle className="text-base">AI Provider Stats</CardTitle>
@@ -108,6 +133,9 @@ export default function ObservabilityPage() {
 												<p className="text-muted-foreground text-xs">
 													{stats.successRate}% success
 												</p>
+												<p className="font-mono text-xs tabular-nums">
+													${(stats.totalCostCents / 100).toFixed(4)}
+												</p>
 											</div>
 										</div>
 									))}
@@ -118,7 +146,7 @@ export default function ObservabilityPage() {
 
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-base">Usage Analytics</CardTitle>
+							<CardTitle className="text-base">Usage Events</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="mb-4 grid grid-cols-2 gap-3">
@@ -154,6 +182,78 @@ export default function ObservabilityPage() {
 							)}
 						</CardContent>
 					</Card>
+
+					<Card>
+						<CardHeader>
+							<CardTitle className="text-base">Cohort Stats</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="mb-4 grid gap-3">
+								<div className="grid grid-cols-2 gap-3">
+									<div className="rounded-lg bg-muted p-3 text-center">
+										<p className="font-bold text-2xl tabular-nums">
+											{cohortStats.dau}
+										</p>
+										<p className="text-muted-foreground text-xs">DAU</p>
+									</div>
+									<div className="rounded-lg bg-muted p-3 text-center">
+										<p className="font-bold text-2xl tabular-nums">
+											{cohortStats.wau}
+										</p>
+										<p className="text-muted-foreground text-xs">WAU</p>
+									</div>
+								</div>
+								<div className="rounded-lg bg-muted p-3 text-center">
+									<p className="font-bold text-2xl tabular-nums">
+										{cohortStats.totalActiveUsers}
+									</p>
+									<p className="text-muted-foreground text-xs">
+										Total active (30d)
+									</p>
+								</div>
+							</div>
+							{cohortStats.dailyCounts.length > 0 && (
+								<>
+									<p className="mb-2 font-medium text-muted-foreground text-xs">
+										Daily active users (30d)
+									</p>
+									<div className="flex flex-col gap-1">
+										{cohortStats.dailyCounts.map((d) => (
+											<div
+												key={d.date}
+												className="flex items-center gap-2 text-xs"
+											>
+												<span className="w-24 shrink-0 text-muted-foreground">
+													{d.date.slice(5)}
+												</span>
+												<div className="flex h-4 flex-1 overflow-hidden rounded-sm bg-muted">
+													<div
+														className="h-full rounded-sm bg-[oklch(52%_0.18_146)] transition-all"
+														style={{
+															width: `${Math.min(
+																(d.count /
+																	Math.max(
+																		...cohortStats.dailyCounts.map(
+																			(x) => x.count,
+																		),
+																		1,
+																	)) *
+																	100,
+																100,
+															)}%`,
+														}}
+													/>
+												</div>
+												<span className="w-6 text-right font-mono tabular-nums">
+													{d.count}
+												</span>
+											</div>
+										))}
+									</div>
+								</>
+							)}
+						</CardContent>
+					</Card>
 				</div>
 
 				<Card>
@@ -180,6 +280,9 @@ export default function ObservabilityPage() {
 										</span>
 										<span className="font-mono tabular-nums">
 											{call.durationMs}ms
+										</span>
+										<span className="font-mono tabular-nums">
+											${(call.estimatedCost ?? 0.01).toFixed(4)}
 										</span>
 										<span className="ml-auto text-muted-foreground">
 											{new Date(call.timestamp).toLocaleTimeString()}

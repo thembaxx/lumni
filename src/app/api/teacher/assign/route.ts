@@ -10,13 +10,14 @@ export const POST = createRouteHandler({
 		return null;
 	},
 	execute: async ({ userId, body }) => {
-		const { topics } = body as { topics: string[] };
+		const { topics, dueDate } = body as { topics: string[]; dueDate?: string };
 
 		await createDocument(COLLECTIONS.TEACHER_ASSIGNMENTS, {
 			teacherId: userId,
 			topicIds: JSON.stringify(topics),
 			status: "pending",
 			createdAt: new Date().toISOString(),
+			...(dueDate ? { dueDate } : {}),
 		});
 		return { success: true, topics };
 	},

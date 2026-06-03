@@ -43,6 +43,7 @@ export function AssignmentBuilder({
 	...props
 }: AssignmentBuilderProps) {
 	const [selected, setSelected] = useState<string[]>([]);
+	const [dueDate, setDueDate] = useState("");
 	const [open, setOpen] = useState(false);
 
 	const toggleTopic = (topic: string) => {
@@ -97,17 +98,35 @@ export function AssignmentBuilder({
 				</Command>
 
 				{selected.length > 0 && (
-					<div className="flex flex-wrap gap-1">
-						{selected.map((topic) => (
-							<Badge
-								key={topic}
-								variant="secondary"
-								className="cursor-pointer"
-								onClick={() => toggleTopic(topic)}
+					<div className="flex flex-col gap-3">
+						<div className="flex flex-wrap gap-1">
+							{selected.map((topic) => (
+								<Badge
+									key={topic}
+									variant="secondary"
+									className="cursor-pointer"
+									onClick={() => toggleTopic(topic)}
+								>
+									{topic} ×
+								</Badge>
+							))}
+						</div>
+						<div className="flex items-center gap-2">
+							<label
+								htmlFor="due-date"
+								className="text-muted-foreground text-xs"
 							>
-								{topic} ×
-							</Badge>
-						))}
+								Due date (optional):
+							</label>
+							<input
+								id="due-date"
+								type="date"
+								value={dueDate}
+								onChange={(e) => setDueDate(e.target.value)}
+								className="h-9 rounded-lg border bg-background px-3 text-xs"
+								min={new Date().toISOString().split("T")[0]}
+							/>
+						</div>
 					</div>
 				)}
 
@@ -126,6 +145,12 @@ export function AssignmentBuilder({
 							<DialogDescription>
 								This will assign practice quizzes on {selected.length} topic
 								{selected.length > 1 ? "s" : ""} to all students in your class.
+								{dueDate && (
+									<>
+										<br />
+										Due by: {new Date(dueDate).toLocaleDateString()}
+									</>
+								)}
 							</DialogDescription>
 						</DialogHeader>
 						<DialogFooter>
@@ -134,8 +159,9 @@ export function AssignmentBuilder({
 							</Button>
 							<Button
 								onClick={() => {
-									onAssign(selected);
+									onAssign(selected, dueDate || undefined);
 									setSelected([]);
+									setDueDate("");
 									setOpen(false);
 								}}
 							>

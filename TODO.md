@@ -406,6 +406,38 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **Priority support**: Support page at `/support` with priority-aware channel cards; added to premium upgrade page FEATURES array
 - [x] **TypeScript & biome**: `tsc --noEmit` passes with zero errors; `npx biome check` passes on all changed files
 
+## Strategy Roadmap (June 2026 — Product Strategy Assessment)
+
+### Batch 1 (Foundation — parallel, independent)
+- [ ] **1.4 WAM + retention events** — `analyticsEvents` Dexie v27 table, `trackSession{Start,End}()`, `trackDayActive()`, admin cohort view with DAU/WAU chart
+- [ ] **1.3 AI cost observability v2** — `estimatedCost` in `AILatencyRecord`, admin cost summary chart, per-provider cost config
+- [ ] **1.6 Push notification preference expansion** — add `examAlerts` + `assignmentDue` toggles to `NotificationSettings` + `notifications-tab.tsx`
+
+### Batch 2 (Learning loop tightening)
+- [ ] **1.2 Wrong-answer re-encounter loop** — `retentionRecurrence` Dexie table, auto-insert 3 wrong answers into next eligible quiz with "review" badge
+- [ ] **1.5 Per-paper competency split** — extend competency key from `topicId` to `topicId:paperId`, track P1 vs P2 separately
+
+### Batch 3 (Highest impact — Next-best-action)
+- [ ] **1.1 Next-best-action card** — personalised dashboard suggestion card: time-of-day-aware, weakest-topic-first, 24h-dismiss cooldown
+
+### Batch 4 (B2B2C depth)
+- [ ] **2.1 Teacher assignment completion loop** — student submit → auto-grade → teacher comment
+- [ ] **2.2 Parent weekly digest push** — Sunday 18:00 SAST push with prior-week summary
+- [ ] **2.6 Assignment reminders** — push to student 24h before due
+
+### Batch 5 (Network/Defensibility)
+- [ ] **3.2 Public share-with-answer route** — `/q/[id]` public page, 5-star gated
+- [ ] **3.6 PWA install + offline polish** — install banner, offline indicator, analytics
+- [ ] **3.5 Calendar view in study planner** — drag-to-reschedule
+
+### Hardening (Continuous)
+- [ ] **4.1 Refactor `use-premium` test casts** — remove `as never` (3 cases)
+- [ ] **4.4 Storybook coverage** — expand from 2 to 10 stories
+- [ ] **A11y round 2** — tools + admin surfaces, Konva diagram alt text
+- [ ] **i18n round 2** — TOS/Privacy in af/zu, remaining 25 zu keys
+- [ ] **Visual regression testing** — Playwright + Chromatic on 6 hero components
+- [ ] **Static analysis in CI** — add `knip` for dead code detection
+
 ### TypeScript & Lint (Session 8 — cleanup sweep)
 - [x] **Biome lint** — fixed 22 issues:
   - 11 auto-fixed (formatting, import organization, sorted classes)

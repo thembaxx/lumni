@@ -13,6 +13,7 @@ export interface TrackResultParams {
 	correct?: boolean;
 	questionText?: string;
 	userId?: string;
+	paperId?: string;
 }
 
 export async function trackQuestionResult(
@@ -48,6 +49,7 @@ export async function trackQuestionResult(
 			score,
 			maxScore,
 			correct: isCorrect,
+			paperId: params.paperId,
 		}),
 		params.userId
 			? updateChallengeEntry(params.userId, xpGained, 1, accuracy)

@@ -12,6 +12,7 @@ export interface GradeSideEffectParams {
 	maxScore: number;
 	correct: boolean;
 	question?: Question;
+	paperId?: string;
 }
 
 export async function enqueueGradeSideEffects(
@@ -38,7 +39,14 @@ export async function enqueueGradeSideEffects(
 		: 1;
 
 	const jobs = [
-		competencyService.update(subject, topic, bloomLevel, percentage, weight),
+		competencyService.update(
+			subject,
+			topic,
+			bloomLevel,
+			percentage,
+			weight,
+			params.paperId,
+		),
 		enqueue("analytics-sync", {
 			events: [
 				{

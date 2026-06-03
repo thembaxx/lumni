@@ -1,3 +1,5 @@
+import { offlineDB } from "@/lib/db/schema";
+
 export type EventType =
 	| "page_view"
 	| "feature_use"
@@ -48,6 +50,117 @@ export function trackEvent(
 	const events = loadEvents();
 	events.push({ type, label, metadata, timestamp: new Date().toISOString() });
 	saveEvents(events);
+}
+
+/* ── Dexie-backed analytics events (1.4 WAM + retention) ── */
+
+export async function trackSessionStart(
+	userId: string,
+	sessionId: string,
+): Promise<void> {
+	if (typeof window === "undefined" || !("indexedDB" in window)) return;
+	try {
+		await offlineDB.analyticsEvents.add({
+			eventType: "session_start",
+			userId,
+			sessionId,
+			timestamp: Date.now(),
+		});
+	} catch {
+		/* silent */
+	}
+}
+
+export async function trackSessionEnd(
+	userId: string,
+	sessionId: string,
+): Promise<void> {
+	if (typeof window === "undefined" || !("indexedDB" in window)) return;
+	try {
+		await offlineDB.analyticsEvents.add({
+			eventType: "session_end",
+			userId,
+			sessionId,
+			timestamp: Date.now(),
+		});
+	} catch {
+		/* silent */
+	}
+}
+
+export async function trackDayActive(userId: string): Promise<void> {
+	if (typeof window === "undefined" || !("indexedDB" in window)) return;
+	try {
+		const todayStart = new Date();
+		todayStart.setHours(0, 0, 0, 0);
+		const existing = await offlineDB.analyticsEvents
+			.where({ eventType: "day_active", userId })
+			.filter((e) => e.timestamp >= todayStart.getTime())
+			.first();
+		if (existing) return;
+		await offlineDB.analyticsEvents.add({
+			eventType: "day_active",
+			userId,
+			timestamp: Date.now(),
+		});
+	} catch {
+		/* silent */
+	}
+}
+
+export interface CohortStats {
+	dau: number;
+	wau: number;
+	totalActiveUsers: number;
+	dailyCounts: { date: string; count: number }[];
+}
+
+export async function getCohortStats(days = 30): Promise<CohortStats> {
+	if (typeof window === "undefined" || !("indexedDB" in window)) {
+		return { dau: 0, wau: 0, totalActiveUsers: 0, dailyCounts: [] };
+	}
+	try {
+		const now = Date.now();
+		const dayMs = 86400000;
+		const todayStart = new Date();
+		todayStart.setHours(0, 0, 0, 0);
+		const weekAgo = now - 7 * dayMs;
+		const monthAgo = now - days * dayMs;
+
+		const events = await offlineDB.analyticsEvents
+			.where("eventType")
+			.anyOf("day_active", "session_start")
+			.filter((e) => e.timestamp >= monthAgo)
+			.toArray();
+
+		const dau = new Set(
+			events
+				.filter((e) => e.timestamp >= todayStart.getTime())
+				.map((e) => e.userId),
+		).size;
+		const wau = new Set(
+			events.filter((e) => e.timestamp >= weekAgo).map((e) => e.userId),
+		).size;
+		const totalActiveUsers = new Set(events.map((e) => e.userId)).size;
+
+		const dailyMap = new Map<string, Set<string>>();
+		for (let i = 0; i < days; i++) {
+			const d = new Date(now - i * dayMs);
+			dailyMap.set(d.toISOString().slice(0, 10), new Set());
+		}
+		for (const e of events) {
+			const key = new Date(e.timestamp).toISOString().slice(0, 10);
+			const set = dailyMap.get(key);
+			if (set) set.add(e.userId);
+		}
+		const dailyCounts = Array.from(dailyMap.entries())
+			.map(([date, users]) => ({ date, count: users.size }))
+			.sort((a, b) => a.date.localeCompare(b.date));
+
+		return { dau, wau, totalActiveUsers, dailyCounts };
+	} catch {
+		return { dau: 0, wau: 0, totalActiveUsers: 0, dailyCounts: [] };
+	}
 }
 
 export function getEventSummary() {

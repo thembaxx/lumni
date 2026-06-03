@@ -325,12 +325,37 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			topicIds: { type: "string", size: 2000, required: true },
 			status: { type: "string", size: 20, required: true },
 			createdAt: { type: "datetime" },
+			dueDate: { type: "string", size: 20 },
 		},
 		indexes: [
 			{
 				key: "idx_teacher_assignments_teacherId",
 				type: "key",
 				attributes: ["teacherId"],
+			},
+		],
+	},
+	assignment_submissions: {
+		attributes: {
+			assignmentId: { type: "string", size: 100, required: true },
+			studentId: { type: "string", size: 100, required: true },
+			score: { type: "integer", required: true },
+			maxScore: { type: "integer", required: true },
+			totalQuestions: { type: "integer", required: true },
+			correctCount: { type: "integer", required: true },
+			completedAt: { type: "datetime" },
+			teacherComment: { type: "string", size: 2000 },
+		},
+		indexes: [
+			{
+				key: "idx_assignment_submissions_assignmentId",
+				type: "key",
+				attributes: ["assignmentId"],
+			},
+			{
+				key: "idx_assignment_submissions_studentId",
+				type: "key",
+				attributes: ["studentId"],
 			},
 		],
 	},

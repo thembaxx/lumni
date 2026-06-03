@@ -10,6 +10,7 @@ export interface CompetencyRecord {
 	id?: number;
 	subjectId: string;
 	topicId: string;
+	paperId?: string;
 	bloomLevel: BloomLevel;
 	score: number;
 	attempts: number;

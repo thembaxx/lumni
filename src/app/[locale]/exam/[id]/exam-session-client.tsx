@@ -334,6 +334,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				bloomLevel: "apply",
 				score: result.score,
 				maxScore,
+				paperId: paperData?.metadata.id,
 			});
 
 			if (!result.correct) {

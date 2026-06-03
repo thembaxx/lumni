@@ -109,6 +109,66 @@ export function NotificationsTab({
 		),
 		[notifications, onNotificationsChange],
 	);
+	const examAlertsTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.examAlerts}
+				disabled={!notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						examAlerts: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
+	const assignmentDueTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.assignmentDue}
+				disabled={!notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						assignmentDue: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
+	const marketingTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.marketing}
+				disabled={!notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						marketing: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
+	const dailyDigestTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.dailyDigest}
+				disabled={!notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						dailyDigest: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
 
 	const reminderHourTrailing = useMemo(
 		() => (
@@ -171,8 +231,28 @@ export function NotificationsTab({
 			<ListCell
 				title="Weekly Progress"
 				subtitle="Receive weekly progress summary"
-				showSeparator={false}
 				trailing={weeklyProgressTrailing}
+			/>
+			<ListCell
+				title="Exam Alerts"
+				subtitle="Remind you 24h before exams"
+				trailing={examAlertsTrailing}
+			/>
+			<ListCell
+				title="Assignment Due"
+				subtitle="Notify when assignments are due"
+				trailing={assignmentDueTrailing}
+			/>
+			<ListCell
+				title="Daily Digest"
+				subtitle="Daily practice summary notification"
+				trailing={dailyDigestTrailing}
+			/>
+			<ListCell
+				title="Marketing"
+				subtitle="Tips, offers, and product updates"
+				showSeparator={false}
+				trailing={marketingTrailing}
 			/>
 		</ListSection>
 	);

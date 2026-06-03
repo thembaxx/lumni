@@ -49,6 +49,7 @@ export const COLLECTIONS = {
 	GROUP_CHALLENGE_ENTRIES: "group_challenge_entries",
 	GROUP_BADGES: "group_badges",
 	USER_CONSENTS: "user_consents",
+	ASSIGNMENT_SUBMISSIONS: "assignment_submissions",
 } as const;
 
 export type Subject = {

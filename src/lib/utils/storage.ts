@@ -62,4 +62,8 @@ export const DEFAULT_NOTIFICATIONS: NotificationSettings = {
 	achievementNotifications: true,
 	weeklyProgress: false,
 	reminderHour: 18,
+	examAlerts: true,
+	assignmentDue: true,
+	marketing: false,
+	dailyDigest: false,
 };

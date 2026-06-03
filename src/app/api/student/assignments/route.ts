@@ -8,6 +8,15 @@ export interface StudentAssignment {
 	topics: string[];
 	status: string;
 	createdAt: string;
+	dueDate?: string;
+	submission?: {
+		score: number;
+		maxScore: number;
+		totalQuestions: number;
+		correctCount: number;
+		completedAt: string;
+		teacherComment?: string;
+	};
 }
 
 export const GET = createRouteHandler({
@@ -68,6 +77,24 @@ export const GET = createRouteHandler({
 			}),
 		);
 
+		const assignmentIds = allAssignments.map(
+			(a) => (a as Record<string, unknown>).$id as string,
+		);
+		const submissions =
+			assignmentIds.length > 0
+				? await listDocuments(COLLECTIONS.ASSIGNMENT_SUBMISSIONS, [
+						Query.equal("studentId", userId as string),
+						Query.equal("assignmentId", assignmentIds),
+					])
+				: [];
+
+		const submissionMap = new Map(
+			submissions.map((s) => {
+				const sd = s as Record<string, unknown>;
+				return [sd.assignmentId as string, sd];
+			}),
+		);
+
 		const assignments: StudentAssignment[] = allAssignments.map((a) => {
 			const doc = a as Record<string, unknown>;
 			const raw = (doc.topicIds as string) || "[]";
@@ -77,12 +104,24 @@ export const GET = createRouteHandler({
 			} catch {
 				parsed = [];
 			}
+			const subDoc = submissionMap.get(doc.$id as string);
 			return {
 				id: doc.$id as string,
 				teacherId: doc.teacherId as string,
 				topics: parsed.map((tId) => topicMap.get(tId) || tId),
 				status: (doc.status as string) || "pending",
 				createdAt: (doc.createdAt as string) || "",
+				dueDate: doc.dueDate as string | undefined,
+				submission: subDoc
+					? {
+							score: (subDoc.score as number) ?? 0,
+							maxScore: (subDoc.maxScore as number) ?? 0,
+							totalQuestions: (subDoc.totalQuestions as number) ?? 0,
+							correctCount: (subDoc.correctCount as number) ?? 0,
+							completedAt: (subDoc.completedAt as string) ?? "",
+							teacherComment: subDoc.teacherComment as string | undefined,
+						}
+					: undefined,
 			};
 		});
 

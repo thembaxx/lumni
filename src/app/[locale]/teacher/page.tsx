@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { RoleGate } from "@/components/shared/role-gate";
 import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
+import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-panel";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
 import { StudentDetailDialog } from "@/components/teacher/student-detail-dialog";
@@ -37,12 +38,12 @@ interface EngagementData {
 	activeStudents: number;
 }
 
-async function assignTopics(topics: string[]): Promise<void> {
+async function assignTopics(topics: string[], dueDate?: string): Promise<void> {
 	try {
 		const res = await fetch("/api/teacher/assign", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ topics }),
+			body: JSON.stringify({ topics, dueDate }),
 		});
 		if (!res.ok) throw new Error("Assignment failed");
 		toast({
@@ -195,6 +196,7 @@ function TeacherDashboardPageInner() {
 							/>
 						</div>
 					)}
+					<AssignmentReviewPanel />
 					<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 						<div className="flex flex-col gap-6 lg:col-span-2">
 							<TopicMasteryHeatmap topics={topicMastery} />

@@ -33,10 +33,15 @@ export class CompetencyService {
 		bloomLevel: BloomLevel,
 		questionScore: number,
 		weight: number,
+		paperId?: string,
 	): Promise<void> {
-		const existing = await this.db.competencies
-			.where({ subjectId, topicId, bloomLevel })
-			.first();
+		const existing = paperId
+			? await this.db.competencies
+					.where({ subjectId, topicId, bloomLevel, paperId })
+					.first()
+			: await this.db.competencies
+					.where({ subjectId, topicId, bloomLevel })
+					.first();
 
 		const newScore = existing
 			? computeWeightedScore(
@@ -59,7 +64,7 @@ export class CompetencyService {
 				level,
 			});
 		} else {
-			await this.db.competencies.add({
+			const record: CompetencyRecord = {
 				subjectId,
 				topicId,
 				bloomLevel,
@@ -67,7 +72,9 @@ export class CompetencyService {
 				attempts: newAttempts,
 				lastAssessed: now,
 				level,
-			});
+			};
+			if (paperId) record.paperId = paperId;
+			await this.db.competencies.add(record);
 		}
 
 		await this.enqueueFn("appwrite-competency-sync", {
@@ -78,6 +85,7 @@ export class CompetencyService {
 			attempts: newAttempts,
 			lastAssessed: now,
 			level,
+			...(paperId ? { paperId } : {}),
 		});
 	}
 
@@ -96,13 +104,13 @@ export class CompetencyService {
 		subjectId: string,
 		topicId: string,
 		bloomLevel: BloomLevel,
+		paperId?: string,
 	): Promise<CompetencyRecord | null> {
 		try {
-			return (
-				(await this.db.competencies
-					.where({ subjectId, topicId, bloomLevel })
-					.first()) ?? null
-			);
+			const query = paperId
+				? { subjectId, topicId, bloomLevel, paperId }
+				: { subjectId, topicId, bloomLevel };
+			return (await this.db.competencies.where(query).first()) ?? null;
 		} catch {
 			return null;
 		}
