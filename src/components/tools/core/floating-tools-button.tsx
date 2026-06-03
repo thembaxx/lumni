@@ -47,7 +47,7 @@ export function FloatingToolsButton() {
 				variant="default"
 				onClick={handleOpen}
 				className={cn(
-					"fixed right-5 bottom-17.25 z-toast",
+					"fixed right-5 bottom-17 z-toast",
 					"h-11 rounded-lg pr-5 font-medium text-white/90 shadow-level-3",
 				)}
 			>
