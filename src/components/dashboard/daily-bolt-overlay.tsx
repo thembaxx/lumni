@@ -5,16 +5,16 @@ import {
 	ArrowRight01Icon,
 	BookOpenIcon,
 	RefreshIcon,
+	Rocket01Icon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { toast } from "@/hooks/use-toast";
 import { offlineDB } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
@@ -24,8 +24,7 @@ type BoltPhase =
 	| "resolving"
 	| "loading"
 	| "answering"
-	| "answered"
-	| "branching"
+	| "celebrating"
 	| "error"
 	| "empty";
 
@@ -84,6 +83,7 @@ export function DailyBoltOverlay({
 	const [subject, setSubject] = useState("mathematics");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
 	const shouldReduceMotion = useReducedMotion();
+	const celebrationTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	useEffect(() => {
 		resolveWeakestSubject().then((s) => {
@@ -126,21 +126,29 @@ export function DailyBoltOverlay({
 		(correct: boolean) => {
 			if (!question) return;
 			setBoltResult({ question, correct });
-			setPhase("answered");
-			toast({
-				type: "success",
-				message: "⚡ Bolt Complete!",
-				description: correct
-					? "Great start to your study session."
-					: "Keep going — practice makes perfect.",
-				duration: 3000,
-			});
+			celebrationTimerRef.current = setTimeout(() => {
+				setPhase("celebrating");
+			}, 800);
 		},
 		[question],
 	);
 
 	const handleProceed = useCallback(() => {
-		setPhase("branching");
+		if (!boltResult) return;
+		onComplete(boltResult);
+	}, [boltResult, onComplete]);
+
+	const handleSprintFromCelebration = useCallback(() => {
+		if (!boltResult) return;
+		onSprint(boltResult);
+	}, [boltResult, onSprint]);
+
+	useEffect(() => {
+		return () => {
+			if (celebrationTimerRef.current) {
+				clearTimeout(celebrationTimerRef.current);
+			}
+		};
 	}, []);
 
 	const handleRetry = useCallback(() => {
@@ -186,7 +194,7 @@ export function DailyBoltOverlay({
 				<button
 					type="button"
 					onClick={onSkip}
-					className="rounded-full px-3 py-1.5 font-medium text-muted-foreground text-xs transition-colors hover:bg-system-fill hover:text-foreground"
+					className="min-h-10 rounded-full px-4 py-2 font-medium text-muted-foreground text-xs transition-[background-color,transform] hover:bg-system-fill hover:text-foreground active:scale-[0.96]"
 				>
 					{skipLabel}
 				</button>
@@ -207,7 +215,7 @@ export function DailyBoltOverlay({
 						</m.section>
 					)}
 
-					{(phase === "answering" || phase === "answered") && question && (
+					{phase === "answering" && question && (
 						<m.section
 							key="question"
 							initial={{ opacity: 0, y: 12 }}
@@ -229,20 +237,21 @@ export function DailyBoltOverlay({
 						</m.section>
 					)}
 
-					{phase === "branching" && boltResult && (
+					{phase === "celebrating" && boltResult && (
 						<m.section
-							key="branching"
-							initial={{ opacity: 0, y: 12 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -8 }}
-							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							key="celebrating"
+							initial={{ opacity: 0, scale: 0.92 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0.92 }}
+							transition={{ duration: 0.45, ease: iOSDecelerate }}
 							className="flex flex-1 items-center justify-center"
 						>
-							<BoltBranch
+							<BoltCelebration
 								correct={boltResult.correct}
 								subjectLabel={subjectLabel}
+								xpReward={boltResult.correct ? 35 : 15}
 								onDashboard={() => onComplete(boltResult)}
-								onSprint={() => onSprint(boltResult)}
+								onSprint={handleSprintFromCelebration}
 							/>
 						</m.section>
 					)}
@@ -482,76 +491,103 @@ function BoltEmptyState({
 	);
 }
 
-function BoltBranch({
+function BoltCelebration({
 	correct,
 	subjectLabel,
+	xpReward,
 	onDashboard,
 	onSprint,
 }: {
 	correct: boolean;
 	subjectLabel: string;
+	xpReward: number;
 	onDashboard: () => void;
 	onSprint: () => void;
 }) {
 	return (
-		<div className="flex w-full max-w-md flex-col items-center gap-7 text-center">
+		<div className="flex w-full max-w-sm flex-col items-center gap-8 text-center">
 			<m.div
-				initial={{ scale: 0.6, opacity: 0 }}
-				animate={{ scale: 1, opacity: 1 }}
-				transition={{ duration: 0.5, ease: iOSDecelerate }}
+				initial={{ scale: 0, rotate: -15 }}
+				animate={{ scale: 1, rotate: 0 }}
+				transition={{ duration: 0.6, ease: iOSDecelerate, delay: 0.1 }}
 				className="relative"
 			>
-				<div
+				<m.div
+					animate={{ scale: [1, 1.08, 1] }}
+					transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
 					className={cn(
-						"absolute inset-0 rounded-full blur-2xl",
-						correct ? "bg-success/35" : "bg-warning/30",
+						"absolute inset-0 rounded-full blur-3xl",
+						correct ? "bg-success/25" : "bg-warning/20",
 					)}
 				/>
 				<div
 					className={cn(
-						"relative flex size-20 items-center justify-center rounded-full shadow-level-2 ring-1",
+						"relative flex size-24 items-center justify-center rounded-full shadow-level-2 ring-1",
 						correct
-							? "bg-success/15 text-success ring-success/30"
-							: "bg-warning/15 text-warning ring-warning/30",
+							? "bg-success/15 text-success ring-success/25"
+							: "bg-warning/15 text-warning ring-warning/25",
 					)}
 				>
-					<HugeiconsIcon
-						icon={SparklesIcon}
-						className="size-9"
-						strokeWidth={2.25}
-					/>
+					<m.div
+						animate={correct ? { rotate: [0, -6, 6, -6, 0] } : undefined}
+						transition={{ duration: 0.6, delay: 0.4 }}
+					>
+						<HugeiconsIcon
+							icon={correct ? Rocket01Icon : SparklesIcon}
+							className="size-10"
+							strokeWidth={2}
+						/>
+					</m.div>
 				</div>
 			</m.div>
 
-			<div className="flex flex-col gap-2">
+			<m.div
+				initial={{ opacity: 0, y: 8 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, ease: iOSDecelerate, delay: 0.3 }}
+				className="flex flex-col gap-2"
+			>
 				<h2
 					className={cn(
-						"ios-title-2 text-balance",
+						"text-balance font-extrabold font-heading text-2xl tracking-tight",
 						correct ? "text-success" : "text-foreground",
 					)}
 				>
-					{correct ? "Bolt delivered." : "Solid attempt."}
+					{correct ? "Bolt delivered" : "Solid attempt"}
 				</h2>
-				<p className="max-w-sm text-balance text-muted-foreground text-sm">
+				<p className="max-w-xs text-balance text-muted-foreground text-sm leading-relaxed">
 					{correct
-						? `Nice work on that ${subjectLabel} question. Want another one in the same lane?`
-						: `Every bolt sharpens you. Keep the streak going with another ${subjectLabel} round.`}
+						? `Nice work on that ${subjectLabel} question.`
+						: `Every bolt sharpens you. Keep at it.`}
 				</p>
-			</div>
+				<p className="font-semibold text-foreground text-xs tabular-nums">
+					+{xpReward} XP
+				</p>
+			</m.div>
 
-			<div className="flex w-full flex-col gap-2.5">
-				<Button onClick={onSprint} size="lg" className="w-full gap-2 text-base">
+			<m.div
+				initial={{ opacity: 0, y: 12 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, ease: iOSDecelerate, delay: 0.5 }}
+				className="flex w-full flex-col gap-3"
+			>
+				<Button
+					onClick={onDashboard}
+					size="lg"
+					className="w-full gap-2 text-base"
+				>
+					Go to Dashboard
+				</Button>
+				<Button
+					onClick={onSprint}
+					variant="outline"
+					size="lg"
+					className="w-full gap-2"
+				>
 					Continue Sprint
 					<HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
 				</Button>
-				<Button
-					onClick={onDashboard}
-					variant="ghost"
-					className="w-full text-muted-foreground"
-				>
-					Back to Dashboard
-				</Button>
-			</div>
+			</m.div>
 		</div>
 	);
 }
