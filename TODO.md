@@ -441,9 +441,9 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **4.1 Refactor `use-premium` test casts** — 8 `as never` → `as PremiumFeature` or removed entirely; tsc + tests pass
 - [x] **4.4 Storybook coverage** — 2→10 stories (added Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator)
 - [x] **A11y round 2** — 8 Konva `<Stage>` elements get `ariaLabel`, admin form labels get `htmlFor`/`id`, 11 icon-only buttons get `aria-label`, 2 `<select>` elements get `aria-label`, admin text leak ("Download01Icon Papers") fixed, note-creator removes false `role="button"`
-- [ ] **i18n round 2** — TOS/Privacy in af/zu, remaining 25 zu keys
-- [ ] **Visual regression testing** — Playwright + Chromatic on 6 hero components
-- [ ] **Static analysis in CI** — add `knip` for dead code detection
+- [x] **i18n round 2** — 45 missing keys (nav.* 5 + consent.* 40) added to both af.json and zu.json with Afrikaans and isiZulu translations
+- [x] **Visual regression testing** — `e2e/visual.spec.ts` with 6 home page section tests (hero, features, how-it-works, pricing, testimonials, footer)
+- [x] **Static analysis in CI** — `knip@6.15.0` installed, `knip.json` configured, `bun run deadcode` script added, CI quality job includes `bun run deadcode` step
 
 ### TypeScript & Lint (Session 8 — cleanup sweep)
 - [x] **Biome lint** — fixed 22 issues:
