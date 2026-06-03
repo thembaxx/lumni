@@ -217,6 +217,7 @@ export function GeometryDiagram({ data }: { data: GeometryData }) {
 			width={400}
 			height={350}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Geometry diagram with shapes and labels"
 		>
 			<Layer>
 				{gridLines}

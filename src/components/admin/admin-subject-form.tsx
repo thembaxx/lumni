@@ -59,12 +59,18 @@ export function SubjectForm({
 			<CardContent className="flex flex-col gap-4">
 				<div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col gap-2">
-						<Label className="font-medium text-foreground text-sm">Name</Label>
+						<Label
+							htmlFor="subject-name"
+							className="font-medium text-foreground text-sm"
+						>
+							Name
+						</Label>
 						<m.div
 							whileFocus={{ scale: 1.01 }}
 							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 						>
 							<Input
+								id="subject-name"
 								placeholder="Accounting"
 								value={editSubject?.name || formData.name}
 								onChange={(e) =>
@@ -75,12 +81,18 @@ export function SubjectForm({
 						</m.div>
 					</div>
 					<div className="flex flex-col gap-2">
-						<Label className="font-medium text-foreground text-sm">Code</Label>
+						<Label
+							htmlFor="subject-code"
+							className="font-medium text-foreground text-sm"
+						>
+							Code
+						</Label>
 						<m.div
 							whileFocus={{ scale: 1.01 }}
 							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 						>
 							<Input
+								id="subject-code"
 								placeholder="accounting"
 								value={editSubject?.code || formData.code}
 								onChange={(e) =>
@@ -92,7 +104,10 @@ export function SubjectForm({
 					</div>
 				</div>
 				<div className="flex flex-col gap-2">
-					<Label className="font-medium text-foreground text-sm">
+					<Label
+						htmlFor="subject-description"
+						className="font-medium text-foreground text-sm"
+					>
 						Description
 					</Label>
 					<m.div
@@ -100,6 +115,7 @@ export function SubjectForm({
 						className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 					>
 						<Input
+							id="subject-description"
 							placeholder="Brief description"
 							value={editSubject?.description || formData.description}
 							onChange={(e) =>

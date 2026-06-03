@@ -139,6 +139,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 			width={300}
 			height={200}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Wave diagram"
 		>
 			<Layer>{waveLines}</Layer>
 			<Layer>{longitudinalWaves}</Layer>

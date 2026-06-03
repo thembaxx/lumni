@@ -27,6 +27,7 @@ export function CalculatorDisplay({
 					type="button"
 					onClick={onCopy}
 					className="shrink-0 text-muted-foreground/40 transition-colors hover:text-muted-foreground"
+					aria-label="Copy result"
 				>
 					<HugeiconsIcon icon={Copy01Icon} className="size-3.5" data-icon />
 				</button>

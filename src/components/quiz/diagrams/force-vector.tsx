@@ -160,6 +160,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
 			width={300}
 			height={200}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Force vector diagram"
 		>
 			<Layer>{objects}</Layer>
 			<Layer>{forceArrows}</Layer>

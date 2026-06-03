@@ -209,6 +209,7 @@ export function AdminExamList() {
 											onClick={() => handleExtract(exam.id)}
 											disabled={extracting === exam.id}
 											title="Extract questions"
+											aria-label="Extract questions"
 										>
 											{extracting === exam.id ? (
 												<HugeiconsIcon
@@ -224,6 +225,7 @@ export function AdminExamList() {
 											size="icon"
 											onClick={() => push(`/exam/${exam.id}`)}
 											title="Take exam"
+											aria-label="Take exam"
 										>
 											<HugeiconsIcon
 												icon={ArrowUpRight01Icon}
@@ -237,6 +239,7 @@ export function AdminExamList() {
 											onClick={() => handleDelete(exam.id)}
 											disabled={deleting === exam.id}
 											title="Delete exam"
+											aria-label="Delete exam"
 										>
 											{deleting === exam.id ? (
 												<HugeiconsIcon

@@ -284,7 +284,12 @@ export function AdminDashboard() {
 						>
 							Observability
 						</Button>
-						<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							onClick={handleSignOut}
+							aria-label="Sign out"
+						>
 							<HugeiconsIcon icon={Logout01Icon} className="size-4" />
 						</Button>
 					</div>

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { PremiumProvider, usePremium } from "@/lib/premium/premium-context";
+import type { PremiumFeature } from "@/lib/premium/premium-context";
 
 const mockStorage = new Map<string, unknown>();
 const mockFetch =
@@ -56,12 +57,12 @@ describe("usePremium", () => {
 
 		expect(result.current.isPremium).toBe(false);
 		for (const f of FREE_FEATURES) {
-			expect(result.current.hasFeature(f as never)).toBe(true);
+			expect(result.current.hasFeature(f)).toBe(true);
 		}
 		const freeSet = new Set(FREE_FEATURES);
 		for (const f of PREMIUM_FEATURES) {
 			if (!freeSet.has(f)) {
-				expect(result.current.hasFeature(f as never)).toBe(false);
+				expect(result.current.hasFeature(f)).toBe(false);
 			}
 		}
 	});
@@ -77,7 +78,7 @@ describe("usePremium", () => {
 
 		expect(result.current.isPremium).toBe(true);
 		for (const f of PREMIUM_FEATURES) {
-			expect(result.current.hasFeature(f as never)).toBe(true);
+			expect(result.current.hasFeature(f)).toBe(true);
 		}
 	});
 
@@ -97,7 +98,7 @@ describe("usePremium", () => {
 
 		expect(result.current.isPremium).toBe(false);
 		for (const f of FREE_FEATURES) {
-			expect(result.current.hasFeature(f as never)).toBe(true);
+			expect(result.current.hasFeature(f)).toBe(true);
 		}
 	});
 
@@ -106,15 +107,15 @@ describe("usePremium", () => {
 			wrapper: createPremiumWrapper(),
 		});
 
-		expect(result.current.hasFeature("ai-tutor" as never)).toBe(true);
-		expect(result.current.hasFeature("exam-simulator" as never)).toBe(false);
+		expect(result.current.hasFeature("ai-tutor" as PremiumFeature)).toBe(true);
+		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(false);
 
 		await act(async () => {
 			await result.current.upgrade();
 		});
 
-		expect(result.current.hasFeature("exam-simulator" as never)).toBe(true);
-		expect(result.current.hasFeature("priority-support" as never)).toBe(true);
+		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(true);
+		expect(result.current.hasFeature("priority-support" as PremiumFeature)).toBe(true);
 	});
 
 	test("createCheckoutSession calls /api/premium/checkout and returns url", async () => {

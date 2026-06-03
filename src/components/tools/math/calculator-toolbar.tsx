@@ -44,6 +44,7 @@ export function CalculatorToolbar({
 					size="xs"
 					onClick={onToggleHistory}
 					className="h-7 rounded-lg px-2.5 text-xs"
+					aria-label="Toggle history"
 				>
 					<HugeiconsIcon icon={UndoIcon} className="size-3.5" data-icon />
 				</Button>
@@ -52,6 +53,7 @@ export function CalculatorToolbar({
 					size="xs"
 					onClick={onClearHistory}
 					className="h-7 rounded-lg px-2.5 text-xs"
+					aria-label="Clear history"
 				>
 					<HugeiconsIcon icon={Clock01Icon} className="size-3.5" data-icon />
 				</Button>

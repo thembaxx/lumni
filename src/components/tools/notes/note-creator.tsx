@@ -159,10 +159,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 								animate={{ opacity: 1, x: 0 }}
 								exit={{ opacity: 0, x: -10 }}
 								transition={{ duration: 0.2, ease: iOSEase }}
-								className="cursor-pointer rounded-3xl border p-4 transition-colors hover:bg-accent/5"
-								tabIndex={0}
-								role="button"
-								aria-label={`Note: ${note.title}`}
+								className="rounded-3xl border p-4 transition-colors hover:bg-accent/5"
 							>
 								<div className="flex items-start justify-between">
 									<div className="flex-1">

@@ -200,6 +200,7 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
 			width={totalWidth}
 			height={200}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Chemistry molecular structure diagram"
 		>
 			<Layer>{elements}</Layer>
 		</Stage>

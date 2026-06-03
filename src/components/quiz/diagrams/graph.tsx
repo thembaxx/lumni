@@ -309,6 +309,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 			width={GRAPH_W}
 			height={GRAPH_H}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Mathematical graph with axes and curves"
 		>
 			<Layer>
 				{gridLines}

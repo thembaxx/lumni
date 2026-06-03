@@ -99,6 +99,7 @@ export function SolverInputTools({
 						size="icon-xs"
 						onClick={onRetake}
 						className="absolute top-1 right-1 size-5"
+						aria-label="Remove image"
 					>
 						<HugeiconsIcon icon={Cancel01Icon} data-icon />
 					</Button>

@@ -425,14 +425,21 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **2.2 Parent weekly digest push** — Sunday 18:00 SAST push with prior-week summary
 - [x] **2.6 Assignment reminders** — push to student 24h before due
 
-### Batch 5 (Network/Defensibility)
-- [ ] **3.2 Public share-with-answer route** — `/q/[id]` public page, 5-star gated
-- [ ] **3.6 PWA install + offline polish** — install banner, offline indicator, analytics
-- [ ] **3.5 Calendar view in study planner** — drag-to-reschedule
+## ✅ Batch 5 — Network/Defensibility (June 2026)
 
-### Hardening (Continuous)
-- [ ] **4.1 Refactor `use-premium` test casts** — remove `as never` (3 cases)
-- [ ] **4.4 Storybook coverage** — expand from 2 to 10 stories
+- [x] **3.2 Public share-with-answer route** — `/q/[id]` public page, 5-star gated answer
+- [x] **3.6 PWA install + offline polish** — `/offline` page, manifest theme_color, `pwa_install`/`offline_visit` events, install tracking
+- [x] **3.5 Calendar view in study planner** — month grid, session dots, native drag-to-reschedule
+
+### Verification
+- [x] `npx tsc --noEmit` — zero errors
+- [x] `npx biome check` — zero errors
+- [x] `git commit` — `6d51dd0f` pushed to `origin/master`
+
+## ✅ Hardening Batch 6 (June 2026)
+
+- [x] **4.1 Refactor `use-premium` test casts** — 8 `as never` → `as PremiumFeature` or removed entirely; tsc + tests pass
+- [x] **4.4 Storybook coverage** — 2→10 stories (added Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator)
 - [ ] **A11y round 2** — tools + admin surfaces, Konva diagram alt text
 - [ ] **i18n round 2** — TOS/Privacy in af/zu, remaining 25 zu keys
 - [ ] **Visual regression testing** — Playwright + Chromatic on 6 hero components

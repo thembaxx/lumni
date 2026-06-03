@@ -87,6 +87,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 			width={300}
 			height={200}
 			className="w-full rounded-2xl border bg-background/20"
+			ariaLabel="Motion diagram"
 		>
 			<Layer>
 				{data.ground && (

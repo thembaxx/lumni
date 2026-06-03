@@ -114,7 +114,7 @@ export function ExamFilters({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Download01Icon Papers</CardTitle>
+				<CardTitle>Papers</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-6">
 				<div className="flex flex-col gap-3">

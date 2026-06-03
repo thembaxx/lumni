@@ -297,6 +297,7 @@ export function ChartDiagram({ data }: { data: ChartData }) {
 			width={CHART_WIDTH}
 			height={Math.max(CHART_HEIGHT, chartData.length * 12 + 50)}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Chart diagram"
 		>
 			{data.title && (
 				<Layer>

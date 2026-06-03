@@ -93,6 +93,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 			width={300}
 			height={200}
 			className="w-full rounded-2xl border bg-background/40"
+			ariaLabel="Circuit diagram"
 		>
 			<Layer>{wires}</Layer>
 			<Layer>{components}</Layer>

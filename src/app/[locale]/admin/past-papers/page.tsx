@@ -53,6 +53,7 @@ export default function AdminPastPapersPage() {
 					className={cn(
 						"rounded-lg border border-border bg-card px-3 py-1.5 text-sm",
 					)}
+					aria-label="Filter by subject"
 				>
 					<option value="">All subjects</option>
 					{subjects.map((s) => (
@@ -67,6 +68,7 @@ export default function AdminPastPapersPage() {
 					className={cn(
 						"rounded-lg border border-border bg-card px-3 py-1.5 text-sm",
 					)}
+					aria-label="Filter by question type"
 				>
 					<option value="">All types</option>
 					{types.map((t) => (
