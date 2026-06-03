@@ -1,0 +1,58 @@
+import { getAI } from "@/lib/ai/client";
+import { offlineDB } from "@/lib/db/schema";
+import { buildKnowledgeCacheKey } from "./cache-key";
+import type { CachedGraph, KnowledgeGraph } from "./types";
+
+const KNOWLEDGE_GRAPH_TTL = 7 * 24 * 60 * 60 * 1000;
+
+const SYSTEM_PROMPT = `You are a knowledge graph generator for educational topics. Given a subject and topic, return a JSON object representing the prerequisite knowledge, core concepts, and advanced follow-up topics. Format:
+{
+  "nodes": [{ "id": string, "label": string, "type": "prerequisite" | "core" | "advanced" }],
+  "edges": [{ "from": string, "to": string, "relation": string }]
+}
+Each node must have a unique id. Connect nodes with meaningful relation labels like "requires", "leads_to", "builds_on", "includes". Return 5-15 nodes total.`;
+
+export async function fetchGraph(
+	subject: string,
+	topic: string,
+): Promise<KnowledgeGraph> {
+	const ai = getAI();
+	const prompt = `Subject: ${subject}\nTopic: ${topic}\n\nGenerate a knowledge graph for this topic showing prerequisites, core concepts, and advanced topics.`;
+	const result = await ai.generateWithSystem(SYSTEM_PROMPT, prompt);
+	if (!("content" in result) || !result.content) {
+		return { nodes: [], edges: [] };
+	}
+	try {
+		const parsed = JSON.parse(result.content) as KnowledgeGraph;
+		return parsed;
+	} catch {
+		return { nodes: [], edges: [] };
+	}
+}
+
+export async function getCachedGraph(
+	subject: string,
+	topic: string,
+): Promise<KnowledgeGraph | null> {
+	const key = buildKnowledgeCacheKey(subject, topic);
+	const cached = await offlineDB.knowledgeGraph.get(key);
+	if (cached && cached.expiresAt > Date.now()) {
+		return cached.graph;
+	}
+	return null;
+}
+
+export async function storeGraph(
+	subject: string,
+	topic: string,
+	graph: KnowledgeGraph,
+): Promise<void> {
+	const key = buildKnowledgeCacheKey(subject, topic);
+	const entry: CachedGraph = {
+		key,
+		graph,
+		createdAt: Date.now(),
+		expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
+	};
+	await offlineDB.knowledgeGraph.put(entry);
+}

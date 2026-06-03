@@ -7,7 +7,6 @@ import {
 	ChartDownIcon,
 	ChartUpIcon,
 	Clock01Icon,
-	CrownIcon,
 	FireIcon,
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
@@ -16,13 +15,13 @@ import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart } from "@/components/ui/charts/bar-chart";
+import { ContentLock } from "@/components/ui/content-lock";
 import {
 	type OverallAnalytics,
 	type SubjectAnalytics,
 	useAnalytics,
 } from "@/hooks/use-analytics";
 import { Link } from "@/i18n/navigation";
-import { usePremium } from "@/lib/premium/premium-context";
 
 const WEEKLY_CHART_CONFIG = {
 	accuracy: {
@@ -32,29 +31,7 @@ const WEEKLY_CHART_CONFIG = {
 } as const;
 
 export function AnalyticsPanel() {
-	const { hasFeature } = usePremium();
 	const { analytics, isLoading, refresh } = useAnalytics();
-
-	if (!hasFeature("advanced-analytics")) {
-		return (
-			<Card className="flex flex-col items-center gap-4 p-8 text-center">
-				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
-				<div>
-					<p className="font-semibold text-lg">Premium Feature</p>
-					<p className="mt-1 text-muted-foreground text-sm">
-						Advanced analytics with detailed performance breakdowns are
-						available on Premium.
-					</p>
-				</div>
-				<Button asChild>
-					<Link href="/premium">
-						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-						Upgrade Now
-					</Link>
-				</Button>
-			</Card>
-		);
-	}
 
 	if (isLoading) {
 		return (
@@ -83,28 +60,30 @@ export function AnalyticsPanel() {
 	}
 
 	return (
-		<div className="flex flex-col gap-6">
-			<div className="flex items-center justify-between">
-				<h2 className="font-semibold text-2xl">Analytics</h2>
-				<Button variant="ghost" onClick={refresh}>
-					Refresh
-				</Button>
+		<ContentLock feature="advanced-analytics">
+			<div className="flex flex-col gap-6">
+				<div className="flex items-center justify-between">
+					<h2 className="font-semibold text-2xl">Analytics</h2>
+					<Button variant="ghost" onClick={refresh}>
+						Refresh
+					</Button>
+				</div>
+
+				<OverallStatsCard analytics={analytics} />
+
+				{analytics.insights.length > 0 && (
+					<InsightsCard insights={analytics.insights} />
+				)}
+
+				<RecommendationsCard recommendations={analytics.recommendations} />
+
+				<SubjectBreakdownCard subjects={analytics.subjects} />
+
+				{analytics.weeklyProgress.length > 0 && (
+					<WeeklyProgressCard progress={analytics.weeklyProgress} />
+				)}
 			</div>
-
-			<OverallStatsCard analytics={analytics} />
-
-			{analytics.insights.length > 0 && (
-				<InsightsCard insights={analytics.insights} />
-			)}
-
-			<RecommendationsCard recommendations={analytics.recommendations} />
-
-			<SubjectBreakdownCard subjects={analytics.subjects} />
-
-			{analytics.weeklyProgress.length > 0 && (
-				<WeeklyProgressCard progress={analytics.weeklyProgress} />
-			)}
-		</div>
+		</ContentLock>
 	);
 }
 

@@ -1,19 +1,13 @@
 "use client";
 
-import {
-	CrownIcon,
-	ListViewIcon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import { ListViewIcon, RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ContentLock } from "@/components/ui/content-lock";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useExamSessionAutoSave } from "@/hooks/use-exam-session-persistence";
-import { Link } from "@/i18n/navigation";
-import { usePremium } from "@/lib/premium/premium-context";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { ExamPaper } from "@/types/exam-paper";
 import { ExamResults } from "./exam-results";
@@ -34,7 +28,6 @@ export function ExamEngine({
 	durationMinutes,
 }: ExamEngineProps) {
 	const t = useTranslations();
-	const { hasFeature } = usePremium();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	useExamSessionAutoSave(paperId);
@@ -130,29 +123,6 @@ export function ExamEngine({
 	);
 	const answeredCount = Object.keys(answers).length;
 
-	if (!hasFeature("exam-simulator")) {
-		return (
-			<Card className="flex flex-col items-center gap-4 p-8 text-center">
-				<HugeiconsIcon
-					icon={CrownIcon}
-					className="size-10 text-amber-400 dark:text-amber-300"
-				/>
-				<div>
-					<p className="font-semibold text-lg">{t("exam.premiumFeature")}</p>
-					<p className="mt-1 text-muted-foreground text-sm">
-						{t("exam.premiumDesc")}
-					</p>
-				</div>
-				<Button asChild>
-					<Link href="/premium">
-						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-						{t("exam.upgradeNow")}
-					</Link>
-				</Button>
-			</Card>
-		);
-	}
-
 	if (completed) {
 		return (
 			<ExamResults
@@ -165,129 +135,131 @@ export function ExamEngine({
 	}
 
 	return (
-		<div className="flex h-dvh flex-col bg-background">
-			<ExamTimer />
-			<div className="flex items-start gap-2 px-4 pt-4">
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={() => setSidebarOpen(!sidebarOpen)}
-					className="mt-0.5 shrink-0 lg:hidden"
-				>
-					<HugeiconsIcon icon={ListViewIcon} data-icon />
-					<span className="sr-only">{t("exam.toggleQuestionList")}</span>
-				</Button>
-				<AssessmentHeader
-					title={t("exam.engineTitle", {
-						subject: paper.metadata.subject,
-						paperCode: paper.metadata.paperCode,
-					})}
-					elapsedTime={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
-					currentQuestionIndex={answeredCount}
-					totalQuestions={totalParts}
-					progressValue={
-						totalParts > 0 ? (answeredCount / totalParts) * 100 : 0
-					}
-					showMarks={true}
-					marks={paper.metadata.totalMarks}
-					totalMarks={paper.metadata.totalMarks}
-					timeRemaining={timeRemaining}
-					className="flex-1"
+		<ContentLock feature="exam-simulator">
+			<div className="flex h-dvh flex-col bg-background">
+				<ExamTimer />
+				<div className="flex items-start gap-2 px-4 pt-4">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setSidebarOpen(!sidebarOpen)}
+						className="mt-0.5 shrink-0 lg:hidden"
+					>
+						<HugeiconsIcon icon={ListViewIcon} data-icon />
+						<span className="sr-only">{t("exam.toggleQuestionList")}</span>
+					</Button>
+					<AssessmentHeader
+						title={t("exam.engineTitle", {
+							subject: paper.metadata.subject,
+							paperCode: paper.metadata.paperCode,
+						})}
+						elapsedTime={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
+						currentQuestionIndex={answeredCount}
+						totalQuestions={totalParts}
+						progressValue={
+							totalParts > 0 ? (answeredCount / totalParts) * 100 : 0
+						}
+						showMarks={true}
+						marks={paper.metadata.totalMarks}
+						totalMarks={paper.metadata.totalMarks}
+						timeRemaining={timeRemaining}
+						className="flex-1"
+					/>
+				</div>
+
+				<div className="flex min-h-0 flex-1">
+					<aside
+						className={`w-64 shrink-0 overflow-hidden border-r bg-muted/20 transition-[width,opacity] ${
+							sidebarOpen
+								? "max-lg:fixed max-lg:inset-0 max-lg:z-modal"
+								: "max-lg:hidden max-lg:w-0"
+						}`}
+					>
+						<ExamSidebar
+							paper={paper}
+							answers={answers}
+							flags={flags}
+							currentPartId={currentPartId}
+							onNavigate={handleNavigate}
+							onClose={() => setSidebarOpen(false)}
+						/>
+					</aside>
+
+					<main className="min-w-0 flex-1 overflow-auto">
+						<div className="mx-auto flex max-w-3xl flex-col gap-8 p-4 sm:p-6">
+							{paper.sections.map((section) => (
+								<div key={section.id}>
+									<h2 className="mb-4 font-semibold text-xl">
+										{t("exam.sectionTitle", { id: section.id })}
+										{section.title ? `: ${section.title}` : ""}
+									</h2>
+
+									{section.instructions && section.instructions.length > 0 && (
+										<div className="mb-4 rounded-lg bg-muted/50 p-3">
+											<p className="mb-1 font-semibold text-muted-foreground text-xs uppercase">
+												{t("exam.instructions")}
+											</p>
+											<ul className="flex flex-col gap-1">
+												{section.instructions.map((inst) => (
+													<li
+														key={inst}
+														className="text-muted-foreground text-xs"
+													>
+														{inst}
+													</li>
+												))}
+											</ul>
+										</div>
+									)}
+
+									{section.questions.map((question) => (
+										<QuestionRenderer
+											key={question.id}
+											question={question}
+											sectionId={section.id}
+											subject={paper.metadata.subject}
+											answers={answers}
+											flags={flags}
+											currentPartId={currentPartId}
+											onAnswer={handleAnswer}
+											onFlag={handleFlag}
+										/>
+									))}
+								</div>
+							))}
+
+							<div className="flex justify-center border-t py-6">
+								<Button
+									size="lg"
+									onClick={() => setShowSubmit(true)}
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? (
+										<>
+											<HugeiconsIcon
+												icon={RadialIcon}
+												data-icon
+												className="mr-2 animate-spin"
+											/>
+											{t("exam.submitting")}
+										</>
+									) : (
+										t("exam.submitExam")
+									)}
+								</Button>
+							</div>
+						</div>
+					</main>
+				</div>
+
+				<ExamSubmitDialog
+					open={showSubmit}
+					onOpenChange={setShowSubmit}
+					onConfirm={handleSubmit}
+					answeredCount={answeredCount}
+					totalParts={totalParts}
 				/>
 			</div>
-
-			<div className="flex min-h-0 flex-1">
-				<aside
-					className={`w-64 shrink-0 overflow-hidden border-r bg-muted/20 transition-[width,opacity] ${
-						sidebarOpen
-							? "max-lg:fixed max-lg:inset-0 max-lg:z-modal"
-							: "max-lg:hidden max-lg:w-0"
-					}`}
-				>
-					<ExamSidebar
-						paper={paper}
-						answers={answers}
-						flags={flags}
-						currentPartId={currentPartId}
-						onNavigate={handleNavigate}
-						onClose={() => setSidebarOpen(false)}
-					/>
-				</aside>
-
-				<main className="min-w-0 flex-1 overflow-auto">
-					<div className="mx-auto flex max-w-3xl flex-col gap-8 p-4 sm:p-6">
-						{paper.sections.map((section) => (
-							<div key={section.id}>
-								<h2 className="mb-4 font-semibold text-xl">
-									{t("exam.sectionTitle", { id: section.id })}
-									{section.title ? `: ${section.title}` : ""}
-								</h2>
-
-								{section.instructions && section.instructions.length > 0 && (
-									<div className="mb-4 rounded-lg bg-muted/50 p-3">
-										<p className="mb-1 font-semibold text-muted-foreground text-xs uppercase">
-											{t("exam.instructions")}
-										</p>
-										<ul className="flex flex-col gap-1">
-											{section.instructions.map((inst) => (
-												<li
-													key={inst}
-													className="text-muted-foreground text-xs"
-												>
-													{inst}
-												</li>
-											))}
-										</ul>
-									</div>
-								)}
-
-								{section.questions.map((question) => (
-									<QuestionRenderer
-										key={question.id}
-										question={question}
-										sectionId={section.id}
-										subject={paper.metadata.subject}
-										answers={answers}
-										flags={flags}
-										currentPartId={currentPartId}
-										onAnswer={handleAnswer}
-										onFlag={handleFlag}
-									/>
-								))}
-							</div>
-						))}
-
-						<div className="flex justify-center border-t py-6">
-							<Button
-								size="lg"
-								onClick={() => setShowSubmit(true)}
-								disabled={isSubmitting}
-							>
-								{isSubmitting ? (
-									<>
-										<HugeiconsIcon
-											icon={RadialIcon}
-											data-icon
-											className="mr-2 animate-spin"
-										/>
-										{t("exam.submitting")}
-									</>
-								) : (
-									t("exam.submitExam")
-								)}
-							</Button>
-						</div>
-					</div>
-				</main>
-			</div>
-
-			<ExamSubmitDialog
-				open={showSubmit}
-				onOpenChange={setShowSubmit}
-				onConfirm={handleSubmit}
-				answeredCount={answeredCount}
-				totalParts={totalParts}
-			/>
-		</div>
+		</ContentLock>
 	);
 }

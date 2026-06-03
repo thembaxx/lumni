@@ -8,6 +8,7 @@ import {
 } from "@/lib/db/client";
 import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
+import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
@@ -166,10 +167,63 @@ export const questionRegen: JobHandler = async (payload) => {
 	});
 };
 
+const PRUNE_CONFIG = {
+	maxAgeDays: 30,
+	minRatingCount: 0,
+};
+
+export const pruneStaleQuestions: JobHandler = async () => {
+	try {
+		const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
+		const all = await offlineDB.questions.toArray();
+		const stale = all.filter((q) => {
+			const parsed = safeParseQuestions(q.questions);
+			if (!parsed) return false;
+			return (parsed as Record<string, unknown>[]).some((pq) => {
+				const createdAt = pq.createdAt as number | undefined;
+				const ratingCount = pq.ratingCount as number | undefined;
+				return (
+					createdAt &&
+					createdAt < cutoff &&
+					(!ratingCount || ratingCount <= PRUNE_CONFIG.minRatingCount)
+				);
+			});
+		});
+
+		if (stale.length === 0) {
+			console.log("[Prune] No stale questions found");
+			return;
+		}
+
+		await Promise.all(
+			stale.map((entry) => {
+				if (entry.id != null) {
+					return offlineDB.questions.delete(entry.id);
+				}
+				return Promise.resolve();
+			}),
+		);
+
+		console.log(`[Prune] Removed ${stale.length} stale question cache entries`);
+	} catch (error) {
+		console.error("[Prune] Error pruning stale questions:", error);
+	}
+};
+
+function safeParseQuestions(json: string): unknown[] | null {
+	try {
+		const parsed = JSON.parse(json);
+		return Array.isArray(parsed) ? parsed : null;
+	} catch {
+		return null;
+	}
+}
+
 export const domainHandlers: Partial<Record<string, JobHandler>> = {
 	"analytics-sync": analyticsSync,
 	"spaced-rep-update": spacedRepUpdate,
 	"progress-update": progressUpdate,
 	"visual-generation": visualGeneration,
 	"question-regen": questionRegen,
+	"prune-stale-questions": pruneStaleQuestions,
 };

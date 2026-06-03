@@ -8,6 +8,7 @@ import { AchievementShowcase } from "@/components/dashboard/achievement-showcase
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
+import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 
@@ -248,41 +249,46 @@ export function DashboardContent({
 				)}
 				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.105}>
+						<LearningMapCard />
+					</SectionReveal>
+				)}
+				{showPractice && !isAnonymous && (
+					<SectionReveal delay={0.108}>
 						<MyAssignments />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.11}>
+					<SectionReveal delay={0.113}>
 						<StreakCard />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.115}>
+					<SectionReveal delay={0.118}>
 						<StudyPlanOverview />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.12}>
+					<SectionReveal delay={0.123}>
 						<CompetencyOverview />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.13}>
+					<SectionReveal delay={0.133}>
 						<BloomTaxonomyWidget />
 					</SectionReveal>
 				)}
 				{showPractice && (
-					<SectionReveal delay={0.135}>
+					<SectionReveal delay={0.138}>
 						<OfflinePackManager />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.14}>
+					<SectionReveal delay={0.143}>
 						<DailyChallenges />
 					</SectionReveal>
 				)}
 				{showPractice && (
-					<SectionReveal delay={0.14}>
+					<SectionReveal delay={0.143}>
 						<QuizStartCard onStart={onStartQuiz} />
 					</SectionReveal>
 				)}

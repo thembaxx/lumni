@@ -22,7 +22,8 @@ export type JobType =
 	| "appwrite-question-flag"
 	| "question-regen"
 	| "appwrite-exam-dates-sync"
-	| "appwrite-consent-sync";
+	| "appwrite-consent-sync"
+	| "prune-stale-questions";
 
 export type JobPayloadByType = {
 	"appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -148,6 +149,7 @@ export type JobPayloadByType = {
 		slots: string;
 		source: string;
 	};
+	"prune-stale-questions": Record<string, never>;
 	"appwrite-consent-sync": {
 		userId: string;
 		record: {

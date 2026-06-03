@@ -193,6 +193,7 @@ export type Question<T extends QuestionType = QuestionType> = {
 	body: QuestionBody[T];
 	metadata?: QuestionMetadata;
 	webSources?: QuestionSource[];
+	pruned?: boolean;
 };
 
 export interface UserAnswer {

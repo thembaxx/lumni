@@ -3,18 +3,15 @@
 import {
 	Calendar01Icon,
 	Clock01Icon,
-	CrownIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ContentLock } from "@/components/ui/content-lock";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "@/i18n/navigation";
-import { usePremium } from "@/lib/premium/premium-context";
 import { cn } from "@/lib/shared";
 
 interface StudySession {
@@ -180,7 +177,6 @@ function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
 }
 
 export function SmartScheduler() {
-	const { hasFeature } = usePremium();
 	const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 	const [hoursPerDay, setHoursPerDay] = useState(2);
 	const [examDate, setExamDate] = useState("");
@@ -259,215 +255,192 @@ export function SmartScheduler() {
 		sessions: schedule.filter((s) => s.day === day),
 	}));
 
-	if (!hasFeature("custom-study-plans")) {
-		return (
-			<div className="flex h-full flex-col items-center justify-center gap-4 p-8">
-				<Card className="flex max-w-md flex-col items-center gap-4 p-8 text-center">
-					<HugeiconsIcon
-						icon={CrownIcon}
-						className="size-10 text-amber-400 dark:text-amber-300"
-					/>
-					<div>
-						<p className="font-semibold text-lg">Premium Feature</p>
-						<p className="mt-1 text-muted-foreground text-sm">
-							AI-powered study scheduling is available on Premium.
-						</p>
-					</div>
-					<Button asChild>
-						<Link href="/premium">
-							<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-							Upgrade Now
-						</Link>
-					</Button>
-				</Card>
-			</div>
-		);
-	}
-
 	return (
-		<div className="flex h-full flex-col overflow-y-auto">
-			<div className="px-5 pt-5 pb-3">
-				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					<HugeiconsIcon
-						icon={Calendar01Icon}
-						className="size-5 text-[--system-accent]"
-					/>
-					Smart Scheduler
-				</h2>
-				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
-					Generate a personalised study plan for your exams.
-				</p>
-			</div>
-
-			{schedule.length === 0 ? (
-				<div className="px-5 pb-10">
-					<div className="flex flex-col gap-5 rounded-2xl bg-system-background-secondary p-5">
-						<div>
-							<Label className="mb-3 block text-sm">Select Subjects</Label>
-							<div className="grid grid-cols-2 gap-2">
-								{subjectOptions.map((subject) => (
-									<div key={subject.id}>
-										<Button
-											variant={
-												selectedSubjects.includes(subject.id)
-													? "default"
-													: "ghost"
-											}
-											onClick={() => toggleSubject(subject.id)}
-											className="w-full"
-										>
-											{subject.name}
-										</Button>
-										{selectedSubjects.includes(subject.id) && (
-											<div className="mt-1.5 flex gap-1">
-												{(["easy", "medium", "hard"] as const).map((diff) => (
-													<Button
-														key={diff}
-														size="xs"
-														variant={
-															difficultyMap[subject.id] === diff
-																? "default"
-																: "ghost"
-														}
-														onClick={() => updateDifficulty(subject.id, diff)}
-													>
-														{diff[0].toUpperCase()}
-													</Button>
-												))}
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						</div>
-
-						<div>
-							<Label className="text-sm">Study Hours Per Day</Label>
-							<div className="mt-2 flex gap-2">
-								{[1, 2, 3, 4, 5].map((h) => (
-									<Button
-										key={h}
-										variant={hoursPerDay === h ? "default" : "ghost"}
-										onClick={() => setHoursPerDay(h)}
-									>
-										{h}h
-									</Button>
-								))}
-							</div>
-						</div>
-
-						<div>
-							<Label className="text-sm">First Exam Date</Label>
-							<Input
-								type="date"
-								value={examDate}
-								onChange={(e) => setExamDate(e.target.value)}
-								className="mt-2 rounded-xl"
-							/>
-						</div>
-
-						<Button
-							className="w-full rounded-xl"
-							onClick={generateSchedule}
-							disabled={
-								selectedSubjects.length === 0 || !examDate || isGenerating
-							}
-						>
-							{isGenerating ? (
-								<>
-									<div className="mr-2 size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-									Generating…
-								</>
-							) : (
-								<>
-									<HugeiconsIcon
-										icon={SparklesIcon}
-										data-icon
-										className="mr-2"
-									/>
-									Generate Schedule
-								</>
-							)}
-						</Button>
-					</div>
+		<ContentLock feature="custom-study-plans">
+			<div className="flex h-full flex-col overflow-y-auto">
+				<div className="px-5 pt-5 pb-3">
+					<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+						<HugeiconsIcon
+							icon={Calendar01Icon}
+							className="size-5 text-[--system-accent]"
+						/>
+						Smart Scheduler
+					</h2>
+					<p className="ios-subhead mt-1 text-[--system-text-secondary]">
+						Generate a personalised study plan for your exams.
+					</p>
 				</div>
-			) : (
-				<div className="flex-1 overflow-y-auto px-5 pb-10">
-					<div className="mb-4 flex items-center justify-between">
-						<h3 className="font-semibold">Your Study Plan</h3>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => setSchedule([])}
-							className="rounded-xl"
-						>
-							Reset
-						</Button>
-					</div>
 
-					<div className="flex flex-col gap-4">
-						{scheduleByDay.flatMap((day, idx) =>
-							day.sessions.length > 0
-								? [
-										<m.div
-											key={day.day}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ delay: idx * 0.05 }}
+				{schedule.length === 0 ? (
+					<div className="px-5 pb-10">
+						<div className="flex flex-col gap-5 rounded-2xl bg-system-background-secondary p-5">
+							<div>
+								<Label className="mb-3 block text-sm">Select Subjects</Label>
+								<div className="grid grid-cols-2 gap-2">
+									{subjectOptions.map((subject) => (
+										<div key={subject.id}>
+											<Button
+												variant={
+													selectedSubjects.includes(subject.id)
+														? "default"
+														: "ghost"
+												}
+												onClick={() => toggleSubject(subject.id)}
+												className="w-full"
+											>
+												{subject.name}
+											</Button>
+											{selectedSubjects.includes(subject.id) && (
+												<div className="mt-1.5 flex gap-1">
+													{(["easy", "medium", "hard"] as const).map((diff) => (
+														<Button
+															key={diff}
+															size="xs"
+															variant={
+																difficultyMap[subject.id] === diff
+																	? "default"
+																	: "ghost"
+															}
+															onClick={() => updateDifficulty(subject.id, diff)}
+														>
+															{diff[0].toUpperCase()}
+														</Button>
+													))}
+												</div>
+											)}
+										</div>
+									))}
+								</div>
+							</div>
+
+							<div>
+								<Label className="text-sm">Study Hours Per Day</Label>
+								<div className="mt-2 flex gap-2">
+									{[1, 2, 3, 4, 5].map((h) => (
+										<Button
+											key={h}
+											variant={hoursPerDay === h ? "default" : "ghost"}
+											onClick={() => setHoursPerDay(h)}
 										>
-											<h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
-												<HugeiconsIcon
-													icon={Calendar01Icon}
-													className="size-4 text-[--system-accent]"
-												/>
-												{day.day}
-											</h4>
-											<div className="flex flex-col gap-2">
-												{day.sessions.map((session) => (
-													<div
-														key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
-														className={cn(
-															"rounded-xl border border-border bg-card p-3 shadow-sm",
-															session.subject === "Break" && "bg-muted/50",
-														)}
-													>
-														<div className="flex items-center justify-between">
-															<div>
-																<span className="font-medium text-sm">
-																	{session.subject}
-																</span>
-																<span className="ml-2 text-muted-foreground text-sm">
-																	- {session.topic}
-																</span>
-															</div>
-															<div className="flex items-center gap-2">
-																<span
-																	className={cn(
-																		"rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
-																		getTypeColor(session.type),
-																	)}
-																>
-																	{session.type}
-																</span>
-																<span className="flex items-center gap-1 text-muted-foreground text-sm tabular-nums">
-																	<HugeiconsIcon
-																		icon={Clock01Icon}
-																		className="size-3"
-																	/>
-																	{session.duration}min
-																</span>
+											{h}h
+										</Button>
+									))}
+								</div>
+							</div>
+
+							<div>
+								<Label className="text-sm">First Exam Date</Label>
+								<Input
+									type="date"
+									value={examDate}
+									onChange={(e) => setExamDate(e.target.value)}
+									className="mt-2 rounded-xl"
+								/>
+							</div>
+
+							<Button
+								className="w-full rounded-xl"
+								onClick={generateSchedule}
+								disabled={
+									selectedSubjects.length === 0 || !examDate || isGenerating
+								}
+							>
+								{isGenerating ? (
+									<>
+										<div className="mr-2 size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+										Generating…
+									</>
+								) : (
+									<>
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											data-icon
+											className="mr-2"
+										/>
+										Generate Schedule
+									</>
+								)}
+							</Button>
+						</div>
+					</div>
+				) : (
+					<div className="flex-1 overflow-y-auto px-5 pb-10">
+						<div className="mb-4 flex items-center justify-between">
+							<h3 className="font-semibold">Your Study Plan</h3>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => setSchedule([])}
+								className="rounded-xl"
+							>
+								Reset
+							</Button>
+						</div>
+
+						<div className="flex flex-col gap-4">
+							{scheduleByDay.flatMap((day, idx) =>
+								day.sessions.length > 0
+									? [
+											<m.div
+												key={day.day}
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: idx * 0.05 }}
+											>
+												<h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
+													<HugeiconsIcon
+														icon={Calendar01Icon}
+														className="size-4 text-[--system-accent]"
+													/>
+													{day.day}
+												</h4>
+												<div className="flex flex-col gap-2">
+													{day.sessions.map((session) => (
+														<div
+															key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
+															className={cn(
+																"rounded-xl border border-border bg-card p-3 shadow-sm",
+																session.subject === "Break" && "bg-muted/50",
+															)}
+														>
+															<div className="flex items-center justify-between">
+																<div>
+																	<span className="font-medium text-sm">
+																		{session.subject}
+																	</span>
+																	<span className="ml-2 text-muted-foreground text-sm">
+																		- {session.topic}
+																	</span>
+																</div>
+																<div className="flex items-center gap-2">
+																	<span
+																		className={cn(
+																			"rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
+																			getTypeColor(session.type),
+																		)}
+																	>
+																		{session.type}
+																	</span>
+																	<span className="flex items-center gap-1 text-muted-foreground text-sm tabular-nums">
+																		<HugeiconsIcon
+																			icon={Clock01Icon}
+																			className="size-3"
+																		/>
+																		{session.duration}min
+																	</span>
+																</div>
 															</div>
 														</div>
-													</div>
-												))}
-											</div>
-										</m.div>,
-									]
-								: [],
-						)}
+													))}
+												</div>
+											</m.div>,
+										]
+									: [],
+							)}
+						</div>
 					</div>
-				</div>
-			)}
-		</div>
+				)}
+			</div>
+		</ContentLock>
 	);
 }

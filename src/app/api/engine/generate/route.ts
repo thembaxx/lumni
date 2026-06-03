@@ -27,6 +27,14 @@ export const POST = createRouteHandler({
 		});
 		const requested = body.count;
 		const delivered = result.questions.length;
+
+		try {
+			const { enqueue } = await import("@/lib/orchestrator/job-queue");
+			await enqueue("prune-stale-questions", {}, { priority: 10 });
+		} catch (e) {
+			console.warn("[Prune] Failed to enqueue prune job:", e);
+		}
+
 		return {
 			questions: result.questions,
 			count: delivered,

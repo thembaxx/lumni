@@ -30,6 +30,7 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"question-regen": 2,
 	"appwrite-exam-dates-sync": 3,
 	"appwrite-consent-sync": 3,
+	"prune-stale-questions": 1,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -54,6 +55,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"question-regen": 40,
 	"appwrite-exam-dates-sync": 60,
 	"appwrite-consent-sync": 65,
+	"prune-stale-questions": 10,
 };
 
 export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);

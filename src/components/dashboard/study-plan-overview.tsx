@@ -5,7 +5,6 @@ import {
 	Calendar01Icon,
 	CheckListIcon,
 	Clock01Icon,
-	CrownIcon,
 	MagicWand01Icon,
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
@@ -14,17 +13,16 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ContentLock } from "@/components/ui/content-lock";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { Link } from "@/i18n/navigation";
-import { usePremium } from "@/lib/premium/premium-context";
 import { getSubjectAbbr } from "@/lib/subjects";
 import { getWeekOldThreshold, loadStudyPlan } from "@/lib/utils/study-planner";
 import { useBookmarksStore } from "@/store/bookmarks";
 
 export function StudyPlanOverview() {
-	const { hasFeature } = usePremium();
 	const {
 		todaySessions,
 		upcomingExams,
@@ -102,8 +100,8 @@ export function StudyPlanOverview() {
 	}
 
 	if (showForm) {
-		if (!hasFeature("custom-study-plans")) {
-			return (
+		return (
+			<ContentLock feature="custom-study-plans">
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between">
 						<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
@@ -111,154 +109,127 @@ export function StudyPlanOverview() {
 							Generate Study Plan
 						</CardTitle>
 					</CardHeader>
-					<CardContent className="flex flex-col items-center gap-4 py-8 text-center">
-						<HugeiconsIcon
-							icon={CrownIcon}
-							className="size-10 text-amber-400 dark:text-amber-300"
-						/>
-						<div>
-							<p className="font-semibold text-lg">Premium Feature</p>
-							<p className="mt-1 text-muted-foreground text-sm">
-								AI-optimised study plans are available on Premium.
-							</p>
+					<CardContent className="flex flex-col gap-4">
+						<p className="text-muted-foreground text-sm">
+							Your plan will focus on your weakest topics based on quiz
+							performance, scheduled
+							{includeWeekends ? " across all days" : " across weekdays"}
+							{horizonDays === "custom"
+								? ` for ${horizonCustom || "…"} days`
+								: ` for ${horizonDays} days`}
+							.
+						</p>
+						<div className="grid grid-cols-2 gap-4">
+							<div className="flex flex-col gap-1.5">
+								<Label htmlFor="target-aps" className="text-xs">
+									Target APS
+								</Label>
+								<Input
+									id="target-aps"
+									type="number"
+									min="1"
+									max="42"
+									value={targetAps}
+									onChange={(e) => setTargetAps(e.target.value)}
+								/>
+							</div>
+							<div className="flex flex-col gap-1.5">
+								<Label htmlFor="daily-minutes" className="text-xs">
+									Daily minutes
+								</Label>
+								<Input
+									id="daily-minutes"
+									type="number"
+									min="5"
+									max="480"
+									value={dailyMinutes}
+									onChange={(e) => setDailyMinutes(e.target.value)}
+								/>
+							</div>
 						</div>
-						<Button asChild>
-							<Link href="/premium">
-								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-								Upgrade Now
-							</Link>
-						</Button>
-					</CardContent>
-				</Card>
-			);
-		}
-
-		return (
-			<Card>
-				<CardHeader className="flex flex-row items-center justify-between">
-					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
-						<HugeiconsIcon icon={CheckListIcon} className="size-5" />
-						Generate Study Plan
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="flex flex-col gap-4">
-					<p className="text-muted-foreground text-sm">
-						Your plan will focus on your weakest topics based on quiz
-						performance, scheduled
-						{includeWeekends ? " across all days" : " across weekdays"}
-						{horizonDays === "custom"
-							? ` for ${horizonCustom || "…"} days`
-							: ` for ${horizonDays} days`}
-						.
-					</p>
-					<div className="grid grid-cols-2 gap-4">
-						<div className="flex flex-col gap-1.5">
-							<Label htmlFor="target-aps" className="text-xs">
-								Target APS
-							</Label>
-							<Input
-								id="target-aps"
-								type="number"
-								min="1"
-								max="42"
-								value={targetAps}
-								onChange={(e) => setTargetAps(e.target.value)}
+						<Label
+							htmlFor="include-weekends"
+							className="flex cursor-pointer items-center gap-2 text-xs"
+						>
+							<Checkbox
+								id="include-weekends"
+								checked={includeWeekends}
+								onCheckedChange={(checked) =>
+									setIncludeWeekends(checked === true)
+								}
 							/>
-						</div>
+							Include weekends
+						</Label>
 						<div className="flex flex-col gap-1.5">
-							<Label htmlFor="daily-minutes" className="text-xs">
-								Daily minutes
-							</Label>
-							<Input
-								id="daily-minutes"
-								type="number"
-								min="5"
-								max="480"
-								value={dailyMinutes}
-								onChange={(e) => setDailyMinutes(e.target.value)}
-							/>
-						</div>
-					</div>
-					<Label
-						htmlFor="include-weekends"
-						className="flex cursor-pointer items-center gap-2 text-xs"
-					>
-						<Checkbox
-							id="include-weekends"
-							checked={includeWeekends}
-							onCheckedChange={(checked) =>
-								setIncludeWeekends(checked === true)
-							}
-						/>
-						Include weekends
-					</Label>
-					<div className="flex flex-col gap-1.5">
-						<span className="text-muted-foreground text-xs">Plan horizon</span>
-						<div className="flex flex-wrap gap-1.5">
-							{["7", "14", "30"].map((days) => (
+							<span className="text-muted-foreground text-xs">
+								Plan horizon
+							</span>
+							<div className="flex flex-wrap gap-1.5">
+								{["7", "14", "30"].map((days) => (
+									<Button
+										key={days}
+										size="sm"
+										variant={horizonDays === days ? "default" : "outline"}
+										onClick={() => {
+											setHorizonDays(days);
+											setHorizonCustom("");
+										}}
+									>
+										{days} days
+									</Button>
+								))}
 								<Button
-									key={days}
 									size="sm"
-									variant={horizonDays === days ? "default" : "outline"}
-									onClick={() => {
-										setHorizonDays(days);
-										setHorizonCustom("");
-									}}
+									variant={horizonDays === "custom" ? "default" : "outline"}
+									onClick={() => setHorizonDays("custom")}
 								>
-									{days} days
+									Custom
 								</Button>
-							))}
+							</div>
+							{horizonDays === "custom" && (
+								<Input
+									type="number"
+									min="7"
+									max="90"
+									placeholder="Days"
+									value={horizonCustom}
+									className="mt-1 h-8 w-24"
+									onChange={(e) => setHorizonCustom(e.target.value)}
+								/>
+							)}
+						</div>
+						<div className="flex items-center justify-end gap-2">
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => setShowForm(false)}
+								disabled={isGenerating}
+							>
+								Cancel
+							</Button>
 							<Button
 								size="sm"
-								variant={horizonDays === "custom" ? "default" : "outline"}
-								onClick={() => setHorizonDays("custom")}
+								disabled={isGenerating}
+								onClick={async () => {
+									const resolvedHorizon =
+										horizonDays === "custom"
+											? Number.parseInt(horizonCustom, 10) || 30
+											: Number.parseInt(horizonDays, 10);
+									await generatePlan({
+										targetAps: Number.parseInt(targetAps, 10) || 25,
+										dailyStudyMinutes: Number.parseInt(dailyMinutes, 10) || 30,
+										includeWeekends,
+										horizonDays: resolvedHorizon,
+									});
+									setShowForm(false);
+								}}
 							>
-								Custom
+								{isGenerating ? "Generating…" : "Generate"}
 							</Button>
 						</div>
-						{horizonDays === "custom" && (
-							<Input
-								type="number"
-								min="7"
-								max="90"
-								placeholder="Days"
-								value={horizonCustom}
-								className="mt-1 h-8 w-24"
-								onChange={(e) => setHorizonCustom(e.target.value)}
-							/>
-						)}
-					</div>
-					<div className="flex items-center justify-end gap-2">
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={() => setShowForm(false)}
-							disabled={isGenerating}
-						>
-							Cancel
-						</Button>
-						<Button
-							size="sm"
-							disabled={isGenerating}
-							onClick={async () => {
-								const resolvedHorizon =
-									horizonDays === "custom"
-										? Number.parseInt(horizonCustom, 10) || 30
-										: Number.parseInt(horizonDays, 10);
-								await generatePlan({
-									targetAps: Number.parseInt(targetAps, 10) || 25,
-									dailyStudyMinutes: Number.parseInt(dailyMinutes, 10) || 30,
-									includeWeekends,
-									horizonDays: resolvedHorizon,
-								});
-								setShowForm(false);
-							}}
-						>
-							{isGenerating ? "Generating…" : "Generate"}
-						</Button>
-					</div>
-				</CardContent>
-			</Card>
+					</CardContent>
+				</Card>
+			</ContentLock>
 		);
 	}
 

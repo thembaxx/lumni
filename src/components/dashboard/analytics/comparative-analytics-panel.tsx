@@ -2,13 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { ContentLock } from "@/components/ui/content-lock";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useAuth } from "@/lib/auth/auth-context";
-import { usePremium } from "@/lib/premium/premium-context";
 import { analyticsService } from "@/lib/services/analytics-service";
 import { AnalyticsEmptyState } from "./comparative-analytics-panel/analytics-empty-state";
 import { PerformanceTrendsSection } from "./comparative-analytics-panel/performance-trends-section";
-import { PremiumGate } from "./comparative-analytics-panel/premium-gate";
 import { SubjectRankingsChart } from "./comparative-analytics-panel/subject-rankings-chart";
 import { UserPercentileCard } from "./comparative-analytics-panel/user-percentile-card";
 
@@ -19,7 +18,6 @@ interface SubjectTrendData {
 }
 
 export function ComparativeAnalyticsPanel() {
-	const { hasFeature } = usePremium();
 	const { analytics, isLoading } = useAnalytics();
 	const { user } = useAuth();
 
@@ -68,10 +66,6 @@ export function ComparativeAnalyticsPanel() {
 
 	const subjectTrends = trendsQuery.data ?? {};
 
-	if (!hasFeature("advanced-analytics")) {
-		return <PremiumGate />;
-	}
-
 	if (isLoading || !analytics) {
 		return (
 			<div className="flex items-center justify-center p-8">
@@ -85,24 +79,26 @@ export function ComparativeAnalyticsPanel() {
 	}
 
 	return (
-		<div className="flex flex-col gap-8 pt-6">
-			{comparativeData && (
-				<UserPercentileCard
-					userPercentile={comparativeData.userPercentile}
-					globalAverage={comparativeData.globalAverage}
-					userAverage={comparativeData.userAverage}
-				/>
-			)}
-
-			{comparativeData &&
-				Object.keys(comparativeData.subjectRankings).length > 0 && (
-					<SubjectRankingsChart
-						subjectRankings={comparativeData.subjectRankings}
+		<ContentLock feature="advanced-analytics">
+			<div className="flex flex-col gap-8 pt-6">
+				{comparativeData && (
+					<UserPercentileCard
+						userPercentile={comparativeData.userPercentile}
+						globalAverage={comparativeData.globalAverage}
 						userAverage={comparativeData.userAverage}
 					/>
 				)}
 
-			<PerformanceTrendsSection subjectTrends={subjectTrends} />
-		</div>
+				{comparativeData &&
+					Object.keys(comparativeData.subjectRankings).length > 0 && (
+						<SubjectRankingsChart
+							subjectRankings={comparativeData.subjectRankings}
+							userAverage={comparativeData.userAverage}
+						/>
+					)}
+
+				<PerformanceTrendsSection subjectTrends={subjectTrends} />
+			</div>
+		</ContentLock>
 	);
 }
