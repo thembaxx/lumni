@@ -102,6 +102,7 @@ export function SwipeableCard({
 				isTop ? "z-10" : "pointer-events-none z-0",
 			)}
 			style={{ ...style, x, rotate, opacity }}
+			aria-disabled={!isTop}
 			drag={isTop ? "x" : false}
 			dragConstraints={{ left: 0, right: 0 }}
 			dragElastic={0.7}

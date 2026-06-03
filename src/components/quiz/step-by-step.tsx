@@ -107,10 +107,10 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						variant="ghost"
 						onClick={() => setCurrentStep(idx)}
 						className={cn(
-							"h-1.5 min-h-0 rounded-full p-0",
+							"size-6 rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
 							idx === currentStep
-								? "w-10 bg-[--system-accent] shadow-level-1 shadow-sm"
-								: "w-2 bg-muted-foreground/20 hover:bg-muted-foreground/40",
+								? "bg-[--system-accent] shadow-level-1 shadow-sm"
+								: "bg-muted-foreground/20 hover:bg-muted-foreground/40",
 						)}
 						aria-label={`Go to step ${idx + 1}`}
 					/>

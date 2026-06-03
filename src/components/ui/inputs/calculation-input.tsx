@@ -67,6 +67,8 @@ export function CalculationInput({
 					size="sm"
 					onClick={() => setShowWorking(!showWorking)}
 					disabled={disabled}
+					aria-expanded={showWorking}
+					aria-controls="working-textarea"
 					className="text-xs"
 				>
 					{showWorking ? (
@@ -79,10 +81,12 @@ export function CalculationInput({
 			)}
 			{showWorking && onWorkingChange && (
 				<Textarea
+					id="working-textarea"
 					value={workingValue}
 					onChange={(e) => onWorkingChange(e.target.value)}
 					disabled={disabled}
 					placeholder="Show your working steps..."
+					aria-label="Show your working"
 					className="min-h-[100px]"
 				/>
 			)}

@@ -49,29 +49,36 @@ export function QualityPicker({
 					? "How well did you know it?"
 					: "How much did you struggle?"}
 			</p>
-			<div className="flex gap-2">
-				{qualities.map((q) => (
-					<button
-						key={q.quality}
-						type="button"
-						onClick={() => handleSelect(q.quality)}
-						className={cn(
-							"flex flex-col items-center gap-0.5 rounded-xl border px-4 py-2 text-xs transition-all duration-200",
-							polarity === "correct"
-								? "border-success/30 text-success hover:bg-success/10"
-								: "border-destructive/30 text-destructive hover:bg-destructive/10",
-							selected === q.quality &&
-								(polarity === "correct"
-									? "bg-success/20 ring-2 ring-success/50"
-									: "bg-destructive/20 ring-2 ring-destructive/50"),
-							selected !== null && selected !== q.quality && "opacity-30",
-						)}
-					>
-						<span className="font-medium">{q.label}</span>
-						<span className="ios-caption-3 opacity-60">{q.description}</span>
-					</button>
-				))}
-			</div>
+			<fieldset className="m-0 border-0 p-0">
+				<legend className="sr-only">
+					{polarity === "correct"
+						? "Rate how well you knew it"
+						: "Rate how much you struggled"}
+				</legend>
+				<div className="flex gap-2">
+					{qualities.map((q) => (
+						<button
+							key={q.quality}
+							type="button"
+							onClick={() => handleSelect(q.quality)}
+							className={cn(
+								"flex flex-col items-center gap-0.5 rounded-xl border px-4 py-2 text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
+								polarity === "correct"
+									? "border-success/30 text-success hover:bg-success/10"
+									: "border-destructive/30 text-destructive hover:bg-destructive/10",
+								selected === q.quality &&
+									(polarity === "correct"
+										? "bg-success/20 ring-2 ring-success/50"
+										: "bg-destructive/20 ring-2 ring-destructive/50"),
+								selected !== null && selected !== q.quality && "opacity-30",
+							)}
+						>
+							<span className="font-medium">{q.label}</span>
+							<span className="ios-caption-3 opacity-60">{q.description}</span>
+						</button>
+					))}
+				</div>
+			</fieldset>
 		</div>
 	);
 }

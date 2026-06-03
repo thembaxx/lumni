@@ -167,6 +167,7 @@ export function QuestionCardFeedback({
 							<HugeiconsIcon
 								icon={RadialIcon}
 								className="size-5 animate-spin"
+								aria-hidden="true"
 							/>
 							<span className="text-sm">{t("quiz.solving")}</span>
 						</div>
@@ -242,6 +243,7 @@ export function QuestionCardFeedback({
 							<HugeiconsIcon
 								icon={RadialIcon}
 								className="size-4 animate-spin"
+								aria-hidden="true"
 							/>
 							{t("quiz.thinking")}
 						</div>

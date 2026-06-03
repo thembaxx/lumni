@@ -211,7 +211,10 @@ export function SwipeableCardDeck({
 										onSwipe={handleSwipe}
 									/>
 								) : (
-									<div className="h-full w-full rounded-card-lg border border-border/60 bg-system-background/95 p-6 shadow-level-1">
+									<div
+										aria-hidden="true"
+										className="h-full w-full rounded-card-lg border border-border/60 bg-system-background/95 p-6 shadow-level-1"
+									>
 										<div className="flex h-full items-center justify-center">
 											<p className="text-center text-muted-foreground/60">
 												{stackIndex + 1}

@@ -408,6 +408,29 @@ const systemPrompt = webContext.xml
 
 **Final test baseline:** 1220 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. +17 from Session 20, no regressions.
 
+### Session 22 — UI polish sprint (June 2026)
+
+**Batch 1 — Avatar menu, celebration, details audit, dead code, any types**
+
+- **Avatar menu dark mode fix**: `dropdown-menu.tsx` content/sub-content got `border border-border` — invisible menu on dark was a regression from Base UI migration. Menu now controlled React state with `useEffect` close-on-navigate.
+- **DailyBoltOverlay simplification**: Removed `answered→branching` two-step. "Finish" goes direct to dashboard. Replaced `BoltBranch` with `BoltCelebration` (800ms auto-advance, staggered entrance, pulsing glow).
+- **Dashboard gamification cards**: `daily-challenges.tsx`, `today-focus-card.tsx`, `streak-card.tsx` — `active:scale-[0.96]`, `tabular-nums`, `text-balance`, `transition-[background-color]` over `transition-all`, bigger hit targets (`min-h-10`), bigger icons, animated progress bars.
+- **"Details" audit**: Applied micro-interaction principles across 3 files. Concentric radii (`rounded-2xl→rounded-xl`), fixed no-op hover on `today-focus-card`, removed `-m-2` hack for touch targets.
+- **Dead code (−211 lines)**: `_EmptyStates` (170 lines, 15 unused presets), `_iconAnimations` (duplicate of `animationPresets`), `_LEVEL_ORDER`, `_PADDING`, 3 orphaned `useTranslations()` calls, 3 orphaned icon imports, unused `m` import.
+- **`any` type fixes (6 files)**: `use-gamification.ts` (`any→StoredGamification`), `markdown-renderer.tsx` (`any→ReturnType<typeof loadMathPlugins>`), `notification-service.ts` (`as any→as BufferSource`), `ocr-service.ts` (`as any→Partial<WorkerParams>`), `line-chart.tsx` (`T = any→T extends object`).
+
+**Batch 2 — WCAG a11y sweep (~19 issues across 15 files)**
+- **Critical**: Focus-visible rings on step indicators (`step-by-step.tsx`, `progress-dots.tsx`); `min-h-6` (24px) touch targets on dot buttons; `aria-expanded` + `aria-controls` on calculation working toggle; `aria-label` on working textarea.
+- **High**: ARIA tabs pattern in `settings-client.tsx` (`role="tabpanel"`, `aria-labelledby`, `aria-controls`); `aria-label="(opens in new tab)"` on TOS banner external link; `aria-disabled` on non-top swipeable cards; `aria-hidden` on decorative heading icons in `consent-gate.tsx`.
+- **Medium**: `aria-hidden` on decorative × character in `assessment-header.tsx`; `aria-hidden` on spinner icons in `QuestionCardFeedback`; `fieldset` + `legend.sr-only` around quality picker; cookie banner disabled switch → presentational indicator.
+- **Low**: `aria-hidden` on placeholder card in `swipeable-card-deck.tsx`.
+
+**Batch 3 — TypeScript hardening**
+- `line-chart.tsx`: changed generic from `T = any` and `T extends Record<string, unknown>` to `T extends object` — fixes `ProgressDataPoint` lacking index signature.
+- `notification-service.ts`: `as unknown as NotificationOptions` for `actions` field.
+
+**Build:** `npx tsc --noEmit`: 0 errors. `npx biome check`: 0 warnings on changed files.
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

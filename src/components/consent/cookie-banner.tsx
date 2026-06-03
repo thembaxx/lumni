@@ -109,7 +109,11 @@ function CookieSettingsContent({
 						{t("consent.cookieSettings.essentialDesc")}
 					</p>
 				</div>
-				<Switch id="cookie-essential" checked disabled />
+				<div className="flex items-center gap-2" aria-label="Essential cookies always enabled">
+				<div className="size-4 rounded-full bg-muted-foreground/30">
+					<div className="ml-auto size-4 rounded-full bg-success" />
+				</div>
+			</div>
 			</div>
 			<div className="flex items-center justify-between">
 				<div>

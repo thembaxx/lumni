@@ -95,8 +95,7 @@ export function useGamification() {
 		if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
 		syncTimerRef.current = setTimeout(() => {
 			syncToServer(newData);
-			// biome-ignore lint/suspicious/noExplicitAny: Dexie table type mismatch
-			const x: any = { ...newData, id: 1 };
+			const x: StoredGamification & { id: number } = { ...newData, id: 1 };
 			offlineDB.gamification
 				.put(x)
 				.catch((e) => console.warn("[Gamification] Failed to save", e));

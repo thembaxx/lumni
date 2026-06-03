@@ -48,6 +48,7 @@ export function ConsentGate({
 							icon={ShieldCheck}
 							size={20}
 							className="text-success"
+							aria-hidden="true"
 						/>
 						Parental Consent Active
 					</CardTitle>
@@ -82,6 +83,7 @@ export function ConsentGate({
 						icon={UserCheck01Icon}
 						size={20}
 						className="text-primary"
+						aria-hidden="true"
 					/>
 					Parental Consent Required
 				</CardTitle>

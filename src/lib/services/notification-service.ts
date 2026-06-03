@@ -62,8 +62,9 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
 
 		const subscription = await registration.pushManager.subscribe({
 			userVisibleOnly: true,
-			// biome-ignore lint/suspicious/noExplicitAny: TS BufferSource type mismatch with Uint8Array
-			applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as any,
+			applicationServerKey: urlBase64ToUint8Array(
+				VAPID_PUBLIC_KEY,
+			) as BufferSource,
 		});
 
 		saveToStorage(NOTIF_KEY, JSON.stringify(subscription));
@@ -104,7 +105,7 @@ export async function unsubscribeFromPush(): Promise<boolean> {
 					method: "DELETE",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ endpoint: json.endpoint }),
-				});
+				} as NotificationOptions);
 			} catch (e) {
 				console.warn("Failed to sync unsubscribe to server:", e);
 			}
@@ -142,8 +143,7 @@ export function sendLocalNotification(
 				{ action: "study", title: "Open" },
 				{ action: "snooze", title: "Later" },
 			],
-			// biome-ignore lint/suspicious/noExplicitAny: TS DOM types lack badge/data/actions for showNotification, valid per Web API
-		} as any);
+		} as unknown as NotificationOptions);
 	});
 }
 

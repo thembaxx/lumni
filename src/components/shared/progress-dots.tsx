@@ -72,7 +72,7 @@ export function ProgressDots({
 						aria-label={`Go to question ${idx + 1}`}
 						aria-current={isCurrent ? "step" : undefined}
 						className={cn(
-							"size-1.5 min-h-0 rounded-full p-0",
+							"size-6 rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
 							dotClass,
 							onDotClick && "hover:scale-125",
 						)}

@@ -26,8 +26,7 @@ const Line = dynamic(() => import("recharts").then((m) => m.Line), {
 	ssr: false,
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: recharts accepts any record-like data
-interface LineChartProps<T = any> {
+interface LineChartProps<T extends object> {
 	data: T[];
 	xKey: string;
 	yKey: string;
@@ -37,7 +36,7 @@ interface LineChartProps<T = any> {
 	showDots?: boolean;
 }
 
-export function LineChart<T>({
+export function LineChart<T extends object>({
 	data,
 	xKey,
 	yKey,

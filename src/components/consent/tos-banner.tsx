@@ -34,6 +34,7 @@ export function TosBanner() {
 							href={appConfig.links.terms}
 							target="_blank"
 							rel="noopener noreferrer"
+							aria-label="View changes (opens in new tab)"
 						>
 							{t("consent.tosBanner.viewChanges")}
 						</a>

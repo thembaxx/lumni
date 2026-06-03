@@ -1,4 +1,10 @@
-import { createWorker, OEM, PSM, type Worker } from "tesseract.js";
+import {
+	createWorker,
+	OEM,
+	PSM,
+	type Worker,
+	type WorkerParams,
+} from "tesseract.js";
 
 export interface OcrResult {
 	text: string;
@@ -28,7 +34,7 @@ export async function recognizeImage(
 	mode: "printed" | "handwritten" = "printed",
 ): Promise<OcrResult> {
 	const w = await getWorker();
-	const params: Record<string, string> = {};
+	const params: Partial<WorkerParams> = {};
 	if (mode === "handwritten") {
 		params.tessedit_pageseg_mode = PSM.SINGLE_BLOCK;
 		params.tessedit_char_whitelist =
@@ -36,8 +42,7 @@ export async function recognizeImage(
 	} else {
 		params.tessedit_pageseg_mode = PSM.AUTO;
 	}
-	// biome-ignore lint/suspicious/noExplicitAny: WorkerParams is namespaced internally
-	await w.setParameters(params as any);
+	await w.setParameters(params);
 
 	const { data } = await w.recognize(imageData);
 	let text = data.text || "";

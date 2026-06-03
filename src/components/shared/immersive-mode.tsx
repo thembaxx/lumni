@@ -55,6 +55,7 @@ function ExitFullscreenButton({ onClick }: { onClick: () => void }) {
 			onClick={onClick}
 			aria-label="Exit full-screen mode"
 			className="fixed top-3 right-3 z-modal flex items-center gap-1.5 rounded-full border border-border/60 bg-system-background/95 px-3 py-1.5 font-medium text-muted-foreground text-xs shadow-level-2"
+			style={{ top: `calc(0.75rem + env(safe-area-inset-top, 0px))` }}
 			initial={{ opacity: 0, y: -8 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -8 }}

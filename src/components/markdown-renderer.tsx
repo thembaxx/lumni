@@ -276,12 +276,9 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 
 	const needsMath = isMathSubject || hasMath;
 
-	const [mathPlugins, setMathPlugins] = useState<{
-		// biome-ignore lint/suspicious/noExplicitAny: dynamic remark/rehype plugin
-		rehypeKatex: any;
-		// biome-ignore lint/suspicious/noExplicitAny: dynamic remark/rehype plugin
-		remarkMath: any;
-	} | null>(null);
+	const [mathPlugins, setMathPlugins] = useState<Awaited<
+		ReturnType<typeof loadMathPlugins>
+	> | null>(null);
 
 	useEffect(() => {
 		if (!needsMath || mathPlugins) return;
