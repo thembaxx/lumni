@@ -440,7 +440,7 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 
 - [x] **4.1 Refactor `use-premium` test casts** — 8 `as never` → `as PremiumFeature` or removed entirely; tsc + tests pass
 - [x] **4.4 Storybook coverage** — 2→10 stories (added Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator)
-- [ ] **A11y round 2** — tools + admin surfaces, Konva diagram alt text
+- [x] **A11y round 2** — 8 Konva `<Stage>` elements get `ariaLabel`, admin form labels get `htmlFor`/`id`, 11 icon-only buttons get `aria-label`, 2 `<select>` elements get `aria-label`, admin text leak ("Download01Icon Papers") fixed, note-creator removes false `role="button"`
 - [ ] **i18n round 2** — TOS/Privacy in af/zu, remaining 25 zu keys
 - [ ] **Visual regression testing** — Playwright + Chromatic on 6 hero components
 - [ ] **Static analysis in CI** — add `knip` for dead code detection
