@@ -151,8 +151,7 @@ export function BottomNav() {
 			aria-label="Main navigation"
 			className="fixed right-0 bottom-0 left-0 z-header flex w-full"
 			style={{
-				// TODO: extract safe-area-inset-bottom to a CSS variable
-				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
+				height: "calc(49px + var(--spacing-safe-pb, 0px))",
 			}}
 		>
 			<div className="grid h-12.25 w-full grow grid-cols-6 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">

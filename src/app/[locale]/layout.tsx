@@ -207,7 +207,10 @@ export default async function LocaleLayout({
 					<TosBanner />
 					<div className="flex flex-1">
 						<DesktopSidebar />
-						<main id="main-content" className="flex min-w-0 flex-1 flex-col">
+						<main
+							id="main-content"
+							className="flex min-w-0 flex-1 flex-col pb-[calc(49px+env(safe-area-inset-bottom,0px))]"
+						>
 							<TopNav />
 							<ErrorBoundary>{children}</ErrorBoundary>
 						</main>
