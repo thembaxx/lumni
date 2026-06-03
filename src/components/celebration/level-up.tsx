@@ -82,7 +82,9 @@ export function LevelUp({
 										icon={StarIcon}
 										className="size-6 fill-white"
 									/>
-									<span className="font-extrabold text-4xl">{level}</span>
+									<span className="font-extrabold text-4xl tabular-nums">
+										{level}
+									</span>
 								</m.div>
 								<h2 className="balance mb-2 text-wrap font-semibold text-2xl">
 									{title}

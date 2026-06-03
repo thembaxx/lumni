@@ -2,7 +2,6 @@
 
 import { MessageAdd01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +29,6 @@ interface Props {
 }
 
 export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
-	const _t = useTranslations();
 	const { data: groups } = useStudyGroups();
 	const { mutate: createPost, isPending } = useCreatePost();
 	const [open, setOpen] = useState(false);

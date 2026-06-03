@@ -2,7 +2,6 @@
 
 import { Message02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useTranslations } from "next-intl";
 import { useGroupPosts } from "@/hooks/use-study-groups";
 import { PostCardWithComments } from "./post-card-with-comments";
 
@@ -11,7 +10,6 @@ interface Props {
 }
 
 export function DiscussionFeed({ groupId }: Props) {
-	const _t = useTranslations();
 	const { data: posts, isLoading } = useGroupPosts(groupId);
 
 	if (isLoading) {

@@ -58,7 +58,7 @@ export function StreakFire({
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 					>
-						<div className="whitespace-nowrap rounded-full bg-warning px-2 py-0.5 font-extrabold text-[10px] text-primary-foreground">
+						<div className="whitespace-nowrap rounded-full bg-warning px-2 py-0.5 font-extrabold text-primary-foreground text-xs">
 							{getStreakMessage(milestone)}
 						</div>
 					</m.div>
@@ -66,7 +66,7 @@ export function StreakFire({
 			</div>
 
 			<m.span
-				className={`font-extrabold ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
+				className={`font-extrabold tabular-nums ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
 				key={streak}
 				initial={{ scale: 1.5 }}
 				animate={{ scale: 1 }}

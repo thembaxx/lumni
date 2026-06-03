@@ -12,12 +12,6 @@ const BLOOM_ORDER = [
 	"evaluate",
 	"create",
 ] as const;
-const _LEVEL_ORDER = [
-	"novice",
-	"developing",
-	"proficient",
-	"mastered",
-] as const;
 
 const LEVEL_COLORS: Record<string, string> = {
 	novice: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",

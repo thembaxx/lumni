@@ -27,20 +27,6 @@ export type AnimationPreset =
 	| "rotate"
 	| "sway";
 
-const _iconAnimations = {
-	spin: {
-		rotate: 360,
-		transition: { duration: 1, repeat: Infinity, ease: "linear" },
-	},
-	pulse: {
-		scale: [1, 1.1, 1],
-		transition: { duration: 1.5, repeat: Infinity },
-	},
-	bounce: { y: [0, -10, 0], transition: { duration: 0.6, repeat: Infinity } },
-	shake: { x: [-5, 5, -5, 5, 0], transition: { duration: 0.4 } },
-	scale: { scale: [0, 1.2, 1], transition: { duration: 0.3 } },
-} as const;
-
 interface IconMappingEntry {
 	icon: typeof CheckmarkCircle01Icon;
 	size: number;
@@ -96,10 +82,6 @@ const animationMapping: Record<string, IconMappingEntry> = {
 };
 
 export type LottieAnimationName = keyof typeof animationMapping;
-
-function _getIconMapping(name: string): IconMappingEntry | undefined {
-	return animationMapping[name];
-}
 
 export function AnimatedIcon({
 	name,

@@ -86,7 +86,9 @@ export function AchievementUnlock({
 								</h2>
 								<p className="mb-4 text-muted-foreground">{description}</p>
 								<div className="inline-flex items-center gap-2 rounded-full bg-warning/20 px-4 py-2 text-warning-foreground">
-									<span className="font-semibold text-lg">+{xpReward} XP</span>
+									<span className="font-semibold text-lg tabular-nums">
+										+{xpReward} XP
+									</span>
 								</div>
 							</m.div>
 						</div>

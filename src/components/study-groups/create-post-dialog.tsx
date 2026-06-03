@@ -2,7 +2,6 @@
 
 import { MessageAdd01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +27,6 @@ export function CreatePostDialog({
 	subject,
 	topic,
 }: Props) {
-	const _t = useTranslations();
 	const [open, setOpen] = useState(false);
 	const [content, setContent] = useState("");
 	const { mutate: createPost, isPending } = useCreatePost();

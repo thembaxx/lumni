@@ -63,13 +63,15 @@ export function ChestUnlock({
 								</p>
 							</div>
 							<div className="flex items-center gap-2 text-amber-400 dark:text-amber-300">
-								<span className="font-bold text-2xl">+{xpReward}</span>
+								<span className="font-bold text-2xl tabular-nums">
+									+{xpReward}
+								</span>
 								<span className="text-sm">XP</span>
 							</div>
 							<button
 								type="button"
 								onClick={onClose}
-								className="mt-2 rounded-xl bg-accent px-6 py-2 font-medium text-accent-foreground text-sm transition-colors hover:bg-accent/80"
+								className="mt-2 min-h-10 rounded-xl bg-accent px-6 py-2 font-medium text-accent-foreground text-sm transition-[background-color] hover:bg-accent/80 active:scale-[0.96]"
 							>
 								Claim
 							</button>

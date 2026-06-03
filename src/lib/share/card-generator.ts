@@ -17,7 +17,6 @@ const GRADIENTS: Record<CardType, [string, string]> = {
 
 const WIDTH = 600;
 const HEIGHT = 315;
-const _PADDING = 40;
 const CONTENT_TOP = 70;
 
 function hexToRgb(hex: string): [number, number, number] {
