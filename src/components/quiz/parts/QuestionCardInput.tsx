@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
@@ -66,6 +67,15 @@ export function QuestionCardInput({
 	handleGrade,
 }: QuestionCardInputProps) {
 	const t = useTranslations();
+	const [textInputValue, setTextInputValue] = useState("");
+	const [longAnswerValue, setLongAnswerValue] = useState("");
+	const [essayValue, setEssayValue] = useState("");
+
+	useEffect(() => {
+		setTextInputValue("");
+		setLongAnswerValue("");
+		setEssayValue("");
+	}, []);
 
 	if (state.isSubmitted) {
 		return null;
@@ -168,6 +178,8 @@ export function QuestionCardInput({
 			const qBody = body.body as Record<string, unknown>;
 			return (
 				<ShortAnswerInput
+					value={textInputValue}
+					onChange={setTextInputValue}
 					maxLength={qBody.maxLength as number | undefined}
 					onSubmit={(answer: string) =>
 						handleGrade({ type: "text", value: answer })
@@ -182,6 +194,8 @@ export function QuestionCardInput({
 			const qBody = body.body as Record<string, unknown>;
 			return (
 				<LongAnswerInput
+					value={longAnswerValue}
+					onChange={setLongAnswerValue}
 					minWords={qBody.minWords as number | undefined}
 					maxWords={qBody.maxWords as number | undefined}
 					onSubmit={(answer: string) =>
@@ -197,6 +211,8 @@ export function QuestionCardInput({
 			const qBody = body.body as Record<string, unknown>;
 			return (
 				<EssayInput
+					value={essayValue}
+					onChange={setEssayValue}
 					wordLimit={qBody.wordLimit as number | undefined}
 					rubric={
 						qBody.rubric as

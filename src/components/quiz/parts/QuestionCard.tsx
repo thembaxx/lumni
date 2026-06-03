@@ -330,14 +330,7 @@ export function QuestionCard({
 				}
 			/>
 			<QuestionCardControls
-				options={{
-					isMCQ,
-					isGrading,
-					isSubmitted: state.isSubmitted,
-					isSolverEnabled,
-				}}
 				onNext={onNext}
-				onAnswered={onAnswered}
 				questionNumber={questionNumber}
 				totalQuestions={totalQuestions}
 			/>

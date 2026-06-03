@@ -10,7 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -83,7 +83,6 @@ export function DailyBoltOverlay({
 	const [subject, setSubject] = useState("mathematics");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
 	const shouldReduceMotion = useReducedMotion();
-	const celebrationTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	useEffect(() => {
 		resolveWeakestSubject().then((s) => {
@@ -126,30 +125,19 @@ export function DailyBoltOverlay({
 		(correct: boolean) => {
 			if (!question) return;
 			setBoltResult({ question, correct });
-			celebrationTimerRef.current = setTimeout(() => {
-				setPhase("celebrating");
-			}, 800);
 		},
 		[question],
 	);
 
 	const handleProceed = useCallback(() => {
 		if (!boltResult) return;
-		onComplete(boltResult);
-	}, [boltResult, onComplete]);
+		setPhase("celebrating");
+	}, [boltResult]);
 
 	const handleSprintFromCelebration = useCallback(() => {
 		if (!boltResult) return;
 		onSprint(boltResult);
 	}, [boltResult, onSprint]);
-
-	useEffect(() => {
-		return () => {
-			if (celebrationTimerRef.current) {
-				clearTimeout(celebrationTimerRef.current);
-			}
-		};
-	}, []);
 
 	const handleRetry = useCallback(() => {
 		setPhase("loading");
@@ -191,13 +179,9 @@ export function DailyBoltOverlay({
 						)}
 					</div>
 				</div>
-				<button
-					type="button"
-					onClick={onSkip}
-					className="min-h-10 rounded-full px-4 py-2 font-medium text-muted-foreground text-xs transition-[background-color,transform] hover:bg-system-fill hover:text-foreground active:scale-[0.96]"
-				>
+				<Button variant="outline" size="sm" onClick={onSkip}>
 					{skipLabel}
-				</button>
+				</Button>
 			</header>
 
 			<main className="relative z-10 flex flex-1 flex-col overflow-y-auto px-5 pb-8">
