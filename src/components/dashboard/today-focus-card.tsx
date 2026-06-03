@@ -142,7 +142,7 @@ export function TodayFocusCard() {
 				ease: iOSEase,
 			}}
 		>
-			<Card className="border border-border/80 transition-colors hover:border-border/80">
+			<Card className="border border-border/80 transition-colors hover:border-foreground/15">
 				<div className="flex flex-col gap-4 p-5">
 					<div className="flex items-center gap-3">
 						<div
@@ -174,7 +174,7 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<div className="-m-2 flex cursor-pointer items-center rounded-sm border p-2 py-1 pr-1.5 pl-2 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground">
+								<div className="flex min-h-9 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1.5 font-medium text-muted-foreground text-xs transition-[background-color,color] hover:bg-system-fill hover:text-foreground">
 									Change subject
 									<HugeiconsIcon
 										icon={ArrowDown01Icon}
@@ -195,7 +195,7 @@ export function TodayFocusCard() {
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full bg-system-fill font-extrabold text-sm hover:opacity-90"
+						className="w-full bg-system-fill font-extrabold text-sm transition-[background-color,opacity] hover:opacity-90 active:scale-[0.96]"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
@@ -212,7 +212,7 @@ export function TodayFocusCard() {
 									}}
 									className="flex items-center gap-1.5"
 								>
-									<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
+									<HugeiconsIcon icon={CheckmarkCircle01Icon} />
 									Starting quiz…
 								</m.span>
 							) : (

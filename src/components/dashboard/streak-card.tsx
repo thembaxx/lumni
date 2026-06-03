@@ -55,7 +55,7 @@ export function StreakCard() {
 								<Button
 									size="sm"
 									variant="outline"
-									className="mt-3 h-8 gap-1.5 text-xs"
+									className="mt-3 h-10 gap-1.5 text-xs active:scale-[0.96]"
 									onClick={() => push("/quiz")}
 								>
 									<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
