@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 
 export interface ReferralInfo {
 	code: string;
@@ -24,31 +25,23 @@ interface UseReferralReturn {
 	share: () => Promise<void>;
 }
 
+async function fetchReferralInfo(): Promise<ReferralInfo> {
+	const res = await fetch("/api/referral/info");
+	if (!res.ok) {
+		const data = await res.json();
+		throw new Error(data.error || "Failed to load referral info");
+	}
+	return res.json();
+}
+
 export function useReferral(): UseReferralReturn {
-	const [info, setInfo] = useState<ReferralInfo | null>(null);
-	const [error, setError] = useState<string | null>(null);
+	const { data, isPending, error, refetch } = useQuery({
+		queryKey: ["referral-info"],
+		queryFn: fetchReferralInfo,
+	});
 
-	const fetchInfo = useCallback(async () => {
-		setInfo(null);
-		setError(null);
-		try {
-			const res = await fetch("/api/referral/info");
-			if (!res.ok) {
-				const data = await res.json();
-				throw new Error(data.error || "Failed to load referral info");
-			}
-			const data = await res.json();
-			setInfo(data);
-		} catch (err) {
-			setError(err instanceof Error ? err.message : "Something went wrong");
-		}
-	}, []);
-
-	useEffect(() => {
-		fetchInfo();
-	}, [fetchInfo]);
-
-	const isLoading = info === null;
+	const info = data ?? null;
+	const isLoading = isPending;
 
 	const share = useCallback(async () => {
 		if (!info) return;
@@ -63,5 +56,13 @@ export function useReferral(): UseReferralReturn {
 		}
 	}, [info]);
 
-	return { info, isLoading, error, refetch: fetchInfo, share };
+	return {
+		info,
+		isLoading,
+		error: error instanceof Error ? error.message : null,
+		refetch: async () => {
+			await refetch();
+		},
+		share,
+	};
 }

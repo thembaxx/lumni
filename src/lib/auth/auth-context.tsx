@@ -7,6 +7,7 @@ import {
 	use,
 	useCallback,
 	useEffect,
+	useMemo,
 	useReducer,
 	useRef,
 } from "react";
@@ -284,25 +285,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		[state.isAnonymous],
 	);
 
-	return (
-		<AuthContext
-			value={{
-				user: state.user,
-				status: state.status,
-				isAnonymous: state.isAnonymous,
-				error: state.error,
-				authReady: state.authReady,
-				signIn,
-				signUp,
-				signInWithMagicLink,
-				signOut,
-				verifyEmail,
-				updateProfile,
-			}}
-		>
-			{children}
-		</AuthContext>
+	const value = useMemo(
+		() => ({
+			user: state.user,
+			status: state.status,
+			isAnonymous: state.isAnonymous,
+			error: state.error,
+			authReady: state.authReady,
+			signIn,
+			signUp,
+			signInWithMagicLink,
+			signOut,
+			verifyEmail,
+			updateProfile,
+		}),
+		[
+			state.user,
+			state.status,
+			state.isAnonymous,
+			state.error,
+			state.authReady,
+			signIn,
+			signUp,
+			signInWithMagicLink,
+			signOut,
+			verifyEmail,
+			updateProfile,
+		],
 	);
+
+	return <AuthContext value={value}>{children}</AuthContext>;
 }
 
 export function useAuth(): AuthContextValue {

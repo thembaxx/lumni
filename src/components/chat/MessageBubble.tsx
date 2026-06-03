@@ -15,6 +15,8 @@ import { iOSEase } from "@/lib/utils/animation";
 import { ImageViewer } from "./ImageViewer";
 import { SmartImage } from "./SmartImage";
 
+const VOICE_BARS = [0.4, 0.65, 0.85, 0.55, 0.3] as const;
+
 interface MessageBubbleProps {
 	message: ChatMessage;
 	onRetry?: (messageId: string) => void;
@@ -150,7 +152,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 	}
 
 	if (message.type === "voice") {
-		const bars = [0.4, 0.65, 0.85, 0.55, 0.3];
+		const bars = VOICE_BARS;
 
 		return (
 			<m.div

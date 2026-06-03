@@ -48,15 +48,13 @@ export function buildRagContext(sources: WebSource[]): RagContext {
 
 	const domainsQueried = Array.from(
 		new Set(
-			viable
-				.map((s) => {
-					try {
-						return new URL(s.url).hostname;
-					} catch {
-						return "";
-					}
-				})
-				.filter(Boolean),
+			viable.flatMap((s) => {
+				try {
+					return [new URL(s.url).hostname];
+				} catch {
+					return [];
+				}
+			}),
 		),
 	);
 

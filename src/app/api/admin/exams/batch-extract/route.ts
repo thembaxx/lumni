@@ -38,30 +38,31 @@ export const POST = createRouteHandler({
 	},
 	execute: async ({ body }) => {
 		const { urls } = body as { urls: string[] };
-		const results: { url: string; success: boolean; error?: string }[] = [];
-
-		for (const url of urls) {
-			try {
-				const response = await fetch(url, { cache: "no-store" });
-				if (!response.ok) {
-					throw new Error(`HTTP ${response.status}`);
-				}
-				const text = await response.text();
-				const fileName = `extracted_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.txt`;
-				const outputDir = path.resolve(process.cwd(), "exam-data", "extracted");
-				if (!fs.existsSync(outputDir)) {
-					fs.mkdirSync(outputDir, { recursive: true });
-				}
-				fs.writeFileSync(path.join(outputDir, fileName), text, "utf-8");
-				results.push({ url, success: true });
-			} catch (error) {
-				results.push({
-					url,
-					success: false,
-					error: error instanceof Error ? error.message : "Unknown error",
-				});
-			}
+		const outputDir = path.resolve(process.cwd(), "exam-data", "extracted");
+		if (!fs.existsSync(outputDir)) {
+			fs.mkdirSync(outputDir, { recursive: true });
 		}
+
+		const results = await Promise.all(
+			urls.map(async (url) => {
+				try {
+					const response = await fetch(url, { cache: "no-store" });
+					if (!response.ok) {
+						throw new Error(`HTTP ${response.status}`);
+					}
+					const text = await response.text();
+					const fileName = `extracted_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.txt`;
+					fs.writeFileSync(path.join(outputDir, fileName), text, "utf-8");
+					return { url, success: true };
+				} catch (error) {
+					return {
+						url,
+						success: false,
+						error: error instanceof Error ? error.message : "Unknown error",
+					};
+				}
+			}),
+		);
 
 		return { results };
 	},

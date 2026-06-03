@@ -16,6 +16,10 @@ import {
 	shareReferral,
 } from "@/lib/referral/client";
 
+const copyLeading = <HugeiconsIcon icon={Copy01Icon} className="size-4" />;
+const copiedLeading = <HugeiconsIcon icon={Tick01Icon} className="size-4" />;
+const shareLeading = <HugeiconsIcon icon={Share07Icon} className="size-4" />;
+
 export function ReferralTab() {
 	const { info, isLoading } = useReferral();
 	const [copied, setCopied] = useState(false);
@@ -45,6 +49,8 @@ export function ReferralTab() {
 			setTimeout(() => setCopied(false), 2000);
 		}
 	};
+
+	const copyIcon = copied ? copiedLeading : copyLeading;
 
 	const handleShare = async () => {
 		await shareReferral(info.link, info.code);
@@ -78,20 +84,14 @@ export function ReferralTab() {
 
 				<ListCell
 					title={copied ? "Copied!" : "Copy Code"}
-					leading={
-						copied ? (
-							<HugeiconsIcon icon={Tick01Icon} className="size-4" />
-						) : (
-							<HugeiconsIcon icon={Copy01Icon} className="size-4" />
-						)
-					}
+					leading={copyIcon}
 					onClick={handleCopy}
 					showSeparator
 				/>
 
 				<ListCell
 					title="Share Invite Link"
-					leading={<HugeiconsIcon icon={Share07Icon} className="size-4" />}
+					leading={shareLeading}
 					onClick={handleShare}
 					showSeparator={false}
 				/>

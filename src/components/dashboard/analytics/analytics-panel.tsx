@@ -24,6 +24,13 @@ import {
 import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
 
+const WEEKLY_CHART_CONFIG = {
+	accuracy: {
+		label: "Accuracy",
+		color: "var(--system-accent)",
+	},
+} as const;
+
 export function AnalyticsPanel() {
 	const { hasFeature } = usePremium();
 	const { analytics, isLoading, refresh } = useAnalytics();
@@ -296,12 +303,7 @@ function WeeklyProgressCard({
 		accuracy: Math.round(day.accuracy * 100),
 	}));
 
-	const chartConfig = {
-		accuracy: {
-			label: "Accuracy",
-			color: "var(--system-accent)",
-		},
-	};
+	const chartConfig = WEEKLY_CHART_CONFIG;
 
 	return (
 		<Card size="sm">

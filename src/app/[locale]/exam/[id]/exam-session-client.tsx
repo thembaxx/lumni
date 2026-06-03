@@ -192,16 +192,17 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return getFlatParts();
 	}, [paper, getFlatParts]);
 
-	const sessionInitRef = useRef(false);
-
-	useEffect(() => {
-		if (!paperLoading && paperData && !sessionInitRef.current) {
-			sessionInitRef.current = true;
-			const durationMinutes = parseDuration(paperData.exam.metadata.duration);
-			initSession(paperData.exam, paperData.metadata.id, durationMinutes);
-			setPhase("mode-select");
-		}
-	}, [paperLoading, paperData, initSession]);
+	const initializedPaperIdRef = useRef<string | null>(null);
+	if (
+		!paperLoading &&
+		paperData &&
+		paperData.metadata.id !== initializedPaperIdRef.current
+	) {
+		initializedPaperIdRef.current = paperData.metadata.id;
+		const durationMinutes = parseDuration(paperData.exam.metadata.duration);
+		initSession(paperData.exam, paperData.metadata.id, durationMinutes);
+		setPhase("mode-select");
+	}
 
 	useEffect(() => {
 		if (phase === "active" && (sessionMode === "timed" || isMock) && !paused) {
@@ -217,16 +218,20 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		};
 	}, [phase, sessionMode, isMock, paused, tick]);
 
-	useEffect(() => {
-		if (
-			timeRemaining <= 0 &&
-			phase === "active" &&
-			(sessionMode === "timed" || isMock)
-		) {
-			completeSession();
-			setPhase("submitting");
-		}
-	}, [timeRemaining, phase, sessionMode, isMock, completeSession]);
+	const completionRef = useRef(false);
+	if (
+		timeRemaining <= 0 &&
+		phase === "active" &&
+		(sessionMode === "timed" || isMock) &&
+		!completionRef.current
+	) {
+		completionRef.current = true;
+		completeSession();
+		setPhase("submitting");
+	}
+	if (phase !== "active") {
+		completionRef.current = false;
+	}
 
 	useEffect(() => {
 		setImmersive(phase === "active");
@@ -382,12 +387,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		addWrongAnswer,
 	]);
 
-	const router = useRouter();
+	const { back } = useRouter();
 
 	const handleDashboard = useCallback(() => {
 		resetSession();
-		router.back();
-	}, [resetSession, router]);
+		back();
+	}, [resetSession, back]);
 
 	if (paperLoading) {
 		return (

@@ -8,9 +8,70 @@ import { SendButton } from "./voice-recorder/send-button";
 import { StatusDisplay } from "./voice-recorder/status-display";
 import { WaveformDisplay } from "./voice-recorder/waveform-display";
 
+function deriveRecorderState(args: {
+	isRecording: boolean;
+	isPlaying: boolean;
+	isPaperPlaneing: boolean;
+	showPermissionError: boolean;
+	audioBlob: Blob | null;
+}):
+	| "idle"
+	| "recording"
+	| "recorded"
+	| "playing"
+	| "sending"
+	| "permission-denied" {
+	if (args.showPermissionError) return "permission-denied";
+	if (args.isPaperPlaneing) return "sending";
+	if (args.isRecording) return "recording";
+	if (args.isPlaying) return "playing";
+	if (args.audioBlob) return "recorded";
+	return "idle";
+}
+
+function deriveStatusDisplayMode(args: {
+	sendSuccess: boolean;
+	isRecording: boolean;
+	isPlaying: boolean;
+	showPermissionError: boolean;
+	showValidationError: boolean;
+}):
+	| "idle"
+	| "recording"
+	| "playing"
+	| "permission-denied"
+	| "validation-error"
+	| "success" {
+	if (args.showPermissionError) return "permission-denied";
+	if (args.showValidationError) return "validation-error";
+	if (args.sendSuccess) return "success";
+	if (args.isRecording) return "recording";
+	if (args.isPlaying) return "playing";
+	return "idle";
+}
+
+function deriveSendButtonState(args: {
+	isRecording: boolean;
+	isPaperPlaneing: boolean;
+	sendSuccess: boolean;
+	audioBlob: Blob | null;
+}): "idle" | "recording" | "recorded" | "playing" | "sending" | "success" {
+	if (args.sendSuccess) return "success";
+	if (args.isPaperPlaneing) return "sending";
+	if (args.isRecording) return "recording";
+	if (args.audioBlob) return "recorded";
+	return "idle";
+}
+
 interface VoiceRecorderProps {
 	onRecordingComplete?: (audioBlob: Blob | null) => void;
 	className?: string;
+}
+
+function formatRecordingTime(seconds: number): string {
+	const mins = Math.floor(Math.abs(seconds) / 60);
+	const secs = Math.floor(Math.abs(seconds) % 60);
+	return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
 export function VoiceRecorder({
@@ -75,17 +136,13 @@ export function VoiceRecorder({
 
 	// Cleanup timers on unmount
 	useEffect(() => {
+		const sendTimersAtMount = sendTimers.current;
 		return () => {
-			sendTimers.current.forEach(clearTimeout);
-			sendTimers.current = [];
+			sendTimersAtMount.forEach(clearTimeout);
 		};
 	}, []);
 
-	const formatTime = (seconds: number) => {
-		const mins = Math.floor(Math.abs(seconds) / 60);
-		const secs = Math.floor(Math.abs(seconds) % 60);
-		return `${mins}:${secs.toString().padStart(2, "0")}`;
-	};
+	const formatTime = formatRecordingTime;
 
 	const getStatusText = () => {
 		if (sendSuccess) return "Sent!";
@@ -117,11 +174,13 @@ export function VoiceRecorder({
 			<WaveformDisplay isRecording={isRecording} audioBlob={audioBlob} />
 
 			<StatusDisplay
-				sendSuccess={sendSuccess}
-				isRecording={isRecording}
-				isPlaying={isPlaying}
-				showPermissionError={showPermissionError}
-				showValidationError={showValidationError}
+				displayMode={deriveStatusDisplayMode({
+					sendSuccess,
+					isRecording,
+					isPlaying,
+					showPermissionError,
+					showValidationError,
+				})}
 				isTooShort={isTooShort}
 				isTooLong={isTooLong}
 				recordingError={recordingError}
@@ -130,11 +189,14 @@ export function VoiceRecorder({
 			/>
 
 			<ControlButtons
-				isRecording={isRecording}
-				isPlaying={isPlaying}
+				recorderState={deriveRecorderState({
+					isRecording,
+					isPlaying,
+					isPaperPlaneing,
+					showPermissionError,
+					audioBlob,
+				})}
 				audioBlob={audioBlob}
-				isPaperPlaneing={isPaperPlaneing}
-				showPermissionError={showPermissionError}
 				disabled={isPaperPlaneing || showPermissionError}
 				onReset={resetRecording}
 				onRecordClick={handleRecordClick}
@@ -142,10 +204,13 @@ export function VoiceRecorder({
 			/>
 
 			<SendButton
-				isRecording={isRecording}
+				recorderState={deriveSendButtonState({
+					isRecording,
+					isPaperPlaneing,
+					sendSuccess,
+					audioBlob,
+				})}
 				audioBlob={audioBlob}
-				isPaperPlaneing={isPaperPlaneing}
-				sendSuccess={sendSuccess}
 				isTooShort={isTooShort}
 				isTooLong={isTooLong}
 				onSend={handleSend}

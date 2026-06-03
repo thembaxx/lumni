@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createContext,
 	use,
@@ -102,8 +102,9 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
 	const queryClient = useQueryClient();
 
-	const { mutate: verifyPremium } = useMutation({
-		mutationFn: async () => {
+	const { data: verifyData } = useQuery({
+		queryKey: ["premium-verify"],
+		queryFn: async () => {
 			const res = await fetch(VERIFY_API, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -114,37 +115,40 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				isPremium: boolean;
 				subscriptionId?: string;
 				expiresAt?: string;
-			}>;
+			} | null>;
 		},
-		onSuccess: (data) => {
-			if (!data) return;
-			if (data.isPremium) {
-				setState((prev) => ({
-					...prev,
-					isPremium: true,
-					features: PREMIUM_FEATURES,
-					subscriptionId: data.subscriptionId || prev.subscriptionId,
-					expiresAt: data.expiresAt
-						? (() => {
-								const d = new Date(data.expiresAt);
-								return Number.isNaN(d.getTime()) ? prev.expiresAt : d.getTime();
-							})()
-						: prev.expiresAt,
-				}));
-			} else if (state.isPremium) {
-				setState({
-					isPremium: false,
-					expiresAt: null,
-					features: FREE_FEATURES,
-				});
-			}
-			queryClient.invalidateQueries({ queryKey: ["premium"] });
+	});
+
+	const { mutate: verifyPremium } = useMutation({
+		mutationFn: async () => {
+			queryClient.invalidateQueries({ queryKey: ["premium-verify"] });
 		},
 	});
 
 	useEffect(() => {
-		verifyPremium();
-	}, [verifyPremium]);
+		if (!verifyData) return;
+		if (verifyData.isPremium) {
+			setState((prev) => ({
+				...prev,
+				isPremium: true,
+				features: PREMIUM_FEATURES,
+				subscriptionId: verifyData.subscriptionId || prev.subscriptionId,
+				expiresAt: verifyData.expiresAt
+					? (() => {
+							const d = new Date(verifyData.expiresAt);
+							return Number.isNaN(d.getTime()) ? prev.expiresAt : d.getTime();
+						})()
+					: prev.expiresAt,
+			}));
+		} else if (state.isPremium) {
+			setState({
+				isPremium: false,
+				expiresAt: null,
+				features: FREE_FEATURES,
+			});
+		}
+		queryClient.invalidateQueries({ queryKey: ["premium"] });
+	}, [verifyData, queryClient, state.isPremium]);
 
 	const features = state.isPremium ? PREMIUM_FEATURES : FREE_FEATURES;
 

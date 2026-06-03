@@ -26,10 +26,24 @@ const consentStatusBadgeVariants = cva("gap-1.5 font-medium", {
 	},
 });
 
+type ConsentStatus = "granted" | "pending" | "revoked";
+
+const ICON_MAP: Record<ConsentStatus, typeof UserCheck01Icon> = {
+	granted: UserCheck01Icon,
+	pending: HelpCircleIcon,
+	revoked: CheckmarkBadge01Icon,
+};
+
+const LABEL_MAP: Record<ConsentStatus, string> = {
+	granted: "Consent Granted",
+	pending: "Consent Pending",
+	revoked: "Consent Revoked",
+};
+
 interface ConsentStatusBadgeProps
 	extends React.ComponentProps<typeof Badge>,
 		VariantProps<typeof consentStatusBadgeVariants> {
-	status?: "granted" | "pending" | "revoked";
+	status?: ConsentStatus;
 }
 
 export function ConsentStatusBadge({
@@ -37,26 +51,14 @@ export function ConsentStatusBadge({
 	className,
 	...props
 }: ConsentStatusBadgeProps) {
-	const iconMap = {
-		granted: UserCheck01Icon,
-		pending: HelpCircleIcon,
-		revoked: CheckmarkBadge01Icon,
-	};
-
-	const labelMap = {
-		granted: "Consent Granted",
-		pending: "Consent Pending",
-		revoked: "Consent Revoked",
-	};
-
 	return (
 		<Badge
 			variant="outline"
 			className={cn(consentStatusBadgeVariants({ status }), className)}
 			{...props}
 		>
-			<HugeiconsIcon icon={iconMap[status]} size={14} />
-			{labelMap[status]}
+			<HugeiconsIcon icon={ICON_MAP[status]} size={14} />
+			{LABEL_MAP[status]}
 		</Badge>
 	);
 }

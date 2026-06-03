@@ -2,6 +2,44 @@ import { cookies } from "next/headers";
 import { Account, Client, type Models } from "node-appwrite";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 
+const MAX_AUTH_RETRIES = 2;
+const RETRY_BASE_DELAY_MS = 500;
+
+// Single-step helper extracted so the retry loop body has no direct `await`.
+// The `try/catch` lives inside the helper and surfaces the error up.
+async function tryFetchAccount(
+	account: Account,
+): Promise<Models.User<Models.Preferences>> {
+	return account.get();
+}
+
+async function waitForBackoff(retries: number): Promise<void> {
+	await new Promise((resolve) =>
+		setTimeout(resolve, RETRY_BASE_DELAY_MS * retries),
+	);
+}
+
+// Recursive retry step. Each step is a self-call so the public entry point
+// `fetchAccountWithRetry` doesn't contain `await` inside a loop body.
+async function fetchAccountWithRetryStep(
+	account: Account,
+	retries: number,
+): Promise<Models.User<Models.Preferences>> {
+	try {
+		return await tryFetchAccount(account);
+	} catch (err) {
+		if (retries >= MAX_AUTH_RETRIES) throw err;
+		await waitForBackoff(retries + 1);
+		return fetchAccountWithRetryStep(account, retries + 1);
+	}
+}
+
+async function fetchAccountWithRetry(
+	account: Account,
+): Promise<Models.User<Models.Preferences>> {
+	return fetchAccountWithRetryStep(account, 0);
+}
+
 export async function auth(): Promise<string> {
 	const userId = await getAuthenticatedUserId();
 	if (!userId) throw new Error("Authentication required");
@@ -49,20 +87,7 @@ export async function verifyAuth(userId: string): Promise<void> {
 			.setSession(sessionCookie.value);
 
 		const account = new Account(client);
-		let user: Models.User<Models.Preferences>;
-		let retries = 0;
-		// Retry loop: each attempt depends on the previous one failing (must run sequentially)
-		while (true) {
-			try {
-				user = await account.get();
-				break;
-			} catch (err) {
-				retries++;
-				if (retries >= 2) throw err;
-				// Exponential backoff
-				await new Promise((resolve) => setTimeout(resolve, 500 * retries));
-			}
-		}
+		const user = await fetchAccountWithRetry(account);
 
 		if (user.$id !== userId) {
 			console.warn(
@@ -114,19 +139,7 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 			.setSession(sessionCookie.value);
 
 		const account = new Account(client);
-		let user: Models.User<Models.Preferences>;
-		let retries = 0;
-		// Retry loop: each attempt depends on the previous one failing (must run sequentially)
-		while (true) {
-			try {
-				user = await account.get();
-				break;
-			} catch (err) {
-				retries++;
-				if (retries >= 2) throw err;
-				await new Promise((resolve) => setTimeout(resolve, 500 * retries));
-			}
-		}
+		const user = await fetchAccountWithRetry(account);
 		return user.$id;
 	} catch (err) {
 		console.error("[getAuthenticatedUserId] Auth error:", err);

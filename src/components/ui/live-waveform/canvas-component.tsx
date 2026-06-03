@@ -19,18 +19,18 @@ export function CanvasComponent({
 	heightStyle,
 	className,
 }: CanvasComponentProps) {
+	const label = active
+		? "Live audio waveform"
+		: processing
+			? "Processing audio"
+			: "Audio waveform idle";
+
 	return (
 		<div
 			className={cn("relative h-full w-full", className)}
 			ref={containerRef}
 			style={{ height: heightStyle }}
-			aria-label={
-				active
-					? "Live audio waveform"
-					: processing
-						? "Processing audio"
-						: "Audio waveform idle"
-			}
+			aria-label={label}
 			role="img"
 		>
 			{!active && !processing && (

@@ -37,6 +37,26 @@ interface EngagementData {
 	activeStudents: number;
 }
 
+async function assignTopics(topics: string[]): Promise<void> {
+	try {
+		const res = await fetch("/api/teacher/assign", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ topics }),
+		});
+		if (!res.ok) throw new Error("Assignment failed");
+		toast({
+			type: "success",
+			message: `Assigned: ${topics.join(", ")}`,
+		});
+	} catch {
+		toast({
+			type: "error",
+			message: "Failed to create assignment",
+		});
+	}
+}
+
 export default function TeacherDashboardPage() {
 	return (
 		<RoleGate requiredRole="teacher" fallback={<TeacherDashboardPageInner />}>
@@ -103,25 +123,7 @@ function TeacherDashboardPageInner() {
 			toast({ type: "error", message: "Failed to unlink student" }),
 	});
 
-	const handleAssign = async (topics: string[]) => {
-		try {
-			const res = await fetch("/api/teacher/assign", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ topics }),
-			});
-			if (!res.ok) throw new Error("Assignment failed");
-			toast({
-				type: "success",
-				message: `Assigned: ${topics.join(", ")}`,
-			});
-		} catch {
-			toast({
-				type: "error",
-				message: "Failed to create assignment",
-			});
-		}
-	};
+	const handleAssign = assignTopics;
 
 	if (isLoading) {
 		return (

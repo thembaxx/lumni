@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import type { OverallAnalytics } from "@/lib/analytics-engine";
+import { useQuery } from "@tanstack/react-query";
 import { analyticsEngine } from "@/lib/analytics-engine";
 
 export type {
@@ -13,22 +12,16 @@ export type {
 } from "@/lib/analytics-engine";
 
 export function useAnalytics() {
-	const [analytics, setAnalytics] = useState<OverallAnalytics | null>(null);
-
-	const refresh = useCallback(() => {
-		setAnalytics(null);
-		analyticsEngine.compute().then(setAnalytics);
-	}, []);
-
-	useEffect(() => {
-		refresh();
-	}, [refresh]);
-
-	const isLoading = analytics === null;
+	const { data, isPending, refetch } = useQuery({
+		queryKey: ["analytics"],
+		queryFn: () => analyticsEngine.compute(),
+	});
 
 	return {
-		analytics,
-		isLoading,
-		refresh,
+		analytics: data ?? null,
+		isLoading: isPending,
+		refresh: () => {
+			refetch();
+		},
 	};
 }

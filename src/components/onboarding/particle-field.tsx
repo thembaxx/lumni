@@ -52,7 +52,10 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 		() => COLORS[step as keyof typeof COLORS] ?? COLORS[0],
 		[step],
 	);
-	const currentColor = useRef(new Color(...COLORS[0]));
+	const currentColorRef = useRef<Color | null>(null);
+	if (currentColorRef.current === null) {
+		currentColorRef.current = new Color(...COLORS[0]);
+	}
 	const mouse = useRef({ x: 0, y: 0 });
 
 	useEffect(() => {
@@ -67,8 +70,11 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 	useFrame((state, delta) => {
 		if (!meshRef.current) return;
 		const material = meshRef.current.material as PointsMaterial;
-		currentColor.current.lerp(new Color(...targetColor), delta * 0.8);
-		material.color.copy(currentColor.current);
+		const color = currentColorRef.current;
+		if (color) {
+			color.lerp(new Color(...targetColor), delta * 0.8);
+			material.color.copy(color);
+		}
 
 		const time = state.clock.elapsedTime;
 		const positions2 = meshRef.current.geometry.attributes.position

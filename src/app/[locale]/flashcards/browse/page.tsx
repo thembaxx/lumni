@@ -60,7 +60,9 @@ export default function FlashcardBrowsePage() {
 	const [status, setStatus] = useState<LoadingStatus>("loading");
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
 	const [subjects, setSubjects] = useState<string[]>([]);
-	const now = useRef(Date.now()).current;
+	const nowRef = useRef<number | null>(null);
+	if (nowRef.current === null) nowRef.current = Date.now();
+	const now = nowRef.current;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const PAGE_SIZE = 20;
 

@@ -57,10 +57,11 @@ export function useGamification() {
 
 	// Cleanup all timers on unmount
 	useEffect(() => {
+		const syncTimerAtMount = syncTimerRef.current;
+		const timersAtMount = timersRef.current;
 		return () => {
-			if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
-			for (const id of timersRef.current) clearTimeout(id);
-			timersRef.current = [];
+			if (syncTimerAtMount) clearTimeout(syncTimerAtMount);
+			for (const id of timersAtMount) clearTimeout(id);
 		};
 	}, []);
 

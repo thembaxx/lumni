@@ -12,6 +12,13 @@ interface ProgressDataPoint {
 	accuracy: number;
 }
 
+const CHART_CONFIG = {
+	accuracy: {
+		label: "Accuracy",
+		color: "var(--primary)",
+	},
+} as const;
+
 interface ProgressChartProps {
 	data: ProgressDataPoint[];
 	title?: string;
@@ -19,12 +26,7 @@ interface ProgressChartProps {
 
 export function ProgressChart({ data, title }: ProgressChartProps) {
 	const { push } = useRouter();
-	const chartConfig = {
-		accuracy: {
-			label: "Accuracy",
-			color: "var(--primary)",
-		},
-	};
+	const chartConfig = CHART_CONFIG;
 
 	return (
 		<Card className="w-full overflow-hidden">

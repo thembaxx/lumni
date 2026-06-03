@@ -39,7 +39,7 @@ export function MatchingInput({
 
 	return (
 		<fieldset className="flex flex-col gap-3">
-			<legend className="sr-only">{colA} — Match each item</legend>
+			<legend className="sr-only">{colA}, Match each item</legend>
 			<div className="mb-1 grid grid-cols-[1fr_auto_1fr] items-center gap-3 font-medium text-muted-foreground text-sm">
 				<span>{colA}</span>
 				<span />

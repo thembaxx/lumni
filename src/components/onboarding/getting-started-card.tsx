@@ -30,6 +30,33 @@ const defaultSteps: StepState = {
 	explore: false,
 };
 
+const GETTING_STARTED_ACTIONS = [
+	{
+		key: "quiz" as const,
+		icon: PlayFreeIcons,
+		label: "Take your first quiz",
+		desc: "Practice with AI-generated questions tailored to your subjects.",
+		action: "Start quiz",
+		href: "/quiz",
+	},
+	{
+		key: "settings" as const,
+		icon: Settings01Icon,
+		label: "Set study preferences",
+		desc: "Adjust your subjects, study time, and notification settings.",
+		action: "Open settings",
+		href: "/settings",
+	},
+	{
+		key: "explore" as const,
+		icon: ArrowRight01Icon,
+		label: "Explore past papers",
+		desc: "Practice with real Matric exam papers from previous years.",
+		action: "Browse papers",
+		href: "/past-papers",
+	},
+];
+
 function loadSteps(): StepState {
 	if (typeof window === "undefined") return defaultSteps;
 	try {
@@ -85,32 +112,7 @@ export function GettingStartedCard() {
 
 	if (dismissed || allDone || visitsLeft <= 0) return null;
 
-	const actions = [
-		{
-			key: "quiz" as const,
-			icon: PlayFreeIcons,
-			label: "Take your first quiz",
-			desc: "Practice with AI-generated questions tailored to your subjects.",
-			action: "Start quiz",
-			href: "/quiz",
-		},
-		{
-			key: "settings" as const,
-			icon: Settings01Icon,
-			label: "Set study preferences",
-			desc: "Adjust your subjects, study time, and notification settings.",
-			action: "Open settings",
-			href: "/settings",
-		},
-		{
-			key: "explore" as const,
-			icon: ArrowRight01Icon,
-			label: "Explore past papers",
-			desc: "Practice with real Matric exam papers from previous years.",
-			action: "Browse papers",
-			href: "/past-papers",
-		},
-	];
+	const actions = GETTING_STARTED_ACTIONS;
 
 	return (
 		<AnimatePresence initial={false}>

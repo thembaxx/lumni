@@ -21,6 +21,16 @@ const masteryBadgeVariants = cva("font-medium", {
 	},
 });
 
+const MASTERY_LABELS: Record<
+	"mastered" | "proficient" | "developing" | "novice",
+	string
+> = {
+	mastered: "Mastered",
+	proficient: "Proficient",
+	developing: "Developing",
+	novice: "Novice",
+};
+
 interface MasteryBadgeProps
 	extends React.ComponentProps<typeof Badge>,
 		VariantProps<typeof masteryBadgeVariants> {
@@ -32,20 +42,13 @@ export function MasteryBadge({
 	className,
 	...props
 }: MasteryBadgeProps) {
-	const labels = {
-		mastered: "Mastered",
-		proficient: "Proficient",
-		developing: "Developing",
-		novice: "Novice",
-	};
-
 	return (
 		<Badge
 			variant="outline"
 			className={cn(masteryBadgeVariants({ level }), className)}
 			{...props}
 		>
-			{labels[level]}
+			{MASTERY_LABELS[level]}
 		</Badge>
 	);
 }

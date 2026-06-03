@@ -4,9 +4,15 @@ import type { ButtonHTMLAttributes } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 
+const VARIANT_STYLES = {
+	correct: "bg-success hover:bg-success/90 text-primary-foreground",
+	incorrect: "bg-destructive hover:bg-destructive/90 text-primary-foreground",
+	default: "",
+} as const;
+
 interface CelebrationButtonProps
 	extends ButtonHTMLAttributes<HTMLButtonElement> {
-	variantBtn?: "correct" | "incorrect" | "default";
+	variantBtn?: keyof typeof VARIANT_STYLES;
 	celebrateOnClick?: boolean;
 }
 
@@ -28,18 +34,12 @@ export function CelebrationButton({
 		onClick?.(e);
 	};
 
-	const variantStyles = {
-		correct: "bg-success hover:bg-success/90 text-primary-foreground",
-		incorrect: "bg-destructive hover:bg-destructive/90 text-primary-foreground",
-		default: "",
-	};
-
 	return (
 		<Button
 			ref={ref}
 			className={cn(
 				"relative font-medium transition-colors",
-				variantStyles[variantBtn],
+				VARIANT_STYLES[variantBtn],
 				className,
 			)}
 			onClick={handleCelebrationClick}

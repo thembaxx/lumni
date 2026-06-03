@@ -29,16 +29,17 @@ export const POST = withRateLimit(
 				return { success: false, reason: "vapid-not-configured" };
 			}
 
-			const webpush = await import("web-push");
+			const [webpushModule, { Query }, { listDocuments }] = await Promise.all([
+				import("web-push"),
+				import("appwrite"),
+				import("@/lib/db/client"),
+			]);
 
-			webpush.default.setVapidDetails(
+			webpushModule.default.setVapidDetails(
 				"mailto:study@lumni.app",
 				VAPID_PUBLIC_KEY,
 				VAPID_PRIVATE_KEY,
 			);
-
-			const { Query } = await import("appwrite");
-			const { listDocuments } = await import("@/lib/db/client");
 
 			const subscriptions = await listDocuments<Record<string, unknown>>(
 				"push_subscriptions",
@@ -54,7 +55,7 @@ export const POST = withRateLimit(
 							p256dh: sub.p256dh as string,
 						},
 					};
-					return webpush.default.sendNotification(
+					return webpushModule.default.sendNotification(
 						pushSub,
 						JSON.stringify({
 							title,

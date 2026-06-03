@@ -31,7 +31,7 @@ export function useAnimationBudget(
 	budget: AnimationBudget = DEFAULT_ANIMATION_BUDGET,
 ) {
 	const frameCountRef = useRef(0);
-	const lastFrameTimeRef = useRef(performance.now());
+	const lastFrameTimeRef = useRef<number | null>(null);
 	const budgetExceededRef = useRef(false);
 	const animationFrameRef = useRef<number | null>(null);
 
@@ -48,7 +48,7 @@ export function useAnimationBudget(
 
 		const frameCallback = (time: number) => {
 			frameCountRef.current++;
-			const frameTime = time - lastFrameTimeRef.current;
+			const frameTime = time - (lastFrameTimeRef.current ?? time);
 
 			// Check if we're exceeding our animation budget
 			if (frameTime > budget.maxFrameTime) {
@@ -90,7 +90,7 @@ export function useAnimationBudget(
 
 		const updateFPS = () => {
 			const now = performance.now();
-			const elapsed = now - lastFrameTimeRef.current;
+			const elapsed = now - (lastFrameTimeRef.current ?? now);
 
 			if (elapsed >= 1000) {
 				// Reset counters

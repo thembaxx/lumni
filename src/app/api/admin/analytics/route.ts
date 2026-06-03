@@ -63,20 +63,21 @@ export const GET = createRouteHandler({
 			}))
 			.slice(0, 10);
 
-		const subjectSessionCounts = await Promise.all(
-			subjectPopularity.map(async (s) => {
-				const count = await listDocuments<Record<string, unknown>>(
-					COLLECTIONS.STUDY_SESSIONS,
-					[Query.equal("subjectId", s.code), Query.limit(100)],
-				);
-				return { ...s, sessions: count.length };
-			}),
-		);
-
-		const recentSessionDocs = await listDocuments<Record<string, unknown>>(
-			COLLECTIONS.STUDY_SESSIONS,
-			[Query.greaterThan("startedAt", thirtyDaysAgo), Query.limit(500)],
-		);
+		const [subjectSessionCounts, recentSessionDocs] = await Promise.all([
+			Promise.all(
+				subjectPopularity.map(async (s) => {
+					const count = await listDocuments<Record<string, unknown>>(
+						COLLECTIONS.STUDY_SESSIONS,
+						[Query.equal("subjectId", s.code), Query.limit(100)],
+					);
+					return { ...s, sessions: count.length };
+				}),
+			),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.STUDY_SESSIONS, [
+				Query.greaterThan("startedAt", thirtyDaysAgo),
+				Query.limit(500),
+			]),
+		]);
 
 		const completedSessions = recentSessionDocs.filter(
 			(s) => s.endedAt || s.startedAt,

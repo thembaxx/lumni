@@ -51,17 +51,9 @@ export class QuizPackService {
 			.reverse()
 			.toArray();
 		const now = Date.now();
-		const updated: QuizPack[] = [];
-		const updates = packs.map(async (pack) => {
-			if (pack.status === "ready" && pack.expiresAt < now) {
-				await offlineDB.quizPacks.update(pack.id, {
-					status: "expired",
-				});
-				return { ...pack, status: "expired" as const };
-			}
-			return pack;
-		});
-		updated.push(...(await Promise.all(updates)));
+		const updated = await Promise.all(
+			packs.map(async (pack) => expirePackIfNeeded(pack, now)),
+		);
 		return updated;
 	}
 
@@ -112,3 +104,16 @@ export class QuizPackService {
 }
 
 export const quizPackService = new QuizPackService();
+
+async function expirePackIfNeeded(
+	pack: QuizPack,
+	now: number,
+): Promise<QuizPack> {
+	if (pack.status === "ready" && pack.expiresAt < now) {
+		await offlineDB.quizPacks.update(pack.id, {
+			status: "expired",
+		});
+		return { ...pack, status: "expired" as const };
+	}
+	return pack;
+}

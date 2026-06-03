@@ -3,8 +3,13 @@
 import { LinkSquare01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+
+const consentLeading = (
+	<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />
+);
 
 export function ParentConsentSection({ userId }: { userId: string }) {
 	const { data: requests } = useQuery({
@@ -19,12 +24,28 @@ export function ParentConsentSection({ userId }: { userId: string }) {
 		},
 	});
 
+	const trailing = useMemo(
+		() =>
+			requests ? (
+				<span
+					className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
+						requests.status === "granted"
+							? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300"
+							: "bg-muted text-muted-foreground"
+					}`}
+				>
+					{requests.status}
+				</span>
+			) : undefined,
+		[requests],
+	);
+
 	if (!requests) return null;
 
 	return (
 		<ListSection header="Parental Consent">
 			<ListCell
-				leading={<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />}
+				leading={consentLeading}
 				title="Consent Status"
 				subtitle={
 					requests.status === "granted"
@@ -34,17 +55,7 @@ export function ParentConsentSection({ userId }: { userId: string }) {
 							: "No parent link active"
 				}
 				showSeparator={false}
-				trailing={
-					<span
-						className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
-							requests.status === "granted"
-								? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300"
-								: "bg-muted text-muted-foreground"
-						}`}
-					>
-						{requests.status}
-					</span>
-				}
+				trailing={trailing}
 			/>
 		</ListSection>
 	);

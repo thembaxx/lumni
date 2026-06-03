@@ -9,6 +9,11 @@ import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
+
+async function refreshPage(): Promise<void> {
+	window.location.reload();
+}
+
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { SectionReveal } from "@/components/dashboard/section-reveal";
@@ -172,9 +177,7 @@ export function DashboardContent({
 	const showPractice = activeTab === "today" || activeTab === "spaces";
 	const showAnalytics = activeTab === "today" || activeTab === "analytics";
 
-	const handleRefresh = async () => {
-		window.location.reload();
-	};
+	const handleRefresh = refreshPage;
 
 	const todayStr = new Date().toDateString();
 	const boltDone = gamification.lastPracticeDate === todayStr;

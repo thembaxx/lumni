@@ -216,15 +216,16 @@ export function generateStudyPlan(
 		for (let i = unassigned.length - 1; i >= 0; i--) {
 			if (remaining <= 0) break;
 			const cand = unassigned[i];
+			const candSubjectId = cand.topic.subjectId;
 
 			// Skip if subject has an exam today
-			if (isExamDay(cand.topic.subjectId, key)) continue;
+			if (isExamDay(candSubjectId, key)) continue;
 			// Skip day before exam (rest day for that subject)
-			if (isDayBeforeExam(cand.topic.subjectId, d)) continue;
+			if (isDayBeforeExam(candSubjectId, d)) continue;
 
 			if (cand.topic.estimatedMinutes > remaining) continue;
 			if (
-				!todaySubjects.has(cand.topic.subjectId) &&
+				!todaySubjects.has(candSubjectId) &&
 				todaySubjects.size >= maxSubjectsPerDay
 			) {
 				continue;

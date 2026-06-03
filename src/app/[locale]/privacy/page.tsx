@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PageContainer } from "@/components/layout/page-container";
 
@@ -39,9 +40,12 @@ export default async function PrivacyPage() {
 						<p className="text-muted-foreground">
 							We use essential cookies for authentication and preferences, and
 							analytics cookies (Sentry) with your consent. See our{" "}
-							<a href="/cookie-policy" className="text-system-accent underline">
+							<Link
+								href="/cookie-policy"
+								className="text-system-accent underline"
+							>
 								Cookie Policy
-							</a>{" "}
+							</Link>{" "}
 							for details. You can manage preferences in Privacy Settings.
 						</p>
 

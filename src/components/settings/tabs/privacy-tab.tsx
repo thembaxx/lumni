@@ -16,6 +16,18 @@ import { Switch } from "@/components/ui/switch";
 import { useConsent } from "@/lib/consent/consent-context";
 import { appConfig } from "../../../../app.config";
 
+async function exportUserData(): Promise<void> {
+	const res = await fetch("/api/user/export");
+	if (!res.ok) return;
+	const blob = await res.blob();
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = `lumni-data-${new Date().toISOString().split("T")[0]}.json`;
+	a.click();
+	URL.revokeObjectURL(url);
+}
+
 export function PrivacyTab() {
 	const t = useTranslations();
 	const { consent, updateConsent } = useConsent();
@@ -45,17 +57,7 @@ export function PrivacyTab() {
 		}
 	};
 
-	const handleExport = async () => {
-		const res = await fetch("/api/user/export");
-		if (!res.ok) return;
-		const blob = await res.blob();
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = `lumni-data-${new Date().toISOString().split("T")[0]}.json`;
-		a.click();
-		URL.revokeObjectURL(url);
-	};
+	const handleExport = exportUserData;
 
 	return (
 		<div className="flex flex-col gap-6">

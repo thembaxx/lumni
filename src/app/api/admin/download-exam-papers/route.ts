@@ -63,6 +63,82 @@ function normalizeSubjectToCode(subjectName: string): string {
 		.replace(/^-|-$/g, "");
 }
 
+async function processExamFlow(params: {
+	subjectName: string;
+	subjectId: string;
+	year: number;
+	paperNum: number;
+	examType: string;
+	type: "paper" | "memo";
+	session: string;
+	fileName: string;
+}): Promise<{ downloaded: number; errors: string[] }> {
+	const {
+		subjectName,
+		subjectId,
+		year,
+		paperNum,
+		examType,
+		type,
+		session,
+		fileName,
+	} = params;
+
+	const examInfo = await findExamPaperUrl(
+		subjectName,
+		year,
+		paperNum,
+		type,
+		session,
+	);
+
+	if (!examInfo) {
+		const label = type === "paper" ? `P${paperNum}` : `Memo P${paperNum}`;
+		return {
+			downloaded: 0,
+			errors: [`${subjectName} ${examType} ${label}: No source URL found`],
+		};
+	}
+
+	const pdfData = await downloadPdf(examInfo.url);
+	if (!pdfData) {
+		const label = type === "paper" ? `P${paperNum}` : `Memo P${paperNum}`;
+		return {
+			downloaded: 0,
+			errors: [`${subjectName} ${examType} ${label}: Could not download PDF`],
+		};
+	}
+
+	const uploadResult = await uploadToUploadThing(pdfData.buffer, fileName);
+	if (!uploadResult) {
+		const label = type === "paper" ? `P${paperNum}` : `Memo P${paperNum}`;
+		return {
+			downloaded: 0,
+			errors: [`${subjectName} ${examType} ${label}: Upload to server failed`],
+		};
+	}
+
+	const saved = await saveToDatabase(
+		subjectId,
+		year,
+		paperNum,
+		type,
+		uploadResult.url,
+		uploadResult.key,
+		fileName,
+	);
+
+	if (!saved) {
+		const label = type === "paper" ? `P${paperNum}` : `Memo P${paperNum}`;
+		return {
+			downloaded: 0,
+			errors: [`${subjectName} ${examType} ${label}: Database save failed`],
+		};
+	}
+
+	return { downloaded: 1, errors: [] };
+}
+
 async function findExamPaperUrl(
 	subjectName: string,
 	year: number,
@@ -191,6 +267,70 @@ async function saveToDatabase(
 	}
 }
 
+async function downloadSubjectPapers(params: {
+	subject: unknown;
+	examType: string;
+	session: string;
+	year: number;
+	paperNumbers: number[];
+	includeMemo: boolean | undefined;
+}): Promise<{ downloadedForSubj: number; allErrors: string[] }> {
+	const subjRecord = params.subject as Record<string, unknown>;
+	const subjectName = subjRecord.name as string;
+	const subjectId = subjRecord.$id as string;
+	const subjectCode = subjRecord.code as string;
+
+	const paperResults = await Promise.all(
+		params.paperNumbers.map(async (paperNum) => {
+			const fileName = `${params.year}_${params.examType}_${subjectCode}_p${paperNum}.pdf`;
+			const memoFileName = `${params.year}_${params.examType}_${subjectCode}_p${paperNum}_memo.pdf`;
+
+			const flows: Promise<{ downloaded: number; errors: string[] }>[] = [
+				processExamFlow({
+					subjectName,
+					subjectId,
+					year: params.year,
+					paperNum,
+					examType: params.examType,
+					type: "paper",
+					session: params.session,
+					fileName,
+				}),
+			];
+
+			if (params.includeMemo) {
+				flows.push(
+					processExamFlow({
+						subjectName,
+						subjectId,
+						year: params.year,
+						paperNum,
+						examType: params.examType,
+						type: "memo",
+						session: params.session,
+						fileName: memoFileName,
+					}),
+				);
+			}
+
+			const flowResults = await Promise.all(flows);
+			const paperDownloaded = flowResults.reduce(
+				(sum, r) => sum + r.downloaded,
+				0,
+			);
+			const localErrors = flowResults.flatMap((r) => r.errors);
+			return { paperDownloaded, localErrors };
+		}),
+	);
+
+	const downloadedForSubj = paperResults.reduce(
+		(sum, r) => sum + r.paperDownloaded,
+		0,
+	);
+	const allErrors = paperResults.flatMap((r) => r.localErrors);
+	return { downloadedForSubj, allErrors };
+}
+
 export const POST = createRouteHandler({
 	auth: "admin",
 	errorLabel: "DownloadExamPapers",
@@ -214,124 +354,16 @@ export const POST = createRouteHandler({
 		const taskResults = await Promise.all(
 			examTypes.flatMap((examType) => {
 				const session = examType === "november" ? "november" : "may-june";
-				return subjects.map(async (subj) => {
-					const paperNumbers = examType === "november" ? [1, 2] : [1];
-
-					const paperResults = await Promise.all(
-						paperNumbers.map(async (paperNum) => {
-							const fileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}.pdf`;
-							const memoFileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}_memo.pdf`;
-
-							let paperDownloaded = 0;
-							const localErrors: string[] = [];
-
-							const examInfo = await findExamPaperUrl(
-								(subj as Record<string, unknown>).name as string,
-								year,
-								paperNum,
-								"paper",
-								session,
-							);
-
-							if (examInfo) {
-								const pdfData = await downloadPdf(examInfo.url);
-
-								if (pdfData) {
-									const uploadResult = await uploadToUploadThing(
-										pdfData.buffer,
-										fileName,
-									);
-
-									if (uploadResult) {
-										const saved = await saveToDatabase(
-											(subj as Record<string, unknown>).$id as string,
-											year,
-											paperNum,
-											"paper",
-											uploadResult.url,
-											uploadResult.key,
-											fileName,
-										);
-
-										if (saved) {
-											paperDownloaded++;
-										}
-									} else {
-										localErrors.push(
-											`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Upload to server failed`,
-										);
-									}
-								} else {
-									localErrors.push(
-										`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Could not download PDF`,
-									);
-								}
-							} else {
-								localErrors.push(
-									`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: No source URL found`,
-								);
-							}
-
-							if (includeMemo) {
-								const memoInfo = await findExamPaperUrl(
-									(subj as Record<string, unknown>).name as string,
-									year,
-									paperNum,
-									"memo",
-									session,
-								);
-
-								if (memoInfo) {
-									const memoData = await downloadPdf(memoInfo.url);
-
-									if (memoData) {
-										const uploadResult = await uploadToUploadThing(
-											memoData.buffer,
-											memoFileName,
-										);
-
-										if (uploadResult) {
-											const saved = await saveToDatabase(
-												(subj as Record<string, unknown>).$id as string,
-												year,
-												paperNum,
-												"memo",
-												uploadResult.url,
-												uploadResult.key,
-												memoFileName,
-											);
-
-											if (saved) {
-												paperDownloaded++;
-											}
-										} else {
-											localErrors.push(
-												`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: Upload to server failed`,
-											);
-										}
-									} else {
-										localErrors.push(
-											`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: Could not download PDF`,
-										);
-									}
-								} else {
-									localErrors.push(
-										`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: No source URL found`,
-									);
-								}
-							}
-
-							return { paperDownloaded, localErrors };
-						}),
-					);
-
-					const downloadedForSubj = paperResults.reduce(
-						(sum, r) => sum + r.paperDownloaded,
-						0,
-					);
-					const allErrors = paperResults.flatMap((r) => r.localErrors);
-					return { subj, downloadedForSubj, allErrors };
-				});
+				return subjects.map((subj) =>
+					downloadSubjectPapers({
+						subject: subj,
+						examType,
+						session,
+						year,
+						paperNumbers: examType === "november" ? [1, 2] : [1],
+						includeMemo,
+					}).then((summary) => ({ subj, ...summary })),
+				);
 			}),
 		);
 

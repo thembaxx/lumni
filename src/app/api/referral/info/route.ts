@@ -35,8 +35,10 @@ export const GET = withRateLimit(
 				codeDoc = fresh;
 			}
 
-			const referrals = await getReferralsByReferrer(userId);
-			const monthlyCount = await getReferralCountThisMonth(userId);
+			const [referrals, monthlyCount] = await Promise.all([
+				getReferralsByReferrer(userId),
+				getReferralCountThisMonth(userId),
+			]);
 
 			return {
 				code: codeDoc.code,

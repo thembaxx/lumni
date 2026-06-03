@@ -48,7 +48,6 @@ export function LeaderboardCard() {
 	const currentUserId = user?.$id;
 	const liveSince = useRealtimeIndicator();
 	const prevEntriesRef = useRef<LeaderboardEntry[]>([]);
-	const [rankChanged, setRankChanged] = useState(false);
 
 	const { data: rawEntries = [] } = useQuery({
 		queryKey: ["leaderboard"],
@@ -62,13 +61,6 @@ export function LeaderboardCard() {
 	}));
 
 	useEffect(() => {
-		if (rankChanged) {
-			const timer = setTimeout(() => setRankChanged(false), 3000);
-			return () => clearTimeout(timer);
-		}
-	}, [rankChanged]);
-
-	useEffect(() => {
 		const prev = prevEntriesRef.current;
 		if (prev.length > 0 && entries.length > 0) {
 			const currentUserEntry = entries.find((e) => e.isCurrentUser);
@@ -78,7 +70,6 @@ export function LeaderboardCard() {
 				prevUserEntry &&
 				currentUserEntry.rank < prevUserEntry.rank
 			) {
-				setRankChanged(true);
 				toast({
 					type: "success",
 					message: `Leaderboard: #${prevUserEntry.rank} → #${currentUserEntry.rank}`,

@@ -32,18 +32,21 @@ export const DELETE = createRouteHandler({
 	auth: "required",
 	errorLabel: "Account",
 	execute: async ({ userId }) => {
-		for (const collection of USER_DATA_COLLECTIONS) {
-			try {
-				const docs = await listDocuments<Record<string, unknown>>(collection, [
-					Query.equal("userId", userId as string),
-				]);
-				await Promise.all(
-					docs.map((doc) => deleteDocument(collection, doc.$id as string)),
-				);
-			} catch {
-				// collection may not exist, skip
-			}
-		}
+		await Promise.all(
+			USER_DATA_COLLECTIONS.map(async (collection) => {
+				try {
+					const docs = await listDocuments<Record<string, unknown>>(
+						collection,
+						[Query.equal("userId", userId as string)],
+					);
+					await Promise.all(
+						docs.map((doc) => deleteDocument(collection, doc.$id as string)),
+					);
+				} catch {
+					// collection may not exist, skip
+				}
+			}),
+		);
 
 		await userConsentService.delete(userId as string);
 

@@ -17,6 +17,21 @@ import { Textarea } from "@/components/ui/textarea";
 import type { GradingResult, Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 
+const QUESTION_TYPES = [
+	"any",
+	"multiple-choice",
+	"matching",
+	"short-answer",
+	"long-answer",
+	"essay",
+	"calculation",
+	"diagram",
+	"programming",
+	"source-based",
+	"data-response",
+	"mixed",
+] as const;
+
 interface DevEngineState {
 	subject: string;
 	topic: string;
@@ -153,20 +168,7 @@ export default function DevEnginePage() {
 		}
 	}, []);
 
-	const types = [
-		"any",
-		"multiple-choice",
-		"matching",
-		"short-answer",
-		"long-answer",
-		"essay",
-		"calculation",
-		"diagram",
-		"programming",
-		"source-based",
-		"data-response",
-		"mixed",
-	];
+	const types = QUESTION_TYPES;
 
 	return (
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-4 bg-background p-4 pb-20">

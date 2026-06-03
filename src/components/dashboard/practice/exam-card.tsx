@@ -118,9 +118,10 @@ export function ExamCard({ exam }: ExamCardProps) {
 						</Button>
 						{viewDropdownOpen && (
 							<>
-								{/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: backdrop overlay */}
-								<div
-									className="fixed inset-0 z-10"
+								<button
+									type="button"
+									aria-label="Close menu"
+									className="fixed inset-0 z-10 cursor-default"
 									onClick={(e) => {
 										e.stopPropagation();
 										setViewDropdownOpen(false);
@@ -159,9 +160,10 @@ export function ExamCard({ exam }: ExamCardProps) {
 						</Button>
 						{practiceDropdownOpen && (
 							<>
-								{/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: backdrop overlay */}
-								<div
-									className="fixed inset-0 z-10"
+								<button
+									type="button"
+									aria-label="Close menu"
+									className="fixed inset-0 z-10 cursor-default"
 									onClick={(e) => {
 										e.stopPropagation();
 										setPracticeDropdownOpen(false);

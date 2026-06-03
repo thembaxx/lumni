@@ -162,17 +162,18 @@ interface EmptyStateWithIllustrationProps {
 	animation?: "search" | "upload" | "error";
 }
 
+const ANIMATION_MAP: Record<"search" | "upload" | "error", string> = {
+	search: "empty-search",
+	upload: "empty-upload",
+	error: "error-state",
+};
+
 function AnimatedIllustration({
 	animation,
 }: {
 	animation: "search" | "upload" | "error";
 }) {
-	const animationMap: Record<string, string> = {
-		search: "empty-search",
-		upload: "empty-upload",
-		error: "error-state",
-	};
-	return <AnimatedIcon name={animationMap[animation]} className="size-14" />;
+	return <AnimatedIcon name={ANIMATION_MAP[animation]} className="size-14" />;
 }
 
 export function EmptyStateWithIllustration({

@@ -12,11 +12,14 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 
 interface ControlButtonsProps {
-	isRecording: boolean;
-	isPlaying: boolean;
+	recorderState:
+		| "idle"
+		| "recording"
+		| "recorded"
+		| "playing"
+		| "sending"
+		| "permission-denied";
 	audioBlob: Blob | null;
-	isPaperPlaneing: boolean;
-	showPermissionError: boolean;
 	disabled: boolean;
 	onReset: () => void;
 	onRecordClick: () => void;
@@ -24,16 +27,17 @@ interface ControlButtonsProps {
 }
 
 export function ControlButtons({
-	isRecording,
-	isPlaying,
+	recorderState,
 	audioBlob,
-	isPaperPlaneing,
-	showPermissionError,
 	disabled,
 	onReset,
 	onRecordClick,
 	onTogglePlayback,
 }: ControlButtonsProps) {
+	const isRecording = recorderState === "recording";
+	const isPlaying = recorderState === "playing";
+	const isPaperPlaneing = recorderState === "sending";
+	const showPermissionError = recorderState === "permission-denied";
 	return (
 		<div className="flex items-center gap-4">
 			<Button

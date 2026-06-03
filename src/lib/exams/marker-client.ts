@@ -53,10 +53,12 @@ export async function uploadImagesAndRewriteMarkdown(
 	const utapi = new UTApi();
 	const imageUrlMap: Record<string, string> = {};
 
+	const base64Marker = "base64,";
 	const uploadPromises: Promise<{ filename: string; url: string }>[] = [];
 	for (const img of images) {
-		const base64Data = img.data.includes("base64,")
-			? img.data.split("base64,")[1]
+		const hasBase64Prefix = img.data.startsWith(`data:${base64Marker}`);
+		const base64Data = hasBase64Prefix
+			? (img.data.split(base64Marker)[1] ?? img.data)
 			: img.data;
 		const buffer = Buffer.from(base64Data, "base64");
 		const uint8Array = new Uint8Array(buffer);

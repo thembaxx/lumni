@@ -9,6 +9,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 
+const QUESTION_TYPES = [
+	"multiple-choice",
+	"matching",
+	"short-answer",
+	"long-answer",
+	"essay",
+	"calculation",
+	"diagram",
+	"programming",
+	"source-based",
+	"data-response",
+	"mixed",
+] as const;
+
 interface QuestionWithMeta {
 	question: Question;
 	generatedAt: string;
@@ -93,19 +107,7 @@ export default function AdminQuestionsPage() {
 		[subject],
 	);
 
-	const questionTypes = [
-		"multiple-choice",
-		"matching",
-		"short-answer",
-		"long-answer",
-		"essay",
-		"calculation",
-		"diagram",
-		"programming",
-		"source-based",
-		"data-response",
-		"mixed",
-	];
+	const questionTypes = QUESTION_TYPES;
 
 	return (
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-6 bg-background p-6">

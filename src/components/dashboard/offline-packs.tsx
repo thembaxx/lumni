@@ -26,6 +26,27 @@ import { useQuizPacks } from "@/hooks/use-quiz-packs";
 import { useSubjects } from "@/hooks/use-subjects";
 import { usePremium } from "@/lib/premium/premium-context";
 
+function formatPackBytes(bytes: number): string {
+	if (bytes < 1024) return `${bytes} B`;
+	if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+	return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function renderPackStatusBadge(status: string): React.ReactNode {
+	switch (status) {
+		case "generating":
+			return <Badge variant="outline">Generating…</Badge>;
+		case "ready":
+			return <Badge variant="default">Ready</Badge>;
+		case "expired":
+			return <Badge variant="secondary">Expired</Badge>;
+		case "failed":
+			return <Badge variant="destructive">Failed</Badge>;
+		default:
+			return null;
+	}
+}
+
 export function OfflinePackManager() {
 	const {
 		packs,
@@ -79,26 +100,9 @@ export function OfflinePackManager() {
 		);
 	};
 
-	const formatBytes = (bytes: number) => {
-		if (bytes < 1024) return `${bytes} B`;
-		if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-		return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-	};
+	const formatBytes = formatPackBytes;
 
-	const statusBadge = (status: string) => {
-		switch (status) {
-			case "generating":
-				return <Badge variant="outline">Generating…</Badge>;
-			case "ready":
-				return <Badge variant="default">Ready</Badge>;
-			case "expired":
-				return <Badge variant="secondary">Expired</Badge>;
-			case "failed":
-				return <Badge variant="destructive">Failed</Badge>;
-			default:
-				return null;
-		}
-	};
+	const statusBadge = renderPackStatusBadge;
 
 	return (
 		<Card>

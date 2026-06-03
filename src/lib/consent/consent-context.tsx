@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, use, useCallback, useEffect, useState } from "react";
+import {
+	createContext,
+	use,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 import { updateAnalyticsConsent } from "@/lib/consent/sentry-gate";
@@ -111,16 +118,15 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 		[userId],
 	);
 
-	return (
-		<ConsentContext
-			value={{
-				...state,
-				updateConsent,
-			}}
-		>
-			{children}
-		</ConsentContext>
+	const value = useMemo(
+		() => ({
+			...state,
+			updateConsent,
+		}),
+		[state, updateConsent],
 	);
+
+	return <ConsentContext value={value}>{children}</ConsentContext>;
 }
 
 export function useConsent(): ConsentContextValue {

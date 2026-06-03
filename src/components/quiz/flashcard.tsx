@@ -81,7 +81,8 @@ export function Flashcard({
 
 	return (
 		<Anim>
-			<fieldset
+			<div
+				role="application"
 				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}
 				aria-label="Flashcard quiz"
@@ -166,7 +167,7 @@ export function Flashcard({
 						Restart
 					</Button>
 				</div>
-			</fieldset>
+			</div>
 		</Anim>
 	);
 }

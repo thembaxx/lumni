@@ -172,23 +172,34 @@ export const navConfig: NavCategory[] = [
 ];
 
 export function getPrimaryItems(): NavItem[] {
-	return navConfig.flatMap((cat) => cat.items).filter((item) => item.primary);
+	const allItems = navConfig.flatMap((cat) => cat.items);
+	const primary: NavItem[] = [];
+	for (const item of allItems) {
+		if (item.primary) primary.push(item);
+	}
+	return primary;
 }
 
 export function getRouteLabel(route: string): string | undefined {
+	const itemByRoute = new Map<string, NavItem>();
 	for (const cat of navConfig) {
-		const item = cat.items.find((item) => route.startsWith(item.route));
-		if (item) return item.label;
+		for (const item of cat.items) {
+			if (!itemByRoute.has(item.route)) {
+				itemByRoute.set(item.route, item);
+			}
+		}
+	}
+	for (const [itemRoute, item] of itemByRoute) {
+		if (route.startsWith(itemRoute)) return item.label;
 	}
 	return undefined;
 }
 
 export function getNavHierarchy(): Record<string, number> {
 	const depthMap: Record<string, number> = {};
-	navConfig
-		.flatMap((cat) => cat.items)
-		.forEach((item, index) => {
-			depthMap[item.route] = index < 2 ? 0 : 1;
-		});
+	const allItems = navConfig.flatMap((cat) => cat.items);
+	allItems.forEach((item, index) => {
+		depthMap[item.route] = index < 2 ? 0 : 1;
+	});
 	return depthMap;
 }

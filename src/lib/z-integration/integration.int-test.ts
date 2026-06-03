@@ -354,7 +354,7 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 	test("5. Job processor processes batch of queued jobs", async () => {
 		const processor = new JobProcessor();
 
-		const [_syncId, _visId] = await Promise.all([
+		await Promise.all([
 			enqueue("appwrite-sync", {
 				questions: [cannedQuestion],
 				subject: "mathematics",
@@ -367,15 +367,17 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 				topic: "algebra",
 			}),
 		]);
-
-		const result = await processor.processBatch(5);
+		const [result, allJobs] = await Promise.all([
+			processor.processBatch(5),
+			mockJobsStore.toArray(),
+		]);
 
 		expect(result.processed).toBe(2);
 		expect(result.succeeded).toBe(2);
 		expect(result.failed).toBe(0);
 		expect(mockSyncToAppwrite).toHaveBeenCalled();
 
-		const completedJobs = (await mockJobsStore.toArray()).filter(
+		const completedJobs = allJobs.filter(
 			(j) => (j as { status: string }).status === "completed",
 		);
 		expect(completedJobs).toHaveLength(2);

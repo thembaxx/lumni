@@ -2,12 +2,16 @@
 
 import { cn } from "@/lib/shared";
 
+type DisplayMode =
+	| "idle"
+	| "recording"
+	| "playing"
+	| "permission-denied"
+	| "validation-error"
+	| "success";
+
 interface StatusDisplayProps {
-	sendSuccess: boolean;
-	isRecording: boolean;
-	isPlaying: boolean;
-	showPermissionError: boolean;
-	showValidationError: boolean;
+	displayMode: DisplayMode;
 	isTooShort: boolean;
 	isTooLong: boolean;
 	recordingError: string | null;
@@ -16,17 +20,18 @@ interface StatusDisplayProps {
 }
 
 export function StatusDisplay({
-	sendSuccess,
-	isRecording,
-	isPlaying,
-	showPermissionError,
-	showValidationError,
+	displayMode,
 	isTooShort,
 	isTooLong,
 	recordingError,
 	statusText,
 	timerDisplay,
 }: StatusDisplayProps) {
+	const isRecording = displayMode === "recording";
+	const isPlaying = displayMode === "playing";
+	const showPermissionError = displayMode === "permission-denied";
+	const showValidationError = displayMode === "validation-error";
+	const sendSuccess = displayMode === "success";
 	return (
 		<div className="flex min-h-14 flex-col items-center gap-1">
 			{showValidationError && (

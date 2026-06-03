@@ -2,7 +2,7 @@
 
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
@@ -70,12 +70,6 @@ export function QuestionCardInput({
 	const [textInputValue, setTextInputValue] = useState("");
 	const [longAnswerValue, setLongAnswerValue] = useState("");
 	const [essayValue, setEssayValue] = useState("");
-
-	useEffect(() => {
-		setTextInputValue("");
-		setLongAnswerValue("");
-		setEssayValue("");
-	}, []);
 
 	if (state.isSubmitted) {
 		return null;

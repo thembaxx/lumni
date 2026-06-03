@@ -15,6 +15,13 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
+const REASON_COLORS: Record<string, string> = {
+	wrong: "destructive",
+	offensive: "destructive",
+	broken: "outline",
+	other: "secondary",
+};
+
 interface Flag {
 	$id: string;
 	questionId: string;
@@ -73,12 +80,7 @@ export function ContentClient() {
 		return nextDates;
 	}, [flags]);
 
-	const reasonColors: Record<string, string> = {
-		wrong: "destructive",
-		offensive: "destructive",
-		broken: "outline",
-		other: "secondary",
-	};
+	const reasonColors: Record<string, string> = REASON_COLORS;
 
 	return (
 		<div className="min-h-dvh bg-background" suppressHydrationWarning>

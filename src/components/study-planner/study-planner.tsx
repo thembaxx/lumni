@@ -40,7 +40,9 @@ function StudyPlannerInner() {
 
 	const [showAddSession, setShowAddSession] = useState(false);
 	const [showAddExam, setShowAddExam] = useState(false);
-	const _now = useRef(Date.now());
+	const _nowRef = useRef<number | null>(null);
+	if (_nowRef.current === null) _nowRef.current = Date.now();
+	const _now = _nowRef.current;
 
 	const exportCalendar = () => {
 		const ics = exportToICal(

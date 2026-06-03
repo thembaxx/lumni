@@ -12,15 +12,16 @@ export const GET = createRouteHandler({
 	execute: async ({ userId, params }) => {
 		const groupId = params?.groupId as string;
 
-		const membersResult = await getGroupMembers(groupId);
+		const [membersResult, result] = await Promise.all([
+			getGroupMembers(groupId),
+			getGroupPosts(groupId),
+		]);
 		const isMember =
 			membersResult.success &&
 			membersResult.data.some((m) => m.userId === userId);
 		if (!isMember) {
 			throw new HttpError(403, "Not a member of this group");
 		}
-
-		const result = await getGroupPosts(groupId);
 		if (!result.success) {
 			throw new HttpError(500, result.error);
 		}
@@ -42,8 +43,10 @@ export const POST = createRouteHandler({
 			throw new HttpError(403, "Not a member of this group");
 		}
 
-		const body = await req.json();
-		const userName = await getAuthenticatedUserName();
+		const [body, userName] = await Promise.all([
+			req.json(),
+			getAuthenticatedUserName(),
+		]);
 
 		const result = await createPost(userId as string, userName ?? undefined, {
 			groupId,

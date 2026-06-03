@@ -1,6 +1,7 @@
+import { Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
-import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
+import { APPWRITE_DATABASE_ID, listDocuments } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const PUSH_SUBSCRIPTIONS_COLLECTION = "push_subscriptions";
@@ -19,11 +20,6 @@ const subscribeHandler = createRouteHandler({
 				keys?: { auth?: string; p256dh?: string };
 			};
 		};
-
-		const [{ Query }, { listDocuments }] = await Promise.all([
-			import("appwrite"),
-			import("@/lib/db/client"),
-		]);
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,
@@ -60,11 +56,6 @@ const unsubscribeHandler = createRouteHandler({
 	},
 	execute: async ({ body, userId }) => {
 		const { endpoint } = body as { endpoint: string };
-
-		const [{ Query }, { listDocuments }] = await Promise.all([
-			import("appwrite"),
-			import("@/lib/db/client"),
-		]);
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,

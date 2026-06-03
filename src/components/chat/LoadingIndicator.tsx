@@ -3,18 +3,21 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useState } from "react";
 
+const LOADING_MESSAGES = [
+	"Thinking…",
+	"Finding the right words…",
+	"Just a sec…",
+] as const;
+
+const MESSAGE_ROTATION_INTERVAL_MS = 2500;
+
 export function LoadingIndicator() {
-	const loadingMessages = [
-		"Thinking…",
-		"Finding the right words…",
-		"Just a sec…",
-	] as const;
 	const [messageIndex, setMessageIndex] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setMessageIndex((prev) => (prev + 1) % 3);
-		}, 2500);
+			setMessageIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+		}, MESSAGE_ROTATION_INTERVAL_MS);
 		return () => clearInterval(interval);
 	}, []);
 
@@ -45,7 +48,7 @@ export function LoadingIndicator() {
 					transition={{ duration: 0.2 }}
 					className="font-extrabold text-xs uppercase tracking-widest"
 				>
-					{loadingMessages[messageIndex]}
+					{LOADING_MESSAGES[messageIndex]}
 				</m.span>
 			</AnimatePresence>
 		</m.div>

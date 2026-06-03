@@ -25,38 +25,57 @@ import { useUploadThing } from "@/lib/uploadthing";
 const guidedSetupLeading = (
 	<HugeiconsIcon icon={CompassIcon} className="size-5" />
 );
+
+const guidedSetupTrailing = (
+	<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
+		Redo
+	</span>
+);
+
+const initialDrafts = {
+	schoolDraft: "",
+	gradeDraft: "",
+	provinceDraft: "",
+};
+
+type ProfileDraftState = typeof initialDrafts;
+
+function draftReducer(
+	state: ProfileDraftState,
+	action:
+		| { type: "SET_ALL"; drafts: ProfileDraftState }
+		| { type: "SET_FIELD"; field: keyof ProfileDraftState; value: unknown },
+): ProfileDraftState {
+	switch (action.type) {
+		case "SET_ALL":
+			return action.drafts;
+		case "SET_FIELD":
+			return { ...state, [action.field]: action.value };
+	}
+}
+
+async function toggleProfileSubject(
+	userId: string,
+	subjectId: string,
+	queryClient: ReturnType<typeof useQueryClient>,
+): Promise<void> {
+	try {
+		await toggleUserSubject(userId, subjectId);
+		queryClient.invalidateQueries({ queryKey: ["subjects"] });
+		queryClient.invalidateQueries({
+			queryKey: ["user-subjects", userId],
+		});
+	} catch (e) {
+		console.warn("[Profile] Failed to save subjects", e);
+	}
+}
+
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
 	const { startUpload } = useUploadThing("avatarUploader");
 	const [showGuidedSetup, setShowGuidedSetup] = useState(false);
 	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-
-	type ProfileDraftState = {
-		schoolDraft: string;
-		gradeDraft: string;
-		provinceDraft: string;
-	};
-
-	const initialDrafts: ProfileDraftState = {
-		schoolDraft: "",
-		gradeDraft: "",
-		provinceDraft: "",
-	};
-
-	function draftReducer(
-		state: ProfileDraftState,
-		action:
-			| { type: "SET_ALL"; drafts: ProfileDraftState }
-			| { type: "SET_FIELD"; field: keyof ProfileDraftState; value: unknown },
-	): ProfileDraftState {
-		switch (action.type) {
-			case "SET_ALL":
-				return action.drafts;
-			case "SET_FIELD":
-				return { ...state, [action.field]: action.value };
-		}
-	}
 
 	const [drafts, dispatchDrafts] = useReducer(draftReducer, initialDrafts);
 	const { schoolDraft, gradeDraft, provinceDraft } = drafts;
@@ -115,15 +134,7 @@ export function ProfileTab() {
 	const handleToggleSubject = useCallback(
 		async (subjectId: string) => {
 			if (!user) return;
-			try {
-				await toggleUserSubject(user.$id, subjectId);
-				queryClient.invalidateQueries({ queryKey: ["subjects"] });
-				queryClient.invalidateQueries({
-					queryKey: ["user-subjects", user.$id],
-				});
-			} catch (e) {
-				console.warn("[Profile] Failed to save subjects", e);
-			}
+			await toggleProfileSubject(user.$id, subjectId, queryClient);
 		},
 		[user, queryClient],
 	);
@@ -231,11 +242,7 @@ export function ProfileTab() {
 					title="Guided Setup"
 					subtitle="Set your subjects, targets, and study schedule"
 					showSeparator={false}
-					trailing={
-						<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
-							Redo
-						</span>
-					}
+					trailing={guidedSetupTrailing}
 					onClick={() => setShowConfirmDialog(true)}
 				/>
 			</ListSection>

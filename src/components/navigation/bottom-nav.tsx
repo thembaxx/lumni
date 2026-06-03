@@ -37,16 +37,16 @@ const navItems: BottomNavItem[] = [
 const NavItemComponent = memo(function NavItemComponent({
 	item,
 	isActive,
-	onClick,
+	onNavigate,
 }: {
 	item: BottomNavItem;
 	isActive: boolean;
-	onClick: () => void;
+	onNavigate: (href: string) => void;
 }) {
 	return (
 		<m.button
 			type="button"
-			onClick={onClick}
+			onClick={() => onNavigate(item.href)}
 			aria-label={item.label}
 			aria-current={isActive ? "page" : undefined}
 			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-inset"
@@ -109,9 +109,9 @@ export function BottomNav() {
 		return index >= 0 ? index : 0;
 	}, [pathname]);
 
-	const handleItemClick = useCallback(
-		(item: BottomNavItem) => {
-			push(item.href);
+	const handleNavigate = useCallback(
+		(href: string) => {
+			push(href);
 		},
 		[push],
 	);
@@ -129,7 +129,7 @@ export function BottomNav() {
 					<NavItemComponent
 						key={item.id}
 						item={item}
-						onClick={() => handleItemClick(item)}
+						onNavigate={handleNavigate}
 						isActive={index === activeIndex}
 					/>
 				))}

@@ -33,7 +33,10 @@ export function UploadDialogRenderer({
 	const startUploadRef = useRef<
 		((files: File[]) => Promise<UploadedFile[] | undefined> | undefined) | null
 	>(null);
-	const fileNameToItemRef = useRef<Map<string, number>>(new Map());
+	const fileNameToItemRef = useRef<Map<string, number> | null>(null);
+	if (fileNameToItemRef.current === null) {
+		fileNameToItemRef.current = new Map();
+	}
 
 	const { startUpload, isUploading } = useUploadThing(endpoint, {
 		uploadProgressGranularity: "fine",

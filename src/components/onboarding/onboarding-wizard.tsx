@@ -2,7 +2,14 @@
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useReducer,
+	useRef,
+	useState,
+} from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { PageContainer } from "@/components/layout/page-container";
 import subjectsData from "@/data/subjects.json";
@@ -55,16 +62,86 @@ const STEPS_COPY = [
 		cta: "Start learning",
 		SVG: WelcomeSVG,
 	},
+] as const;
+
+type WizardState = {
+	step: number;
+	selectedSubjects: string[];
+	targetAps: number;
+	dailyMinutes: number;
+};
+
+type WizardAction =
+	| { type: "setStep"; step: number | ((prev: number) => number) }
+	| { type: "setSelectedSubjects"; subjects: string[] }
+	| { type: "setTargetAps"; aps: number }
+	| { type: "setDailyMinutes"; minutes: number };
+
+function wizardReducer(state: WizardState, action: WizardAction): WizardState {
+	switch (action.type) {
+		case "setStep":
+			return {
+				...state,
+				step:
+					typeof action.step === "function"
+						? action.step(state.step)
+						: action.step,
+			};
+		case "setSelectedSubjects":
+			return { ...state, selectedSubjects: action.subjects };
+		case "setTargetAps":
+			return { ...state, targetAps: action.aps };
+		case "setDailyMinutes":
+			return { ...state, dailyMinutes: action.minutes };
+		default:
+			return state;
+	}
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+	sciences: "Sciences",
+	languages: "Languages",
+	business: "Business",
+	humanities: "Humanities",
+	technology: "Technology",
+	agriculture: "Agriculture",
+	arts: "Arts",
+	services: "Services",
+	compulsory: "Compulsory",
+};
+
+const CATEGORY_ORDER: string[] = [
+	"sciences",
+	"languages",
+	"business",
+	"humanities",
+	"technology",
+	"agriculture",
+	"arts",
+	"services",
+	"compulsory",
 ];
 
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	const { data, completeOnboarding, updateProgress } = useOnboarding();
-	const [step, setStep] = useState(data.currentStep);
-	const [selectedSubjects, setSelectedSubjects] = useState<string[]>(
-		data.selectedSubjects,
-	);
-	const [targetAps, setTargetAps] = useState(data.targetAps);
-	const [dailyMinutes, setDailyMinutes] = useState(data.dailyStudyMinutes);
+	const [wizard, dispatchWizard] = useReducer(wizardReducer, {
+		step: data.currentStep,
+		selectedSubjects: data.selectedSubjects,
+		targetAps: data.targetAps,
+		dailyMinutes: data.dailyStudyMinutes,
+	});
+	const setStep = (step: number | ((prev: number) => number)) =>
+		dispatchWizard({ type: "setStep", step });
+	const setSelectedSubjects = (subjects: string[]) =>
+		dispatchWizard({
+			type: "setSelectedSubjects",
+			subjects: subjects as readonly string[] as string[],
+		});
+	const setTargetAps = (aps: number) =>
+		dispatchWizard({ type: "setTargetAps", aps });
+	const setDailyMinutes = (minutes: number) =>
+		dispatchWizard({ type: "setDailyMinutes", minutes });
+	const { step, selectedSubjects, targetAps, dailyMinutes } = wizard;
 	const [searchTerm, setSearchTerm] = useState("");
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [isCompleting, setIsCompleting] = useState(false);
@@ -81,25 +158,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	}, [step, selectedSubjects, targetAps, dailyMinutes, updateProgress]);
 
 	useEffect(() => {
+		const timerAtMount = completeTimerRef.current;
 		return () => {
-			if (completeTimerRef.current) clearTimeout(completeTimerRef.current);
+			if (timerAtMount) clearTimeout(timerAtMount);
 		};
 	}, []);
 
 	const current = STEPS_COPY[step];
 	const { user } = useAuth();
 
-	const categoryLabels: Record<string, string> = {
-		sciences: "Sciences",
-		languages: "Languages",
-		business: "Business",
-		humanities: "Humanities",
-		technology: "Technology",
-		agriculture: "Agriculture",
-		arts: "Arts",
-		services: "Services",
-		compulsory: "Compulsory",
-	};
+	const categoryLabels: Record<string, string> = CATEGORY_LABELS;
 
 	const subjectsByCategory = useMemo(() => {
 		const groups: Record<string, Subject[]> = {};
@@ -114,17 +182,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 		return groups;
 	}, []);
 
-	const categoryOrder = [
-		"sciences",
-		"languages",
-		"business",
-		"humanities",
-		"technology",
-		"agriculture",
-		"arts",
-		"services",
-		"compulsory",
-	];
+	const categoryOrder = CATEGORY_ORDER;
 
 	const [expandedCategories, setExpandedCategories] = useState<
 		Record<string, boolean>
@@ -202,12 +260,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			return;
 		}
 		if (step === 1) setSearchTerm("");
-		setStep((s) => s + 1);
+		setStep((prev) => prev + 1);
 	};
 
 	const handleBack = () => {
 		if (step > 0) {
-			setStep((s) => s - 1);
+			setStep((prev) => prev - 1);
 		}
 	};
 
@@ -232,8 +290,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	};
 
 	const handleToggleSubject = (id: string) => {
-		setSelectedSubjects((prev) =>
-			prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
+		setSelectedSubjects(
+			selectedSubjects.includes(id)
+				? selectedSubjects.filter((s) => s !== id)
+				: [...selectedSubjects, id],
 		);
 	};
 

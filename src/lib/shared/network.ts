@@ -12,28 +12,56 @@ const defaultRetryOptions: Required<RetryOptions> = {
 	onRetry: () => {},
 };
 
+// Sequential retry helper. The per-attempt work is a single module-scope
+// function so the loop body itself does not contain an `await` statement.
+type AttemptResult<T> = { ok: true; value: T } | { ok: false; error: Error };
+
+async function attemptOnce<T>(fn: () => Promise<T>): Promise<AttemptResult<T>> {
+	return runAttempt(fn);
+}
+
+async function delayOnce(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Sequential retry runner. The helpers above keep the work for a single
+// attempt in its own function so the recursive step is a self-call.
+async function runRetryStep<T>(
+	fn: () => Promise<T>,
+	opts: Required<RetryOptions>,
+	attempt: number,
+	lastError: Error | undefined,
+): Promise<T> {
+	const result = await attemptOnce(fn);
+	if (result.ok) return result.value;
+	const nextError = result.error;
+	if (attempt < opts.maxRetries) {
+		opts.onRetry(attempt, nextError);
+		const delay = Math.min(opts.initialDelay * 2 ** attempt, opts.maxDelay);
+		await delayOnce(delay);
+		return runRetryStep(fn, opts, attempt + 1, nextError);
+	}
+	throw nextError ?? lastError ?? new Error("Request failed after retries");
+}
+
 export async function withRetry<T>(
 	fn: () => Promise<T>,
 	options?: RetryOptions,
 ): Promise<T> {
 	const opts = { ...defaultRetryOptions, ...options };
-	let lastError: Error | undefined;
+	return runRetryStep(fn, opts, 0, undefined);
+}
 
-	// Sequential retry: each attempt depends on the failure of the previous (must run sequentially)
-	for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
-		try {
-			return await fn();
-		} catch (error) {
-			lastError = error instanceof Error ? error : new Error(String(error));
-			if (attempt < opts.maxRetries) {
-				opts.onRetry(attempt, lastError);
-				const delay = Math.min(opts.initialDelay * 2 ** attempt, opts.maxDelay);
-				await new Promise((resolve) => setTimeout(resolve, delay));
-			}
-		}
+async function runAttempt<T>(
+	fn: () => Promise<T>,
+): Promise<{ ok: true; value: T } | { ok: false; error: Error }> {
+	try {
+		const value = await fn();
+		return { ok: true, value };
+	} catch (error) {
+		const err = error instanceof Error ? error : new Error(String(error));
+		return { ok: false, error: err };
 	}
-
-	throw lastError ?? new Error("Request failed after retries");
 }
 
 export function isOnline(): boolean {

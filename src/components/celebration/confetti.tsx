@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 
 interface ConfettiPiece {
 	id: number;
@@ -34,22 +34,7 @@ export function Confetti({
 	count?: number;
 	duration?: number;
 }) {
-	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-	const [visible, setVisible] = useState(false);
-
-	if (trigger && !visible) {
-		setVisible(true);
-	}
-
-	useEffect(() => {
-		if (!trigger) return;
-		clearTimeout(timerRef.current);
-		timerRef.current = setTimeout(() => setVisible(false), duration);
-		return () => clearTimeout(timerRef.current);
-	}, [trigger, duration]);
-
 	const pieces = useMemo<ConfettiPiece[]>(() => {
-		if (!trigger) return [];
 		return Array.from({ length: count }, (_, i) => ({
 			id: i,
 			x: Math.random() * 100,
@@ -63,12 +48,16 @@ export function Confetti({
 				| "square",
 			xOffset: (Math.random() - 0.5) * 30,
 		}));
-	}, [trigger, count]);
+	}, [count]);
 
-	if (!visible) return null;
+	if (!trigger) return null;
 
 	return (
-		<div className="pointer-events-none fixed inset-0 z-modal overflow-hidden">
+		<div
+			suppressHydrationWarning
+			key={`burst-${trigger}-${count}`}
+			className="pointer-events-none fixed inset-0 z-modal overflow-hidden"
+		>
 			{pieces.map((piece) => (
 				<m.div
 					key={piece.id}

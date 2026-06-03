@@ -175,8 +175,10 @@ export default async function LocaleLayout({
 
 	setRequestLocale(locale);
 
-	const messages = await getMessages();
-	const t = await getTranslations({ locale, namespace: "common" });
+	const [messages, t] = await Promise.all([
+		getMessages(),
+		getTranslations({ locale, namespace: "common" }),
+	]);
 
 	return (
 		<>

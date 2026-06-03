@@ -371,8 +371,10 @@ export function StudyPlanOverview() {
 							Bookmarked questions
 						</p>
 						<div className="flex flex-wrap gap-1.5">
-							{[...bookmarksBySubject.entries()]
-								.sort((a, b) => b[1] - a[1])
+							{bookmarksBySubject
+								.entries()
+								.toArray()
+								.toSorted((a, b) => b[1] - a[1])
 								.slice(0, 5)
 								.map(([subj, count]) => (
 									<Link

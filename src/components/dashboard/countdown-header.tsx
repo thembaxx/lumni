@@ -371,12 +371,10 @@ export function CountdownHeader() {
 							)}
 						</div>
 
-						<div
-							className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40"
-							role="progressbar"
-							aria-valuenow={mounted ? Math.round(yearProgress * 100) : 0}
-							aria-valuemin={0}
-							aria-valuemax={100}
+						<progress
+							className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40 [&::-moz-progress-bar]:bg-primary [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-primary"
+							value={mounted ? Math.round(yearProgress * 100) : 0}
+							max={100}
 							aria-label="Year progress: days studied vs total"
 						>
 							<m.div
@@ -385,7 +383,7 @@ export function CountdownHeader() {
 								animate="visible"
 								className={cn("h-full rounded-full shadow-sm", cfg.barLight)}
 							/>
-						</div>
+						</progress>
 
 						{mounted && (
 							<m.p

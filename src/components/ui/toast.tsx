@@ -41,31 +41,42 @@ export function useToastContext() {
 export function ToastProvider({ children }: { children: React.ReactNode }) {
 	const [toasts, setToasts] = useState<ToastData[]>([]);
 
-	const timersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
-		new Map(),
+	const timersRef = useRef<Map<string, ReturnType<typeof setTimeout>> | null>(
+		null,
 	);
+	const getTimers = (): Map<string, ReturnType<typeof setTimeout>> => {
+		if (timersRef.current === null) {
+			timersRef.current = new Map();
+		}
+		return timersRef.current;
+	};
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: getTimers is a stable closure over a ref.
 	const dismiss = useCallback((id: string) => {
 		setToasts((prev) =>
 			prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
 		);
 		const timer = setTimeout(() => {
-			timersRef.current.delete(id);
+			getTimers().delete(id);
 			setToasts((prev) => prev.filter((t) => t.id !== id));
 		}, 200);
-		timersRef.current.set(id, timer);
+		getTimers().set(id, timer);
 	}, []);
 
 	// Cleanup all timers on unmount
 	useEffect(() => {
+		const timersAtMount = timersRef.current;
 		return () => {
-			for (const t of timersRef.current.values()) {
-				clearTimeout(t);
+			if (timersAtMount) {
+				for (const t of timersAtMount.values()) {
+					clearTimeout(t);
+				}
+				timersAtMount.clear();
 			}
-			timersRef.current.clear();
 		};
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: getTimers is a stable closure over a ref.
 	const toast = useCallback(
 		(props: Omit<ToastData, "id">) => {
 			const id = Math.random().toString(36).slice(2);
@@ -77,10 +88,10 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 			setToasts((prev) => [...prev, newToast]);
 
 			const timer = setTimeout(() => {
-				timersRef.current.delete(id);
+				getTimers().delete(id);
 				dismiss(id);
 			}, newToast.duration);
-			timersRef.current.set(id, timer);
+			getTimers().set(id, timer);
 		},
 		[dismiss],
 	);

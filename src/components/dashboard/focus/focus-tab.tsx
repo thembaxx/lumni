@@ -17,6 +17,12 @@ import { cn } from "@/lib/shared";
 const DEFAULT_TIME = 25 * 60;
 const MAX_TIME = 60 * 60;
 
+function formatFocusTime(seconds: number): string {
+	const mins = Math.floor(seconds / 60);
+	const secs = seconds % 60;
+	return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+}
+
 interface FocusTabProps {
 	className?: string;
 }
@@ -28,11 +34,7 @@ export function FocusTab({ className }: FocusTabProps) {
 
 	const progress = initialTime > 0 ? (timeLeft / initialTime) * 100 : 0;
 
-	const formatTime = (seconds: number) => {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-	};
+	const formatTime = formatFocusTime;
 
 	useInterval(
 		() => {

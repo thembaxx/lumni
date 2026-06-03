@@ -10,24 +10,29 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 
 interface SendButtonProps {
-	isRecording: boolean;
+	recorderState:
+		| "idle"
+		| "recording"
+		| "recorded"
+		| "playing"
+		| "sending"
+		| "success";
 	audioBlob: Blob | null;
-	isPaperPlaneing: boolean;
-	sendSuccess: boolean;
 	isTooShort: boolean;
 	isTooLong: boolean;
 	onSend: () => void;
 }
 
 export function SendButton({
-	isRecording,
+	recorderState,
 	audioBlob,
-	isPaperPlaneing,
-	sendSuccess,
 	isTooShort,
 	isTooLong,
 	onSend,
 }: SendButtonProps) {
+	const isRecording = recorderState === "recording";
+	const isPaperPlaneing = recorderState === "sending";
+	const sendSuccess = recorderState === "success";
 	return (
 		<Button
 			onClick={onSend}

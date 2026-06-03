@@ -2,13 +2,7 @@
 
 import { Menu01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useState,
-} from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -40,8 +34,9 @@ export function SidebarStateProvider({
 	children: React.ReactNode;
 }) {
 	const [open, setOpen] = useState(false);
+	const value = useMemo(() => ({ open, setOpen }), [open]);
 	return (
-		<SidebarStateContext.Provider value={{ open, setOpen }}>
+		<SidebarStateContext.Provider value={value}>
 			{children}
 		</SidebarStateContext.Provider>
 	);
@@ -51,31 +46,27 @@ function SidebarContent() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
 	const { user } = useAuth();
-	const { setOpen } = useContext(SidebarStateContext);
+	const { setOpen } = use(SidebarStateContext);
 	const [query, setQuery] = useState("");
 
-	const userLabels = user?.labels ?? [];
-
 	const hasRole = useCallback(
-		(role: string) => userLabels.includes(role),
-		[userLabels],
+		(role: string) => (user?.labels ?? []).includes(role),
+		[user?.labels],
 	);
 
 	const filteredCategories = useMemo(() => {
 		const q = query.toLowerCase().trim();
-		return navConfig
-			.map((cat) => {
-				if (cat.role && !hasRole(cat.role)) return null;
+		return navConfig.flatMap((cat) => {
+			if (cat.role && !hasRole(cat.role)) return [];
 
-				const items = q
-					? cat.items.filter((item) => item.label.toLowerCase().includes(q))
-					: cat.items;
+			const items = q
+				? cat.items.filter((item) => item.label.toLowerCase().includes(q))
+				: cat.items;
 
-				if (q && items.length === 0) return null;
+			if (q && items.length === 0) return [];
 
-				return { ...cat, items };
-			})
-			.filter(Boolean) as typeof navConfig;
+			return [{ ...cat, items }];
+		});
 	}, [query, hasRole]);
 
 	const activeRoute = useMemo(() => {
@@ -104,13 +95,17 @@ function SidebarContent() {
 
 	return (
 		<div className="flex h-full flex-col">
-			<div className="shrink-0 border-border/30 border-b px-3 py-3">
+			<div className="shrink-0 border-border/30 border-b p-3">
 				<div className="relative">
+					<label htmlFor="sidebar-nav-search" className="sr-only">
+						Search pages
+					</label>
 					<HugeiconsIcon
 						icon={Menu01Icon}
 						className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 					/>
 					<input
+						id="sidebar-nav-search"
 						type="text"
 						placeholder="Search pages..."
 						value={query}
@@ -177,7 +172,7 @@ function SidebarContent() {
 
 export function SidebarNav() {
 	const { isImmersive } = useImmersiveMode();
-	const { open, setOpen } = useContext(SidebarStateContext);
+	const { open, setOpen } = use(SidebarStateContext);
 
 	if (isImmersive) return null;
 
@@ -208,7 +203,7 @@ export function SidebarNav() {
 }
 
 export function SidebarHamburger() {
-	const { open, setOpen } = useContext(SidebarStateContext);
+	const { open, setOpen } = use(SidebarStateContext);
 	const { isImmersive } = useImmersiveMode();
 
 	if (isImmersive) return null;

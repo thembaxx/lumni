@@ -20,6 +20,28 @@ import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 
+const CONTAINER_VARIANTS = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+	},
+};
+
+const ITEM_VARIANTS = {
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			type: "spring" as const,
+			stiffness: 300,
+			damping: 25,
+			bounce: 0,
+		},
+	},
+};
+
 interface QuizResultsCardProps {
 	totalQuestions: number;
 	correctAnswers: number;
@@ -46,27 +68,8 @@ export function QuizResultsCard({
 	const isGreatScore = accuracy >= 80;
 	const isPerfect = accuracy === 100;
 
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-		},
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				type: "spring" as const,
-				stiffness: 300,
-				damping: 25,
-				bounce: 0,
-			},
-		},
-	};
+	const containerVariants = CONTAINER_VARIANTS;
+	const itemVariants = ITEM_VARIANTS;
 
 	return (
 		<m.div

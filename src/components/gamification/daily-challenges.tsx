@@ -77,8 +77,8 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 							>
 								{challenge.completed ? (
 									<m.div
-										initial={{ scale: 0, rotate: -45 }}
-										animate={{ scale: 1, rotate: 0 }}
+										initial={{ scale: 0.95, opacity: 0, rotate: -45 }}
+										animate={{ scale: 1, opacity: 1, rotate: 0 }}
 										transition={{ duration: 0.35, ease: iOSDecelerate }}
 									>
 										<HugeiconsIcon icon={CheckmarkCircle01Icon} size={16} />

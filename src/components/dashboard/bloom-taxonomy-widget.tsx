@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { competencyService } from "@/lib/competency-engine";
 import type { CompetencyLevel } from "@/lib/competency-engine/types";
@@ -55,15 +56,12 @@ const LEVEL_RECOMMENDATIONS: Record<
 };
 
 export function BloomTaxonomyWidget() {
-	const [topicData, setTopicData] = useState<
-		{
-			topicId: string;
-			levels: Record<BloomLevel, number>;
-		}[]
-	>([]);
+	const { data: competencies = [] } = useQuery({
+		queryKey: ["bloom-taxonomy-widget"],
+		queryFn: () => competencyService.getCompetencies(""),
+	});
 
-	const load = useCallback(async () => {
-		const competencies = await competencyService.getCompetencies("");
+	const topicData = useMemo(() => {
 		const grouped: Record<string, CompetencyLevel[]> = {};
 		const scores: Record<string, Record<string, number>> = {};
 
@@ -76,7 +74,7 @@ export function BloomTaxonomyWidget() {
 			scores[key][c.bloomLevel] = c.score;
 		}
 
-		const result = Object.entries(grouped).map(([key, _levels]) => {
+		return Object.entries(grouped).map(([key, _levels]) => {
 			const [, topicId] = key.split("::");
 			const levelScores = scores[key] ?? {};
 			return {
@@ -86,13 +84,7 @@ export function BloomTaxonomyWidget() {
 				) as Record<BloomLevel, number>,
 			};
 		});
-
-		setTopicData(result);
-	}, []);
-
-	useEffect(() => {
-		load();
-	}, [load]);
+	}, [competencies]);
 
 	if (topicData.length === 0) return null;
 
