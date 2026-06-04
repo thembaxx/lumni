@@ -111,7 +111,7 @@
 		"@types/uuid": "^11.0.0",
 		"@types/web-push": "^3.6.4",
 		"eslint": "^10.4.0",
-		"eslint-config-next": "16.2.6",
+		"eslint-config-next": "16.2.7",
 		"happy-dom": "^20.9.0",
 		"husky": "^9.1.7",
 		"knip": "^6.15.0",
