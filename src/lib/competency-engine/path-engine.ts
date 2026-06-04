@@ -1,4 +1,5 @@
 import { curriculumRegistry } from "@/curriculum";
+import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
 import type { CompetencyLevel, CompetencyRecord } from "./types";
 
 export interface TopicRecommendation {
@@ -223,6 +224,31 @@ export class PathEngine {
 		);
 
 		return dayResults.sort((a, b) => a.day - b.day);
+	}
+
+	getAdvancedFromGraph(
+		graph: KnowledgeGraph,
+		masteredLabels: string[],
+		maxResults = 3,
+	): { label: string; type: string }[] {
+		const masteredSet = new Set(masteredLabels.map((l) => l.toLowerCase()));
+		const advanced: { label: string; type: string }[] = [];
+
+		const relevantEdges = graph.edges.filter(
+			(e) => masteredSet.has(e.from.toLowerCase()) && e.relation === "leads_to",
+		);
+
+		for (const edge of relevantEdges) {
+			const node = graph.nodes.find(
+				(n) => n.id === edge.to && (n.type === "advanced" || n.type === "core"),
+			);
+			if (node && !masteredSet.has(node.label.toLowerCase())) {
+				advanced.push({ label: node.label, type: node.type });
+				if (advanced.length >= maxResults) break;
+			}
+		}
+
+		return advanced;
 	}
 
 	private async getTopicLevel(

@@ -480,6 +480,22 @@ export function initializeNotificationSchedulers(): void {
 	if (typeof window !== "undefined" && "indexedDB" in window) {
 		scheduleWeeklyProgress(settings);
 		scheduleAssignmentReminders(settings);
+		scheduleExamAlertsFromSession(settings);
+	}
+}
+
+async function scheduleExamAlertsFromSession(
+	settings: NotificationSettings,
+): Promise<void> {
+	try {
+		const { getCurrentSession } = await import("@/lib/exam-dates/types");
+		const { getExamDates } = await import("@/lib/exam-dates/service");
+		const { session, year } = getCurrentSession();
+		const slots = await getExamDates(session, year);
+		if (slots.length === 0) return;
+		await scheduleExamAlerts(slots, settings);
+	} catch (err) {
+		logError("ScheduleExamAlertsFromSession", err);
 	}
 }
 

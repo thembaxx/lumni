@@ -4,6 +4,7 @@ import { Lightning, Login01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
@@ -43,6 +44,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useAuth } from "@/lib/auth/auth-context";
+import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
 
 const CompetencyOverview = dynamic(
 	() =>
@@ -176,6 +178,10 @@ export function DashboardContent({
 	const t = useTranslations();
 	const { isAnonymous } = useAuth();
 	const { gamification } = useGamification();
+
+	useEffect(() => {
+		initializeNotificationSchedulers();
+	}, []);
 
 	const stats = {
 		questionsAnswered:

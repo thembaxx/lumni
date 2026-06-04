@@ -109,41 +109,55 @@ export class QuestionEngine {
 		this.lastRagContext = ragContext;
 
 		const { questionType, count } = enriched;
-		let questions: Question[];
+		const MAX_RETRIES = 2;
+		let questions: Question[] = [];
 
-		if (!questionType || questionType === "any") {
-			questions = await this.generateMixed(enriched, ragContext);
-		} else {
-			const types = Array.isArray(questionType) ? questionType : [questionType];
-			const perTypeCount = Math.ceil(count / types.length);
+		for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+			if (attempt > 0 && questions.length >= count) break;
+			if (attempt > 0) {
+				console.warn(
+					`[QuestionEngine] Retry ${attempt}/${MAX_RETRIES}: got ${questions.length}/${count} questions`,
+				);
+			}
+
 			questions = [];
 
-			const typeResults = await Promise.all(
-				types.map(async (type) => {
-					try {
-						const processor = this.registry.getProcessor(type);
-						const typeParams = {
-							...enriched,
-							count: perTypeCount,
-							questionType: type,
-						};
-						const result = await processor.generate(typeParams, ragContext);
-						return result;
-					} catch (error) {
-						console.error(
-							`[QuestionEngine] Failed to generate ${type}:`,
-							error,
-						);
-						return [];
-					}
-				}),
-			);
-			for (const result of typeResults) {
-				questions.push(...result);
+			if (!questionType || questionType === "any") {
+				questions = await this.generateMixed(enriched, ragContext);
+			} else {
+				const types = Array.isArray(questionType)
+					? questionType
+					: [questionType];
+				const perTypeCount = Math.ceil(count / types.length);
+				const typeResults = await Promise.all(
+					types.map(async (type) => {
+						try {
+							const processor = this.registry.getProcessor(type);
+							const typeParams = {
+								...enriched,
+								count: perTypeCount,
+								questionType: type,
+							};
+							const result = await processor.generate(typeParams, ragContext);
+							return result;
+						} catch (error) {
+							console.error(
+								`[QuestionEngine] Failed to generate ${type}:`,
+								error,
+							);
+							return [];
+						}
+					}),
+				);
+				for (const result of typeResults) {
+					questions.push(...result);
+				}
 			}
+
+			questions = questions.slice(0, count);
 		}
 
-		return questions.slice(0, count);
+		return questions.length > 0 ? questions : null;
 	}
 
 	private withProcessor<T extends QuestionType>(

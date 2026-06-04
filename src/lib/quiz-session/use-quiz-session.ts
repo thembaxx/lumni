@@ -56,6 +56,9 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 		case "TICK":
 			return { ...state, elapsedTime: state.elapsedTime + 1 };
 		case "FINISH":
+			if (typeof window !== "undefined") {
+				localStorage.removeItem("lumni_active_quiz_session");
+			}
 			return { ...state, isComplete: true, isActive: false };
 		case "START":
 			return {
@@ -77,7 +80,7 @@ export function useQuizSession(
 	config?: QuizSessionConfig,
 	options?: { sessionId?: string },
 ): { state: QuizSessionState; actions: QuizSessionActions } {
-	const maxTime = config?.maxTime ?? 90 * 60;
+	const maxTime = Math.max(1, config?.maxTime ?? 90 * 60);
 	const sessionId = options?.sessionId ?? crypto.randomUUID();
 
 	const [quizState, dispatch] = useReducer(quizReducer, {
@@ -159,8 +162,18 @@ export function useQuizSession(
 	const totalQuestions = questions.length;
 
 	const start = useCallback(() => {
+		if (typeof window !== "undefined") {
+			const activeSession = localStorage.getItem("lumni_active_quiz_session");
+			if (activeSession) {
+				console.warn("[QuizSession] Active session already in progress");
+				return;
+			}
+		}
+		if (typeof window !== "undefined") {
+			localStorage.setItem("lumni_active_quiz_session", sessionId);
+		}
 		dispatch({ type: "START" });
-	}, []);
+	}, [sessionId]);
 
 	const recordAnswer = useCallback(
 		(correct: boolean, detail?: AnswerDetail) => {
@@ -182,6 +195,9 @@ export function useQuizSession(
 	}, [currentIndex]);
 
 	const stop = useCallback(() => {
+		if (typeof window !== "undefined") {
+			localStorage.removeItem("lumni_active_quiz_session");
+		}
 		dispatch({ type: "FINISH" });
 	}, []);
 

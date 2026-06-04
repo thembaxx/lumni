@@ -15,11 +15,41 @@ export function isBudgetExceeded(error: unknown): boolean {
 	);
 }
 
+const RETRYABLE_STATUSES = new Set([408, 429, 502, 503, 504]);
+
+async function fetchWithRetry(
+	url: string,
+	options: RequestInit,
+	retries: number,
+	backoffMs: number,
+): Promise<Response> {
+	let lastError: Error | null = null;
+	for (let attempt = 0; attempt <= retries; attempt++) {
+		try {
+			const response = await fetch(url, options);
+			if (response.ok || !RETRYABLE_STATUSES.has(response.status)) {
+				return response;
+			}
+			lastError = new Error(`Request failed with status ${response.status}`);
+			if (attempt < retries) {
+				await new Promise((r) => setTimeout(r, backoffMs * 2 ** attempt));
+			}
+		} catch (err) {
+			lastError = err instanceof Error ? err : new Error(String(err));
+			if (attempt < retries) {
+				await new Promise((r) => setTimeout(r, backoffMs * 2 ** attempt));
+			}
+		}
+	}
+	throw lastError ?? new Error("Request failed after retries");
+}
+
 export async function apiFetch<T>(
 	url: string,
 	options: RequestInit,
+	retries = 1,
 ): Promise<T> {
-	const response = await fetch(url, options);
+	const response = await fetchWithRetry(url, options, retries, 1000);
 
 	if (!response.ok) {
 		const body = await response.json().catch(() => ({}));

@@ -1,10 +1,16 @@
 import { Camera01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
+
+const TopicGraph = dynamic(
+	() => import("@/components/quiz/topic-graph").then((m) => m.TopicGraph),
+	{ ssr: false },
+);
 
 interface QuestionCardHeaderProps {
 	question: {
@@ -100,6 +106,7 @@ export function QuestionCardHeader({
 				subject={effectiveSubject}
 				className="text-lg leading-relaxed"
 			/>
+			<TopicGraph subject={question.subject} topic={question.topic} />
 		</div>
 	);
 }
