@@ -18,6 +18,7 @@ import {
 	getUpcomingExams,
 	getUpcomingSessions,
 	loadStudyPlan,
+	loadStudyPlanFromDexie,
 	markPlanStale,
 	type StudyPlan,
 	type StudySession,
@@ -71,6 +72,13 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		setUpcomingSessions(getUpcomingSessions(7));
 		setUpcomingExams(getUpcomingExams());
 		setStats(getStudyStats());
+	}, []);
+
+	// Load from Dexie on mount (overrides localStorage initial value)
+	useEffect(() => {
+		loadStudyPlanFromDexie().then((dexiePlan) => {
+			setPlan(dexiePlan);
+		});
 	}, []);
 
 	useEffect(() => {

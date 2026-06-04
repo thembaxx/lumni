@@ -262,6 +262,32 @@ export interface AssignmentMessage {
 	createdAt: number;
 }
 
+export interface StudyPlanRecord {
+	id: string;
+	plan: string; // JSON serialized StudyPlan
+	updatedAt: number;
+}
+
+export interface OnboardingState {
+	userId: string;
+	hasVisited: boolean;
+	firstVisitsRemaining: number;
+	onboardingData: string; // JSON
+	updatedAt: number;
+}
+
+export interface SrDailyBudget {
+	userId: string;
+	date: string;
+	newCardsUsed: number;
+	reviewsUsed: number;
+}
+
+export interface FlashcardSyncState {
+	userId: string;
+	lastSyncTimestamp: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -302,6 +328,10 @@ export class LumniOfflineDB extends Dexie {
 	knowledgeGraph!: Table<CachedGraph, string>;
 	teacherObservations!: Table<TeacherObservation, number>;
 	assignmentMessages!: Table<AssignmentMessage, number>;
+	studyPlans!: Table<StudyPlanRecord, string>;
+	onboardingState!: Table<OnboardingState, string>;
+	srDailyBudget!: Table<SrDailyBudget, string>;
+	flashcardSyncState!: Table<FlashcardSyncState, string>;
 
 	constructor() {
 		super("lumni-offline");
@@ -926,6 +956,13 @@ export class LumniOfflineDB extends Dexie {
 			teacherObservations: "++id, studentId, teacherId, subject, createdAt",
 			assignmentMessages:
 				"++id, &assignmentId, senderId, senderRole, createdAt",
+		});
+
+		this.version(31).stores({
+			studyPlans: "&id, updatedAt",
+			onboardingState: "&userId, updatedAt",
+			srDailyBudget: "&userId, date, newCardsUsed, reviewsUsed",
+			flashcardSyncState: "&userId, lastSyncTimestamp",
 		});
 	}
 }

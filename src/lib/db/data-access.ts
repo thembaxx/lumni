@@ -2,6 +2,7 @@ import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	AnalyticsEvent,
+	AssignmentMessage,
 	BookmarkRecord,
 	CachedExamDates,
 	CachedPdf,
@@ -10,15 +11,22 @@ import type {
 	CachedSubject,
 	CachedVisual,
 	ChatMessageRecord,
+	DexieGroupComment,
+	DexieGroupReaction,
 	ExamSessionSnapshot,
 	ExtractionCache,
+	FlashcardSyncState,
 	NoteRecord,
+	OnboardingState,
 	QuestionRating,
 	QuizAttempt,
 	QuizSessionState,
 	RetentionRecurrence,
 	SharedQuestionRecord,
+	SrDailyBudget,
+	StudyPlanRecord,
 	SyncConflict,
+	TeacherObservation,
 } from "@/lib/db/schema";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -30,9 +38,16 @@ import type { CachedGraph } from "@/lib/knowledge-graph/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
 import type {
+	GroupBadge,
+	GroupChallenge,
+	GroupChallengeEntry,
+} from "@/lib/study-groups/challenge-types";
+import type { GroupPost } from "@/lib/study-groups/types";
+import type {
 	TinyFishCacheEntry,
 	TinyFishUsageEntry,
 } from "@/lib/tinyfish/cache";
+import type { UserConsent } from "@/types/user-consent";
 
 // ──────────────────────────────────────────────
 // Generic query interfaces
@@ -118,4 +133,18 @@ export interface DataAccess {
 	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
 	jobs: DataAccessTable<JobRecord, number>;
 	conflicts: DataAccessTable<SyncConflict, number>;
+	// Phase 1 — remaining tables for full coverage
+	userConsents: DataAccessTable<UserConsent, string>;
+	groupPosts: DataAccessTable<GroupPost, number>;
+	groupComments: DataAccessTable<DexieGroupComment, number>;
+	groupReactions: DataAccessTable<DexieGroupReaction, number>;
+	groupChallenges: DataAccessTable<GroupChallenge, string>;
+	groupChallengeEntries: DataAccessTable<GroupChallengeEntry, string>;
+	groupBadges: DataAccessTable<GroupBadge, string>;
+	teacherObservations: DataAccessTable<TeacherObservation, number>;
+	assignmentMessages: DataAccessTable<AssignmentMessage, number>;
+	studyPlans: DataAccessTable<StudyPlanRecord, string>;
+	onboardingState: DataAccessTable<OnboardingState, string>;
+	srDailyBudget: DataAccessTable<SrDailyBudget, string>;
+	flashcardSyncState: DataAccessTable<FlashcardSyncState, string>;
 }

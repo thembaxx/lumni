@@ -180,7 +180,7 @@ export async function schedulePlanAwareReminder(
 	if (!settings.enabled || !settings.studyReminders) return;
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
-		const sessions = getTodayPlanSessions();
+		const sessions = await getTodayPlanSessions();
 		const reminder = await buildReminder(settings, sessions);
 		if (reminder) {
 			const existing = getNextReminder();
@@ -193,11 +193,15 @@ export async function schedulePlanAwareReminder(
 	}
 }
 
-function getTodayPlanSessions(): { subject: string; topic?: string }[] {
+async function getTodayPlanSessions(): Promise<
+	{ subject: string; topic?: string }[]
+> {
 	try {
-		const raw = localStorage.getItem("lumni_study_plan");
-		if (!raw) return [];
-		const plan = JSON.parse(raw);
+		const record = await dexieDataAccess.studyPlans.get("default");
+		if (!record) return [];
+		const plan = JSON.parse(record.plan) as {
+			sessions: { scheduledAt: number; subject: string; topic?: string }[];
+		};
 		const today = new Date();
 		const startOfDay = new Date(
 			today.getFullYear(),
@@ -206,8 +210,7 @@ function getTodayPlanSessions(): { subject: string; topic?: string }[] {
 		).getTime();
 		const endOfDay = startOfDay + 24 * 60 * 60 * 1000;
 		return (plan.sessions || []).filter(
-			(s: { scheduledAt: number }) =>
-				s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
+			(s) => s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
 		);
 	} catch (err) {
 		logError("GetTodayPlanSessions", err);

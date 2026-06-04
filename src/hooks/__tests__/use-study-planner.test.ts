@@ -25,6 +25,8 @@ let mockStats = {
 };
 
 mock.module("@/lib/utils/study-planner", () => ({
+	loadStudyPlanFromDexie: () =>
+		Promise.resolve({ sessions: [], examDates: [], generatedAt: 0 }),
 	loadStudyPlan: () => ({
 		sessions: [...mockPlan.sessions],
 		examDates: [...mockPlan.examDates],

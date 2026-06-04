@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { dexieDataAccess } from "@/lib/db";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
@@ -39,31 +40,110 @@ interface ExamSessionState {
 	isFlagged: (partId: string) => boolean;
 }
 
-const EXAM_SESSION_VERSION = 1;
+const EXAM_SESSION_STORAGE_KEY = "exam-session-storage";
 
-function validateHydratedState(state: unknown): boolean {
-	if (!state || typeof state !== "object") return false;
-	const s = state as Record<string, unknown>;
-	return (
-		typeof s.paperId === "string" ||
-		s.paperId === null ||
-		s.paperId === undefined
-	);
+// Dexie-backed storage adapter for zustand persist
+interface PersistedState {
+	paperId: string | null;
+	sessionId: string | null;
+	answers: Record<string, ExamAnswer>;
+	flags: string[];
+	currentPartId: string | null;
+	timeRemaining: number;
+	startedAt: number | null;
+	completed: boolean;
 }
+
+const dexiePersistStorage = {
+	getItem: async (name: string): Promise<{ state: PersistedState } | null> => {
+		try {
+			const record = await dexieDataAccess.examSessions
+				.where("paperId")
+				.equals(name)
+				.first();
+			if (record) {
+				return {
+					state: {
+						paperId: record.paperId,
+						sessionId: null,
+						answers: JSON.parse(record.answers || "{}") as Record<
+							string,
+							ExamAnswer
+						>,
+						flags: JSON.parse(record.flags || "[]") as string[],
+						currentPartId: record.currentPartId,
+						timeRemaining: record.timeRemaining,
+						startedAt: record.startedAt,
+						completed: record.completed,
+					},
+				};
+			}
+		} catch {
+			// fall through
+		}
+		// Fallback to localStorage for backward compat
+		if (typeof window !== "undefined") {
+			const raw = localStorage.getItem(name);
+			if (raw) {
+				try {
+					return JSON.parse(raw) as { state: PersistedState };
+				} catch {
+					// ignore
+				}
+			}
+		}
+		return null;
+	},
+	setItem: async (
+		name: string,
+		value: { state: PersistedState },
+	): Promise<void> => {
+		const state = value.state;
+		if (state?.paperId) {
+			try {
+				await dexieDataAccess.examSessions.put({
+					paperId: state.paperId,
+					answers: JSON.stringify(state.answers || {}),
+					flags: JSON.stringify(state.flags || []),
+					currentPartId: state.currentPartId || null,
+					timeRemaining: state.timeRemaining || 0,
+					startedAt: state.startedAt || Date.now(),
+					lastSavedAt: Date.now(),
+					completed: state.completed || false,
+				});
+			} catch {
+				// ignore storage errors
+			}
+		}
+		if (typeof window !== "undefined") {
+			localStorage.setItem(name, JSON.stringify(value));
+		}
+	},
+	removeItem: async (name: string): Promise<void> => {
+		try {
+			await dexieDataAccess.examSessions.where("paperId").equals(name).delete();
+			if (typeof window !== "undefined") {
+				localStorage.removeItem(name);
+			}
+		} catch {
+			// ignore
+		}
+	},
+};
 
 let cleanupCrossTabSync: (() => void) | null = null;
 
 function setupCrossTabSync() {
 	if (typeof window === "undefined") return;
 	const handleStorage = (e: StorageEvent) => {
-		if (e.key === "exam-session-storage" && e.newValue) {
+		if (e.key === EXAM_SESSION_STORAGE_KEY && e.newValue) {
 			try {
 				const parsed = JSON.parse(e.newValue);
 				if (parsed?.state) {
 					useExamSessionStore.setState(parsed.state);
 				}
-			} catch (e) {
-				console.warn("[ExamSession] Failed to parse cross-tab sync data", e);
+			} catch {
+				console.warn("[ExamSession] Failed to parse cross-tab sync data");
 			}
 		}
 	};
@@ -203,9 +283,9 @@ export const useExamSessionStore = create<ExamSessionState>()(
 			},
 		}),
 		{
-			name: "exam-session-storage",
-			version: EXAM_SESSION_VERSION,
-			partialize: (state) => ({
+			name: EXAM_SESSION_STORAGE_KEY,
+			storage: dexiePersistStorage,
+			partialize: (state: ExamSessionState): PersistedState => ({
 				paperId: state.paperId,
 				sessionId: state.sessionId,
 				answers: state.answers,
@@ -215,25 +295,6 @@ export const useExamSessionStore = create<ExamSessionState>()(
 				startedAt: state.startedAt,
 				completed: state.completed,
 			}),
-			migrate: (persistedState, version) => {
-				if (version < 1) {
-					return {
-						paper: null,
-						paperId: null,
-						sessionId: null,
-						answers: {},
-						flags: [],
-						currentPartId: null,
-						timeRemaining: 0,
-						startedAt: null,
-						completed: false,
-						isSubmitting: false,
-					};
-				}
-				const migrated = persistedState as ExamSessionState;
-				migrated.paper = null;
-				return migrated;
-			},
 			onRehydrateStorage: () => (state) => {
 				if (state && !validateHydratedState(state)) {
 					state.resetSession();
@@ -242,6 +303,16 @@ export const useExamSessionStore = create<ExamSessionState>()(
 		},
 	),
 );
+
+function validateHydratedState(state: unknown): boolean {
+	if (!state || typeof state !== "object") return false;
+	const s = state as Record<string, unknown>;
+	return (
+		typeof s.paperId === "string" ||
+		s.paperId === null ||
+		s.paperId === undefined
+	);
+}
 
 function getFirstPart(paper: ExamPaper): string | null {
 	for (const section of paper.sections) {

@@ -176,6 +176,19 @@ export class DexieDataAccess implements DataAccess {
 	pastPaperQuestions = tableAdapter(offlineDB.pastPaperQuestions);
 	jobs = tableAdapter(offlineDB.jobs);
 	conflicts = tableAdapter(offlineDB.conflicts);
+	userConsents = tableAdapter(offlineDB.userConsents);
+	groupPosts = tableAdapter(offlineDB.groupPosts);
+	groupComments = tableAdapter(offlineDB.groupComments);
+	groupReactions = tableAdapter(offlineDB.groupReactions);
+	groupChallenges = tableAdapter(offlineDB.groupChallenges);
+	groupChallengeEntries = tableAdapter(offlineDB.groupChallengeEntries);
+	groupBadges = tableAdapter(offlineDB.groupBadges);
+	teacherObservations = tableAdapter(offlineDB.teacherObservations);
+	assignmentMessages = tableAdapter(offlineDB.assignmentMessages);
+	studyPlans = tableAdapter(offlineDB.studyPlans);
+	onboardingState = tableAdapter(offlineDB.onboardingState);
+	srDailyBudget = tableAdapter(offlineDB.srDailyBudget);
+	flashcardSyncState = tableAdapter(offlineDB.flashcardSyncState);
 }
 
 export const dexieDataAccess = new DexieDataAccess();

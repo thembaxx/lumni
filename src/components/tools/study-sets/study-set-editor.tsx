@@ -75,18 +75,15 @@ export function StudySetForm({
 
 	useEffect(() => {
 		if (showFlashcardPicker) {
-			import("@/lib/db/schema").then(({ offlineDB }) =>
-				offlineDB
-					.table("flashcards")
-					.toArray()
-					.then((cards) =>
-						setAvailableFlashcards(
-							cards.map((c: { id: string; front: string }) => ({
-								id: c.id,
-								front: c.front,
-							})),
-						),
+			import("@/lib/db/dexie-data-access").then(({ dexieDataAccess }) =>
+				dexieDataAccess.flashcards.toArray().then((cards) =>
+					setAvailableFlashcards(
+						cards.map((c) => ({
+							id: c.id,
+							front: c.front,
+						})),
 					),
+				),
 			);
 		}
 	}, [showFlashcardPicker]);

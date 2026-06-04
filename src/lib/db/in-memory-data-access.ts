@@ -1,9 +1,59 @@
+import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
+import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	Collection,
 	DataAccess,
 	DataAccessTable,
 	WhereClause,
 } from "@/lib/db/data-access";
+import type {
+	AnalyticsEvent,
+	AssignmentMessage,
+	BookmarkRecord,
+	CachedExamDates,
+	CachedPdf,
+	CachedProgress,
+	CachedQuestion,
+	CachedSubject,
+	CachedVisual,
+	ChatMessageRecord,
+	DexieGroupComment,
+	DexieGroupReaction,
+	ExamSessionSnapshot,
+	ExtractionCache,
+	FlashcardSyncState,
+	NoteRecord,
+	OnboardingState,
+	QuestionRating,
+	QuizAttempt,
+	QuizSessionState,
+	RetentionRecurrence,
+	SharedQuestionRecord,
+	SrDailyBudget,
+	StudyPlanRecord,
+	SyncConflict,
+	TeacherObservation,
+} from "@/lib/db/schema";
+import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
+import type {
+	FlashcardReview,
+	FlashcardSM2,
+} from "@/lib/flashcard-engine/types";
+import type { StoredGamification } from "@/lib/gamification-engine/types";
+import type { CachedGraph } from "@/lib/knowledge-graph/types";
+import type { JobRecord } from "@/lib/orchestrator/types";
+import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type {
+	GroupBadge,
+	GroupChallenge,
+	GroupChallengeEntry,
+} from "@/lib/study-groups/challenge-types";
+import type { GroupPost } from "@/lib/study-groups/types";
+import type {
+	TinyFishCacheEntry,
+	TinyFishUsageEntry,
+} from "@/lib/tinyfish/cache";
+import type { UserConsent } from "@/types/user-consent";
 
 // ──────────────────────────────────────────────
 // Lazy-evaluated collection
@@ -108,18 +158,17 @@ class InMemoryWhereClause<T> implements WhereClause<T> {
 
 type IdType = string | number;
 
-export class InMemoryTable<
-	T extends Record<string, unknown>,
-	TId extends IdType = number,
-> implements DataAccessTable<T, TId>
+export class InMemoryTable<T extends object, TId extends IdType = number>
+	implements DataAccessTable<T, TId>
 {
 	private items = new Map<TId, T>();
 	private nextId = 1;
 
 	seed(data: T[]): void {
 		for (const item of data) {
-			if (item.id != null) {
-				this.items.set(item.id as TId, item);
+			const rec = item as Record<string, unknown>;
+			if (rec.id != null) {
+				this.items.set(rec.id as TId, item);
 			} else {
 				const autoId = this.nextId++ as TId;
 				this.items.set(autoId, { ...item, id: autoId } as T);
@@ -138,7 +187,8 @@ export class InMemoryTable<
 	}
 
 	async put(item: T): Promise<TId> {
-		const id = (item.id ?? this.nextId++) as TId;
+		const rec = item as Record<string, unknown>;
+		const id = (rec.id ?? this.nextId++) as TId;
 		this.items.set(id, { ...item, id } as unknown as T);
 		return id;
 	}
@@ -201,8 +251,10 @@ export class InMemoryTable<
 		return new InMemoryCollection(
 			() => [...this.items.values()],
 			(a: T, b: T) => {
-				const av = a[index] as string | number;
-				const bv = b[index] as string | number;
+				const arec = a as Record<string, unknown>;
+				const brec = b as Record<string, unknown>;
+				const av = arec[index] as string | number;
+				const bv = brec[index] as string | number;
 				if (av < bv) return -1;
 				if (av > bv) return 1;
 				return 0;
@@ -216,65 +268,47 @@ export class InMemoryTable<
 // ──────────────────────────────────────────────
 
 export class InMemoryDataAccess implements DataAccess {
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	flashcards = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	reviewHistory = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	analyticsEvents = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	retentionRecurrence = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	wrongAnswers = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	quizPacks = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	packQuestions = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	competencies = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	progress = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	quizAttempts = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	bookmarks = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	questions = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	subjects = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	visuals = new InMemoryTable<any>();
-	// Phase 3 — expanded tables
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	chatMessages = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	questionRatings = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	knowledgeGraph = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	examSessions = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	sharedQuestions = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	examDates = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	extractionCache = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	notes = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	gamification = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	cachedPdfs = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	quizSessions = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	tinyfishCache = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	tinyfishUsage = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	pastPaperQuestions = new InMemoryTable<any, string>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	jobs = new InMemoryTable<any>();
-	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
-	conflicts = new InMemoryTable<any>();
+	flashcards = new InMemoryTable<FlashcardSM2, string>();
+	reviewHistory = new InMemoryTable<FlashcardReview>();
+	analyticsEvents = new InMemoryTable<AnalyticsEvent>();
+	retentionRecurrence = new InMemoryTable<RetentionRecurrence>();
+	wrongAnswers = new InMemoryTable<WrongAnswerEntry>();
+	quizPacks = new InMemoryTable<QuizPack, string>();
+	packQuestions = new InMemoryTable<QuizPackQuestion>();
+	competencies = new InMemoryTable<CompetencyRecord>();
+	progress = new InMemoryTable<CachedProgress>();
+	quizAttempts = new InMemoryTable<QuizAttempt>();
+	bookmarks = new InMemoryTable<BookmarkRecord>();
+	questions = new InMemoryTable<CachedQuestion>();
+	subjects = new InMemoryTable<CachedSubject>();
+	visuals = new InMemoryTable<CachedVisual>();
+	chatMessages = new InMemoryTable<ChatMessageRecord>();
+	questionRatings = new InMemoryTable<QuestionRating>();
+	knowledgeGraph = new InMemoryTable<CachedGraph, string>();
+	examSessions = new InMemoryTable<ExamSessionSnapshot>();
+	sharedQuestions = new InMemoryTable<SharedQuestionRecord, string>();
+	examDates = new InMemoryTable<CachedExamDates>();
+	extractionCache = new InMemoryTable<ExtractionCache>();
+	notes = new InMemoryTable<NoteRecord>();
+	gamification = new InMemoryTable<StoredGamification>();
+	cachedPdfs = new InMemoryTable<CachedPdf>();
+	quizSessions = new InMemoryTable<QuizSessionState>();
+	tinyfishCache = new InMemoryTable<TinyFishCacheEntry, string>();
+	tinyfishUsage = new InMemoryTable<TinyFishUsageEntry>();
+	pastPaperQuestions = new InMemoryTable<PastPaperQuestion, string>();
+	jobs = new InMemoryTable<JobRecord>();
+	conflicts = new InMemoryTable<SyncConflict>();
+	userConsents = new InMemoryTable<UserConsent, string>();
+	groupPosts = new InMemoryTable<GroupPost>();
+	groupComments = new InMemoryTable<DexieGroupComment>();
+	groupReactions = new InMemoryTable<DexieGroupReaction>();
+	groupChallenges = new InMemoryTable<GroupChallenge, string>();
+	groupChallengeEntries = new InMemoryTable<GroupChallengeEntry, string>();
+	groupBadges = new InMemoryTable<GroupBadge, string>();
+	teacherObservations = new InMemoryTable<TeacherObservation>();
+	assignmentMessages = new InMemoryTable<AssignmentMessage>();
+	studyPlans = new InMemoryTable<StudyPlanRecord, string>();
+	onboardingState = new InMemoryTable<OnboardingState, string>();
+	srDailyBudget = new InMemoryTable<SrDailyBudget, string>();
+	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
 }

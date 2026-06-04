@@ -161,6 +161,10 @@ export function QuestionCard({
 		useReducer(followUpReducer, { messages: [], input: "" });
 
 	useEffect(() => {
+		useBookmarksStore.getState().initialize();
+	}, []);
+
+	useEffect(() => {
 		if (solver.followUpData?.answer) {
 			dispatchFollowUp({
 				type: "ADD_ASSISTANT",

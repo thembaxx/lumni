@@ -5,7 +5,7 @@ import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
-import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { loadFromStorage } from "@/lib/utils/storage";
 
 export interface ChatMessage {
 	id: string;
@@ -24,7 +24,7 @@ export interface ChatMessage {
 
 const CHAT_STORAGE_KEY = "lumni_chat_history";
 
-function serializeMessages(messages: ChatMessage[]): string {
+function _serializeMessages(messages: ChatMessage[]): string {
 	return JSON.stringify(
 		messages.map((m) => ({
 			id: m.id,
@@ -71,8 +71,33 @@ export function useChat() {
 	const [chatContext, setChatContext] = useState<string>("");
 	const messagesRef = useRef(messages);
 	const contextRef = useRef(chatContext);
+	const loadedRef = useRef(false);
 	messagesRef.current = messages;
 	contextRef.current = chatContext;
+
+	// Load from Dexie on mount (overrides localStorage initial value)
+	useEffect(() => {
+		if (loadedRef.current) return;
+		loadedRef.current = true;
+		dexieDataAccess.chatMessages
+			.toArray()
+			.then((records) => {
+				if (records.length > 0) {
+					const loaded = records.map(
+						(r) =>
+							({
+								id: r.messageId,
+								role: r.role,
+								content: r.content,
+								type: r.type || "text",
+								timestamp: new Date(r.timestamp),
+							}) as ChatMessage,
+					);
+					setMessages(loaded);
+				}
+			})
+			.catch(() => {});
+	}, []);
 
 	useEffect(() => {
 		buildChatContext()
@@ -83,8 +108,6 @@ export function useChat() {
 	}, []);
 
 	useEffect(() => {
-		const serialized = serializeMessages(messages);
-		saveToStorage(CHAT_STORAGE_KEY, serialized);
 		dexieDataAccess.chatMessages
 			.bulkAdd(
 				messages.map((m) => ({
@@ -171,7 +194,6 @@ export function useChat() {
 	const clearChat = useCallback(() => {
 		setMessages([]);
 		setError(null);
-		localStorage.removeItem(CHAT_STORAGE_KEY);
 	}, []);
 
 	return {

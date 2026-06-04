@@ -1,3 +1,4 @@
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "./storage";
@@ -36,9 +37,10 @@ export interface StudyPlan {
 }
 
 const STUDY_PLAN_KEY = "lumni_study_plan";
+const STUDY_PLAN_DEXIE_KEY = "default";
 
-export function loadStudyPlan(): StudyPlan {
-	return loadFromStorage<StudyPlan>(STUDY_PLAN_KEY, {
+function defaultStudyPlan(): StudyPlan {
+	return {
 		sessions: [],
 		examDates: [],
 		generatedAt: 0,
@@ -46,11 +48,32 @@ export function loadStudyPlan(): StudyPlan {
 		lastCompetencyRefresh: 0,
 		progress: 0,
 		totalActualMinutes: 0,
-	});
+	};
+}
+
+export function loadStudyPlan(): StudyPlan {
+	return loadFromStorage<StudyPlan>(STUDY_PLAN_KEY, defaultStudyPlan());
+}
+
+export async function loadStudyPlanFromDexie(): Promise<StudyPlan> {
+	try {
+		const record = await dexieDataAccess.studyPlans.get(STUDY_PLAN_DEXIE_KEY);
+		if (record) return JSON.parse(record.plan) as StudyPlan;
+	} catch {
+		// fall through
+	}
+	return loadStudyPlan();
 }
 
 export function saveStudyPlan(plan: StudyPlan): void {
 	saveToStorage(STUDY_PLAN_KEY, plan);
+	dexieDataAccess.studyPlans
+		.put({
+			id: STUDY_PLAN_DEXIE_KEY,
+			plan: JSON.stringify(plan),
+			updatedAt: Date.now(),
+		})
+		.catch(() => {});
 }
 
 export function markPlanStale(): void {

@@ -1,5 +1,6 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
@@ -85,34 +86,38 @@ export const appwriteFlashcardSync = createUpsertHandler(
 export const appwriteFlashcardPull: JobHandler = async (payload) => {
 	const _data = payload as JobPayloadByType["appwrite-flashcard-pull"];
 	try {
-		const lastSyncStr =
-			typeof window !== "undefined"
-				? (localStorage.getItem("lumni_flashcard_last_sync") ?? "0")
-				: "0";
-		const lastSync = Number.parseInt(lastSyncStr, 10) || 0;
+		let lastSync = 0;
+		if (typeof window !== "undefined") {
+			try {
+				const state = await dexieDataAccess.flashcardSyncState.get("default");
+				lastSync = state?.lastSyncTimestamp ?? 0;
+			} catch {
+				const legacy = localStorage.getItem("lumni_flashcard_last_sync");
+				lastSync = Number.parseInt(legacy ?? "0", 10) || 0;
+			}
+		}
 
-		const [remoteCards, { offlineDB: db }] = await Promise.all([
-			listDocuments<Record<string, unknown>>(
-				COLLECTIONS.FLASHCARDS,
-				lastSync > 0
-					? [Query.greaterThan("updatedAt", new Date(lastSync).toISOString())]
-					: [],
-			),
-			import("@/lib/db/schema").then((m) => ({ offlineDB: m.offlineDB })),
-		]);
+		const remoteCards = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.FLASHCARDS,
+			lastSync > 0
+				? [Query.greaterThan("updatedAt", new Date(lastSync).toISOString())]
+				: [],
+		);
 
 		await Promise.all(
 			remoteCards.map(async (remote) => {
 				const remoteUpdatedAt = new Date(
 					(remote.updatedAt as string) || 0,
 				).getTime();
-				const localCard = await db.flashcards.get(remote.flashcardId as string);
+				const localCard = await dexieDataAccess.flashcards.get(
+					remote.flashcardId as string,
+				);
 
 				if (localCard?.updatedAt && localCard.updatedAt > remoteUpdatedAt) {
 					return;
 				}
 
-				await db.flashcards.put({
+				await dexieDataAccess.flashcards.put({
 					id: remote.flashcardId as string,
 					front: (remote.front as string) || "",
 					back: (remote.back as string) || "",
@@ -144,7 +149,14 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 		);
 
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
+			try {
+				await dexieDataAccess.flashcardSyncState.put({
+					userId: "default",
+					lastSyncTimestamp: Date.now(),
+				});
+			} catch {
+				localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
+			}
 		}
 	} catch (e) {
 		console.warn("[FlashcardPull] sync failed:", e);

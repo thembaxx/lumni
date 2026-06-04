@@ -2,6 +2,7 @@
 
 import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
@@ -12,6 +13,10 @@ import { useBookmarksStore } from "@/store/bookmarks";
 
 export default function BookmarksPage() {
 	const { bookmarks, removeBookmark } = useBookmarksStore();
+
+	useEffect(() => {
+		useBookmarksStore.getState().initialize();
+	}, []);
 
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">

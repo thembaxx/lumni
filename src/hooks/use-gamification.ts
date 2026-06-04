@@ -23,11 +23,7 @@ import {
 export function useGamification() {
 	const [data, setData] = useState<StoredGamification>(() => {
 		const stored = gamificationEngine.load();
-		const merged = gamificationEngine.mergeWithDefaults(stored);
-		if (merged !== stored) {
-			gamificationEngine.save(merged);
-		}
-		return merged;
+		return gamificationEngine.mergeWithDefaults(stored);
 	});
 	const prevLevelRef = useRef<number>(calculateLevel(data.totalXp).level);
 	const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
@@ -37,6 +33,22 @@ export function useGamification() {
 	const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const syncedRef = useRef(false);
 	const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+	// Load from Dexie on mount (overrides localStorage initial value)
+	useEffect(() => {
+		dexieDataAccess.gamification
+			.get(1)
+			.then((dexieData) => {
+				if (dexieData) {
+					setData((prev) => {
+						const merged = gamificationEngine.mergeWithDefaults(dexieData);
+						if (merged !== prev) return merged;
+						return prev;
+					});
+				}
+			})
+			.catch(() => {});
+	}, []);
 
 	// Try to load from server on mount (once)
 	useEffect(() => {
@@ -49,7 +61,6 @@ export function useGamification() {
 						...prev,
 						...serverData,
 					});
-					gamificationEngine.save(merged);
 					return merged;
 				});
 			}
@@ -93,14 +104,15 @@ export function useGamification() {
 		lastPracticeDate: data.lastPracticeDate,
 	};
 
+	const persistGamification = useCallback((newData: StoredGamification) => {
+		const record = { ...newData, id: 1 as const };
+		dexieDataAccess.gamification.put(record).catch(() => {});
+	}, []);
+
 	const scheduleSync = useCallback((newData: StoredGamification) => {
 		if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
 		syncTimerRef.current = setTimeout(() => {
 			syncToServer(newData);
-			const x: StoredGamification & { id: number } = { ...newData, id: 1 };
-			dexieDataAccess.gamification
-				.put(x)
-				.catch((e) => console.warn("[Gamification] Failed to save", e));
 		}, 2000);
 		timersRef.current.push(syncTimerRef.current);
 	}, []);
@@ -122,7 +134,7 @@ export function useGamification() {
 					setLeveledUp(calculateLevel(newData.totalXp));
 					prevLevelRef.current = newLevel;
 				}
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 				const label =
 					typeof window !== "undefined"
@@ -139,7 +151,7 @@ export function useGamification() {
 				return newData;
 			});
 		},
-		[scheduleSync],
+		[scheduleSync, persistGamification],
 	);
 
 	const addAchievement = useCallback(
@@ -159,12 +171,12 @@ export function useGamification() {
 					}, 0);
 					timersRef.current.push(achTimer);
 				}
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 				return newData;
 			});
 		},
-		[scheduleSync],
+		[scheduleSync, persistGamification],
 	);
 
 	const checkAndUnlockAchievements = useCallback(
@@ -204,34 +216,34 @@ export function useGamification() {
 				}, 0);
 				timersRef.current.push(freezeTimer);
 			}
-			gamificationEngine.save(newData);
+			persistGamification(newData);
 			scheduleSync(newData);
 			return newData;
 		});
-	}, [scheduleSync]);
+	}, [scheduleSync, persistGamification]);
 
 	const useStreakFreeze = useCallback(() => {
 		setData((prev) => {
 			const { data: newData, success } =
 				gamificationEngine.consumeStreakFreeze(prev);
 			if (success) {
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 			}
 			return newData;
 		});
-	}, [scheduleSync]);
+	}, [scheduleSync, persistGamification]);
 
 	const addStreakFreeze = useCallback(
 		(count?: number) => {
 			setData((prev) => {
 				const newData = gamificationEngine.addStreakFreeze(prev, count);
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 				return newData;
 			});
 		},
-		[scheduleSync],
+		[scheduleSync, persistGamification],
 	);
 
 	const completeDailyChallenge = useCallback(
@@ -241,12 +253,12 @@ export function useGamification() {
 					prev,
 					challengeId,
 				);
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 				return newData;
 			});
 		},
-		[scheduleSync],
+		[scheduleSync, persistGamification],
 	);
 
 	const checkForRewardChests = useCallback(() => {
@@ -266,12 +278,12 @@ export function useGamification() {
 				timersRef.current.push(chestTimer);
 			}
 			if (newData !== prev) {
-				gamificationEngine.save(newData);
+				persistGamification(newData);
 				scheduleSync(newData);
 			}
 			return newData;
 		});
-	}, [scheduleSync]);
+	}, [scheduleSync, persistGamification]);
 
 	const clearChest = useCallback(() => setPendingChest(null), []);
 

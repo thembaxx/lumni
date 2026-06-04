@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { UserConsent } from "@/types/user-consent";
 
@@ -7,12 +7,8 @@ function nowISO(): string {
 }
 
 export class UserConsentService {
-	private get db() {
-		return offlineDB;
-	}
-
 	async get(userId: string): Promise<UserConsent | null> {
-		return (await this.db.userConsents.get(userId)) ?? null;
+		return (await dexieDataAccess.userConsents.get(userId)) ?? null;
 	}
 
 	async save(
@@ -28,7 +24,7 @@ export class UserConsentService {
 			>
 		>,
 	): Promise<UserConsent> {
-		const existing = await this.db.userConsents.get(userId);
+		const existing = await dexieDataAccess.userConsents.get(userId);
 		const now = nowISO();
 
 		const record: UserConsent = {
@@ -52,7 +48,7 @@ export class UserConsentService {
 			createdAt: existing?.createdAt ?? now,
 		};
 
-		await this.db.userConsents.put(record);
+		await dexieDataAccess.userConsents.put(record);
 
 		await enqueue("appwrite-consent-sync", {
 			userId,
@@ -63,7 +59,7 @@ export class UserConsentService {
 	}
 
 	async delete(userId: string): Promise<void> {
-		await this.db.userConsents.delete(userId);
+		await dexieDataAccess.userConsents.delete(userId);
 	}
 }
 

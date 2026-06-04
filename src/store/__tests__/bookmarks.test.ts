@@ -13,7 +13,7 @@ mock.module("@/lib/bookmark-service", () => ({
 import { useBookmarksStore } from "../bookmarks";
 
 beforeEach(() => {
-	useBookmarksStore.setState({ bookmarks: [] });
+	useBookmarksStore.setState({ bookmarks: [], hydrated: false });
 });
 
 describe("useBookmarksStore", () => {
