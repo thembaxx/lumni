@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
 import { quizSessionRepo } from "@/lib/db/repositories/quiz-session";
-import type { Question } from "@/lib/question-engine/types";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import type {
 	AnswerDetail,
 	QuizSessionActions,
@@ -15,6 +15,7 @@ interface QuizState {
 	currentIndex: number;
 	correctAnswers: number;
 	correctness: boolean[];
+	userAnswers: UserAnswer[];
 	elapsedTime: number;
 	isComplete: boolean;
 	isActive: boolean;
@@ -23,7 +24,7 @@ interface QuizState {
 type QuizAction =
 	| { type: "RESET" }
 	| { type: "SET_INDEX"; index: number }
-	| { type: "RECORD_ANSWER"; correct: boolean }
+	| { type: "RECORD_ANSWER"; correct: boolean; answer?: UserAnswer }
 	| { type: "TICK" }
 	| { type: "FINISH" }
 	| { type: "START" }
@@ -36,6 +37,7 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 				currentIndex: 0,
 				correctAnswers: 0,
 				correctness: [],
+				userAnswers: [],
 				elapsedTime: 0,
 				isComplete: false,
 				isActive: false,
@@ -47,6 +49,9 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 				...state,
 				correctness: [...state.correctness, action.correct],
 				correctAnswers: state.correctAnswers + (action.correct ? 1 : 0),
+				userAnswers: action.answer
+					? [...state.userAnswers, action.answer]
+					: state.userAnswers,
 			};
 		case "TICK":
 			return { ...state, elapsedTime: state.elapsedTime + 1 };
@@ -57,6 +62,7 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 				currentIndex: 0,
 				correctAnswers: 0,
 				correctness: [],
+				userAnswers: [],
 				elapsedTime: 0,
 				isComplete: false,
 				isActive: true,
@@ -78,6 +84,7 @@ export function useQuizSession(
 		currentIndex: 0,
 		correctAnswers: 0,
 		correctness: [],
+		userAnswers: [],
 		elapsedTime: 0,
 		isComplete: false,
 		isActive: false,
@@ -87,6 +94,7 @@ export function useQuizSession(
 		currentIndex,
 		correctAnswers,
 		correctness,
+		userAnswers,
 		elapsedTime,
 		isComplete,
 		isActive,
@@ -98,9 +106,9 @@ export function useQuizSession(
 	}
 	prevQuestionsLength.current = questions.length;
 
-	const saveRef = useRef({ ...quizState, questions });
+	const saveRef = useRef({ ...quizState, userAnswers, questions });
 	useEffect(() => {
-		saveRef.current = { ...quizState, questions };
+		saveRef.current = { ...quizState, userAnswers, questions };
 	});
 
 	const persist = useCallback(() => {
@@ -155,8 +163,8 @@ export function useQuizSession(
 	}, []);
 
 	const recordAnswer = useCallback(
-		(correct: boolean, _detail?: AnswerDetail) => {
-			dispatch({ type: "RECORD_ANSWER", correct });
+		(correct: boolean, detail?: AnswerDetail) => {
+			dispatch({ type: "RECORD_ANSWER", correct, answer: detail?.answer });
 		},
 		[],
 	);
@@ -189,6 +197,7 @@ export function useQuizSession(
 			isComplete,
 			correctAnswers,
 			correctness,
+			userAnswers,
 		},
 		actions: { start, recordAnswer, next, previous, stop, restart },
 	};

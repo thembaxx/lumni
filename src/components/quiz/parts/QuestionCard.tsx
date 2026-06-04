@@ -34,7 +34,7 @@ interface QuestionCardProps {
 	questionNumber?: number;
 	totalQuestions?: number;
 	onNext?: () => void;
-	onAnswered?: (correct: boolean, score: number) => void;
+	onAnswered?: (correct: boolean, score: number, answer?: UserAnswer) => void;
 }
 
 const MATH_SUBJECTS = [
@@ -221,7 +221,7 @@ export function QuestionCard({
 					setTimeout(() => setShowConfetti(false), 2000);
 					setTimeout(() => setShowXPGain(false), 1500);
 				}
-				onAnswered?.(result.correct, result.score);
+				onAnswered?.(result.correct, result.score, answer);
 			} catch {
 				dispatchGrading({ type: "GRADE_FAILED" });
 				setState((prev) => ({

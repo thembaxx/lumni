@@ -20,10 +20,15 @@ export type { QuizCompleteResult as QuizResults };
 
 interface QuizEngineProps {
 	subjectId: string;
+	questionType?: string;
 	onComplete?: (results: QuizCompleteResult) => void;
 }
 
-export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
+export function QuizEngine({
+	subjectId,
+	questionType = "multiple-choice",
+	onComplete,
+}: QuizEngineProps) {
 	const {
 		questions,
 		sources,
@@ -40,7 +45,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	} = useQuiz({
 		subject: subjectId,
 		count: 10,
-		questionType: "multiple-choice",
+		questionType,
 		autoStart: true,
 		onComplete,
 	});
@@ -118,6 +123,9 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					elapsedTime={state.elapsedTime}
 					subject={subjectId}
 					sources={sources}
+					questions={state.questions}
+					correctness={state.correctness}
+					userAnswers={state.userAnswers}
 					onRestart={handleRestart}
 					onDashboard={handleStop}
 				/>

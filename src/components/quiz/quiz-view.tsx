@@ -161,6 +161,9 @@ export function QuizView({
 				elapsedTime={state.elapsedTime}
 				subject={selectedSubject ?? "Quiz"}
 				sources={sources}
+				questions={state.questions}
+				correctness={state.correctness}
+				userAnswers={state.userAnswers}
 				onRestart={handleRestart}
 				onDashboard={handleStop}
 			/>

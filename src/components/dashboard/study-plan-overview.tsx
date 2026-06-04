@@ -9,7 +9,8 @@ import {
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -39,7 +40,22 @@ export function StudyPlanOverview() {
 	const [showForm, setShowForm] = useState(false);
 	const [dismissedStale, setDismissedStale] = useState(false);
 	const autoRefreshDoneRef = useRef(false);
+	const router = useRouter();
 	const bookmarks = useBookmarksStore((s) => s.bookmarks);
+
+	const handleStartSession = useCallback(
+		(session: { subject: string; topic?: string; duration: number }) => {
+			const params = new URLSearchParams();
+			params.set("subject", session.subject);
+			if (session.topic) params.set("topic", session.topic);
+			if (session.duration)
+				params.set("maxTime", String(session.duration * 60));
+			params.set("count", "10");
+			params.set("autoStart", "true");
+			router.push(`/quiz?${params.toString()}`);
+		},
+		[router],
+	);
 	const bookmarksBySubject = useMemo(() => {
 		const map = new Map<string, number>();
 		for (const b of bookmarks) {
@@ -277,9 +293,11 @@ export function StudyPlanOverview() {
 				)}
 				{todaySessions.length > 0 ? (
 					todaySessions.slice(0, 3).map((session) => (
-						<div
+						<button
+							type="button"
 							key={session.id}
-							className="flex items-center gap-3 rounded-xl bg-muted/30 p-2.5"
+							onClick={() => handleStartSession(session)}
+							className="flex w-full items-center gap-3 rounded-xl bg-muted/30 p-2.5 text-left transition-colors hover:bg-muted/50"
 						>
 							<div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[--system-accent]/10">
 								<HugeiconsIcon
@@ -298,7 +316,7 @@ export function StudyPlanOverview() {
 							{session.completed && (
 								<span className="font-medium text-success text-xs">Done</span>
 							)}
-						</div>
+						</button>
 					))
 				) : (
 					<div className="flex items-center gap-3 rounded-xl bg-muted/30 p-2.5">

@@ -1,6 +1,7 @@
 "use client";
 
 import { QuizResultsCard } from "@/components/quiz";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { DecorativeRightPanel } from "./decorative-right-panel";
 
 interface QuizResultsStateProps {
@@ -9,8 +10,12 @@ interface QuizResultsStateProps {
 	elapsedTime: number;
 	subject: string;
 	sources?: { url: string; title: string }[];
+	questions?: Question[];
+	correctness?: boolean[];
+	userAnswers?: UserAnswer[];
 	onRestart: () => void;
 	onDashboard: () => void;
+	onPracticeMistakes?: () => void;
 }
 
 export function QuizResultsState({
@@ -19,8 +24,12 @@ export function QuizResultsState({
 	elapsedTime,
 	subject,
 	sources,
+	questions,
+	correctness,
+	userAnswers,
 	onRestart,
 	onDashboard,
+	onPracticeMistakes,
 }: QuizResultsStateProps) {
 	return (
 		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
@@ -31,8 +40,12 @@ export function QuizResultsState({
 					elapsedTime={elapsedTime}
 					subject={subject ?? "Quiz"}
 					sources={sources}
+					questions={questions}
+					correctness={correctness}
+					userAnswers={userAnswers}
 					onRestart={onRestart}
 					onDashboard={onDashboard}
+					onPracticeMistakes={onPracticeMistakes}
 				/>
 			</div>
 			<DecorativeRightPanel />

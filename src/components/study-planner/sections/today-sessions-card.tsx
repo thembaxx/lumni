@@ -14,10 +14,12 @@ export function TodaySessionsCard({
 	sessions,
 	onComplete,
 	onDelete,
+	onStart,
 }: {
 	sessions: StudySessionType[];
 	onComplete: (id: string) => void;
 	onDelete: (id: string) => void;
+	onStart?: (session: StudySessionType) => void;
 }) {
 	const t = useTranslations();
 	return (
@@ -40,13 +42,16 @@ export function TodaySessionsCard({
 								key={session.id}
 								className="flex items-center justify-between rounded-lg bg-muted p-3"
 							>
-								<div className="flex items-center gap-3">
+								<div className="flex min-w-0 flex-1 items-center gap-3">
 									<Button
 										variant="ghost"
 										size="icon-xs"
-										onClick={() => onComplete(session.id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											onComplete(session.id);
+										}}
 										aria-label={t("studyPlanner.markComplete")}
-										className={`rounded-full ${
+										className={`shrink-0 rounded-full ${
 											session.completed
 												? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
 												: "border-muted-foreground"
@@ -59,17 +64,26 @@ export function TodaySessionsCard({
 											/>
 										)}
 									</Button>
-									<div>
-										<p className="font-medium text-sm">{session.subject}</p>
-										<p className="text-muted-foreground text-xs">
+									<button
+										type="button"
+										onClick={() => onStart?.(session)}
+										className="min-w-0 flex-1 text-left"
+									>
+										<p className="truncate font-medium text-sm">
+											{session.subject}
+										</p>
+										<p className="truncate text-muted-foreground text-xs">
 											{session.topic || session.type} • {session.duration}min
 										</p>
-									</div>
+									</button>
 								</div>
 								<Button
 									variant="ghost"
 									size="icon-xs"
-									onClick={() => onDelete(session.id)}
+									onClick={(e) => {
+										e.stopPropagation();
+										onDelete(session.id);
+									}}
 									aria-label={t("studyPlanner.deleteSession")}
 								>
 									<HugeiconsIcon icon={Delete02Icon} className="size-4" />

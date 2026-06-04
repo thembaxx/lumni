@@ -2,23 +2,62 @@
 
 import {
 	Award01Icon,
+	CancelCircleIcon,
+	CheckmarkCircle01Icon,
 	DashboardSquare01Icon,
 	Refresh01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Confetti } from "@/components/celebration";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { NextActions } from "@/components/quiz/next-actions";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { ShareResultButton } from "@/components/shared/share-button";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
+
+function getUserAnswerText(answer?: UserAnswer): string {
+	if (!answer) return "Skipped";
+	if (answer.type === "option-ids" && Array.isArray(answer.value)) {
+		return (answer.value as string[]).join(", ");
+	}
+	if (answer.type === "text" || answer.type === "numeric") {
+		return String(answer.value ?? "");
+	}
+	return JSON.stringify(answer.value ?? "");
+}
+
+function getCorrectAnswerText(q: Question): string {
+	if (q.type === "multiple-choice") {
+		const body = q.body as {
+			options?: { id: string; text: string; isCorrect: boolean }[];
+		};
+		const correct = body?.options?.find((o) => o.isCorrect);
+		return correct?.text ?? "";
+	}
+	if (q.type === "short-answer") {
+		const body = q.body as {
+			modelAnswer?: string;
+			acceptableAnswers?: string[];
+		};
+		return body?.modelAnswer ?? body?.acceptableAnswers?.[0] ?? "";
+	}
+	if (q.type === "calculation") {
+		const body = q.body as { correctValue?: number; unit?: string };
+		return `${body?.correctValue ?? ""} ${body?.unit ?? ""}`.trim();
+	}
+	return q.explanation?.split(".")[0] ?? "";
+}
 
 const CONTAINER_VARIANTS = {
 	hidden: { opacity: 0 },
@@ -48,8 +87,12 @@ interface QuizResultsCardProps {
 	elapsedTime: number;
 	subject: string;
 	sources?: { url: string; title: string }[];
+	questions?: Question[];
+	correctness?: boolean[];
+	userAnswers?: UserAnswer[];
 	onRestart?: () => void;
 	onDashboard?: () => void;
+	onPracticeMistakes?: () => void;
 	className?: string;
 }
 
@@ -59,11 +102,17 @@ export function QuizResultsCard({
 	elapsedTime,
 	subject,
 	sources,
+	questions,
+	correctness,
+	userAnswers,
 	onRestart,
 	onDashboard,
+	onPracticeMistakes,
 	className,
 }: QuizResultsCardProps) {
 	const t = useTranslations();
+	const [showReview, setShowReview] = useState(false);
+	const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
 	const isGreatScore = accuracy >= 80;
 	const isPerfect = accuracy === 100;
@@ -239,6 +288,143 @@ export function QuizResultsCard({
 						</section>
 
 						<VerifiedByPill sources={sources ?? []} />
+
+						{questions && questions.length > 0 && (
+							<m.div variants={itemVariants}>
+								<NextActions
+									subject={subject}
+									correctness={correctness ?? []}
+									totalQuestions={totalQuestions}
+								/>
+							</m.div>
+						)}
+
+						{questions && questions.length > 0 && (
+							<m.div variants={itemVariants} className="flex flex-col gap-2">
+								<button
+									type="button"
+									onClick={() => setShowReview(!showReview)}
+									className="flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-left font-medium text-sm transition-colors hover:bg-muted"
+									aria-expanded={showReview}
+									aria-controls="question-review-panel"
+								>
+									<span>Review Answers</span>
+									<span className="text-muted-foreground text-xs">
+										{showReview ? "Hide" : `Show ${questions.length} questions`}
+									</span>
+								</button>
+								{showReview && (
+									<div
+										id="question-review-panel"
+										className="flex flex-col gap-2"
+									>
+										{questions.map((q, i) => {
+											const isCorrect = correctness?.[i] ?? false;
+											const isExpanded = expandedIndex === i;
+											const userAns = userAnswers?.[i];
+											return (
+												<Card
+													key={q.id}
+													className={cn(
+														"overflow-hidden",
+														isCorrect
+															? "border-success/20"
+															: "border-destructive/20",
+													)}
+												>
+													<button
+														type="button"
+														onClick={() =>
+															setExpandedIndex(isExpanded ? null : i)
+														}
+														className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/50"
+														aria-expanded={isExpanded}
+													>
+														<HugeiconsIcon
+															icon={
+																isCorrect
+																	? CheckmarkCircle01Icon
+																	: CancelCircleIcon
+															}
+															className={cn(
+																"size-5 shrink-0",
+																isCorrect ? "text-success" : "text-destructive",
+															)}
+														/>
+														<span className="flex-1 truncate font-medium text-sm">
+															Question {i + 1}
+														</span>
+														<span className="shrink-0 text-muted-foreground text-xs">
+															{isExpanded ? "▲" : "▼"}
+														</span>
+													</button>
+													{isExpanded && (
+														<div className="border-t px-4 py-3">
+															<MarkdownRenderer
+																content={q.questionText}
+																subject={subject}
+															/>
+															<div className="mt-3 grid grid-cols-2 gap-3">
+																{userAns && (
+																	<div className="rounded-lg bg-muted p-3">
+																		<p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+																			Your Answer
+																		</p>
+																		<p className="text-sm">
+																			{getUserAnswerText(userAns)}
+																		</p>
+																	</div>
+																)}
+																<div
+																	className={cn(
+																		"rounded-lg p-3",
+																		isCorrect
+																			? "bg-success/10"
+																			: "bg-destructive/10",
+																	)}
+																>
+																	<p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+																		{isCorrect ? "Answer" : "Correct Answer"}
+																	</p>
+																	<p className="text-sm">
+																		{getCorrectAnswerText(q)}
+																	</p>
+																</div>
+															</div>
+															{q.explanation && (
+																<div className="mt-3 rounded-lg bg-muted/50 p-3">
+																	<p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+																		Explanation
+																	</p>
+																	<MarkdownRenderer
+																		content={q.explanation}
+																		subject={subject}
+																	/>
+																</div>
+															)}
+														</div>
+													)}
+												</Card>
+											);
+										})}
+										{totalQuestions - correctAnswers > 0 && (
+											<Button
+												variant="secondary"
+												size="sm"
+												onClick={onPracticeMistakes}
+												className="mt-2 gap-2"
+											>
+												<HugeiconsIcon
+													icon={Refresh01Icon}
+													className="size-4"
+												/>
+												Practice These Topics
+											</Button>
+										)}
+									</div>
+								)}
+							</m.div>
+						)}
 
 						{(onRestart || onDashboard) && (
 							<m.div

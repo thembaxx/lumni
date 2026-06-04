@@ -8,41 +8,36 @@ const {
 } = await import("../difficulty");
 
 describe("difficulty shared utilities", () => {
-	test("normalizeDifficulty lowercases all variants", () => {
-		expect(normalizeDifficulty("easy")).toBe("easy");
-		expect(normalizeDifficulty("Easy")).toBe("easy");
-		expect(normalizeDifficulty("EASY")).toBe("easy");
-		expect(normalizeDifficulty("medium")).toBe("medium");
-		expect(normalizeDifficulty("Medium")).toBe("medium");
-		expect(normalizeDifficulty("hard")).toBe("hard");
-		expect(normalizeDifficulty("Hard")).toBe("hard");
+	test("normalizeDifficulty capitalises all variants", () => {
+		expect(normalizeDifficulty("easy")).toBe("Easy");
+		expect(normalizeDifficulty("Easy")).toBe("Easy");
+		expect(normalizeDifficulty("EASY")).toBe("Easy");
+		expect(normalizeDifficulty("medium")).toBe("Medium");
+		expect(normalizeDifficulty("Medium")).toBe("Medium");
+		expect(normalizeDifficulty("hard")).toBe("Hard");
+		expect(normalizeDifficulty("Hard")).toBe("Hard");
 	});
 
-	test("normalizeDifficulty passes through unknown values", () => {
-		expect(normalizeDifficulty("unknown" as string)).toBe("unknown");
+	test("normalizeDifficulty defaults unknown to Medium", () => {
+		expect(normalizeDifficulty("unknown" as string)).toBe("Medium");
 	});
 
 	test("isValidDifficulty validates correct values", () => {
-		expect(isValidDifficulty("easy")).toBe(true);
+		expect(isValidDifficulty("easy")).toBe(false);
 		expect(isValidDifficulty("Easy")).toBe(true);
-		expect(isValidDifficulty("medium")).toBe(true);
-		expect(isValidDifficulty("hard")).toBe(true);
+		expect(isValidDifficulty("medium")).toBe(false);
+		expect(isValidDifficulty("Medium")).toBe(true);
+		expect(isValidDifficulty("hard")).toBe(false);
+		expect(isValidDifficulty("Hard")).toBe(true);
 		expect(isValidDifficulty("unknown")).toBe(false);
 		expect(isValidDifficulty("")).toBe(false);
 	});
 
-	test("DIFFICULTY_VALUES contains lowercase values", () => {
-		expect(DIFFICULTY_VALUES).toEqual(["easy", "medium", "hard"]);
+	test("DIFFICULTY_VALUES contains capitalised values", () => {
+		expect(DIFFICULTY_VALUES).toEqual(["Easy", "Medium", "Hard"]);
 	});
 
-	test("DIFFICULTY_INPUT_VALUES includes both cases", () => {
-		expect(DIFFICULTY_INPUT_VALUES).toEqual([
-			"easy",
-			"medium",
-			"hard",
-			"Easy",
-			"Medium",
-			"Hard",
-		]);
+	test("DIFFICULTY_INPUT_VALUES matches DIFFICULTY_VALUES", () => {
+		expect(DIFFICULTY_INPUT_VALUES).toEqual(["Easy", "Medium", "Hard"]);
 	});
 });

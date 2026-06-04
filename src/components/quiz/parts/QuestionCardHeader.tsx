@@ -43,7 +43,7 @@ export function QuestionCardHeader({
 						<span className="opacity-80">{question.topic}</span>
 					</Badge>
 					<DifficultyBadge
-						difficulty={question.difficulty as "easy" | "medium" | "hard"}
+						difficulty={question.difficulty}
 						variant="quiz"
 						className="border font-mono text-xs"
 					/>

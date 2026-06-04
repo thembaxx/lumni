@@ -1,4 +1,4 @@
-import type { Question } from "@/lib/question-engine/types";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 
 export interface QuizSessionConfig {
 	maxTime?: number;
@@ -7,6 +7,7 @@ export interface QuizSessionConfig {
 export interface AnswerDetail {
 	selectedAnswer: string;
 	correctAnswer: string;
+	answer: UserAnswer;
 }
 
 export interface QuizSessionState {
@@ -18,6 +19,7 @@ export interface QuizSessionState {
 	isComplete: boolean;
 	correctAnswers: number;
 	correctness: boolean[];
+	userAnswers: UserAnswer[];
 }
 
 export interface QuizSessionActions {

@@ -2,8 +2,33 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { flashcardEngine } from "@/lib/flashcard-engine";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
+import { logError } from "@/lib/shared/logger";
 import type { UseQuizParams } from "./types";
+
+function getCorrectAnswerText(q: Question): string {
+	if (q.type === "multiple-choice") {
+		const body = q.body as {
+			options?: { id: string; text: string; isCorrect: boolean }[];
+		};
+		const correct = body?.options?.find((o) => o.isCorrect);
+		return correct?.text ?? "";
+	}
+	if (q.type === "short-answer") {
+		const body = q.body as {
+			modelAnswer?: string;
+			acceptableAnswers?: string[];
+		};
+		return body?.modelAnswer ?? body?.acceptableAnswers?.[0] ?? "";
+	}
+	if (q.type === "calculation") {
+		const body = q.body as { correctValue?: number; unit?: string };
+		return `${body?.correctValue ?? ""} ${body?.unit ?? ""}`.trim();
+	}
+	return q.explanation?.split(".")[0] ?? "";
+}
 
 export function useQuiz(params: UseQuizParams) {
 	const {
@@ -65,6 +90,32 @@ export function useQuiz(params: UseQuizParams) {
 	const stateRef = useRef(state);
 	stateRef.current = state;
 
+	const flashcardsCreatedRef = useRef(false);
+
+	useEffect(() => {
+		if (!state.isComplete || flashcardsCreatedRef.current) return;
+		flashcardsCreatedRef.current = true;
+		const wrongIndices = state.correctness
+			.map((c, i) => (c ? -1 : i))
+			.filter((i) => i >= 0);
+		if (wrongIndices.length === 0) return;
+		Promise.all(
+			wrongIndices.map(async (i) => {
+				const q = state.questions[i];
+				if (!q) return;
+				try {
+					await flashcardEngine.create(
+						q.questionText,
+						getCorrectAnswerText(q) || "Review this topic",
+						params.subject,
+					);
+				} catch (err) {
+					logError("CreateFlashcardFromQuiz", err);
+				}
+			}),
+		);
+	}, [state.isComplete, state.correctness, state.questions, params.subject]);
+
 	const handleNext = useCallback(() => {
 		const s = stateRef.current;
 		const wasLast = s.questionNumber - 1 >= s.totalQuestions - 1;
@@ -92,9 +143,12 @@ export function useQuiz(params: UseQuizParams) {
 	}, [handleNext]);
 
 	const handleAnswered = useCallback(
-		(correct: boolean) => {
+		(correct: boolean, _score?: number, answer?: UserAnswer) => {
 			setCurrentAnswered(true);
-			actions.recordAnswer(correct);
+			actions.recordAnswer(
+				correct,
+				answer ? { selectedAnswer: "", correctAnswer: "", answer } : undefined,
+			);
 		},
 		[actions],
 	);

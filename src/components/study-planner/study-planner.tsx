@@ -2,13 +2,15 @@
 
 import { Add01Icon, Download03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Button } from "@/components/ui/button";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { downloadICal, exportToICal } from "@/lib/utils/calendar-export";
+import type { StudySession } from "@/lib/utils/study-planner";
 import { AddExamModal } from "./sections/add-exam-modal";
 import { AddSessionModal } from "./sections/add-session-modal";
 import { CalendarView } from "./sections/calendar-view";
@@ -27,6 +29,7 @@ export function StudyPlanner() {
 
 function StudyPlannerInner() {
 	const t = useTranslations();
+	const router = useRouter();
 	const {
 		todaySessions,
 		upcomingSessions,
@@ -46,6 +49,20 @@ function StudyPlannerInner() {
 	const _nowRef = useRef<number | null>(null);
 	if (_nowRef.current === null) _nowRef.current = Date.now();
 	const _now = _nowRef.current;
+
+	const handleStartSession = useCallback(
+		(session: StudySession) => {
+			const params = new URLSearchParams();
+			params.set("subject", session.subject);
+			if (session.topic) params.set("topic", session.topic);
+			if (session.duration)
+				params.set("maxTime", String(session.duration * 60));
+			params.set("count", "10");
+			params.set("autoStart", "true");
+			router.push(`/quiz?${params.toString()}`);
+		},
+		[router],
+	);
 
 	const exportCalendar = () => {
 		const ics = exportToICal(
@@ -101,6 +118,7 @@ function StudyPlannerInner() {
 					sessions={todaySessions}
 					onComplete={markComplete}
 					onDelete={removeSession}
+					onStart={handleStartSession}
 				/>
 
 				<UpcomingExamsCard exams={upcomingExams} onDelete={removeExam} />
@@ -110,6 +128,7 @@ function StudyPlannerInner() {
 				sessions={upcomingSessions}
 				onComplete={markComplete}
 				onDelete={removeSession}
+				onStart={handleStartSession}
 			/>
 
 			{showAddSession && (
