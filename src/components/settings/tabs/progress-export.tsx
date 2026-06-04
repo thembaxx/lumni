@@ -42,14 +42,14 @@ export function ProgressExport() {
 	const handleExportCsv = async () => {
 		setExportState("csv-exporting");
 		try {
-			const { offlineDB } = await import("@/lib/db/schema");
+			const { dexieDataAccess } = await import("@/lib/db");
 			const [quizAttempts, examSessions] = await Promise.all([
-				offlineDB.quizAttempts
+				dexieDataAccess.quizAttempts
 					.orderBy("completedAt")
 					.reverse()
 					.limit(100)
 					.toArray(),
-				offlineDB.examSessions.toArray(),
+				dexieDataAccess.examSessions.toArray(),
 			]);
 			const csv = exportService.toCSV(quizAttempts, examSessions);
 			const blob = new Blob([csv], { type: "text/csv" });

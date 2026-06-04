@@ -94,17 +94,17 @@ export function ProfileTabRefactored() {
 						format: "csv",
 						onExport: async () => {
 							try {
-								const [{ exportService }, { offlineDB }] = await Promise.all([
+								const [{ exportService }, { dexieDataAccess }] = await Promise.all([
 									import("@/lib/export"),
-									import("@/lib/db/schema"),
+									import("@/lib/db"),
 								]);
 								const [quizAttempts, examSessions] = await Promise.all([
-									offlineDB.quizAttempts
+									dexieDataAccess.quizAttempts
 										.orderBy("completedAt")
 										.reverse()
 										.limit(100)
 										.toArray(),
-									offlineDB.examSessions.toArray(),
+									dexieDataAccess.examSessions.toArray(),
 								]);
 								const csv = exportService.toCSV(quizAttempts, examSessions);
 								const blob = new Blob([csv], { type: "text/csv" });

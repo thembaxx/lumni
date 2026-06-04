@@ -4,7 +4,7 @@ import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 
 interface StudentReport {
 	competencies: {
@@ -33,9 +33,9 @@ export default function StudentReportPage({
 
 	useEffect(() => {
 		Promise.all([
-			offlineDB.competencies.toArray(),
-			offlineDB.quizAttempts.toArray(),
-			offlineDB.subjects.toArray(),
+			dexieDataAccess.competencies.toArray(),
+			dexieDataAccess.quizAttempts.toArray(),
+			dexieDataAccess.subjects.toArray(),
 		]).then(([competencies, quizAttempts, subjects]) => {
 			setData({
 				competencies: competencies.map((c) => ({

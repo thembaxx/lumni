@@ -89,8 +89,8 @@ export const POST = createRouteHandler({
 		}
 
 		try {
-			const { offlineDB } = await import("@/lib/db/schema");
-			await offlineDB.pastPaperQuestions.bulkPut(questions);
+			const { dexieDataAccess } = await import("@/lib/db");
+			await dexieDataAccess.pastPaperQuestions.bulkPut(questions);
 		} catch {
 			// Dexie unavailable server-side
 		}

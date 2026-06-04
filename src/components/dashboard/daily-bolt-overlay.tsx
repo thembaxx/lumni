@@ -13,7 +13,7 @@ import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
@@ -32,7 +32,7 @@ interface DailyBoltOverlayProps {
 
 async function resolveWeakestSubject(): Promise<string> {
 	try {
-		const all = await offlineDB.competencies.toArray();
+		const all = await dexieDataAccess.competencies.toArray();
 		if (all.length === 0) return "mathematics";
 
 		const bySubject = new Map<string, number[]>();

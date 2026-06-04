@@ -115,6 +115,8 @@ function tableAdapter<T, TId extends string | number>(
 			table.bulkAdd(
 				items as (T & Record<string, unknown>)[],
 			) as unknown as Promise<TId[]>,
+		bulkPut: (items) =>
+			table.bulkPut(items) as unknown as Promise<TId[]>,
 		bulkDelete: (ids) => table.bulkDelete(ids) as unknown as Promise<void>,
 
 		toArray: () => table.toArray(),
@@ -165,12 +167,14 @@ export class DexieDataAccess implements DataAccess {
 	examSessions = tableAdapter(offlineDB.examSessions);
 	sharedQuestions = tableAdapter(offlineDB.sharedQuestions);
 	examDates = tableAdapter(offlineDB.examDates);
+	extractionCache = tableAdapter(offlineDB.extractionCache);
 	notes = tableAdapter(offlineDB.notes);
 	gamification = tableAdapter(offlineDB.gamification);
 	cachedPdfs = tableAdapter(offlineDB.cachedPdfs);
 	quizSessions = tableAdapter(offlineDB.quizSessions);
 	tinyfishCache = tableAdapter(offlineDB.tinyfishCache);
 	tinyfishUsage = tableAdapter(offlineDB.tinyfishUsage);
+	pastPaperQuestions = tableAdapter(offlineDB.pastPaperQuestions);
 	jobs = tableAdapter(offlineDB.jobs);
 	conflicts = tableAdapter(offlineDB.conflicts);
 }

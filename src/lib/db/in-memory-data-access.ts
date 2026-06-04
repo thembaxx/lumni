@@ -163,6 +163,14 @@ export class InMemoryTable<
 		return ids;
 	}
 
+	async bulkPut(items: T[]): Promise<TId[]> {
+		const ids: TId[] = [];
+		for (const item of items) {
+			ids.push(await this.put(item));
+		}
+		return ids;
+	}
+
 	async bulkDelete(ids: TId[]): Promise<void> {
 		for (const id of ids) {
 			this.items.delete(id);
@@ -250,6 +258,8 @@ export class InMemoryDataAccess implements DataAccess {
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	examDates = new InMemoryTable<any>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	extractionCache = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	notes = new InMemoryTable<any>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	gamification = new InMemoryTable<any>();
@@ -261,6 +271,8 @@ export class InMemoryDataAccess implements DataAccess {
 	tinyfishCache = new InMemoryTable<any, string>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	tinyfishUsage = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	pastPaperQuestions = new InMemoryTable<any, string>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	jobs = new InMemoryTable<any>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface

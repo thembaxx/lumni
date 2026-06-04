@@ -15,7 +15,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
@@ -89,7 +89,7 @@ export function SnapFab() {
 
 		try {
 			const hash = getImageHash(dataUrl);
-			const cached = await offlineDB.extractionCache
+			const cached = await dexieDataAccess.extractionCache
 				.where("imageHash")
 				.equals(hash)
 				.first();
@@ -106,7 +106,7 @@ export function SnapFab() {
 
 			const localText = await tryLocalOcr(dataUrl);
 			if (localText) {
-				await offlineDB.extractionCache.add({
+				await dexieDataAccess.extractionCache.add({
 					imageHash: hash,
 					extractedText: localText,
 					createdAt: Date.now(),
@@ -129,7 +129,7 @@ export function SnapFab() {
 			const data: ExtractionResult = await response.json();
 			const text = data.solution || "";
 
-			await offlineDB.extractionCache.add({
+			await dexieDataAccess.extractionCache.add({
 				imageHash: hash,
 				extractedText: text,
 				createdAt: Date.now(),
@@ -160,7 +160,7 @@ export function SnapFab() {
 				setImagePreview(processed.dataUrl);
 
 				const hash = getImageHash(processed.dataUrl);
-				const cached = await offlineDB.extractionCache
+				const cached = await dexieDataAccess.extractionCache
 					.where("imageHash")
 					.equals(hash)
 					.first();
@@ -175,7 +175,7 @@ export function SnapFab() {
 
 				const localText = await tryLocalOcr(processed.dataUrl);
 				if (localText) {
-					await offlineDB.extractionCache.add({
+					await dexieDataAccess.extractionCache.add({
 						imageHash: hash,
 						extractedText: localText,
 						createdAt: Date.now(),
@@ -201,7 +201,7 @@ export function SnapFab() {
 				const data: ExtractionResult = await response.json();
 				const text = data.solution || "";
 
-				await offlineDB.extractionCache.add({
+				await dexieDataAccess.extractionCache.add({
 					imageHash: hash,
 					extractedText: text,
 					createdAt: Date.now(),

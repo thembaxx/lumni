@@ -1,5 +1,6 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	AnalyticsEvent,
 	BookmarkRecord,
@@ -11,6 +12,7 @@ import type {
 	CachedVisual,
 	ChatMessageRecord,
 	ExamSessionSnapshot,
+	ExtractionCache,
 	NoteRecord,
 	QuestionRating,
 	QuizAttempt,
@@ -68,6 +70,7 @@ export interface DataAccessTable<T, TId extends string | number = number> {
 	delete(id: TId): Promise<void>;
 
 	bulkAdd(items: Omit<T, "id">[]): Promise<TId[]>;
+	bulkPut(items: T[]): Promise<TId[]>;
 	bulkDelete(ids: TId[]): Promise<void>;
 
 	toArray(): Promise<T[]>;
@@ -105,12 +108,14 @@ export interface DataAccess {
 	examSessions: DataAccessTable<ExamSessionSnapshot, number>;
 	sharedQuestions: DataAccessTable<SharedQuestionRecord, string>;
 	examDates: DataAccessTable<CachedExamDates, number>;
+	extractionCache: DataAccessTable<ExtractionCache, number>;
 	notes: DataAccessTable<NoteRecord, number>;
 	gamification: DataAccessTable<StoredGamification, number>;
 	cachedPdfs: DataAccessTable<CachedPdf, number>;
 	quizSessions: DataAccessTable<QuizSessionState, number>;
 	tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
 	tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
+	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
 	jobs: DataAccessTable<JobRecord, number>;
 	conflicts: DataAccessTable<SyncConflict, number>;
 }
