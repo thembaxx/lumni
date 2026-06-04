@@ -515,4 +515,14 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **QuizPackService**: DI via `DataAccess`, replaced `offlineDB.quizPacks/packQuestions`, moved helper into class
 - [x] **RetentionService**: Created class with DI (was standalone functions), replaced `offlineDB.retentionRecurrence/wrongAnswers`, removed compound `where({...})`
 - [x] **useWrongAnswerJournal**: Replaced `offlineDB.table("wrongAnswers")` string pattern with typed `dexieDataAccess.wrongAnswers` accessor
-- [x] **Verification**: tsc 0 errors, biome 0 warnings, 1225 tests pass
+
+### DataAccess seam — Phase 3 (Expand + batch migrate remaining consumers)
+- [x] **Expanded interface**: 13 more table accessors added to `DataAccess` (27 total): chatMessages, questionRatings, knowledgeGraph, examSessions, sharedQuestions, examDates, notes, gamification, cachedPdfs, quizSessions, tinyfishCache, tinyfishUsage, jobs
+- [x] **Interface additions**: `.limit(n)` on `DataAccessTable`, `.modify()` on `Collection<T>` with callback support
+- [x] **Migrated files** (20 files, ~120 `offlineDB` calls removed):
+  - 5 Batch A: observability/events, sync/sync-handler, knowledge-graph/service, ai/chat-context, notification-service
+  - 6 Batch B: search-service, share-service, exam-dates/service, chunked-search, export/export-service, seed
+  - 4 repositories: question-rating, pdf-cache, exam-session, quiz-session
+  - Interface layer: data-access.ts, dexie-data-access.ts, in-memory-data-access.ts
+- [x] **Test fix**: `all-repos.test.ts` mock moved before imports, both `@/lib/db` and `@/lib/db/schema` mocked with shared stores (fixed process-wide mock.module pollution gap)
+- [x] **Verification**: tsc 0 errors (1 pre-existing `maxScore` on `QuizAttempt`), biome 0 warnings, 1225 tests pass, 0 fail

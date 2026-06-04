@@ -1,5 +1,5 @@
 import { getAI } from "@/lib/ai/client";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import type { CachedGraph, KnowledgeGraph } from "./types";
@@ -37,7 +37,7 @@ export async function getCachedGraph(
 	topic: string,
 ): Promise<KnowledgeGraph | null> {
 	const key = buildKnowledgeCacheKey(subject, topic);
-	const cached = await offlineDB.knowledgeGraph.get(key);
+	const cached = await dexieDataAccess.knowledgeGraph.get(key);
 	if (cached && cached.expiresAt > Date.now()) {
 		return cached.graph;
 	}
@@ -56,5 +56,5 @@ export async function storeGraph(
 		createdAt: Date.now(),
 		expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
 	};
-	await offlineDB.knowledgeGraph.put(entry);
+	await dexieDataAccess.knowledgeGraph.put(entry);
 }

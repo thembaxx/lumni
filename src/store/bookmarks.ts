@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 
 export interface Bookmark {
@@ -32,19 +32,21 @@ async function migrateFromLocalStorage() {
 		const oldBookmarks = parsed?.state?.bookmarks ?? [];
 		if (oldBookmarks.length === 0) return;
 
-		const existing = await offlineDB.bookmarks.toArray();
+		const existing = await dexieDataAccess.bookmarks.toArray();
 		if (existing.length > 0) return;
 
-		await offlineDB.bookmarks.bulkPut(
-			oldBookmarks.map((b, i) => ({
-				id: i + 1,
-				questionId: b.id,
-				questionText: b.questionText,
-				subject: b.subject,
-				topic: b.topic,
-				note: b.note,
-				savedAt: b.savedAt,
-			})),
+		await Promise.all(
+			oldBookmarks.map((b, i) =>
+				dexieDataAccess.bookmarks.put({
+					id: i + 1,
+					questionId: b.id,
+					questionText: b.questionText,
+					subject: b.subject,
+					topic: b.topic,
+					note: b.note,
+					savedAt: b.savedAt,
+				}),
+			),
 		);
 
 		localStorage.removeItem("lumni_bookmarks");
@@ -64,7 +66,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 				const savedAt = Date.now();
 				const entry = { ...bookmark, savedAt };
 				set({ bookmarks: [entry, ...bookmarks] });
-				offlineDB.bookmarks.add({
+				dexieDataAccess.bookmarks.add({
 					questionId: bookmark.id,
 					questionText: bookmark.questionText,
 					subject: bookmark.subject,
@@ -84,7 +86,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 
 			removeBookmark: (id) => {
 				set({ bookmarks: get().bookmarks.filter((b) => b.id !== id) });
-				offlineDB.bookmarks.where("questionId").equals(id).delete();
+				dexieDataAccess.bookmarks.where("questionId").equals(id).delete();
 				enqueue("appwrite-bookmark-delete", { questionId: id });
 			},
 
@@ -94,7 +96,10 @@ export const useBookmarksStore = create<BookmarksState>()(
 						b.id === id ? { ...b, note } : b,
 					),
 				});
-				offlineDB.bookmarks.where("questionId").equals(id).modify({ note });
+				dexieDataAccess.bookmarks
+					.where("questionId")
+					.equals(id)
+					.modify({ note });
 			},
 
 			isBookmarked: (id) => {

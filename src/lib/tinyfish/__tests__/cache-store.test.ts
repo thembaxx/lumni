@@ -20,7 +20,7 @@ interface MockTable {
 	}): Promise<unknown>;
 	delete(key: string): Promise<unknown>;
 	where(field: string): {
-		below(value: number): { primaryKeys(): Promise<string[]> };
+		below(value: number): { toArray(): Promise<{ key: string }[]> };
 		equals(value: unknown): {
 			first(): Promise<unknown>;
 		};
@@ -47,10 +47,10 @@ const mockTinyfishCache: MockTable = {
 			return {
 				below(value: number) {
 					return {
-						async primaryKeys() {
-							const out: string[] = [];
+						async toArray() {
+							const out: { key: string }[] = [];
 							for (const [k, v] of cacheStore.entries()) {
-								if (v.expiresAt < value) out.push(k);
+								if (v.expiresAt < value) out.push({ key: k });
 							}
 							return out;
 						},
@@ -143,8 +143,8 @@ const mockTinyfishUsage: MockTable = {
 	},
 };
 
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: {
 		tinyfishCache: mockTinyfishCache,
 		tinyfishUsage: mockTinyfishUsage,
 	},

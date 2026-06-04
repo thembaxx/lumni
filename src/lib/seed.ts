@@ -28,8 +28,8 @@ export async function seedDatabase() {
 
 export async function getUserStats(_userId: string) {
 	try {
-		const { offlineDB } = await import("@/lib/db/schema");
-		const allAttempts = await offlineDB.table("quizAttempts").toArray();
+		const { dexieDataAccess } = await import("@/lib/db");
+		const allAttempts = await dexieDataAccess.quizAttempts.toArray();
 		const reviewed = allAttempts.filter((a) => a.completedAt);
 		const total = reviewed.length;
 		const correct = reviewed.filter((a) => a.score === a.maxScore).length;
@@ -60,9 +60,8 @@ export async function getUserStats(_userId: string) {
 
 export async function selectSubject(userId: string, subjectId: string) {
 	try {
-		const { offlineDB } = await import("@/lib/db/schema");
-		await offlineDB
-			.table("progress")
+		const { dexieDataAccess } = await import("@/lib/db");
+		await dexieDataAccess.progress
 			.where("odSubjectId")
 			.equals(subjectId)
 			.modify({ updatedAt: Date.now() });

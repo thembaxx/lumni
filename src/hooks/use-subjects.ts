@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import subjectsData from "@/data/subjects.json";
 import { useAuth } from "@/lib/auth/auth-context";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 export interface Subject {
@@ -51,8 +51,8 @@ export function useSubjects() {
 		queryKey: ["subjects"],
 		queryFn: async () => {
 			const { subjects, selectedSubjectIds } = await fetchSubjects();
-			await offlineDB.subjects
-				.bulkPut(
+			await dexieDataAccess.subjects
+				.bulkAdd(
 					subjects.map((s) => ({
 						code: s.code,
 						name: s.name,

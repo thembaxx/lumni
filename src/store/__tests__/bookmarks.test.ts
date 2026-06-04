@@ -1,9 +1,10 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: {
 		bookmarks: {
 			add: async () => 1,
+			put: async () => {},
 			toArray: async () => [],
 			where: () => ({
 				equals: () => ({

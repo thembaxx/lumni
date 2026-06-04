@@ -1,6 +1,54 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { safeJsonStringify } from "@/lib/shared/json";
 
+// Mock store for all repositories
+const stores: Record<string, Record<string, unknown>[]> = {
+	cachedPdfs: [],
+	examSessions: [],
+	quizSessions: [],
+	quizAttempts: [],
+	visuals: [],
+	questions: [],
+	progress: [],
+	conflicts: [],
+	changeLog: [],
+	competencyProgress: [],
+	questionCache: [],
+	visualCache: [],
+};
+
+// Helper to get store by table name
+function getStore(tableName: string) {
+	return stores[tableName];
+}
+
+// Mock module with full DataAccess-like API — MUST be before imports
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: buildMockDataAccess(),
+}));
+
+// Also mock schema for unmigrated repos that still use offlineDB directly
+mock.module("@/lib/db/schema", () => ({
+	offlineDB: buildMockDataAccess(),
+}));
+
+function buildMockDataAccess() {
+	return {
+		cachedPdfs: createDexieTable("cachedPdfs"),
+		examSessions: createDexieTable("examSessions"),
+		quizSessions: createDexieTable("quizSessions"),
+		quizAttempts: createQuizAttemptsTable(),
+		visuals: createDexieTable("visuals"),
+		questions: createDexieTable("questions"),
+		progress: createDexieTable("progress"),
+		conflicts: createDexieTable("conflicts"),
+		changeLog: createDexieTable("changeLog"),
+		competencyProgress: createDexieTable("competencyProgress"),
+		questionCache: createDexieTable("questionCache"),
+		visualCache: createDexieTable("visualCache"),
+	};
+}
+
 // Import all repository functions
 const pdfRepo = await import("../pdf-cache");
 const examSessionRepo = await import("../exam-session");
@@ -48,45 +96,6 @@ const {
 	resolveConflict,
 	clearResolvedConflicts,
 } = conflictsRepo;
-
-// Mock store for all repositories
-const stores: Record<string, Record<string, unknown>[]> = {
-	cachedPdfs: [],
-	examSessions: [],
-	quizSessions: [],
-	quizAttempts: [],
-	visuals: [],
-	questions: [],
-	progress: [],
-	conflicts: [],
-	changeLog: [],
-	competencyProgress: [],
-	questionCache: [],
-	visualCache: [],
-};
-
-// Helper to get store by table name
-function getStore(tableName: string) {
-	return stores[tableName];
-}
-
-// Mock module with full Dexie-like API
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
-		cachedPdfs: createDexieTable("cachedPdfs"),
-		examSessions: createDexieTable("examSessions"),
-		quizSessions: createDexieTable("quizSessions"),
-		quizAttempts: createQuizAttemptsTable(),
-		visuals: createDexieTable("visuals"),
-		questions: createDexieTable("questions"),
-		progress: createDexieTable("progress"),
-		conflicts: createDexieTable("conflicts"),
-		changeLog: createDexieTable("changeLog"),
-		competencyProgress: createDexieTable("competencyProgress"),
-		questionCache: createDexieTable("questionCache"),
-		visualCache: createDexieTable("visualCache"),
-	},
-}));
 
 // Clear stores before each test
 beforeEach(() => {

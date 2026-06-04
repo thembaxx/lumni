@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import type { RagContext, WebSource } from "./types";
 
 export interface TinyFishCacheEntry {
@@ -20,10 +20,10 @@ function todayDateKey(): string {
 }
 
 export async function getCached(key: string): Promise<RagContext | null> {
-	const entry = await offlineDB.tinyfishCache.get(key);
+	const entry = await dexieDataAccess.tinyfishCache.get(key);
 	if (!entry) return null;
 	if (entry.expiresAt < Date.now()) {
-		await offlineDB.tinyfishCache.delete(key);
+		await dexieDataAccess.tinyfishCache.delete(key);
 		return null;
 	}
 	return entry.value;
@@ -41,28 +41,27 @@ export async function setCached(
 		expiresAt: now + ttlMs,
 		fetchedAt: now,
 	};
-	await offlineDB.tinyfishCache.put(entry);
+	await dexieDataAccess.tinyfishCache.put(entry);
 }
 
 export async function deleteCached(key: string): Promise<void> {
-	await offlineDB.tinyfishCache.delete(key);
+	await dexieDataAccess.tinyfishCache.delete(key);
 }
 
 export async function clearExpiredCache(): Promise<number> {
 	const now = Date.now();
-	const expired = await offlineDB.tinyfishCache
-		.where("expiresAt")
-		.below(now)
-		.primaryKeys();
+	const expired = (
+		await dexieDataAccess.tinyfishCache.where("expiresAt").below(now).toArray()
+	).map((e) => e.key);
 	if (expired.length > 0) {
-		await offlineDB.tinyfishCache.bulkDelete(expired);
+		await dexieDataAccess.tinyfishCache.bulkDelete(expired);
 	}
 	return expired.length;
 }
 
 export async function getTodayUsageCount(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const entry = await offlineDB.tinyfishUsage
+	const entry = await dexieDataAccess.tinyfishUsage
 		.where("[userId+date]")
 		.equals([userId, date])
 		.first();
@@ -71,18 +70,20 @@ export async function getTodayUsageCount(userId: string): Promise<number> {
 
 export async function incrementTodayUsage(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const existing = await offlineDB.tinyfishUsage
+	const existing = await dexieDataAccess.tinyfishUsage
 		.where("[userId+date]")
 		.equals([userId, date])
 		.first();
 
 	if (existing) {
 		const next = existing.count + 1;
-		await offlineDB.tinyfishUsage.update(existing.id ?? 0, { count: next });
+		await dexieDataAccess.tinyfishUsage.update(existing.id ?? 0, {
+			count: next,
+		});
 		return next;
 	}
 
-	await offlineDB.tinyfishUsage.add({ userId, date, count: 1 });
+	await dexieDataAccess.tinyfishUsage.add({ userId, date, count: 1 });
 	return 1;
 }
 

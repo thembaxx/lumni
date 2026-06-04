@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 
 export async function GET(
 	_request: Request,
@@ -29,9 +29,9 @@ export async function GET(
 
 	try {
 		const [_competencies, quizAttempts, subjects] = await Promise.all([
-			offlineDB.competencies.toArray(),
-			offlineDB.quizAttempts.toArray(),
-			offlineDB.subjects.toArray(),
+			dexieDataAccess.competencies.toArray(),
+			dexieDataAccess.quizAttempts.toArray(),
+			dexieDataAccess.subjects.toArray(),
 		]);
 
 		const subjectEnrollments: Record<string, number> = {};

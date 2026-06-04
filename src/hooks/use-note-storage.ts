@@ -25,15 +25,15 @@ export function useNoteStorage() {
 			if (!migratedItem) {
 				if (v1Item) {
 					const localNotes: Note[] = JSON.parse(v1Item);
-					const db = (await import("@/lib/db/schema")).offlineDB;
+					const { dexieDataAccess } = await import("@/lib/db");
 					await Promise.all(
 						localNotes.map(async (n) => {
-							const existing = await db.notes
+							const existing = await dexieDataAccess.notes
 								.where("uuid")
 								.equals(n.id)
 								.first();
 							if (!existing) {
-								await db.notes.add({
+								await dexieDataAccess.notes.add({
 									uuid: n.id,
 									title: n.title,
 									content: n.content,
@@ -55,8 +55,8 @@ export function useNoteStorage() {
 			}
 			migratedRef.current = true;
 
-			const db = (await import("@/lib/db/schema")).offlineDB;
-			const records = await db.notes.toArray();
+			const { dexieDataAccess } = await import("@/lib/db");
+			const records = await dexieDataAccess.notes.toArray();
 			records.sort((a, b) => b.updatedAt - a.updatedAt);
 			setNotes(
 				records.map((r) => ({
@@ -76,11 +76,11 @@ export function useNoteStorage() {
 	}, [migratedItem, v1Item]);
 
 	const saveNotes = useCallback(async (notes: Note[]) => {
-		const db = (await import("@/lib/db/schema")).offlineDB;
-		await db.notes.clear();
+		const { dexieDataAccess } = await import("@/lib/db");
+		await dexieDataAccess.notes.clear();
 		await Promise.all(
 			notes.map((n) =>
-				db.notes.add({
+				dexieDataAccess.notes.add({
 					uuid: n.id,
 					title: n.title,
 					content: n.content,
@@ -97,8 +97,11 @@ export function useNoteStorage() {
 	}, []);
 
 	const persistNote = useCallback(async (note: Note) => {
-		const db = (await import("@/lib/db/schema")).offlineDB;
-		const existing = await db.notes.where("uuid").equals(note.id).first();
+		const { dexieDataAccess } = await import("@/lib/db");
+		const existing = await dexieDataAccess.notes
+			.where("uuid")
+			.equals(note.id)
+			.first();
 		const record = {
 			uuid: note.id,
 			title: note.title,
@@ -111,9 +114,9 @@ export function useNoteStorage() {
 			updatedAt: new Date(note.updatedAt).getTime(),
 		};
 		if (existing && existing.id !== undefined) {
-			await db.notes.update(existing.id, record);
+			await dexieDataAccess.notes.update(existing.id, record);
 		} else {
-			await db.notes.add(record);
+			await dexieDataAccess.notes.add(record);
 		}
 	}, []);
 
@@ -128,8 +131,8 @@ export function useNoteStorage() {
 	const removeNote = useCallback((id: string) => {
 		setNotes((prev) => prev.filter((note) => note.id !== id));
 		(async () => {
-			const db = (await import("@/lib/db/schema")).offlineDB;
-			await db.notes.where("uuid").equals(id).delete();
+			const { dexieDataAccess } = await import("@/lib/db");
+			await dexieDataAccess.notes.where("uuid").equals(id).delete();
 		})();
 	}, []);
 

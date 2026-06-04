@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
@@ -372,9 +372,8 @@ export async function scheduleWeeklyProgress(
 
 	try {
 		const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-		const attempts = await offlineDB.quizAttempts
-			.filter((a) => a.completedAt >= sevenDaysAgo)
-			.toArray();
+		const allAttempts = await dexieDataAccess.quizAttempts.toArray();
+		const attempts = allAttempts.filter((a) => a.completedAt >= sevenDaysAgo);
 
 		const totalAttempts = attempts.length;
 		let totalScore = 0;

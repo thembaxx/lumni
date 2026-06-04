@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { QueueCore } from "@/lib/queue/core";
 import { safeJsonStringify } from "@/lib/shared/json";
 import type {
@@ -58,7 +58,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"prune-stale-questions": 10,
 };
 
-export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);
+export const queueCore = new QueueCore<JobRecord>(dexieDataAccess.jobs);
 
 export async function enqueue<T extends JobType>(
 	type: T,

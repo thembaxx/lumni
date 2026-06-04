@@ -3,18 +3,34 @@ import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	AnalyticsEvent,
 	BookmarkRecord,
+	CachedExamDates,
+	CachedPdf,
 	CachedProgress,
 	CachedQuestion,
 	CachedSubject,
 	CachedVisual,
+	ChatMessageRecord,
+	ExamSessionSnapshot,
+	NoteRecord,
+	QuestionRating,
 	QuizAttempt,
+	QuizSessionState,
 	RetentionRecurrence,
+	SharedQuestionRecord,
+	SyncConflict,
 } from "@/lib/db/schema";
 import type {
 	FlashcardReview,
 	FlashcardSM2,
 } from "@/lib/flashcard-engine/types";
+import type { StoredGamification } from "@/lib/gamification-engine/types";
+import type { CachedGraph } from "@/lib/knowledge-graph/types";
+import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type {
+	TinyFishCacheEntry,
+	TinyFishUsageEntry,
+} from "@/lib/tinyfish/cache";
 
 // ──────────────────────────────────────────────
 // Generic query interfaces
@@ -25,6 +41,7 @@ export interface Collection<T> {
 	toArray(): Promise<T[]>;
 	count(): Promise<number>;
 	delete(): Promise<void>;
+	modify(changes: Partial<T> | ((record: T) => void)): Promise<number>;
 	reverse(): Collection<T>;
 	limit(n: number): Collection<T>;
 	filter(pred: (item: T) => boolean): Collection<T>;
@@ -56,6 +73,7 @@ export interface DataAccessTable<T, TId extends string | number = number> {
 	toArray(): Promise<T[]>;
 	count(): Promise<number>;
 	clear(): Promise<void>;
+	limit(n: number): Collection<T>;
 
 	where(index: string): WhereClause<T>;
 	orderBy(index: string): Collection<T>;
@@ -80,4 +98,19 @@ export interface DataAccess {
 	questions: DataAccessTable<CachedQuestion, number>;
 	subjects: DataAccessTable<CachedSubject, number>;
 	visuals: DataAccessTable<CachedVisual, number>;
+	// Phase 3 — expanded tables for remaining offlineDB consumers
+	chatMessages: DataAccessTable<ChatMessageRecord, number>;
+	questionRatings: DataAccessTable<QuestionRating, number>;
+	knowledgeGraph: DataAccessTable<CachedGraph, string>;
+	examSessions: DataAccessTable<ExamSessionSnapshot, number>;
+	sharedQuestions: DataAccessTable<SharedQuestionRecord, string>;
+	examDates: DataAccessTable<CachedExamDates, number>;
+	notes: DataAccessTable<NoteRecord, number>;
+	gamification: DataAccessTable<StoredGamification, number>;
+	cachedPdfs: DataAccessTable<CachedPdf, number>;
+	quizSessions: DataAccessTable<QuizSessionState, number>;
+	tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
+	tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
+	jobs: DataAccessTable<JobRecord, number>;
+	conflicts: DataAccessTable<SyncConflict, number>;
 }

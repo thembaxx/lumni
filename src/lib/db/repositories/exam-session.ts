@@ -1,5 +1,6 @@
+import { dexieDataAccess } from "@/lib/db";
 import { safeJsonStringify } from "@/lib/shared/json";
-import { type ExamSessionSnapshot, offlineDB } from "../schema";
+import type { ExamSessionSnapshot } from "../schema";
 
 export async function saveExamSession(
 	paperId: string,
@@ -12,7 +13,7 @@ export async function saveExamSession(
 		completed: boolean;
 	},
 ): Promise<void> {
-	const existing = await offlineDB.examSessions
+	const existing = await dexieDataAccess.examSessions
 		.where("paperId")
 		.equals(paperId)
 		.first();
@@ -29,23 +30,26 @@ export async function saveExamSession(
 	};
 
 	if (existing) {
-		await offlineDB.examSessions.update(existing.id ?? 0, snapshot);
+		await dexieDataAccess.examSessions.update(existing.id ?? 0, snapshot);
 	} else {
-		await offlineDB.examSessions.add(snapshot);
+		await dexieDataAccess.examSessions.add(snapshot);
 	}
 }
 
 export async function getExamSession(
 	paperId: string,
 ): Promise<ExamSessionSnapshot | undefined> {
-	return offlineDB.examSessions.where("paperId").equals(paperId).first();
+	return dexieDataAccess.examSessions.where("paperId").equals(paperId).first();
 }
 
 export async function clearExamSession(paperId: string): Promise<void> {
-	await offlineDB.examSessions.where("paperId").equals(paperId).delete();
+	await dexieDataAccess.examSessions.where("paperId").equals(paperId).delete();
 }
 
 export async function clearOldExamSessions(maxAgeHours = 24): Promise<void> {
 	const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
-	await offlineDB.examSessions.where("lastSavedAt").below(cutoff).delete();
+	await dexieDataAccess.examSessions
+		.where("lastSavedAt")
+		.below(cutoff)
+		.delete();
 }

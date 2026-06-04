@@ -1,13 +1,16 @@
-import { offlineDB, type SyncConflict } from "../schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { SyncConflict } from "../schema";
 
 export async function saveConflict(
 	conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">,
 ): Promise<number> {
-	return offlineDB.conflicts.add(conflict as SyncConflict);
+	return dexieDataAccess.conflicts.add(conflict as SyncConflict);
 }
 
 export async function getUnresolvedConflicts(): Promise<SyncConflict[]> {
-	return offlineDB.conflicts.filter((c) => !c.resolvedAt).toArray();
+	return (await dexieDataAccess.conflicts.toArray()).filter(
+		(c) => !c.resolvedAt,
+	);
 }
 
 export async function resolveConflict(
@@ -15,12 +18,17 @@ export async function resolveConflict(
 	resolution: "local" | "server" | "merged",
 	_mergedData?: unknown,
 ): Promise<void> {
-	await offlineDB.conflicts.update(id, {
+	await dexieDataAccess.conflicts.update(id, {
 		resolvedAt: Date.now(),
 		resolution,
 	});
 }
 
 export async function clearResolvedConflicts(): Promise<void> {
-	await offlineDB.conflicts.filter((c) => !!c.resolvedAt).delete();
+	const resolved = (await dexieDataAccess.conflicts.toArray()).filter(
+		(c) => !!c.resolvedAt,
+	);
+	await Promise.all(
+		resolved.map((c) => dexieDataAccess.conflicts.delete(c.id ?? 0)),
+	);
 }

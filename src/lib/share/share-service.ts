@@ -1,4 +1,5 @@
 import { Query } from "appwrite";
+import { dexieDataAccess } from "@/lib/db";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -6,7 +7,6 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
-import { offlineDB } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 
@@ -45,7 +45,7 @@ export async function shareQuestion(
 	}
 
 	try {
-		await offlineDB.sharedQuestions.add(record as never);
+		await dexieDataAccess.sharedQuestions.add(record as never);
 	} catch (err) {
 		logError("ShareQuestionDexie", err);
 	}
@@ -73,7 +73,7 @@ export async function getSharedQuestion(
 	id: string,
 ): Promise<SharedQuestionRecord | null> {
 	try {
-		const local = await offlineDB.sharedQuestions.get(id);
+		const local = await dexieDataAccess.sharedQuestions.get(id);
 		if (local) {
 			const record = local as unknown as SharedQuestionRecord;
 			if (record.question) return record;
@@ -113,7 +113,7 @@ export async function getSharedQuestion(
 
 export async function incrementViewCount(id: string): Promise<void> {
 	try {
-		await offlineDB.sharedQuestions
+		await dexieDataAccess.sharedQuestions
 			.where("id")
 			.equals(id)
 			.modify((record: SchemaRecord) => {

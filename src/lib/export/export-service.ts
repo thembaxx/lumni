@@ -1,6 +1,6 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
+import { dexieDataAccess } from "@/lib/db";
 import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/schema";
-import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
@@ -38,15 +38,15 @@ export class ExportService {
 			wrongAnswers,
 			flashcards,
 		] = await Promise.all([
-			offlineDB.gamification.orderBy("id").reverse().first(),
-			offlineDB.quizAttempts
+			dexieDataAccess.gamification.orderBy("id").reverse().first(),
+			dexieDataAccess.quizAttempts
 				.orderBy("completedAt")
 				.reverse()
 				.limit(100)
 				.toArray(),
-			offlineDB.competencies.toArray(),
-			offlineDB.examSessions.toArray(),
-			offlineDB.wrongAnswers.toArray(),
+			dexieDataAccess.competencies.toArray(),
+			dexieDataAccess.examSessions.toArray(),
+			dexieDataAccess.wrongAnswers.toArray(),
 			flashcardEngine.getAll(),
 		]);
 

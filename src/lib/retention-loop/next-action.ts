@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
 
@@ -123,9 +123,8 @@ export async function resolveNextAction(
 async function getDueCardCount(): Promise<number> {
 	try {
 		const now = Date.now();
-		const cards = await offlineDB.flashcards
-			.filter((c) => c.nextReview <= now)
-			.toArray();
+		const allCards = await dexieDataAccess.flashcards.toArray();
+		const cards = allCards.filter((c) => c.nextReview <= now);
 		return cards.length;
 	} catch (err) {
 		logError("GetDueCardCount", err);
@@ -139,7 +138,7 @@ async function getWeakestTopic(_userId?: string): Promise<{
 	score: number;
 } | null> {
 	try {
-		const competencies = await offlineDB.competencies.toArray();
+		const competencies = await dexieDataAccess.competencies.toArray();
 
 		if (competencies.length === 0) return null;
 
@@ -171,7 +170,7 @@ async function getWeakestTopic(_userId?: string): Promise<{
 
 async function getSubjectName(subjectId: string): Promise<string> {
 	try {
-		const subject = await offlineDB.subjects
+		const subject = await dexieDataAccess.subjects
 			.where("code")
 			.equals(subjectId)
 			.first();

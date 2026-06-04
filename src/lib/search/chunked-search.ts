@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 
 export interface ChunkedSearchResult {
 	id: string;
@@ -39,7 +39,7 @@ export async function searchAllChunked(
 
 	const queries: Promise<ChunkedSearchResult[]>[] = [
 		queryWithTimeout(async () => {
-			const all = await offlineDB.questions
+			const all = await dexieDataAccess.questions
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			const results: ChunkedSearchResult[] = [];
@@ -71,7 +71,9 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await offlineDB.notes.limit(MAX_RESULTS_PER_TABLE).toArray();
+			const all = await dexieDataAccess.notes
+				.limit(MAX_RESULTS_PER_TABLE)
+				.toArray();
 			return all
 				.filter((n) => scoreMatch(`${n.title} ${n.content}`, q) > 0)
 				.map((n) => ({
@@ -87,7 +89,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await offlineDB.flashcards
+			const all = await dexieDataAccess.flashcards
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			return all
@@ -105,7 +107,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await offlineDB.wrongAnswers
+			const all = await dexieDataAccess.wrongAnswers
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			return all

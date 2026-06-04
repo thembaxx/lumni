@@ -1,6 +1,7 @@
+import { dexieDataAccess } from "@/lib/db";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import type { VisualContent } from "@/lib/visual-engine/types";
-import { type CachedVisual, offlineDB } from "../schema";
+import type { CachedVisual } from "../schema";
 
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -16,7 +17,7 @@ export async function cacheVisual(
 	visual: VisualContent | null,
 ): Promise<void> {
 	const now = Date.now();
-	const existing = await offlineDB.visuals
+	const existing = await dexieDataAccess.visuals
 		.where("cacheKey")
 		.equals(cacheKey)
 		.first();
@@ -30,16 +31,16 @@ export async function cacheVisual(
 	};
 
 	if (existing) {
-		await offlineDB.visuals.update(existing.id ?? 0, record);
+		await dexieDataAccess.visuals.update(existing.id ?? 0, record);
 	} else {
-		await offlineDB.visuals.add(record as CachedVisual);
+		await dexieDataAccess.visuals.add(record as CachedVisual);
 	}
 }
 
 export async function getCachedVisual(
 	cacheKey: string,
 ): Promise<VisualContent | null> {
-	const entry = await offlineDB.visuals
+	const entry = await dexieDataAccess.visuals
 		.where("cacheKey")
 		.equals(cacheKey)
 		.first();
@@ -47,7 +48,7 @@ export async function getCachedVisual(
 	if (!entry) return null;
 
 	if (Date.now() > entry.expiresAt) {
-		await offlineDB.visuals.delete(entry.id ?? 0);
+		await dexieDataAccess.visuals.delete(entry.id ?? 0);
 		return null;
 	}
 

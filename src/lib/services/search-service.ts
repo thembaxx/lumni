@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage } from "@/lib/utils/storage";
@@ -30,7 +30,7 @@ function textRelevant(text: string, query: string): boolean {
 }
 
 function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.questions.toArray().then((rows) => {
+	return dexieDataAccess.questions.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const row of rows) {
 			const questions: Array<{
@@ -57,7 +57,7 @@ function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.wrongAnswers.toArray().then((rows) => {
+	return dexieDataAccess.wrongAnswers.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (
@@ -142,7 +142,7 @@ function searchLocalStorageNotes(query: string): SearchResultItem[] {
 }
 
 function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.quizAttempts.toArray().then((rows) => {
+	return dexieDataAccess.quizAttempts.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.odSubject, query)) {
@@ -162,7 +162,7 @@ function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.examSessions.toArray().then((rows) => {
+	return dexieDataAccess.examSessions.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.paperId, query)) {
@@ -182,7 +182,7 @@ function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieProgress(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.progress.toArray().then((rows) => {
+	return dexieDataAccess.progress.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.odSubjectId, query)) {

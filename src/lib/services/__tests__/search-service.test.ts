@@ -15,8 +15,8 @@ const mockWrongAnswers: unknown[] = [];
 
 const mockFlashcards: unknown[] = [];
 
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: {
 		questions: {
 			toArray: () => Promise.resolve(mockQuestions),
 		},

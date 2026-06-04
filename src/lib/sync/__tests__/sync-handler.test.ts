@@ -38,8 +38,8 @@ const mockAttemptsTable = {
 	},
 };
 
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: {
 		progress: mockProgressTable,
 		quizAttempts: mockAttemptsTable,
 		competencies: { toArray: async () => [] },

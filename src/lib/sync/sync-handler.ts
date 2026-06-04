@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 
 export async function flushOfflineData(userId: string): Promise<void> {
@@ -12,14 +12,14 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		allRatings,
 		allBookmarks,
 	] = await Promise.all([
-		offlineDB.progress.toArray(),
-		offlineDB.quizAttempts.toArray(),
-		offlineDB.competencies.toArray(),
-		offlineDB.flashcards.toArray(),
-		offlineDB.wrongAnswers.toArray(),
-		offlineDB.chatMessages.toArray(),
-		offlineDB.questionRatings.toArray(),
-		offlineDB.bookmarks.toArray(),
+		dexieDataAccess.progress.toArray(),
+		dexieDataAccess.quizAttempts.toArray(),
+		dexieDataAccess.competencies.toArray(),
+		dexieDataAccess.flashcards.toArray(),
+		dexieDataAccess.wrongAnswers.toArray(),
+		dexieDataAccess.chatMessages.toArray(),
+		dexieDataAccess.questionRatings.toArray(),
+		dexieDataAccess.bookmarks.toArray(),
 	]);
 
 	await Promise.all([
@@ -47,7 +47,9 @@ export async function flushOfflineData(userId: string): Promise<void> {
 							totalQuestions: a.totalQuestions,
 							duration: a.duration,
 							completedAt: a.completedAt,
-						}).then(() => offlineDB.quizAttempts.update(a.id ?? 0, { userId })),
+						}).then(() =>
+							dexieDataAccess.quizAttempts.update(a.id ?? 0, { userId }),
+						),
 					]
 				: [],
 		),

@@ -1,4 +1,5 @@
-import { offlineDB, type QuestionRating } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { QuestionRating } from "@/lib/db/schema";
 
 export interface QuestionRatingRepository {
 	findByQuestionId(questionId: string): Promise<QuestionRating | undefined>;
@@ -15,7 +16,7 @@ export class DexieQuestionRatingRepository implements QuestionRatingRepository {
 		questionId: string,
 	): Promise<QuestionRating | undefined> {
 		return (
-			offlineDB.questionRatings
+			dexieDataAccess.questionRatings
 				.where("questionId")
 				.equals(questionId)
 				.first() ?? undefined
@@ -27,18 +28,21 @@ export class DexieQuestionRatingRepository implements QuestionRatingRepository {
 		record: Partial<QuestionRating> & { createdAt: number },
 	): Promise<void> {
 		if (id) {
-			await offlineDB.questionRatings.update(id, record);
+			await dexieDataAccess.questionRatings.update(id, record);
 		} else {
-			await offlineDB.questionRatings.add(record as QuestionRating);
+			await dexieDataAccess.questionRatings.add(record as QuestionRating);
 		}
 	}
 
 	async getAll(): Promise<QuestionRating[]> {
-		return offlineDB.questionRatings.orderBy("createdAt").reverse().toArray();
+		return dexieDataAccess.questionRatings
+			.orderBy("createdAt")
+			.reverse()
+			.toArray();
 	}
 
 	async getBySubject(subject: string): Promise<QuestionRating[]> {
-		return offlineDB.questionRatings
+		return dexieDataAccess.questionRatings
 			.where("subject")
 			.equals(subject)
 			.reverse()

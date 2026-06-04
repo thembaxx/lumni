@@ -72,6 +72,7 @@ export interface QuizAttempt {
 	userId?: string;
 	answers: string; // JSON stringified answers
 	score: number;
+	maxScore?: number;
 	totalQuestions: number;
 	duration: number;
 	completedAt: number;

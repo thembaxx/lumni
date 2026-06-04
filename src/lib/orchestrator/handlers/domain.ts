@@ -1,5 +1,6 @@
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
+import { dexieDataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
@@ -8,7 +9,6 @@ import {
 } from "@/lib/db/client";
 import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
-import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
@@ -175,7 +175,7 @@ const PRUNE_CONFIG = {
 export const pruneStaleQuestions: JobHandler = async () => {
 	try {
 		const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
-		const all = await offlineDB.questions.toArray();
+		const all = await dexieDataAccess.questions.toArray();
 		const stale = all.filter((q) => {
 			const parsed = safeParseQuestions(q.questions);
 			if (!parsed) return false;
@@ -198,7 +198,7 @@ export const pruneStaleQuestions: JobHandler = async () => {
 		await Promise.all(
 			stale.map((entry) => {
 				if (entry.id != null) {
-					return offlineDB.questions.delete(entry.id);
+					return dexieDataAccess.questions.delete(entry.id);
 				}
 				return Promise.resolve();
 			}),

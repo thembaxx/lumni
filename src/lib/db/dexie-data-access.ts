@@ -35,6 +35,10 @@ class DexieCollectionAdapter<T> implements Collection<T> {
 		await this.source.delete();
 	}
 
+	async modify(changes: Partial<T> | ((record: T) => void)): Promise<number> {
+		return this.source.modify(changes as UpdateSpec<T>);
+	}
+
 	reverse(): Collection<T> {
 		return new DexieCollectionAdapter(this.source.reverse());
 	}
@@ -116,6 +120,10 @@ function tableAdapter<T, TId extends string | number>(
 		toArray: () => table.toArray(),
 		count: () => table.count(),
 		clear: () => table.clear(),
+		limit: (n: number) =>
+			new DexieCollectionAdapter(
+				table.limit(n) as unknown as DexieCollection<T, unknown>,
+			),
 
 		where: (index: string) => {
 			return new DexieWhereClauseAdapter<T>(
@@ -150,6 +158,21 @@ export class DexieDataAccess implements DataAccess {
 	questions = tableAdapter(offlineDB.questions);
 	subjects = tableAdapter(offlineDB.subjects);
 	visuals = tableAdapter(offlineDB.visuals);
+	// Phase 3 — expanded tables
+	chatMessages = tableAdapter(offlineDB.chatMessages);
+	questionRatings = tableAdapter(offlineDB.questionRatings);
+	knowledgeGraph = tableAdapter(offlineDB.knowledgeGraph);
+	examSessions = tableAdapter(offlineDB.examSessions);
+	sharedQuestions = tableAdapter(offlineDB.sharedQuestions);
+	examDates = tableAdapter(offlineDB.examDates);
+	notes = tableAdapter(offlineDB.notes);
+	gamification = tableAdapter(offlineDB.gamification);
+	cachedPdfs = tableAdapter(offlineDB.cachedPdfs);
+	quizSessions = tableAdapter(offlineDB.quizSessions);
+	tinyfishCache = tableAdapter(offlineDB.tinyfishCache);
+	tinyfishUsage = tableAdapter(offlineDB.tinyfishUsage);
+	jobs = tableAdapter(offlineDB.jobs);
+	conflicts = tableAdapter(offlineDB.conflicts);
 }
 
 export const dexieDataAccess = new DexieDataAccess();

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
@@ -98,7 +98,7 @@ export function useGamification() {
 		syncTimerRef.current = setTimeout(() => {
 			syncToServer(newData);
 			const x: StoredGamification & { id: number } = { ...newData, id: 1 };
-			offlineDB.gamification
+			dexieDataAccess.gamification
 				.put(x)
 				.catch((e) => console.warn("[Gamification] Failed to save", e));
 		}, 2000);

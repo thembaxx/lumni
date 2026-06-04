@@ -1,5 +1,5 @@
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 let cachedContext: string | null = null;
@@ -46,7 +46,7 @@ export async function buildChatContext(): Promise<string> {
 	if (strong.length > 0) parts.push(`Strong areas: ${strong.join(", ")}.`);
 
 	try {
-		const recent = await offlineDB.wrongAnswers
+		const recent = await dexieDataAccess.wrongAnswers
 			.orderBy("createdAt")
 			.reverse()
 			.limit(5)

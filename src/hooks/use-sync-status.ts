@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
 import { useOnlineStatus } from "./useOnlineStatus";
@@ -12,7 +12,7 @@ export function useSyncStatus() {
 
 	useInterval(async () => {
 		try {
-			const items = await offlineDB.jobs
+			const items = await dexieDataAccess.jobs
 				.where("status")
 				.equals("pending")
 				.count();

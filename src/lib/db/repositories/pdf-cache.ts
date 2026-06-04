@@ -1,11 +1,12 @@
-import { type CachedPdf, offlineDB } from "../schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { CachedPdf } from "../schema";
 
 export async function cachePdf(
 	paperId: string,
 	pdfData: Blob,
 	fileName: string,
 ): Promise<void> {
-	const existing = await offlineDB.cachedPdfs
+	const existing = await dexieDataAccess.cachedPdfs
 		.where("paperId")
 		.equals(paperId)
 		.first();
@@ -18,20 +19,20 @@ export async function cachePdf(
 	};
 
 	if (existing) {
-		await offlineDB.cachedPdfs.update(existing.id ?? 0, entry);
+		await dexieDataAccess.cachedPdfs.update(existing.id ?? 0, entry);
 	} else {
-		await offlineDB.cachedPdfs.add(entry);
+		await dexieDataAccess.cachedPdfs.add(entry);
 	}
 }
 
 export async function getCachedPdf(
 	paperId: string,
 ): Promise<CachedPdf | undefined> {
-	return offlineDB.cachedPdfs.where("paperId").equals(paperId).first();
+	return dexieDataAccess.cachedPdfs.where("paperId").equals(paperId).first();
 }
 
 export async function removeCachedPdf(paperId: string): Promise<void> {
-	await offlineDB.cachedPdfs.where("paperId").equals(paperId).delete();
+	await dexieDataAccess.cachedPdfs.where("paperId").equals(paperId).delete();
 }
 
 export async function isPdfCached(paperId: string): Promise<boolean> {
@@ -47,12 +48,12 @@ export async function getCachedPdfUrl(paperId: string): Promise<string | null> {
 
 export async function clearOldPdfCache(maxAgeHours = 168): Promise<void> {
 	const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
-	const old = await offlineDB.cachedPdfs
+	const old = await dexieDataAccess.cachedPdfs
 		.where("cachedAt")
 		.below(cutoff)
 		.toArray();
 	for (const entry of old) {
 		URL.revokeObjectURL(entry.paperId);
 	}
-	await offlineDB.cachedPdfs.where("cachedAt").below(cutoff).delete();
+	await dexieDataAccess.cachedPdfs.where("cachedAt").below(cutoff).delete();
 }

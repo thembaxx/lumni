@@ -1,21 +1,24 @@
+import { dexieDataAccess } from "@/lib/db";
 import { safeJsonStringify } from "@/lib/shared/json";
-import { offlineDB, type QuizAttempt, type QuizSessionState } from "../schema";
+import type { QuizAttempt, QuizSessionState } from "../schema";
 
 export async function saveQuizAttempt(
 	odSubject: string,
 	data: {
 		answers: unknown[];
 		score: number;
+		maxScore?: number;
 		totalQuestions: number;
 		duration: number;
 	},
 	userId?: string,
 ): Promise<number> {
-	return offlineDB.quizAttempts.add({
+	return dexieDataAccess.quizAttempts.add({
 		odSubject,
 		userId,
 		answers: safeJsonStringify(data.answers),
 		score: data.score,
+		maxScore: data.maxScore,
 		totalQuestions: data.totalQuestions,
 		duration: data.duration,
 		completedAt: Date.now(),
@@ -26,7 +29,7 @@ export async function getQuizAttempts(
 	odSubject: string,
 	limit = 10,
 ): Promise<QuizAttempt[]> {
-	return offlineDB.quizAttempts
+	return dexieDataAccess.quizAttempts
 		.where("odSubject")
 		.equals(odSubject)
 		.reverse()
@@ -37,19 +40,19 @@ export async function getQuizAttempts(
 export async function saveQuizSession(
 	session: Omit<QuizSessionState, "id" | "lastSavedAt">,
 ): Promise<number> {
-	const existing = await offlineDB.quizSessions
+	const existing = await dexieDataAccess.quizSessions
 		.where("sessionId")
 		.equals(session.sessionId)
 		.first();
 
 	if (existing) {
-		return offlineDB.quizSessions.update(existing.id ?? 0, {
+		return dexieDataAccess.quizSessions.update(existing.id ?? 0, {
 			...session,
 			lastSavedAt: Date.now(),
 		});
 	}
 
-	return offlineDB.quizSessions.add({
+	return dexieDataAccess.quizSessions.add({
 		...session,
 		lastSavedAt: Date.now(),
 	});
@@ -58,13 +61,16 @@ export async function saveQuizSession(
 export async function getQuizSession(
 	sessionId: string,
 ): Promise<QuizSessionState | undefined> {
-	return offlineDB.quizSessions.where("sessionId").equals(sessionId).first();
+	return dexieDataAccess.quizSessions
+		.where("sessionId")
+		.equals(sessionId)
+		.first();
 }
 
 export async function getActiveQuizSession(
 	subject: string,
 ): Promise<QuizSessionState | undefined> {
-	const sessions = await offlineDB.quizSessions
+	const sessions = await dexieDataAccess.quizSessions
 		.where("subject")
 		.equals(subject)
 		.toArray();
@@ -76,7 +82,8 @@ export async function getActiveQuizSession(
 }
 
 export async function getAllPausedSessions(): Promise<QuizSessionState[]> {
-	return offlineDB.quizSessions.filter((s) => s.isPaused).toArray();
+	const all = await dexieDataAccess.quizSessions.toArray();
+	return all.filter((s) => s.isPaused);
 }
 
 export async function resumeQuizSession(
@@ -85,7 +92,7 @@ export async function resumeQuizSession(
 	const session = await getQuizSession(sessionId);
 	if (!session) return undefined;
 
-	await offlineDB.quizSessions.update(session.id ?? 0, {
+	await dexieDataAccess.quizSessions.update(session.id ?? 0, {
 		isPaused: false,
 		lastSavedAt: Date.now(),
 	});
@@ -97,17 +104,23 @@ export async function pauseQuizSession(sessionId: string): Promise<void> {
 	const session = await getQuizSession(sessionId);
 	if (!session) return;
 
-	await offlineDB.quizSessions.update(session.id ?? 0, {
+	await dexieDataAccess.quizSessions.update(session.id ?? 0, {
 		isPaused: true,
 		lastSavedAt: Date.now(),
 	});
 }
 
 export async function deleteQuizSession(sessionId: string): Promise<void> {
-	await offlineDB.quizSessions.where("sessionId").equals(sessionId).delete();
+	await dexieDataAccess.quizSessions
+		.where("sessionId")
+		.equals(sessionId)
+		.delete();
 }
 
 export async function clearOldQuizSessions(maxAgeHours = 24): Promise<void> {
 	const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
-	await offlineDB.quizSessions.where("lastSavedAt").below(cutoff).delete();
+	await dexieDataAccess.quizSessions
+		.where("lastSavedAt")
+		.below(cutoff)
+		.delete();
 }

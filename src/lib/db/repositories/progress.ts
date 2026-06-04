@@ -1,4 +1,5 @@
-import { type CachedProgress, offlineDB } from "../schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { CachedProgress } from "../schema";
 
 export async function saveProgress(
 	odSubjectId: string,
@@ -10,19 +11,19 @@ export async function saveProgress(
 	},
 	userId?: string,
 ): Promise<number> {
-	const existing = await offlineDB.progress
+	const existing = await dexieDataAccess.progress
 		.where("odSubjectId")
 		.equals(odSubjectId)
 		.first();
 
 	if (existing) {
-		return offlineDB.progress.update(existing.id ?? 0, {
+		return dexieDataAccess.progress.update(existing.id ?? 0, {
 			...data,
 			updatedAt: Date.now(),
 		});
 	}
 
-	return offlineDB.progress.add({
+	return dexieDataAccess.progress.add({
 		odSubjectId,
 		userId,
 		...data,
@@ -34,7 +35,9 @@ export async function getProgress(
 	odSubjectId: string,
 	userId?: string,
 ): Promise<CachedProgress | undefined> {
-	const query = offlineDB.progress.where("odSubjectId").equals(odSubjectId);
+	const query = dexieDataAccess.progress
+		.where("odSubjectId")
+		.equals(odSubjectId);
 	const item = await query.first();
 	if (!item) return undefined;
 	if (userId && item.userId && item.userId !== userId) return undefined;

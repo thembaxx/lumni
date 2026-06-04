@@ -32,6 +32,10 @@ class InMemoryCollection<T> implements Collection<T> {
 		throw new Error("InMemory delete() not implemented — use table.delete()");
 	}
 
+	async modify(_changes: Partial<T> | ((record: T) => void)): Promise<number> {
+		throw new Error("InMemory modify() not implemented — use table.update()");
+	}
+
 	reverse(): Collection<T> {
 		return new InMemoryCollection(
 			() => this.getItems(),
@@ -177,6 +181,10 @@ export class InMemoryTable<
 		this.items.clear();
 	}
 
+	limit(n: number): Collection<T> {
+		return new InMemoryCollection(() => [...this.items.values()].slice(0, n));
+	}
+
 	where(index: string): WhereClause<T> {
 		return new InMemoryWhereClause(() => [...this.items.values()], index);
 	}
@@ -228,4 +236,33 @@ export class InMemoryDataAccess implements DataAccess {
 	subjects = new InMemoryTable<any>();
 	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
 	visuals = new InMemoryTable<any>();
+	// Phase 3 — expanded tables
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	chatMessages = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	questionRatings = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	knowledgeGraph = new InMemoryTable<any, string>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	examSessions = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	sharedQuestions = new InMemoryTable<any, string>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	examDates = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	notes = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	gamification = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	cachedPdfs = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	quizSessions = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	tinyfishCache = new InMemoryTable<any, string>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	tinyfishUsage = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	jobs = new InMemoryTable<any>();
+	// biome-ignore lint/suspicious/noExplicitAny: must match DataAccess interface
+	conflicts = new InMemoryTable<any>();
 }

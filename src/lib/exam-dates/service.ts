@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { EXAM_SLOTS_2026_MAY } from "./data-2026-may";
 import { EXAM_SLOTS_2026_NOV } from "./data-2026-nov";
 import { getSubjectAbbr, getSubjectColor } from "./subject-maps";
@@ -26,7 +26,7 @@ export async function getExamDates(
 	const key = getSessionKey(session, year);
 
 	try {
-		const cached = await offlineDB.examDates
+		const cached = await dexieDataAccess.examDates
 			.where("cacheKey")
 			.equals(key)
 			.first();
@@ -41,7 +41,7 @@ export async function getExamDates(
 	const slots = getSeedData(session, year);
 	if (slots.length > 0) {
 		try {
-			await offlineDB.examDates.put({
+			await dexieDataAccess.examDates.put({
 				cacheKey: key,
 				session,
 				year,

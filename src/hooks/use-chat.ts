@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
@@ -85,8 +85,8 @@ export function useChat() {
 	useEffect(() => {
 		const serialized = serializeMessages(messages);
 		saveToStorage(CHAT_STORAGE_KEY, serialized);
-		offlineDB.chatMessages
-			.bulkPut(
+		dexieDataAccess.chatMessages
+			.bulkAdd(
 				messages.map((m) => ({
 					messageId: m.id,
 					role: m.role,

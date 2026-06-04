@@ -1,5 +1,5 @@
+import { dexieDataAccess } from "@/lib/db";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
-import { offlineDB } from "../schema";
 
 export async function cacheQuestions(
 	subject: string,
@@ -7,19 +7,19 @@ export async function cacheQuestions(
 	topic?: string,
 ): Promise<number> {
 	const key = topic ? `${subject}-${topic}` : subject;
-	const existing = await offlineDB.questions
+	const existing = await dexieDataAccess.questions
 		.where("subject")
 		.equals(key)
 		.first();
 
 	if (existing) {
-		return offlineDB.questions.update(existing.id ?? 0, {
+		return dexieDataAccess.questions.update(existing.id ?? 0, {
 			questions: safeJsonStringify(questions),
 			cachedAt: Date.now(),
 		});
 	}
 
-	return offlineDB.questions.add({
+	return dexieDataAccess.questions.add({
 		subject: key,
 		topic,
 		questions: safeJsonStringify(questions),
@@ -32,7 +32,10 @@ export async function getCachedQuestions(
 	topic?: string,
 ): Promise<unknown[] | undefined> {
 	const key = topic ? `${subject}-${topic}` : subject;
-	const cached = await offlineDB.questions.where("subject").equals(key).first();
+	const cached = await dexieDataAccess.questions
+		.where("subject")
+		.equals(key)
+		.first();
 
 	if (!cached) return undefined;
 

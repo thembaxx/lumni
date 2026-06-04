@@ -14,8 +14,8 @@ const cacheStore = new Map<
 let usageAutoId = 1;
 let consentGranted = false;
 
-mock.module("@/lib/db/schema", () => ({
-	offlineDB: {
+mock.module("@/lib/db", () => ({
+	dexieDataAccess: {
 		tinyfishCache: {
 			get(key: string) {
 				return Promise.resolve(cacheStore.get(key) ?? undefined);
