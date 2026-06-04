@@ -9,6 +9,7 @@ import {
 	getCachedVisual,
 	makeCacheKey,
 } from "@/lib/db/repositories/visual-cache";
+import { logError } from "@/lib/shared/logger";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
 import type { VisualContent, VisualEngineParams } from "./types";
@@ -43,7 +44,8 @@ export class VisualEngine {
 					read: async (params) => {
 						try {
 							return loadVisualFromAppwrite(params.questionId, params.subject);
-						} catch {
+						} catch (err) {
+							logError("VisualEngine", err);
 							return null;
 						}
 					},

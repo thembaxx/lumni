@@ -1,6 +1,7 @@
 import { getAI } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { logError } from "@/lib/shared/logger";
 import { classifyAndMap, isKonvaType } from "./diagram-mapper";
 import { getDiagramPrompt, getMermaidPrompt } from "./prompts";
 import type { VisualContent } from "./types";
@@ -40,7 +41,8 @@ export async function generateDiagram(
 			diagramType: mapping.type,
 			diagramData: mapping.data,
 		};
-	} catch {
+	} catch (err) {
+		logError("StemRenderer", err);
 		return fallbackToMermaid(questionText, subject, topic);
 	}
 }

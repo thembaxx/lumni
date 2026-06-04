@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { offlineDB } from "@/lib/db/schema";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 
@@ -25,7 +26,8 @@ function getDismissed(): Map<string, number> {
 	try {
 		const raw = localStorage.getItem(DISMISS_KEY);
 		return raw ? new Map(JSON.parse(raw)) : new Map();
-	} catch {
+	} catch (err) {
+		logError("GetDismissed", err);
 		return new Map();
 	}
 }
@@ -35,8 +37,8 @@ function setDismissed(kind: ActionKind, durationMs: number): void {
 		const map = getDismissed();
 		map.set(kind, Date.now() + durationMs);
 		localStorage.setItem(DISMISS_KEY, JSON.stringify([...map]));
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("SetDismissed", err);
 	}
 }
 
@@ -125,7 +127,8 @@ async function getDueCardCount(): Promise<number> {
 			.filter((c) => c.nextReview <= now)
 			.toArray();
 		return cards.length;
-	} catch {
+	} catch (err) {
+		logError("GetDueCardCount", err);
 		return 0;
 	}
 }
@@ -160,7 +163,8 @@ async function getWeakestTopic(_userId?: string): Promise<{
 			topic: topicName,
 			score: weakest.score,
 		};
-	} catch {
+	} catch (err) {
+		logError("GetWeakestTopic", err);
 		return null;
 	}
 }
@@ -172,7 +176,8 @@ async function getSubjectName(subjectId: string): Promise<string> {
 			.equals(subjectId)
 			.first();
 		return subject?.name ?? subjectId;
-	} catch {
+	} catch (err) {
+		logError("GetSubjectName", err);
 		return subjectId;
 	}
 }
@@ -204,7 +209,8 @@ function getDaysUntilExam(
 			0,
 			Math.ceil((examDate.getTime() - now.getTime()) / 86400000),
 		);
-	} catch {
+	} catch (err) {
+		logError("GetDaysUntilExam", err);
 		return null;
 	}
 }

@@ -102,6 +102,7 @@ export function SubjectSelect({
 									ref={inputRef}
 									type="text"
 									placeholder="Search subjects…"
+									aria-label="Search subjects"
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
 									className="h-9 rounded-lg pr-4 pl-10"

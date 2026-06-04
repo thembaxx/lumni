@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
@@ -218,7 +219,8 @@ export class DailyCallTracker {
 									(doc as Record<string, unknown>).metadata as string,
 								);
 								return sum + ((meta as Record<string, number>).tokens || 0);
-							} catch {
+							} catch (err) {
+								logError("ParseTokenMetadata", err);
 								return sum;
 							}
 						}, 0);

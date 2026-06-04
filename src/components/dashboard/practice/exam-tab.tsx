@@ -159,6 +159,7 @@ export function ExamTab({ className }: ExamTabProps) {
 										variant="ghost"
 										size="icon"
 										className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground active:scale-[0.96]"
+										aria-label="Clear search"
 									>
 										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>

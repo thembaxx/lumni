@@ -1,6 +1,8 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { BloomLevel } from "@/lib/question-engine/types";
+import { logError } from "@/lib/shared/logger";
 import {
 	type CompetencyLevel,
 	type CompetencyRecord,
@@ -9,12 +11,12 @@ import {
 } from "./types";
 
 export interface CompetencyDeps {
-	db: typeof offlineDB;
+	db: DataAccess;
 	enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
 }
 
 const DEFAULT_DEPS: CompetencyDeps = {
-	db: offlineDB,
+	db: dexieDataAccess,
 	enqueue: enqueue as unknown as CompetencyDeps["enqueue"],
 };
 
@@ -37,10 +39,19 @@ export class CompetencyService {
 	): Promise<void> {
 		const existing = paperId
 			? await this.db.competencies
-					.where({ subjectId, topicId, bloomLevel, paperId })
+					.where("subjectId")
+					.equals(subjectId)
+					.filter(
+						(c) =>
+							c.topicId === topicId &&
+							c.bloomLevel === bloomLevel &&
+							c.paperId === paperId,
+					)
 					.first()
 			: await this.db.competencies
-					.where({ subjectId, topicId, bloomLevel })
+					.where("subjectId")
+					.equals(subjectId)
+					.filter((c) => c.topicId === topicId && c.bloomLevel === bloomLevel)
 					.first();
 
 		const newScore = existing
@@ -95,7 +106,8 @@ export class CompetencyService {
 				.where("subjectId")
 				.equals(subjectId)
 				.toArray();
-		} catch {
+		} catch (err) {
+			logError("GetCompetencies", err);
 			return [];
 		}
 	}
@@ -107,11 +119,16 @@ export class CompetencyService {
 		paperId?: string,
 	): Promise<CompetencyRecord | null> {
 		try {
-			const query = paperId
-				? { subjectId, topicId, bloomLevel, paperId }
-				: { subjectId, topicId, bloomLevel };
-			return (await this.db.competencies.where(query).first()) ?? null;
-		} catch {
+			let coll = this.db.competencies
+				.where("subjectId")
+				.equals(subjectId)
+				.filter((c) => c.topicId === topicId && c.bloomLevel === bloomLevel);
+			if (paperId) {
+				coll = coll.filter((c) => c.paperId === paperId);
+			}
+			return (await coll.first()) ?? null;
+		} catch (err) {
+			logError("GetCompetency", err);
 			return null;
 		}
 	}

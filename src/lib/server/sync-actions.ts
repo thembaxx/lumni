@@ -3,6 +3,7 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 
 function getAllSubjects(): string[] {
 	return [
@@ -52,6 +53,7 @@ export async function syncSubject(subject: string): Promise<{
 			version,
 		};
 	} catch (error) {
+		logError("SyncSubject", error);
 		return {
 			success: false,
 			synced: 0,
@@ -141,7 +143,8 @@ async function checkSubjectStatusInternal(subject: string): Promise<{
 			version,
 			needsSync,
 		};
-	} catch {
+	} catch (err) {
+		logError("CheckSubjectStatusInternal", err);
 		return { exists: false, localQuestions: 0, version: null, needsSync: true };
 	}
 }

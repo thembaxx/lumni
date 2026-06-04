@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 export interface AILatencyRecord {
 	provider: string;
 	durationMs: number;
@@ -49,7 +51,8 @@ function loadRecords(): AILatencyRecord[] {
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
 		return raw ? (JSON.parse(raw) as AILatencyRecord[]) : [];
-	} catch {
+	} catch (err) {
+		logError("LoadRecords", err);
 		return [];
 	}
 }
@@ -60,8 +63,8 @@ function saveRecords(records: AILatencyRecord[]): void {
 			STORAGE_KEY,
 			JSON.stringify(records.slice(-MAX_RECORDS)),
 		);
-	} catch {
-		/* storage full — silently drop */
+	} catch (err) {
+		logError("SaveRecords", err);
 	}
 }
 
@@ -154,7 +157,7 @@ export function getAILatencyStats() {
 export function clearAILatencyRecords(): void {
 	try {
 		localStorage.removeItem(STORAGE_KEY);
-	} catch {
-		/* noop */
+	} catch (err) {
+		logError("ClearAILatencyRecords", err);
 	}
 }

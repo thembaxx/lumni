@@ -1,5 +1,6 @@
 import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const NOTIF_KEY = "lumni_notification_subscription";
@@ -79,6 +80,7 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
 		syncSubscriptionToServer(subscription);
 		return subscription;
 	} catch (error) {
+		logError("SubscribeToPush", error);
 		console.error("Failed to subscribe to push:", error);
 		return null;
 	}
@@ -97,6 +99,7 @@ async function syncSubscriptionToServer(
 			}),
 		});
 	} catch (err) {
+		logError("SyncSubscriptionToServer", err);
 		console.warn("Failed to sync subscription to server:", err);
 	}
 }
@@ -115,12 +118,14 @@ export async function unsubscribeFromPush(): Promise<boolean> {
 					body: JSON.stringify({ endpoint: json.endpoint }),
 				} as NotificationOptions);
 			} catch (e) {
+				logError("UnsubscribeFromPushSync", e);
 				console.warn("Failed to sync unsubscribe to server:", e);
 			}
 		}
 		localStorage.removeItem(NOTIF_KEY);
 		return true;
 	} catch (e) {
+		logError("UnsubscribeFromPush", e);
 		console.warn("Failed to unsubscribe from push:", e);
 		return false;
 	}
@@ -204,7 +209,8 @@ function getTodayPlanSessions(): { subject: string; topic?: string }[] {
 			(s: { scheduledAt: number }) =>
 				s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
 		);
-	} catch {
+	} catch (err) {
+		logError("GetTodayPlanSessions", err);
 		return [];
 	}
 }
@@ -213,7 +219,8 @@ async function getDueCardCount(): Promise<number> {
 	try {
 		const cards = await flashcardEngine.getDueCards();
 		return cards.length;
-	} catch {
+	} catch (err) {
+		logError("GetDueCardCount", err);
 		return 0;
 	}
 }
@@ -298,7 +305,8 @@ function getGamificationData(): {
 		const raw = localStorage.getItem("lumni_gamification");
 		if (!raw) return null;
 		return JSON.parse(raw);
-	} catch {
+	} catch (err) {
+		logError("GetGamificationData", err);
 		return null;
 	}
 }
@@ -403,8 +411,8 @@ export async function scheduleWeeklyProgress(
 		sendLocalNotification("Weekly Progress", body);
 
 		saveToStorage(WEEKLY_NOTIF_KEY, now);
-	} catch {
-		// Silently fail — Dexie may not be ready
+	} catch (err) {
+		logError("ScheduleWeeklyProgress", err);
 	}
 }
 
@@ -457,8 +465,8 @@ export async function scheduleAssignmentReminders(
 			existing.push({ id: a.id, scheduledAt: alertTime });
 			saveToStorage(ASSIGNMENT_ALERT_KEY, existing);
 		}
-	} catch {
-		// silent fail
+	} catch (err) {
+		logError("ScheduleAssignmentReminders", err);
 	}
 }
 

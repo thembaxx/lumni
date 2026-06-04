@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import type { RewardChestDef } from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
@@ -53,7 +54,8 @@ export class GamificationEngine {
 				}
 				return this.mergeWithDefaults(parsed);
 			}
-		} catch {
+		} catch (err) {
+			logError("GamificationEngine", err);
 			// ignore
 		}
 		return DEFAULT_GAMIFICATION;
@@ -65,7 +67,8 @@ export class GamificationEngine {
 		this._saveTimer = setTimeout(() => {
 			try {
 				localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(data));
-			} catch {
+			} catch (err) {
+				logError("GamificationEngine", err);
 				// ignore
 			}
 		}, 0);

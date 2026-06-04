@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { type ChunkedSearchResult, searchAllChunked } from "@/lib/search";
+import { logError } from "@/lib/shared/logger";
 
 export function useSearch(query: string, enabled = true) {
 	const [results, setResults] = useState<ChunkedSearchResult[]>([]);
@@ -16,7 +17,8 @@ export function useSearch(query: string, enabled = true) {
 		try {
 			const res = await searchAllChunked(q);
 			setResults(res);
-		} catch {
+		} catch (err) {
+			logError("UseSearch", err);
 			setResults([]);
 		} finally {
 			setIsLoading(false);

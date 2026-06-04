@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import subjectsData from "@/data/subjects.json";
 import { useAuth } from "@/lib/auth/auth-context";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 export interface Subject {
 	id: string;
@@ -36,7 +37,8 @@ async function fetchSubjects(): Promise<SubjectsResponse> {
 			subjects: data.subjects ?? (subjectsData as Subject[]),
 			selectedSubjectIds: data.selectedSubjectIds ?? [],
 		};
-	} catch {
+	} catch (err) {
+		logError("FetchSubjects", err);
 		return {
 			subjects: subjectsData as Subject[],
 			selectedSubjectIds: [],
@@ -59,7 +61,7 @@ export function useSubjects() {
 						cachedAt: Date.now(),
 					})),
 				)
-				.catch(() => {});
+				.catch((err) => { logError("UseSubjects", err); });
 			return { subjects, selectedSubjectIds };
 		},
 		staleTime: 1000 * 60 * 60,
@@ -102,6 +104,7 @@ export function useEnrolledSubjects() {
 				});
 				queryClient.invalidateQueries({ queryKey: ["subjects"] });
 			} catch (e) {
+				logError("MigratePrefsSubjects", e);
 				console.warn("[Subjects] Failed to migrate preferences", e);
 			}
 		}
@@ -152,7 +155,8 @@ export function getLocalEnrolledSubjects(): string[] {
 		if (!raw) return [];
 		const data = JSON.parse(raw);
 		return Array.isArray(data.selectedSubjects) ? data.selectedSubjects : [];
-	} catch {
+	} catch (err) {
+		logError("GetLocalEnrolledSubjects", err);
 		return [];
 	}
 }
@@ -165,6 +169,7 @@ export function saveLocalEnrolledSubjects(subjectIds: string[]): void {
 		data.selectedSubjects = subjectIds;
 		localStorage.setItem("lumni_onboarding:v1", JSON.stringify(data));
 	} catch (e) {
+		logError("SaveLocalEnrolledSubjects", e);
 		console.warn("[Subjects] Failed to save local enrollment", e);
 	}
 }

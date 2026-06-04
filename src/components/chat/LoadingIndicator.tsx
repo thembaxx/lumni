@@ -23,6 +23,8 @@ export function LoadingIndicator() {
 
 	return (
 		<m.div
+			role="status"
+			aria-live="polite"
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			className="flex items-center gap-3 rounded-lg border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-sm"

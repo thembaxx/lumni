@@ -22,7 +22,6 @@ interface FlashcardsState {
 	isFlipped: boolean;
 	knownCards: StoredCardSet;
 	reviewCards: StoredCardSet;
-	sessionComplete: boolean;
 
 	setSelectedSubject: (subject: string) => void;
 	setIsActive: (active: boolean) => void;
@@ -44,7 +43,6 @@ export const useFlashcardsStore = create<FlashcardsState>((set, get) => ({
 	isFlipped: false,
 	knownCards: { values: [] },
 	reviewCards: { values: [] },
-	sessionComplete: false,
 
 	setSelectedSubject: (selectedSubject) => set({ selectedSubject }),
 	setIsActive: (isActive) => set({ isActive }),
@@ -77,7 +75,6 @@ export const useFlashcardsStore = create<FlashcardsState>((set, get) => ({
 			isFlipped: false,
 			knownCards: { values: [] },
 			reviewCards: { values: [] },
-			sessionComplete: false,
 		}),
 
 	getKnownSet: () => fromStored(get().knownCards),

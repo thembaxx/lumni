@@ -8,6 +8,7 @@ import {
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import { offlineDB } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
+import { logError } from "@/lib/shared/logger";
 
 export interface SharedQuestionRecord extends Omit<SchemaRecord, "question"> {
 	question: Question;
@@ -45,8 +46,8 @@ export async function shareQuestion(
 
 	try {
 		await offlineDB.sharedQuestions.add(record as never);
-	} catch {
-		/* Dexie may not be ready */
+	} catch (err) {
+		logError("ShareQuestionDexie", err);
 	}
 
 	const appwritePayload: Record<string, unknown> = {
@@ -77,8 +78,8 @@ export async function getSharedQuestion(
 			const record = local as unknown as SharedQuestionRecord;
 			if (record.question) return record;
 		}
-	} catch {
-		/* fall through */
+	} catch (err) {
+		logError("GetSharedQuestionLocal", err);
 	}
 
 	try {
@@ -103,8 +104,8 @@ export async function getSharedQuestion(
 			};
 			return parsed;
 		}
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("GetSharedQuestionAppwrite", err);
 	}
 
 	return null;
@@ -118,8 +119,8 @@ export async function incrementViewCount(id: string): Promise<void> {
 			.modify((record: SchemaRecord) => {
 				record.viewCount = (record.viewCount ?? 0) + 1;
 			});
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("IncrementViewCountDexie", err);
 	}
 
 	try {
@@ -132,8 +133,8 @@ export async function incrementViewCount(id: string): Promise<void> {
 				viewCount: ((doc.viewCount as number) ?? 0) + 1,
 			});
 		}
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("IncrementViewCountAppwrite", err);
 	}
 }
 
@@ -180,7 +181,8 @@ export function getSharedAssignment(shareId: string): {
 			questionCount: number;
 			dueDate: string | null;
 		};
-	} catch {
+	} catch (err) {
+		logError("GetSharedAssignment", err);
 		return null;
 	}
 }

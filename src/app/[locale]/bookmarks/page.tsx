@@ -60,6 +60,7 @@ export default function BookmarksPage() {
 											size="icon"
 											className="size-8"
 											onClick={() => removeBookmark(bm.id)}
+											aria-label="Remove bookmark"
 										>
 											<HugeiconsIcon
 												icon={Delete01Icon}

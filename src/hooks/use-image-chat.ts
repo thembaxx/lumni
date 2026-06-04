@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import type { ChatMessage, useChat } from "@/hooks/use-chat";
 import { formatBytes } from "@/lib/shared/format";
+import { logError } from "@/lib/shared/logger";
 
 export type ImageProcessingStatus =
 	| "idle"
@@ -59,8 +60,8 @@ export function useImageChat(options: UseImageChatOptions = {}) {
 		cleanupFnsRef.current.forEach((fn) => {
 			try {
 				fn();
-			} catch {
-				// Ignore cleanup errors
+			} catch (err) {
+				logError("UseImageChat", err);
 			}
 		});
 		cleanupFnsRef.current = [];
@@ -303,6 +304,7 @@ export function useImageChatWithSend(
 
 				cleanup();
 			} catch (err) {
+				logError("UseImageChatWithSend", err);
 				const errorMessage =
 					err instanceof Error
 						? err.message
@@ -416,6 +418,7 @@ export function useImageChatWithSend(
 					error: null,
 				});
 			} catch (err) {
+				logError("RetryLastImage", err);
 				const errorMessage =
 					err instanceof Error
 						? err.message

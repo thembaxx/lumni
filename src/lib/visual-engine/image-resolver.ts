@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { getImageSearchQuery } from "./prompts";
 
 interface WikimediaImage {
@@ -98,7 +99,8 @@ export async function searchImage(
 		}
 
 		return null;
-	} catch {
+	} catch (err) {
+		logError("ImageResolver", err);
 		return null;
 	}
 }

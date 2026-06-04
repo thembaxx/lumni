@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 export type ErrorType =
 	| "concept-misunderstanding"
@@ -47,8 +48,8 @@ export function useWrongAnswerJournal() {
 					createdAt: Date.now(),
 					reviewed: false,
 				});
-			} catch {
-				/* non-critical */
+			} catch (err) {
+				logError("AddWrongAnswer", err);
 			}
 		},
 		[],
@@ -76,7 +77,8 @@ export function useWrongAnswerJournal() {
 					) as unknown as ReturnType<typeof table.filter>;
 				}
 				return collection.limit(limit).toArray();
-			} catch {
+			} catch (err) {
+				logError("GetWrongAnswers", err);
 				return [];
 			}
 		},
@@ -86,8 +88,8 @@ export function useWrongAnswerJournal() {
 	const markReviewed = useCallback(async (id: number) => {
 		try {
 			await offlineDB.table("wrongAnswers").update(id, { reviewed: true });
-		} catch {
-			/* non-critical */
+		} catch (err) {
+			logError("MarkReviewed", err);
 		}
 	}, []);
 
@@ -95,8 +97,8 @@ export function useWrongAnswerJournal() {
 		async (id: number, errorType: ErrorType) => {
 			try {
 				await offlineDB.table("wrongAnswers").update(id, { errorType });
-			} catch {
-				/* non-critical */
+			} catch (err) {
+				logError("UpdateErrorType", err);
 			}
 		},
 		[],
@@ -113,8 +115,8 @@ export function useWrongAnswerJournal() {
 					e.id ? [offlineDB.table("wrongAnswers").delete(e.id)] : [],
 				),
 			);
-		} catch {
-			/* non-critical */
+		} catch (err) {
+			logError("ClearReviewed", err);
 		}
 	}, []);
 

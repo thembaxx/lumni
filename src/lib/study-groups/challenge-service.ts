@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -68,6 +69,7 @@ export async function getOrCreateChallenge(
 		if (!challenge) return failure("Failed to create challenge");
 		return success(challenge);
 	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to get challenge",
 		);
@@ -84,6 +86,7 @@ export async function getChallengeEntries(
 		);
 		return success(entries);
 	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to get entries",
 		);
@@ -165,7 +168,8 @@ export async function updateChallengeEntry(
 				}
 			}),
 		);
-	} catch {
+	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		// Silently fail - challenge tracking is non-critical
 	}
 }
@@ -199,7 +203,8 @@ async function closeChallenge(challengeId: string): Promise<void> {
 		await updateDocument(COLLECTIONS.GROUP_CHALLENGES, challengeId, {
 			status: "completed",
 		});
-	} catch {
+	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		// Silently fail
 	}
 }
@@ -213,6 +218,7 @@ export async function getGroupBadges(
 		]);
 		return success(badges);
 	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		return failure(err instanceof Error ? err.message : "Failed to get badges");
 	}
 }
@@ -269,6 +275,7 @@ export async function getInterGroupLeaderboard(): Promise<
 		leaderboard.sort((a, b) => b.totalScore - a.totalScore);
 		return success(leaderboard);
 	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to get leaderboard",
 		);

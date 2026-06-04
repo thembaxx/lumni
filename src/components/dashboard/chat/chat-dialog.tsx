@@ -67,6 +67,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 						size="icon"
 						onClick={handleClose}
 						className="rounded-full hover:bg-secondary"
+						aria-label="Close chat"
 					>
 						<HugeiconsIcon
 							icon={Cancel01Icon}

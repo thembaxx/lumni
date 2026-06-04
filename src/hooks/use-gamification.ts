@@ -7,6 +7,7 @@ import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
+import { logError } from "@/lib/shared/logger";
 import type {
 	Achievement,
 	LevelInfo,
@@ -312,8 +313,8 @@ async function syncToServer(data: StoredGamification) {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ ...data, label }),
 		});
-	} catch {
-		// Silently fail — will retry on next mutation
+	} catch (err) {
+		logError("SyncToServer", err);
 	}
 }
 
@@ -324,7 +325,8 @@ async function syncFromServer(): Promise<StoredGamification | null> {
 			{},
 		);
 		return res.gamification;
-	} catch {
+	} catch (err) {
+		logError("SyncFromServer", err);
 		return null;
 	}
 }

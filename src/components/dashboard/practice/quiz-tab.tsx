@@ -190,6 +190,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						size="icon"
 						onClick={handleStop}
 						className="rounded-full bg-destructive hover:bg-destructive/90"
+						aria-label="Stop quiz"
 					>
 						<HugeiconsIcon icon={SquareIcon} className="size-4" />
 					</Button>
@@ -204,6 +205,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 								? "animate-fade-in-scale bg-[--system-accent] hover:bg-[--system-accent]/90"
 								: "cursor-not-allowed bg-muted",
 						)}
+						aria-label="Start quiz"
 					>
 						<HugeiconsIcon icon={PlayIcon} className="ml-0.5 size-4" />
 					</Button>

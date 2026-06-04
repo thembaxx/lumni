@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { logError } from "@/lib/shared/logger";
 
 interface MicrophoneRefs {
 	streamRef: React.MutableRefObject<MediaStream | null>;
@@ -90,6 +91,7 @@ export function useMicrophone(refs: MicrophoneRefs, values: MicrophoneValues) {
 
 				historyRef.current = [];
 			} catch (error) {
+				logError("UseMicrophone", error);
 				onError?.(error as Error);
 			}
 		};

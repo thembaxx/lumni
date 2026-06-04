@@ -111,6 +111,7 @@ export function ChatInput({
 						ref={inputRef}
 						type="text"
 						placeholder="Ask me a question about your studies…"
+						aria-label="Ask me a question"
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						onFocus={() => setIsFocused(true)}
@@ -184,6 +185,7 @@ export function ChatInput({
 							onClick={() => setVoiceDialogOpen(true)}
 							className="size-10 rounded-md border border-border/40 hover:bg-secondary"
 							disabled={isLoading}
+							aria-label="Voice input"
 						>
 							<HugeiconsIcon
 								icon={Mic01Icon}

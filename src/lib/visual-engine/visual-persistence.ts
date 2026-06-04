@@ -2,6 +2,7 @@ import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { makeCacheKey } from "@/lib/db/repositories/visual-cache";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
+import { logError } from "@/lib/shared/logger";
 import type { VisualContent } from "./types";
 
 const COLLECTION_ID = COLLECTIONS.VISUALS;
@@ -24,8 +25,8 @@ export async function saveVisualToAppwrite(
 				expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
 			},
 		);
-	} catch {
-		/* Appwrite visual persistence is optional */
+	} catch (err) {
+		logError("SaveVisualToAppwrite", err);
 	}
 }
 
@@ -54,7 +55,8 @@ export async function loadVisualFromAppwrite(
 		}
 
 		return visual;
-	} catch {
+	} catch (err) {
+		logError("LoadVisualFromAppwrite", err);
 		return null;
 	}
 }

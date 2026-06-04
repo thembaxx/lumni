@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
+import { logError } from "@/lib/shared/logger";
 import {
 	addExamDate,
 	addStudySession,
@@ -247,6 +248,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 					);
 				refresh();
 			} catch (error) {
+				logError("GenerateStudyPlan", error);
 				console.error("Failed to generate study plan:", error);
 			} finally {
 				setIsGenerating(false);

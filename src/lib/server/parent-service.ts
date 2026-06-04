@@ -8,6 +8,7 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 
 export interface ParentStudent {
 	id: string;
@@ -82,7 +83,8 @@ export async function getParentStudents(
 					initials: getInitials(u.name || "U"),
 					grade: (u.prefs?.grade as string) || "Matric",
 				};
-			} catch {
+			} catch (err) {
+				logError("GetParentStudents", err);
 				return {
 					id: sid,
 					name: "Unknown",

@@ -1,4 +1,5 @@
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 export interface AnalyticsEvent {
 	event: "generate" | "grade" | "hint" | "validate";
@@ -21,8 +22,8 @@ export function trackEngineEvent(
 		events.push({ ...data, timestamp: Date.now() });
 		const recent = events.slice(-500);
 		localStorage.setItem(ANALYTICS_KEY, safeJsonStringify(recent));
-	} catch {
-		// silently fail
+	} catch (err) {
+		logError("TrackEngineEvent", err);
 	}
 }
 
@@ -31,7 +32,8 @@ export function loadEvents(): AnalyticsEvent[] {
 	try {
 		const raw = localStorage.getItem(ANALYTICS_KEY);
 		return raw ? (safeJsonParse(raw, []) as AnalyticsEvent[]) : [];
-	} catch {
+	} catch (err) {
+		logError("LoadEvents", err);
 		return [];
 	}
 }
@@ -89,7 +91,7 @@ export function getAnalyticsSummary(): {
 export function clearAnalytics(): void {
 	try {
 		localStorage.removeItem(ANALYTICS_KEY);
-	} catch {
-		// ignore
+	} catch (err) {
+		logError("ClearAnalytics", err);
 	}
 }

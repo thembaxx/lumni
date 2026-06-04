@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import {
 	DEFAULT_FETCH_MAX_CHARS,
@@ -186,6 +187,7 @@ async function fetchRagForTopic(
 		);
 		return buildRagContext(sources);
 	} catch (err) {
+		logError("TinyFishIndex", err);
 		if (err instanceof TinyFishError) {
 			console.warn(`[tinyfish] RAG fetch failed: ${err.message}`);
 		}
@@ -215,6 +217,7 @@ async function fetchSourceForQuestion(question: string): Promise<RagContext> {
 		const source = extractSourceFromFetchResult(firstResult);
 		return buildRagContext([source]);
 	} catch (err) {
+		logError("TinyFishIndex", err);
 		if (err instanceof TinyFishError) {
 			console.warn(`[tinyfish] source fetch failed: ${err.message}`);
 		}

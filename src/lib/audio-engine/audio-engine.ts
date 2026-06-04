@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import type {
 	AudioEngineOptions,
 	AudioEngineState,
@@ -76,6 +77,7 @@ export class AudioEngine {
 			this.notify();
 			return true;
 		} catch (err) {
+			logError("AudioEngineRequestPermission", err);
 			const error = err instanceof Error ? err : undefined;
 			if (
 				error?.name === "NotAllowedError" ||
@@ -139,6 +141,7 @@ export class AudioEngine {
 
 			this.notify();
 		} catch (err) {
+			logError("AudioEngineStartRecording", err);
 			const error = err instanceof Error ? err : undefined;
 			if (
 				error?.name === "NotAllowedError" ||

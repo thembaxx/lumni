@@ -121,7 +121,14 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
 	const { mutate: verifyPremium } = useMutation({
 		mutationFn: async () => {
-			queryClient.invalidateQueries({ queryKey: ["premium-verify"] });
+			const res = await fetch(VERIFY_API, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+			});
+			if (!res.ok) throw new Error("Verification failed");
+			const data = await res.json();
+			queryClient.setQueryData(["premium-verify"], data);
+			return data;
 		},
 	});
 

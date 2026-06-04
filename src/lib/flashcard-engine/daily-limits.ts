@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 const DAILY_LIMIT_KEY = "lumni_sr_daily_budget";
 
 interface DailyBudget {
@@ -23,7 +25,8 @@ function loadBudget(): DailyBudget {
 			return { date: getTodayKey(), newCardsUsed: 0, reviewsUsed: 0 };
 		}
 		return parsed;
-	} catch {
+	} catch (err) {
+		logError("LoadBudget", err);
 		return { date: getTodayKey(), newCardsUsed: 0, reviewsUsed: 0 };
 	}
 }
@@ -32,7 +35,9 @@ function saveBudget(budget: DailyBudget): void {
 	if (typeof window === "undefined") return;
 	try {
 		localStorage.setItem(DAILY_LIMIT_KEY, JSON.stringify(budget));
-	} catch {}
+	} catch (err) {
+		logError("SaveBudget", err);
+	}
 }
 
 export interface DailyLimitAPI {

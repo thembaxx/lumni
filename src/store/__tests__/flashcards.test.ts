@@ -13,13 +13,11 @@ describe("useFlashcardsStore", () => {
 			isActive,
 			currentIndex,
 			isFlipped,
-			sessionComplete,
 		} = useFlashcardsStore.getState();
 		expect(selectedSubject).toBe("");
 		expect(isActive).toBe(false);
 		expect(currentIndex).toBe(0);
 		expect(isFlipped).toBe(false);
-		expect(sessionComplete).toBe(false);
 	});
 
 	test("setSelectedSubject updates subject", () => {
@@ -77,7 +75,6 @@ describe("useFlashcardsStore", () => {
 		expect(useFlashcardsStore.getState().isFlipped).toBe(false);
 		expect(useFlashcardsStore.getState().getKnownSet().size).toBe(0);
 		expect(useFlashcardsStore.getState().getReviewSet().size).toBe(0);
-		expect(useFlashcardsStore.getState().sessionComplete).toBe(false);
 	});
 
 	test("getKnownSet and getReviewSet return empty sets initially", () => {

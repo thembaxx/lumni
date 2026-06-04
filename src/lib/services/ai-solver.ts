@@ -1,6 +1,7 @@
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { logError } from "@/lib/shared/logger";
 import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
 
 const SUBJECT_PROMPTS: Record<string, string> = {
@@ -121,6 +122,7 @@ export const aiSolver = {
 			try {
 				return await fetchSources({ question: q, userId: uid ?? undefined });
 			} catch (err) {
+				logError("AiSolverFetchSources", err);
 				console.warn(
 					`[ai-solver] web source fetch failed, continuing without grounding: ${
 						err instanceof Error ? err.message : String(err)
@@ -177,7 +179,8 @@ export const aiSolver = {
 					title: s.title,
 				})),
 			};
-		} catch {
+		} catch (err) {
+			logError("AiSolverParseResponse", err);
 			return {
 				solution: response.content,
 				steps: [],

@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 export async function tryLocalOcr(
 	imageData: string,
 	mode: "printed" | "handwritten" = "printed",
@@ -9,7 +11,8 @@ export async function tryLocalOcr(
 			return result.text;
 		}
 		return null;
-	} catch {
+	} catch (err) {
+		logError("TryLocalOcr", err);
 		return null;
 	}
 }

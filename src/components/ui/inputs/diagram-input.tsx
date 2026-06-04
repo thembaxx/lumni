@@ -52,6 +52,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 							size="icon-sm"
 							className="absolute top-1 right-1"
 							onClick={handleClear}
+							aria-label="Clear diagram"
 						>
 							<HugeiconsIcon icon={Delete02Icon} data-icon />
 						</Button>

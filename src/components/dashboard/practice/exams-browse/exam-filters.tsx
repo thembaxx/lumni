@@ -103,6 +103,7 @@ export function ExamFilters({
 								variant="ghost"
 								size="sm"
 								className="text-muted-foreground transition-[scale] hover:text-foreground active:scale-[0.96]"
+								aria-label="Clear filters"
 							>
 								<HugeiconsIcon icon={Cancel01Icon} data-icon />
 							</Button>

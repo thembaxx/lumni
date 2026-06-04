@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { Account, Client, type Models } from "node-appwrite";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 
 const MAX_AUTH_RETRIES = 2;
 const RETRY_BASE_DELAY_MS = 500;
@@ -28,6 +29,7 @@ async function fetchAccountWithRetryStep(
 	try {
 		return await tryFetchAccount(account);
 	} catch (err) {
+		logError("FetchAccountWithRetryStep", err);
 		if (retries >= MAX_AUTH_RETRIES) throw err;
 		await waitForBackoff(retries + 1);
 		return fetchAccountWithRetryStep(account, retries + 1);
@@ -96,6 +98,7 @@ export async function verifyAuth(userId: string): Promise<void> {
 			throw new Error("Unauthorized: User ID mismatch");
 		}
 	} catch (err) {
+		logError("VerifyAuth", err);
 		console.error("[verifyAuth] Auth failure:", err);
 		throw new Error("Authentication required");
 	}
@@ -142,6 +145,7 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 		const user = await fetchAccountWithRetry(account);
 		return user.$id;
 	} catch (err) {
+		logError("GetAuthenticatedUserId", err);
 		console.error("[getAuthenticatedUserId] Auth error:", err);
 		return null;
 	}
@@ -191,7 +195,8 @@ export async function getAuthenticatedUserName(): Promise<string | null> {
 		const account = new Account(client);
 		const user = await account.get();
 		return user.name || null;
-	} catch {
+	} catch (err) {
+		logError("GetAuthenticatedUserName", err);
 		return null;
 	}
 }

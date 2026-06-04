@@ -33,6 +33,7 @@ export interface QueueTable<T extends QueueItemBase> {
 }
 
 import { calculateBackoffDelay } from "@/lib/shared/backoff";
+import { logError } from "@/lib/shared/logger";
 
 type ProcessOutcome = "succeeded" | "failed" | "retried";
 
@@ -50,6 +51,7 @@ async function processItem<T extends QueueItemBase>(
 		await queue.markCompleted(id);
 		return "succeeded";
 	} catch (error) {
+		logError("ProcessItem", error);
 		const message = error instanceof Error ? error.message : "Unknown error";
 		if (item.attempts + 1 >= item.maxRetries) {
 			await queue.markFailed(id, message);

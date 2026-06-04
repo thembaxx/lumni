@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 export interface LeaderboardEntry {
@@ -19,7 +20,8 @@ export async function fetchLeaderboardFromServer(): Promise<
 		if (!res.ok) throw new Error("Server unavailable");
 		const data = await res.json();
 		return (data.entries as LeaderboardEntry[]) || [];
-	} catch {
+	} catch (err) {
+		logError("LeaderboardService", err);
 		return [];
 	}
 }

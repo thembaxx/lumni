@@ -452,3 +452,61 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
   - 3 manual fixes (non-null assertions in `teacher-service.ts` → `as` casts, array index key in `weekly-report-panel.tsx` → biome-ignore)
 - [x] **TypeScript** — `tsc --noEmit` passes with zero errors
 - [x] **Build — middleware/proxy migration**: `src/middleware.ts` and `src/proxy.ts` coexisted, causing Next.js 16.2.6 build error. Merged auth logic into `proxy.ts`, deleted `middleware.ts`. Build compiles successfully (Turbopack Google Fonts issue is pre-existing/environmental).
+
+## ✅ Session 23 — Codebase Audit Fixes (June 2026)
+
+### P0 — Silent catch blocks (148 instances)
+- [x] **Create centralized logger** — `src/lib/shared/logger.ts` with `logError(context, error, meta?)`, filters dev/prod
+- [x] **High-severity catch sweep** (~40 files) — Added `logError()` to retention-loop/*, observability/events.ts, visual-engine/*, question-engine/*, share-service.ts, ai/*, ocr, hooks/*, etc.
+- [x] **Medium-severity catch sweep** (~100 instances) — Added `logError()` to study-groups/service.ts, notification-service.ts, competency-service.ts, analytics-service.ts, etc.
+- [x] **Production telemetry** — Wired `Sentry.captureException()` into `logger.ts` via `withScope()`; client-side events already consent-gated by Sentry's `beforeSend`
+
+### P1 — Icon buttons missing aria-label (14 HIGH)
+- [x] **star-rating.tsx:34** — Added `aria-label="Rate {star} out of 5 stars"`
+- [x] **focus-tab.tsx:94,104,108,113** — Added `aria-label` to minus/stop/play/add icon buttons
+- [x] **quiz-tab.tsx:189,196** — Added `aria-label` to stop/play icon buttons
+- [x] **exam-card.tsx:108,150** — Added `aria-label` to dropdown toggle and download buttons
+- [x] **chat/ChatInput.tsx:181** — Added `aria-label="Voice input"`
+- [x] **diagram-input.tsx:50** — Added `aria-label="Clear diagram"`
+- [x] **exam-filters.tsx:101** — Added `aria-label="Clear filters"`
+- [x] **exam-tab.tsx:155** — Added `aria-label="Clear search"`
+- [x] **chat-dialog.tsx:65** — Added `aria-label="Close chat"`
+- [x] **chat/page.tsx:53** — Added `aria-label="Back to dashboard"`
+- [x] **bookmarks/page.tsx:58** — Added `aria-label="Remove bookmark"`
+- [x] **leaderboard/page.tsx:38** — Added `aria-label="Back to study groups"`
+- [x] **tools-dialog.tsx:114** — Added `aria-label="Close"`
+- [x] **sidebar-nav.tsx:116** — Added `aria-label="Clear search"`
+
+### P2 — Form inputs missing aria-label (6 MEDIUM)
+- [x] **note-editor.tsx:50** — Added `aria-label="Note title"`
+- [x] **note-editor.tsx:70** — Added `aria-label="Note content"`
+- [x] **lesson-sheet.tsx:90** — Added `aria-label="Filter by title"`
+- [x] **subject-select.tsx:101** — Added `aria-label="Search subjects"`
+- [x] **subjects-drawer.tsx:72** — Added `aria-label="Search subjects"`
+- [x] **ChatInput.tsx:110** — Added `aria-label="Ask me a question"`
+
+### P2 — Loading indicator missing aria-live (1 MEDIUM)
+- [x] **LoadingIndicator.tsx:14** — Added `role="status"` and `aria-live="polite"`
+
+### P3 — Empty verifyPremium mutation (1 instance)
+- [x] **premium-context.tsx:122** — Added real `POST /api/premium/verify` call to mutationFn
+
+### P4 — Dead sessionComplete state (1 instance)
+- [x] **flashcards.ts:24,47** — Removed `sessionComplete` field from state type and initial state
+
+### P5 — Missing loading.tsx (all routes, Suspense gap)
+- [x] Add `loading.tsx` to tier-1 routes (auth/*, bookmarks, study-groups/*, search, review, premium) — uses shared `<PageSkeleton>`
+
+### P6 — Dialog Escape-key blocked (by design)
+- [x] Add comment explaining forced-flow reasoning to `celebration-overlay.tsx` and `onboarding-wizard.tsx` dialog `onOpenChange` no-ops
+
+### Production telemetry
+- [x] Wire `Sentry.captureException()` into `logger.ts` via `withScope()`; client-side events already consent-gated by Sentry's `beforeSend`
+
+### DataAccess seam — Phase 1
+- [x] **Interface**: `DataAccess` with 14 typed table accessors, `DataAccessTable<T, TId>`, `Collection<T>`, `WhereClause<T>` in `src/lib/db/data-access.ts`
+- [x] **Dexie implementation**: `DexieDataAccess` wrapping `offlineDB` via `tableAdapter()` factory in `src/lib/db/dexie-data-access.ts`
+- [x] **In-memory implementation**: `InMemoryDataAccess` + `InMemoryTable<T, TId>` for tests in `src/lib/db/in-memory-data-access.ts`
+- [x] **Migrated consumers**: `CompetencyService` and `FlashcardEngine` receive `DataAccess` via DI instead of `typeof offlineDB`
+- [x] **ADR-0011**: Updated to "Implemented — Phase 1"
+- [x] **Verification**: tsc 0 errors, biome 0 warnings, 1225 tests pass

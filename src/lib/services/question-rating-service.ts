@@ -3,6 +3,7 @@ import {
 	type QuestionRatingRepository,
 } from "@/lib/db/repositories/question-rating-repository";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { logError } from "@/lib/shared/logger";
 import { failure, type ServiceResult, success } from "./index";
 
 export class QuestionRatingService {
@@ -38,6 +39,7 @@ export class QuestionRatingService {
 
 			return success(undefined);
 		} catch (e) {
+			logError("QuestionRatingServiceRate", e);
 			return failure(
 				e instanceof Error ? e.message : "Failed to rate question",
 			);
@@ -51,6 +53,7 @@ export class QuestionRatingService {
 			const ratings = await this.repo.getBySubject(subject);
 			return success(ratings);
 		} catch (e) {
+			logError("QuestionRatingServiceGetRatings", e);
 			return failure(e instanceof Error ? e.message : "Failed to get ratings");
 		}
 	}
@@ -62,6 +65,7 @@ export class QuestionRatingService {
 			const ratings = await this.repo.getAll();
 			return success(ratings);
 		} catch (e) {
+			logError("QuestionRatingServiceGetAll", e);
 			return failure(e instanceof Error ? e.message : "Failed to get ratings");
 		}
 	}
@@ -89,6 +93,7 @@ export class QuestionRatingService {
 				counts,
 			});
 		} catch (e) {
+			logError("QuestionRatingServiceGetStats", e);
 			return failure(
 				e instanceof Error ? e.message : "Failed to get rating stats",
 			);
@@ -145,6 +150,7 @@ export class QuestionRatingService {
 
 			return success(result.sort((a, b) => a.avgRating - b.avgRating));
 		} catch (e) {
+			logError("QuestionRatingServiceGetLowRated", e);
 			return failure(
 				e instanceof Error ? e.message : "Failed to get low-rated questions",
 			);

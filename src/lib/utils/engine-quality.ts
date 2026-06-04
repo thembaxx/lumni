@@ -1,4 +1,5 @@
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 export interface QualityRecord {
 	timestamp: number;
@@ -21,11 +22,12 @@ export function recordQuality(data: Omit<QualityRecord, "timestamp">): void {
 	const recent = records.slice(-200);
 	try {
 		localStorage.setItem(QUALITY_KEY, safeJsonStringify(recent));
-	} catch {
+	} catch (err) {
+		logError("RecordQuality", err);
 		try {
 			localStorage.setItem(QUALITY_KEY, safeJsonStringify(recent.slice(-50)));
-		} catch {
-			// ignore
+		} catch (innerErr) {
+			logError("RecordQualityInner", innerErr);
 		}
 	}
 }
@@ -35,7 +37,8 @@ export function loadQualityRecords(): QualityRecord[] {
 	try {
 		const raw = localStorage.getItem(QUALITY_KEY);
 		return raw ? (safeJsonParse(raw, []) as QualityRecord[]) : [];
-	} catch {
+	} catch (err) {
+		logError("LoadQualityRecords", err);
 		return [];
 	}
 }
@@ -86,7 +89,7 @@ export function getQualityStats(): {
 export function clearQualityRecords(): void {
 	try {
 		localStorage.removeItem(QUALITY_KEY);
-	} catch {
-		// ignore
+	} catch (err) {
+		logError("ClearQualityRecords", err);
 	}
 }

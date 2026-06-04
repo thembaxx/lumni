@@ -96,16 +96,27 @@ export function FocusTab({ className }: FocusTabProps) {
 					size="icon"
 					onClick={handleMinusFive}
 					disabled={isRunning || timeLeft <= 60}
+					aria-label="Subtract 5 minutes"
 				>
 					<HugeiconsIcon icon={MinusSignIcon} className="size-5" />
 				</Button>
 
 				{isRunning ? (
-					<Button size="icon" onClick={handleStop} className="rounded-full">
+					<Button
+						size="icon"
+						onClick={handleStop}
+						className="rounded-full"
+						aria-label="Stop timer"
+					>
 						<HugeiconsIcon icon={SquareIcon} className="size-6 fill-current" />
 					</Button>
 				) : (
-					<Button size="icon" onClick={handleStart} className="rounded-full">
+					<Button
+						size="icon"
+						onClick={handleStart}
+						className="rounded-full"
+						aria-label="Start timer"
+					>
 						<HugeiconsIcon icon={PlayFreeIcons} className="ml-1 size-6" />
 					</Button>
 				)}
@@ -115,6 +126,7 @@ export function FocusTab({ className }: FocusTabProps) {
 					size="icon"
 					onClick={handleAddFive}
 					disabled={isRunning || timeLeft >= MAX_TIME}
+					aria-label="Add 5 minutes"
 				>
 					<HugeiconsIcon icon={Add01Icon} className="size-5" />
 				</Button>

@@ -3,6 +3,7 @@ import type { Databases as NodeDatabases } from "node-appwrite";
 import { AppwriteException, type DatabasesIndexType } from "node-appwrite";
 import { databases as clientDatabases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 import { schemaConfig } from "./ensure-schema";
 
 const ALL_COLLECTIONS = [...Object.values(COLLECTIONS), "analytics"];
@@ -69,7 +70,8 @@ async function ensureCollectionSchema(
 			collectionId,
 		);
 		existingAttrs = new Set(listAttrs.attributes.map((a) => a.key));
-	} catch {
+	} catch (err) {
+		logError("DbEnsure", err);
 		// collection might not exist yet — proceed with creation
 	}
 

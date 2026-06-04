@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { UTApi, UTFile } from "uploadthing/server";
@@ -30,7 +31,8 @@ function loadTracker(): UploadedTracker[] {
 		if (!existsSync(TRACKER_PATH)) return [];
 		const content = readFileSync(TRACKER_PATH, "utf-8");
 		return JSON.parse(content) as UploadedTracker[];
-	} catch {
+	} catch (err) {
+		logError("SyncExamPapers", err);
 		return [];
 	}
 }
@@ -48,7 +50,8 @@ function findLocalPdfs(): string[] {
 		return readdirSync(DOWNLOADS_DIR)
 			.filter((f) => f.endsWith(".pdf"))
 			.sort();
-	} catch {
+	} catch (err) {
+		logError("SyncExamPapers", err);
 		return [];
 	}
 }

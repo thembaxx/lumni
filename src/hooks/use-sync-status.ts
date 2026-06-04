@@ -4,6 +4,7 @@ import { useState } from "react";
 import { offlineDB } from "@/lib/db/schema";
 import { useInterval } from "./use-interval";
 import { useOnlineStatus } from "./useOnlineStatus";
+import { logError } from "@/lib/shared/logger";
 
 export function useSyncStatus() {
 	const { isOnline } = useOnlineStatus();
@@ -16,7 +17,8 @@ export function useSyncStatus() {
 				.equals("pending")
 				.count();
 			setPendingCount(items);
-		} catch {
+		} catch (err) {
+			logError("UseSyncStatus", err);
 			setPendingCount(0);
 		}
 	}, 10000);

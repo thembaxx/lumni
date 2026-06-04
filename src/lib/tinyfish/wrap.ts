@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { MAX_SOURCE_CONTENT_CHARS, MIN_CONTENT_LENGTH } from "./allowlist";
 import type { RagContext, WebSource } from "./types";
 
@@ -51,7 +52,8 @@ export function buildRagContext(sources: WebSource[]): RagContext {
 			viable.flatMap((s) => {
 				try {
 					return [new URL(s.url).hostname];
-				} catch {
+				} catch (err) {
+					logError("TinyFishWrap", err);
 					return [];
 				}
 			}),

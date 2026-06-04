@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { getAI } from "@/lib/ai/client";
 import { offlineDB } from "@/lib/db/schema";
 import { buildKnowledgeCacheKey } from "./cache-key";
@@ -25,7 +26,8 @@ export async function fetchGraph(
 	try {
 		const parsed = JSON.parse(result.content) as KnowledgeGraph;
 		return parsed;
-	} catch {
+	} catch (err) {
+		logError("KnowledgeGraphService", err);
 		return { nodes: [], edges: [] };
 	}
 }

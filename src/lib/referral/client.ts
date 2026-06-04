@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 export async function shareReferral(link: string, code: string) {
 	if (navigator.share) {
 		await navigator.share({
@@ -14,7 +16,8 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 	try {
 		await navigator.clipboard.writeText(text);
 		return true;
-	} catch {
+	} catch (err) {
+		logError("CopyToClipboard", err);
 		return false;
 	}
 }

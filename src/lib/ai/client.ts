@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { getAICallContext } from "@/lib/ai/call-context";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { trackAILatency } from "./latency-tracker";
@@ -78,6 +79,7 @@ export class AIClient {
 					});
 					return { ...response, provider: provider.name };
 				} catch (err) {
+					logError("AiClientCallProvider", err);
 					const durationMs = Math.round(performance.now() - start);
 					trackAILatency({
 						provider: provider.name,

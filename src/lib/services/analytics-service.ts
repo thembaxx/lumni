@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 import { failure, type ServiceResult, success } from "./index";
 
@@ -32,6 +33,7 @@ export class AnalyticsService {
 						if (!res.ok) throw new Error(`HTTP ${res.status}`);
 						return await res.json();
 					} catch (error) {
+						logError("AnalyticsService", error);
 						if (attempt < 2) {
 							await new Promise((resolve) =>
 								setTimeout(resolve, 1000 * attempt),
@@ -68,6 +70,7 @@ export class AnalyticsService {
 				userAverage: 0,
 			});
 		} catch (e) {
+			logError("AnalyticsService", e);
 			return failure(
 				e instanceof Error ? e.message : "Failed to get comparative analytics",
 			);
@@ -91,6 +94,7 @@ export class AnalyticsService {
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
 			return success(await res.json());
 		} catch (error) {
+			logError("AnalyticsService", error);
 			console.error("Failed to get subject trend:", error);
 			return success({ dates: [], accuracies: [], trend: "stable" });
 		}

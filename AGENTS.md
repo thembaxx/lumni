@@ -440,3 +440,28 @@ const systemPrompt = webContext.xml
 - `npx tsc --noEmit` must pass with zero errors
 - `npx biome check` must pass on all changed files
 - Build: `npx next build` (catches runtime issues; `bunx --bun next build` may fail due to Next.js worker git-clone compat, use `npx` instead)
+
+### Session 23 — Codebase Hardening + DataAccess Seam (June 2026)
+
+**Batch A — Audit-driven fixes:**
+- **Centralized logger** (`src/lib/shared/logger.ts`): `logError()` dev-only console.error → now wires `Sentry.captureException()` in production via `withScope()`. Client-side events consent-gated by existing `beforeSend` hook.
+- **Catch block sweep (148 instances)**: All empty `catch {}` and `.catch(() => {})` across 53+ files now call `logError()` with context tag. Batches: retention-loop, observability, question-engine, ai, visual-engine, share-service, notification-service, study-groups, all hooks, utils, server modules.
+- **14 icon-button aria-labels**: star-rating, focus-tab, quiz-tab, exam-card, ChatInput mic, diagram-input, exam-filters, exam-tab, chat-dialog, chat back, bookmarks remove, leaderboard back, tools-dialog close, sidebar-nav clear.
+- **6 input aria-labels**: note-editor (title + content), lesson-sheet filter, subject-select search, subjects-drawer search, ChatInput message.
+- **1 aria-live**: LoadingIndicator gets `role="status"` + `aria-live="polite"`.
+- **1 empty mutation fixed**: `verifyPremium` in premium-context.tsx now calls real `POST /api/premium/verify`.
+- **1 dead store state removed**: `sessionComplete` from flashcards store.
+- **12 loading.tsx files**: tier-1 routes (auth/*, bookmarks, study-groups/**, search, review, premium) using `<PageSkeleton>`.
+- **2 dialog Escape-key comments**: celebration-overlay + onboarding-wizard — documented forced-flow rationale.
+
+**Batch B — DataAccess seam (Phase 1):**
+- **`src/lib/db/data-access.ts`** — `DataAccess` interface: 14 typed table accessors (`DataAccessTable<T, TId>`) + generic query interfaces (`Collection<T>`, `WhereClause<T>`). Modeled on actual Dexie usage patterns (no compound index queries in the interface).
+- **`src/lib/db/dexie-data-access.ts`** — `DexieDataAccess` class: wraps `offlineDB` tables via `tableAdapter()` factory. Thin delegation with Dexie type bridging.
+- **`src/lib/db/in-memory-data-access.ts`** — `InMemoryDataAccess` class + `InMemoryTable<T, TId>`: `Map`-backed for unit tests, includes `seed()` for test setup, supports all query methods.
+- **Migrated consumers (Phase 1)**: `CompetencyService` and `FlashcardEngine` now receive `DataAccess` via DI instead of `typeof offlineDB`. Compound `where({...})` calls rewritten to `.where("key").equals(val).filter(...)` chaining.
+- **ADR-0011**: Written and updated to "Implemented — Phase 1".
+
+**Verification:**
+- `npx tsc --noEmit` — 0 errors
+- `npx biome check` — 0 errors on all changed files
+- `bun test` — 1225 pass, 0 fail

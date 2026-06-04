@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 export const ALLOWED_SUBJECTS: readonly string[] = [
 	"mathematics",
 	"mathematical-literacy",
@@ -55,7 +57,8 @@ export function isDomainBlocked(url: string): boolean {
 			}
 		}
 		return false;
-	} catch {
+	} catch (err) {
+		logError("TinyFishAllowlist", err);
 		return true;
 	}
 }

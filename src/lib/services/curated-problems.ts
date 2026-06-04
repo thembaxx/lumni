@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { curriculumRegistry } from "@/curriculum";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
@@ -132,7 +133,8 @@ Generate exactly ${Math.min(count, 10)} problems at varying difficulty levels.`;
 		let problems: Omit<CuratedProblem, "id">[];
 		try {
 			problems = JSON.parse(cleaned);
-		} catch {
+		} catch (err) {
+			logError("CuratedProblems", err);
 			return {
 				problems: [
 					{

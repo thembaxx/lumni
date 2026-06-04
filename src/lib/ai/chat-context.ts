@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { offlineDB } from "@/lib/db/schema";
 
@@ -60,8 +61,8 @@ export async function buildChatContext(): Promise<string> {
 				.join("\n");
 			parts.push(`Recent mistakes to address:\n${mistakes}`);
 		}
-	} catch {
-		// Dexie may not be available
+	} catch (err) {
+		logError("BuildChatContext", err);
 	}
 
 	cachedContext = parts.length > 0 ? parts.join("\n") : "";

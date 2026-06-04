@@ -300,6 +300,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 
 	return (
 		<Dialog open={true} onOpenChange={() => {}}>
+			{/* Intentionally non-dismissable — forced onboarding flow. Escape is disabled
+			    because the user must complete onboarding before accessing the dashboard. */}
 			<DialogContent
 				showCloseButton={false}
 				className="inset-0 m-0 h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-system-grouped p-0"

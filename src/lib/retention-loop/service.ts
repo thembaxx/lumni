@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { offlineDB, type RetentionRecurrence } from "@/lib/db/schema";
 
 const DEFAULT_COUNT = 3;
@@ -53,7 +54,8 @@ export async function getRecurrenceCandidates(
 		}
 
 		return candidates;
-	} catch {
+	} catch (err) {
+		logError("GetRecurrenceCandidates", err);
 		return [];
 	}
 }
@@ -76,8 +78,8 @@ export async function markRecurrence(
 				completed: true,
 			});
 		}
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("MarkRecurrence", err);
 	}
 }
 
@@ -114,7 +116,8 @@ export async function getRecurrenceStats(userId: string): Promise<{
 					: 0,
 			pendingCount: all.filter((r) => !r.completed).length,
 		};
-	} catch {
+	} catch (err) {
+		logError("GetRecurrenceStats", err);
 		return {
 			totalScheduled: 0,
 			totalCompleted: 0,

@@ -117,6 +117,7 @@ function SidebarContent() {
 							type="button"
 							onClick={() => setQuery("")}
 							className="absolute top-1/2 right-2.5 flex size-5 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:text-foreground"
+							aria-label="Clear search"
 						>
 							<span className="text-xs leading-none">×</span>
 						</button>

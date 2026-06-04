@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import type { AIFailure, AIResponse, AIResult } from "./types";
 
 export function isAIFailure(result: AIResult): result is AIFailure {
@@ -19,7 +20,8 @@ export function parseAIResponse<T>(
 	const raw = cleanResponse((result as AIResponse).content);
 	try {
 		return { data: JSON.parse(raw) as T, raw };
-	} catch {
+	} catch (err) {
+		logError("ParseAiResponse", err);
 		return null;
 	}
 }

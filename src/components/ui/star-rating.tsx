@@ -38,6 +38,7 @@ export function StarRating({
 						type="button"
 						disabled={disabled}
 						className="h-auto w-auto p-0.5"
+						aria-label={`Rate ${star} out of 5 stars`}
 						onMouseEnter={() => !disabled && setHovered(star)}
 						onMouseLeave={() => setHovered(0)}
 						onClick={() => handleClick(star)}

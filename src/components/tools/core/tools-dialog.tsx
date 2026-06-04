@@ -115,6 +115,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 						variant="ghost"
 						size="icon-sm"
 						onClick={() => onOpenChange(false)}
+						aria-label="Close"
 					>
 						<HugeiconsIcon icon={Cancel01Icon} data-icon />
 					</Button>

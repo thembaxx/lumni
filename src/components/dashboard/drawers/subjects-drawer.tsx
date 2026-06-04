@@ -72,6 +72,7 @@ export function SubjectsDrawer({
 						<Input
 							type="text"
 							placeholder="Search subjects..."
+							aria-label="Search subjects"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							className="h-10 rounded-lg pr-4 pl-10"

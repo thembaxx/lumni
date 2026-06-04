@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { offlineDB } from "@/lib/db/schema";
 
 export type EventType =
@@ -28,7 +29,8 @@ function loadEvents(): TrackEvent[] {
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
 		return raw ? (JSON.parse(raw) as TrackEvent[]) : [];
-	} catch {
+	} catch (err) {
+		logError("LoadEvents", err);
 		return [];
 	}
 }
@@ -39,8 +41,8 @@ function saveEvents(events: TrackEvent[]): void {
 			STORAGE_KEY,
 			JSON.stringify(events.slice(-MAX_EVENTS)),
 		);
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("SaveEvents", err);
 	}
 }
 
@@ -68,8 +70,8 @@ export async function trackSessionStart(
 			sessionId,
 			timestamp: Date.now(),
 		});
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("TrackSessionStart", err);
 	}
 }
 
@@ -85,8 +87,8 @@ export async function trackSessionEnd(
 			sessionId,
 			timestamp: Date.now(),
 		});
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("TrackSessionEnd", err);
 	}
 }
 
@@ -105,8 +107,8 @@ export async function trackDayActive(userId: string): Promise<void> {
 			userId,
 			timestamp: Date.now(),
 		});
-	} catch {
-		/* silent */
+	} catch (err) {
+		logError("TrackDayActive", err);
 	}
 }
 
@@ -160,7 +162,8 @@ export async function getCohortStats(days = 30): Promise<CohortStats> {
 			.sort((a, b) => a.date.localeCompare(b.date));
 
 		return { dau, wau, totalActiveUsers, dailyCounts };
-	} catch {
+	} catch (err) {
+		logError("GetCohortStats", err);
 		return { dau: 0, wau: 0, totalActiveUsers: 0, dailyCounts: [] };
 	}
 }
@@ -191,7 +194,7 @@ export function getEventSummary() {
 export function clearEvents(): void {
 	try {
 		localStorage.removeItem(STORAGE_KEY);
-	} catch {
-		/* noop */
+	} catch (err) {
+		logError("ClearEvents", err);
 	}
 }

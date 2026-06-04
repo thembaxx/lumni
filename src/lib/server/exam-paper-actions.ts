@@ -1,5 +1,6 @@
 "use server";
 
+import { logError } from "@/lib/shared/logger";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { UTApi, UTFile } from "uploadthing/server";
@@ -299,7 +300,8 @@ export async function getExamPapersWithFallback() {
 		}
 
 		return null;
-	} catch {
+	} catch (err) {
+		logError("ExamPaperActions", err);
 		return null;
 	}
 }

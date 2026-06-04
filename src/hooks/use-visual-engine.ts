@@ -5,6 +5,7 @@ import { usePremium } from "@/lib/premium/premium-context";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import type { VisualContent } from "@/lib/visual-engine/types";
+import { logError } from "@/lib/shared/logger";
 
 interface VisualResult {
 	visual: VisualContent | null;
@@ -23,6 +24,7 @@ async function fetchVisual(question: Question): Promise<VisualResult> {
 			}),
 		});
 	} catch (error) {
+		logError("FetchVisual", error);
 		showBudgetToast(error);
 		throw error;
 	}

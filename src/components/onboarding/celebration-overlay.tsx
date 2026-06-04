@@ -23,6 +23,8 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 
 	return (
 		<Dialog open={true} onOpenChange={() => {}}>
+			{/* Intentionally non-dismissable — forced celebration flow. Escape is disabled here
+			    because the user must complete onboarding before accessing the dashboard. */}
 			<DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
 				<DialogTitle className="sr-only">Celebration</DialogTitle>
 				<Confetti trigger={true} />

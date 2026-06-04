@@ -8,6 +8,7 @@ import {
 	listDocuments,
 } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 
 export interface TeacherStudent {
 	id: string;
@@ -90,7 +91,8 @@ export async function getTeacherStudents(
 							grade: (u.prefs?.grade as string) || "Matric",
 						},
 					] as const;
-				} catch {
+				} catch (innerErr) {
+					logError("GetTeacherStudentsUser", innerErr);
 					return [sid, { name: "Unknown", grade: "Matric" }] as const;
 				}
 			}),
@@ -98,8 +100,8 @@ export async function getTeacherStudents(
 		for (const [sid, entry] of userEntries) {
 			userMap.set(sid, entry);
 		}
-	} catch {
-		// fallback
+	} catch (err) {
+		logError("GetTeacherStudents", err);
 	}
 
 	const [allCompetencies, allProgress, allSessions] = await Promise.all([

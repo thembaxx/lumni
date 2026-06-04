@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import { createCachingStrategy } from "@/lib/caching-strategy";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
@@ -234,7 +235,8 @@ export class QuestionEngine {
 					marks: q.marks,
 					year: q.year,
 				}));
-		} catch {
+		} catch (err) {
+			logError("RetrievePastPaperExamples", err);
 			return [];
 		}
 	}

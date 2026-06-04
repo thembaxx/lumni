@@ -1,5 +1,6 @@
 import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { logError } from "@/lib/shared/logger";
 import { loadFromStorage } from "@/lib/utils/storage";
 
 export interface SearchResultItem {
@@ -209,7 +210,8 @@ async function searchAppwrite(query: string): Promise<SearchResultItem[]> {
 		if (!res.ok) return [];
 		const data = (await res.json()) as { results: SearchResultItem[] };
 		return data.results ?? [];
-	} catch {
+	} catch (err) {
+		logError("SearchAppwrite", err);
 		return [];
 	}
 }
@@ -244,7 +246,8 @@ export async function searchWeb(query: string): Promise<SearchResultItem[]> {
 		if (!res.ok) return [];
 		const data = (await res.json()) as { results: SearchResultItem[] };
 		return data.results ?? [];
-	} catch {
+	} catch (err) {
+		logError("SearchWeb", err);
 		return [];
 	}
 }

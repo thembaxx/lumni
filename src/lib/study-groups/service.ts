@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -61,6 +62,7 @@ export async function createGroup(
 		if (!group) return failure("Failed to create group");
 		return success(group);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to create group",
 		);
@@ -85,6 +87,7 @@ export async function getGroupsForUser(
 		) as StudyGroup[];
 		return success(groups);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to load groups",
 		);
@@ -102,6 +105,7 @@ export async function getGroupById(
 		if (!group) return failure("Group not found");
 		return success(group);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(err instanceof Error ? err.message : "Failed to load group");
 	}
 }
@@ -116,6 +120,7 @@ export async function getGroupMembers(
 		);
 		return success(members);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to load members",
 		);
@@ -152,6 +157,7 @@ export async function joinGroup(
 
 		return success({ ...group, memberCount: (group.memberCount ?? 0) + 1 });
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(err instanceof Error ? err.message : "Failed to join group");
 	}
 }
@@ -182,6 +188,7 @@ export async function leaveGroup(
 
 		return success(undefined);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to leave group",
 		);
@@ -209,6 +216,7 @@ export async function createPost(
 		if (!post) return failure("Failed to create post");
 		return success(post);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to create post",
 		);
@@ -225,6 +233,7 @@ export async function getGroupPosts(
 		]);
 		return success(posts);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(err instanceof Error ? err.message : "Failed to load posts");
 	}
 }
@@ -241,6 +250,7 @@ export async function deletePost(
 		await deleteDocument(COLLECTIONS.GROUP_POSTS, postId);
 		return success(undefined);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to delete post",
 		);
@@ -257,6 +267,7 @@ export async function getPostComments(
 		);
 		return success(comments);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to load comments",
 		);
@@ -288,6 +299,7 @@ export async function createComment(
 		if (!comment) return failure("Failed to create comment");
 		return success(comment);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to create comment",
 		);
@@ -308,6 +320,7 @@ export async function deleteComment(
 		await deleteDocument(COLLECTIONS.GROUP_COMMENTS, commentId);
 		return success(undefined);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to delete comment",
 		);
@@ -324,6 +337,7 @@ export async function getPostReactions(
 		);
 		return success(reactions);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to load reactions",
 		);
@@ -340,6 +354,7 @@ export async function getCommentReactions(
 		);
 		return success(reactions);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to load reactions",
 		);
@@ -373,6 +388,7 @@ export async function togglePostReaction(
 		);
 		return success(reaction ?? null);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to toggle reaction",
 		);
@@ -406,6 +422,7 @@ export async function toggleCommentReaction(
 		);
 		return success(reaction ?? null);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to toggle reaction",
 		);
@@ -443,6 +460,7 @@ export async function removeMember(
 
 		return success(undefined);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to remove member",
 		);
@@ -478,6 +496,7 @@ export async function deleteGroup(
 		]);
 		return success(undefined);
 	} catch (err) {
+		logError("StudyGroupsService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to delete group",
 		);

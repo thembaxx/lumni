@@ -49,6 +49,7 @@ export function NoteEditor({
 		<div className={cn("flex flex-col gap-3", className)} {...props}>
 			<Input
 				placeholder="Note title"
+				aria-label="Note title"
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
 				className="h-10 font-medium"
@@ -70,6 +71,7 @@ export function NoteEditor({
 			<Textarea
 				ref={contentRef}
 				placeholder="Start writing..."
+				aria-label="Note content"
 				value={content}
 				onChange={(e) => setContent(e.target.value)}
 				className="min-h-48 resize-y"

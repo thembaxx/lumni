@@ -1,4 +1,5 @@
 import type { NotificationSettings } from "@/lib/services/notification-service";
+import { logError } from "@/lib/shared/logger";
 
 export type { NotificationSettings };
 
@@ -8,6 +9,7 @@ export function loadFromStorage<T>(key: string, defaultValue: T): T {
 		const stored = localStorage.getItem(key);
 		return stored ? JSON.parse(stored) : defaultValue;
 	} catch (e) {
+		logError("LoadFromStorage", e);
 		console.warn("localStorage read failed:", e);
 		return defaultValue;
 	}
@@ -18,6 +20,7 @@ export function saveToStorage<T>(key: string, value: T): void {
 	try {
 		localStorage.setItem(key, JSON.stringify(value));
 	} catch (e) {
+		logError("SaveToStorage", e);
 		console.error("Failed to save to localStorage:", e);
 	}
 }

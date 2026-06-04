@@ -1,5 +1,6 @@
 import type { Databases } from "appwrite";
 import { browserDatabases, databases } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 import type { AppwriteExamPaperRecord } from "@/types/exam";
 
 export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID ?? "";
@@ -161,7 +162,8 @@ export async function getDocument<T>(
 			documentId,
 		);
 		return doc as unknown as T;
-	} catch {
+	} catch (err) {
+		logError("DbClient", err);
 		return null;
 	}
 }

@@ -109,6 +109,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 							variant="default"
 							size="icon-sm"
 							className="size-8"
+							aria-label="View options"
 							onClick={(e) => {
 								e.stopPropagation();
 								setViewDropdownOpen((o) => !o);
@@ -151,6 +152,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 							variant="secondary"
 							size="icon-sm"
 							className="size-8"
+							aria-label="Practice options"
 							onClick={(e) => {
 								e.stopPropagation();
 								setPracticeDropdownOpen((o) => !o);
@@ -188,7 +190,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 						className="size-8"
 						onClick={handleDownloadPdf}
 						disabled={downloading}
-						title={cached ? "Remove offline copy" : "Save for offline"}
+						aria-label={cached ? "Remove offline copy" : "Save for offline"}
 					>
 						{cached || downloading ? (
 							<span

@@ -1,4 +1,5 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import {
@@ -25,10 +26,8 @@ import type {
 } from "./types";
 import { DEFAULT_SR_SETTINGS, SR_SETTINGS_KEY } from "./types";
 
-const offlineDBTyped: typeof offlineDB = offlineDB;
-
 export interface EngineDependencies {
-	db: typeof offlineDB;
+	db: DataAccess;
 	enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
 	loadFromStorage: <T>(key: string, fallback: T) => T;
 	saveToStorage: (key: string, value: unknown) => void;
@@ -36,7 +35,7 @@ export interface EngineDependencies {
 }
 
 const DEFAULT_DEPS: EngineDependencies = {
-	db: offlineDBTyped,
+	db: dexieDataAccess,
 	enqueue: enqueue as unknown as EngineDependencies["enqueue"],
 	loadFromStorage,
 	saveToStorage,

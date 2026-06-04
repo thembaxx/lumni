@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
@@ -53,6 +54,7 @@ export async function saveQuestionsToAppwrite(
 		}
 		await Promise.all(batchPromises);
 	} catch (error) {
+		logError("SaveQuestionsToAppwrite", error);
 		console.error("[Persistence] Failed to save to Appwrite:", error);
 	}
 }
@@ -85,6 +87,7 @@ export async function loadQuestionsFromAppwrite(
 			[],
 		);
 	} catch (error) {
+		logError("LoadQuestionsFromAppwrite", error);
 		console.error("[Persistence] Failed to load from Appwrite:", error);
 		return [];
 	}
@@ -111,6 +114,7 @@ export async function syncQuestionsToAppwrite(
 
 		return { saved: newQuestions.length, existing: existing.length };
 	} catch (error) {
+		logError("SyncQuestionsToAppwrite", error);
 		console.error("[Persistence] Sync error:", error);
 		return { saved: 0, existing: 0 };
 	}

@@ -1,0 +1,155 @@
+import type {
+	Collection as DexieCollection,
+	IndexableType,
+	Table,
+	UpdateSpec,
+} from "dexie";
+import type {
+	Collection,
+	DataAccess,
+	DataAccessTable,
+	WhereClause,
+} from "@/lib/db/data-access";
+import { offlineDB } from "@/lib/db/schema";
+
+// ──────────────────────────────────────────────
+// Dexie adapter wrappers
+// ──────────────────────────────────────────────
+
+class DexieCollectionAdapter<T> implements Collection<T> {
+	constructor(private readonly source: DexieCollection<T, unknown>) {}
+
+	async first(): Promise<T | undefined> {
+		return this.source.first();
+	}
+
+	async toArray(): Promise<T[]> {
+		return this.source.toArray();
+	}
+
+	async count(): Promise<number> {
+		return this.source.count();
+	}
+
+	async delete(): Promise<void> {
+		await this.source.delete();
+	}
+
+	reverse(): Collection<T> {
+		return new DexieCollectionAdapter(this.source.reverse());
+	}
+
+	limit(n: number): Collection<T> {
+		return new DexieCollectionAdapter(this.source.limit(n));
+	}
+
+	filter(pred: (item: T) => boolean): Collection<T> {
+		return new DexieCollectionAdapter(this.source.and(pred));
+	}
+
+	async sortBy(index: string): Promise<T[]> {
+		return this.source.sortBy(index);
+	}
+}
+
+class DexieWhereClauseAdapter<T> implements WhereClause<T> {
+	constructor(
+		private readonly table: Table<T, unknown>,
+		private readonly index: string,
+	) {}
+
+	equals(val: unknown): Collection<T> {
+		return new DexieCollectionAdapter(
+			this.table.where(this.index).equals(val as IndexableType),
+		);
+	}
+
+	belowOrEqual(val: unknown): Collection<T> {
+		return new DexieCollectionAdapter(
+			this.table.where(this.index).belowOrEqual(val as IndexableType),
+		);
+	}
+
+	below(val: unknown): Collection<T> {
+		return new DexieCollectionAdapter(
+			this.table.where(this.index).below(val as IndexableType),
+		);
+	}
+
+	startsWith(val: string): Collection<T> {
+		return new DexieCollectionAdapter(
+			this.table.where(this.index).startsWith(val as IndexableType & string),
+		);
+	}
+
+	anyOf(vals: unknown[]): Collection<T> {
+		return new DexieCollectionAdapter(
+			this.table.where(this.index).anyOf(vals as IndexableType[]),
+		);
+	}
+}
+
+// ──────────────────────────────────────────────
+// Factory: create DataAccessTable from Dexie table
+// ──────────────────────────────────────────────
+
+function tableAdapter<T, TId extends string | number>(
+	table: Table<T, TId>,
+): DataAccessTable<T, TId> {
+	return {
+		get: (id) => table.get(id),
+		add: (item) => table.add(item as T & Record<string, unknown>),
+		put: (item) => table.put(item),
+		update: (id, changes) =>
+			table.update(
+				id,
+				changes as unknown as UpdateSpec<T>,
+			) as unknown as Promise<TId>,
+		delete: (id) => table.delete(id) as unknown as Promise<void>,
+
+		bulkAdd: (items) =>
+			table.bulkAdd(
+				items as (T & Record<string, unknown>)[],
+			) as unknown as Promise<TId[]>,
+		bulkDelete: (ids) => table.bulkDelete(ids) as unknown as Promise<void>,
+
+		toArray: () => table.toArray(),
+		count: () => table.count(),
+		clear: () => table.clear(),
+
+		where: (index: string) => {
+			return new DexieWhereClauseAdapter<T>(
+				table as unknown as Table<T, unknown>,
+				index,
+			);
+		},
+
+		orderBy: (index: string) =>
+			new DexieCollectionAdapter(
+				table.orderBy(index) as unknown as DexieCollection<T, unknown>,
+			),
+	};
+}
+
+// ──────────────────────────────────────────────
+// Dexie implementation
+// ──────────────────────────────────────────────
+
+export class DexieDataAccess implements DataAccess {
+	flashcards = tableAdapter(offlineDB.flashcards);
+	reviewHistory = tableAdapter(offlineDB.reviewHistory);
+	analyticsEvents = tableAdapter(offlineDB.analyticsEvents);
+	retentionRecurrence = tableAdapter(offlineDB.retentionRecurrence);
+	wrongAnswers = tableAdapter(offlineDB.wrongAnswers);
+	quizPacks = tableAdapter(offlineDB.quizPacks);
+	packQuestions = tableAdapter(offlineDB.packQuestions);
+	competencies = tableAdapter(offlineDB.competencies);
+	progress = tableAdapter(offlineDB.progress);
+	quizAttempts = tableAdapter(offlineDB.quizAttempts);
+	bookmarks = tableAdapter(offlineDB.bookmarks);
+	questions = tableAdapter(offlineDB.questions);
+	subjects = tableAdapter(offlineDB.subjects);
+	visuals = tableAdapter(offlineDB.visuals);
+}
+
+export const dexieDataAccess = new DexieDataAccess();

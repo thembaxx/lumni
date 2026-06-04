@@ -5,6 +5,7 @@ import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { offlineDB } from "@/lib/db/schema";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { logError } from "@/lib/shared/logger";
 
 export interface ChatMessage {
 	id: string;
@@ -51,7 +52,8 @@ function deserializeMessages(data: string): ChatMessage[] {
 				timestamp: new Date(m.timestamp),
 			}),
 		);
-	} catch {
+	} catch (err) {
+		logError("DeserializeMessages", err);
 		return [];
 	}
 }
@@ -93,7 +95,7 @@ export function useChat() {
 					timestamp: m.timestamp.getTime(),
 				})),
 			)
-			.catch(() => {});
+			.catch((err) => { logError("UseChat", err); });
 	}, [messages]);
 
 	const sendMessage = useCallback(async (content: string) => {
@@ -150,6 +152,7 @@ export function useChat() {
 
 			setMessages((prev) => [...prev, assistantMessage]);
 		} catch (err) {
+			logError("UseChat", err);
 			setError(err instanceof Error ? err.message : "Something went wrong");
 			const errorMessage: ChatMessage = {
 				id: crypto.randomUUID(),

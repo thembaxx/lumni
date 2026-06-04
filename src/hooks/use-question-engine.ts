@@ -9,6 +9,7 @@ import type {
 	UserAnswer,
 } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
+import { logError } from "@/lib/shared/logger";
 
 interface GenerateResult {
 	questions: Question[];
@@ -31,6 +32,7 @@ async function generateQuestions(
 			body: JSON.stringify(params),
 		});
 	} catch (error) {
+		logError("GenerateQuestions", error);
 		showBudgetToast(error);
 		throw error;
 	}
@@ -47,6 +49,7 @@ async function gradeAnswer(
 			body: JSON.stringify({ question, answer }),
 		});
 	} catch (error) {
+		logError("GradeAnswer", error);
 		showBudgetToast(error);
 		throw error;
 	}
@@ -60,6 +63,7 @@ async function generateHint(question: Question): Promise<HintResult> {
 			body: JSON.stringify({ question }),
 		});
 	} catch (error) {
+		logError("GenerateHint", error);
 		showBudgetToast(error);
 		throw error;
 	}

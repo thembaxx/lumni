@@ -89,6 +89,7 @@ export function LessonSheet() {
 							/>
 							<Input
 								placeholder="Filter by title…"
+								aria-label="Filter by title"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								className="pl-10"
