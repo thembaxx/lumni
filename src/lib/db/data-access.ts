@@ -1,6 +1,5 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
-import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	AnalyticsEvent,
 	BookmarkRecord,
@@ -21,6 +20,7 @@ import type {
 	SharedQuestionRecord,
 	SyncConflict,
 } from "@/lib/db/schema";
+import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	FlashcardReview,
 	FlashcardSM2,

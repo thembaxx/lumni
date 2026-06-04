@@ -115,8 +115,7 @@ function tableAdapter<T, TId extends string | number>(
 			table.bulkAdd(
 				items as (T & Record<string, unknown>)[],
 			) as unknown as Promise<TId[]>,
-		bulkPut: (items) =>
-			table.bulkPut(items) as unknown as Promise<TId[]>,
+		bulkPut: (items) => table.bulkPut(items) as unknown as Promise<TId[]>,
 		bulkDelete: (ids) => table.bulkDelete(ids) as unknown as Promise<void>,
 
 		toArray: () => table.toArray(),

@@ -94,10 +94,11 @@ export function ProfileTabRefactored() {
 						format: "csv",
 						onExport: async () => {
 							try {
-								const [{ exportService }, { dexieDataAccess }] = await Promise.all([
-									import("@/lib/export"),
-									import("@/lib/db"),
-								]);
+								const [{ exportService }, { dexieDataAccess }] =
+									await Promise.all([
+										import("@/lib/export"),
+										import("@/lib/db"),
+									]);
 								const [quizAttempts, examSessions] = await Promise.all([
 									dexieDataAccess.quizAttempts
 										.orderBy("completedAt")
