@@ -34,6 +34,10 @@ import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggerList } from "@/components/shared/stagger-list";
+import {
+	StaggeredSection,
+	StaggerProvider,
+} from "@/components/shared/stagger-provider";
 import { LeaderboardCard } from "@/components/social/leaderboard-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -210,139 +214,141 @@ export function DashboardContent({
 					/>
 				)}
 				{activeTab === "today" && !isAnonymous && <CountdownHeader />}
-				{activeTab === "today" && (
-					<SectionReveal delay={0.02}>
-						<GettingStartedCard />
-					</SectionReveal>
-				)}
-				{activeTab === "today" && (
-					<SectionReveal delay={0.03}>
-						<NotificationNudge />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.05}>
-						<BentoStatRow
-							questionsAnswered={stats.questionsAnswered}
-							accuracy={stats.accuracy}
-						/>
-					</SectionReveal>
-				)}
-				{showPractice && (
-					<SectionReveal delay={0.08}>
-						<FocusTimerCard />
-					</SectionReveal>
-				)}
-				{isAnonymous && (
-					<SectionReveal delay={0.09}>
-						<AnonymousUpsell />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.095}>
-						<AppErrorBoundary>
-							<NextBestActionCard />
-						</AppErrorBoundary>
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.1}>
-						<TodayFocusCard />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.105}>
-						<AppErrorBoundary>
-							<LearningMapCard />
-						</AppErrorBoundary>
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.108}>
-						<MyAssignments />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.113}>
-						<StreakCard />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.118}>
-						<StudyPlanOverview />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.123}>
-						<CompetencyOverview />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.133}>
-						<BloomTaxonomyWidget />
-					</SectionReveal>
-				)}
-				{showPractice && (
-					<SectionReveal delay={0.138}>
-						<OfflinePackManager />
-					</SectionReveal>
-				)}
-				{showPractice && !isAnonymous && (
-					<SectionReveal delay={0.143}>
-						<DailyChallenges />
-					</SectionReveal>
-				)}
-				{showPractice && (
-					<SectionReveal delay={0.143}>
-						<QuizStartCard onStart={onStartQuiz} />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.14}>
-						<ComparativeAnalyticsPanel />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.16}>
-						<StatsRow />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.17}>
-						<LeaderboardCard />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.18}>
-						<AchievementShowcase />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.185}>
-						<RewardChestPanel />
-					</SectionReveal>
-				)}
-				{showAnalytics && !isAnonymous && (
-					<SectionReveal delay={0.19}>
-						<Card>
-							<CardHeader>
-								<CardTitle className="font-extrabold text-base tracking-tight">
-									Mastery Heatmap
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<MasteryHeatmap />
-							</CardContent>
-						</Card>
-					</SectionReveal>
-				)}
-				{showPractice && (
-					<SectionReveal delay={0.19}>
-						<StaggerList>
-							<QuickActions />
-						</StaggerList>
-					</SectionReveal>
-				)}
+				<StaggerProvider baseDelay={0.02}>
+					{activeTab === "today" && (
+						<StaggeredSection>
+							<GettingStartedCard />
+						</StaggeredSection>
+					)}
+					{activeTab === "today" && (
+						<StaggeredSection>
+							<NotificationNudge />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<BentoStatRow
+								questionsAnswered={stats.questionsAnswered}
+								accuracy={stats.accuracy}
+							/>
+						</StaggeredSection>
+					)}
+					{showPractice && (
+						<StaggeredSection>
+							<FocusTimerCard />
+						</StaggeredSection>
+					)}
+					{isAnonymous && (
+						<StaggeredSection>
+							<AnonymousUpsell />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<AppErrorBoundary>
+								<NextBestActionCard />
+							</AppErrorBoundary>
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<TodayFocusCard />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<AppErrorBoundary>
+								<LearningMapCard />
+							</AppErrorBoundary>
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<MyAssignments />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<StreakCard />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<StudyPlanOverview />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<CompetencyOverview />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<BloomTaxonomyWidget />
+						</StaggeredSection>
+					)}
+					{showPractice && (
+						<StaggeredSection>
+							<OfflinePackManager />
+						</StaggeredSection>
+					)}
+					{showPractice && !isAnonymous && (
+						<StaggeredSection>
+							<DailyChallenges />
+						</StaggeredSection>
+					)}
+					{showPractice && (
+						<StaggeredSection>
+							<QuizStartCard onStart={onStartQuiz} />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<ComparativeAnalyticsPanel />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<StatsRow />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<LeaderboardCard />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<AchievementShowcase />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<RewardChestPanel />
+						</StaggeredSection>
+					)}
+					{showAnalytics && !isAnonymous && (
+						<StaggeredSection>
+							<Card>
+								<CardHeader>
+									<CardTitle className="font-extrabold text-base tracking-tight">
+										Mastery Heatmap
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<MasteryHeatmap />
+								</CardContent>
+							</Card>
+						</StaggeredSection>
+					)}
+					{showPractice && (
+						<StaggeredSection>
+							<StaggerList>
+								<QuickActions />
+							</StaggerList>
+						</StaggeredSection>
+					)}
+				</StaggerProvider>
 			</PageContainer>
 		</PullToRefresh>
 	);

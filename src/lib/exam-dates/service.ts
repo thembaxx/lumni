@@ -147,7 +147,7 @@ export async function syncExamDatesDirect(
 ): Promise<void> {
 	try {
 		const { upsertDocument } = await import(
-			"@/lib/orchestrator/handlers/sync-handlers"
+			"@/lib/orchestrator/handlers/sync-factory"
 		);
 		const key = `${session}_${year}`;
 		const { Query } = await import("appwrite");

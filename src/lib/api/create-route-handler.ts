@@ -97,7 +97,8 @@ export function createRouteHandler<
 
 			let body = {} as TBody;
 
-			if (req.method !== "GET" && req.method !== "HEAD") {
+			const method = req?.method ?? "GET";
+			if (method !== "GET" && method !== "HEAD") {
 				if (parseBody) {
 					body = await parseBody(req);
 				} else {

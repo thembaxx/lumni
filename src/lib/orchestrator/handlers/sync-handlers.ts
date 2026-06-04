@@ -1,123 +1,86 @@
 import { Query } from "appwrite";
-import {
-	COLLECTIONS,
-	createDocument,
-	deleteDocument,
-	listDocuments,
-	updateDocument,
-} from "@/lib/db/client";
+import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { JobHandler } from "./index";
-
-export async function upsertDocument(
-	collection: string,
-	findQuery: string[],
-	data: Record<string, unknown>,
-): Promise<void> {
-	const existing = await listDocuments<Record<string, unknown>>(
-		collection,
-		findQuery,
-	);
-	const now = new Date().toISOString();
-	if (existing.length > 0) {
-		await updateDocument(collection, existing[0].$id as string, {
-			...data,
-			updatedAt: now,
-		});
-	} else {
-		await createDocument(collection, {
-			...data,
-			createdAt: now,
-			updatedAt: now,
-		});
-	}
-}
+import {
+	createAppendHandler,
+	createDeleteHandler,
+	createUpsertHandler,
+} from "./sync-factory";
 
 export const appwriteSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-sync"];
 	await syncQuestionsToAppwrite(data.questions, data.subject, data.topic);
 };
 
-export const appwriteProgressSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-progress-sync"];
-	await upsertDocument(
-		COLLECTIONS.USER_PROGRESS,
-		[
-			Query.equal("userId", data.userId),
-			Query.equal("subjectId", data.odSubjectId),
-		],
-		{
-			userId: data.userId,
-			subjectId: data.odSubjectId,
-			questionsAttempted: data.questionsAttempted,
-			correctCount: data.correctCount,
-			currentStreak: data.currentStreak,
-			longestStreak: data.longestStreak,
-		},
-	);
-};
+export const appwriteProgressSync = createUpsertHandler(
+	COLLECTIONS.USER_PROGRESS,
+	{ userId: "userId", subjectId: "odSubjectId" },
+	(data) => ({
+		userId: data.userId as string,
+		subjectId: data.odSubjectId as string,
+		questionsAttempted: data.questionsAttempted as number,
+		correctCount: data.correctCount as number,
+		currentStreak: data.currentStreak as number,
+		longestStreak: data.longestStreak as number,
+	}),
+);
 
-export const appwriteAttemptSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-attempt-sync"];
-	await createDocument(COLLECTIONS.STUDY_SESSIONS, {
-		userId: data.userId,
-		subjectId: data.subjectId,
-		questionsAnswered: data.totalQuestions,
-		correctCount: data.score,
-		duration: data.duration,
-		startedAt: new Date(data.completedAt - data.duration * 1000).toISOString(),
-		endedAt: new Date(data.completedAt).toISOString(),
-	});
-};
+export const appwriteAttemptSync = createAppendHandler(
+	COLLECTIONS.STUDY_SESSIONS,
+	(data) => {
+		const completedAt = data.completedAt as number;
+		const duration = data.duration as number;
+		return {
+			userId: data.userId as string,
+			subjectId: data.subjectId as string,
+			questionsAnswered: data.totalQuestions as number,
+			correctCount: data.score as number,
+			duration: duration,
+			startedAt: new Date(completedAt - duration * 1000).toISOString(),
+			endedAt: new Date(completedAt).toISOString(),
+		};
+	},
+);
 
-export const appwriteCompetencySync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-competency-sync"];
-	await upsertDocument(
-		COLLECTIONS.COMPETENCIES,
-		[
-			Query.equal("subjectId", data.subjectId),
-			Query.equal("topicId", data.topicId),
-			Query.equal("bloomLevel", data.bloomLevel),
-		],
-		{
-			userId: data.userId,
-			subjectId: data.subjectId,
-			topicId: data.topicId,
-			bloomLevel: data.bloomLevel,
-			score: data.proficiency,
-			attempts: data.attempts,
-			level: data.level,
-			lastAssessed: data.lastAssessed,
-		},
-	);
-};
+export const appwriteCompetencySync = createUpsertHandler(
+	COLLECTIONS.COMPETENCIES,
+	{ subjectId: "subjectId", topicId: "topicId", bloomLevel: "bloomLevel" },
+	(data) => ({
+		userId: data.userId as string,
+		subjectId: data.subjectId as string,
+		topicId: data.topicId as string,
+		bloomLevel: data.bloomLevel as string,
+		score: data.proficiency as number,
+		attempts: data.attempts as number,
+		level: data.level as string,
+		lastAssessed: data.lastAssessed as number,
+	}),
+);
 
-export const appwriteFlashcardSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-flashcard-sync"];
-	await upsertDocument(
-		COLLECTIONS.FLASHCARDS,
-		[Query.equal("flashcardId", data.id)],
-		{
-			userId: data.userId,
-			flashcardId: data.id,
-			front: data.front,
-			back: data.back,
-			subject: data.subject,
-			topic: data.topic || "",
-			easeFactor: data.easeFactor,
-			interval: data.interval,
-			repetitions: data.repetitions,
-			nextReview: new Date(data.nextReview).toISOString(),
-			lastReview: data.lastReview
-				? new Date(data.lastReview).toISOString()
-				: null,
-			createdAt: new Date(data.createdAt).toISOString(),
-			updatedAt: new Date(data.updatedAt).toISOString(),
-		},
-	);
-};
+export const appwriteFlashcardSync = createUpsertHandler(
+	COLLECTIONS.FLASHCARDS,
+	{ flashcardId: "id" },
+	(data) => ({
+		userId: data.userId as string,
+		flashcardId: data.id as string,
+		front: data.front as string,
+		back: data.back as string,
+		subject: data.subject as string,
+		topic: (data.topic as string) || "",
+		easeFactor: data.easeFactor as number,
+		interval: data.interval as number,
+		repetitions: data.repetitions as number,
+		nextReview: new Date(data.nextReview as number).toISOString(),
+		lastReview: data.lastReview
+			? new Date(data.lastReview as number).toISOString()
+			: null,
+		createdAt: new Date(data.createdAt as number).toISOString(),
+		updatedAt: new Date(data.updatedAt as number).toISOString(),
+	}),
+);
 
 export const appwriteFlashcardPull: JobHandler = async (payload) => {
 	const _data = payload as JobPayloadByType["appwrite-flashcard-pull"];
@@ -188,51 +151,39 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 	}
 };
 
-export const appwriteFlashcardDelete: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-flashcard-delete"];
-	try {
-		const existing = await listDocuments<Record<string, unknown>>(
-			COLLECTIONS.FLASHCARDS,
-			[Query.equal("flashcardId", data.id)],
-		);
-		await Promise.all(
-			existing.map((doc) =>
-				deleteDocument(COLLECTIONS.FLASHCARDS, doc.$id as string),
-			),
-		);
-	} catch (e) {
-		console.warn("[FlashcardDelete] failed:", e);
-	}
-};
+export const appwriteFlashcardDelete = createDeleteHandler(
+	COLLECTIONS.FLASHCARDS,
+	{ flashcardId: "id" },
+);
 
-export const appwriteWrongAnswerSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-wrong-answer-sync"];
-	await createDocument(COLLECTIONS.WRONG_ANSWERS, {
-		userId: data.userId,
-		questionId: data.questionId,
-		questionText: data.questionText,
-		subject: data.subject,
-		topic: data.topic,
-		correctAnswer: data.correctAnswer,
-		userAnswer: data.userAnswer,
-		explanation: data.explanation,
-		errorType: data.errorType || "unknown",
-		reviewed: data.reviewed,
-		createdAt: new Date(data.createdAt).toISOString(),
-	});
-};
+export const appwriteWrongAnswerSync = createAppendHandler(
+	COLLECTIONS.WRONG_ANSWERS,
+	(data) => ({
+		userId: data.userId as string,
+		questionId: data.questionId as string,
+		questionText: data.questionText as string,
+		subject: data.subject as string,
+		topic: data.topic as string,
+		correctAnswer: data.correctAnswer as string,
+		userAnswer: data.userAnswer as string,
+		explanation: data.explanation as string,
+		errorType: (data.errorType as string) || "unknown",
+		reviewed: data.reviewed as boolean,
+		createdAt: new Date(data.createdAt as number).toISOString(),
+	}),
+);
 
-export const appwriteChatSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-chat-sync"];
-	await createDocument(COLLECTIONS.CHAT_MESSAGES, {
-		userId: data.userId,
-		messageId: data.messageId,
-		role: data.role,
-		content: data.content,
-		type: data.type || "",
-		createdAt: new Date(data.timestamp).toISOString(),
-	});
-};
+export const appwriteChatSync = createAppendHandler(
+	COLLECTIONS.CHAT_MESSAGES,
+	(data) => ({
+		userId: data.userId as string,
+		messageId: data.messageId as string,
+		role: data.role as string,
+		content: data.content as string,
+		type: (data.type as string) || "",
+		createdAt: new Date(data.timestamp as number).toISOString(),
+	}),
+);
 
 export const appwriteRatingSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-rating-sync"];
@@ -263,116 +214,82 @@ export const appwriteRatingSync: JobHandler = async (payload) => {
 	}
 };
 
-export const appwriteStudyPlanSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-study-plan-sync"];
+export const appwriteStudyPlanSync = createUpsertHandler(
+	COLLECTIONS.STUDY_PLANS,
+	{ userId: "userId" },
+	(data) => ({
+		userId: data.userId as string,
+		planData: JSON.stringify(data.sessions),
+		examDates: JSON.stringify(data.examDates),
+		generatedAt: new Date(data.generatedAt as number).toISOString(),
+	}),
+);
 
-	const existing = await listDocuments<Record<string, unknown>>(
-		COLLECTIONS.STUDY_PLANS,
-		[Query.equal("userId", data.userId)],
-	);
-	const now = new Date().toISOString();
-	if (existing.length > 0) {
-		await updateDocument(COLLECTIONS.STUDY_PLANS, existing[0].$id as string, {
-			planData: JSON.stringify(data.sessions),
-			examDates: JSON.stringify(data.examDates),
-			generatedAt: new Date(data.generatedAt).toISOString(),
-			updatedAt: now,
-		});
-	} else {
-		await createDocument(COLLECTIONS.STUDY_PLANS, {
-			userId: data.userId,
-			planData: JSON.stringify(data.sessions),
-			examDates: JSON.stringify(data.examDates),
-			generatedAt: new Date(data.generatedAt).toISOString(),
-			updatedAt: now,
-			createdAt: now,
-		});
-	}
-};
-
-export const appwriteQuestionFlag: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-question-flag"];
-	await createDocument(COLLECTIONS.QUESTION_FLAGS, {
-		questionId: data.questionId,
-		userId: data.userId,
-		reason: data.reason,
-		details: data.details || "",
+export const appwriteQuestionFlag = createAppendHandler(
+	COLLECTIONS.QUESTION_FLAGS,
+	(data) => ({
+		questionId: data.questionId as string,
+		userId: data.userId as string,
+		reason: data.reason as string,
+		details: (data.details as string) || "",
 		status: "pending",
-		createdAt: new Date(data.createdAt).toISOString(),
-	});
-};
+		createdAt: new Date(data.createdAt as number).toISOString(),
+	}),
+);
 
-export const appwriteBookmarkSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-bookmark-sync"];
-	const existing = await listDocuments<Record<string, unknown>>(
-		COLLECTIONS.BOOKMARKS,
-		[Query.equal("questionId", data.questionId)],
-	);
-	if (existing.length > 0) {
-		await updateDocument(COLLECTIONS.BOOKMARKS, existing[0].$id as string, {
-			note: data.note || "",
-			savedAt: new Date(data.savedAt).toISOString(),
-		});
-	} else {
-		await createDocument(COLLECTIONS.BOOKMARKS, {
-			userId: data.userId || "",
-			questionId: data.questionId,
-			questionText: data.questionText,
-			subject: data.subject,
-			topic: data.topic || "",
-			note: data.note || "",
-			savedAt: new Date(data.savedAt).toISOString(),
-		});
-	}
-};
+export const appwriteBookmarkSync = createUpsertHandler(
+	COLLECTIONS.BOOKMARKS,
+	{ questionId: "questionId" },
+	(data) => ({
+		userId: (data.userId as string) || "",
+		questionId: data.questionId as string,
+		questionText: data.questionText as string,
+		subject: data.subject as string,
+		topic: (data.topic as string) || "",
+		note: (data.note as string) || "",
+		savedAt: new Date(data.savedAt as number).toISOString(),
+	}),
+);
 
-export const appwriteExamDatesSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-exam-dates-sync"];
-	await upsertDocument(
-		COLLECTIONS.EXAM_DATES,
-		[Query.equal("cacheKey", data.cacheKey)],
-		{
-			cacheKey: data.cacheKey,
-			session: data.session,
-			year: data.year,
-			slots: data.slots,
-			source: data.source,
-		},
-	);
-};
+export const appwriteBookmarkDelete = createDeleteHandler(
+	COLLECTIONS.BOOKMARKS,
+	{ questionId: "questionId" },
+);
 
-export const appwriteConsentSync: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-consent-sync"];
-	await upsertDocument(
-		COLLECTIONS.USER_CONSENTS,
-		[Query.equal("userId", data.userId)],
-		{
-			userId: data.userId,
-			analytics: data.record.analytics,
-			marketing: data.record.marketing,
-			dataSharing: data.record.dataSharing,
-			tosVersion: data.record.tosVersion || "",
-			tosAcceptedAt: data.record.tosAcceptedAt || "",
-			privacyVersion: data.record.privacyVersion || "",
-			privacyAcknowledgedAt: data.record.privacyAcknowledgedAt || "",
-			updatedAt: data.record.updatedAt,
-			createdAt: data.record.createdAt,
-		},
-	);
-};
+export const appwriteExamDatesSync = createUpsertHandler(
+	COLLECTIONS.EXAM_DATES,
+	{ cacheKey: "cacheKey" },
+	(data) => ({
+		cacheKey: data.cacheKey as string,
+		session: data.session as string,
+		year: data.year as number,
+		slots: data.slots as string,
+		source: data.source as string,
+	}),
+);
 
-export const appwriteBookmarkDelete: JobHandler = async (payload) => {
-	const data = payload as JobPayloadByType["appwrite-bookmark-delete"];
-	const existing = await listDocuments<Record<string, unknown>>(
-		COLLECTIONS.BOOKMARKS,
-		[Query.equal("questionId", data.questionId)],
-	);
-	await Promise.all(
-		existing.map((doc) =>
-			deleteDocument(COLLECTIONS.BOOKMARKS, doc.$id as string),
-		),
-	);
-};
+export const appwriteConsentSync = createUpsertHandler(
+	COLLECTIONS.USER_CONSENTS,
+	{ userId: "userId" },
+	(data) => ({
+		userId: data.userId as string,
+		analytics: (data.record as Record<string, unknown>).analytics as boolean,
+		marketing: (data.record as Record<string, unknown>).marketing as boolean,
+		dataSharing: (data.record as Record<string, unknown>)
+			.dataSharing as boolean,
+		tosVersion:
+			((data.record as Record<string, unknown>).tosVersion as string) || "",
+		tosAcceptedAt:
+			((data.record as Record<string, unknown>).tosAcceptedAt as string) || "",
+		privacyVersion:
+			((data.record as Record<string, unknown>).privacyVersion as string) || "",
+		privacyAcknowledgedAt:
+			((data.record as Record<string, unknown>)
+				.privacyAcknowledgedAt as string) || "",
+		updatedAt: (data.record as Record<string, unknown>).updatedAt as string,
+		createdAt: (data.record as Record<string, unknown>).createdAt as string,
+	}),
+);
 
 export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-exam-dates-sync": appwriteExamDatesSync,

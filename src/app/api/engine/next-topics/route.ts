@@ -75,7 +75,7 @@ export const GET = withRateLimit(
 				},
 			};
 		},
-		errorLabel: "Next Topics",
+		errorLabel: "get next topics",
 	}),
 	{ max: 10, windowMs: 60000 },
 );

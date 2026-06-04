@@ -12,6 +12,7 @@ mock.module("@/lib/competency-engine", () => ({
 }));
 
 mock.module("@/lib/db/client", () => ({
+	APPWRITE_DATABASE_ID: "test-db",
 	COLLECTIONS: { COMPETENCIES: "competencies" },
 	listDocuments: mockListDocuments,
 }));

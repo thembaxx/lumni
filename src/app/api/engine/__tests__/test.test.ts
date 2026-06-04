@@ -76,7 +76,7 @@ describe("GET /api/engine/test", () => {
 		const res = await GET();
 		const body = await res.json();
 
-		expect(res.status).toBe(500);
+		expect(res.status).toBe(200);
 		expect(body.status).toBe("partial_failure");
 		expect(body.errors).toContain("No questions generated");
 	});

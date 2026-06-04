@@ -318,4 +318,37 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	question_flags: {
+		attributes: {
+			questionId: { type: "string", size: 100, required: true },
+			userId: { type: "string", size: 100, required: true },
+			reason: { type: "string", size: 255, required: true },
+			details: { type: "string", size: 5000 },
+			status: { type: "string", size: 20 },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_question_flags_questionId",
+				type: "key",
+				attributes: ["questionId"],
+			},
+		],
+	},
+	analytics: {
+		attributes: {
+			eventType: { type: "string", size: 50, required: true },
+			userId: { type: "string", size: 100 },
+			sessionId: { type: "string", size: 100 },
+			metadata: { type: "string", size: 10000 },
+			timestamp: { type: "integer", required: true },
+		},
+		indexes: [
+			{
+				key: "idx_analytics_timestamp",
+				type: "key",
+				attributes: ["timestamp"],
+			},
+		],
+	},
 };
