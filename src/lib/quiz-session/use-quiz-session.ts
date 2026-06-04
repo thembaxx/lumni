@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
-import { saveQuizSession } from "@/lib/db/repositories/quiz-session";
+import { quizSessionRepo } from "@/lib/db/repositories/quiz-session";
 import type { Question } from "@/lib/question-engine/types";
 import type {
 	AnswerDetail,
@@ -105,7 +105,7 @@ export function useQuizSession(
 
 	const persist = useCallback(() => {
 		const s = saveRef.current;
-		saveQuizSession({
+		quizSessionRepo.save({
 			sessionId,
 			subject: s.questions[0]?.subject ?? "unknown",
 			topic: s.questions[0]?.topic,

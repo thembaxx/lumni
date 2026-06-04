@@ -1,4 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import type { VisualContent } from "@/lib/visual-engine/types";
 import type { CachedVisual } from "../schema";
@@ -11,46 +12,50 @@ export function makeCacheKey(questionId: string, subject: string): string {
 		.slice(0, 36);
 }
 
-export async function cacheVisual(
-	cacheKey: string,
-	subject: string,
-	visual: VisualContent | null,
-): Promise<void> {
-	const now = Date.now();
-	const existing = await dexieDataAccess.visuals
-		.where("cacheKey")
-		.equals(cacheKey)
-		.first();
+export class VisualCacheRepository {
+	constructor(private db: DataAccess) {}
 
-	const record: Omit<CachedVisual, "id"> = {
-		cacheKey,
-		subject,
-		visual: safeJsonStringify(visual),
-		createdAt: now,
-		expiresAt: now + CACHE_TTL_MS,
-	};
+	async cacheVisual(
+		cacheKey: string,
+		subject: string,
+		visual: VisualContent | null,
+	): Promise<void> {
+		const now = Date.now();
+		const existing = await this.db.visuals
+			.where("cacheKey")
+			.equals(cacheKey)
+			.first();
 
-	if (existing) {
-		await dexieDataAccess.visuals.update(existing.id ?? 0, record);
-	} else {
-		await dexieDataAccess.visuals.add(record as CachedVisual);
+		const record: Omit<CachedVisual, "id"> = {
+			cacheKey,
+			subject,
+			visual: safeJsonStringify(visual),
+			createdAt: now,
+			expiresAt: now + CACHE_TTL_MS,
+		};
+
+		if (existing) {
+			await this.db.visuals.update(existing.id ?? 0, record);
+		} else {
+			await this.db.visuals.add(record as CachedVisual);
+		}
+	}
+
+	async getVisual(cacheKey: string): Promise<VisualContent | null> {
+		const entry = await this.db.visuals
+			.where("cacheKey")
+			.equals(cacheKey)
+			.first();
+
+		if (!entry) return null;
+
+		if (Date.now() > entry.expiresAt) {
+			await this.db.visuals.delete(entry.id ?? 0);
+			return null;
+		}
+
+		return safeJsonParse(entry.visual, null) as VisualContent | null;
 	}
 }
 
-export async function getCachedVisual(
-	cacheKey: string,
-): Promise<VisualContent | null> {
-	const entry = await dexieDataAccess.visuals
-		.where("cacheKey")
-		.equals(cacheKey)
-		.first();
-
-	if (!entry) return null;
-
-	if (Date.now() > entry.expiresAt) {
-		await dexieDataAccess.visuals.delete(entry.id ?? 0);
-		return null;
-	}
-
-	return safeJsonParse(entry.visual, null) as VisualContent | null;
-}
+export const visualCacheRepo = new VisualCacheRepository(dexieDataAccess);

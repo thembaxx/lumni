@@ -1,6 +1,6 @@
 import {
-	DexieQuestionRatingRepository,
 	type QuestionRatingRepository,
+	questionRatingRepository,
 } from "@/lib/db/repositories/question-rating-repository";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { logError } from "@/lib/shared/logger";
@@ -8,7 +8,7 @@ import { failure, type ServiceResult, success } from "./index";
 
 export class QuestionRatingService {
 	constructor(
-		private repo: QuestionRatingRepository = new DexieQuestionRatingRepository(),
+		private repo: QuestionRatingRepository = questionRatingRepository,
 	) {}
 
 	async rate(params: {

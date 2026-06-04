@@ -117,9 +117,13 @@ const mockGetCachedQuestions = mock(() => null);
 const mockCacheQuestions = mock(() => {});
 
 mock.module("@/lib/db/repositories/question-cache", () => ({
-	getCachedQuestions: mockGetCachedQuestions,
-	cacheQuestions: mockCacheQuestions,
+	questionCacheRepo: {
+		get: mockGetCachedQuestions,
+		cache: mockCacheQuestions,
+		constructor: class {},
+	},
 	makeCacheKey: (s: string, t: string) => `${s}:${t}`,
+	QuestionCacheRepository: class {},
 }));
 
 const mockLoadFromAppwrite = mock(() => []);

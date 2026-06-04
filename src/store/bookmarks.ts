@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { dexieDataAccess } from "@/lib/db";
-import { enqueue } from "@/lib/orchestrator/job-queue";
+import { bookmarkService } from "@/lib/bookmark-service";
 
 export interface Bookmark {
 	id: string;
@@ -20,41 +19,6 @@ interface BookmarksState {
 	isBookmarked: (id: string) => boolean;
 }
 
-let migrated = false;
-
-async function migrateFromLocalStorage() {
-	if (migrated) return;
-	migrated = true;
-	try {
-		const raw = localStorage.getItem("lumni_bookmarks");
-		if (!raw) return;
-		const parsed = JSON.parse(raw) as { state?: { bookmarks: Bookmark[] } };
-		const oldBookmarks = parsed?.state?.bookmarks ?? [];
-		if (oldBookmarks.length === 0) return;
-
-		const existing = await dexieDataAccess.bookmarks.toArray();
-		if (existing.length > 0) return;
-
-		await Promise.all(
-			oldBookmarks.map((b, i) =>
-				dexieDataAccess.bookmarks.put({
-					id: i + 1,
-					questionId: b.id,
-					questionText: b.questionText,
-					subject: b.subject,
-					topic: b.topic,
-					note: b.note,
-					savedAt: b.savedAt,
-				}),
-			),
-		);
-
-		localStorage.removeItem("lumni_bookmarks");
-	} catch (e) {
-		console.warn("[Bookmarks] Failed to migrate localStorage", e);
-	}
-}
-
 export const useBookmarksStore = create<BookmarksState>()(
 	persist(
 		(set, get) => ({
@@ -66,15 +30,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 				const savedAt = Date.now();
 				const entry = { ...bookmark, savedAt };
 				set({ bookmarks: [entry, ...bookmarks] });
-				dexieDataAccess.bookmarks.add({
-					questionId: bookmark.id,
-					questionText: bookmark.questionText,
-					subject: bookmark.subject,
-					topic: bookmark.topic,
-					note: bookmark.note,
-					savedAt,
-				});
-				enqueue("appwrite-bookmark-sync", {
+				bookmarkService.add({
 					questionId: bookmark.id,
 					questionText: bookmark.questionText,
 					subject: bookmark.subject,
@@ -86,8 +42,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 
 			removeBookmark: (id) => {
 				set({ bookmarks: get().bookmarks.filter((b) => b.id !== id) });
-				dexieDataAccess.bookmarks.where("questionId").equals(id).delete();
-				enqueue("appwrite-bookmark-delete", { questionId: id });
+				bookmarkService.remove(id);
 			},
 
 			updateNote: (id, note) => {
@@ -96,10 +51,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 						b.id === id ? { ...b, note } : b,
 					),
 				});
-				dexieDataAccess.bookmarks
-					.where("questionId")
-					.equals(id)
-					.modify({ note });
+				bookmarkService.updateNote(id, note);
 			},
 
 			isBookmarked: (id) => {
@@ -108,11 +60,6 @@ export const useBookmarksStore = create<BookmarksState>()(
 		}),
 		{
 			name: "lumni_bookmarks",
-			onRehydrateStorage: () => {
-				return () => {
-					migrateFromLocalStorage();
-				};
-			},
 		},
 	),
 );

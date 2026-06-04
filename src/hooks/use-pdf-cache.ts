@@ -1,19 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import {
-	cachePdf,
-	getCachedPdfUrl,
-	isPdfCached,
-	removeCachedPdf,
-} from "@/lib/db/repositories/pdf-cache";
+import { pdfCacheRepo } from "@/lib/db/repositories/pdf-cache";
 
 export function usePdfCache(paperId: string) {
 	const [cached, setCached] = useState(false);
 	const [downloading, setDownloading] = useState(false);
 
 	useEffect(() => {
-		isPdfCached(paperId).then(setCached);
+		pdfCacheRepo.isCached(paperId).then(setCached);
 	}, [paperId]);
 
 	const download = useCallback(
@@ -22,7 +17,7 @@ export function usePdfCache(paperId: string) {
 			try {
 				const response = await fetch(pdfUrl);
 				const blob = await response.blob();
-				await cachePdf(paperId, blob, fileName);
+				await pdfCacheRepo.cache(paperId, blob, fileName);
 				setCached(true);
 			} finally {
 				setDownloading(false);
@@ -32,7 +27,7 @@ export function usePdfCache(paperId: string) {
 	);
 
 	const remove = useCallback(async () => {
-		await removeCachedPdf(paperId);
+		await pdfCacheRepo.remove(paperId);
 		setCached(false);
 	}, [paperId]);
 
@@ -45,7 +40,7 @@ export function useCachedPdfUrl(paperId: string | undefined) {
 	useEffect(() => {
 		if (!paperId) return;
 		let cancelled = false;
-		getCachedPdfUrl(paperId).then((url) => {
+		pdfCacheRepo.getUrl(paperId).then((url) => {
 			if (!cancelled) setBlobUrl(url);
 		});
 		return () => {

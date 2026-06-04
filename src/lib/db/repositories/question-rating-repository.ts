@@ -1,4 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { QuestionRating } from "@/lib/db/schema";
 
 export interface QuestionRatingRepository {
@@ -12,14 +13,14 @@ export interface QuestionRatingRepository {
 }
 
 export class DexieQuestionRatingRepository implements QuestionRatingRepository {
+	constructor(private db: DataAccess) {}
+
 	async findByQuestionId(
 		questionId: string,
 	): Promise<QuestionRating | undefined> {
 		return (
-			dexieDataAccess.questionRatings
-				.where("questionId")
-				.equals(questionId)
-				.first() ?? undefined
+			this.db.questionRatings.where("questionId").equals(questionId).first() ??
+			undefined
 		);
 	}
 
@@ -28,24 +29,25 @@ export class DexieQuestionRatingRepository implements QuestionRatingRepository {
 		record: Partial<QuestionRating> & { createdAt: number },
 	): Promise<void> {
 		if (id) {
-			await dexieDataAccess.questionRatings.update(id, record);
+			await this.db.questionRatings.update(id, record);
 		} else {
-			await dexieDataAccess.questionRatings.add(record as QuestionRating);
+			await this.db.questionRatings.add(record as QuestionRating);
 		}
 	}
 
 	async getAll(): Promise<QuestionRating[]> {
-		return dexieDataAccess.questionRatings
-			.orderBy("createdAt")
-			.reverse()
-			.toArray();
+		return this.db.questionRatings.orderBy("createdAt").reverse().toArray();
 	}
 
 	async getBySubject(subject: string): Promise<QuestionRating[]> {
-		return dexieDataAccess.questionRatings
+		return this.db.questionRatings
 			.where("subject")
 			.equals(subject)
 			.reverse()
 			.toArray();
 	}
 }
+
+export const questionRatingRepository = new DexieQuestionRatingRepository(
+	dexieDataAccess,
+);

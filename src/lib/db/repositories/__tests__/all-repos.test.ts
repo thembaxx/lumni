@@ -49,53 +49,59 @@ function buildMockDataAccess() {
 	};
 }
 
-// Import all repository functions
-const pdfRepo = await import("../pdf-cache");
-const examSessionRepo = await import("../exam-session");
-const quizSessionRepo = await import("../quiz-session");
-const visualCacheRepo = await import("../visual-cache");
-const questionCacheRepo = await import("../question-cache");
-const progressRepo = await import("../progress");
-const conflictsRepo = await import("../conflicts");
+// Import all repos (class-based with DataAccess DI)
+const pdfRepoModule = await import("../pdf-cache");
+const examRepoModule = await import("../exam-session");
+const quizRepoModule = await import("../quiz-session");
+const visCacheModule = await import("../visual-cache");
+const qCacheModule = await import("../question-cache");
+const progModule = await import("../progress");
+const conflictModule = await import("../conflicts");
 
-const {
-	cachePdf,
-	getCachedPdf,
-	isPdfCached,
-	removeCachedPdf,
-	clearOldPdfCache,
-} = pdfRepo;
+const { pdfCacheRepo } = pdfRepoModule;
+const { examSessionRepo } = examRepoModule;
+const { quizSessionRepo } = quizRepoModule;
+void visCacheModule; // visualCacheRepo used indirectly via dynamic imports
+const { questionCacheRepo } = qCacheModule;
+const { progressRepo } = progModule;
+const { conflictRepo } = conflictModule;
 
-const {
-	saveExamSession,
-	getExamSession,
-	clearExamSession,
-	clearOldExamSessions,
-} = examSessionRepo;
+// Bind method names for backward-compat with test bodies below
+const cachePdf = pdfCacheRepo.cache.bind(pdfCacheRepo);
+const getCachedPdf = pdfCacheRepo.get.bind(pdfCacheRepo);
+const isPdfCached = pdfCacheRepo.isCached.bind(pdfCacheRepo);
+const removeCachedPdf = pdfCacheRepo.remove.bind(pdfCacheRepo);
+const clearOldPdfCache = pdfCacheRepo.clearOld.bind(pdfCacheRepo);
 
-const {
-	saveQuizSession,
-	getQuizSession,
-	getActiveQuizSession,
-	getAllPausedSessions,
-	resumeQuizSession,
-	pauseQuizSession,
-	deleteQuizSession,
-	clearOldQuizSessions,
-} = quizSessionRepo;
+const saveExamSession = examSessionRepo.save.bind(examSessionRepo);
+const getExamSession = examSessionRepo.get.bind(examSessionRepo);
+const clearExamSession = examSessionRepo.clear.bind(examSessionRepo);
+const clearOldExamSessions = examSessionRepo.clearOld.bind(examSessionRepo);
 
-const { makeCacheKey, cacheVisual, getCachedVisual } = visualCacheRepo;
+const saveQuizSession = quizSessionRepo.save.bind(quizSessionRepo);
+const getQuizSession = quizSessionRepo.get.bind(quizSessionRepo);
+const getActiveQuizSession = quizSessionRepo.getActive.bind(quizSessionRepo);
+const getAllPausedSessions = quizSessionRepo.getAllPaused.bind(quizSessionRepo);
+const resumeQuizSession = quizSessionRepo.resume.bind(quizSessionRepo);
+const pauseQuizSession = quizSessionRepo.pause.bind(quizSessionRepo);
+const deleteQuizSession = quizSessionRepo.delete.bind(quizSessionRepo);
+const clearOldQuizSessions = quizSessionRepo.clearOld.bind(quizSessionRepo);
 
-const { cacheQuestions, getCachedQuestions } = questionCacheRepo;
+const { makeCacheKey, VisualCacheRepository } = visCacheModule;
+const visualRepo = new VisualCacheRepository(buildMockDataAccess());
+const cacheVisual = visualRepo.cacheVisual.bind(visualRepo);
+const getCachedVisual = visualRepo.getVisual.bind(visualRepo);
 
-const { saveProgress, getProgress } = progressRepo;
+const cacheQuestions = questionCacheRepo.cache.bind(questionCacheRepo);
+const getCachedQuestions = questionCacheRepo.get.bind(questionCacheRepo);
 
-const {
-	saveConflict,
-	getUnresolvedConflicts,
-	resolveConflict,
-	clearResolvedConflicts,
-} = conflictsRepo;
+const saveProgress = progressRepo.save.bind(progressRepo);
+const getProgress = progressRepo.get.bind(progressRepo);
+
+const saveConflict = conflictRepo.save.bind(conflictRepo);
+const getUnresolvedConflicts = conflictRepo.getUnresolved.bind(conflictRepo);
+const resolveConflict = conflictRepo.resolve.bind(conflictRepo);
+const clearResolvedConflicts = conflictRepo.clearResolved.bind(conflictRepo);
 
 // Clear stores before each test
 beforeEach(() => {

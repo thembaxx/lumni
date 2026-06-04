@@ -1,34 +1,36 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { SyncConflict } from "../schema";
 
-export async function saveConflict(
-	conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">,
-): Promise<number> {
-	return dexieDataAccess.conflicts.add(conflict as SyncConflict);
+export class ConflictRepository {
+	constructor(private db: DataAccess) {}
+
+	async save(
+		conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">,
+	): Promise<number> {
+		return this.db.conflicts.add(conflict as SyncConflict);
+	}
+
+	async getUnresolved(): Promise<SyncConflict[]> {
+		return (await this.db.conflicts.toArray()).filter((c) => !c.resolvedAt);
+	}
+
+	async resolve(
+		id: number,
+		resolution: "local" | "server" | "merged",
+	): Promise<void> {
+		await this.db.conflicts.update(id, {
+			resolvedAt: Date.now(),
+			resolution,
+		});
+	}
+
+	async clearResolved(): Promise<void> {
+		const resolved = (await this.db.conflicts.toArray()).filter(
+			(c) => !!c.resolvedAt,
+		);
+		await Promise.all(resolved.map((c) => this.db.conflicts.delete(c.id)));
+	}
 }
 
-export async function getUnresolvedConflicts(): Promise<SyncConflict[]> {
-	return (await dexieDataAccess.conflicts.toArray()).filter(
-		(c) => !c.resolvedAt,
-	);
-}
-
-export async function resolveConflict(
-	id: number,
-	resolution: "local" | "server" | "merged",
-	_mergedData?: unknown,
-): Promise<void> {
-	await dexieDataAccess.conflicts.update(id, {
-		resolvedAt: Date.now(),
-		resolution,
-	});
-}
-
-export async function clearResolvedConflicts(): Promise<void> {
-	const resolved = (await dexieDataAccess.conflicts.toArray()).filter(
-		(c) => !!c.resolvedAt,
-	);
-	await Promise.all(
-		resolved.map((c) => dexieDataAccess.conflicts.delete(c.id ?? 0)),
-	);
-}
+export const conflictRepo = new ConflictRepository(dexieDataAccess);

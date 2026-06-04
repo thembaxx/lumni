@@ -34,10 +34,10 @@ export class QuestionEngine {
 				{
 					name: "dexie",
 					read: async (p) => {
-						const { getCachedQuestions } = await import(
+						const { questionCacheRepo: qRepo } = await import(
 							"@/lib/db/repositories/question-cache"
 						);
-						const cached = await getCachedQuestions(p.subject, p.topic);
+						const cached = await qRepo.get(p.subject, p.topic);
 						if (cached && cached.length >= p.count) {
 							const shuffled = (cached as Question[]).toSorted(
 								() => Math.random() - 0.5,
@@ -47,10 +47,10 @@ export class QuestionEngine {
 						return null;
 					},
 					write: async (params, questions) => {
-						const { cacheQuestions } = await import(
+						const { questionCacheRepo: qRepo } = await import(
 							"@/lib/db/repositories/question-cache"
 						);
-						await cacheQuestions(
+						await qRepo.cache(
 							params.subject,
 							questions as Question[],
 							params.topic,

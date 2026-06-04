@@ -5,9 +5,8 @@ import {
 } from "@/lib/caching-strategy";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import {
-	cacheVisual,
-	getCachedVisual,
 	makeCacheKey,
+	visualCacheRepo,
 } from "@/lib/db/repositories/visual-cache";
 import { logError } from "@/lib/shared/logger";
 import { searchImage } from "./image-resolver";
@@ -32,11 +31,11 @@ export class VisualEngine {
 					name: "dexie",
 					read: async (params) => {
 						const cacheKey = makeCacheKey(params.questionId, params.subject);
-						return getCachedVisual(cacheKey);
+						return visualCacheRepo.getVisual(cacheKey);
 					},
 					write: async (params, visual) => {
 						const cacheKey = makeCacheKey(params.questionId, params.subject);
-						await cacheVisual(cacheKey, params.subject, visual);
+						await visualCacheRepo.cacheVisual(cacheKey, params.subject, visual);
 					},
 				},
 				{

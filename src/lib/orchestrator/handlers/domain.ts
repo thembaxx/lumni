@@ -8,7 +8,7 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 import { safePersist } from "@/lib/db/persist";
-import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
+import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
@@ -76,10 +76,10 @@ export const spacedRepUpdate: JobHandler = async (payload) => {
 export const progressUpdate: JobHandler = async (payload) => {
 	const { subject, result } = payload as JobPayloadByType["progress-update"];
 
-	const existing = await getProgress(subject);
+	const existing = await progressRepo.get(subject);
 
 	await Promise.all([
-		saveProgress(subject, {
+		progressRepo.save(subject, {
 			questionsAttempted: (existing?.questionsAttempted ?? 0) + 1,
 			correctCount: (existing?.correctCount ?? 0) + (result.correct ? 1 : 0),
 			currentStreak: result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,

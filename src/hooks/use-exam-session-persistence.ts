@@ -1,11 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import {
-	clearExamSession,
-	getExamSession,
-	saveExamSession,
-} from "@/lib/db/repositories/exam-session";
+import { examSessionRepo } from "@/lib/db/repositories/exam-session";
 import type { ExamSessionSnapshot } from "@/lib/db/schema";
 import { useExamSessionStore } from "@/store/exam-session";
 
@@ -16,7 +12,7 @@ export function useExamSessionAutoSave(paperId: string | null) {
 		const state = useExamSessionStore.getState();
 		if (!paperId || !state.paperId) return;
 
-		saveExamSession(paperId, {
+		examSessionRepo.save(paperId, {
 			answers: state.answers,
 			flags: state.flags,
 			currentPartId: state.currentPartId,
@@ -61,16 +57,16 @@ export function useExamSessionAutoSave(paperId: string | null) {
 export async function hasSavedSession(
 	paperId: string,
 ): Promise<ExamSessionSnapshot | null> {
-	const session = await getExamSession(paperId);
+	const session = await examSessionRepo.get(paperId);
 	if (!session) return null;
 	if (session.completed) return null;
 	if (Date.now() - session.lastSavedAt > STALE_AGE_MS) {
-		await clearExamSession(paperId);
+		await examSessionRepo.clear(paperId);
 		return null;
 	}
 	return session;
 }
 
 export async function clearSavedSession(paperId: string): Promise<void> {
-	await clearExamSession(paperId);
+	await examSessionRepo.clear(paperId);
 }

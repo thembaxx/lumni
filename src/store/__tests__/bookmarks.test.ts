@@ -1,23 +1,13 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 
-mock.module("@/lib/db", () => ({
-	dexieDataAccess: {
-		bookmarks: {
-			add: async () => 1,
-			put: async () => {},
-			toArray: async () => [],
-			where: () => ({
-				equals: () => ({
-					delete: async () => {},
-					modify: async () => {},
-				}),
-			}),
-		},
+mock.module("@/lib/bookmark-service", () => ({
+	bookmarkService: {
+		add: mock(async () => {}),
+		remove: mock(async () => {}),
+		updateNote: mock(async () => {}),
+		getAll: mock(async () => []),
+		isBookmarked: mock(async () => false),
 	},
-}));
-
-mock.module("@/lib/orchestrator/job-queue", () => ({
-	enqueue: mock(async () => 1),
 }));
 
 import { useBookmarksStore } from "../bookmarks";
