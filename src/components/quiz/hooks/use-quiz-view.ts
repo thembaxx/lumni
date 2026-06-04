@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
-import { useQuizSession } from "@/lib/quiz-session";
+import { useQuiz } from "@/lib/quiz";
 import type { QuizViewProps } from "../quiz-view";
 
 export function useQuizView({
@@ -18,7 +17,6 @@ export function useQuizView({
 	const [selectedSubject, setSelectedSubject] = useState(initialSubject ?? "");
 	const [sessionActive, setSessionActive] = useState(false);
 	const [loadError, setLoadError] = useState<string | null>(null);
-	const [currentAnswered, setCurrentAnswered] = useState(false);
 	const [competencyData, setCompetencyData] = useState<{
 		topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
 		topicCompetencyScore?: number;
@@ -27,33 +25,29 @@ export function useQuizView({
 	}>({});
 	const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
 
-	const engineParams = useMemo(
-		() => ({
-			subject: selectedSubject.toLowerCase(),
-			topic: resolvedTopic,
-			count: questionCount,
-			questionType: "any" as const,
-			...(pastPaperMode ? { pastPaperMode: true } : {}),
-			...competencyData,
-		}),
-		[
-			selectedSubject,
-			resolvedTopic,
-			questionCount,
-			pastPaperMode,
-			competencyData,
-		],
-	);
+	const shared = useQuiz({
+		subject: selectedSubject,
+		topic: resolvedTopic,
+		count: questionCount,
+		questionType: "any",
+		maxTime,
+		enabled: sessionActive && !!selectedSubject,
+		pastPaperMode,
+		suggestedBloomLevel: competencyData.suggestedBloomLevel,
+		suggestedDifficulty: competencyData.suggestedDifficulty,
+		topicCompetencyLevel: competencyData.topicCompetencyLevel,
+		topicCompetencyScore: competencyData.topicCompetencyScore,
+		onComplete: useCallback(
+			(result) => {
+				if (result.reason === "completed") {
+					onFinish?.(result);
+				}
+			},
+			[onFinish],
+		),
+	});
 
-	const { questions, sources, isLoading, isError } = useQuestionEngine(
-		engineParams,
-		{
-			enabled: sessionActive && !!selectedSubject,
-		},
-	);
-
-	const { state, actions } = useQuizSession(questions ?? [], { maxTime });
-
+	const { state, actions } = shared;
 	const currentIndex = state.questionNumber - 1;
 
 	const handleStartWithSubject = useCallback(
@@ -130,7 +124,6 @@ export function useQuizView({
 		[topic],
 	);
 
-	// Auto-start when a subject is provided via URL params
 	const handleStartRef = useRef(handleStartWithSubject);
 	handleStartRef.current = handleStartWithSubject;
 	const hasAutoStarted = useRef(false);
@@ -141,67 +134,25 @@ export function useQuizView({
 		}
 	}, [initialSubject]);
 
-	// Start the quiz session when questions are loaded
 	useEffect(() => {
-		if (sessionActive && questions.length > 0 && !state.isComplete) {
+		if (sessionActive && shared.questions.length > 0 && !state.isComplete) {
 			actions.start();
 		}
-	}, [sessionActive, questions, state.isComplete, actions]);
+	}, [sessionActive, shared.questions, state.isComplete, actions]);
 
 	const handleStop = useCallback(() => {
 		setSessionActive(false);
-		actions.stop();
+		shared.handleStop();
 		onQuit?.();
-	}, [actions, onQuit]);
+	}, [shared, onQuit]);
 
-	const handleRestart = useCallback(() => {
-		actions.restart();
-		setCurrentAnswered(false);
-	}, [actions]);
-
-	const stateRef = useRef(state);
-	stateRef.current = state;
-
-	const handleNext = useCallback(() => {
-		const wasLastQuestion = currentIndex >= stateRef.current.totalQuestions - 1;
-		actions.next();
-		setCurrentAnswered(false);
-		if (wasLastQuestion) {
-			onFinish?.({
-				questions: stateRef.current.questions,
-				correctness: stateRef.current.correctness,
-				correctAnswers: stateRef.current.correctAnswers,
-				totalQuestions: stateRef.current.totalQuestions,
-				elapsedTime: stateRef.current.elapsedTime,
-			});
-		}
-	}, [actions, currentIndex, onFinish]);
-
-	const handlePrevious = useCallback(() => {
-		actions.previous();
-		setCurrentAnswered(false);
-	}, [actions]);
-
-	const handleSkip = useCallback(() => {
-		handleNext();
-	}, [handleNext]);
-
-	const handleAnswered = useCallback(
-		(correct: boolean) => {
-			setCurrentAnswered(true);
-			actions.recordAnswer(correct);
-		},
-		[actions],
-	);
-
-	// Keyboard handler
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (!sessionActive || !state.currentQuestion) return;
 
 			if (
 				state.currentQuestion.type === "multiple-choice" &&
-				currentAnswered === false
+				shared.currentAnswered === false
 			) {
 				switch (e.key) {
 					case "ArrowLeft":
@@ -219,13 +170,13 @@ export function useQuizView({
 				case "ArrowLeft":
 					if (currentIndex > 0) {
 						e.preventDefault();
-						handlePrevious();
+						shared.handlePrevious();
 					}
 					break;
 				case "ArrowRight":
 					if (currentIndex < state.totalQuestions - 1) {
 						e.preventDefault();
-						handleNext();
+						shared.handleNext();
 					}
 					break;
 				case "Escape":
@@ -246,9 +197,9 @@ export function useQuizView({
 		state.currentQuestion,
 		currentIndex,
 		state.totalQuestions,
-		currentAnswered,
-		handlePrevious,
-		handleNext,
+		shared.currentAnswered,
+		shared.handlePrevious,
+		shared.handleNext,
 		handleStop,
 		state.isComplete,
 	]);
@@ -257,22 +208,22 @@ export function useQuizView({
 		selectedSubject,
 		sessionActive,
 		loadError,
-		currentAnswered,
+		currentAnswered: shared.currentAnswered,
 		competencyData,
 		resolvedTopic,
-		questions,
-		sources,
-		isLoading,
-		isError,
+		questions: shared.questions,
+		sources: shared.sources,
+		isLoading: shared.isLoading,
+		isError: shared.isError,
 		state,
 		currentIndex,
 		handleStartWithSubject,
 		handleStop,
-		handleRestart,
-		handleNext,
-		handlePrevious,
-		handleSkip,
-		handleAnswered,
+		handleRestart: shared.handleRestart,
+		handleNext: shared.handleNext,
+		handlePrevious: shared.handlePrevious,
+		handleSkip: shared.handleSkip,
+		handleAnswered: shared.handleAnswered,
 		setLoadError,
 	};
 }

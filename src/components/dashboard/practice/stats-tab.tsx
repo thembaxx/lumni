@@ -26,7 +26,8 @@ import {
 	ProgressMilestones,
 	StreakCelebration,
 } from "@/components/gamification";
-import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
+import type { QuizResults } from "@/components/quiz/quiz-engine";
+import { QuizEngine } from "@/components/quiz/quiz-engine";
 import { useGamification } from "@/hooks/use-gamification";
 import { useUserProgress } from "@/hooks/use-user-progress";
 import { useUserSubjects } from "@/hooks/use-user-subjects";
@@ -114,8 +115,14 @@ export default function StatsTab() {
 	}
 
 	if (quizResults) {
-		const isGreatScore = quizResults.accuracy >= 80;
-		const isPerfect = quizResults.accuracy === 100;
+		const accuracy =
+			quizResults.totalQuestions > 0
+				? Math.round(
+						(quizResults.correctAnswers / quizResults.totalQuestions) * 100,
+					)
+				: 0;
+		const isGreatScore = accuracy >= 80;
+		const isPerfect = accuracy === 100;
 
 		return (
 			<div className="flex flex-col gap-3 px-4 pb-6">
@@ -172,7 +179,7 @@ export default function StatsTab() {
 										(isGreatScore ? "text-success" : "")
 									}
 								>
-									{quizResults.accuracy}%
+									{accuracy}%
 								</p>
 								<p className="text-muted-foreground text-xs">Accuracy</p>
 							</div>
@@ -187,31 +194,6 @@ export default function StatsTab() {
 						</div>
 					</CardContent>
 				</Card>
-
-				{quizResults.incorrectAnswers.length > 0 && (
-					<Card className="overflow-hidden border-0">
-						<CardHeader className="p-4 pb-2">
-							<h3 className="font-semibold text-base tracking-tight">
-								Review Mistakes
-							</h3>
-						</CardHeader>
-						<CardContent className="flex flex-col gap-2 p-4">
-							{quizResults.incorrectAnswers.slice(0, 3).map((item, idx) => (
-								<div
-									key={item.questionId || idx}
-									className="flex gap-2 text-sm"
-								>
-									<span className="text-muted-foreground">{idx + 1}.</span>
-									<span className="text-destructive">
-										{item.selectedAnswer}
-									</span>
-									<span className="text-muted-foreground">→</span>
-									<span className="text-success">{item.correctAnswer}</span>
-								</div>
-							))}
-						</CardContent>
-					</Card>
-				)}
 
 				<Button className="w-full" onClick={handleQuizRestart}>
 					Try Another Quiz

@@ -6,7 +6,7 @@ import { animate, m, useMotionValue } from "framer-motion";
 import { useCallback, useEffect } from "react";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
-import type { Question } from "@/lib/question-engine/types";
+import type { QuizCompleteResult } from "@/lib/quiz";
 import { useQuizView } from "./hooks/use-quiz-view";
 import { QuizFooter } from "./quiz-footer";
 import { QuizHeader } from "./quiz-header";
@@ -17,13 +17,7 @@ import { QuizNoQuestionsState } from "./quiz-view/quiz-no-questions-state";
 import { QuizResultsState } from "./quiz-view/quiz-results-state";
 import { QuizSubjectSelection } from "./quiz-view/quiz-subject-selection";
 
-export interface QuizResults {
-	questions: Question[];
-	correctness: boolean[];
-	correctAnswers: number;
-	totalQuestions: number;
-	elapsedTime: number;
-}
+export type QuizResults = QuizCompleteResult;
 
 export type QuizViewVariant = "full" | "compact";
 

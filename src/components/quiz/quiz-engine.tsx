@@ -3,108 +3,47 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
-import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { useQuizSession } from "@/lib/quiz-session";
+import type { QuizCompleteResult } from "@/lib/quiz";
+import { useQuiz } from "@/lib/quiz";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { QuestionCard } from "./question-card";
 import { QuizControls } from "./quiz-controls";
-import { QuizResult } from "./quiz-result";
+import { QuizResultsCard } from "./quiz-results";
+import { DecorativeRightPanel } from "./quiz-view/decorative-right-panel";
+
+export type { QuizCompleteResult as QuizResults };
 
 interface QuizEngineProps {
 	subjectId: string;
-	onComplete?: (results: QuizResults) => void;
-}
-
-export interface QuizResults {
-	totalQuestions: number;
-	correctAnswers: number;
-	accuracy: number;
-	elapsedTime: number;
-	incorrectAnswers: {
-		questionId: string;
-		selectedAnswer: string;
-		correctAnswer: string;
-	}[];
-}
-
-function buildResults(
-	total: number,
-	correct: number,
-	elapsedTime: number,
-	incorrect: QuizResults["incorrectAnswers"],
-): QuizResults {
-	return {
-		totalQuestions: total,
-		correctAnswers: correct,
-		accuracy: total > 0 ? Math.round((correct / total) * 100) : 0,
-		elapsedTime,
-		incorrectAnswers: incorrect,
-	};
+	onComplete?: (results: QuizCompleteResult) => void;
 }
 
 export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
-	const [incorrectAnswers, setIncorrectAnswers] = useState<
-		QuizResults["incorrectAnswers"]
-	>([]);
-
-	const engineParams = useMemo(
-		() => ({
-			subject: subjectId,
-			count: 10,
-			questionType: "multiple-choice" as const,
-		}),
-		[subjectId],
-	);
-
-	const { questions, sources, isLoading, isError } = useQuestionEngine(
-		engineParams,
-		{
-			enabled: true,
-		},
-	);
-
-	const { state, actions } = useQuizSession(questions ?? []);
-	const sessionStarted = useRef(false);
-
-	if (questions.length > 0 && !sessionStarted.current && !state.isComplete) {
-		sessionStarted.current = true;
-		actions.start();
-	}
-
-	const handleNext = useCallback(() => {
-		actions.next();
-	}, [actions]);
-
-	const handlePrevious = useCallback(() => {
-		actions.previous();
-	}, [actions]);
-
-	const handleSkip = useCallback(() => {
-		actions.next();
-	}, [actions]);
-
-	const handleQuit = useCallback(() => {
-		onComplete?.(
-			buildResults(
-				state.totalQuestions,
-				state.correctAnswers,
-				state.elapsedTime,
-				incorrectAnswers,
-			),
-		);
-	}, [
-		state.totalQuestions,
-		state.correctAnswers,
-		state.elapsedTime,
-		incorrectAnswers,
+	const {
+		questions,
+		sources,
+		isLoading,
+		isError,
+		state,
+		currentAnswered,
+		handleNext,
+		handlePrevious,
+		handleSkip,
+		handleAnswered,
+		handleStop,
+		handleRestart,
+	} = useQuiz({
+		subject: subjectId,
+		count: 10,
+		questionType: "multiple-choice",
+		autoStart: true,
 		onComplete,
-	]);
+	});
 
 	if (isLoading) {
 		return (
@@ -128,12 +67,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						</CardContent>
 					</Card>
 				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
-					</div>
-				</div>
+				<DecorativeRightPanel variant="accent" />
 			</div>
 		);
 	}
@@ -151,12 +85,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						</CardContent>
 					</Card>
 				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
-					</div>
-				</div>
+				<DecorativeRightPanel variant="destructive" />
 			</div>
 		);
 	}
@@ -175,12 +104,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						</CardContent>
 					</Card>
 				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
-					</div>
-				</div>
+				<DecorativeRightPanel variant="accent" />
 			</div>
 		);
 	}
@@ -188,31 +112,15 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (state.isComplete) {
 		return (
 			<Anim>
-				<AnimatePresence mode="wait" initial={false}>
-					<m.div
-						key="results"
-						initial={{ opacity: 0, scale: 0.9 }}
-						animate={{ opacity: 1, scale: 1 }}
-						exit={{ opacity: 0, scale: 0.9 }}
-						transition={{ duration: 0.4, ease: iOSEase }}
-					>
-						<QuizResult
-							results={buildResults(
-								state.totalQuestions,
-								state.correctAnswers,
-								state.elapsedTime,
-								incorrectAnswers,
-							)}
-							sources={sources}
-							onRestart={() => {
-								setIncorrectAnswers([]);
-								sessionStarted.current = false;
-								actions.restart();
-							}}
-							onClose={handleQuit}
-						/>
-					</m.div>
-				</AnimatePresence>
+				<QuizResultsCard
+					totalQuestions={state.totalQuestions}
+					correctAnswers={state.correctAnswers}
+					elapsedTime={state.elapsedTime}
+					subject={subjectId}
+					sources={sources}
+					onRestart={handleRestart}
+					onDashboard={handleStop}
+				/>
 			</Anim>
 		);
 	}
@@ -234,7 +142,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 							| "medium"
 							| "hard"
 					}
-					onQuit={handleQuit}
+					onQuit={handleStop}
 				/>
 
 				<AnimatePresence mode="wait" initial={false}>
@@ -251,6 +159,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 							questionNumber={state.questionNumber}
 							totalQuestions={state.totalQuestions}
 							onNext={handleNext}
+							onAnswered={handleAnswered}
 						/>
 					</m.div>
 				</AnimatePresence>
@@ -258,8 +167,8 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 				<QuizControls
 					currentQuestionIndex={state.questionNumber - 1}
 					totalQuestions={state.totalQuestions}
-					hasSelected={false}
-					showFeedback={false}
+					hasSelected={currentAnswered}
+					showFeedback={currentAnswered}
 					onPrevious={handlePrevious}
 					onNext={handleNext}
 					onSkip={handleSkip}

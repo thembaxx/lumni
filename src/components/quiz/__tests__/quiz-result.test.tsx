@@ -1,25 +1,28 @@
-import { afterEach, describe, expect, test } from "bun:test";
+import { afterEach, describe, expect, mock, test } from "bun:test";
 import { cleanup, render } from "@testing-library/react";
-import { QuizResult } from "@/components/quiz/quiz-result";
+
+mock.module("next-intl", () => ({
+	useTranslations: () => (key: string) => key,
+}));
+
+import { QuizResultsCard } from "@/components/quiz/quiz-results";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {
 	return regex.test(container.textContent ?? "");
 }
 
-describe("QuizResult", () => {
+describe("QuizResultsCard", () => {
 	afterEach(() => {
 		cleanup();
 	});
 
 	test("renders VerifiedByPill with sources when provided", () => {
 		const { container } = render(
-			<QuizResult
-				results={{
-					totalQuestions: 10,
-					correctAnswers: 7,
-					accuracy: 70,
-					incorrectAnswers: [],
-				}}
+			<QuizResultsCard
+				totalQuestions={10}
+				correctAnswers={7}
+				elapsedTime={120}
+				subject="Mathematics"
 				sources={[
 					{
 						url: "https://www.education.gov.za/Curriculum/",
@@ -36,13 +39,11 @@ describe("QuizResult", () => {
 
 	test("singular label when exactly one source", () => {
 		const { container } = render(
-			<QuizResult
-				results={{
-					totalQuestions: 10,
-					correctAnswers: 7,
-					accuracy: 70,
-					incorrectAnswers: [],
-				}}
+			<QuizResultsCard
+				totalQuestions={10}
+				correctAnswers={7}
+				elapsedTime={120}
+				subject="Mathematics"
 				sources={[{ url: "https://www.education.gov.za/", title: "DBE" }]}
 				onRestart={() => {}}
 			/>,
@@ -53,13 +54,11 @@ describe("QuizResult", () => {
 
 	test("does not render VerifiedByPill when sources is empty", () => {
 		const { container } = render(
-			<QuizResult
-				results={{
-					totalQuestions: 10,
-					correctAnswers: 7,
-					accuracy: 70,
-					incorrectAnswers: [],
-				}}
+			<QuizResultsCard
+				totalQuestions={10}
+				correctAnswers={7}
+				elapsedTime={120}
+				subject="Mathematics"
 				sources={[]}
 				onRestart={() => {}}
 			/>,
@@ -70,17 +69,29 @@ describe("QuizResult", () => {
 
 	test("does not render VerifiedByPill when sources is undefined", () => {
 		const { container } = render(
-			<QuizResult
-				results={{
-					totalQuestions: 10,
-					correctAnswers: 7,
-					accuracy: 70,
-					incorrectAnswers: [],
-				}}
+			<QuizResultsCard
+				totalQuestions={10}
+				correctAnswers={7}
+				elapsedTime={120}
+				subject="Mathematics"
 				onRestart={() => {}}
 			/>,
 		);
 
 		expect(hasText(container, /Verified by \d+ web source/)).toBe(false);
+	});
+
+	test("renders accuracy percentage", () => {
+		const { container } = render(
+			<QuizResultsCard
+				totalQuestions={10}
+				correctAnswers={7}
+				elapsedTime={120}
+				subject="Mathematics"
+				onRestart={() => {}}
+			/>,
+		);
+
+		expect(hasText(container, /70%/)).toBe(true);
 	});
 });
