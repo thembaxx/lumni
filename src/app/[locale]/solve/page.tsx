@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { AiSolver } from "@/components/tools/communication/ai-solver";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -33,11 +34,13 @@ export default function SolvePage() {
 	return (
 		<div className="min-h-dvh bg-system-grouped pt-4 pb-24">
 			<PageContainer>
-				<Anim>
-					<Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
-						<SolveContent />
-					</Suspense>
-				</Anim>
+				<AppErrorBoundary>
+					<Anim>
+						<Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
+							<SolveContent />
+						</Suspense>
+					</Anim>
+				</AppErrorBoundary>
 			</PageContainer>
 		</div>
 	);

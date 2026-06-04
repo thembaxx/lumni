@@ -1,11 +1,20 @@
 "use client";
 
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import {
+	Component,
+	type ComponentType,
+	type ErrorInfo,
+	type ReactNode,
+} from "react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
 	children: ReactNode;
 	fallback?: ReactNode;
+	fallbackComponent?: ComponentType<{
+		error: Error;
+		resetError: () => void;
+	}>;
 	onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
@@ -29,8 +38,21 @@ export class AppErrorBoundary extends Component<Props, State> {
 		this.props.onError?.(error, errorInfo);
 	}
 
+	resetError = () => {
+		this.setState({ hasError: false, error: null });
+	};
+
 	render() {
 		if (this.state.hasError) {
+			if (this.props.fallbackComponent) {
+				const Fallback = this.props.fallbackComponent;
+				return (
+					<Fallback
+						error={this.state.error ?? new Error("Unknown error")}
+						resetError={this.resetError}
+					/>
+				);
+			}
 			if (this.props.fallback) return this.props.fallback;
 			return (
 				<div className="flex min-h-48 flex-col items-center justify-center p-6 text-center">
@@ -38,10 +60,7 @@ export class AppErrorBoundary extends Component<Props, State> {
 					<p className="mb-4 text-muted-foreground text-sm">
 						{this.state.error?.message || "An unexpected error occurred"}
 					</p>
-					<Button
-						variant="outline"
-						onClick={() => this.setState({ hasError: false, error: null })}
-					>
+					<Button variant="outline" onClick={this.resetError}>
 						Try again
 					</Button>
 				</div>

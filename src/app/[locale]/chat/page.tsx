@@ -12,12 +12,13 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { WelcomeState } from "@/components/chat/WelcomeState";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@/hooks/use-chat";
 import { useImageChatWithSend } from "@/hooks/use-image-chat";
 import { Link } from "@/i18n/navigation";
 
-export default function ChatPage() {
+function ChatContent() {
 	const chat = useChat();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const { imageProcessing, sendImage, retryLastImage, resetState } =
@@ -87,5 +88,13 @@ export default function ChatPage() {
 				onDismissImageProcessing={() => resetState()}
 			/>
 		</div>
+	);
+}
+
+export default function ChatPage() {
+	return (
+		<AppErrorBoundary>
+			<ChatContent />
+		</AppErrorBoundary>
 	);
 }

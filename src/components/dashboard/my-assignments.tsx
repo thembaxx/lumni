@@ -14,6 +14,7 @@ import { AssignmentThread } from "@/components/teacher/assignment-thread";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function MyAssignments() {
 	const router = useRouter();
@@ -30,8 +31,40 @@ export function MyAssignments() {
 
 	const assignments = data?.assignments ?? [];
 
-	if (isLoading) return null;
-	if (assignments.length === 0) return null;
+	if (isLoading) {
+		return (
+			<Card>
+				<CardHeader>
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+						<HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
+						My Assignments
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-3">
+					<Skeleton className="h-16 w-full rounded-xl" />
+					<Skeleton className="h-16 w-full rounded-xl" />
+				</CardContent>
+			</Card>
+		);
+	}
+
+	if (assignments.length === 0) {
+		return (
+			<Card>
+				<CardHeader>
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+						<HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
+						My Assignments
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p className="py-6 text-center text-muted-foreground text-xs">
+						No assignments yet
+					</p>
+				</CardContent>
+			</Card>
+		);
+	}
 
 	return (
 		<Card>

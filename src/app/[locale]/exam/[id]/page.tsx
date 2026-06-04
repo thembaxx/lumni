@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { ExamSessionWithResume } from "./exam-session-client";
 
 export const metadata: Metadata = {
@@ -16,13 +16,13 @@ export default async function ExamPage({
 	const [{ id }, { mode }] = await Promise.all([params, searchParams]);
 
 	return (
-		<ErrorBoundary>
+		<AppErrorBoundary>
 			<ExamSessionWithResume
 				id={id}
 				mode={
 					mode === "timed" ? "timed" : mode === "mock" ? "mock" : "practice"
 				}
 			/>
-		</ErrorBoundary>
+		</AppErrorBoundary>
 	);
 }

@@ -93,6 +93,9 @@ function ChartContainer({
 	);
 }
 
+const SAFE_CSS_ID = /^[\w-]+$/;
+const SAFE_CSS_VAR = /[^a-zA-Z0-9-]/g;
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 	const colorConfig = Object.entries(config).filter(
 		([, config]) => config.theme ?? config.color,
@@ -102,22 +105,27 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 		return null;
 	}
 
+	const cssId = SAFE_CSS_ID.test(id)
+		? id
+		: `chart-${id.replace(SAFE_CSS_VAR, "")}`;
+
 	return (
 		<style
-			// react-doctor will-fix: safe — chart CSS uses internal IDs (useId) and developer-defined config colors only
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: chart CSS injection
+			// biome-ignore lint/security/noDangerouslySetInnerHtml: chart CSS uses sanitized internal IDs (useId) and developer-defined config colors; key names are stripped of non-CSS-safe chars
 			dangerouslySetInnerHTML={{
 				__html: Object.entries(THEMES)
 					.map(
 						([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
+${prefix} [data-chart=${cssId}] {
 ${colorConfig
 	.map(([key, itemConfig]) => {
 		const color =
 			itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
 			itemConfig.color;
-		return color ? `  --color-${key}: ${color};` : null;
+		const safeKey = key.replace(SAFE_CSS_VAR, "");
+		return color && safeKey ? `  --color-${safeKey}: ${color};` : null;
 	})
+	.filter(Boolean)
 	.join("\n")}
 }
 `,

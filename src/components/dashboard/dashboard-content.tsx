@@ -11,6 +11,7 @@ import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 
 async function refreshPage(): Promise<void> {
 	window.location.reload();
@@ -239,7 +240,9 @@ export function DashboardContent({
 				)}
 				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.095}>
-						<NextBestActionCard />
+						<AppErrorBoundary>
+							<NextBestActionCard />
+						</AppErrorBoundary>
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (
@@ -249,7 +252,9 @@ export function DashboardContent({
 				)}
 				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.105}>
-						<LearningMapCard />
+						<AppErrorBoundary>
+							<LearningMapCard />
+						</AppErrorBoundary>
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (

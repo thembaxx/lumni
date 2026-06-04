@@ -12,10 +12,10 @@ import {
 } from "next-intl/server";
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
-import ErrorBoundary from "@/components/ErrorBoundary";
 import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
@@ -216,7 +216,7 @@ export default async function LocaleLayout({
 								className="flex min-w-0 flex-1 flex-col pb-[calc(49px+env(safe-area-inset-bottom,0px))]"
 							>
 								<TopNav />
-								<ErrorBoundary>{children}</ErrorBoundary>
+								<AppErrorBoundary>{children}</AppErrorBoundary>
 							</main>
 						</div>
 						<BottomNav />
