@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 export type ErrorType =
@@ -43,7 +43,7 @@ export function useWrongAnswerJournal() {
 			},
 		) => {
 			try {
-				await offlineDB.table("wrongAnswers").add({
+				await dexieDataAccess.wrongAnswers.add({
 					...entry,
 					createdAt: Date.now(),
 					reviewed: false,
@@ -62,21 +62,14 @@ export function useWrongAnswerJournal() {
 			limit = 50,
 		): Promise<WrongAnswerEntry[]> => {
 			try {
-				const table = offlineDB.table<WrongAnswerEntry>("wrongAnswers");
-				let collection: ReturnType<typeof table.filter> = table
-					.orderBy("createdAt")
-					.reverse();
+				let collection = dexieDataAccess.wrongAnswers.orderBy("createdAt");
 				if (subject) {
-					collection = collection.filter(
-						(e) => e.subject === subject,
-					) as unknown as ReturnType<typeof table.filter>;
+					collection = collection.filter((e) => e.subject === subject);
 				}
 				if (topic) {
-					collection = collection.filter(
-						(e) => e.topic === topic,
-					) as unknown as ReturnType<typeof table.filter>;
+					collection = collection.filter((e) => e.topic === topic);
 				}
-				return collection.limit(limit).toArray();
+				return collection.reverse().limit(limit).toArray();
 			} catch (err) {
 				logError("GetWrongAnswers", err);
 				return [];
@@ -87,7 +80,7 @@ export function useWrongAnswerJournal() {
 
 	const markReviewed = useCallback(async (id: number) => {
 		try {
-			await offlineDB.table("wrongAnswers").update(id, { reviewed: true });
+			await dexieDataAccess.wrongAnswers.update(id, { reviewed: true });
 		} catch (err) {
 			logError("MarkReviewed", err);
 		}
@@ -96,7 +89,7 @@ export function useWrongAnswerJournal() {
 	const updateErrorType = useCallback(
 		async (id: number, errorType: ErrorType) => {
 			try {
-				await offlineDB.table("wrongAnswers").update(id, { errorType });
+				await dexieDataAccess.wrongAnswers.update(id, { errorType });
 			} catch (err) {
 				logError("UpdateErrorType", err);
 			}
@@ -106,13 +99,13 @@ export function useWrongAnswerJournal() {
 
 	const clearReviewed = useCallback(async () => {
 		try {
-			const entries = await offlineDB
-				.table<WrongAnswerEntry>("wrongAnswers")
-				.filter((e) => e.reviewed)
+			const entries = await dexieDataAccess.wrongAnswers
+				.where("reviewed")
+				.equals(true)
 				.toArray();
 			await Promise.all(
 				entries.flatMap((e) =>
-					e.id ? [offlineDB.table("wrongAnswers").delete(e.id)] : [],
+					e.id ? [dexieDataAccess.wrongAnswers.delete(e.id)] : [],
 				),
 			);
 		} catch (err) {

@@ -1,9 +1,15 @@
 import { nanoid } from "nanoid";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { QuizPack, QuizPackQuestion } from "./types";
 import { PACK_EXPIRY_DAYS } from "./types";
 
 export class QuizPackService {
+	private db: DataAccess;
+
+	constructor(deps?: { db?: DataAccess }) {
+		this.db = deps?.db ?? dexieDataAccess;
+	}
 	async generatePack(
 		subject: string,
 		topic: string | null,
@@ -23,12 +29,12 @@ export class QuizPackService {
 			lastUsedAt: null,
 		};
 
-		await offlineDB.quizPacks.add(pack);
+		await this.db.quizPacks.add(pack);
 		return pack;
 	}
 
 	async markReady(id: string, storageBytes: number): Promise<void> {
-		await offlineDB.quizPacks.update(id, {
+		await this.db.quizPacks.update(id, {
 			status: "ready",
 			downloadProgress: 100,
 			storageBytes,
@@ -36,48 +42,48 @@ export class QuizPackService {
 	}
 
 	async markFailed(id: string): Promise<void> {
-		await offlineDB.quizPacks.update(id, { status: "failed" });
+		await this.db.quizPacks.update(id, { status: "failed" });
 	}
 
 	async updateProgress(id: string, progress: number): Promise<void> {
-		await offlineDB.quizPacks.update(id, {
+		await this.db.quizPacks.update(id, {
 			downloadProgress: Math.min(progress, 100),
 		});
 	}
 
 	async getPacks(): Promise<QuizPack[]> {
-		const packs = await offlineDB.quizPacks
+		const packs = await this.db.quizPacks
 			.orderBy("createdAt")
 			.reverse()
 			.toArray();
 		const now = Date.now();
 		const updated = await Promise.all(
-			packs.map(async (pack) => expirePackIfNeeded(pack, now)),
+			packs.map(async (pack) => this.expirePackIfNeeded(pack, now)),
 		);
 		return updated;
 	}
 
 	async getPack(id: string): Promise<QuizPack | undefined> {
-		return offlineDB.quizPacks.get(id);
+		return this.db.quizPacks.get(id);
 	}
 
 	async deletePack(id: string): Promise<void> {
-		await offlineDB.quizPacks.delete(id);
-		await offlineDB.packQuestions.where("packId").equals(id).delete();
+		await this.db.quizPacks.delete(id);
+		await this.db.packQuestions.where("packId").equals(id).delete();
 	}
 
 	async touchPack(id: string): Promise<void> {
-		await offlineDB.quizPacks.update(id, { lastUsedAt: Date.now() });
+		await this.db.quizPacks.update(id, { lastUsedAt: Date.now() });
 	}
 
 	async getStorageUsage(): Promise<{ usedBytes: number; packCount: number }> {
-		const packs = await offlineDB.quizPacks.toArray();
+		const packs = await this.db.quizPacks.toArray();
 		const usedBytes = packs.reduce((sum, p) => sum + p.storageBytes, 0);
 		return { usedBytes, packCount: packs.length };
 	}
 
 	async getQuestions(packId: string): Promise<QuizPackQuestion[]> {
-		return offlineDB.packQuestions
+		return this.db.packQuestions
 			.where("packId")
 			.equals(packId)
 			.sortBy("questionIndex");
@@ -87,33 +93,32 @@ export class QuizPackService {
 		packId: string,
 		questions: Omit<QuizPackQuestion, "packId">[],
 	): Promise<void> {
-		await offlineDB.packQuestions.bulkAdd(
+		await this.db.packQuestions.bulkAdd(
 			questions.map((q) => ({ ...q, packId })),
 		);
 	}
 
 	async cleanupExpired(): Promise<number> {
 		const now = Date.now();
-		const expired = await offlineDB.quizPacks
+		const expired = await this.db.quizPacks
 			.where("expiresAt")
 			.below(now)
 			.toArray();
 		await Promise.all(expired.map((pack) => this.deletePack(pack.id)));
 		return expired.length;
 	}
+	private async expirePackIfNeeded(
+		pack: QuizPack,
+		now: number,
+	): Promise<QuizPack> {
+		if (pack.status === "ready" && pack.expiresAt < now) {
+			await this.db.quizPacks.update(pack.id, {
+				status: "expired",
+			});
+			return { ...pack, status: "expired" as const };
+		}
+		return pack;
+	}
 }
 
 export const quizPackService = new QuizPackService();
-
-async function expirePackIfNeeded(
-	pack: QuizPack,
-	now: number,
-): Promise<QuizPack> {
-	if (pack.status === "ready" && pack.expiresAt < now) {
-		await offlineDB.quizPacks.update(pack.id, {
-			status: "expired",
-		});
-		return { ...pack, status: "expired" as const };
-	}
-	return pack;
-}

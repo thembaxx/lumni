@@ -2,11 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { RetentionRecurrence } from "@/lib/db/schema";
-import {
-	getRecurrenceCandidates,
-	getRecurrenceStats,
-	markRecurrence,
-} from "@/lib/retention-loop";
+import { retentionService } from "@/lib/retention-loop";
 
 export function useRetentionLoop(userId?: string) {
 	const [candidates, setCandidates] = useState<RetentionRecurrence[]>([]);
@@ -20,14 +16,17 @@ export function useRetentionLoop(userId?: string) {
 
 	const refreshStats = useCallback(async () => {
 		if (!userId) return;
-		const s = await getRecurrenceStats(userId);
+		const s = await retentionService.getRecurrenceStats(userId);
 		setStats(s);
 	}, [userId]);
 
 	const scheduleRetention = useCallback(
 		async (count = 3) => {
 			if (!userId) return [];
-			const result = await getRecurrenceCandidates(userId, count);
+			const result = await retentionService.getRecurrenceCandidates(
+				userId,
+				count,
+			);
 			if (result.length > 0) {
 				setCandidates((prev) => [...prev, ...result]);
 				await refreshStats();
@@ -40,7 +39,7 @@ export function useRetentionLoop(userId?: string) {
 	const recordRecurrence = useCallback(
 		async (questionId: string, isCorrect: boolean) => {
 			if (!userId) return;
-			await markRecurrence(questionId, userId, isCorrect);
+			await retentionService.markRecurrence(questionId, userId, isCorrect);
 			setCandidates((prev) => prev.filter((c) => c.questionId !== questionId));
 			await refreshStats();
 		},

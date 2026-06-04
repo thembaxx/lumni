@@ -1,4 +1,5 @@
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type {
 	AnalyticsRecommendation,
 	OverallAnalytics,
@@ -168,11 +169,17 @@ function generateRecommendations(
 }
 
 export class AnalyticsEngine {
+	private db: DataAccess;
+
+	constructor(deps?: { db?: DataAccess }) {
+		this.db = deps?.db ?? dexieDataAccess;
+	}
+
 	async compute(_userId?: string): Promise<OverallAnalytics> {
 		const [competencies, progressRecords, attempts] = await Promise.all([
-			offlineDB.competencies.toArray(),
-			offlineDB.progress.toArray(),
-			offlineDB.quizAttempts.toArray(),
+			this.db.competencies.toArray(),
+			this.db.progress.toArray(),
+			this.db.quizAttempts.toArray(),
 		]);
 
 		const subjectIds = new Set([

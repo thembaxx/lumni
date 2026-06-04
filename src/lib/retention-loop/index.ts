@@ -1,5 +1,1 @@
-export {
-	getRecurrenceCandidates,
-	getRecurrenceStats,
-	markRecurrence,
-} from "./service";
+export { RetentionService, retentionService } from "./service";

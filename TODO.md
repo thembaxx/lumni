@@ -503,10 +503,16 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 ### Production telemetry
 - [x] Wire `Sentry.captureException()` into `logger.ts` via `withScope()`; client-side events already consent-gated by Sentry's `beforeSend`
 
-### DataAccess seam — Phase 1
+### DataAccess seam — Phase 1 (Foundation)
 - [x] **Interface**: `DataAccess` with 14 typed table accessors, `DataAccessTable<T, TId>`, `Collection<T>`, `WhereClause<T>` in `src/lib/db/data-access.ts`
 - [x] **Dexie implementation**: `DexieDataAccess` wrapping `offlineDB` via `tableAdapter()` factory in `src/lib/db/dexie-data-access.ts`
 - [x] **In-memory implementation**: `InMemoryDataAccess` + `InMemoryTable<T, TId>` for tests in `src/lib/db/in-memory-data-access.ts`
-- [x] **Migrated consumers**: `CompetencyService` and `FlashcardEngine` receive `DataAccess` via DI instead of `typeof offlineDB`
-- [x] **ADR-0011**: Updated to "Implemented — Phase 1"
+- [x] **Migrated**: `CompetencyService`, `FlashcardEngine` — DI via `DataAccess`
+- [x] **ADR-0011**: Written, status "Implemented — Phase 1"
+
+### DataAccess seam — Phase 2 (Migrate top consumers)
+- [x] **AnalyticsEngine**: DI via `DataAccess`, replaced `offlineDB.competencies/progress/quizAttempts`
+- [x] **QuizPackService**: DI via `DataAccess`, replaced `offlineDB.quizPacks/packQuestions`, moved helper into class
+- [x] **RetentionService**: Created class with DI (was standalone functions), replaced `offlineDB.retentionRecurrence/wrongAnswers`, removed compound `where({...})`
+- [x] **useWrongAnswerJournal**: Replaced `offlineDB.table("wrongAnswers")` string pattern with typed `dexieDataAccess.wrongAnswers` accessor
 - [x] **Verification**: tsc 0 errors, biome 0 warnings, 1225 tests pass
