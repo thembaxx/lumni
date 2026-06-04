@@ -1,9 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { access, readdir } from "node:fs/promises";
 import path from "node:path";
+import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
+import { databases } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 const DEFAULT_FOLDER_PATH = `${(process as { cwd(): string }).cwd()}/downloads/exam-papers-2025`;
 
@@ -94,22 +96,6 @@ async function uploadToUploadThing(
 	}
 }
 
-function dbExecOne(
-	db: Awaited<ReturnType<typeof getExamsDb>>,
-	sql: string,
-	args?: unknown[],
-): Record<string, unknown> | undefined {
-	const result = db.exec(sql, args as (string | number | null | Uint8Array)[]);
-	if (!result || result.length === 0 || !result[0].values) return undefined;
-	const { columns, values } = result[0];
-	if (values.length === 0) return undefined;
-	const obj: Record<string, unknown> = {};
-	columns.forEach((col: string, i: number) => {
-		obj[col] = values[0][i];
-	});
-	return obj;
-}
-
 export const POST = createRouteHandler({
 	auth: "admin",
 	errorLabel: "UploadLocalExamPapers",
@@ -131,7 +117,6 @@ export const POST = createRouteHandler({
 			throw new HttpError(400, "No PDF files found in folder");
 		}
 
-		const db = await getExamsDb();
 		let uploaded = 0;
 		let updated = 0;
 		const errors: string[] = [];
@@ -191,56 +176,90 @@ export const POST = createRouteHandler({
 				continue;
 			}
 
-			const existingPaper = dbExecOne(
-				db,
-				`SELECT id FROM exam_papers
-					 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?`,
-				[result.normalizedCode, result.year, result.paperNumber, result.type],
+			// Check if document already exists in Appwrite
+			const existingDocs = await databases.listDocuments(
+				APPWRITE_DATABASE_ID,
+				COLLECTIONS.EXAM_PAPERS,
+				[
+					Query.equal("subjectCode", result.normalizedCode),
+					Query.equal("year", result.year),
+					Query.equal("paperNumber", result.paperNumber),
+					Query.equal("type", result.type),
+				],
 			);
 
-			if (existingPaper) {
-				db.run(
-					`UPDATE exam_papers
-						 SET file_url = ?, file_key = ?, original_file_name = ?, uploaded_at = datetime('now')
-						 WHERE id = ?`,
-					[
-						result.uploadResult.url,
-						result.uploadResult.key,
-						result.originalFileName,
-						existingPaper.id as string,
-					],
+			if (existingDocs.documents.length > 0) {
+				const existingId = existingDocs.documents[0].$id;
+				await databases.updateDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.EXAM_PAPERS,
+					existingId,
+					{
+						fileUrl: result.uploadResult.url,
+						fileKeys: JSON.stringify([result.uploadResult.key]),
+						originalFileName: result.originalFileName,
+						uploadedAt: new Date().toISOString(),
+					},
 				);
-				saveExamsDb();
 				updated++;
 			} else {
 				const id = randomUUID();
-				insertExamPaper({
-					id,
-					subjectCode: result.normalizedCode,
-					subjectName: result.subjectName,
-					year: result.year,
-					paperNumber: result.paperNumber,
-					type: result.type,
-					paperId: null,
-					fileUrl: result.uploadResult.url,
-					fileKey: result.uploadResult.key,
-					originalFileName: result.originalFileName,
-				});
+				const paperCode = `${result.normalizedCode}-p${result.paperNumber}`;
+				const examPeriod = result.paperNumber > 2 ? "may-june" : "november";
 
+				await databases.createDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.EXAM_PAPERS,
+					id,
+					{
+						subject: result.subjectName,
+						subjectCode: result.normalizedCode,
+						subjectName: result.subjectName,
+						paperCode,
+						paperNumber: result.paperNumber,
+						examPeriod,
+						year: result.year,
+						grade: 12,
+						language: "english",
+						totalMarks: 150,
+						duration: "3 hours",
+						type: result.type,
+						memoId: null,
+						fileKeys: JSON.stringify([result.uploadResult.key]),
+						fileUrl: result.uploadResult.url,
+						originalFileName: result.originalFileName,
+						uploadedAt: new Date().toISOString(),
+						uploadedBy: "admin",
+					},
+				);
+
+				// If uploading a memo, link it to the corresponding paper
 				if (result.type === "memo") {
-					const paperResult = dbExecOne(
-						db,
-						`SELECT id FROM exam_papers
-						 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper'`,
-						[result.normalizedCode, result.year, result.paperNumber],
+					const paperDocs = await databases.listDocuments(
+						APPWRITE_DATABASE_ID,
+						COLLECTIONS.EXAM_PAPERS,
+						[
+							Query.equal("subjectCode", result.normalizedCode),
+							Query.equal("year", result.year),
+							Query.equal("paperNumber", result.paperNumber),
+							Query.equal("type", "paper"),
+						],
 					);
 
-					if (paperResult) {
-						db.run("UPDATE exam_papers SET memo_id = ? WHERE id = ?", [
+					if (paperDocs.documents.length > 0) {
+						const paperId = paperDocs.documents[0].$id;
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
 							id,
-							paperResult.id as string,
-						]);
-						saveExamsDb();
+							{ memoId: paperId },
+						);
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
+							paperId,
+							{ memoId: id },
+						);
 					}
 				}
 				uploaded++;

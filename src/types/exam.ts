@@ -36,52 +36,25 @@ export interface ExamGroup {
 	papers: PaperListing[];
 }
 
-// --- ExamPaperRecord variants ---
-// These intentionally differ per data store. Consolidated here as single source of truth.
-
-/** Appwrite `exam_papers` collection record (db/client.ts). */
+/** Appwrite `exam_papers` collection record — single source of truth. */
 export interface AppwriteExamPaperRecord {
 	$id: string;
 	subject: string;
+	subjectCode: string;
+	subjectName: string;
 	paperCode: string;
+	paperNumber: number;
 	examPeriod: string;
 	year: number;
 	grade: number;
 	language: string;
 	totalMarks: number;
 	duration: string;
-	fileKeys: string;
-	uploadedAt: string;
-	uploadedBy: string;
-}
-
-/** Local SQLite `exam_papers` table record (db/exams/schema.ts). */
-export interface LocalExamPaperRecord {
-	id: string;
-	subjectCode: string;
-	subjectName: string;
-	year: number;
-	paperNumber: number;
-	type: "paper" | "memo";
-	paperId: string | null;
-	fileUrl: string;
-	fileKey: string;
-	originalFileName: string;
-	uploadedAt: string;
-}
-
-/** Server-action return type (exam-paper-actions.ts). Adds memoId/subjectId. */
-export interface ServerExamPaperRecord {
-	id: string;
-	subjectId: string;
-	subjectCode: string;
-	subjectName: string;
-	year: number;
-	paperNumber: number;
 	type: "paper" | "memo";
 	memoId: string | null;
+	fileKeys: string;
 	fileUrl: string;
-	fileKey: null;
 	originalFileName: string;
 	uploadedAt: string;
+	uploadedBy: string;
 }

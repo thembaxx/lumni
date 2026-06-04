@@ -3,6 +3,7 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { makeCacheKey } from "@/lib/db/repositories/visual-cache";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import { logError } from "@/lib/shared/logger";
+import { syncManager } from "@/lib/sync/sync-manager";
 import type { VisualContent } from "./types";
 
 const COLLECTION_ID = COLLECTIONS.VISUALS;
@@ -12,22 +13,14 @@ export async function saveVisualToAppwrite(
 	subject: string,
 	visual: VisualContent | null,
 ): Promise<void> {
-	try {
-		await databases.createDocument(
-			APPWRITE_DATABASE_ID,
-			COLLECTION_ID,
-			makeCacheKey(questionId, subject),
-			{
-				questionId,
-				subject,
-				visual: safeJsonStringify(visual),
-				createdAt: new Date().toISOString(),
-				expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-			},
-		);
-	} catch (err) {
-		logError("SaveVisualToAppwrite", err);
-	}
+	syncManager.enqueue({
+		type: "appwrite-visual-sync",
+		payload: {
+			questionId,
+			subject,
+			visual: safeJsonStringify(visual),
+		},
+	});
 }
 
 export async function loadVisualFromAppwrite(

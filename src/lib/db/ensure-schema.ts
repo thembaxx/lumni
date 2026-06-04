@@ -115,6 +115,8 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 	exam_papers: {
 		attributes: {
 			subject: { type: "string", size: 100 },
+			subjectCode: { type: "string", size: 20 },
+			subjectName: { type: "string", size: 100 },
 			paperCode: { type: "string", size: 50 },
 			paperNumber: { type: "integer" },
 			examPeriod: { type: "string", size: 50 },
@@ -123,7 +125,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			language: { type: "string", size: 50 },
 			totalMarks: { type: "integer" },
 			duration: { type: "string", size: 20 },
+			type: { type: "string", size: 10 },
+			memoId: { type: "string", size: 50 },
 			fileKeys: { type: "string", size: 1000 },
+			fileUrl: { type: "string", size: 500 },
+			originalFileName: { type: "string", size: 200 },
 		},
 		indexes: [
 			{

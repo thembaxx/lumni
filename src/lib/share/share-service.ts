@@ -1,14 +1,10 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
-import {
-	COLLECTIONS,
-	createDocument,
-	listDocuments,
-	updateDocument,
-} from "@/lib/db/client";
+import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
+import { syncManager } from "@/lib/sync/sync-manager";
 
 export interface SharedQuestionRecord extends Omit<SchemaRecord, "question"> {
 	question: Question;
@@ -50,20 +46,18 @@ export async function shareQuestion(
 		logError("ShareQuestionDexie", err);
 	}
 
-	const appwritePayload: Record<string, unknown> = {
-		id,
-		question: JSON.stringify(question),
-		subject,
-		topic,
-		sharedById: userId,
-		sharedAt: new Date().toISOString(),
-		viewCount: 0,
-	};
-	if (sources && sources.length > 0) {
-		appwritePayload.sources = JSON.stringify(sources);
-	}
-	createDocument(COLLECTIONS.SHARED_QUESTIONS, appwritePayload).catch(() => {
-		/* Appwrite may be unavailable */
+	syncManager.enqueue({
+		type: "appwrite-shared-question-sync",
+		payload: {
+			id,
+			question: JSON.stringify(question),
+			subject,
+			topic,
+			sharedById: userId,
+			sharedAt: Date.now(),
+			sources:
+				sources && sources.length > 0 ? JSON.stringify(sources) : undefined,
+		},
 	});
 
 	return id;

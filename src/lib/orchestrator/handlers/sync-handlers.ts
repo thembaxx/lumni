@@ -303,6 +303,22 @@ export const appwriteConsentSync = createUpsertHandler(
 	}),
 );
 
+export const appwriteSharedQuestionSync: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-shared-question-sync"];
+	await createDocument(COLLECTIONS.SHARED_QUESTIONS, data);
+};
+
+export const appwriteVisualSync: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-visual-sync"];
+	await createDocument(COLLECTIONS.VISUALS, {
+		questionId: data.questionId,
+		subject: data.subject,
+		visual: data.visual,
+		createdAt: new Date().toISOString(),
+		expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+	});
+};
+
 export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-exam-dates-sync": appwriteExamDatesSync,
 	"appwrite-sync": appwriteSync,
@@ -320,4 +336,6 @@ export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-study-plan-sync": appwriteStudyPlanSync,
 	"appwrite-question-flag": appwriteQuestionFlag,
 	"appwrite-consent-sync": appwriteConsentSync,
+	"appwrite-shared-question-sync": appwriteSharedQuestionSync,
+	"appwrite-visual-sync": appwriteVisualSync,
 };

@@ -23,6 +23,8 @@ export type JobType =
 	| "question-regen"
 	| "appwrite-exam-dates-sync"
 	| "appwrite-consent-sync"
+	| "appwrite-shared-question-sync"
+	| "appwrite-visual-sync"
 	| "prune-stale-questions";
 
 export type JobPayloadByType = {
@@ -163,6 +165,20 @@ export type JobPayloadByType = {
 			updatedAt: string;
 			createdAt: string;
 		};
+	};
+	"appwrite-shared-question-sync": {
+		id: string;
+		question: string;
+		subject: string;
+		topic: string;
+		sharedById: string;
+		sharedAt: number;
+		sources?: string;
+	};
+	"appwrite-visual-sync": {
+		questionId: string;
+		subject: string;
+		visual: string;
 	};
 };
 

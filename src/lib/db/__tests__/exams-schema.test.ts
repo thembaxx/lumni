@@ -1,8 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-const { parseExamPaperFilename, getSubjectName } = await import(
-	"../exams/schema"
-);
+const { parseExamPaperFilename } = await import("@/lib/exams/helpers");
 
 describe("parseExamPaperFilename", () => {
 	test("parses standard paper filename", () => {
@@ -49,20 +47,5 @@ describe("parseExamPaperFilename", () => {
 		expect(r).not.toBeNull();
 		expect(r.subjectCode).toBe("computer-applications-technology");
 		expect(r.subjectName).toBe("Computer Applications Technology");
-	});
-});
-
-describe("getSubjectName", () => {
-	test("returns mapped names for known codes", () => {
-		expect(getSubjectName("mathematics")).toBe("Mathematics");
-		expect(getSubjectName("physical-sciences")).toBe("Physical Sciences");
-		expect(getSubjectName("life-sciences")).toBe("Life Sciences");
-		expect(getSubjectName("accounting")).toBe("Accounting");
-		expect(getSubjectName("history")).toBe("History");
-		expect(getSubjectName("geography")).toBe("Geography");
-	});
-
-	test("falls back to title-cased code for unknown codes", () => {
-		expect(getSubjectName("unknown-subject")).toBe("Unknown Subject");
 	});
 });

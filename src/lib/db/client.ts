@@ -127,9 +127,7 @@ export type StudySession = {
 	endedAt?: string;
 };
 
-// Re-exported from types/exam.ts (single source of truth). Shape intentionally differs
-// from LocalExamPaperRecord (SQLite) and ServerExamPaperRecord (server actions) because
-// this is the Appwrite collection schema — different fields for online storage.
+// Re-exported from types/exam.ts (single source of truth).
 export type ExamPaperRecord = AppwriteExamPaperRecord;
 
 export async function listDocuments<T>(

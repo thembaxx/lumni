@@ -1,14 +1,12 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
-import {
-	findPaperForMemo,
-	getExamPaperCount,
-	insertExamPaper,
-	updateExamPaperMemoLink,
-} from "@/lib/db/exams";
-import { getSubjectName, parseExamPaperFilename } from "@/lib/db/exams/schema";
+import { databases } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { parseExamPaperFilename } from "@/lib/exams/helpers";
 import { logError } from "@/lib/shared/logger";
+import { getSubjectName } from "@/lib/subjects";
 
 interface UploadedTracker {
 	year: number;
@@ -64,10 +62,18 @@ export async function ensureExamPapersSynced(): Promise<void> {
 	if (syncCompleted) return;
 	if (syncInProgress) return;
 
-	const count = getExamPaperCount();
-	if (count > 0) {
-		syncCompleted = true;
-		return;
+	try {
+		const existing = await databases.listDocuments(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_PAPERS,
+			[Query.limit(1)],
+		);
+		if (existing.documents.length > 0) {
+			syncCompleted = true;
+			return;
+		}
+	} catch {
+		// Appwrite not available, continue with sync
 	}
 
 	syncInProgress = true;
@@ -122,40 +128,63 @@ async function syncExamPapersInternal(
 		for (const entry of sortedTracker) {
 			try {
 				const id = crypto.randomUUID();
+				const subjectName = getSubjectName(entry.subjectCode);
+				const paperCode = `${entry.subjectCode}-p${entry.paperNumber}`;
+				const examPeriod = entry.paperNumber > 2 ? "may-june" : "november";
 
-				if (entry.type === "paper") {
-					insertExamPaper({
-						id,
+				await databases.createDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.EXAM_PAPERS,
+					id,
+					{
+						subject: subjectName,
 						subjectCode: entry.subjectCode,
-						subjectName: getSubjectName(entry.subjectCode),
-						year: entry.year,
+						subjectName,
+						paperCode,
 						paperNumber: entry.paperNumber,
-						type: "paper",
-						paperId: null,
+						examPeriod,
+						year: entry.year,
+						grade: 12,
+						language: "english",
+						totalMarks: 150,
+						duration: "3 hours",
+						type: entry.type,
+						memoId: null,
+						fileKeys: JSON.stringify([entry.fileKey]),
 						fileUrl: entry.fileUrl,
-						fileKey: entry.fileKey,
 						originalFileName: entry.originalFileName,
-					});
-				} else {
-					const existingPaperId = findPaperForMemo(
-						entry.subjectCode,
-						entry.year,
-						entry.paperNumber,
+						uploadedAt: new Date().toISOString(),
+						uploadedBy: "system",
+					},
+				);
+
+				// Link memo to paper if applicable
+				if (entry.type === "memo") {
+					const paperDocs = await databases.listDocuments(
+						APPWRITE_DATABASE_ID,
+						COLLECTIONS.EXAM_PAPERS,
+						[
+							Query.equal("subjectCode", entry.subjectCode),
+							Query.equal("year", entry.year),
+							Query.equal("paperNumber", entry.paperNumber),
+							Query.equal("type", "paper"),
+						],
 					);
-					insertExamPaper({
-						id,
-						subjectCode: entry.subjectCode,
-						subjectName: getSubjectName(entry.subjectCode),
-						year: entry.year,
-						paperNumber: entry.paperNumber,
-						type: "memo",
-						paperId: existingPaperId,
-						fileUrl: entry.fileUrl,
-						fileKey: entry.fileKey,
-						originalFileName: entry.originalFileName,
-					});
-					if (existingPaperId) {
-						updateExamPaperMemoLink(existingPaperId, id);
+
+					if (paperDocs.documents.length > 0) {
+						const paperId = paperDocs.documents[0].$id;
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
+							id,
+							{ memoId: paperId },
+						);
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
+							paperId,
+							{ memoId: id },
+						);
 					}
 				}
 
@@ -167,10 +196,7 @@ async function syncExamPapersInternal(
 			}
 		}
 
-		const finalCount = getExamPaperCount();
-		if (finalCount === inserted + errors.length) {
-			return { uploaded: inserted, skipped: 0, errors };
-		}
+		return { uploaded: inserted, skipped: 0, errors };
 	}
 
 	const toUpload: {
@@ -213,42 +239,62 @@ async function syncExamPapersInternal(
 				const fileUrl = result.data.ufsUrl || result.data.url;
 				const fileKey = result.data.key;
 				const id = crypto.randomUUID();
+				const subjectName = getSubjectName(parsed.subjectCode);
+				const paperCode = `${parsed.subjectCode}-p${parsed.paperNumber}`;
+				const examPeriod = parsed.paperNumber > 2 ? "may-june" : "november";
 
-				if (parsed.type === "paper") {
-					insertExamPaper({
-						id,
+				await databases.createDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.EXAM_PAPERS,
+					id,
+					{
+						subject: subjectName,
 						subjectCode: parsed.subjectCode,
-						subjectName: getSubjectName(parsed.subjectCode),
-						year: parsed.year,
+						subjectName,
+						paperCode,
 						paperNumber: parsed.paperNumber,
-						type: "paper",
-						paperId: null,
+						examPeriod,
+						year: parsed.year,
+						grade: 12,
+						language: "english",
+						totalMarks: 150,
+						duration: "3 hours",
+						type: parsed.type,
+						memoId: null,
+						fileKeys: JSON.stringify([fileKey]),
 						fileUrl,
-						fileKey,
 						originalFileName: filename,
-					});
-				} else {
-					const existingPaperId = findPaperForMemo(
-						parsed.subjectCode,
-						parsed.year,
-						parsed.paperNumber,
+						uploadedAt: new Date().toISOString(),
+						uploadedBy: "system",
+					},
+				);
+
+				if (parsed.type === "memo") {
+					const paperDocs = await databases.listDocuments(
+						APPWRITE_DATABASE_ID,
+						COLLECTIONS.EXAM_PAPERS,
+						[
+							Query.equal("subjectCode", parsed.subjectCode),
+							Query.equal("year", parsed.year),
+							Query.equal("paperNumber", parsed.paperNumber),
+							Query.equal("type", "paper"),
+						],
 					);
 
-					insertExamPaper({
-						id,
-						subjectCode: parsed.subjectCode,
-						subjectName: getSubjectName(parsed.subjectCode),
-						year: parsed.year,
-						paperNumber: parsed.paperNumber,
-						type: "memo",
-						paperId: existingPaperId,
-						fileUrl,
-						fileKey,
-						originalFileName: filename,
-					});
-
-					if (existingPaperId) {
-						updateExamPaperMemoLink(existingPaperId, id);
+					if (paperDocs.documents.length > 0) {
+						const paperId = paperDocs.documents[0].$id;
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
+							id,
+							{ memoId: paperId },
+						);
+						await databases.updateDocument(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.EXAM_PAPERS,
+							paperId,
+							{ memoId: id },
+						);
 					}
 				}
 

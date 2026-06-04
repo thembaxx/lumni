@@ -32,5 +32,26 @@ mock.module("@/lib/appwrite", () => ({
 
 mock.module("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db-id",
-	COLLECTIONS: { VISUALS: "visuals" },
+	COLLECTIONS: {
+		VISUALS: "visuals",
+		SUBJECTS: "subjects",
+		QUESTIONS: "questions",
+		USER_PROGRESS: "user_progress",
+		STUDY_SESSIONS: "study_sessions",
+		EXAM_PAPERS: "exam_papers",
+		COMPETENCIES: "competencies",
+		FLASHCARDS: "flashcards",
+		WRONG_ANSWERS: "wrong_answers",
+		BOOKMARKS: "bookmarks",
+		CHAT_MESSAGES: "chat_messages",
+		STUDY_PLANS: "study_plans",
+		EXAM_DATES: "exam_dates",
+		USER_CONSENTS: "user_consents",
+		SHARED_QUESTIONS: "shared_questions",
+	},
+	createDocument: mock(async () => {}),
+	listDocuments: mock(async () => []),
+	getDocument: mock(async () => null),
+	updateDocument: mock(async () => {}),
+	deleteDocument: mock(async () => {}),
 }));
