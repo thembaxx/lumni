@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
 import { useOnlineStatus } from "./useOnlineStatus";
-import { logError } from "@/lib/shared/logger";
 
 export function useSyncStatus() {
 	const { isOnline } = useOnlineStatus();

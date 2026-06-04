@@ -1,4 +1,3 @@
-import { logError } from "@/lib/shared/logger";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { UTApi, UTFile } from "uploadthing/server";
@@ -9,6 +8,7 @@ import {
 	updateExamPaperMemoLink,
 } from "@/lib/db/exams";
 import { getSubjectName, parseExamPaperFilename } from "@/lib/db/exams/schema";
+import { logError } from "@/lib/shared/logger";
 
 interface UploadedTracker {
 	year: number;

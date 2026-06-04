@@ -1,6 +1,6 @@
-import { logError } from "@/lib/shared/logger";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 let cachedContext: string | null = null;
 let contextLoadedAt = 0;

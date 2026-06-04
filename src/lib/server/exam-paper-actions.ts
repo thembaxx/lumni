@@ -1,6 +1,5 @@
 "use server";
 
-import { logError } from "@/lib/shared/logger";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { UTApi, UTFile } from "uploadthing/server";
@@ -13,6 +12,7 @@ import {
 } from "@/lib/db/exams";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/db/exams/schema";
 import { auth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 import type { ServerExamPaperRecord } from "@/types/exam";
 
 export interface UploadExamPaperOptions {

@@ -1,8 +1,8 @@
-import { logError } from "@/lib/shared/logger";
 import { curriculumRegistry } from "@/curriculum";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { logError } from "@/lib/shared/logger";
 
 interface CuratedProblem {
 	id: string;

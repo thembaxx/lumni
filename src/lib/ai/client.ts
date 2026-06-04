@@ -1,6 +1,6 @@
-import { logError } from "@/lib/shared/logger";
 import { getAICallContext } from "@/lib/ai/call-context";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
+import { logError } from "@/lib/shared/logger";
 import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";

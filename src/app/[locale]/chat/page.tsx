@@ -51,7 +51,12 @@ function ChatContent() {
 					</div>
 				</div>
 				<Link href="/dashboard">
-					<Button variant="ghost" size="icon" className="rounded-full" aria-label="Back to dashboard">
+					<Button
+						variant="ghost"
+						size="icon"
+						className="rounded-full"
+						aria-label="Back to dashboard"
+					>
 						<HugeiconsIcon
 							icon={Cancel01Icon}
 							className="size-5 text-muted-foreground"

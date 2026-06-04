@@ -1,6 +1,6 @@
-import { logError } from "@/lib/shared/logger";
 import { getAI } from "@/lib/ai/client";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import type { CachedGraph, KnowledgeGraph } from "./types";
 

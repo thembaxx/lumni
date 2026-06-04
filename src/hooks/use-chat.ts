@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { offlineDB } from "@/lib/db/schema";
-import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import { logError } from "@/lib/shared/logger";
+import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 export interface ChatMessage {
 	id: string;
@@ -95,7 +95,9 @@ export function useChat() {
 					timestamp: m.timestamp.getTime(),
 				})),
 			)
-			.catch((err) => { logError("UseChat", err); });
+			.catch((err) => {
+				logError("UseChat", err);
+			});
 	}, [messages]);
 
 	const sendMessage = useCallback(async (content: string) => {

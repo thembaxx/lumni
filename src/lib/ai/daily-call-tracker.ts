@@ -1,8 +1,8 @@
-import { logError } from "@/lib/shared/logger";
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { RateLimiter } from "@/lib/rate-limiter/core";
+import { logError } from "@/lib/shared/logger";
 
 export type AICallType = "generate" | "grade" | "hint" | "visual";
 

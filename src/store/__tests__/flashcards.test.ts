@@ -8,12 +8,8 @@ beforeEach(() => {
 
 describe("useFlashcardsStore", () => {
 	test("initial state is empty", () => {
-		const {
-			selectedSubject,
-			isActive,
-			currentIndex,
-			isFlipped,
-		} = useFlashcardsStore.getState();
+		const { selectedSubject, isActive, currentIndex, isFlipped } =
+			useFlashcardsStore.getState();
 		expect(selectedSubject).toBe("");
 		expect(isActive).toBe(false);
 		expect(currentIndex).toBe(0);

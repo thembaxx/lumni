@@ -61,7 +61,9 @@ export function useSubjects() {
 						cachedAt: Date.now(),
 					})),
 				)
-				.catch((err) => { logError("UseSubjects", err); });
+				.catch((err) => {
+					logError("UseSubjects", err);
+				});
 			return { subjects, selectedSubjectIds };
 		},
 		staleTime: 1000 * 60 * 60,

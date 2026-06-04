@@ -1,7 +1,7 @@
-import { logError } from "@/lib/shared/logger";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import { createCachingStrategy } from "@/lib/caching-strategy";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
+import { logError } from "@/lib/shared/logger";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager, type RagContext } from "./prompt-manager";
 import { fetchRagContext, type RagDeps } from "./rag-enricher";

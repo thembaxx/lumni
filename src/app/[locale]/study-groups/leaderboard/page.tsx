@@ -35,7 +35,12 @@ export default function LeaderboardPage() {
 		<PageContainer>
 			<div className="flex flex-col gap-6 py-6">
 				<div className="flex items-center gap-3">
-					<Button variant="ghost" size="icon" asChild aria-label="Back to study groups">
+					<Button
+						variant="ghost"
+						size="icon"
+						asChild
+						aria-label="Back to study groups"
+					>
 						<Link href="/study-groups">
 							<HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
 						</Link>

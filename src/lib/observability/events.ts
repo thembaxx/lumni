@@ -1,5 +1,5 @@
-import { logError } from "@/lib/shared/logger";
 import { offlineDB } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 export type EventType =
 	| "page_view"

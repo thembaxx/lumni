@@ -1,4 +1,3 @@
-import { logError } from "@/lib/shared/logger";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -8,6 +7,7 @@ import {
 } from "@/lib/db/client";
 import type { ServiceResult } from "@/lib/services";
 import { failure, success } from "@/lib/services";
+import { logError } from "@/lib/shared/logger";
 import type {
 	GroupBadge,
 	GroupChallenge,

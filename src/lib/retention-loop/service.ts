@@ -1,5 +1,5 @@
-import { logError } from "@/lib/shared/logger";
 import { offlineDB, type RetentionRecurrence } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 const DEFAULT_COUNT = 3;
 

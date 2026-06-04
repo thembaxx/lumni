@@ -1,5 +1,5 @@
-import { logError } from "@/lib/shared/logger";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
+import { logError } from "@/lib/shared/logger";
 import {
 	DEFAULT_FETCH_MAX_CHARS,
 	DEFAULT_SEARCH_RESULTS,

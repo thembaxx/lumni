@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { usePremium } from "@/lib/premium/premium-context";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
-import type { VisualContent } from "@/lib/visual-engine/types";
 import { logError } from "@/lib/shared/logger";
+import type { VisualContent } from "@/lib/visual-engine/types";
 
 interface VisualResult {
 	visual: VisualContent | null;
