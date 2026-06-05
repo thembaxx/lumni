@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { flashcardEngine } from "@/lib/flashcard-engine";
-import { calculateNextReview } from "@/lib/orchestrator/sm2";
+import { calculateNextReview } from "@/lib/flashcard-engine/algorithms";
 
 const getMasteryLevel = (interval: number) =>
 	flashcardEngine.getMasteryLevel(interval);

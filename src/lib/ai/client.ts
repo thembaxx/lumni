@@ -64,41 +64,32 @@ export class AIClient {
 
 		let lastError = "";
 
-		const results = await Promise.allSettled(
-			this.providers.map(async (provider) => {
-				const start = performance.now();
-				try {
-					const response = await provider.generate(request);
-					const durationMs = Math.round(performance.now() - start);
-					trackAILatency({
-						provider: provider.name,
-						durationMs,
-						success: true,
-						callType,
-						timestamp: new Date().toISOString(),
-					});
-					return { ...response, provider: provider.name };
-				} catch (err) {
-					logError("AiClientCallProvider", err);
-					const durationMs = Math.round(performance.now() - start);
-					trackAILatency({
-						provider: provider.name,
-						durationMs,
-						success: false,
-						callType,
-						timestamp: new Date().toISOString(),
-					});
-					throw err;
-				}
-			}),
-		);
-		for (const result of results) {
-			if (result.status === "fulfilled") {
-				return result.value;
+		for (const provider of this.providers) {
+			const start = performance.now();
+			try {
+				const response = await provider.generate(request);
+				const durationMs = Math.round(performance.now() - start);
+				trackAILatency({
+					provider: provider.name,
+					durationMs,
+					success: true,
+					callType,
+					timestamp: new Date().toISOString(),
+				});
+				return { ...response, provider: provider.name };
+			} catch (err) {
+				logError("AiClientCallProvider", err);
+				const durationMs = Math.round(performance.now() - start);
+				trackAILatency({
+					provider: provider.name,
+					durationMs,
+					success: false,
+					callType,
+					timestamp: new Date().toISOString(),
+				});
+				lastError = err instanceof Error ? err.message : String(err);
+				console.error(`[AI] Provider failed: ${provider.name}`, lastError);
 			}
-			const error = result.reason;
-			lastError = error instanceof Error ? error.message : String(error);
-			console.error(`[AI] Provider failed:`, lastError);
 		}
 
 		return {

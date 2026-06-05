@@ -1,25 +1,22 @@
-import { NextResponse } from "next/server";
 import { initAI, isAIConfigured } from "@/lib/ai/client";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import {
 	fetchGraph,
 	getCachedGraph,
 	storeGraph,
 } from "@/lib/knowledge-graph/service";
 
-export async function POST(request: Request) {
-	try {
-		const { subject, topic } = await request.json();
-		if (!subject || !topic) {
-			return NextResponse.json(
-				{ error: "subject and topic are required" },
-				{ status: 400 },
-			);
-		}
+export const POST = createRouteHandler({
+	auth: "none",
+	validate: (body: { subject?: string; topic?: string }) => {
+		if (!body.subject || !body.topic) return "subject and topic are required";
+		return null;
+	},
+	execute: async ({ body }: { body: { subject: string; topic: string } }) => {
+		const { subject, topic } = body;
 
 		const cached = await getCachedGraph(subject, topic);
-		if (cached) {
-			return NextResponse.json(cached);
-		}
+		if (cached) return cached;
 
 		if (!isAIConfigured()) {
 			initAI({
@@ -32,20 +29,12 @@ export async function POST(request: Request) {
 		const graph = await fetchGraph(subject, topic);
 
 		if (graph.nodes.length === 0) {
-			return NextResponse.json(
-				{ error: "Failed to generate knowledge graph" },
-				{ status: 500 },
-			);
+			throw new Error("Failed to generate knowledge graph");
 		}
 
 		await storeGraph(subject, topic, graph);
 
-		return NextResponse.json(graph);
-	} catch (error) {
-		console.error("[KnowledgeGraph] Error:", error);
-		return NextResponse.json(
-			{ error: "Internal server error" },
-			{ status: 500 },
-		);
-	}
-}
+		return graph;
+	},
+	errorLabel: "KnowledgeGraph",
+});

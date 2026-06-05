@@ -74,6 +74,27 @@ async function countConsecutivePasses(
 	return count;
 }
 
+/**
+ * Build the payload shape expected by the appwrite-flashcard-sync job.
+ * Only the fields that exist in the Appwrite collection are included.
+ */
+function syncCardPayload(card: FlashcardSM2): Record<string, unknown> {
+	return {
+		id: card.id,
+		front: card.front,
+		back: card.back,
+		subject: card.subject,
+		topic: card.topic,
+		easeFactor: card.easeFactor,
+		interval: card.interval,
+		repetitions: card.repetitions,
+		nextReview: card.nextReview,
+		lastReview: card.lastReview,
+		createdAt: card.createdAt,
+		updatedAt: card.updatedAt,
+	};
+}
+
 export class FlashcardEngine {
 	private db: EngineDependencies["db"];
 	private enqueueFn: EngineDependencies["enqueue"];
@@ -167,20 +188,9 @@ export class FlashcardEngine {
 		};
 		await this.db.flashcards.add(card);
 
-		this.enqueueFn("appwrite-flashcard-sync", {
-			id: card.id,
-			front: card.front,
-			back: card.back,
-			subject: card.subject,
-			topic: card.topic,
-			easeFactor: card.easeFactor,
-			interval: card.interval,
-			repetitions: card.repetitions,
-			nextReview: card.nextReview,
-			lastReview: card.lastReview,
-			createdAt: card.createdAt,
-			updatedAt: card.updatedAt,
-		}).catch((e: unknown) => console.warn("[FlashcardEngine] create sync:", e));
+		this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(card)).catch(
+			(e: unknown) => console.warn("[FlashcardEngine] create sync:", e),
+		);
 
 		return card;
 	}
@@ -319,20 +329,10 @@ export class FlashcardEngine {
 		await this.db.flashcards.put(updatedCard);
 		await this.saveReview(card.id, quality, updatedCard);
 
-		this.enqueueFn("appwrite-flashcard-sync", {
-			id: updatedCard.id,
-			front: updatedCard.front,
-			back: updatedCard.back,
-			subject: updatedCard.subject,
-			topic: updatedCard.topic,
-			easeFactor: updatedCard.easeFactor,
-			interval: updatedCard.interval,
-			repetitions: updatedCard.repetitions,
-			nextReview: updatedCard.nextReview,
-			lastReview: updatedCard.lastReview,
-			createdAt: updatedCard.createdAt,
-			updatedAt: updatedCard.updatedAt,
-		}).catch((e: unknown) => console.warn("[FlashcardEngine] review sync:", e));
+		this.enqueueFn(
+			"appwrite-flashcard-sync",
+			syncCardPayload(updatedCard),
+		).catch((e: unknown) => console.warn("[FlashcardEngine] review sync:", e));
 
 		return updatedCard;
 	}

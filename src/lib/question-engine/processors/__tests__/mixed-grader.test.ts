@@ -14,7 +14,7 @@ mock.module("@/lib/ai", () => ({
 
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
-import { grade } from "../graders/mixed";
+import { gradeMixed as grade } from "../graders/shared";
 
 const prompts = new PromptManager();
 

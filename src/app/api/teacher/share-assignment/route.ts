@@ -1,27 +1,30 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { shareAssignment } from "@/lib/share/share-service";
 
-export async function POST(request: Request) {
-	try {
-		const { assignmentId, topic, questionCount, dueDate } =
-			await request.json();
-		if (!assignmentId || !topic) {
-			return NextResponse.json(
-				{ error: "assignmentId and topic required" },
-				{ status: 400 },
-			);
-		}
+export const POST = createRouteHandler({
+	auth: "none",
+	validate: (body: { assignmentId?: string; topic?: string }) => {
+		if (!body.assignmentId || !body.topic)
+			return "assignmentId and topic required";
+		return null;
+	},
+	execute: async ({
+		body,
+	}: {
+		body: {
+			assignmentId: string;
+			topic: string;
+			questionCount?: number;
+			dueDate?: string;
+		};
+	}) => {
 		const result = await shareAssignment(
-			assignmentId,
-			topic,
-			questionCount,
-			dueDate,
+			body.assignmentId,
+			body.topic,
+			body.questionCount ?? 10,
+			body.dueDate,
 		);
-		return NextResponse.json(result);
-	} catch {
-		return NextResponse.json(
-			{ error: "Failed to share assignment" },
-			{ status: 500 },
-		);
-	}
-}
+		return result;
+	},
+	errorLabel: "ShareAssignment",
+});

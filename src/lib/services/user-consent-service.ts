@@ -1,14 +1,35 @@
+import type { DataAccess } from "@/lib/db/data-access";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+
 import type { UserConsent } from "@/types/user-consent";
+
+export interface UserConsentDependencies {
+	db: DataAccess;
+	enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
+}
+
+const DEFAULT_DEPS: UserConsentDependencies = {
+	db: dexieDataAccess,
+	enqueue: enqueue as UserConsentDependencies["enqueue"],
+};
 
 function nowISO(): string {
 	return new Date().toISOString();
 }
 
 export class UserConsentService {
+	private db: UserConsentDependencies["db"];
+	private enqueueFn: UserConsentDependencies["enqueue"];
+
+	constructor(deps?: Partial<UserConsentDependencies>) {
+		const resolved = { ...DEFAULT_DEPS, ...deps };
+		this.db = resolved.db;
+		this.enqueueFn = resolved.enqueue;
+	}
+
 	async get(userId: string): Promise<UserConsent | null> {
-		return (await dexieDataAccess.userConsents.get(userId)) ?? null;
+		return (await this.db.userConsents.get(userId)) ?? null;
 	}
 
 	async save(
@@ -24,7 +45,7 @@ export class UserConsentService {
 			>
 		>,
 	): Promise<UserConsent> {
-		const existing = await dexieDataAccess.userConsents.get(userId);
+		const existing = await this.db.userConsents.get(userId);
 		const now = nowISO();
 
 		const record: UserConsent = {
@@ -48,9 +69,9 @@ export class UserConsentService {
 			createdAt: existing?.createdAt ?? now,
 		};
 
-		await dexieDataAccess.userConsents.put(record);
+		await this.db.userConsents.put(record);
 
-		await enqueue("appwrite-consent-sync", {
+		await this.enqueueFn("appwrite-consent-sync", {
 			userId,
 			record,
 		});
@@ -59,7 +80,7 @@ export class UserConsentService {
 	}
 
 	async delete(userId: string): Promise<void> {
-		await dexieDataAccess.userConsents.delete(userId);
+		await this.db.userConsents.delete(userId);
 	}
 }
 

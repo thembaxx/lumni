@@ -1,14 +1,20 @@
 import * as calculation from "./graders/calculation";
-import * as dataResponse from "./graders/data-response";
-import * as diagram from "./graders/diagram";
 import * as essay from "./graders/essay";
 import * as longAnswer from "./graders/long-answer";
 import * as matching from "./graders/matching";
 import * as mcq from "./graders/mcq";
-import * as mixed from "./graders/mixed";
 import * as programming from "./graders/programming";
+import {
+	gradeDataResponse,
+	gradeDiagram,
+	gradeMixed,
+	gradeSourceBased,
+	hintDataResponse,
+	hintDiagram,
+	hintMixed,
+	hintSourceBased,
+} from "./graders/shared";
 import * as shortAnswer from "./graders/short-answer";
-import * as sourceBased from "./graders/source-based";
 import type { ProcessorConfig } from "./types";
 
 export const processorConfigs: ProcessorConfig[] = [
@@ -46,14 +52,14 @@ export const processorConfigs: ProcessorConfig[] = [
 	{
 		type: "diagram",
 		temperature: 0.7,
-		grade: diagram.grade,
-		hint: diagram.hint,
+		grade: gradeDiagram,
+		hint: hintDiagram,
 	},
 	{
 		type: "source-based",
 		temperature: 0.7,
-		grade: sourceBased.grade,
-		hint: sourceBased.hint,
+		grade: gradeSourceBased,
+		hint: hintSourceBased,
 	},
 	{
 		type: "programming",
@@ -64,8 +70,8 @@ export const processorConfigs: ProcessorConfig[] = [
 	{
 		type: "data-response",
 		temperature: 0.7,
-		grade: dataResponse.grade,
-		hint: dataResponse.hint,
+		grade: gradeDataResponse,
+		hint: hintDataResponse,
 	},
-	{ type: "mixed", temperature: 0.8, grade: mixed.grade, hint: mixed.hint },
+	{ type: "mixed", temperature: 0.8, grade: gradeMixed, hint: hintMixed },
 ];

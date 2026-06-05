@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
-import { grade } from "../graders/data-response";
+import { gradeDataResponse as grade } from "../graders/shared";
 
 const prompts = new PromptManager();
 
