@@ -47,7 +47,16 @@ export function estimateCallCost(
 const MAX_RECORDS = 1000;
 const STORAGE_KEY = "lumni_ai_latency";
 
+function isLocalStorageAvailable(): boolean {
+	try {
+		return typeof localStorage !== "undefined";
+	} catch {
+		return false;
+	}
+}
+
 function loadRecords(): AILatencyRecord[] {
+	if (!isLocalStorageAvailable()) return [];
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
 		return raw ? (JSON.parse(raw) as AILatencyRecord[]) : [];
@@ -58,6 +67,7 @@ function loadRecords(): AILatencyRecord[] {
 }
 
 function saveRecords(records: AILatencyRecord[]): void {
+	if (!isLocalStorageAvailable()) return;
 	try {
 		localStorage.setItem(
 			STORAGE_KEY,
@@ -155,6 +165,7 @@ export function getAILatencyStats() {
 }
 
 export function clearAILatencyRecords(): void {
+	if (!isLocalStorageAvailable()) return;
 	try {
 		localStorage.removeItem(STORAGE_KEY);
 	} catch (err) {

@@ -12,6 +12,7 @@ import {
 	useRef,
 } from "react";
 import { APPWRITE_ENDPOINT, account } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { getReadableErrorMessage } from "./errors";
 import {
@@ -109,12 +110,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		initRef.current = true;
 
 		async function init() {
-			const alreadyAttempted =
+			if (
 				typeof window !== "undefined" &&
-				localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true";
+				localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true"
+			) {
+				dispatch({ type: "SET_AUTH_READY", authReady: true });
+				return;
+			}
 
 			try {
-				const currentUser = await account.get();
+				const currentUser = await retryGetAccount();
 				const isAnon = currentUser.labels?.includes("anonymous") ?? false;
 				dispatch({
 					type: "SET_USER",
@@ -122,11 +127,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					status: "authenticated",
 					isAnonymous: isAnon,
 				});
-			} catch {
-				if (alreadyAttempted) {
-					dispatch({ type: "SET_AUTH_READY", authReady: true });
-					return;
-				}
+			} catch (err) {
+				logError("auth-init", err);
 
 				try {
 					await account.createAnonymousSession();
@@ -138,7 +140,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 						status: "authenticated",
 						isAnonymous: true,
 					});
-				} catch {
+				} catch (anonErr) {
+					logError("auth-anonymous", anonErr);
+					localStorage.setItem(ANONYMOUS_ATTEMPTED_KEY, "true");
 					dispatch({
 						type: "SET_USER",
 						user: null,
@@ -148,6 +152,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				}
 			} finally {
 				dispatch({ type: "SET_AUTH_READY", authReady: true });
+			}
+		}
+
+		async function retryGetAccount(
+			retries = 2,
+			delay = 1000,
+		): Promise<Models.User<Models.Preferences>> {
+			for (let attempt = 0; ; attempt++) {
+				try {
+					return await account.get();
+				} catch (err) {
+					if (attempt < retries) {
+						await new Promise((r) => setTimeout(r, delay * (attempt + 1)));
+						continue;
+					}
+					throw err;
+				}
 			}
 		}
 

@@ -53,12 +53,11 @@ export default async function RootLayout({
 						__html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else if(t==="light"){document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}else{if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}}}catch(e){}})()`,
 					}}
 				/>
-				<Script
-					id="sw-cleanup-dev"
-					strategy="beforeInteractive"
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: dev-only SW cleanup
+				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: dev SW cleanup
 					dangerouslySetInnerHTML={{
-						__html: `if(location.hostname==="localhost"&&"serviceWorker"in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister()})})}`,
+						__html:
+							'if(location.hostname==="localhost"&&"serviceWorker"in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){for(var i=0;i<rs.length;i++){rs[i].unregister()}});navigator.serviceWorker.register("/sw.js").then(function(){navigator.serviceWorker.getRegistrations().then(function(rs){for(var i=0;i<rs.length;i++){rs[i].unregister()}})})}',
 					}}
 				/>
 				{children}

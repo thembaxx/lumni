@@ -36,10 +36,14 @@ export async function getCachedGraph(
 	subject: string,
 	topic: string,
 ): Promise<KnowledgeGraph | null> {
-	const key = buildKnowledgeCacheKey(subject, topic);
-	const cached = await dexieDataAccess.knowledgeGraph.get(key);
-	if (cached && cached.expiresAt > Date.now()) {
-		return cached.graph;
+	try {
+		const key = buildKnowledgeCacheKey(subject, topic);
+		const cached = await dexieDataAccess.knowledgeGraph.get(key);
+		if (cached && cached.expiresAt > Date.now()) {
+			return cached.graph;
+		}
+	} catch {
+		// IndexedDB unavailable (server-side)
 	}
 	return null;
 }
@@ -49,12 +53,16 @@ export async function storeGraph(
 	topic: string,
 	graph: KnowledgeGraph,
 ): Promise<void> {
-	const key = buildKnowledgeCacheKey(subject, topic);
-	const entry: CachedGraph = {
-		key,
-		graph,
-		createdAt: Date.now(),
-		expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
-	};
-	await dexieDataAccess.knowledgeGraph.put(entry);
+	try {
+		const key = buildKnowledgeCacheKey(subject, topic);
+		const entry: CachedGraph = {
+			key,
+			graph,
+			createdAt: Date.now(),
+			expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
+		};
+		await dexieDataAccess.knowledgeGraph.put(entry);
+	} catch {
+		// IndexedDB unavailable (server-side)
+	}
 }
