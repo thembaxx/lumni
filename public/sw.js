@@ -57,10 +57,15 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   if (request.method !== 'GET') return;
+  if (request.mode === 'websocket') return;
+  if (request.destination === '') return;
 
   const url = new URL(request.url);
 
   if (url.origin !== location.origin) return;
+
+  // Skip internal Next.js dev server / Vite HMR traffic.
+  if (url.pathname.startsWith('/__next') || url.pathname.startsWith('/@vite') || url.pathname.startsWith('/node_modules/.vite')) return;
 
   // Build artifacts (JS/CSS chunks, RSC payloads, optimized images): pass through.
   // Browser HTTP cache + Vercel's immutable headers handle these correctly and
@@ -99,15 +104,16 @@ async function networkFirstHtml(request) {
 async function staleWhileRevalidate(request, cacheName) {
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
-  const networkPromise = fetch(request)
-    .then((response) => {
-      if (response && response.ok) {
-        cache.put(request, response.clone()).catch(() => {});
-      }
-      return response;
-    })
-    .catch(() => cached);
-  return cached || networkPromise;
+  try {
+    const response = await fetch(request);
+    if (response && response.ok) {
+      cache.put(request, response.clone()).catch(() => {});
+    }
+    return response;
+  } catch {
+    if (cached) return cached;
+    return new Response(null, { status: 503, statusText: 'Offline' });
+  }
 }
 
 async function networkFirst(request, cacheName) {
