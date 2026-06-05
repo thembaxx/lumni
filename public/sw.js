@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `lumni-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `lumni-runtime-${CACHE_VERSION}`;
 const HTML_CACHE = `lumni-html-${CACHE_VERSION}`;
@@ -26,6 +26,16 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  // Self-unregister in dev mode so the SW never interferes with HMR.
+  if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+    event.waitUntil(
+      self.registration.unregister().then(() =>
+        caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n)))),
+      ),
+    );
+    return;
+  }
+
   const keep = new Set([CACHE_NAME, RUNTIME_CACHE, HTML_CACHE]);
   event.waitUntil(
     caches.keys().then((cacheNames) =>

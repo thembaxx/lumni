@@ -44,7 +44,7 @@ export function MasteryHeatmap() {
 	const [selectedSubject, setSelectedSubject] = useState("");
 
 	const { data: subjects = [] } = useQuery({
-		queryKey: ["subjects"],
+		queryKey: ["admin-subjects", "heatmap"],
 		queryFn: async () => {
 			const res = await fetch("/api/admin/subjects");
 			if (!res.ok) return [];
@@ -97,7 +97,7 @@ export function MasteryHeatmap() {
 					className="flex-1 rounded-lg border border-border bg-card px-3 py-1.5 text-sm"
 				>
 					<option value="">Select a subject</option>
-					{subjects.map((s) => (
+					{(Array.isArray(subjects) ? subjects : []).map((s) => (
 						<option key={s.id || s.code} value={s.code || s.id}>
 							{s.name}
 						</option>

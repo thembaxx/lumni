@@ -68,15 +68,15 @@ function signUpReducer(state: SignUpState, action: SignUpAction): SignUpState {
 
 function SignUpForm() {
 	const { push, refresh } = useRouter();
-	const { get } = useSearchParams();
-	const redirect = safeRedirect(get("redirect"));
+	const searchParams = useSearchParams();
+	const redirect = safeRedirect(searchParams.get("redirect"));
 	const { signUp, error } = useAuth();
 
 	const [state, dispatch] = useReducer(signUpReducer, initialState);
 	const { name, email, password, showPassword, loading } = state;
 	const t = useTranslations();
 
-	const referralCode = get("ref");
+	const referralCode = searchParams.get("ref");
 
 	const handleSignUp = useCallback(
 		async (e: React.FormEvent) => {
