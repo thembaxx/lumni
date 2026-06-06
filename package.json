@@ -93,7 +93,7 @@
 		"zustand": "^5.0.13"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.15",
+		"@biomejs/biome": "2.4.16",
 		"@next/bundle-analyzer": "^16.2.6",
 		"@playwright/test": "^1.60.0",
 		"@storybook/nextjs": "^10.4.1",
