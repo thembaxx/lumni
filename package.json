@@ -65,7 +65,7 @@
 		"nanoid": "^5.1.11",
 		"next": "16.2.6",
 		"next-intl": "^4.12.0",
-		"node-appwrite": "^25.2.0",
+		"node-appwrite": "^26.1.0",
 		"react": "19.2.6",
 		"react-day-picker": "^10.0.1",
 		"react-dom": "19.2.6",
