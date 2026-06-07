@@ -9,6 +9,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
 import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -25,7 +26,13 @@ export function __setDepsForTesting(deps: { db: DataAccess }) {
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 
-type BoltPhase = "resolving" | "loading" | "answering" | "error" | "empty";
+type BoltPhase =
+	| "resolving"
+	| "loading"
+	| "answering"
+	| "celebrating"
+	| "error"
+	| "empty";
 
 export interface BoltResult {
 	question: Question;
@@ -35,6 +42,7 @@ export interface BoltResult {
 interface DailyBoltOverlayProps {
 	onComplete: (result: BoltResult) => void;
 	onSkip: () => void;
+	streak: number;
 }
 
 async function resolveWeakestSubject(): Promise<string> {
@@ -75,6 +83,7 @@ function formatSubjectLabel(subject: string): string {
 export function DailyBoltOverlay({
 	onComplete,
 	onSkip,
+	streak,
 }: DailyBoltOverlayProps) {
 	const [phase, setPhase] = useState<BoltPhase>("resolving");
 	const [subject, setSubject] = useState("mathematics");
@@ -126,6 +135,10 @@ export function DailyBoltOverlay({
 		[question],
 	);
 
+	const handleFinish = useCallback(() => {
+		setPhase("celebrating");
+	}, []);
+
 	const handleRetry = useCallback(() => {
 		setPhase("loading");
 		void refetch();
@@ -137,6 +150,7 @@ export function DailyBoltOverlay({
 	const showLoading = phase === "resolving" || phase === "loading";
 	const showError = phase === "error";
 	const showEmpty = phase === "empty";
+	const showCelebrating = phase === "celebrating";
 
 	return (
 		<div className="fixed inset-0 z-overlay flex flex-col overflow-hidden bg-system-background">
@@ -208,7 +222,7 @@ export function DailyBoltOverlay({
 								<div className="sticky bottom-0 z-content -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
 									<div className="mx-auto w-full max-w-2xl">
 										<Button
-											onClick={() => onComplete(boltResult)}
+											onClick={handleFinish}
 											size="lg"
 											className="w-full gap-2 text-base"
 										>
@@ -217,6 +231,24 @@ export function DailyBoltOverlay({
 									</div>
 								</div>
 							)}
+						</m.section>
+					)}
+
+					{showCelebrating && (
+						<m.section
+							key="celebrating"
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center pt-2"
+						>
+							<BoltCelebration
+								correct={boltResult?.correct ?? false}
+								subjectLabel={subjectLabel}
+								streak={streak}
+								onContinue={() => boltResult && onComplete(boltResult)}
+							/>
 						</m.section>
 					)}
 

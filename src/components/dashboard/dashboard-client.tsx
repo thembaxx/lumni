@@ -74,6 +74,14 @@ export function DashboardClient({
 			updateStreak();
 			const accuracy = result.correct ? 100 : 0;
 			addXp(1, accuracy, currentStreak);
+			checkAndUnlockAchievements(
+				totalQuestionsAnswered + 1,
+				accuracy,
+				currentStreak,
+				levelInfo.level,
+				result.correct,
+			);
+			checkForRewardChests();
 			trackQuestionResult({
 				subjectId: result.question.subject,
 				topicId: result.question.topic,
@@ -112,7 +120,16 @@ export function DashboardClient({
 			});
 			setShowDailyBolt(false);
 		},
-		[updateStreak, addXp, currentStreak, addWrongAnswer],
+		[
+			updateStreak,
+			addXp,
+			currentStreak,
+			addWrongAnswer,
+			checkAndUnlockAchievements,
+			checkForRewardChests,
+			totalQuestionsAnswered,
+			levelInfo,
+		],
 	);
 
 	const handleBoltSkip = useCallback(() => {
@@ -221,6 +238,7 @@ export function DashboardClient({
 					<DailyBoltOverlay
 						onComplete={handleBoltComplete}
 						onSkip={handleBoltSkip}
+						streak={currentStreak}
 					/>
 				) : !isLoaded ? (
 					<m.div
