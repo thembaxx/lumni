@@ -1,9 +1,9 @@
+import type { AIProvider } from "../types";
 import {
 	createUniformProvider,
 	openaiNormalizer,
 	openaiResponseParser,
 } from "../uniform-adapter";
-import type { AIProvider } from "../types";
 
 const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 

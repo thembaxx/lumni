@@ -21,7 +21,9 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export function ProfileTabRefactored() {
 	const { user, updateProfile, signOut } = useAuth();
@@ -100,8 +102,8 @@ export function ProfileTabRefactored() {
 						onExport: async () => {
 							try {
 								const [{ exportService }] = await Promise.all([
-										import("@/lib/export"),
-									]);
+									import("@/lib/export"),
+								]);
 								const [quizAttempts, examSessions] = await Promise.all([
 									_deps.db.quizAttempts
 										.orderBy("completedAt")

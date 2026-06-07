@@ -1,9 +1,9 @@
-import { describe, test, expect, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
+import type { Collection, DataAccess } from "@/lib/db/data-access";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
 import { QuizPackService } from "../service";
-import { PACK_EXPIRY_DAYS } from "../types";
-import type { Collection, DataAccess } from "@/lib/db/data-access";
 import type { QuizPack, QuizPackQuestion } from "../types";
+import { PACK_EXPIRY_DAYS } from "../types";
 
 class PatchedCollection<T> implements Collection<T> {
 	private inner: Collection<T>;
@@ -26,9 +26,7 @@ class PatchedCollection<T> implements Collection<T> {
 	async delete(): Promise<void> {
 		await this.onDelete();
 	}
-	async modify(
-		changes: Partial<T> | ((record: T) => void),
-	): Promise<number> {
+	async modify(changes: Partial<T> | ((record: T) => void)): Promise<number> {
 		return this.inner.modify(changes);
 	}
 	reverse(): Collection<T> {
@@ -75,24 +73,25 @@ describe("QuizPackService", () => {
 				where: (index: string) => ReturnType<typeof rawDb.packQuestions.where>;
 			}
 		).where.bind(rawDb.packQuestions);
-		(rawDb.packQuestions as unknown as { where: (index: string) => unknown }).where =
-			(index: string) => {
-				const clause = origWhere(index);
-				return {
-					...clause,
-					equals: (val: unknown) => {
-						const coll = clause.equals(val);
-						return new PatchedCollection(coll, async () => {
-							const items = await coll.toArray();
-							for (const item of items) {
-								await rawDb.packQuestions.delete(
-									(item as unknown as { id: number }).id,
-								);
-							}
-						});
-					},
-				};
+		(
+			rawDb.packQuestions as unknown as { where: (index: string) => unknown }
+		).where = (index: string) => {
+			const clause = origWhere(index);
+			return {
+				...clause,
+				equals: (val: unknown) => {
+					const coll = clause.equals(val);
+					return new PatchedCollection(coll, async () => {
+						const items = await coll.toArray();
+						for (const item of items) {
+							await rawDb.packQuestions.delete(
+								(item as unknown as { id: number }).id,
+							);
+						}
+					});
+				},
 			};
+		};
 
 		db = rawDb as unknown as DataAccess;
 		service = new QuizPackService({ db });
@@ -251,9 +250,7 @@ describe("QuizPackService", () => {
 
 	describe("touchPack", () => {
 		test("updates lastUsedAt to current time", async () => {
-			db.quizPacks.seed([
-				seedPack({ id: "pack_1", lastUsedAt: null }),
-			]);
+			db.quizPacks.seed([seedPack({ id: "pack_1", lastUsedAt: null })]);
 
 			await service.touchPack("pack_1");
 

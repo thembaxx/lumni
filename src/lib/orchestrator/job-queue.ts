@@ -63,7 +63,9 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"prune-stale-questions": 10,
 };
 
-export function createQueueCore(jobs: DataAccessTable<JobRecord, number> = dexieDataAccess.jobs) {
+export function createQueueCore(
+	jobs: DataAccessTable<JobRecord, number> = dexieDataAccess.jobs,
+) {
 	return new QueueCore<JobRecord>(jobs);
 }
 export const queueCore = createQueueCore();

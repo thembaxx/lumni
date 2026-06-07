@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
-import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import type { DataAccess } from "@/lib/db/data-access";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
@@ -13,7 +13,9 @@ import {
 } from "./sync-factory";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export const appwriteSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-sync"];

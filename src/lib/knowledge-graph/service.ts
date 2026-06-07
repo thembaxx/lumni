@@ -8,7 +8,9 @@ import type { CachedGraph, KnowledgeGraph } from "./types";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 const KNOWLEDGE_GRAPH_TTL = 7 * 24 * 60 * 60 * 1000;
 

@@ -4,8 +4,12 @@ import type { RagContext, WebSource } from "./types";
 export type TinyFishDB = typeof dexieDataAccess;
 
 let _deps: TinyFishDB | null = null;
-export function __setDepsForTesting(deps: TinyFishDB) { _deps = deps; }
-function db(): TinyFishDB { return _deps ?? dexieDataAccess; }
+export function __setDepsForTesting(deps: TinyFishDB) {
+	_deps = deps;
+}
+function db(): TinyFishDB {
+	return _deps ?? dexieDataAccess;
+}
 
 export interface TinyFishCacheEntry {
 	key: string;
@@ -67,8 +71,8 @@ export async function clearExpiredCache(): Promise<number> {
 
 export async function getTodayUsageCount(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const entry = await db().tinyfishUsage
-		.where("[userId+date]")
+	const entry = await db()
+		.tinyfishUsage.where("[userId+date]")
 		.equals([userId, date])
 		.first();
 	return entry?.count ?? 0;
@@ -76,8 +80,8 @@ export async function getTodayUsageCount(userId: string): Promise<number> {
 
 export async function incrementTodayUsage(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const existing = await db().tinyfishUsage
-		.where("[userId+date]")
+	const existing = await db()
+		.tinyfishUsage.where("[userId+date]")
 		.equals([userId, date])
 		.first();
 

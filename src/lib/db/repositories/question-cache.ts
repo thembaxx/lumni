@@ -45,7 +45,9 @@ export class QuestionCacheRepository {
 	}
 }
 
-export function createQuestionCacheRepository(db: DataAccess = dexieDataAccess) {
+export function createQuestionCacheRepository(
+	db: DataAccess = dexieDataAccess,
+) {
 	return new QuestionCacheRepository(db);
 }
 export const questionCacheRepo = createQuestionCacheRepository();

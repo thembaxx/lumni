@@ -1,8 +1,10 @@
-import { dexieDataAccess, type DataAccess } from "@/lib/db";
+import { type DataAccess, dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export async function flushOfflineData(userId: string): Promise<void> {
 	const [
@@ -50,9 +52,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 							totalQuestions: a.totalQuestions,
 							duration: a.duration,
 							completedAt: a.completedAt,
-						}).then(() =>
-							_deps.db.quizAttempts.update(a.id ?? 0, { userId }),
-						),
+						}).then(() => _deps.db.quizAttempts.update(a.id ?? 0, { userId })),
 					]
 				: [],
 		),

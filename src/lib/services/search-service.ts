@@ -2,14 +2,19 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 
-type SearchDb = Pick<DataAccess, "questions" | "wrongAnswers" | "quizAttempts" | "examSessions" | "progress">;
+type SearchDb = Pick<
+	DataAccess,
+	"questions" | "wrongAnswers" | "quizAttempts" | "examSessions" | "progress"
+>;
 const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
 
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage } from "@/lib/utils/storage";
 
-export function __setDepsForTesting(deps: { db: SearchDb }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: SearchDb }) {
+	_deps = deps;
+}
 
 export interface SearchResultItem {
 	id: string;

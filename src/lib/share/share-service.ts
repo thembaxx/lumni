@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -10,7 +10,9 @@ import { syncManager } from "@/lib/sync/sync-manager";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export interface SharedQuestionRecord extends Omit<SchemaRecord, "question"> {
 	question: Question;

@@ -1,11 +1,13 @@
-import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import type { DataAccess } from "@/lib/db/data-access";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "./storage";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export interface StudySession {
 	id: string;

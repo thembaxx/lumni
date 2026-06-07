@@ -8,7 +8,9 @@ let _deps = DEFAULT_DEPS;
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 const NOTIF_KEY = "lumni_notification_subscription";
 export const NOTIF_SETTINGS_KEY = "lumni_notification_settings";

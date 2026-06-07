@@ -1,9 +1,11 @@
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { dexieDataAccess, type DataAccess } from "@/lib/db";
+import { type DataAccess, dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 let cachedContext: string | null = null;
 let contextLoadedAt = 0;

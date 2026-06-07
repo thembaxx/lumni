@@ -10,7 +10,9 @@ import type { DataAccess } from "@/lib/db/data-access";
 import { exportService } from "@/lib/export";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 type ExportState = "idle" | "exporting" | "printing" | "csv-exporting";
 

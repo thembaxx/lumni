@@ -1,8 +1,7 @@
-export type { ServiceResult } from "@/lib/shared/service-result";
-export { success, failure } from "@/lib/shared/service-result";
-
 export type { GradeEvent, GradeEventSubscriber } from "@/lib/grade-event-bus";
 export { GradeEventBus, gradeEventBus } from "@/lib/grade-event-bus";
+export type { ServiceResult } from "@/lib/shared/service-result";
+export { failure, success } from "@/lib/shared/service-result";
 export { aiSolver } from "./ai-solver";
 export { AnalyticsService, analyticsService } from "./analytics-service";
 export { chatImageService } from "./chat-image";

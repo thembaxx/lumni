@@ -66,9 +66,7 @@ export function createUniformProvider(config: ProviderConfig): AIProvider {
 
 // --- Normalizers ---
 
-export function openaiNormalizer(
-	request: AIRequest,
-): Record<string, unknown> {
+export function openaiNormalizer(request: AIRequest): Record<string, unknown> {
 	const messages: Array<{ role: string; content: string }> =
 		request.messages.map((m) => ({
 			role: m.role === "model" ? "assistant" : m.role,
@@ -87,9 +85,7 @@ export function openaiNormalizer(
 	};
 }
 
-export function geminiNormalizer(
-	request: AIRequest,
-): Record<string, unknown> {
+export function geminiNormalizer(request: AIRequest): Record<string, unknown> {
 	const contents = request.messages.map((m) => ({
 		role: m.role === "model" ? "model" : "user",
 		parts: [{ text: m.content }],

@@ -1,5 +1,8 @@
-import { createUniformProvider, geminiResponseParser } from "../uniform-adapter";
 import type { AIProvider, AIRequest } from "../types";
+import {
+	createUniformProvider,
+	geminiResponseParser,
+} from "../uniform-adapter";
 
 async function geminiWithImagesNormalizer(
 	request: AIRequest,

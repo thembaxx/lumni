@@ -8,7 +8,9 @@ import type { ExamSlot } from "./types";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export { getSubjectAbbr, getSubjectColor };
 

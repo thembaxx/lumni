@@ -1,7 +1,9 @@
-import { dexieDataAccess, type DataAccess } from "@/lib/db";
+import { type DataAccess, dexieDataAccess } from "@/lib/db";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export interface ChunkedSearchResult {
 	id: string;
@@ -74,9 +76,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await _deps.db.notes
-				.limit(MAX_RESULTS_PER_TABLE)
-				.toArray();
+			const all = await _deps.db.notes.limit(MAX_RESULTS_PER_TABLE).toArray();
 			return all
 				.filter((n) => scoreMatch(`${n.title} ${n.content}`, q) > 0)
 				.map((n) => ({

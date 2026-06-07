@@ -18,7 +18,10 @@ import type { DataAccess } from "@/lib/db/data-access";
 import type { Question } from "@/lib/question-engine/types";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
+
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 

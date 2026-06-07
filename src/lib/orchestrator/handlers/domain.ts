@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
-import { dexieDataAccess, type DataAccess } from "@/lib/db";
+import { type DataAccess, dexieDataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
@@ -17,7 +17,9 @@ import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 export const analyticsSync: JobHandler = async (payload) => {
 	const { events } = payload as JobPayloadByType["analytics-sync"];

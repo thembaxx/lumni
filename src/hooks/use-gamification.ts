@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
-import { dexieDataAccess, type DataAccess } from "@/lib/db";
+import { type DataAccess, dexieDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
 
 import { gamificationEngine } from "@/lib/gamification-engine";
@@ -11,7 +11,10 @@ import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
+
 import type {
 	Achievement,
 	LevelInfo,
