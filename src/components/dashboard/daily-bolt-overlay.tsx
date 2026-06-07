@@ -166,11 +166,9 @@ export function DailyBoltOverlay({
 						)}
 					</div>
 				</div>
-				{phase !== "answering" && (
-					<Button variant="outline" size="sm" onClick={onSkip}>
-						{skipLabel}
-					</Button>
-				)}
+				<Button variant="outline" size="sm" onClick={onSkip}>
+					{skipLabel}
+				</Button>
 			</header>
 
 			<main className="relative z-content flex flex-1 flex-col overflow-y-auto px-5 pb-8">

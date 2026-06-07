@@ -20,6 +20,7 @@ function buildCsp(isDev: boolean): string {
 	const connectSrc = [
 		"'self'",
 		"https://*.cloud.appwrite.io",
+		"wss://*.cloud.appwrite.io",
 		"https://*.uploadthing.com",
 		"https://api.iconify.design",
 		"https://api.simplesvg.com",
@@ -33,7 +34,7 @@ function buildCsp(isDev: boolean): string {
 		`script-src ${scriptSrc.join(" ")}`,
 		"style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net",
 		"img-src 'self' data: blob: https://*.cloud.appwrite.io https://*.uploadthing.com https://commons.wikimedia.org https://upload.wikimedia.org https://api.dicebear.com https://api.iconify.design https://api.qrserver.com",
-		"font-src 'self' data: fonts.gstatic.com",
+		"font-src 'self' data: fonts.gstatic.com cdn.jsdelivr.net",
 		`connect-src ${connectSrc.join(" ")}`,
 		"worker-src 'self' blob:",
 		"frame-ancestors 'none'",

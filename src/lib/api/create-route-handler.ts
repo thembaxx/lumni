@@ -84,7 +84,16 @@ export function createRouteHandler<
 
 			if (auth !== "none") {
 				if (auth === "admin") {
-					await requireAdmin();
+					try {
+						await requireAdmin();
+					} catch (err) {
+						const msg =
+							err instanceof Error ? err.message : "Admin access required";
+						if (msg.includes("Authentication required")) {
+							throw new HttpError(401, msg);
+						}
+						throw new HttpError(403, msg);
+					}
 				} else {
 					if (!budget) {
 						userId = await getAuthenticatedUserId();

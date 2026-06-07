@@ -5,6 +5,9 @@ import {
 	getCachedGraph,
 	storeGraph,
 } from "@/lib/knowledge-graph/service";
+import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
+
+const EMPTY_GRAPH: KnowledgeGraph = { nodes: [], edges: [] };
 
 export const POST = createRouteHandler({
 	auth: "none",
@@ -24,12 +27,15 @@ export const POST = createRouteHandler({
 				nvidiaApiKey: process.env.NVIDIA_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
 			});
+			if (!isAIConfigured()) {
+				return EMPTY_GRAPH;
+			}
 		}
 
 		const graph = await fetchGraph(subject, topic);
 
 		if (graph.nodes.length === 0) {
-			throw new Error("Failed to generate knowledge graph");
+			return EMPTY_GRAPH;
 		}
 
 		await storeGraph(subject, topic, graph);

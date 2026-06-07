@@ -37,7 +37,11 @@ export async function fetchSubjects(userId: string) {
 }
 
 export async function fetchUserProgress(userId: string) {
-	await verifyAuth(userId);
+	try {
+		await verifyAuth(userId);
+	} catch {
+		return { questionsAnswered: 0, accuracy: 0, streak: 0 };
+	}
 	const targetUserId = userId;
 
 	const [progressArr, sessions] = await Promise.all([
