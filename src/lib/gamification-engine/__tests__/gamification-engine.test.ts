@@ -1,4 +1,10 @@
 import { describe, expect, test } from "bun:test";
+import {
+	generateDailyChallenges,
+	XP_PER_CORRECT,
+	XP_PER_QUESTION,
+	XP_STREAK_BONUS,
+} from "@/types/gamification";
 import { GamificationEngine } from "../gamification-engine";
 
 function makeEngine() {
@@ -125,6 +131,47 @@ describe("GamificationEngine", () => {
 			const { leveledUp } = engine.addXp(data, 1, 50, 0);
 
 			expect(leveledUp).toBeNull();
+		});
+
+		test("awards bonus XP when challenge becomes newly completed", () => {
+			const engine = makeEngine();
+			const data = makeDefault();
+			const withChallenges = {
+				...data,
+				dailyChallenges: generateDailyChallenges().map((c) =>
+					c.id === "daily_questions"
+						? { ...c, progress: 9, completed: false }
+						: { ...c, progress: 0, completed: false },
+				),
+			};
+
+			const { data: result, xpGained } = engine.addXp(withChallenges, 1, 50, 0);
+
+			const expectedBase = XP_PER_QUESTION + XP_PER_CORRECT;
+			expect(xpGained).toBeGreaterThan(expectedBase);
+			const questionsChallenge = result.dailyChallenges.find(
+				(c) => c.id === "daily_questions",
+			);
+			expect(questionsChallenge?.completed).toBe(true);
+			expect(questionsChallenge?.progress).toBe(10);
+		});
+
+		test("does not award bonus XP for already-completed challenges", () => {
+			const engine = makeEngine();
+			const data = makeDefault();
+			const withCompleted = {
+				...data,
+				dailyChallenges: generateDailyChallenges().map((c) => ({
+					...c,
+					progress: c.target,
+					completed: true,
+				})),
+			};
+
+			const { xpGained } = engine.addXp(withCompleted, 1, 100, 5);
+
+			const expectedBase = XP_PER_QUESTION + XP_PER_CORRECT + XP_STREAK_BONUS;
+			expect(xpGained).toBe(expectedBase);
 		});
 	});
 

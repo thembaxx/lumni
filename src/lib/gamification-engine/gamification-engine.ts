@@ -115,55 +115,73 @@ export class GamificationEngine {
 		const newLevelInfo = calculateLevel(newTotalXp);
 		const leveledUp = newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
 
+		let bonusXp = 0;
 		const updatedChallenges = data.dailyChallenges.map((challenge) => {
 			if (challenge.completed) return challenge;
+			let updated: typeof challenge;
 			switch (challenge.type) {
-				case "questions":
-					return {
+				case "questions": {
+					const newProgress = Math.min(
+						challenge.progress + amount,
+						challenge.target,
+					);
+					updated = {
 						...challenge,
-						progress: Math.min(challenge.progress + amount, challenge.target),
-						completed: challenge.progress + amount >= challenge.target,
+						progress: newProgress,
+						completed: newProgress >= challenge.target,
 					};
+					break;
+				}
 				case "accuracy":
 					if (accuracy > challenge.progress) {
-						return {
+						updated = {
 							...challenge,
 							progress: accuracy,
 							completed: accuracy >= challenge.target,
 						};
+					} else {
+						updated = challenge;
 					}
-					return challenge;
+					break;
 				case "streak":
 					if (streak >= challenge.target) {
-						return { ...challenge, progress: streak, completed: true };
+						updated = { ...challenge, progress: streak, completed: true };
+					} else {
+						updated = {
+							...challenge,
+							progress: Math.max(challenge.progress, streak),
+						};
 					}
-					return {
-						...challenge,
-						progress: Math.max(challenge.progress, streak),
-					};
+					break;
 				case "subject":
 					if (
 						subject &&
 						challenge.title.toLowerCase().includes(subject.toLowerCase())
 					) {
-						return { ...challenge, progress: 1, completed: true };
+						updated = { ...challenge, progress: 1, completed: true };
+					} else {
+						updated = challenge;
 					}
-					return challenge;
+					break;
 				default:
-					return challenge;
+					updated = challenge;
 			}
+			if (updated.completed && !challenge.completed) {
+				bonusXp += challenge.xpReward;
+			}
+			return updated;
 		});
 
 		return {
 			data: {
 				...data,
-				xp: newXp,
-				totalXp: newTotalXp,
+				xp: newXp + bonusXp,
+				totalXp: newTotalXp + bonusXp,
 				totalQuestionsAnswered: data.totalQuestionsAnswered + amount,
 				dailyChallenges: updatedChallenges,
 			},
 			leveledUp,
-			xpGained: totalXpGain,
+			xpGained: totalXpGain + bonusXp,
 		};
 	}
 
