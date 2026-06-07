@@ -33,4 +33,7 @@ export class ConflictRepository {
 	}
 }
 
-export const conflictRepo = new ConflictRepository(dexieDataAccess);
+export function createConflictRepository(db: DataAccess = dexieDataAccess) {
+	return new ConflictRepository(db);
+}
+export const conflictRepo = createConflictRepository();

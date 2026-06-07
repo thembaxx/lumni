@@ -14,7 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { Question } from "@/lib/question-engine/types";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 
@@ -32,7 +36,7 @@ interface DailyBoltOverlayProps {
 
 async function resolveWeakestSubject(): Promise<string> {
 	try {
-		const all = await dexieDataAccess.competencies.toArray();
+		const all = await _deps.db.competencies.toArray();
 		if (all.length === 0) return "mathematics";
 
 		const bySubject = new Map<string, number[]>();

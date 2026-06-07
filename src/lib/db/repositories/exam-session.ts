@@ -54,4 +54,7 @@ export class ExamSessionRepository {
 	}
 }
 
-export const examSessionRepo = new ExamSessionRepository(dexieDataAccess);
+export function createExamSessionRepository(db: DataAccess = dexieDataAccess) {
+	return new ExamSessionRepository(db);
+}
+export const examSessionRepo = createExamSessionRepository();

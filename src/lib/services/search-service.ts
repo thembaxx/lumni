@@ -1,7 +1,15 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+
+type SearchDb = Pick<DataAccess, "questions" | "wrongAnswers" | "quizAttempts" | "examSessions" | "progress">;
+const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
+let _deps: { db: SearchDb } = DEFAULT_DEPS;
+
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage } from "@/lib/utils/storage";
+
+export function __setDepsForTesting(deps: { db: SearchDb }) { _deps = deps; }
 
 export interface SearchResultItem {
 	id: string;
@@ -30,7 +38,7 @@ function textRelevant(text: string, query: string): boolean {
 }
 
 function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
-	return dexieDataAccess.questions.toArray().then((rows) => {
+	return _deps.db.questions.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const row of rows) {
 			const questions: Array<{
@@ -57,7 +65,7 @@ function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
-	return dexieDataAccess.wrongAnswers.toArray().then((rows) => {
+	return _deps.db.wrongAnswers.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (
@@ -142,7 +150,7 @@ function searchLocalStorageNotes(query: string): SearchResultItem[] {
 }
 
 function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
-	return dexieDataAccess.quizAttempts.toArray().then((rows) => {
+	return _deps.db.quizAttempts.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.odSubject, query)) {
@@ -162,7 +170,7 @@ function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
-	return dexieDataAccess.examSessions.toArray().then((rows) => {
+	return _deps.db.examSessions.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.paperId, query)) {
@@ -182,7 +190,7 @@ function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieProgress(query: string): Promise<SearchResultItem[]> {
-	return dexieDataAccess.progress.toArray().then((rows) => {
+	return _deps.db.progress.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const r of rows) {
 			if (textRelevant(r.odSubjectId, query)) {

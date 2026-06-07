@@ -1,14 +1,5 @@
-export type ServiceResult<T> =
-	| { success: true; data: T }
-	| { success: false; error: string };
-
-export function success<T>(data: T): ServiceResult<T> {
-	return { success: true, data };
-}
-
-export function failure<T = never>(error: string): ServiceResult<T> {
-	return { success: false, error };
-}
+export type { ServiceResult } from "@/lib/shared/service-result";
+export { success, failure } from "@/lib/shared/service-result";
 
 export type { GradeEvent, GradeEventSubscriber } from "@/lib/grade-event-bus";
 export { GradeEventBus, gradeEventBus } from "@/lib/grade-event-bus";

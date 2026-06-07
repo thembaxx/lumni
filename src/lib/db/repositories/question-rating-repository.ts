@@ -48,6 +48,9 @@ export class DexieQuestionRatingRepository implements QuestionRatingRepository {
 	}
 }
 
-export const questionRatingRepository = new DexieQuestionRatingRepository(
-	dexieDataAccess,
-);
+export function createQuestionRatingRepository(
+	db: DataAccess = dexieDataAccess,
+) {
+	return new DexieQuestionRatingRepository(db);
+}
+export const questionRatingRepository = createQuestionRatingRepository();

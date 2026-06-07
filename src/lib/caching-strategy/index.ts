@@ -1,5 +1,6 @@
 export type {
 	CacheReadAdapter,
+	CacheResolver,
 	CacheTier,
 	CacheWriteAdapter,
 	Generator,

@@ -3,9 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
+
 import { loadFromStorage } from "@/lib/utils/storage";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export interface ChatMessage {
 	id: string;
@@ -79,7 +83,7 @@ export function useChat() {
 	useEffect(() => {
 		if (loadedRef.current) return;
 		loadedRef.current = true;
-		dexieDataAccess.chatMessages
+		_deps.db.chatMessages
 			.toArray()
 			.then((records) => {
 				if (records.length > 0) {
@@ -108,7 +112,7 @@ export function useChat() {
 	}, []);
 
 	useEffect(() => {
-		dexieDataAccess.chatMessages
+		_deps.db.chatMessages
 			.bulkAdd(
 				messages.map((m) => ({
 					messageId: m.id,

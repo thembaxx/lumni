@@ -1,6 +1,7 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import type { DataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
@@ -10,6 +11,9 @@ import {
 	createDeleteHandler,
 	createUpsertHandler,
 } from "./sync-factory";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export const appwriteSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-sync"];
@@ -89,7 +93,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 		let lastSync = 0;
 		if (typeof window !== "undefined") {
 			try {
-				const state = await dexieDataAccess.flashcardSyncState.get("default");
+				const state = await _deps.db.flashcardSyncState.get("default");
 				lastSync = state?.lastSyncTimestamp ?? 0;
 			} catch {
 				const legacy = localStorage.getItem("lumni_flashcard_last_sync");
@@ -109,7 +113,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 				const remoteUpdatedAt = new Date(
 					(remote.updatedAt as string) || 0,
 				).getTime();
-				const localCard = await dexieDataAccess.flashcards.get(
+				const localCard = await _deps.db.flashcards.get(
 					remote.flashcardId as string,
 				);
 
@@ -117,7 +121,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 					return;
 				}
 
-				await dexieDataAccess.flashcards.put({
+				await _deps.db.flashcards.put({
 					id: remote.flashcardId as string,
 					front: (remote.front as string) || "",
 					back: (remote.back as string) || "",
@@ -150,7 +154,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 
 		if (typeof window !== "undefined") {
 			try {
-				await dexieDataAccess.flashcardSyncState.put({
+				await _deps.db.flashcardSyncState.put({
 					userId: "default",
 					lastSyncTimestamp: Date.now(),
 				});

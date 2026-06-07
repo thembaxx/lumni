@@ -3,6 +3,11 @@
 import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 import {
 	Dialog,
 	DialogContent,
@@ -75,14 +80,12 @@ export function StudySetForm({
 
 	useEffect(() => {
 		if (showFlashcardPicker) {
-			import("@/lib/db/dexie-data-access").then(({ dexieDataAccess }) =>
-				dexieDataAccess.flashcards.toArray().then((cards) =>
-					setAvailableFlashcards(
-						cards.map((c) => ({
-							id: c.id,
-							front: c.front,
-						})),
-					),
+			_deps.db.flashcards.toArray().then((cards) =>
+				setAvailableFlashcards(
+					cards.map((c) => ({
+						id: c.id,
+						front: c.front,
+					})),
 				),
 			);
 		}

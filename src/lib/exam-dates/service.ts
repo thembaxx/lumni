@@ -1,8 +1,14 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { EXAM_SLOTS_2026_MAY } from "./data-2026-may";
 import { EXAM_SLOTS_2026_NOV } from "./data-2026-nov";
 import { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 import type { ExamSlot } from "./types";
+
+const DEFAULT_DEPS = { db: dexieDataAccess };
+let _deps = DEFAULT_DEPS;
+
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export { getSubjectAbbr, getSubjectColor };
 
@@ -26,7 +32,7 @@ export async function getExamDates(
 	const key = getSessionKey(session, year);
 
 	try {
-		const cached = await dexieDataAccess.examDates
+		const cached = await _deps.db.examDates
 			.where("cacheKey")
 			.equals(key)
 			.first();
@@ -41,7 +47,7 @@ export async function getExamDates(
 	const slots = getSeedData(session, year);
 	if (slots.length > 0) {
 		try {
-			await dexieDataAccess.examDates.put({
+			await _deps.db.examDates.put({
 				cacheKey: key,
 				session,
 				year,

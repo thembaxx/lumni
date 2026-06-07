@@ -2,12 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
+
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 import type {
 	Achievement,
 	LevelInfo,
@@ -36,7 +40,7 @@ export function useGamification() {
 
 	// Load from Dexie on mount (overrides localStorage initial value)
 	useEffect(() => {
-		dexieDataAccess.gamification
+		_deps.db.gamification
 			.get(1)
 			.then((dexieData) => {
 				if (dexieData) {
@@ -106,7 +110,7 @@ export function useGamification() {
 
 	const persistGamification = useCallback((newData: StoredGamification) => {
 		const record = { ...newData, id: 1 as const };
-		dexieDataAccess.gamification.put(record).catch(() => {});
+		_deps.db.gamification.put(record).catch(() => {});
 	}, []);
 
 	const scheduleSync = useCallback((newData: StoredGamification) => {

@@ -57,4 +57,7 @@ export class PdfCacheRepository {
 	}
 }
 
-export const pdfCacheRepo = new PdfCacheRepository(dexieDataAccess);
+export function createPdfCacheRepository(db: DataAccess = dexieDataAccess) {
+	return new PdfCacheRepository(db);
+}
+export const pdfCacheRepo = createPdfCacheRepository();

@@ -1,4 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccessTable } from "@/lib/db/data-access";
 import { QueueCore } from "@/lib/queue/core";
 import { safeJsonStringify } from "@/lib/shared/json";
 import type {
@@ -62,7 +63,10 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"prune-stale-questions": 10,
 };
 
-export const queueCore = new QueueCore<JobRecord>(dexieDataAccess.jobs);
+export function createQueueCore(jobs: DataAccessTable<JobRecord, number> = dexieDataAccess.jobs) {
+	return new QueueCore<JobRecord>(jobs);
+}
+export const queueCore = createQueueCore();
 
 export async function enqueue<T extends JobType>(
 	type: T,

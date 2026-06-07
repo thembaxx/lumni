@@ -58,4 +58,7 @@ export class VisualCacheRepository {
 	}
 }
 
-export const visualCacheRepo = new VisualCacheRepository(dexieDataAccess);
+export function createVisualCacheRepository(db: DataAccess = dexieDataAccess) {
+	return new VisualCacheRepository(db);
+}
+export const visualCacheRepo = createVisualCacheRepository();

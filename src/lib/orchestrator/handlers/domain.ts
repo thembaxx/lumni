@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
@@ -15,6 +15,9 @@ import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export const analyticsSync: JobHandler = async (payload) => {
 	const { events } = payload as JobPayloadByType["analytics-sync"];
@@ -175,7 +178,7 @@ const PRUNE_CONFIG = {
 export const pruneStaleQuestions: JobHandler = async () => {
 	try {
 		const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
-		const all = await dexieDataAccess.questions.toArray();
+		const all = await _deps.db.questions.toArray();
 		const stale = all.filter((q) => {
 			const parsed = safeParseQuestions(q.questions);
 			if (!parsed) return false;
@@ -198,7 +201,7 @@ export const pruneStaleQuestions: JobHandler = async () => {
 		await Promise.all(
 			stale.map((entry) => {
 				if (entry.id != null) {
-					return dexieDataAccess.questions.delete(entry.id);
+					return _deps.db.questions.delete(entry.id);
 				}
 				return Promise.resolve();
 			}),

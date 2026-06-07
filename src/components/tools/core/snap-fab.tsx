@@ -16,6 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
@@ -89,7 +93,7 @@ export function SnapFab() {
 
 		try {
 			const hash = getImageHash(dataUrl);
-			const cached = await dexieDataAccess.extractionCache
+			const cached = await _deps.db.extractionCache
 				.where("imageHash")
 				.equals(hash)
 				.first();
@@ -106,7 +110,7 @@ export function SnapFab() {
 
 			const localText = await tryLocalOcr(dataUrl);
 			if (localText) {
-				await dexieDataAccess.extractionCache.add({
+				await _deps.db.extractionCache.add({
 					imageHash: hash,
 					extractedText: localText,
 					createdAt: Date.now(),
@@ -129,7 +133,7 @@ export function SnapFab() {
 			const data: ExtractionResult = await response.json();
 			const text = data.solution || "";
 
-			await dexieDataAccess.extractionCache.add({
+			await _deps.db.extractionCache.add({
 				imageHash: hash,
 				extractedText: text,
 				createdAt: Date.now(),
@@ -160,7 +164,7 @@ export function SnapFab() {
 				setImagePreview(processed.dataUrl);
 
 				const hash = getImageHash(processed.dataUrl);
-				const cached = await dexieDataAccess.extractionCache
+				const cached = await _deps.db.extractionCache
 					.where("imageHash")
 					.equals(hash)
 					.first();
@@ -175,7 +179,7 @@ export function SnapFab() {
 
 				const localText = await tryLocalOcr(processed.dataUrl);
 				if (localText) {
-					await dexieDataAccess.extractionCache.add({
+					await _deps.db.extractionCache.add({
 						imageHash: hash,
 						extractedText: localText,
 						createdAt: Date.now(),
@@ -201,7 +205,7 @@ export function SnapFab() {
 				const data: ExtractionResult = await response.json();
 				const text = data.solution || "";
 
-				await dexieDataAccess.extractionCache.add({
+				await _deps.db.extractionCache.add({
 					imageHash: hash,
 					extractedText: text,
 					createdAt: Date.now(),

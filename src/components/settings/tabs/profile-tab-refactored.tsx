@@ -17,6 +17,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth/auth-context";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export function ProfileTabRefactored() {
 	const { user, updateProfile, signOut } = useAuth();
@@ -94,13 +99,11 @@ export function ProfileTabRefactored() {
 						format: "csv",
 						onExport: async () => {
 							try {
-								const [{ exportService }, { dexieDataAccess }] =
-									await Promise.all([
+								const [{ exportService }] = await Promise.all([
 										import("@/lib/export"),
-										import("@/lib/db"),
 									]);
 								const [quizAttempts, examSessions] = await Promise.all([
-									dexieDataAccess.quizAttempts
+									_deps.db.quizAttempts
 										.orderBy("completedAt")
 										.reverse()
 										.limit(100)

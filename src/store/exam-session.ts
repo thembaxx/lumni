@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 interface ExamSessionState {
 	paper: ExamPaper | null;
@@ -57,7 +60,7 @@ interface PersistedState {
 const dexiePersistStorage = {
 	getItem: async (name: string): Promise<{ state: PersistedState } | null> => {
 		try {
-			const record = await dexieDataAccess.examSessions
+			const record = await _deps.db.examSessions
 				.where("paperId")
 				.equals(name)
 				.first();
@@ -101,7 +104,7 @@ const dexiePersistStorage = {
 		const state = value.state;
 		if (state?.paperId) {
 			try {
-				await dexieDataAccess.examSessions.put({
+				await _deps.db.examSessions.put({
 					paperId: state.paperId,
 					answers: JSON.stringify(state.answers || {}),
 					flags: JSON.stringify(state.flags || []),
@@ -121,7 +124,7 @@ const dexiePersistStorage = {
 	},
 	removeItem: async (name: string): Promise<void> => {
 		try {
-			await dexieDataAccess.examSessions.where("paperId").equals(name).delete();
+			await _deps.db.examSessions.where("paperId").equals(name).delete();
 			if (typeof window !== "undefined") {
 				localStorage.removeItem(name);
 			}

@@ -1,5 +1,8 @@
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export async function flushOfflineData(userId: string): Promise<void> {
 	const [
@@ -12,14 +15,14 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		allRatings,
 		allBookmarks,
 	] = await Promise.all([
-		dexieDataAccess.progress.toArray(),
-		dexieDataAccess.quizAttempts.toArray(),
-		dexieDataAccess.competencies.toArray(),
-		dexieDataAccess.flashcards.toArray(),
-		dexieDataAccess.wrongAnswers.toArray(),
-		dexieDataAccess.chatMessages.toArray(),
-		dexieDataAccess.questionRatings.toArray(),
-		dexieDataAccess.bookmarks.toArray(),
+		_deps.db.progress.toArray(),
+		_deps.db.quizAttempts.toArray(),
+		_deps.db.competencies.toArray(),
+		_deps.db.flashcards.toArray(),
+		_deps.db.wrongAnswers.toArray(),
+		_deps.db.chatMessages.toArray(),
+		_deps.db.questionRatings.toArray(),
+		_deps.db.bookmarks.toArray(),
 	]);
 
 	await Promise.all([
@@ -48,7 +51,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 							duration: a.duration,
 							completedAt: a.completedAt,
 						}).then(() =>
-							dexieDataAccess.quizAttempts.update(a.id ?? 0, { userId }),
+							_deps.db.quizAttempts.update(a.id ?? 0, { userId }),
 						),
 					]
 				: [],

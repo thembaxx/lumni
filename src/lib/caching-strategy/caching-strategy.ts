@@ -16,7 +16,16 @@ export interface Generator<T, P> {
 	generate(params: P): Promise<T | null>;
 }
 
-export class CachingStrategy<T, P> {
+/**
+ * CacheResolver is the injectable seam for the CachingStrategy.
+ * It wraps the full resolve(generate) flow so consumers can swap
+ * caching behaviour without knowing about tiers.
+ */
+export interface CacheResolver<T, P> {
+	resolve(params: P): Promise<T | null>;
+}
+
+export class CachingStrategy<T, P> implements CacheResolver<T, P> {
 	constructor(
 		private tiers: CacheTier<T, P>[],
 		private generator: Generator<T, P>,

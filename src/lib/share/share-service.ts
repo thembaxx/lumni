@@ -1,10 +1,16 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { syncManager } from "@/lib/sync/sync-manager";
+
+const DEFAULT_DEPS = { db: dexieDataAccess };
+let _deps = DEFAULT_DEPS;
+
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export interface SharedQuestionRecord extends Omit<SchemaRecord, "question"> {
 	question: Question;
@@ -41,7 +47,7 @@ export async function shareQuestion(
 	}
 
 	try {
-		await dexieDataAccess.sharedQuestions.add(record as never);
+		await _deps.db.sharedQuestions.add(record as never);
 	} catch (err) {
 		logError("ShareQuestionDexie", err);
 	}
@@ -67,7 +73,7 @@ export async function getSharedQuestion(
 	id: string,
 ): Promise<SharedQuestionRecord | null> {
 	try {
-		const local = await dexieDataAccess.sharedQuestions.get(id);
+		const local = await _deps.db.sharedQuestions.get(id);
 		if (local) {
 			const record = local as unknown as SharedQuestionRecord;
 			if (record.question) return record;
@@ -107,7 +113,7 @@ export async function getSharedQuestion(
 
 export async function incrementViewCount(id: string): Promise<void> {
 	try {
-		await dexieDataAccess.sharedQuestions
+		await _deps.db.sharedQuestions
 			.where("id")
 			.equals(id)
 			.modify((record: SchemaRecord) => {

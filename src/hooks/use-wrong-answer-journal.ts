@@ -1,8 +1,11 @@
 "use client";
 
 import { useCallback } from "react";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export type ErrorType =
 	| "concept-misunderstanding"
@@ -43,7 +46,7 @@ export function useWrongAnswerJournal() {
 			},
 		) => {
 			try {
-				await dexieDataAccess.wrongAnswers.add({
+				await _deps.db.wrongAnswers.add({
 					...entry,
 					createdAt: Date.now(),
 					reviewed: false,
@@ -62,7 +65,7 @@ export function useWrongAnswerJournal() {
 			limit = 50,
 		): Promise<WrongAnswerEntry[]> => {
 			try {
-				let collection = dexieDataAccess.wrongAnswers.orderBy("createdAt");
+				let collection = _deps.db.wrongAnswers.orderBy("createdAt");
 				if (subject) {
 					collection = collection.filter((e) => e.subject === subject);
 				}
@@ -80,7 +83,7 @@ export function useWrongAnswerJournal() {
 
 	const markReviewed = useCallback(async (id: number) => {
 		try {
-			await dexieDataAccess.wrongAnswers.update(id, { reviewed: true });
+			await _deps.db.wrongAnswers.update(id, { reviewed: true });
 		} catch (err) {
 			logError("MarkReviewed", err);
 		}
@@ -89,7 +92,7 @@ export function useWrongAnswerJournal() {
 	const updateErrorType = useCallback(
 		async (id: number, errorType: ErrorType) => {
 			try {
-				await dexieDataAccess.wrongAnswers.update(id, { errorType });
+				await _deps.db.wrongAnswers.update(id, { errorType });
 			} catch (err) {
 				logError("UpdateErrorType", err);
 			}
@@ -99,13 +102,13 @@ export function useWrongAnswerJournal() {
 
 	const clearReviewed = useCallback(async () => {
 		try {
-			const entries = await dexieDataAccess.wrongAnswers
+			const entries = await _deps.db.wrongAnswers
 				.where("reviewed")
 				.equals(true)
 				.toArray();
 			await Promise.all(
 				entries.flatMap((e) =>
-					e.id ? [dexieDataAccess.wrongAnswers.delete(e.id)] : [],
+					e.id ? [_deps.db.wrongAnswers.delete(e.id)] : [],
 				),
 			);
 		} catch (err) {

@@ -5,7 +5,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
+import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { exportService } from "@/lib/export";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 type ExportState = "idle" | "exporting" | "printing" | "csv-exporting";
 
@@ -42,14 +47,13 @@ export function ProgressExport() {
 	const handleExportCsv = async () => {
 		setExportState("csv-exporting");
 		try {
-			const { dexieDataAccess } = await import("@/lib/db");
 			const [quizAttempts, examSessions] = await Promise.all([
-				dexieDataAccess.quizAttempts
+				_deps.db.quizAttempts
 					.orderBy("completedAt")
 					.reverse()
 					.limit(100)
 					.toArray(),
-				dexieDataAccess.examSessions.toArray(),
+				_deps.db.examSessions.toArray(),
 			]);
 			const csv = exportService.toCSV(quizAttempts, examSessions);
 			const blob = new Blob([csv], { type: "text/csv" });

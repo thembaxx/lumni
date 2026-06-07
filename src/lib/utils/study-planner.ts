@@ -1,7 +1,11 @@
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "./storage";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export interface StudySession {
 	id: string;
@@ -57,7 +61,7 @@ export function loadStudyPlan(): StudyPlan {
 
 export async function loadStudyPlanFromDexie(): Promise<StudyPlan> {
 	try {
-		const record = await dexieDataAccess.studyPlans.get(STUDY_PLAN_DEXIE_KEY);
+		const record = await _deps.db.studyPlans.get(STUDY_PLAN_DEXIE_KEY);
 		if (record) return JSON.parse(record.plan) as StudyPlan;
 	} catch {
 		// fall through
@@ -67,7 +71,7 @@ export async function loadStudyPlanFromDexie(): Promise<StudyPlan> {
 
 export function saveStudyPlan(plan: StudyPlan): void {
 	saveToStorage(STUDY_PLAN_KEY, plan);
-	dexieDataAccess.studyPlans
+	_deps.db.studyPlans
 		.put({
 			id: STUDY_PLAN_DEXIE_KEY,
 			plan: JSON.stringify(plan),

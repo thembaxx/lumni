@@ -1,5 +1,8 @@
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export type EventType =
 	| "page_view"
@@ -64,7 +67,7 @@ export async function trackSessionStart(
 ): Promise<void> {
 	if (typeof window === "undefined" || !("indexedDB" in window)) return;
 	try {
-		await dexieDataAccess.analyticsEvents.add({
+		await _deps.db.analyticsEvents.add({
 			eventType: "session_start",
 			userId,
 			sessionId,
@@ -81,7 +84,7 @@ export async function trackSessionEnd(
 ): Promise<void> {
 	if (typeof window === "undefined" || !("indexedDB" in window)) return;
 	try {
-		await dexieDataAccess.analyticsEvents.add({
+		await _deps.db.analyticsEvents.add({
 			eventType: "session_end",
 			userId,
 			sessionId,
@@ -97,13 +100,13 @@ export async function trackDayActive(userId: string): Promise<void> {
 	try {
 		const todayStart = new Date();
 		todayStart.setHours(0, 0, 0, 0);
-		const existing = await dexieDataAccess.analyticsEvents
+		const existing = await _deps.db.analyticsEvents
 			.where("eventType")
 			.equals("day_active")
 			.filter((e) => e.userId === userId && e.timestamp >= todayStart.getTime())
 			.first();
 		if (existing) return;
-		await dexieDataAccess.analyticsEvents.add({
+		await _deps.db.analyticsEvents.add({
 			eventType: "day_active",
 			userId,
 			timestamp: Date.now(),
@@ -132,7 +135,7 @@ export async function getCohortStats(days = 30): Promise<CohortStats> {
 		const weekAgo = now - 7 * dayMs;
 		const monthAgo = now - days * dayMs;
 
-		const events = await dexieDataAccess.analyticsEvents
+		const events = await _deps.db.analyticsEvents
 			.where("eventType")
 			.anyOf(["day_active", "session_start"])
 			.filter((e) => e.timestamp >= monthAgo)

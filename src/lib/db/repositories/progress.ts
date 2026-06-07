@@ -49,4 +49,7 @@ export class ProgressRepository {
 	}
 }
 
-export const progressRepo = new ProgressRepository(dexieDataAccess);
+export function createProgressRepository(db: DataAccess = dexieDataAccess) {
+	return new ProgressRepository(db);
+}
+export const progressRepo = createProgressRepository();

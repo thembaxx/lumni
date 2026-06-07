@@ -1,6 +1,12 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { RagContext, WebSource } from "./types";
 
+export type TinyFishDB = typeof dexieDataAccess;
+
+let _deps: TinyFishDB | null = null;
+export function __setDepsForTesting(deps: TinyFishDB) { _deps = deps; }
+function db(): TinyFishDB { return _deps ?? dexieDataAccess; }
+
 export interface TinyFishCacheEntry {
 	key: string;
 	value: RagContext;
@@ -20,10 +26,10 @@ function todayDateKey(): string {
 }
 
 export async function getCached(key: string): Promise<RagContext | null> {
-	const entry = await dexieDataAccess.tinyfishCache.get(key);
+	const entry = await db().tinyfishCache.get(key);
 	if (!entry) return null;
 	if (entry.expiresAt < Date.now()) {
-		await dexieDataAccess.tinyfishCache.delete(key);
+		await db().tinyfishCache.delete(key);
 		return null;
 	}
 	return entry.value;
@@ -41,27 +47,27 @@ export async function setCached(
 		expiresAt: now + ttlMs,
 		fetchedAt: now,
 	};
-	await dexieDataAccess.tinyfishCache.put(entry);
+	await db().tinyfishCache.put(entry);
 }
 
 export async function deleteCached(key: string): Promise<void> {
-	await dexieDataAccess.tinyfishCache.delete(key);
+	await db().tinyfishCache.delete(key);
 }
 
 export async function clearExpiredCache(): Promise<number> {
 	const now = Date.now();
 	const expired = (
-		await dexieDataAccess.tinyfishCache.where("expiresAt").below(now).toArray()
+		await db().tinyfishCache.where("expiresAt").below(now).toArray()
 	).map((e) => e.key);
 	if (expired.length > 0) {
-		await dexieDataAccess.tinyfishCache.bulkDelete(expired);
+		await db().tinyfishCache.bulkDelete(expired);
 	}
 	return expired.length;
 }
 
 export async function getTodayUsageCount(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const entry = await dexieDataAccess.tinyfishUsage
+	const entry = await db().tinyfishUsage
 		.where("[userId+date]")
 		.equals([userId, date])
 		.first();
@@ -70,20 +76,20 @@ export async function getTodayUsageCount(userId: string): Promise<number> {
 
 export async function incrementTodayUsage(userId: string): Promise<number> {
 	const date = todayDateKey();
-	const existing = await dexieDataAccess.tinyfishUsage
+	const existing = await db().tinyfishUsage
 		.where("[userId+date]")
 		.equals([userId, date])
 		.first();
 
 	if (existing) {
 		const next = existing.count + 1;
-		await dexieDataAccess.tinyfishUsage.update(existing.id ?? 0, {
+		await db().tinyfishUsage.update(existing.id ?? 0, {
 			count: next,
 		});
 		return next;
 	}
 
-	await dexieDataAccess.tinyfishUsage.add({ userId, date, count: 1 });
+	await db().tinyfishUsage.add({ userId, date, count: 1 });
 	return 1;
 }
 

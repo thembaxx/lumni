@@ -1,7 +1,14 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+
+const DEFAULT_DEPS = { db: dexieDataAccess };
+let _deps = DEFAULT_DEPS;
+
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 const NOTIF_KEY = "lumni_notification_subscription";
 export const NOTIF_SETTINGS_KEY = "lumni_notification_settings";
@@ -197,7 +204,7 @@ async function getTodayPlanSessions(): Promise<
 	{ subject: string; topic?: string }[]
 > {
 	try {
-		const record = await dexieDataAccess.studyPlans.get("default");
+		const record = await _deps.db.studyPlans.get("default");
 		if (!record) return [];
 		const plan = JSON.parse(record.plan) as {
 			sessions: { scheduledAt: number; subject: string; topic?: string }[];
@@ -375,7 +382,7 @@ export async function scheduleWeeklyProgress(
 
 	try {
 		const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-		const allAttempts = await dexieDataAccess.quizAttempts.toArray();
+		const allAttempts = await _deps.db.quizAttempts.toArray();
 		const attempts = allAttempts.filter((a) => a.completedAt >= sevenDaysAgo);
 
 		const totalAttempts = attempts.length;

@@ -1,6 +1,12 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
+
+const DEFAULT_DEPS = { db: dexieDataAccess };
+let _deps = DEFAULT_DEPS;
+
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export type ActionKind =
 	| "weakest-topic"
@@ -123,7 +129,7 @@ export async function resolveNextAction(
 async function getDueCardCount(): Promise<number> {
 	try {
 		const now = Date.now();
-		const allCards = await dexieDataAccess.flashcards.toArray();
+		const allCards = await _deps.db.flashcards.toArray();
 		const cards = allCards.filter((c) => c.nextReview <= now);
 		return cards.length;
 	} catch (err) {
@@ -138,7 +144,7 @@ async function getWeakestTopic(_userId?: string): Promise<{
 	score: number;
 } | null> {
 	try {
-		const competencies = await dexieDataAccess.competencies.toArray();
+		const competencies = await _deps.db.competencies.toArray();
 
 		if (competencies.length === 0) return null;
 
@@ -170,7 +176,7 @@ async function getWeakestTopic(_userId?: string): Promise<{
 
 async function getSubjectName(subjectId: string): Promise<string> {
 	try {
-		const subject = await dexieDataAccess.subjects
+		const subject = await _deps.db.subjects
 			.where("code")
 			.equals(subjectId)
 			.first();

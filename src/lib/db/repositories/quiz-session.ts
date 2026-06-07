@@ -112,4 +112,7 @@ export class QuizSessionRepository {
 	}
 }
 
-export const quizSessionRepo = new QuizSessionRepository(dexieDataAccess);
+export function createQuizSessionRepository(db: DataAccess = dexieDataAccess) {
+	return new QuizSessionRepository(db);
+}
+export const quizSessionRepo = createQuizSessionRepository();

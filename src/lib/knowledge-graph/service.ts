@@ -1,8 +1,14 @@
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import type { CachedGraph, KnowledgeGraph } from "./types";
+
+const DEFAULT_DEPS = { db: dexieDataAccess };
+let _deps = DEFAULT_DEPS;
+
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 const KNOWLEDGE_GRAPH_TTL = 7 * 24 * 60 * 60 * 1000;
 
@@ -38,7 +44,7 @@ export async function getCachedGraph(
 ): Promise<KnowledgeGraph | null> {
 	try {
 		const key = buildKnowledgeCacheKey(subject, topic);
-		const cached = await dexieDataAccess.knowledgeGraph.get(key);
+		const cached = await _deps.db.knowledgeGraph.get(key);
 		if (cached && cached.expiresAt > Date.now()) {
 			return cached.graph;
 		}
@@ -61,7 +67,7 @@ export async function storeGraph(
 			createdAt: Date.now(),
 			expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
 		};
-		await dexieDataAccess.knowledgeGraph.put(entry);
+		await _deps.db.knowledgeGraph.put(entry);
 	} catch {
 		// IndexedDB unavailable (server-side)
 	}

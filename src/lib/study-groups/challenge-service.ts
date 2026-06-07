@@ -5,8 +5,8 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import type { ServiceResult } from "@/lib/services";
-import { failure, success } from "@/lib/services";
+import type { ServiceResult } from "@/lib/shared/service-result";
+import { failure, success } from "@/lib/shared/service-result";
 import { logError } from "@/lib/shared/logger";
 import type {
 	GroupBadge,

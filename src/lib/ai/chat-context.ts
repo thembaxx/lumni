@@ -1,6 +1,9 @@
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 let cachedContext: string | null = null;
 let contextLoadedAt = 0;
@@ -46,7 +49,7 @@ export async function buildChatContext(): Promise<string> {
 	if (strong.length > 0) parts.push(`Strong areas: ${strong.join(", ")}.`);
 
 	try {
-		const recent = await dexieDataAccess.wrongAnswers
+		const recent = await _deps.db.wrongAnswers
 			.orderBy("createdAt")
 			.reverse()
 			.limit(5)

@@ -1,5 +1,6 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
@@ -29,6 +30,8 @@ export interface FullReport {
 }
 
 export class ExportService {
+	constructor(private db: DataAccess = dexieDataAccess) {}
+
 	async buildFullReport(): Promise<FullReport> {
 		const [
 			gamificationData,
@@ -38,15 +41,15 @@ export class ExportService {
 			wrongAnswers,
 			flashcards,
 		] = await Promise.all([
-			dexieDataAccess.gamification.orderBy("id").reverse().first(),
-			dexieDataAccess.quizAttempts
+			this.db.gamification.orderBy("id").reverse().first(),
+			this.db.quizAttempts
 				.orderBy("completedAt")
 				.reverse()
 				.limit(100)
 				.toArray(),
-			dexieDataAccess.competencies.toArray(),
-			dexieDataAccess.examSessions.toArray(),
-			dexieDataAccess.wrongAnswers.toArray(),
+			this.db.competencies.toArray(),
+			this.db.examSessions.toArray(),
+			this.db.wrongAnswers.toArray(),
 			flashcardEngine.getAll(),
 		]);
 

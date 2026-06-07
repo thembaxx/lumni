@@ -1,4 +1,7 @@
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 
 export interface ChunkedSearchResult {
 	id: string;
@@ -39,7 +42,7 @@ export async function searchAllChunked(
 
 	const queries: Promise<ChunkedSearchResult[]>[] = [
 		queryWithTimeout(async () => {
-			const all = await dexieDataAccess.questions
+			const all = await _deps.db.questions
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			const results: ChunkedSearchResult[] = [];
@@ -71,7 +74,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await dexieDataAccess.notes
+			const all = await _deps.db.notes
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			return all
@@ -89,7 +92,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await dexieDataAccess.flashcards
+			const all = await _deps.db.flashcards
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			return all
@@ -107,7 +110,7 @@ export async function searchAllChunked(
 		}),
 
 		queryWithTimeout(async () => {
-			const all = await dexieDataAccess.wrongAnswers
+			const all = await _deps.db.wrongAnswers
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
 			return all

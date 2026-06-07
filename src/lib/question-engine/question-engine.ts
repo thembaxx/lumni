@@ -1,4 +1,5 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
+import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { logError } from "@/lib/shared/logger";
@@ -20,65 +21,70 @@ export class QuestionEngine {
 	private registry: ProcessorRegistry;
 	private prompts: PromptManager;
 	private ragDeps?: RagDeps;
-	private cachingStrategy: ReturnType<
-		typeof createCachingStrategy<Question[], GenerationParams>
-	>;
+	private cachingStrategy: CacheResolver<Question[], GenerationParams>;
 	private lastRagContext: RagContext | null = null;
 
-	constructor(ragDeps?: RagDeps) {
+	constructor(
+		ragDeps?: RagDeps,
+		caching?: CacheResolver<Question[], GenerationParams>,
+	) {
 		this.ragDeps = ragDeps;
 		this.prompts = new PromptManager(ragDeps);
 		this.registry = new ProcessorRegistry(this.prompts);
-		this.cachingStrategy = createCachingStrategy<Question[], GenerationParams>(
-			[
-				{
-					name: "dexie",
-					read: async (p) => {
-						const { questionCacheRepo: qRepo } = await import(
-							"@/lib/db/repositories/question-cache"
-						);
-						const cached = await qRepo.get(p.subject, p.topic);
-						if (cached && cached.length >= p.count) {
-							const shuffled = (cached as Question[]).toSorted(
-								() => Math.random() - 0.5,
+		this.cachingStrategy =
+			caching ??
+			createCachingStrategy<Question[], GenerationParams>(
+				[
+					{
+						name: "dexie",
+						read: async (p) => {
+							const { questionCacheRepo: qRepo } = await import(
+								"@/lib/db/repositories/question-cache"
 							);
-							return shuffled.slice(0, p.count);
-						}
-						return null;
-					},
-					write: async (params, questions) => {
-						const { questionCacheRepo: qRepo } = await import(
-							"@/lib/db/repositories/question-cache"
-						);
-						await qRepo.cache(
-							params.subject,
-							questions as Question[],
-							params.topic,
-						);
-					},
-				},
-				{
-					name: "appwrite",
-					read: async (p) => {
-						const { loadQuestionsFromAppwrite } = await import("./persistence");
-						const appwriteQuestions = await loadQuestionsFromAppwrite(
-							p.subject,
-							p.topic,
-							p.count,
-						);
-						if (appwriteQuestions.length >= p.count) {
-							const shuffled = appwriteQuestions.sort(
-								() => Math.random() - 0.5,
+							const cached = await qRepo.get(p.subject, p.topic);
+							if (cached && cached.length >= p.count) {
+								const shuffled = (cached as Question[]).toSorted(
+									() => Math.random() - 0.5,
+								);
+								return shuffled.slice(0, p.count);
+							}
+							return null;
+						},
+						write: async (params, questions) => {
+							const { questionCacheRepo: qRepo } = await import(
+								"@/lib/db/repositories/question-cache"
 							);
-							return shuffled.slice(0, p.count);
-						}
-						return null;
+							await qRepo.cache(
+								params.subject,
+								questions as Question[],
+								params.topic,
+							);
+						},
 					},
-					write: async () => {},
-				},
-			],
-			(params) => this.generateInternal(params),
-		);
+					{
+						name: "appwrite",
+						read: async (p) => {
+							const { loadQuestionsFromAppwrite } = await import(
+								"./persistence"
+							);
+							const appwriteQuestions = await loadQuestionsFromAppwrite(
+								p.subject,
+								p.topic,
+								p.count,
+							);
+							if (appwriteQuestions.length >= p.count) {
+								const shuffled = appwriteQuestions.sort(
+									() => Math.random() - 0.5,
+								);
+								return shuffled.slice(0, p.count);
+							}
+							return null;
+						},
+						write: async () => {},
+					},
+				],
+				(params) => this.generateInternal(params),
+			);
 	}
 
 	static async initialize(ragDeps?: RagDeps): Promise<QuestionEngine> {

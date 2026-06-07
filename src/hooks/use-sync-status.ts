@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type DataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) { _deps = deps; }
 import { useOnlineStatus } from "./useOnlineStatus";
 
 export function useSyncStatus() {
@@ -12,7 +15,7 @@ export function useSyncStatus() {
 
 	useInterval(async () => {
 		try {
-			const items = await dexieDataAccess.jobs
+			const items = await _deps.db.jobs
 				.where("status")
 				.equals("pending")
 				.count();
