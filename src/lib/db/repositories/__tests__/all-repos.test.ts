@@ -60,11 +60,17 @@ const conflictModule = await import("../conflicts");
 
 const { pdfCacheRepo } = pdfRepoModule;
 const { examSessionRepo } = examRepoModule;
-const { quizSessionRepo } = quizRepoModule;
+const { QuizSessionRepository } = quizRepoModule;
 void visCacheModule; // visualCacheRepo used indirectly via dynamic imports
 const { questionCacheRepo } = qCacheModule;
 const { progressRepo } = progModule;
 const { conflictRepo } = conflictModule;
+
+// Create quizSessionRepo inline with the in-memory mock to avoid
+// process-wide mock.module pollution from @/lib/db (other test files
+// import @/lib/db before this file runs, permanently caching the real
+// DexieDataAccess instance).
+const quizSessionRepo = new QuizSessionRepository(buildMockDataAccess());
 
 // Bind method names for backward-compat with test bodies below
 const cachePdf = pdfCacheRepo.cache.bind(pdfCacheRepo);

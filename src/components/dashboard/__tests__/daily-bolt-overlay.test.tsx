@@ -1,24 +1,37 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { Question } from "@/lib/question-engine/types";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {
 	return regex.test(container.textContent ?? "");
 }
 
+const mockUseQuestionEngine = mock(
+	(): {
+		questions: Question[];
+		isLoading: boolean;
+		count: number;
+		sources: { url: string; title: string }[];
+	} => ({
+		questions: [],
+		isLoading: false,
+		count: 0,
+		sources: [],
+	}),
+);
+
+// Mock useQuestionEngine at the hook boundary so we don't depend on
+// @/lib/shared/api-fetch (which gets stale-cached by other test files
+// in bun's sequential mode).
+mock.module("@/hooks/use-question-engine", () => ({
+	useQuestionEngine: mockUseQuestionEngine,
+}));
+
 mock.module("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 	useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),
-}));
-
-const mockApiFetch = mock<(url: string, options: RequestInit) => unknown>();
-
-mock.module("@/lib/shared/api-fetch", () => ({
-	apiFetch: mockApiFetch,
-	isBudgetExceeded: () => false,
-	showBudgetToast: () => {},
 }));
 
 const { DailyBoltOverlay, __setDepsForTesting } = await import(
@@ -61,10 +74,15 @@ const MOCK_QUESTION: Question = {
 describe("DailyBoltOverlay", () => {
 	afterEach(() => {
 		cleanup();
-		mockApiFetch.mockReset();
 	});
 
 	test("renders header and skip button on mount", () => {
+		mockUseQuestionEngine.mockReturnValue({
+			questions: [MOCK_QUESTION],
+			isLoading: false,
+			count: 1,
+			sources: [],
+		});
 		const { container } = render(
 			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
 			{ wrapper: createWrapper() },
@@ -75,14 +93,13 @@ describe("DailyBoltOverlay", () => {
 		expect(buttons.length).toBeGreaterThan(0);
 	});
 
-	// Error state test skipped: happy-dom's CSS parser crashes
-	// when KaTeX injects a <link rel="stylesheet"> element during
-	// async state transitions (TypeError on this.window.SyntaxError).
-	// BoltErrorState is a simple presentation component verified
-	// through the empty-state test structure.
-
 	test("shows empty state when no questions returned", async () => {
-		mockApiFetch.mockResolvedValue({ questions: [], count: 0 });
+		mockUseQuestionEngine.mockReturnValue({
+			questions: [],
+			isLoading: false,
+			count: 0,
+			sources: [],
+		});
 		__setDepsForTesting({
 			db: { competencies: { toArray: async () => [] } } as never,
 		});
@@ -101,9 +118,11 @@ describe("DailyBoltOverlay", () => {
 	});
 
 	test("skip button visible in header throughout all phases", async () => {
-		mockApiFetch.mockResolvedValue({
+		mockUseQuestionEngine.mockReturnValue({
 			questions: [MOCK_QUESTION],
+			isLoading: false,
 			count: 1,
+			sources: [],
 		});
 		__setDepsForTesting({
 			db: { competencies: { toArray: async () => [] } } as never,
@@ -128,9 +147,11 @@ describe("DailyBoltOverlay", () => {
 	});
 
 	test("calls onSkip when skip button clicked", async () => {
-		mockApiFetch.mockResolvedValue({
+		mockUseQuestionEngine.mockReturnValue({
 			questions: [MOCK_QUESTION],
+			isLoading: false,
 			count: 1,
+			sources: [],
 		});
 		__setDepsForTesting({
 			db: { competencies: { toArray: async () => [] } } as never,
@@ -164,9 +185,11 @@ describe("DailyBoltOverlay", () => {
 	});
 
 	test("shows answering phase when question loads", async () => {
-		mockApiFetch.mockResolvedValue({
+		mockUseQuestionEngine.mockReturnValue({
 			questions: [MOCK_QUESTION],
+			isLoading: false,
 			count: 1,
+			sources: [],
 		});
 		__setDepsForTesting({
 			db: { competencies: { toArray: async () => [] } } as never,
