@@ -1,5 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import type {
 	AnalyticsRecommendation,
 	OverallAnalytics,
@@ -169,9 +169,9 @@ function generateRecommendations(
 }
 
 export class AnalyticsEngine {
-	private db: DataAccess;
+	private db: CompetencyDataAccess;
 
-	constructor(deps?: { db?: DataAccess }) {
+	constructor(deps?: { db?: CompetencyDataAccess }) {
 		this.db = deps?.db ?? dexieDataAccess;
 	}
 

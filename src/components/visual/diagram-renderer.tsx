@@ -1,8 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ComponentType } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SafeHTML } from "@/components/ui/safe-html";
 
 const diaLoading = () => <Skeleton className="h-48 w-full rounded-lg" />;
 
@@ -75,6 +77,22 @@ const ReactFlowDiagram = dynamic(() => import("./reactflow-diagram"), {
 	loading: diaLoading,
 });
 
+type DiagramComponent = ComponentType<{ data: Record<string, unknown> }>;
+
+const diagramRegistry: Record<string, DiagramComponent> = {
+	"force-vector": ForceVectorDiagram as unknown as DiagramComponent,
+	circuit: CircuitDiagram as unknown as DiagramComponent,
+	wave: WaveDiagram as unknown as DiagramComponent,
+	motion: MotionDiagram as unknown as DiagramComponent,
+	geometry: GeometryDiagram as unknown as DiagramComponent,
+	chart: ChartDiagram as unknown as DiagramComponent,
+	chemistry: ChemistryDiagram as unknown as DiagramComponent,
+	graph: GraphDiagram as unknown as DiagramComponent,
+	"node-flow": ReactFlowDiagram as unknown as DiagramComponent,
+	node: ReactFlowDiagram as unknown as DiagramComponent,
+	"custom-svg": CustomSvgRenderer as unknown as DiagramComponent,
+};
+
 interface DiagramRendererProps {
 	type: string;
 	data: Record<string, unknown>;
@@ -89,35 +107,15 @@ export function DiagramRenderer({ type, data }: DiagramRendererProps) {
 }
 
 function DiagramRendererInner({ type, data }: DiagramRendererProps) {
-	switch (type) {
-		case "force-vector":
-			return <ForceVectorDiagram data={data as never} />;
-		case "circuit":
-			return <CircuitDiagram data={data as never} />;
-		case "wave":
-			return <WaveDiagram data={data as never} />;
-		case "motion":
-			return <MotionDiagram data={data as never} />;
-		case "geometry":
-			return <GeometryDiagram data={data as never} />;
-		case "chart":
-			return <ChartDiagram data={data as never} />;
-		case "chemistry":
-			return <ChemistryDiagram data={data as never} />;
-		case "graph":
-			return <GraphDiagram data={data as never} />;
-		case "node-flow":
-		case "node":
-			return <ReactFlowDiagram data={data} />;
-		case "custom-svg":
-			return <CustomSvgRenderer data={data} />;
-		default:
-			return (
-				<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
-					Unsupported diagram type: {type}
-				</div>
-			);
+	const Component = diagramRegistry[type];
+	if (!Component) {
+		return (
+			<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
+				Unsupported diagram type: {type}
+			</div>
+		);
 	}
+	return <Component data={data as never} />;
 }
 
 function sanitizeSvg(svg: string): string {
@@ -128,8 +126,6 @@ function sanitizeSvg(svg: string): string {
 		.replace(/javascript:/gi, "")
 		.replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "");
 }
-
-import { SafeHTML } from "@/components/ui/safe-html";
 
 function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 	const rawSvg = data.svg as string;

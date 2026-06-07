@@ -8,7 +8,6 @@ import type {
 } from "@/lib/db/data-access";
 import type {
 	AnalyticsEvent,
-	AssignmentMessage,
 	BookmarkRecord,
 	CachedExamDates,
 	CachedPdf,
@@ -17,22 +16,17 @@ import type {
 	CachedSubject,
 	CachedVisual,
 	ChatMessageRecord,
-	DexieGroupComment,
-	DexieGroupReaction,
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
 	NoteRecord,
-	OnboardingState,
 	QuestionRating,
 	QuizAttempt,
 	QuizSessionState,
 	RetentionRecurrence,
 	SharedQuestionRecord,
-	SrDailyBudget,
 	StudyPlanRecord,
 	SyncConflict,
-	TeacherObservation,
 } from "@/lib/db/schema";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -43,12 +37,6 @@ import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
-import type {
-	GroupBadge,
-	GroupChallenge,
-	GroupChallengeEntry,
-} from "@/lib/study-groups/challenge-types";
-import type { GroupPost } from "@/lib/study-groups/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
@@ -300,17 +288,7 @@ export class InMemoryDataAccess implements DataAccess {
 	jobs = new InMemoryTable<JobRecord>();
 	conflicts = new InMemoryTable<SyncConflict>();
 	userConsents = new InMemoryTable<UserConsent, string>();
-	groupPosts = new InMemoryTable<GroupPost>();
-	groupComments = new InMemoryTable<DexieGroupComment>();
-	groupReactions = new InMemoryTable<DexieGroupReaction>();
-	groupChallenges = new InMemoryTable<GroupChallenge, string>();
-	groupChallengeEntries = new InMemoryTable<GroupChallengeEntry, string>();
-	groupBadges = new InMemoryTable<GroupBadge, string>();
-	teacherObservations = new InMemoryTable<TeacherObservation>();
-	assignmentMessages = new InMemoryTable<AssignmentMessage>();
 	studyPlans = new InMemoryTable<StudyPlanRecord, string>();
-	onboardingState = new InMemoryTable<OnboardingState, string>();
-	srDailyBudget = new InMemoryTable<SrDailyBudget, string>();
 	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
 	studyGuides = new InMemoryTable<CachedStudyGuide, string>();
 }

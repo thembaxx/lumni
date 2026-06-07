@@ -1,14 +1,14 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { SyncDataAccess } from "@/lib/db/data-access";
 import type { RetentionRecurrence } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
 
 const DEFAULT_COUNT = 3;
 
 export class RetentionService {
-	private db: DataAccess;
+	private db: SyncDataAccess;
 
-	constructor(deps?: { db?: DataAccess }) {
+	constructor(deps?: { db?: SyncDataAccess }) {
 		this.db = deps?.db ?? dexieDataAccess;
 	}
 

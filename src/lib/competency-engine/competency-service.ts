@@ -1,5 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { BloomLevel } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -11,7 +11,7 @@ import {
 } from "./types";
 
 export interface CompetencyDeps {
-	db: DataAccess;
+	db: CompetencyDataAccess;
 	enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
 }
 

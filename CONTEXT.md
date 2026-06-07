@@ -6,7 +6,7 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers are implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables accessed via typed interface. Knowledge graph, study guides, live sessions, and share/public routes shipped. Theme chrome and navigation sidebar redesigned. Hardening sweep (a11y, i18n, knip, visual tests) done. 1225 tests pass, 0 fail. Next: pick from TODO.md or new features.
+All Batch 1-6 superpowers are implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables accessed via typed interface. Knowledge graph, study guides, live sessions, and share/public routes shipped. Theme chrome and navigation sidebar redesigned. Hardening sweep (a11y, i18n, knip, visual tests) done. 1258 tests pass, 0 fail. Next: pick from TODO.md or new features.
 
 ## System at a Glance
 

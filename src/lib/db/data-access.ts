@@ -2,7 +2,6 @@ import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	AnalyticsEvent,
-	AssignmentMessage,
 	BookmarkRecord,
 	CachedExamDates,
 	CachedPdf,
@@ -11,22 +10,17 @@ import type {
 	CachedSubject,
 	CachedVisual,
 	ChatMessageRecord,
-	DexieGroupComment,
-	DexieGroupReaction,
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
 	NoteRecord,
-	OnboardingState,
 	QuestionRating,
 	QuizAttempt,
 	QuizSessionState,
 	RetentionRecurrence,
 	SharedQuestionRecord,
-	SrDailyBudget,
 	StudyPlanRecord,
 	SyncConflict,
-	TeacherObservation,
 } from "@/lib/db/schema";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -37,12 +31,6 @@ import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
-import type {
-	GroupBadge,
-	GroupChallenge,
-	GroupChallengeEntry,
-} from "@/lib/study-groups/challenge-types";
-import type { GroupPost } from "@/lib/study-groups/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
@@ -99,54 +87,85 @@ export interface DataAccessTable<T, TId extends string | number = number> {
 }
 
 // ──────────────────────────────────────────────
-// DataAccess seam — one accessor per table
+// Domain sub-interfaces
 // ──────────────────────────────────────────────
 
-export interface DataAccess {
+export interface FlashcardDataAccess {
 	flashcards: DataAccessTable<FlashcardSM2, string>;
 	reviewHistory: DataAccessTable<FlashcardReview, number>;
-	analyticsEvents: DataAccessTable<AnalyticsEvent, number>;
-	retentionRecurrence: DataAccessTable<RetentionRecurrence, number>;
-	wrongAnswers: DataAccessTable<WrongAnswerEntry, number>;
-	quizPacks: DataAccessTable<QuizPack, string>;
-	packQuestions: DataAccessTable<QuizPackQuestion, number>;
+}
+
+export interface CompetencyDataAccess {
 	competencies: DataAccessTable<CompetencyRecord, number>;
 	progress: DataAccessTable<CachedProgress, number>;
 	quizAttempts: DataAccessTable<QuizAttempt, number>;
-	bookmarks: DataAccessTable<BookmarkRecord, number>;
+}
+
+export interface QuizDataAccess {
 	questions: DataAccessTable<CachedQuestion, number>;
-	subjects: DataAccessTable<CachedSubject, number>;
+	quizPacks: DataAccessTable<QuizPack, string>;
+	packQuestions: DataAccessTable<QuizPackQuestion, number>;
+	quizSessions: DataAccessTable<QuizSessionState, number>;
+}
+
+export interface ContentDataAccess {
+	notes: DataAccessTable<NoteRecord, number>;
+	bookmarks: DataAccessTable<BookmarkRecord, number>;
+	sharedQuestions: DataAccessTable<SharedQuestionRecord, string>;
 	visuals: DataAccessTable<CachedVisual, number>;
-	// Phase 3 — expanded tables for remaining offlineDB consumers
+	cachedPdfs: DataAccessTable<CachedPdf, number>;
+	extractionCache: DataAccessTable<ExtractionCache, number>;
+}
+
+export interface StudyDataAccess {
+	studyPlans: DataAccessTable<StudyPlanRecord, string>;
+	studyGuides: DataAccessTable<CachedStudyGuide, string>;
+	examDates: DataAccessTable<CachedExamDates, number>;
+}
+
+export interface SyncDataAccess {
+	wrongAnswers: DataAccessTable<WrongAnswerEntry, number>;
+	retentionRecurrence: DataAccessTable<RetentionRecurrence, number>;
+	examSessions: DataAccessTable<ExamSessionSnapshot, number>;
 	chatMessages: DataAccessTable<ChatMessageRecord, number>;
 	questionRatings: DataAccessTable<QuestionRating, number>;
-	knowledgeGraph: DataAccessTable<CachedGraph, string>;
-	examSessions: DataAccessTable<ExamSessionSnapshot, number>;
-	sharedQuestions: DataAccessTable<SharedQuestionRecord, string>;
-	examDates: DataAccessTable<CachedExamDates, number>;
-	extractionCache: DataAccessTable<ExtractionCache, number>;
-	notes: DataAccessTable<NoteRecord, number>;
-	gamification: DataAccessTable<StoredGamification, number>;
-	cachedPdfs: DataAccessTable<CachedPdf, number>;
-	quizSessions: DataAccessTable<QuizSessionState, number>;
-	tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
-	tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
-	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
 	jobs: DataAccessTable<JobRecord, number>;
 	conflicts: DataAccessTable<SyncConflict, number>;
-	// Phase 1 — remaining tables for full coverage
-	userConsents: DataAccessTable<UserConsent, string>;
-	groupPosts: DataAccessTable<GroupPost, number>;
-	groupComments: DataAccessTable<DexieGroupComment, number>;
-	groupReactions: DataAccessTable<DexieGroupReaction, number>;
-	groupChallenges: DataAccessTable<GroupChallenge, string>;
-	groupChallengeEntries: DataAccessTable<GroupChallengeEntry, string>;
-	groupBadges: DataAccessTable<GroupBadge, string>;
-	teacherObservations: DataAccessTable<TeacherObservation, number>;
-	assignmentMessages: DataAccessTable<AssignmentMessage, number>;
-	studyPlans: DataAccessTable<StudyPlanRecord, string>;
-	onboardingState: DataAccessTable<OnboardingState, string>;
-	srDailyBudget: DataAccessTable<SrDailyBudget, string>;
 	flashcardSyncState: DataAccessTable<FlashcardSyncState, string>;
-	studyGuides: DataAccessTable<CachedStudyGuide, string>;
 }
+
+export interface ObservabilityDataAccess {
+	analyticsEvents: DataAccessTable<AnalyticsEvent, number>;
+	gamification: DataAccessTable<StoredGamification, number>;
+}
+
+export interface SocialDataAccess {
+	userConsents: DataAccessTable<UserConsent, string>;
+}
+
+export interface CacheDataAccess {
+	tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
+	tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
+	knowledgeGraph: DataAccessTable<CachedGraph, string>;
+}
+
+export interface LegacyDataAccess {
+	subjects: DataAccessTable<CachedSubject, number>;
+	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
+}
+
+// ──────────────────────────────────────────────
+// Composite — full 33-table access
+// ──────────────────────────────────────────────
+
+export interface DataAccess extends
+	FlashcardDataAccess,
+	CompetencyDataAccess,
+	QuizDataAccess,
+	ContentDataAccess,
+	StudyDataAccess,
+	SyncDataAccess,
+	ObservabilityDataAccess,
+	SocialDataAccess,
+	CacheDataAccess,
+	LegacyDataAccess {}
