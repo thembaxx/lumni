@@ -1,18 +1,19 @@
-<!-- LAST_SYNC: 2026-06-02 -->
+<!-- LAST_SYNC: 2026-06-07 -->
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation) + Q7 follow-up (`2c16e85e` quiz results page surfaces RAG sources via `getLastRagContext()`) + Q4 follow-up (`f769f322` per-question RAG source persistence on `Question.webSources` via hybrid AI-cite + fallback). 1220 tests pass. Active: pick next P1 or new features/bug fixes.
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. 1225 tests pass, 0 fail. Next: pick from TODO.md or new features.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
 - **RAG Allowlist**: 24 subjects (STEM + humanities); off-grid subjects skip RAG entirely.
-- **Offline-First**: Dexie is the source of truth for all client reads; all writes must be queued via `QueueCore`.
+- **Offline-First**: Dexie is the source of truth for all client reads; all writes must be queued via `QueueCore`. All DB access via `DataAccess` interface.
 - **Math**: Strictly use `$...$` for inline and `$$...$$` for display math (KaTeX).
 - **Design**: No arbitrary pixels or magic z-index. Use semantic tokens.
+- **DataAccess**: Never use `offlineDB` directly — always go through `DexieDataAccess` or `InMemoryDataAccess`.
 
 ## DEFINITIONS
 - **QuestionEngine**: Single source of truth for all 11 question types. RAG-augmented via `PromptManager`.
@@ -20,7 +21,13 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - **FlashcardEngine**: Unified SR logic (SM-2/FSRS) + daily limits + leech detection.
 - **Immersive Mode**: UI state that auto-hides core navigation for focus.
 - **Quiz Pack**: AI-generated question sets for offline study.
-- **SourceAttributionPill**: Inline non-collapsible pill on `QuestionCardFeedback` that surfaces per-question web sources. Lighter than the collapsible `VerifiedByPill` on the results page.
+- **Knowledge Graph**: AI-generated topic dependency graphs (prerequisites, core, advanced). Cached 7d in Dexie v29.
+- **Study Guide**: AI-generated structured study guides with sections + summary. Cached 30d in Dexie v32.
+- **Live Session**: Real-time collaborative study session via Appwrite, 15s polling.
+- **SourceAttributionPill**: Inline non-collapsible pill on `QuestionCardFeedback` that surfaces per-question web sources.
+- **DataAccess**: Typed interface over all 38+ Dexie tables; `DexieDataAccess` (production) and `InMemoryDataAccess` (tests).
+- **Uniform AI Adapter**: Factory pattern for pluggable AI provider request normalizers and response parsers.
+- **Theme Chrome**: Dynamic `theme-color` meta tag synced on theme switch; accent-tinted frosted glass on nav.
 
 ## DECISION_LOG
 - [D030] **Mega-component breakdown**: Overgrown files split into co-located subdirs.
@@ -28,23 +35,45 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - [D032] **Generic API**: Migrated routes to `createRouteHandler` factory.
 - [D033] **Swipeable Deck**: Tinder-style interaction for flashcards with quality fine-tuning.
 - [D034] **GDPR Consent**: Dual-write (Dexie + Appwrite) with ai-gate/sentry-gate blocking.
-- [D035] **WCAG 2.2 AA**: 30+ components audited; 19 critical/high fixes applied (labels, focus-visible, aria-live, keyboard).
+- [D035] **WCAG 2.2 AA**: 30+ components audited; 19 critical/high fixes applied.
 - [D036] **TinyFish RAG foundation**: 7-module `src/lib/tinyfish/` with 24-subject allowlist, 14d Dexie cache, in-flight dedup, 3s timeout fail-open.
-- [D037] **DI over `Bun.mock.module`**: Network/IO-touching functions accept a `deps` arg to avoid process-wide test pollution.
-- [D038] **RAG fetch once per batch**: `QuestionEngine.lastRagContext` shared across processors in a single `generateInternal` call.
-- [D039] **Quiz results page RAG sources** (`2c16e85e`): `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` and maps to `{ url, title }[]` for the API wire; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill>`. `getLastRagContext()` getter pattern is reusable for any future "sidecar context" surfaced by the engine without touching the `generate()` signature.
-- [D040] **Per-question RAG source persistence** (`f769f322`): `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate). Hybrid AI-cite `sourceRefs: number[]` with all-sources fallback in `src/lib/question-engine/source-mapper.ts`. AI cites (cheap), mapper validates (catches drift), engine falls back (guarantees coverage). Companion pattern: strip the AI-only `sourceRefs` field before persistence so it never reaches storage. New `<SourceAttributionPill>` rendered on `QuestionCardFeedback` (4th pill consumer).
+- [D037] **DI over `Bun.mock.module`**: Network/IO-touching functions accept a `deps` arg.
+- [D038] **RAG fetch once per batch**: `QuestionEngine.lastRagContext` shared across processors.
+- [D039] **Quiz results page RAG sources**: `getLastRagContext()` pattern for sidecar context.
+- [D040] **Per-question RAG source persistence**: `Question.webSources` via hybrid AI-cite + fallback; `SourceAttributionPill` on QuestionCardFeedback.
+- [D041] **Centralized logger**: `logError()` with context tag; dev console.error, prod Sentry captureException.
+- [D042] **DataAccess seam**: Typed `DataAccess` interface with `DexieDataAccess` + `InMemoryDataAccess` implementations. All 38+ tables. Phase 1-4 complete.
+- [D043] **Knowledge graph**: AI-generated topic dependency graphs; 7d Dexie cache. `LearningMapCard` + `TopicGraph` UIs.
+- [D044] **Study guide generator**: AI-generated structured guides; 30d Dexie cache. `/study-guide` page.
+- [D045] **Live study sessions**: Appwrite-backed with `useLiveSession()` hook (15s polling).
+- [D046] **Uniform AI adapter**: `createUniformProvider()` factory with pluggable normalizers.
+- [D047] **RedisStore rate limiter**: `RedisStore` via `@upstash/redis` alongside existing `MapStore`.
+- [D048] **Wrong-answer re-encounter**: `retentionRecurrence` table; auto-insert 3 wrong answers into quiz.
+- [D049] **Public share routes**: `/q/[id]` star-gated answer; ghost links (30d); assignment sharing.
+- [D050] **Theme chrome takeover**: Dynamic `theme-color` meta tag; SSR viewport; accent-tinted nav glass.
+- [D051] **Navigation sidebar**: Categorized (Study, Practice, Tools, Social, Account); search/filter; `SidebarStateProvider`.
+- [D052] **PWA offline polish**: `/offline` page; install tracking events; service worker preload.
+- [D053] **Item-bank pruning**: `"prune-stale-questions"` job type from `/api/engine/generate`.
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
 - `LearningOrchestrator` → `QuestionEngine` → `TinyFish RAG` (3s timeout, 14d cache)
 - `LearningOrchestrator` → `QuestionEngine` → `PromptManager` (injects `<reference_material>` XML + sourceRefs appendix)
-- `LearningOrchestrator.generateQuestionSet` → `engine.getLastRagContext()` → `QuizResult` + `QuizResultsCard` (Q7)
-- `QuestionEngine.generateInternal` → `source-mapper.attachWebSources()` → `Question.webSources` → `QuestionCardFeedback` (Q4)
+- `LearningOrchestrator.generateQuestionSet` → `engine.getLastRagContext()` → `QuizResult` + `QuizResultsCard`
+- `QuestionEngine.generateInternal` → `source-mapper.attachWebSources()` → `Question.webSources` → `QuestionCardFeedback`
 - `aiSolver.execute` → `TinyFish RAG` (1-source, 24h cache) → system+user prompt injection
-- `FlashcardEngine` → `Dexie` → `QueueCore` → `Appwrite`
-- `QuizPackService` → `QuestionEngine` → `Dexie` (v25)
-- `UserConsentService` → `Dexie` → `QueueCore` → `Appwrite` (dual-write)
+- `FlashcardEngine` → `DataAccess` → `QueueCore` → `Appwrite`
+- `QuizPackService` → `QuestionEngine` → `DataAccess` (Dexie)
+- `UserConsentService` → `DataAccess` → `QueueCore` → `Appwrite` (dual-write)
+- `KnowledgeGraph` → `DataAccess` (v29, 7d TTL) → `LearningMapCard` + `TopicGraph`
+- `StudyGuide` → `DataAccess` (v32, 30d TTL) → `/study-guide` page
+- `LiveSessionService` → `Appwrite` → `useLiveSession()` (15s polling) → `LiveSessionBar`
+- `ShareService` → `DataAccess` (sharedQuestions) → `/q/[id]` public page
+- `RetentionService` → `DataAccess` (retentionRecurrence) → next-best-action card
+- `ThemeProvider` → `theme-color` meta tag → Browser chrome
+- `SidebarNav` → `SidebarStateProvider` → categorized navigation with search
+- `RateLimiter` → `MapStore | RedisStore` → API routes
+- `aiClient` → `UniformAdapter` (openaiNormalizer/geminiNormalizer) → provider chain
 
 ## REUSABLE_SNIPPETS
 - **API Route**: `export const POST = createRouteHandler({ auth: 'required', schema: z.object({...}), handler: async (data, ctx) => {...} });`
@@ -52,21 +81,31 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - **Competency Tracking**: `await trackQuestionResult(questionId, score, subject, topic);`
 - **RAG Fetch (quiz)**: `const ctx = await fetchRagContext(subject, topic, userId);` → `PromptManager.getPrompt(type, params, ctx)`
 - **RAG Fetch (solve)**: `const ctx = await getSourceForQuestion(question, userId);` → inject into prompt
-- **Quiz results pill**: `<VerifiedByPill sources={sources ?? []} />` — wire `sources` from `useQuestionEngine()` (defaults to `[]`)
-- **Question feedback pill**: `<SourceAttributionPill sources={question.webSources} />` — wire from generated `Question` after `source-mapper` attaches (defaults to undefined = renders nothing)
-- **Engine sidecar context**: `const ctx = engine.getLastRagContext()` after `generate()`; map full schema down to wire shape — avoids touching `generate()` signature
-- **Hybrid AI-cite + fallback**: prompt model to return `sourceRefs: number[]` per item; validate + map to typed objects; fall back to all sources on missing/invalid; strip the AI-only field before persistence
+- **Quiz results pill**: `<VerifiedByPill sources={sources ?? []} />`
+- **Question feedback pill**: `<SourceAttributionPill sources={question.webSources} />`
+- **Engine sidecar context**: `const ctx = engine.getLastRagContext()` after `generate()`
+- **Hybrid AI-cite + fallback**: prompt `sourceRefs: number[]`; validate; fall back to all sources; strip before persist
+- **DataAccess DI**: `class Service { constructor(private data: DataAccess) {} }` — inject `dexieDataAccess` (prod) or `InMemoryDataAccess` (test)
+- **Rate limiter**: `new RateLimiter(new MapStore(), config)` or `new RateLimiter(new RedisStore(redis), config)`
+- **Uniform provider**: `createUniformProvider({ name: 'gemini', model: 'gemini-2.0-flash-lite', normalizeRequest: geminiNormalizer, parseResponse: geminiResponseParser })`
+- **Live session**: `const { session, participants, isLoading } = useLiveSession(groupId);`
+- **Knowledge graph**: `const { data: graph } = useQuery({ queryKey: ['knowledge-graph', subject, topic], queryFn: () => fetchGraph(subject, topic) });`
+- **Study guide**: `const { data: guide } = useMutation({ mutationFn: ({ subject, topic }) => generateGuide(subject, topic) });`
 
 ## AVOID_LIST
 - **Space-y**: Avoid `space-y-*`, use `flex-col` + `gap-*`.
 - **Arbitrary Values**: Prohibited `w-[200px]`, `z-50`, `rounded-[2.5rem]`.
 - **Direct Appwrite Writes**: Use `QueueCore` for sync consistency.
+- **Direct offlineDB access**: Always use `DataAccess` interface.
 - **DeepSeek**: Removed from AI chain due to cost.
 - **`Bun.mock.module` for tinyfish**: Use DI (`deps` arg) instead — `mock.module` is process-wide.
-- **`querySelector` / `querySelectorAll` in tests**: happy-dom `SelectorParser` throws `TypeError` on `new this.window.SyntaxError`. Use `getElementsByTagName` / `getElementsByClassName` and `container.textContent` regex matching.
+- **`querySelector` / `querySelectorAll` in tests**: happy-dom `SelectorParser` throws `TypeError`. Use DOM API + textContent regex.
+- **`lottie-react`**: Already migrated to `@lottiefiles/dotlottie-react`.
 
 ## PROMPT_LOOKUP_TABLE
 - If working on **Engines**, check `prompt-index.md` > `agent-engine-architecture`.
 - If working on **UI/Design**, check `prompt-index.md` > `design-system-emerald`.
 - If performing a **UI Audit**, check `prompt-index.md` > `impeccable-ui-audit`.
 - If working on **RAG**, check `docs/adr/0010-tinyfish-rag-integration.md`.
+- If working on **DataAccess**, check `docs/adr/0011-data-access-seam.md`.
+- If working on **Theme/Nav**, check `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md` and `2026-06-03-nav-sidebar-design.md`.

@@ -1,8 +1,8 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** 2026-06-02 (Sessions 15-21, including TinyFish RAG + Q4 per-question source persistence)
-**Sources:** MEMORY.md, AGENTS.md (Sessions 1-21), implementation-notes.md, CONTEXT.md, docs/adr/
+**Last updated:** 2026-06-07 (Sessions 22-32, including Batch 1-6, Data Consolidation, Theme Chrome, Navigation Sidebar)
+**Sources:** MEMORY.md, AGENTS.md (Sessions 1-32), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -28,7 +28,7 @@
 | D015 | Onboarding fires once on first visit regardless of auth status; never re-triggers | Partial data saved with defaults; wizard is 5 steps | 2026-05-15 |
 | D016 | Competency sync field: use `score` (not `proficiency`) | Historical bug — job-processor wrote `proficiency` but API routes read `score`; fixed both write paths + backward-compat fallback | 2026-05-20 |
 | D017 | Exam sessions stored in `exam_sessions` Appwrite collection (not `exam_papers`) | Wrong collection was used historically; fixed in Session 1 | 2026-05-15 |
-| D018 | Flashcard engine consolidated into `src/lib/flashcard-engine/` | Unified FlashcardEngine class wrapping DexieRepository + SM-2/FSRS | 2026-05-24 |
+| D018 | Flashcard engine consolidated into `src/lib/flashcard-engine/` | Unified FlashcardEngine class wrapping DataAccess + SM-2/FSRS | 2026-05-24 |
 | D019 | Generic route handler factory `createRouteHandler()` | Replaces 49 copies of auth/try-catch boilerplate | 2026-05-24 |
 | D020 | QuizPackService for offline AI quiz packs | Bulk generation + Dexie v18 persistence + rate limiting | 2026-05-26 |
 | D021 | Playwright for E2E testing; Storybook for UI documentation | Coverage gap: only unit tests existed; Storybook for component doc | 2026-05-26 |
@@ -44,8 +44,23 @@
 | D031 | TinyFish over Exa for RAG flows | TinyFish Search + Fetch are free forever; Exa kept for low-volume dashboard semantic search; 24-subject allowlist cuts waste | 2026-06-02 |
 | D032 | DI (`deps?: { ... }` arg) over `Bun.mock.module` for RAG-touching code | `mock.module` is process-wide in Bun; same specifier from different test files collides; DI lets each test inject a clean stub | 2026-06-02 |
 | D033 | RAG fetch once per batch (not per question) | `QuestionEngine.lastRagContext` shared across all `QuestionProcessor.generate` calls in a single `generateInternal`; cuts network calls and ensures batch coherence | 2026-06-02 |
-| D034 | Quiz results page surfaces RAG sources via `getLastRagContext()` | `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps `RagContext.sources` (full WebSource with content) → `{ url, title }[]` (lightweight) for the API wire; no engine signature change needed. Two quiz result surfaces (`QuizResult` + `QuizResultsCard`) both consume the field | 2026-06-02 |
-| D035 | Q4 hybrid source matching: AI-cited `sourceRefs: number[]` with all-sources fallback | Model returns `sourceRefs` per question referencing 1-indexed sources in the XML block; `mapSourceRefs()` validates integers in range and dedupes; on missing/invalid/non-array/out-of-range, `attachWebSources()` falls back to attaching all 3 batch sources so attribution is never lost. `sourceRefs` is stripped from the question after mapping (lives only in the AI wire) | 2026-06-02 |
+| D034 | Quiz results page surfaces RAG sources via `getLastRagContext()` | `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps full WebSource → `{ url, title }[]`; no engine signature change needed | 2026-06-02 |
+| D035 | Q4 hybrid source matching: AI-cited `sourceRefs: number[]` with all-sources fallback | Model returns `sourceRefs` per question; `mapSourceRefs()` validates; `attachWebSources()` falls back to all 3 batch sources; `sourceRefs` stripped after mapping | 2026-06-02 |
+| D036 | Centralized logger (`src/lib/shared/logger.ts`) with Sentry in production | `logError()` context tag; dev console.error, prod Sentry.captureException via withScope(); client-side consent-gated by beforeSend | 2026-06-04 |
+| D037 | DataAccess seam — typed interface over Dexie | `DataAccess` interface with `DataAccessTable<T, TId>`, `Collection<T>`, `WhereClause<T>`; two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests with `seed()`); all 38+ tables covered | 2026-06-04 |
+| D038 | Knowledge graph — AI-generated topic dependency graphs | `fetchGraph()` generates `{ nodes, edges }`; cached 7d in Dexie v29; two UIs: dashboard `LearningMapCard` + per-question `TopicGraph` | 2026-06-04 |
+| D039 | Study guide generator — 30d Dexie cache | AI-generated structured guides with sections + summary; `/study-guide` page; Dexie v32 | 2026-06-04 |
+| D040 | Live study sessions via Appwrite with 15s polling | `LiveSessionService` + `useLiveSession()` hook; real-time collaborative sessions within study groups | 2026-06-04 |
+| D041 | Dark-mode design tokens: `--system-background`, `--system-accent-alpha-10`, `shadow-level-*` | Apple HIG-inspired dark mode where base layer is dimmer and elevated layers brighter; accent-tinted frosted glass for nav | 2026-06-07 |
+| D042 | Navigation sidebar: categorized with search | Replaced 64px icon column with full categorized sidebar (Study, Practice, Tools, Social, Account); config in `src/lib/navigation/config.ts`; `SidebarStateProvider` context | 2026-06-07 |
+| D043 | Theme chrome: dynamic `theme-color` sync | `ThemeProvider` syncs `<meta name="theme-color">` on theme switch via `getComputedStyle`; SSR viewport with light/dark media query values | 2026-06-07 |
+| D044 | Uniform AI adapter factory pattern | `createUniformProvider()` with pluggable request normalizers (`openaiNormalizer`, `geminiNormalizer`) and response parsers; used by `client.ts` for the provider chain | 2026-06-07 |
+| D045 | RedisStore rate limiter for multi-instance | `RedisStore` implements `RateLimitStore` via `@upstash/redis` alongside existing `MapStore`; production-ready for multi-instance deployments | 2026-06-07 |
+| D046 | Wrong-answer re-encounter via retentionRecurrence | 3 wrong answers auto-inserted into next eligible quiz with "review" badge; per-paper competency split (P1 vs P2) | 2026-06-07 |
+| D047 | Next-best-action dashboard card | Time-of-day-aware, weakest-topic-first, 24h-dismiss cooldown; per-topic inline mini-graph | 2026-06-07 |
+| D048 | Share/public routes: star-gated answer reveal | `/q/[id]` public page with 5-star rating gate; `<VerifiedByPill>` for sources; ghost links (30d expiry) for B2B2C | 2026-06-07 |
+| D049 | PWA offline polish with install tracking | `/offline` page, manifest `theme_color`, `pwa_install`/`offline_visit` events in observability | 2026-06-07 |
+| D050 | Item-bank pruning background job | `"prune-stale-questions"` job type enqueued from `/api/engine/generate`; `pruned?: boolean` field on `Question` | 2026-06-07 |
 
 ### Reversals
 
@@ -54,32 +69,38 @@
 | LearningOrchestrator duplicated `generate`/`grade`/`validate` | D001 — Orchestrator composes QuestionEngine | Violated depth principle; two modules had identical logic | 2026-05-15 |
 | DeepSeek Reasoner as AI provider | D003 — Gemini -> Nvidia -> Groq | Too expensive for free-tier credits | 2026-05-13 |
 | `lottie-react` for animations | `@lottiefiles/dotlottie-react` | lottie-web unpin issue; see `docs/issues/lottie-web-unpin.md` | 2026-05-15 |
+| In-memory-only RateLimiter | D045 — MapStore + RedisStore | RedisStore for multi-instance production; MapStore for dev/single-instance | 2026-06-07 |
+| 64px icon sidebar | D042 — Full categorized sidebar | Navigation depth + discoverability | 2026-06-07 |
 
 ---
 
 ## Patterns (Reusable Solutions)
 
 - **Zod for all external API validation**: API routes validate request bodies with Zod schemas before processing
-- **Repository pattern for DB access**: All `src/lib/db/repositories/` provide typed CRUD, tests use mock repos
-- **QueueCore generic queue**: Single `QueueCore` class in `src/lib/queue/core.ts` powers both SyncQueue (offline mutations) and JobQueue (orchestration side effects). Exponential backoff + concurrency guard built in.
-- **RateLimiter single class, domain-specific configs**: In-memory rate limiter with configs for auth, API routes, and AI token budgets
-- **Dexie schema versioning**: Schema versions (currently v24) managed in `src/lib/db/schema.ts` with upgrade handlers (v18→v24 includes userConsents, quizPacks, packQuestions, and more)
-- **Competency mapper**: Novice→Easy, Developing→Medium, Proficient→Medium, Mastered→Hard (in `src/lib/question-engine/competency-mapper.ts`)
-- **Background visual pre-caching**: When questions are generated, visual generation fires in background so visuals are cached before the question card renders
-- **SM-2 spaced repetition**: Flashcard review uses SM-2 algorithm; existing cards use `reviewFlashcard()`, AI fallback for new content
-- **Immersive mode pattern**: React context + `useImmersiveMode()` hook; nav components self-hide; quiz/exam auto-enable; floating exit pill
-- **Swipeable deck pattern**: `useSwipeDeck` state machine (idle→dragging→swiped→quality-pick→advancing); undo stack; framer-motion drag + spring-back
-- **Offline pack pattern**: `QuizPackService` + Dexie `quizPacks`/`packQuestions` tables; rate-limited generation; expiry-based eviction
-- **Consent dual-write pattern**: `UserConsentService.save()` writes to Dexie first, then enqueues `appwrite-consent-sync` background job with retry; gates (`ai-gate`, `sentry-gate`) read module-level booleans
-- **i18n pattern**: Locale-based routing via `[locale]` middleware; `i18n-provider.tsx` + `navigation.ts` helpers; translation keys in JSON under `src/i18n/`
-- **Mega-component decomposition**: Co-located sub-components; barrel exports in `index.ts` preserve import sites; target: <200 lines per component
-- **RAG injection pattern**: Prepend `<reference_material>` XML block to user prompt with `\n\n---\n\n` separator; append `buildPromptInstruction()` to system prompt with `\n\n`. Used in both `aiSolver.execute` (solve) and `PromptManager.getPrompt` (quiz). Skip when consent is missing, subject is off-grid, or query is trivial.
-- **TinyFish module pattern**: client (thin HTTP) + cache (Dexie TTL) + in-flight (Map dedup) + allowlist (subject + rate) + wrap (XML/CSV escapers + instruction builder) + types + index barrel. Each module is testable in isolation with no cross-imports.
-- **DI test pattern for cross-test pollution**: Functions that touch network/IO accept a `deps` arg (`deps?: { fetchSources?, buildInstruction? }`). Tests instantiate the function with stub `deps` instead of `Bun.mock.module`. Avoids process-wide specifier collisions across test files.
-- **Fetch-once-per-batch pattern**: Higher-level orchestrator fetches RAG once, threads context to all per-item processors via a property (`this.lastRagContext`) and an explicit function arg. Saves N-1 fetches per batch and ensures all items are grounded in the same sources.
-- **`getLastRagContext()` surface pattern**: Engine exposes in-memory batch context via a read-only getter; orchestrator pulls it AFTER `generate()` returns, maps the full source schema down to the wire shape, and threads it through API → hook → component. Avoids touching the `generate()` signature while still giving UI access to the per-batch RAG metadata. Reusable for any future "sidecar context" data the engine computes.
-- **Hybrid AI-cite + fallback pattern**: Prompt the AI to return `sourceRefs: number[]` per item referencing an indexed source list; validate + map to typed objects; fall back to a sensible default (e.g. all sources) on missing/invalid input. Guarantees attribution is never lost while still preferring the model's judgment. Companion: strip the AI-only field before persistence so it never lands in storage.
-- **DOM API over `querySelector`/`querySelectorAll` in tests**: happy-dom's SelectorParser constructs `new this.window.SyntaxError(...)` to throw invalid-selector errors; that constructor is sometimes undefined in test setups, causing `TypeError: undefined is not a constructor` in `node_modules/happy-dom/.../SelectorParser.js:127`. Use `getElementsByTagName` / `getElementsByClassName` (DOM API, no selector parsing) and `container.textContent` (regex matching) for all test assertions.
+- **DataAccess seam for DB access**: All 38+ tables accessed via typed `DataAccess` interface. `DexieDataAccess` (production) wraps offlineDB; `InMemoryDataAccess` (tests) with `seed()`.
+- **QueueCore generic queue**: Single `QueueCore` class powers both SyncQueue (offline mutations) and JobQueue (orchestration side effects). Exponential backoff + concurrency guard.
+- **RateLimiter single class, dual stores**: In-memory `MapStore` + production `RedisStore` via `@upstash/redis`. Configs for auth, API routes, and AI token budgets.
+- **Dexie schema versioning**: v32 — 38+ tables. Incremental schema upgrades with TTL-based expiry.
+- **Competency mapper**: Novice→Easy, Developing→Medium, Proficient→Medium, Mastered→Hard (per-paper P1/P2 split).
+- **Background visual pre-caching**: When questions are generated, visual generation fires in background so visuals are cached before the question card renders.
+- **SM-2 spaced repetition**: Flashcard review uses SM-2 algorithm; existing cards use `reviewFlashcard()`, AI fallback for new content.
+- **Immersive mode pattern**: React context + `useImmersiveMode()` hook; nav components self-hide; quiz/exam auto-enable; floating exit pill.
+- **Swipeable deck pattern**: `useSwipeDeck` state machine (idle→dragging→swiped→quality-pick→advancing); undo stack; framer-motion drag + spring-back.
+- **Offline pack pattern**: `QuizPackService` + Dexie `quizPacks`/`packQuestions` tables; rate-limited generation; expiry-based eviction.
+- **Consent dual-write pattern**: `UserConsentService.save()` writes to Dexie first, then enqueues background job with retry.
+- **i18n pattern**: Locale-based routing via `[locale]` middleware; `i18n-provider.tsx` + `navigation.ts` helpers; JSON translation keys.
+- **RAG injection pattern**: Prepend `<reference_material>` XML block to user prompt; append `buildPromptInstruction()` to system prompt. Used in both solve and quiz flows.
+- **Hybrid AI-cite + fallback pattern**: Prompt model to return `sourceRefs: number[]` per item; validate + map to typed objects; fall back to all sources on missing/invalid; strip AI-only field before persistence.
+- **`getLastRagContext()` surface pattern**: Engine exposes in-memory batch context via a read-only getter; orchestrator pulls AFTER `generate()` returns and maps full schema down to wire shape.
+- **DI test pattern for cross-test pollution**: Network/IO functions accept `deps` arg instead of `Bun.mock.module` (process-wide collisions).
+- **DOM API over `querySelector` in tests**: happy-dom's `new this.window.SyntaxError(...)` undefined. Use `getElementsByTagName` / `getElementsByClassName` and `container.textContent` regex matching.
+- **Knowledge graph pattern**: AI generate → cache (7d Dexie) → two UIs (dashboard card + per-question inline mini-graph). Same pattern reused for study guides.
+- **Study guide pattern**: AI generate → cache (30d Dexie) → `/study-guide` page with animated display.
+- **Live session pattern**: Appwrite-backed with `useLiveSession()` hook (15s polling via React Query). `LiveSessionService` manages CRUD + participants.
+- **Uniform provider pattern**: `createUniformProvider()` factory with `ProviderConfig` (name, model, url, authScheme, normalizeRequest, parseResponse). Plugged into `client.ts`.
+- **Centralized logger pattern**: `logError(context, error, meta?)` — dev: console.error, prod: Sentry.captureException via withScope(). Catch blocks pass context tag.
+- **Theme chrome pattern**: React `useEffect` reads `getComputedStyle(document.documentElement).getPropertyValue('--system-background')` and writes to `<meta name="theme-color">`. SSR fallback via `viewport` export.
+- **Sidebar search pattern**: Client-side filter over nav config entries with real-time input. `SidebarStateProvider` context manages open/close + hamburger toggle.
 
 ---
 
@@ -87,32 +108,41 @@
 
 | What | Why | Lesson |
 |------|-----|--------|
-| DBE PDF text extraction | Official PDF timetable is image-based (embedded JPEGs) — `@opendataloader/pdf` and `pdfjs-dist` both fail | Manual extraction from web sources (studentdaily.co.za) needed; live PDF scraping is future work with OCR |
+| DBE PDF text extraction | Official PDF timetable is image-based (embedded JPEGs) — `@opendataloader/pdf` and `pdfjs-dist` both fail | Manual extraction from web sources needed; live PDF scraping is future work with OCR |
 | DeepSeek Reasoner as AI provider | Exceeded free-tier budget too quickly | Switch to cheaper models: Gemini 2.0 Flash Lite (primary), Nvidia NIM (fallback) |
-| Duplicate sync hooks | Multiple hooks (`useAutoSync`, `useEnhancedSync`, etc.) that all processed the same queue | Consolidate to single `src/lib/sync-queue.ts` processor |
+| Duplicate sync hooks | Multiple hooks that all processed the same queue | Consolidate to single `src/lib/sync-queue.ts` processor |
 | Competency `proficiency` vs `score` field | Job processor wrote to `proficiency` but all readers expected `score` | Fix both write paths + add backward-compat fallback in readers |
-| Duplicated generate/grade in both QuestionEngine and LearningOrchestrator | Two modules with identical logic — bugs had to be fixed in two places | Compose, don't duplicate: Orchestrator calls Engine |
-| happy-dom `querySelectorAll` SyntaxError | `screen.getByText` / `screen.queryByText` / `container.querySelector("a")` throw `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')` in `node_modules/happy-dom/.../SelectorParser.js:127` | Use `container.textContent` with regex matching AND `getElementsByTagName` / `getElementsByClassName` (DOM API, no selector parsing) for all component render assertions in `@testing-library/react` + happy-dom test setups |
+| Duplicated generate/grade in both QuestionEngine and LearningOrchestrator | Two modules with identical logic | Compose, don't duplicate: Orchestrator calls Engine |
+| happy-dom `querySelectorAll` SyntaxError | `screen.getByText` throws `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')` | Use `container.textContent` regex + `getElementsByTagName` / `getElementsByClassName` |
+| Bun `mock.module` process-wide pollution | `Bun.mock.module("@/lib/tinyfish")` collided across test files | Use DI (`deps` arg) pattern or shared mock modules |
 
 ---
 
 ## Open Questions
 
-1. **Redis-backed rate limiting**: In-memory RateLimiter does not survive server restarts. Needed for multi-instance deployment.
-2. **Kangaroo keyboard support**: Swipeable deck now has basic keyboard (Space/Enter flip, Arrow keys swipe) but lacks full ARIA widget semantics
-3. **QuestionEngine consent-denied UX**: Engine silently returns `[]` when data-sharing consent is denied — no user-facing explanation
+1. **RAG source persistence on Question schema**: Solved (Q4 follow-up `f769f322`). `Question.webSources?: { url, title }[]` persisted.
+2. **Redis-backed rate limiting**: ✅ Solved (`RedisStore` via `@upstash/redis` implemented alongside `MapStore`).
+3. **Kangaroo keyboard support**: Swipeable deck has Space/Enter flip and Arrow keys swipe but lacks full ARIA widget semantics.
+4. **QuestionEngine consent-denied UX**: Engine silently returns `[]` when data-sharing consent is denied — no user-facing explanation.
+5. **PWA titlebar theming**: Gap 3 of Theme Chrome Takeover — `window-controls-overlay` for desktop installed PWAs not yet implemented.
 
 ### Resolved
 
 | Question | Resolution | Date |
 |----------|-----------|------|
-| Appwrite write path for exam_dates? No server-side cron exists. | ✅ Done — Session 10: background job `"appwrite-exam-dates-sync"` + `syncExamDatesToAppwrite()` | 2026-05-26 |
-| Component test strategy? What framework? | ✅ Playwright for E2E + Storybook for UI docs — Session 10 | 2026-05-26 |
-| PDF scraping for exam dates? OCR or manual? | ✅ Manual extraction from web sources for now; OCR remains future work | 2026-05-26 |
-| GDPR/POPIA legal compliance? | ✅ Done — consent management, cookie banner, TOS versioning, account deletion, data export (Session 17) | 2026-05-29 |
-| Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19) | 2026-06-01 |
-| Test suite health? | ✅ 1109 pass, 5 fail (e2e only) — fixed module cache conflicts + missing mocks (Session 18) | 2026-06-01 |
-| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19). ✅ Q7 follow-up shipped — quiz results page now surfaces RAG sources via `getLastRagContext()` (`2c16e85e`) — 1203 pass (Session 20). ✅ Q4 follow-up shipped — per-question RAG sources persist to `Question.webSources` via hybrid AI-cite + fallback (`f769f322`) — 1220 pass (Session 21) | 2026-06-02 |
+| Appwrite write path for exam_dates? | ✅ Background job `"appwrite-exam-dates-sync"` + `syncExamDatesToAppwrite()` | 2026-05-26 |
+| Component test strategy? | ✅ Playwright for E2E + Storybook for UI docs | 2026-05-26 |
+| PDF scraping for exam dates? | ✅ Manual extraction from web sources for now | 2026-05-26 |
+| GDPR/POPIA legal compliance? | ✅ Consent management, cookie banner, TOS versioning, account deletion, data export | 2026-05-29 |
+| Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19), round 2 a11y (Session 30) | 2026-06-07 |
+| Test suite health? | ✅ 1225 pass, 0 fail | 2026-06-07 |
+| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs + Q7/Q4 follow-ups. 1225 pass. | 2026-06-02 |
+| DataAccess seam? | ✅ Phase 1-4 complete. All 38+ tables migrated. | 2026-06-07 |
+| Knowledge graph + study guides? | ✅ Both shipped. Knowledge graph (v29, 7d TTL). Study guides (v32, 30d TTL). | 2026-06-07 |
+| Live study sessions? | ✅ Appwrite-backed with 15s polling. | 2026-06-07 |
+| Theme chrome + nav sidebar? | ✅ Dynamic theme-color, accent-tinted glass, categorized sidebar with search. | 2026-06-07 |
+| Uniform AI adapter? | ✅ Factory pattern with pluggable normalizers. | 2026-06-07 |
+| Redis rate limiter? | ✅ `RedisStore` via `@upstash/redis` implemented. | 2026-06-07 |
 
 ---
 
@@ -121,12 +151,15 @@
 | Resource | Location | Purpose |
 |----------|----------|---------|
 | Domain glossary | `CONTEXT.md` | Shared vocabulary for all agents |
-| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session 1-19 history |
+| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session 1-32 history |
 | Design system | `DESIGN.md` | "The Emerald Study Room" — colors, typography, components |
 | Product context | `PRODUCT.md` | Target users, brand principles |
 | Spec: Exam Dates | `SPEC.md` | National Exam Dates Tracker spec |
 | Roadmap | `docs/roadmap.md` | Phase-based product roadmap |
 | ADR-0001 | `docs/adr/0001-question-engine-composition.md` | QuestionEngine composition decision |
-| ADR-0010 | `docs/adr/0010-tinyfish-rag-integration.md` | TinyFish RAG injection for solve + quiz (status: Implemented across 3 PRs) |
+| ADR-0010 | `docs/adr/0010-tinyfish-rag-integration.md` | TinyFish RAG injection (status: Implemented) |
+| ADR-0011 | `docs/adr/0011-data-access-seam.md` | DataAccess seam (status: Implemented — Phase 1-4) |
 | Lottie migration | `docs/issues/lottie-web-unpin.md` | Resolved: migrated from lottie-react to @lottiefiles/dotlottie-react |
+| Theme chrome takeover | `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md` | Dynamic theme-color, accent-tinted glass, PWA titlebar |
+| Design specs | `docs/superpowers/specs/` | All batch design documents |
 | Impeccable skill | `.agents/skills/impeccable/` | UI/UX design audit workflow (34 reference files) |

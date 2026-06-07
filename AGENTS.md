@@ -465,3 +465,185 @@ const systemPrompt = webContext.xml
 - `npx tsc --noEmit` — 0 errors
 - `npx biome check` — 0 errors on all changed files
 - `bun test` — 1225 pass, 0 fail
+
+### Session 24 — Data Consolidation Phase 2-4 (June 2026)
+
+**Phase 2 — Migrate top consumers:**
+- **AnalyticsEngine**: DI via `DataAccess`, replaced `offlineDB.competencies/progress/quizAttempts`
+- **QuizPackService**: DI via `DataAccess`, replaced `offlineDB.quizPacks/packQuestions`
+- **RetentionService**: Created class with DI (was standalone functions), replaced `offlineDB.retentionRecurrence/wrongAnswers`, removed compound `where({...})`
+- **useWrongAnswerJournal**: Replaced `offlineDB.table("wrongAnswers")` string pattern with typed `dexieDataAccess.wrongAnswers` accessor
+
+**Phase 3 — Expand + batch migrate:**
+- **Expanded DataAccess interface**: 27 table accessors (all 38+ tables) — added `chatMessages`, `questionRatings`, `knowledgeGraph`, `examSessions`, `sharedQuestions`, `examDates`, `notes`, `gamification`, `cachedPdfs`, `quizSessions`, `tinyfishCache`, `tinyfishUsage`, `jobs`, etc.
+- **Interface additions**: `.limit(n)` on `DataAccessTable`, `.modify()` on `Collection<T>` with callback support
+- **Migrated 20+ files**: observability/events, sync/sync-handler, knowledge-graph/service, ai/chat-context, notification-service, search-service, share-service, exam-dates/service, chunked-search, export/export-service, 4 repositories
+- **Verification**: tsc 0 errors, biome 0 warnings, 1225 tests pass, 0 fail
+
+**Phase 4 — localStorage → Dexie migration:**
+- Migrated onboarding, planner sessions, study sessions from localStorage into Dexie tables (`studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState`)
+
+### Session 25 — Batch 1: Foundation Features (June 2026)
+
+**Knowledge graph (AI topic dependencies):**
+- **`src/lib/knowledge-graph/`** — `fetchGraph()` (AI), `getCachedGraph()` (Dexie 7d TTL), `KnowledgeNode/Edge/Graph` types
+- **API**: `POST /api/engine/knowledge-graph` → `{ nodes, edges }`
+- **UI**: `LearningMapCard` (dashboard SVG topic graph with prerequisite/core/advanced rows), `TopicGraph` (per-question inline mini-graph)
+- **Dexie v29**: `knowledgeGraph` table
+
+**Content lock component:**
+- **`src/components/ui/content-lock.tsx`** — reusable shadcn premium gating. Blurred preview + "Upgrade to Premium" CTA when locked, renders children when `hasFeature()` returns true
+
+**Item-bank pruning:**
+- New job type `"prune-stale-questions"` in orchestrator domain handlers; enqueued from `POST /api/engine/generate`
+- `pruned?: boolean` field on `Question` type
+
+**WAM + retention events:**
+- `analyticsEvents` Dexie v27 table, `trackSession{Start,End}()`, `trackDayActive()`, admin cohort view with DAU/WAU chart
+- AI cost observability v2: `estimatedCost` in `AILatencyRecord`, admin cost summary chart, per-provider cost config
+
+### Session 26 — Batch 2: Learning Loop Tightening (June 2026)
+
+**Wrong-answer re-encounter loop:**
+- `retentionRecurrence` Dexie table for tracking wrong answers scheduled for review
+- Auto-insert 3 wrong answers into next eligible quiz with "review" badge
+- Per-paper competency split: competency key extended from `topicId` to `topicId:paperId`, tracks P1 vs P2 separately
+
+**Next-best-action card:**
+- Personalised dashboard suggestion card: time-of-day-aware, weakest-topic-first, 24h-dismiss cooldown
+- Per-topic inline mini-graph (`TopicGraph` component, 3-hop max)
+
+### Session 27 — Batch 3: B2B2C Depth (June 2026)
+
+**Teacher tools:**
+- **Assignment completion loop**: student submit → auto-grade → teacher comment (`POST /api/assignments/[id]/submit`, comment API)
+- **Teacher observations**: `observation-timeline.tsx`, Dexie v30 `teacherObservations` table
+- **In-app messaging**: `assignment-thread.tsx`, `POST /api/teacher/assignments/[id]/messages`, Dexie v30 `assignmentMessages` table
+- **Ghost links**: B2B2C ghost dashboard, 30-day expiry aggregate stats (`POST /api/teacher/ghost-link`, `src/app/ghost/[token]/`)
+- **Assignment sharing**: share links with 7-day expiry (`POST /api/teacher/share-assignment`, `src/app/shared/assignment/[shareId]/`)
+
+**Parent tools:**
+- **Weekly digest push**: Sunday 18:00 SAST push with prior-week summary
+- **Assignment reminders**: push to student 24h before due
+
+### Session 28 — Batch 4: Infrastructure + AI (June 2026)
+
+**Study guide generator:**
+- **`src/lib/study-guide/`** — AI-generated structured study guides with sections, key points, summary
+- **Dexie v32**: `studyGuides` table (30-day TTL)
+- **API**: `POST /api/engine/study-guide` → `{ sections[], summary }`
+- **UI**: `/study-guide` page with subject selector + topic input + animated guide
+
+**Live study sessions:**
+- **`src/lib/study-groups/live-session-service.ts`** — real-time collaborative sessions via Appwrite
+- **API**: `GET/POST /api/study-groups/[groupId]/live-session`, participant management
+- **Hook**: `useLiveSession()` with 15s polling
+- **UI**: `LiveSessionBar` component
+
+**Uniform AI adapter:**
+- **`src/lib/ai/uniform-adapter.ts`** — factory pattern creating uniform AI providers with pluggable request normalizers (`openaiNormalizer`, `geminiNormalizer`) and response parsers
+- `createUniformProvider()`, `ProviderConfig` interface
+- Used by `src/lib/ai/client.ts` for the provider chain
+
+**Redis rate limiter:**
+- **`src/lib/rate-limiter/redis-store.ts`** — production `RedisStore` via `@upstash/redis`
+- `RateLimiter` class, `RateLimitStore` interface, `MapStore` (in-memory) + `RedisStore`
+
+**Caching strategy module:**
+- **`src/lib/caching-strategy/`** — generic multi-tier caching with `CacheTier<T,P>`, `CachingStrategy<T,P>` class, `createCachingStrategy()` factory
+
+**Search-in-chunks:**
+- **`src/lib/search/chunked-search.ts`** — parallel Dexie table queries with 500ms timeout, scored by relevance (exact > prefix > substring), max 50 results
+
+**📱 Quiz engine library:**
+- **`src/lib/quiz/`** — `useQuiz()` hook wrapping `useQuestionEngine` + `useQuizSession` with auto-flashcard creation for wrong answers
+
+**Flashcard deck types:**
+- **`src/lib/flashcard-engine/deck-types.ts`** — `FlashcardDeckCard`, `FlashcardDeck` interfaces
+
+**Utility types:**
+- `src/lib/shared/service-result.ts` — `ServiceResult<T>` with `success()` / `failure()` helpers
+- `src/lib/shared/web-search-types.ts` — `WebSearchResult`, `WebSearchOptions` interfaces
+
+### Session 29 — Batch 5: Network/Defensibility (June 2026)
+
+**Public share route:**
+- `/q/[id]` public page with 5-star gated answer reveal, `<VerifiedByPill>` for sources, view counting
+
+**PWA offline polish:**
+- `/offline` page, manifest `theme_color`, `pwa_install`/`offline_visit` events, install tracking
+- Service worker (`public/sw.js`) with navigation preload and offline fallback
+
+**Calendar view:**
+- Month grid in study planner with session dots, native drag-to-reschedule
+
+### Session 30 — Batch 6: Hardening (June 2026)
+
+**i18n round 2:**
+- 45 missing keys (nav.* 5 + consent.* 40) added to both `af.json` and `zu.json` with Afrikaans and isiZulu translations
+
+**Storybook coverage:**
+- 2→10 stories (added Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator)
+
+**Playwright visual tests:**
+- `e2e/visual.spec.ts` with 6 home page section tests (hero, features, how-it-works, pricing, testimonials, footer)
+
+**Knip setup:**
+- `knip@6.15.0` installed, `knip.json` configured, `bun run deadcode` script added, CI quality job includes step
+
+**A11y round 2:**
+- 8 Konva `<Stage>` elements get `ariaLabel`, admin form labels get `htmlFor`/`id`, 11 icon-only buttons get `aria-label`
+
+### Session 31 — Theme Chrome + Navigation (June 2026)
+
+**Theme chrome takeover:**
+- **Dynamic `theme-color`**: `ThemeProvider` now syncs `theme-color` meta tag dynamically on theme switch, reading resolved `--system-background` from `getComputedStyle`
+- **Accent-tinted nav glass**: Desktop sidebar now has `before:bg-(--system-accent-alpha-10)` for subtle Emerald Green tint on frosted glass
+- **SSR viewport**: `layout.tsx` has `themeColor` with light/dark media query values (`#fcfaf5` / `#14141f`)
+- See `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md`
+
+**Navigation sidebar overhaul:**
+- Desktop sidebar replaced 64px icon column with full categorized sidebar (Study, Practice, Tools, Social, Account categories)
+- Added page search/filter input, `SidebarStateProvider` context for open/close, `SidebarHamburger` component
+- Moved config to `src/lib/navigation/config.ts` (hierarchy, icons, labels)
+- Removed `PageTransition` + 14 loading.tsx files for smoother navigation
+- Fixed content hidden behind BottomNav on all pages
+- See `docs/superpowers/specs/2026-06-03-nav-sidebar-design.md`
+
+### Session 32 — Daily Bolt + UI Polish (June 2026)
+
+**Daily Bolt simplification:**
+- Removed `answered→branching` two-step. "Finish" goes direct to dashboard.
+- Replaced `BoltBranch` with `BoltCelebration` (800ms auto-advance, staggered entrance, pulsing glow)
+- Sticky bottom bar in daily challenge mode
+
+**Avatar menu dark mode fix:**
+- `dropdown-menu.tsx` content/sub-content got `border border-border`; menu now controlled React state with `useEffect` close-on-navigate
+
+**Dashboard gamification cards polish:**
+- `daily-challenges.tsx`, `today-focus-card.tsx`, `streak-card.tsx` — `active:scale-[0.96]`, `tabular-nums`, `text-balance`, `min-h-10`, animated progress bars, bigger icons
+- Concentric radii (`rounded-2xl→rounded-xl`), fixed no-op hover
+
+**Dead code removal (−211 lines):**
+- `_EmptyStates` (170 lines, 15 unused presets), `_iconAnimations`, `_LEVEL_ORDER`, `_PADDING`, orphaned imports
+- `any` type fixes (6 files) — gamification, markdown-renderer, notification-service, ocr-service, line-chart
+
+**WCAG a11y sweep (~19 issues across 15 files):**
+- Critical: focus-visible rings on step indicators, `aria-expanded` + `aria-controls` on calculation working toggle
+- High: ARIA tabs pattern in settings, `aria-disabled` on non-top swipeable cards
+- Medium: `aria-hidden` on decorative icons, `fieldset` + `legend.sr-only` around quality picker
+
+### Dexie Schema Progression
+
+| Version | Session | Tables Added |
+|---------|---------|-------------|
+| v25 | S19 | `tinyfishCache`, `tinyfishUsage` |
+| v26 | S21 | `Question.webSources` (lazy, no new index) |
+| v27 | S25 | `analyticsEvents` |
+| v28 | S27 | `sharedQuestions` |
+| v29 | S25 | `knowledgeGraph` |
+| v30 | S27 | `teacherObservations`, `assignmentMessages` |
+| v31 | S24 | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
+| v32 | S28 | `studyGuides` |
+
+### Final test baseline: 1225 pass, 0 fail (no pre-existing failures)

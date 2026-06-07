@@ -182,8 +182,15 @@
     <span class="tag">Playwright</span>
     <span class="tag">Storybook</span>
     <span class="tag">Immersive Mode</span>
+    <span class="tag">Knowledge Graph</span>
+    <span class="tag">Study Guide</span>
+    <span class="tag">Live Sessions</span>
+    <span class="tag">RAG (TinyFish)</span>
+    <span class="tag">Uniform AI</span>
+    <span class="tag">Redis Rate Limiter</span>
+    <span class="tag">Knip</span>
   </div>
-  <div class="subtitle">Generated from codebase — June 2026</div>
+  <div class="subtitle">Generated from codebase — June 2026 | v32 schema, 38+ tables</div>
 </div>
 
 <div class="nav">
@@ -201,6 +208,10 @@
   <a href="#sync">Sync</a>
   <a href="#gamification">Gamification</a>
   <a href="#routes">Routes</a>
+  <a href="#knowledge-graph">Knowledge Graph</a>
+  <a href="#study-guide">Study Guide</a>
+  <a href="#live-sessions">Live Sessions</a>
+  <a href="#data-access">DataAccess</a>
 </div>
 
 <div class="container">
@@ -214,23 +225,26 @@
       graph TB
         subgraph Client["Client Layer"]
           RSC["Next.js RSC / Pages"]
-          Hooks["33+ React Hooks<br/>(useQuestionEngine, useVisualEngine, etc.)"]
+          Hooks["40+ React Hooks<br/>(useQuestionEngine, useVisualEngine, useLiveSession, useStudyGuide, etc.)"]
           Stores["Zustand Stores<br/>(quiz, exam, sync, search, bookmarks, voice, premium)"]
         end
 
         subgraph Engine["Engine Layer"]
-          QE["QuestionEngine<br/>Generation · Grading · Validation"]
+          QE["QuestionEngine<br/>Generation · Grading · Validation · RAG"]
           VE["VisualEngine<br/>Konva · Wikimedia · Mermaid"]
           CE["CompetencyEngine<br/>Bloom's Taxonomy · 4 Levels · Paths"]
           FE["FlashcardEngine<br/>SM-2 · FSRS · Leech Detection"]
           QPS["QuizPackService<br/>Offline Pack Lifecycle"]
           QS["QuizSession<br/>State Machine · Timer"]
+          KGE["KnowledgeGraph<br/>AI Topic Dependencies · 7d TTL"]
+          SGE["StudyGuide<br/>AI Structured Guides · 30d TTL"]
           LO["LearningOrchestrator<br/>Composition Root · Job Queue"]
+          RS["RetentionService<br/>Re-encounter Loop · Next Action"]
         end
 
         subgraph Cache["Caching Layer"]
-           D["Dexie (IndexedDB)<br/>24 tables · v24 schema · 24h-30d expiry"]
-          AW["Appwrite Cloud<br/>10+ collections"]
+           D["Dexie (IndexedDB)<br/>38 tables · v32 schema · 24h-30d expiry"]
+          AW["Appwrite Cloud<br/>13+ collections"]
           AI["AI Generation<br/>On-demand fallback"]
         end
 
@@ -300,6 +314,9 @@
           S["Subjects: 7d"]
           P["Progress: immediate"]
           QP["QuizPacks: 30d"]
+          KG["KnowledgeGraph: 7d"]
+          SG["StudyGuides: 30d"]
+          RAG["TinyFish RAG: 14d quiz / 24h solve"]
         end
     </pre>
   </div>
@@ -312,6 +329,12 @@
   <div class="diagram-wrap">
     <pre class="mermaid">
       graph TB
+        subgraph RAG["RAG Pipeline"]
+          RAG_F["fetchRagContext<br/>(TinyFish, 3s timeout)"]
+          RAG_X["PromptManager<br/>Injects reference_material XML<br/>+ sourceRefs appendix"]
+          RAG_S["source-mapper<br/>attachWebSources()<br/>AI-cite + fallback"]
+        end
+
         subgraph Gen["Generation Pipeline"]
           direction TB
           Prompt["PromptManager<br/>Type-specific system prompts"]
@@ -338,8 +361,10 @@
         end
 
         Req_Q["/api/engine/generate"] --> Cache_Q
-        Cache_Q -->|Miss| Gen
-        Gen --> Types
+        Cache_Q -->|Miss| RAG
+        RAG --> Gen
+        Gen --> RAG_S
+        RAG_S --> Types
         Types --> Grade
         Req_Q_G["/api/engine/grade"] --> Grade
         Req_Q_H["/api/engine/hint"] --> AI_Gen
@@ -581,12 +606,11 @@
         Root --> JobP["JobProcessorWrapper"]
         Root --> Query["QueryProvider"]
 
-        Root --> Side["DesktopSidebar<br/>(hidden immersive)"]
+        Root --> Side["DesktopSidebar<br/>(categorized, search, accent-tint)"]
         Root --> Main["Main Content Area"]
         Main --> Nav["TopNav<br/>(iOS-style, hidden immersive)"]
-        Main --> Err["ErrorBoundary"]
-        Err --> PT["PageTransition<br/>(framer-motion)"]
-        PT --> Children["{children}"]
+        Main --> Err["AppErrorBoundary"]
+        Err --> Children["{children}"]
         Root --> BNav["BottomNav<br/>(mobile, hidden immersive)"]
         Root --> UD["UploadDialogRenderer"]
         Root --> Toaster
@@ -611,7 +635,10 @@
         Children --> TP["/tools — APS Calc, Periodic Table, ..."]
         Children --> DVP["/dev — Dev / Testing"]
         Children --> PMP["/premium — Premium Upgrade"]
+        Children --> SGP["/study-guide — Study Guide Generator"]
         Children --> OLP["OfflinePackManager<br/>(dashboard widget)"]
+        Children --> LMC["LearningMapCard<br/>(dashboard knowledge graph)"]
+        Children --> NBA["NextBestAction<br/>(dashboard suggestion card)"]
     </pre>
   </div>
 </div>
@@ -780,7 +807,141 @@
   </div>
 </div>
 
-<!-- ===== 14. ROUTES ===== -->
+<!-- ===== 14. KNOWLEDGE GRAPH ===== -->
+<div class="section" id="knowledge-graph">
+  <h2>14. Knowledge Graph System</h2>
+  <p class="desc">AI-generated topic dependency graphs showing prerequisite, core, and advanced concepts for any subject+topic combination.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TD
+        Req_KG["POST /api/engine/knowledge-graph<br/>{ subject, topic }"] --> Cache_KG{"Dexie Cache<br/>(7d TTL)"}
+        Cache_KG -->|Hit| Return_KG["Return cached graph"]
+        Cache_KG -->|Miss| AI_KG["AI Generate<br/>(Gemini → Nvidia → Groq)"]
+        AI_KG --> Store_KG["Store in Dexie<br/>knowledgeGraph table"]
+        Store_KG --> Return_KG
+        Return_KG --> UI_KG["<LearningMapCard><br/>(dashboard SVG graph)"]
+        Return_KG --> UI_TG["<TopicGraph><br/>(per-question mini graph, 3-hop)"]
+
+        subgraph Types_KG["Node Types"]
+          PREREQ["prerequisite — must know first"]
+          CORE["core — central concept"]
+          ADVANCED["advanced — beyond scope"]
+        end
+
+        AI_KG -.-> Types_KG
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 15. STUDY GUIDE ===== -->
+<div class="section" id="study-guide">
+  <h2>15. Study Guide Generator</h2>
+  <p class="desc">AI-generated structured study guides with sections, key points, and summaries. 30-day Dexie cache.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph LR
+        UI_SG["/study-guide page<br/>Subject + Topic input"] --> Req_SG["POST /api/engine/study-guide"]
+        Req_SG --> Cache_SG{"Dexie Cache<br/>(30d TTL)"}
+        Cache_SG -->|Miss| AI_SG["AI Generate structured guide"]
+        AI_SG --> Store_SG["Store in Dexie<br/>studyGuides table"]
+        Cache_SG -->|Hit| Return_SG
+        Store_SG --> Return_SG["Return { sections[], summary }"]
+        Return_SG --> Display_SG["Animated guide display<br/>with expandable sections"]
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 16. LIVE SESSIONS ===== -->
+<div class="section" id="live-sessions">
+  <h2>16. Live Study Sessions</h2>
+  <p class="desc">Real-time collaborative study sessions within study groups, powered by Appwrite.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TD
+        subgraph API_LS["API Routes"]
+          START["POST /api/study-groups/[id]/live-session<br/>→ startLiveSession()"]
+          GET_LS["GET /api/study-groups/[id]/live-session<br/>→ getActiveSession()"]
+          JOIN["→ joinSession() / leaveSession()"]
+          END_LS["PATCH .../[sessionId]<br/>→ endLiveSession()"]
+        end
+
+        subgraph Hook["useLiveSession()"]
+          POLL["15s polling via React Query"]
+          DATA["Returns: session status,<br/>participants, currentActivity"]
+        end
+
+        subgraph UI["Components"]
+          LB["<LiveSessionBar><br/>Session status + join/leave"]
+          PART["Participant list<br/>with activity indicators"]
+        end
+
+        START --> Appwrite_LS["Appwrite: LiveSession document"]
+        GET_LS --> Appwrite_LS
+        JOIN --> Appwrite_LS
+        POLL --> Appwrite_LS
+        Appwrite_LS --> LB
+        Appwrite_LS --> PART
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 17. DATAACCESS SEAM ===== -->
+<div class="section" id="data-access">
+  <h2>17. DataAccess Abstraction Layer</h2>
+  <p class="desc">All database access goes through a typed `DataAccess` interface. Two implementations: Dexie (production) and InMemory (tests). All 38+ tables covered.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TB
+        subgraph Consumers["Migrated Consumers"]
+          CS["CompetencyService"]
+          FE["FlashcardEngine"]
+          AE["AnalyticsEngine"]
+          QPS_DA["QuizPackService"]
+          RS_DA["RetentionService"]
+          WA["useWrongAnswerJournal"]
+          OBS["observability/events"]
+          SYNC_DA["sync-handler"]
+          KG_DA["knowledge-graph/service"]
+          CHAT["ai/chat-context"]
+          NS["notification-service"]
+          SS_DA["search-service"]
+          SHARE_DA["share-service"]
+          ED["exam-dates/service"]
+          CHUNK["chunked-search"]
+          EXPORT["export-service"]
+          REPOS["4 repositories"]
+        end
+
+        subgraph Interface["DataAccess Interface"]
+          DA["interface DataAccess"]
+          DT["DataAccessTable&lt;T, TId&gt;<br/>.get() .put() .bulkPut() .delete() .toArray() .limit()"]
+          COL["Collection&lt;T&gt;<br/>.filter() .sortBy() .modify()"]
+        end
+
+        subgraph Impl["Implementations"]
+          DEX["DexieDataAccess<br/>production (wraps offlineDB)"]
+          MEM["InMemoryDataAccess<br/>tests (Map-backed, seed())"]
+        end
+
+        Consumers --> DA
+        DA --> DEX
+        DA --> MEM
+
+        subgraph Tables["38+ Typed Tables"]
+          T1["competencies, progress, quizAttempts,<br/>bookmarks, questions, subjects, visuals"]
+          T2["flashcards, reviewHistory, wrongAnswers,<br/>retentionRecurrence, srsettings"]
+          T3["quizPacks, packQuestions, chatMessages,<br/>questionRatings, knowledgeGraph"]
+          T4["examSessions, sharedQuestions, examDates,<br/>extractionCache, notes, gamification"]
+          T5["cachedPdfs, quizSessions, tinyfishCache,<br/>tinyfishUsage, pastPaperQuestions, jobs"]
+          T6["conflicts, userConsents, groupPosts,<br/>groupComments, groupReactions, groupChallenges"]
+          T7["teacherObservations, assignmentMessages,<br/>studyPlans, onboardingState, srDailyBudget"]
+          T8["flashcardSyncState, studyGuides"]
+        end
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 18. ROUTES ===== -->
 <div class="section" id="routes">
   <h2>14. Full Route Map</h2>
   <p class="desc">Every app page and API endpoint with their purpose.</p>
@@ -822,6 +983,8 @@
             Grade(("POST /api/engine/grade"))
             Hint(("POST /api/engine/hint"))
             Visual(("POST /api/engine/visual"))
+            KnowledgeGraph(("POST /api/engine/knowledge-graph"))
+            StudyGuide(("POST /api/engine/study-guide"))
             Test(("GET /api/engine/test"))
             VisualTest(("GET /api/engine/visual/test"))
             Budget(("GET /api/engine/budget"))
@@ -856,6 +1019,19 @@
             TestExamPapers(("/api/test-exam-papers"))
             UploadQA(("/api/upload-qa"))
             DbTest(("/api/db-test"))
+            TeacherAssign(("POST /api/teacher/assign"))
+            TeacherAssignments(("GET /api/teacher/assignments"))
+            TeacherMessages(("GET/POST /api/teacher/assignments/[id]/messages"))
+            TeacherGhost(("POST /api/teacher/ghost-link"))
+            TeacherShare(("POST /api/teacher/share-assignment"))
+            StudentAssignments(("GET /api/student/assignments"))
+            AssignmentSubmit(("POST /api/assignments/[id]/submit"))
+            AssignmentComment(("POST /api/assignments/[id]/comment"))
+            LiveSession(("GET/POST /api/study-groups/[id]/live-session"))
+            LiveSessionDetail(("GET/PATCH /api/study-groups/[id]/live-session/[sId]"))
+            QShare(("POST /api/q/share"))
+            QDetail(("GET /api/q/[id]"))
+            GhostToken(("GET /api/ghost/[token]"))
     </pre>
   </div>
 </div>
