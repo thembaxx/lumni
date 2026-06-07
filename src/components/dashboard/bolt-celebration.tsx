@@ -21,6 +21,7 @@ interface BoltCelebrationProps {
 	subjectLabel: string;
 	streak: number;
 	onContinue: () => void;
+	onPracticeMore?: () => void;
 }
 
 const variants = {
@@ -38,6 +39,7 @@ export function BoltCelebration({
 	subjectLabel,
 	streak,
 	onContinue,
+	onPracticeMore,
 }: BoltCelebrationProps) {
 	const baseXp = XP_PER_QUESTION + (correct ? XP_PER_CORRECT : 0);
 	const showStreakBonus = streak > 1;
@@ -137,7 +139,13 @@ export function BoltCelebration({
 				</m.div>
 			</div>
 
-			<m.div custom={3} variants={variants} initial="hidden" animate="visible">
+			<m.div
+				custom={3}
+				variants={variants}
+				initial="hidden"
+				animate="visible"
+				className="flex flex-col items-center gap-2.5"
+			>
 				<Button
 					onClick={onContinue}
 					size="lg"
@@ -145,6 +153,16 @@ export function BoltCelebration({
 				>
 					Continue to Dashboard
 				</Button>
+				{onPracticeMore && (
+					<Button
+						variant="link"
+						size="sm"
+						onClick={onPracticeMore}
+						className="h-auto p-0 text-muted-foreground text-sm"
+					>
+						Practice more {subjectLabel}
+					</Button>
+				)}
 			</m.div>
 		</div>
 	);

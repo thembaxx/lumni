@@ -17,6 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { toast } from "@/hooks/use-toast";
 import { useViewTransition } from "@/hooks/use-view-transition";
+import { useRouter } from "next/navigation";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
@@ -61,6 +62,7 @@ export function DashboardClient({
 	const [showDailyBolt, setShowDailyBolt] = useState(boltDue);
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
+	const router = useRouter();
 
 	const handleStartQuiz = (subject: string) => {
 		startViewTransition(() => {
@@ -135,6 +137,16 @@ export function DashboardClient({
 	const handleBoltSkip = useCallback(() => {
 		setShowDailyBolt(false);
 	}, []);
+
+	const handleBoltPracticeMore = useCallback(
+		(subject: string) => {
+			setShowDailyBolt(false);
+			startViewTransition(() => {
+				router.push(`/quiz?subject=${encodeURIComponent(subject)}`);
+			});
+		},
+		[router, startViewTransition],
+	);
 
 	async function handleFinishQuizLogic(results: QuizResults) {
 		updateStreak();
@@ -238,6 +250,7 @@ export function DashboardClient({
 					<DailyBoltOverlay
 						onComplete={handleBoltComplete}
 						onSkip={handleBoltSkip}
+						onPracticeMore={handleBoltPracticeMore}
 						streak={currentStreak}
 					/>
 				) : !isLoaded ? (

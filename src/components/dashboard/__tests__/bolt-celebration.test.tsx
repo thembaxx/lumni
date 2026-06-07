@@ -93,4 +93,51 @@ describe("BoltCelebration", () => {
 		container.getElementsByTagName("button")[0]?.click();
 		expect(called).toBe(true);
 	});
+
+	test("does not render Practice More button when onPracticeMore not provided", () => {
+		const { container } = render(
+			<BoltCelebration
+				correct
+				subjectLabel="Mathematics"
+				streak={1}
+				onContinue={() => {}}
+			/>,
+		);
+		expect(hasText(container, /Practice more/i)).toBe(false);
+	});
+
+	test("renders Practice More button with subject label when onPracticeMore provided", () => {
+		const { container } = render(
+			<BoltCelebration
+				correct
+				subjectLabel="Physical Sciences"
+				streak={1}
+				onContinue={() => {}}
+				onPracticeMore={() => {}}
+			/>,
+		);
+		expect(hasText(container, /Practice more Physical Sciences/i)).toBe(true);
+	});
+
+	test("calls onPracticeMore when Practice More button clicked", () => {
+		let called = false;
+		const { container } = render(
+			<BoltCelebration
+				correct
+				subjectLabel="Mathematics"
+				streak={1}
+				onContinue={() => {}}
+				onPracticeMore={() => {
+					called = true;
+				}}
+			/>,
+		);
+		const buttons = container.getElementsByTagName("button");
+		const practiceBtn = Array.from(buttons).find((b) =>
+			b.textContent?.includes("Practice more"),
+		);
+		expect(practiceBtn).toBeTruthy();
+		practiceBtn?.click();
+		expect(called).toBe(true);
+	});
 });

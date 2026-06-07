@@ -42,6 +42,7 @@ export interface BoltResult {
 interface DailyBoltOverlayProps {
 	onComplete: (result: BoltResult) => void;
 	onSkip: () => void;
+	onPracticeMore?: (subject: string) => void;
 	streak: number;
 }
 
@@ -83,6 +84,7 @@ function formatSubjectLabel(subject: string): string {
 export function DailyBoltOverlay({
 	onComplete,
 	onSkip,
+	onPracticeMore,
 	streak,
 }: DailyBoltOverlayProps) {
 	const [phase, setPhase] = useState<BoltPhase>("resolving");
@@ -248,6 +250,11 @@ export function DailyBoltOverlay({
 								subjectLabel={subjectLabel}
 								streak={streak}
 								onContinue={() => boltResult && onComplete(boltResult)}
+								onPracticeMore={
+									onPracticeMore
+										? () => onPracticeMore(subject)
+										: undefined
+								}
 							/>
 						</m.section>
 					)}
