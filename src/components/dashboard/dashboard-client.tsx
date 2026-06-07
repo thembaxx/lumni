@@ -2,6 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
 import type { BoltResult } from "@/components/dashboard/daily-bolt-overlay";
@@ -17,7 +18,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { toast } from "@/hooks/use-toast";
 import { useViewTransition } from "@/hooks/use-view-transition";
-import { useRouter } from "next/navigation";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";

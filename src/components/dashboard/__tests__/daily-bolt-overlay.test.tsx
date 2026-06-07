@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
-import { cleanup, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import type { Question } from "@/lib/question-engine/types";
 
@@ -66,11 +66,7 @@ describe("DailyBoltOverlay", () => {
 
 	test("renders header and skip button on mount", () => {
 		const { container } = render(
-			<DailyBoltOverlay
-				onComplete={() => {}}
-				onSkip={() => {}}
-				streak={1}
-			/>,
+			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
 			{ wrapper: createWrapper() },
 		);
 		expect(hasText(container, /Today/)).toBe(true);
@@ -92,11 +88,7 @@ describe("DailyBoltOverlay", () => {
 		});
 
 		const { container } = render(
-			<DailyBoltOverlay
-				onComplete={() => {}}
-				onSkip={() => {}}
-				streak={1}
-			/>,
+			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
 			{ wrapper: createWrapper() },
 		);
 
@@ -118,11 +110,7 @@ describe("DailyBoltOverlay", () => {
 		});
 
 		const { container } = render(
-			<DailyBoltOverlay
-				onComplete={() => {}}
-				onSkip={() => {}}
-				streak={1}
-			/>,
+			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
 			{ wrapper: createWrapper() },
 		);
 
@@ -131,8 +119,7 @@ describe("DailyBoltOverlay", () => {
 				const buttons = container.getElementsByTagName("button");
 				return Array.from(buttons).find(
 					(b) =>
-						b.textContent === "Skip" ||
-						b.textContent === "Skip to Dashboard",
+						b.textContent === "Skip" || b.textContent === "Skip to Dashboard",
 				);
 			},
 			{ timeout: 10000 },
@@ -166,8 +153,7 @@ describe("DailyBoltOverlay", () => {
 				const buttons = container.getElementsByTagName("button");
 				return Array.from(buttons).find(
 					(b) =>
-						b.textContent === "Skip" ||
-						b.textContent === "Skip to Dashboard",
+						b.textContent === "Skip" || b.textContent === "Skip to Dashboard",
 				);
 			},
 			{ timeout: 10000 },
@@ -187,11 +173,7 @@ describe("DailyBoltOverlay", () => {
 		});
 
 		const { container } = render(
-			<DailyBoltOverlay
-				onComplete={() => {}}
-				onSkip={() => {}}
-				streak={3}
-			/>,
+			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={3} />,
 			{ wrapper: createWrapper() },
 		);
 
@@ -204,5 +186,4 @@ describe("DailyBoltOverlay", () => {
 
 		expect(hasText(container, /Mathematics/)).toBe(true);
 	});
-
 });

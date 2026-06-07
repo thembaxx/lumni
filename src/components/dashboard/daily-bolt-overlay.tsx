@@ -251,9 +251,7 @@ export function DailyBoltOverlay({
 								streak={streak}
 								onContinue={() => boltResult && onComplete(boltResult)}
 								onPracticeMore={
-									onPracticeMore
-										? () => onPracticeMore(subject)
-										: undefined
+									onPracticeMore ? () => onPracticeMore(subject) : undefined
 								}
 							/>
 						</m.section>
