@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from "bun:test";
 import type { Collection, DataAccess } from "@/lib/db/data-access";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
 import { QuizPackService } from "../service";
-import type { QuizPack, QuizPackQuestion } from "../types";
+import type { QuizPack } from "../types";
 import { PACK_EXPIRY_DAYS } from "../types";
 
 class PatchedCollection<T> implements Collection<T> {
@@ -138,8 +138,8 @@ describe("QuizPackService", () => {
 
 			const pack = await service.getPack("pack_1");
 			expect(pack).toBeDefined();
-			expect(pack!.id).toBe("pack_1");
-			expect(pack!.subject).toBe("Mathematics");
+			expect(pack?.id).toBe("pack_1");
+			expect(pack?.subject).toBe("Mathematics");
 		});
 	});
 

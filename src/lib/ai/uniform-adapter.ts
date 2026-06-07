@@ -30,7 +30,7 @@ export function createUniformProvider(config: ProviderConfig): AIProvider {
 				"Content-Type": "application/json",
 			};
 			if (config.authScheme === "bearer") {
-				headers["Authorization"] = `Bearer ${config.apiKey}`;
+				headers.Authorization = `Bearer ${config.apiKey}`;
 			} else {
 				headers["x-goog-api-key"] = config.apiKey;
 			}
@@ -102,7 +102,7 @@ export function geminiNormalizer(request: AIRequest): Record<string, unknown> {
 	};
 
 	if (request.systemPrompt) {
-		body["system_instruction"] = {
+		body.system_instruction = {
 			parts: [{ text: request.systemPrompt }],
 		};
 	}
@@ -113,20 +113,20 @@ export function geminiNormalizer(request: AIRequest): Record<string, unknown> {
 // --- Response Parsers ---
 
 export function openaiResponseParser(data: Record<string, unknown>) {
-	const choices = data["choices"] as
+	const choices = data.choices as
 		| Array<{ message: { content: string } }>
 		| undefined;
 	const content = choices?.[0]?.message?.content ?? "";
-	const usage = data["usage"] as Record<string, unknown> | undefined;
+	const usage = data.usage as Record<string, unknown> | undefined;
 	return {
 		content,
-		inputTokens: (usage?.["prompt_tokens"] as number) ?? undefined,
-		outputTokens: (usage?.["completion_tokens"] as number) ?? undefined,
+		inputTokens: (usage?.prompt_tokens as number) ?? undefined,
+		outputTokens: (usage?.completion_tokens as number) ?? undefined,
 	};
 }
 
 export function geminiResponseParser(data: Record<string, unknown>) {
-	const candidates = data["candidates"] as
+	const candidates = data.candidates as
 		| Array<{ content: { parts: Array<{ text: string }> } }>
 		| undefined;
 	const content = candidates?.[0]?.content?.parts?.[0]?.text ?? "";

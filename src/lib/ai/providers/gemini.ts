@@ -45,7 +45,7 @@ async function geminiWithImagesNormalizer(
 	};
 
 	if (request.systemPrompt) {
-		body["system_instruction"] = {
+		body.system_instruction = {
 			parts: [{ text: request.systemPrompt }],
 		};
 	}

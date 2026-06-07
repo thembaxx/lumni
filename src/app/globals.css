@@ -640,6 +640,23 @@
 .z-toast { z-index: var(--z-toast); }
 .z-skip-link { z-index: var(--z-skip-link); }
 
+/* ========================================
+   PWA TITLEBAR — window-controls-overlay
+   ======================================== */
+
+@media (display-mode: standalone) {
+	.titlebar-drag-region {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 0;
+		-webkit-app-region: drag;
+		z-index: var(--z-modal);
+		background: var(--system-background);
+	}
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {

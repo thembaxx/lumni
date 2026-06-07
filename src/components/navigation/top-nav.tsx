@@ -96,9 +96,11 @@ export function TopNav({ title, className }: TopNavProps) {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-header border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
+				"sticky z-header border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
+				"relative before:pointer-events-none before:absolute before:inset-0 before:bg-(--system-accent-alpha-10)",
 				className,
 			)}
+			style={{ top: "env(titlebar-area-height, 0px)" }}
 		>
 			<div className="flex h-12 items-center justify-between px-4">
 				<div className="flex items-center gap-4">

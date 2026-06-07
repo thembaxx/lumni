@@ -56,6 +56,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 		root.classList.remove("light", "dark");
 		root.classList.add(resolvedTheme);
 		root.style.colorScheme = resolvedTheme;
+
+		// Sync theme-color meta tag with resolved background
+		const bg = getComputedStyle(root)
+			.getPropertyValue("--system-background")
+			.trim();
+		let meta = document.querySelector<HTMLMetaElement>(
+			'meta[name="theme-color"]',
+		);
+		if (!meta) {
+			meta = document.createElement("meta");
+			meta.name = "theme-color";
+			document.head.appendChild(meta);
+		}
+		meta.content = bg || (resolvedTheme === "dark" ? "#14141f" : "#fcfaf5");
 	}, [theme]);
 
 	useEffect(() => {

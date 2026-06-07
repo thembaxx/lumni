@@ -4,6 +4,7 @@
 	"description": "Pass your Matric with confidence. AI-powered study companion with quizzes, flashcards, and exam papers.",
 	"start_url": "/dashboard",
 	"display": "standalone",
+	"display_override": ["window-controls-overlay", "minimal-ui", "standalone"],
 	"background_color": "#ffffff",
 	"theme_color": "#fcfaf5",
 	"orientation": "portrait-primary",

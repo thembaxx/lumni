@@ -124,7 +124,7 @@ export function BottomNav() {
 				height: "calc(49px + var(--spacing-safe-pb, 0px))",
 			}}
 		>
-			<div className="grid h-12.25 w-full grow grid-cols-6 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">
+			<div className="relative grid h-12.25 w-full grow grid-cols-6 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-(--system-accent-alpha-10)">
 				{navItems.map((item, index) => (
 					<NavItemComponent
 						key={item.id}

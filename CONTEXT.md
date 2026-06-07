@@ -81,7 +81,7 @@ Appwrite Cloud
 - **Question types (11)**: multiple-choice, matching, short-answer, long-answer, essay, calculation, diagram, programming, source-based, data-response, mixed. Local grade for 4 types (MC, matching, calculation, short-answer with exact-match fallback), AI grade for 7 types.
 - **Flashcard engine**: `src/lib/flashcard-engine/` — single `FlashcardEngine` class wrapping DexieRepository + SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings. Used via `flashcardEngine` singleton.
 - **Swipeable flashcard deck**: `SwipeableCardDeck` (3-card cascade, drag-to-swipe, tap-to-flip), `QualityPicker` (6-level SM-2), `useSwipeDeck` (state machine with undo stack). Replaces old `flashcards-active.tsx` and `sm2-study-session.tsx`.
-- **Immersive mode**: `ImmersiveModeProvider` context — auto-hides `TopNav`/`BottomNav`/`DesktopSidebar` when quiz `phase="active"` or exam `phase="active"`. Floating exit pill button. Full-width layout via `max-w-2xl` centered.
+- **Immersive mode**: `ImmersiveModeProvider` context — auto-hides `TopNav`/`DesktopSidebar` when quiz `phase="active"` or exam `phase="active"`. BottomNav does NOT respond to immersive mode. Floating exit pill button. Full-width layout via `max-w-2xl` centered.
 - **Route handler factory**: `src/lib/api/create-route-handler.ts` — `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, validation, error wrapping, optional rate limiting. 5 routes migrated.
 - **AI provider chain**: Gemini 2.0 Flash Lite (primary) → Nvidia NIM meta/llama-3.3-70b-instruct → Groq llama-3.3-70b-versatile. Defined in `src/lib/ai/client.ts`. DeepSeek was removed.
 - **Competency levels**: novice→Easy/remember, developing→Medium/understand/apply, proficient→Medium/apply/analyze/evaluate, mastered→Hard/evaluate/create. Mapped in `src/lib/question-engine/competency-mapper.ts`.
@@ -96,6 +96,14 @@ Appwrite Cloud
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.
 - **Auth**: Anonymous users auto-created; sign-up upgrades anonymous session. Admin uses separate magic-link + OTP. Rate limits: 3 sign-in/5min, 1 magic link/5min.
 - **Onboarding**: 5-step wizard (Welcome→Subjects→Goals→Schedule→Notifications) with Three.js particle background + inline SVG illustrations. Fires once only. Re-enter via Settings > Data tab.
+
+## Glossary — Theming
+
+- **App chrome**: The app's own navigation shell — TopNav, BottomNav, SidebarNav. Controlled by the theming system. Currently uses `bg-system-background/80 backdrop-blur-xl` frosted glass, being upgraded to accent-tinted glass.
+- **Browser chrome**: The browser's native UI surrounding the web page — tab strip, URL bar, scrollbar, window buttons (minimize/maximize/close). Controlled via `theme-color` meta tag, `color-scheme` CSS property, and PWA `display` / `display_override` modes.
+- **Accent-tinted glass**: A `--system-accent-alpha-10` overlay on frosted glass surfaces that gives the nav bars a subtle Emerald Green tint while maintaining the frosted backdrop-filter effect.
+- **`theme-color`**: The `<meta name="theme-color">` tag that controls the browser chrome's accent color (tab strip, URL bar on mobile, window titlebar area). Must dynamically update when the user switches light/dark theme to match the resolved `--system-background`.
+- **`window-controls-overlay`**: A PWA `display_override` mode (`["window-controls-overlay", "minimal-ui", "standalone"]`) that lets the app render behind the window control buttons (minimize/maximize/close) on desktop installed PWAs. Uses CSS `env(titlebar-area-*)` variables for layout, `-webkit-app-region: drag` for the draggable titlebar region.
 
 ## Glossary — Legal Compliance
 
