@@ -15,11 +15,11 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import type { Question } from "@/lib/question-engine/types";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
 	_deps = deps;
 }
 

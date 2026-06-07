@@ -4,10 +4,10 @@ import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { FlashcardDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: FlashcardDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: FlashcardDataAccess }) {
 	_deps = deps;
 }
 

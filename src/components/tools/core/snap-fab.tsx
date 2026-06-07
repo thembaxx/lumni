@@ -16,10 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { ContentDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: ContentDataAccess }) {
 	_deps = deps;
 }
 

@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 

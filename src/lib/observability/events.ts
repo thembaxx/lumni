@@ -1,8 +1,8 @@
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type ObservabilityDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: ObservabilityDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: ObservabilityDataAccess }) {
 	_deps = deps;
 }
 

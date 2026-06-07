@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 

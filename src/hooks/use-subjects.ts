@@ -4,11 +4,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import subjectsData from "@/data/subjects.json";
 import { useAuth } from "@/lib/auth/auth-context";
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type LegacyDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: LegacyDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: LegacyDataAccess }) {
 	_deps = deps;
 }
 

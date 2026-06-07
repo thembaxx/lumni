@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 import { loadFromStorage } from "@/lib/utils/storage";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 

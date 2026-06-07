@@ -6,11 +6,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+	CompetencyDataAccess,
+	SyncDataAccess,
+} from "@/lib/db/data-access";
 import { exportService } from "@/lib/export";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+type ExportTabDb = Pick<CompetencyDataAccess, "quizAttempts"> &
+	Pick<SyncDataAccess, "examSessions">;
+
+let _deps: { db: ExportTabDb } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: ExportTabDb }) {
 	_deps = deps;
 }
 

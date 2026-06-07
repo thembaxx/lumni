@@ -1,14 +1,20 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+	CompetencyDataAccess,
+	StudyDataAccess,
+} from "@/lib/db/data-access";
+
+type NotifDb = StudyDataAccess & Pick<CompetencyDataAccess, "quizAttempts">;
+
 import { flashcardEngine } from "@/lib/flashcard-engine";
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
-let _deps = DEFAULT_DEPS;
+const DEFAULT_DEPS = { db: dexieDataAccess as NotifDb };
+let _deps: { db: NotifDb } = DEFAULT_DEPS;
 
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+export function __setDepsForTesting(deps: { db: NotifDb }) {
 	_deps = deps;
 }
 

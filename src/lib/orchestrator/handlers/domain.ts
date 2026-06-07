@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite";
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess, type QuizDataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
@@ -16,8 +16,8 @@ import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: QuizDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: QuizDataAccess }) {
 	_deps = deps;
 }
 

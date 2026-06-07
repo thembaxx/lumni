@@ -1,6 +1,6 @@
 # ADR-0011: DataAccess Seam
 
-**Status:** Implemented — Phase 1 · **Date:** 2026-06-04 · **Author:** AI Session 23
+**Status:** Implemented — Complete (Session 33) · **Date:** 2026-06-04 · **Author:** AI Session 23, refined in Session 33
 
 ## Context
 
@@ -21,25 +21,23 @@ Generic CRUD + query operations, modeled on the patterns actually used by consum
 
 ```typescript
 export interface DataAccessTable<T, TId extends string | number = number> {
-  // CRUD
   get(id: TId): Promise<T | undefined>;
   add(item: Omit<T, "id">): Promise<TId>;
   put(item: T): Promise<TId>;
   update(id: TId, changes: Partial<T>): Promise<TId>;
   delete(id: TId): Promise<void>;
 
-  // Bulk
   bulkAdd(items: Omit<T, "id">[]): Promise<TId[]>;
+  bulkPut(items: T[]): Promise<TId[]>;
   bulkDelete(ids: TId[]): Promise<void>;
 
-  // Full table
   toArray(): Promise<T[]>;
   count(): Promise<number>;
   clear(): Promise<void>;
+  limit(n: number): Collection<T>;
 
-  // Index queries
   where(index: string): WhereClause<T>;
-  orderBy(index: string): SortedQuery<T>;
+  orderBy(index: string): Collection<T>;
 }
 
 export interface WhereClause<T> {
@@ -48,8 +46,6 @@ export interface WhereClause<T> {
   below(val: unknown): Collection<T>;
   startsWith(val: string): Collection<T>;
   anyOf(vals: unknown[]): Collection<T>;
-  /** Compound match: where({ key: val, key2: val2 }).first() */
-  compound(query: Record<string, unknown>): Collection<T>;
 }
 
 export interface Collection<T> {
@@ -57,108 +53,75 @@ export interface Collection<T> {
   toArray(): Promise<T[]>;
   count(): Promise<number>;
   delete(): Promise<void>;
-  reverse(): SortedQuery<T>;
+  modify(changes: Partial<T> | ((record: T) => void)): Promise<number>;
+  reverse(): Collection<T>;
   limit(n: number): Collection<T>;
   filter(pred: (item: T) => boolean): Collection<T>;
   sortBy(index: string): Promise<T[]>;
 }
-
-export interface SortedQuery<T> {
-  toArray(): Promise<T[]>;
-  limit(n: number): SortedQuery<T>;
-  first(): Promise<T | undefined>;
-}
 ```
 
-### Accessor: `DataAccess`
+### Domain sub-interfaces (Session 33)
 
-One typed accessor per Dexie table. 39 tables, each typed to its row interface.
+The `DataAccess` was split into 10 domain sub-interfaces. Each is independently importable and has a single architectural concern:
 
-```typescript
-export interface DataAccess {
-  flashcards: DataAccessTable<FlashcardSM2, string>;
-  reviewHistory: DataAccessTable<FlashcardReview, number>;
-  analyticsEvents: DataAccessTable<AnalyticsEvent, number>;
-  retentionRecurrence: DataAccessTable<RetentionRecurrence, number>;
-  wrongAnswers: DataAccessTable<WrongAnswerEntry, number>;
-  quizPacks: DataAccessTable<QuizPack, string>;
-  packQuestions: DataAccessTable<QuizPackQuestion, number>;
-  competencies: DataAccessTable<CompetencyRecord, number>;
-  progress: DataAccessTable<CachedProgress, number>;
-  quizAttempts: DataAccessTable<QuizAttempt, number>;
-  quizSessions: DataAccessTable<QuizSessionState, number>;
-  visuals: DataAccessTable<CachedVisual, number>;
-  questions: DataAccessTable<CachedQuestion, number>;
-  subjects: DataAccessTable<CachedSubject, number>;
-  bookmarks: DataAccessTable<BookmarkRecord, number>;
-  examSessions: DataAccessTable<ExamSessionSnapshot, number>;
-  cachedPdfs: DataAccessTable<CachedPdf, number>;
-  examDates: DataAccessTable<CachedExamDates, number>;
-  // ... remaining 21 tables follow same pattern
-}
-```
+| Interface | Tables | Typical consumers |
+|-----------|--------|-------------------|
+| `FlashcardDataAccess` | `flashcards`, `reviewHistory` | flashcard-engine, study-set-editor |
+| `CompetencyDataAccess` | `competencies`, `progress`, `quizAttempts` | analytics-engine, competency-service |
+| `QuizDataAccess` | `questions`, `quizPacks`, `packQuestions`, `quizSessions` | quiz-session repository, domain handlers |
+| `ContentDataAccess` | `notes`, `bookmarks`, `sharedQuestions`, `visuals`, `cachedPdfs`, `extractionCache` | share-service, snap-fab, note-storage |
+| `StudyDataAccess` | `studyPlans`, `studyGuides`, `examDates` | study-guide service, study-planner |
+| `SyncDataAccess` | `wrongAnswers`, `retentionRecurrence`, `examSessions`, `chatMessages`, `questionRatings`, `jobs`, `conflicts`, `flashcardSyncState` | sync-handler, retention-service, wrong-answer-journal |
+| `ObservabilityDataAccess` | `analyticsEvents`, `gamification` | events tracker, use-gamification |
+| `SocialDataAccess` | `userConsents` | user-consent service |
+| `CacheDataAccess` | `tinyfishCache`, `tinyfishUsage`, `knowledgeGraph` | tinyfish cache, knowledge-graph service |
+| `LegacyDataAccess` | `subjects`, `pastPaperQuestions` | use-subjects, past-paper extractor |
+
+The composite `DataAccess` extends all 10 sub-interfaces for backward compat. Cross-domain consumers (sync-handler, search-service, etc.) keep the full composite.
+
+11 dead table accessors were removed (no consumers found anywhere in the codebase): `groupPosts`, `groupComments`, `groupReactions`, `groupChallenges`, `groupChallengeEntries`, `groupBadges`, `teacherObservations`, `assignmentMessages`, `onboardingState`, `srDailyBudget`.
+
+**Total: 33 tables** (down from 39).
 
 ### Dependency Injection
 
-Consumers receive a `DataAccess` in their constructor / deps object:
+Consumers receive a `DataAccess` (or narrower sub-interface) in their constructor / `_deps` object:
 
 ```typescript
-// Before
-import { offlineDB } from "@/lib/db/schema";
+// Narrowed to single domain
+class AnalyticsEngine {
+  constructor(deps?: { db?: CompetencyDataAccess }) {
+    this.db = deps?.db ?? dexieDataAccess;
+  }
+}
 
-// After
-class CompetencyService {
-  constructor(private db: DataAccess) {}
+// Cross-domain kept as composite
+class SyncHandler {
+  private _deps: { db: DataAccess } = { db: dexieDataAccess };
 }
 ```
 
 ## Implementation: `DexieDataAccess`
 
-Thin adapter — each method delegates 1:1 to the corresponding `offlineDB` table.
-
-```typescript
-export class DexieDataAccess implements DataAccess {
-  // Auto-generated via factory for all 39 tables
-  flashcards = tableAdapter(offlineDB.flashcards);
-  competencies = tableAdapter(offlineDB.competencies);
-  // ...
-
-  private tableAdapter<T, TId>(table: DexieTable<T, TId>): DataAccessTable<T, TId> {
-    return {
-      get: (id) => table.get(id),
-      add: (item) => table.add(item as T),
-      // ...
-    };
-  }
-}
-```
+Thin adapter — each method delegates 1:1 to the corresponding `offlineDB` table. Generated via `tableAdapter()` factory for all 33 active tables.
 
 ## Implementation: `InMemoryDataAccess`
 
-Map-backed, for unit tests. No external dependencies.
+Map-backed, for unit tests. No external dependencies. Implements the full 33-table `DataAccess` interface.
 
-```typescript
-export class InMemoryDataAccess implements DataAccess {
-  // Pre-populated with empty Map stores
-  flashcards = inMemoryTable<FlashcardSM2, string>();
-  competencies = inMemoryTable<CompetencyRecord, number>();
-  // ...
-}
-```
+## All phases complete
 
-## Migration Order
-
-| Phase | Consumers | Ops | Files |
-|-------|-----------|-----|-------|
-| 1 | `FlashcardEngine`, `CompetencyService` | ~35 | 2 engines, ~10 tests |
-| 2 | `RetentionLoop`, `AnalyticsEngine` | ~30 | 2 services, ~5 tests |
-| 3 | `QuizPackService`, `WrongAnswerJournal` | ~24 | 2 consumers |
-| 4 | `Observability`, `StudyPlanner`, `SearchService` | ~30 | 5 consumers |
-| 5 | Remaining ~20 files | ~44 | ~20 files |
+| Phase | What | Migrated to DataAccess |
+|-------|------|----------------------|
+| 1 | Foundation | `FlashcardEngine`, `CompetencyService` |
+| 2 | Top consumers | `AnalyticsEngine`, `RetentionService`, `QuizPackService`, `WrongAnswerJournal` |
+| 3 | Expand + batch migrate | 20+ files: sync-handler, knowledge-graph, chat-context, notification-service, search-service, share-service, exam-dates, export, chunked-search, 4 repositories |
+| 4 | localStorage → Dexie | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
+| — | Domain split (Session 33) | 10 sub-interfaces, 11 dead accessors removed, 4 consumers narrowed to sub-interfaces, 19 narrowed in `_deps` pattern |
 
 ## Excluded from scope
 
 - **Appwrite** (`src/lib/db/client.ts`) — stays as-is. Seam is Dexie-only.
 - **localStorage** — settings/flags stay as-is.
 - **SQLite exams.db** — separate store, different concerns.
-- **`offlineDB.table("name")` string pattern** — migrated to typed accessor during its phase.

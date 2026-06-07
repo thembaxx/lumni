@@ -18,10 +18,10 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
 	_deps = deps;
 }
 

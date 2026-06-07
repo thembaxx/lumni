@@ -1,14 +1,14 @@
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CacheDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import type { CachedGraph, KnowledgeGraph } from "./types";
 
 const DEFAULT_DEPS = { db: dexieDataAccess };
-let _deps = DEFAULT_DEPS;
+let _deps: { db: CacheDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+export function __setDepsForTesting(deps: { db: CacheDataAccess }) {
 	_deps = deps;
 }
 

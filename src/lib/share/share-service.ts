@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { ContentDataAccess } from "@/lib/db/data-access";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
 import type { Question } from "@/lib/question-engine/types";
@@ -9,9 +9,9 @@ import { logError } from "@/lib/shared/logger";
 import { syncManager } from "@/lib/sync/sync-manager";
 
 const DEFAULT_DEPS = { db: dexieDataAccess };
-let _deps = DEFAULT_DEPS;
+let _deps: { db: ContentDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+export function __setDepsForTesting(deps: { db: ContentDataAccess }) {
 	_deps = deps;
 }
 

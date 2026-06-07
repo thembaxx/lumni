@@ -8,9 +8,19 @@ export {
 	updateDocument,
 } from "./client";
 export type {
+	CacheDataAccess,
 	Collection,
+	CompetencyDataAccess,
+	ContentDataAccess,
 	DataAccess,
 	DataAccessTable,
+	FlashcardDataAccess,
+	LegacyDataAccess,
+	ObservabilityDataAccess,
+	QuizDataAccess,
+	SocialDataAccess,
+	StudyDataAccess,
+	SyncDataAccess,
 	WhereClause,
 } from "./data-access";
 export { dexieDataAccess } from "./dexie-data-access";

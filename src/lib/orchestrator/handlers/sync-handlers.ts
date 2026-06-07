@@ -1,7 +1,10 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { FlashcardDataAccess, SyncDataAccess } from "@/lib/db/data-access";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+
+type SyncHandlerDb = SyncDataAccess & Pick<FlashcardDataAccess, "flashcards">;
+
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
@@ -12,8 +15,8 @@ import {
 	createUpsertHandler,
 } from "./sync-factory";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: SyncHandlerDb } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
 	_deps = deps;
 }
 
