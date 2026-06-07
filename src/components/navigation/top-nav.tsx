@@ -11,7 +11,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
 import { SidebarHamburger } from "@/components/navigation/sidebar-nav";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
@@ -66,6 +66,15 @@ export function TopNav({ title, className }: TopNavProps) {
 		return "Lumni";
 	}, [pathname, title]);
 
+	const headerRef = useRef<HTMLHeadElement>(null);
+
+	useEffect(() => {
+		const el = headerRef.current;
+		if (el) {
+			el.style.top = "env(titlebar-area-height, 0px)";
+		}
+	}, []);
+
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	useEffect(() => {
@@ -95,12 +104,12 @@ export function TopNav({ title, className }: TopNavProps) {
 
 	return (
 		<header
+			ref={headerRef}
 			className={cn(
 				"sticky z-header border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
 				"relative before:pointer-events-none before:absolute before:inset-0 before:bg-(--system-accent-alpha-10)",
 				className,
 			)}
-			style={{ top: "env(titlebar-area-height, 0px)" }}
 		>
 			<div className="flex h-12 items-center justify-between px-4">
 				<div className="flex items-center gap-4">

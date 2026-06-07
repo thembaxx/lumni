@@ -55,6 +55,8 @@ export const COLLECTIONS = {
 	TEACHER_OBSERVATIONS: "teacher_observations",
 	ASSIGNMENT_MESSAGES: "assignment_messages",
 	GHOST_LINKS: "ghost_links",
+	LIVE_SESSIONS: "live_sessions",
+	LIVE_SESSION_PARTICIPANTS: "live_session_participants",
 } as const;
 
 export type Subject = {

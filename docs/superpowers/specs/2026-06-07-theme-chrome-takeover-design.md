@@ -90,13 +90,7 @@ Add to `src/app/globals.css`:
 The TopNav uses `sticky top-0` to stick to the top of the viewport. When the titlebar overlay is active, the TopNav must sit below it. Change to:
 
 ```tsx
-// Before:
-"sticky top-0 z-header ..."
-// After:
-"sticky top-[env(titlebar-area-height,0px)] z-header ..."
-```
-
-When `env(titlebar-area-height)` is `0px` or `unsupported` (not in PWA / not desktop), this evaluates to `top-0` — no layout change. When the overlay is active, the TopNav shifts down by the titlebar height (~38px on Windows/Linux). The `.titlebar-drag-region` div renders at `position: fixed; top: 0` above everything, covering the titlebar area with the app's background color.
+The top offset is applied via inline style (not a Tailwind class) to avoid CSS parser issues with `env()` variable syntax.
 
 **Detection:** CSS `env()` fallback handles it. No JS needed.
 
@@ -104,7 +98,7 @@ When `env(titlebar-area-height)` is `0px` or `unsupported` (not in PWA / not des
 
 | File | Change | Complexity |
 |------|--------|------------|
-| `src/components/navigation/top-nav.tsx` | Add accent-tint pseudo-element chain + `top-[env(...)]` | 2 lines |
+| `src/components/navigation/top-nav.tsx` | Add accent-tint pseudo-element chain + inline `top` style | 2 lines |
 | `src/components/navigation/bottom-nav.tsx` | Add accent-tint pseudo-element chain | 1 line |
 | `src/components/navigation/sidebar-nav.tsx` | Add accent-tint pseudo-element chain (desktop + sheet) | 2 lines |
 | `src/components/theme/theme-provider.tsx` | Dynamic `theme-color` on theme switch | ~8 lines |

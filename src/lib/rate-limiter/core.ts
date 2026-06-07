@@ -15,11 +15,15 @@ export interface RateLimitStoreEntry {
 }
 
 export interface RateLimitStore {
-	get(key: string): RateLimitStoreEntry | undefined;
-	set(key: string, value: RateLimitStoreEntry): void;
-	delete(key: string): void;
-	entries(): IterableIterator<[string, RateLimitStoreEntry]>;
-	size(): number;
+	get(
+		key: string,
+	): RateLimitStoreEntry | undefined | Promise<RateLimitStoreEntry | undefined>;
+	set(key: string, value: RateLimitStoreEntry): void | Promise<void>;
+	delete(key: string): void | Promise<void>;
+	entries():
+		| IterableIterator<[string, RateLimitStoreEntry]>
+		| Promise<IterableIterator<[string, RateLimitStoreEntry]>>;
+	size(): number | Promise<number>;
 }
 
 class MapStore implements RateLimitStore {
@@ -42,6 +46,15 @@ class MapStore implements RateLimitStore {
 	}
 }
 
+async function resolveRecord(
+	record:
+		| RateLimitStoreEntry
+		| undefined
+		| Promise<RateLimitStoreEntry | undefined>,
+): Promise<RateLimitStoreEntry | undefined> {
+	return record;
+}
+
 export class RateLimiter {
 	private store: RateLimitStore;
 
@@ -49,13 +62,13 @@ export class RateLimiter {
 		this.store = store ?? new MapStore();
 	}
 
-	check(key: string, config: RateLimitConfig): RateLimitResult {
+	async check(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
 		const now = Date.now();
-		const record = this.store.get(key);
+		const record = await resolveRecord(this.store.get(key));
 
 		if (!record || record.resetAt < now) {
 			const resetAt = now + config.windowMs;
-			this.store.set(key, { count: 1, resetAt });
+			await this.store.set(key, { count: 1, resetAt });
 			return { allowed: true, remaining: config.max - 1, resetAt };
 		}
 
@@ -64,6 +77,7 @@ export class RateLimiter {
 		}
 
 		record.count++;
+		await this.store.set(key, record);
 		return {
 			allowed: true,
 			remaining: config.max - record.count,
@@ -71,9 +85,9 @@ export class RateLimiter {
 		};
 	}
 
-	peek(key: string, config: RateLimitConfig): RateLimitResult {
+	async peek(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
 		const now = Date.now();
-		const record = this.store.get(key);
+		const record = await resolveRecord(this.store.get(key));
 
 		if (!record || record.resetAt < now) {
 			return {
@@ -90,20 +104,21 @@ export class RateLimiter {
 		};
 	}
 
-	reset(key: string): void {
-		this.store.delete(key);
+	async reset(key: string): Promise<void> {
+		await this.store.delete(key);
 	}
 
-	cleanup(): void {
+	async cleanup(): Promise<void> {
 		const now = Date.now();
-		for (const [key, value] of this.store.entries()) {
+		const entries = await this.store.entries();
+		for (const [key, value] of entries) {
 			if (value.resetAt < now) {
-				this.store.delete(key);
+				await this.store.delete(key);
 			}
 		}
 	}
 
-	getStoreSize(): number {
+	async getStoreSize(): Promise<number> {
 		return this.store.size();
 	}
 }

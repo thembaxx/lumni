@@ -34,7 +34,7 @@ export async function attemptSignIn(email: string): Promise<RateLimitResult> {
 	}
 
 	// Fallback to in-memory RateLimiter
-	const result = rateLimiter.check(key, SIGNIN_CONFIG);
+	const result = await rateLimiter.check(key, SIGNIN_CONFIG);
 	if (!result.allowed) {
 		const waitMinutes = Math.ceil((result.resetAt - Date.now()) / 60000);
 		return {
@@ -94,7 +94,7 @@ export async function attemptMagicLink(
 	}
 
 	// Fallback to in-memory RateLimiter
-	const result = rateLimiter.check(key, MAGIC_LINK_CONFIG);
+	const result = await rateLimiter.check(key, MAGIC_LINK_CONFIG);
 	if (!result.allowed) {
 		const waitMinutes = Math.ceil((result.resetAt - Date.now()) / 60000);
 		return {

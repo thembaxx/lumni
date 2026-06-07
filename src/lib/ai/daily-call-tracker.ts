@@ -121,11 +121,11 @@ export class DailyCallTracker {
 		// Fallback to in-memory
 		this.ensureDate();
 		const limiter = this.getLimiter(userId, type);
-		const userResult = limiter.peek(`${userId}:${type}`, {
+		const userResult = await limiter.peek(`${userId}:${type}`, {
 			max: USER_LIMITS[type].maxPerDay,
 			windowMs: DAILY_WINDOW_MS,
 		});
-		const globalResult = this.globalLimiter.peek("global", {
+		const globalResult = await this.globalLimiter.peek("global", {
 			max: GLOBAL_LIMIT_TOTAL,
 			windowMs: DAILY_WINDOW_MS,
 		});
@@ -255,7 +255,7 @@ export class DailyCallTracker {
 		>;
 		for (const type of Object.keys(USER_LIMITS) as AICallType[]) {
 			const limiter = this.getLimiter(userId, type);
-			const peeking = limiter.peek(`${userId}:${type}`, {
+			const peeking = await limiter.peek(`${userId}:${type}`, {
 				max: USER_LIMITS[type].maxPerDay,
 				windowMs: DAILY_WINDOW_MS,
 			});
@@ -298,7 +298,7 @@ export class DailyCallTracker {
 
 		// Fallback to in-memory
 		this.ensureDate();
-		const result = this.globalLimiter.peek("global", {
+		const result = await this.globalLimiter.peek("global", {
 			max: GLOBAL_LIMIT_TOTAL,
 			windowMs: DAILY_WINDOW_MS,
 		});

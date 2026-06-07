@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { useRouter } from "@/i18n/navigation";
 import type {
 	GroupChallenge,
 	GroupChallengeEntry,
@@ -8,9 +10,17 @@ import type {
 interface Props {
 	challenge: GroupChallenge;
 	entries: GroupChallengeEntry[];
+	subjectId?: string;
+	groupId?: string;
 }
 
-export function ChallengeBanner({ challenge, entries }: Props) {
+export function ChallengeBanner({
+	challenge,
+	entries,
+	subjectId,
+	groupId,
+}: Props) {
+	const { push } = useRouter();
 	const now = Date.now();
 	const weekEnd = new Date(challenge.weekEnd).getTime();
 	const daysLeft = Math.max(
@@ -60,6 +70,19 @@ export function ChallengeBanner({ challenge, entries }: Props) {
 					</p>
 				</div>
 			</div>
+			{subjectId && groupId && (
+				<Button
+					className="mt-3 w-full"
+					size="sm"
+					onClick={() =>
+						push(
+							`/quiz?subject=${encodeURIComponent(subjectId)}&count=10&challenge=true&challengeGroup=${groupId}`,
+						)
+					}
+				>
+					Start Challenge Quiz
+				</Button>
+			)}
 		</div>
 	);
 }

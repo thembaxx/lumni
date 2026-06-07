@@ -96,6 +96,12 @@ export const navConfig: NavCategory[] = [
 				route: "/solve",
 			},
 			{
+				id: "study-guide",
+				label: "Study Guide",
+				icon: BookOpen01Icon,
+				route: "/study-guide",
+			},
+			{
 				id: "search",
 				label: "Search",
 				icon: Search01Icon,

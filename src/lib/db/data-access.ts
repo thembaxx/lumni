@@ -43,6 +43,7 @@ import type {
 	GroupChallengeEntry,
 } from "@/lib/study-groups/challenge-types";
 import type { GroupPost } from "@/lib/study-groups/types";
+import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
 	TinyFishUsageEntry,
@@ -147,4 +148,5 @@ export interface DataAccess {
 	onboardingState: DataAccessTable<OnboardingState, string>;
 	srDailyBudget: DataAccessTable<SrDailyBudget, string>;
 	flashcardSyncState: DataAccessTable<FlashcardSyncState, string>;
+	studyGuides: DataAccessTable<CachedStudyGuide, string>;
 }

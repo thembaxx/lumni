@@ -189,6 +189,7 @@ export class DexieDataAccess implements DataAccess {
 	onboardingState = tableAdapter(offlineDB.onboardingState);
 	srDailyBudget = tableAdapter(offlineDB.srDailyBudget);
 	flashcardSyncState = tableAdapter(offlineDB.flashcardSyncState);
+	studyGuides = tableAdapter(offlineDB.studyGuides);
 }
 
 export const dexieDataAccess = new DexieDataAccess();

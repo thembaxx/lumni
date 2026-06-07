@@ -17,7 +17,7 @@ export function withRateLimit(
 			req.headers.get("x-real-ip") ||
 			"unknown";
 
-		const rateLimit = checkRateLimit(ip, apiConfig);
+		const rateLimit = await checkRateLimit(ip, apiConfig);
 
 		if (!rateLimit.allowed) {
 			return NextResponse.json(

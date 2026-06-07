@@ -1,0 +1,217 @@
+"use client";
+
+import {
+	BookOpen01Icon,
+	RadialIcon,
+	SparklesIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, m } from "framer-motion";
+import { useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Anim } from "@/components/shared/anim";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SubjectSelect } from "@/components/ui/subject-select";
+import { useStudyGuide } from "@/hooks/use-study-guide";
+import type { StudyGuide } from "@/lib/study-guide/types";
+
+function StudyGuideContent({ guide }: { guide: StudyGuide }) {
+	return (
+		<div className="flex flex-col gap-6">
+			{guide.sections.map((section, i) => (
+				<m.div
+					key={section.title}
+					initial={{ opacity: 0, y: 12 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: i * 0.08, duration: 0.3 }}
+					className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2"
+				>
+					<div className="p-6">
+						<h2 className="mb-4 font-semibold text-foreground text-xl tracking-tight">
+							{section.title}
+						</h2>
+						<div className="mb-4 text-foreground/80 text-sm leading-relaxed">
+							<MarkdownRenderer content={section.content} />
+						</div>
+						{section.keyPoints.length > 0 && (
+							<div className="rounded-xl bg-system-background p-4">
+								<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+									Key Points
+								</p>
+								<ul className="flex flex-col gap-1.5">
+									{section.keyPoints.map((point) => (
+										<li
+											key={point}
+											className="flex items-start gap-2 text-foreground/70 text-sm"
+										>
+											<span className="mt-0.5 block size-1.5 shrink-0 rounded-full bg-foreground/30" />
+											{point}
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+					</div>
+				</m.div>
+			))}
+
+			{guide.summary && (
+				<m.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ delay: guide.sections.length * 0.08 + 0.1 }}
+					className="rounded-2xl border border-border/50 bg-primary/5 p-6"
+				>
+					<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+						Summary
+					</p>
+					<p className="text-foreground/70 text-sm leading-relaxed">
+						{guide.summary}
+					</p>
+				</m.div>
+			)}
+		</div>
+	);
+}
+
+function StudyGuideClient() {
+	const [selectedSubject, setSelectedSubject] = useState("");
+	const [topicText, setTopicText] = useState("");
+	const { data, isPending, error, mutate } = useStudyGuide();
+	const [fetched, setFetched] = useState(false);
+
+	const handleGenerate = () => {
+		if (!selectedSubject || !topicText.trim()) return;
+		setFetched(true);
+		mutate({ subject: selectedSubject, topic: topicText.trim() });
+	};
+
+	return (
+		<div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+			<PageContainer className="flex flex-col gap-8">
+				<Anim>
+					<div className="flex flex-col gap-6">
+						<div>
+							<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
+								Study Guide
+							</h1>
+							<p className="ios-subhead mt-1.5 text-muted-foreground/60">
+								Generate AI-powered study guides for any subject and topic
+							</p>
+						</div>
+
+						<div className="flex flex-col gap-3">
+							<div className="flex items-center gap-3">
+								<div className="flex-1">
+									<SubjectSelect
+										value={selectedSubject}
+										onChange={setSelectedSubject}
+									/>
+								</div>
+							</div>
+							<div className="flex items-center gap-3">
+								<div className="flex-1">
+									<Input
+										value={topicText}
+										onChange={(e) => setTopicText(e.target.value)}
+										placeholder="Enter topic (e.g. Quadratic Equations, Cellular Respiration)"
+										aria-label="Topic"
+										className="h-11 rounded-xl"
+									/>
+								</div>
+								<Button
+									onClick={handleGenerate}
+									disabled={!selectedSubject || !topicText.trim() || isPending}
+									className="h-11 shrink-0 gap-2 rounded-xl"
+								>
+									{isPending ? (
+										<HugeiconsIcon
+											icon={RadialIcon}
+											className="size-4 animate-spin"
+											data-icon
+										/>
+									) : (
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											className="size-4"
+											data-icon
+										/>
+									)}
+									Generate
+								</Button>
+							</div>
+						</div>
+					</div>
+
+					<AnimatePresence mode="wait" initial={false}>
+						{!fetched && !isPending && (
+							<m.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								className="py-20 text-center"
+							>
+								<HugeiconsIcon
+									icon={BookOpen01Icon}
+									className="mx-auto mb-4 size-12 text-muted-foreground/20"
+								/>
+								<p className="text-muted-foreground/40 text-sm">
+									Select a subject and topic to generate a study guide
+								</p>
+							</m.div>
+						)}
+
+						{isPending && (
+							<m.div
+								key="loading"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								className="flex flex-col gap-4"
+							>
+								{[1, 2, 3].map((i) => (
+									<Skeleton
+										key={`skeleton-${i}`}
+										className="flex flex-col gap-3 rounded-2xl p-6"
+									>
+										<div className="h-5 w-1/3 rounded bg-muted/30" />
+										<div className="h-4 w-full rounded bg-muted/30" />
+										<div className="h-4 w-3/4 rounded bg-muted/30" />
+										<div className="h-4 w-1/2 rounded bg-muted/30" />
+									</Skeleton>
+								))}
+							</m.div>
+						)}
+
+						{error && (
+							<m.div
+								key="error"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								className="rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-destructive text-sm"
+							>
+								Failed to generate study guide. Please try again.
+							</m.div>
+						)}
+
+						{data && !isPending && !error && (
+							<m.div
+								key="results"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+							>
+								<StudyGuideContent guide={data} />
+							</m.div>
+						)}
+					</AnimatePresence>
+				</Anim>
+			</PageContainer>
+		</div>
+	);
+}
+
+export default function StudyGuidePage() {
+	return <StudyGuideClient />;
+}

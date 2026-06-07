@@ -17,6 +17,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { ChallengeBanner } from "@/components/study-groups/challenge/challenge-banner";
 import { ChallengeLeaderboard } from "@/components/study-groups/challenge/challenge-leaderboard";
 import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
+import { LiveSessionBar } from "@/components/study-groups/live-session-bar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -125,6 +126,8 @@ export function GroupDetail() {
 						<ChallengeBanner
 							challenge={challengeData.challenge}
 							entries={challengeData.entries}
+							subjectId={data?.group?.subjectId}
+							groupId={groupId}
 						/>
 						<Card className="flex flex-col gap-3 p-4">
 							<div className="flex items-center gap-2">
@@ -138,6 +141,8 @@ export function GroupDetail() {
 						</Card>
 					</>
 				)}
+
+				<LiveSessionBar groupId={groupId} />
 
 				<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 					<Card className="flex flex-col gap-4 p-4">

@@ -346,31 +346,6 @@ export function scheduleStreakAlert(settings = getSettings()): void {
 	}
 }
 
-const ACHIEVEMENT_CHECK_KEY = "lumni_last_checked_achievement_count";
-
-export function checkForNewAchievements(): void {
-	const settings = getSettings();
-	if (!settings.enabled || !settings.achievementNotifications) return;
-
-	const gamification = getGamificationData();
-	if (!gamification) return;
-
-	const currentCount = gamification.achievements.length;
-	const lastCount = loadFromStorage<number>(ACHIEVEMENT_CHECK_KEY, 0);
-
-	if (currentCount > lastCount && lastCount > 0) {
-		const newlyEarned = gamification.achievements.slice(lastCount);
-		for (const _achievement of newlyEarned) {
-			sendLocalNotification(
-				"Achievement Unlocked!",
-				`You unlocked an achievement!`,
-			);
-		}
-	}
-
-	saveToStorage(ACHIEVEMENT_CHECK_KEY, currentCount);
-}
-
 const WEEKLY_NOTIF_KEY = "lumni_last_weekly_notification";
 
 export async function scheduleWeeklyProgress(
@@ -487,7 +462,6 @@ export function initializeNotificationSchedulers(): void {
 
 	scheduleStudyReminder(settings);
 	scheduleStreakAlert(settings);
-	checkForNewAchievements();
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
 		scheduleWeeklyProgress(settings);

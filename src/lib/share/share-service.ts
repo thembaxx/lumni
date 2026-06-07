@@ -3,6 +3,7 @@ import { dexieDataAccess } from "@/lib/db";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { DataAccess } from "@/lib/db/data-access";
 import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
+import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { syncManager } from "@/lib/sync/sync-manager";
@@ -164,6 +165,29 @@ export async function shareAssignment(
 		shareId,
 		url: `/shared/assignment/${shareId}`,
 	};
+}
+
+export async function shareFlashcardDeck(
+	deck: Omit<FlashcardDeck, "id" | "createdAt">,
+	userId: string,
+): Promise<string> {
+	const id = generateShareId();
+	const record: Record<string, unknown> = {
+		id,
+		type: "flashcard-deck",
+		deckData: deck,
+		sharedById: userId,
+		sharedAt: Date.now(),
+		viewCount: 0,
+	};
+
+	try {
+		await _deps.db.sharedQuestions.add(record as never);
+	} catch (err) {
+		logError("ShareFlashcardDeck", err);
+	}
+
+	return id;
 }
 
 export function getSharedAssignment(shareId: string): {

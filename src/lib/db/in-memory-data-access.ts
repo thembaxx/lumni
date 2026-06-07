@@ -49,6 +49,7 @@ import type {
 	GroupChallengeEntry,
 } from "@/lib/study-groups/challenge-types";
 import type { GroupPost } from "@/lib/study-groups/types";
+import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
 	TinyFishUsageEntry,
@@ -311,4 +312,5 @@ export class InMemoryDataAccess implements DataAccess {
 	onboardingState = new InMemoryTable<OnboardingState, string>();
 	srDailyBudget = new InMemoryTable<SrDailyBudget, string>();
 	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
+	studyGuides = new InMemoryTable<CachedStudyGuide, string>();
 }

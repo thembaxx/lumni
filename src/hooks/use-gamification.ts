@@ -7,6 +7,10 @@ import type { StoredGamification } from "@/lib/gamification-engine";
 
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
+import {
+	getSettings,
+	sendLocalNotification,
+} from "@/lib/services/notification-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
 
@@ -175,6 +179,16 @@ export function useGamification() {
 							description: achievement.description,
 							duration: 5000,
 						});
+						const notifSettings = getSettings();
+						if (
+							notifSettings.enabled &&
+							notifSettings.achievementNotifications
+						) {
+							sendLocalNotification(
+								`${achievement.icon} ${achievement.name}`,
+								achievement.description,
+							);
+						}
 					}, 0);
 					timersRef.current.push(achTimer);
 				}
