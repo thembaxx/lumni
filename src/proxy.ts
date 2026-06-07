@@ -12,6 +12,9 @@ const intlMiddleware = createMiddleware({
 
 const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
 
+// Non-locale page routes (outside [locale] directory) that should bypass intlMiddleware
+const NON_LOCALE_PAGES = ["/offline", "/q", "/ghost"];
+
 function getProjectCookieName(): string {
 	const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
 	return `a_session_${projectId}`;
@@ -39,6 +42,13 @@ export function proxy(request: NextRequest) {
 
 	const isApiRoute = pathname.startsWith("/api/");
 	if (isApiRoute) {
+		return;
+	}
+
+	const isNonLocalePage = NON_LOCALE_PAGES.some(
+		(prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+	);
+	if (isNonLocalePage) {
 		return;
 	}
 
