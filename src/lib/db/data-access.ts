@@ -158,14 +158,14 @@ export interface LegacyDataAccess {
 // Composite — full 33-table access
 // ──────────────────────────────────────────────
 
-export interface DataAccess extends
-	FlashcardDataAccess,
-	CompetencyDataAccess,
-	QuizDataAccess,
-	ContentDataAccess,
-	StudyDataAccess,
-	SyncDataAccess,
-	ObservabilityDataAccess,
-	SocialDataAccess,
-	CacheDataAccess,
-	LegacyDataAccess {}
+export interface DataAccess
+	extends FlashcardDataAccess,
+		CompetencyDataAccess,
+		QuizDataAccess,
+		ContentDataAccess,
+		StudyDataAccess,
+		SyncDataAccess,
+		ObservabilityDataAccess,
+		SocialDataAccess,
+		CacheDataAccess,
+		LegacyDataAccess {}

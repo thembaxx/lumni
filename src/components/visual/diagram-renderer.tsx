@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { Skeleton } from "@/components/ui/skeleton";
 import { SafeHTML } from "@/components/ui/safe-html";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const diaLoading = () => <Skeleton className="h-48 w-full rounded-lg" />;
 

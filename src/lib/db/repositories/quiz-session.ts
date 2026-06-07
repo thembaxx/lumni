@@ -1,7 +1,7 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
-import type { QuizAttempt, QuizSessionState } from "../schema";
 import { safeJsonStringify } from "@/lib/shared/json";
+import type { QuizAttempt, QuizSessionState } from "../schema";
 
 export class QuizSessionRepository {
 	constructor(private db: DataAccess) {}
