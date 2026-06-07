@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { Question } from "@/lib/question-engine/types";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {
