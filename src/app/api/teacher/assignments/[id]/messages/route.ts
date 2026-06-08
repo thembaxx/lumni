@@ -1,13 +1,20 @@
 import { NextResponse } from "next/server";
+import { dexieDataAccess } from "@/lib/db";
 
 export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	const { id } = await params;
-	const raw = localStorage.getItem(`lumni_messages_${id}`);
-	const messages = raw ? JSON.parse(raw) : [];
-	return NextResponse.json(messages);
+	try {
+		const messages = await dexieDataAccess.assignmentMessages
+			.where("assignmentId")
+			.equals(id)
+			.toArray();
+		return NextResponse.json(messages);
+	} catch {
+		return NextResponse.json([]);
+	}
 }
 
 export async function POST(
@@ -23,9 +30,10 @@ export async function POST(
 		content,
 		createdAt: Date.now(),
 	};
-	const raw = localStorage.getItem(`lumni_messages_${id}`);
-	const messages = raw ? JSON.parse(raw) : [];
-	messages.push(msg);
-	localStorage.setItem(`lumni_messages_${id}`, JSON.stringify(messages));
+	try {
+		await dexieDataAccess.assignmentMessages.add(msg);
+	} catch {
+		/* silent */
+	}
 	return NextResponse.json(msg);
 }

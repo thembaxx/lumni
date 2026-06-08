@@ -1,8 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { questionRatingService } from "@/lib/services/question-rating-service";
+
+const BarChartComponent = dynamic(
+	() => import("@/components/ui/charts/bar-chart").then((m) => m.BarChart),
+	{ ssr: false },
+);
 
 export function QuestionRatingsDashboard() {
 	const [mounted] = useState(true);
@@ -38,6 +44,14 @@ export function QuestionRatingsDashboard() {
 		},
 	});
 
+	const chartData = ([1, 2, 3, 4, 5] as const).map((n) => ({
+		label: `${n} Star`,
+		ratings: stats.counts[n],
+	}));
+	const chartConfig = {
+		ratings: { label: "Ratings", color: "var(--color-chart-1)" },
+	} as const;
+
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="grid grid-cols-2 gap-4 lg:grid-cols-6">
@@ -59,6 +73,22 @@ export function QuestionRatingsDashboard() {
 					</div>
 				))}
 			</div>
+
+			{stats.total > 0 && (
+				<div className="rounded-2xl border border-border/80 bg-card p-4">
+					<h3 className="mb-3 font-heading font-medium text-sm">
+						Rating Distribution
+					</h3>
+					<div className="h-48">
+						<BarChartComponent
+							data={chartData}
+							xKey="label"
+							yKey="ratings"
+							config={chartConfig}
+						/>
+					</div>
+				</div>
+			)}
 
 			{lowRated.length > 0 && (
 				<div className="rounded-2xl border border-destructive/30 bg-card p-4">

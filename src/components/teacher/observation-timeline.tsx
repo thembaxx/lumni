@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { dexieDataAccess } from "@/lib/db";
 
 interface Observation {
 	id?: number;
@@ -24,29 +25,37 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
 	const [newNote, setNewNote] = useState("");
 	const [saving, setSaving] = useState(false);
 
-	useEffect(() => {
+	const loadObservations = useCallback(async () => {
 		try {
-			const raw = localStorage.getItem(`lumni_observations_${studentId}`);
-			if (raw) setObservations(JSON.parse(raw));
+			const all = await dexieDataAccess.teacherObservations
+				.where("studentId")
+				.equals(studentId)
+				.toArray();
+			all.sort((a, b) => b.createdAt - a.createdAt);
+			setObservations(all);
 		} catch {}
 		setLoading(false);
 	}, [studentId]);
 
+	useEffect(() => {
+		loadObservations();
+	}, [loadObservations]);
+
 	const addObservation = async () => {
 		if (!newNote.trim()) return;
 		setSaving(true);
-		const obs: Observation = {
+		await dexieDataAccess.teacherObservations.add({
 			studentId,
 			teacherId: "current",
 			content: newNote.trim(),
 			createdAt: Date.now(),
-		};
-		const updated = [obs, ...observations];
-		localStorage.setItem(
-			`lumni_observations_${studentId}`,
-			JSON.stringify(updated),
-		);
-		setObservations(updated);
+		} as Observation);
+		const all = await dexieDataAccess.teacherObservations
+			.where("studentId")
+			.equals(studentId)
+			.toArray();
+		all.sort((a, b) => b.createdAt - a.createdAt);
+		setObservations(all);
 		setNewNote("");
 		setSaving(false);
 	};

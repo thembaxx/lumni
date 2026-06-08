@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { dexieDataAccess } from "@/lib/db";
 
 interface AssignmentData {
 	type: string;
@@ -19,15 +20,23 @@ export default function SharedAssignmentPage() {
 
 	useEffect(() => {
 		if (!shareId) return;
-		try {
-			const raw = localStorage.getItem(`lumni_shared_assignment_${shareId}`);
-			if (raw) {
-				setData(JSON.parse(raw) as AssignmentData);
+		(async () => {
+			try {
+				const shared = await dexieDataAccess.sharedQuestions.get(shareId);
+				if (shared) {
+					setData({
+						type: "assignment",
+						assignmentId: shareId,
+						topic: shared.subject ?? "Assignment",
+						questionCount: 1,
+						dueDate: null,
+					});
+				}
+			} catch {
+				/* silent */
 			}
-		} catch {
-			/* silent */
-		}
-		setLoading(false);
+			setLoading(false);
+		})();
 	}, [shareId]);
 
 	if (loading) {

@@ -85,11 +85,11 @@ export function WeeklyReportPanel({
 								{Array.from(
 									{ length: Math.min(subject.topicsStudied, 3) },
 									(_, i) => {
-										const hash = subject.subject.length + i * 17;
-										const mastery = 40 + (hash % 55);
+										const variation = subject.score - 10 + i * 8;
+										const mastery = Math.min(100, Math.max(10, variation));
 										return (
 											<div
-												key={`tp-${subject.subject}-${hash}`}
+												key={`tp-${subject.subject}-${mastery}`}
 												className="flex items-center justify-between"
 											>
 												<span className="text-muted-foreground text-xs">

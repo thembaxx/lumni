@@ -8,6 +8,7 @@ import type {
 } from "@/lib/db/data-access";
 import type {
 	AnalyticsEvent,
+	AssignmentMessage,
 	BookmarkRecord,
 	CachedExamDates,
 	CachedPdf,
@@ -27,6 +28,7 @@ import type {
 	SharedQuestionRecord,
 	StudyPlanRecord,
 	SyncConflict,
+	TeacherObservation,
 } from "@/lib/db/schema";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -84,6 +86,10 @@ class InMemoryCollection<T> implements Collection<T> {
 
 	limit(n: number): Collection<T> {
 		return new InMemoryCollection(() => this.getItems().slice(0, n));
+	}
+
+	offset(n: number): Collection<T> {
+		return new InMemoryCollection(() => this.getItems().slice(n));
 	}
 
 	filter(pred: (item: T) => boolean): Collection<T> {
@@ -291,4 +297,6 @@ export class InMemoryDataAccess implements DataAccess {
 	studyPlans = new InMemoryTable<StudyPlanRecord, string>();
 	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
 	studyGuides = new InMemoryTable<CachedStudyGuide, string>();
+	teacherObservations = new InMemoryTable<TeacherObservation>();
+	assignmentMessages = new InMemoryTable<AssignmentMessage>();
 }

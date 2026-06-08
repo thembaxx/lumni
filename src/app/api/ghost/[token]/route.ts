@@ -1,25 +1,51 @@
 import { NextResponse } from "next/server";
+import { databases } from "@/lib/appwrite";
 import { dexieDataAccess } from "@/lib/db";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 
 export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ token: string }> },
 ) {
 	const { token } = await params;
-	const raw = localStorage.getItem(`lumni_ghost_${token}`);
-	if (!raw)
-		return NextResponse.json(
-			{ error: "Invalid or expired token" },
-			{ status: 404 },
-		);
 
-	const link = JSON.parse(raw) as {
+	let link: {
 		token: string;
 		teacherId: string;
 		createdAt: number;
 		expiresAt: number;
 		revoked: boolean;
-	};
+	} | null = null;
+
+	try {
+		const docs = await databases.listDocuments(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.GHOST_LINKS,
+			[],
+		);
+		const found = docs.documents.find(
+			(d: Record<string, unknown>) => d.token === token,
+		);
+		if (found) {
+			link = found as unknown as {
+				token: string;
+				teacherId: string;
+				createdAt: number;
+				expiresAt: number;
+				revoked: boolean;
+			};
+		}
+	} catch (e) {
+		logError("GhostTokenFetch", e);
+	}
+
+	if (!link) {
+		return NextResponse.json(
+			{ error: "Invalid or expired token" },
+			{ status: 404 },
+		);
+	}
 	if (link.revoked || link.expiresAt < Date.now()) {
 		return NextResponse.json(
 			{ error: "Token expired or revoked" },

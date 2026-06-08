@@ -47,6 +47,10 @@ class DexieCollectionAdapter<T> implements Collection<T> {
 		return new DexieCollectionAdapter(this.source.limit(n));
 	}
 
+	offset(n: number): Collection<T> {
+		return new DexieCollectionAdapter(this.source.offset(n));
+	}
+
 	filter(pred: (item: T) => boolean): Collection<T> {
 		return new DexieCollectionAdapter(this.source.and(pred));
 	}
@@ -179,6 +183,8 @@ export class DexieDataAccess implements DataAccess {
 	studyPlans = tableAdapter(offlineDB.studyPlans);
 	flashcardSyncState = tableAdapter(offlineDB.flashcardSyncState);
 	studyGuides = tableAdapter(offlineDB.studyGuides);
+	teacherObservations = tableAdapter(offlineDB.teacherObservations);
+	assignmentMessages = tableAdapter(offlineDB.assignmentMessages);
 }
 
 export const dexieDataAccess = new DexieDataAccess();

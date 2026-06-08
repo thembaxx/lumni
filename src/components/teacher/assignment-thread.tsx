@@ -1,52 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { dexieDataAccess } from "@/lib/db";
 
-interface Message {
-	id?: number;
-	assignmentId: string;
-	senderId: string;
-	senderRole: "teacher" | "student";
-	content: string;
-	createdAt: number;
-}
+import type { AssignmentMessage } from "@/lib/db/schema";
 
 interface AssignmentThreadProps {
 	assignmentId: string;
 }
 
 export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<AssignmentMessage[]>([]);
 	const [_loading, setLoading] = useState(true);
 	const [newMessage, setNewMessage] = useState("");
 	const [sending, setSending] = useState(false);
 
-	useEffect(() => {
+	const loadMessages = useCallback(async () => {
 		try {
-			const raw = localStorage.getItem(`lumni_messages_${assignmentId}`);
-			if (raw) setMessages(JSON.parse(raw));
+			const all = await dexieDataAccess.assignmentMessages
+				.where("assignmentId")
+				.equals(assignmentId)
+				.toArray();
+			all.sort((a, b) => a.createdAt - b.createdAt);
+			setMessages(all);
 		} catch {}
 		setLoading(false);
 	}, [assignmentId]);
 
+	useEffect(() => {
+		loadMessages();
+	}, [loadMessages]);
+
 	const sendMessage = async () => {
 		if (!newMessage.trim()) return;
 		setSending(true);
-		const msg: Message = {
+		await dexieDataAccess.assignmentMessages.add({
 			assignmentId,
 			senderId: "current",
 			senderRole: "teacher",
 			content: newMessage.trim(),
 			createdAt: Date.now(),
-		};
-		const updated = [...messages, msg];
-		localStorage.setItem(
-			`lumni_messages_${assignmentId}`,
-			JSON.stringify(updated),
-		);
-		setMessages(updated);
+		});
+		const all = await dexieDataAccess.assignmentMessages
+			.where("assignmentId")
+			.equals(assignmentId)
+			.toArray();
+		all.sort((a, b) => a.createdAt - b.createdAt);
+		setMessages(all);
 		setNewMessage("");
 		setSending(false);
 	};

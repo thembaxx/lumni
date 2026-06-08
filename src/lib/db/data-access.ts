@@ -2,6 +2,7 @@ import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	AnalyticsEvent,
+	AssignmentMessage,
 	BookmarkRecord,
 	CachedExamDates,
 	CachedPdf,
@@ -21,6 +22,7 @@ import type {
 	SharedQuestionRecord,
 	StudyPlanRecord,
 	SyncConflict,
+	TeacherObservation,
 } from "@/lib/db/schema";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -50,6 +52,7 @@ export interface Collection<T> {
 	modify(changes: Partial<T> | ((record: T) => void)): Promise<number>;
 	reverse(): Collection<T>;
 	limit(n: number): Collection<T>;
+	offset(n: number): Collection<T>;
 	filter(pred: (item: T) => boolean): Collection<T>;
 	sortBy(index: string): Promise<T[]>;
 }
@@ -132,6 +135,8 @@ export interface SyncDataAccess {
 	jobs: DataAccessTable<JobRecord, number>;
 	conflicts: DataAccessTable<SyncConflict, number>;
 	flashcardSyncState: DataAccessTable<FlashcardSyncState, string>;
+	teacherObservations: DataAccessTable<TeacherObservation, number>;
+	assignmentMessages: DataAccessTable<AssignmentMessage, number>;
 }
 
 export interface ObservabilityDataAccess {

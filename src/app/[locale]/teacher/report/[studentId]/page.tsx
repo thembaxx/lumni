@@ -1,10 +1,9 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { dexieDataAccess } from "@/lib/db";
 
 interface StudentReport {
 	competencies: {
@@ -27,34 +26,25 @@ export default function StudentReportPage({
 }: {
 	params: Promise<{ studentId: string }>;
 }) {
-	use(params);
+	const [studentId, setStudentId] = useState<string | null>(null);
 	const [data, setData] = useState<StudentReport | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		Promise.all([
-			dexieDataAccess.competencies.toArray(),
-			dexieDataAccess.quizAttempts.toArray(),
-			dexieDataAccess.subjects.toArray(),
-		]).then(([competencies, quizAttempts, subjects]) => {
-			setData({
-				competencies: competencies.map((c) => ({
-					subjectId: c.subjectId,
-					topicId: c.topicId,
-					level: c.level,
-					score: c.score,
-				})),
-				quizAttempts: quizAttempts.map((a) => ({
-					subject: a.odSubject,
-					score: a.score,
-					total: a.totalQuestions,
-					date: a.completedAt,
-				})),
-				subjects: subjects.map((s) => ({ name: s.name })),
-			});
-			setLoading(false);
-		});
-	}, []);
+		params.then((p) => setStudentId(p.studentId));
+	}, [params]);
+
+	useEffect(() => {
+		if (!studentId) return;
+		setLoading(true);
+		fetch(`/api/teacher/students/${studentId}/report`)
+			.then((r) => r.json())
+			.then((json) => {
+				setData(json as StudentReport);
+				setLoading(false);
+			})
+			.catch(() => setLoading(false));
+	}, [studentId]);
 
 	if (loading)
 		return (
@@ -90,6 +80,16 @@ export default function StudentReportPage({
 							</tr>
 						</thead>
 						<tbody>
+							{data.competencies.length === 0 && (
+								<tr>
+									<td
+										colSpan={4}
+										className="py-4 text-center text-muted-foreground"
+									>
+										No competency data available
+									</td>
+								</tr>
+							)}
 							{data.competencies.map((c) => (
 								<tr
 									key={c.subjectId + c.topicId}
@@ -120,23 +120,27 @@ export default function StudentReportPage({
 							</tr>
 						</thead>
 						<tbody>
-							{data.quizAttempts
-								.toReversed()
-								.slice(0, 20)
-								.map((a) => (
-									<tr
-										key={a.subject + a.date}
-										className="border-b last:border-0"
+							{data.quizAttempts.length === 0 && (
+								<tr>
+									<td
+										colSpan={3}
+										className="py-4 text-center text-muted-foreground"
 									>
-										<td className="py-2">{a.subject}</td>
-										<td className="py-2">
-											{a.score}/{a.total}
-										</td>
-										<td className="py-2">
-											{new Date(a.date).toLocaleDateString()}
-										</td>
-									</tr>
-								))}
+										No quiz data available
+									</td>
+								</tr>
+							)}
+							{data.quizAttempts.map((a) => (
+								<tr key={a.subject + a.date} className="border-b last:border-0">
+									<td className="py-2">{a.subject}</td>
+									<td className="py-2">
+										{a.score}/{a.total}
+									</td>
+									<td className="py-2">
+										{new Date(a.date).toLocaleDateString()}
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</CardContent>

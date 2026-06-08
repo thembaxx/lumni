@@ -462,6 +462,45 @@ export async function scheduleAssignmentReminders(
 	}
 }
 
+const DAILY_DIGEST_KEY = "lumni_daily_digest";
+
+export async function scheduleDailyDigest(
+	settings = getSettings(),
+): Promise<void> {
+	if (!settings.enabled || !settings.dailyDigest) return;
+	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+	if (Notification.permission !== "granted") return;
+
+	const lastDigest = loadFromStorage<number>(DAILY_DIGEST_KEY, 0);
+	const now = Date.now();
+	if (now - lastDigest < 24 * 60 * 60 * 1000) return;
+
+	try {
+		const todayStart = new Date();
+		todayStart.setHours(0, 0, 0, 0);
+		const todayMs = todayStart.getTime();
+
+		const allAttempts = await _deps.db.quizAttempts.toArray();
+		const todayAttempts = allAttempts.filter((a) => a.completedAt >= todayMs);
+
+		const totalScore = todayAttempts.reduce((s, a) => s + a.score, 0);
+		const avgScore =
+			todayAttempts.length > 0
+				? Math.round(totalScore / todayAttempts.length)
+				: 0;
+
+		const body =
+			todayAttempts.length > 0
+				? `You completed ${todayAttempts.length} quiz${todayAttempts.length === 1 ? "" : "zes"} today with ${avgScore}% average.`
+				: "You haven't studied yet today. Time for a quick quiz!";
+
+		sendLocalNotification("Daily Study Report", body, "/dashboard");
+		saveToStorage(DAILY_DIGEST_KEY, now);
+	} catch (err) {
+		logError("ScheduleDailyDigest", err);
+	}
+}
+
 export function initializeNotificationSchedulers(): void {
 	const settings = getSettings();
 	if (!settings.enabled) return;
@@ -471,6 +510,7 @@ export function initializeNotificationSchedulers(): void {
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
 		scheduleWeeklyProgress(settings);
+		scheduleDailyDigest(settings);
 		scheduleAssignmentReminders(settings);
 		scheduleExamAlertsFromSession(settings);
 	}
