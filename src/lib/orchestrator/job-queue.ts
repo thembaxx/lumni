@@ -83,16 +83,18 @@ export async function enqueue<T extends JobType>(
 	}
 	const now = Date.now();
 	try {
-		return await queueCore?.enqueue({
-			type,
-			payload: safeJsonStringify(payload),
-			status: "pending",
-			priority: opts?.priority ?? DEFAULT_PRIORITY[type],
-			attempts: 0,
-			maxRetries: DEFAULT_MAX_RETRIES[type],
-			scheduledAt: opts?.scheduledAt ?? now,
-			createdAt: now,
-		});
+		return (
+			(await queueCore?.enqueue({
+				type,
+				payload: safeJsonStringify(payload),
+				status: "pending",
+				priority: opts?.priority ?? DEFAULT_PRIORITY[type],
+				attempts: 0,
+				maxRetries: DEFAULT_MAX_RETRIES[type],
+				scheduledAt: opts?.scheduledAt ?? now,
+				createdAt: now,
+			})) ?? -1
+		);
 	} catch (err) {
 		console.warn(`[enqueue] Failed to enqueue ${type}:`, err);
 		return -1;

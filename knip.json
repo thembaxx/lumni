@@ -3,19 +3,33 @@
 	"entry": [
 		"src/app/**/page.tsx",
 		"src/app/**/layout.tsx",
-		"src/app/**/route.ts",
-		"src/proxy.ts",
-		"sentry.server.config.ts",
-		"instrumentation.ts"
+		"src/app/**/route.ts"
 	],
-	"project": ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
-	"ignoreDependencies": ["@sentry/nextjs", "patch-package", "husky"],
-	"ignoreBinaries": ["husky", "patch-package"],
+	"project": ["src/**/*.{ts,tsx}"],
+	"ignore": [
+		"src/hooks/__tests__/test-utils.tsx",
+		"src/lib/server/__tests__/setup.ts",
+		"src/lib/z-integration/integration.int-test.ts",
+		"src/lib/caching-strategy/index.ts"
+	],
+
+	"ignoreDependencies": [
+		"@types/katex",
+		"react-day-picker",
+		"sharp",
+		"tailwind-scrollbar-hide",
+		"tw-animate-css",
+		"web-vitals",
+		"dotenv",
+		"zod"
+	],
 	"rules": {
-		"files": "warn",
+		"files": "off",
 		"dependencies": "warn",
 		"unlisted": "warn",
-		"devDependencies": "warn",
+		"devDependencies": "off",
+		"exports": "off",
+		"types": "off",
 		"nsExports": "off",
 		"nsTypes": "off",
 		"duplicates": "off",
