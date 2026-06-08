@@ -142,12 +142,16 @@ export function createRouteHandler<
 			const result = aiContext
 				? await runWithAICallContext(aiContext, invokeExecute)
 				: await invokeExecute();
-			const response = NextResponse.json(serializeResponse(result));
 
 			if (budget) {
-				await trackUsage(budget, userId ?? "anonymous");
+				try {
+					await trackUsage(budget, userId ?? "anonymous");
+				} catch {
+					// Usage tracking failure must not invalidate the response
+				}
 			}
 
+			const response = NextResponse.json(serializeResponse(result));
 			return response;
 		} catch (error) {
 			if (error instanceof HttpError) {

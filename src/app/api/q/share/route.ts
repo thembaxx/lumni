@@ -1,7 +1,7 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import type { Question } from "@/lib/question-engine/types";
 import { shareQuestion } from "@/lib/share/share-service";
 import { getSourceForQuestion } from "@/lib/tinyfish";
-import type { Question } from "@/lib/question-engine/types";
 
 export const POST = createRouteHandler({
 	auth: "required",

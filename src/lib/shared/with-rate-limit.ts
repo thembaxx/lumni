@@ -17,7 +17,16 @@ export function withRateLimit(
 			req.headers.get("x-real-ip") ||
 			"unknown";
 
-		const rateLimit = await checkRateLimit(ip, apiConfig);
+		let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
+		try {
+			rateLimit = await checkRateLimit(ip, apiConfig);
+		} catch {
+			rateLimit = {
+				allowed: true,
+				remaining: Infinity,
+				resetAt: Date.now() + apiConfig.windowMs,
+			};
+		}
 
 		if (!rateLimit.allowed) {
 			return NextResponse.json(
