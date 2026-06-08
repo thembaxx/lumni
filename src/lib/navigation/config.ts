@@ -135,7 +135,6 @@ export const navConfig: NavCategory[] = [
 				label: "Settings",
 				icon: Settings01Icon,
 				route: "/settings",
-				primary: true,
 			},
 		],
 	},

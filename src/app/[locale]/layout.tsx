@@ -48,16 +48,6 @@ const TosBanner = dynamic(() =>
 		default: m.TosBanner,
 	})),
 );
-const FloatingToolsButton = dynamic(() =>
-	import("@/components/tools/core/floating-tools-button").then((m) => ({
-		default: m.FloatingToolsButton,
-	})),
-);
-const SnapFab = dynamic(() =>
-	import("@/components/tools/core/snap-fab").then((m) => ({
-		default: m.SnapFab,
-	})),
-);
 
 async function Utssr() {
 	await connection();
@@ -204,8 +194,6 @@ export default async function LocaleLayout({
 				<LazyMotion features={domAnimation}>
 					<UploadDialogRenderer />
 					<Toaster />
-					<FloatingToolsButton />
-					<SnapFab />
 					<CookieBanner />
 					<TosBanner />
 					<SidebarStateProvider>
@@ -213,7 +201,7 @@ export default async function LocaleLayout({
 							<SidebarNav />
 							<main
 								id="main-content"
-								className="flex min-w-0 flex-1 flex-col pb-[calc(49px+env(safe-area-inset-bottom,0px))]"
+								className="flex min-w-0 flex-1 flex-col pb-[calc(64px+env(safe-area-inset-bottom,0px))]"
 							>
 								<TopNav />
 								<AppErrorBoundary>{children}</AppErrorBoundary>

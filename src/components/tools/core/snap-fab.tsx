@@ -54,7 +54,7 @@ const MATH_SUBJECTS = new Set([
 	"physical-sciences",
 ]);
 
-export function SnapFab() {
+export function SnapFab({ inline }: { inline?: boolean }) {
 	const [phase, setPhase] = useState<SnapPhase>("idle");
 	const [extractedText, setExtractedText] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -312,20 +312,31 @@ export function SnapFab() {
 				</DialogContent>
 			</Dialog>
 
-			<Button
-				type="button"
-				onClick={handleSnap}
-				aria-label="Snap photo to solve"
-				className={cn(
-					"fixed right-5 bottom-31 z-toast",
-					"flex size-12 items-center justify-center",
-					"rounded-full bg-[--system-accent] text-white",
-					"shadow-level-3 transition-transform active:scale-90",
-					"hover:bg-[--system-accent]/90",
-				)}
-			>
-				<HugeiconsIcon icon={Camera01Icon} className="size-5" />
-			</Button>
+			{inline ? (
+				<button
+					type="button"
+					onClick={handleSnap}
+					aria-label="Snap photo to solve"
+					className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[--system-accent] text-white shadow-level-2 transition-transform hover:bg-[--system-accent]/90 active:scale-90"
+				>
+					<HugeiconsIcon icon={Camera01Icon} className="size-5" />
+				</button>
+			) : (
+				<Button
+					type="button"
+					onClick={handleSnap}
+					aria-label="Snap photo to solve"
+					className={cn(
+						"fixed right-5 bottom-31 z-toast",
+						"flex size-12 items-center justify-center",
+						"rounded-full bg-[--system-accent] text-white",
+						"shadow-level-3 transition-transform active:scale-90",
+						"hover:bg-[--system-accent]/90",
+					)}
+				>
+					<HugeiconsIcon icon={Camera01Icon} className="size-5" />
+				</Button>
+			)}
 
 			<Dialog open={showDialog} onOpenChange={(o) => !o && handleDismiss()}>
 				<DialogContent className="max-h-[80dvh] overflow-y-auto sm:max-w-lg">
