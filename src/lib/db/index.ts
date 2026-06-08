@@ -14,6 +14,7 @@ export type {
 	ContentDataAccess,
 	DataAccess,
 	DataAccessTable,
+	EmbeddingDataAccess,
 	FlashcardDataAccess,
 	LegacyDataAccess,
 	ObservabilityDataAccess,

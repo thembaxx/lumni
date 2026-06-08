@@ -403,4 +403,36 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	past_paper_questions: {
+		attributes: {
+			subject: { type: "string", size: 100, required: true },
+			topic: { type: "string", size: 255 },
+			year: { type: "integer" },
+			paperNumber: { type: "integer" },
+			sectionTitle: { type: "string", size: 255 },
+			questionText: { type: "string", size: 50000, required: true },
+			answerText: { type: "string", size: 50000 },
+			marks: { type: "integer" },
+			questionType: { type: "string", size: 50 },
+			bloomLevel: { type: "string", size: 50 },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_ppq_subject",
+				type: "key",
+				attributes: ["subject"],
+			},
+			{
+				key: "idx_ppq_topic",
+				type: "key",
+				attributes: ["topic"],
+			},
+			{
+				key: "idx_ppq_subject_topic",
+				type: "key",
+				attributes: ["subject", "topic"],
+			},
+		],
+	},
 };

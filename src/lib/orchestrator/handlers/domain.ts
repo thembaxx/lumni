@@ -215,6 +215,32 @@ export const pruneStaleQuestions: JobHandler = async () => {
 	}
 };
 
+export const generateEmbedding: JobHandler = async (payload) => {
+	const { questionId, questionText, subject } =
+		payload as JobPayloadByType["generate-embedding"];
+	try {
+		const { embedText, storeEmbedding } = await import("@/lib/embedding/index");
+		const { dexieDataAccess } = await import("@/lib/db");
+		const values = await embedText(questionText);
+		if (!values) {
+			console.warn("[Embedding] Failed to generate for:", questionId);
+			return;
+		}
+		await storeEmbedding(
+			{
+				id: questionId,
+				questionId,
+				vector: new Float32Array(values),
+				subject,
+				updatedAt: new Date().toISOString(),
+			},
+			dexieDataAccess.questionEmbeddings,
+		);
+	} catch (err) {
+		console.error("[Embedding] Error generating embedding:", err);
+	}
+};
+
 function safeParseQuestions(json: string): unknown[] | null {
 	try {
 		const parsed = JSON.parse(json);
@@ -231,4 +257,5 @@ export const domainHandlers: Partial<Record<string, JobHandler>> = {
 	"visual-generation": visualGeneration,
 	"question-regen": questionRegen,
 	"prune-stale-questions": pruneStaleQuestions,
+	"generate-embedding": generateEmbedding,
 };

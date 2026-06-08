@@ -149,6 +149,7 @@ function tableAdapter<T, TId extends string | number>(
 // ──────────────────────────────────────────────
 
 class DexieDataAccess implements DataAccess {
+	questionEmbeddings = tableAdapter(offlineDB.questionEmbeddings);
 	flashcards = tableAdapter(offlineDB.flashcards);
 	reviewHistory = tableAdapter(offlineDB.reviewHistory);
 	analyticsEvents = tableAdapter(offlineDB.analyticsEvents);

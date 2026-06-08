@@ -243,6 +243,16 @@ export interface GenerationParams {
 		year: number;
 	}>;
 	userId?: string | null;
+	poolQuestions?: Array<{
+		id: string;
+		questionText: string;
+		answerText: string;
+		marks: number;
+		year: number;
+		paperNumber: number;
+		topic?: string;
+		similarity: number;
+	}>;
 }
 
 export interface HintParams {

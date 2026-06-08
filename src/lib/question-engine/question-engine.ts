@@ -1,6 +1,9 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
+import { dexieDataAccess as _dexieDa } from "@/lib/db";
+import { embedText } from "@/lib/embedding/client";
+import { findTopK } from "@/lib/embedding/similarity";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { logError } from "@/lib/shared/logger";
 import { ProcessorRegistry } from "./processor-registry";
@@ -106,6 +109,42 @@ export class QuestionEngine {
 		params: GenerationParams,
 	): Promise<Question[] | null> {
 		const enriched = await this.enrichParams(params);
+
+		// Serve pool questions directly (no AI generation needed)
+		const poolQuestions = enriched.poolQuestions ?? [];
+		const poolCount = poolQuestions.length;
+		const remainingCount = Math.max(0, enriched.count - poolCount);
+
+		if (remainingCount === 0 && poolCount > 0) {
+			return poolQuestions.map((pq) => ({
+				id: pq.id,
+				type: "short-answer" as const,
+				subject: enriched.subject,
+				topic: pq.topic ?? enriched.topic ?? "",
+				difficulty: "Medium" as const,
+				bloomTaxonomy: "understand" as const,
+				points: pq.marks,
+				questionText: pq.questionText,
+				hint: "",
+				explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
+				body: {
+					modelAnswer: pq.answerText,
+					acceptableAnswers: [pq.answerText],
+					maxLength: 500,
+				},
+				metadata: {
+					createdAt: Date.now(),
+					source: "imported",
+				},
+				webSources: [
+					{
+						title: `${enriched.subject} ${pq.year} Paper ${pq.paperNumber}`,
+						url: "#",
+					},
+				],
+			}));
+		}
+
 		const ragContext = await fetchRagContext(
 			enriched.subject,
 			enriched.topic,
@@ -114,12 +153,11 @@ export class QuestionEngine {
 		);
 		this.lastRagContext = ragContext;
 
-		const { count } = enriched;
 		const MAX_RETRIES = 2;
 
 		const results = await Promise.allSettled(
 			Array.from({ length: MAX_RETRIES + 1 }, () =>
-				this.generateBatch(enriched, ragContext, count),
+				this.generateBatch(enriched, ragContext, remainingCount),
 			),
 		);
 
@@ -130,7 +168,40 @@ export class QuestionEngine {
 			}
 		}
 
-		questions = questions.slice(0, count);
+		questions = questions.slice(0, remainingCount);
+
+		// Prepend pool questions
+		if (poolCount > 0) {
+			const directQuestions: Question[] = poolQuestions.map((pq) => ({
+				id: pq.id,
+				type: "short-answer" as const,
+				subject: enriched.subject,
+				topic: pq.topic ?? enriched.topic ?? "",
+				difficulty: "Medium" as const,
+				bloomTaxonomy: "understand" as const,
+				points: pq.marks,
+				questionText: pq.questionText,
+				hint: "",
+				explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
+				body: {
+					modelAnswer: pq.answerText,
+					acceptableAnswers: [pq.answerText],
+					maxLength: 500,
+				},
+				metadata: {
+					createdAt: Date.now(),
+					source: "imported",
+				},
+				webSources: [
+					{
+						title: `${enriched.subject} ${pq.year} Paper ${pq.paperNumber}`,
+						url: "#",
+					},
+				],
+			}));
+			questions = [...directQuestions, ...questions];
+		}
+
 		return questions.length > 0 ? questions : null;
 	}
 
@@ -215,14 +286,71 @@ export class QuestionEngine {
 			params.topic,
 		);
 		const exampleCount = params.pastPaperMode ? 5 : 3;
-		const pastPaperExamples = await this.retrievePastPaperExamples(
-			params.subject,
-			params.topic,
-			exampleCount,
-		);
+
+		const poolQuestions: NonNullable<GenerationParams["poolQuestions"]> = [];
+		let pastPaperExamples: GenerationParams["pastPaperExamples"] = [];
+
+		// Try semantic pool search first
+		try {
+			const queryText = params.topic
+				? `${params.subject}: ${params.topic}`
+				: params.subject;
+			const embedding = await embedText(queryText);
+			if (embedding) {
+				const scored = await findTopK(
+					{
+						subject: params.subject,
+						queryEmbedding: new Float32Array(embedding),
+						k: exampleCount + 2,
+						threshold: 0.5,
+					},
+					{
+						questionEmbeddings: _dexieDa.questionEmbeddings,
+						pastPaperQuestions: _dexieDa.pastPaperQuestions,
+					},
+				);
+				for (const sq of scored) {
+					if (sq.similarity > 0.8) {
+						poolQuestions.push({
+							id: sq.questionId,
+							questionText: sq.questionText,
+							answerText: sq.answerText,
+							marks: sq.marks,
+							year: sq.year,
+							paperNumber: sq.paperNumber,
+							topic: sq.topic,
+							similarity: sq.similarity,
+						});
+					}
+				}
+				pastPaperExamples = scored
+					.filter((q) => q.similarity >= 0.5 && q.similarity <= 0.8)
+					.slice(0, exampleCount)
+					.map((q) => ({
+						questionText: q.questionText,
+						answerText: q.answerText,
+						marks: q.marks,
+						year: q.year,
+					}));
+			}
+		} catch {
+			// Fallback to keyword search if embedding fails
+		}
+
+		// Fallback if pool search returned nothing
+		if (pastPaperExamples.length === 0) {
+			const fallback = await this.retrievePastPaperExamples(
+				params.subject,
+				params.topic,
+				exampleCount,
+			);
+			pastPaperExamples = fallback;
+		}
+
 		return {
 			...params,
 			...(curriculumContext ? { curriculumContext } : {}),
+			...(poolQuestions.length > 0 ? { poolQuestions } : {}),
 			...(pastPaperExamples.length > 0 ? { pastPaperExamples } : {}),
 		};
 	}

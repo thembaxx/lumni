@@ -34,6 +34,7 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"appwrite-shared-question-sync": 3,
 	"appwrite-visual-sync": 3,
 	"prune-stale-questions": 1,
+	"generate-embedding": 2,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -61,6 +62,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"appwrite-shared-question-sync": 60,
 	"appwrite-visual-sync": 50,
 	"prune-stale-questions": 10,
+	"generate-embedding": 50,
 };
 
 export function createQueueCore(

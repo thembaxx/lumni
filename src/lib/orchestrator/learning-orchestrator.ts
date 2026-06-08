@@ -1,3 +1,6 @@
+import { dexieDataAccess } from "@/lib/db";
+import { embedText } from "@/lib/embedding/client";
+import { findTopK } from "@/lib/embedding/similarity";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type {
 	GenerationParams,
@@ -26,16 +29,30 @@ export class LearningOrchestrator {
 		const startTime = Date.now();
 		const { questionType, subject, topic, count } = params;
 
-		const questions = await this.engine.generate(params);
-		const sliced = questions.slice(0, count);
+		let questions = await this.engine.generate(params);
+
+		// Dedup: check AI-generated questions against pool
+		const deduped: Question[] = [];
+		for (const q of questions) {
+			const isPoolQuestion = q.metadata?.source === "imported";
+			if (isPoolQuestion) {
+				deduped.push(q);
+				continue;
+			}
+			const isDuplicate = await this.checkDuplicate(q, subject);
+			if (!isDuplicate) {
+				deduped.push(q);
+			}
+		}
+		questions = deduped.slice(0, count);
 
 		const [syncJobId, ...visualJobIds] = await Promise.all([
 			enqueue("appwrite-sync", {
-				questions: sliced,
+				questions,
 				subject,
 				topic,
 			}),
-			...sliced.map((q) =>
+			...questions.map((q) =>
 				enqueue("visual-generation", {
 					questionId: q.id,
 					questionText: q.questionText,
@@ -51,7 +68,7 @@ export class LearningOrchestrator {
 			event: "generate",
 			subject,
 			questionType: serializeQuestionType(questionType),
-			count: sliced.length,
+			count: questions.length,
 			success: true,
 			duration: Date.now() - startTime,
 		});
@@ -61,12 +78,37 @@ export class LearningOrchestrator {
 			ragContext?.sources.map((s) => ({ url: s.url, title: s.title })) ?? [];
 
 		return {
-			questions: sliced,
-			count: sliced.length,
+			questions,
+			count: questions.length,
 			type: serializeQuestionType(questionType),
 			jobIds,
 			sources,
 		};
+	}
+
+	private async checkDuplicate(
+		question: Question,
+		subject: string,
+	): Promise<boolean> {
+		try {
+			const embedding = await embedText(question.questionText);
+			if (!embedding) return false;
+			const top = await findTopK(
+				{
+					subject,
+					queryEmbedding: new Float32Array(embedding),
+					k: 1,
+					threshold: 0.85,
+				},
+				{
+					questionEmbeddings: dexieDataAccess.questionEmbeddings,
+					pastPaperQuestions: dexieDataAccess.pastPaperQuestions,
+				},
+			);
+			return top.length > 0;
+		} catch {
+			return false;
+		}
 	}
 
 	async gradeAndTrack(

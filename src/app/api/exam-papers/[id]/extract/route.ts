@@ -95,6 +95,16 @@ export const POST = createRouteHandler({
 			// Dexie unavailable server-side
 		}
 
+		// Fire-and-forget embedding generation
+		const { enqueue } = await import("@/lib/orchestrator/job-queue");
+		for (const q of questions) {
+			enqueue(
+				"generate-embedding",
+				{ questionId: q.id, questionText: q.questionText, subject: q.subject },
+				{ priority: 50 },
+			).catch(() => {});
+		}
+
 		return {
 			success: true,
 			extracted: questions.length,

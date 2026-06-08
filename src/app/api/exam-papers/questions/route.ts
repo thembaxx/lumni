@@ -16,6 +16,7 @@ export const GET = createRouteHandler({
 
 		const filters: string[] = [];
 		if (subject) filters.push(Query.equal("subject", subject));
+		if (topic) filters.push(Query.equal("topic", topic));
 		if (type) filters.push(Query.equal("questionType", type));
 
 		const docs = await databases.listDocuments(
@@ -24,7 +25,7 @@ export const GET = createRouteHandler({
 			[...filters, Query.limit(limit), Query.orderDesc("year")],
 		);
 
-		let questions = docs.documents.map((d) => {
+		const questions = docs.documents.map((d) => {
 			const {
 				userId: _u,
 				$id,
@@ -37,15 +38,6 @@ export const GET = createRouteHandler({
 			} = d;
 			return rest as unknown as PastPaperQuestion;
 		});
-
-		if (topic) {
-			const topicLower = topic.toLowerCase();
-			questions = questions.filter(
-				(q) =>
-					q.questionText.toLowerCase().includes(topicLower) ||
-					q.topic?.toLowerCase().includes(topicLower),
-			);
-		}
 
 		return { questions };
 	},

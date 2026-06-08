@@ -26,6 +26,7 @@ export interface RetentionRecurrence {
 }
 
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	FlashcardReview,
@@ -334,6 +335,7 @@ export class LumniOfflineDB extends Dexie {
 	srDailyBudget!: Table<SrDailyBudget, string>;
 	flashcardSyncState!: Table<FlashcardSyncState, string>;
 	studyGuides!: Table<CachedStudyGuide, string>;
+	questionEmbeddings!: Table<QuestionEmbedding, string>;
 
 	constructor() {
 		super("lumni-offline");
@@ -1015,6 +1017,10 @@ export class LumniOfflineDB extends Dexie {
 			srDailyBudget: "&userId, date, newCardsUsed, reviewsUsed",
 			flashcardSyncState: "&userId, lastSyncTimestamp",
 			studyGuides: "&key, expiresAt",
+		});
+
+		this.version(33).stores({
+			questionEmbeddings: "&id, subject, updatedAt",
 		});
 	}
 }

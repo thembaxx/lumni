@@ -106,6 +106,7 @@ export function extractQuestionsFromPaper(
 	for (let si = 0; si < paper.sections.length; si++) {
 		const section = paper.sections[si];
 		const memoSection = memo?.sections[si] || null;
+		const sectionTopic = section.title || undefined;
 
 		for (let qi = 0; qi < section.questions.length; qi++) {
 			const question = section.questions[qi];
@@ -133,7 +134,8 @@ export function extractQuestionsFromPaper(
 					subject,
 					year,
 					paperNumber,
-					sectionTitle: section.title || undefined,
+					sectionTitle: sectionTopic,
+					topic: sectionTopic,
 					questionId: question.id || `q${qi}`,
 					partId,
 					questionText,

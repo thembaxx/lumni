@@ -24,6 +24,7 @@ import type {
 	SyncConflict,
 	TeacherObservation,
 } from "@/lib/db/schema";
+import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	FlashcardReview,
@@ -154,13 +155,17 @@ export interface CacheDataAccess {
 	knowledgeGraph: DataAccessTable<CachedGraph, string>;
 }
 
+export interface EmbeddingDataAccess {
+	questionEmbeddings: DataAccessTable<QuestionEmbedding, string>;
+}
+
 export interface LegacyDataAccess {
 	subjects: DataAccessTable<CachedSubject, number>;
 	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
 }
 
 // ──────────────────────────────────────────────
-// Composite — full 33-table access
+// Composite — full 34-table access
 // ──────────────────────────────────────────────
 
 export interface DataAccess
@@ -173,4 +178,5 @@ export interface DataAccess
 		ObservabilityDataAccess,
 		SocialDataAccess,
 		CacheDataAccess,
+		EmbeddingDataAccess,
 		LegacyDataAccess {}

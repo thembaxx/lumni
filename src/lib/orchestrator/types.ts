@@ -25,7 +25,8 @@ export type JobType =
 	| "appwrite-consent-sync"
 	| "appwrite-shared-question-sync"
 	| "appwrite-visual-sync"
-	| "prune-stale-questions";
+	| "prune-stale-questions"
+	| "generate-embedding";
 
 export type JobPayloadByType = {
 	"appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -152,6 +153,11 @@ export type JobPayloadByType = {
 		source: string;
 	};
 	"prune-stale-questions": Record<string, never>;
+	"generate-embedding": {
+		questionId: string;
+		questionText: string;
+		subject: string;
+	};
 	"appwrite-consent-sync": {
 		userId: string;
 		record: {

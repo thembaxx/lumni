@@ -1,0 +1,42 @@
+import { describe, expect, it } from "bun:test";
+import { cosineSimilarity } from "../similarity";
+
+describe("cosineSimilarity", () => {
+	it("returns 1 for identical vectors", () => {
+		const a = new Float32Array([1, 2, 3]);
+		const b = new Float32Array([1, 2, 3]);
+		expect(cosineSimilarity(a, b)).toBeCloseTo(1, 5);
+	});
+
+	it("returns 0 for orthogonal vectors", () => {
+		const a = new Float32Array([1, 0]);
+		const b = new Float32Array([0, 1]);
+		expect(cosineSimilarity(a, b)).toBeCloseTo(0, 5);
+	});
+
+	it("returns -1 for opposite vectors", () => {
+		const a = new Float32Array([1, 2, 3]);
+		const b = new Float32Array([-1, -2, -3]);
+		expect(cosineSimilarity(a, b)).toBeCloseTo(-1, 5);
+	});
+
+	it("handles partial similarity", () => {
+		const a = new Float32Array([1, 0, 0]);
+		const b = new Float32Array([0.5, 0.5, 0]);
+		const sim = cosineSimilarity(a, b);
+		expect(sim).toBeGreaterThan(0);
+		expect(sim).toBeLessThan(1);
+	});
+
+	it("handles different length vectors", () => {
+		const a = new Float32Array([1, 2]);
+		const b = new Float32Array([1, 2, 3]);
+		expect(cosineSimilarity(a, b)).toBe(0);
+	});
+
+	it("handles zero vectors", () => {
+		const a = new Float32Array([0, 0, 0]);
+		const b = new Float32Array([0, 0, 0]);
+		expect(cosineSimilarity(a, b)).toBe(0);
+	});
+});

@@ -30,6 +30,7 @@ import type {
 	SyncConflict,
 	TeacherObservation,
 } from "@/lib/db/schema";
+import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
 	FlashcardReview,
@@ -289,6 +290,7 @@ export class InMemoryDataAccess implements DataAccess {
 	studyPlans = new InMemoryTable<StudyPlanRecord, string>();
 	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
 	studyGuides = new InMemoryTable<CachedStudyGuide, string>();
+	questionEmbeddings = new InMemoryTable<QuestionEmbedding, string>();
 	teacherObservations = new InMemoryTable<TeacherObservation>();
 	assignmentMessages = new InMemoryTable<AssignmentMessage>();
 }
