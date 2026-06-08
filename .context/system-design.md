@@ -112,6 +112,7 @@ graph TD
 - **WeeklyDigest cron**: No external cron service configured — relies on manual/admin triggering.
 
 ## Recent Changes Log (Last 7 Days)
+- **React Doctor 100/100**: 194 issues fixed (5 errors, 189 warnings). 114 unused exports removed, 250+ lines dead code deleted. Knowledge-graph consumers converted from `useMutation+useEffect` → `useQuery`. Added `GET /api/engine/knowledge-graph` route. Biome zero errors across 1260 files.
 - **DataAccess domain split**: 10 domain sub-interfaces (33 accessors, 11 dead removed). `Collection.offset(n)` pagination. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain kept composite.
 - **Practice More button**: Link-style CTA on `BoltCelebration` → `/quiz?subject=X` via `startViewTransition`.
 - **Test fixes**: 8 RateLimiter async, 8 quiz-session repo, KaTeX CSS happy-dom patch, mock.module pollution.

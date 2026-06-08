@@ -6,7 +6,7 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. 1258 tests pass, 0 fail.
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1258 tests pass, 0 fail.
 
 ## System at a Glance
 
@@ -74,7 +74,7 @@ Appwrite Cloud
 | `src/lib/db/dexie-data-access.ts` | Production implementation |
 | `src/lib/db/in-memory-data-access.ts` | Test implementation |
 | `src/lib/db/schema.ts` | Dexie v32 schema |
-| `src/lib/knowledge-graph/` | AI topic dependency graphs |
+| `src/lib/knowledge-graph/` | AI topic dependency graphs (GET+POST routes) |
 | `src/lib/study-guide/` | AI study guide generator |
 | `src/lib/quiz/` | High-level quiz hook (useQuiz) |
 | `src/lib/ai/uniform-adapter.ts` | Pluggable AI provider adapter |
@@ -91,6 +91,7 @@ Appwrite Cloud
 | `src/components/admin/question-ratings-dashboard.tsx` | Quality dashboard with rating chart |
 | `src/app/api/cron/weekly-digest/route.ts` | Weekly digest push cron endpoint |
 | `src/app/api/teacher/students/[studentId]/report/route.ts` | Student report from Appwrite |
+| `src/app/api/engine/knowledge-graph/route.ts` | Knowledge-graph GET+POST handler |
 | `docs/superpowers/specs/2026-06-07-*.md` | Latest design specs |
 
 ## Background Knowledge

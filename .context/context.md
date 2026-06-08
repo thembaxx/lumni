@@ -5,7 +5,7 @@
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. 1225 tests pass, 0 fail. Next: pick from TODO.md or new features.
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1258 tests pass, 0 fail. Next: pick from TODO.md or new features.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
@@ -54,6 +54,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D051] **Navigation sidebar**: Categorized (Study, Practice, Tools, Social, Account); search/filter; `SidebarStateProvider`.
 - [D052] **PWA offline polish**: `/offline` page; install tracking events; service worker preload.
 - [D053] **Item-bank pruning**: `"prune-stale-questions"` job type from `/api/engine/generate`.
+- [D054] **React Doctor score 100/100**: 194 issues fixed (5 errors, 189 warnings). Removed 114 unused exports, 250+ lines dead code. `useMutation+useEffect` → `useQuery` for knowledge-graph consumers. Added `GET /api/engine/knowledge-graph` route. Biome lint zero across 1260 files.
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
@@ -89,7 +90,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Rate limiter**: `new RateLimiter(new MapStore(), config)` or `new RateLimiter(new RedisStore(redis), config)`
 - **Uniform provider**: `createUniformProvider({ name: 'gemini', model: 'gemini-2.0-flash-lite', normalizeRequest: geminiNormalizer, parseResponse: geminiResponseParser })`
 - **Live session**: `const { session, participants, isLoading } = useLiveSession(groupId);`
-- **Knowledge graph**: `const { data: graph } = useQuery({ queryKey: ['knowledge-graph', subject, topic], queryFn: () => fetchGraph(subject, topic) });`
+- **Knowledge graph**: `const { data: graph, isPending } = useQuery({ queryKey: ['knowledge-graph', subject, topic], queryFn: () => fetch(`/api/engine/knowledge-graph?subject=${subject}&topic=${topic}`).then(r => r.json()), enabled: !!subject && !!topic });`
 - **Study guide**: `const { data: guide } = useMutation({ mutationFn: ({ subject, topic }) => generateGuide(subject, topic) });`
 
 ## AVOID_LIST

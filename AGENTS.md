@@ -726,3 +726,16 @@ const systemPrompt = webContext.xml
 | v32 | S28 | `studyGuides` |
 
 ### Final test baseline: 1258 pass, 0 fail (no pre-existing failures)
+
+### Session 35 — React Doctor score 100 + Biome lint zero (June 2026)
+
+- **Goal**: Run `npx react-doctor@latest` and fix all 194 issues (5 errors + 189 warnings) to reach score 100.
+- **5 errors fixed**: effect-needs-cleanup in `auth-context.tsx`, query-destructure-result (×3), no-adjust-state-on-prop-change in `topic-graph.tsx`.
+- **114 unused-export warnings fixed**: Removed `export` from unused declarations across ~38 files.
+- **Performance fixes**: Parallelised sequential `for` loops (`async-await-in-loop`), replaced chained `map().filter().reduce()` with single `for...of`, removed hydration-mismatch-time via lazy `useState`.
+- **Dead component removal (−250+ lines)**: Removed 20+ unused functions/variables across `joy-provider.tsx`, `dropdown-menu.tsx` (8 unused components), `field.tsx` (3), `quiz-results.tsx`, `use-group-reactions.ts` (2), `use-interval.ts`, `use-onboarding.ts`, `use-upload-subjects.ts` (2), `animation.ts`, `gamification.ts`, `user-consent.ts`.
+- **Knowledge-graph route**: Added `GET /api/engine/knowledge-graph` handler (was POST-only), updated consumer components (`learning-map-card.tsx`, `topic-graph.tsx`) from `useMutation+useEffect` to `useQuery` with `enabled`. Eliminated "event logic in effect" + "mutation without cache invalidation".
+- **Biome lint**: `npx biome check --write --unsafe` — 0 errors across 1260 files.
+- **TypeScript**: `npx tsc --noEmit` — 0 errors.
+- **Tests**: 1258 pass, 0 fail.
+- **Commit**: `26635245` on `master` — 108 files changed, +823/−1138 lines.

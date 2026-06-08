@@ -278,7 +278,7 @@ erDiagram
 | **TinyFish RAG** | Web-grounded reference material for solve + quiz generation | searchWithRAG (3-source, 14d cache) + getSourceForQuestion (1-source, 24h cache); 24-subject allowlist; per-user daily limit; 3s timeout fail-open; XML wrap + prompt framing | `src/lib/tinyfish/` |
 | **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed via DataAccess | `src/lib/flashcard-engine/` |
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
-| **KnowledgeGraph** | AI-generated topic dependency graphs (prerequisites, core, advanced) | AI generation + Dexie 7d cache | `src/lib/knowledge-graph/` |
+| **KnowledgeGraph** | AI-generated topic dependency graphs (prerequisites, core, advanced), GET+POST endpoints | AI generation + Dexie 7d cache | `src/lib/knowledge-graph/` |
 | **StudyGuide** | AI-generated structured study guides with sections + summary | AI generation + Dexie 30d cache | `src/lib/study-guide/` |
 | **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
 | **QuizPackService** | Offline AI quiz pack lifecycle (generate, persist, expire) | DataAccess + QuestionEngine | `src/lib/quiz-packs/` |
@@ -327,7 +327,7 @@ erDiagram
 | `/api/engine/budget` | GET | Get current token budget status | Engine handler |
 | `/api/engine/next-topics` | POST | Get next recommended topics based on competency | Engine handler |
 | `/api/engine/study-plan` | POST | Generate study plan | Engine handler |
-| `/api/engine/knowledge-graph` | POST | Generate topic dependency graph | Engine handler |
+| `/api/engine/knowledge-graph` | GET+POST | Get/generate topic dependency graph | Engine handler (GET for read, POST for write) |
 | `/api/engine/study-guide` | POST | Generate study guide | Engine handler |
 | `/api/quiz-packs/generate` | POST | Generate offline AI quiz pack | Rate-limited |
 | `/api/auth/verify` | POST | Verify sign-in session | Engine handler |
@@ -400,9 +400,10 @@ Client -> POST /api/engine/grade
 
 **Knowledge Graph Generation:**
 ```
-Client -> POST /api/engine/knowledge-graph { subject, topic }
+Client -> GET /api/engine/knowledge-graph?subject=X&topic=Y
   -> check Dexie cache (7d TTL)
-  -> cache miss -> AI generate (Gemini -> Nvidia -> Groq)
+  -> cache hit -> Response: graph
+  -> cache miss -> POST internally or AI generate
   -> store in Dexie knowledgeGraph table
   -> Response: { nodes: KnowledgeNode[], edges: KnowledgeEdge[] }
 ```
@@ -491,7 +492,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | **Appwrite limits** | <50k documents | Cleanup cron deletes >30d |
 | **Page load** | Mobile-first, Core Web Vitals tracked | Sentry + web-vitals |
 | **Error monitoring** | Client + server + edge | Sentry DSN configured + centralized logger |
-| **Build quality** | Zero tsc errors, zero Biome errors | Pre-commit hook (Bun) |
+| **Build quality** | Zero tsc errors, zero Biome errors, React Doctor 100/100 | Pre-commit hook (Bun), react-doctor |
 | **E2E coverage** | Smoke + visual tests for core flows | Playwright 1.60.0 |
 | **UI documentation** | Storybook for component library | Storybook 10.4.1 (18 stories) |
 | **Dead code detection** | Knip static analysis | knip@6.15.0 |

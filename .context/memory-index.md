@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-07 -->
+<!-- LAST_SYNC: 2026-06-08 -->
 # Memory Index — Lumni
 
 ## Heuristics & Conventions
@@ -41,6 +41,7 @@
 - [2026-06-07] **Batch 6 hardening**: i18n round 2 (nav+consent af/zu), knip, Playwright visual tests, storybook 10 stories, a11y round 2.
 - [2026-06-07] **Daily Bolt simplification**: Removed two-step; `BoltCelebration` with 800ms auto-advance.
 - [2026-06-07] **Item-bank pruning**: `"prune-stale-questions"` job type; `pruned?: boolean` on Question.
+- [2026-06-08] **React Doctor 100/100**: 194 issues fixed (5 errors + 189 warnings). Removed 114 unused exports, 250+ lines dead code. Converted `useMutation+useEffect` → `useQuery` for knowledge-graph consumers. Added `GET /api/engine/knowledge-graph` route. Biome zero errors across 1260 files.
 
 ## Past Bugs & Failures
 - **Competency Field**: Mismatch between `proficiency` and `score` fields. Standardized on `score`.
