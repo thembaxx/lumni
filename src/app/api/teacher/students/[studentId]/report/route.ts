@@ -27,14 +27,22 @@ export const GET = createRouteHandler({
 				Query.orderDesc("endedAt"),
 			])) as Record<string, unknown>[];
 
-			const attemptData = sessions
-				.filter((s) => s.type === "quiz")
-				.map((s) => ({
-					subject: (s.subject as string) ?? "Unknown",
-					score: (s.score as number) ?? 0,
-					total: (s.totalQuestions as number) ?? 1,
-					date: new Date(s.endedAt as string).getTime(),
-				}));
+			const attemptData: {
+				subject: string;
+				score: number;
+				total: number;
+				date: number;
+			}[] = [];
+			for (const s of sessions) {
+				if (s.type === "quiz") {
+					attemptData.push({
+						subject: (s.subject as string) ?? "Unknown",
+						score: (s.score as number) ?? 0,
+						total: (s.totalQuestions as number) ?? 1,
+						date: new Date(s.endedAt as string).getTime(),
+					});
+				}
+			}
 
 			const subjects = (await listDocuments(COLLECTIONS.SUBJECTS)) as Record<
 				string,

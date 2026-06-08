@@ -118,14 +118,13 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 						([theme, prefix]) => `
 ${prefix} [data-chart=${cssId}] {
 ${colorConfig
-	.map(([key, itemConfig]) => {
+	.flatMap(([key, itemConfig]) => {
 		const color =
 			itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
 			itemConfig.color;
 		const safeKey = key.replace(SAFE_CSS_VAR, "");
-		return color && safeKey ? `  --color-${safeKey}: ${color};` : null;
+		return color && safeKey ? [`  --color-${safeKey}: ${color};`] : [];
 	})
-	.filter(Boolean)
 	.join("\n")}
 }
 `,

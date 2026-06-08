@@ -238,10 +238,15 @@ export class PathEngine {
 			(e) => masteredSet.has(e.from.toLowerCase()) && e.relation === "leads_to",
 		);
 
+		const nodeMap = new Map<string, (typeof graph.nodes)[0]>();
+		for (const n of graph.nodes) {
+			if (n.type === "advanced" || n.type === "core") {
+				nodeMap.set(n.id, n);
+			}
+		}
+
 		for (const edge of relevantEdges) {
-			const node = graph.nodes.find(
-				(n) => n.id === edge.to && (n.type === "advanced" || n.type === "core"),
-			);
+			const node = nodeMap.get(edge.to);
 			if (node && !masteredSet.has(node.label.toLowerCase())) {
 				advanced.push({ label: node.label, type: node.type });
 				if (advanced.length >= maxResults) break;

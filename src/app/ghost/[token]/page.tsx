@@ -1,5 +1,6 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { use } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -17,30 +18,28 @@ export default function GhostDashboardPage({
 	params: Promise<{ token: string }>;
 }) {
 	const { token } = use(params);
-	const [stats, setStats] = useState<GhostStats | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
 
-	useEffect(() => {
-		fetch(`/api/ghost/${token}`)
-			.then((r) => (r.ok ? r.json() : Promise.reject()))
-			.then((d) => {
-				setStats(d);
-				setLoading(false);
-			})
-			.catch(() => {
-				setError(true);
-				setLoading(false);
-			});
-	}, [token]);
+	const {
+		data: stats,
+		isLoading,
+		isError,
+	} = useQuery({
+		queryKey: ["ghost", token],
+		queryFn: async () => {
+			const res = await fetch(`/api/ghost/${token}`);
+			if (!res.ok) throw new Error("not found");
+			return res.json() as Promise<GhostStats>;
+		},
+		enabled: !!token,
+	});
 
-	if (loading)
+	if (isLoading)
 		return (
 			<div className="p-8">
 				<Skeleton className="h-64 rounded-xl" />
 			</div>
 		);
-	if (error)
+	if (isError)
 		return (
 			<div className="flex min-h-screen items-center justify-center">
 				<p className="text-muted-foreground">Invalid or expired link</p>

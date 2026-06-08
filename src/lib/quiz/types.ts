@@ -19,7 +19,6 @@ export interface UseQuizParams {
 	count?: number;
 	questionType?: string;
 	maxTime?: number;
-	autoStart?: boolean;
 	enabled?: boolean;
 	pastPaperMode?: boolean;
 	suggestedBloomLevel?: BloomLevel;

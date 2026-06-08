@@ -1,6 +1,6 @@
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 
-export function exportToCSV(cards: FlashcardSM2[]): string {
+function exportToCSV(cards: FlashcardSM2[]): string {
 	const header = "front,back,subject,topic";
 	const rows = cards.map((c) => {
 		const escapeCsv = (s: string) => `"${s.replace(/"/g, '""')}"`;

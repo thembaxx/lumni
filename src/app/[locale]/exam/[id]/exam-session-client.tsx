@@ -130,7 +130,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 	return <ExamSessionClient id={id} mode={mode} />;
 }
 
-export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
+function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const t = useTranslations();
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 	const [phase, setPhase] = useState<SessionPhase>("loading");

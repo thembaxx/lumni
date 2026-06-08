@@ -5,7 +5,7 @@ import type { Note } from "@/components/tools/notes/types";
 import { type ContentDataAccess, dexieDataAccess } from "@/lib/db";
 
 let _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: ContentDataAccess }) {
+function __setDepsForTesting(deps: { db: ContentDataAccess }) {
 	_deps = deps;
 }
 

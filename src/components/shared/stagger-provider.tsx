@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, type ReactNode, useContext, useRef } from "react";
+import {
+	createContext,
+	type ReactNode,
+	use,
+	useCallback,
+	useMemo,
+	useRef,
+} from "react";
 import { SectionReveal } from "@/components/dashboard/section-reveal";
 
 interface StaggerContextValue {
@@ -19,21 +26,20 @@ export function StaggerProvider({
 	baseDelay?: number;
 }) {
 	const counterRef = useRef(0);
-	const register = () => {
+	const register = useCallback(() => {
 		const idx = counterRef.current;
 		counterRef.current += 1;
 		return idx * baseDelay;
-	};
+	}, [baseDelay]);
 
+	const value = useMemo(() => ({ register }), [register]);
 	return (
-		<StaggerContext.Provider value={{ register }}>
-			{children}
-		</StaggerContext.Provider>
+		<StaggerContext.Provider value={value}>{children}</StaggerContext.Provider>
 	);
 }
 
-export function useStagger(): number {
-	const { register } = useContext(StaggerContext);
+function useStagger(): number {
+	const { register } = use(StaggerContext);
 	const delayRef = useRef<number | null>(null);
 	if (delayRef.current === null) {
 		delayRef.current = register();

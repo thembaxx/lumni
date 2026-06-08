@@ -18,10 +18,7 @@ import { usePathname } from "@/i18n/navigation";
 import { dexieDataAccess } from "@/lib/db";
 import type { ContentDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: ContentDataAccess }) {
-	_deps = deps;
-}
+const _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
 
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";

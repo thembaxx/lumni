@@ -14,7 +14,6 @@ import { useState } from "react";
 import { Confetti } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { NextActions } from "@/components/quiz/next-actions";
-import { ProgressDots } from "@/components/shared/progress-dots";
 import { ShareResultButton } from "@/components/shared/share-button";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
@@ -473,26 +472,5 @@ export function QuizResultsCard({
 				</CardContent>
 			</Card>
 		</m.div>
-	);
-}
-
-interface QuizResultsInlineProps {
-	currentQuestionIndex: number;
-	totalQuestions: number;
-	correctAnswers: number;
-}
-
-export function QuizResultsInline({
-	currentQuestionIndex,
-	totalQuestions,
-	correctAnswers: _correctAnswers,
-}: QuizResultsInlineProps) {
-	return (
-		<ProgressDots
-			total={totalQuestions}
-			currentIndex={currentQuestionIndex}
-			completedCount={currentQuestionIndex}
-			variant="results"
-		/>
 	);
 }

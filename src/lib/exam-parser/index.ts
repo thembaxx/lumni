@@ -3,9 +3,6 @@ import * as path from "node:path";
 import type { ExamPaper } from "@/types/exam-paper";
 import { MarkdownExamParser } from "./markdown-exam-parser";
 
-export type { ExamPaper } from "@/types/exam-paper";
-export { MarkdownExamParser };
-
 export function parseMarkdown(content: string, filename: string): ExamPaper {
 	const parser = new MarkdownExamParser(content, filename);
 	return parser.parse();

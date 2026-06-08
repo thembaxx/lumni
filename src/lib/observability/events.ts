@@ -143,14 +143,14 @@ export async function getCohortStats(days = 30): Promise<CohortStats> {
 			.filter((e) => e.timestamp >= monthAgo)
 			.toArray();
 
-		const dau = new Set(
-			events
-				.filter((e) => e.timestamp >= todayStart.getTime())
-				.map((e) => e.userId),
-		).size;
-		const wau = new Set(
-			events.filter((e) => e.timestamp >= weekAgo).map((e) => e.userId),
-		).size;
+		const dauSet = new Set<string>();
+		const wauSet = new Set<string>();
+		for (const e of events) {
+			if (e.timestamp >= todayStart.getTime()) dauSet.add(e.userId);
+			if (e.timestamp >= weekAgo) wauSet.add(e.userId);
+		}
+		const dau = dauSet.size;
+		const wau = wauSet.size;
 		const totalActiveUsers = new Set(events.map((e) => e.userId)).size;
 
 		const dailyMap = new Map<string, Set<string>>();

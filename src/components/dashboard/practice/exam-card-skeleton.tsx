@@ -4,7 +4,7 @@ interface ExamCardSkeletonProps {
 	className?: string;
 }
 
-export function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
+function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
 	return (
 		<div
 			className={`flex items-center justify-between rounded-xl border-0 bg-secondary/40 p-3 ${className ?? ""}`}

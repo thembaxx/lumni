@@ -14,17 +14,10 @@ import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { dexieDataAccess } from "@/lib/db";
-import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import type { Question } from "@/lib/question-engine/types";
-
-let _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
-	_deps = deps;
-}
-
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
+import { _deps } from "./daily-bolt-overlay-deps";
 
 type BoltPhase =
 	| "resolving"

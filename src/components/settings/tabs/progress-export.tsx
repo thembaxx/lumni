@@ -15,10 +15,7 @@ import { exportService } from "@/lib/export";
 type ExportTabDb = Pick<CompetencyDataAccess, "quizAttempts"> &
 	Pick<SyncDataAccess, "examSessions">;
 
-let _deps: { db: ExportTabDb } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: ExportTabDb }) {
-	_deps = deps;
-}
+const _deps: { db: ExportTabDb } = { db: dexieDataAccess };
 
 type ExportState = "idle" | "exporting" | "printing" | "csv-exporting";
 

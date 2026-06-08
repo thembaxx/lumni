@@ -1,6 +1,6 @@
 "use client";
 
-import { type ComponentProps, createContext, use, useId } from "react";
+import { type ComponentProps, createContext, use, useId, useMemo } from "react";
 import { cn } from "@/lib/shared";
 
 interface FieldContextValue {
@@ -30,22 +30,28 @@ export function FieldGroup({ className, ...props }: ComponentProps<"div">) {
 export function Field({
 	className,
 	children,
+	"data-invalid": dataInvalid,
+	"data-disabled": dataDisabled,
 	...props
 }: ComponentProps<"div"> & {
 	"data-invalid"?: boolean;
 	"data-disabled"?: boolean;
 }) {
 	const id = useId();
+	const fieldValue = useMemo(
+		() => ({
+			id,
+			invalid: !!dataInvalid,
+			disabled: !!dataDisabled,
+		}),
+		[id, dataInvalid, dataDisabled],
+	);
 	return (
-		<FieldContext.Provider
-			value={{
-				id,
-				invalid: !!props["data-invalid"],
-				disabled: !!props["data-disabled"],
-			}}
-		>
+		<FieldContext.Provider value={fieldValue}>
 			<div
 				data-slot="field"
+				data-invalid={dataInvalid}
+				data-disabled={dataDisabled}
 				className={cn("flex flex-col gap-1.5", className)}
 				{...props}
 			/>
@@ -77,44 +83,6 @@ export function FieldDescription({ className, ...props }: ComponentProps<"p">) {
 		<p
 			data-slot="field-description"
 			className={cn("text-muted-foreground text-xs", className)}
-			{...props}
-		/>
-	);
-}
-
-export function FieldError({ className, ...props }: ComponentProps<"p">) {
-	const ctx = useFieldContext();
-	if (!ctx.invalid) return null;
-	return (
-		<p
-			data-slot="field-error"
-			className={cn("text-destructive text-xs", className)}
-			{...props}
-		/>
-	);
-}
-
-export function InputGroup({ className, ...props }: ComponentProps<"div">) {
-	return (
-		<div
-			data-slot="input-group"
-			className={cn("flex items-center gap-2", className)}
-			{...props}
-		/>
-	);
-}
-
-export function InputGroupAddon({
-	className,
-	...props
-}: ComponentProps<"span">) {
-	return (
-		<span
-			data-slot="input-group-addon"
-			className={cn(
-				"inline-flex items-center rounded-md border bg-muted/30 px-3 text-muted-foreground text-xs",
-				className,
-			)}
 			{...props}
 		/>
 	);

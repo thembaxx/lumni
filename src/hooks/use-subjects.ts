@@ -8,7 +8,7 @@ import { dexieDataAccess, type LegacyDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: LegacyDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: LegacyDataAccess }) {
+function __setDepsForTesting(deps: { db: LegacyDataAccess }) {
 	_deps = deps;
 }
 
@@ -155,7 +155,7 @@ export function useEnrolledSubjects() {
 	};
 }
 
-export function getLocalEnrolledSubjects(): string[] {
+function getLocalEnrolledSubjects(): string[] {
 	if (typeof window === "undefined") return [];
 	try {
 		const raw = localStorage.getItem("lumni_onboarding");

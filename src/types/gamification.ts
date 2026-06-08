@@ -54,9 +54,7 @@ export interface LevelInfo {
 export const XP_PER_QUESTION = 10;
 export const XP_PER_CORRECT = 5;
 export const XP_STREAK_BONUS = 20;
-export const XP_DAILY_COMPLETE = 50;
-export const XP_STREAK_FREEZE_REWARD = 25;
-
+const XP_DAILY_COMPLETE = 50;
 export const LEVELS = [
 	{ level: 1, title: "Beginner", xpRequired: 0 },
 	{ level: 2, title: "Learner", xpRequired: 100 },

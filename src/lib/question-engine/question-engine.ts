@@ -114,56 +114,55 @@ export class QuestionEngine {
 		);
 		this.lastRagContext = ragContext;
 
-		const { questionType, count } = enriched;
+		const { count } = enriched;
 		const MAX_RETRIES = 2;
+
+		const results = await Promise.allSettled(
+			Array.from({ length: MAX_RETRIES + 1 }, () =>
+				this.generateBatch(enriched, ragContext, count),
+			),
+		);
+
 		let questions: Question[] = [];
-
-		for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-			if (attempt > 0 && questions.length >= count) break;
-			if (attempt > 0) {
-				console.warn(
-					`[QuestionEngine] Retry ${attempt}/${MAX_RETRIES}: got ${questions.length}/${count} questions`,
-				);
+		for (const r of results) {
+			if (r.status === "fulfilled" && r.value.length > questions.length) {
+				questions = r.value;
 			}
-
-			questions = [];
-
-			if (!questionType || questionType === "any") {
-				questions = await this.generateMixed(enriched, ragContext);
-			} else {
-				const types = Array.isArray(questionType)
-					? questionType
-					: [questionType];
-				const perTypeCount = Math.ceil(count / types.length);
-				const typeResults = await Promise.all(
-					types.map(async (type) => {
-						try {
-							const processor = this.registry.getProcessor(type);
-							const typeParams = {
-								...enriched,
-								count: perTypeCount,
-								questionType: type,
-							};
-							const result = await processor.generate(typeParams, ragContext);
-							return result;
-						} catch (error) {
-							console.error(
-								`[QuestionEngine] Failed to generate ${type}:`,
-								error,
-							);
-							return [];
-						}
-					}),
-				);
-				for (const result of typeResults) {
-					questions.push(...result);
-				}
-			}
-
-			questions = questions.slice(0, count);
 		}
 
+		questions = questions.slice(0, count);
 		return questions.length > 0 ? questions : null;
+	}
+
+	private async generateBatch(
+		enriched: GenerationParams,
+		ragContext: RagContext,
+		count: number,
+	): Promise<Question[]> {
+		if (!enriched.questionType || enriched.questionType === "any") {
+			return this.generateMixed(enriched, ragContext);
+		}
+		const types = Array.isArray(enriched.questionType)
+			? enriched.questionType
+			: [enriched.questionType];
+		const perTypeCount = Math.ceil(count / types.length);
+		const typeResults = await Promise.all(
+			types.map(async (type) => {
+				try {
+					const processor = this.registry.getProcessor(type);
+					const typeParams = {
+						...enriched,
+						count: perTypeCount,
+						questionType: type,
+					};
+					return await processor.generate(typeParams, ragContext);
+				} catch (error) {
+					console.error(`[QuestionEngine] Failed to generate ${type}:`, error);
+					return [];
+				}
+			}),
+		);
+		return typeResults.flat();
 	}
 
 	private withProcessor<T extends QuestionType>(

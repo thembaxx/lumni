@@ -81,7 +81,7 @@ export async function getActiveSession(
 	}
 }
 
-export async function joinSession(
+async function _joinSession(
 	sessionId: string,
 	userId: string,
 	userName?: string,
@@ -101,7 +101,7 @@ export async function joinSession(
 	}
 }
 
-export async function leaveSession(
+async function _leaveSession(
 	sessionId: string,
 	userId: string,
 ): Promise<boolean> {
@@ -142,7 +142,7 @@ export async function getParticipants(
 	}
 }
 
-export async function updateActivity(
+async function _updateActivity(
 	sessionId: string,
 	userId: string,
 	activity: string,

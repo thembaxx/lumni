@@ -228,19 +228,16 @@ export async function getExamPaperUrl(
 	paperNumber: number,
 	type: "paper" | "memo",
 ): Promise<string | null> {
-	const _userId = await auth();
-
-	const response = await databases.listDocuments(
-		APPWRITE_DATABASE_ID,
-		COLLECTIONS.EXAM_PAPERS,
-		[
+	const [_userId, response] = await Promise.all([
+		auth(),
+		databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, [
 			Query.equal("subjectCode", subjectCode),
 			Query.equal("year", year),
 			Query.equal("paperNumber", paperNumber),
 			Query.equal("type", type),
 			Query.limit(1),
-		],
-	);
+		]),
+	]);
 
 	return (response.documents[0]?.fileUrl as string) || null;
 }

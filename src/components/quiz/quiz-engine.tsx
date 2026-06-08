@@ -46,7 +46,6 @@ export function QuizEngine({
 		subject: subjectId,
 		count: 10,
 		questionType,
-		autoStart: true,
 		onComplete,
 	});
 

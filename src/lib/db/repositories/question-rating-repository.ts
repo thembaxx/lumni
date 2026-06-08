@@ -12,7 +12,7 @@ export interface QuestionRatingRepository {
 	getBySubject(subject: string): Promise<QuestionRating[]>;
 }
 
-export class DexieQuestionRatingRepository implements QuestionRatingRepository {
+class DexieQuestionRatingRepository implements QuestionRatingRepository {
 	constructor(private db: DataAccess) {}
 
 	async findByQuestionId(
@@ -48,9 +48,7 @@ export class DexieQuestionRatingRepository implements QuestionRatingRepository {
 	}
 }
 
-export function createQuestionRatingRepository(
-	db: DataAccess = dexieDataAccess,
-) {
+function createQuestionRatingRepository(db: DataAccess = dexieDataAccess) {
 	return new DexieQuestionRatingRepository(db);
 }
 export const questionRatingRepository = createQuestionRatingRepository();

@@ -1,7 +1,7 @@
 "use client";
 
-import { type QueryClient, useQuery } from "@tanstack/react-query";
-import { type UploadSubject, useUploadStore } from "@/store";
+import type { QueryClient } from "@tanstack/react-query";
+import type { UploadSubject } from "@/store";
 
 export interface UTFileConfig {
 	maxFileSize: string;
@@ -45,23 +45,6 @@ async function fetchUploadSubjects(): Promise<UploadSubject[]> {
 	const config = await response.json();
 	return transformToSubjects(config);
 }
-
-export function useUploadSubjects() {
-	return useQuery({
-		queryKey: ["upload-subjects"],
-		queryFn: async () => {
-			return fetchUploadSubjects();
-		},
-		staleTime: 1000 * 60 * 5,
-		retry: 2,
-	});
-}
-
-export function useUploadSubject(routeKey: string) {
-	const { subjects } = useUploadStore();
-	return subjects.find((s) => s.routeKey === routeKey);
-}
-
 export async function prefetchUploadSubjects(queryClient: QueryClient) {
 	await queryClient.prefetchQuery({
 		queryKey: ["upload-subjects"],

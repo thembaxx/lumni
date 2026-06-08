@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { use } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -26,33 +27,25 @@ export default function StudentReportPage({
 }: {
 	params: Promise<{ studentId: string }>;
 }) {
-	const [studentId, setStudentId] = useState<string | null>(null);
-	const [data, setData] = useState<StudentReport | null>(null);
-	const [loading, setLoading] = useState(true);
+	const { studentId } = use(params);
 
-	useEffect(() => {
-		params.then((p) => setStudentId(p.studentId));
-	}, [params]);
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ["student-report", studentId],
+		queryFn: async () => {
+			const res = await fetch(`/api/teacher/students/${studentId}/report`);
+			if (!res.ok) throw new Error("Failed to fetch");
+			return res.json() as Promise<StudentReport>;
+		},
+		enabled: !!studentId,
+	});
 
-	useEffect(() => {
-		if (!studentId) return;
-		setLoading(true);
-		fetch(`/api/teacher/students/${studentId}/report`)
-			.then((r) => r.json())
-			.then((json) => {
-				setData(json as StudentReport);
-				setLoading(false);
-			})
-			.catch(() => setLoading(false));
-	}, [studentId]);
-
-	if (loading)
+	if (isLoading)
 		return (
 			<div className="p-8">
 				<Skeleton className="h-96 rounded-xl" />
 			</div>
 		);
-	if (!data) return null;
+	if (isError || !data) return null;
 
 	return (
 		<div className="mx-auto max-w-3xl space-y-6 p-8">
@@ -146,7 +139,7 @@ export default function StudentReportPage({
 				</CardContent>
 			</Card>
 
-			<style jsx global>{`
+			<style>{`
         @media print {
           button { display: none; }
           body { padding: 0; margin: 0; }

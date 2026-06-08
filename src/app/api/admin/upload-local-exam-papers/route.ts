@@ -170,39 +170,39 @@ export const POST = createRouteHandler({
 			}),
 		);
 
-		for (const result of uploadResults) {
-			if (!result.uploadResult) {
-				errors.push(`${result.fileName}: Upload to uploadthing failed`);
-				continue;
-			}
+		const processResults = await Promise.all(
+			uploadResults.map(async (result) => {
+				if (!result.uploadResult) {
+					return { error: `${result.fileName}: Upload to uploadthing failed` };
+				}
 
-			// Check if document already exists in Appwrite
-			const existingDocs = await databases.listDocuments(
-				APPWRITE_DATABASE_ID,
-				COLLECTIONS.EXAM_PAPERS,
-				[
-					Query.equal("subjectCode", result.normalizedCode),
-					Query.equal("year", result.year),
-					Query.equal("paperNumber", result.paperNumber),
-					Query.equal("type", result.type),
-				],
-			);
-
-			if (existingDocs.documents.length > 0) {
-				const existingId = existingDocs.documents[0].$id;
-				await databases.updateDocument(
+				const existingDocs = await databases.listDocuments(
 					APPWRITE_DATABASE_ID,
 					COLLECTIONS.EXAM_PAPERS,
-					existingId,
-					{
-						fileUrl: result.uploadResult.url,
-						fileKeys: JSON.stringify([result.uploadResult.key]),
-						originalFileName: result.originalFileName,
-						uploadedAt: new Date().toISOString(),
-					},
+					[
+						Query.equal("subjectCode", result.normalizedCode),
+						Query.equal("year", result.year),
+						Query.equal("paperNumber", result.paperNumber),
+						Query.equal("type", result.type),
+					],
 				);
-				updated++;
-			} else {
+
+				if (existingDocs.documents.length > 0) {
+					const existingId = existingDocs.documents[0].$id;
+					await databases.updateDocument(
+						APPWRITE_DATABASE_ID,
+						COLLECTIONS.EXAM_PAPERS,
+						existingId,
+						{
+							fileUrl: result.uploadResult.url,
+							fileKeys: JSON.stringify([result.uploadResult.key]),
+							originalFileName: result.originalFileName,
+							uploadedAt: new Date().toISOString(),
+						},
+					);
+					return { updated: true };
+				}
+
 				const id = randomUUID();
 				const paperCode = `${result.normalizedCode}-p${result.paperNumber}`;
 				const examPeriod = result.paperNumber > 2 ? "may-june" : "november";
@@ -233,7 +233,6 @@ export const POST = createRouteHandler({
 					},
 				);
 
-				// If uploading a memo, link it to the corresponding paper
 				if (result.type === "memo") {
 					const paperDocs = await databases.listDocuments(
 						APPWRITE_DATABASE_ID,
@@ -262,6 +261,16 @@ export const POST = createRouteHandler({
 						);
 					}
 				}
+				return { uploaded: true };
+			}),
+		);
+
+		for (const r of processResults) {
+			if ("error" in r && r.error) {
+				errors.push(r.error);
+			} else if (r.updated) {
+				updated++;
+			} else {
 				uploaded++;
 			}
 		}

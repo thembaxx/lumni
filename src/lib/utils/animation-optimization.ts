@@ -18,7 +18,7 @@ export interface AnimationBudget {
  * Default animation budget (aiming for 60fps = 16.67ms per frame)
  * We allocate 8ms for animations to leave room for other work
  */
-export const DEFAULT_ANIMATION_BUDGET: AnimationBudget = {
+const DEFAULT_ANIMATION_BUDGET: AnimationBudget = {
 	maxFrameTime: 8,
 	warningThreshold: 6,
 	disableOnExceed: false,
@@ -27,7 +27,7 @@ export const DEFAULT_ANIMATION_BUDGET: AnimationBudget = {
 /**
  * Hook to monitor animation frame rates and enforce budgets
  */
-export function useAnimationBudget(
+function useAnimationBudget(
 	budget: AnimationBudget = DEFAULT_ANIMATION_BUDGET,
 ) {
 	const frameCountRef = useRef(0);
@@ -120,7 +120,7 @@ export function useAnimationBudget(
 /**
  * Utility function to create optimized animation presets
  */
-export const createOptimizedPresets = () => {
+const createOptimizedPresets = () => {
 	return {
 		// Reduced motion preset for when budget is exceeded or user prefers reduced motion
 		reducedMotion: {

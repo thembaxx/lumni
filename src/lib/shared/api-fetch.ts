@@ -23,25 +23,24 @@ async function fetchWithRetry(
 	retries: number,
 	backoffMs: number,
 ): Promise<Response> {
-	let lastError: Error | null = null;
-	for (let attempt = 0; attempt <= retries; attempt++) {
+	const attempt = async (
+		remaining: number,
+		delay: number,
+	): Promise<Response> => {
 		try {
 			const response = await fetch(url, options);
 			if (response.ok || !RETRYABLE_STATUSES.has(response.status)) {
 				return response;
 			}
-			lastError = new Error(`Request failed with status ${response.status}`);
-			if (attempt < retries) {
-				await new Promise((r) => setTimeout(r, backoffMs * 2 ** attempt));
-			}
+			throw new Error(`Request failed with status ${response.status}`);
 		} catch (err) {
-			lastError = err instanceof Error ? err : new Error(String(err));
-			if (attempt < retries) {
-				await new Promise((r) => setTimeout(r, backoffMs * 2 ** attempt));
-			}
+			if (remaining <= 0)
+				throw err instanceof Error ? err : new Error(String(err));
+			await new Promise((r) => setTimeout(r, delay));
+			return attempt(remaining - 1, delay * 2);
 		}
-	}
-	throw lastError ?? new Error("Request failed after retries");
+	};
+	return attempt(retries, backoffMs);
 }
 
 export async function apiFetch<T>(

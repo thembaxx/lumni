@@ -18,7 +18,7 @@ function nowISO(): string {
 	return new Date().toISOString();
 }
 
-export class UserConsentService {
+class UserConsentService {
 	private db: UserConsentDependencies["db"];
 	private enqueueFn: UserConsentDependencies["enqueue"];
 

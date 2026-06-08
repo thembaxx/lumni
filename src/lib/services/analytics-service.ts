@@ -1,8 +1,12 @@
 import { logError } from "@/lib/shared/logger";
+import {
+	failure,
+	type ServiceResult,
+	success,
+} from "@/lib/shared/service-result";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
-import { failure, type ServiceResult, success } from "./index";
 
-export class AnalyticsService {
+class AnalyticsService {
 	track(
 		event: "generate" | "grade" | "hint" | "validate",
 		data: {

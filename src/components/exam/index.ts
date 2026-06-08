@@ -1,5 +1,4 @@
 export { ContentBlockRenderer } from "./content-block-renderer";
-export { ExamEngine } from "./exam-engine";
 export { ExamResults } from "./exam-results";
 export { ExamSidebar } from "./exam-sidebar";
 export { ExamSubmitDialog } from "./exam-submit-dialog";

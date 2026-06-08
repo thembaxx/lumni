@@ -1,20 +1,10 @@
 "use client";
 
 import { Menu as ListPrimitive } from "@base-ui/react/menu";
-import {
-	ArrowRight01Icon,
-	CheckmarkCircle01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type * as React from "react";
 import { cn } from "@/lib/shared";
 
 function DropdownMenu({ ...props }: ListPrimitive.Root.Props) {
 	return <ListPrimitive.Root data-slot="dropdown-menu" {...props} />;
-}
-
-function DropdownMenuPortal({ ...props }: ListPrimitive.Portal.Props) {
-	return <ListPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
 function DropdownMenuTrigger({ ...props }: ListPrimitive.Trigger.Props) {
@@ -102,131 +92,6 @@ function DropdownMenuItem({
 	);
 }
 
-function DropdownMenuSub({ ...props }: ListPrimitive.SubmenuRoot.Props) {
-	return <ListPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
-}
-
-function DropdownMenuSubTrigger({
-	className,
-	inset,
-	children,
-	...props
-}: ListPrimitive.SubmenuTrigger.Props & {
-	inset?: boolean;
-}) {
-	return (
-		<ListPrimitive.SubmenuTrigger
-			data-slot="dropdown-menu-sub-trigger"
-			data-inset={inset}
-			className={cn(
-				"flex min-h-7 cursor-default select-none items-center gap-2 rounded-md px-2 py-1 text-xs outline-hidden focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-open:bg-accent data-popup-open:bg-accent data-inset:pl-7.5 data-open:text-accent-foreground data-popup-open:text-accent-foreground [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
-			{...props}
-		>
-			{children}
-			<HugeiconsIcon icon={ArrowRight01Icon} className="ml-auto" />
-		</ListPrimitive.SubmenuTrigger>
-	);
-}
-
-function DropdownMenuSubContent({
-	align = "start",
-	alignOffset = -3,
-	side = "right",
-	sideOffset = 0,
-	className,
-	...props
-}: React.ComponentProps<typeof DropdownMenuContent>) {
-	return (
-		<DropdownMenuContent
-			data-slot="dropdown-menu-sub-content"
-			className={cn(
-				"data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:fade-in-0 data-open:zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 w-auto min-w-32 rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-closed:animate-out data-open:animate-in",
-				className,
-			)}
-			align={align}
-			alignOffset={alignOffset}
-			side={side}
-			sideOffset={sideOffset}
-			{...props}
-		/>
-	);
-}
-
-function DropdownMenuCheckboxItem({
-	className,
-	children,
-	checked,
-	inset,
-	...props
-}: ListPrimitive.CheckboxItem.Props & {
-	inset?: boolean;
-}) {
-	return (
-		<ListPrimitive.CheckboxItem
-			data-slot="dropdown-menu-checkbox-item"
-			data-inset={inset}
-			className={cn(
-				"relative flex min-h-7 cursor-default select-none items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-xs outline-hidden focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-7.5 data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
-			checked={checked}
-			{...props}
-		>
-			<span
-				className="pointer-events-none absolute right-2 flex items-center justify-center"
-				data-slot="dropdown-menu-checkbox-item-indicator"
-			>
-				<ListPrimitive.CheckboxItemIndicator>
-					<HugeiconsIcon icon={CheckmarkCircle01Icon} />
-				</ListPrimitive.CheckboxItemIndicator>
-			</span>
-			{children}
-		</ListPrimitive.CheckboxItem>
-	);
-}
-
-function DropdownMenuRadioGroup({ ...props }: ListPrimitive.RadioGroup.Props) {
-	return (
-		<ListPrimitive.RadioGroup
-			data-slot="dropdown-menu-radio-group"
-			{...props}
-		/>
-	);
-}
-
-function DropdownMenuRadioItem({
-	className,
-	children,
-	inset,
-	...props
-}: ListPrimitive.RadioItem.Props & {
-	inset?: boolean;
-}) {
-	return (
-		<ListPrimitive.RadioItem
-			data-slot="dropdown-menu-radio-item"
-			data-inset={inset}
-			className={cn(
-				"relative flex min-h-7 cursor-default select-none items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-xs outline-hidden focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-disabled:pointer-events-none data-inset:pl-7.5 data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
-			{...props}
-		>
-			<span
-				className="pointer-events-none absolute right-2 flex items-center justify-center"
-				data-slot="dropdown-menu-radio-item-indicator"
-			>
-				<ListPrimitive.RadioItemIndicator>
-					<HugeiconsIcon icon={CheckmarkCircle01Icon} />
-				</ListPrimitive.RadioItemIndicator>
-			</span>
-			{children}
-		</ListPrimitive.RadioItem>
-	);
-}
-
 function DropdownMenuSeparator({
 	className,
 	...props
@@ -240,7 +105,7 @@ function DropdownMenuSeparator({
 	);
 }
 
-function DropdownMenuShortcut({
+function _DropdownMenuShortcut({
 	className,
 	...props
 }: React.ComponentProps<"span">) {
@@ -258,18 +123,10 @@ function DropdownMenuShortcut({
 
 export {
 	DropdownMenu as DropdownList,
-	DropdownMenuCheckboxItem as DropdownListCheckboxItem,
 	DropdownMenuContent as DropdownListContent,
 	DropdownMenuGroup as DropdownListGroup,
 	DropdownMenuItem as DropdownListItem,
 	DropdownMenuLabel as DropdownListLabel,
-	DropdownMenuPortal as DropdownListPortal,
-	DropdownMenuRadioGroup as DropdownListRadioGroup,
-	DropdownMenuRadioItem as DropdownListRadioItem,
 	DropdownMenuSeparator as DropdownListSeparator,
-	DropdownMenuShortcut as DropdownListShortcut,
-	DropdownMenuSub as DropdownListSub,
-	DropdownMenuSubContent as DropdownListSubContent,
-	DropdownMenuSubTrigger as DropdownListSubTrigger,
 	DropdownMenuTrigger as DropdownListTrigger,
 };

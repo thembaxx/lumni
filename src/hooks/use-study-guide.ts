@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { StudyGuide } from "@/lib/study-guide/types";
 
 interface UseStudyGuideParams {
@@ -9,6 +9,7 @@ interface UseStudyGuideParams {
 }
 
 export function useStudyGuide() {
+	const queryClient = useQueryClient();
 	return useMutation<StudyGuide, Error, UseStudyGuideParams>({
 		mutationFn: async ({ subject, topic }) => {
 			const res = await fetch("/api/engine/study-guide", {
@@ -21,6 +22,9 @@ export function useStudyGuide() {
 				throw new Error(err.error || "Failed to generate study guide");
 			}
 			return res.json();
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["study-guide"] });
 		},
 	});
 }

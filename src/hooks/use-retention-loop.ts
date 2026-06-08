@@ -20,6 +20,11 @@ export function useRetentionLoop(userId?: string) {
 		setStats(s);
 	}, [userId]);
 
+	useEffect(() => {
+		if (!userId) return;
+		retentionService.getRecurrenceStats(userId).then((s) => setStats(s));
+	}, [userId]);
+
 	const scheduleRetention = useCallback(
 		async (count = 3) => {
 			if (!userId) return [];
@@ -29,7 +34,7 @@ export function useRetentionLoop(userId?: string) {
 			);
 			if (result.length > 0) {
 				setCandidates((prev) => [...prev, ...result]);
-				await refreshStats();
+				refreshStats();
 			}
 			return result;
 		},
@@ -41,16 +46,10 @@ export function useRetentionLoop(userId?: string) {
 			if (!userId) return;
 			await retentionService.markRecurrence(questionId, userId, isCorrect);
 			setCandidates((prev) => prev.filter((c) => c.questionId !== questionId));
-			await refreshStats();
+			refreshStats();
 		},
 		[userId, refreshStats],
 	);
-
-	useEffect(() => {
-		if (userId) {
-			refreshStats();
-		}
-	}, [userId, refreshStats]);
 
 	return {
 		candidates,

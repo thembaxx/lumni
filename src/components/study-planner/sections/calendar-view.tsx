@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
@@ -63,9 +63,9 @@ interface CalendarViewProps {
 
 export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
 	const today = useMemo(() => new Date(), []);
-	const [viewYear, setViewYear] = useState(today.getFullYear());
-	const [viewMonth, setViewMonth] = useState(today.getMonth());
-	const [dragTarget, setDragTarget] = useState<string | null>(null);
+	const [viewYear, setViewYear] = useState(() => today.getFullYear());
+	const [viewMonth, setViewMonth] = useState(() => today.getMonth());
+	const dragTargetRef = useRef<string | null>(null);
 
 	const grid = useMemo(
 		() => buildMonthGrid(viewYear, viewMonth),
@@ -92,13 +92,14 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
 
 	const handleDrop = useCallback(
 		(day: number) => {
-			if (dragTarget === null) return;
+			const id = dragTargetRef.current;
+			if (id === null) return;
 			const newDate = new Date(viewYear, viewMonth, day);
 			newDate.setHours(9, 0, 0, 0);
-			onUpdateSession(dragTarget, { scheduledAt: newDate.getTime() });
-			setDragTarget(null);
+			onUpdateSession(id, { scheduledAt: newDate.getTime() });
+			dragTargetRef.current = null;
 		},
-		[dragTarget, viewYear, viewMonth, onUpdateSession],
+		[viewYear, viewMonth, onUpdateSession],
 	);
 
 	const handleDragStart = useCallback(
@@ -182,7 +183,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
 								onDrop={(e) => {
 									const id = e.dataTransfer.getData("text/plain");
 									if (id) {
-										setDragTarget(id);
+										dragTargetRef.current = id;
 										handleDrop(day);
 									}
 								}}
@@ -201,7 +202,9 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
 										key={s.id}
 										draggable
 										onDragStart={(e) => handleDragStart(e, s.id)}
-										onDragEnd={() => setDragTarget(null)}
+										onDragEnd={() => {
+											dragTargetRef.current = null;
+										}}
 										className={cn(
 											"mb-px cursor-grab truncate rounded px-1 text-[9px] leading-4 transition-shadow active:cursor-grabbing",
 											s.completed

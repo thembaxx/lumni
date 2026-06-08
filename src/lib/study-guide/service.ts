@@ -7,7 +7,7 @@ import type { CachedStudyGuide, StudyGuide } from "./types";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps: { db: StudyDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: StudyDataAccess }) {
+function __setDepsForTesting(deps: { db: StudyDataAccess }) {
 	_deps = deps;
 }
 

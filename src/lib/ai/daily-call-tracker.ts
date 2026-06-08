@@ -121,14 +121,16 @@ export class DailyCallTracker {
 		// Fallback to in-memory
 		this.ensureDate();
 		const limiter = this.getLimiter(userId, type);
-		const userResult = await limiter.peek(`${userId}:${type}`, {
-			max: USER_LIMITS[type].maxPerDay,
-			windowMs: DAILY_WINDOW_MS,
-		});
-		const globalResult = await this.globalLimiter.peek("global", {
-			max: GLOBAL_LIMIT_TOTAL,
-			windowMs: DAILY_WINDOW_MS,
-		});
+		const [userResult, globalResult] = await Promise.all([
+			limiter.peek(`${userId}:${type}`, {
+				max: USER_LIMITS[type].maxPerDay,
+				windowMs: DAILY_WINDOW_MS,
+			}),
+			this.globalLimiter.peek("global", {
+				max: GLOBAL_LIMIT_TOTAL,
+				windowMs: DAILY_WINDOW_MS,
+			}),
+		]);
 
 		return {
 			allowed: userResult.allowed && globalResult.allowed,
@@ -249,23 +251,27 @@ export class DailyCallTracker {
 		// Fallback to in-memory
 		this.ensureDate();
 		const tokenMap = this.getTokenMap(userId);
-		const result = {} as Record<
+		const entries = await Promise.all(
+			(Object.keys(USER_LIMITS) as AICallType[]).map(async (type) => {
+				const limiter = this.getLimiter(userId, type);
+				const peeking = await limiter.peek(`${userId}:${type}`, {
+					max: USER_LIMITS[type].maxPerDay,
+					windowMs: DAILY_WINDOW_MS,
+				});
+				return [
+					type,
+					{
+						count: USER_LIMITS[type].maxPerDay - peeking.remaining,
+						tokens: tokenMap.get(type) ?? 0,
+						limit: USER_LIMITS[type].maxPerDay,
+					},
+				] as const;
+			}),
+		);
+		return Object.fromEntries(entries) as Record<
 			AICallType,
 			{ count: number; tokens: number; limit: number }
 		>;
-		for (const type of Object.keys(USER_LIMITS) as AICallType[]) {
-			const limiter = this.getLimiter(userId, type);
-			const peeking = await limiter.peek(`${userId}:${type}`, {
-				max: USER_LIMITS[type].maxPerDay,
-				windowMs: DAILY_WINDOW_MS,
-			});
-			result[type] = {
-				count: USER_LIMITS[type].maxPerDay - peeking.remaining,
-				tokens: tokenMap.get(type) ?? 0,
-				limit: USER_LIMITS[type].maxPerDay,
-			};
-		}
-		return result;
 	}
 
 	async getGlobalUsage(): Promise<{ totalCalls: number; limit: number }> {

@@ -34,34 +34,40 @@ export const GET = createRouteHandler({
 			return { assignments: [] };
 		}
 
-		const grouped: AssignmentWithSubmissions[] = [];
+		const subsResults = await Promise.all(
+			assignments.map(async (a) => {
+				const doc = a as Record<string, unknown>;
+				const subs = await listDocuments(COLLECTIONS.ASSIGNMENT_SUBMISSIONS, [
+					Query.equal("assignmentId", doc.$id as string),
+				]);
+				return {
+					doc,
+					subs: subs.map((s) => {
+						const sd = s as Record<string, unknown>;
+						return {
+							studentId: sd.studentId as string,
+							score: (sd.score as number) ?? 0,
+							maxScore: (sd.maxScore as number) ?? 0,
+							totalQuestions: (sd.totalQuestions as number) ?? 0,
+							correctCount: (sd.correctCount as number) ?? 0,
+							completedAt: (sd.completedAt as string) ?? "",
+							teacherComment: sd.teacherComment as string | undefined,
+						};
+					}),
+				};
+			}),
+		);
 
-		for (const a of assignments) {
-			const doc = a as Record<string, unknown>;
-			const subs = await listDocuments(COLLECTIONS.ASSIGNMENT_SUBMISSIONS, [
-				Query.equal("assignmentId", doc.$id as string),
-			]);
-
-			grouped.push({
+		const grouped: AssignmentWithSubmissions[] = subsResults.map(
+			({ doc, subs }) => ({
 				id: doc.$id as string,
 				topicIds: (doc.topicIds as string) ?? "[]",
 				status: (doc.status as string) ?? "pending",
 				createdAt: (doc.createdAt as string) ?? "",
 				dueDate: doc.dueDate as string | undefined,
-				submissions: subs.map((s) => {
-					const sd = s as Record<string, unknown>;
-					return {
-						studentId: sd.studentId as string,
-						score: (sd.score as number) ?? 0,
-						maxScore: (sd.maxScore as number) ?? 0,
-						totalQuestions: (sd.totalQuestions as number) ?? 0,
-						correctCount: (sd.correctCount as number) ?? 0,
-						completedAt: (sd.completedAt as string) ?? "",
-						teacherComment: sd.teacherComment as string | undefined,
-					};
-				}),
-			});
-		}
+				submissions: subs,
+			}),
+		);
 
 		return { assignments: grouped };
 	},

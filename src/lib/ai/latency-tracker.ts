@@ -11,7 +11,7 @@ export interface AILatencyRecord {
 }
 
 /** Per-call cost in USD cents by provider + callType */
-export const AI_COST_PER_CALL: Record<string, Record<string, number>> = {
+const AI_COST_PER_CALL: Record<string, Record<string, number>> = {
 	gemini: {
 		generate: 0.008,
 		grade: 0.003,
@@ -35,9 +35,9 @@ export const AI_COST_PER_CALL: Record<string, Record<string, number>> = {
 	},
 };
 
-export const DEFAULT_COST = 0.01;
+const DEFAULT_COST = 0.01;
 
-export function estimateCallCost(
+function estimateCallCost(
 	provider: string,
 	callType: AILatencyRecord["callType"],
 ): number {

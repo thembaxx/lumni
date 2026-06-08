@@ -7,7 +7,7 @@ import type {
 	RecordingResult,
 } from "./types";
 
-export class AudioEngine {
+class AudioEngine {
 	private mediaRecorder: MediaRecorder | null = null;
 	private audioChunks: Blob[] = [];
 	private audioElement: HTMLAudioElement | null = null;

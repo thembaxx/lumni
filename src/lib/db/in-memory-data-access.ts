@@ -62,7 +62,7 @@ class InMemoryCollection<T> implements Collection<T> {
 
 	async toArray(): Promise<T[]> {
 		const items = this.getItems();
-		return this.compareFn ? [...items].sort(this.compareFn) : [...items];
+		return this.compareFn ? items.toSorted(this.compareFn) : [...items];
 	}
 
 	async count(): Promise<number> {
@@ -97,7 +97,7 @@ class InMemoryCollection<T> implements Collection<T> {
 	}
 
 	async sortBy(index: string): Promise<T[]> {
-		return [...this.getItems()].sort((a, b) => {
+		return this.getItems().toSorted((a, b) => {
 			const av = (a as Record<string, unknown>)[index] as string | number;
 			const bv = (b as Record<string, unknown>)[index] as string | number;
 			if (av < bv) return -1;
@@ -201,19 +201,11 @@ export class InMemoryTable<T extends object, TId extends IdType = number>
 	}
 
 	async bulkAdd(items: Omit<T, "id">[]): Promise<TId[]> {
-		const ids: TId[] = [];
-		for (const item of items) {
-			ids.push(await this.add(item));
-		}
-		return ids;
+		return Promise.all(items.map((item) => this.add(item)));
 	}
 
 	async bulkPut(items: T[]): Promise<TId[]> {
-		const ids: TId[] = [];
-		for (const item of items) {
-			ids.push(await this.put(item));
-		}
-		return ids;
+		return Promise.all(items.map((item) => this.put(item)));
 	}
 
 	async bulkDelete(ids: TId[]): Promise<void> {

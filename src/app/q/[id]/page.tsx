@@ -2,8 +2,10 @@
 
 import { StarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
@@ -46,41 +48,22 @@ function storeRating(id: string, rating: number): void {
 
 export default function SharedQuestionPage() {
 	const { id } = useParams<{ id: string }>();
-	const [data, setData] = useState<FetchedData | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [notFound, setNotFound] = useState(false);
-	const [rating, setRating] = useState(0);
-	const [submittedRating, setSubmittedRating] = useState(0);
-	const [showAnswer, setShowAnswer] = useState(false);
-
 	const questionId = id;
 
-	useEffect(() => {
-		if (!questionId) return;
-		const stored = getStoredRating(questionId);
-		if (stored > 0) {
-			setRating(stored);
-			setSubmittedRating(stored);
-			setShowAnswer(stored >= 3);
-		}
-	}, [questionId]);
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ["shared-question", questionId],
+		queryFn: async () => {
+			const res = await fetch(`/api/q/${questionId}`);
+			if (!res.ok) throw new Error("not found");
+			return res.json() as Promise<FetchedData>;
+		},
+		enabled: !!questionId,
+	});
 
-	useEffect(() => {
-		if (!questionId) return;
-		fetch(`/api/q/${questionId}`)
-			.then((r) => {
-				if (!r.ok) throw new Error("not found");
-				return r.json() as Promise<FetchedData>;
-			})
-			.then((d) => {
-				setData(d);
-				setLoading(false);
-			})
-			.catch(() => {
-				setNotFound(true);
-				setLoading(false);
-			});
-	}, [questionId]);
+	const storedRating = questionId ? getStoredRating(questionId) : 0;
+	const [rating, setRating] = useState(storedRating);
+	const [submittedRating, setSubmittedRating] = useState(storedRating);
+	const [showAnswer, setShowAnswer] = useState(storedRating >= 3);
 
 	const handleRate = useCallback(
 		(value: number) => {
@@ -101,7 +84,7 @@ export default function SharedQuestionPage() {
 		[showAnswer, submittedRating],
 	);
 
-	if (loading) {
+	if (isLoading) {
 		return (
 			<div className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 p-6">
 				<Skeleton className="h-8 w-48" />
@@ -111,7 +94,7 @@ export default function SharedQuestionPage() {
 		);
 	}
 
-	if (notFound || !data) {
+	if (isError || !data) {
 		return (
 			<div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8 text-center">
 				<div className="flex size-16 items-center justify-center rounded-full bg-muted">
@@ -121,12 +104,12 @@ export default function SharedQuestionPage() {
 				<p className="max-w-md text-muted-foreground text-sm">
 					This question may have been removed or the link is invalid.
 				</p>
-				<a
+				<Link
 					href="/dashboard"
-					className="mt-2 rounded-xl bg-primary px-5 py-2.5 font-medium text-primary-foreground text-sm"
+					className="mt-2 inline-flex rounded-xl bg-primary px-5 py-2.5 font-medium text-primary-foreground text-sm"
 				>
 					Go to Dashboard
-				</a>
+				</Link>
 			</div>
 		);
 	}

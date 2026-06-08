@@ -9,5 +9,5 @@ export {
 	QuizSubjectPrompt,
 } from "./quiz-empty-state";
 export { QuizEngine } from "./quiz-engine";
-export { QuizResultsCard, QuizResultsInline } from "./quiz-results";
+export { QuizResultsCard } from "./quiz-results";
 export { QuizView } from "./quiz-view";

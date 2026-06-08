@@ -41,7 +41,7 @@ const DEFAULT_ONBOARDING: OnboardingData = {
 	notificationTimeOfDay: "morning",
 };
 
-export function loadOnboardingData(): OnboardingData {
+function loadOnboardingData(): OnboardingData {
 	const stored = loadFromStorage<OnboardingData>(
 		ONBOARDING_KEY,
 		DEFAULT_ONBOARDING,
@@ -50,11 +50,11 @@ export function loadOnboardingData(): OnboardingData {
 	return { ...DEFAULT_ONBOARDING, ...stored };
 }
 
-export function saveOnboardingData(data: OnboardingData): void {
+function saveOnboardingData(data: OnboardingData): void {
 	saveToStorage(ONBOARDING_KEY, data);
 }
 
-export function resetOnboardingData(): void {
+function _resetOnboardingData(): void {
 	saveToStorage(ONBOARDING_KEY, DEFAULT_ONBOARDING);
 }
 
@@ -123,27 +123,4 @@ export function useOnboarding(): UseOnboardingReturn {
 		updateProgress,
 		resetOnboarding,
 	};
-}
-
-export function useOnboardingCheck(): { shouldShow: boolean; reason?: string } {
-	const [result] = useState<{
-		shouldShow: boolean;
-		reason?: string;
-	}>(() => {
-		if (typeof window === "undefined") return { shouldShow: false };
-
-		const data = loadOnboardingData();
-		if (!data.isComplete) {
-			return { shouldShow: true };
-		}
-
-		const hasProgress = localStorage.getItem("lumni_user_progress");
-		if (!hasProgress) {
-			return { shouldShow: true, reason: "No progress yet" };
-		}
-
-		return { shouldShow: false };
-	});
-
-	return result;
 }

@@ -40,7 +40,7 @@ const itemVariants = {
 	show: { opacity: 1, y: 0 },
 };
 
-export function LessonSheet() {
+function LessonSheet() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");

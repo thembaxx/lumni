@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
 
@@ -10,33 +10,18 @@ interface TopicGraphProps {
 }
 
 export function TopicGraph({ subject, topic }: TopicGraphProps) {
-	const [graph, setGraph] = useState<KnowledgeGraph | null>(null);
-	const [loading, setLoading] = useState(true);
+	const { data: graph, isPending } = useQuery({
+		queryKey: ["knowledge-graph", subject, topic],
+		queryFn: async () => {
+			const params = new URLSearchParams({ subject, topic });
+			const res = await fetch(`/api/engine/knowledge-graph?${params}`);
+			if (!res.ok) return null;
+			return res.json() as Promise<KnowledgeGraph>;
+		},
+		enabled: !!subject && !!topic,
+	});
 
-	useEffect(() => {
-		let cancelled = false;
-		setLoading(true);
-		fetch("/api/engine/knowledge-graph", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ subject, topic }),
-		})
-			.then((res) => (res.ok ? (res.json() as Promise<KnowledgeGraph>) : null))
-			.then((data) => {
-				if (!cancelled) {
-					setGraph(data);
-					setLoading(false);
-				}
-			})
-			.catch(() => {
-				if (!cancelled) setLoading(false);
-			});
-		return () => {
-			cancelled = true;
-		};
-	}, [subject, topic]);
-
-	if (loading) {
+	if (isPending) {
 		return (
 			<div className="flex items-center gap-2 overflow-x-auto py-2">
 				<Skeleton className="h-7 w-24 shrink-0 rounded-full" />

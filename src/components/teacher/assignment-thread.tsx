@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { dexieDataAccess } from "@/lib/db";
@@ -17,21 +17,25 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
 	const [newMessage, setNewMessage] = useState("");
 	const [sending, setSending] = useState(false);
 
-	const loadMessages = useCallback(async () => {
-		try {
-			const all = await dexieDataAccess.assignmentMessages
-				.where("assignmentId")
-				.equals(assignmentId)
-				.toArray();
-			all.sort((a, b) => a.createdAt - b.createdAt);
-			setMessages(all);
-		} catch {}
-		setLoading(false);
-	}, [assignmentId]);
-
 	useEffect(() => {
-		loadMessages();
-	}, [loadMessages]);
+		let cancelled = false;
+		dexieDataAccess.assignmentMessages
+			.where("assignmentId")
+			.equals(assignmentId)
+			.toArray()
+			.then((all) => {
+				if (cancelled) return;
+				all.sort((a, b) => a.createdAt - b.createdAt);
+				setMessages(all);
+			})
+			.catch(() => {})
+			.finally(() => {
+				if (!cancelled) setLoading(false);
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [assignmentId]);
 
 	const sendMessage = async () => {
 		if (!newMessage.trim()) return;

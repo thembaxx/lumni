@@ -34,8 +34,11 @@ mock.module("next-intl", () => ({
 	useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),
 }));
 
-const { DailyBoltOverlay, __setDepsForTesting } = await import(
+const { DailyBoltOverlay } = await import(
 	"@/components/dashboard/daily-bolt-overlay"
+);
+const { __setDepsForTesting } = await import(
+	"@/components/dashboard/daily-bolt-overlay-deps"
 );
 
 function createWrapper() {

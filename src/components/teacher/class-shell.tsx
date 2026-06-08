@@ -6,7 +6,7 @@ import {
 	TeacherIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ export function ClassShell({
 	const [ghostUrl, setGhostUrl] = useState<string | null>(null);
 	const [ghostExpiry, setGhostExpiry] = useState<number | null>(null);
 	const [ghostCopied, setGhostCopied] = useState(false);
-	const [ghostToken, setGhostToken] = useState<string | null>(null);
+	const ghostTokenRef = useRef<string | null>(null);
 
 	const generateGhostLink = async () => {
 		try {
@@ -42,23 +42,23 @@ export function ClassShell({
 			};
 			setGhostUrl(data.url);
 			setGhostExpiry(data.expiresAt);
-			setGhostToken(data.token);
+			ghostTokenRef.current = data.token;
 		} catch {
 			/* silent */
 		}
 	};
 
 	const revokeGhostLink = async () => {
-		if (!ghostToken) return;
+		if (!ghostTokenRef.current) return;
 		try {
 			await fetch("/api/teacher/ghost-link", {
 				method: "DELETE",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ token: ghostToken }),
+				body: JSON.stringify({ token: ghostTokenRef.current }),
 			});
 			setGhostUrl(null);
 			setGhostExpiry(null);
-			setGhostToken(null);
+			ghostTokenRef.current = null;
 		} catch {
 			/* silent */
 		}

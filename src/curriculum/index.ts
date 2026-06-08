@@ -189,7 +189,7 @@ async function ensureLoaded() {
 	}
 }
 
-export class CurriculumRegistry {
+class CurriculumRegistry {
 	async getSubject(subjectId: string): Promise<SubjectCurriculum | null> {
 		await ensureLoaded();
 		return curricula.get(subjectId) ?? null;

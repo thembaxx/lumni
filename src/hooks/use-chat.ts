@@ -9,7 +9,7 @@ import { logError } from "@/lib/shared/logger";
 import { loadFromStorage } from "@/lib/utils/storage";
 
 let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
+function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 

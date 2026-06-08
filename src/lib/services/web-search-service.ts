@@ -67,7 +67,7 @@ export async function searchWeb(
 	);
 }
 
-export async function getWebContents(
+async function _getWebContents(
 	urls: string[],
 ): Promise<Record<string, string>> {
 	const client = getClient();

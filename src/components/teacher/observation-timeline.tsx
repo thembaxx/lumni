@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,21 +25,25 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
 	const [newNote, setNewNote] = useState("");
 	const [saving, setSaving] = useState(false);
 
-	const loadObservations = useCallback(async () => {
-		try {
-			const all = await dexieDataAccess.teacherObservations
-				.where("studentId")
-				.equals(studentId)
-				.toArray();
-			all.sort((a, b) => b.createdAt - a.createdAt);
-			setObservations(all);
-		} catch {}
-		setLoading(false);
-	}, [studentId]);
-
 	useEffect(() => {
-		loadObservations();
-	}, [loadObservations]);
+		let cancelled = false;
+		dexieDataAccess.teacherObservations
+			.where("studentId")
+			.equals(studentId)
+			.toArray()
+			.then((all) => {
+				if (cancelled) return;
+				all.sort((a, b) => b.createdAt - a.createdAt);
+				setObservations(all);
+			})
+			.catch(() => {})
+			.finally(() => {
+				if (!cancelled) setLoading(false);
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [studentId]);
 
 	const addObservation = async () => {
 		if (!newNote.trim()) return;

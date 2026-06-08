@@ -82,7 +82,14 @@ export function useQuestionEngine(
 		Question[] | null
 	>(null);
 
-	const query = useQuery({
+	const {
+		data: queryData,
+		isLoading,
+		isFetching,
+		error,
+		isError,
+		refetch,
+	} = useQuery({
 		queryKey: ["questionEngine", params ? JSON.stringify(params) : undefined],
 		queryFn: async () => {
 			const result = await generateQuestions(params as GenerationParams);
@@ -160,18 +167,18 @@ export function useQuestionEngine(
 	);
 
 	const questions = useMemo(
-		() => generatedQuestions ?? query.data?.questions ?? [],
-		[generatedQuestions, query.data?.questions],
+		() => generatedQuestions ?? queryData?.questions ?? [],
+		[generatedQuestions, queryData?.questions],
 	);
 
 	return {
 		questions,
-		count: query.data?.count ?? 0,
-		sources: query.data?.sources ?? [],
-		isLoading: query.isLoading,
-		isFetching: query.isFetching,
-		error: query.error,
-		isError: query.isError,
+		count: queryData?.count ?? 0,
+		sources: queryData?.sources ?? [],
+		isLoading,
+		isFetching,
+		error,
+		isError,
 		generate,
 		grade,
 		hint,
@@ -182,6 +189,6 @@ export function useQuestionEngine(
 		isGeneratingHint: hintMutation.isPending,
 		hintResult: hintMutation.data?.hint,
 		hintError: hintMutation.error,
-		refetch: query.refetch,
+		refetch,
 	};
 }

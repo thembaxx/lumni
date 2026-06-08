@@ -11,7 +11,7 @@ import { syncManager } from "@/lib/sync/sync-manager";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps: { db: ContentDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: ContentDataAccess }) {
+function __setDepsForTesting(deps: { db: ContentDataAccess }) {
 	_deps = deps;
 }
 
@@ -167,7 +167,7 @@ export async function shareAssignment(
 	};
 }
 
-export async function shareFlashcardDeck(
+async function _shareFlashcardDeck(
 	deck: Omit<FlashcardDeck, "id" | "createdAt">,
 	userId: string,
 ): Promise<string> {
@@ -190,7 +190,7 @@ export async function shareFlashcardDeck(
 	return id;
 }
 
-export function getSharedAssignment(shareId: string): {
+function _getSharedAssignment(shareId: string): {
 	type: string;
 	assignmentId: string;
 	topic: string;

@@ -10,9 +10,7 @@ export function updateAnalyticsConsent(granted: boolean): void {
 	_analyticsConsent = granted;
 }
 
-export async function syncAnalyticsConsentFromService(
-	userId: string,
-): Promise<void> {
+async function _syncAnalyticsConsentFromService(userId: string): Promise<void> {
 	const record = await userConsentService.get(userId);
 	_analyticsConsent = record?.analytics ?? false;
 }

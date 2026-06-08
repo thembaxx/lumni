@@ -8,7 +8,7 @@ import type { CachedGraph, KnowledgeGraph } from "./types";
 const DEFAULT_DEPS = { db: dexieDataAccess };
 let _deps: { db: CacheDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: CacheDataAccess }) {
+function __setDepsForTesting(deps: { db: CacheDataAccess }) {
 	_deps = deps;
 }
 

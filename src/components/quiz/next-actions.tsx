@@ -6,11 +6,10 @@ import {
 	TargetIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { competencyService } from "@/lib/competency-engine";
 import { flashcardEngine } from "@/lib/flashcard-engine";
-import { logError } from "@/lib/shared/logger";
 
 interface NextActionsProps {
 	subject: string;
@@ -25,32 +24,29 @@ export function NextActions({
 	totalQuestions,
 	onPracticeTopic,
 }: NextActionsProps) {
-	const [dueCount, setDueCount] = useState(0);
-	const [weakestTopic, setWeakestTopic] = useState<string | null>(null);
-	const [weakestScore, setWeakestScore] = useState<number | null>(null);
-
-	const loadData = useCallback(async () => {
-		try {
+	const { data } = useQuery({
+		queryKey: ["next-actions", subject.toLowerCase()],
+		queryFn: async () => {
 			const [dueCards, competencies] = await Promise.all([
 				flashcardEngine.getDueCards(),
 				competencyService.getCompetencies(subject.toLowerCase()),
 			]);
-			setDueCount(dueCards.length);
+			let weakestTopic: string | null = null;
+			let weakestScore: number | null = null;
 			if (competencies.length > 0) {
 				const weakest = competencies.reduce((prev, curr) =>
 					curr.score < prev.score ? curr : prev,
 				);
-				setWeakestTopic(weakest.topicId);
-				setWeakestScore(Math.round(weakest.score));
+				weakestTopic = weakest.topicId;
+				weakestScore = Math.round(weakest.score);
 			}
-		} catch (err) {
-			logError("NextActionsLoad", err);
-		}
-	}, [subject]);
+			return { dueCount: dueCards.length, weakestTopic, weakestScore };
+		},
+	});
 
-	useEffect(() => {
-		loadData();
-	}, [loadData]);
+	const dueCount = data?.dueCount ?? 0;
+	const weakestTopic = data?.weakestTopic ?? null;
+	const weakestScore = data?.weakestScore ?? null;
 
 	const wrongCount = totalQuestions - correctness.filter(Boolean).length;
 	if (dueCount === 0 && weakestTopic === null && wrongCount === 0) return null;

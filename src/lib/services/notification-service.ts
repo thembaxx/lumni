@@ -14,12 +14,12 @@ let _deps: { db: NotifDb } = DEFAULT_DEPS;
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
-export function __setDepsForTesting(deps: { db: NotifDb }) {
+function __setDepsForTesting(deps: { db: NotifDb }) {
 	_deps = deps;
 }
 
 const NOTIF_KEY = "lumni_notification_subscription";
-export const NOTIF_SETTINGS_KEY = "lumni_notification_settings";
+const NOTIF_SETTINGS_KEY = "lumni_notification_settings";
 const VAPID_PUBLIC_KEY =
 	"BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
 
@@ -58,7 +58,7 @@ export function getSettings(): NotificationSettings {
 	};
 }
 
-export function saveSettings(settings: NotificationSettings): void {
+function _saveSettings(settings: NotificationSettings): void {
 	saveToStorage(NOTIF_SETTINGS_KEY, settings);
 }
 
@@ -69,7 +69,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
 	return new Uint8Array([...rawData].map((c) => c.charCodeAt(0)));
 }
 
-export async function subscribeToPush(): Promise<PushSubscription | null> {
+async function _subscribeToPush(): Promise<PushSubscription | null> {
 	if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
 		console.warn("Push not supported");
 		return null;
@@ -119,7 +119,7 @@ async function syncSubscriptionToServer(
 	}
 }
 
-export async function unsubscribeFromPush(): Promise<boolean> {
+async function _unsubscribeFromPush(): Promise<boolean> {
 	try {
 		const registration = await navigator.serviceWorker.ready;
 		const subscription = await registration.pushManager.getSubscription();
@@ -146,7 +146,7 @@ export async function unsubscribeFromPush(): Promise<boolean> {
 	}
 }
 
-export async function requestPermission(): Promise<boolean> {
+async function _requestPermission(): Promise<boolean> {
 	if (!("Notification" in window)) return false;
 
 	const result = await Notification.requestPermission();
@@ -306,11 +306,11 @@ function scheduleTimeout(
 	}, delay);
 }
 
-export function getNextReminder(): StudyReminder | null {
+function getNextReminder(): StudyReminder | null {
 	return loadFromStorage<StudyReminder | null>("lumni_next_reminder", null);
 }
 
-export function cancelScheduledReminder(): void {
+function _cancelScheduledReminder(): void {
 	localStorage.removeItem("lumni_next_reminder");
 }
 
@@ -331,7 +331,7 @@ function getGamificationData(): {
 
 const STREAK_ALERT_KEY = "lumni_last_streak_alert_notification";
 
-export function scheduleStreakAlert(settings = getSettings()): void {
+function scheduleStreakAlert(settings = getSettings()): void {
 	if (!settings.enabled || !settings.streakAlerts) return;
 
 	const lastAlertDay = loadFromStorage<string>(STREAK_ALERT_KEY, "");
@@ -354,9 +354,7 @@ export function scheduleStreakAlert(settings = getSettings()): void {
 
 const WEEKLY_NOTIF_KEY = "lumni_last_weekly_notification";
 
-export async function scheduleWeeklyProgress(
-	settings = getSettings(),
-): Promise<void> {
+async function scheduleWeeklyProgress(settings = getSettings()): Promise<void> {
 	if (!settings.enabled || !settings.weeklyProgress) return;
 
 	const lastNotif = loadFromStorage<number>(WEEKLY_NOTIF_KEY, 0);
@@ -410,7 +408,7 @@ export async function scheduleWeeklyProgress(
 
 const ASSIGNMENT_ALERT_KEY = "lumni_assignment_alerts";
 
-export async function scheduleAssignmentReminders(
+async function scheduleAssignmentReminders(
 	settings = getSettings(),
 ): Promise<void> {
 	if (!settings.enabled || !settings.assignmentDue) return;
@@ -464,9 +462,7 @@ export async function scheduleAssignmentReminders(
 
 const DAILY_DIGEST_KEY = "lumni_daily_digest";
 
-export async function scheduleDailyDigest(
-	settings = getSettings(),
-): Promise<void> {
+async function scheduleDailyDigest(settings = getSettings()): Promise<void> {
 	if (!settings.enabled || !settings.dailyDigest) return;
 	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
 	if (Notification.permission !== "granted") return;

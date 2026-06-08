@@ -169,7 +169,7 @@ export interface PronunciationExercise {
 	phoneticHint?: string;
 }
 
-export const SAMPLE_EXERCISES: Record<string, PronunciationExercise[]> = {
+const SAMPLE_EXERCISES: Record<string, PronunciationExercise[]> = {
 	en: [
 		{
 			id: "e1",

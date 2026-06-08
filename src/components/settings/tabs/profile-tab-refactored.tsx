@@ -20,10 +20,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
 import type { CompetencyDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
-	_deps = deps;
-}
+const _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
 
 export function ProfileTabRefactored() {
 	const { user, updateProfile, signOut } = useAuth();

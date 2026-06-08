@@ -16,16 +16,16 @@ import {
 } from "./sync-factory";
 
 let _deps: { db: SyncHandlerDb } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
+function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
 	_deps = deps;
 }
 
-export const appwriteSync: JobHandler = async (payload) => {
+const appwriteSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-sync"];
 	await syncQuestionsToAppwrite(data.questions, data.subject, data.topic);
 };
 
-export const appwriteProgressSync = createUpsertHandler(
+const appwriteProgressSync = createUpsertHandler(
 	COLLECTIONS.USER_PROGRESS,
 	{ userId: "userId", subjectId: "odSubjectId" },
 	(data) => ({
@@ -38,7 +38,7 @@ export const appwriteProgressSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteAttemptSync = createAppendHandler(
+const appwriteAttemptSync = createAppendHandler(
 	COLLECTIONS.STUDY_SESSIONS,
 	(data) => {
 		const completedAt = data.completedAt as number;
@@ -55,7 +55,7 @@ export const appwriteAttemptSync = createAppendHandler(
 	},
 );
 
-export const appwriteCompetencySync = createUpsertHandler(
+const appwriteCompetencySync = createUpsertHandler(
 	COLLECTIONS.COMPETENCIES,
 	{ subjectId: "subjectId", topicId: "topicId", bloomLevel: "bloomLevel" },
 	(data) => ({
@@ -70,7 +70,7 @@ export const appwriteCompetencySync = createUpsertHandler(
 	}),
 );
 
-export const appwriteFlashcardSync = createUpsertHandler(
+const appwriteFlashcardSync = createUpsertHandler(
 	COLLECTIONS.FLASHCARDS,
 	{ flashcardId: "id" },
 	(data) => ({
@@ -92,7 +92,7 @@ export const appwriteFlashcardSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteFlashcardPull: JobHandler = async (payload) => {
+const appwriteFlashcardPull: JobHandler = async (payload) => {
 	const _data = payload as JobPayloadByType["appwrite-flashcard-pull"];
 	try {
 		let lastSync = 0;
@@ -172,12 +172,11 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 	}
 };
 
-export const appwriteFlashcardDelete = createDeleteHandler(
-	COLLECTIONS.FLASHCARDS,
-	{ flashcardId: "id" },
-);
+const appwriteFlashcardDelete = createDeleteHandler(COLLECTIONS.FLASHCARDS, {
+	flashcardId: "id",
+});
 
-export const appwriteWrongAnswerSync = createAppendHandler(
+const appwriteWrongAnswerSync = createAppendHandler(
 	COLLECTIONS.WRONG_ANSWERS,
 	(data) => ({
 		userId: data.userId as string,
@@ -194,7 +193,7 @@ export const appwriteWrongAnswerSync = createAppendHandler(
 	}),
 );
 
-export const appwriteChatSync = createAppendHandler(
+const appwriteChatSync = createAppendHandler(
 	COLLECTIONS.CHAT_MESSAGES,
 	(data) => ({
 		userId: data.userId as string,
@@ -206,7 +205,7 @@ export const appwriteChatSync = createAppendHandler(
 	}),
 );
 
-export const appwriteRatingSync: JobHandler = async (payload) => {
+const appwriteRatingSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-rating-sync"];
 	await createDocument(COLLECTIONS.QUESTIONS, {
 		type: "rating",
@@ -235,7 +234,7 @@ export const appwriteRatingSync: JobHandler = async (payload) => {
 	}
 };
 
-export const appwriteStudyPlanSync = createUpsertHandler(
+const appwriteStudyPlanSync = createUpsertHandler(
 	COLLECTIONS.STUDY_PLANS,
 	{ userId: "userId" },
 	(data) => ({
@@ -246,7 +245,7 @@ export const appwriteStudyPlanSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteQuestionFlag = createAppendHandler(
+const appwriteQuestionFlag = createAppendHandler(
 	COLLECTIONS.QUESTION_FLAGS,
 	(data) => ({
 		questionId: data.questionId as string,
@@ -258,7 +257,7 @@ export const appwriteQuestionFlag = createAppendHandler(
 	}),
 );
 
-export const appwriteBookmarkSync = createUpsertHandler(
+const appwriteBookmarkSync = createUpsertHandler(
 	COLLECTIONS.BOOKMARKS,
 	{ questionId: "questionId" },
 	(data) => ({
@@ -272,12 +271,11 @@ export const appwriteBookmarkSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteBookmarkDelete = createDeleteHandler(
-	COLLECTIONS.BOOKMARKS,
-	{ questionId: "questionId" },
-);
+const appwriteBookmarkDelete = createDeleteHandler(COLLECTIONS.BOOKMARKS, {
+	questionId: "questionId",
+});
 
-export const appwriteExamDatesSync = createUpsertHandler(
+const appwriteExamDatesSync = createUpsertHandler(
 	COLLECTIONS.EXAM_DATES,
 	{ cacheKey: "cacheKey" },
 	(data) => ({
@@ -289,7 +287,7 @@ export const appwriteExamDatesSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteConsentSync = createUpsertHandler(
+const appwriteConsentSync = createUpsertHandler(
 	COLLECTIONS.USER_CONSENTS,
 	{ userId: "userId" },
 	(data) => ({
@@ -312,12 +310,12 @@ export const appwriteConsentSync = createUpsertHandler(
 	}),
 );
 
-export const appwriteSharedQuestionSync: JobHandler = async (payload) => {
+const appwriteSharedQuestionSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-shared-question-sync"];
 	await createDocument(COLLECTIONS.SHARED_QUESTIONS, data);
 };
 
-export const appwriteVisualSync: JobHandler = async (payload) => {
+const appwriteVisualSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-visual-sync"];
 	await createDocument(COLLECTIONS.VISUALS, {
 		questionId: data.questionId,

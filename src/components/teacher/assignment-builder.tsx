@@ -45,6 +45,7 @@ export function AssignmentBuilder({
 	const [selected, setSelected] = useState<string[]>([]);
 	const [dueDate, setDueDate] = useState("");
 	const [open, setOpen] = useState(false);
+	const [today] = useState(() => new Date().toISOString().split("T")[0]);
 
 	const toggleTopic = (topic: string) => {
 		setSelected((prev) =>
@@ -124,7 +125,7 @@ export function AssignmentBuilder({
 								value={dueDate}
 								onChange={(e) => setDueDate(e.target.value)}
 								className="h-9 rounded-lg border bg-background px-3 text-xs"
-								min={new Date().toISOString().split("T")[0]}
+								min={today}
 							/>
 						</div>
 					</div>

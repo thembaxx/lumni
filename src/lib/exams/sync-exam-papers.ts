@@ -125,74 +125,84 @@ async function syncExamPapersInternal(
 			return 0;
 		});
 
-		for (const entry of sortedTracker) {
-			try {
-				const id = crypto.randomUUID();
-				const subjectName = getSubjectName(entry.subjectCode);
-				const paperCode = `${entry.subjectCode}-p${entry.paperNumber}`;
-				const examPeriod = entry.paperNumber > 2 ? "may-june" : "november";
+		const syncResults = await Promise.all(
+			sortedTracker.map(async (entry) => {
+				try {
+					const id = crypto.randomUUID();
+					const subjectName = getSubjectName(entry.subjectCode);
+					const paperCode = `${entry.subjectCode}-p${entry.paperNumber}`;
+					const examPeriod = entry.paperNumber > 2 ? "may-june" : "november";
 
-				await databases.createDocument(
-					APPWRITE_DATABASE_ID,
-					COLLECTIONS.EXAM_PAPERS,
-					id,
-					{
-						subject: subjectName,
-						subjectCode: entry.subjectCode,
-						subjectName,
-						paperCode,
-						paperNumber: entry.paperNumber,
-						examPeriod,
-						year: entry.year,
-						grade: 12,
-						language: "english",
-						totalMarks: 150,
-						duration: "3 hours",
-						type: entry.type,
-						memoId: null,
-						fileKeys: JSON.stringify([entry.fileKey]),
-						fileUrl: entry.fileUrl,
-						originalFileName: entry.originalFileName,
-						uploadedAt: new Date().toISOString(),
-						uploadedBy: "system",
-					},
-				);
-
-				// Link memo to paper if applicable
-				if (entry.type === "memo") {
-					const paperDocs = await databases.listDocuments(
+					await databases.createDocument(
 						APPWRITE_DATABASE_ID,
 						COLLECTIONS.EXAM_PAPERS,
-						[
-							Query.equal("subjectCode", entry.subjectCode),
-							Query.equal("year", entry.year),
-							Query.equal("paperNumber", entry.paperNumber),
-							Query.equal("type", "paper"),
-						],
+						id,
+						{
+							subject: subjectName,
+							subjectCode: entry.subjectCode,
+							subjectName,
+							paperCode,
+							paperNumber: entry.paperNumber,
+							examPeriod,
+							year: entry.year,
+							grade: 12,
+							language: "english",
+							totalMarks: 150,
+							duration: "3 hours",
+							type: entry.type,
+							memoId: null,
+							fileKeys: JSON.stringify([entry.fileKey]),
+							fileUrl: entry.fileUrl,
+							originalFileName: entry.originalFileName,
+							uploadedAt: new Date().toISOString(),
+							uploadedBy: "system",
+						},
 					);
 
-					if (paperDocs.documents.length > 0) {
-						const paperId = paperDocs.documents[0].$id;
-						await databases.updateDocument(
+					if (entry.type === "memo") {
+						const paperDocs = await databases.listDocuments(
 							APPWRITE_DATABASE_ID,
 							COLLECTIONS.EXAM_PAPERS,
-							id,
-							{ memoId: paperId },
+							[
+								Query.equal("subjectCode", entry.subjectCode),
+								Query.equal("year", entry.year),
+								Query.equal("paperNumber", entry.paperNumber),
+								Query.equal("type", "paper"),
+							],
 						);
-						await databases.updateDocument(
-							APPWRITE_DATABASE_ID,
-							COLLECTIONS.EXAM_PAPERS,
-							paperId,
-							{ memoId: id },
-						);
-					}
-				}
 
+						if (paperDocs.documents.length > 0) {
+							const paperId = paperDocs.documents[0].$id;
+							await databases.updateDocument(
+								APPWRITE_DATABASE_ID,
+								COLLECTIONS.EXAM_PAPERS,
+								id,
+								{ memoId: paperId },
+							);
+							await databases.updateDocument(
+								APPWRITE_DATABASE_ID,
+								COLLECTIONS.EXAM_PAPERS,
+								paperId,
+								{ memoId: id },
+							);
+						}
+					}
+
+					return { ok: true as const };
+				} catch (error) {
+					return {
+						ok: false as const,
+						error: `${entry.originalFileName}: ${error instanceof Error ? error.message : "unknown"}`,
+					};
+				}
+			}),
+		);
+
+		for (const r of syncResults) {
+			if (r.ok) {
 				inserted++;
-			} catch (error) {
-				errors.push(
-					`${entry.originalFileName}: ${error instanceof Error ? error.message : "unknown"}`,
-				);
+			} else {
+				errors.push(r.error);
 			}
 		}
 

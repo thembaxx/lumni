@@ -77,16 +77,21 @@ export async function searchAllChunked(
 
 		queryWithTimeout(async () => {
 			const all = await _deps.db.notes.limit(MAX_RESULTS_PER_TABLE).toArray();
-			return all
-				.filter((n) => scoreMatch(`${n.title} ${n.content}`, q) > 0)
-				.map((n) => ({
-					id: n.uuid,
-					type: "note" as const,
-					title: n.title,
-					snippet: n.content.slice(0, 150),
-					source: n.subject || "notes",
-					score: scoreMatch(`${n.title} ${n.content}`, q),
-				}))
+			const results: ChunkedSearchResult[] = [];
+			for (const n of all) {
+				const score = scoreMatch(`${n.title} ${n.content}`, q);
+				if (score > 0) {
+					results.push({
+						id: n.uuid,
+						type: "note" as const,
+						title: n.title,
+						snippet: n.content.slice(0, 150),
+						source: n.subject || "notes",
+						score,
+					});
+				}
+			}
+			return results
 				.sort((a, b) => b.score - a.score)
 				.slice(0, MAX_RESULTS_PER_TABLE);
 		}),
@@ -95,16 +100,21 @@ export async function searchAllChunked(
 			const all = await _deps.db.flashcards
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
-			return all
-				.filter((f) => scoreMatch(`${f.front} ${f.back}`, q) > 0)
-				.map((f) => ({
-					id: f.id,
-					type: "flashcard" as const,
-					title: f.front.slice(0, 80),
-					snippet: f.back.slice(0, 150),
-					source: f.subject || "flashcards",
-					score: scoreMatch(`${f.front} ${f.back}`, q),
-				}))
+			const results: ChunkedSearchResult[] = [];
+			for (const f of all) {
+				const score = scoreMatch(`${f.front} ${f.back}`, q);
+				if (score > 0) {
+					results.push({
+						id: f.id,
+						type: "flashcard" as const,
+						title: f.front.slice(0, 80),
+						snippet: f.back.slice(0, 150),
+						source: f.subject || "flashcards",
+						score,
+					});
+				}
+			}
+			return results
 				.sort((a, b) => b.score - a.score)
 				.slice(0, MAX_RESULTS_PER_TABLE);
 		}),
@@ -113,16 +123,21 @@ export async function searchAllChunked(
 			const all = await _deps.db.wrongAnswers
 				.limit(MAX_RESULTS_PER_TABLE)
 				.toArray();
-			return all
-				.filter((w) => scoreMatch(w.questionText, q) > 0)
-				.map((w) => ({
-					id: w.questionId,
-					type: "wrong-answer" as const,
-					title: w.questionText.slice(0, 80),
-					snippet: w.questionText.slice(0, 150),
-					source: w.subject || "wrong-answers",
-					score: scoreMatch(w.questionText, q),
-				}))
+			const results: ChunkedSearchResult[] = [];
+			for (const w of all) {
+				const score = scoreMatch(w.questionText, q);
+				if (score > 0) {
+					results.push({
+						id: w.questionId,
+						type: "wrong-answer" as const,
+						title: w.questionText.slice(0, 80),
+						snippet: w.questionText.slice(0, 150),
+						source: w.subject || "wrong-answers",
+						score,
+					});
+				}
+			}
+			return results
 				.sort((a, b) => b.score - a.score)
 				.slice(0, MAX_RESULTS_PER_TABLE);
 		}),

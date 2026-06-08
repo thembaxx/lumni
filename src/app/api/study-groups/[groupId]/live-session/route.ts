@@ -28,8 +28,10 @@ export const POST = createRouteHandler({
 	},
 	execute: async ({ userId, params, body }) => {
 		const groupId = params?.groupId as string;
-		const userName = await getAuthenticatedUserName();
-		const existing = await getActiveSession(groupId);
+		const [userName, existing] = await Promise.all([
+			getAuthenticatedUserName(),
+			getActiveSession(groupId),
+		]);
 		if (existing) {
 			throw new HttpError(
 				409,

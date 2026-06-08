@@ -111,11 +111,11 @@ export class RateLimiter {
 	async cleanup(): Promise<void> {
 		const now = Date.now();
 		const entries = await this.store.entries();
+		const expired: string[] = [];
 		for (const [key, value] of entries) {
-			if (value.resetAt < now) {
-				await this.store.delete(key);
-			}
+			if (value.resetAt < now) expired.push(key);
 		}
+		await Promise.all(expired.map((key) => this.store.delete(key)));
 	}
 
 	async getStoreSize(): Promise<number> {

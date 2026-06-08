@@ -3,7 +3,7 @@ import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
+function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 
@@ -75,7 +75,7 @@ export async function buildChatContext(): Promise<string> {
 	return cachedContext;
 }
 
-export function clearChatContextCache(): void {
+function _clearChatContextCache(): void {
 	cachedContext = null;
 	contextLoadedAt = 0;
 }

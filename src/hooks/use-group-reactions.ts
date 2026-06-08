@@ -41,39 +41,3 @@ export function useTogglePostReaction(postId: string) {
 		},
 	});
 }
-
-export function useCommentReactions(commentId: string) {
-	return useQuery<GroupReaction[]>({
-		queryKey: ["comment-reactions", commentId],
-		queryFn: async () => {
-			const res = await apiFetch<ReactionsResponse>(
-				`/api/study-groups/comments/${commentId}/reactions`,
-				{},
-			);
-			return res.reactions;
-		},
-	});
-}
-
-export function useToggleCommentReaction(commentId: string) {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (emoji: string) => {
-			const res = await apiFetch<{ reaction: GroupReaction | null }>(
-				`/api/study-groups/comments/${commentId}/reactions`,
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ emoji }),
-				},
-			);
-			return res.reaction;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["comment-reactions", commentId],
-			});
-		},
-	});
-}

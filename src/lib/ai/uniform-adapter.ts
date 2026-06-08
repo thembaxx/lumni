@@ -85,7 +85,7 @@ export function openaiNormalizer(request: AIRequest): Record<string, unknown> {
 	};
 }
 
-export function geminiNormalizer(request: AIRequest): Record<string, unknown> {
+function _geminiNormalizer(request: AIRequest): Record<string, unknown> {
 	const contents = request.messages.map((m) => ({
 		role: m.role === "model" ? "model" : "user",
 		parts: [{ text: m.content }],

@@ -59,7 +59,7 @@ export async function aiGradeResult(
 	};
 }
 
-export const compositeGrade = (
+const compositeGrade = (
 	ctxBuilder: (q: Question, _a: UserAnswer) => string,
 ): GradeFn => {
 	return (q, a, prompts) => aiGradeResult(q, a, prompts, ctxBuilder);

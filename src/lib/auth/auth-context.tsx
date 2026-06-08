@@ -109,7 +109,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		if (initRef.current) return;
 		initRef.current = true;
 
-		async function init() {
+		let cancelled = false;
+
+		const delayedRetry = (ms: number) =>
+			new Promise<void>((resolve) => {
+				const id = setTimeout(() => {
+					if (!cancelled) resolve();
+				}, ms);
+				if (cancelled) clearTimeout(id);
+			});
+
+		async function retryGetAccount(
+			retries = 2,
+			delay = 1000,
+		): Promise<Models.User<Models.Preferences>> {
+			try {
+				return await account.get();
+			} catch (err) {
+				if (retries <= 0) throw err;
+				await delayedRetry(delay);
+				if (cancelled) throw new DOMException("Cancelled", "AbortError");
+				return retryGetAccount(retries - 1, delay * 2);
+			}
+		}
+
+		const init = async () => {
 			if (
 				typeof window !== "undefined" &&
 				localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true"
@@ -120,6 +144,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 			try {
 				const currentUser = await retryGetAccount();
+				if (cancelled) return;
 				const isAnon = currentUser.labels?.includes("anonymous") ?? false;
 				dispatch({
 					type: "SET_USER",
@@ -128,10 +153,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					isAnonymous: isAnon,
 				});
 			} catch (err) {
+				if (cancelled) return;
 				logError("auth-init", err);
 
 				try {
 					await account.createAnonymousSession();
+					if (cancelled) return;
 					const anonUser = await account.get();
 					localStorage.setItem(ANONYMOUS_ATTEMPTED_KEY, "true");
 					dispatch({
@@ -141,6 +168,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 						isAnonymous: true,
 					});
 				} catch (anonErr) {
+					if (cancelled) return;
 					logError("auth-anonymous", anonErr);
 					localStorage.setItem(ANONYMOUS_ATTEMPTED_KEY, "true");
 					dispatch({
@@ -151,28 +179,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					});
 				}
 			} finally {
-				dispatch({ type: "SET_AUTH_READY", authReady: true });
-			}
-		}
-
-		async function retryGetAccount(
-			retries = 2,
-			delay = 1000,
-		): Promise<Models.User<Models.Preferences>> {
-			for (let attempt = 0; ; attempt++) {
-				try {
-					return await account.get();
-				} catch (err) {
-					if (attempt < retries) {
-						await new Promise((r) => setTimeout(r, delay * (attempt + 1)));
-						continue;
-					}
-					throw err;
+				if (!cancelled) {
+					dispatch({ type: "SET_AUTH_READY", authReady: true });
 				}
 			}
-		}
+		};
 
-		init();
+		init().catch(() => {});
+
+		return () => {
+			cancelled = true;
+		};
 	}, []);
 
 	const signIn = useCallback(

@@ -8,7 +8,7 @@ export type Token =
 	| { type: "rp" }
 	| { type: "fact" };
 
-export function factorial(n: number): number {
+function factorial(n: number): number {
 	if (n < 0 || !Number.isInteger(n)) return NaN;
 	if (n <= 1) return 1;
 	let r = 1;
@@ -16,7 +16,7 @@ export function factorial(n: number): number {
 	return r;
 }
 
-export function tokenize(expression: string): Token[] {
+function tokenize(expression: string): Token[] {
 	const tokens: Token[] = [];
 	let i = 0;
 	while (i < expression.length) {
@@ -100,7 +100,7 @@ export function tokenize(expression: string): Token[] {
 	return tokens;
 }
 
-export function applyOp(op: string, a: number, b: number): number {
+function applyOp(op: string, a: number, b: number): number {
 	switch (op) {
 		case "+":
 			return a + b;
@@ -119,7 +119,7 @@ export function applyOp(op: string, a: number, b: number): number {
 	}
 }
 
-export function applyFunc(name: string, arg: number): number {
+function applyFunc(name: string, arg: number): number {
 	switch (name) {
 		case "Math.sin":
 		case "sin":
@@ -159,7 +159,7 @@ export function applyFunc(name: string, arg: number): number {
 	}
 }
 
-export function parseExpression(
+function parseExpression(
 	tokens: Token[],
 	pos: number,
 	minPrec: number,

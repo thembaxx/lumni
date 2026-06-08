@@ -1,4 +1,4 @@
-export { AudioEngine, audioEngine } from "./audio-engine";
+export { audioEngine } from "./audio-engine";
 export type {
 	AudioEngineOptions,
 	AudioEngineState,

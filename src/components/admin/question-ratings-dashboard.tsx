@@ -10,6 +10,10 @@ const BarChartComponent = dynamic(
 	{ ssr: false },
 );
 
+const CHART_CONFIG = {
+	ratings: { label: "Ratings", color: "var(--color-chart-1)" },
+} as const;
+
 export function QuestionRatingsDashboard() {
 	const [mounted] = useState(true);
 	const { data: lowRated = [] } = useQuery({
@@ -48,10 +52,6 @@ export function QuestionRatingsDashboard() {
 		label: `${n} Star`,
 		ratings: stats.counts[n],
 	}));
-	const chartConfig = {
-		ratings: { label: "Ratings", color: "var(--color-chart-1)" },
-	} as const;
-
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="grid grid-cols-2 gap-4 lg:grid-cols-6">
@@ -84,7 +84,7 @@ export function QuestionRatingsDashboard() {
 							data={chartData}
 							xKey="label"
 							yKey="ratings"
-							config={chartConfig}
+							config={CHART_CONFIG}
 						/>
 					</div>
 				</div>

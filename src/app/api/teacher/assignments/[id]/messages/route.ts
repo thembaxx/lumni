@@ -21,8 +21,10 @@ export async function POST(
 	request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
-	const { id } = await params;
-	const { content, senderRole } = await request.json();
+	const [{ id }, { content, senderRole }] = await Promise.all([
+		params,
+		request.json(),
+	]);
 	const msg = {
 		assignmentId: id,
 		senderId: "current",

@@ -6,10 +6,7 @@ import { Button } from "@/components/ui/button";
 import { dexieDataAccess } from "@/lib/db";
 import type { FlashcardDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: FlashcardDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: FlashcardDataAccess }) {
-	_deps = deps;
-}
+const _deps: { db: FlashcardDataAccess } = { db: dexieDataAccess };
 
 import {
 	Dialog,

@@ -6,7 +6,7 @@ import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
 
 let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
+function __setDepsForTesting(deps: { db: SyncDataAccess }) {
 	_deps = deps;
 }
 

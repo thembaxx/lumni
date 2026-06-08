@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
@@ -37,7 +37,6 @@ export function useQuiz(params: UseQuizParams) {
 		count = 10,
 		questionType = "any",
 		maxTime,
-		autoStart = false,
 		enabled = true,
 		pastPaperMode,
 		suggestedBloomLevel,
@@ -81,40 +80,34 @@ export function useQuiz(params: UseQuizParams) {
 
 	const [currentAnswered, setCurrentAnswered] = useState(false);
 
-	useEffect(() => {
-		if (autoStart && questions.length > 0 && !state.isComplete) {
-			actions.start();
-		}
-	}, [autoStart, questions, state.isComplete, actions]);
-
 	const stateRef = useRef(state);
 	stateRef.current = state;
 
-	const flashcardsCreatedRef = useRef(false);
-
-	useEffect(() => {
-		if (!state.isComplete || flashcardsCreatedRef.current) return;
-		flashcardsCreatedRef.current = true;
-		const wrongIndices = state.correctness
-			.map((c, i) => (c ? -1 : i))
-			.filter((i) => i >= 0);
-		if (wrongIndices.length === 0) return;
-		Promise.all(
-			wrongIndices.map(async (i) => {
-				const q = state.questions[i];
-				if (!q) return;
-				try {
-					await flashcardEngine.create(
-						q.questionText,
-						getCorrectAnswerText(q) || "Review this topic",
-						params.subject,
-					);
-				} catch (err) {
-					logError("CreateFlashcardFromQuiz", err);
-				}
-			}),
-		);
-	}, [state.isComplete, state.correctness, state.questions, params.subject]);
+	const createFlashcardsForWrongAnswers = useCallback(
+		(s: typeof state) => {
+			const wrongIndices: number[] = [];
+			for (let i = 0; i < s.correctness.length; i++) {
+				if (!s.correctness[i]) wrongIndices.push(i);
+			}
+			if (wrongIndices.length === 0) return;
+			Promise.all(
+				wrongIndices.map(async (i) => {
+					const q = s.questions[i];
+					if (!q) return;
+					try {
+						await flashcardEngine.create(
+							q.questionText,
+							getCorrectAnswerText(q) || "Review this topic",
+							params.subject,
+						);
+					} catch (err) {
+						logError("CreateFlashcardFromQuiz", err);
+					}
+				}),
+			);
+		},
+		[params.subject],
+	);
 
 	const handleNext = useCallback(() => {
 		const s = stateRef.current;
@@ -130,8 +123,9 @@ export function useQuiz(params: UseQuizParams) {
 				totalQuestions: s.totalQuestions,
 				elapsedTime: s.elapsedTime,
 			});
+			createFlashcardsForWrongAnswers(s);
 		}
-	}, [actions, onComplete]);
+	}, [actions, onComplete, createFlashcardsForWrongAnswers]);
 
 	const handlePrevious = useCallback(() => {
 		actions.previous();

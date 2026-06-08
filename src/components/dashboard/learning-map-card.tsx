@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
@@ -14,6 +14,8 @@ const NODE_COLORS: Record<string, string> = {
 	advanced: "fill-emerald-500 stroke-emerald-600",
 };
 
+const LAYER_KEYS = ["prerequisite", "core", "advanced"] as const;
+
 const NODE_TEXT_COLORS: Record<string, string> = {
 	prerequisite: "#d97706",
 	core: "#2563eb",
@@ -24,41 +26,30 @@ export function LearningMapCard() {
 	const { push } = useRouter();
 	const { isAnonymous } = useAuth();
 	const { enrolledSubjects } = useEnrolledSubjects();
-	const [graph, setGraph] = useState<KnowledgeGraph | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
 
-	const fetchGraph = useCallback(async () => {
-		if (enrolledSubjects.length === 0) {
-			setLoading(false);
-			return;
-		}
-		setLoading(true);
-		setError(false);
-		try {
-			const sub = enrolledSubjects[0];
-			const res = await fetch("/api/engine/knowledge-graph", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ subject: sub.name, topic: sub.name }),
+	const subjectForQuery = enrolledSubjects[0]?.name;
+
+	const {
+		data: graph,
+		isPending,
+		isError,
+	} = useQuery({
+		queryKey: ["knowledge-graph", subjectForQuery],
+		queryFn: async () => {
+			const params = new URLSearchParams({
+				subject: subjectForQuery ?? "",
+				topic: subjectForQuery ?? "",
 			});
+			const res = await fetch(`/api/engine/knowledge-graph?${params}`);
 			if (!res.ok) throw new Error("Failed to fetch");
-			const data = (await res.json()) as KnowledgeGraph;
-			setGraph(data);
-		} catch {
-			setError(true);
-		} finally {
-			setLoading(false);
-		}
-	}, [enrolledSubjects]);
-
-	useEffect(() => {
-		fetchGraph();
-	}, [fetchGraph]);
+			return res.json() as Promise<KnowledgeGraph>;
+		},
+		enabled: !!subjectForQuery,
+	});
 
 	if (isAnonymous || enrolledSubjects.length === 0) return null;
 
-	if (loading) {
+	if (isPending) {
 		return (
 			<Card>
 				<CardHeader>
@@ -73,7 +64,7 @@ export function LearningMapCard() {
 		);
 	}
 
-	if (error || !graph || graph.nodes.length === 0) {
+	if (isError || !graph || graph.nodes.length === 0) {
 		return (
 			<Card>
 				<CardHeader>
@@ -94,7 +85,6 @@ export function LearningMapCard() {
 		advanced: graph.nodes.filter((n) => n.type === "advanced"),
 	};
 
-	const layerKeys = ["prerequisite", "core", "advanced"] as const;
 	const maxNodes = Math.max(
 		layers.prerequisite.length,
 		layers.core.length,
@@ -148,11 +138,11 @@ export function LearningMapCard() {
 							const fromNode = graph.nodes.find((n) => n.id === edge.from);
 							const toNode = graph.nodes.find((n) => n.id === edge.to);
 							if (!fromNode || !toNode) return null;
-							const fromLayer = layerKeys.indexOf(
-								fromNode.type as (typeof layerKeys)[number],
+							const fromLayer = LAYER_KEYS.indexOf(
+								fromNode.type as (typeof LAYER_KEYS)[number],
 							);
-							const toLayer = layerKeys.indexOf(
-								toNode.type as (typeof layerKeys)[number],
+							const toLayer = LAYER_KEYS.indexOf(
+								toNode.type as (typeof LAYER_KEYS)[number],
 							);
 							const fromIdx = layers[fromNode.type].indexOf(fromNode);
 							const toIdx = layers[toNode.type].indexOf(toNode);
@@ -180,8 +170,8 @@ export function LearningMapCard() {
 							);
 						})}
 						{graph.nodes.map((node) => {
-							const rowIndex = layerKeys.indexOf(
-								node.type as (typeof layerKeys)[number],
+							const rowIndex = LAYER_KEYS.indexOf(
+								node.type as (typeof LAYER_KEYS)[number],
 							);
 							const row = layers[node.type];
 							const nodeIndex = row.indexOf(node);

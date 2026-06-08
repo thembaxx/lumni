@@ -148,7 +148,7 @@ function tableAdapter<T, TId extends string | number>(
 // Dexie implementation
 // ──────────────────────────────────────────────
 
-export class DexieDataAccess implements DataAccess {
+class DexieDataAccess implements DataAccess {
 	flashcards = tableAdapter(offlineDB.flashcards);
 	reviewHistory = tableAdapter(offlineDB.reviewHistory);
 	analyticsEvents = tableAdapter(offlineDB.analyticsEvents);

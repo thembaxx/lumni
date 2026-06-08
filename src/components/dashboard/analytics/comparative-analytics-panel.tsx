@@ -21,7 +21,7 @@ export function ComparativeAnalyticsPanel() {
 	const { analytics, isLoading } = useAnalytics();
 	const { user } = useAuth();
 
-	const comparativeQuery = useQuery({
+	const { data: comparativeData = null } = useQuery({
 		queryKey: ["comparative-analytics", user?.$id],
 		queryFn: async () => {
 			const result = await analyticsService.getComparativeAnalytics(
@@ -33,8 +33,6 @@ export function ComparativeAnalyticsPanel() {
 		staleTime: 5 * 60 * 1000,
 	});
 
-	const comparativeData = comparativeQuery.data ?? null;
-
 	const weakSubjects = useMemo(() => {
 		if (!comparativeData) return [];
 		return Object.entries(comparativeData.subjectRankings)
@@ -43,7 +41,7 @@ export function ComparativeAnalyticsPanel() {
 			.map(([subject]) => subject);
 	}, [comparativeData]);
 
-	const trendsQuery = useQuery({
+	const { data: subjectTrends = {} } = useQuery({
 		queryKey: ["subject-trends", user?.$id, ...weakSubjects.sort()],
 		queryFn: async () => {
 			const trends: Record<string, SubjectTrendData> = {};
@@ -63,8 +61,6 @@ export function ComparativeAnalyticsPanel() {
 		enabled: weakSubjects.length > 0 && !!user?.$id,
 		staleTime: 5 * 60 * 1000,
 	});
-
-	const subjectTrends = trendsQuery.data ?? {};
 
 	if (isLoading || !analytics) {
 		return (

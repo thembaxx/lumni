@@ -1,4 +1,4 @@
-export { AnalyticsEngine, analyticsEngine } from "./analytics-engine";
+export { analyticsEngine } from "./analytics-engine";
 export type {
 	AnalyticsRecommendation,
 	OverallAnalytics,

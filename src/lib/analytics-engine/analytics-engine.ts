@@ -168,7 +168,7 @@ function generateRecommendations(
 	return recommendations.sort((a, b) => a.priority - b.priority);
 }
 
-export class AnalyticsEngine {
+class AnalyticsEngine {
 	private db: CompetencyDataAccess;
 
 	constructor(deps?: { db?: CompetencyDataAccess }) {

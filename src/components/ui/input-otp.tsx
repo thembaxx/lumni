@@ -4,10 +4,9 @@ import { OTPInput } from "input-otp";
 import type * as React from "react";
 import { cn } from "@/lib/shared";
 import { InputOTPGroup } from "./input-otp-group";
-import { InputOTPSeparator } from "./input-otp-separator";
 import { InputOTPSlot } from "./input-otp-slot";
 
-export { InputOTPGroup, InputOTPSeparator, InputOTPSlot };
+export { InputOTPGroup, InputOTPSlot };
 
 function InputOTP({
 	className,

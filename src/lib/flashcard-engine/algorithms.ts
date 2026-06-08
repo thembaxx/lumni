@@ -1,6 +1,6 @@
 import type { CardStatus } from "./types";
 
-export function computeNextReviewDate(interval: number): number {
+function computeNextReviewDate(interval: number): number {
 	return Date.now() + interval * 24 * 60 * 60 * 1000;
 }
 
@@ -58,7 +58,7 @@ export interface FSRSResult {
 	nextReview: number;
 }
 
-export const DEFAULT_FSRS_CONFIG: FSRSConfig = {
+const DEFAULT_FSRS_CONFIG: FSRSConfig = {
 	desiredRetention: 0.9,
 	enableFuzz: true,
 };

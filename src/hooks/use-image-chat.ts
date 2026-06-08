@@ -34,7 +34,7 @@ interface UseImageChatOptions {
 
 const DATA_URL_SIZE_LIMIT = 500 * 1024;
 
-export function useImageChat(options: UseImageChatOptions = {}) {
+function useImageChat(options: UseImageChatOptions = {}) {
 	const { onProcessingChange } = options;
 	const [processingState, setProcessingState] = useState<ImageProcessingState>({
 		status: "idle",
