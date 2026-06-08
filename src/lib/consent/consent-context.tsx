@@ -42,7 +42,34 @@ export type ConsentContextValue = ConsentState & {
 
 const ConsentContext = createContext<ConsentContextValue | null>(null);
 
+const ANONYMOUS_STORAGE_KEY = "lumni-consent";
 const anonymousConsentCache = new Map<string, UserConsent>();
+
+function readAnonymousConsent(): UserConsent | null {
+	try {
+		const raw = localStorage.getItem(ANONYMOUS_STORAGE_KEY);
+		if (!raw) return null;
+		return JSON.parse(raw) as UserConsent;
+	} catch {
+		return null;
+	}
+}
+
+function writeAnonymousConsent(consent: UserConsent): void {
+	try {
+		localStorage.setItem(ANONYMOUS_STORAGE_KEY, JSON.stringify(consent));
+	} catch {
+		/* storage full or unavailable */
+	}
+}
+
+function clearAnonymousConsent(): void {
+	try {
+		localStorage.removeItem(ANONYMOUS_STORAGE_KEY);
+	} catch {
+		/* noop */
+	}
+}
 
 export function ConsentProvider({ children }: { children: React.ReactNode }) {
 	const { user } = useAuth();
@@ -55,8 +82,10 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		if (!userId) {
-			const cached = anonymousConsentCache.get("default");
+			const cached =
+				anonymousConsentCache.get("default") ?? readAnonymousConsent();
 			if (cached) {
+				anonymousConsentCache.set("default", cached);
 				setState({
 					consent: cached,
 					isLoading: false,
@@ -84,7 +113,8 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 			let existing = await userConsentService.get(userId as string);
 			if (cancelled) return;
 
-			const cached = anonymousConsentCache.get("default");
+			const cached =
+				anonymousConsentCache.get("default") ?? readAnonymousConsent();
 			if (!existing && cached) {
 				existing = await userConsentService.save(userId as string, {
 					analytics: cached.analytics,
@@ -92,6 +122,7 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 					dataSharing: cached.dataSharing,
 				});
 				anonymousConsentCache.delete("default");
+				clearAnonymousConsent();
 			}
 
 			const currentTos = appConfig.legal.tosVersion;
@@ -165,6 +196,7 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 				};
 
 				anonymousConsentCache.set("default", local);
+				writeAnonymousConsent(local);
 
 				updateAnalyticsConsent(local.analytics);
 				updateDataSharingConsent(local.dataSharing);
