@@ -76,38 +76,38 @@ export function useOnboarding(): UseOnboardingReturn {
 		}));
 	}, []);
 
-	const completeOnboarding = useCallback(
-		(newData: Partial<OnboardingData>) => {
+	const completeOnboarding = useCallback((newData: Partial<OnboardingData>) => {
+		setData((prev) => {
 			const updated = {
-				...data,
+				...prev,
 				...newData,
 				isComplete: true,
 				completedAt: Date.now(),
 			};
-			setData(updated);
 			saveOnboardingData(updated);
-		},
-		[data],
-	);
+			return updated;
+		});
+	}, []);
 
 	const skipOnboarding = useCallback(() => {
-		const updated = {
-			...data,
-			isComplete: true,
-			completedAt: Date.now(),
-		};
-		setData(updated);
-		saveOnboardingData(updated);
-	}, [data]);
-
-	const updateProgress = useCallback(
-		(newData: Partial<OnboardingData>) => {
-			const updated = { ...data, ...newData };
-			setData(updated);
+		setData((prev) => {
+			const updated = {
+				...prev,
+				isComplete: true,
+				completedAt: Date.now(),
+			};
 			saveOnboardingData(updated);
-		},
-		[data],
-	);
+			return updated;
+		});
+	}, []);
+
+	const updateProgress = useCallback((newData: Partial<OnboardingData>) => {
+		setData((prev) => {
+			const updated = { ...prev, ...newData };
+			saveOnboardingData(updated);
+			return updated;
+		});
+	}, []);
 
 	const resetOnboarding = useCallback(() => {
 		setData(DEFAULT_ONBOARDING);

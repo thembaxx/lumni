@@ -4,11 +4,12 @@ import { m } from "framer-motion";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { PaperListing } from "@/types/exam";
 
 interface ExamGroupListProps {
 	groupedExams: Array<{
 		subject: string;
-		papers: Array<{ id: string }>;
+		papers: PaperListing[];
 	}>;
 	expandedGroups: Set<string>;
 	onToggleExpand: (subject: string) => void;
@@ -45,7 +46,7 @@ export function ExamGroupList({
 							? group.papers
 							: group.papers.slice(0, 4)
 						).map((exam) => (
-							<ExamCard key={exam.id} exam={exam as never} />
+							<ExamCard key={exam.id} exam={exam} />
 						))}
 						{group.papers.length > 4 && (
 							<Button

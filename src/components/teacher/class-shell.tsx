@@ -12,6 +12,7 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 interface ClassShellProps extends React.ComponentProps<"div"> {
 	className?: string;
@@ -43,8 +44,8 @@ export function ClassShell({
 			setGhostUrl(data.url);
 			setGhostExpiry(data.expiresAt);
 			ghostTokenRef.current = data.token;
-		} catch {
-			/* silent */
+		} catch (err) {
+			logError("ClassShellCreateGhostLink", err);
 		}
 	};
 
@@ -59,8 +60,8 @@ export function ClassShell({
 			setGhostUrl(null);
 			setGhostExpiry(null);
 			ghostTokenRef.current = null;
-		} catch {
-			/* silent */
+		} catch (err) {
+			logError("ClassShellRevokeGhostLink", err);
 		}
 	};
 

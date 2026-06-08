@@ -162,7 +162,6 @@ export function QuestionCardInput({
 					onChange={(pairs: Record<string, unknown>) =>
 						handleGrade({ type: "pairs", value: pairs })
 					}
-					disabled={false}
 				/>
 			);
 		}
@@ -178,7 +177,6 @@ export function QuestionCardInput({
 					onSubmit={(answer: string) =>
 						handleGrade({ type: "text", value: answer })
 					}
-					disabled={false}
 				/>
 			);
 		}
@@ -216,7 +214,6 @@ export function QuestionCardInput({
 					onSubmit={(answer: string) =>
 						handleGrade({ type: "text", value: answer })
 					}
-					disabled={false}
 				/>
 			);
 		}
@@ -230,7 +227,6 @@ export function QuestionCardInput({
 						value={calcValue}
 						onChange={setCalcValue}
 						unit={qBody.unit as string | undefined}
-						disabled={false}
 					/>
 					<Button
 						onClick={() => handleGrade({ type: "numeric", value: calcValue })}
@@ -263,7 +259,6 @@ export function QuestionCardInput({
 						onChange={setCode}
 						language={qBody.language as string | undefined}
 						starterCode={qBody.starterCode as string | undefined}
-						disabled={false}
 					/>
 					<Button
 						onClick={() => handleGrade({ type: "code", value: code })}

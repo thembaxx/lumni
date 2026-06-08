@@ -83,7 +83,6 @@ export function NoteForm({
 						value={formData.title || ""}
 						onChange={handleInputChange}
 						placeholder="Enter note title"
-						disabled={false}
 					/>
 				</Field>
 
@@ -96,7 +95,6 @@ export function NoteForm({
 						onChange={handleInputChange}
 						placeholder="Write your note content here..."
 						className="min-h-50"
-						disabled={false}
 					/>
 				</Field>
 
@@ -108,7 +106,6 @@ export function NoteForm({
 						value={Array.isArray(formData.tags) ? formData.tags.join(", ") : ""}
 						onChange={handleInputChange}
 						placeholder="e.g., biology, mitosis, cell-division"
-						disabled={false}
 					/>
 					<FieldDescription>Separate tags with commas</FieldDescription>
 				</Field>
@@ -146,7 +143,6 @@ export function NoteForm({
 						value={formData.topic || ""}
 						onChange={handleInputChange}
 						placeholder="e.g., algebra, photosynthesis, world war II"
-						disabled={false}
 					/>
 				</Field>
 

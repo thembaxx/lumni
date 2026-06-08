@@ -1,6 +1,7 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { shareQuestion } from "@/lib/share/share-service";
 import { getSourceForQuestion } from "@/lib/tinyfish";
+import type { Question } from "@/lib/question-engine/types";
 
 export const POST = createRouteHandler({
 	auth: "required",
@@ -36,7 +37,7 @@ export const POST = createRouteHandler({
 		}
 
 		const id = await shareQuestion(
-			question as never,
+			question as Question,
 			subject.toLowerCase(),
 			topic ?? "general",
 			userId as string,

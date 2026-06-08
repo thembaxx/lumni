@@ -526,3 +526,48 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
   - Interface layer: data-access.ts, dexie-data-access.ts, in-memory-data-access.ts
 - [x] **Test fix**: `all-repos.test.ts` mock moved before imports, both `@/lib/db` and `@/lib/db/schema` mocked with shared stores (fixed process-wide mock.module pollution gap)
 - [x] **Verification**: tsc 0 errors (1 pre-existing `maxScore` on `QuizAttempt`), biome 0 warnings, 1225 tests pass, 0 fail
+
+## 🔴 P0 — Runtime crashes (found June 2026 audit)
+
+### 9 pages crash with HTTP 000 (server connection refused)
+- [ ] **Diagnose + fix root cause** — Pages at `/search`, `/upload`, `/bookmarks`, `/settings`, `/past-papers`, `/review`, `/premium`, `/support`, `/offline` crash the server (HTTP 000 = connection refused) when accessed without locale prefix. Proxy (`src/proxy.ts`) is correct for Next.js 16 — functionality works for `/quiz`, `/flashcards`, `/chat`, `/solve`, `/problems`, `/study-guide`. Likely causes:
+  - **Module-level Dexie instantiation** — `src/lib/db/schema.ts` and `src/lib/db/dexie-data-access.ts` create Dexie/DataAccess at module load time, which fires during SSR where `indexedDB` is unavailable. Pages transitively importing `@/lib/db` crash. Fix: wrap in lazy getter or `typeof window === "undefined"` guard.
+  - **Missing locale guard in layout** — `[locale]/layout.tsx` passes raw `params.locale` to `<Providers>` → `<NextIntlClientProvider>`. When accessed without locale prefix, locale may be invalid, causing `Intl.DateTimeFormat("search")` `RangeError`. Add fallback to `defaultLocale`.
+
+### Infinite re-render in useOnboarding
+- [ ] **Fix `updateProgress` dependency cycle** — `src/hooks/use-onboarding.ts:106` has `updateProgress = useCallback(fn, [data])` where `data` changes on every `setData(updated)` call. `src/components/onboarding/onboarding-wizard.tsx:153` has a `useEffect` depending on `[updateProgress]`, creating a tight infinite loop. Fix: use functional updater `setData(prev => ...)` with empty `[]` deps so `updateProgress` is stable. Same pattern exists in `completeOnboarding` and `skipOnboarding` (latent).
+
+## 🟡 P1 — Missing / dead code
+
+### ResultsSearch uses mock data only
+- [ ] **Connect live backend or remove** — `src/components/tools/communication/results-search.tsx` imports `mockExamResults` from `src/lib/data/mock-exam-results.ts` (25 hardcoded fake entries, 5 per year 2021-2025). Renders "Demo data" badge. No real API endpoint exists.
+
+### 22 dead barrel files (zero consumers)
+- [ ] **Remove or consolidate** — `index.ts` re-export files with zero imports from their barrel path. All consumers import directly from file paths. Affected: `src/components/dashboard/index.ts`, `src/components/icons/index.ts`, `src/components/loading/index.ts`, `src/components/atoms/index.ts`, `src/components/molecules/index.ts`, `src/components/tools/index.ts`, `src/components/teacher/index.ts`, `src/components/i18n/index.ts`, `src/components/parent/index.ts`, `src/components/home/index.ts`, `src/components/consent/index.ts`, `src/components/onboarding/svgs/index.ts`, `src/components/study-planner/index.ts`, `src/components/language/index.ts`, `src/components/ui/headers/index.ts`, `src/components/chat/index.ts`, `src/components/auth/index.ts`, `src/lib/embedding/index.ts`, `src/lib/ocr/index.ts`, `src/lib/rate-limiter/index.ts`, `src/lib/knowledge-graph/index.ts`, `src/lib/data/index.ts`.
+
+### 8 orphaned components (defined, never imported)
+- [ ] **Remove or wire** — `EmptyReportState`, `LastStudyTime`, `CelebrationButton`, `DashboardHeader`, `DashboardHero`, `SearchInput` (dashboard/search), `VoiceWaveIcon`, `LoadingScreen`.
+
+### 3 silent empty catch blocks
+- [ ] **Add `logError()`** — `src/components/teacher/class-shell.tsx:47,63` and `src/components/teacher/assignment-card.tsx:40` have `/* silent */` empty catch blocks. Should use `logError()` per Session 23 standard.
+
+### 10 redundant `disabled={false}` props
+- [ ] **Remove dead props** — `src/components/tools/notes/note-form.tsx` (4x: lines 86, 99, 111, 149) and `src/components/quiz/parts/QuestionCardInput.tsx` (6x: lines 165, 181, 198, 219, 233, 266) hardcode `disabled={false}` which is never conditionally toggled.
+
+### 6 `as never` casts in production code
+- [ ] **Fix type safety** — `src/components/visual/diagram-renderer.tsx:118`, `src/components/dashboard/practice/exams-browse/exam-group-list.tsx:48`, `src/app/api/q/share/route.ts:39`, `src/lib/share/share-service.ts:53,170,196`.
+
+### Dead i18n keys
+- [ ] **Remove unused "comingSoon"** — 11 message files (`en.json`, `af.json`, `zu.json`, etc.) define `"comingSoon": "Coming soon"` but no component references this key.
+
+### Redirect-only page
+- [ ] **Remove or inline** — `src/app/[locale]/exam/page.tsx` (12 lines) only redirects to `/dashboard/exams`. Could be replaced with a route redirect config.
+
+## 🟠 P2 — Missing Suspense boundaries (Next.js 16)
+
+- [ ] **Wrap `useSearchParams()` in `auth/sign-up`** — Verify `src/app/[locale]/auth/sign-up/page.tsx:71` has a `<Suspense>` boundary around the component using `useSearchParams()`. Next.js 16 enforces this.
+- [ ] **Wrap `useSearchParams()` in `auth/reset-password`** — Same check for `src/app/[locale]/auth/reset-password/page.tsx:68`.
+
+## 🔵 P3 — 404 routes (wrong URLs)
+
+- [ ] **Add redirects** — `/exams` (should be `/dashboard/exams`), `/sign-in` (should be `/auth/sign-in`), `/sign-up` (should be `/auth/sign-up`). Add page files at these paths that redirect, or configure in `next.config`.

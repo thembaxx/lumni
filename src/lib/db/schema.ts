@@ -1025,4 +1025,19 @@ export class LumniOfflineDB extends Dexie {
 	}
 }
 
-export const offlineDB = new LumniOfflineDB();
+let _offlineDB: LumniOfflineDB | undefined;
+
+export function getDB(): LumniOfflineDB {
+	if (typeof window === "undefined") {
+		throw new Error("Dexie is only available on the client side");
+	}
+	if (!_offlineDB) {
+		_offlineDB = new LumniOfflineDB();
+	}
+	return _offlineDB;
+}
+
+export const offlineDB =
+	typeof window !== "undefined"
+		? new LumniOfflineDB()
+		: (undefined as unknown as LumniOfflineDB);

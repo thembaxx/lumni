@@ -10,38 +10,42 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/shared/empty-state";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { examYears, mockExamResults } from "@/lib/data/mock-exam-results";
-
-interface Result {
-	name: string;
-	examNumber: string;
-	school: string;
-	province: string;
-	subjects: { name: string; percentage: number }[];
-	overall: number;
-}
+import type { MatricResult } from "@/lib/matric-results";
+import { matricResultsYears } from "@/lib/matric-results";
+import { apiFetch } from "@/lib/shared/api-fetch";
 
 export function ResultsSearch() {
-	const [selectedYear, setSelectedYear] = useState(2025);
+	const [selectedYear, setSelectedYear] = useState<number>(
+		matricResultsYears[0],
+	);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [results, setResults] = useState<Result[]>([]);
+	const [results, setResults] = useState<MatricResult[]>([]);
 	const [isSearching, setIsSearching] = useState(false);
-	const isDemoData = true;
+	const [error, setError] = useState("");
 
-	const handleSearch = () => {
+	const handleSearch = async () => {
 		setIsSearching(true);
-		const yearResults = mockExamResults[selectedYear] || [];
-		const query = searchQuery.toLowerCase();
-		const filtered = yearResults.filter((r) =>
-			r.name.toLowerCase().includes(query),
-		);
-		setResults(filtered);
-		setTimeout(() => setIsSearching(false), 500);
+		setError("");
+		try {
+			const data = await apiFetch<{
+				results: MatricResult[];
+				year: number;
+				total: number;
+			}>(
+				`/api/matric-results?name=${encodeURIComponent(searchQuery)}&year=${selectedYear}`,
+				{ method: "GET" },
+			);
+			setResults(data.results);
+		} catch {
+			setError("Failed to search results. Please try again.");
+			setResults([]);
+		} finally {
+			setIsSearching(false);
+		}
 	};
 
 	const getGrade = (percentage: number): string => {
@@ -62,11 +66,6 @@ export function ResultsSearch() {
 						className="size-5 text-[--system-accent]"
 					/>
 					Results Search
-					{isDemoData && (
-						<Badge variant="outline" className="ios-caption-3">
-							Demo data
-						</Badge>
-					)}
 				</h2>
 				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 					Search past matric results by name and year.
@@ -78,7 +77,7 @@ export function ResultsSearch() {
 					<div>
 						<Label className="mb-2 text-sm">Year</Label>
 						<div className="flex gap-2 overflow-x-auto pb-1">
-							{examYears.map((year) => (
+							{matricResultsYears.map((year) => (
 								<Button
 									key={year}
 									variant={selectedYear === year ? "default" : "ghost"}
@@ -115,7 +114,20 @@ export function ResultsSearch() {
 				</div>
 			</div>
 
-			{isSearching ? (
+			{error ? (
+				<div className="px-5 pb-10">
+					<Empty className="border-none">
+						<EmptyMedia>
+							<HugeiconsIcon
+								icon={Search01Icon}
+								className="size-12 text-red-500"
+							/>
+						</EmptyMedia>
+						<EmptyTitle>Search failed</EmptyTitle>
+						<EmptyDescription>{error}</EmptyDescription>
+					</Empty>
+				</div>
+			) : isSearching ? (
 				<div className="flex flex-1 items-center justify-center">
 					<div className="size-8 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
 				</div>

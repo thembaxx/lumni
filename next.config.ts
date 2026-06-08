@@ -69,6 +69,25 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	async redirects() {
+		return [
+			{
+				source: "/exams",
+				destination: "/dashboard/exams",
+				permanent: true,
+			},
+			{
+				source: "/sign-in",
+				destination: "/auth/sign-in",
+				permanent: true,
+			},
+			{
+				source: "/sign-up",
+				destination: "/auth/sign-up",
+				permanent: true,
+			},
+		];
+	},
 	async rewrites() {
 		return [
 			{

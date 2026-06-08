@@ -188,4 +188,7 @@ class DexieDataAccess implements DataAccess {
 	assignmentMessages = tableAdapter(offlineDB.assignmentMessages);
 }
 
-export const dexieDataAccess = new DexieDataAccess();
+export const dexieDataAccess =
+	typeof window !== "undefined"
+		? new DexieDataAccess()
+		: (undefined as unknown as DexieDataAccess);

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 interface AssignmentCardProps {
 	assignmentId: string;
@@ -36,8 +37,8 @@ export function AssignmentCard({
 			await navigator.clipboard.writeText(`${window.location.origin}${url}`);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2000);
-		} catch {
-			/* silent */
+		} catch (err) {
+			logError("AssignmentCardShare", err);
 		}
 	};
 

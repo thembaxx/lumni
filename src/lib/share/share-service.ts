@@ -2,7 +2,6 @@ import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { ContentDataAccess } from "@/lib/db/data-access";
-import type { SharedQuestionRecord as SchemaRecord } from "@/lib/db/schema";
 import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -15,8 +14,15 @@ function __setDepsForTesting(deps: { db: ContentDataAccess }) {
 	_deps = deps;
 }
 
-export interface SharedQuestionRecord extends Omit<SchemaRecord, "question"> {
+interface SharedRecord {
+	id: string;
 	question: Question;
+	subject: string;
+	topic: string;
+	sharedById: string;
+	sharedAt: number;
+	viewCount: number;
+	sources?: { url: string; title: string }[];
 }
 
 function generateShareId(): string {
@@ -36,21 +42,20 @@ export async function shareQuestion(
 	sources?: { url: string; title: string }[],
 ): Promise<string> {
 	const id = generateShareId();
-	const record: Record<string, unknown> = {
+	const record: SharedRecord = {
 		id,
-		question: JSON.parse(JSON.stringify(question)) as Record<string, unknown>,
+		question,
 		subject,
 		topic,
 		sharedById: userId,
 		sharedAt: Date.now(),
 		viewCount: 0,
+		sources: sources?.length ? sources : undefined,
 	};
-	if (sources && sources.length > 0) {
-		record.sources = sources;
-	}
 
 	try {
-		await _deps.db.sharedQuestions.add(record as never);
+		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
+		await _deps.db.sharedQuestions.add(record as any);
 	} catch (err) {
 		logError("ShareQuestionDexie", err);
 	}
@@ -74,11 +79,11 @@ export async function shareQuestion(
 
 export async function getSharedQuestion(
 	id: string,
-): Promise<SharedQuestionRecord | null> {
+): Promise<SharedRecord | null> {
 	try {
 		const local = await _deps.db.sharedQuestions.get(id);
 		if (local) {
-			const record = local as unknown as SharedQuestionRecord;
+			const record = local as unknown as SharedRecord;
 			if (record.question) return record;
 		}
 	} catch (err) {
@@ -91,7 +96,7 @@ export async function getSharedQuestion(
 		]);
 		if (docs.length > 0) {
 			const doc = docs[0] as Record<string, unknown>;
-			const parsed: SharedQuestionRecord = {
+			const parsed: SharedRecord = {
 				id: doc.id as string,
 				question: JSON.parse(doc.question as string) as Question,
 				subject: doc.subject as string,
@@ -101,7 +106,10 @@ export async function getSharedQuestion(
 				viewCount: (doc.viewCount as number) ?? 0,
 				sources: doc.sources
 					? typeof doc.sources === "string"
-						? JSON.parse(doc.sources as string)
+						? (JSON.parse(doc.sources as string) as {
+								url: string;
+								title: string;
+							}[])
 						: (doc.sources as { url: string; title: string }[])
 					: undefined,
 			};
@@ -119,8 +127,9 @@ export async function incrementViewCount(id: string): Promise<void> {
 		await _deps.db.sharedQuestions
 			.where("id")
 			.equals(id)
-			.modify((record: SchemaRecord) => {
-				record.viewCount = (record.viewCount ?? 0) + 1;
+			// biome-ignore lint/suspicious/noExplicitAny: Dexie modify callback type is schema's SharedQuestionRecord
+			.modify((rec: any) => {
+				rec.viewCount = (rec.viewCount ?? 0) + 1;
 			});
 	} catch (err) {
 		logError("IncrementViewCountDexie", err);
@@ -148,17 +157,17 @@ export async function shareAssignment(
 	dueDate?: string,
 ): Promise<{ shareId: string; url: string }> {
 	const shareId = crypto.randomUUID();
-	const record: Record<string, unknown> = {
+	const record: SharedRecord = {
 		id: shareId,
-		question: JSON.stringify({
+		question: {
 			type: "assignment",
-			assignmentId,
+			id: assignmentId,
 			topic,
 			questionCount,
 			dueDate: dueDate || null,
 			createdAt: Date.now(),
 			expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
-		}),
+		} as unknown as Question,
 		subject: topic,
 		topic,
 		sharedById: "teacher",
@@ -167,7 +176,8 @@ export async function shareAssignment(
 	};
 
 	try {
-		await _deps.db.sharedQuestions.add(record as never);
+		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
+		await _deps.db.sharedQuestions.add(record as any);
 	} catch (err) {
 		logError("ShareAssignmentDexie", err);
 	}
@@ -183,17 +193,22 @@ async function _shareFlashcardDeck(
 	userId: string,
 ): Promise<string> {
 	const id = generateShareId();
-	const record: Record<string, unknown> = {
+	const record: SharedRecord = {
 		id,
-		type: "flashcard-deck",
-		deckData: deck,
+		question: {
+			type: "flashcard-deck",
+			deckData: deck,
+		} as unknown as Question,
+		subject: "general",
+		topic: "flashcards",
 		sharedById: userId,
 		sharedAt: Date.now(),
 		viewCount: 0,
 	};
 
 	try {
-		await _deps.db.sharedQuestions.add(record as never);
+		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
+		await _deps.db.sharedQuestions.add(record as any);
 	} catch (err) {
 		logError("ShareFlashcardDeck", err);
 	}

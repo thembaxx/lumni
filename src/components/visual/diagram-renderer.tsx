@@ -115,7 +115,7 @@ function DiagramRendererInner({ type, data }: DiagramRendererProps) {
 			</div>
 		);
 	}
-	return <Component data={data as never} />;
+	return <Component data={data} />;
 }
 
 function sanitizeSvg(svg: string): string {

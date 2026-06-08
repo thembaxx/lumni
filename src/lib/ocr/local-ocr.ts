@@ -5,7 +5,7 @@ export async function tryLocalOcr(
 	mode: "printed" | "handwritten" = "printed",
 ): Promise<string | null> {
 	try {
-		const { recognizeImage } = await import("@/lib/ocr");
+		const { recognizeImage } = await import("@/lib/ocr/ocr-service");
 		const result = await recognizeImage(imageData, mode);
 		if (result.confidence > 60 && result.text.length > 3) {
 			return result.text;
