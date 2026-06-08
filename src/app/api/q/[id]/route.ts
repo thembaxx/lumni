@@ -3,6 +3,7 @@ import {
 	getSharedQuestion,
 	incrementViewCount,
 } from "@/lib/share/share-service";
+import { logError } from "@/lib/shared/logger";
 
 export const GET = createRouteHandler({
 	auth: "optional",
@@ -20,7 +21,7 @@ export const GET = createRouteHandler({
 			return { error: "Question not found" };
 		}
 
-		incrementViewCount(id).catch(() => {});
+		incrementViewCount(id).catch((err) => logError("IncrementViewCount", err));
 
 		return {
 			id: record.id,

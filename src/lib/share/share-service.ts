@@ -148,19 +148,30 @@ export async function shareAssignment(
 	dueDate?: string,
 ): Promise<{ shareId: string; url: string }> {
 	const shareId = crypto.randomUUID();
-	const shareData = {
-		type: "assignment",
-		assignmentId,
+	const record: Record<string, unknown> = {
+		id: shareId,
+		question: JSON.stringify({
+			type: "assignment",
+			assignmentId,
+			topic,
+			questionCount,
+			dueDate: dueDate || null,
+			createdAt: Date.now(),
+			expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+		}),
+		subject: topic,
 		topic,
-		questionCount,
-		dueDate: dueDate || null,
-		createdAt: Date.now(),
-		expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+		sharedById: "teacher",
+		sharedAt: Date.now(),
+		viewCount: 0,
 	};
-	localStorage.setItem(
-		`lumni_shared_assignment_${shareId}`,
-		JSON.stringify(shareData),
-	);
+
+	try {
+		await _deps.db.sharedQuestions.add(record as never);
+	} catch (err) {
+		logError("ShareAssignmentDexie", err);
+	}
+
 	return {
 		shareId,
 		url: `/shared/assignment/${shareId}`,
@@ -188,27 +199,4 @@ async function _shareFlashcardDeck(
 	}
 
 	return id;
-}
-
-function _getSharedAssignment(shareId: string): {
-	type: string;
-	assignmentId: string;
-	topic: string;
-	questionCount: number;
-	dueDate: string | null;
-} | null {
-	try {
-		const raw = localStorage.getItem(`lumni_shared_assignment_${shareId}`);
-		if (!raw) return null;
-		return JSON.parse(raw) as {
-			type: string;
-			assignmentId: string;
-			topic: string;
-			questionCount: number;
-			dueDate: string | null;
-		};
-	} catch (err) {
-		logError("GetSharedAssignment", err);
-		return null;
-	}
 }

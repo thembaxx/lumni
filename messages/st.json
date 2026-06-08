@@ -467,6 +467,7 @@
     "paperMeta": "{year} {period} | {marks} marks | {duration}",
     "startPractice": "Start Practice Mode",
     "startTimed": "Start Timed Exam",
+    "startMockExam": "Start Mock Exam",
     "timed": "Timed",
     "practice": "Practice",
     "previous": "Previous",

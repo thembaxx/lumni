@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { dexieDataAccess } from "@/lib/db";
+import { logError } from "@/lib/shared/logger";
 
 interface Observation {
 	id?: number;
@@ -36,7 +37,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
 				all.sort((a, b) => b.createdAt - a.createdAt);
 				setObservations(all);
 			})
-			.catch(() => {})
+			.catch((err) => logError("ObservationTimelineLoad", err))
 			.finally(() => {
 				if (!cancelled) setLoading(false);
 			});

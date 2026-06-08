@@ -102,7 +102,7 @@ export function useChat() {
 					setMessages(loaded);
 				}
 			})
-			.catch(() => {});
+			.catch((err) => logError("useChatLoadDexie", err));
 	}, []);
 
 	useEffect(() => {

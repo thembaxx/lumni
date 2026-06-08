@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { dexieDataAccess } from "@/lib/db";
-
 import type { AssignmentMessage } from "@/lib/db/schema";
+import { logError } from "@/lib/shared/logger";
 
 interface AssignmentThreadProps {
 	assignmentId: string;
@@ -28,7 +28,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
 				all.sort((a, b) => a.createdAt - b.createdAt);
 				setMessages(all);
 			})
-			.catch(() => {})
+			.catch((err) => logError("AssignmentThreadLoad", err))
 			.finally(() => {
 				if (!cancelled) setLoading(false);
 			});

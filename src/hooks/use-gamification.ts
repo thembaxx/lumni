@@ -58,7 +58,7 @@ export function useGamification() {
 					});
 				}
 			})
-			.catch(() => {});
+			.catch((err) => logError("useGamificationLoadDexie", err));
 	}, []);
 
 	// Try to load from server on mount (once)
@@ -117,7 +117,9 @@ export function useGamification() {
 
 	const persistGamification = useCallback((newData: StoredGamification) => {
 		const record = { ...newData, id: 1 as const };
-		_deps.db.gamification.put(record).catch(() => {});
+		_deps.db.gamification
+			.put(record)
+			.catch((err) => logError("useGamificationPersist", err));
 	}, []);
 
 	const scheduleSync = useCallback((newData: StoredGamification) => {

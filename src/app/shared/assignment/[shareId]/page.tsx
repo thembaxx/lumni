@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { dexieDataAccess } from "@/lib/db";
+import { logError } from "@/lib/shared/logger";
 
 interface AssignmentData {
 	type: string;
@@ -24,16 +25,13 @@ export default function SharedAssignmentPage() {
 			try {
 				const shared = await dexieDataAccess.sharedQuestions.get(shareId);
 				if (shared) {
-					setData({
-						type: "assignment",
-						assignmentId: shareId,
-						topic: shared.subject ?? "Assignment",
-						questionCount: 1,
-						dueDate: null,
-					});
+					const parsed = JSON.parse(
+						shared.question as string,
+					) as AssignmentData;
+					setData(parsed);
 				}
-			} catch {
-				/* silent */
+			} catch (err) {
+				logError("SharedAssignmentPage", err);
 			}
 			setLoading(false);
 		})();

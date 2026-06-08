@@ -2,6 +2,7 @@ import type { StudyDataAccess } from "@/lib/db/data-access";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "./storage";
 
 let _deps: { db: StudyDataAccess } = { db: dexieDataAccess };
@@ -79,7 +80,7 @@ export function saveStudyPlan(plan: StudyPlan): void {
 			plan: JSON.stringify(plan),
 			updatedAt: Date.now(),
 		})
-		.catch(() => {});
+		.catch((err) => logError("SaveStudyPlan", err));
 }
 
 export function markPlanStale(): void {

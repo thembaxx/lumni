@@ -467,6 +467,7 @@
     "paperMeta": "{year} {period} | {marks} punte | {duration}",
     "startPractice": "Begin Oefenmodus",
     "startTimed": "Begin Getemperde Eksamen",
+    "startMockExam": "Begin Nabootsings Eksamen",
     "timed": "Getemperd",
     "practice": "Oefening",
     "previous": "Vorige",

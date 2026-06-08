@@ -1,5 +1,6 @@
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType, JobType } from "@/lib/orchestrator/types";
+import { logError } from "@/lib/shared/logger";
 
 /**
  * SyncManager — unified facade for all Dexie→Appwrite sync operations.
@@ -28,7 +29,9 @@ export type SyncOperation =
 
 export const syncManager = {
 	enqueue(op: SyncOperation): void {
-		enqueue(op.type, op.payload).catch(() => {});
+		enqueue(op.type, op.payload).catch((err) =>
+			logError("SyncManagerEnqueue", err),
+		);
 	},
 
 	flushAll: async (userId: string): Promise<void> => {
