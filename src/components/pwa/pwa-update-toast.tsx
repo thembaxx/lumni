@@ -4,6 +4,7 @@ import { Cancel01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { usePWAInstall, useServiceWorker } from "@/hooks/use-service-worker";
 
 export function PWAUpdateToast() {
@@ -58,7 +59,8 @@ export function PWAUpdateToast() {
 }
 
 export function PWAInstallPrompt() {
-	const { isInstallable, install, dismissed } = usePWAInstall();
+	const { isInstallable, install, dismissed, dismiss } = usePWAInstall();
+	const [dontShowAgain, setDontShowAgain] = useState(false);
 
 	if (!isInstallable || dismissed) return null;
 
@@ -78,16 +80,35 @@ export function PWAInstallPrompt() {
 						</p>
 					</div>
 				</div>
+				<div className="mt-3 flex items-center gap-2">
+					<Checkbox
+						id="pwa-dont-show-again"
+						checked={dontShowAgain}
+						onCheckedChange={(checked) => setDontShowAgain(checked === true)}
+					/>
+					<label
+						htmlFor="pwa-dont-show-again"
+						className="cursor-pointer text-muted-foreground text-xs"
+					>
+						Don&apos;t show again
+					</label>
+				</div>
 				<div className="mt-3 flex gap-2">
-					<Button size="sm" onClick={install}>
+					<Button
+						size="sm"
+						onClick={() => {
+							if (dontShowAgain) {
+								localStorage.setItem("pwa-install-dismissed", "true");
+							}
+							install();
+						}}
+					>
 						Install
 					</Button>
 					<Button
 						variant="ghost"
 						size="sm"
-						onClick={() =>
-							localStorage.setItem("pwa-install-dismissed", "true")
-						}
+						onClick={() => dismiss(dontShowAgain)}
 					>
 						Not now
 					</Button>

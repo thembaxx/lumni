@@ -1,4 +1,7 @@
+"use client";
+
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { usePWAInstall } from "@/hooks/use-service-worker";
 import { useRouter } from "@/i18n/navigation";
 import { ProgressExport } from "./progress-export";
 
@@ -52,6 +55,67 @@ const clearTrailing = (
 	</span>
 );
 
+function InstallAppSection() {
+	const { isInstallable, install, dismissed, resetPwaDismiss } =
+		usePWAInstall();
+
+	const wasDismissed =
+		typeof window !== "undefined" &&
+		localStorage.getItem("pwa-install-dismissed");
+
+	const installTrailing = isInstallable ? (
+		<span className="ios-footnote font-semibold text-[--system-accent]">
+			Install
+		</span>
+	) : (
+		<span className="ios-footnote text-muted-foreground text-xs">
+			Installed
+		</span>
+	);
+
+	const resetTrailing = wasDismissed ? (
+		<span className="ios-footnote font-semibold text-[--system-accent]">
+			Reset
+		</span>
+	) : (
+		<span className="ios-footnote text-muted-foreground text-xs">Active</span>
+	);
+
+	return (
+		<ListSection
+			header="App Installation"
+			footer="Install Lumni on your device for offline access"
+		>
+			<ListCell
+				title="Install Lumni"
+				subtitle={
+					isInstallable
+						? "Add to home screen"
+						: dismissed || wasDismissed
+							? "Prompt dismissed — reset to try again"
+							: "App is available for installation"
+				}
+				disabled={!isInstallable}
+				onClick={isInstallable ? install : undefined}
+				trailing={installTrailing}
+			/>
+			<ListCell
+				title="Reset Install Prompt"
+				subtitle={
+					wasDismissed
+						? "Prompt will appear on next page visit"
+						: "Install prompt has not been dismissed"
+				}
+				onClick={() => {
+					resetPwaDismiss();
+				}}
+				showSeparator={false}
+				trailing={resetTrailing}
+			/>
+		</ListSection>
+	);
+}
+
 export function DataTab({ onExport, onClear }: DataTabProps) {
 	return (
 		<>
@@ -77,6 +141,7 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
 				/>
 				<RestartOnboarding />
 			</ListSection>
+			<InstallAppSection />
 		</>
 	);
 }

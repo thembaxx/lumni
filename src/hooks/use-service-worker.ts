@@ -138,12 +138,15 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 	};
 }
 
-export function usePWAInstall(): {
+export interface UsePWAInstallReturn {
 	isInstallable: boolean;
 	install: () => void;
 	dismissed: boolean;
-	dismiss: () => void;
-} {
+	dismiss: (persist?: boolean) => void;
+	resetPwaDismiss: () => void;
+}
+
+export function usePWAInstall(): UsePWAInstallReturn {
 	const [isInstallable, setIsInstallable] = useState(false);
 	interface BeforeInstallPromptEvent extends Event {
 		prompt: () => Promise<void>;
@@ -196,11 +199,18 @@ export function usePWAInstall(): {
 		setDeferredPrompt(null);
 	}, [deferredPrompt]);
 
-	const dismiss = useCallback(() => {
+	const dismiss = useCallback((persist = false) => {
 		setIsInstallable(false);
 		setDismissed(true);
-		localStorage.setItem("pwa-install-dismissed", "true");
+		if (persist) {
+			localStorage.setItem("pwa-install-dismissed", "true");
+		}
 	}, []);
 
-	return { isInstallable, install, dismissed, dismiss };
+	const resetPwaDismiss = useCallback(() => {
+		localStorage.removeItem("pwa-install-dismissed");
+		setDismissed(false);
+	}, []);
+
+	return { isInstallable, install, dismissed, dismiss, resetPwaDismiss };
 }
