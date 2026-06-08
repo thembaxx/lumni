@@ -39,15 +39,15 @@ function handleFinish(
 }
 
 function QuizClientContent() {
-	const { get } = useSearchParams();
-	const initialSubject = get("subject") || undefined;
-	const topic = get("topic") || undefined;
-	const countParam = get("count");
+	const searchParams = useSearchParams();
+	const initialSubject = searchParams.get("subject") || undefined;
+	const topic = searchParams.get("topic") || undefined;
+	const countParam = searchParams.get("count");
 	const questionCount = countParam ? parseInt(countParam, 10) : 20;
-	const timeParam = get("time");
+	const timeParam = searchParams.get("time");
 	const maxTime = timeParam ? parseInt(timeParam, 10) : undefined;
-	const pastPaperMode = get("pastPaperMode") === "true";
-	const assignmentId = get("assignmentId") || null;
+	const pastPaperMode = searchParams.get("pastPaperMode") === "true";
+	const assignmentId = searchParams.get("assignmentId") || null;
 
 	return (
 		<QuizView

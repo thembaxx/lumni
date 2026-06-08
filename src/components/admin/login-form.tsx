@@ -71,7 +71,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 								},
 							}}
 						>
-							<form onSubmit={handleSubmit}>
+							<form onSubmit={handleSubmit} suppressHydrationWarning>
 								<Card className="shadow-lg">
 									<CardContent className="flex flex-col gap-4 p-6">
 										<div className="flex flex-col gap-1.5">

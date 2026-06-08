@@ -14,9 +14,9 @@ import { iOSEase } from "@/lib/utils/animation";
 
 function VerifyEmailContent() {
 	const { push } = useRouter();
-	const { get } = useSearchParams();
-	const userId = get("userId");
-	const secret = get("secret");
+	const searchParams = useSearchParams();
+	const userId = searchParams.get("userId");
+	const secret = searchParams.get("secret");
 	const [error, setError] = useState("");
 	const calledRef = useRef(false);
 	const t = useTranslations();

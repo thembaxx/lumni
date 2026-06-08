@@ -75,8 +75,8 @@ function signInReducer(state: SignInState, action: SignInAction): SignInState {
 
 function SignInForm() {
 	const { push, refresh } = useRouter();
-	const { get } = useSearchParams();
-	const redirect = safeRedirect(get("redirect"));
+	const searchParams = useSearchParams();
+	const redirect = safeRedirect(searchParams.get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
 	const [state, dispatch] = useReducer(signInReducer, initialState);
@@ -159,6 +159,7 @@ function SignInForm() {
 			transition={{ duration: 0.35, ease: iOSEase }}
 			onSubmit={handleSignIn}
 			className="flex flex-col gap-8"
+			suppressHydrationWarning
 		>
 			<div className="flex flex-col gap-2">
 				<h1 className="ios-title-2 font-semibold text-foreground">

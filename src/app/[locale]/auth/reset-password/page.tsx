@@ -65,9 +65,9 @@ function resetPasswordReducer(
 
 function ResetPasswordForm() {
 	const { push } = useRouter();
-	const { get } = useSearchParams();
-	const userId = get("userId");
-	const secret = get("secret");
+	const searchParams = useSearchParams();
+	const userId = searchParams.get("userId");
+	const secret = searchParams.get("secret");
 
 	const [state, dispatch] = useReducer(resetPasswordReducer, initialState);
 	const { password, confirmPassword, showPassword, error, loading, success } =
@@ -130,6 +130,7 @@ function ResetPasswordForm() {
 
 	return (
 		<m.form
+			suppressHydrationWarning
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
