@@ -23,6 +23,7 @@ export function MyAssignments() {
 		queryKey: ["studentAssignments"],
 		queryFn: () =>
 			fetch("/api/student/assignments").then((r) => {
+				if (r.status === 401) return { assignments: [] };
 				if (!r.ok) throw new Error("Failed to fetch");
 				return r.json();
 			}),

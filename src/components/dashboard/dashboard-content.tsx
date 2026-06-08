@@ -14,6 +14,7 @@ import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
+import { LoginBanner } from "@/components/dashboard/login-banner";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
@@ -180,8 +181,9 @@ export function DashboardContent({
 	activeTab: TabValue;
 }) {
 	const t = useTranslations();
-	const { isAnonymous } = useAuth();
+	const { user, isAnonymous } = useAuth();
 	const { gamification } = useGamification();
+	const isLoggedIn = !!user && !isAnonymous;
 
 	useEffect(() => {
 		initializeNotificationSchedulers();
@@ -208,6 +210,7 @@ export function DashboardContent({
 			className="flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))]"
 		>
 			<PageContainer className="gap-8 pb-16">
+				<LoginBanner />
 				{activeTab === "today" && <HeroBanner />}
 				{activeTab === "today" && boltDone && (
 					<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/8 px-4 py-3 transition-[background-color] duration-300">
@@ -236,7 +239,7 @@ export function DashboardContent({
 						description={t("dashboard.localDataDescription")}
 					/>
 				)}
-				{activeTab === "today" && !isAnonymous && <CountdownHeader />}
+				{activeTab === "today" && isLoggedIn && <CountdownHeader />}
 				<StaggerProvider baseDelay={0.02}>
 					{activeTab === "today" && (
 						<StaggeredSection>
@@ -248,7 +251,7 @@ export function DashboardContent({
 							<NotificationNudge />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<BentoStatRow
 								questionsAnswered={stats.questionsAnswered}
@@ -266,46 +269,46 @@ export function DashboardContent({
 							<AnonymousUpsell />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<AppErrorBoundary>
 								<NextBestActionCard />
 							</AppErrorBoundary>
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<TodayFocusCard />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<AppErrorBoundary>
 								<LearningMapCard />
 							</AppErrorBoundary>
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<MyAssignments />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<StreakCard />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<StudyPlanOverview />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<CompetencyOverview />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<BloomTaxonomyWidget />
 						</StaggeredSection>
@@ -315,7 +318,7 @@ export function DashboardContent({
 							<OfflinePackManager />
 						</StaggeredSection>
 					)}
-					{showPractice && !isAnonymous && (
+					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<DailyChallenges />
 						</StaggeredSection>
@@ -325,32 +328,32 @@ export function DashboardContent({
 							<QuizStartCard onStart={onStartQuiz} />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<ComparativeAnalyticsPanel />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<StatsRow />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<LeaderboardCard />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<AchievementShowcase />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<RewardChestPanel />
 						</StaggeredSection>
 					)}
-					{showAnalytics && !isAnonymous && (
+					{showAnalytics && isLoggedIn && (
 						<StaggeredSection>
 							<Card>
 								<CardHeader>

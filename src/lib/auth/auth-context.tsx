@@ -138,6 +138,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				typeof window !== "undefined" &&
 				localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true"
 			) {
+				dispatch({
+					type: "SET_USER",
+					user: null,
+					status: "unauthenticated",
+					isAnonymous: false,
+				});
 				dispatch({ type: "SET_AUTH_READY", authReady: true });
 				return;
 			}

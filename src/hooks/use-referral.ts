@@ -25,8 +25,9 @@ interface UseReferralReturn {
 	share: () => Promise<void>;
 }
 
-async function fetchReferralInfo(): Promise<ReferralInfo> {
+async function fetchReferralInfo(): Promise<ReferralInfo | null> {
 	const res = await fetch("/api/referral/info");
+	if (res.status === 401) return null;
 	if (!res.ok) {
 		const data = await res.json();
 		throw new Error(data.error || "Failed to load referral info");

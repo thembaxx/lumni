@@ -73,6 +73,7 @@ async function toggleProfileSubject(
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
+	const isLoggedIn = !!user && !isAnonymous;
 	const { startUpload } = useUploadThing("avatarUploader");
 	const [showGuidedSetup, setShowGuidedSetup] = useState(false);
 	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -139,7 +140,7 @@ export function ProfileTab() {
 		[user, queryClient],
 	);
 
-	if (isAnonymous) {
+	if (!isLoggedIn) {
 		return (
 			<div className="flex flex-col gap-10 pt-8">
 				<EmptyStateWithIllustration
@@ -195,7 +196,7 @@ export function ProfileTab() {
 				onUpdateName={async (v) => updateProfile({ name: v })}
 			/>
 
-			{!isAnonymous && <PasswordSection />}
+			{isLoggedIn && <PasswordSection />}
 
 			<SchoolDetailsSection
 				schoolDraft={schoolDraft}

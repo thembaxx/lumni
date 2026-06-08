@@ -24,9 +24,10 @@ const rankColors = [
 
 function useRealtimeIndicator() {
 	const [liveSince, setLiveSince] = useState<Date | null>(null);
+	const { user } = useAuth();
 
 	useEffect(() => {
-		if (typeof window === "undefined") return;
+		if (typeof window === "undefined" || !user) return;
 		let unsub: (() => void) | undefined;
 		const channel = `databases.${APPWRITE_DATABASE_ID}.collections.${COLLECTIONS.USER_GAMIFICATION}.documents`;
 
@@ -38,7 +39,7 @@ function useRealtimeIndicator() {
 			// Realtime unavailable — polling fallback
 		}
 		return () => unsub?.();
-	}, []);
+	}, [user]);
 
 	return liveSince;
 }

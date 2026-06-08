@@ -60,7 +60,8 @@ const tabDefs = [
 
 function SettingsContent() {
 	const t = useTranslations();
-	const { isAnonymous } = useAuth();
+	const { user, isAnonymous } = useAuth();
+	const isLoggedIn = !!user && !isAnonymous;
 	const [activeTab, setActiveTab] = useState("profile");
 
 	useEffect(() => {
@@ -71,11 +72,11 @@ function SettingsContent() {
 	const visibleTabs = useMemo(
 		() =>
 			tabDefs.flatMap((td) =>
-				!(isAnonymous && td.value === "referrals")
+				td.value !== "referrals" || isLoggedIn
 					? [{ ...td, label: t(td.key) }]
 					: [],
 			),
-		[isAnonymous, t],
+		[isLoggedIn, t],
 	);
 	const [saved, setSaved] = useState(false);
 
@@ -138,13 +139,13 @@ function SettingsContent() {
 
 	const handleSetActiveTab = useCallback(
 		(tab: string) => {
-			if (isAnonymous && tab === "referrals") {
+			if (!isLoggedIn && tab === "referrals") {
 				setActiveTab("profile");
 			} else {
 				setActiveTab(tab);
 			}
 		},
-		[isAnonymous],
+		[isLoggedIn],
 	);
 
 	const setBetaFeatures = useCallback(
@@ -315,7 +316,7 @@ function SettingsContent() {
 								/>
 							)}
 
-							{activeTab === "referrals" && !isAnonymous && <ReferralTab />}
+							{activeTab === "referrals" && isLoggedIn && <ReferralTab />}
 
 							{activeTab === "beta" && (
 								<BetaTab
