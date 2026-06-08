@@ -67,7 +67,7 @@ export function HomeContent() {
 										Try a Quiz
 									</Button>
 								</Link>
-								<Link href="/auth/sign-up">
+								<Link href="/dashboard">
 									<Button size="sm">{t("home.navGetStarted")}</Button>
 								</Link>
 							</>
@@ -78,7 +78,7 @@ export function HomeContent() {
 										{t("home.navSignIn")}
 									</Button>
 								</Link>
-								<Link href="/auth/sign-up">
+								<Link href="/dashboard">
 									<Button size="sm">
 										{t("home.navGetStarted")}
 										<HugeiconsIcon

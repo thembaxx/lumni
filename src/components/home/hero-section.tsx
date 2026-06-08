@@ -69,7 +69,7 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 									</Button>
 								</Link>
 							) : (
-								<Link href="/auth/sign-up">
+								<Link href="/dashboard">
 									<Button size="lg" className="w-full sm:w-auto">
 										{t("home.heroStartFree")}
 									</Button>
