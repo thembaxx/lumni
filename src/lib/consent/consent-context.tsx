@@ -15,6 +15,10 @@ import { userConsentService } from "@/lib/services/user-consent-service";
 import type { UserConsent } from "@/types/user-consent";
 import { appConfig } from "../../../app.config";
 
+function nowISO(): string {
+	return new Date().toISOString();
+}
+
 export type ConsentState = {
 	consent: UserConsent | null;
 	isLoading: boolean;
@@ -38,6 +42,8 @@ export type ConsentContextValue = ConsentState & {
 
 const ConsentContext = createContext<ConsentContextValue | null>(null);
 
+const anonymousConsentCache = new Map<string, UserConsent>();
+
 export function ConsentProvider({ children }: { children: React.ReactNode }) {
 	const { user } = useAuth();
 	const [state, setState] = useState<ConsentState>({
@@ -49,17 +55,42 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		if (!userId) {
-			setState({ consent: null, isLoading: false, needsTosAcceptance: false });
-			updateAnalyticsConsent(false);
-			updateDataSharingConsent(false);
+			const cached = anonymousConsentCache.get("default");
+			if (cached) {
+				setState({
+					consent: cached,
+					isLoading: false,
+					needsTosAcceptance: true,
+				});
+				updateAnalyticsConsent(cached.analytics);
+				updateDataSharingConsent(cached.dataSharing);
+			} else {
+				setState({
+					consent: null,
+					isLoading: false,
+					needsTosAcceptance: false,
+				});
+				updateAnalyticsConsent(false);
+				updateDataSharingConsent(false);
+			}
 			return;
 		}
 
 		let cancelled = false;
 
 		async function load() {
-			const existing = await userConsentService.get(userId as string);
+			let existing = await userConsentService.get(userId as string);
 			if (cancelled) return;
+
+			const cached = anonymousConsentCache.get("default");
+			if (!existing && cached) {
+				existing = await userConsentService.save(userId as string, {
+					analytics: cached.analytics,
+					marketing: cached.marketing,
+					dataSharing: cached.dataSharing,
+				});
+				anonymousConsentCache.delete("default");
+			}
 
 			const currentTos = appConfig.legal.tosVersion;
 			const _currentPrivacy = appConfig.legal.privacyVersion;
@@ -97,23 +128,46 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 				>
 			>,
 		) => {
-			if (!userId) return;
-			const updated = await userConsentService.save(userId, partial);
+			const now = nowISO();
 
-			const currentTos = appConfig.legal.tosVersion;
-			const _currentPrivacy = appConfig.legal.privacyVersion;
+			if (userId) {
+				const updated = await userConsentService.save(userId, partial);
 
-			const needsTosAcceptance =
-				!updated.tosVersion || updated.tosVersion !== currentTos;
+				updateAnalyticsConsent(updated.analytics);
+				updateDataSharingConsent(updated.dataSharing);
 
-			updateAnalyticsConsent(updated.analytics);
-			updateDataSharingConsent(updated.dataSharing);
+				setState({
+					consent: updated,
+					isLoading: false,
+					needsTosAcceptance:
+						!updated.tosVersion ||
+						updated.tosVersion !== appConfig.legal.tosVersion,
+				});
+			} else {
+				const local: UserConsent = {
+					userId: "anonymous",
+					analytics: partial.analytics ?? false,
+					marketing: partial.marketing ?? false,
+					dataSharing: partial.dataSharing ?? false,
+					tosVersion: null,
+					tosAcceptedAt: null,
+					privacyVersion: null,
+					privacyAcknowledgedAt: null,
+					updatedAt: now,
+					createdAt: now,
+				};
 
-			setState({
-				consent: updated,
-				isLoading: false,
-				needsTosAcceptance,
-			});
+				anonymousConsentCache.set("default", local);
+
+				updateAnalyticsConsent(local.analytics);
+				updateDataSharingConsent(local.dataSharing);
+
+				setState({
+					consent: local,
+					isLoading: false,
+					needsTosAcceptance: true,
+				});
+			}
 		},
 		[userId],
 	);
