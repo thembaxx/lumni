@@ -70,7 +70,8 @@ export function createQueueCore(
 ) {
 	return new QueueCore<JobRecord>(jobs);
 }
-export const queueCore = createQueueCore();
+export const queueCore: QueueCore<JobRecord> | undefined =
+	typeof indexedDB !== "undefined" ? createQueueCore() : undefined;
 
 export async function enqueue<T extends JobType>(
 	type: T,
@@ -82,7 +83,7 @@ export async function enqueue<T extends JobType>(
 	}
 	const now = Date.now();
 	try {
-		return await queueCore.enqueue({
+		return await queueCore?.enqueue({
 			type,
 			payload: safeJsonStringify(payload),
 			status: "pending",
