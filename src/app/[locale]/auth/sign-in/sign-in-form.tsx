@@ -230,6 +230,14 @@ export function SignInForm() {
 								)}
 							</button>
 						</div>
+						<div className="flex justify-end">
+							<Link
+								href="/auth/forgot-password"
+								className="font-medium text-sm text-system-accent hover:underline"
+							>
+								{t("auth.forgotPassword")}
+							</Link>
+						</div>
 					</div>
 				)}
 
