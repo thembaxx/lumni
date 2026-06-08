@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { cn } from "@/lib/shared";
 import "./globals.css";
@@ -29,6 +29,10 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const locale = await getLocale();
+	const cookieStore = await cookies();
+	const themeCookie = cookieStore.get("theme")?.value;
+	const prefersDark = themeCookie === "dark" || (!themeCookie && false);
+	const isDark = prefersDark;
 
 	return (
 		<html
@@ -41,27 +45,11 @@ export default async function RootLayout({
 				fontSans.variable,
 				fontMono.variable,
 				fontHeading.variable,
+				isDark && "dark",
 			)}
+			style={{ colorScheme: isDark ? "dark" : "light" }}
 		>
 			<body className="flex h-full min-h-full flex-col bg-[--system-background] text-[--system-text-primary] antialiased">
-				<Script
-					id="theme-init"
-					strategy="beforeInteractive"
-					// react-doctor will-fix: theme FOUC prevention — no user input, hardcoded inline script
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: theme FOUC prevention
-					dangerouslySetInnerHTML={{
-						__html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else if(t==="light"){document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}else{if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}}}catch(e){}})()`,
-					}}
-				/>
-				<Script
-					id="sw-cleanup"
-					strategy="beforeInteractive"
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: dev SW cleanup
-					dangerouslySetInnerHTML={{
-						__html:
-							'if(location.hostname==="localhost"&&"serviceWorker"in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){for(var i=0;i<rs.length;i++){rs[i].unregister()}});navigator.serviceWorker.register("/sw.js").then(function(){navigator.serviceWorker.getRegistrations().then(function(rs){for(var i=0;i<rs.length;i++){rs[i].unregister()}})})}',
-					}}
-				/>
 				{children}
 			</body>
 		</html>

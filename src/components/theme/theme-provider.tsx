@@ -48,6 +48,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 		if (!mounted.current) return;
 		try {
 			localStorage.setItem("theme", theme);
+			// biome-ignore lint/suspicious/noDocumentCookie: Cookie needed for server-side theme detection
+			document.cookie = `theme=${theme};path=/;max-age=31536000;SameSite=Lax`;
 		} catch {
 			// Storage unavailable; theme still applies in-memory
 		}

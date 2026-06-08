@@ -3,7 +3,7 @@ import { domAnimation, LazyMotion } from "framer-motion";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
-import Script from "next/script";
+
 import { connection } from "next/server";
 import {
 	getMessages,
@@ -181,13 +181,12 @@ export default async function LocaleLayout({
 			<Suspense fallback={<CardSkeleton />}>
 				<Utssr />
 			</Suspense>
-			<Script
-				id="json-ld"
-				type="application/ld+json"
-				strategy="afterInteractive"
-				// react-doctor will-fix: JSON-LD structured data is static, no user input
+			<div
+				aria-hidden="true"
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				dangerouslySetInnerHTML={{
+					__html: `<script id="json-ld" type="application/ld+json">${JSON.stringify(jsonLd).replace(/<\/script>/g, "<\\/script>")}</script>`,
+				}}
 			/>
 			<ChunkLoadHandler />
 			<Providers locale={locale} messages={messages} timeZone={timeZone}>
