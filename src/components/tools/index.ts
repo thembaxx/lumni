@@ -1,7 +1,6 @@
 export { AiSolver } from "./communication/ai-solver";
 export { ExamDetailDialog } from "./communication/exam-detail-dialog";
 export { ResultsSearch } from "./communication/results-search";
-export { FloatingToolsButton } from "./core/floating-tools-button";
 export { SnapFab } from "./core/snap-fab";
 export { ToolsDialog } from "./core/tools-dialog";
 export { APSCalculator } from "./math/aps-calculator";
