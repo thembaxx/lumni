@@ -178,7 +178,7 @@ function SignInForm() {
 					>
 						{t("auth.emailLabel")}
 					</label>
-					<div className="relative">
+					<div className="relative" suppressHydrationWarning>
 						<HugeiconsIcon
 							icon={Mail01Icon}
 							className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
@@ -205,7 +205,7 @@ function SignInForm() {
 						>
 							{t("auth.passwordLabel")}
 						</label>
-						<div className="relative">
+						<div className="relative" suppressHydrationWarning>
 							<Input
 								id="password"
 								type={showPassword ? "text" : "password"}

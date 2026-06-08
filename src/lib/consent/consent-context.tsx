@@ -60,7 +60,9 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 				setState({
 					consent: cached,
 					isLoading: false,
-					needsTosAcceptance: true,
+					needsTosAcceptance:
+						!cached.tosVersion ||
+						cached.tosVersion !== appConfig.legal.tosVersion,
 				});
 				updateAnalyticsConsent(cached.analytics);
 				updateDataSharingConsent(cached.dataSharing);
@@ -144,17 +146,22 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 						updated.tosVersion !== appConfig.legal.tosVersion,
 				});
 			} else {
+				const cached = anonymousConsentCache.get("default");
+
 				const local: UserConsent = {
 					userId: "anonymous",
-					analytics: partial.analytics ?? false,
-					marketing: partial.marketing ?? false,
-					dataSharing: partial.dataSharing ?? false,
-					tosVersion: null,
-					tosAcceptedAt: null,
+					analytics: partial.analytics ?? cached?.analytics ?? false,
+					marketing: partial.marketing ?? cached?.marketing ?? false,
+					dataSharing: partial.dataSharing ?? cached?.dataSharing ?? false,
+					tosVersion: partial.tosVersion ?? cached?.tosVersion ?? null,
+					tosAcceptedAt:
+						partial.tosVersion && partial.tosVersion !== cached?.tosVersion
+							? now
+							: (cached?.tosAcceptedAt ?? null),
 					privacyVersion: null,
 					privacyAcknowledgedAt: null,
 					updatedAt: now,
-					createdAt: now,
+					createdAt: cached?.createdAt ?? now,
 				};
 
 				anonymousConsentCache.set("default", local);
@@ -165,7 +172,9 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 				setState({
 					consent: local,
 					isLoading: false,
-					needsTosAcceptance: true,
+					needsTosAcceptance:
+						!local.tosVersion ||
+						local.tosVersion !== appConfig.legal.tosVersion,
 				});
 			}
 		},
