@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** 2026-06-07 (sessions 1-32, June 2026)
+**Last synced:** 2026-06-08 (sessions 1-34, June 2026)
 
 ---
 
@@ -18,7 +18,7 @@ graph TB
     subgraph Client [Browser / PWA]
         A[React 19 + Next.js 16]
         B[Zustand Stores]
-        C[Dexie IndexedDB<br/>38+ tables, v32 schema]
+        C[Dexie IndexedDB<br/>35+ tables, v32 schema]
         D[Zustand Persist<br/>localStorage]
     end
 
@@ -347,8 +347,9 @@ erDiagram
 | `/api/teacher/assign` | POST | Assign student to teacher | Traditional |
 | `/api/teacher/assignments` | GET | List teacher assignments | Traditional |
 | `/api/teacher/assignments/[id]/messages` | GET/POST | Assignment messaging | Traditional |
-| `/api/teacher/ghost-link` | POST | Create B2B2C ghost link | Traditional |
+| `/api/teacher/ghost-link` | POST/DELETE | Create/revoke B2B2C ghost link (Appwrite) | `createRouteHandler` |
 | `/api/teacher/share-assignment` | POST | Create assignment share link | Traditional |
+| `/api/teacher/students/[studentId]/report` | GET | Student progress report from Appwrite | `createRouteHandler` |
 | `/api/student/assignments` | GET | List student assignments | Traditional |
 | `/api/assignments/[id]/submit` | POST | Submit assignment for grading | Traditional |
 | `/api/assignments/[id]/comment` | POST | Teacher comment on assignment | Traditional |
@@ -356,7 +357,8 @@ erDiagram
 | `/api/study-groups/[groupId]/live-session/[sessionId]` | GET/PATCH | Get/end live session | Traditional |
 | `/api/q/share` | POST | Share a question publicly | Traditional |
 | `/api/q/[id]` | GET | Get shared question | Traditional |
-| `/api/ghost/[token]` | GET | Get ghost dashboard stats | Traditional |
+| `/api/ghost/[token]` | GET | Get ghost dashboard stats (Appwrite) | Traditional |
+| `/api/cron/weekly-digest` | POST | Weekly digest push to all subscribers | Admin-only |
 
 ### Key Event Flows
 
@@ -491,7 +493,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | **Error monitoring** | Client + server + edge | Sentry DSN configured + centralized logger |
 | **Build quality** | Zero tsc errors, zero Biome errors | Pre-commit hook (Bun) |
 | **E2E coverage** | Smoke + visual tests for core flows | Playwright 1.60.0 |
-| **UI documentation** | Storybook for component library | Storybook 10.4.1 (10 stories) |
+| **UI documentation** | Storybook for component library | Storybook 10.4.1 (18 stories) |
 | **Dead code detection** | Knip static analysis | knip@6.15.0 |
 
 ### Scalability Bottlenecks
@@ -545,7 +547,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | P2 | Public share route | `/q/[id]` with star-gated answer reveal + source attribution | ✅ Done |
 | P2 | PWA offline polish | `/offline` page, manifest theming, install tracking | ✅ Done |
 | P2 | Calendar view | Month grid in study planner with session dots + drag-to-reschedule | ✅ Done |
-| P2 | Batch 6 hardening | i18n round 2, knip, visual tests, storybook coverage 10 stories | ✅ Done |
+| P2 | Batch 6 hardening | i18n round 2, knip, visual tests, storybook coverage 18 stories | ✅ Done |
 | P2 | Theme chrome takeover | Dynamic `theme-color`, accent-tinted nav glass, SSR viewport | ✅ Done |
 | P2 | Navigation sidebar overhaul | 64px icon column → full categorized sidebar with search | ✅ Done |
 | P2 | Daily Bolt simplification | Remove two-step, streamlined celebration | ✅ Done |

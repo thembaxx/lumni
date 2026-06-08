@@ -1,4 +1,4 @@
-# Context Manifest — 2026-06-07
+# Context Manifest — 2026-06-08
 
 ## Identity
 
@@ -6,13 +6,13 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers are implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables accessed via typed interface. Knowledge graph, study guides, live sessions, and share/public routes shipped. Theme chrome and navigation sidebar redesigned. Hardening sweep (a11y, i18n, knip, visual tests) done. 1258 tests pass, 0 fail. Next: pick from TODO.md or new features.
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. 1258 tests pass, 0 fail.
 
 ## System at a Glance
 
 ```
 Browser (React 19 + Next.js 16)
-  ├── Dexie IndexedDB   ← L1 cache (v32, 38+ tables, 24h-30d expiry)
+  ├── Dexie IndexedDB   ← L1 cache (v32, 35+ tables, 24h-30d expiry)
   │     ├── Questions, Visuals, QuizPacks, StudyGuides, KnowledgeGraph
   │     ├── tinyfishCache + tinyfishUsage (RAG cache + daily counter)
   │     ├── Flashcard SM-2 state + SR settings + sync state
@@ -45,10 +45,12 @@ Next.js API Routes (~50 groups, most via createRouteHandler factory)
   ├── LiveSessionService → real-time study sessions via Appwrite (15s polling)
   ├── ShareService       → public shares, ghost links, assignment sharing
   ├── RetentionService   → wrong-answer re-encounter, next-best-action
-  ├── QueueCore          → Dexie-backed job queue (retry + backoff)
-  ├── RateLimiter+TokenTracker → auth limits + AI budget caps (MapStore or RedisStore)
-  ├── UniformAIAdapter   → factory for pluggable provider normalizers
-  └── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
+├── QueueCore          → Dexie-backed job queue (retry + backoff)
+├── RateLimiter+TokenTracker → auth limits + AI budget caps (MapStore or RedisStore)
+├── UniformAIAdapter   → factory for pluggable provider normalizers
+├── WeeklyDigest       → POST /api/cron/weekly-digest (admin push to all subscribers)
+├── DailyDigest        → scheduleDailyDigest() in notification-service (per-day local notification)
+└── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
         │
 Appwrite Cloud
   ├── Auth (anonymous → email/password)
@@ -68,7 +70,7 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
-| `src/lib/db/data-access.ts` | DataAccess interface (38+ tables) |
+| `src/lib/db/data-access.ts` | DataAccess interface (33 accessors, 10 sub-interfaces) |
 | `src/lib/db/dexie-data-access.ts` | Production implementation |
 | `src/lib/db/in-memory-data-access.ts` | Test implementation |
 | `src/lib/db/schema.ts` | Dexie v32 schema |
@@ -84,6 +86,11 @@ Appwrite Cloud
 | `src/lib/flashcard-engine/deck-types.ts` | Flashcard deck interfaces |
 | `src/lib/navigation/config.ts` | Sidebar navigation config |
 | `src/components/theme/theme-provider.tsx` | Dynamic theme-color sync |
+| `src/components/teacher/observation-timeline.tsx` | Teacher observations (Dexie-backed) |
+| `src/components/teacher/assignment-thread.tsx` | Assignment messaging (Dexie-backed) |
+| `src/components/admin/question-ratings-dashboard.tsx` | Quality dashboard with rating chart |
+| `src/app/api/cron/weekly-digest/route.ts` | Weekly digest push cron endpoint |
+| `src/app/api/teacher/students/[studentId]/report/route.ts` | Student report from Appwrite |
 | `docs/superpowers/specs/2026-06-07-*.md` | Latest design specs |
 
 ## Background Knowledge
@@ -101,9 +108,9 @@ Appwrite Cloud
 - **Study guides**: `src/lib/study-guide/` — AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
 - **Live sessions**: `useLiveSession()` hook with 15s polling via React Query. Appwrite-backed with `LiveSession` + `LiveSessionParticipant` collections.
 - **Dexie schema**: v32 — 38+ tables. v27 added `analyticsEvents`. v28 added `sharedQuestions`. v29 added `knowledgeGraph`. v30 added `teacherObservations` + `assignmentMessages`. v31 added `studyPlans` + `onboardingState` + `srDailyBudget` + `flashcardSyncState`. v32 added `studyGuides`.
-- **DataAccess seam**: All 38+ tables accessed via typed `DataAccess` interface. Two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests). `seed()` for test setup. See ADR-0011.
+- **DataAccess seam**: All 33 accessors via typed `DataAccess` interface (10 domain sub-interfaces: FlashcardDataAccess, CompetencyDataAccess, QuizDataAccess, ContentDataAccess, StudyDataAccess, SyncDataAccess, ObservabilityDataAccess, SocialDataAccess, CacheDataAccess, LegacyDataAccess). 11 dead accessors removed. Two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests). `seed()` for test setup. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain consumers kept on composite `DataAccess`. `Collection<T>` now supports `.offset(n)` for pagination. See ADR-0011.
 - **E2E testing**: Playwright 1.60.0 — smoke tests + visual regression tests (homepage sections).
-- **Storybook**: 10.4.1 with 10 stories (Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator, ShareButton, Badge).
+- **Storybook**: 10.4.1 with 18 stories (Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator, ShareButton, Badge, Dialog, Input, Textarea, Select, Tabs, Popover, DropdownMenu, Toast).
 - **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules. Injects CAPS/DBE sources into solve + quiz prompts. XML `<reference_material>` block + `buildPromptInstruction()` framing. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent-gated. DI pattern (`deps?` arg). `getLastRagContext()` surfaces batch RAG context. Per-question `Question.webSources` via hybrid AI-cite + fallback. See ADR-0010.
 - **Exam_dates sync**: Background job `"appwrite-exam-dates-sync"` with `upsertDocument` handler.
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.

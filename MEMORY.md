@@ -1,7 +1,7 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** 2026-06-07 (Sessions 22-32, including Batch 1-6, Data Consolidation, Theme Chrome, Navigation Sidebar)
+**Last updated:** 2026-06-08 (Sessions 22-34, including Batch 1-6, Data Consolidation, Theme Chrome, Navigation Sidebar, DataAccess domain split, Teacher localStorage fixes, Weekly/Daily digest)
 **Sources:** MEMORY.md, AGENTS.md (Sessions 1-32), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
@@ -61,6 +61,15 @@
 | D048 | Share/public routes: star-gated answer reveal | `/q/[id]` public page with 5-star rating gate; `<VerifiedByPill>` for sources; ghost links (30d expiry) for B2B2C | 2026-06-07 |
 | D049 | PWA offline polish with install tracking | `/offline` page, manifest `theme_color`, `pwa_install`/`offline_visit` events in observability | 2026-06-07 |
 | D050 | Item-bank pruning background job | `"prune-stale-questions"` job type enqueued from `/api/engine/generate`; `pruned?: boolean` field on `Question` | 2026-06-07 |
+| D051 | DataAccess domain split into 10 sub-interfaces | 33 accessors, 11 dead removed; `Collection.offset(n)` for pagination; 19 consumers narrowed to sub-interfaces; 7 cross-domain kept on composite DataAccess | 2026-06-08 |
+| D052 | Practice More button on BoltCelebration | Link-style secondary CTA navigates to `/quiz?subject=X` via `startViewTransition`; avoids mock.module pollution in tests | 2026-06-08 |
+| D053 | Quality dashboard rating distribution chart | Recharts bar chart added to `QuestionRatingsDashboard` showing 1-5 star counts | 2026-06-08 |
+| D054 | Storybook 10→18 stories | Added Dialog, Input, Textarea, Select, Tabs, Popover, DropdownMenu, Toast | 2026-06-08 |
+| D055 | Teacher tooling localStorage → proper storage | Ghost links → Appwrite `ghost_links` collection; Observations → Dexie `teacherObservations` (v30); Messages → Dexie `assignmentMessages` (v30); Shared assignments → Dexie `sharedQuestions`; `teacherObservations` + `assignmentMessages` re-added to DataAccess | 2026-06-08 |
+| D056 | Weekly digest push via cron endpoint | `POST /api/cron/weekly-digest` — admin-protected, computes weekly quiz stats, sends web push to all subscribers via `web-push` | 2026-06-08 |
+| D057 | Teacher report fetches from Appwrite | `GET /api/teacher/students/[studentId]/report` replaces local Dexie read; now shows actual student data across devices | 2026-06-08 |
+| D058 | Daily digest notification | `scheduleDailyDigest()` in notification-service — local notification with today's quiz count + average score, respects `dailyDigest` settings toggle | 2026-06-08 |
+| D059 | WeeklyReportPanel real data | Replaced hash-based random mastery (`40 + hash % 55`) with values derived from subject's actual score (±8 pts per topic) | 2026-06-08 |
 
 ### Reversals
 
@@ -135,7 +144,7 @@
 | PDF scraping for exam dates? | ✅ Manual extraction from web sources for now | 2026-05-26 |
 | GDPR/POPIA legal compliance? | ✅ Consent management, cookie banner, TOS versioning, account deletion, data export | 2026-05-29 |
 | Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19), round 2 a11y (Session 30) | 2026-06-07 |
-| Test suite health? | ✅ 1225 pass, 0 fail | 2026-06-07 |
+| Test suite health? | ✅ 1258 pass, 0 fail | 2026-06-08 |
 | Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs + Q7/Q4 follow-ups. 1225 pass. | 2026-06-02 |
 | DataAccess seam? | ✅ Phase 1-4 complete. All 38+ tables migrated. | 2026-06-07 |
 | Knowledge graph + study guides? | ✅ Both shipped. Knowledge graph (v29, 7d TTL). Study guides (v32, 30d TTL). | 2026-06-07 |

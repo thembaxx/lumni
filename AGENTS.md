@@ -646,4 +646,83 @@ const systemPrompt = webContext.xml
 | v31 | S24 | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
 | v32 | S28 | `studyGuides` |
 
-### Final test baseline: 1225 pass, 0 fail (no pre-existing failures)
+### Session 33 — DataAccess domain split + Practice More + test fixes (June 2026)
+
+**DataAccess domain split:**
+- Defined 10 exported sub-interfaces (`FlashcardDataAccess`, `CompetencyDataAccess`, `QuizDataAccess`, `ContentDataAccess`, `StudyDataAccess`, `SyncDataAccess`, `ObservabilityDataAccess`, `SocialDataAccess`, `CacheDataAccess`, `LegacyDataAccess`) — 33 accessors total
+- Removed 11 dead accessors (groupPosts, groupComments, groupReactions, groupChallenges, groupChallengeEntries, groupBadges, teacherObservations, assignmentMessages, onboardingState, srDailyBudget)
+- Updated `DexieDataAccess` and `InMemoryDataAccess` — stripped dead accessors
+- Narrowed 19 `_deps` consumers to specific sub-interfaces
+- Barrelled all sub-interfaces from `@/lib/db`
+- 7 cross-domain consumers kept on composite `DataAccess`
+
+**Konva renderer registry:**
+- `switch` with 10 cases replaced by `diagramRegistry: Record<string, DiagramComponent>` map
+
+**Practice More button:**
+- Added "Practice more {subjectLabel}" link-style button to `BoltCelebration` behind `onPracticeMore` prop
+- Wired through `DailyBoltOverlay` → `DashboardClient` → `startViewTransition` to `/quiz?subject=X`
+
+**Test fixes (+ → 1258 pass, 0 fail):**
+- 8 RateLimiter async/await test fixes
+- 8 quiz-session repo test failures (inlined `QuizSessionRepository` with mock DataAccess)
+- KaTeX happy-dom CSS crash: global preload `setup.ts` patches `CSSStyleSheet.prototype.replaceSync` with try/catch
+- Removed `mock.module` pollution: mock `@/hooks/use-question-engine` instead of `@/lib/shared/api-fetch`
+
+**ADR-0011:** Updated for 33 tables, 10 sub-interfaces, current API surface.
+
+### Session 34 — Quality dashboard + Storybook + Teacher fixes + Digest (June 2026)
+
+**Quality dashboard rating chart:**
+- Added recharts bar chart to `QuestionRatingsDashboard` showing 1-5 star distribution
+- Dynamically imported via `BarChartComponent` from `@/components/ui/charts/bar-chart`
+
+**Storybook 10→18 stories:**
+- Added Dialog, Input, Textarea, Select, Tabs, Popover, DropdownMenu, Toast
+
+**Teacher localStorage → proper storage:**
+- Ghost links (`POST/DELETE /api/teacher/ghost-link`): localStorage → Appwrite `ghost_links` collection
+- Ghost token (`GET /api/ghost/[token]`): localStorage → Appwrite query
+- `ObservationTimeline`: localStorage → Dexie `teacherObservations` table (v30 existed, unused)
+- `AssignmentThread` + messages API route: localStorage → Dexie `assignmentMessages` table (v30 existed, unused)
+- Shared assignment page: localStorage → Dexie `sharedQuestions` table
+- Re-added `teacherObservations` + `assignmentMessages` to `DataAccess` (removed as dead in S33, now have real consumers)
+
+**Weekly digest push:**
+- Created `POST /api/cron/weekly-digest` — admin-protected endpoint
+- Computes weekly quiz stats (total quizzes, avg score, top 3 subjects)
+- Sends web push notifications to all subscribers via `web-push`
+- No external cron configured — relies on manual/admin trigger
+
+**Teacher report from Appwrite:**
+- Created `GET /api/teacher/students/[studentId]/report`
+- Rewrote `teacher/report/[studentId]/page.tsx` to call API instead of reading local Dexie
+- Now shows actual student data across devices
+
+**Daily digest notification:**
+- Added `scheduleDailyDigest()` to notification-service.ts
+- Sends local daily notification with today's quiz count and average score
+- Wired into `initializeNotificationSchedulers()` — respects `dailyDigest` settings toggle
+
+**WeeklyReportPanel:**
+- Replaced hash-based random mastery (`40 + hash % 55`) with subject-score-derived values
+
+**DataAccess pagination:**
+- Added `offset(n): Collection<T>` to `Collection<T>` interface
+- Implemented in `DexieCollectionAdapter` (delegates to Dexie `.offset(n)`)
+- Implemented in `InMemoryCollection` (`.slice(n)`)
+
+### Dexie Schema Progression
+
+| Version | Session | Tables Added |
+|---------|---------|-------------|
+| v25 | S19 | `tinyfishCache`, `tinyfishUsage` |
+| v26 | S21 | `Question.webSources` (lazy, no new index) |
+| v27 | S25 | `analyticsEvents` |
+| v28 | S27 | `sharedQuestions` |
+| v29 | S25 | `knowledgeGraph` |
+| v30 | S27 | `teacherObservations`, `assignmentMessages` |
+| v31 | S24 | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
+| v32 | S28 | `studyGuides` |
+
+### Final test baseline: 1258 pass, 0 fail (no pre-existing failures)
