@@ -1,3 +1,4 @@
+import { getCachedGraph } from "@/lib/knowledge-graph/service";
 import type { ExamDateInfo } from "@/lib/utils/study-planner";
 import type {
 	StudyPlan,
@@ -53,11 +54,11 @@ export function allocateDailyMinutes(
  * Bloom level progression (remember → apply → analyze → create) can be layered
  * in once per-topic Bloom levels are stored in SubjectCompetency.
  */
-export function generateStudyPlan(
+export async function generateStudyPlan(
 	settings: StudyPlanSettings,
 	subjects: SubjectCompetency[],
 	examDates: ExamDateInfo[] = [],
-): StudyPlan {
+): Promise<StudyPlan> {
 	const startDate = new Date(settings.startDate);
 	let endDate = new Date(settings.endDate);
 	const studyDays = settings.studyDays;
@@ -140,6 +141,52 @@ export function generateStudyPlan(
 				subjectLevel: subject.level,
 				subjectWeight: subject.weight,
 			});
+		}
+	}
+
+	// 2.5 Prerequisite check using cached knowledge graph
+	const graphResults = await Promise.all(
+		candidates.map(async (cand) => {
+			try {
+				const graph = await getCachedGraph(
+					cand.topic.subjectId,
+					cand.topic.topicId,
+				);
+				return { topicId: cand.topic.topicId, graph };
+			} catch {
+				return { topicId: cand.topic.topicId, graph: null };
+			}
+		}),
+	);
+	const graphMap = new Map(graphResults.map((r) => [r.topicId, r.graph]));
+
+	for (const cand of candidates) {
+		const graph = graphMap.get(cand.topic.topicId);
+		if (!graph) continue;
+
+		const prereqTopicIds = new Set(
+			graph.nodes
+				.filter((n) => n.type === "prerequisite")
+				.map((n) => n.label.toLowerCase().replace(/\s+/g, "-")),
+		);
+
+		if (prereqTopicIds.size === 0) continue;
+
+		let hasUnsatisfiedPrereq = false;
+		for (const prereqId of prereqTopicIds) {
+			const prereqTopic = candidates.find(
+				(c) =>
+					c.topic.topicId.toLowerCase() === prereqId &&
+					c.topic.topicId !== cand.topic.topicId,
+			);
+			if (prereqTopic && !prereqTopic.topic.isCompleted) {
+				hasUnsatisfiedPrereq = true;
+				break;
+			}
+		}
+
+		if (hasUnsatisfiedPrereq) {
+			cand.topic.priority = Math.max(1, cand.topic.priority - 2);
 		}
 	}
 

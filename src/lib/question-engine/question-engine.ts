@@ -118,7 +118,7 @@ export class QuestionEngine {
 		if (remainingCount === 0 && poolCount > 0) {
 			return poolQuestions.map((pq) => ({
 				id: pq.id,
-				type: "short-answer" as const,
+				type: (pq.type as QuestionType) ?? "short-answer",
 				subject: enriched.subject,
 				topic: pq.topic ?? enriched.topic ?? "",
 				difficulty: "Medium" as const,
@@ -155,16 +155,16 @@ export class QuestionEngine {
 
 		const MAX_RETRIES = 2;
 
-		const results = await Promise.allSettled(
-			Array.from({ length: MAX_RETRIES + 1 }, () =>
-				this.generateBatch(enriched, ragContext, remainingCount),
-			),
-		);
-
 		let questions: Question[] = [];
-		for (const r of results) {
-			if (r.status === "fulfilled" && r.value.length > questions.length) {
-				questions = r.value;
+		for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+			const result = await this.generateBatch(
+				enriched,
+				ragContext,
+				remainingCount,
+			);
+			if (result.length > questions.length) {
+				questions = result;
+				if (questions.length >= remainingCount) break;
 			}
 		}
 
@@ -174,7 +174,7 @@ export class QuestionEngine {
 		if (poolCount > 0) {
 			const directQuestions: Question[] = poolQuestions.map((pq) => ({
 				id: pq.id,
-				type: "short-answer" as const,
+				type: (pq.type as QuestionType) ?? "short-answer",
 				subject: enriched.subject,
 				topic: pq.topic ?? enriched.topic ?? "",
 				difficulty: "Medium" as const,
@@ -320,6 +320,7 @@ export class QuestionEngine {
 							paperNumber: sq.paperNumber,
 							topic: sq.topic,
 							similarity: sq.similarity,
+							type: sq.type,
 						});
 					}
 				}

@@ -1,10 +1,34 @@
 import type { QuestionBody } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 
+function parseAnswer(raw: unknown): { value: number; unit?: string } {
+	if (raw == null) return { value: NaN };
+	const v = raw as Record<string, unknown>;
+	if (typeof v.value === "number") return v as { value: number; unit?: string };
+	if (typeof v.value === "string")
+		return { value: parseFloat(v.value), unit: v.unit as string | undefined };
+	if (typeof raw === "string") {
+		const match = raw
+			.trim()
+			.match(/^(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\s*(.*?)$/);
+		if (match)
+			return {
+				value: parseFloat(match[1]),
+				unit: match[2].trim() || undefined,
+			};
+		return { value: NaN };
+	}
+	return { value: NaN };
+}
+
 export const grade: GradeFn = (q, a) => {
 	const body = q.body as QuestionBody["calculation"];
-	const studentAnswer = a.value as { value: number; unit?: string };
-	if (studentAnswer == null || studentAnswer.value == null) {
+	const studentAnswer = a.value as { value: number; unit?: string } | string;
+	const parsed =
+		typeof studentAnswer === "string"
+			? parseAnswer(studentAnswer)
+			: parseAnswer(studentAnswer as unknown);
+	if (Number.isNaN(parsed.value)) {
 		return {
 			correct: false,
 			score: 0,
@@ -12,9 +36,9 @@ export const grade: GradeFn = (q, a) => {
 			feedback: "No answer provided.",
 		};
 	}
-	const numericDiff = Math.abs(studentAnswer.value - body.correctValue);
-	const unitCorrect = studentAnswer.unit
-		? studentAnswer.unit.toLowerCase().trim() === body.unit.toLowerCase().trim()
+	const numericDiff = Math.abs(parsed.value - body.correctValue);
+	const unitCorrect = parsed.unit
+		? parsed.unit.toLowerCase().trim() === body.unit.toLowerCase().trim()
 		: !body.unit;
 	const valueCorrect = numericDiff <= body.tolerance;
 	if (valueCorrect && !unitCorrect) {

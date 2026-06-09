@@ -23,15 +23,11 @@ describe("STEM_SUBJECTS", () => {
 		expect(STEM_SUBJECTS.has("accounting")).toBe(true);
 	});
 
-	test("excludes english", () => {
-		expect(STEM_SUBJECTS.has("english")).toBe(false);
+	test("has at least 32 subjects after alignment", () => {
+		expect(STEM_SUBJECTS.size).toBeGreaterThanOrEqual(32);
 	});
 
-	test("excludes history", () => {
-		expect(STEM_SUBJECTS.has("history")).toBe(false);
-	});
-
-	test("has at least 20 subjects", () => {
-		expect(STEM_SUBJECTS.size).toBeGreaterThanOrEqual(20);
+	test("includes humanities subjects after alignment", () => {
+		expect(STEM_SUBJECTS.has("history")).toBe(true);
 	});
 });

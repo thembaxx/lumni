@@ -65,6 +65,7 @@ export async function findTopK(
 			paperNumber: pq.paperNumber,
 			topic: pq.topic,
 			similarity: s.score,
+			type: pq.questionType,
 		});
 	}
 	return result;

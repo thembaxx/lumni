@@ -2,6 +2,7 @@
 
 import {
 	BookOpen01Icon,
+	BookOpen02Icon,
 	RadialIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
@@ -16,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { useStudyGuide } from "@/hooks/use-study-guide";
+import { useRouter } from "@/i18n/navigation";
 import type { StudyGuide } from "@/lib/study-guide/types";
 
 function StudyGuideContent({ guide }: { guide: StudyGuide }) {
@@ -82,6 +84,7 @@ function StudyGuideClient() {
 	const [topicText, setTopicText] = useState("");
 	const { data, isPending, error, mutate } = useStudyGuide();
 	const [fetched, setFetched] = useState(false);
+	const router = useRouter();
 
 	const handleGenerate = () => {
 		if (!selectedSubject || !topicText.trim()) return;
@@ -201,8 +204,42 @@ function StudyGuideClient() {
 								key="results"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
+								className="flex flex-col gap-4"
 							>
 								<StudyGuideContent guide={data} />
+								<div className="flex flex-wrap items-center gap-3">
+									<Button
+										onClick={() =>
+											router.push(
+												`/quiz?subject=${encodeURIComponent(selectedSubject)}&topic=${encodeURIComponent(topicText)}&count=10`,
+											)
+										}
+										className="h-10 gap-2 rounded-xl"
+									>
+										<HugeiconsIcon
+											icon={BookOpen02Icon}
+											className="size-4"
+											data-icon
+										/>
+										Practice these topics
+									</Button>
+									<Button
+										variant="outline"
+										onClick={() =>
+											router.push(
+												`/flashcards?subject=${encodeURIComponent(selectedSubject)}&topic=${encodeURIComponent(topicText)}`,
+											)
+										}
+										className="h-10 gap-2 rounded-xl"
+									>
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											className="size-4"
+											data-icon
+										/>
+										Generate flashcards
+									</Button>
+								</div>
 							</m.div>
 						)}
 					</AnimatePresence>

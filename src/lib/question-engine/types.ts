@@ -242,6 +242,7 @@ export interface GenerationParams {
 		marks: number;
 		year: number;
 	}>;
+	remediationFocus?: string;
 	userId?: string | null;
 	poolQuestions?: Array<{
 		id: string;
@@ -252,6 +253,7 @@ export interface GenerationParams {
 		paperNumber: number;
 		topic?: string;
 		similarity: number;
+		type?: string;
 	}>;
 }
 

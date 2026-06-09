@@ -7,6 +7,7 @@ import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
+import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
 import type { QuizCompleteResult } from "@/lib/quiz";
 import { useQuiz } from "@/lib/quiz";
 import { iOSEase } from "@/lib/utils/animation";
@@ -21,12 +22,19 @@ export type { QuizCompleteResult as QuizResults };
 interface QuizEngineProps {
 	subjectId: string;
 	questionType?: string;
+	competencyProps?: {
+		topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
+		topicCompetencyScore?: number;
+		suggestedBloomLevel?: BloomLevel;
+		suggestedDifficulty?: Difficulty;
+	};
 	onComplete?: (results: QuizCompleteResult) => void;
 }
 
 export function QuizEngine({
 	subjectId,
 	questionType = "multiple-choice",
+	competencyProps,
 	onComplete,
 }: QuizEngineProps) {
 	const {
@@ -46,6 +54,10 @@ export function QuizEngine({
 		subject: subjectId,
 		count: 10,
 		questionType,
+		topicCompetencyLevel: competencyProps?.topicCompetencyLevel,
+		topicCompetencyScore: competencyProps?.topicCompetencyScore,
+		suggestedBloomLevel: competencyProps?.suggestedBloomLevel,
+		suggestedDifficulty: competencyProps?.suggestedDifficulty,
 		onComplete,
 	});
 

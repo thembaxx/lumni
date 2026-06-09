@@ -1,5 +1,6 @@
 import type { CompetencyService } from "@/lib/competency-engine/competency-service";
 import { competencyService as defaultCompetencyService } from "@/lib/competency-engine/competency-service";
+import { sendLocalNotification } from "@/lib/services/notification-service";
 import type { ExamDateInfo } from "@/lib/utils/study-planner";
 import { generateStudyPlan } from "./algorithms";
 import type { StudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";
@@ -26,7 +27,37 @@ export class StudyPlannerService {
 		examDates: ExamDateInfo[] = [],
 	): Promise<StudyPlan> {
 		const subjects = await this.getAllSubjectsCompetency();
-		return generateStudyPlan(settings, subjects, examDates);
+		const plan = await generateStudyPlan(settings, subjects, examDates);
+
+		// Schedule 15-minute-before push reminders for each session
+		if (
+			typeof window !== "undefined" &&
+			"serviceWorker" in navigator &&
+			"Notification" in window &&
+			Notification.permission === "granted"
+		) {
+			for (const topic of plan.topics) {
+				if (!topic.scheduledDate) continue;
+				const sessionDate = new Date(`${topic.scheduledDate}T09:00:00`);
+				if (settings.preferredStudyTime === "afternoon") {
+					sessionDate.setHours(14, 0, 0, 0);
+				} else if (settings.preferredStudyTime === "evening") {
+					sessionDate.setHours(18, 0, 0, 0);
+				}
+				const reminderTime = sessionDate.getTime() - 15 * 60 * 1000;
+				const delay = reminderTime - Date.now();
+				if (delay > 0) {
+					setTimeout(() => {
+						sendLocalNotification(
+							"Study Session Reminder",
+							`Your ${topic.subjectId} study session on ${topic.topicId} starts in 15 minutes`,
+						);
+					}, delay);
+				}
+			}
+		}
+
+		return plan;
 	}
 
 	async updateStudyPlan(

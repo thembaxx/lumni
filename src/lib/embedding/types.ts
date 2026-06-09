@@ -15,6 +15,7 @@ export interface ScoredPoolQuestion {
 	paperNumber: number;
 	topic?: string;
 	similarity: number;
+	type?: string;
 }
 
 export interface FindTopKParams {

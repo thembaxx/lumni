@@ -142,7 +142,7 @@ describe("generateStudyPlan", () => {
 		endDate: "2026-01-09",
 	};
 
-	test("returns a study plan with correct structure", () => {
+	test("returns a study plan with correct structure", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -152,7 +152,7 @@ describe("generateStudyPlan", () => {
 				topics: ["algebra", "calculus"],
 			},
 		];
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		expect(plan).toHaveProperty("settings");
 		expect(plan).toHaveProperty("subjects");
 		expect(plan).toHaveProperty("topics");
@@ -161,7 +161,7 @@ describe("generateStudyPlan", () => {
 		expect(plan.progress).toBe(0);
 	});
 
-	test("schedules topics across valid weekdays only", () => {
+	test("schedules topics across valid weekdays only", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -172,7 +172,7 @@ describe("generateStudyPlan", () => {
 			},
 		];
 		// Jan 5 2026 is a Monday, Jan 9 is Friday — 5 weekdays
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		const scheduledDates = plan.topics.flatMap((t) =>
 			t.scheduledDate ? [t.scheduledDate] : [],
 		);
@@ -183,7 +183,7 @@ describe("generateStudyPlan", () => {
 		}
 	});
 
-	test("distributes topics across subjects based on weights", () => {
+	test("distributes topics across subjects based on weights", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -200,7 +200,7 @@ describe("generateStudyPlan", () => {
 				topics: ["grammar"],
 			},
 		];
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		expect(plan.topics.length).toBe(2);
 		const mathTopics = plan.topics.filter((t) => t.subjectId === "mathematics");
 		const englishTopics = plan.topics.filter((t) => t.subjectId === "english");
@@ -210,7 +210,7 @@ describe("generateStudyPlan", () => {
 		);
 	});
 
-	test("handles subjects with no topics", () => {
+	test("handles subjects with no topics", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -220,12 +220,12 @@ describe("generateStudyPlan", () => {
 				topics: [],
 			},
 		];
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		expect(plan.topics).toHaveLength(0);
 		expect(plan.totalEstimatedMinutes).toBe(0);
 	});
 
-	test("excludes non-study days", () => {
+	test("excludes non-study days", async () => {
 		const weekendSettings: StudyPlanSettings = {
 			...baseSettings,
 			startDate: "2026-01-03",
@@ -241,7 +241,7 @@ describe("generateStudyPlan", () => {
 				topics: ["algebra", "calculus"],
 			},
 		];
-		const plan = generateStudyPlan(weekendSettings, subjects);
+		const plan = await generateStudyPlan(weekendSettings, subjects);
 		// Jan 3 2026 = Saturday (6), Jan 4 2026 = Sunday (0)
 		const scheduledDates = plan.topics.flatMap((t) =>
 			t.scheduledDate ? [t.scheduledDate] : [],
@@ -252,7 +252,7 @@ describe("generateStudyPlan", () => {
 		}
 	});
 
-	test("sets isCompleted to false and actualMinutesSpent to 0 for all topics", () => {
+	test("sets isCompleted to false and actualMinutesSpent to 0 for all topics", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -262,14 +262,14 @@ describe("generateStudyPlan", () => {
 				topics: ["algebra"],
 			},
 		];
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		for (const topic of plan.topics) {
 			expect(topic.isCompleted).toBe(false);
 			expect(topic.actualMinutesSpent).toBe(0);
 		}
 	});
 
-	test("preserves settings in the plan output", () => {
+	test("preserves settings in the plan output", async () => {
 		const subjects: SubjectCompetency[] = [
 			{
 				subjectId: "mathematics",
@@ -279,7 +279,7 @@ describe("generateStudyPlan", () => {
 				topics: ["algebra"],
 			},
 		];
-		const plan = generateStudyPlan(baseSettings, subjects);
+		const plan = await generateStudyPlan(baseSettings, subjects);
 		expect(plan.settings.targetAps).toBe(baseSettings.targetAps);
 		expect(plan.settings.dailyStudyMinutes).toBe(
 			baseSettings.dailyStudyMinutes,

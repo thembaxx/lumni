@@ -1,9 +1,9 @@
-import { dexieDataAccess } from "@/lib/db";
+import { dexieDataAccess as _dexieDa } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
+const DEFAULT_DEPS = { db: _dexieDa };
 let _deps = DEFAULT_DEPS;
 
 function __setDepsForTesting(deps: { db: DataAccess }) {
@@ -15,7 +15,8 @@ export type ActionKind =
 	| "exam-practice"
 	| "due-cards"
 	| "study-plan"
-	| "flashcards";
+	| "flashcards"
+	| "review-mistakes";
 
 export interface NextAction {
 	kind: ActionKind;
@@ -84,6 +85,20 @@ export async function resolveNextAction(
 		};
 	}
 
+	const overdueItems = await getOverdueRetentionItems();
+	if (overdueItems.length > 0 && !isDismissed("review-mistakes")) {
+		const subject = overdueItems[0].subject;
+		return {
+			kind: "review-mistakes",
+			title: "Review mistakes",
+			reason: "You have overdue review items",
+			ctaHref: "/review",
+			ctaLabel: "Review mistakes",
+			subject,
+			expiresAt: Date.now() + 3600000,
+		};
+	}
+
 	const weakest = await getWeakestTopic(userId);
 	if (weakest && !isDismissed("weakest-topic")) {
 		const session = getCurrentSession();
@@ -137,6 +152,24 @@ async function getDueCardCount(): Promise<number> {
 	} catch (err) {
 		logError("GetDueCardCount", err);
 		return 0;
+	}
+}
+
+async function getOverdueRetentionItems(): Promise<
+	Array<{ subject: string; topic: string }>
+> {
+	try {
+		const now = Date.now();
+		const items = await _dexieDa.retentionRecurrence
+			.where("scheduledAt")
+			.belowOrEqual(now)
+			.toArray();
+		return items
+			.filter((i) => !i.completed)
+			.map((i) => ({ subject: i.subject, topic: i.topic }));
+	} catch (err) {
+		logError("GetOverdueRetentionItems", err);
+		return [];
 	}
 }
 

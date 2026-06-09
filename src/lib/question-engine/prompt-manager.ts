@@ -40,6 +40,18 @@ export class PromptManager {
 		return `\n\nStudent context: The student has a ${params.topicCompetencyLevel} understanding of this topic${scoreStr} — ${desc}. Focus on the following Bloom's taxonomy levels: ${bloomStr}.${diffNote}`;
 	}
 
+	private attachRemediationFocus(
+		template: PromptTemplate,
+		params: GenerationParams,
+	): PromptTemplate {
+		if (!params.remediationFocus) return template;
+		const note = `\n\nThe student needs remediation on: ${params.remediationFocus}. Prioritise questions that address this weakness.`;
+		return {
+			system: `${template.system}${note}`,
+			user: template.user,
+		};
+	}
+
 	private applyRagContext(
 		template: PromptTemplate,
 		ragContext?: RagContext,
@@ -91,7 +103,8 @@ ${sourceList}`;
 			this.buildCompetencyContext(params),
 		);
 		const withRefs = this.appendSourceRefsAppendix(base, ragContext);
-		return this.applyRagContext(withRefs, ragContext);
+		const withRemediation = this.attachRemediationFocus(withRefs, params);
+		return this.applyRagContext(withRemediation, ragContext);
 	}
 
 	getHintPrompt(questionType: QuestionType): PromptTemplate {

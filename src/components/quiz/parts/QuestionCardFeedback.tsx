@@ -2,6 +2,7 @@
 
 import {
 	Cancel01Icon,
+	Chat01Icon,
 	CheckmarkCircle01Icon,
 	MailSend01Icon,
 	RadialIcon,
@@ -14,6 +15,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
+import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import {
@@ -67,6 +69,21 @@ interface QuestionCardFeedbackProps {
 }
 
 const DEFAULT_FEEDBACK_OPTIONS: QuestionCardFeedbackOptions = {};
+
+function AskInChatButton({ questionText }: { questionText: string }) {
+	const router = useRouter();
+	return (
+		<Button
+			variant="ghost"
+			size="sm"
+			onClick={() => router.push(`/chat?q=${encodeURIComponent(questionText)}`)}
+			className="h-9 gap-2 self-start text-sm"
+		>
+			<HugeiconsIcon icon={Chat01Icon} data-icon="inline-start" />
+			Ask in Chat
+		</Button>
+	);
+}
 
 export function QuestionCardFeedback({
 	state,
@@ -151,6 +168,7 @@ export function QuestionCardFeedback({
 					<TTSButton text={feedback.feedback} />
 				</div>
 			)}
+			<AskInChatButton questionText={question.questionText} />
 			{question.steps && question.steps.length > 0 && (
 				<div className="border-current/20 border-t pt-2">
 					<StepByStep

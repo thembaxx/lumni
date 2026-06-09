@@ -35,9 +35,9 @@ export default function SupportPage() {
 		<PageContainer className="flex min-h-dvh flex-col gap-6 bg-background py-6">
 			<div>
 				<h1 className="font-extrabold text-2xl">Support</h1>
-			<p className="mt-1 text-muted-foreground/60 text-sm">
-				We're here to help. Get back to you within 4 hours.
-			</p>
+				<p className="mt-1 text-muted-foreground/60 text-sm">
+					We're here to help. Get back to you within 4 hours.
+				</p>
 			</div>
 
 			<div className="flex flex-col gap-4">

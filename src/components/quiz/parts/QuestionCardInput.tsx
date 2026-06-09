@@ -2,13 +2,14 @@
 
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
 import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
 	CalculationInput,
 	EssayInput,
@@ -70,6 +71,11 @@ export function QuestionCardInput({
 	const [textInputValue, setTextInputValue] = useState("");
 	const [longAnswerValue, setLongAnswerValue] = useState("");
 	const [essayValue, setEssayValue] = useState("");
+	const [unitValue, setUnitValue] = useState("");
+	const [diagramMode, setDiagramMode] = useState<"draw" | "upload">("draw");
+	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const [isDrawing, setIsDrawing] = useState(false);
 
 	if (state.isSubmitted) {
 		return null;
@@ -193,7 +199,6 @@ export function QuestionCardInput({
 					onSubmit={(answer: string) =>
 						handleGrade({ type: "text", value: answer })
 					}
-					disabled={false}
 				/>
 			);
 		}
@@ -226,10 +231,24 @@ export function QuestionCardInput({
 					<CalculationInput
 						value={calcValue}
 						onChange={setCalcValue}
-						unit={qBody.unit as string | undefined}
+						unit={unitValue}
+						onUnitChange={setUnitValue}
 					/>
+					{(qBody.unit as string | undefined) && (
+						<p className="text-muted-foreground text-xs">
+							Expected unit: {qBody.unit as string}
+						</p>
+					)}
 					<Button
-						onClick={() => handleGrade({ type: "numeric", value: calcValue })}
+						onClick={() => {
+							const numeric = parseFloat(calcValue);
+							handleGrade({
+								type: "numeric",
+								value: Number.isNaN(numeric)
+									? calcValue
+									: { value: numeric, unit: unitValue || undefined },
+							});
+						}}
 						disabled={!calcValue.trim()}
 					>
 						{t("quiz.submitAnswer")}
@@ -239,12 +258,147 @@ export function QuestionCardInput({
 		}
 
 		case "diagram": {
-			const body = question as Record<string, unknown>;
-			const qBody = body.body as Record<string, unknown>;
+			const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+				const canvas = canvasRef.current;
+				if (!canvas) return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
+				ctx.strokeStyle = "var(--system-foreground, #000)";
+				ctx.lineWidth = 2;
+				ctx.lineCap = "round";
+				const rect = canvas.getBoundingClientRect();
+				ctx.beginPath();
+				ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+				setIsDrawing(true);
+			};
+
+			const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+				if (!isDrawing) return;
+				const canvas = canvasRef.current;
+				if (!canvas) return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
+				const rect = canvas.getBoundingClientRect();
+				ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+				ctx.stroke();
+			};
+
+			const stopDrawing = () => {
+				setIsDrawing(false);
+			};
+
+			const clearCanvas = () => {
+				const canvas = canvasRef.current;
+				if (!canvas) return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			};
+
+			const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+				const file = e.target.files?.[0];
+				if (!file) return;
+				const reader = new FileReader();
+				reader.onload = () => {
+					setUploadedImage(reader.result as string);
+				};
+				reader.readAsDataURL(file);
+			};
+
+			const submitDiagram = () => {
+				if (diagramMode === "draw" && canvasRef.current) {
+					handleGrade({
+						type: "text",
+						value: canvasRef.current.toDataURL(),
+					});
+				} else if (diagramMode === "upload" && uploadedImage) {
+					handleGrade({
+						type: "text",
+						value: uploadedImage,
+					});
+				}
+			};
+
 			return (
-				<div className="py-4 text-center text-muted-foreground text-sm">
-					{(qBody.instructions as string | undefined) ||
-						t("quiz.diagramPrompt")}
+				<div className="flex flex-col gap-3">
+					<div
+						className="flex gap-2"
+						role="tablist"
+						aria-label="Diagram input mode"
+					>
+						<Button
+							variant={diagramMode === "draw" ? "default" : "ghost"}
+							size="sm"
+							onClick={() => setDiagramMode("draw")}
+							role="tab"
+							aria-selected={diagramMode === "draw"}
+							aria-label="Draw diagram"
+						>
+							Draw
+						</Button>
+						<Button
+							variant={diagramMode === "upload" ? "default" : "ghost"}
+							size="sm"
+							onClick={() => setDiagramMode("upload")}
+							role="tab"
+							aria-selected={diagramMode === "upload"}
+							aria-label="Upload image"
+						>
+							Upload
+						</Button>
+					</div>
+					{diagramMode === "draw" ? (
+						<div className="overflow-hidden rounded-lg border">
+							<canvas
+								ref={canvasRef}
+								width={400}
+								height={300}
+								className="w-full max-w-md cursor-crosshair"
+								onMouseDown={startDrawing}
+								onMouseMove={draw}
+								onMouseUp={stopDrawing}
+								onMouseLeave={stopDrawing}
+								aria-label="Draw your diagram"
+								role="img"
+							/>
+						</div>
+					) : (
+						<div className="flex flex-col gap-2">
+							<Input
+								type="file"
+								accept="image/*"
+								onChange={handleFileUpload}
+								aria-label="Upload diagram image"
+							/>
+							{uploadedImage && (
+								// biome-ignore lint/performance/noImgElement: data URL from user upload
+								<img
+									src={uploadedImage}
+									alt="Uploaded diagram preview"
+									className="max-w-md rounded-lg border"
+								/>
+							)}
+						</div>
+					)}
+					<div className="flex gap-2">
+						{diagramMode === "draw" && (
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={clearCanvas}
+								aria-label="Clear canvas"
+							>
+								Clear
+							</Button>
+						)}
+						<Button
+							size="sm"
+							onClick={submitDiagram}
+							disabled={diagramMode === "upload" && !uploadedImage}
+						>
+							Submit
+						</Button>
+					</div>
 				</div>
 			);
 		}

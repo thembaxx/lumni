@@ -1,12 +1,7 @@
-import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 
-export const metadata: Metadata = {
-	title: "Exams",
-};
-
-export default async function ExamIndexPage() {
+export default async function ExamsRedirectPage() {
 	const locale = await getLocale();
 	redirect({ href: "/dashboard/exams", locale });
 }

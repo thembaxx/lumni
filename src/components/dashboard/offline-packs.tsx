@@ -113,10 +113,7 @@ export function OfflinePackManager() {
 						onClick={handleGenerate}
 						disabled={generating || !selectedSubject}
 					>
-						<HugeiconsIcon
-							icon={CloudDownloadIcon}
-							data-icon="inline-start"
-						/>
+						<HugeiconsIcon icon={CloudDownloadIcon} data-icon="inline-start" />
 						{generating ? "Generating…" : "Download"}
 					</Button>
 				</div>
@@ -140,8 +137,8 @@ export function OfflinePackManager() {
 							className="size-4 text-muted-foreground"
 						/>
 						<p className="text-muted-foreground text-sm">
-							No offline packs yet. Select a subject and download questions
-							for offline study.
+							No offline packs yet. Select a subject and download questions for
+							offline study.
 						</p>
 					</div>
 				) : (
@@ -174,8 +171,7 @@ export function OfflinePackManager() {
 													icon={Time03Icon}
 													className="inline size-3 align-middle"
 												/>{" "}
-												Expires{" "}
-												{new Date(pack.expiresAt).toLocaleDateString()}
+												Expires {new Date(pack.expiresAt).toLocaleDateString()}
 											</>
 										)}
 									</p>
