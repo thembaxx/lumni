@@ -96,7 +96,7 @@ async function ensureCollectionSchema(
 							collectionId,
 							attrName,
 							attrConfig.required ?? false,
-							undefined,
+							"",
 							attrConfig.size,
 						);
 						console.log(
