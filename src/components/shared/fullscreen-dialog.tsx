@@ -66,7 +66,7 @@ export function FullscreenDialog({
 							<HugeiconsIcon icon={Cancel01Icon} />
 						</Button>
 					</div>
-					{children}
+					<div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
 				</div>
 			</DialogContent>
 		</Dialog>

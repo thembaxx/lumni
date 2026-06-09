@@ -145,34 +145,34 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 					</m.div>
 
 					<div className="grow overflow-y-auto">
-						<TabsContent value="solver" className="m-0 h-full">
+						<TabsContent value="solver" className="m-0 min-h-full">
 							<AiSolver cameraFocus={cameraFocus} />
 						</TabsContent>
-						<TabsContent value="scientific" className="m-0 h-full">
+						<TabsContent value="scientific" className="m-0 min-h-full">
 							<ScientificCalculator />
 						</TabsContent>
-						<TabsContent value="periodic" className="m-0 h-full">
+						<TabsContent value="periodic" className="m-0 min-h-full">
 							<PeriodicTable />
 						</TabsContent>
-						<TabsContent value="calculator" className="m-0 h-full">
+						<TabsContent value="calculator" className="m-0 min-h-full">
 							<APSCalculator />
 						</TabsContent>
-						<TabsContent value="calendar" className="m-0 h-full">
+						<TabsContent value="calendar" className="m-0 min-h-full">
 							<NationalExamCalendar />
 						</TabsContent>
-						<TabsContent value="results" className="m-0 h-full">
+						<TabsContent value="results" className="m-0 min-h-full">
 							<ResultsSearch />
 						</TabsContent>
-						<TabsContent value="scheduler" className="m-0 h-full">
+						<TabsContent value="scheduler" className="m-0 min-h-full">
 							<SmartScheduler />
 						</TabsContent>
-						<TabsContent value="flashcards" className="m-0 h-full">
+						<TabsContent value="flashcards" className="m-0 min-h-full">
 							<FlashcardCreator />
 						</TabsContent>
-						<TabsContent value="notes" className="m-0 h-full">
+						<TabsContent value="notes" className="m-0 min-h-full">
 							<NoteCreator />
 						</TabsContent>
-						<TabsContent value="study-sets" className="m-0 h-full">
+						<TabsContent value="study-sets" className="m-0 min-h-full">
 							<StudySetCreator />
 						</TabsContent>
 					</div>
