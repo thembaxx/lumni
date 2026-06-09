@@ -74,7 +74,8 @@
     "quiz": "Kwiz",
     "flashcards": "Flitskaarte",
     "settings": "Instellings",
-    "studyGroups": "Studiegroepe"
+    "studyGroups": "Studiegroepe",
+    "studyPlanner": "Study Planner"
   },
   "home": {
     "brand": "lumni",
@@ -690,7 +691,8 @@
     "termsOfService": "Diensbepalings",
     "emailNotifications": "E-poskennisgewings",
     "soundEffects": "Klank-effekte",
-    "deleteConfirm": "Is jy seker? Dit kan nie ongedaan gemaak word nie."
+    "deleteConfirm": "Is jy seker? Dit kan nie ongedaan gemaak word nie.",
+    "backToDashboard": "Back to dashboard"
   },
   "subjects": {
     "mathematics": "Wiskunde",

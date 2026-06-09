@@ -75,7 +75,8 @@
     "quiz": "Quiz",
     "flashcards": "Flashcards",
     "settings": "Settings",
-    "studyGroups": "Study Groups"
+    "studyGroups": "Study Groups",
+    "studyPlanner": "Study Planner"
   },
   "home": {
     "brand": "lumni",
@@ -692,7 +693,8 @@
     "about": "About",
     "version": "Version",
     "privacyPolicy": "Privacy policy",
-    "termsOfService": "Terms of service"
+    "termsOfService": "Terms of service",
+    "backToDashboard": "Back to dashboard"
   },
   "tools": {
     "title": "Tools",

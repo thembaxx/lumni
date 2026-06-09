@@ -102,9 +102,9 @@ export function DictionaryClient() {
 				</div>
 			)}
 
-			{results?.map((entry, i) => (
+			{results?.map((entry) => (
 				<m.div
-					key={`${entry.word}-${i}`}
+					key={entry.word}
 					initial={{ opacity: 0, y: 16 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
@@ -143,8 +143,11 @@ export function DictionaryClient() {
 								)}
 							</div>
 
-							{entry.meanings.map((meaning, mi) => (
-								<div key={mi} className="flex flex-col gap-3">
+							{entry.meanings.map((meaning) => (
+								<div
+									key={`${meaning.partOfSpeech}-${meaning.definitions[0]?.definition.slice(0, 20)}`}
+									className="flex flex-col gap-3"
+								>
 									<div className="flex items-center gap-2">
 										<span className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[--system-accent] text-xs">
 											{meaning.partOfSpeech}
@@ -152,6 +155,7 @@ export function DictionaryClient() {
 									</div>
 									<div className="flex flex-col gap-3">
 										{meaning.definitions.map((def, di) => (
+											// biome-ignore lint/suspicious/noArrayIndexKey: static definitions, no stable id
 											<div key={di} className="flex flex-col gap-1">
 												<p className="leading-relaxed">
 													{di + 1}. {def.definition}

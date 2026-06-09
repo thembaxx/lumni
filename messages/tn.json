@@ -683,7 +683,8 @@
     "about": "About",
     "version": "Version",
     "privacyPolicy": "Privacy policy",
-    "termsOfService": "Terms of service"
+    "termsOfService": "Terms of service",
+    "backToDashboard": "Back to dashboard"
   },
   "tools": {
     "title": "Tools",

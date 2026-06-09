@@ -18,6 +18,7 @@ export default function StoriesPage() {
 						<Skeleton className="h-10 w-48 rounded-2xl" />
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 							{[...Array(6)].map((_, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 								<Skeleton key={i} className="h-48 rounded-3xl" />
 							))}
 						</div>

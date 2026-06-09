@@ -683,7 +683,8 @@
     "about": "Ka",
     "version": "Thebo",
     "privacyPolicy": "Tšireletso ya tšireletso",
-    "termsOfService": "Dikarabo tsa tšireletso"
+    "termsOfService": "Dikarabo tsa tšireletso",
+    "backToDashboard": "Back to dashboard"
   },
   "tools": {
     "title": "Ts'ebe",

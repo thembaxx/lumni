@@ -138,6 +138,7 @@ export function LessonViewClient({
 				<div className="h-8 w-64 animate-pulse rounded-2xl bg-muted" />
 				<div className="h-4 w-40 animate-pulse rounded-2xl bg-muted" />
 				{[...Array(3)].map((_, i) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 					<div key={i} className="h-32 animate-pulse rounded-3xl bg-muted" />
 				))}
 			</PageContainer>
@@ -268,8 +269,8 @@ export function LessonViewClient({
 										<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
 											Key points
 										</span>
-										{section.keyPoints.map((kp, ki) => (
-											<li key={ki} className="text-muted-foreground text-sm">
+										{section.keyPoints.map((kp) => (
+											<li key={kp} className="text-muted-foreground text-sm">
 												{kp}
 											</li>
 										))}

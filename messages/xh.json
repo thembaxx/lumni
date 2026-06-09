@@ -683,7 +683,8 @@
     "about": "Kwanga",
     "version": "Iversoni",
     "privacyPolicy": "Polisi yokutyotyozwa",
-    "termsOfService": "Izilungiso zokusebenza"
+    "termsOfService": "Izilungiso zokusebenza",
+    "backToDashboard": "Back to dashboard"
   },
   "tools": {
     "title": "Izixhobo",

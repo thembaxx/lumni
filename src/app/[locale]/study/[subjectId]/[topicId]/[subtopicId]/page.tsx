@@ -24,6 +24,7 @@ export default async function LessonPage({
 						<Skeleton className="h-4 w-40 rounded-2xl" />
 						<div className="mt-4 flex flex-col gap-3">
 							{[...Array(4)].map((_, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 								<Skeleton key={i} className="h-32 w-full rounded-3xl" />
 							))}
 						</div>

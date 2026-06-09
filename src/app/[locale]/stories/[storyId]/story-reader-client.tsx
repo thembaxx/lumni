@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/navigation";
+import type { Question } from "@/lib/question-engine/types";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
 import type { Story } from "@/lib/stories/types";
@@ -25,7 +26,7 @@ export function StoryReaderClient() {
 	const { back } = useRouter();
 	const [story, setStory] = useState<Story | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [questions, setQuestions] = useState<any[] | null>(null);
+	const [questions, setQuestions] = useState<Question[] | null>(null);
 	const [questionsLoading, setQuestionsLoading] = useState(false);
 	const [showQuestions, setShowQuestions] = useState(false);
 
@@ -177,12 +178,9 @@ export function StoryReaderClient() {
 							<CardContent className="flex flex-col gap-4 p-5 pt-0">
 								{questions && questions.length > 0 ? (
 									questions.map((q, i) => (
-										<div
-											key={q.id ?? i}
-											className="rounded-2xl border bg-card p-4"
-										>
+										<div key={q.id} className="rounded-2xl border bg-card p-4">
 											<p className="mb-2 font-medium text-sm">
-												{i + 1}. {q.questionText ?? q.question}
+												{i + 1}. {q.questionText}
 											</p>
 										</div>
 									))

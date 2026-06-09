@@ -42,6 +42,7 @@
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.5.0",
+		"@formatjs/intl-localematcher": "^0.8.10",
 		"@hugeicons/core-free-icons": "^4.2.0",
 		"@hugeicons/react": "^1.1.6",
 		"@opendataloader/pdf": "^2.4.7",
@@ -69,7 +70,7 @@
 		"konva": "^10.3.0",
 		"mermaid": "^11.15.0",
 		"nanoid": "^5.1.11",
-		"next": "16.3.0-preview.0",
+		"next": "^16.2.9",
 		"next-intl": "^4.13.0",
 		"node-appwrite": "^26.2.0",
 		"react": "19.2.7",
@@ -100,7 +101,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.16",
-		"@next/bundle-analyzer": "^16.3.0-preview.0",
+		"@next/bundle-analyzer": "^16.2.9",
 		"@playwright/test": "^1.60.0",
 		"@storybook/nextjs": "^10.4.3",
 		"@storybook/react": "^10.4.3",
@@ -116,12 +117,12 @@
 		"@types/uuid": "^11.0.0",
 		"@types/web-push": "^3.6.4",
 		"eslint": "^10.4.1",
-		"eslint-config-next": "16.3.0-preview.0",
+		"eslint-config-next": "^16.2.9",
 		"happy-dom": "^20.10.2",
 		"husky": "^9.1.7",
 		"knip": "^6.16.1",
 		"patch-package": "^8.0.1",
-		"react-doctor": "^0.5.0",
+		"react-doctor": "^0.5.1",
 		"shadcn": "^4.11.0",
 		"storybook": "^10.4.3",
 		"tailwindcss": "^4.3.0",
@@ -136,18 +137,6 @@
 	],
 	"overrides": {
 		"postcss": "8.5.15",
-		"tmp": "^0.2.6",
-		"uploadthing": {
-			"effect": "3.21.0"
-		},
-		"@uploadthing/react": {
-			"effect": "3.21.0"
-		},
-		"@uploadthing/shared": {
-			"effect": "3.21.0"
-		},
-		"@effect/platform": {
-			"effect": "3.21.0"
-		}
+		"tmp": "^0.2.6"
 	}
 }

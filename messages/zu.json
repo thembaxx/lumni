@@ -74,7 +74,8 @@
     "quiz": "Iquizi",
     "flashcards": "Iflashikadi",
     "settings": "Izilungiselelo",
-    "studyGroups": "Izigaba zokufunda"
+    "studyGroups": "Izigaba zokufunda",
+    "studyPlanner": "Study Planner"
   },
   "home": {
     "brand": "lumni",
@@ -690,7 +691,8 @@
     "about": "Mali",
     "version": "Ivethi",
     "privacyPolicy": "Inkqubo yokuntulela",
-    "termsOfService": "Izilungiselelo zokusebenza"
+    "termsOfService": "Izilungiselelo zokusebenza",
+    "backToDashboard": "Back to dashboard"
   },
   "tools": {
     "title": "Izixazululo",

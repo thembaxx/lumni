@@ -343,6 +343,7 @@ export function QuestionBankClient() {
 						<div className="flex flex-col gap-3">
 							{[...Array(3)].map((_, i) => (
 								<div
+									// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 									key={i}
 									className="h-32 animate-pulse rounded-2xl bg-muted"
 								/>
