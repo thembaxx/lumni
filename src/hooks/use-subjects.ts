@@ -4,13 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import subjectsData from "@/data/subjects.json";
 import { useAuth } from "@/lib/auth/auth-context";
-import { dexieDataAccess, type LegacyDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
-
-let _deps: { db: LegacyDataAccess } = { db: dexieDataAccess };
-function __setDepsForTesting(deps: { db: LegacyDataAccess }) {
-	_deps = deps;
-}
 
 export interface Subject {
 	id: string;
@@ -23,57 +17,29 @@ export interface Subject {
 	createdAt?: string;
 }
 
-interface SubjectsResponse {
-	subjects: Subject[];
-	selectedSubjectIds: string[];
-}
-
-async function fetchSubjects(): Promise<SubjectsResponse> {
-	try {
-		const response = await fetch("/api/subjects");
-		if (!response.ok) {
-			throw new Error(`Failed to fetch subjects: ${response.status}`);
-		}
-		const data = (await response.json()) as {
-			subjects: Subject[];
-			selectedSubjectIds?: string[];
-		};
-		return {
-			subjects: data.subjects ?? (subjectsData as Subject[]),
-			selectedSubjectIds: data.selectedSubjectIds ?? [],
-		};
-	} catch (err) {
-		logError("FetchSubjects", err);
-		return {
-			subjects: subjectsData as Subject[],
-			selectedSubjectIds: [],
-		};
-	}
-}
-
 export function useSubjects() {
 	return useQuery({
 		queryKey: ["subjects"],
 		queryFn: async () => {
-			const { subjects, selectedSubjectIds } = await fetchSubjects();
-			await _deps.db.subjects
-				.bulkAdd(
-					subjects.map((s) => ({
-						code: s.code,
-						name: s.name,
-						category: s.category,
-						data: JSON.stringify(s),
-						cachedAt: Date.now(),
-					})),
-				)
-				.catch((err) => {
-					logError("UseSubjects", err);
-				});
+			const subjects = subjectsData as Subject[];
+			let selectedSubjectIds: string[] = [];
+			try {
+				const response = await fetch("/api/subjects");
+				if (response.ok) {
+					const data = (await response.json()) as {
+						subjects: Subject[];
+						selectedSubjectIds?: string[];
+					};
+					selectedSubjectIds = data.selectedSubjectIds ?? [];
+				}
+			} catch (err) {
+				logError("FetchSubjects", err);
+			}
 			return { subjects, selectedSubjectIds };
 		},
 		staleTime: 1000 * 60 * 60,
 		retry: 2,
-		initialData: {
+		placeholderData: {
 			subjects: subjectsData as Subject[],
 			selectedSubjectIds: [] as string[],
 		},
