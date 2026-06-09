@@ -4,7 +4,6 @@ import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion } from "framer-motion";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { ContentLock } from "@/components/ui/content-lock";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
 import { ImageViewer } from "./image-viewer";
@@ -27,7 +26,7 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<ContentLock feature="visual-engine">
+		<>
 			{isLoading ? (
 				<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">
 					{shouldReduceMotion ? (
@@ -69,6 +68,6 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 					sourceUrl={visual.imageUrl}
 				/>
 			) : null}
-		</ContentLock>
+		</>
 	);
 }

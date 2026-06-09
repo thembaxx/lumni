@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-08 -->
+<!-- LAST_SYNC: 2026-06-09 -->
 # System Design — Lumni
 
 ## Overview & Goals
@@ -62,7 +62,7 @@ graph TD
 6. **Knowledge Graph**: AI generates topic dependency graphs (prerequisites/core/advanced). Cached 7d in Dexie v29. Two UIs: `LearningMapCard` (dashboard) + `TopicGraph` (per-question).
 7. **Study Guides**: AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
 8. **Live Sessions**: Real-time collaborative study sessions via Appwrite. `useLiveSession()` hook with 15s polling.
-9. **Monetization**: `PremiumProvider` gates features (offline packs, advanced analytics) based on Appwrite `premium_subscriptions`.
+9. **Monetization**: [Removed June 2026] All features are free. `PremiumProvider` and `PremiumService` infra retained for potential future monetization but no UI-level gating (no ContentLock, no `usePremium` checks). Auth-required standalone pages (problems, support) show login banners for unauthenticated users.
 10. **B2B2C Flows**: Teachers manage assignments via `teacher_assignments`; parents monitor progress via `ParentShell`. Ghost links (Appwrite-backed) for anonymous B2B2C access. Observations + assignment messages stored in Dexie.
 11. **Observability**: `latency-tracker` monitors AI performance; `events.ts` tracks usage events. Centralized `logger.ts` with Sentry production integration.
 12. **Retention Loop**: Wrong-answer re-encounter via `retentionRecurrence` table. Auto-insert 3 wrong answers into next eligible quiz. Next-best-action dashboard card.
@@ -112,6 +112,7 @@ graph TD
 - **WeeklyDigest cron**: No external cron service configured — relies on manual/admin triggering.
 
 ## Recent Changes Log (Last 7 Days)
+- **Premium gating removed (June 2026)**: All ContentLock wrappers purged from 5 dashboard components (analytics, study-plan, scheduler, visual-content, offline-packs). `usePremium`/`isPremium`/`isPriority` checks stripped from visual engine hook and support page. Visual engine always fetches. Support page shows priority to all. Problems page shows login banner via `useAuth()` when unauthenticated. View transitions consolidated — `useNavigationDirection` owns full lifecycle; `experimental.viewTransition: true` removed from next.config. `NavigationPointerOff01Icon` → `Cancel01Icon`. `tsc --noEmit` zero, `biome check` zero, 1271 tests pass 0 fail.
 - **React Doctor 100/100**: 194 issues fixed (5 errors, 189 warnings). 114 unused exports removed, 250+ lines dead code deleted. Knowledge-graph consumers converted from `useMutation+useEffect` → `useQuery`. Added `GET /api/engine/knowledge-graph` route. Biome zero errors across 1260 files.
 - **DataAccess domain split**: 10 domain sub-interfaces (33 accessors, 11 dead removed). `Collection.offset(n)` pagination. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain kept composite.
 - **Practice More button**: Link-style CTA on `BoltCelebration` → `/quiz?subject=X` via `startViewTransition`.

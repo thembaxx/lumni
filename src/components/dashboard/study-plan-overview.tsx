@@ -3,6 +3,7 @@
 import {
 	Bookmark02Icon,
 	Calendar01Icon,
+	Cancel01Icon,
 	CheckListIcon,
 	Clock01Icon,
 	MagicWand01Icon,
@@ -14,7 +15,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ContentLock } from "@/components/ui/content-lock";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
@@ -117,131 +117,127 @@ export function StudyPlanOverview() {
 
 	if (showForm) {
 		return (
-			<ContentLock feature="custom-study-plans">
-				<Card>
-					<CardHeader className="flex flex-row items-center justify-between">
-						<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
-							<HugeiconsIcon icon={CheckListIcon} className="size-5" />
-							Generate Study Plan
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="flex flex-col gap-4">
-						<p className="text-muted-foreground text-sm">
-							Your plan will focus on your weakest topics based on quiz
-							performance, scheduled
-							{includeWeekends ? " across all days" : " across weekdays"}
-							{horizonDays === "custom"
-								? ` for ${horizonCustom || "…"} days`
-								: ` for ${horizonDays} days`}
-							.
-						</p>
-						<FieldGroup>
-							<Field>
-								<FieldLabel htmlFor="target-aps">Target APS</FieldLabel>
-								<Input
-									id="target-aps"
-									type="number"
-									min="1"
-									max="42"
-									value={targetAps}
-									onChange={(e) => setTargetAps(e.target.value)}
-								/>
-							</Field>
-							<Field>
-								<FieldLabel htmlFor="daily-minutes">Daily minutes</FieldLabel>
-								<Input
-									id="daily-minutes"
-									type="number"
-									min="5"
-									max="480"
-									value={dailyMinutes}
-									onChange={(e) => setDailyMinutes(e.target.value)}
-								/>
-							</Field>
-						</FieldGroup>
-						<label
-							htmlFor="include-weekends"
-							className="flex cursor-pointer items-center gap-2 text-xs"
-						>
-							<Checkbox
-								id="include-weekends"
-								checked={includeWeekends}
-								onCheckedChange={(checked) =>
-									setIncludeWeekends(checked === true)
-								}
+			<Card>
+				<CardHeader className="flex flex-row items-center justify-between">
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+						<HugeiconsIcon icon={CheckListIcon} className="size-5" />
+						Generate Study Plan
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4">
+					<p className="text-muted-foreground text-sm">
+						Your plan will focus on your weakest topics based on quiz
+						performance, scheduled
+						{includeWeekends ? " across all days" : " across weekdays"}
+						{horizonDays === "custom"
+							? ` for ${horizonCustom || "…"} days`
+							: ` for ${horizonDays} days`}
+						.
+					</p>
+					<FieldGroup>
+						<Field>
+							<FieldLabel htmlFor="target-aps">Target APS</FieldLabel>
+							<Input
+								id="target-aps"
+								type="number"
+								min="1"
+								max="42"
+								value={targetAps}
+								onChange={(e) => setTargetAps(e.target.value)}
 							/>
-							Include weekends
-						</label>
-						<div className="flex flex-col gap-1.5">
-							<span className="text-muted-foreground text-xs">
-								Plan horizon
-							</span>
-							<div className="flex flex-wrap gap-1.5">
-								{["7", "14", "30"].map((days) => (
-									<Button
-										key={days}
-										size="sm"
-										variant={horizonDays === days ? "default" : "outline"}
-										onClick={() => {
-											setHorizonDays(days);
-											setHorizonCustom("");
-										}}
-									>
-										{days} days
-									</Button>
-								))}
+						</Field>
+						<Field>
+							<FieldLabel htmlFor="daily-minutes">Daily minutes</FieldLabel>
+							<Input
+								id="daily-minutes"
+								type="number"
+								min="5"
+								max="480"
+								value={dailyMinutes}
+								onChange={(e) => setDailyMinutes(e.target.value)}
+							/>
+						</Field>
+					</FieldGroup>
+					<label
+						htmlFor="include-weekends"
+						className="flex cursor-pointer items-center gap-2 text-xs"
+					>
+						<Checkbox
+							id="include-weekends"
+							checked={includeWeekends}
+							onCheckedChange={(checked) =>
+								setIncludeWeekends(checked === true)
+							}
+						/>
+						Include weekends
+					</label>
+					<div className="flex flex-col gap-1.5">
+						<span className="text-muted-foreground text-xs">Plan horizon</span>
+						<div className="flex flex-wrap gap-1.5">
+							{["7", "14", "30"].map((days) => (
 								<Button
+									key={days}
 									size="sm"
-									variant={horizonDays === "custom" ? "default" : "outline"}
-									onClick={() => setHorizonDays("custom")}
+									variant={horizonDays === days ? "default" : "outline"}
+									onClick={() => {
+										setHorizonDays(days);
+										setHorizonCustom("");
+									}}
 								>
-									Custom
+									{days} days
 								</Button>
-							</div>
-							{horizonDays === "custom" && (
-								<Input
-									type="number"
-									min="7"
-									max="90"
-									placeholder="Days"
-									value={horizonCustom}
-									className="mt-1 h-8 w-24"
-									onChange={(e) => setHorizonCustom(e.target.value)}
-								/>
-							)}
-						</div>
-						<div className="flex items-center justify-end gap-2">
-							<Button
-								variant="ghost"
-								size="sm"
-								onClick={() => setShowForm(false)}
-								disabled={isGenerating}
-							>
-								Cancel
-							</Button>
+							))}
 							<Button
 								size="sm"
-								disabled={isGenerating}
-								onClick={async () => {
-									const resolvedHorizon =
-										horizonDays === "custom"
-											? Number.parseInt(horizonCustom, 10) || 30
-											: Number.parseInt(horizonDays, 10);
-									await generatePlan({
-										targetAps: Number.parseInt(targetAps, 10) || 25,
-										dailyStudyMinutes: Number.parseInt(dailyMinutes, 10) || 30,
-										includeWeekends,
-										horizonDays: resolvedHorizon,
-									});
-									setShowForm(false);
-								}}
+								variant={horizonDays === "custom" ? "default" : "outline"}
+								onClick={() => setHorizonDays("custom")}
 							>
-								{isGenerating ? "Generating…" : "Generate"}
+								Custom
 							</Button>
 						</div>
-					</CardContent>
-				</Card>
-			</ContentLock>
+						{horizonDays === "custom" && (
+							<Input
+								type="number"
+								min="7"
+								max="90"
+								placeholder="Days"
+								value={horizonCustom}
+								className="mt-1 h-8 w-24"
+								onChange={(e) => setHorizonCustom(e.target.value)}
+							/>
+						)}
+					</div>
+					<div className="flex items-center justify-end gap-2">
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => setShowForm(false)}
+							disabled={isGenerating}
+						>
+							Cancel
+						</Button>
+						<Button
+							size="sm"
+							disabled={isGenerating}
+							onClick={async () => {
+								const resolvedHorizon =
+									horizonDays === "custom"
+										? Number.parseInt(horizonCustom, 10) || 30
+										: Number.parseInt(horizonDays, 10);
+								await generatePlan({
+									targetAps: Number.parseInt(targetAps, 10) || 25,
+									dailyStudyMinutes: Number.parseInt(dailyMinutes, 10) || 30,
+									includeWeekends,
+									horizonDays: resolvedHorizon,
+								});
+								setShowForm(false);
+							}}
+						>
+							{isGenerating ? "Generating…" : "Generate"}
+						</Button>
+					</div>
+				</CardContent>
+			</Card>
 		);
 	}
 
@@ -280,14 +276,15 @@ export function StudyPlanOverview() {
 							>
 								Regenerate
 							</Button>
-							<button
-								type="button"
-								className="text-muted-foreground hover:text-foreground"
+							<Button
+								variant="ghost"
+								size="icon"
 								onClick={() => setDismissedStale(true)}
 								aria-label="Dismiss"
+								className="size-6"
 							>
-								\u2715
-							</button>
+								<HugeiconsIcon icon={Cancel01Icon} className="size-3" />
+							</Button>
 						</div>
 					</div>
 				)}

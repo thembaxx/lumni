@@ -1,4 +1,4 @@
-# Context Manifest — 2026-06-08
+# Context Manifest — 2026-06-09
 
 ## Identity
 
@@ -6,7 +6,9 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1258 tests pass, 0 fail.
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1271 tests pass, 0 fail.
+
+**Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
 
 ## System at a Glance
 
@@ -70,29 +72,17 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
-| `src/lib/db/data-access.ts` | DataAccess interface (33 accessors, 10 sub-interfaces) |
-| `src/lib/db/dexie-data-access.ts` | Production implementation |
-| `src/lib/db/in-memory-data-access.ts` | Test implementation |
-| `src/lib/db/schema.ts` | Dexie v32 schema |
-| `src/lib/knowledge-graph/` | AI topic dependency graphs (GET+POST routes) |
-| `src/lib/study-guide/` | AI study guide generator |
-| `src/lib/quiz/` | High-level quiz hook (useQuiz) |
-| `src/lib/ai/uniform-adapter.ts` | Pluggable AI provider adapter |
-| `src/lib/rate-limiter/redis-store.ts` | Redis-backed rate limiting |
-| `src/lib/caching-strategy/` | Generic multi-tier caching |
-| `src/lib/share/share-service.ts` | Public share + ghost links |
-| `src/lib/study-groups/live-session-service.ts` | Real-time study sessions |
-| `src/lib/retention-loop/` | Wrong-answer re-encounter + next-action |
-| `src/lib/flashcard-engine/deck-types.ts` | Flashcard deck interfaces |
-| `src/lib/navigation/config.ts` | Sidebar navigation config |
-| `src/components/theme/theme-provider.tsx` | Dynamic theme-color sync |
-| `src/components/teacher/observation-timeline.tsx` | Teacher observations (Dexie-backed) |
-| `src/components/teacher/assignment-thread.tsx` | Assignment messaging (Dexie-backed) |
-| `src/components/admin/question-ratings-dashboard.tsx` | Quality dashboard with rating chart |
-| `src/app/api/cron/weekly-digest/route.ts` | Weekly digest push cron endpoint |
-| `src/app/api/teacher/students/[studentId]/report/route.ts` | Student report from Appwrite |
-| `src/app/api/engine/knowledge-graph/route.ts` | Knowledge-graph GET+POST handler |
-| `docs/superpowers/specs/2026-06-07-*.md` | Latest design specs |
+| `src/app/[locale]/problems/page.tsx` | Login gate (useAuth) for unauthenticated users |
+| `src/hooks/use-visual-engine.ts` | Removed usePremium, enabled flag simplified |
+| `src/app/[locale]/support/page.tsx` | Removed isPriority, always shows best support |
+| `src/components/dashboard/analytics/comparative-analytics-panel.tsx` | ContentLock removed |
+| `src/components/dashboard/offline-packs.tsx` | ContentLock removed |
+| `src/components/visual/visual-content.tsx` | ContentLock removed |
+| `src/hooks/use-navigation-direction.ts` | Owns view transitions, direction-based nav |
+| `next.config.ts` | Removed `experimental.viewTransition: true` |
+| `system-design.md` | Updated for premium removal |
+| `CONTEXT.md` | Updated for premium removal |
+| `.context/` | Memory files updated |
 
 ## Background Knowledge
 
@@ -114,6 +104,7 @@ Appwrite Cloud
 - **Storybook**: 10.4.1 with 18 stories (Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator, ShareButton, Badge, Dialog, Input, Textarea, Select, Tabs, Popover, DropdownMenu, Toast).
 - **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules. Injects CAPS/DBE sources into solve + quiz prompts. XML `<reference_material>` block + `buildPromptInstruction()` framing. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent-gated. DI pattern (`deps?` arg). `getLastRagContext()` surfaces batch RAG context. Per-question `Question.webSources` via hybrid AI-cite + fallback. See ADR-0010.
 - **Exam_dates sync**: Background job `"appwrite-exam-dates-sync"` with `upsertDocument` handler.
+- **Premium gating removed**: All features are free (June 2026). ContentLock component is dead — no `usePremium`, `isPremium`, or `isPriority` checks anywhere. Stripe/Payfast infra still exists for potential future monetization but no UI gating.
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.
 - **Auth**: Anonymous users auto-created; sign-up upgrades anonymous session. Admin uses separate magic-link + OTP. Rate limits: 3 sign-in/5min, 1 magic link/5min.
 - **Onboarding**: 5-step wizard (Welcome→Subjects→Goals→Schedule→Notifications). Migrated to Dexie v31.
@@ -150,6 +141,7 @@ Appwrite Cloud
 - ❌ Do NOT duplicate QuestionEngine logic in LearningOrchestrator — compose, don't duplicate
 - ❌ Do NOT use `lottie-react` — already migrated to `@lottiefiles/dotlottie-react`
 - ❌ Do NOT add route-level auth guards — anonymous users exist at every route; use component-level `isAnonymous` checks
+- ❌ Do NOT use ContentLock component or `usePremium` checks — premium gating was removed in June 2026; all features are free
 - ❌ Do NOT use arbitrary pixel values — use design tokens (`--space-*`, `--fs-*`)
 - ❌ Do NOT hardcode shadows — use `shadow-level-1/2/3`
 - ❌ Do NOT use `space-y-*` or manual `mt-* mb-*` pairs — use `gap-*` on the parent container

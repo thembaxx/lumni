@@ -2,7 +2,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { ContentLock } from "@/components/ui/content-lock";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useAuth } from "@/lib/auth/auth-context";
 import { analyticsService } from "@/lib/services/analytics-service";
@@ -75,26 +74,24 @@ export function ComparativeAnalyticsPanel() {
 	}
 
 	return (
-		<ContentLock feature="advanced-analytics">
-			<div className="flex flex-col gap-8 pt-6">
-				{comparativeData && (
-					<UserPercentileCard
-						userPercentile={comparativeData.userPercentile}
-						globalAverage={comparativeData.globalAverage}
+		<div className="flex flex-col gap-8 pt-6">
+			{comparativeData && (
+				<UserPercentileCard
+					userPercentile={comparativeData.userPercentile}
+					globalAverage={comparativeData.globalAverage}
+					userAverage={comparativeData.userAverage}
+				/>
+			)}
+
+			{comparativeData &&
+				Object.keys(comparativeData.subjectRankings).length > 0 && (
+					<SubjectRankingsChart
+						subjectRankings={comparativeData.subjectRankings}
 						userAverage={comparativeData.userAverage}
 					/>
 				)}
 
-				{comparativeData &&
-					Object.keys(comparativeData.subjectRankings).length > 0 && (
-						<SubjectRankingsChart
-							subjectRankings={comparativeData.subjectRankings}
-							userAverage={comparativeData.userAverage}
-						/>
-					)}
-
-				<PerformanceTrendsSection subjectTrends={subjectTrends} />
-			</div>
-		</ContentLock>
+			<PerformanceTrendsSection subjectTrends={subjectTrends} />
+		</div>
 	);
 }

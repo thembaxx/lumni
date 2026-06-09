@@ -725,7 +725,7 @@ const systemPrompt = webContext.xml
 | v31 | S24 | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
 | v32 | S28 | `studyGuides` |
 
-### Final test baseline: 1258 pass, 0 fail (no pre-existing failures)
+### Final test baseline: 1271 pass, 0 fail (no pre-existing failures)
 
 ### Session 35 — React Doctor score 100 + Biome lint zero (June 2026)
 
@@ -739,3 +739,18 @@ const systemPrompt = webContext.xml
 - **TypeScript**: `npx tsc --noEmit` — 0 errors.
 - **Tests**: 1258 pass, 0 fail.
 - **Commit**: `26635245` on `master` — 108 files changed, +823/−1138 lines.
+
+### Session 36 — Premium gating removal + login banners (June 2026)
+
+- **Goal**: Remove all premium gating so features are free, add login banners on auth-required standalone pages.
+- **ContentLock purged**: Removed from 5 components (analytics, study-plan, scheduler, visual-content, offline-packs). `usePremium`/`isPremium`/`isPriority` checks stripped everywhere.
+- **Login gating**: `/problems` page shows sign-in prompt (`useAuth()`) with LockIcon + "Create Account"/"Sign In" buttons when unauthenticated.
+- **Visual engine**: Always fetches — `enabled` only checks `!!question` (no premium check).
+- **Support page**: Removed `isPriority` conditional — always shows priority support and best response times.
+- **Icon fix**: `NavigationPointerOff01Icon` → `Cancel01Icon` (icon didn't exist in hugeicons package).
+- **View transitions**: Removed `experimental.viewTransition: true` from next.config — `useNavigationDirection` now owns the full lifecycle with `startViewTransition()` wrapper.
+- **Design polish**: Heading `font-extrabold` (Outfit 800), subtitle opacity `text-muted-foreground/60`, `shadow-level-1` token replacement, removed dead `standard` fields from SUPPORT_CHANNELS.
+- **Documentation**: All 6 files updated (CONTEXT.md, .context/CONTEXT.md, .context/memory-index.md, system-design.md, .context/system-design.md, AGENTS.md). D055 decision added.
+- **TypeScript**: `npx tsc --noEmit` — 0 errors.
+- **Biome**: `npx biome check` — 0 errors.
+- **Tests**: `bun test` — 1271 pass, 0 fail.

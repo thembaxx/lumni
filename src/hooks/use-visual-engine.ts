@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { usePremium } from "@/lib/premium/premium-context";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
@@ -31,16 +30,13 @@ async function fetchVisual(question: Question): Promise<VisualResult> {
 }
 
 export function useVisualEngine(question: Question | null) {
-	const { hasFeature } = usePremium();
-	const isPremium = hasFeature("visual-engine");
-
 	return useQuery({
 		queryKey: ["visualEngine", question?.id],
 		queryFn: () => {
 			if (!question) throw new Error("No question provided");
 			return fetchVisual(question);
 		},
-		enabled: !!question && isPremium,
+		enabled: !!question,
 		staleTime: 1000 * 60 * 60,
 		retry: 1,
 		select: (data) => data.visual,

@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** 2026-06-08 (sessions 1-34, June 2026)
+**Last synced:** 2026-06-09 (sessions 1-35, June 2026)
 
 ---
 
@@ -244,7 +244,7 @@ erDiagram
 | **Tools** | Domain-organized: core, communication, math, science, scheduling | React | `src/components/tools/` |
 | **Learning Map** | SVG topic dependency graph with prerequisite/core/advanced rows | React, SVG | `src/components/dashboard/learning-map-card.tsx` |
 | **Topic Graph** | Per-question inline mini knowledge graph (3-hop max) | React, SVG | `src/components/quiz/topic-graph.tsx` |
-| **Content Lock** | Premium gating: blurred preview + upgrade CTA | React, shadcn | `src/components/ui/content-lock.tsx` |
+| **Content Lock** | [DEAD — removed June 2026] Premium gating removed; all features are free | — | `src/components/ui/content-lock.tsx` (unused) |
 | **Live Session Bar** | Real-time collaborative study session component | React, Appwrite | `src/components/study-groups/live-session-bar.tsx` |
 | **Teacher Tools** | Assignment builder, review panel, observation timeline, messaging | React | `src/components/teacher/` |
 | **Public Share** | Shared question page (`/q/[id]`) with star-gated answer | React | `src/app/q/[id]/page.tsx` |
@@ -286,7 +286,7 @@ erDiagram
 | **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
 | **SyncService** | Offline-to-online data reconciliation | DataAccess→Appwrite flush | `src/lib/sync/` |
 | **AuthService** | Anonymous→authenticated upgrade, magic link | Appwrite SDK | `src/lib/auth/` |
-| **PremiumService** | Premium gating, checkout, Stripe webhook verification | localStorage + API | `src/lib/premium/` |
+| **PremiumService** | [Legacy — no UI gating] Stripe/Payfast checkout, webhook verification (infra retained for potential future monetization) | localStorage + API | `src/lib/premium/` |
 | **UserConsentService** | GDPR/POPIA dual-write consent (Dexie + Appwrite) | Background job queue | `src/lib/services/user-consent-service.ts` |
 | **ShareService** | Public share links, assignment sharing, ghost links, share card generation | localStorage + API | `src/lib/share/share-service.ts` |
 | **LiveSessionService** | Real-time collaborative study sessions via Appwrite | Appwrite SDK | `src/lib/study-groups/live-session-service.ts` |
@@ -514,7 +514,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | Admin routes | Separate magic-link + OTP auth (localStorage session) |
 | File uploads | UploadThing server-side verification |
 | Push notifications | VAPID key, subscription-based (web-push) |
-| Premium gating | Component-level `hasFeature()` checks + API verification |
+| Premium gating | [Removed June 2026 — all features free] Stripe/Payfast infra retained |
 
 ---
 
@@ -532,7 +532,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | P1 | Bun migration | Runtime + CI + Husky migration to Bun | ✅ Done |
 | P1 | Observability dashboard | AI latency tracking + usage events + admin panel | ✅ Done |
 | P1 | Teacher + Parent dashboards | Role-gated B2B2C analytics (FEAT-01, FEAT-02) | ✅ Done |
-| P1 | Premium gating + Stripe webhook | Monetization end-to-end: checkout, verify, cancel | ✅ Done |
+| P1 | Premium gating + Stripe webhook | Monetization end-to-end: checkout, verify, cancel | ✅ Done (removed June 2026 — all features free) |
 | P1 | GDPR/POPIA consent suite | Cookie banner, TOS versioning, account deletion, data export | ✅ Done |
 | P1 | i18n AF + ZU | Afrikaans 100%, isiZulu ~97% complete | ✅ Done |
 | P1 | WCAG 2.2 AA a11y audit + critical fixes | 30+ components audited, 11 critical + 8 high fixes | ✅ Done |

@@ -1,11 +1,11 @@
-<!-- LAST_SYNC: 2026-06-07 -->
+<!-- LAST_SYNC: 2026-06-09 -->
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1258 tests pass, 0 fail. Next: pick from TODO.md or new features.
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1271 tests pass, 0 fail. **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
@@ -55,6 +55,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D052] **PWA offline polish**: `/offline` page; install tracking events; service worker preload.
 - [D053] **Item-bank pruning**: `"prune-stale-questions"` job type from `/api/engine/generate`.
 - [D054] **React Doctor score 100/100**: 194 issues fixed (5 errors, 189 warnings). Removed 114 unused exports, 250+ lines dead code. `useMutation+useEffect` → `useQuery` for knowledge-graph consumers. Added `GET /api/engine/knowledge-graph` route. Biome lint zero across 1260 files.
+- [D055] **Premium gating removed**: All ContentLock wrappers purged. `usePremium` removed from visual-engine and support page. Visual engine always fetches. Support shows priority to all. Auth-required standalone pages get login banners. `experimental.viewTransition: true` removed — `useNavigationDirection` owns the full view transition lifecycle. `NavigationPointerOff01Icon` → `Cancel01Icon` (icon didn't exist).
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
