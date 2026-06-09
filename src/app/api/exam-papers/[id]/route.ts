@@ -2,8 +2,8 @@ import { UTApi, UTFile } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import { MarkdownExamParser } from "@/lib/exam-parser/markdown-exam-parser";
+import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper as ExamPaperData } from "@/types/exam-paper";
 
@@ -11,9 +11,7 @@ export const runtime = "nodejs";
 
 const utapi = new UTApi();
 
-function parseFileKeys(
-	raw: string | undefined | null,
-): Record<string, string> {
+function parseFileKeys(raw: string | undefined | null): Record<string, string> {
 	if (!raw) return {};
 	try {
 		const parsed = JSON.parse(raw);
@@ -90,16 +88,16 @@ export const GET = createRouteHandler({
 
 		const mdResult = await getExamMarkdown(fileUrl);
 		if (mdResult.source === "error" || !mdResult.content) {
-			logError("ExamPaper-markdown-fallback", mdResult.error || "Unknown error");
+			logError(
+				"ExamPaper-markdown-fallback",
+				mdResult.error || "Unknown error",
+			);
 			throw new HttpError(502, "Failed to convert exam paper to markdown");
 		}
 
 		let examPaper: ExamPaperData;
 		try {
-			const parser = new MarkdownExamParser(
-				mdResult.content,
-				originalFileName,
-			);
+			const parser = new MarkdownExamParser(mdResult.content, originalFileName);
 			examPaper = parser.parse();
 		} catch (err) {
 			logError("ExamPaper-parse", err);

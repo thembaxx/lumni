@@ -193,17 +193,17 @@ export function LoginBanner() {
 			</div>
 			<div className="flex shrink-0 items-center gap-1">
 				<div className="flex grow items-center gap-1">
-				<Button
-					size="sm"
-					variant="default"
-					className="h-8 px-3 text-xs"
-					onClick={() => {
-						window.location.href = "/auth/sign-in?redirect=/dashboard";
-					}}
-				>
-					Log In
-				</Button>
-				<FeatureDialog />
+					<Button
+						size="sm"
+						variant="default"
+						className="h-8 px-3 text-xs"
+						onClick={() => {
+							window.location.href = "/auth/sign-in?redirect=/dashboard";
+						}}
+					>
+						Log In
+					</Button>
+					<FeatureDialog />
 				</div>
 				<button
 					type="button"
