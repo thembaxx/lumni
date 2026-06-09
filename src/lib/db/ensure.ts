@@ -62,23 +62,57 @@ async function ensureCollectionSchema(
 	let attributesCreated = 0;
 	let indexesCreated = 0;
 
-	let existingAttrs = new Set<string>();
+	const existingAttrMap = new Map<string, { size?: number }>();
 	let existingIndexes = new Set<string>();
 	try {
 		const listAttrs = await db.listAttributes(
 			APPWRITE_DATABASE_ID,
 			collectionId,
 		);
-		existingAttrs = new Set(listAttrs.attributes.map((a) => a.key));
+		for (const attr of listAttrs.attributes) {
+			existingAttrMap.set(attr.key, {
+				size: (attr as { size?: number }).size,
+			});
+		}
 	} catch (err) {
 		logError("DbEnsure", err);
-		// collection might not exist yet — proceed with creation
 	}
 
 	// Create missing attributes
 	await Promise.all(
 		Object.entries(schema.attributes).map(async ([attrName, attrConfig]) => {
-			if (existingAttrs.has(attrName)) return;
+			if (existingAttrMap.has(attrName)) {
+				const existing = existingAttrMap.get(attrName);
+				if (
+					attrConfig.type === "string" &&
+					attrConfig.size &&
+					existing &&
+					existing.size !== undefined &&
+					existing.size < attrConfig.size
+				) {
+					try {
+						await db.updateStringAttribute(
+							APPWRITE_DATABASE_ID,
+							collectionId,
+							attrName,
+							attrConfig.required ?? false,
+							undefined,
+							attrConfig.size,
+						);
+						console.log(
+							`  Updated attribute "${attrName}" size: ${existing.size} → ${attrConfig.size}`,
+						);
+					} catch (e) {
+						if (!(e instanceof AppwriteException && e.code === 409)) {
+							console.error(
+								`Failed to update attribute ${attrName}:`,
+								String(e),
+							);
+						}
+					}
+				}
+				return;
+			}
 			try {
 				if (attrConfig.type === "string") {
 					await db.createStringAttribute(
@@ -138,11 +172,11 @@ async function ensureCollectionSchema(
 			if (existingIndexes.has(idx.key)) return;
 
 			const allAttrsAvailable = idx.attributes.every((a) =>
-				existingAttrs.has(a),
+				existingAttrMap.has(a),
 			);
 			if (!allAttrsAvailable) {
 				console.error(
-					`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrs.has(a)).join(", ")}`,
+					`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrMap.has(a)).join(", ")}`,
 				);
 				return;
 			}
