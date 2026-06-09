@@ -108,7 +108,7 @@ function FeatureDialog() {
 			>
 				See Features
 			</Button>
-			<DialogContent className="sm:max-w-md">
+			<DialogContent className="flex flex-col sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle>Features waiting for you</DialogTitle>
 					<DialogDescription>
@@ -173,23 +173,26 @@ export function LoginBanner() {
 			initial={{ opacity: 0, y: -6 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="flex items-center gap-3 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3"
+			className="flex w-full flex-col gap-6 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
 		>
-			<div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
-				<HugeiconsIcon
-					icon={Login01Icon}
-					className="size-4 text-system-accent"
-				/>
-			</div>
-			<div className="min-w-0 flex-1">
-				<p className="text-balance font-semibold text-sm">
-					Log in to unlock your full study toolkit
-				</p>
-				<p className="text-muted-foreground text-xs">
-					Streaks, leaderboards, study plans, and more
-				</p>
+			<div className="flex gap-3">
+				<div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
+					<HugeiconsIcon
+						icon={Login01Icon}
+						className="size-4 text-system-accent"
+					/>
+				</div>
+				<div className="min-w-0 flex-1 grow">
+					<p className="text-balance font-semibold text-sm">
+						Log in to unlock your full study toolkit
+					</p>
+					<p className="text-muted-foreground text-xs">
+						Streaks, leaderboards, study plans, and more
+					</p>
+				</div>
 			</div>
 			<div className="flex shrink-0 items-center gap-1">
+				<div className="flex grow items-center gap-1">
 				<Button
 					size="sm"
 					variant="default"
@@ -201,6 +204,7 @@ export function LoginBanner() {
 					Log In
 				</Button>
 				<FeatureDialog />
+				</div>
 				<button
 					type="button"
 					onClick={handleDismiss}

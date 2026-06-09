@@ -93,14 +93,14 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 	return (
 		<DialogContent
 			showCloseButton={false}
-			className="inset-0 m-0 h-dvh w-screen max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-system-surface p-0"
+			className="m-0 flex h-dvh w-full translate-x-0 translate-y-0 flex-col rounded-none border-0 bg-system-surface p-0"
 		>
 			<DialogTitle className="sr-only">Tools</DialogTitle>
 			<m.div
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.2 }}
-				className="flex h-full flex-col"
+				className="flex h-full grow flex-col overflow-y-auto"
 			>
 				<m.header
 					initial={{ opacity: 0, y: -10 }}
