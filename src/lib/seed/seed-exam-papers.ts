@@ -28,7 +28,7 @@ function parseFilename(filename: string): ParsedFile | null {
 	return {
 		filename,
 		year: Number.parseInt(match[1], 10),
-		subjectCode: match[2],
+		subjectCode: match[2].replace(/_/g, "-"),
 		paperNumber: Number.parseInt(match[3], 10),
 	};
 }
