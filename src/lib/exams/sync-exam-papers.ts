@@ -154,8 +154,6 @@ async function syncExamPapersInternal(
 							fileKeys: JSON.stringify([entry.fileKey]),
 							fileUrl: entry.fileUrl,
 							originalFileName: entry.originalFileName,
-							uploadedAt: new Date().toISOString(),
-							uploadedBy: "system",
 						},
 					);
 
@@ -246,7 +244,7 @@ async function syncExamPapersInternal(
 					};
 				}
 
-				const fileUrl = result.data.ufsUrl || result.data.url;
+				const fileUrl = result.data.ufsUrl;
 				const fileKey = result.data.key;
 				const id = crypto.randomUUID();
 				const subjectName = getSubjectName(parsed.subjectCode);

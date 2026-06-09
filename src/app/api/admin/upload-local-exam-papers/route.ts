@@ -87,7 +87,7 @@ async function uploadToUploadThing(
 		}
 
 		return {
-			url: result.data.ufsUrl || result.data.url,
+			url: result.data.ufsUrl,
 			key: result.data.key,
 		};
 	} catch (error) {

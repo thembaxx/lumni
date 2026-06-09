@@ -16,6 +16,7 @@ export type UploadedFile = {
 	size: number;
 	key: string;
 	url: string;
+	ufsUrl?: string;
 	customId: string | null;
 	serverData: unknown;
 };

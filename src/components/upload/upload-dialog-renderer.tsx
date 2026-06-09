@@ -45,7 +45,11 @@ export function UploadDialogRenderer({
 				prev.map((item) => {
 					const uploaded = res.find((r) => r.name === item.name);
 					if (!uploaded) return item;
-					return { ...item, status: "complete", url: uploaded.url };
+					return {
+						...item,
+						status: "complete",
+						url: uploaded.ufsUrl ?? uploaded.url,
+					};
 				}),
 			);
 		},

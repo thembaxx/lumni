@@ -44,7 +44,7 @@ export const POST = withRateLimit(
 
 				return {
 					success: true,
-					url: uploadedFile.url,
+					url: uploadedFile.ufsUrl ?? uploadedFile.url,
 					key: uploadedFile.key,
 					fileName,
 				};

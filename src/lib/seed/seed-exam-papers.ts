@@ -108,7 +108,7 @@ async function seedExamPapers() {
 				continue;
 			}
 
-			const fileUrl = result.data.ufsUrl || result.data.url;
+			const fileUrl = result.data.ufsUrl;
 			const fileKey = result.data.key;
 			const subjectName = file.subjectCode
 				.split("-")
@@ -145,8 +145,6 @@ async function seedExamPapers() {
 				fileKeys: JSON.stringify([fileKey]),
 				fileUrl,
 				originalFileName: file.filename,
-				uploadedAt: new Date().toISOString(),
-				uploadedBy: "system",
 			});
 
 			console.log(`  OK    ${file.filename}`);

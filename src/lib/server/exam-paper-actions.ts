@@ -116,7 +116,7 @@ export async function uploadExamPaper(
 		throw new Error(uploadResult?.error?.message || "Upload failed");
 	}
 
-	const fileUrl = uploadResult.data.ufsUrl || uploadResult.data.url;
+	const fileUrl = uploadResult.data.ufsUrl;
 	const fileKey = uploadResult.data.key;
 
 	// Check for existing paper in Appwrite

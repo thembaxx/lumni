@@ -73,7 +73,7 @@ export async function uploadImagesAndRewriteMarkdown(
 					);
 				}
 
-				const url = result.data?.ufsUrl || result.data?.url || "";
+				const url = result.data?.ufsUrl ?? "";
 				imageUrlMap[img.filename] = url;
 				return { filename: img.filename, url };
 			}),

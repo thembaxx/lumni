@@ -131,7 +131,7 @@ export async function adminUploadExamPaper(
 			};
 		}
 
-		const fileUrl = result.data.ufsUrl || result.data.url;
+		const fileUrl = result.data.ufsUrl;
 		const fileKey = result.data.key;
 		const id = randomUUID();
 

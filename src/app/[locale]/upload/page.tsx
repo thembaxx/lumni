@@ -40,9 +40,9 @@ export default function UploadPage() {
 	};
 
 	const handleUploadComplete = async (
-		files: { url: string; name: string }[],
+		files: { url: string; name: string; ufsUrl?: string }[],
 	) => {
-		const urls = files.map((f) => f.url);
+		const urls = files.map((f) => f.ufsUrl ?? f.url);
 		setLastUploadUrl(urls[0] || null);
 
 		const fileName = files[0]?.name || "";
