@@ -67,7 +67,6 @@ async function seedSubjects() {
 				icon: subject.icon,
 				category: subject.category,
 				color: subject.color,
-				createdAt: new Date().toISOString(),
 			});
 			console.log(`  OK    ${subject.name}`);
 			inserted++;

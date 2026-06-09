@@ -69,7 +69,7 @@ export type Subject = {
 	color?: string;
 	sourceUrl?: string;
 	sourceVersion?: string;
-	createdAt: string;
+	createdAt?: string;
 };
 
 export type Topic = {
