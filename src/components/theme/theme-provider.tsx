@@ -59,19 +59,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 		root.classList.add(resolvedTheme);
 		root.style.colorScheme = resolvedTheme;
 
-		// Sync theme-color meta tag with resolved background
-		const bg = getComputedStyle(root)
-			.getPropertyValue("--system-background")
-			.trim();
-		let meta = document.querySelector<HTMLMetaElement>(
-			'meta[name="theme-color"]',
-		);
-		if (!meta) {
-			meta = document.createElement("meta");
-			meta.name = "theme-color";
-			document.head.appendChild(meta);
+		// Remove all existing theme-color metas and set a single one without media queries
+		for (const m of document.querySelectorAll('meta[name="theme-color"]')) {
+			m.remove();
 		}
-		meta.content = bg || (resolvedTheme === "dark" ? "#14141f" : "#fcfaf5");
+		const meta = document.createElement("meta");
+		meta.name = "theme-color";
+		meta.content =
+			resolvedTheme === "dark" ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)";
+		document.head.appendChild(meta);
 	}, [theme]);
 
 	useEffect(() => {

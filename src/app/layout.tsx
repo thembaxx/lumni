@@ -13,15 +13,17 @@ export const metadata: Metadata = {
 	},
 };
 
-export const viewport: Viewport = {
-	width: "device-width",
-	initialScale: 1,
-	maximumScale: 5,
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#fcfaf5" },
-		{ media: "(prefers-color-scheme: dark)", color: "#14141f" },
-	],
-};
+export async function generateViewport(): Promise<Viewport> {
+	const cookieStore = await cookies();
+	const themeCookie = cookieStore.get("theme")?.value;
+	const isDark = themeCookie === "dark" || (!themeCookie && false);
+	return {
+		width: "device-width",
+		initialScale: 1,
+		maximumScale: 5,
+		themeColor: isDark ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)",
+	};
+}
 
 export default async function RootLayout({
 	children,
