@@ -7,14 +7,19 @@ import type { ExamFilter, ExamGroup, PaperListing } from "@/types/exam";
 interface AppwriteExam {
 	id: string;
 	subject: string;
+	subjectCode: string;
 	paperCode: string;
+	paperNumber: number;
 	examPeriod: string;
 	year: number;
 	grade: number;
 	language: string;
 	totalMarks: number;
 	duration: string;
-	fileKeys: { pdf: string; markdown: string; json: string } | null;
+	type: string;
+	fileKeys: string[] | null;
+	fileUrl: string;
+	originalFileName: string;
 	uploadedAt: string;
 }
 
@@ -26,18 +31,18 @@ async function fetchExams(): Promise<PaperListing[]> {
 	return appwriteExams.map((e) => ({
 		id: e.id,
 		subject: e.subject,
-		subjectId: e.subject.toLowerCase().replace(/\s+/g, "-"),
+		subjectId: e.subjectCode || e.subject.toLowerCase().replace(/\s+/g, "-"),
 		year: e.year,
 		session: e.examPeriod.toLowerCase().includes("june")
 			? ("may-june" as const)
 			: ("november" as const),
-		type: "paper" as const,
-		paperNumber: parseInt(e.paperCode?.replace("P", "") || "1", 10),
+		type: (e.type as "paper" | "memo") || "paper",
+		paperNumber: e.paperNumber,
 		language: e.language?.toLowerCase() as "english" | "afrikaans" | undefined,
-		title: `${e.subject} ${e.paperCode} ${e.examPeriod}`,
+		title: `${e.subject} ${e.paperCode} ${e.year}`,
 		url: "",
-		fileUrl: e.fileKeys?.pdf || undefined,
-		fileKey: e.fileKeys?.json || undefined,
+		fileUrl: e.fileUrl,
+		fileKey: e.fileKeys?.[0],
 	}));
 }
 

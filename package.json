@@ -29,6 +29,8 @@
 		"todo:sync": "bun scripts/sync-todo-to-linear.ts",
 		"todo:seed": "bun scripts/seed-linear-issues.ts",
 		"seed:subjects": "bun src/lib/seed/seed-subjects.ts",
+		"seed:exam-papers": "bun src/lib/seed/seed-exam-papers.ts",
+		"rename:exam-pdfs": "bun scripts/rename-exam-pdfs.ts",
 		"embed:backfill": "bun scripts/embed-backfill.ts",
 		"i18n:check": "bun scripts/check-translations.ts",
 		"i18n:translate": "bun scripts/translate-locales.ts",
