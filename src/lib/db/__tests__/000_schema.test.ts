@@ -34,6 +34,12 @@ const tableNames = [
 	"userConsents",
 	"tinyfishCache",
 	"tinyfishUsage",
+	"lessonCache",
+	"dictionaryCache",
+	"storyCache",
+	"storyQuestions",
+	"vocabularyList",
+	"lessonProgress",
 ];
 
 const mockTables = tableNames.map((name) => ({
@@ -85,7 +91,7 @@ describe("LumniOfflineDB", () => {
 	});
 
 	test("has all expected tables", () => {
-		expect(offlineDB.tables.length).toBe(33);
+		expect(offlineDB.tables.length).toBe(39);
 		for (const name of tableNames) {
 			const table = offlineDB.tables.find(
 				(t: { name: string }) => t.name === name,

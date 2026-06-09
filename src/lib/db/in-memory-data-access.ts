@@ -20,7 +20,9 @@ import type {
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
+	LessonProgress,
 	NoteRecord,
+	OnboardingState,
 	QuestionRating,
 	QuizAttempt,
 	QuizSessionState,
@@ -29,7 +31,9 @@ import type {
 	StudyPlanRecord,
 	SyncConflict,
 	TeacherObservation,
+	VocabularyEntry,
 } from "@/lib/db/schema";
+import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -38,8 +42,10 @@ import type {
 } from "@/lib/flashcard-engine/types";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
+import type { CachedLesson } from "@/lib/lesson/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
@@ -290,7 +296,14 @@ export class InMemoryDataAccess implements DataAccess {
 	studyPlans = new InMemoryTable<StudyPlanRecord, string>();
 	flashcardSyncState = new InMemoryTable<FlashcardSyncState, string>();
 	studyGuides = new InMemoryTable<CachedStudyGuide, string>();
+	lessonCache = new InMemoryTable<CachedLesson, string>();
 	questionEmbeddings = new InMemoryTable<QuestionEmbedding, string>();
 	teacherObservations = new InMemoryTable<TeacherObservation>();
 	assignmentMessages = new InMemoryTable<AssignmentMessage>();
+	dictionaryCache = new InMemoryTable<DictionaryCacheEntry, string>();
+	storyCache = new InMemoryTable<CachedStory, string>();
+	storyQuestions = new InMemoryTable<StoryQuestionSet, string>();
+	vocabularyList = new InMemoryTable<VocabularyEntry>();
+	lessonProgress = new InMemoryTable<LessonProgress, string>();
+	onboardingState = new InMemoryTable<OnboardingState, string>();
 }

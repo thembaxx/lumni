@@ -1,17 +1,12 @@
-import fs from "node:fs";
-import path from "node:path";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import {
+	generateLesson,
+	getCachedLesson,
+	storeLesson,
+} from "@/lib/lesson/service";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const revalidate = 3600;
-
-interface Lesson {
-	id: string;
-	subject: string;
-	title: string;
-	summary: string;
-	difficulty: string;
-}
 
 export const GET = withRateLimit(
 	createRouteHandler({
@@ -19,39 +14,30 @@ export const GET = withRateLimit(
 		execute: async ({ req }) => {
 			const { searchParams } = new URL(req.url);
 			const subject = searchParams.get("subject");
-			const search = searchParams.get("search");
-			const difficulty = searchParams.get("difficulty");
+			const topic = searchParams.get("topic");
+			const subtopic = searchParams.get("subtopic");
 
-			const filePath = path.resolve("lessons-comprehensive.json");
-
-			if (!fs.existsSync(filePath)) {
-				return { lessons: [] };
+			if (!subject || !topic || !subtopic) {
+				return {
+					lesson: null,
+					error: "subject, topic, and subtopic are required",
+				};
 			}
 
-			const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-			let filteredLessons: Lesson[] = lessonsData.lessons;
-
-			if (subject && subject !== "") {
-				filteredLessons = filteredLessons.filter(
-					(l: Lesson) => l.subject.toLowerCase() === subject.toLowerCase(),
-				);
+			const cached = await getCachedLesson(subject, topic, subtopic);
+			if (cached) {
+				return { lesson: cached, cached: true };
 			}
 
-			if (search && search !== "") {
-				filteredLessons = filteredLessons.filter((l: Lesson) =>
-					l.title.toLowerCase().includes(search.toLowerCase()),
-				);
+			const lesson = await generateLesson(subject, topic, subtopic);
+			if (lesson.sections.length === 0) {
+				return { lesson: null, error: "Failed to generate lesson" };
 			}
 
-			if (difficulty && difficulty !== "") {
-				filteredLessons = filteredLessons.filter(
-					(l: Lesson) => l.difficulty === difficulty,
-				);
-			}
-
-			return { lessons: filteredLessons };
+			await storeLesson(subject, topic, subtopic, lesson);
+			return { lesson, cached: false };
 		},
 		errorLabel: "Lessons",
 	}),
-	{ max: 20, windowMs: 60000 },
+	{ max: 10, windowMs: 60000 },
 );

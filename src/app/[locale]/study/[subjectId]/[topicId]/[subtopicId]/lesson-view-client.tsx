@@ -1,0 +1,428 @@
+"use client";
+
+import {
+	ArrowLeft01Icon,
+	BookOpen01Icon,
+	CheckmarkCircle01Icon,
+	Lightning,
+	Mic01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
+import { m } from "framer-motion";
+import { useCallback, useMemo, useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "@/i18n/navigation";
+import { suggestQuestionsForLesson } from "@/lib/integration/service";
+
+interface LessonViewProps {
+	subjectId: string;
+	topicId: string;
+	subtopicId: string;
+}
+
+function buildLessonKey(params: LessonViewProps) {
+	return `lesson:${params.subjectId}:${params.topicId}:${params.subtopicId}`;
+}
+
+export function LessonViewClient({
+	subjectId,
+	topicId,
+	subtopicId,
+}: LessonViewProps) {
+	const { push, back } = useRouter();
+	const [completedSections, setCompletedSections] = useState<Set<string>>(
+		new Set(),
+	);
+
+	const { data: curriculum } = useQuery({
+		queryKey: ["curriculum", subjectId],
+		queryFn: async () => {
+			const mod = await import("@/curriculum");
+			return mod.curriculumRegistry.getSubject(subjectId);
+		},
+		enabled: !!subjectId,
+	});
+
+	const topic = useMemo(
+		() => curriculum?.topics.find((t: { id: string }) => t.id === topicId),
+		[curriculum, topicId],
+	);
+	const subtopic = useMemo(
+		() => topic?.subtopics.find((s: { id: string }) => s.id === subtopicId),
+		[topic, subtopicId],
+	);
+
+	const topicIndex = useMemo(
+		() => (topic ? (curriculum?.topics.indexOf(topic) ?? -1) : -1),
+		[curriculum, topic],
+	);
+	const subtopicIndex = useMemo(
+		() => (subtopic && topic ? topic.subtopics.indexOf(subtopic) : -1),
+		[subtopic, topic],
+	);
+
+	const prev = useMemo(() => {
+		if (!topic || subtopicIndex <= 0) return null;
+		const prevSub = topic.subtopics[subtopicIndex - 1];
+		return `/study/${subjectId}/${topic.id}/${prevSub.id}`;
+	}, [topic, subtopicIndex, subjectId]);
+
+	const next = useMemo(() => {
+		if (!topic || subtopicIndex < 0) return null;
+		if (subtopicIndex < topic.subtopics.length - 1) {
+			const nextSub = topic.subtopics[subtopicIndex + 1];
+			return `/study/${subjectId}/${topic.id}/${nextSub.id}`;
+		}
+		if (
+			topicIndex >= 0 &&
+			curriculum &&
+			topicIndex < curriculum.topics.length - 1
+		) {
+			const nextTopic = curriculum.topics[topicIndex + 1];
+			return `/study/${subjectId}/${nextTopic.id}/${nextTopic.subtopics[0].id}`;
+		}
+		return null;
+	}, [topic, subtopicIndex, topicIndex, curriculum, subjectId]);
+
+	const { data: lesson, isPending } = useQuery({
+		queryKey: [buildLessonKey({ subjectId, topicId, subtopicId })],
+		queryFn: async () => {
+			const res = await fetch(
+				`/api/lessons?subject=${encodeURIComponent(subjectId)}&topic=${encodeURIComponent(topicId)}&subtopic=${encodeURIComponent(subtopicId)}`,
+			);
+			if (!res.ok) throw new Error("Failed to fetch lesson");
+			const json = await res.json();
+			return json.lesson as {
+				sections: {
+					id: string;
+					title: string;
+					content: string;
+					type: string;
+					keyPoints?: string[];
+				}[];
+				summary: string;
+				estimatedMinutes: number;
+				vocabulary?: { term: string; definition: string }[];
+			};
+		},
+		enabled: !!subjectId && !!topicId && !!subtopicId,
+	});
+
+	const { data: relatedQuestions } = useQuery({
+		queryKey: ["related-questions", subjectId, subtopicId],
+		queryFn: () => suggestQuestionsForLesson(subjectId, subtopicId),
+		enabled: !!subjectId && !!subtopicId,
+	});
+
+	const toggleSection = useCallback((sectionId: string) => {
+		setCompletedSections((prev) => {
+			const next = new Set(prev);
+			if (next.has(sectionId)) next.delete(sectionId);
+			else next.add(sectionId);
+			return next;
+		});
+	}, []);
+
+	const progress = lesson
+		? Math.round((completedSections.size / lesson.sections.length) * 100)
+		: 0;
+
+	if (isPending) {
+		return (
+			<PageContainer className="gap-4 pt-8">
+				<div className="h-8 w-64 animate-pulse rounded-2xl bg-muted" />
+				<div className="h-4 w-40 animate-pulse rounded-2xl bg-muted" />
+				{[...Array(3)].map((_, i) => (
+					<div key={i} className="h-32 animate-pulse rounded-3xl bg-muted" />
+				))}
+			</PageContainer>
+		);
+	}
+
+	if (!lesson) {
+		return (
+			<PageContainer className="flex flex-col items-center gap-3 py-16 text-center">
+				<HugeiconsIcon
+					icon={BookOpen01Icon}
+					className="size-12 text-muted-foreground/30"
+				/>
+				<p className="font-semibold text-lg">Lesson not found</p>
+				<p className="text-muted-foreground text-sm">
+					This lesson could not be loaded.
+				</p>
+				<Button
+					variant="outline"
+					onClick={() => back()}
+					className="mt-2 rounded-full"
+				>
+					Go back
+				</Button>
+			</PageContainer>
+		);
+	}
+
+	return (
+		<PageContainer className="gap-5 pt-8">
+			<Button
+				variant="ghost"
+				size="sm"
+				onClick={() => back()}
+				className="self-start rounded-full"
+			>
+				<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+				Back
+			</Button>
+
+			<m.div
+				initial={{ opacity: 0, y: 16 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+			>
+				<div className="flex flex-col gap-1">
+					<div className="flex flex-wrap items-center gap-2">
+						<Badge variant="secondary" className="rounded-full text-xs">
+							{curriculum?.subjectName ?? subjectId}
+						</Badge>
+						<span className="text-muted-foreground text-xs">{topic?.name}</span>
+						<span className="text-muted-foreground text-xs">
+							&middot; {lesson.estimatedMinutes} min
+						</span>
+					</div>
+					<h1 className="font-extrabold text-2xl tracking-tight">
+						{subtopic?.name ?? subtopicId}
+					</h1>
+				</div>
+
+				{progress > 0 && (
+					<div className="mt-4 flex items-center gap-3">
+						<div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+							<div
+								className="h-full rounded-full bg-[--system-accent] transition-[width] duration-500"
+								style={{ width: `${progress}%` }}
+							/>
+						</div>
+						<span className="text-muted-foreground text-xs tabular-nums">
+							{completedSections.size}/{lesson.sections.length}
+						</span>
+					</div>
+				)}
+			</m.div>
+
+			{lesson.sections.map((section, i) => {
+				const isComplete = completedSections.has(section.id);
+				return (
+					<m.div
+						key={section.id}
+						initial={{ opacity: 0, y: 16 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{
+							duration: 0.4,
+							ease: [0.32, 0.72, 0, 1],
+							delay: i * 0.05,
+						}}
+					>
+						<Card
+							className={`overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 ${
+								isComplete ? "border-success/20 bg-success/5" : ""
+							}`}
+						>
+							<CardHeader className="flex-row items-center justify-between">
+								<div className="flex items-center gap-2">
+									<Badge
+										variant="outline"
+										className="rounded-full text-[10px] uppercase tracking-wide"
+									>
+										{section.type}
+									</Badge>
+									<CardTitle className="font-extrabold text-base">
+										{section.title}
+									</CardTitle>
+								</div>
+								<button
+									type="button"
+									onClick={() => toggleSection(section.id)}
+									className={`flex size-7 items-center justify-center rounded-full border transition-colors ${
+										isComplete
+											? "border-success bg-success text-success-foreground"
+											: "border-muted-foreground/30 hover:border-muted-foreground/50"
+									}`}
+									aria-label={isComplete ? "Mark incomplete" : "Mark complete"}
+								>
+									<HugeiconsIcon
+										icon={CheckmarkCircle01Icon}
+										className="size-4"
+									/>
+								</button>
+							</CardHeader>
+							<CardContent className="flex flex-col gap-3 p-5 pt-0">
+								<div className="text-sm leading-relaxed">
+									<MarkdownRenderer content={section.content} />
+								</div>
+								{section.keyPoints && section.keyPoints.length > 0 && (
+									<div className="flex flex-col gap-1.5 rounded-xl bg-muted/50 p-3">
+										<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
+											Key points
+										</span>
+										{section.keyPoints.map((kp, ki) => (
+											<li key={ki} className="text-muted-foreground text-sm">
+												{kp}
+											</li>
+										))}
+									</div>
+								)}
+							</CardContent>
+						</Card>
+					</m.div>
+				);
+			})}
+
+			{lesson.vocabulary && lesson.vocabulary.length > 0 && (
+				<m.div
+					initial={{ opacity: 0, y: 16 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{
+						duration: 0.4,
+						ease: [0.32, 0.72, 0, 1],
+					}}
+				>
+					<Card className="overflow-hidden rounded-3xl shadow-level-1">
+						<CardHeader>
+							<CardTitle className="font-extrabold text-lg">
+								Vocabulary
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 p-5 pt-0">
+							{lesson.vocabulary.map((v) => (
+								<div
+									key={v.term}
+									className="flex items-center justify-between rounded-2xl border bg-card px-4 py-3"
+								>
+									<div className="flex flex-col">
+										<span className="font-semibold text-sm">{v.term}</span>
+										<span className="text-muted-foreground text-xs">
+											{v.definition}
+										</span>
+									</div>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="rounded-full"
+										aria-label={`Pronounce ${v.term}`}
+									>
+										<HugeiconsIcon icon={Mic01Icon} className="size-4" />
+									</Button>
+								</div>
+							))}
+						</CardContent>
+					</Card>
+				</m.div>
+			)}
+
+			{lesson.summary && (
+				<m.div
+					initial={{ opacity: 0, y: 16 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{
+						duration: 0.4,
+						ease: [0.32, 0.72, 0, 1],
+					}}
+				>
+					<Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
+						<CardHeader>
+							<CardTitle className="font-extrabold text-lg">Summary</CardTitle>
+						</CardHeader>
+						<CardContent className="p-5 pt-0">
+							<p className="text-sm leading-relaxed">{lesson.summary}</p>
+						</CardContent>
+					</Card>
+				</m.div>
+			)}
+
+			{relatedQuestions && relatedQuestions.length > 0 && (
+				<m.div
+					initial={{ opacity: 0, y: 16 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{
+						duration: 0.4,
+						ease: [0.32, 0.72, 0, 1],
+					}}
+				>
+					<Card className="overflow-hidden rounded-3xl shadow-level-1">
+						<CardHeader>
+							<CardTitle className="font-extrabold text-lg">
+								Related Past Questions
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 p-5 pt-0">
+							{relatedQuestions.map((q) => (
+								<div key={q.id} className="rounded-2xl border bg-card p-3">
+									<div className="line-clamp-2 text-sm">
+										<MarkdownRenderer content={q.questionText} />
+									</div>
+									<div className="mt-1 flex items-center gap-2 text-muted-foreground text-xs">
+										<span>{q.year}</span>
+										{q.marks > 0 && <span>{q.marks} marks</span>}
+									</div>
+								</div>
+							))}
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() =>
+									push(
+										`/quiz?subject=${encodeURIComponent(subjectId)}&topic=${encodeURIComponent(topicId)}&count=5`,
+									)
+								}
+								className="self-start rounded-full text-xs"
+							>
+								Practice more
+							</Button>
+						</CardContent>
+					</Card>
+				</m.div>
+			)}
+
+			<div className="flex items-center justify-between gap-3 pb-8">
+				{prev ? (
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={() => push(prev)}
+						className="rounded-full"
+					>
+						← Previous
+					</Button>
+				) : (
+					<div />
+				)}
+				{next ? (
+					<Button
+						variant="default"
+						size="sm"
+						onClick={() => push(next)}
+						className="rounded-full"
+					>
+						Next →
+					</Button>
+				) : (
+					<Button
+						variant="default"
+						size="sm"
+						onClick={() =>
+							push(`/quiz?subject=${encodeURIComponent(subjectId)}&count=5`)
+						}
+						className="rounded-full"
+					>
+						<HugeiconsIcon icon={Lightning} className="size-4" />
+						Practice
+					</Button>
+				)}
+			</div>
+		</PageContainer>
+	);
+}

@@ -4,6 +4,7 @@ export interface CurriculumSubtopic {
 	id: string;
 	name: string;
 	order: number;
+	stories?: string[];
 }
 
 export interface CurriculumTopic {

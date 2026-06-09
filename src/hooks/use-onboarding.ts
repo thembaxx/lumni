@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { dexieDataAccess } from "@/lib/db";
+import type { SyncDataAccess } from "@/lib/db/data-access";
+
+let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+function __setDepsForTesting(deps: { db: SyncDataAccess }) {
+	_deps = deps;
+}
 
 export interface OnboardingData {
 	isComplete: boolean;
@@ -27,7 +33,7 @@ export interface UseOnboardingReturn {
 	resetOnboarding: () => void;
 }
 
-const ONBOARDING_KEY = "lumni_onboarding";
+const STORAGE_KEY = "lumni_onboarding";
 
 const DEFAULT_ONBOARDING: OnboardingData = {
 	isComplete: false,
@@ -41,36 +47,35 @@ const DEFAULT_ONBOARDING: OnboardingData = {
 	notificationTimeOfDay: "morning",
 };
 
-function loadOnboardingData(): OnboardingData {
-	const stored = loadFromStorage<OnboardingData>(
-		ONBOARDING_KEY,
-		DEFAULT_ONBOARDING,
-	);
-	// Merge with defaults to ensure we have all fields (for backward compatibility)
-	return { ...DEFAULT_ONBOARDING, ...stored };
+function loadLocal(): OnboardingData {
+	try {
+		const raw = localStorage.getItem(STORAGE_KEY);
+		if (raw) return { ...DEFAULT_ONBOARDING, ...JSON.parse(raw) };
+	} catch {
+		// localStorage unavailable
+	}
+	return { ...DEFAULT_ONBOARDING };
 }
 
-function saveOnboardingData(data: OnboardingData): void {
-	saveToStorage(ONBOARDING_KEY, data);
-}
-
-function _resetOnboardingData(): void {
-	saveToStorage(ONBOARDING_KEY, DEFAULT_ONBOARDING);
+function saveLocal(data: OnboardingData): void {
+	try {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+	} catch {
+		// localStorage full or unavailable
+	}
 }
 
 export function useOnboarding(): UseOnboardingReturn {
-	const [data, setData] = useState<OnboardingData>(() => loadOnboardingData());
-	const [isLoaded] = useState(true);
+	const [data, setData] = useState<OnboardingData>(loadLocal);
 
-	const isOnboarding = isLoaded && !data.isComplete;
+	const isOnboarding = !data.isComplete;
 
 	const startOnboarding = useCallback(() => {
 		setData((prev) => ({
 			...prev,
 			isComplete: false,
 			startedAt: Date.now(),
-			currentStep: 0, // Reset to step 0 when starting
-			// Reset notification settings to default? Or keep existing? We'll reset to default for a fresh start.
+			currentStep: 0,
 			notificationFrequency: DEFAULT_ONBOARDING.notificationFrequency,
 			notificationTimeOfDay: DEFAULT_ONBOARDING.notificationTimeOfDay,
 		}));
@@ -84,19 +89,15 @@ export function useOnboarding(): UseOnboardingReturn {
 				isComplete: true,
 				completedAt: Date.now(),
 			};
-			saveOnboardingData(updated);
+			saveLocal(updated);
 			return updated;
 		});
 	}, []);
 
 	const skipOnboarding = useCallback(() => {
 		setData((prev) => {
-			const updated = {
-				...prev,
-				isComplete: true,
-				completedAt: Date.now(),
-			};
-			saveOnboardingData(updated);
+			const updated = { ...prev, isComplete: true, completedAt: Date.now() };
+			saveLocal(updated);
 			return updated;
 		});
 	}, []);
@@ -104,14 +105,15 @@ export function useOnboarding(): UseOnboardingReturn {
 	const updateProgress = useCallback((newData: Partial<OnboardingData>) => {
 		setData((prev) => {
 			const updated = { ...prev, ...newData };
-			saveOnboardingData(updated);
+			saveLocal(updated);
 			return updated;
 		});
 	}, []);
 
 	const resetOnboarding = useCallback(() => {
-		setData(DEFAULT_ONBOARDING);
-		saveToStorage(ONBOARDING_KEY, DEFAULT_ONBOARDING);
+		const fresh = { ...DEFAULT_ONBOARDING };
+		saveLocal(fresh);
+		setData(fresh);
 	}, []);
 
 	return {

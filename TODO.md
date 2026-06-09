@@ -527,6 +527,302 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **Test fix**: `all-repos.test.ts` mock moved before imports, both `@/lib/db` and `@/lib/db/schema` mocked with shared stores (fixed process-wide mock.module pollution gap)
 - [x] **Verification**: tsc 0 errors (1 pre-existing `maxScore` on `QuizAttempt`), biome 0 warnings, 1225 tests pass, 0 fail
 
+## 📚 Next Up — Guided Lessons + Past Questions + Pronunciation + Stories
+
+**3 waves, 4 parallel workstreams, ~40 tasks.** Estimated total: 10-14 sessions.
+
+---
+
+### Wave 1 — Foundation Infrastructure (parallel, independent)
+
+All 4 batches can run in parallel — zero cross-dependency on each other.
+
+---
+
+#### Batch A — Lesson Engine (P0) <!-- linear-priority: 0 -->
+
+Extends the curriculum data model to support structured lesson content, adds AI generation with web grounding, and creates the shared cache layer.
+
+- [ ] **A1 — Lesson data model** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/lesson/types.ts`:
+    ```ts
+    Lesson { id, subjectId, topicId, subtopicId, title, order,
+             prerequisites: string[], sections: LessonSection[],
+             vocabulary: VocabWord[], difficulty, estimatedMinutes }
+    LessonSection { id, type: "introduction"|"concept"|"worked-example"|"comprehension-check"|"summary"|"practice",
+                    title, content (markdown), keyPoints: string[] }
+    VocabWord { word, definition, partOfSpeech, pronunciation, language }
+    ```
+  - Each lesson maps 1:1 to a `CurriculumSubtopic.id` (existing `src/curriculum/types.ts`)
+  - Prerequisite chain inherited from the curriculum DAG
+
+- [ ] **A2 — Lesson generation service** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/lesson/service.ts`:
+    - `generateLesson(subjectId, topicId, subtopicId)` — calls existing AI chain (Gemini→Nvidia→Groq) with structured lesson prompt
+    - Uses TinyFish RAG (`fetchRagContext`) for web-grounded content (CAPS/DBE sources)
+    - Shared Dexie cache key: `lesson:${subjectId}:${subtopicId}`, 30d TTL
+    - One AI call per subtopic ever — cost caps at ~1,920 calls total across all subjects
+  - System prompt: structured for section-by-section lesson output (intro → concept → worked examples → comprehension check → vocabulary → practice link)
+
+- [ ] **A3 — Lesson API route** <!-- linear-id: LUM-NEW -->
+  - `GET /api/lessons/{subjectId}/{subtopicId}` — returns cached or generates on first access
+  - `GET /api/lessons/{subjectId}` — returns all lessons for a subject (topic-grouped)
+  - Rate-limited (20/min), auth-required
+  - Parallel: `POST /lessons/batch-generate` — admin endpoint to pre-generate all subtopics for a subject
+
+- [ ] **A4 — Update existing lesson infrastructure** <!-- linear-id: LUM-NEW -->
+  - Rewrite `lessons-comprehensive.json` — replace empty array with generated lesson references (or delete in favor of Dexie cache)
+  - Update `LessonCardData` (src/components/lesson/lesson-card.tsx) — add `topicId`, `subtopicId`, `order`, `prerequisites`, `vocabulary`, `sections`
+  - Update `GET /api/lessons` to route to new lesson service
+
+---
+
+#### Batch B — Past Question Classification (P0) <!-- linear-priority: 0 -->
+
+AI batch job to tag all existing `PastPaperQuestion` records with their specific `CurriculumSubtopic.id`, then build student-facing question bank UI.
+
+- [ ] **B1 — AI batch classifier** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/exam-paper-ingestion/question-classifier.ts`:
+    - Reads each `PastPaperQuestion` from Dexie/Appwrite
+    - Feeds question text + subject's curriculum JSON (all topics + subtopics) to Gemini Flash
+    - Assigns `CurriculumSubtopic.id` to each question
+    - Batch size: ~50 questions per call (context window permitting)
+    - Stores result back on the `PastPaperQuestion.topic` field (upgraded from optional to resolved)
+  - One-time admin trigger: `POST /api/exam-papers/classify` (rate-limited)
+  - Estimated cost: ~$0.50 total for all past questions (Gemini Flash is cheap)
+
+- [ ] **B2 — Question bank API enhancement** <!-- linear-id: LUM-NEW -->
+  - Upgrade `GET /api/exam-papers/questions` — add filter by `subtopicId`, sort by year/difficulty, paginate (already has `limit`)
+  - Return `{ subject, topic, subtopicId, year, paperNumber, marks, questionText, answerText, bloomLevel }` with proper subtopic resolution
+
+- [ ] **B3 — Student question bank UI** <!-- linear-id: LUM-NEW -->
+  - New route: `/questions` or integrate into dashboard as a tab
+  - Browse/filter: subject → topic → subtopic, with year range, difficulty, question type
+  - Results: paginated question cards with expand-to-reveal answer
+  - Actions per question: "Practice this" (→ `/quiz?subject=X&topic=Y&count=5`), "Add to quiz", "Discuss" (→ AI solver)
+  - Empty states for subjects/years with no data
+
+- [ ] **B4 — Dashboard past question widgets** <!-- linear-id: LUM-NEW -->
+  - "Recent Exam Questions" card on dashboard Today tab (last 5 viewed/unanswered questions)
+  - "Practice Weak Topics" card showing questions from the student's lowest-scored topics
+  - "Question of the Day" — random past question with answer reveal (once per day)
+
+---
+
+#### Batch C — Pronunciation + Dictionary (P1) <!-- linear-priority: 1 -->
+
+Infrastructure layer: speech-to-text via browser-side Whisper, dictionary API integration. UI comes in Wave 2.
+
+- [ ] **C1 — whisper.cpp WASM integration** <!-- linear-id: LUM-NEW -->
+  - Add `whisper.cpp` compiled to WebAssembly as a build dependency
+  - Currently Whisper's multilingual model supports **99 languages** including Afrikaans, isiZulu, isiXhosa (verified from OpenAI Whisper GitHub repo + HuggingFace model cards)
+  - A fine-tuned Afrikaans model already exists: `andreoosthuizen/whisper-large-v3-afrikaans` on HuggingFace
+  - Create `src/lib/audio-engine/whisper-service.ts`:
+    - `initWhisper()` — loads WASM model (lazy, ~80MB for `tiny` multilingual)
+    - `transcribe(audioBlob, language)` — runs inference, returns `{ text, segments, confidence }`
+    - `assessPronunciation(studentText, expectedText)` — word-level alignment + accuracy scoring
+    - Falls back gracefully if WASM fails to load (return null, disable pronunciation feature)
+  - Model choice: Start with `whisper-tiny` (~39M params, ~1GB VRAM or ~80MB WASM) — fast enough for real-time in browser
+    - Accuracy for SA languages: Tier 4 (~20-40% WER) out of the box
+    - Future: fine-tune on NCHLT Speech Corpus (200 speakers × 11 SA languages) for better accuracy
+  - **Critical design decision**: All inference happens on-device in the browser
+    - Zero server cost
+    - Fully offline
+    - No audio data leaves the device (privacy win)
+    - User must download model once (~80MB for tiny)
+
+- [ ] **C2 — Dictionary service** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/dictionary/service.ts`:
+    - Uses **Free Dictionary API** (`api.dictionaryapi.dev`) — no API key, no rate limit, MIT-licensed data from Wiktionary
+    - `lookupWord(word, language)` → `{ word, phonetic, audio, definitions: [{ partOfSpeech, definition, example }], synonyms, antonyms }`
+    - Falls back to `FreeDictionaryAPI.com` (~1,000 req/h) if primary fails
+    - Client-side cache in Dexie (`dictionaryCache` table, 24h TTL) to avoid redundant lookups
+    - Supports English only initially (the Free Dictionary API is English-focused)
+    - For Afrikaans/isiZulu/isiXhosa: can extend using Wiktionary's own API (`en.wiktionary.org/w/api.php`) which has CC-BY-SA data in those languages
+  - Dexie v33: Add `dictionaryCache` table (`&key, word, result, fetchedAt, expiresAt`)
+
+---
+
+#### Batch D — Short Stories + Comprehension (P1) <!-- linear-priority: 1 -->
+
+Content pipeline: ingest from copyright-free sources, create story data model, generate comprehension questions.
+
+- [ ] **D1 — Story data model** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/stories/types.ts`:
+    ```ts
+    Story { id, title, author, text, language, source, sourceUrl,
+            license: "cc-by"|"public-domain"|"ai-generated",
+            gradeLevel, wordCount, vocabulary: VocabWord[],
+            topics: string[] (mapped to curriculum subtopic IDs) }
+    ```
+  - Stories stored as JSON in `src/curriculum/stories/{language}/` — per-language directory
+  - Initial sources:
+    - **African Storybook** (CC-BY, 40+ stories in multiple SA languages WITH audio) — `southafricareads.org`
+    - **Project Gutenberg** — "South-African Folk-Tales" (Honey), "The Outspan" (Fitzpatrick), Olive Schreiner, Herman Charles Bosman (public domain)
+    - AI-generated original stories as supplement for topics not covered by either source
+
+- [ ] **D2 — Story ingestion pipeline** <!-- linear-id: LUM-NEW -->
+  - Create `src/lib/stories/service.ts`:
+    - `loadStoryLibrary(language)` — loads all stories for a language
+    - `getStory(id)` — single story lookup
+    - `getComprehensionQuestions(storyId)` — AI-generated or cached
+    - Dexie cache: `storyCache` table (stories), `storyQuestions` table (AI-generated questions, 30d TTL)
+  - Seed script: `scripts/ingest-stories.ts` — downloads CC-BY content, formats as JSON, writes to `src/curriculum/stories/`
+  - Register in curriculum: add `stories: string[]` field to `CurriculumSubtopic` to reference relevant story IDs
+
+- [ ] **D3 — Comprehension question generator** <!-- linear-id: LUM-NEW -->
+  - AI prompt: given a story text + curriculum topic context, generate 3-5 comprehension questions (mix of literal, inferential, critical — matching the CAPS "Reading and Comprehension" bloom target of `analyze`)
+  - Questions formatted as `Question` type from the engine (supports MCQ + short-answer)
+  - Integrated with existing quiz engine for answering + grading + wrong-answer tracking
+  - Cached per story (one generation ever, 30d TTL)
+
+---
+
+### Wave 2 — UI Layer (depends on Wave 1)
+
+All 4 batches build on Wave 1 foundations. Can run in parallel once Wave 1 infrastructure is stable.
+
+---
+
+#### Batch A5-A6 — Lesson UI (P0) <!-- linear-priority: 0 -->
+
+- [ ] **A5 — Guided lesson navigation** <!-- linear-id: LUM-NEW -->
+  - Lesson view page: `/study/{subjectId}/{topicId}/{subtopicId}`
+  - Sections rendered as scrollable cards with progress tracking (which sections completed)
+  - Prerequisite-aware: shows "Complete [lesson X] first" block for locked lessons
+  - "Next Lesson" / "Previous Lesson" navigation following curriculum order
+  - "Practice this Topic" button → quiz with relevant past questions
+  - "Mark Complete" + progress per lesson stored in Dexie (`lessonProgress` table)
+  - TTS read-aloud button on each section (reuse existing `TTSButton`)
+
+- [ ] **A6 — Lesson library dashboard card** <!-- linear-id: LUM-NEW -->
+  - Replace existing `LessonLibrary` component with curriculum-order-aware version
+  - Shows personalized lesson recommendations based on competency data
+  - "Continue where you left off" — resume last incomplete lesson
+  - Progress bar per subject (X of Y lessons completed)
+
+---
+
+#### Batch B5-B7 — Question Bank UI (P0) <!-- linear-priority: 0 -->
+
+- [ ] **B5 — Question bank browser page** <!-- linear-id: LUM-NEW -->
+  - New route: `/questions` — full student-facing question browser
+  - Breadcrumb: Subject → Topic → Subtopic
+  - Filter sidebar: year range, question type, difficulty (inferred from marks), paper number
+  - Grid of question cards with expand/collapse for answer
+  - "Quiz Me" button — creates a quiz from selected filters (reuses existing quiz engine)
+
+- [ ] **B6 — Dashboard past question widgets** <!-- linear-id: LUM-NEW -->
+  - "Recent Past Questions" — last 5 unanswered/incorrect from user's history
+  - "Questions from Weak Topics" — pulls from lowest competency topics
+  - Each widget card: question preview snippet + "Answer" expand + "Practice" link
+
+- [ ] **B7 — Lesson→Question linking** <!-- linear-id: LUM-NEW -->
+  - Each lesson page shows "Related Past Questions" section at bottom
+  - Filters by `subtopicId` (from B1 classification)
+  - Shows up to 5 questions with expand-to-reveal answers
+  - "Practice More" → opens quiz filtered to that subtopic's past questions
+
+---
+
+#### Batch C3-C5 — Pronunciation + Dictionary UI (P1) <!-- linear-priority: 1 -->
+
+- [ ] **C3 — Pronunciation exercise UI** <!-- linear-id: LUM-NEW -->
+  - Build `PronunciationExercise` component (from existing `tts-service.ts` type but as real UI)
+  - Flow: Show word/phrase → Play TTS → Student records → Whisper transcribes → Show comparison
+  - Comparison view: expected text vs transcribed text, word-level accuracy highlighting (green=correct, red=wrong, yellow=close)
+  - Per-language exercise sets:
+    - English: 10+ exercises (existing tongue twisters + vocabulary from lessons)
+    - Afrikaans: 10+ exercises (existing phrases + lesson vocabulary)
+    - isiZulu: 5+ exercises (from NCHLT corpus + lesson vocabulary)
+    - isiXhosa: 5+ exercises (from NCHLT corpus + lesson vocabulary)
+  - Integrate into lesson pages: each lesson's `vocabulary` array feeds into pronunciation practice at the bottom
+
+- [ ] **C4 — Dictionary lookup UI** <!-- linear-id: LUM-NEW -->
+  - `WordLookup` component — inline popover on word tap/click within lesson content
+  - Shows: phonetic spelling, audio pronunciation (from API), definitions, part of speech, example sentence
+  - Dedicated `/dictionary` page: search bar, results list, "Listen" button per result
+  - "Add to Vocabulary List" — saves word to Dexie `vocabularyList` table for review
+  - Lesson integration: vocabulary words in lesson sections become clickable, opening the `WordLookup` popover
+
+- [ ] **C5 — Dexie v33: vocabulary + dictionary tables** <!-- linear-id: LUM-NEW -->
+  - `dictionaryCache` — `&key, word, result (JSON), fetchedAt, expiresAt` (24h TTL)
+  - `vocabularyList` — `++id, userId, word, definition, language, sourceLesson, addedAt, reviewCount`
+  - `lessonProgress` — `&[userId+lessonId], userId, lessonId, completedSections: string[], completedAt, score`
+
+---
+
+#### Batch D4-D6 — Story Reader + Comprehension (P1) <!-- linear-priority: 1 -->
+
+- [ ] **D4 — Story library UI** <!-- linear-id: LUM-NEW -->
+  - Route: `/stories` — filters by language, grade level, topic
+  - Grid of story cards: title, author, language badge, word count, "Read now" / "Listen" buttons
+  - "Reading Level" badge (easy/medium/hard derived from word count + vocabulary complexity)
+
+- [ ] **D5 — Story reader page** <!-- linear-id: LUM-NEW -->
+  - Route: `/stories/{storyId}`
+  - Clean reading view: large text, comfortable line height, page-like margins
+  - TTS read-aloud (reuse `ListenToLesson` component with word highlighting)
+  - Inline vocabulary: tap/click word → `WordLookup` popover (reuses C4 component)
+  - "Comprehension Questions" section at bottom (collapsible, shows after reading)
+  - "Mark as Read" + reading progress tracking in Dexie
+
+- [ ] **D6 — Story→Curriculum linking** <!-- linear-id: LUM-NEW -->
+  - Stories tagged with curriculum `subtopicId`s (e.g., "comprehension" subtopic under "Reading and Comprehension")
+  - "Read a Story" link appears in relevant lesson pages
+  - "Practice Comprehension" → leads to next unread story matching the student's language subject
+
+---
+
+### Wave 3 — Cross-Feature Integration (P2) <!-- linear-priority: 2 -->
+
+Runs after Wave 2 UI is stable. Each integration ties two Wave 2 features together.
+
+- [ ] **Integration 1: Lesson→Past Questions loop** <!-- linear-id: LUM-NEW -->
+  - When a student completes a lesson → automatically suggest 3 past questions on that subtopic
+  - Wrong answers on those questions → flag the lesson for review → resurface after 24h
+
+- [ ] **Integration 2: Lesson→Pronunciation loop** <!-- linear-id: LUM-NEW -->
+  - Vocabulary from each lesson feeds into pronunciation practice module
+  - Student marks a vocabulary word as "learned" only after passing pronunciation assessment
+
+- [ ] **Integration 3: Story→Lesson loop** <!-- linear-id: LUM-NEW -->
+  - Comprehension questions from stories feed competency tracking for the "Reading and Comprehension" topic
+  - Low comprehension score → suggests simpler story → suggests vocabulary review
+
+- [ ] **Integration 4: Dictionary→Flashcard loop** <!-- linear-id: LUM-NEW -->
+  - Words saved to vocabulary list auto-create flashcards (SM-2 spaced repetition)
+  - "Review Vocabulary" flashcard session type for language subjects
+
+- [ ] **Integration 5: Student Question Bank → Quiz Engine** <!-- linear-id: LUM-NEW -->
+  - "Quiz from past questions" mode: creates a quiz session using only `PastPaperQuestion` records filtered by subtopic
+  - Uses existing quiz engine (`useQuiz`, `QuestionCardFeedback`, etc.) — only the source changes from AI-generated to past-paper-sourced
+
+---
+
+### Dexie Schema Changes
+
+| Version | Batch | New Tables | Notes |
+|---------|-------|-----------|-------|
+| v33 | C5 | `dictionaryCache` | 24h TTL, word lookup cache |
+| v33 | C5 | `vocabularyList` | Per-user saved vocabulary |
+| v33 | C5 | `lessonProgress` | Per-user lesson tracking |
+| v33 | D2 | `storyCache` | Story content cache |
+| v33 | D2 | `storyQuestions` | AI-generated comprehension questions |
+
+---
+
+### Verification Gates (Every Batch)
+
+```
+npx tsc --noEmit     → zero errors
+npx biome check       → zero warnings on changed files
+bun test              → no regressions (current baseline: 1271 pass, 0 fail)
+npx next build        → clean build
+```
+
+---
+
 ## 🔴 P0 — Runtime crashes (found June 2026 audit)
 
 ### 9 pages crash with HTTP 000 (server connection refused)

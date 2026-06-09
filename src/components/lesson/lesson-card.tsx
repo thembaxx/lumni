@@ -21,6 +21,10 @@ export interface LessonCardData {
 	difficulty: "easy" | "medium" | "hard";
 	title: string;
 	summary: string;
+	topicId?: string;
+	subtopicId?: string;
+	prerequisites?: string[];
+	order?: number;
 }
 
 export function LessonCard({

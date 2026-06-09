@@ -4,6 +4,7 @@ export interface PastPaperQuestion {
 	id: string;
 	subject: string;
 	topic?: string;
+	subtopicId?: string;
 	year: number;
 	paperNumber: number;
 	sectionTitle?: string;

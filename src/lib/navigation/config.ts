@@ -7,6 +7,7 @@ import {
 	DatabaseIcon,
 	File01Icon,
 	FlashIcon,
+	Mic01Icon,
 	Mortarboard01Icon,
 	Quiz01Icon,
 	Search01Icon,
@@ -54,6 +55,18 @@ export const navConfig: NavCategory[] = [
 				route: "/problems",
 				primary: true,
 			},
+			{
+				id: "stories",
+				label: "Stories",
+				icon: BookOpen01Icon,
+				route: "/stories",
+			},
+			{
+				id: "pronunciation",
+				label: "Pronunciation",
+				icon: Mic01Icon,
+				route: "/pronunciation",
+			},
 		],
 	},
 	{
@@ -100,6 +113,12 @@ export const navConfig: NavCategory[] = [
 				label: "Study Guide",
 				icon: BookOpen01Icon,
 				route: "/study-guide",
+			},
+			{
+				id: "dictionary",
+				label: "Dictionary",
+				icon: Search01Icon,
+				route: "/dictionary",
 			},
 			{
 				id: "search",

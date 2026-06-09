@@ -14,7 +14,9 @@ import type {
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
+	LessonProgress,
 	NoteRecord,
+	OnboardingState,
 	QuestionRating,
 	QuizAttempt,
 	QuizSessionState,
@@ -23,7 +25,9 @@ import type {
 	StudyPlanRecord,
 	SyncConflict,
 	TeacherObservation,
+	VocabularyEntry,
 } from "@/lib/db/schema";
+import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -32,8 +36,10 @@ import type {
 } from "@/lib/flashcard-engine/types";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
+import type { CachedLesson } from "@/lib/lesson/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type {
 	TinyFishCacheEntry,
@@ -127,6 +133,19 @@ export interface StudyDataAccess {
 	examDates: DataAccessTable<CachedExamDates, number>;
 }
 
+export interface LessonDataAccess {
+	lessonCache: DataAccessTable<CachedLesson, string>;
+}
+
+export interface DictionaryDataAccess {
+	dictionaryCache: DataAccessTable<DictionaryCacheEntry, string>;
+}
+
+export interface StoryDataAccess {
+	storyCache: DataAccessTable<CachedStory, string>;
+	storyQuestions: DataAccessTable<StoryQuestionSet, string>;
+}
+
 export interface SyncDataAccess {
 	wrongAnswers: DataAccessTable<WrongAnswerEntry, number>;
 	retentionRecurrence: DataAccessTable<RetentionRecurrence, number>;
@@ -138,6 +157,12 @@ export interface SyncDataAccess {
 	flashcardSyncState: DataAccessTable<FlashcardSyncState, string>;
 	teacherObservations: DataAccessTable<TeacherObservation, number>;
 	assignmentMessages: DataAccessTable<AssignmentMessage, number>;
+	onboardingState: DataAccessTable<OnboardingState, string>;
+}
+
+export interface VocabularyDataAccess {
+	vocabularyList: DataAccessTable<VocabularyEntry, number>;
+	lessonProgress: DataAccessTable<LessonProgress, string>;
 }
 
 export interface ObservabilityDataAccess {
@@ -174,6 +199,10 @@ export interface DataAccess
 		QuizDataAccess,
 		ContentDataAccess,
 		StudyDataAccess,
+		LessonDataAccess,
+		DictionaryDataAccess,
+		StoryDataAccess,
+		VocabularyDataAccess,
 		SyncDataAccess,
 		ObservabilityDataAccess,
 		SocialDataAccess,

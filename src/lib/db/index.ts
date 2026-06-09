@@ -14,14 +14,18 @@ export type {
 	ContentDataAccess,
 	DataAccess,
 	DataAccessTable,
+	DictionaryDataAccess,
 	EmbeddingDataAccess,
 	FlashcardDataAccess,
 	LegacyDataAccess,
+	LessonDataAccess,
 	ObservabilityDataAccess,
 	QuizDataAccess,
 	SocialDataAccess,
+	StoryDataAccess,
 	StudyDataAccess,
 	SyncDataAccess,
+	VocabularyDataAccess,
 	WhereClause,
 } from "./data-access";
 export { dexieDataAccess } from "./dexie-data-access";

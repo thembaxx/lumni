@@ -17,6 +17,9 @@ import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { LoginBanner } from "@/components/dashboard/login-banner";
 import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
+import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
+import { RecentQuestionsCard } from "@/components/dashboard/recent-questions-card";
+import { StudyCard } from "@/components/dashboard/study-card";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 
 async function refreshPage(): Promise<void> {
@@ -269,6 +272,11 @@ export function DashboardContent({
 							<AnonymousUpsell />
 						</StaggeredSection>
 					)}
+					{showPractice && (
+						<StaggeredSection>
+							<QuestionOfTheDayCard />
+						</StaggeredSection>
+					)}
 					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<AppErrorBoundary>
@@ -295,7 +303,17 @@ export function DashboardContent({
 					)}
 					{showPractice && isLoggedIn && (
 						<StaggeredSection>
+							<StudyCard />
+						</StaggeredSection>
+					)}
+					{showPractice && isLoggedIn && (
+						<StaggeredSection>
 							<StreakCard />
+						</StaggeredSection>
+					)}
+					{showPractice && isLoggedIn && (
+						<StaggeredSection>
+							<RecentQuestionsCard />
 						</StaggeredSection>
 					)}
 					{showPractice && isLoggedIn && (

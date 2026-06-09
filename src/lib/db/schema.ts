@@ -26,6 +26,7 @@ export interface RetentionRecurrence {
 }
 
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import type {
@@ -34,8 +35,10 @@ import type {
 } from "@/lib/flashcard-engine/types";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
+import type { CachedLesson } from "@/lib/lesson/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type {
 	GroupBadge,
 	GroupChallenge,
@@ -278,6 +281,26 @@ export interface OnboardingState {
 	updatedAt: number;
 }
 
+export interface VocabularyEntry {
+	id?: number;
+	userId: string;
+	word: string;
+	definition: string;
+	language: string;
+	sourceLesson?: string;
+	addedAt: number;
+	reviewCount: number;
+}
+
+export interface LessonProgress {
+	userId: string;
+	lessonId: string;
+	completedSections: number;
+	totalSections: number;
+	completedAt: number;
+	score?: number;
+}
+
 export interface SrDailyBudget {
 	userId: string;
 	date: string;
@@ -335,7 +358,13 @@ export class LumniOfflineDB extends Dexie {
 	srDailyBudget!: Table<SrDailyBudget, string>;
 	flashcardSyncState!: Table<FlashcardSyncState, string>;
 	studyGuides!: Table<CachedStudyGuide, string>;
+	lessonCache!: Table<CachedLesson, string>;
 	questionEmbeddings!: Table<QuestionEmbedding, string>;
+	dictionaryCache!: Table<DictionaryCacheEntry, string>;
+	vocabularyList!: Table<VocabularyEntry, number>;
+	lessonProgress!: Table<LessonProgress, string>;
+	storyCache!: Table<CachedStory, string>;
+	storyQuestions!: Table<StoryQuestionSet, string>;
 
 	constructor() {
 		super("lumni-offline");
@@ -1021,6 +1050,73 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(33).stores({
 			questionEmbeddings: "&id, subject, updatedAt",
+		});
+
+		this.version(34).stores({
+			lessonCache: "&key, expiresAt",
+		});
+
+		// v35: dictionaryCache, storyCache, storyQuestions
+		this.version(35).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, title, subject, topic, isFavorite, updatedAt",
+			groupPosts: "++id, groupId, userId, createdAt",
+			groupComments: "++id, postId, parentId, userId, createdAt",
+			groupReactions: "++id, postId, commentId, userId, emoji, createdAt",
+			gamification: "++id, totalXp, currentStreak, lastPracticeDate",
+			quizPacks: "&id, subject, topic, status, createdAt, expiresAt",
+			packQuestions: "++id, &[packId+questionIndex], packId",
+			pastPaperQuestions:
+				"&id, subject, year, paperNumber, questionType, createdAt",
+			groupChallenges: "&id, groupId, weekStart, status",
+			groupChallengeEntries: "&id, challengeId, groupId, userId",
+			groupBadges: "&id, groupId, userId, tier",
+			userConsents: "&userId, updatedAt",
+			tinyfishCache: "&key, expiresAt",
+			tinyfishUsage: "++id, &[userId+date], userId, date",
+			analyticsEvents: "++id, eventType, userId, timestamp",
+			retentionRecurrence: "++id, questionId, userId, scheduledAt, completed",
+			sharedQuestions: "&id, subject, topic, sharedById, sharedAt",
+			knowledgeGraph: "&key, expiresAt",
+			teacherObservations: "++id, studentId, teacherId, subject, createdAt",
+			assignmentMessages:
+				"++id, &assignmentId, senderId, senderRole, createdAt",
+			studyPlans: "&id, updatedAt",
+			onboardingState: "&userId, updatedAt",
+			srDailyBudget: "&userId, date, newCardsUsed, reviewsUsed",
+			flashcardSyncState: "&userId, lastSyncTimestamp",
+			studyGuides: "&key, expiresAt",
+			questionEmbeddings: "&id, subject, updatedAt",
+			lessonCache: "&key, expiresAt",
+			dictionaryCache: "&key, word, expiresAt",
+			storyCache: "&key, expiresAt",
+			storyQuestions: "&storyId, expiresAt",
+		});
+
+		// v36: vocabularyList + lessonProgress
+		this.version(36).stores({
+			vocabularyList: "++id, userId, word, language, addedAt, reviewCount",
+			lessonProgress:
+				"&[userId+lessonId], userId, lessonId, completedAt, score",
 		});
 	}
 }

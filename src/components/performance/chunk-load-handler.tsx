@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { logError } from "@/lib/shared/logger";
 
 const RELOAD_GUARD_KEY = "lumni:chunk-reload-attempt";
 const CHUNK_ERROR_PATTERNS = [
@@ -27,21 +28,27 @@ async function recoverAndReload() {
 			return;
 		}
 		sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
-	} catch {}
+	} catch (err) {
+		logError("ChunkLoadHandler.sessionStorage", err);
+	}
 
 	try {
 		if ("caches" in window) {
 			const names = await caches.keys();
 			await Promise.all(names.map((n) => caches.delete(n)));
 		}
-	} catch {}
+	} catch (err) {
+		logError("ChunkLoadHandler.cacheClear", err);
+	}
 
 	try {
 		if ("serviceWorker" in navigator) {
 			const regs = await navigator.serviceWorker.getRegistrations();
 			await Promise.all(regs.map((r) => r.unregister()));
 		}
-	} catch {}
+	} catch (err) {
+		logError("ChunkLoadHandler.swUnregister", err);
+	}
 
 	window.location.reload();
 }

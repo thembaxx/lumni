@@ -184,8 +184,15 @@ class DexieDataAccess implements DataAccess {
 	studyPlans = tableAdapter(offlineDB.studyPlans);
 	flashcardSyncState = tableAdapter(offlineDB.flashcardSyncState);
 	studyGuides = tableAdapter(offlineDB.studyGuides);
+	lessonCache = tableAdapter(offlineDB.lessonCache);
 	teacherObservations = tableAdapter(offlineDB.teacherObservations);
 	assignmentMessages = tableAdapter(offlineDB.assignmentMessages);
+	dictionaryCache = tableAdapter(offlineDB.dictionaryCache);
+	storyCache = tableAdapter(offlineDB.storyCache);
+	storyQuestions = tableAdapter(offlineDB.storyQuestions);
+	vocabularyList = tableAdapter(offlineDB.vocabularyList);
+	lessonProgress = tableAdapter(offlineDB.lessonProgress);
+	onboardingState = tableAdapter(offlineDB.onboardingState);
 }
 
 export const dexieDataAccess =
