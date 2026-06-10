@@ -20,9 +20,9 @@ import {
 	hasSavedSession,
 	useExamSessionAutoSave,
 } from "@/hooks/use-exam-session-persistence";
+import { useExamSessionSync } from "@/hooks/use-exam-session-sync";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { useExamSessionSync } from "@/hooks/use-exam-session-sync";
 import { useRouter } from "@/i18n/navigation";
 import {
 	getAnswerText,
