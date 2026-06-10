@@ -1,5 +1,5 @@
-minimumReleaseAge: 10080
-trustPolicy: no-downgrade
+# minimumReleaseAge: 1440
+# trustPolicy: no-downgrade
 allowBuilds:
   '@parcel/watcher': set this to true or false
   '@sentry/cli': set this to true or false
@@ -11,6 +11,11 @@ allowBuilds:
   sharp: set this to true or false
   tesseract.js: set this to true or false
   unrs-resolver: set this to true or false
+overrides:
+  protobufjs: 7.6.3
+  effect: '>=3.20.0'
+  postcss: 8.5.15
+  tmp: '^0.2.6'
 minimumReleaseAgeExclude:
   - '@next/bundle-analyzer@16.2.9'
   - '@next/env@16.2.9'
@@ -35,3 +40,4 @@ minimumReleaseAgeExclude:
   - react-doctor@0.5.1
   - react-konva@19.2.5
   - storybook@10.4.3
+  - protobufjs@7.6.3
