@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
+vi.mock("@/lib/shared/logger", () => ({ logError: () => {} }));
+
 const originalFetch = globalThis.fetch;
 const originalEnv = process.env.TINYFISH_API_KEY;
 

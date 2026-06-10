@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 import { client } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth";
-import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/constants";
 import {
 	getWeeklyLeaderboard,
 	type LeaderboardEntry,

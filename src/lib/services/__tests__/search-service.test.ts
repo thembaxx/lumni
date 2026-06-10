@@ -1,49 +1,39 @@
-import { describe, expect, test, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 
-const mockQuestions = [
-	{
-		subject: "math",
-		topic: "algebra",
-		questions: JSON.stringify([
-			{ id: "q1", questionText: "What is 2+2?", topic: "algebra" },
-		]),
-		cachedAt: Date.now(),
-	},
-];
+const { mockQuestions, mockWrongAnswers, mockFlashcards } = vi.hoisted(() => ({
+	mockQuestions: [
+		{
+			subject: "math",
+			topic: "algebra",
+			questions: JSON.stringify([
+				{ id: "q1", questionText: "What is 2+2?", topic: "algebra" },
+			]),
+			cachedAt: Date.now(),
+		},
+	],
+	mockWrongAnswers: [] as unknown[],
+	mockFlashcards: [] as unknown[],
+}));
 
-const mockWrongAnswers: unknown[] = [];
+beforeEach(() => {
+	vi.stubGlobal("fetch", () => Promise.resolve({ ok: true, json: () => Promise.resolve({ results: [] }) }));
+});
+afterEach(() => {
+	vi.unstubAllGlobals();
+});
 
-const mockFlashcards: unknown[] = [];
-
+vi.mock("@/lib/shared/logger", () => ({ logError: () => {} }));
 vi.mock("@/lib/db", () => ({
 	dexieDataAccess: {
-		questions: {
-			toArray: () => Promise.resolve(mockQuestions),
-		},
-		wrongAnswers: {
-			toArray: () => Promise.resolve(mockWrongAnswers),
-		},
-		quizAttempts: {
-			toArray: () => Promise.resolve([]),
-		},
-		examSessions: {
-			toArray: () => Promise.resolve([]),
-		},
-		progress: {
-			toArray: () => Promise.resolve([]),
-		},
+		questions: { toArray: () => Promise.resolve(mockQuestions) },
+		wrongAnswers: { toArray: () => Promise.resolve(mockWrongAnswers) },
+		quizAttempts: { toArray: () => Promise.resolve([]) },
+		examSessions: { toArray: () => Promise.resolve([]) },
+		progress: { toArray: () => Promise.resolve([]) },
 	},
 }));
-
-vi.mock("@/lib/flashcard-engine", () => ({
-	flashcardEngine: {
-		getAll: () => Promise.resolve(mockFlashcards),
-	},
-}));
-
-vi.mock("@/lib/utils/storage", () => ({
-	loadFromStorage: () => [],
-}));
+vi.mock("@/lib/flashcard-engine", () => ({ flashcardEngine: { getAll: () => Promise.resolve(mockFlashcards) } }));
+vi.mock("@/lib/utils/storage", () => ({ loadFromStorage: () => [] }));
 
 const { searchAll, searchByType } = await import("../search-service");
 

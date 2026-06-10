@@ -1,6 +1,10 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 
 const mockStorage = new Map<string, unknown>();
+
+vi.mock("@/lib/shared/logger", () => ({
+	logError: () => {},
+}));
 
 vi.mock("@/lib/utils/storage", () => ({
 	loadFromStorage: (key: string, defaultValue: unknown) => {
@@ -20,6 +24,10 @@ describe("leaderboard-service", () => {
 		mockStorage.clear();
 		mockStorage.set("lumni_total_xp", 100);
 		mockStorage.set("lumni_streak", 5);
+		vi.stubGlobal("fetch", () => Promise.resolve({ ok: true, json: () => Promise.resolve({ leaderboard: [] }) }));
+	});
+	afterEach(() => {
+		vi.unstubAllGlobals();
 	});
 
 	test("getWeeklyLeaderboard returns user entry at top", async () => {

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { isTinyFishConfigured, tinyfishFetch, tinyfishSearch, TinyFishError } from "../client";
 
 const originalFetch = globalThis.fetch;
 const originalEnv = process.env.TINYFISH_API_KEY;
@@ -13,6 +14,7 @@ function mockJsonResponse(body: unknown, status = 200): Response {
 describe("tinyfishSearch", () => {
 	beforeEach(() => {
 		process.env.TINYFISH_API_KEY = "test-key";
+		globalThis.fetch = vi.fn() as unknown as typeof fetch;
 	});
 
 	afterEach(() => {
@@ -21,13 +23,11 @@ describe("tinyfishSearch", () => {
 	});
 
 	test("returns empty for empty query", async () => {
-		const { tinyfishSearch } = await import("../client");
 		const result = await tinyfishSearch("");
 		expect(result.results).toEqual([]);
 	});
 
 	test("returns empty for single-char query", async () => {
-		const { tinyfishSearch } = await import("../client");
 		const result = await tinyfishSearch("a");
 		expect(result.results).toEqual([]);
 	});
@@ -51,7 +51,6 @@ describe("tinyfishSearch", () => {
 			});
 		}) as typeof fetch;
 
-		const { tinyfishSearch } = await import("../client");
 		const result = await tinyfishSearch("photosynthesis", {
 			location: "ZA",
 			language: "en",
@@ -76,7 +75,6 @@ describe("tinyfishSearch", () => {
 			},
 		) as typeof fetch;
 
-		const { tinyfishSearch } = await import("../client");
 		await tinyfishSearch("test query");
 
 		const headers = calledHeaders as Record<string, string> | undefined;
@@ -88,7 +86,6 @@ describe("tinyfishSearch", () => {
 			async () => new Response("forbidden", { status: 403 }),
 		) as typeof fetch;
 
-		const { tinyfishSearch, TinyFishError } = await import("../client");
 		await expect(tinyfishSearch("valid query here")).rejects.toThrow(
 			TinyFishError,
 		);
@@ -96,7 +93,6 @@ describe("tinyfishSearch", () => {
 
 	test("throws when API key not configured", async () => {
 		process.env.TINYFISH_API_KEY = "";
-		const { tinyfishSearch, TinyFishError } = await import("../client");
 		await expect(tinyfishSearch("test")).rejects.toThrow(TinyFishError);
 	});
 });
@@ -112,7 +108,6 @@ describe("tinyfishFetch", () => {
 	});
 
 	test("returns empty when urls is empty", async () => {
-		const { tinyfishFetch } = await import("../client");
 		const result = await tinyfishFetch([]);
 		expect(result.results).toEqual([]);
 		expect(result.errors).toEqual([]);
@@ -138,7 +133,6 @@ describe("tinyfishFetch", () => {
 			},
 		) as typeof fetch;
 
-		const { tinyfishFetch } = await import("../client");
 		const result = await tinyfishFetch(["https://x.com"], {
 			format: "markdown",
 		});
@@ -158,7 +152,6 @@ describe("tinyfishFetch", () => {
 			async () => new Response("server error", { status: 500 }),
 		) as typeof fetch;
 
-		const { tinyfishFetch, TinyFishError } = await import("../client");
 		await expect(tinyfishFetch(["https://x.com"])).rejects.toThrow(
 			TinyFishError,
 		);
@@ -172,19 +165,16 @@ describe("isTinyFishConfigured", () => {
 
 	test("returns true when key is set", async () => {
 		process.env.TINYFISH_API_KEY = "abc";
-		const { isTinyFishConfigured } = await import("../client");
 		expect(isTinyFishConfigured()).toBe(true);
 	});
 
 	test("returns false when key is empty", async () => {
 		process.env.TINYFISH_API_KEY = "";
-		const { isTinyFishConfigured } = await import("../client");
 		expect(isTinyFishConfigured()).toBe(false);
 	});
 
 	test("returns false when key is undefined", async () => {
 		delete process.env.TINYFISH_API_KEY;
-		const { isTinyFishConfigured } = await import("../client");
 		expect(isTinyFishConfigured()).toBe(false);
 	});
 });

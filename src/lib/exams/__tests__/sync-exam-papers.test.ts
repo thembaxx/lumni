@@ -25,6 +25,12 @@ vi.mock("node:fs", () => ({
 	readFileSync: mockReadFileSync,
 	readdirSync: mockReaddirSync,
 	writeFileSync: mockWriteFileSync,
+	default: {
+		existsSync: mockExistsSync,
+		readFileSync: mockReadFileSync,
+		readdirSync: mockReaddirSync,
+		writeFileSync: mockWriteFileSync,
+	},
 }));
 
 vi.mock("path", () => ({

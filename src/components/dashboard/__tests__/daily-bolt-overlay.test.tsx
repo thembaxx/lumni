@@ -29,6 +29,12 @@ vi.mock("@/hooks/use-question-engine", () => ({
 	useQuestionEngine: mockUseQuestionEngine,
 }));
 
+vi.mock("@/i18n/navigation", () => ({
+	useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
+	usePathname: () => "/",
+	Link: ({ children }: { children: React.ReactNode }) => children,
+}));
+
 vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 	useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),

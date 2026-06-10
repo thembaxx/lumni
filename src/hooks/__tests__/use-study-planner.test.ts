@@ -122,27 +122,6 @@ vi.mock("@/lib/study-planner/study-planner-service", () => ({
 
 const { useStudyPlanner } = await import("@/hooks/use-study-planner");
 
-describe("useStudyPlanner", () => {
-	beforeEach(() => {
-		mockPlan = { sessions: [], examDates: [], generatedAt: 0 };
-		mockSessions = [];
-		mockUpcoming = [];
-		mockUpcomingExams = [];
-		mockStats = {
-			totalSessions: 0,
-			completedSessions: 0,
-			upcomingSessions: 0,
-			studyTimeMinutes: 0,
-			examCount: 0,
-			daysUntilNextExam: null,
-		};
-	});
-
-	afterEach(() => {
-		// clean up intervals scheduled by the hook
-	});
-});
-
 function setupIntervalTracking() {
 	const originalSet = globalThis.setInterval;
 	const originalClear = globalThis.clearInterval;
