@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 let mockUserId: string | null = "user_abc";
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
@@ -15,7 +15,7 @@ mock.module("@/lib/appwrite", () => ({
 	serverClient: {},
 }));
 
-mock.module("@/lib/server/auth", () => ({
+vi.mock("@/lib/server/auth", () => ({
 	auth: async () => {
 		if (!mockUserId) throw new Error("Authentication required");
 		return mockUserId;
@@ -28,12 +28,12 @@ mock.module("@/lib/server/auth", () => ({
 
 let mockListDocumentsResults: Record<string, unknown[]> = {};
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	COLLECTIONS: {
 		TOPICS: "topics",
 		QUESTIONS: "questions",
 	},
-	listDocuments: mock(async (collection: string, _queries?: string[]) => {
+	listDocuments: vi.fn(async (collection: string, _queries?: string[]) => {
 		return mockListDocumentsResults[collection] || [];
 	}),
 }));

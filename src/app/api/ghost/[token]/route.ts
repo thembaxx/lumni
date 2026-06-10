@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";

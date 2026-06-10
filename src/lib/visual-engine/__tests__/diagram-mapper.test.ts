@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import type { Validator } from "../diagram-mapper";
 import {
 	classifyAndMap,
@@ -47,7 +47,7 @@ describe("isKonvaType", () => {
 describe("getValidator", () => {
 	test("returns validator for known type", () => {
 		const validator = getValidator("wave");
-		expect(validator).toBeFunction();
+		expect(validator).toEqual(expect.any(Function));
 	});
 
 	test("returns undefined for unknown type", () => {

@@ -1,7 +1,7 @@
-import { afterEach, describe, expect, mock, test } from "bun:test";
 import { cleanup, render } from "@testing-library/react";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
-mock.module("next-intl", () => ({
+vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 }));
 

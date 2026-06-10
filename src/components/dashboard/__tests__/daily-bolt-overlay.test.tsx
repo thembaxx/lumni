@@ -1,14 +1,14 @@
-import { afterEach, describe, expect, mock, test } from "bun:test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { afterEach, describe, expect, test, vi } from "vitest";
 import type { Question } from "@/lib/question-engine/types";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {
 	return regex.test(container.textContent ?? "");
 }
 
-const mockUseQuestionEngine = mock(
+const mockUseQuestionEngine = vi.fn(
 	(): {
 		questions: Question[];
 		isLoading: boolean;
@@ -25,11 +25,11 @@ const mockUseQuestionEngine = mock(
 // Mock useQuestionEngine at the hook boundary so we don't depend on
 // @/lib/shared/api-fetch (which gets stale-cached by other test files
 // in bun's sequential mode).
-mock.module("@/hooks/use-question-engine", () => ({
+vi.mock("@/hooks/use-question-engine", () => ({
 	useQuestionEngine: mockUseQuestionEngine,
 }));
 
-mock.module("next-intl", () => ({
+vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
 	useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),
 }));

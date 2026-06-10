@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
@@ -14,11 +14,11 @@ mock.module("@/lib/appwrite", () => ({
 }));
 
 const mockListDocuments =
-	mock<(collection: string, queries: string[]) => unknown[]>();
+	vi.fn<(collection: string, queries: string[]) => unknown[]>();
 const mockCreateDocument =
-	mock<(collection: string, data: Record<string, unknown>) => string>();
+	vi.fn<(collection: string, data: Record<string, unknown>) => string>();
 const mockUpdateDocument =
-	mock<
+	vi.fn<
 		(
 			collection: string,
 			documentId: string,
@@ -26,7 +26,7 @@ const mockUpdateDocument =
 		) => void
 	>();
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db-id",
 	COLLECTIONS: {
 		REFERRAL_CODES: "referral_codes",

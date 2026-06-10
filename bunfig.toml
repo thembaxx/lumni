@@ -1,4 +1,0 @@
-[test]
-dom = false
-preload = ["./src/hooks/__tests__/setup.ts"]
-root = "src"

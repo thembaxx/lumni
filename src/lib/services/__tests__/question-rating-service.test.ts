@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import type { QuestionRatingRepository } from "@/lib/db/repositories/question-rating-repository";
 import type { QuestionRating } from "@/lib/db/schema";
 
-const enqueueMock = mock(async () => 1);
+const enqueueMock = vi.fn(async () => 1);
 const ratingStore: QuestionRating[] = [];
 
 let currentId = 1;
@@ -48,7 +48,7 @@ class MockQuestionRatingRepository implements QuestionRatingRepository {
 	}
 }
 
-mock.module("@/lib/orchestrator/job-queue", () => ({
+vi.mock("@/lib/orchestrator/job-queue", () => ({
 	enqueue: enqueueMock,
 }));
 

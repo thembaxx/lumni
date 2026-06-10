@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { serverAccount } from "@/lib/appwrite";
+import { serverAccount } from "@/lib/appwrite.server";
 
 const magicLinkSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),

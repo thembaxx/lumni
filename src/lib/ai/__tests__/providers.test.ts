@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const GEMINI_MOCK_RESPONSE = {
 	candidates: [
@@ -17,7 +17,7 @@ const GROQ_MOCK_RESPONSE = {
 
 function mockFetch(response: object, status = 200) {
 	const original = globalThis.fetch;
-	globalThis.fetch = mock(() =>
+	globalThis.fetch = vi.fn(() =>
 		Promise.resolve(
 			new Response(JSON.stringify(response), {
 				status,

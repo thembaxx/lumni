@@ -17,7 +17,7 @@ export interface UserSubjectsResult {
 	selectedSubjectIds: string[];
 }
 
-function useUserSubjects(userId: string): UseQueryResult<UserSubjectsResult> {
+function _useUserSubjects(userId: string): UseQueryResult<UserSubjectsResult> {
 	const targetUserId = userId;
 
 	return useQuery<UserSubjectsResult>({

@@ -1,5 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { serverAccount } from "@/lib/appwrite";
+import { serverAccount } from "@/lib/appwrite.server";
 
 export const POST = createRouteHandler({
 	auth: "none",

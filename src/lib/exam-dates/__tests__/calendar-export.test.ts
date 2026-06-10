@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import type { ExamSlot } from "../types";
 
 const { generateIcal, buildGoogleCalendarUrl, buildExportFilename } =
@@ -34,8 +34,8 @@ const mockSlots: ExamSlot[] = [
 describe("calendar-export", () => {
 	test("generateIcal produces valid iCal format", () => {
 		const ical = generateIcal(mockSlots, "Oct/Nov 2026");
-		expect(ical).toStartWith("BEGIN:VCALENDAR");
-		expect(ical).toEndWith("END:VCALENDAR");
+		expect(ical.startsWith("BEGIN:VCALENDAR")).toBe(true);
+		expect(ical.endsWith("END:VCALENDAR")).toBe(true);
 		expect(ical).toContain("VERSION:2.0");
 		expect(ical).toContain("BEGIN:VEVENT");
 		expect(ical).toContain("END:VEVENT");
@@ -55,7 +55,9 @@ describe("calendar-export", () => {
 
 	test("buildGoogleCalendarUrl produces valid URL", () => {
 		const url = buildGoogleCalendarUrl(mockSlots[0]);
-		expect(url).toStartWith("https://calendar.google.com/calendar/render");
+		expect(url.startsWith("https://calendar.google.com/calendar/render")).toBe(
+			true,
+		);
 		expect(url).toContain("action=TEMPLATE");
 		expect(url).toContain("Mathematics");
 	});
@@ -63,6 +65,6 @@ describe("calendar-export", () => {
 	test("buildExportFilename generates correct name", () => {
 		expect(buildExportFilename("may-june", 2026)).toContain("May-June");
 		expect(buildExportFilename("oct-nov", 2026)).toContain("Oct-Nov");
-		expect(buildExportFilename("may-june", 2026)).toEndWith(".ics");
+		expect(buildExportFilename("may-june", 2026).endsWith(".ics")).toBe(true);
 	});
 });

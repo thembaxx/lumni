@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "bun:test";
+import { beforeEach, describe, expect, test } from "vitest";
 import { createDailyLimits } from "../daily-limits";
 
 // In non-browser environments (bun test), daily-limits gracefully

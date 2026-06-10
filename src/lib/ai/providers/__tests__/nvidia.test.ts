@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 import { createNvidiaProvider } from "../nvidia";
 
 const MOCK_SUCCESS = {
@@ -14,7 +14,7 @@ interface FetchOptions {
 
 function mockFetch(response: object, status = 200) {
 	const original = globalThis.fetch;
-	globalThis.fetch = mock(() =>
+	globalThis.fetch = vi.fn(() =>
 		Promise.resolve(
 			new Response(JSON.stringify(response), {
 				status,

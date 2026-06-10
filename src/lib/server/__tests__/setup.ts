@@ -1,21 +1,23 @@
 process.env.APPWRITE_DATABASE_ID = "test-db-id";
 process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID = "test-project";
 
-import { mock } from "bun:test";
+import { vi } from "vitest";
 
-export const authState: {
-	sessionCookieValue: string | null;
-	userId: string | null;
-	userName: string;
-	getRejects: boolean;
-} = {
-	sessionCookieValue: "session123",
-	userId: "user_abc",
-	userName: "Test User",
-	getRejects: false,
-};
+export const { authState } = vi.hoisted(() => ({
+	authState: {
+		sessionCookieValue: "session123",
+		userId: "user_abc",
+		userName: "Test User",
+		getRejects: false,
+	} as {
+		sessionCookieValue: string | null;
+		userId: string | null;
+		userName: string;
+		getRejects: boolean;
+	},
+}));
 
-mock.module("next/headers", () => ({
+vi.mock("next/headers", () => ({
 	cookies: async () => ({
 		get: (name: string) => {
 			if (
@@ -39,7 +41,7 @@ mock.module("next/headers", () => ({
 	}),
 }));
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
@@ -58,7 +60,7 @@ mock.module("@/lib/appwrite", () => ({
 	browserDatabases: {},
 }));
 
-mock.module("node-appwrite", () => {
+vi.mock("node-appwrite", () => {
 	class MockClient {
 		setEndpoint() {
 			return this;

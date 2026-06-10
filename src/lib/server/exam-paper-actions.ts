@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/exams/helpers";
 import { auth } from "@/lib/server/auth";

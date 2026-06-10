@@ -1,17 +1,17 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import type { PremiumFeature } from "@/lib/premium/premium-context";
 import { PremiumProvider, usePremium } from "@/lib/premium/premium-context";
 
 const mockStorage = new Map<string, unknown>();
 const mockFetch =
-	mock<
+	vi.fn<
 		(url: string | URL | Request, init?: RequestInit) => Promise<Response>
 	>();
 
-mock.module("@/lib/utils/storage", () => ({
+vi.mock("@/lib/utils/storage", () => ({
 	loadFromStorage: (key: string, defaultValue: unknown) =>
 		mockStorage.has(key) ? mockStorage.get(key) : defaultValue,
 	saveToStorage: (key: string, value: unknown) => {

@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockGetUsage = mock<(userId: string) => unknown>();
-const mockGetGlobalUsage = mock<() => unknown>();
+const mockGetUsage = vi.fn<(userId: string) => unknown>();
+const mockGetGlobalUsage = vi.fn<() => unknown>();
 
-mock.module("@/lib/ai/daily-call-tracker", () => ({
+vi.mock("@/lib/ai/daily-call-tracker", () => ({
 	dailyCallTracker: {
 		getUsage: mockGetUsage,
 		getGlobalUsage: mockGetGlobalUsage,

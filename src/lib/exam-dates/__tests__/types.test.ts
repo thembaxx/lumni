@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { getCurrentSession } from "../types";
 
 describe("exam-dates types", () => {
@@ -21,16 +21,16 @@ describe("exam-dates types", () => {
 			endTime: "12:00",
 			durationHours: 3,
 		};
-		expect(slot.id).toBeString();
-		expect(slot.subject).toBeString();
-		expect(slot.subjectId).toBeString();
-		expect(slot.paperNumber).toBeNumber();
+		expect(slot.id).toEqual(expect.any(String));
+		expect(slot.subject).toEqual(expect.any(String));
+		expect(slot.subjectId).toEqual(expect.any(String));
+		expect(typeof slot.paperNumber).toBe("number");
 		expect(["may-june", "oct-nov"]).toContain(slot.session);
-		expect(slot.year).toBeNumber();
+		expect(typeof slot.year).toBe("number");
 		expect(slot.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		expect(slot.startTime).toMatch(/^\d{2}:\d{2}$/);
 		expect(slot.endTime).toMatch(/^\d{2}:\d{2}$/);
-		expect(slot.durationHours).toBeNumber();
+		expect(typeof slot.durationHours).toBe("number");
 	});
 
 	test("ExamDateCollection shape", () => {
@@ -42,10 +42,10 @@ describe("exam-dates types", () => {
 			updatedAt: new Date().toISOString(),
 			source: "seed",
 		};
-		expect(collection.id).toBeString();
-		expect(collection.session).toBeString();
-		expect(collection.year).toBeNumber();
-		expect(Array.isArray(collection.slots)).toBeTrue();
-		expect(collection.source).toBeOneOf(["seed", "scraper", "admin"]);
+		expect(collection.id).toEqual(expect.any(String));
+		expect(collection.session).toEqual(expect.any(String));
+		expect(typeof collection.year).toBe("number");
+		expect(Array.isArray(collection.slots)).toBe(true);
+		expect(["seed", "scraper", "admin"]).toContain(collection.source);
 	});
 });

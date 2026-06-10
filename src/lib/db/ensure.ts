@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import type { Databases as NodeDatabases } from "node-appwrite";
 import { AppwriteException, type DatabasesIndexType } from "node-appwrite";
-import { databases as clientDatabases } from "@/lib/appwrite";
+import { databases as clientDatabases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 import { schemaConfig } from "./ensure-schema";

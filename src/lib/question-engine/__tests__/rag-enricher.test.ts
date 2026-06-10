@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const { fetchRagContext, RAG_TIMEOUT_MS } = await import("../rag-enricher");
 
@@ -46,7 +46,7 @@ describe("fetchRagContext", () => {
 
 	test("calls searchWithRAG with subject, topic, and userId", async () => {
 		const mockRag = await import("@/lib/tinyfish");
-		const spy = mock(async () => ragWithSources());
+		const spy = vi.fn(async () => ragWithSources());
 		const result = await fetchRagContext("mathematics", "algebra", "user-1", {
 			searchWithRAG: spy as never,
 		});
@@ -60,7 +60,7 @@ describe("fetchRagContext", () => {
 	});
 
 	test("passes userId=undefined when null is provided", async () => {
-		const spy = mock(async () => ragWithSources());
+		const spy = vi.fn(async () => ragWithSources());
 		await fetchRagContext("mathematics", "algebra", null, {
 			searchWithRAG: spy as never,
 		});
@@ -72,7 +72,7 @@ describe("fetchRagContext", () => {
 	});
 
 	test("fail-open: returns empty context on searchWithRAG rejection", async () => {
-		const spy = mock(async () => {
+		const spy = vi.fn(async () => {
 			throw new Error("network down");
 		});
 		const result = await fetchRagContext("mathematics", "algebra", "user-1", {
@@ -82,7 +82,7 @@ describe("fetchRagContext", () => {
 	});
 
 	test("fail-open: returns empty context on timeout", async () => {
-		const spy = mock(
+		const spy = vi.fn(
 			() => new Promise((resolve) => setTimeout(resolve, RAG_TIMEOUT_MS + 100)),
 		);
 		const result = await fetchRagContext("mathematics", "algebra", "user-1", {

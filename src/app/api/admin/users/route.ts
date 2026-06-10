@@ -1,6 +1,6 @@
 import { Users } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { serverClient } from "@/lib/appwrite";
+import { serverClient } from "@/lib/appwrite.server";
 
 export const GET = createRouteHandler({
 	auth: "admin",

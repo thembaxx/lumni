@@ -1,6 +1,6 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
-mock.module("@/lib/ai", () => ({
+vi.mock("@/lib/ai", () => ({
 	getAI: () => ({
 		generateWithSystem: async (_system: string, userPrompt: string) => {
 			const parsed = JSON.parse(userPrompt);
@@ -43,13 +43,13 @@ mock.module("@/lib/ai", () => ({
 	initAI: () => {},
 }));
 
-mock.module("@/lib/ai/parse-response", () => ({
+vi.mock("@/lib/ai/parse-response", () => ({
 	cleanResponse: (content: string) => content.trim(),
 }));
 
-mock.module("@/lib/ai/types", () => ({}));
+vi.mock("@/lib/ai/types", () => ({}));
 
-mock.module("../diagram-mapper", () => ({
+vi.mock("../diagram-mapper", () => ({
 	classifyAndMap: (raw: Record<string, unknown>) => {
 		const diagramType = raw.diagramType as string;
 		const data = raw.diagramData as Record<string, unknown>;

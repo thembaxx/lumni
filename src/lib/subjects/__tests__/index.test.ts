@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import {
 	getSubjectAbbr,
 	getSubjectHexColor,
@@ -68,7 +68,7 @@ describe("getSubjectHexColor", () => {
 describe("getSubjectTailwindColor", () => {
 	test("returns a tailwind class for a known subject", () => {
 		const color = getSubjectTailwindColor("mathematics");
-		expect(color).toStartWith("bg-");
+		expect(color.startsWith("bg-")).toBe(true);
 	});
 
 	test("returns bg-muted for an unknown subject", () => {
@@ -83,7 +83,7 @@ describe("getSubjectTailwindColor", () => {
 describe("getSubjectOklchColor", () => {
 	test("returns oklch string for mathematics", () => {
 		const color = getSubjectOklchColor("mathematics");
-		expect(color).toStartWith("oklch(");
+		expect(color.startsWith("oklch(")).toBe(true);
 	});
 
 	test("returns undefined for a subject without oklch color", () => {

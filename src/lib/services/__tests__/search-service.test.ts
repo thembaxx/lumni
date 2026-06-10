@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const mockQuestions = [
 	{
@@ -15,7 +15,7 @@ const mockWrongAnswers: unknown[] = [];
 
 const mockFlashcards: unknown[] = [];
 
-mock.module("@/lib/db", () => ({
+vi.mock("@/lib/db", () => ({
 	dexieDataAccess: {
 		questions: {
 			toArray: () => Promise.resolve(mockQuestions),
@@ -35,13 +35,13 @@ mock.module("@/lib/db", () => ({
 	},
 }));
 
-mock.module("@/lib/flashcard-engine", () => ({
+vi.mock("@/lib/flashcard-engine", () => ({
 	flashcardEngine: {
 		getAll: () => Promise.resolve(mockFlashcards),
 	},
 }));
 
-mock.module("@/lib/utils/storage", () => ({
+vi.mock("@/lib/utils/storage", () => ({
 	loadFromStorage: () => [],
 }));
 

@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { act, renderHook } from "@testing-library/react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import type { Question } from "@/lib/question-engine/types";
 
 let _mockedQuestions: Question[] = [];
@@ -9,9 +9,9 @@ let capturedIntervalCallback: (() => void) | null = null;
 const mockQuestionEngineResult = {
 	questions: [] as Question[],
 	isLoading: false,
-	generate: mock(() => Promise.resolve([] as Question[])),
-	grade: mock(() => Promise.resolve({})),
-	hint: mock(() => Promise.resolve("")),
+	generate: vi.fn(() => Promise.resolve([] as Question[])),
+	grade: vi.fn(() => Promise.resolve({})),
+	hint: vi.fn(() => Promise.resolve("")),
 	isGenerating: false,
 	isGrading: false,
 	gradeResult: null as unknown,
@@ -22,24 +22,24 @@ const mockQuestionEngineResult = {
 	count: 0,
 	error: null as unknown,
 	isError: false,
-	refetch: mock(() => Promise.resolve({} as unknown)),
+	refetch: vi.fn(() => Promise.resolve({} as unknown)),
 };
 
-mock.module("@/hooks/use-question-engine", () => ({
+vi.mock("@/hooks/use-question-engine", () => ({
 	useQuestionEngine: () => mockQuestionEngineResult,
 }));
 
-mock.module("@/hooks/use-interval", () => ({
+vi.mock("@/hooks/use-interval", () => ({
 	useInterval: (callback: () => void) => {
 		capturedIntervalCallback = callback;
 	},
 	useTimer: () => ({
 		timeLeft: 30,
 		isRunning: false,
-		start: mock(() => {}),
-		stop: mock(() => {}),
-		reset: mock(() => {}),
-		setTimeLeft: mock(() => {}),
+		start: vi.fn(() => {}),
+		stop: vi.fn(() => {}),
+		reset: vi.fn(() => {}),
+		setTimeLeft: vi.fn(() => {}),
 	}),
 }));
 
@@ -148,7 +148,7 @@ describe("useQuizSession", () => {
 		mockQuestionEngineResult.questions = [questionA];
 		mockQuestionEngineResult.count = 1;
 
-		const onFinish = mock(() => {});
+		const onFinish = vi.fn(() => {});
 		const { result } = renderHook(() => useQuizSession({ onFinish }));
 
 		act(() => result.current.actions.handleStart());
@@ -204,7 +204,7 @@ describe("useQuizSession", () => {
 		mockQuestionEngineResult.questions = [questionA, questionB];
 		mockQuestionEngineResult.count = 2;
 
-		const onFinish = mock(() => {});
+		const onFinish = vi.fn(() => {});
 		const { result } = renderHook(() => useQuizSession({ onFinish }));
 
 		act(() => result.current.actions.handleStart());
@@ -268,7 +268,7 @@ describe("useQuizSession", () => {
 		mockQuestionEngineResult.questions = [questionA, questionB];
 		mockQuestionEngineResult.count = 2;
 
-		const onFinish = mock(() => {});
+		const onFinish = vi.fn(() => {});
 		const { result } = renderHook(() =>
 			useQuizSession({ maxTime: 5, onFinish }),
 		);

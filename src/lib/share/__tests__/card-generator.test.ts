@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import type { ShareCardParams } from "@/lib/share/card-generator";
 import { generateShareCard } from "@/lib/share/card-generator";
 
@@ -19,21 +19,21 @@ function createMockCtx() {
 		textBaseline: "alphabetic" as CanvasTextBaseline,
 		strokeStyle: "",
 		lineWidth: 0,
-		fillText: mock(() => {}),
-		beginPath: mock(() => {}),
-		moveTo: mock(() => {}),
-		lineTo: mock(() => {}),
-		quadraticCurveTo: mock(() => {}),
-		closePath: mock(() => {}),
-		fill: mock(() => {}),
-		stroke: mock(() => {}),
-		createLinearGradient: mock(() => ({
-			addColorStop: mock(() => {}),
+		fillText: vi.fn(() => {}),
+		beginPath: vi.fn(() => {}),
+		moveTo: vi.fn(() => {}),
+		lineTo: vi.fn(() => {}),
+		quadraticCurveTo: vi.fn(() => {}),
+		closePath: vi.fn(() => {}),
+		fill: vi.fn(() => {}),
+		stroke: vi.fn(() => {}),
+		createLinearGradient: vi.fn(() => ({
+			addColorStop: vi.fn(() => {}),
 		})),
-		createRadialGradient: mock(() => ({
-			addColorStop: mock(() => {}),
+		createRadialGradient: vi.fn(() => ({
+			addColorStop: vi.fn(() => {}),
 		})),
-		fillRect: mock(() => {}),
+		fillRect: vi.fn(() => {}),
 	} as unknown as CanvasRenderingContext2D;
 }
 
@@ -53,10 +53,10 @@ afterEach(() => {
 describe("generateShareCard", () => {
 	test("returns a Blob on successful canvas render", async () => {
 		const mockBlob = new Blob(["fake-png"], { type: "image/png" });
-		HTMLCanvasElement.prototype.getContext = mock(() =>
+		HTMLCanvasElement.prototype.getContext = vi.fn(() =>
 			createMockCtx(),
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+		HTMLCanvasElement.prototype.toBlob = vi.fn((cb: (b: Blob | null) => void) =>
 			cb(mockBlob),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 
@@ -66,10 +66,10 @@ describe("generateShareCard", () => {
 	});
 
 	test("throws when toBlob returns null", async () => {
-		HTMLCanvasElement.prototype.getContext = mock(() =>
+		HTMLCanvasElement.prototype.getContext = vi.fn(() =>
 			createMockCtx(),
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+		HTMLCanvasElement.prototype.toBlob = vi.fn((cb: (b: Blob | null) => void) =>
 			cb(null),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 
@@ -79,13 +79,13 @@ describe("generateShareCard", () => {
 	});
 
 	test("renders correct text for each card type", async () => {
-		const fillTextMock = mock(() => {});
+		const fillTextMock = vi.fn(() => {});
 		const ctx = { ...createMockCtx(), fillText: fillTextMock };
 
-		HTMLCanvasElement.prototype.getContext = mock(
+		HTMLCanvasElement.prototype.getContext = vi.fn(
 			() => ctx,
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+		HTMLCanvasElement.prototype.toBlob = vi.fn((cb: (b: Blob | null) => void) =>
 			cb(new Blob()),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 

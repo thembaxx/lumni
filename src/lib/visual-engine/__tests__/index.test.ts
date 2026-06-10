@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
 	classifyAndMap,
@@ -13,19 +13,19 @@ import { STEM_SUBJECTS } from "../types";
 
 describe("barrel exports", () => {
 	test("exports diagram-mapper functions", () => {
-		expect(classifyAndMap).toBeFunction();
-		expect(getDataForType).toBeFunction();
-		expect(getValidator).toBeFunction();
-		expect(isKonvaType).toBeFunction();
+		expect(classifyAndMap).toEqual(expect.any(Function));
+		expect(getDataForType).toEqual(expect.any(Function));
+		expect(getValidator).toEqual(expect.any(Function));
+		expect(isKonvaType).toEqual(expect.any(Function));
 		expect(KONVA_TYPES).toBeDefined();
 	});
 
 	test("exports image-resolver function", () => {
-		expect(searchImage).toBeFunction();
+		expect(searchImage).toEqual(expect.any(Function));
 	});
 
 	test("exports stem-renderer function", () => {
-		expect(generateDiagram).toBeFunction();
+		expect(generateDiagram).toEqual(expect.any(Function));
 	});
 
 	test("exports types constant", () => {

@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { dexieDataAccess, type QuizDataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,

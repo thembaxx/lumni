@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 
 const GEMINI_RESP = {
@@ -7,7 +7,7 @@ const GEMINI_RESP = {
 
 function mockFetch(response: object, status = 200) {
 	const original = globalThis.fetch;
-	globalThis.fetch = mock(() =>
+	globalThis.fetch = vi.fn(() =>
 		Promise.resolve(
 			new Response(JSON.stringify(response), {
 				status,
@@ -55,7 +55,7 @@ import {
 
 describe("AI module (client)", () => {
 	test("CHAT_SYSTEM_PROMPT is defined", () => {
-		expect(CHAT_SYSTEM_PROMPT).toBeString();
+		expect(CHAT_SYSTEM_PROMPT).toEqual(expect.any(String));
 		expect(CHAT_SYSTEM_PROMPT).toContain("study assistant");
 	});
 

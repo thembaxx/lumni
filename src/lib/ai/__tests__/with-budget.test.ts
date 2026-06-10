@@ -1,14 +1,15 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
-const mockCheck = mock(() => ({
-	allowed: true,
-	remaining: { user: 5, global: 100 },
-	resetAt: Date.now() + 3600000,
+const { mockCheck, mockIncrement } = vi.hoisted(() => ({
+	mockCheck: vi.fn(() => ({
+		allowed: true,
+		remaining: { user: 5, global: 100 },
+		resetAt: Date.now() + 3600000,
+	})),
+	mockIncrement: vi.fn(() => {}),
 }));
 
-const mockIncrement = mock(() => {});
-
-mock.module("../daily-call-tracker", () => ({
+vi.mock("../daily-call-tracker", () => ({
 	dailyCallTracker: {
 		check: mockCheck,
 		increment: mockIncrement,

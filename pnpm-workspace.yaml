@@ -1,0 +1,35 @@
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  '@sentry/cli': set this to true or false
+  '@swc/core': set this to true or false
+  core-js-pure: set this to true or false
+  esbuild: set this to true or false
+  msgpackr-extract: set this to true or false
+  protobufjs: set this to true or false
+  sharp: set this to true or false
+  tesseract.js: set this to true or false
+  unrs-resolver: set this to true or false
+minimumReleaseAgeExclude:
+  - '@next/bundle-analyzer@16.2.9'
+  - '@next/env@16.2.9'
+  - '@next/eslint-plugin-next@16.2.9'
+  - '@next/swc-darwin-arm64@16.2.9'
+  - '@next/swc-darwin-x64@16.2.9'
+  - '@next/swc-linux-arm64-gnu@16.2.9'
+  - '@next/swc-linux-arm64-musl@16.2.9'
+  - '@next/swc-linux-x64-gnu@16.2.9'
+  - '@next/swc-linux-x64-musl@16.2.9'
+  - '@next/swc-win32-arm64-msvc@16.2.9'
+  - '@next/swc-win32-x64-msvc@16.2.9'
+  - '@storybook/builder-webpack5@10.4.3'
+  - '@storybook/core-webpack@10.4.3'
+  - '@storybook/nextjs@10.4.3'
+  - '@storybook/preset-react-webpack@10.4.3'
+  - '@storybook/react-dom-shim@10.4.3'
+  - '@storybook/react@10.4.3'
+  - eslint-config-next@16.2.9
+  - next@16.2.9
+  - oxlint-plugin-react-doctor@0.5.1
+  - react-doctor@0.5.1
+  - react-konva@19.2.5
+  - storybook@10.4.3

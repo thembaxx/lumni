@@ -1,12 +1,12 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-mock.module("@/lib/bookmark-service", () => ({
+vi.mock("@/lib/bookmark-service", () => ({
 	bookmarkService: {
-		add: mock(async () => {}),
-		remove: mock(async () => {}),
-		updateNote: mock(async () => {}),
-		getAll: mock(async () => []),
-		isBookmarked: mock(async () => false),
+		add: vi.fn(async () => {}),
+		remove: vi.fn(async () => {}),
+		updateNote: vi.fn(async () => {}),
+		getAll: vi.fn(async () => []),
+		isBookmarked: vi.fn(async () => false),
 	},
 }));
 

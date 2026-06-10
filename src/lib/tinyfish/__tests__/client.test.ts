@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const originalFetch = globalThis.fetch;
 const originalEnv = process.env.TINYFISH_API_KEY;
@@ -34,7 +34,7 @@ describe("tinyfishSearch", () => {
 
 	test("calls Search API with correct query params", async () => {
 		let calledUrl = "";
-		globalThis.fetch = mock(async (url: string | URL | Request) => {
+		globalThis.fetch = vi.fn(async (url: string | URL | Request) => {
 			calledUrl = String(url);
 			return mockJsonResponse({
 				query: "photosynthesis",
@@ -69,7 +69,7 @@ describe("tinyfishSearch", () => {
 
 	test("sends X-API-Key header", async () => {
 		let calledHeaders: HeadersInit | undefined;
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async (_url: string | URL | Request, init?: RequestInit) => {
 				calledHeaders = init?.headers;
 				return mockJsonResponse({ query: "x", results: [], total_results: 0 });
@@ -84,7 +84,7 @@ describe("tinyfishSearch", () => {
 	});
 
 	test("throws TinyFishError on 4xx", async () => {
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async () => new Response("forbidden", { status: 403 }),
 		) as typeof fetch;
 
@@ -121,7 +121,7 @@ describe("tinyfishFetch", () => {
 	test("POSTs to Fetch API with urls body", async () => {
 		let calledUrl = "";
 		let calledBody: unknown;
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async (url: string | URL | Request, init?: RequestInit) => {
 				calledUrl = String(url);
 				calledBody = init?.body;
@@ -154,7 +154,7 @@ describe("tinyfishFetch", () => {
 	});
 
 	test("throws on 5xx", async () => {
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async () => new Response("server error", { status: 500 }),
 		) as typeof fetch;
 

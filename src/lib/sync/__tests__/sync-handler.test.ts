@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const enqueueMock = mock(async () => 1);
+const enqueueMock = vi.fn(async () => 1);
 
 const progressStore: {
 	id: number;
@@ -38,7 +38,7 @@ const mockAttemptsTable = {
 	},
 };
 
-mock.module("@/lib/db", () => ({
+vi.mock("@/lib/db", () => ({
 	dexieDataAccess: {
 		progress: mockProgressTable,
 		quizAttempts: mockAttemptsTable,
@@ -51,7 +51,7 @@ mock.module("@/lib/db", () => ({
 	},
 }));
 
-mock.module("@/lib/orchestrator/job-queue", () => ({
+vi.mock("@/lib/orchestrator/job-queue", () => ({
 	enqueue: enqueueMock,
 }));
 

@@ -1,15 +1,15 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockCheckBudget = mock<(req: unknown, type: string) => unknown>();
-const mockTrackUsage = mock<(type: string, userId: string) => void>();
-const mockWithRateLimit = mock((handler: unknown) => handler);
+const mockCheckBudget = vi.fn<(req: unknown, type: string) => unknown>();
+const mockTrackUsage = vi.fn<(type: string, userId: string) => void>();
+const mockWithRateLimit = vi.fn((handler: unknown) => handler);
 
-mock.module("@/lib/ai/with-budget", () => ({
+vi.mock("@/lib/ai/with-budget", () => ({
 	checkBudget: mockCheckBudget,
 	trackUsage: mockTrackUsage,
 }));
 
-mock.module("@/lib/shared/with-rate-limit", () => ({
+vi.mock("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: mockWithRateLimit,
 }));
 
@@ -37,9 +37,9 @@ describe("createRouteHandler with budget config", () => {
 	test("budget allowed calls parseBody, validate, execute, returns result", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
-		const parseBody = mock(async () => ({ subject: "math", count: 2 }));
-		const validate = mock(() => null);
-		const execute = mock(async () => ({ questions: [], count: 2 }));
+		const parseBody = vi.fn(async () => ({ subject: "math", count: 2 }));
+		const validate = vi.fn(() => null);
+		const execute = vi.fn(async () => ({ questions: [], count: 2 }));
 
 		const handler = createHandler({
 			budget: "generate",
@@ -79,7 +79,7 @@ describe("createRouteHandler with budget config", () => {
 			),
 		});
 
-		const execute = mock(async () => ({ ok: true }));
+		const execute = vi.fn(async () => ({ ok: true }));
 		const handler = createHandler({
 			budget: "generate",
 			execute,
@@ -101,7 +101,7 @@ describe("createRouteHandler with budget config", () => {
 	test("validation fails returns 400 and execute not called", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
-		const execute = mock(async () => ({ ok: true }));
+		const execute = vi.fn(async () => ({ ok: true }));
 		const handler = createHandler({
 			budget: "generate",
 			parseBody: async () => ({ subject: "" }),
@@ -125,7 +125,7 @@ describe("createRouteHandler with budget config", () => {
 	test("execute throws returns 500 with error message", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
-		const execute = mock(async () => {
+		const execute = vi.fn(async () => {
 			throw new Error("Something went wrong");
 		});
 		const handler = createHandler({
@@ -147,7 +147,7 @@ describe("createRouteHandler with budget config", () => {
 	test("execute throws non-Error returns 500 with generic message", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
-		const execute = mock(async () => {
+		const execute = vi.fn(async () => {
 			throw "string error";
 		});
 		const handler = createHandler({

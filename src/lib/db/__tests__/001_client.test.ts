@@ -1,15 +1,15 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const mockDb = {
-	listDocuments: mock(
+	listDocuments: vi.fn(
 		async (_dbId: string, _coll: string, _queries: string[]) => ({
 			documents: [],
 		}),
 	),
-	getDocument: mock(
+	getDocument: vi.fn(
 		async (_dbId: string, _coll: string, _docId: string) => ({}),
 	),
-	createDocument: mock(
+	createDocument: vi.fn(
 		async (
 			_dbId: string,
 			_coll: string,
@@ -19,7 +19,7 @@ const mockDb = {
 			$id: "doc-123",
 		}),
 	),
-	updateDocument: mock(
+	updateDocument: vi.fn(
 		async (
 			_dbId: string,
 			_coll: string,
@@ -27,14 +27,14 @@ const mockDb = {
 			_data: Record<string, unknown>,
 		) => {},
 	),
-	deleteDocument: mock(
+	deleteDocument: vi.fn(
 		async (_dbId: string, _coll: string, _docId: string) => {},
 	),
 };
 
 process.env.APPWRITE_DATABASE_ID = "test-db-id";
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
 	databases: mockDb,
 	browserDatabases: mockDb,
 	storage: {},
@@ -47,7 +47,7 @@ mock.module("@/lib/appwrite", () => ({
 	APPWRITE_API_KEY: "test-key",
 }));
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	COLLECTIONS: {
 		SUBJECTS: "subjects",
 		TOPICS: "topics",

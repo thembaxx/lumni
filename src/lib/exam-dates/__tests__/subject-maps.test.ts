@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 const { getSubjectColor, getSubjectAbbr, subjectColors, subjectAbbrs } =
 	await import("../subject-maps");

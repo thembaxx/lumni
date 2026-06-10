@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 const mockStorage = new Map<string, unknown>();
 
-mock.module("@/lib/utils/storage", () => ({
+vi.mock("@/lib/utils/storage", () => ({
 	loadFromStorage: (key: string, defaultValue: unknown) => {
 		return mockStorage.has(key) ? mockStorage.get(key) : defaultValue;
 	},

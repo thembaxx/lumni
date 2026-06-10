@@ -31,7 +31,7 @@ function formatTime(seconds: number): string {
 	return `${m}m`;
 }
 
-function ExamResults({ paper, answers, flags, timeTaken }: ExamResultsProps) {
+function _ExamResults({ paper, answers, flags, timeTaken }: ExamResultsProps) {
 	const t = useTranslations();
 	const { push } = useRouter();
 

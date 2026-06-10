@@ -1,9 +1,14 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-let mockUserId: string | null = "user_abc";
-let mockVerifyAuthResolves = true;
+const { mockUserId } = vi.hoisted(() => ({
+	mockUserId: { val: "user_abc" as string | null },
+}));
 
-mock.module("@/lib/appwrite", () => ({
+const { mockVerifyAuthResolves } = vi.hoisted(() => ({
+	mockVerifyAuthResolves: { val: true },
+}));
+
+vi.mock("@/lib/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
@@ -16,29 +21,43 @@ mock.module("@/lib/appwrite", () => ({
 	serverClient: {},
 }));
 
-mock.module("@/lib/server/auth", () => ({
+vi.mock("@/lib/server/auth", () => ({
 	auth: async () => {
-		if (!mockUserId) throw new Error("Authentication required");
-		return mockUserId;
+		if (!mockUserId.val) throw new Error("Authentication required");
+		return mockUserId.val;
 	},
-	getAuthenticatedUserId: async () => mockUserId,
-	verifyAuth: mock(async (_userId: string) => {
-		if (!mockVerifyAuthResolves) throw new Error("Authentication required");
+	getAuthenticatedUserId: async () => mockUserId.val,
+	verifyAuth: vi.fn(async (_userId: string) => {
+		if (!mockVerifyAuthResolves.val) throw new Error("Authentication required");
 	}),
-	requireAdmin: async () => mockUserId,
+	requireAdmin: async () => mockUserId.val,
 	getAuthenticatedUserName: async () => "Test User",
 }));
 
-let mockListDocumentsResults: Record<string, Record<string, unknown>[]> = {};
-let mockCreateDocumentResult = "new-doc-id";
-let mockDeleteDocumentCalls: { collection: string; documentId: string }[] = [];
-let mockUpdateDocumentCalls: {
-	collection: string;
-	documentId: string;
-	data: Record<string, unknown>;
-}[] = [];
+const {
+	mockListDocumentsResults,
+	mockCreateDocumentResult,
+	mockDeleteDocumentCalls,
+	mockUpdateDocumentCalls,
+} = vi.hoisted(() => ({
+	mockListDocumentsResults: {
+		val: {} as Record<string, Record<string, unknown>[]>,
+	},
+	mockCreateDocumentResult: { val: "new-doc-id" },
+	mockDeleteDocumentCalls: {
+		val: [] as { collection: string; documentId: string }[],
+	},
+	mockUpdateDocumentCalls: {
+		val: [] as {
+			collection: string;
+			documentId: string;
+			data: Record<string, unknown>;
+		}[],
+	},
+}));
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
+	APPWRITE_DATABASE_ID: "test-db-id",
 	COLLECTIONS: {
 		SUBJECTS: "subjects",
 		USER_SUBJECTS: "user_subjects",
@@ -46,39 +65,69 @@ mock.module("@/lib/db/client", () => ({
 		STUDY_SESSIONS: "study_sessions",
 		EXAM_PAPERS: "exam_papers",
 	},
-	createDocument: mock(
+	createDocument: vi.fn(
 		async (_collection: string, _data: Record<string, unknown>) =>
-			mockCreateDocumentResult,
+			mockCreateDocumentResult.val,
 	),
-	listDocuments: mock(async (collection: string, _queries?: string[]) => {
-		return mockListDocumentsResults[collection] || [];
+	listDocuments: vi.fn(async (collection: string, _queries?: string[]) => {
+		return mockListDocumentsResults.val[collection] || [];
 	}),
-	deleteDocument: mock(async (collection: string, documentId: string) => {
-		mockDeleteDocumentCalls.push({ collection, documentId });
+	deleteDocument: vi.fn(async (collection: string, documentId: string) => {
+		mockDeleteDocumentCalls.val.push({ collection, documentId });
 	}),
-	updateDocument: mock(
+	updateDocument: vi.fn(
 		async (
 			collection: string,
 			documentId: string,
 			data: Record<string, unknown>,
 		) => {
-			mockUpdateDocumentCalls.push({ collection, documentId, data });
+			mockUpdateDocumentCalls.val.push({ collection, documentId, data });
 		},
 	),
 }));
 
-let mockUploadFilesResult: Record<string, unknown> = {};
-
-mock.module("uploadthing/server", () => ({
-	UTApi: mock(() => ({
-		uploadFiles: mock(() => mockUploadFilesResult),
-	})),
-	UTFile: mock((_data: Uint8Array[], _name: string) => ({})),
+vi.mock("@/lib/appwrite.server", () => ({
+	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
+	databases: {},
+	serverAccount: {},
+	serverClient: {},
 }));
 
-let uuidCounter = 0;
-mock.module("crypto", () => ({
-	randomUUID: () => `uuid-${++uuidCounter}`,
+const { mockUploadFilesResult } = vi.hoisted(() => ({
+	mockUploadFilesResult: { val: {} as Record<string, unknown> },
+}));
+
+vi.mock("uploadthing/server", () => ({
+	UTApi: class {
+		uploadFiles = vi.fn(() => mockUploadFilesResult.val);
+	},
+	UTFile: class {
+		_data: Uint8Array[];
+		_name: string;
+		constructor(_data: Uint8Array[], _name: string) {
+			this._data = _data;
+			this._name = _name;
+		}
+	},
+}));
+
+vi.mock("node-appwrite", () => ({
+	Users: class {
+		async list() {
+			return { users: [] };
+		}
+	},
+}));
+
+const { uuidCounter } = vi.hoisted(() => ({
+	uuidCounter: { val: 0 },
+}));
+
+vi.mock("node:crypto", async () => ({
+	default: { randomUUID: () => `uuid-${++uuidCounter.val}` },
+	randomUUID: () => `uuid-${++uuidCounter.val}`,
 }));
 
 const {
@@ -90,23 +139,23 @@ const {
 } = await import("../actions");
 
 beforeEach(() => {
-	mockUserId = "user_abc";
-	mockVerifyAuthResolves = true;
-	mockListDocumentsResults = {};
-	mockCreateDocumentResult = "new-doc-id";
-	mockDeleteDocumentCalls = [];
-	mockUpdateDocumentCalls = [];
-	mockUploadFilesResult = {};
-	uuidCounter = 0;
+	mockUserId.val = "user_abc";
+	mockVerifyAuthResolves.val = true;
+	mockListDocumentsResults.val = {};
+	mockCreateDocumentResult.val = "new-doc-id";
+	mockDeleteDocumentCalls.val = [];
+	mockUpdateDocumentCalls.val = [];
+	mockUploadFilesResult.val = {};
+	uuidCounter.val = 0;
 });
 
 describe("fetchSubjects", () => {
 	test("returns subjects and selected subject IDs", async () => {
-		mockListDocumentsResults.subjects = [
+		mockListDocumentsResults.val.subjects = [
 			{ $id: "s1", name: "Mathematics", code: "math" },
 			{ $id: "s2", name: "Physics", code: "physics" },
 		];
-		mockListDocumentsResults.user_subjects = [
+		mockListDocumentsResults.val.user_subjects = [
 			{ $id: "us1", userId: "user_abc", subjectId: "s1" },
 		];
 
@@ -119,8 +168,8 @@ describe("fetchSubjects", () => {
 
 describe("fetchUserProgress", () => {
 	test("returns aggregated progress from sessions", async () => {
-		mockListDocumentsResults.user_progress = [{ currentStreak: 3 }];
-		mockListDocumentsResults.study_sessions = [
+		mockListDocumentsResults.val.user_progress = [{ currentStreak: 3 }];
+		mockListDocumentsResults.val.study_sessions = [
 			{ questionsAnswered: 10, correctCount: 7 },
 			{ questionsAnswered: 5, correctCount: 3 },
 		];
@@ -133,8 +182,8 @@ describe("fetchUserProgress", () => {
 	});
 
 	test("handles empty progress and sessions", async () => {
-		mockListDocumentsResults.user_progress = [];
-		mockListDocumentsResults.study_sessions = [];
+		mockListDocumentsResults.val.user_progress = [];
+		mockListDocumentsResults.val.study_sessions = [];
 
 		const result = await fetchUserProgress("user_abc");
 
@@ -144,8 +193,8 @@ describe("fetchUserProgress", () => {
 	});
 
 	test("handles null progress with existing sessions", async () => {
-		mockListDocumentsResults.user_progress = [];
-		mockListDocumentsResults.study_sessions = [
+		mockListDocumentsResults.val.user_progress = [];
+		mockListDocumentsResults.val.study_sessions = [
 			{ questionsAnswered: 20, correctCount: 15 },
 		];
 
@@ -159,19 +208,19 @@ describe("fetchUserProgress", () => {
 
 describe("toggleUserSubject", () => {
 	test("deletes existing user subject and returns false", async () => {
-		mockListDocumentsResults.user_subjects = [
+		mockListDocumentsResults.val.user_subjects = [
 			{ $id: "us1", userId: "user_abc", subjectId: "s1" },
 		];
 
 		const result = await toggleUserSubject("user_abc", "s1");
 
 		expect(result).toBe(false);
-		expect(mockDeleteDocumentCalls).toHaveLength(1);
-		expect(mockDeleteDocumentCalls[0].documentId).toBe("us1");
+		expect(mockDeleteDocumentCalls.val).toHaveLength(1);
+		expect(mockDeleteDocumentCalls.val[0].documentId).toBe("us1");
 	});
 
 	test("creates new user subject and returns true", async () => {
-		mockListDocumentsResults.user_subjects = [];
+		mockListDocumentsResults.val.user_subjects = [];
 
 		const result = await toggleUserSubject("user_abc", "s1");
 
@@ -181,7 +230,7 @@ describe("toggleUserSubject", () => {
 
 describe("adminUploadExamPaper", () => {
 	test("returns auth error when not authenticated", async () => {
-		mockUserId = null;
+		mockUserId.val = null;
 		const formData = new FormData();
 		await expect(adminUploadExamPaper(formData)).rejects.toThrow(
 			"Authentication required",
@@ -206,7 +255,7 @@ describe("adminUploadExamPaper", () => {
 		formData.append("paperNumber", "1");
 		formData.append("type", "paper");
 
-		mockUploadFilesResult = {
+		mockUploadFilesResult.val = {
 			data: {
 				ufsUrl: "https://utfs.io/f/exam.pdf",
 				key: "file-key",
@@ -229,14 +278,14 @@ describe("adminUploadExamPaper", () => {
 		formData.append("paperNumber", "1");
 		formData.append("type", "memo");
 
-		mockUploadFilesResult = {
+		mockUploadFilesResult.val = {
 			data: {
 				ufsUrl: "https://utfs.io/f/memo.pdf",
 				key: "memo-key",
 				url: "https://utfs.io/f/memo.pdf",
 			},
 		};
-		mockListDocumentsResults.exam_papers = [
+		mockListDocumentsResults.val.exam_papers = [
 			{
 				$id: "paper1",
 				subjectId: "math",
@@ -249,9 +298,9 @@ describe("adminUploadExamPaper", () => {
 		const result = await adminUploadExamPaper(formData);
 
 		expect(result.success).toBe(true);
-		expect(mockUpdateDocumentCalls).toHaveLength(1);
-		expect(mockUpdateDocumentCalls[0].documentId).toBe("paper1");
-		expect(mockUpdateDocumentCalls[0].data).toEqual({ memoId: "uuid-1" });
+		expect(mockUpdateDocumentCalls.val).toHaveLength(1);
+		expect(mockUpdateDocumentCalls.val[0].documentId).toBe("paper1");
+		expect(mockUpdateDocumentCalls.val[0].data).toEqual({ memoId: "uuid-1" });
 	});
 
 	test("handles upload failure gracefully", async () => {
@@ -263,7 +312,7 @@ describe("adminUploadExamPaper", () => {
 		formData.append("paperNumber", "1");
 		formData.append("type", "paper");
 
-		mockUploadFilesResult = {
+		mockUploadFilesResult.val = {
 			error: { message: "Upload failed" },
 		};
 

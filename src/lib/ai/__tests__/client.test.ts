@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 import { AIClient } from "../client";
 
@@ -75,7 +75,7 @@ describe("AIClient", () => {
 	});
 
 	test("generate delegates to provider", async () => {
-		globalThis.fetch = mock(() =>
+		globalThis.fetch = vi.fn(() =>
 			Promise.resolve(
 				new Response(
 					JSON.stringify({

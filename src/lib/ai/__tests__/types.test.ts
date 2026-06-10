@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import type {
 	AIFailure,
 	AIProvider,
@@ -104,7 +104,7 @@ describe("AI types", () => {
 			}),
 		};
 		expect(provider.name).toBe("test");
-		expect(provider.generate).toBeFunction();
+		expect(provider.generate).toEqual(expect.any(Function));
 	});
 
 	test("TaskType union values", () => {

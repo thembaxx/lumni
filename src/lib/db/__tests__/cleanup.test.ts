@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const deleteErrors: string[] = [];
 const mockDocs: Array<{ $id: string; createdAt: string }> = [];
@@ -23,12 +23,17 @@ const mockDatabases = {
 	},
 };
 
-mock.module("@/lib/appwrite", () => ({
-	databases: mockDatabases,
+vi.mock("@/lib/appwrite", () => ({
 	browserDatabases: mockDatabases,
 	storage: {},
 	functions: {},
 	account: {},
+	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+}));
+
+vi.mock("@/lib/appwrite.server", () => ({
+	databases: mockDatabases,
 	serverAccount: {},
 	serverClient: {},
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",

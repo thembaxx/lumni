@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { QuestionEngine } from "../question-engine";
 import type { Question } from "../types";
 

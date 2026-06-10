@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
 import { gradeDiagram as grade } from "../graders/shared";

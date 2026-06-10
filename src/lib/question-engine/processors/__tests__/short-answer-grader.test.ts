@@ -1,6 +1,6 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
-mock.module("@/lib/ai", () => ({
+vi.mock("@/lib/ai", () => ({
 	getAI: () => ({
 		generateWithSystem: async () => ({
 			content: "not valid json",

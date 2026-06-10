@@ -1,15 +1,21 @@
 import type { Databases } from "appwrite";
-import { browserDatabases, databases } from "@/lib/appwrite";
+import { browserDatabases } from "@/lib/appwrite";
 import { logError } from "@/lib/shared/logger";
 import type { AppwriteExamPaperRecord } from "@/types/exam";
 
 export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID ?? "";
 
-function getDb(): Databases {
+let _serverDb: Databases | null = null;
+
+async function getDb(): Promise<Databases> {
 	if (typeof window !== "undefined") {
 		return browserDatabases;
 	}
-	return databases as unknown as Databases;
+	if (!_serverDb) {
+		const { databases } = await import("@/lib/appwrite.server");
+		_serverDb = databases as unknown as Databases;
+	}
+	return _serverDb;
 }
 
 export const COLLECTIONS = {
@@ -140,7 +146,7 @@ export async function listDocuments<T>(
 		console.warn("[listDocuments] APPWRITE_DATABASE_ID is not set");
 		return [];
 	}
-	const db = getDb();
+	const db = await getDb();
 	const response = await db.listDocuments(
 		APPWRITE_DATABASE_ID,
 		collection,
@@ -155,7 +161,7 @@ export async function getDocument<T>(
 ): Promise<T | null> {
 	if (!APPWRITE_DATABASE_ID) return null;
 	try {
-		const db = getDb();
+		const db = await getDb();
 		const doc = await db.getDocument(
 			APPWRITE_DATABASE_ID,
 			collection,
@@ -175,7 +181,7 @@ export async function createDocument(
 	if (!APPWRITE_DATABASE_ID) {
 		throw new Error("APPWRITE_DATABASE_ID is missing");
 	}
-	const db = getDb();
+	const db = await getDb();
 	const doc = await db.createDocument(
 		APPWRITE_DATABASE_ID,
 		collection,
@@ -191,7 +197,7 @@ export async function updateDocument(
 	data: Record<string, unknown>,
 ): Promise<void> {
 	if (!APPWRITE_DATABASE_ID) return;
-	const db = getDb();
+	const db = await getDb();
 	await db.updateDocument(APPWRITE_DATABASE_ID, collection, documentId, data);
 }
 
@@ -200,6 +206,6 @@ export async function deleteDocument(
 	documentId: string,
 ): Promise<void> {
 	if (!APPWRITE_DATABASE_ID) return;
-	const db = getDb();
+	const db = await getDb();
 	await db.deleteDocument(APPWRITE_DATABASE_ID, collection, documentId);
 }

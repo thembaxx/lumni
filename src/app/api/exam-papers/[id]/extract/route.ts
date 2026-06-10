@@ -1,6 +1,6 @@
 import { UTApi } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-extractor";
 import type { ExamPaper } from "@/types/exam-paper";

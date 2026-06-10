@@ -1,17 +1,17 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
-const mockCreateDocument = mock(() => "doc-id");
-const mockListDocuments = mock(() => []);
-const mockUpdateDocument = mock(() => {});
-const mockDeleteDocument = mock(() => {});
+const mockCreateDocument = vi.fn(() => "doc-id");
+const mockListDocuments = vi.fn(() => []);
+const mockUpdateDocument = vi.fn(() => {});
+const mockDeleteDocument = vi.fn(() => {});
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
 	databases: {
 		createDocument: mockCreateDocument,
 	},
 }));
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db",
 	COLLECTIONS: {
 		QUESTIONS: "questions",
@@ -30,31 +30,31 @@ mock.module("@/lib/db/client", () => ({
 	deleteDocument: mockDeleteDocument,
 }));
 
-mock.module("@/lib/db/persist", () => ({
+vi.mock("@/lib/db/persist", () => ({
 	safePersist: async (_label: string, fn: () => Promise<void>) => fn(),
 }));
 
-mock.module("@/lib/curriculum", () => ({
+vi.mock("@/lib/curriculum", () => ({
 	curriculumRegistry: {
 		getSubject: async () => null,
 	},
 }));
 
-mock.module("@/lib/competency-engine", () => ({
+vi.mock("@/lib/competency-engine", () => ({
 	competencyService: { update: async () => {} },
 	computeBloomWeight: () => 1.0,
 }));
 
-mock.module("@/lib/db/repositories/progress", () => ({
+vi.mock("@/lib/db/repositories/progress", () => ({
 	getProgress: async () => undefined,
 	saveProgress: async () => 1,
 }));
 
-mock.module("@/lib/visual-engine/visual-engine", () => ({
+vi.mock("@/lib/visual-engine/visual-engine", () => ({
 	visualEngine: { resolve: async () => null },
 }));
 
-mock.module("@/lib/flashcard-repository", () => ({
+vi.mock("@/lib/flashcard-repository", () => ({
 	flashcardRepository: {
 		getAll: async () => [],
 		create: async () => ({ id: "new" }),
@@ -62,20 +62,20 @@ mock.module("@/lib/flashcard-repository", () => ({
 	},
 }));
 
-mock.module("@/lib/orchestrator/job-queue", () => ({
+vi.mock("@/lib/orchestrator/job-queue", () => ({
 	enqueue: async () => 1,
 	queueCore: { enqueue: async (_item: { type: string }) => 1 },
 }));
 
-mock.module("@/lib/shared/question-utils", () => ({
+vi.mock("@/lib/shared/question-utils", () => ({
 	extractCorrectAnswer: () => "42",
 }));
 
-mock.module("@/lib/question-engine/persistence", () => ({
+vi.mock("@/lib/question-engine/persistence", () => ({
 	syncQuestionsToAppwrite: async () => {},
 }));
 
-mock.module("@/lib/db/schema", () => ({
+vi.mock("@/lib/db/schema", () => ({
 	offlineDB: {
 		jobs: {
 			add: async () => 1,

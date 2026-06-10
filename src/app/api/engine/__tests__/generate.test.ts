@@ -1,22 +1,22 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockCheckBudget = mock<(req: unknown, type: string) => unknown>();
-const mockTrackUsage = mock<(type: string, userId: string) => void>();
-const mockWithRateLimit = mock((handler: unknown) => handler);
+const mockCheckBudget = vi.fn<(req: unknown, type: string) => unknown>();
+const mockTrackUsage = vi.fn<(type: string, userId: string) => void>();
+const mockWithRateLimit = vi.fn((handler: unknown) => handler);
 
-mock.module("@/lib/ai/with-budget", () => ({
+vi.mock("@/lib/ai/with-budget", () => ({
 	checkBudget: mockCheckBudget,
 	trackUsage: mockTrackUsage,
 }));
 
-mock.module("@/lib/shared/with-rate-limit", () => ({
+vi.mock("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: mockWithRateLimit,
 }));
 
 const mockGenerateQuestionSet =
-	mock<(params: { subject: string; count: number }) => unknown>();
+	vi.fn<(params: { subject: string; count: number }) => unknown>();
 
-mock.module("@/lib/orchestrator", () => ({
+vi.mock("@/lib/orchestrator", () => ({
 	LearningOrchestrator: {
 		initialize: async () => ({
 			generateQuestionSet: mockGenerateQuestionSet,

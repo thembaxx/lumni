@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "bun:test";
+import { beforeEach, describe, expect, test } from "vitest";
 import { FlashcardEngine } from "../engine";
 import type { FlashcardReview, FlashcardSM2 } from "../types";
 import { DEFAULT_SR_SETTINGS } from "../types";

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { safeJsonStringify } from "@/lib/shared/json";
 
 // Mock store for all repositories
@@ -23,12 +23,12 @@ function getStore(tableName: string) {
 }
 
 // Mock module with full DataAccess-like API — MUST be before imports
-mock.module("@/lib/db", () => ({
+vi.mock("@/lib/db", () => ({
 	dexieDataAccess: buildMockDataAccess(),
 }));
 
 // Also mock schema for unmigrated repos that still use offlineDB directly
-mock.module("@/lib/db/schema", () => ({
+vi.mock("@/lib/db/schema", () => ({
 	offlineDB: buildMockDataAccess(),
 }));
 

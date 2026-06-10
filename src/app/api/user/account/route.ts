@@ -1,6 +1,6 @@
 import { Query, Users } from "node-appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { serverClient } from "@/lib/appwrite";
+import { serverClient } from "@/lib/appwrite.server";
 import { COLLECTIONS, deleteDocument, listDocuments } from "@/lib/db/client";
 import { userConsentService } from "@/lib/services/user-consent-service";
 

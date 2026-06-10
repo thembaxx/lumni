@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 import { searchImage } from "../image-resolver";
 
@@ -25,7 +25,7 @@ const validWikimediaResponse = {
 
 function mockFetchResponse(response: object, status = 200) {
 	const original = globalThis.fetch;
-	globalThis.fetch = mock(() =>
+	globalThis.fetch = vi.fn(() =>
 		Promise.resolve(
 			new Response(JSON.stringify(response), {
 				status,
@@ -77,7 +77,9 @@ describe("searchImage", () => {
 
 	test("returns null on network error", async () => {
 		const original = globalThis.fetch;
-		globalThis.fetch = mock(() => Promise.reject(new Error("Network failure")));
+		globalThis.fetch = vi.fn(() =>
+			Promise.reject(new Error("Network failure")),
+		);
 		const result = await searchImage("test", "mathematics", "algebra");
 		expect(result).toBeNull();
 		globalThis.fetch = original;

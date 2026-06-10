@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 describe("exam-dates service", () => {
 	test("getSessionLabel formats may-june", async () => {
@@ -55,7 +55,7 @@ describe("exam-dates service", () => {
 
 	test("re-exports getSubjectAbbr and getSubjectColor", async () => {
 		const mod = await import("../service");
-		expect(mod.getSubjectAbbr).toBeFunction();
-		expect(mod.getSubjectColor).toBeFunction();
+		expect(mod.getSubjectAbbr).toEqual(expect.any(Function));
+		expect(mod.getSubjectColor).toEqual(expect.any(Function));
 	});
 });

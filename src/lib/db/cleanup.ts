@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 const TTL_DAYS = 30;

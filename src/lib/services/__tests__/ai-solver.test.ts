@@ -1,10 +1,10 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
-const mockInitAI = mock<(...args: unknown[]) => unknown>();
-const mockIsAIConfigured = mock<(...args: unknown[]) => unknown>();
+const mockGenerateWithSystem = vi.fn<(...args: unknown[]) => unknown>();
+const mockInitAI = vi.fn<(...args: unknown[]) => unknown>();
+const mockIsAIConfigured = vi.fn<(...args: unknown[]) => unknown>();
 
-mock.module("@/lib/ai", () => ({
+vi.mock("@/lib/ai", () => ({
 	generateWithSystem: mockGenerateWithSystem,
 	initAI: mockInitAI,
 	isAIConfigured: mockIsAIConfigured,
@@ -12,8 +12,8 @@ mock.module("@/lib/ai", () => ({
 
 const { aiSolver } = await import("../ai-solver");
 
-const mockGetSourceForQuestion = mock<(...args: unknown[]) => unknown>();
-const mockBuildPromptInstruction = mock<(...args: unknown[]) => unknown>();
+const mockGetSourceForQuestion = vi.fn<(...args: unknown[]) => unknown>();
+const mockBuildPromptInstruction = vi.fn<(...args: unknown[]) => unknown>();
 
 const deps = {
 	getSourceForQuestion: mockGetSourceForQuestion as never,

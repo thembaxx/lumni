@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -9,10 +9,10 @@ import type {
 	UserAnswer,
 } from "@/lib/question-engine/types";
 
-const mockApiFetch = mock<(url: string, options: RequestInit) => unknown>();
-const mockShowBudgetToast = mock<(error: unknown) => void>();
+const mockApiFetch = vi.fn<(url: string, options: RequestInit) => unknown>();
+const mockShowBudgetToast = vi.fn<(error: unknown) => void>();
 
-mock.module("@/lib/shared/api-fetch", () => ({
+vi.mock("@/lib/shared/api-fetch", () => ({
 	apiFetch: mockApiFetch,
 	isBudgetExceeded: (err: unknown) =>
 		err instanceof Error &&

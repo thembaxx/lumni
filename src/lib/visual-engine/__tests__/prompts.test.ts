@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import {
 	getDiagramPrompt,
 	getImageSearchQuery,
@@ -14,8 +14,8 @@ describe("getDiagramPrompt", () => {
 		);
 		expect(result).toHaveProperty("system");
 		expect(result).toHaveProperty("user");
-		expect(result.system).toBeString();
-		expect(result.user).toBeString();
+		expect(result.system).toEqual(expect.any(String));
+		expect(result.user).toEqual(expect.any(String));
 	});
 
 	test("injects subject into system prompt", () => {
@@ -77,7 +77,7 @@ describe("getImageSearchQuery", () => {
 			"life-sciences",
 			"cell-biology",
 		);
-		expect(query).toBeString();
+		expect(query).toEqual(expect.any(String));
 		expect(query.length).toBeGreaterThan(0);
 	});
 

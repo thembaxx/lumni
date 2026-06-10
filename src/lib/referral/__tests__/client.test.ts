@@ -1,8 +1,10 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 const mockShare =
-	mock<(data: { title: string; text: string; url: string }) => Promise<void>>();
-const mockClipboardWrite = mock<(text: string) => Promise<void>>();
+	vi.fn<
+		(data: { title: string; text: string; url: string }) => Promise<void>
+	>();
+const mockClipboardWrite = vi.fn<(text: string) => Promise<void>>();
 
 Object.defineProperty(globalThis, "navigator", {
 	value: {

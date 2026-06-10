@@ -1,7 +1,11 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+
+vi.mock("@/lib/server/auth", () => ({
+	auth: async () => "test-user-id",
+}));
 
 const mockFetch =
-	mock<(url: string | URL, options?: RequestInit) => Promise<Response>>();
+	vi.fn<(url: string | URL, options?: RequestInit) => Promise<Response>>();
 
 beforeEach(() => {
 	mockFetch.mockReset();

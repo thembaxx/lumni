@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
+const mockGenerateWithSystem = vi.fn<(...args: unknown[]) => unknown>();
 
-mock.module("@/lib/ai/client", () => ({
+vi.mock("@/lib/ai/client", () => ({
 	CHAT_SYSTEM_PROMPT: "You are a helpful study assistant",
 	generateWithSystem: mockGenerateWithSystem,
 }));

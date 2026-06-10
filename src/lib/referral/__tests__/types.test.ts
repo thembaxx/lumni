@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 describe("referral types", () => {
 	test("ReferralStatus is a string union", () => {

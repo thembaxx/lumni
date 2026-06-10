@@ -1,79 +1,116 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockUploadFiles = mock(
-	async (): Promise<{
-		data: { ufsUrl: string; key: string };
-		error: null;
-	}> => ({
-		data: { ufsUrl: "https://utfs.io/f/test-key", key: "test-key" },
-		error: null,
-	}),
-);
+const { mockUploadFiles } = vi.hoisted(() => ({
+	mockUploadFiles: vi.fn(
+		async (): Promise<{
+			data: { ufsUrl: string; key: string };
+			error: null;
+		}> => ({
+			data: { ufsUrl: "https://utfs.io/f/test-key", key: "test-key" },
+			error: null,
+		}),
+	),
+}));
 
-const mockExistsSync = mock((_path: string) => false);
-const mockReadFileSync = mock((_path: string) => Buffer.from("fake-pdf"));
-const mockReaddirSync = mock((_path: string) => [] as string[]);
-const mockWriteFileSync = mock((_path: string, _data: string) => {});
+const { mockExistsSync, mockReadFileSync, mockReaddirSync, mockWriteFileSync } =
+	vi.hoisted(() => ({
+		mockExistsSync: vi.fn((_path: string) => false),
+		mockReadFileSync: vi.fn((_path: string) => Buffer.from("fake-pdf")),
+		mockReaddirSync: vi.fn((_path: string) => [] as string[]),
+		mockWriteFileSync: vi.fn((_path: string, _data: string) => {}),
+	}));
 
-mock.module("node:fs", () => ({
+vi.mock("node:fs", () => ({
 	existsSync: mockExistsSync,
 	readFileSync: mockReadFileSync,
 	readdirSync: mockReaddirSync,
 	writeFileSync: mockWriteFileSync,
 }));
 
-mock.module("path", () => ({
-	join: mock((...parts: string[]) => parts.join("/")),
-	default: { join: mock((...parts: string[]) => parts.join("/")) },
+vi.mock("path", () => ({
+	join: vi.fn((...parts: string[]) => parts.join("/")),
+	default: { join: vi.fn((...parts: string[]) => parts.join("/")) },
 }));
 
-mock.module("uploadthing/server", () => ({
-	UTApi: mock(() => ({
-		uploadFiles: mockUploadFiles,
-	})),
-	UTFile: mock((bytes: Uint8Array[], name: string) => ({ bytes, name })),
+vi.mock("uploadthing/server", () => ({
+	UTApi: class {
+		uploadFiles = mockUploadFiles;
+	},
+	UTFile: class {
+		bytes: Uint8Array[];
+		name: string;
+		constructor(bytes: Uint8Array[], name: string) {
+			this.bytes = bytes;
+			this.name = name;
+		}
+	},
 }));
 
-const mockListDocuments = mock(
-	async (_dbId: string, _collection: string, _queries?: string[]) => ({
-		documents: [],
-		total: 0,
-	}),
-);
-const mockCreateDocument = mock(
-	async (_dbId: string, _collection: string, _docId: string, _data: unknown) =>
-		({ $id: "new-id" }) as unknown,
-);
-const mockUpdateDocument = mock(
-	async (_dbId: string, _collection: string, _docId: string, _data: unknown) =>
-		null,
-);
+const {
+	mockListDocuments,
+	mockGetDocument,
+	mockCreateDocument,
+	mockUpdateDocument,
+} = vi.hoisted(() => ({
+	mockListDocuments: vi.fn(
+		async (_dbId: string, _collection: string, _queries?: string[]) => ({
+			documents: [],
+			total: 0,
+		}),
+	),
+	mockGetDocument: vi.fn(
+		async (_dbId: string, _collection: string, _docId: string) => null,
+	),
+	mockCreateDocument: vi.fn(
+		async (
+			_dbId: string,
+			_collection: string,
+			_docId: string,
+			_data: unknown,
+		) => ({ $id: "new-id" }) as unknown,
+	),
+	mockUpdateDocument: vi.fn(
+		async (
+			_dbId: string,
+			_collection: string,
+			_docId: string,
+			_data: unknown,
+		) => null,
+	),
+}));
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
+	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	browserDatabases: {},
+	storage: {},
+	functions: {},
+	account: {},
+}));
+
+vi.mock("@/lib/appwrite.server", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
 	databases: {
 		listDocuments: mockListDocuments,
-		getDocument: async () => null,
+		getDocument: mockGetDocument,
 		createDocument: mockCreateDocument,
-		updateDocument: mockUpdateDocument,
-		deleteDocument: async () => null,
 	},
+	serverAccount: {},
+	serverClient: {},
 }));
 
-mock.module("@/lib/exams/helpers", () => ({
-	parseExamPaperFilename: mock((_filename: string) => null),
+vi.mock("@/lib/exams/helpers", () => ({
+	parseExamPaperFilename: vi.fn((_filename: string) => null),
 }));
 
-mock.module("@/lib/subjects", () => {
-	// Re-export real module to avoid breaking other tests
-	// biome-ignore lint/style/noCommonJs: required by bun mock.module factory
-	const real = require("@/lib/subjects") as typeof import("@/lib/subjects");
+vi.mock("@/lib/subjects", async (importOriginal) => {
+	const real = await importOriginal<typeof import("@/lib/subjects")>();
 	return {
 		...real,
-		getSubjectAbbr: mock(real.getSubjectAbbr),
-		getSubjectName: mock(real.getSubjectName),
+		getSubjectAbbr: vi.fn(real.getSubjectAbbr),
+		getSubjectName: vi.fn(real.getSubjectName),
 	};
 });
 

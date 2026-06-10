@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 
 let setTimeoutCalls: Array<{ fn: (...args: unknown[]) => void }>;
 let callCount = 0;
@@ -45,7 +45,7 @@ describe("withRetry", () => {
 	});
 
 	test("throws after exhausting maxRetries", async () => {
-		const fn = mock(() => Promise.reject(new Error("persistent")));
+		const fn = vi.fn(() => Promise.reject(new Error("persistent")));
 		await expect(withRetry(fn, { maxRetries: 2 })).rejects.toThrow(
 			"persistent",
 		);
@@ -53,13 +53,13 @@ describe("withRetry", () => {
 	});
 
 	test("uses custom maxRetries", async () => {
-		const fn = mock(() => Promise.reject(new Error("fail")));
+		const fn = vi.fn(() => Promise.reject(new Error("fail")));
 		await expect(withRetry(fn, { maxRetries: 0 })).rejects.toThrow("fail");
 		expect(fn).toHaveBeenCalledTimes(1);
 	});
 
 	test("calls onRetry callback with attempt number", async () => {
-		const onRetry = mock(() => {});
+		const onRetry = vi.fn(() => {});
 		let attempts = 0;
 		await withRetry(
 			() => {
@@ -75,7 +75,7 @@ describe("withRetry", () => {
 	});
 
 	test("wraps non-Error thrown values in Error", async () => {
-		const fn = mock(() => Promise.reject("string error"));
+		const fn = vi.fn(() => Promise.reject("string error"));
 		await expect(withRetry(fn, { maxRetries: 0 })).rejects.toThrow(
 			"string error",
 		);

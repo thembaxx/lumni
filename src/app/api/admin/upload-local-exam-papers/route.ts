@@ -4,7 +4,7 @@ import path from "node:path";
 import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 const DEFAULT_FOLDER_PATH = `${(process as { cwd(): string }).cwd()}/downloads/exam-papers-2025`;

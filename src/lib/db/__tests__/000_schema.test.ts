@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 
 const tableNames = [
 	"chatMessages",
@@ -70,7 +70,7 @@ class MockOfflineDB {
 	close() {}
 }
 
-mock.module("@/lib/db/schema", () => ({
+vi.mock("@/lib/db/schema", () => ({
 	LumniOfflineDB: MockOfflineDB,
 	offlineDB: new MockOfflineDB(),
 }));

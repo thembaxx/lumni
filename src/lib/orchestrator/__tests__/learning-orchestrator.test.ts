@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test, vi } from "vitest";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { GenerationParams, Question } from "@/lib/question-engine/types";
 import { LearningOrchestrator } from "../learning-orchestrator";
@@ -35,8 +35,8 @@ describe("LearningOrchestrator", () => {
 		];
 
 		const fakeEngine = {
-			generate: mock(async (_params: GenerationParams) => questions),
-			getLastRagContext: mock(() => ({
+			generate: vi.fn(async (_params: GenerationParams) => questions),
+			getLastRagContext: vi.fn(() => ({
 				sources: [
 					{
 						url: "https://www.education.gov.za/Curriculum/",
@@ -101,8 +101,8 @@ describe("LearningOrchestrator", () => {
 		];
 
 		const fakeEngine = {
-			generate: mock(async (_params: GenerationParams) => questions),
-			getLastRagContext: mock(() => null),
+			generate: vi.fn(async (_params: GenerationParams) => questions),
+			getLastRagContext: vi.fn(() => null),
 		};
 
 		const orchestrator = new LearningOrchestrator(

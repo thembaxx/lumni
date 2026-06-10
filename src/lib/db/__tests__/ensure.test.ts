@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type NodeDatabases = unknown;
@@ -148,30 +148,15 @@ const mockDb = {
 	},
 };
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db",
-	COLLECTIONS: { QUESTIONS: "questions" },
-	listDocuments: mockDb.listDocuments,
-	getDocument: mockDb.getDocument,
-	createDocument: mockDb.createDocument,
-	updateDocument: mockDb.updateDocument,
-	deleteDocument: mockDb.deleteDocument,
+	COLLECTIONS: {
+		QUESTIONS: "questions",
+		EXAM_PAPERS: "exam_papers",
+	},
 }));
 
-mock.module("@/lib/appwrite", () => ({
-	databases: mockDb,
-	browserDatabases: mockDb,
-	storage: {},
-	functions: {},
-	account: {},
-	serverAccount: {},
-	serverClient: {},
-	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
-	APPWRITE_PROJECT: "test-project",
-	APPWRITE_API_KEY: "test-key",
-}));
-
-mock.module("node-appwrite", () => ({
+vi.mock("node-appwrite", () => ({
 	Client: class {
 		setEndpoint() {
 			return this;
@@ -191,9 +176,39 @@ mock.module("node-appwrite", () => ({
 			return { $id: "test", name: "Test", email: "test@test.com" };
 		}
 	},
+	Databases: class {
+		async create() {}
+		async get() {}
+		async list() {}
+		async createCollection() {}
+		async getCollection() {}
+		async listAttributes() {}
+		async listIndexes() {}
+		async createStringAttribute() {}
+		async createIntegerAttribute() {}
+		async createBooleanAttribute() {}
+		async createDatetimeAttribute() {}
+		async createIndex() {}
+		async listDocuments() {}
+		async createDocument() {}
+		async getDocument() {}
+		async updateDocument() {}
+		async deleteDocument() {}
+	},
 	AppwriteException: MockAppwriteException,
+	Query: {
+		equal: (...args: string[]) => args,
+		limit: (n: number) => [`limit(${n})`],
+	},
 }));
-const { ensureAppwrite } = await import("../ensure");
+let ensureAppwrite: (
+	config?: unknown,
+	databases?: unknown,
+) => Promise<Record<string, unknown>>;
+beforeAll(async () => {
+	const mod = await import("../ensure");
+	ensureAppwrite = mod.ensureAppwrite;
+});
 
 describe("ensureAppwrite", () => {
 	beforeEach(() => {

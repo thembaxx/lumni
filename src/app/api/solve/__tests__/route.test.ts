@@ -1,23 +1,23 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
-const mockInitAI = mock<(...args: unknown[]) => unknown>();
-const mockIsAIConfigured = mock<(...args: unknown[]) => unknown>();
-const mockCheckBudget = mock<(...args: unknown[]) => unknown>();
-const mockTrackUsage = mock<(...args: unknown[]) => unknown>();
+const mockGenerateWithSystem = vi.fn<(...args: unknown[]) => unknown>();
+const mockInitAI = vi.fn<(...args: unknown[]) => unknown>();
+const mockIsAIConfigured = vi.fn<(...args: unknown[]) => unknown>();
+const mockCheckBudget = vi.fn<(...args: unknown[]) => unknown>();
+const mockTrackUsage = vi.fn<(...args: unknown[]) => unknown>();
 
-mock.module("@/lib/ai", () => ({
+vi.mock("@/lib/ai", () => ({
 	generateWithSystem: mockGenerateWithSystem,
 	initAI: mockInitAI,
 	isAIConfigured: mockIsAIConfigured,
 }));
 
-mock.module("@/lib/ai/with-budget", () => ({
+vi.mock("@/lib/ai/with-budget", () => ({
 	checkBudget: mockCheckBudget,
 	trackUsage: mockTrackUsage,
 }));
 
-mock.module("@/lib/shared/with-rate-limit", () => ({
+vi.mock("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: (handler: unknown) => handler,
 }));
 

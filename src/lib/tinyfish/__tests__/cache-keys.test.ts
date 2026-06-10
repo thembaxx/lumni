@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { buildGenerateKey, buildSolveKey } from "../cache";
 
 describe("buildGenerateKey", () => {

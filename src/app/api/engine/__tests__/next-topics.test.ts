@@ -1,23 +1,23 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 const mockGetNextTopics =
-	mock<(subject: string, competencyMap: unknown) => unknown>();
+	vi.fn<(subject: string, competencyMap: unknown) => unknown>();
 const mockListDocuments =
-	mock<(collection: string, queries: unknown[]) => unknown>();
+	vi.fn<(collection: string, queries: unknown[]) => unknown>();
 
-mock.module("@/lib/competency-engine", () => ({
+vi.mock("@/lib/competency-engine", () => ({
 	pathEngine: {
 		getNextTopics: mockGetNextTopics,
 	},
 }));
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db",
 	COLLECTIONS: { COMPETENCIES: "competencies" },
 	listDocuments: mockListDocuments,
 }));
 
-mock.module("@/lib/server/auth", () => ({
+vi.mock("@/lib/server/auth", () => ({
 	auth: () => "test-user-id",
 	verifyAuth: () => {},
 	getAuthenticatedUserId: () => "test-user-id",
@@ -25,7 +25,7 @@ mock.module("@/lib/server/auth", () => ({
 	getAuthenticatedUserName: () => "Test User",
 }));
 
-mock.module("@/lib/shared/with-rate-limit", () => ({
+vi.mock("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: (handler: unknown) => handler,
 }));
 

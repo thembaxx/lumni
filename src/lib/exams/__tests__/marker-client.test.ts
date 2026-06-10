@@ -1,20 +1,29 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockUploadFiles = mock(
-	async (): Promise<{
-		data: { ufsUrl: string; key: string };
-		error: null;
-	}> => ({
-		data: { ufsUrl: "https://example.com/img.png", key: "img-key" },
-		error: null,
-	}),
-);
+const { mockUploadFiles } = vi.hoisted(() => ({
+	mockUploadFiles: vi.fn(
+		async (): Promise<{
+			data: { ufsUrl: string; key: string };
+			error: null;
+		}> => ({
+			data: { ufsUrl: "https://example.com/img.png", key: "img-key" },
+			error: null,
+		}),
+	),
+}));
 
-mock.module("uploadthing/server", () => ({
-	UTApi: mock(() => ({
-		uploadFiles: mockUploadFiles,
-	})),
-	UTFile: mock((bytes: Uint8Array[], name: string) => ({ bytes, name })),
+vi.mock("uploadthing/server", () => ({
+	UTApi: class {
+		uploadFiles = mockUploadFiles;
+	},
+	UTFile: class {
+		bytes: Uint8Array[];
+		name: string;
+		constructor(bytes: Uint8Array[], name: string) {
+			this.bytes = bytes;
+			this.name = name;
+		}
+	},
 }));
 
 const { convertPdfWithMarker, uploadImagesAndRewriteMarkdown } = await import(
@@ -29,7 +38,7 @@ afterAll(() => {
 
 describe("convertPdfWithMarker", () => {
 	beforeEach(() => {
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async (_url: string | URL, _opts?: RequestInit): Promise<Response> =>
 				new Response(
 					JSON.stringify({
@@ -52,7 +61,7 @@ describe("convertPdfWithMarker", () => {
 	});
 
 	test("sends POST request to /convert endpoint", async () => {
-		const fetchMock = mock(
+		const fetchMock = vi.fn(
 			async (url: string | URL, opts?: RequestInit): Promise<Response> => {
 				expect(url.toString()).toMatch(/\/convert$/);
 				expect(opts?.method).toBe("POST");
@@ -71,7 +80,7 @@ describe("convertPdfWithMarker", () => {
 	});
 
 	test("throws on non-ok response", async () => {
-		globalThis.fetch = mock(
+		globalThis.fetch = vi.fn(
 			async (): Promise<Response> =>
 				new Response("Bad Request", { status: 400 }),
 		);

@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, test } from "bun:test";
 import { cleanup, render } from "@testing-library/react";
+import { afterEach, describe, expect, test } from "vitest";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {

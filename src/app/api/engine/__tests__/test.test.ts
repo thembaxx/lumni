@@ -1,13 +1,13 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const mockGenerateQuestionSet = mock<(params: unknown) => unknown>();
-const mockValidate = mock<(q: unknown) => unknown>();
+const mockGenerateQuestionSet = vi.fn<(params: unknown) => unknown>();
+const mockValidate = vi.fn<(q: unknown) => unknown>();
 const mockGenerateHint =
-	mock<(params: { questionId: string; question: unknown }) => string>();
-const mockGrade = mock<(question: unknown, answer: unknown) => unknown>();
-const mockListTypes = mock<() => string[]>();
+	vi.fn<(params: { questionId: string; question: unknown }) => string>();
+const mockGrade = vi.fn<(question: unknown, answer: unknown) => unknown>();
+const mockListTypes = vi.fn<() => string[]>();
 
-mock.module("@/lib/orchestrator", () => ({
+vi.mock("@/lib/orchestrator", () => ({
 	LearningOrchestrator: {
 		initialize: async () => ({
 			generateQuestionSet: mockGenerateQuestionSet,
@@ -15,8 +15,8 @@ mock.module("@/lib/orchestrator", () => ({
 	},
 }));
 
-mock.module("@/lib/question-engine/question-engine", () => ({
-	QuestionEngine: mock(function (this: unknown) {
+vi.mock("@/lib/question-engine/question-engine", () => ({
+	QuestionEngine: vi.fn(function (this: unknown) {
 		return {
 			validate: mockValidate,
 			generateHint: mockGenerateHint,

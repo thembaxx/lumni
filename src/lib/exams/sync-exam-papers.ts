@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
-import { databases } from "@/lib/appwrite";
+import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseExamPaperFilename } from "@/lib/exams/helpers";
 import { logError } from "@/lib/shared/logger";

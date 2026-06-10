@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { calculateBackoffDelay } from "@/lib/shared/backoff";
 import { QueueCore } from "../core";
 

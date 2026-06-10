@@ -1,12 +1,12 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { act, renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import type {
 	ExamDate,
 	StudyPlan,
 	StudySession,
 } from "@/lib/utils/study-planner";
 
-mock.module("@/lib/auth/auth-context", () => ({
+vi.mock("@/lib/auth/auth-context", () => ({
 	AuthProvider: ({ children }: { children: React.ReactNode }) => children,
 	useAuth: () => ({ user: { $id: "test-user" } }),
 }));
@@ -24,7 +24,7 @@ let mockStats = {
 	daysUntilNextExam: null as number | null,
 };
 
-mock.module("@/lib/utils/study-planner", () => ({
+vi.mock("@/lib/utils/study-planner", () => ({
 	loadStudyPlanFromDexie: () =>
 		Promise.resolve({ sessions: [], examDates: [], generatedAt: 0 }),
 	loadStudyPlan: () => ({
@@ -104,7 +104,7 @@ mock.module("@/lib/utils/study-planner", () => ({
 	syncStudyPlanToAppwrite: async () => {},
 }));
 
-mock.module("@/lib/study-planner/study-planner-service", () => ({
+vi.mock("@/lib/study-planner/study-planner-service", () => ({
 	getStudyPlannerService: () => ({
 		generateStudyPlan: async () => ({
 			topics: [

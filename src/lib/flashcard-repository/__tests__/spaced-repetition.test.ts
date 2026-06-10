@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { calculateNextReview } from "@/lib/flashcard-engine/algorithms";
 

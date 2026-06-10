@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "bun:test";
+import { beforeEach, describe, expect, test } from "vitest";
 import type { Collection, DataAccess } from "@/lib/db/data-access";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
 import { QuizPackService } from "../service";
@@ -108,7 +108,7 @@ describe("QuizPackService", () => {
 			expect(pack.downloadProgress).toBe(0);
 			expect(pack.storageBytes).toBe(0);
 			expect(pack.lastUsedAt).toBeNull();
-			expect(pack.id).toStartWith("pack_");
+			expect(pack.id.startsWith("pack_")).toBe(true);
 			expect(pack.title).toBe("Mathematics - Algebra Pack");
 			expect(pack.expiresAt).toBe(
 				pack.createdAt + PACK_EXPIRY_DAYS * 24 * 60 * 60 * 1000,

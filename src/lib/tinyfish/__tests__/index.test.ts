@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const originalFetch = globalThis.fetch;
 const originalEnv = process.env.TINYFISH_API_KEY;
@@ -14,7 +14,7 @@ const cacheStore = new Map<
 let usageAutoId = 1;
 let consentGranted = false;
 
-mock.module("@/lib/db", () => ({
+vi.mock("@/lib/db", () => ({
 	dexieDataAccess: {
 		tinyfishCache: {
 			get(key: string) {
@@ -66,7 +66,7 @@ mock.module("@/lib/db", () => ({
 	},
 }));
 
-mock.module("@/lib/consent/ai-gate", () => ({
+vi.mock("@/lib/consent/ai-gate", () => ({
 	getDataSharingConsent: () => consentGranted,
 	updateDataSharingConsent: (g: boolean) => {
 		consentGranted = g;
@@ -109,7 +109,7 @@ describe("searchWithRAG", () => {
 
 	test("returns empty when consent not granted", async () => {
 		consentGranted = false;
-		globalThis.fetch = mock(async () => jsonResponse({})) as typeof fetch;
+		globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
 		const { searchWithRAG } = await import("../index");
 		const result = await searchWithRAG({
 			subject: "mathematics",
@@ -131,7 +131,7 @@ describe("searchWithRAG", () => {
 
 	test("returns empty when topic is empty", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async () => jsonResponse({})) as typeof fetch;
+		globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
 		const { searchWithRAG } = await import("../index");
 		const result = await searchWithRAG({
 			subject: "mathematics",
@@ -144,7 +144,7 @@ describe("searchWithRAG", () => {
 		consentGranted = true;
 		let searchCalled = false;
 		let fetchCalled = false;
-		globalThis.fetch = mock(async (url: string | URL | Request) => {
+		globalThis.fetch = vi.fn(async (url: string | URL | Request) => {
 			const s = String(url);
 			if (s.includes("api.search.tinyfish.ai")) {
 				searchCalled = true;
@@ -195,7 +195,7 @@ describe("searchWithRAG", () => {
 
 	test("blocks social media domains from results", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async (url: string | URL | Request) => {
+		globalThis.fetch = vi.fn(async (url: string | URL | Request) => {
 			const s = String(url);
 			if (s.includes("api.search.tinyfish.ai")) {
 				return jsonResponse({
@@ -226,7 +226,7 @@ describe("searchWithRAG", () => {
 	test("returns cached result on second call without extra network calls", async () => {
 		consentGranted = true;
 		let fetchCount = 0;
-		globalThis.fetch = mock(async (url: string | URL | Request) => {
+		globalThis.fetch = vi.fn(async (url: string | URL | Request) => {
 			fetchCount++;
 			const s = String(url);
 			if (s.includes("api.search.tinyfish.ai")) {
@@ -267,7 +267,7 @@ describe("searchWithRAG", () => {
 
 	test("enforces per-user daily limit", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async () => jsonResponse({})) as typeof fetch;
+		globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
 		const { searchWithRAG } = await import("../index");
 		const { getTodayUsageCount } = await import("../cache");
 
@@ -285,7 +285,7 @@ describe("searchWithRAG", () => {
 	test("returns empty and does not call network when user over daily limit", async () => {
 		consentGranted = true;
 		let networkCalled = false;
-		globalThis.fetch = mock(async () => {
+		globalThis.fetch = vi.fn(async () => {
 			networkCalled = true;
 			return jsonResponse({});
 		}) as typeof fetch;
@@ -308,7 +308,7 @@ describe("searchWithRAG", () => {
 
 	test("fails open when network errors out", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async () => {
+		globalThis.fetch = vi.fn(async () => {
 			throw new Error("network down");
 		}) as typeof fetch;
 		const { searchWithRAG } = await import("../index");
@@ -324,7 +324,7 @@ describe("searchWithRAG", () => {
 describe("getSourceForQuestion", () => {
 	test("rejects questions with < 5 words", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async () => jsonResponse({})) as typeof fetch;
+		globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
 		const { getSourceForQuestion } = await import("../index");
 		const result = await getSourceForQuestion({ question: "too short" });
 		expect(result.sources).toEqual([]);
@@ -332,7 +332,7 @@ describe("getSourceForQuestion", () => {
 
 	test("returns empty when consent not granted", async () => {
 		consentGranted = false;
-		globalThis.fetch = mock(async () => jsonResponse({})) as typeof fetch;
+		globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
 		const { getSourceForQuestion } = await import("../index");
 		const result = await getSourceForQuestion({
 			question: "When is the 2026 Maths Paper 2 exam?",
@@ -342,7 +342,7 @@ describe("getSourceForQuestion", () => {
 
 	test("fetches a single source for valid question", async () => {
 		consentGranted = true;
-		globalThis.fetch = mock(async (url: string | URL | Request) => {
+		globalThis.fetch = vi.fn(async (url: string | URL | Request) => {
 			const s = String(url);
 			if (s.includes("api.search.tinyfish.ai")) {
 				return jsonResponse({

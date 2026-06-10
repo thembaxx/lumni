@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 let mockGamificationData: Record<string, unknown> = {
 	xp: 50,
@@ -17,8 +17,8 @@ let mockGamificationData: Record<string, unknown> = {
 	subjectQuestionCounts: {},
 };
 
-mock.module("@/lib/shared/api-fetch", () => ({
-	apiFetch: mock(async (_url: string) => mockGamificationData),
+vi.mock("@/lib/shared/api-fetch", () => ({
+	apiFetch: vi.fn(async (_url: string) => mockGamificationData),
 	isBudgetExceeded: () => false,
 	showBudgetToast: () => {},
 }));

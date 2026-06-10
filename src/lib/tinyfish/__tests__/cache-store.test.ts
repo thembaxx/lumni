@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const cacheStore = new Map<
 	string,
@@ -143,7 +143,7 @@ const mockTinyfishUsage: MockTable = {
 	},
 };
 
-mock.module("@/lib/db", () => ({
+vi.mock("@/lib/db", () => ({
 	dexieDataAccess: {
 		tinyfishCache: mockTinyfishCache,
 		tinyfishUsage: mockTinyfishUsage,
