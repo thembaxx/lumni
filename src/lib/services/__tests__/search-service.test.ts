@@ -1,4 +1,4 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const { mockQuestions, mockWrongAnswers, mockFlashcards } = vi.hoisted(() => ({
 	mockQuestions: [
@@ -16,7 +16,9 @@ const { mockQuestions, mockWrongAnswers, mockFlashcards } = vi.hoisted(() => ({
 }));
 
 beforeEach(() => {
-	vi.stubGlobal("fetch", () => Promise.resolve({ ok: true, json: () => Promise.resolve({ results: [] }) }));
+	vi.stubGlobal("fetch", () =>
+		Promise.resolve({ ok: true, json: () => Promise.resolve({ results: [] }) }),
+	);
 });
 afterEach(() => {
 	vi.unstubAllGlobals();
@@ -32,7 +34,9 @@ vi.mock("@/lib/db", () => ({
 		progress: { toArray: () => Promise.resolve([]) },
 	},
 }));
-vi.mock("@/lib/flashcard-engine", () => ({ flashcardEngine: { getAll: () => Promise.resolve(mockFlashcards) } }));
+vi.mock("@/lib/flashcard-engine", () => ({
+	flashcardEngine: { getAll: () => Promise.resolve(mockFlashcards) },
+}));
 vi.mock("@/lib/utils/storage", () => ({ loadFromStorage: () => [] }));
 
 const { searchAll, searchByType } = await import("../search-service");

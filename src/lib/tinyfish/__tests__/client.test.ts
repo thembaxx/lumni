@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { isTinyFishConfigured, tinyfishFetch, tinyfishSearch, TinyFishError } from "../client";
+import {
+	isTinyFishConfigured,
+	TinyFishError,
+	tinyfishFetch,
+	tinyfishSearch,
+} from "../client";
 
 const originalFetch = globalThis.fetch;
 const originalEnv = process.env.TINYFISH_API_KEY;

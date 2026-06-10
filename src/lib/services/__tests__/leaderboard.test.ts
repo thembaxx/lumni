@@ -1,4 +1,4 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const mockStorage = new Map<string, unknown>();
 
@@ -24,7 +24,12 @@ describe("leaderboard-service", () => {
 		mockStorage.clear();
 		mockStorage.set("lumni_total_xp", 100);
 		mockStorage.set("lumni_streak", 5);
-		vi.stubGlobal("fetch", () => Promise.resolve({ ok: true, json: () => Promise.resolve({ leaderboard: [] }) }));
+		vi.stubGlobal("fetch", () =>
+			Promise.resolve({
+				ok: true,
+				json: () => Promise.resolve({ leaderboard: [] }),
+			}),
+		);
 	});
 	afterEach(() => {
 		vi.unstubAllGlobals();
