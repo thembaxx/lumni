@@ -19,6 +19,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { Link } from "@/i18n/navigation";
+import { logError } from "@/lib/shared/logger";
 import { getSubjectAbbr } from "@/lib/subjects";
 import { getWeekOldThreshold, loadStudyPlan } from "@/lib/utils/study-planner";
 import { useBookmarksStore } from "@/store/bookmarks";
@@ -82,7 +83,7 @@ export function StudyPlanOverview() {
 					localStorage.getItem("lumni_plan_daily_minutes") ?? "30",
 					10,
 				),
-			}).catch(() => {});
+			}).catch((err) => logError("study-plan-overview.generate", err));
 		}
 	}, [generatePlan]);
 

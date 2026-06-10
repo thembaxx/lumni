@@ -17,7 +17,12 @@ export default function EmbedBackfillPage() {
 	const [progress, setProgress] = useState({ done: 0, total: 0, failed: 0 });
 	const [running, setRunning] = useState(false);
 
-	const { data: stats, isLoading } = useQuery({
+	const {
+		data: stats,
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["embed-backfill-stats"],
 		queryFn: async () => {
 			const [all, embeddings] = await Promise.all([
@@ -96,7 +101,11 @@ export default function EmbedBackfillPage() {
 					<CardTitle>Pool Status</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{isLoading ? (
+					{isError ? (
+						<p className="text-destructive text-sm">
+							Failed to load stats: {error?.message}
+						</p>
+					) : isLoading ? (
 						<Skeleton className="h-12 w-48" />
 					) : stats ? (
 						<div className="flex gap-8 text-sm">

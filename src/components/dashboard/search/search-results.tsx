@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import type { SearchResultItem } from "@/lib/services/search-service";
 import { searchAll, searchWeb } from "@/lib/services/search-service";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 const typeConfig: Record<
 	SearchResultItem["type"],
@@ -138,12 +139,17 @@ export function SearchResults({
 
 		dispatch({ type: "START_LOADING" });
 		const timer = setTimeout(async () => {
-			const [local, web] = await Promise.all([
-				searchAll(query),
-				searchWeb(query),
-			]);
-			const merged = [...local, ...web];
-			dispatch({ type: "LOAD_RESULTS", items: merged });
+			try {
+				const [local, web] = await Promise.all([
+					searchAll(query),
+					searchWeb(query),
+				]);
+				const merged = [...local, ...web];
+				dispatch({ type: "LOAD_RESULTS", items: merged });
+			} catch (err) {
+				logError("search-results.search", err);
+				dispatch({ type: "LOAD_RESULTS", items: [] });
+			}
 		}, 200);
 
 		return () => clearTimeout(timer);

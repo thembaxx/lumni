@@ -28,7 +28,12 @@ export default function AdminPastPapersPage() {
 	const [typeFilter, setTypeFilter] = useState("");
 	const [expandedId, setExpandedId] = useState<string | null>(null);
 
-	const { data: questions = [], isLoading } = useQuery({
+	const {
+		data: questions = [],
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["admin", "past-paper-questions", subjectFilter, typeFilter],
 		queryFn: () =>
 			fetchQuestions(subjectFilter || undefined, typeFilter || undefined),
@@ -82,7 +87,15 @@ export default function AdminPastPapersPage() {
 				</span>
 			</div>
 
-			{isLoading ? (
+			{isError ? (
+				<div
+					className={cn(
+						"rounded-card-lg border border-destructive/60 bg-destructive/5 p-12 text-center text-destructive text-sm",
+					)}
+				>
+					Failed to load questions: {error?.message}
+				</div>
+			) : isLoading ? (
 				<div className={cn("flex items-center justify-center py-12")}>
 					<div className="size-6 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
 				</div>

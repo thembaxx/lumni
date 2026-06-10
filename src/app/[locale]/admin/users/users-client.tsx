@@ -27,7 +27,7 @@ interface AdminUser {
 export function UsersClient() {
 	const queryClient = useQueryClient();
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["admin-users"],
 		queryFn: async () => {
 			const res = await fetch("/api/admin/users");
@@ -97,6 +97,16 @@ export function UsersClient() {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
+								{isError && (
+									<TableRow>
+										<TableCell
+											colSpan={6}
+											className="py-8 text-center text-destructive"
+										>
+											Failed to load users: {error?.message}
+										</TableCell>
+									</TableRow>
+								)}
 								{isLoading && (
 									<TableRow>
 										<TableCell
@@ -107,7 +117,7 @@ export function UsersClient() {
 										</TableCell>
 									</TableRow>
 								)}
-								{!isLoading && users.length === 0 && (
+								{!isLoading && !isError && users.length === 0 && (
 									<TableRow>
 										<TableCell
 											colSpan={6}

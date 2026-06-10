@@ -36,7 +36,7 @@ export function ContentClient() {
 	const queryClient = useQueryClient();
 	const [statusFilter, setStatusFilter] = useState<string>("pending");
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["admin-content-flags"],
 		queryFn: async () => {
 			const res = await fetch("/api/admin/content");
@@ -120,6 +120,16 @@ export function ContentClient() {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
+								{isError && (
+									<TableRow>
+										<TableCell
+											colSpan={6}
+											className="py-8 text-center text-destructive"
+										>
+											Failed to load flags: {error?.message}
+										</TableCell>
+									</TableRow>
+								)}
 								{isLoading && (
 									<TableRow>
 										<TableCell
@@ -130,7 +140,7 @@ export function ContentClient() {
 										</TableCell>
 									</TableRow>
 								)}
-								{!isLoading && flags.length === 0 && (
+								{!isLoading && !isError && flags.length === 0 && (
 									<TableRow>
 										<TableCell
 											colSpan={6}

@@ -1,7 +1,7 @@
 "use client";
 
 import { animate, m, useMotionValue, useTransform } from "framer-motion";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { cn } from "@/lib/shared";
@@ -21,7 +21,7 @@ interface SwipeableCardProps {
 	style?: React.CSSProperties;
 }
 
-export function SwipeableCard({
+export const SwipeableCard = memo(function SwipeableCard({
 	id: _id,
 	front,
 	back,
@@ -210,4 +210,4 @@ export function SwipeableCard({
 			</m.div>
 		</m.div>
 	);
-}
+});

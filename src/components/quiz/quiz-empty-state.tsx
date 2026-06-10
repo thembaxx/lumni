@@ -107,55 +107,6 @@ function QuizEmptyStateNoQuestions({
 	);
 }
 
-interface QuizStartStateProps {
-	onSelect: () => void;
-}
-
-function _QuizStartState({ onSelect }: QuizStartStateProps) {
-	const t = useTranslations();
-	return (
-		<div className="mt-24 flex flex-col gap-4">
-			<div className="grid grid-cols-12 items-center gap-4">
-				<div className="col-span-12 md:col-span-6">
-					<div className="flex flex-col gap-4 text-center md:text-left">
-						<p className="font-medium text-muted-foreground text-sm">
-							{t("quiz.selectSubjectBegin")}
-						</p>
-						<p className="text-muted-foreground/60 text-xs">
-							{t("quiz.chooseSubjectToStart")}
-						</p>
-					</div>
-				</div>
-				<div className="col-span-12 flex justify-center md:col-span-6">
-					<div className="relative">
-						<Skeleton shape="circle" className="absolute size-20" />
-						<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
-							<m.div
-								animate={{ rotate: 360 }}
-								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							>
-								<HugeiconsIcon
-									icon={RadialIcon}
-									className="size-12 text-muted-foreground"
-								/>
-							</m.div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="flex justify-center md:justify-start">
-				<button
-					type="button"
-					onClick={onSelect}
-					className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
-				>
-					{t("quiz.selectSubject")}
-				</button>
-			</div>
-		</div>
-	);
-}
-
 interface QuizSubjectPromptProps {
 	onSelect: () => void;
 	hasSubject?: boolean;

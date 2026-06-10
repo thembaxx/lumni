@@ -56,7 +56,12 @@ const LEVEL_RECOMMENDATIONS: Record<
 };
 
 export function BloomTaxonomyWidget() {
-	const { data: competencies = [] } = useQuery({
+	const {
+		data: competencies = [],
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["bloom-taxonomy-widget"],
 		queryFn: () => competencyService.getCompetencies(""),
 	});
@@ -86,7 +91,24 @@ export function BloomTaxonomyWidget() {
 		});
 	}, [competencies]);
 
-	if (topicData.length === 0) return null;
+	if (isError) {
+		return (
+			<Card className="rounded-3xl shadow-level-1">
+				<CardHeader>
+					<CardTitle className="font-semibold text-base">
+						Bloom's Taxonomy Progress
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p className="py-4 text-center text-destructive text-xs">
+						Failed to load data: {error?.message}
+					</p>
+				</CardContent>
+			</Card>
+		);
+	}
+
+	if (isLoading || topicData.length === 0) return null;
 
 	return (
 		<Card className="rounded-3xl shadow-level-1">

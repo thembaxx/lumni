@@ -3,6 +3,7 @@ import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-extractor";
+import { logError } from "@/lib/shared/logger";
 import type { ExamPaper } from "@/types/exam-paper";
 
 export const runtime = "nodejs";
@@ -102,7 +103,7 @@ export const POST = createRouteHandler({
 				"generate-embedding",
 				{ questionId: q.id, questionText: q.questionText, subject: q.subject },
 				{ priority: 50 },
-			).catch(() => {});
+			).catch((err) => logError("extract.enqueue-embedding", err));
 		}
 
 		return {

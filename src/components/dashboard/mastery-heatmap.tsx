@@ -43,7 +43,7 @@ interface CompetencyRecord {
 export function MasteryHeatmap() {
 	const [selectedSubject, setSelectedSubject] = useState("");
 
-	const { data: subjects = [] } = useQuery({
+	const { data: subjects = [], isError: subjectsErr } = useQuery({
 		queryKey: ["admin-subjects", "heatmap"],
 		queryFn: async () => {
 			const res = await fetch("/api/admin/subjects");
@@ -57,7 +57,11 @@ export function MasteryHeatmap() {
 		},
 	});
 
-	const { data: competencies = [] } = useQuery({
+	const {
+		data: competencies = [],
+		isError: compsErr,
+		error,
+	} = useQuery({
 		queryKey: ["competencies", selectedSubject],
 		queryFn: async () => {
 			if (!selectedSubject) return [];
@@ -105,6 +109,20 @@ export function MasteryHeatmap() {
 				</select>
 			</div>
 
+			{subjectsErr && (
+				<div className="flex flex-col items-center gap-3 py-12 text-destructive">
+					<p className="text-sm">Failed to load subjects</p>
+				</div>
+			)}
+
+			{compsErr && (
+				<div className="flex flex-col items-center gap-3 py-12 text-destructive">
+					<p className="text-sm">
+						Failed to load competencies: {error?.message}
+					</p>
+				</div>
+			)}
+
 			{!selectedSubject && (
 				<div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
 					<span className="text-3xl">📊</span>
@@ -114,7 +132,7 @@ export function MasteryHeatmap() {
 				</div>
 			)}
 
-			{selectedSubject && topics.length === 0 && (
+			{selectedSubject && !compsErr && topics.length === 0 && (
 				<div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
 					<span className="text-3xl">📊</span>
 					<p className="text-sm">

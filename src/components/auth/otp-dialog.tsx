@@ -24,7 +24,7 @@ import { OtpVerificationForm } from "./otp-verification-form";
 import { OtpVerifiedView } from "./otp-verified-view";
 
 const otpSendSchema = z.object({
-	email: z.string().email("Please enter a valid email address"),
+	email: z.email("Please enter a valid email address"),
 });
 
 type AuthDialogProps = {

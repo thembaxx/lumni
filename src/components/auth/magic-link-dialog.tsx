@@ -17,7 +17,7 @@ import { ResendSection } from "./magic-link-dialog/resend-section";
 import { SuccessState } from "./magic-link-dialog/success-state";
 
 const magicLinkSchema = z.object({
-	email: z.string().email("Please enter a valid email address"),
+	email: z.email("Please enter a valid email address"),
 });
 
 type AuthDialogProps = {

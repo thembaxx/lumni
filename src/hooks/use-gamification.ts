@@ -65,17 +65,19 @@ export function useGamification() {
 	useEffect(() => {
 		if (syncedRef.current) return;
 		syncedRef.current = true;
-		syncFromServer().then((serverData) => {
-			if (serverData) {
-				setData((prev) => {
-					const merged = gamificationEngine.mergeWithDefaults({
-						...prev,
-						...serverData,
+		syncFromServer()
+			.then((serverData) => {
+				if (serverData) {
+					setData((prev) => {
+						const merged = gamificationEngine.mergeWithDefaults({
+							...prev,
+							...serverData,
+						});
+						return merged;
 					});
-					return merged;
-				});
-			}
-		});
+				}
+			})
+			.catch((err) => logError("useGamificationSyncFromServer", err));
 	}, []);
 
 	// Cleanup all timers on unmount

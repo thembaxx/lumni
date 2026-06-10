@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/navigation";
 import type { Question } from "@/lib/question-engine/types";
+import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
 import type { Story } from "@/lib/stories/types";
@@ -36,7 +37,9 @@ export function StoryReaderClient() {
 			setStory(s);
 			setLoading(false);
 			if (s) {
-				cacheStory(storyId, s).catch(() => {});
+				cacheStory(storyId, s).catch((err) =>
+					logError("story-reader.cacheStory", err),
+				);
 			}
 		});
 	}, [storyId]);

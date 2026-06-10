@@ -10,7 +10,12 @@ interface TopicGraphProps {
 }
 
 export function TopicGraph({ subject, topic }: TopicGraphProps) {
-	const { data: graph, isPending } = useQuery({
+	const {
+		data: graph,
+		isPending,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["knowledge-graph", subject, topic],
 		queryFn: async () => {
 			const params = new URLSearchParams({ subject, topic });
@@ -20,6 +25,14 @@ export function TopicGraph({ subject, topic }: TopicGraphProps) {
 		},
 		enabled: !!subject && !!topic,
 	});
+
+	if (isError) {
+		return (
+			<div className="py-2 text-destructive text-xs">
+				Failed to load topic graph: {error?.message}
+			</div>
+		);
+	}
 
 	if (isPending) {
 		return (

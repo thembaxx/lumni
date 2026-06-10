@@ -30,7 +30,7 @@ function ParentDashboardPageInner() {
 	const [selectedChildId, setSelectedChildId] = useState<string | null>(null);
 	const [showInvite, setShowInvite] = useState(false);
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["parent-students"],
 		queryFn: async () => {
 			const res = await fetch("/api/parent/students");
@@ -110,6 +110,18 @@ function ParentDashboardPageInner() {
 			message: `Invitation sent to ${parentEmail}`,
 		});
 	};
+
+	if (isError) {
+		return (
+			<ParentShell>
+				<PageContainer className="flex flex-col gap-6">
+					<div className="rounded-card-lg border border-destructive/60 bg-destructive/5 p-4 text-destructive text-sm">
+						Failed to load data: {error?.message}
+					</div>
+				</PageContainer>
+			</ParentShell>
+		);
+	}
 
 	if (isLoading) {
 		return (

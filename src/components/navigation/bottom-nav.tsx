@@ -3,7 +3,14 @@
 import { GridIcon, Home01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import {
+	memo,
+	Suspense,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { SnapFab } from "@/components/tools/core/snap-fab";
 import { ToolsDialog } from "@/components/tools/core/tools-dialog";
@@ -160,7 +167,9 @@ export function BottomNav() {
 							))}
 						</div>
 
-						<SnapFab inline />
+						<Suspense fallback={null}>
+							<SnapFab inline />
+						</Suspense>
 
 						<button
 							type="button"

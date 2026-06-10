@@ -46,15 +46,16 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
 	const [expanded, setExpanded] = useState<string | null>(null);
 	const [comments, setComments] = useState<Record<string, string>>({});
 
-	const { data, isLoading } = useQuery<TeacherAssignmentsResponse>({
-		queryKey: ["teacherAssignments"],
-		queryFn: () =>
-			fetch("/api/teacher/assignments").then((r) => {
-				if (!r.ok) throw new Error("Failed to fetch");
-				return r.json();
-			}),
-		staleTime: 1000 * 60 * 2,
-	});
+	const { data, isLoading, isError, error } =
+		useQuery<TeacherAssignmentsResponse>({
+			queryKey: ["teacherAssignments"],
+			queryFn: () =>
+				fetch("/api/teacher/assignments").then((r) => {
+					if (!r.ok) throw new Error("Failed to fetch");
+					return r.json();
+				}),
+			staleTime: 1000 * 60 * 2,
+		});
 
 	const submitComment = useMutation({
 		mutationFn: async ({
@@ -82,6 +83,18 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
 
 	const assignments = data?.assignments ?? [];
 	const withSubmissions = assignments.filter((a) => a.submissions.length > 0);
+
+	if (isError) {
+		return (
+			<Card className={cn(className)}>
+				<CardContent>
+					<p className="py-6 text-center text-destructive text-xs">
+						Failed to load assignments: {error?.message}
+					</p>
+				</CardContent>
+			</Card>
+		);
+	}
 
 	if (isLoading) {
 		return (

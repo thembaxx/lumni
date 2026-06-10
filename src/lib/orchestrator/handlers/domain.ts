@@ -12,6 +12,7 @@ import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
+import { logError } from "@/lib/shared/logger";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
@@ -196,7 +197,7 @@ export const pruneStaleQuestions: JobHandler = async () => {
 		});
 
 		if (stale.length === 0) {
-			console.log("[Prune] No stale questions found");
+			logError("Prune.noStaleQuestions", null);
 			return;
 		}
 
@@ -209,9 +210,9 @@ export const pruneStaleQuestions: JobHandler = async () => {
 			}),
 		);
 
-		console.log(`[Prune] Removed ${stale.length} stale question cache entries`);
+		logError("Prune.removedEntries", { count: stale.length });
 	} catch (error) {
-		console.error("[Prune] Error pruning stale questions:", error);
+		logError("Prune.error", error);
 	}
 };
 

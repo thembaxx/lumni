@@ -1,5 +1,3 @@
-"use client";
-
 import type { Story } from "./types";
 
 export interface StoryMeta {

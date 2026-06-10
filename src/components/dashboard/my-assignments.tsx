@@ -19,7 +19,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function MyAssignments() {
 	const router = useRouter();
 	const [questionOpen, setQuestionOpen] = useState<string | null>(null);
-	const { data, isLoading } = useQuery<{ assignments: StudentAssignment[] }>({
+	const { data, isLoading, isError, error } = useQuery<{
+		assignments: StudentAssignment[];
+	}>({
 		queryKey: ["studentAssignments"],
 		queryFn: () =>
 			fetch("/api/student/assignments").then((r) => {
@@ -31,6 +33,24 @@ export function MyAssignments() {
 	});
 
 	const assignments = data?.assignments ?? [];
+
+	if (isError) {
+		return (
+			<Card>
+				<CardHeader>
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+						<HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
+						My Assignments
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p className="py-6 text-center text-destructive text-xs">
+						Failed to load assignments: {error?.message}
+					</p>
+				</CardContent>
+			</Card>
+		);
+	}
 
 	if (isLoading) {
 		return (

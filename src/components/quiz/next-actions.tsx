@@ -24,7 +24,7 @@ export function NextActions({
 	totalQuestions,
 	onPracticeTopic,
 }: NextActionsProps) {
-	const { data } = useQuery({
+	const { data, isError, error } = useQuery({
 		queryKey: ["next-actions", subject.toLowerCase()],
 		queryFn: async () => {
 			const [dueCards, competencies] = await Promise.all([
@@ -49,6 +49,15 @@ export function NextActions({
 	const weakestScore = data?.weakestScore ?? null;
 
 	const wrongCount = totalQuestions - correctness.filter(Boolean).length;
+	if (isError) {
+		return (
+			<div className="flex flex-col gap-2 rounded-lg border border-destructive/60 bg-destructive/5 p-4">
+				<p className="text-destructive text-xs">
+					Failed to load next steps: {error?.message}
+				</p>
+			</div>
+		);
+	}
 	if (dueCount === 0 && weakestTopic === null && wrongCount === 0) return null;
 
 	return (

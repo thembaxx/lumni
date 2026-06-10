@@ -73,7 +73,7 @@ function TeacherDashboardPageInner() {
 		null,
 	);
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["teacher-students"],
 		queryFn: async () => {
 			const res = await fetch("/api/teacher/students");
@@ -125,6 +125,16 @@ function TeacherDashboardPageInner() {
 	});
 
 	const handleAssign = assignTopics;
+
+	if (isError) {
+		return (
+			<ClassShell>
+				<div className="rounded-card-lg border border-destructive/60 bg-destructive/5 p-4 text-destructive text-sm">
+					Failed to load data: {error?.message}
+				</div>
+			</ClassShell>
+		);
+	}
 
 	if (isLoading) {
 		return (

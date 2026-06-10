@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +27,7 @@ export interface LessonCardData {
 	order?: number;
 }
 
-export function LessonCard({
+export const LessonCard = memo(function LessonCard({
 	id,
 	subject,
 	difficulty,
@@ -162,4 +162,4 @@ export function LessonCard({
 			</AnimatePresence>
 		</Anim>
 	);
-}
+});

@@ -17,7 +17,7 @@ interface AnalyticsData {
 }
 
 export function AnalyticsClient() {
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["admin-analytics"],
 		queryFn: async () => {
 			const res = await fetch("/api/admin/analytics");
@@ -42,6 +42,11 @@ export function AnalyticsClient() {
 		<div className="min-h-dvh bg-background">
 			<PageHeader title="Analytics" subtitle="Platform usage statistics" />
 			<div className="flex flex-col gap-4 p-4">
+				{isError && (
+					<div className="rounded-card-lg border border-destructive/60 bg-destructive/5 p-4 text-destructive text-sm">
+						Failed to load analytics: {error?.message}
+					</div>
+				)}
 				<div className="grid grid-cols-2 gap-3 md:grid-cols-3">
 					{stats.map((stat) => (
 						<Card key={stat.label} size="sm">

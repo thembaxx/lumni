@@ -191,7 +191,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			}
 		};
 
-		init().catch(() => {});
+		init().catch((err) => logError("auth-context.init", err));
 
 		return () => {
 			cancelled = true;

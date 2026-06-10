@@ -22,30 +22,36 @@ import { RequestsBreakdownCard } from "./quality-sections/requests-breakdown-car
 import { StatsCardsGrid } from "./quality-sections/stats-cards-grid";
 
 export default function AdminQualityPage() {
-	const { data: quality = getQualityStats() } = useQuery({
+	const { data: quality = getQualityStats(), isError: qualityErr } = useQuery({
 		queryKey: ["engine-quality", "stats"],
 		queryFn: () => getQualityStats(),
 		refetchInterval: 5000,
 	});
 
-	const { data: analytics = getAnalyticsSummary() } = useQuery({
-		queryKey: ["engine-quality", "analytics-summary"],
-		queryFn: () => getAnalyticsSummary(),
-		refetchInterval: 5000,
-	});
+	const { data: analytics = getAnalyticsSummary(), isError: analyticsErr } =
+		useQuery({
+			queryKey: ["engine-quality", "analytics-summary"],
+			queryFn: () => getAnalyticsSummary(),
+			refetchInterval: 5000,
+		});
 
-	const { data: events = loadEvents().slice(-20).reverse() } = useQuery({
+	const {
+		data: events = loadEvents().slice(-20).reverse(),
+		isError: eventsErr,
+	} = useQuery({
 		queryKey: ["engine-quality", "events"],
 		queryFn: () => loadEvents().slice(-20).reverse(),
 		refetchInterval: 5000,
 	});
 
-	const { data: recentQuality = loadQualityRecords().slice(-10).reverse() } =
-		useQuery({
-			queryKey: ["engine-quality", "recent"],
-			queryFn: () => loadQualityRecords().slice(-10).reverse(),
-			refetchInterval: 5000,
-		});
+	const {
+		data: recentQuality = loadQualityRecords().slice(-10).reverse(),
+		isError: recentErr,
+	} = useQuery({
+		queryKey: ["engine-quality", "recent"],
+		queryFn: () => loadQualityRecords().slice(-10).reverse(),
+		refetchInterval: 5000,
+	});
 
 	const queryClient = useQueryClient();
 
@@ -76,6 +82,22 @@ export default function AdminQualityPage() {
 					Clear Data
 				</Button>
 			</div>
+
+			{(qualityErr || analyticsErr || eventsErr || recentErr) && (
+				<div
+					className={cn(
+						"rounded-card-lg",
+						"border",
+						"border-destructive/60",
+						"bg-destructive/5",
+						"p-4",
+						"text-destructive",
+						"text-sm",
+					)}
+				>
+					Failed to load quality data. Some sections may be incomplete.
+				</div>
+			)}
 
 			<StatsCardsGrid
 				totalRequests={analytics.totalRequests}

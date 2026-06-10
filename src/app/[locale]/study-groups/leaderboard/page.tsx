@@ -20,7 +20,7 @@ interface LeaderboardEntry {
 const medalIcons = ["🥇", "🥈", "🥉"];
 
 export default function LeaderboardPage() {
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["group-leaderboard"],
 		queryFn: async () => {
 			const res = await fetch("/api/study-groups/leaderboard");
@@ -64,7 +64,11 @@ export default function LeaderboardPage() {
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						{isLoading ? (
+						{isError ? (
+							<p className="py-8 text-center text-destructive text-sm">
+								Failed to load leaderboard: {error?.message}
+							</p>
+						) : isLoading ? (
 							<div className="flex flex-col gap-3">
 								{[1, 2, 3].map((i) => (
 									<Skeleton key={i} className="h-16 w-full rounded-xl" />

@@ -34,7 +34,12 @@ function calculateLevelFromXp(totalXp: number): number {
 }
 
 export default function AdminGamificationPage() {
-	const { data: entries = [] } = useQuery({
+	const {
+		data: entries = [],
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["admin", "gamification", "leaderboard"],
 		queryFn: fetchLeaderboard,
 		refetchInterval: 15000,
@@ -70,206 +75,245 @@ export default function AdminGamificationPage() {
 				<h1 className={cn("font-extrabold text-2xl")}>Gamification Admin</h1>
 			</div>
 
-			<div className={cn("grid grid-cols-2 gap-4 lg:grid-cols-4")}>
+			{isError && (
 				<div
 					className={cn(
-						"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+						"rounded-card-lg border border-destructive/60 bg-destructive/5 p-4 text-destructive text-sm",
 					)}
 				>
-					<header className={cn("p-4 pb-2")}>
-						<h2
-							className={cn(
-								"font-heading font-medium text-muted-foreground text-sm",
-							)}
-						>
-							Total Users
-						</h2>
-					</header>
-					<div className={cn("p-4 pt-0")}>
-						<p className={cn("font-extrabold text-3xl")}>{totalUsers}</p>
-					</div>
+					Failed to load leaderboard: {error?.message}
 				</div>
-				<div
-					className={cn(
-						"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
-					)}
-				>
-					<header className={cn("p-4 pb-2")}>
-						<h2
-							className={cn(
-								"font-heading font-medium text-muted-foreground text-sm",
-							)}
-						>
-							Total XP
-						</h2>
-					</header>
-					<div className={cn("p-4 pt-0")}>
-						<p className={cn("font-extrabold text-3xl")}>
-							{totalXpAll.toLocaleString()}
-						</p>
-					</div>
-				</div>
-				<div
-					className={cn(
-						"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
-					)}
-				>
-					<header className={cn("p-4 pb-2")}>
-						<h2
-							className={cn(
-								"font-heading font-medium text-muted-foreground text-sm",
-							)}
-						>
-							Avg XP / User
-						</h2>
-					</header>
-					<div className={cn("p-4 pt-0")}>
-						<p className={cn("font-extrabold text-3xl")}>
-							{avgXp.toLocaleString()}
-						</p>
-					</div>
-				</div>
-				<div
-					className={cn(
-						"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
-					)}
-				>
-					<header className={cn("p-4 pb-2")}>
-						<h2
-							className={cn(
-								"font-heading font-medium text-muted-foreground text-sm",
-							)}
-						>
-							Avg Streak
-						</h2>
-					</header>
-					<div className={cn("p-4 pt-0")}>
-						<p className={cn("font-extrabold text-3xl")}>{avgStreak}</p>
-					</div>
-				</div>
-			</div>
+			)}
 
-			<div
-				className={cn(
-					"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
-				)}
-			>
-				<header className={cn("p-4 pb-2")}>
-					<h2 className={cn("font-heading font-medium text-lg")}>
-						Level Distribution
-					</h2>
-				</header>
-				<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
-					{Object.entries(levelDistribution).length === 0 && (
-						<p className={cn("text-muted-foreground text-sm")}>No data yet</p>
-					)}
-					{Object.entries(levelDistribution)
-						.sort(([a], [b]) => Number(a) - Number(b))
-						.map(([level, count]) => {
-							const levelDef = LEVELS.find((l) => l.level === Number(level));
-							return (
-								<div
-									key={level}
-									className={cn("flex items-center justify-between text-sm")}
-								>
-									<span className={cn("font-medium")}>
-										Lvl {level}: {levelDef?.title || ""}
-									</span>
-									<span className={cn("font-mono")}>
-										{count} user{count !== 1 ? "s" : ""}
-									</span>
-								</div>
-							);
-						})}
-				</div>
-			</div>
-
-			<div
-				className={cn(
-					"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
-				)}
-			>
-				<header className={cn("p-4 pb-2")}>
-					<h2 className={cn("font-heading font-medium text-lg")}>Top Users</h2>
-				</header>
-				<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
-					{topUsers.length === 0 && (
-						<p className={cn("text-muted-foreground text-sm")}>No data yet</p>
-					)}
-					{topUsers.map((user) => (
+			{isLoading && (
+				<div className={cn("grid grid-cols-2 gap-4 lg:grid-cols-4")}>
+					{[1, 2, 3, 4].map((i) => (
 						<div
-							key={user.userId}
-							className={cn("flex items-center justify-between text-sm")}
+							key={i}
+							className={cn(
+								"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+							)}
 						>
-							<div className={cn("flex items-center gap-2")}>
-								<span className={cn("w-4 font-mono text-muted-foreground")}>
-									#{user.rank}
-								</span>
-								<span className={cn("font-medium")}>
-									{user.label || "Student"}
-								</span>
-								<Badge
-									variant="outline"
-									className={cn("ios-caption-3 font-mono")}
-								>
-									Lvl {user.level}
-								</Badge>
-							</div>
-							<div className={cn("flex items-center gap-3")}>
-								<span className={cn("text-muted-foreground text-xs")}>
-									🔥 {user.streak}
-								</span>
-								<span className={cn("font-mono")}>
-									{user.xp.toLocaleString()} XP
-								</span>
-							</div>
+							<div className={cn("h-20 w-full animate-pulse bg-muted")} />
 						</div>
 					))}
 				</div>
-			</div>
+			)}
 
-			<div
-				className={cn(
-					"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
-				)}
-			>
-				<header className={cn("p-4 pb-2")}>
-					<h2 className={cn("font-heading font-medium text-lg")}>
-						All Achievements ({ACHIEVEMENTS.length})
-					</h2>
-				</header>
-				<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
-					{achievementStats.map((a) => (
+			{!isLoading && !isError && (
+				<>
+					<div className={cn("grid grid-cols-2 gap-4 lg:grid-cols-4")}>
 						<div
-							key={a.id}
-							className={cn("flex items-center justify-between text-sm")}
+							className={cn(
+								"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+							)}
 						>
-							<div className={cn("flex items-center gap-2")}>
-								<span>{a.icon}</span>
-								<span className={cn("font-medium")}>{a.name}</span>
-								<Badge
-									variant="outline"
+							<header className={cn("p-4 pb-2")}>
+								<h2
 									className={cn(
-										"ios-caption-3 font-mono",
-										a.rarity === "legendary"
-											? "border-yellow-500 text-yellow-500 dark:border-yellow-400 dark:text-yellow-400"
-											: a.rarity === "epic"
-												? "border-purple-500 text-purple-500 dark:border-purple-400 dark:text-purple-400"
-												: a.rarity === "rare"
-													? "border-blue-500 text-blue-500 dark:border-blue-400 dark:text-blue-400"
-													: "",
+										"font-heading font-medium text-muted-foreground text-sm",
 									)}
 								>
-									{a.rarity}
-								</Badge>
+									Total Users
+								</h2>
+							</header>
+							<div className={cn("p-4 pt-0")}>
+								<p className={cn("font-extrabold text-3xl")}>{totalUsers}</p>
 							</div>
-							<span className={cn("text-muted-foreground text-xs")}>
-								{a.xpReward} XP ({a.category})
-							</span>
 						</div>
-					))}
-				</div>
-			</div>
+						<div
+							className={cn(
+								"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+							)}
+						>
+							<header className={cn("p-4 pb-2")}>
+								<h2
+									className={cn(
+										"font-heading font-medium text-muted-foreground text-sm",
+									)}
+								>
+									Total XP
+								</h2>
+							</header>
+							<div className={cn("p-4 pt-0")}>
+								<p className={cn("font-extrabold text-3xl")}>
+									{totalXpAll.toLocaleString()}
+								</p>
+							</div>
+						</div>
+						<div
+							className={cn(
+								"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+							)}
+						>
+							<header className={cn("p-4 pb-2")}>
+								<h2
+									className={cn(
+										"font-heading font-medium text-muted-foreground text-sm",
+									)}
+								>
+									Avg XP / User
+								</h2>
+							</header>
+							<div className={cn("p-4 pt-0")}>
+								<p className={cn("font-extrabold text-3xl")}>
+									{avgXp.toLocaleString()}
+								</p>
+							</div>
+						</div>
+						<div
+							className={cn(
+								"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
+							)}
+						>
+							<header className={cn("p-4 pb-2")}>
+								<h2
+									className={cn(
+										"font-heading font-medium text-muted-foreground text-sm",
+									)}
+								>
+									Avg Streak
+								</h2>
+							</header>
+							<div className={cn("p-4 pt-0")}>
+								<p className={cn("font-extrabold text-3xl")}>{avgStreak}</p>
+							</div>
+						</div>
+					</div>
+
+					<div
+						className={cn(
+							"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
+						)}
+					>
+						<header className={cn("p-4 pb-2")}>
+							<h2 className={cn("font-heading font-medium text-lg")}>
+								Level Distribution
+							</h2>
+						</header>
+						<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
+							{Object.entries(levelDistribution).length === 0 && (
+								<p className={cn("text-muted-foreground text-sm")}>
+									No data yet
+								</p>
+							)}
+							{Object.entries(levelDistribution)
+								.sort(([a], [b]) => Number(a) - Number(b))
+								.map(([level, count]) => {
+									const levelDef = LEVELS.find(
+										(l) => l.level === Number(level),
+									);
+									return (
+										<div
+											key={level}
+											className={cn(
+												"flex items-center justify-between text-sm",
+											)}
+										>
+											<span className={cn("font-medium")}>
+												Lvl {level}: {levelDef?.title || ""}
+											</span>
+											<span className={cn("font-mono")}>
+												{count} user{count !== 1 ? "s" : ""}
+											</span>
+										</div>
+									);
+								})}
+						</div>
+					</div>
+
+					<div
+						className={cn(
+							"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
+						)}
+					>
+						<header className={cn("p-4 pb-2")}>
+							<h2 className={cn("font-heading font-medium text-lg")}>
+								Top Users
+							</h2>
+						</header>
+						<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
+							{topUsers.length === 0 && (
+								<p className={cn("text-muted-foreground text-sm")}>
+									No data yet
+								</p>
+							)}
+							{topUsers.map((user) => (
+								<div
+									key={user.userId}
+									className={cn("flex items-center justify-between text-sm")}
+								>
+									<div className={cn("flex items-center gap-2")}>
+										<span className={cn("w-4 font-mono text-muted-foreground")}>
+											#{user.rank}
+										</span>
+										<span className={cn("font-medium")}>
+											{user.label || "Student"}
+										</span>
+										<Badge
+											variant="outline"
+											className={cn("ios-caption-3 font-mono")}
+										>
+											Lvl {user.level}
+										</Badge>
+									</div>
+									<div className={cn("flex items-center gap-3")}>
+										<span className={cn("text-muted-foreground text-xs")}>
+											🔥 {user.streak}
+										</span>
+										<span className={cn("font-mono")}>
+											{user.xp.toLocaleString()} XP
+										</span>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div
+						className={cn(
+							"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
+						)}
+					>
+						<header className={cn("p-4 pb-2")}>
+							<h2 className={cn("font-heading font-medium text-lg")}>
+								All Achievements ({ACHIEVEMENTS.length})
+							</h2>
+						</header>
+						<div className={cn("flex flex-col gap-2 p-4 pt-0")}>
+							{achievementStats.map((a) => (
+								<div
+									key={a.id}
+									className={cn("flex items-center justify-between text-sm")}
+								>
+									<div className={cn("flex items-center gap-2")}>
+										<span>{a.icon}</span>
+										<span className={cn("font-medium")}>{a.name}</span>
+										<Badge
+											variant="outline"
+											className={cn(
+												"ios-caption-3 font-mono",
+												a.rarity === "legendary"
+													? "border-yellow-500 text-yellow-500 dark:border-yellow-400 dark:text-yellow-400"
+													: a.rarity === "epic"
+														? "border-purple-500 text-purple-500 dark:border-purple-400 dark:text-purple-400"
+														: a.rarity === "rare"
+															? "border-blue-500 text-blue-500 dark:border-blue-400 dark:text-blue-400"
+															: "",
+											)}
+										>
+											{a.rarity}
+										</Badge>
+									</div>
+									<span className={cn("text-muted-foreground text-xs")}>
+										{a.xpReward} XP ({a.category})
+									</span>
+								</div>
+							))}
+						</div>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }

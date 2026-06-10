@@ -26,7 +26,7 @@ function ChatContent() {
 
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	});
+	}, []);
 
 	return (
 		<div className="flex h-full flex-col bg-background/95">

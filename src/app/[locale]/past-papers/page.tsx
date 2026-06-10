@@ -74,7 +74,12 @@ function PaperCard({ paper }: { paper: ExamPaper }) {
 export default function PastPapersPage() {
 	const [selectedSubject, setSelectedSubject] = useState("");
 
-	const { data: papers = [], isLoading } = useQuery({
+	const {
+		data: papers = [],
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["past-papers", selectedSubject],
 		queryFn: () => fetchPapers(selectedSubject),
 		enabled: !!selectedSubject,
@@ -121,7 +126,15 @@ export default function PastPapersPage() {
 					</div>
 				)}
 
-				{!isLoading && selectedSubject && papers.length === 0 && (
+				{isError && (
+					<div className="py-20 text-center">
+						<p className="text-destructive text-sm">
+							Failed to load papers: {error?.message}
+						</p>
+					</div>
+				)}
+
+				{!isLoading && !isError && selectedSubject && papers.length === 0 && (
 					<div className="py-20 text-center">
 						<p className="text-muted-foreground/40 text-sm">
 							No exam papers found for this subject

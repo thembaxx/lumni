@@ -61,7 +61,12 @@ export function CompetencyOverview() {
 		staleTime: 1000 * 60 * 60,
 	});
 
-	const { data: competencies, isLoading } = useQuery({
+	const {
+		data: competencies,
+		isLoading,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ["competency-overview"],
 		queryFn: async () => {
 			const allComps = await Promise.all(
@@ -121,6 +126,18 @@ export function CompetencyOverview() {
 			};
 		});
 	}, [competencies, subjectsData]);
+
+	if (isError) {
+		return (
+			<Card>
+				<CardContent>
+					<p className="py-6 text-center text-destructive text-sm">
+						Failed to load competencies: {error?.message}
+					</p>
+				</CardContent>
+			</Card>
+		);
+	}
 
 	if (isLoading) {
 		return (
