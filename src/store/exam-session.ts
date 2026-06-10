@@ -136,34 +136,6 @@ const dexiePersistStorage = {
 	},
 };
 
-let cleanupCrossTabSync: (() => void) | null = null;
-
-function setupCrossTabSync() {
-	if (typeof window === "undefined") return;
-	const handleStorage = (e: StorageEvent) => {
-		if (e.key === EXAM_SESSION_STORAGE_KEY && e.newValue) {
-			try {
-				const parsed = JSON.parse(e.newValue);
-				if (parsed?.state) {
-					useExamSessionStore.setState(parsed.state);
-				}
-			} catch {
-				console.warn("[ExamSession] Failed to parse cross-tab sync data");
-			}
-		}
-	};
-	window.addEventListener("storage", handleStorage);
-	cleanupCrossTabSync = () =>
-		window.removeEventListener("storage", handleStorage);
-}
-
-export function cleanupExamSessionSync() {
-	cleanupCrossTabSync?.();
-}
-
-if (typeof window !== "undefined") {
-	setupCrossTabSync();
-}
 
 export const useExamSessionStore = create<ExamSessionState>()(
 	persist(
