@@ -109,16 +109,17 @@ export async function lookupWord(
 			`${PRIMARY_API}/${language}/${encodeURIComponent(word)}`,
 			`${FALLBACK_API}/${language}/${encodeURIComponent(word)}`,
 		];
-		for (const url of urls) {
-			try {
-				const res = await fetch(url);
-				if (res.ok) {
-					data = (await res.json()) as DictionaryEntry[];
-					break;
-				}
-			} catch {
-				// try next
-			}
+		try {
+			const res = await Promise.any(
+				urls.map(async (url) => {
+					const response = await fetch(url);
+					if (!response.ok) throw new Error(`Failed: ${url}`);
+					return response.json() as Promise<DictionaryEntry[]>;
+				}),
+			);
+			data = res;
+		} catch {
+			// both failed
 		}
 	}
 

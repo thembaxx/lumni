@@ -20,8 +20,10 @@ export default function EmbedBackfillPage() {
 	const { data: stats, isLoading } = useQuery({
 		queryKey: ["embed-backfill-stats"],
 		queryFn: async () => {
-			const all = await dexieDataAccess.pastPaperQuestions.toArray();
-			const embeddings = await dexieDataAccess.questionEmbeddings.toArray();
+			const [all, embeddings] = await Promise.all([
+				dexieDataAccess.pastPaperQuestions.toArray(),
+				dexieDataAccess.questionEmbeddings.toArray(),
+			]);
 			const embedded = new Set(embeddings.map((e) => e.questionId));
 			const pending = all.filter((q) => !embedded.has(q.id));
 			return {
@@ -33,8 +35,10 @@ export default function EmbedBackfillPage() {
 	});
 
 	const doBackfill = useCallback(async () => {
-		const all = await dexieDataAccess.pastPaperQuestions.toArray();
-		const embeddings = await dexieDataAccess.questionEmbeddings.toArray();
+		const [all, embeddings] = await Promise.all([
+			dexieDataAccess.pastPaperQuestions.toArray(),
+			dexieDataAccess.questionEmbeddings.toArray(),
+		]);
 		const embedded = new Set(embeddings.map((e) => e.questionId));
 		const pending = all.filter((q) => !embedded.has(q.id));
 

@@ -51,13 +51,7 @@ export function DictionaryClient() {
 				</p>
 			</div>
 
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					handleSearch();
-				}}
-				className="flex items-center gap-3"
-			>
+			<div className="flex items-center gap-3">
 				<div className="relative flex-1">
 					<HugeiconsIcon
 						icon={Search01Icon}
@@ -73,13 +67,14 @@ export function DictionaryClient() {
 					/>
 				</div>
 				<Button
-					type="submit"
+					type="button"
 					disabled={loading || !query.trim()}
+					onClick={handleSearch}
 					className="h-12 rounded-full px-6"
 				>
 					{loading ? "Searching..." : "Search"}
 				</Button>
-			</form>
+			</div>
 
 			{!searched && (
 				<div className="flex flex-col items-center gap-3 py-16 text-center">

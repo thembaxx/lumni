@@ -30,7 +30,7 @@ export function PronunciationClient() {
 		fluencyScore: number;
 	} | null>(null);
 	const [loading, setLoading] = useState(false);
-	const [permission, setPermission] = useState(false);
+	const permissionRef = useRef(false);
 	const [downloadProgress, setDownloadProgress] = useState(0);
 	const [modelState, setModelState] = useState<
 		"idle" | "downloading" | "loaded" | "error"
@@ -66,14 +66,14 @@ export function PronunciationClient() {
 	const requestPermission = useCallback(async () => {
 		try {
 			await audioEngine.requestPermission();
-			setPermission(true);
+			permissionRef.current = true;
 		} catch {
 			logError("PronunciationClient.permission", new Error("Mic denied"));
 		}
 	}, []);
 
 	const handleRecord = useCallback(async () => {
-		if (!permission) {
+		if (!permissionRef.current) {
 			await requestPermission();
 		}
 		const state = audioEngine.getState();
@@ -87,7 +87,7 @@ export function PronunciationClient() {
 		} catch (err) {
 			logError("PronunciationClient.record", err);
 		}
-	}, [permission, requestPermission]);
+	}, [requestPermission]);
 
 	const handleTranscribe = useCallback(async () => {
 		const result = audioEngine.getRecordingResult();

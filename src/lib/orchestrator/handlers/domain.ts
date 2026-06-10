@@ -219,11 +219,12 @@ export const generateEmbedding: JobHandler = async (payload) => {
 	const { questionId, questionText, subject } =
 		payload as JobPayloadByType["generate-embedding"];
 	try {
-		const [{ embedText }, { storeEmbedding }] = await Promise.all([
-			import("@/lib/embedding/client"),
-			import("@/lib/embedding/cache"),
-		]);
-		const { dexieDataAccess } = await import("@/lib/db");
+		const [{ embedText }, { storeEmbedding }, { dexieDataAccess }] =
+			await Promise.all([
+				import("@/lib/embedding/client"),
+				import("@/lib/embedding/cache"),
+				import("@/lib/db").then((m) => m),
+			]);
 		const values = await embedText(questionText);
 		if (!values) {
 			console.warn("[Embedding] Failed to generate for:", questionId);

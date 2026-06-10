@@ -22,7 +22,7 @@ const VARIANTS = {
 	}),
 };
 
-export function DailyChallenges({ challenges }: DailyChallengesProps) {
+function DailyChallenges({ challenges }: DailyChallengesProps) {
 	const t = useTranslations();
 	const completedCount = challenges.filter((c) => c.completed).length;
 	const allCompleted = completedCount === challenges.length;

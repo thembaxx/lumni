@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { usePWAInstall } from "@/hooks/use-service-worker";
 import { useRouter } from "@/i18n/navigation";
@@ -63,22 +64,32 @@ function InstallAppSection() {
 		typeof window !== "undefined" &&
 		localStorage.getItem("pwa-install-dismissed");
 
-	const installTrailing = isInstallable ? (
-		<span className="ios-footnote font-semibold text-[--system-accent]">
-			Install
-		</span>
-	) : (
-		<span className="ios-footnote text-muted-foreground text-xs">
-			Installed
-		</span>
+	const installTrailing = useMemo(
+		() =>
+			isInstallable ? (
+				<span className="ios-footnote font-semibold text-[--system-accent]">
+					Install
+				</span>
+			) : (
+				<span className="ios-footnote text-muted-foreground text-xs">
+					Installed
+				</span>
+			),
+		[isInstallable],
 	);
 
-	const resetTrailing = wasDismissed ? (
-		<span className="ios-footnote font-semibold text-[--system-accent]">
-			Reset
-		</span>
-	) : (
-		<span className="ios-footnote text-muted-foreground text-xs">Active</span>
+	const resetTrailing = useMemo(
+		() =>
+			wasDismissed ? (
+				<span className="ios-footnote font-semibold text-[--system-accent]">
+					Reset
+				</span>
+			) : (
+				<span className="ios-footnote text-muted-foreground text-xs">
+					Active
+				</span>
+			),
+		[wasDismissed],
 	);
 
 	return (

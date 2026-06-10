@@ -39,7 +39,7 @@ function buildQuestionText(question: ExamQuestion): string {
 	return [context, parts].filter(Boolean).join(" ") || question.title || "";
 }
 
-export function QuestionRenderer({
+function QuestionRenderer({
 	question,
 	sectionId,
 	subject,

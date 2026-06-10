@@ -164,9 +164,13 @@ async function getOverdueRetentionItems(): Promise<
 			.where("scheduledAt")
 			.belowOrEqual(now)
 			.toArray();
-		return items
-			.filter((i) => !i.completed)
-			.map((i) => ({ subject: i.subject, topic: i.topic }));
+		const result: Array<{ subject: string; topic: string }> = [];
+		for (const i of items) {
+			if (!i.completed) {
+				result.push({ subject: i.subject, topic: i.topic });
+			}
+		}
+		return result;
 	} catch (err) {
 		logError("GetOverdueRetentionItems", err);
 		return [];

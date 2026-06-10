@@ -1,11 +1,6 @@
 export { ContentBlockRenderer } from "./content-block-renderer";
-export { ExamResults } from "./exam-results";
-export { ExamSidebar } from "./exam-sidebar";
-export { ExamSubmitDialog } from "./exam-submit-dialog";
-export { ExamTimer } from "./exam-timer";
 export { MarksDisplay } from "./marks-display";
 export { PartRenderer } from "./part-renderer";
-export { QuestionRenderer } from "./question-renderer";
 export { SessionPartAnswerInput } from "./session-part-answer-input";
 export { SessionQuestionNavigator } from "./session-question-navigator";
 export { SessionResultsView } from "./session-results-view";

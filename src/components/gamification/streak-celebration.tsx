@@ -34,7 +34,7 @@ function getStreakEmoji(streak: number): string {
 	return streakEmojis[streak] || "🌱";
 }
 
-export function StreakCelebration({
+function StreakCelebration({
 	currentStreak,
 	milestones,
 }: StreakCelebrationProps) {

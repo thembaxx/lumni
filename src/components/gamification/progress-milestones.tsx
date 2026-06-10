@@ -10,7 +10,7 @@ interface ProgressMilestonesProps {
 	milestones: StreakMilestone[];
 }
 
-export function ProgressMilestones({
+function ProgressMilestones({
 	currentStreak,
 	milestones,
 }: ProgressMilestonesProps) {

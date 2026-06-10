@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -75,7 +76,7 @@ export function QuestionCardInput({
 	const [diagramMode, setDiagramMode] = useState<"draw" | "upload">("draw");
 	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const [isDrawing, setIsDrawing] = useState(false);
+	const isDrawingRef = useRef(false);
 
 	if (state.isSubmitted) {
 		return null;
@@ -269,11 +270,11 @@ export function QuestionCardInput({
 				const rect = canvas.getBoundingClientRect();
 				ctx.beginPath();
 				ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-				setIsDrawing(true);
+				isDrawingRef.current = true;
 			};
 
 			const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-				if (!isDrawing) return;
+				if (!isDrawingRef.current) return;
 				const canvas = canvasRef.current;
 				if (!canvas) return;
 				const ctx = canvas.getContext("2d");
@@ -284,7 +285,7 @@ export function QuestionCardInput({
 			};
 
 			const stopDrawing = () => {
-				setIsDrawing(false);
+				isDrawingRef.current = false;
 			};
 
 			const clearCanvas = () => {
@@ -371,10 +372,12 @@ export function QuestionCardInput({
 								aria-label="Upload diagram image"
 							/>
 							{uploadedImage && (
-								// biome-ignore lint/performance/noImgElement: data URL from user upload
-								<img
+								<Image
 									src={uploadedImage}
 									alt="Uploaded diagram preview"
+									width={448}
+									height={320}
+									unoptimized
 									className="max-w-md rounded-lg border"
 								/>
 							)}

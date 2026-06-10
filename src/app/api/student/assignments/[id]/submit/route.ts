@@ -106,36 +106,18 @@ export const POST = createRouteHandler({
 
 		const engine = await QuestionEngine.initialize();
 
-		const gradedAnswers: GradedAnswer[] = [];
-		let totalScore = 0;
-		let totalMaxScore = 0;
+		const entries = Object.entries(answers).map(([questionId, raw]) => ({
+			questionId,
+			entry: raw as AnswerEntry,
+		}));
 
-		for (const [questionId, raw] of Object.entries(answers)) {
-			const entry = raw as AnswerEntry;
-			const question = entry.question;
-			const userAnswer = entry.answer;
-
-			if (!question || !userAnswer) {
-				logError("StudentAssignmentSubmit", {
-					message: "Skipping invalid answer entry",
-					questionId,
-				});
-				continue;
-			}
-
-			try {
+		const gradingResults = await Promise.allSettled(
+			entries.map(async ({ questionId, entry }) => {
+				const { question, answer: userAnswer } = entry;
+				if (!question || !userAnswer) {
+					throw new Error("Invalid answer entry");
+				}
 				const result = await engine.grade(question, userAnswer);
-				gradedAnswers.push({
-					questionId,
-					questionText: question.questionText,
-					correct: result.correct,
-					score: result.score,
-					maxScore: result.maxScore,
-					feedback: result.feedback,
-				});
-				totalScore += result.score;
-				totalMaxScore += result.maxScore;
-
 				const bloomLevel = question.bloomTaxonomy ?? "understand";
 				await enqueueGradeSideEffects({
 					subject,
@@ -147,21 +129,46 @@ export const POST = createRouteHandler({
 					correct: result.correct,
 					question,
 				});
-			} catch (err) {
+				return {
+					questionId,
+					questionText: question.questionText,
+					correct: result.correct,
+					score: result.score,
+					maxScore: result.maxScore,
+					feedback: result.feedback,
+				};
+			}),
+		);
+
+		const gradedAnswers: GradedAnswer[] = [];
+		let totalScore = 0;
+		let totalMaxScore = 0;
+
+		for (const [i, result] of gradingResults.entries()) {
+			if (result.status === "fulfilled") {
+				gradedAnswers.push(result.value);
+				totalScore += result.value.score;
+				totalMaxScore += result.value.maxScore;
+			} else {
+				const { questionId, entry } = entries[i];
 				logError("StudentAssignmentSubmit", {
 					message: "Failed to grade question",
 					questionId,
-					error: err instanceof Error ? err.message : String(err),
+					error:
+						result.reason instanceof Error
+							? result.reason.message
+							: String(result.reason),
 				});
+				const points = entry.question?.points ?? 0;
 				gradedAnswers.push({
 					questionId,
-					questionText: question.questionText,
+					questionText: entry.question?.questionText ?? "",
 					correct: false,
 					score: 0,
-					maxScore: question.points,
+					maxScore: points,
 					feedback: "Grading failed",
 				});
-				totalMaxScore += question.points;
+				totalMaxScore += points;
 			}
 		}
 

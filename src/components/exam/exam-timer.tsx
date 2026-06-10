@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useExamSessionStore } from "@/store/exam-session";
 
-export function ExamTimer() {
+function ExamTimer() {
 	const tick = useExamSessionStore((s) => s.tick);
 	const completed = useExamSessionStore((s) => s.completed);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);

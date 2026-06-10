@@ -164,22 +164,26 @@ export async function generateStudyPlan(
 		const graph = graphMap.get(cand.topic.topicId);
 		if (!graph) continue;
 
-		const prereqTopicIds = new Set(
-			graph.nodes
-				.filter((n) => n.type === "prerequisite")
-				.map((n) => n.label.toLowerCase().replace(/\s+/g, "-")),
-		);
+		const prereqTopicIds = new Set<string>();
+		for (const n of graph.nodes) {
+			if (n.type === "prerequisite") {
+				prereqTopicIds.add(n.label.toLowerCase().replace(/\s+/g, "-"));
+			}
+		}
 
 		if (prereqTopicIds.size === 0) continue;
 
+		const candidatesByTopic = new Map(
+			candidates.map((c) => [c.topic.topicId.toLowerCase(), c]),
+		);
 		let hasUnsatisfiedPrereq = false;
 		for (const prereqId of prereqTopicIds) {
-			const prereqTopic = candidates.find(
-				(c) =>
-					c.topic.topicId.toLowerCase() === prereqId &&
-					c.topic.topicId !== cand.topic.topicId,
-			);
-			if (prereqTopic && !prereqTopic.topic.isCompleted) {
+			const prereqTopic = candidatesByTopic.get(prereqId);
+			if (
+				prereqTopic &&
+				prereqTopic.topic.topicId !== cand.topic.topicId &&
+				!prereqTopic.topic.isCompleted
+			) {
 				hasUnsatisfiedPrereq = true;
 				break;
 			}

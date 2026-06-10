@@ -111,7 +111,7 @@ interface QuizStartStateProps {
 	onSelect: () => void;
 }
 
-export function QuizStartState({ onSelect }: QuizStartStateProps) {
+function QuizStartState({ onSelect }: QuizStartStateProps) {
 	const t = useTranslations();
 	return (
 		<div className="mt-24 flex flex-col gap-4">

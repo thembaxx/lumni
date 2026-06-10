@@ -31,12 +31,7 @@ function formatTime(seconds: number): string {
 	return `${m}m`;
 }
 
-export function ExamResults({
-	paper,
-	answers,
-	flags,
-	timeTaken,
-}: ExamResultsProps) {
+function ExamResults({ paper, answers, flags, timeTaken }: ExamResultsProps) {
 	const t = useTranslations();
 	const { push } = useRouter();
 

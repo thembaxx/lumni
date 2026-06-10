@@ -66,31 +66,22 @@ export const POST = withRateLimit(
 			}
 
 			const results = await classifyQuestions(unclassified, subject);
-			let updated = 0;
-			let failed = 0;
 
-			for (const r of results) {
-				if (!r.subtopicId) {
-					failed++;
-					continue;
-				}
-				const appwriteId = appwriteIdByQuestionId.get(r.id);
-				if (!appwriteId) {
-					failed++;
-					continue;
-				}
-				try {
+			const outcomes = await Promise.allSettled(
+				results.map(async (r) => {
+					if (!r.subtopicId) throw new Error("No subtopic");
+					const appwriteId = appwriteIdByQuestionId.get(r.id);
+					if (!appwriteId) throw new Error("No appwrite ID");
 					await databases.updateDocument(
 						APPWRITE_DATABASE_ID,
 						COLLECTIONS.PAST_PAPER_QUESTIONS,
 						appwriteId,
 						{ subtopicId: r.subtopicId },
 					);
-					updated++;
-				} catch {
-					failed++;
-				}
-			}
+				}),
+			);
+			const updated = outcomes.filter((o) => o.status === "fulfilled").length;
+			const failed = outcomes.filter((o) => o.status === "rejected").length;
 
 			return {
 				total: unclassified.length,

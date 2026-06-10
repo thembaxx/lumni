@@ -30,8 +30,7 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const locale = await getLocale();
-	const cookieStore = await cookies();
+	const [locale, cookieStore] = await Promise.all([getLocale(), cookies()]);
 	const themeCookie = cookieStore.get("theme")?.value;
 	const prefersDark = themeCookie === "dark" || (!themeCookie && false);
 	const isDark = prefersDark;

@@ -31,7 +31,7 @@ interface QuizEngineProps {
 	onComplete?: (results: QuizCompleteResult) => void;
 }
 
-export function QuizEngine({
+function QuizEngine({
 	subjectId,
 	questionType = "multiple-choice",
 	competencyProps,

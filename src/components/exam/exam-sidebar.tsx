@@ -17,7 +17,7 @@ interface ExamSidebarProps {
 	onClose?: () => void;
 }
 
-export function ExamSidebar({
+function ExamSidebar({
 	paper,
 	answers,
 	flags,

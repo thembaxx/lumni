@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -149,16 +149,87 @@ function QuestionCard({
 	);
 }
 
+type FiltersState = {
+	selectedSubject: string;
+	selectedTopic: string;
+	selectedSubtopic: string;
+	selectedType: string;
+	selectedYear: number | undefined;
+	curriculum: SubjectCurriculum | null;
+};
+
+type FiltersAction =
+	| { type: "setSubject"; subject: string }
+	| { type: "curriculumLoaded"; subject: string; curriculum: SubjectCurriculum }
+	| { type: "setTopic"; topic: string }
+	| { type: "setSubtopic"; subtopic: string }
+	| { type: "setType"; type_: string }
+	| { type: "setYear"; year: number | undefined }
+	| { type: "clearFilters" };
+
+function filtersReducer(
+	state: FiltersState,
+	action: FiltersAction,
+): FiltersState {
+	switch (action.type) {
+		case "setSubject":
+			return {
+				...state,
+				selectedSubject: action.subject,
+				selectedTopic: "",
+				selectedSubtopic: "",
+				curriculum: null,
+			};
+		case "curriculumLoaded":
+			return {
+				...state,
+				curriculum: action.curriculum,
+				selectedTopic: "",
+				selectedSubtopic: "",
+			};
+		case "setTopic":
+			return { ...state, selectedTopic: action.topic };
+		case "setSubtopic":
+			return { ...state, selectedSubtopic: action.subtopic };
+		case "setType":
+			return { ...state, selectedType: action.type_ };
+		case "setYear":
+			return { ...state, selectedYear: action.year };
+		case "clearFilters":
+			return {
+				...state,
+				selectedTopic: "",
+				selectedSubtopic: "",
+				selectedType: "",
+				selectedYear: undefined,
+			};
+		default:
+			return state;
+	}
+}
+
+const INITIAL_FILTERS: FiltersState = {
+	selectedSubject: "",
+	selectedTopic: "",
+	selectedSubtopic: "",
+	selectedType: "",
+	selectedYear: undefined,
+	curriculum: null,
+};
+
 export function QuestionBankClient() {
 	const { user } = useAuth();
 	const { push } = useRouter();
+	const [filters, dispatch] = useReducer(filtersReducer, INITIAL_FILTERS);
 
-	const [selectedSubject, setSelectedSubject] = useState("");
-	const [selectedTopic, setSelectedTopic] = useState("");
-	const [selectedSubtopic, setSelectedSubtopic] = useState("");
-	const [selectedType, setSelectedType] = useState("");
-	const [selectedYear, setSelectedYear] = useState<number | undefined>();
-	const [curriculum, setCurriculum] = useState<SubjectCurriculum | null>(null);
+	const {
+		selectedSubject,
+		selectedTopic,
+		selectedSubtopic,
+		selectedType,
+		selectedYear,
+		curriculum,
+	} = filters;
 
 	const years = useMemo(() => {
 		const y: number[] = [];
@@ -167,16 +238,13 @@ export function QuestionBankClient() {
 	}, []);
 
 	useEffect(() => {
-		if (!selectedSubject) {
-			setCurriculum(null);
-			setSelectedTopic("");
-			setSelectedSubtopic("");
-			return;
-		}
+		if (!selectedSubject) return;
 		curriculumRegistry.getSubject(selectedSubject).then((c) => {
-			setCurriculum(c as typeof curriculum);
-			setSelectedTopic("");
-			setSelectedSubtopic("");
+			dispatch({
+				type: "curriculumLoaded",
+				subject: selectedSubject,
+				curriculum: c as SubjectCurriculum,
+			});
 		});
 	}, [selectedSubject]);
 
@@ -199,10 +267,7 @@ export function QuestionBankClient() {
 	});
 
 	const clearFilters = useCallback(() => {
-		setSelectedTopic("");
-		setSelectedSubtopic("");
-		setSelectedType("");
-		setSelectedYear(undefined);
+		dispatch({ type: "clearFilters" });
 	}, []);
 
 	const hasFilters =
@@ -247,7 +312,9 @@ export function QuestionBankClient() {
 						<div className="min-w-[200px] flex-1">
 							<SubjectSelect
 								value={selectedSubject}
-								onChange={setSelectedSubject}
+								onChange={(s: string) =>
+									dispatch({ type: "setSubject", subject: s })
+								}
 							/>
 						</div>
 
@@ -256,8 +323,7 @@ export function QuestionBankClient() {
 								<select
 									value={selectedTopic}
 									onChange={(e) => {
-										setSelectedTopic(e.target.value);
-										setSelectedSubtopic("");
+										dispatch({ type: "setTopic", topic: e.target.value });
 									}}
 									className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
 									aria-label="Filter by topic"
@@ -276,7 +342,9 @@ export function QuestionBankClient() {
 							<div className="min-w-[160px] flex-1">
 								<select
 									value={selectedSubtopic}
-									onChange={(e) => setSelectedSubtopic(e.target.value)}
+									onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+										dispatch({ type: "setSubtopic", subtopic: e.target.value })
+									}
 									className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
 									aria-label="Filter by subtopic"
 								>
@@ -293,7 +361,9 @@ export function QuestionBankClient() {
 						<div className="min-w-[120px] flex-1">
 							<select
 								value={selectedType}
-								onChange={(e) => setSelectedType(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+									dispatch({ type: "setType", type_: e.target.value })
+								}
 								className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
 								aria-label="Filter by question type"
 							>
@@ -308,10 +378,11 @@ export function QuestionBankClient() {
 						<div className="min-w-[100px] flex-1">
 							<select
 								value={selectedYear ?? ""}
-								onChange={(e) =>
-									setSelectedYear(
-										e.target.value ? Number(e.target.value) : undefined,
-									)
+								onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+									dispatch({
+										type: "setYear",
+										year: e.target.value ? Number(e.target.value) : undefined,
+									})
 								}
 								className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
 								aria-label="Filter by year"

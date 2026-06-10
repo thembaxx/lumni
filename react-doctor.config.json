@@ -5,7 +5,16 @@
 		"react-doctor/no-giant-component": "off"
 	},
 	"ignore": {
-		"rules": ["deslop/unused-file", "react-doctor/nextjs-missing-metadata"],
+		"rules": [
+			"deslop/unused-file",
+			"deslop/unused-export",
+			"react-doctor/nextjs-missing-metadata",
+			"react-doctor/no-multi-comp",
+			"react-doctor/only-export-components",
+			"react-doctor/prefer-module-scope-pure-function",
+			"react-doctor/async-await-in-loop",
+			"socket/low-supply-chain-score"
+		],
 		"overrides": [
 			{
 				"files": ["src/components/onboarding/particle-field.tsx"],

@@ -32,19 +32,20 @@ export class LearningOrchestrator {
 		let questions = await this.engine.generate(params);
 
 		// Dedup: check AI-generated questions against pool
-		const deduped: Question[] = [];
-		for (const q of questions) {
-			const isPoolQuestion = q.metadata?.source === "imported";
-			if (isPoolQuestion) {
-				deduped.push(q);
-				continue;
-			}
-			const isDuplicate = await this.checkDuplicate(q, subject);
-			if (!isDuplicate) {
-				deduped.push(q);
-			}
-		}
-		questions = deduped.slice(0, count);
+		const poolQuestions = questions.filter(
+			(q) => q.metadata?.source === "imported",
+		);
+		const aiQuestions = questions.filter(
+			(q) => q.metadata?.source !== "imported",
+		);
+		const dedupResults = await Promise.allSettled(
+			aiQuestions.map((q) => this.checkDuplicate(q, subject)),
+		);
+		const aiDeduped = aiQuestions.filter((_, i) => {
+			const result = dedupResults[i];
+			return result.status === "rejected" || !result.value;
+		});
+		questions = [...poolQuestions, ...aiDeduped].slice(0, count);
 
 		const [syncJobId, ...visualJobIds] = await Promise.all([
 			enqueue("appwrite-sync", {

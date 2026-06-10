@@ -18,7 +18,7 @@ interface ExamSubmitDialogProps {
 	totalParts: number;
 }
 
-export function ExamSubmitDialog({
+function ExamSubmitDialog({
 	open,
 	onOpenChange,
 	onConfirm,
