@@ -83,12 +83,15 @@ export function useEnrolledSubjects() {
 		}
 	}, [user, data, queryClient]);
 
+	const migrateRef = useRef(migratePrefsSubjects);
+	migrateRef.current = migratePrefsSubjects;
+
 	useEffect(() => {
 		if (!migrated.current && prefsSubjects.length > 0) {
 			migrated.current = true;
-			migratePrefsSubjects();
+			migrateRef.current();
 		}
-	}, [migratePrefsSubjects, prefsSubjects.length]);
+	}, [prefsSubjects.length]);
 
 	const subjects = useMemo(
 		() => data?.subjects ?? (subjectsData as Subject[]),

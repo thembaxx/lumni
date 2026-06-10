@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
 import { logError } from "@/lib/shared/logger";
@@ -81,10 +81,27 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		});
 	}, []);
 
+	const refreshIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
+		null,
+	);
 	useEffect(() => {
-		refresh();
-		const interval = setInterval(refresh, 60000);
-		return () => clearInterval(interval);
+		if (!refreshIntervalRef.current) {
+			refreshIntervalRef.current = setInterval(refresh, 60000);
+		}
+		const onVisibility = () => {
+			if (document.visibilityState === "visible") refresh();
+		};
+		const onFocus = () => refresh();
+		document.addEventListener("visibilitychange", onVisibility);
+		window.addEventListener("focus", onFocus);
+		return () => {
+			if (refreshIntervalRef.current) {
+				clearInterval(refreshIntervalRef.current);
+				refreshIntervalRef.current = null;
+			}
+			document.removeEventListener("visibilitychange", onVisibility);
+			window.removeEventListener("focus", onFocus);
+		};
 	}, [refresh]);
 
 	const addSession = useCallback(

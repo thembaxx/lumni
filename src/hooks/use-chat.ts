@@ -113,17 +113,21 @@ export function useChat() {
 			.catch((e) => console.warn("[Chat] Failed to build context", e));
 	}, []);
 
+	const lastMessageCountRef = useRef(0);
 	useEffect(() => {
+		const currentCount = messages.length;
+		if (currentCount === lastMessageCountRef.current) return;
+		lastMessageCountRef.current = currentCount;
+		const last = messages[currentCount - 1];
+		if (!last) return;
 		_deps.db.chatMessages
-			.bulkAdd(
-				messages.map((m) => ({
-					messageId: m.id,
-					role: m.role,
-					content: m.content,
-					type: m.type || "text",
-					timestamp: m.timestamp.getTime(),
-				})),
-			)
+			.put({
+				messageId: last.id,
+				role: last.role,
+				content: last.content,
+				type: last.type || "text",
+				timestamp: last.timestamp.getTime(),
+			})
 			.catch((err) => {
 				logError("UseChat", err);
 			});

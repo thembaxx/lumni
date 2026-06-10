@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { competencyService } from "@/lib/competency-engine";
 import type { CompetencyLevel } from "@/lib/competency-engine/types";
 import type { BloomLevel } from "@/lib/question-engine/types";
@@ -108,7 +109,43 @@ export function BloomTaxonomyWidget() {
 		);
 	}
 
-	if (isLoading || topicData.length === 0) return null;
+	if (topicData.length === 0 && !isLoading) return null;
+
+	if (isLoading) {
+		return (
+			<Card className="rounded-3xl shadow-level-1">
+				<CardHeader>
+					<CardTitle className="font-semibold text-base">
+						Bloom's Taxonomy Progress
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4">
+					{Array.from({ length: 3 }).map((_, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
+						<div key={i} className="rounded-xl bg-muted/40 p-3">
+							<div className="mb-2 flex items-center justify-between">
+								<Skeleton className="h-4 w-32" />
+								<Skeleton className="h-5 w-16 rounded-full" />
+							</div>
+							<div className="flex gap-1">
+								{Array.from({ length: 6 }).map((_, j) => (
+									<div
+										// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
+										key={j}
+										className="flex flex-1 flex-col items-center gap-1"
+									>
+										<Skeleton className="h-12 w-full rounded-md" />
+										<Skeleton className="h-3 w-6" />
+									</div>
+								))}
+							</div>
+							<Skeleton className="mt-2 h-3 w-48" />
+						</div>
+					))}
+				</CardContent>
+			</Card>
+		);
+	}
 
 	return (
 		<Card className="rounded-3xl shadow-level-1">

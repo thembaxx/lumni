@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
@@ -22,8 +23,32 @@ export function RecentQuestionsCard() {
 		});
 	}, [getWrongAnswers]);
 
-	if (loading) return null;
-	if (entries.length === 0) return null;
+	if (entries.length === 0 && !loading) return null;
+
+	if (loading) {
+		return (
+			<Card className="overflow-hidden rounded-3xl shadow-level-1">
+				<CardHeader>
+					<CardTitle className="font-extrabold text-lg">
+						Recent Questions
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-3 p-5 pt-0">
+					{Array.from({ length: 3 }).map((_, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
+						<div key={i} className="rounded-2xl border bg-card p-4">
+							<div className="mb-2 flex items-center gap-2">
+								<Skeleton className="h-4 w-16 rounded-full" />
+								<Skeleton className="h-3 w-20" />
+							</div>
+							<Skeleton className="h-4 w-full" />
+							<Skeleton className="mt-1 h-4 w-3/4" />
+						</div>
+					))}
+				</CardContent>
+			</Card>
+		);
+	}
 
 	return (
 		<m.div
