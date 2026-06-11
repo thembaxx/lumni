@@ -1,8 +1,26 @@
 import { Client, Databases, ID, Query } from "appwrite";
+import { z } from "zod";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { getAuthenticatedUserName } from "@/lib/server/auth";
+
+const GamificationUpdateSchema = z
+	.object({
+		totalXp: z.number().optional(),
+		currentStreak: z.number().optional(),
+		longestStreak: z.number().optional(),
+		lastActiveDate: z.string().optional(),
+		totalQuestionsAnswered: z.number().optional(),
+		totalQuizScore: z.number().optional(),
+		totalQuizzesTaken: z.number().optional(),
+		achievements: z.array(z.string()).optional(),
+		streakFreezes: z.number().optional(),
+	})
+	.strict()
+	.refine((obj) => Object.keys(obj).length > 0, {
+		message: "At least one field must be provided",
+	});
 
 export const GET = createRouteHandler({
 	auth: "optional",
@@ -52,10 +70,16 @@ export const POST = createRouteHandler({
 			.setProject(APPWRITE_PROJECT);
 		const db = new Databases(client);
 
+		let parsed: z.infer<typeof GamificationUpdateSchema>;
+		try {
+			parsed = GamificationUpdateSchema.parse(body);
+		} catch {
+			throw new HttpError(400, "Invalid gamification data");
+		}
 		const payload = {
-			...body,
+			...parsed,
 			userId,
-			label: userName || (body as Record<string, unknown>).label || undefined,
+			label: userName ?? undefined,
 		};
 
 		try {

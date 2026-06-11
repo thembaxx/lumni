@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, listDocuments } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
@@ -14,6 +14,8 @@ const subscribeHandler = createRouteHandler({
 		return null;
 	},
 	execute: async ({ body, userId }) => {
+		if (!userId) throw new HttpError(401, "Authentication required");
+
 		const { subscription } = body as {
 			subscription: {
 				endpoint: string;
@@ -23,7 +25,10 @@ const subscribeHandler = createRouteHandler({
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,
-			[Query.equal("endpoint", subscription.endpoint)],
+			[
+				Query.equal("endpoint", subscription.endpoint),
+				Query.equal("userId", userId),
+			],
 		);
 
 		if (existing.length > 0) {
