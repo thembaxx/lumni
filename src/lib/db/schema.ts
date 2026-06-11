@@ -287,15 +287,21 @@ export interface VocabularyEntry {
 	word: string;
 	definition: string;
 	language: string;
+	partOfSpeech?: string;
+	sourceType: "lesson" | "story" | "manual";
+	sourceId: string;
 	sourceLesson?: string;
 	addedAt: number;
 	reviewCount: number;
+	lastReviewedAt?: number;
 }
 
 export interface LessonProgress {
+	id: string;
 	userId: string;
 	lessonId: string;
 	completedSections: number;
+	completedSectionIds: string;
 	totalSections: number;
 	completedAt: number;
 	score?: number;
@@ -1114,7 +1120,8 @@ export class LumniOfflineDB extends Dexie {
 
 		// v36: vocabularyList + lessonProgress
 		this.version(36).stores({
-			vocabularyList: "++id, userId, word, language, addedAt, reviewCount",
+			vocabularyList:
+				"++id, userId, word, language, sourceType, sourceId, addedAt, reviewCount",
 			lessonProgress:
 				"&[userId+lessonId], userId, lessonId, completedAt, score",
 		});

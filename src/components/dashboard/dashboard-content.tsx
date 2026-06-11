@@ -111,6 +111,22 @@ const FocusTimerCard = dynamic(
 	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-3xl" /> },
 );
 
+const LessonLibraryCard = dynamic(
+	() =>
+		import("@/components/dashboard/lesson-library-card").then(
+			(m) => m.LessonLibraryCard,
+		),
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+);
+
+const VocabularyListCard = dynamic(
+	() =>
+		import("@/components/vocabulary/vocabulary-list-card").then(
+			(m) => m.VocabularyListCard,
+		),
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+);
+
 const ComparativeAnalyticsPanel = dynamic(
 	() =>
 		import("@/components/dashboard/analytics/comparative-analytics-panel").then(
@@ -287,6 +303,16 @@ export function DashboardContent({
 					{showPractice && isLoggedIn && (
 						<StaggeredSection>
 							<TodayFocusCard />
+						</StaggeredSection>
+					)}
+					{showPractice && isLoggedIn && (
+						<StaggeredSection>
+							<LessonLibraryCard />
+						</StaggeredSection>
+					)}
+					{showPractice && isLoggedIn && (
+						<StaggeredSection>
+							<VocabularyListCard />
 						</StaggeredSection>
 					)}
 					{showPractice && isLoggedIn && (

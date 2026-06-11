@@ -10,13 +10,18 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
-import { useCallback, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SaveVocabularyButton } from "@/components/vocabulary/save-vocabulary-button";
+import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
+import { useLessonProgress } from "@/hooks/use-lesson-progress";
 import { useRouter } from "@/i18n/navigation";
+import { useAuth } from "@/lib/auth/auth-context";
+import { trackLessonCompletion } from "@/lib/competency-engine";
 import { suggestQuestionsForLesson } from "@/lib/integration/service";
 
 interface LessonViewProps {
@@ -35,9 +40,12 @@ export function LessonViewClient({
 	subtopicId,
 }: LessonViewProps) {
 	const { push, back } = useRouter();
-	const [completedSections, setCompletedSections] = useState<Set<string>>(
-		new Set(),
-	);
+	const { user } = useAuth();
+	const { completedSections, progress, isComplete, toggleSection } =
+		useLessonProgress(
+			user?.$id ?? "anonymous",
+			`${subjectId}:${topicId}:${subtopicId}`,
+		);
 
 	const { data: curriculum } = useQuery({
 		queryKey: ["curriculum", subjectId],
@@ -119,18 +127,28 @@ export function LessonViewClient({
 		enabled: !!subjectId && !!subtopicId,
 	});
 
-	const toggleSection = useCallback((sectionId: string) => {
-		setCompletedSections((prev) => {
-			const next = new Set(prev);
-			if (next.has(sectionId)) next.delete(sectionId);
-			else next.add(sectionId);
-			return next;
-		});
-	}, []);
-
-	const progress = lesson
-		? Math.round((completedSections.size / lesson.sections.length) * 100)
-		: 0;
+	useEffect(() => {
+		if (isComplete && lesson) {
+			const score = Math.round(
+				(completedSections.size / lesson.sections.length) * 100,
+			);
+			trackLessonCompletion(
+				user?.$id ?? "anonymous",
+				subjectId,
+				topicId,
+				subtopicId,
+				score,
+			).catch(() => {});
+		}
+	}, [
+		isComplete,
+		lesson,
+		completedSections.size,
+		user?.$id,
+		subjectId,
+		topicId,
+		subtopicId,
+	]);
 
 	if (isPending) {
 		return (
@@ -246,7 +264,9 @@ export function LessonViewClient({
 								</div>
 								<button
 									type="button"
-									onClick={() => toggleSection(section.id)}
+									onClick={() =>
+										toggleSection(section.id, lesson.sections.length)
+									}
 									className={`flex size-7 items-center justify-center rounded-full border transition-colors ${
 										isComplete
 											? "border-success bg-success text-success-foreground"
@@ -304,19 +324,34 @@ export function LessonViewClient({
 									className="flex items-center justify-between rounded-2xl border bg-card px-4 py-3"
 								>
 									<div className="flex flex-col">
-										<span className="font-semibold text-sm">{v.term}</span>
+										<WordLookupPopover word={v.term} language="en">
+											<span className="font-semibold text-sm">{v.term}</span>
+										</WordLookupPopover>
 										<span className="text-muted-foreground text-xs">
 											{v.definition}
 										</span>
 									</div>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="rounded-full"
-										aria-label={`Pronounce ${v.term}`}
-									>
-										<HugeiconsIcon icon={Mic01Icon} className="size-4" />
-									</Button>
+									<div className="flex items-center gap-1">
+										<Button
+											variant="ghost"
+											size="sm"
+											className="rounded-full"
+											aria-label={`Practice pronouncing ${v.term}`}
+											onClick={() =>
+												(window.location.href = `/pronunciation?text=${encodeURIComponent(v.term)}`)
+											}
+										>
+											<HugeiconsIcon icon={Mic01Icon} className="size-4" />
+										</Button>
+										<SaveVocabularyButton
+											word={v.term}
+											definition={v.definition}
+											language={subjectId}
+											sourceType="lesson"
+											sourceId={`${subjectId}:${topicId}:${subtopicId}`}
+											userId={user?.$id ?? "anonymous"}
+										/>
+									</div>
 								</div>
 							))}
 						</CardContent>

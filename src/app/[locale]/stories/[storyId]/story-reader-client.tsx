@@ -11,11 +11,16 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { ComprehensionQuestionCard } from "@/components/stories/comprehension-question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SaveVocabularyButton } from "@/components/vocabulary/save-vocabulary-button";
+import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
 import { useRouter } from "@/i18n/navigation";
+import { useAuth } from "@/lib/auth/auth-context";
+import { trackComprehensionResult } from "@/lib/competency-engine";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
@@ -25,11 +30,14 @@ import type { Story } from "@/lib/stories/types";
 export function StoryReaderClient() {
 	const { storyId } = useParams<{ storyId: string }>();
 	const { back } = useRouter();
+	const { user } = useAuth();
 	const [story, setStory] = useState<Story | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [questions, setQuestions] = useState<Question[] | null>(null);
 	const [questionsLoading, setQuestionsLoading] = useState(false);
 	const [showQuestions, setShowQuestions] = useState(false);
+	const [scores, setScores] = useState<Map<string, number>>(new Map());
+	const [allGraded, setAllGraded] = useState(false);
 
 	useEffect(() => {
 		if (!storyId) return;
@@ -51,10 +59,42 @@ export function StoryReaderClient() {
 			const qs = await generateComprehensionQuestions(story);
 			setQuestions(qs);
 			setShowQuestions(true);
+			setScores(new Map());
+			setAllGraded(false);
 		} finally {
 			setQuestionsLoading(false);
 		}
 	}, [story]);
+
+	const handleGraded = useCallback((questionId: string, score: number) => {
+		setScores((prev) => {
+			const next = new Map(prev);
+			next.set(questionId, score);
+			return next;
+		});
+	}, []);
+
+	useEffect(() => {
+		if (!questions || questions.length === 0) return;
+		const allDone = questions.every((q) => scores.has(q.id));
+		if (allDone && !allGraded) {
+			setAllGraded(true);
+			const allScores = questions.map((q) => scores.get(q.id) ?? 0);
+			trackComprehensionResult(
+				user?.$id ?? "anonymous",
+				storyId as string,
+				story?.language ?? "english",
+				allScores,
+			).catch((err) => logError("trackComprehensionResult", err));
+		}
+	}, [questions, scores, allGraded, user?.$id, storyId, story?.language]);
+
+	const overallScore =
+		scores.size > 0
+			? Math.round(
+					[...scores.values()].reduce((a, b) => a + b, 0) / scores.size,
+				)
+			: 0;
 
 	if (loading) {
 		return (
@@ -149,6 +189,47 @@ export function StoryReaderClient() {
 				</Card>
 			</m.div>
 
+			{story.vocabulary && story.vocabulary.length > 0 && (
+				<m.div
+					initial={{ opacity: 0, y: 16 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+				>
+					<Card className="overflow-hidden rounded-3xl shadow-level-1">
+						<CardHeader>
+							<CardTitle className="font-extrabold text-lg">
+								Vocabulary
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col gap-2 p-5 pt-0">
+							{story.vocabulary.map((v) => (
+								<div
+									key={v.term}
+									className="flex items-center justify-between rounded-2xl border bg-card px-4 py-3"
+								>
+									<div className="flex flex-col">
+										<WordLookupPopover word={v.term} language={story.language}>
+											<span className="font-semibold text-sm">{v.term}</span>
+										</WordLookupPopover>
+										<span className="text-muted-foreground text-xs">
+											{v.definition}
+										</span>
+									</div>
+									<SaveVocabularyButton
+										word={v.term}
+										definition={v.definition}
+										language={story.language}
+										sourceType="story"
+										sourceId={story.id}
+										userId={user?.$id ?? "anonymous"}
+									/>
+								</div>
+							))}
+						</CardContent>
+					</Card>
+				</m.div>
+			)}
+
 			<div className="flex flex-col gap-3">
 				{!showQuestions ? (
 					<Button
@@ -171,29 +252,95 @@ export function StoryReaderClient() {
 							duration: 0.4,
 							ease: [0.32, 0.72, 0, 1],
 						}}
+						className="flex flex-col gap-4"
 					>
-						<Card className="overflow-hidden rounded-3xl shadow-level-1">
-							<CardHeader>
-								<CardTitle className="font-extrabold text-lg">
-									Comprehension Questions
-								</CardTitle>
-							</CardHeader>
-							<CardContent className="flex flex-col gap-4 p-5 pt-0">
-								{questions && questions.length > 0 ? (
-									questions.map((q, i) => (
-										<div key={q.id} className="rounded-2xl border bg-card p-4">
-											<p className="mb-2 font-medium text-sm">
-												{i + 1}. {q.questionText}
-											</p>
+						<h2 className="font-extrabold text-lg tracking-tight">
+							Comprehension Questions
+						</h2>
+
+						{questions && questions.length > 0 ? (
+							questions.map((q, i) => (
+								<ComprehensionQuestionCard
+									key={q.id}
+									question={q}
+									questionNumber={i + 1}
+									onGraded={(s) => handleGraded(q.id, s)}
+								/>
+							))
+						) : (
+							<p className="text-muted-foreground text-sm">
+								No questions could be generated for this story.
+							</p>
+						)}
+
+						{allGraded && (
+							<m.div
+								initial={{ opacity: 0, y: 16 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+							>
+								<Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
+									<CardHeader>
+										<CardTitle className="font-extrabold text-lg">
+											Results
+										</CardTitle>
+									</CardHeader>
+									<CardContent className="flex flex-col gap-4 p-5 pt-0">
+										<div className="grid grid-cols-2 gap-3">
+											<div className="rounded-2xl bg-card p-4 text-center">
+												<div className="font-extrabold text-3xl tabular-nums">
+													{overallScore}%
+												</div>
+												<div className="mt-1 text-muted-foreground text-xs">
+													Overall Score
+												</div>
+											</div>
+											<div className="rounded-2xl bg-card p-4 text-center">
+												<div className="font-extrabold text-3xl tabular-nums">
+													{scores.size}/{questions?.length ?? 0}
+												</div>
+												<div className="mt-1 text-muted-foreground text-xs">
+													Questions Answered
+												</div>
+											</div>
 										</div>
-									))
-								) : (
-									<p className="text-muted-foreground text-sm">
-										No questions could be generated for this story.
-									</p>
-								)}
-							</CardContent>
-						</Card>
+
+										<div className="flex flex-wrap gap-2">
+											<Button
+												variant="outline"
+												size="sm"
+												className="rounded-full"
+												onClick={() => (window.location.href = `/stories`)}
+											>
+												More Stories
+											</Button>
+											{overallScore < 50 && (
+												<Button
+													variant="ghost"
+													size="sm"
+													className="rounded-full"
+													onClick={() =>
+														(window.location.href = `/stories?lang=${encodeURIComponent(story.language)}&level=easy`)
+													}
+												>
+													Try an Easier Story
+												</Button>
+											)}
+											<Button
+												variant="ghost"
+												size="sm"
+												className="rounded-full"
+												onClick={() =>
+													(window.location.href = `/quiz?subject=${encodeURIComponent(story.language)}&count=5`)
+												}
+											>
+												Practice Quiz
+											</Button>
+										</div>
+									</CardContent>
+								</Card>
+							</m.div>
+						)}
 					</m.div>
 				)}
 			</div>

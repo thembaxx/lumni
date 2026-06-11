@@ -15,3 +15,4 @@ export {
 	SM2_QUALITIES,
 	SR_SETTINGS_KEY,
 } from "./types";
+export { createVocabularyCard } from "./vocabulary-bridge";

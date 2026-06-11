@@ -3,6 +3,7 @@
 import { Mic01Icon, StopCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,9 @@ interface WordScore {
 }
 
 export function PronunciationClient() {
-	const [expectedText, setExpectedText] = useState("");
+	const searchParams = useSearchParams();
+	const prefillText = searchParams.get("text") ?? "";
+	const [expectedText, setExpectedText] = useState(prefillText);
 	const [isRecording, setIsRecording] = useState(false);
 	const [hasRecording, setHasRecording] = useState(false);
 	const [transcribedText, setTranscribedText] = useState<string | null>(null);
