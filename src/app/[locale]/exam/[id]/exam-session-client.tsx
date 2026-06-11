@@ -20,6 +20,7 @@ import {
 	hasSavedSession,
 	useExamSessionAutoSave,
 } from "@/hooks/use-exam-session-persistence";
+import { useExamSessionSync } from "@/hooks/use-exam-session-sync";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
@@ -174,6 +175,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { setImmersive } = useImmersiveMode();
 
+	useExamSessionSync();
 	useExamSessionAutoSave(id);
 
 	useEffect(() => {

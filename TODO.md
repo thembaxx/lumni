@@ -817,7 +817,7 @@ Runs after Wave 2 UI is stable. Each integration ties two Wave 2 features togeth
 ```
 npx tsc --noEmit     → zero errors
 npx biome check       → zero warnings on changed files
-bun test              → no regressions (current baseline: 1271 pass, 0 fail)
+npx vitest run        → all pass (current baseline: 1270 pass, 0 fail)
 npx next build        → clean build
 ```
 
