@@ -22,6 +22,7 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { useExamSessionSync } from "@/hooks/use-exam-session-sync";
 import { useRouter } from "@/i18n/navigation";
 import {
 	getAnswerText,
@@ -174,6 +175,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { setImmersive } = useImmersiveMode();
 
+	useExamSessionSync();
 	useExamSessionAutoSave(id);
 
 	useEffect(() => {
