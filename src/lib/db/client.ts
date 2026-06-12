@@ -14,7 +14,7 @@ async function getDb(): Promise<Databases> {
 		return browserDatabases;
 	}
 	if (!_serverDb) {
-		const { databases } = await import("@/lib/appwrite.server");
+		const { databases } = await import("@/lib/server/appwrite");
 		_serverDb = databases as unknown as Databases;
 	}
 	return _serverDb;

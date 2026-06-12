@@ -26,7 +26,7 @@ const MIN_CONFIDENCE = 0.3;
 export type Validator = (data: Record<string, unknown>) => boolean;
 
 const VALIDATORS: Record<string, Validator> = {
-	"force-vector": (d) => {
+	"force-vector": (d: any) => {
 		const data = d as Record<string, unknown>;
 		if (!Array.isArray(data.objects)) return false;
 		return (data.objects as Record<string, unknown>[]).every(
@@ -37,11 +37,11 @@ const VALIDATORS: Record<string, Validator> = {
 				typeof obj.fill === "string",
 		);
 	},
-	circuit: (d) => {
+	circuit: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return Array.isArray(data.components) && data.components.length > 0;
 	},
-	wave: (d) => {
+	wave: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return (
 			typeof data.amplitude === "number" &&
@@ -49,18 +49,18 @@ const VALIDATORS: Record<string, Validator> = {
 			typeof data.type === "string"
 		);
 	},
-	motion: (d) => {
+	motion: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return (
 			(Array.isArray(data.projectiles) && data.projectiles.length > 0) ||
 			(Array.isArray(data.paths) && data.paths.length > 0)
 		);
 	},
-	geometry: (d) => {
+	geometry: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return Array.isArray(data.shapes) && data.shapes.length > 0;
 	},
-	chart: (d) => {
+	chart: (d: any) => {
 		const data = d as Record<string, unknown>;
 		if (
 			!data.chartType ||
@@ -69,11 +69,11 @@ const VALIDATORS: Record<string, Validator> = {
 			return false;
 		return Array.isArray(data.data) && data.data.length > 0;
 	},
-	chemistry: (d) => {
+	chemistry: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return Array.isArray(data.molecules) && data.molecules.length > 0;
 	},
-	graph: (d) => {
+	graph: (d: any) => {
 		const data = d as Record<string, unknown>;
 		if (!Array.isArray(data.functions)) return false;
 		const axes = data.axes as Record<string, unknown> | undefined;
@@ -85,15 +85,15 @@ const VALIDATORS: Record<string, Validator> = {
 			typeof axes.yMax === "number"
 		);
 	},
-	"node-flow": (d) => {
+	"node-flow": (d: any) => {
 		const data = d as Record<string, unknown>;
 		return Array.isArray(data.nodes) && data.nodes.length > 0;
 	},
-	node: (d) => {
+	node: (d: any) => {
 		const data = d as Record<string, unknown>;
 		return Array.isArray(data.nodes) && data.nodes.length > 0;
 	},
-	"custom-svg": (d) => {
+	"custom-svg": (d: any) => {
 		const data = d as Record<string, unknown>;
 		return typeof data.svg === "string" && data.svg.includes("<svg");
 	},

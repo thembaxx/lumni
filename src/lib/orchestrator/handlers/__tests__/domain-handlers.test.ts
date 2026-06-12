@@ -5,10 +5,34 @@ const mockListDocuments = vi.fn(() => []);
 const mockUpdateDocument = vi.fn(() => {});
 const mockDeleteDocument = vi.fn(() => {});
 
+const mockDatabases = {
+	createDocument: mockCreateDocument,
+	listDocuments: mockListDocuments,
+	updateDocument: mockUpdateDocument,
+	deleteDocument: mockDeleteDocument,
+};
+
 vi.mock("@/lib/appwrite", () => ({
-	databases: {
-		createDocument: mockCreateDocument,
-	},
+    APPWRITE_ENDPOINT: "https://localhost/v1",
+    APPWRITE_PROJECT: "test",
+	databases: mockDatabases,
+}));
+
+vi.mock("@/lib/server/appwrite", () => ({
+	createAdminClient: vi.fn(async () => ({
+		databases: mockDatabases,
+		account: {},
+		storage: {},
+		users: {},
+	})),
+	createSessionClient: vi.fn(async () => ({
+		databases: mockDatabases,
+		account: {},
+		storage: {},
+	})),
+	getLoggedInUser: vi.fn(),
+    APPWRITE_ENDPOINT: "https://localhost/v1",
+    APPWRITE_PROJECT: "test",
 }));
 
 vi.mock("@/lib/db/client", () => ({

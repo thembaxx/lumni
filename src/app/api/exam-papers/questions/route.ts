@@ -1,8 +1,9 @@
 import { Query } from "appwrite";
+import type { Models } from "node-appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
+import { databases } from "@/lib/server/appwrite";
 
 export const GET = createRouteHandler({
 	auth: "required",
@@ -35,7 +36,7 @@ export const GET = createRouteHandler({
 		);
 
 		const questions = docs.documents.map(
-			(d) =>
+			(d: any) =>
 				({
 					id: d.id,
 					subject: d.subject,

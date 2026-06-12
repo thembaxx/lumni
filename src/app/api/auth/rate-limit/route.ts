@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { databases } from "@/lib/server/appwrite";
 
 export const dynamic = "force-dynamic";
 

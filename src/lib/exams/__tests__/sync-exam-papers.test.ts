@@ -94,7 +94,7 @@ vi.mock("@/lib/appwrite", () => ({
 	account: {},
 }));
 
-vi.mock("@/lib/appwrite.server", () => ({
+vi.mock("@/lib/server/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",

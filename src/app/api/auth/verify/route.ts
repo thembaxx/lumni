@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { serverAccount } from "@/lib/appwrite.server";
 import { REFERRAL_REWARD_DAYS } from "@/lib/referral/constants";
 import {
 	getReferralByReferee,
 	updateReferralStatus,
 } from "@/lib/referral/service";
+import { serverAccount } from "@/lib/server/appwrite";
 
 export async function GET(request: NextRequest) {
 	try {

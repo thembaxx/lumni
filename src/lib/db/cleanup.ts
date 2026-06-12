@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite.server";
+import { databases } from "@/lib/server/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 const TTL_DAYS = 30;
@@ -57,7 +57,7 @@ async function cleanupPage(
 		return { deletedInPage: 0, remaining: 0, hasMore: false };
 	}
 
-	const deletePromises = docs.map((doc) =>
+	const deletePromises = docs.map((doc: any) =>
 		databases
 			.deleteDocument(APPWRITE_DATABASE_ID, COLLECTIONS.QUESTIONS, doc.$id)
 			.catch((err: Error) =>

@@ -1,12 +1,14 @@
-"use server";
+import type { Models } from "node-appwrite";
+
+("use server");
 
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { Query } from "node-appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/exams/helpers";
+import { databases } from "@/lib/server/appwrite";
 import { auth } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 import type { AppwriteExamPaperRecord } from "@/types/exam";
@@ -217,7 +219,7 @@ export async function getExamPapers(
 		queries,
 	);
 
-	return response.documents.map((doc) =>
+	return response.documents.map((doc: Models.Document) =>
 		appwriteDocToRecord(doc as unknown as Record<string, unknown>),
 	);
 }
@@ -288,7 +290,7 @@ export async function getExamPapersWithFallback() {
 			return null;
 		}
 
-		return response.documents.map((doc) => {
+		return response.documents.map((doc: Models.Document) => {
 			const docRecord = doc as unknown as Record<string, unknown>;
 			const paperNumber = docRecord.paperNumber as number | undefined;
 			const session = paperNumber && paperNumber > 2 ? "may-june" : "november";

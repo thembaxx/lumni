@@ -179,7 +179,7 @@ export async function getUserAccounts(_userId: string) {
 	await requireAdmin();
 	try {
 		const { Users } = await import("node-appwrite");
-		const { serverClient } = await import("@/lib/appwrite.server");
+		const { serverClient } = await import("@/lib/server/appwrite");
 		const usersApi = new Users(serverClient);
 		const response = await usersApi.list();
 		return response.users.map((u) => ({

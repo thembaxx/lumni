@@ -43,7 +43,7 @@ export function getLocalLeaderboard(): LeaderboardEntry[] {
 
 	const now = Date.now();
 	const oneWeek = 7 * 24 * 60 * 60 * 1000;
-	const recent = data.filter((d) => now - d.timestamp < oneWeek);
+	const recent = data.filter((d: any) => now - d.timestamp < oneWeek);
 
 	const entries: LeaderboardEntry[] = [
 		{
@@ -54,7 +54,7 @@ export function getLocalLeaderboard(): LeaderboardEntry[] {
 			isCurrentUser: true,
 		},
 		...recent
-			.filter((d) => d.label !== "This Week (You)")
+			.filter((d: any) => d.label !== "This Week (You)")
 			.sort((a, b) => b.xp - a.xp)
 			.slice(0, 9)
 			.map((d, i) => ({

@@ -1,4 +1,5 @@
 import { Query } from "appwrite";
+import type { Models } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { pathEngine } from "@/lib/competency-engine";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
@@ -23,15 +24,17 @@ export const GET = withRateLimit(
 				[Query.equal("subjectId", subject)],
 			);
 
-			const competencies: CompetencyRecord[] = docs.map((d) => ({
-				subjectId: d.subjectId as string,
-				topicId: d.topicId as string,
-				bloomLevel: d.bloomLevel as CompetencyRecord["bloomLevel"],
-				score: (d.score as number) ?? (d.proficiency as number) ?? 0,
-				attempts: d.attempts as number,
-				lastAssessed: d.lastAssessed as number,
-				level: d.level as CompetencyRecord["level"],
-			}));
+			const competencies: CompetencyRecord[] = docs.map(
+				(d: any) => ({
+					subjectId: d.subjectId as string,
+					topicId: d.topicId as string,
+					bloomLevel: d.bloomLevel as CompetencyRecord["bloomLevel"],
+					score: (d.score as number) ?? (d.proficiency as number) ?? 0,
+					attempts: d.attempts as number,
+					lastAssessed: d.lastAssessed as number,
+					level: d.level as CompetencyRecord["level"],
+				}),
+			);
 
 			const competencyMap = new Map(
 				competencies.map((c) => [

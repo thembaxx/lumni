@@ -30,11 +30,13 @@ interface AuthContextValue {
 	error: string | null;
 	authReady: boolean;
 	signIn: (email: string, password: string) => Promise<void>;
+	signInWithForm: (formData: FormData) => Promise<void>;
 	signUp: (
 		email: string,
 		password: string,
 		name: string,
 	) => Promise<string | undefined>;
+	signUpWithForm: (formData: FormData) => Promise<string | undefined>;
 	signInWithMagicLink: (email: string) => Promise<void>;
 	signOut: () => Promise<void>;
 	verifyEmail: () => Promise<void>;
@@ -198,9 +200,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		};
 	}, []);
 
-	const signIn = useCallback(
-		async (email: string, password: string) => {
+	const signInWithForm = useCallback(
+		async (formData: FormData) => {
 			dispatch({ type: "SET_ERROR", error: null });
+			const email = formData.get("email") as string;
 
 			const rateLimit = await attemptSignIn(email);
 			if (!rateLimit.allowed) {
@@ -209,7 +212,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			}
 
 			try {
-				await account.createEmailPasswordSession(email, password);
+				const { signInWithEmail } = await eval('import("@/lib/server/auth")');
+				const result = await signInWithEmail(formData);
+				if (!result.success) {
+					throw new Error(result.error);
+				}
+
 				const [user] = await Promise.all([
 					account.get(),
 					recordSuccessfulSignIn(email),
@@ -229,14 +237,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		[queryClient],
 	);
 
-	const signUp = useCallback(
-		async (email: string, password: string, name: string) => {
+	const signIn = useCallback(
+		async (email: string, password: string) => {
+			const formData = new FormData();
+			formData.append("email", email);
+			formData.append("password", password);
+			return signInWithForm(formData);
+		},
+		[signInWithForm],
+	);
+
+	const signUpWithForm = useCallback(
+		async (formData: FormData) => {
 			dispatch({ type: "SET_ERROR", error: null });
 			try {
-				await Promise.all([
-					account.updateName(name),
-					account.updateEmail(email, password),
-				]);
+				const { signUpWithEmail } = await eval('import("@/lib/server/auth")');
+				const result = await signUpWithEmail(formData);
+				if (!result.success) {
+					throw new Error(result.error);
+				}
+
 				const user = await account.get();
 				dispatch({
 					type: "SET_USER",
@@ -255,6 +275,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			}
 		},
 		[],
+	);
+
+	const signUp = useCallback(
+		async (email: string, password: string, name: string) => {
+			const formData = new FormData();
+			formData.append("email", email);
+			formData.append("password", password);
+			formData.append("name", name);
+			return signUpWithForm(formData);
+		},
+		[signUpWithForm],
 	);
 
 	const signInWithMagicLink = useCallback(async (email: string) => {
@@ -281,7 +312,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	const signOut = useCallback(async () => {
 		try {
-			await account.deleteSession("current");
+			const { signOut: serverSignOut } = await eval('import("@/lib/server/auth")');
+			await serverSignOut();
 		} catch {
 		} finally {
 			localStorage.removeItem(ANONYMOUS_ATTEMPTED_KEY);
@@ -337,7 +369,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			error: state.error,
 			authReady: state.authReady,
 			signIn,
+			signInWithForm,
 			signUp,
+			signUpWithForm,
 			signInWithMagicLink,
 			signOut,
 			verifyEmail,
@@ -350,7 +384,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			state.error,
 			state.authReady,
 			signIn,
+			signInWithForm,
 			signUp,
+			signUpWithForm,
 			signInWithMagicLink,
 			signOut,
 			verifyEmail,

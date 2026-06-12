@@ -1,7 +1,7 @@
-import { Query } from "node-appwrite";
+import { type Models, Query } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { databases } from "@/lib/server/appwrite";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const runtime = "nodejs";
@@ -58,7 +58,7 @@ export const GET = withRateLimit(
 				queries,
 			);
 
-			const exams = response.documents.map((doc) => ({
+			const exams = response.documents.map((doc: any) => ({
 				id: doc.$id,
 				subject: doc.subject,
 				subjectCode: doc.subjectCode,

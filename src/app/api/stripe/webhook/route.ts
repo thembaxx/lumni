@@ -1,4 +1,5 @@
 import { Client, Databases } from "appwrite";
+import type { Models } from "node-appwrite";
 import Stripe from "stripe";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
@@ -80,7 +81,7 @@ export const POST = createRouteHandler({
 						`status=active`,
 					] as unknown as string[]);
 					await Promise.all(
-						docs.documents.map((doc) =>
+						docs.documents.map((doc: any) =>
 							db.updateDocument(dbId, "premium_subscriptions", doc.$id, {
 								status: "cancelled",
 							}),

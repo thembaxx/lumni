@@ -1,8 +1,8 @@
 import { UTApi, UTFile } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { MarkdownExamParser } from "@/lib/exam-parser/markdown-exam-parser";
+import { databases } from "@/lib/server/appwrite";
 import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper as ExamPaperData } from "@/types/exam-paper";

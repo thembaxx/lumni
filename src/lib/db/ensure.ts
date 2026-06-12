@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import type { Databases as NodeDatabases } from "node-appwrite";
 import { AppwriteException, type DatabasesIndexType } from "node-appwrite";
-import { databases as clientDatabases } from "@/lib/appwrite.server";
+import { databases as clientDatabases } from "@/lib/server/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 import { schemaConfig } from "./ensure-schema";
@@ -317,7 +317,7 @@ export async function ensureAppwrite(
 			}
 
 			const docResults = await Promise.all(
-				docs.map(async (doc) => {
+				docs.map(async (doc: any) => {
 					try {
 						const existing = await db.listDocuments(
 							APPWRITE_DATABASE_ID,

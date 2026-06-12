@@ -18,7 +18,7 @@ const mockDatabases = {
 	deleteDocument: async (_dbId: string, _collId: string, docId: string) => {
 		if (deleteErrors.length > 0)
 			throw new Error(deleteErrors.shift() as string);
-		const idx = mockDocs.findIndex((d) => d.$id === docId);
+		const idx = mockDocs.findIndex((d: any) => d.$id === docId);
 		if (idx >= 0) mockDocs.splice(idx, 1);
 	},
 };
@@ -32,7 +32,7 @@ vi.mock("@/lib/appwrite", () => ({
 	APPWRITE_PROJECT: "test-project",
 }));
 
-vi.mock("@/lib/appwrite.server", () => ({
+vi.mock("@/lib/server/appwrite", () => ({
 	databases: mockDatabases,
 	serverAccount: {},
 	serverClient: {},

@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite.server";
+import { databases } from "@/lib/server/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { RateLimiter } from "@/lib/rate-limiter/core";
 import { logError } from "@/lib/shared/logger";

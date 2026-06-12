@@ -68,7 +68,7 @@ export function createDeleteHandler(
 			queries,
 		);
 		await Promise.all(
-			existing.map((doc) => deleteDocument(collection, doc.$id as string)),
+			existing.map((doc: any) => deleteDocument(collection, doc.$id as string)),
 		);
 	};
 }

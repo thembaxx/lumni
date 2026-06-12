@@ -245,7 +245,7 @@ describe("PathEngine", () => {
 				5,
 				30,
 			);
-			const dates = plan.map((d) => d.date);
+			const dates = plan.map((d: any) => d.date);
 			expect(new Set(dates).size).toBe(5);
 		});
 

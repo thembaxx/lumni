@@ -1,9 +1,9 @@
 import { Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { classifyQuestions } from "@/lib/exam-paper-ingestion/question-classifier";
+import { databases } from "@/lib/server/appwrite";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(

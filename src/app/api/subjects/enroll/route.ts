@@ -1,4 +1,5 @@
 import { Query } from "appwrite";
+import type { Models } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
 	COLLECTIONS,
@@ -32,7 +33,9 @@ export const POST = createRouteHandler<EnrollBody>({
 		);
 
 		await Promise.all(
-			existing.map((doc) => deleteDocument(COLLECTIONS.USER_SUBJECTS, doc.$id)),
+			existing.map((doc: any) =>
+				deleteDocument(COLLECTIONS.USER_SUBJECTS, doc.$id),
+			),
 		);
 
 		if (body.subjectIds.length > 0) {

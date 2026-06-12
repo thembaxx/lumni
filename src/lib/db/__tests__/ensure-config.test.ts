@@ -22,7 +22,7 @@ describe("ensure-config", () => {
 		const docs = seedConfig.subjects.documents as Array<
 			Record<string, unknown>
 		>;
-		const math = docs.find((d) => d.code === "mathematics");
+		const math = docs.find((d: any) => d.code === "mathematics");
 		expect(math).toBeDefined();
 		expect((math as Record<string, string>).name).toBe("Mathematics");
 		expect((math as Record<string, string>).category).toBe("mathematics");
@@ -43,7 +43,7 @@ describe("ensure-config", () => {
 		)(seeded);
 		expect(docs).toHaveLength(9);
 
-		const calculus = docs.find((d) => d.name === "Calculus");
+		const calculus = docs.find((d: any) => d.name === "Calculus");
 		expect(calculus).toBeDefined();
 		expect((calculus as Record<string, string>).subjectId).toBe("subj-1");
 	});

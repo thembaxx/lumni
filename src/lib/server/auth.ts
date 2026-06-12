@@ -1,46 +1,12 @@
-import { cookies } from "next/headers";
-import { Account, Client, type Models } from "node-appwrite";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
+"use server";
+import { type Models } from "node-appwrite";
 import { logError } from "@/lib/shared/logger";
-
-const MAX_AUTH_RETRIES = 2;
-const RETRY_BASE_DELAY_MS = 500;
-
-// Single-step helper extracted so the retry loop body has no direct `await`.
-// The `try/catch` lives inside the helper and surfaces the error up.
-async function tryFetchAccount(
-	account: Account,
-): Promise<Models.User<Models.Preferences>> {
-	return account.get();
-}
-
-async function waitForBackoff(retries: number): Promise<void> {
-	await new Promise((resolve) =>
-		setTimeout(resolve, RETRY_BASE_DELAY_MS * retries),
-	);
-}
-
-// Recursive retry step. Each step is a self-call so the public entry point
-// `fetchAccountWithRetry` doesn't contain `await` inside a loop body.
-async function fetchAccountWithRetryStep(
-	account: Account,
-	retries: number,
-): Promise<Models.User<Models.Preferences>> {
-	try {
-		return await tryFetchAccount(account);
-	} catch (err) {
-		logError("FetchAccountWithRetryStep", err);
-		if (retries >= MAX_AUTH_RETRIES) throw err;
-		await waitForBackoff(retries + 1);
-		return fetchAccountWithRetryStep(account, retries + 1);
-	}
-}
-
-async function fetchAccountWithRetry(
-	account: Account,
-): Promise<Models.User<Models.Preferences>> {
-	return fetchAccountWithRetryStep(account, 0);
-}
+import { getLoggedInUser } from "./appwrite";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ID } from "node-appwrite";
+import { APPWRITE_PROJECT } from "@/lib/appwrite";
+import { createAdminClient, createSessionClient } from "./appwrite";
 
 export async function auth(): Promise<string> {
 	const userId = await getAuthenticatedUserId();
@@ -50,46 +16,11 @@ export async function auth(): Promise<string> {
 
 export async function verifyAuth(userId: string): Promise<void> {
 	try {
-		const cookieStore = await cookies();
-		const projectId = APPWRITE_PROJECT;
-		if (!projectId) {
-			console.error("[verifyAuth] APPWRITE_PROJECT is not set");
-			throw new Error("Configuration error: APPWRITE_PROJECT is missing");
+		const user = await getLoggedInUser();
+
+		if (!user) {
+			throw new Error("Authentication required");
 		}
-
-		let sessionCookie = cookieStore.get(`a_session_${projectId}`);
-		if (!sessionCookie?.value) {
-			sessionCookie = cookieStore.get(`a_session_${projectId}_legacy`);
-		}
-
-		// Fallback: search for any a_session_ cookie if the specific one is missing
-		if (!sessionCookie?.value) {
-			const fallbackCookie = cookieStore
-				.getAll()
-				.find((c) => c.name.startsWith("a_session_"));
-			if (fallbackCookie) {
-				console.warn(
-					`[auth] Found fallback session cookie: ${fallbackCookie.name} instead of a_session_${projectId}`,
-				);
-				sessionCookie = fallbackCookie;
-			}
-		}
-
-		if (!sessionCookie?.value) {
-			const allCookies = (await cookies()).getAll().map((c) => c.name);
-			console.warn(
-				`[verifyAuth] No session cookie found for project: ${projectId}. Available cookies: ${allCookies.join(", ")}`,
-			);
-			throw new Error(`No session cookie found for project: ${projectId}`);
-		}
-
-		const client = new Client()
-			.setEndpoint(APPWRITE_ENDPOINT)
-			.setProject(projectId)
-			.setSession(sessionCookie.value);
-
-		const account = new Account(client);
-		const user = await fetchAccountWithRetry(account);
 
 		if (user.$id !== userId) {
 			console.warn(
@@ -99,54 +30,16 @@ export async function verifyAuth(userId: string): Promise<void> {
 		}
 	} catch (err) {
 		logError("VerifyAuth", err);
-		console.error("[verifyAuth] Auth failure:", err);
 		throw new Error("Authentication required");
 	}
 }
 
 export async function getAuthenticatedUserId(): Promise<string | null> {
 	try {
-		const cookieStore = await cookies();
-		const projectId = APPWRITE_PROJECT;
-		if (!projectId) {
-			console.error("[getAuthenticatedUserId] APPWRITE_PROJECT is not set");
-			return null;
-		}
-
-		let sessionCookie = cookieStore.get(`a_session_${projectId}`);
-		if (!sessionCookie?.value) {
-			sessionCookie = cookieStore.get(`a_session_${projectId}_legacy`);
-		}
-
-		// Fallback: search for any a_session_ cookie if the specific one is missing
-		if (!sessionCookie?.value) {
-			const fallbackCookie = cookieStore
-				.getAll()
-				.find((c) => c.name.startsWith("a_session_"));
-			if (fallbackCookie) {
-				console.warn(
-					`[auth] Found fallback session cookie: ${fallbackCookie.name} instead of a_session_${projectId}`,
-				);
-				sessionCookie = fallbackCookie;
-			}
-		}
-
-		if (!sessionCookie?.value) {
-			// Silently fail for getAuthenticatedUserId as it's often used for optional auth
-			return null;
-		}
-
-		const client = new Client()
-			.setEndpoint(APPWRITE_ENDPOINT)
-			.setProject(projectId)
-			.setSession(sessionCookie.value);
-
-		const account = new Account(client);
-		const user = await fetchAccountWithRetry(account);
-		return user.$id;
+		const user = await getLoggedInUser();
+		return user?.$id ?? null;
 	} catch (err) {
 		logError("GetAuthenticatedUserId", err);
-		console.error("[getAuthenticatedUserId] Auth error:", err);
 		return null;
 	}
 }
@@ -156,23 +49,10 @@ export async function requireAdmin(): Promise<string> {
 
 	const adminIds = process.env.ADMIN_USER_IDS;
 	if (!adminIds) {
-		console.error(
-			"[requireAdmin] ADMIN_USER_IDS is not set — no admin users configured",
-		);
 		throw new Error("Admin access is not configured");
 	}
 
-	const ids = adminIds.split(",").flatMap((s) => {
-		const trimmed = s.trim();
-		return trimmed ? [trimmed] : [];
-	});
-
-	if (ids.length === 0) {
-		console.error(
-			"[requireAdmin] ADMIN_USER_IDS is empty — no admin users configured",
-		);
-		throw new Error("Admin access is not configured");
-	}
+	const ids = adminIds.split(",").map(s => s.trim());
 
 	if (!ids.includes(userId)) {
 		throw new Error("Admin access required");
@@ -183,20 +63,68 @@ export async function requireAdmin(): Promise<string> {
 
 export async function getAuthenticatedUserName(): Promise<string | null> {
 	try {
-		const cookieStore = await cookies();
-		const sessionCookie = cookieStore.get(`a_session_${APPWRITE_PROJECT}`);
-		if (!sessionCookie?.value) return null;
-
-		const client = new Client()
-			.setEndpoint(APPWRITE_ENDPOINT)
-			.setProject(APPWRITE_PROJECT)
-			.setSession(sessionCookie.value);
-
-		const account = new Account(client);
-		const user = await account.get();
-		return user.name || null;
+		const user = await getLoggedInUser();
+		return user?.name || null;
 	} catch (err) {
 		logError("GetAuthenticatedUserName", err);
 		return null;
 	}
+}
+
+export async function signUpWithEmail(formData: FormData) {
+	const email = formData.get("email") as string;
+	const password = formData.get("password") as string;
+	const name = formData.get("name") as string;
+
+	const { account } = await createAdminClient();
+
+	try {
+		await account.create(ID.unique(), email, password, name);
+		const session = await account.createEmailPasswordSession(email, password);
+
+		(await cookies()).set(`a_session_${APPWRITE_PROJECT}`, session.secret, {
+			path: "/",
+			httpOnly: true,
+			sameSite: "strict",
+			secure: true,
+		});
+
+		return { success: true };
+	} catch (error) {
+		logError("signUpWithEmail", error);
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function signInWithEmail(formData: FormData) {
+	const email = formData.get("email") as string;
+	const password = formData.get("password") as string;
+
+	const { account } = await createAdminClient();
+
+	try {
+		const session = await account.createEmailPasswordSession(email, password);
+
+		(await cookies()).set(`a_session_${APPWRITE_PROJECT}`, session.secret, {
+			path: "/",
+			httpOnly: true,
+			sameSite: "strict",
+			secure: true,
+		});
+
+		return { success: true };
+	} catch (error) {
+		logError("signInWithEmail", error);
+		return { success: false, error: (error as Error).message };
+	}
+}
+
+export async function signOut() {
+	try {
+		const { account } = await createSessionClient();
+		await account.deleteSession("current");
+	} catch {}
+
+	(await cookies()).delete(`a_session_${APPWRITE_PROJECT}`);
+	redirect("/auth/sign-in");
 }

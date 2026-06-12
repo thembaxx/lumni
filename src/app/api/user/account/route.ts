@@ -1,7 +1,7 @@
-import { Query, Users } from "node-appwrite";
+import { type Models, Query, Users } from "node-appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { serverClient } from "@/lib/appwrite.server";
 import { COLLECTIONS, deleteDocument, listDocuments } from "@/lib/db/client";
+import { serverClient } from "@/lib/server/appwrite";
 import { userConsentService } from "@/lib/services/user-consent-service";
 
 const USER_DATA_COLLECTIONS = [
@@ -40,7 +40,9 @@ export const DELETE = createRouteHandler({
 						[Query.equal("userId", userId as string)],
 					);
 					await Promise.all(
-						docs.map((doc) => deleteDocument(collection, doc.$id as string)),
+						docs.map((doc: any) =>
+							deleteDocument(collection, doc.$id as string),
+						),
 					);
 				} catch {
 					// collection may not exist, skip

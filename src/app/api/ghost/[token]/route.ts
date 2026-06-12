@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { databases } from "@/lib/appwrite.server";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { databases } from "@/lib/server/appwrite";
 import { logError } from "@/lib/shared/logger";
 
 export async function GET(

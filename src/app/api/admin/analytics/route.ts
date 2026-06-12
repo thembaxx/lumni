@@ -1,8 +1,8 @@
 import { Query } from "appwrite";
 import { Users } from "node-appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { serverClient } from "@/lib/appwrite.server";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { serverClient } from "@/lib/server/appwrite";
 
 export const GET = createRouteHandler({
 	auth: "admin",

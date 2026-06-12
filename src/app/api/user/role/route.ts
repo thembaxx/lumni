@@ -1,6 +1,6 @@
 import { Users } from "node-appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { serverClient } from "@/lib/appwrite.server";
+import { serverClient } from "@/lib/server/appwrite";
 
 const VALID_ROLES = ["teacher", "parent", "student"] as const;
 

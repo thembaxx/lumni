@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
 import { Users } from "node-appwrite";
-import { serverClient } from "@/lib/appwrite.server";
+import { serverClient } from "@/lib/server/appwrite";
 import {
 	COLLECTIONS,
 	createDocument,
