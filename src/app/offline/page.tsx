@@ -1,15 +1,11 @@
-"use client";
+import { OfflineTracker } from "./offline-tracker";
 
-import Link from "next/link";
-import { useEffect } from "react";
-import { trackEvent } from "@/lib/observability/events";
+export const dynamic = "force-static";
 
 export default function OfflinePage() {
-	useEffect(() => {
-		trackEvent("offline_visit", "offline_page");
-	}, []);
 	return (
 		<div className="flex min-h-dvh flex-col items-center justify-center gap-6 bg-background p-8 text-center">
+			<OfflineTracker />
 			<div className="flex size-16 items-center justify-center rounded-full bg-warning/10">
 				<svg
 					className="size-8 text-warning"
@@ -37,18 +33,18 @@ export default function OfflinePage() {
 				</p>
 			</div>
 			<div className="flex flex-wrap justify-center gap-3">
-				<Link
+				<a
 					href="/quiz"
 					className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground text-sm"
 				>
 					Practice Offline
-				</Link>
-				<Link
+				</a>
+				<a
 					href="/flashcards"
 					className="inline-flex items-center gap-2 rounded-xl bg-muted px-5 py-3 font-medium text-foreground text-sm"
 				>
 					Review Flashcards
-				</Link>
+				</a>
 			</div>
 		</div>
 	);

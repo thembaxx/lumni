@@ -3,27 +3,30 @@ import type { DataAccess } from "@/lib/db/data-access";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 
 export class QuestionCacheRepository {
-	constructor(private db: DataAccess) {}
+	constructor(private db: DataAccess | undefined) {}
+
+	private get table() {
+		return this.db?.questions;
+	}
 
 	async cache(
 		subject: string,
 		questions: unknown[],
 		topic?: string,
 	): Promise<number> {
+		const table = this.table;
+		if (!table) return 0;
 		const key = topic ? `${subject}-${topic}` : subject;
-		const existing = await this.db.questions
-			.where("subject")
-			.equals(key)
-			.first();
+		const existing = await table.where("subject").equals(key).first();
 
 		if (existing) {
-			return this.db.questions.update(existing.id ?? 0, {
+			return table.update(existing.id ?? 0, {
 				questions: safeJsonStringify(questions),
 				cachedAt: Date.now(),
 			});
 		}
 
-		return this.db.questions.add({
+		return table.add({
 			subject: key,
 			topic,
 			questions: safeJsonStringify(questions),
@@ -32,8 +35,10 @@ export class QuestionCacheRepository {
 	}
 
 	async get(subject: string, topic?: string): Promise<unknown[] | undefined> {
+		const table = this.table;
+		if (!table) return undefined;
 		const key = topic ? `${subject}-${topic}` : subject;
-		const cached = await this.db.questions.where("subject").equals(key).first();
+		const cached = await table.where("subject").equals(key).first();
 
 		if (!cached) return undefined;
 

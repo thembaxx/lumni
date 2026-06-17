@@ -89,7 +89,16 @@ export class AIClient {
 						timestamp: new Date().toISOString(),
 					});
 					lastError = err instanceof Error ? err.message : String(err);
-					console.error(`[AI] Provider failed: ${provider.name}`, lastError);
+					const isRateLimit =
+						lastError.includes("429") ||
+						lastError.includes("RESOURCE_EXHAUSTED");
+					if (isRateLimit) {
+						console.warn(
+							`[AI] Provider ${provider.name} rate-limited, trying next...`,
+						);
+					} else {
+						console.error(`[AI] Provider failed: ${provider.name}`, lastError);
+					}
 					throw err;
 				}
 			}),
