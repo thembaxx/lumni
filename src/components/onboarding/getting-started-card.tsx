@@ -77,6 +77,7 @@ export function GettingStartedCard() {
 	const [collapsing, setCollapsing] = useState(false);
 	const [steps, setSteps] = useState<StepState>(() => loadSteps());
 	const [visitsLeft] = useState(() => {
+		if (typeof window === "undefined") return 3;
 		const raw = localStorage.getItem(FIRST_VISITS_KEY);
 		if (raw) {
 			const n = Number.parseInt(raw, 10);
