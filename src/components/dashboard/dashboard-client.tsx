@@ -2,11 +2,9 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
-import type { BoltResult } from "@/components/dashboard/daily-bolt-overlay";
-import { DailyBoltOverlay } from "@/components/dashboard/daily-bolt-overlay";
+import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
@@ -47,7 +45,6 @@ export function DashboardClient({
 	const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
 	const {
 		isLoaded,
-		gamification,
 		addXp,
 		updateStreak,
 		checkAndUnlockAchievements,
@@ -57,12 +54,8 @@ export function DashboardClient({
 		totalQuestionsAnswered,
 	} = useGamification();
 
-	const todayStr = useMemo(() => new Date().toDateString(), []);
-	const boltDue = gamification.lastPracticeDate !== todayStr;
-	const [showDailyBolt, setShowDailyBolt] = useState(boltDue);
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
-	const router = useRouter();
 
 	const handleStartQuiz = (subject: string) => {
 		startViewTransition(() => {
@@ -120,7 +113,6 @@ export function DashboardClient({
 					},
 				],
 			});
-			setShowDailyBolt(false);
 		},
 		[
 			updateStreak,
@@ -132,20 +124,6 @@ export function DashboardClient({
 			totalQuestionsAnswered,
 			levelInfo,
 		],
-	);
-
-	const handleBoltSkip = useCallback(() => {
-		setShowDailyBolt(false);
-	}, []);
-
-	const handleBoltPracticeMore = useCallback(
-		(subject: string) => {
-			setShowDailyBolt(false);
-			startViewTransition(() => {
-				router.push(`/quiz?subject=${encodeURIComponent(subject)}`);
-			});
-		},
-		[router, startViewTransition],
 	);
 
 	async function handleFinishQuizLogic(results: QuizResults) {
@@ -246,14 +224,7 @@ export function DashboardClient({
 		<AppErrorBoundary>
 			<ScrollAmbient />
 			<div className="flex h-full flex-col">
-				{showDailyBolt ? (
-					<DailyBoltOverlay
-						onComplete={handleBoltComplete}
-						onSkip={handleBoltSkip}
-						onPracticeMore={handleBoltPracticeMore}
-						streak={currentStreak}
-					/>
-				) : !isLoaded ? (
+				{!isLoaded ? (
 					<m.div
 						key="loading"
 						initial={{ opacity: 0 }}
@@ -311,6 +282,8 @@ export function DashboardClient({
 										<DashboardContent
 											onStartQuiz={handleStartQuiz}
 											activeTab={activeTab}
+											onBoltComplete={handleBoltComplete}
+											boltStreak={currentStreak}
 										/>
 									</m.div>
 								)}

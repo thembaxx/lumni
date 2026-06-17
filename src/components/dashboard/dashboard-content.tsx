@@ -11,6 +11,8 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
+import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
+import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
@@ -195,9 +197,13 @@ function AnonymousUpsell() {
 export function DashboardContent({
 	onStartQuiz,
 	activeTab,
+	onBoltComplete,
+	boltStreak,
 }: {
 	onStartQuiz: (subject: string) => void;
 	activeTab: TabValue;
+	onBoltComplete: (result: BoltResult) => void;
+	boltStreak: number;
 }) {
 	const t = useTranslations();
 	const { user, isAnonymous } = useAuth();
@@ -233,6 +239,14 @@ export function DashboardContent({
 			<PageContainer className="gap-8 pb-16">
 				<LoginBanner />
 				{activeTab === "today" && <HeroBanner />}
+				{activeTab === "today" && isLoggedIn && (
+					<StaggeredSection>
+						<DailyChallengeCard
+							onComplete={onBoltComplete}
+							streak={boltStreak}
+						/>
+					</StaggeredSection>
+				)}
 				{activeTab === "today" && boltDone && (
 					<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/8 px-4 py-3 transition-[background-color] duration-300">
 						<div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">

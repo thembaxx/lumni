@@ -22,9 +22,6 @@ const mockUseQuestionEngine = vi.fn(
 	}),
 );
 
-// Mock useQuestionEngine at the hook boundary so we don't depend on
-// @/lib/shared/api-fetch (which gets stale-cached by other test files
-// in bun's sequential mode).
 vi.mock("@/hooks/use-question-engine", () => ({
 	useQuestionEngine: mockUseQuestionEngine,
 }));
@@ -40,11 +37,11 @@ vi.mock("next-intl", () => ({
 	useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),
 }));
 
-const { DailyBoltOverlay } = await import(
-	"@/components/dashboard/daily-bolt-overlay"
+const { DailyChallengeDialog } = await import(
+	"@/components/dashboard/daily-challenge-dialog"
 );
 const { __setDepsForTesting } = await import(
-	"@/components/dashboard/daily-bolt-overlay-deps"
+	"@/components/dashboard/daily-challenge-dialog-deps"
 );
 
 function createWrapper() {
@@ -80,12 +77,12 @@ const MOCK_QUESTION: Question = {
 	},
 };
 
-describe("DailyBoltOverlay", () => {
+describe("DailyChallengeDialog", () => {
 	afterEach(() => {
 		cleanup();
 	});
 
-	test("renders header and skip button on mount", () => {
+	test("renders header on mount", () => {
 		mockUseQuestionEngine.mockReturnValue({
 			questions: [MOCK_QUESTION],
 			isLoading: false,
@@ -93,13 +90,16 @@ describe("DailyBoltOverlay", () => {
 			sources: [],
 		});
 		const { container } = render(
-			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
+			<DailyChallengeDialog
+				subject="mathematics"
+				onComplete={() => {}}
+				onClose={() => {}}
+				streak={1}
+			/>,
 			{ wrapper: createWrapper() },
 		);
 		expect(hasText(container, /Today/)).toBe(true);
 		expect(hasText(container, /Bolt/)).toBe(true);
-		const buttons = container.getElementsByTagName("button");
-		expect(buttons.length).toBeGreaterThan(0);
 	});
 
 	test("shows empty state when no questions returned", async () => {
@@ -114,7 +114,12 @@ describe("DailyBoltOverlay", () => {
 		});
 
 		const { container } = render(
-			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
+			<DailyChallengeDialog
+				subject="mathematics"
+				onComplete={() => {}}
+				onClose={() => {}}
+				streak={1}
+			/>,
 			{ wrapper: createWrapper() },
 		);
 
@@ -124,73 +129,6 @@ describe("DailyBoltOverlay", () => {
 			},
 			{ timeout: 10000 },
 		);
-	});
-
-	test("skip button visible in header throughout all phases", async () => {
-		mockUseQuestionEngine.mockReturnValue({
-			questions: [MOCK_QUESTION],
-			isLoading: false,
-			count: 1,
-			sources: [],
-		});
-		__setDepsForTesting({
-			db: { competencies: { toArray: async () => [] } } as never,
-		});
-
-		const { container } = render(
-			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={1} />,
-			{ wrapper: createWrapper() },
-		);
-
-		const skipBtn = await waitFor(
-			() => {
-				const buttons = container.getElementsByTagName("button");
-				return Array.from(buttons).find(
-					(b) =>
-						b.textContent === "Skip" || b.textContent === "Skip to Dashboard",
-				);
-			},
-			{ timeout: 10000 },
-		);
-		expect(skipBtn).toBeTruthy();
-	});
-
-	test("calls onSkip when skip button clicked", async () => {
-		mockUseQuestionEngine.mockReturnValue({
-			questions: [MOCK_QUESTION],
-			isLoading: false,
-			count: 1,
-			sources: [],
-		});
-		__setDepsForTesting({
-			db: { competencies: { toArray: async () => [] } } as never,
-		});
-
-		let skipped = false;
-		const { container } = render(
-			<DailyBoltOverlay
-				onComplete={() => {}}
-				onSkip={() => {
-					skipped = true;
-				}}
-				streak={1}
-			/>,
-			{ wrapper: createWrapper() },
-		);
-
-		const skipButton = await waitFor(
-			() => {
-				const buttons = container.getElementsByTagName("button");
-				return Array.from(buttons).find(
-					(b) =>
-						b.textContent === "Skip" || b.textContent === "Skip to Dashboard",
-				);
-			},
-			{ timeout: 10000 },
-		);
-
-		skipButton?.click();
-		expect(skipped).toBe(true);
 	});
 
 	test("shows answering phase when question loads", async () => {
@@ -205,7 +143,12 @@ describe("DailyBoltOverlay", () => {
 		});
 
 		const { container } = render(
-			<DailyBoltOverlay onComplete={() => {}} onSkip={() => {}} streak={3} />,
+			<DailyChallengeDialog
+				subject="mathematics"
+				onComplete={() => {}}
+				onClose={() => {}}
+				streak={3}
+			/>,
 			{ wrapper: createWrapper() },
 		);
 
@@ -217,5 +160,44 @@ describe("DailyBoltOverlay", () => {
 		);
 
 		expect(hasText(container, /Mathematics/)).toBe(true);
+	});
+
+	test("close button calls onClose in error state", async () => {
+		mockUseQuestionEngine.mockReturnValue({
+			questions: [],
+			isLoading: false,
+			isError: true,
+			count: 0,
+			sources: [],
+			refetch: vi.fn(),
+			isFetching: false,
+		});
+		__setDepsForTesting({
+			db: { competencies: { toArray: async () => [] } } as never,
+		});
+
+		let closed = false;
+		const { container } = render(
+			<DailyChallengeDialog
+				subject="mathematics"
+				onComplete={() => {}}
+				onClose={() => {
+					closed = true;
+				}}
+				streak={1}
+			/>,
+			{ wrapper: createWrapper() },
+		);
+
+		const closeButton = await waitFor(
+			() => {
+				const buttons = container.getElementsByTagName("button");
+				return Array.from(buttons).find((b) => b.textContent === "Close");
+			},
+			{ timeout: 10000 },
+		);
+
+		closeButton?.click();
+		expect(closed).toBe(true);
 	});
 });

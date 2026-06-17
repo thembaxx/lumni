@@ -7,7 +7,7 @@ import {
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
 import { QuestionCard } from "@/components/quiz";
@@ -17,7 +17,7 @@ import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
-import { _deps } from "./daily-bolt-overlay-deps";
+import { _deps } from "./daily-challenge-dialog-deps";
 
 type BoltPhase =
 	| "resolving"
@@ -32,14 +32,14 @@ export interface BoltResult {
 	correct: boolean;
 }
 
-interface DailyBoltOverlayProps {
+interface DailyChallengeDialogProps {
+	subject: string;
 	onComplete: (result: BoltResult) => void;
-	onSkip: () => void;
-	onPracticeMore?: (subject: string) => void;
+	onClose: () => void;
 	streak: number;
 }
 
-async function resolveWeakestSubject(): Promise<string> {
+export async function resolveWeakestSubject(): Promise<string> {
 	try {
 		const all = await _deps.db.competencies.toArray();
 		if (all.length === 0) return "mathematics";
@@ -74,23 +74,14 @@ function formatSubjectLabel(subject: string): string {
 		.join(" ");
 }
 
-export function DailyBoltOverlay({
+export function DailyChallengeDialog({
+	subject,
 	onComplete,
-	onSkip,
-	onPracticeMore,
+	onClose,
 	streak,
-}: DailyBoltOverlayProps) {
-	const [phase, setPhase] = useState<BoltPhase>("resolving");
-	const [subject, setSubject] = useState("mathematics");
+}: DailyChallengeDialogProps) {
+	const [phase, setPhase] = useState<BoltPhase>("loading");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
-	const shouldReduceMotion = useReducedMotion();
-
-	useEffect(() => {
-		resolveWeakestSubject().then((s) => {
-			setSubject(s);
-			setPhase("loading");
-		});
-	}, []);
 
 	const engineParams = useMemo(
 		() => ({
@@ -103,7 +94,7 @@ export function DailyBoltOverlay({
 	);
 
 	const { questions, isLoading, isError, refetch, isFetching } =
-		useQuestionEngine(engineParams, { enabled: phase === "loading" });
+		useQuestionEngine(engineParams, { enabled: true });
 
 	const question = questions[0];
 	const subjectLabel = useMemo(() => formatSubjectLabel(subject), [subject]);
@@ -139,48 +130,26 @@ export function DailyBoltOverlay({
 		void refetch();
 	}, [refetch]);
 
-	const skipLabel =
-		phase === "resolving" || phase === "loading" ? "Skip" : "Skip to Dashboard";
-
-	const showLoading = phase === "resolving" || phase === "loading";
+	const showLoading = phase === "loading";
 	const showError = phase === "error";
 	const showEmpty = phase === "empty";
 	const showCelebrating = phase === "celebrating";
 
 	return (
-		<div className="fixed inset-0 z-overlay flex flex-col overflow-hidden bg-system-background">
-			<BoltAmbientBackground reduceMotion={shouldReduceMotion ?? false} />
-
-			<header className="relative z-content flex items-center justify-between gap-3 px-5 pt-5 pb-3">
-				<div className="flex min-w-0 items-center gap-2.5">
-					<BoltMark reduceMotion={shouldReduceMotion ?? false} />
-					<div className="flex min-w-0 flex-col">
-						<span className="font-extrabold font-heading text-base text-system-text-primary tracking-tight">
-							Today&rsquo;s Bolt
-						</span>
-						{showLoading ? (
-							<span
-								key="loading-subject"
-								className="truncate text-muted-foreground text-xs"
-							>
-								Finding your focus&hellip;
-							</span>
-						) : (
-							<span
-								key="subject-label"
-								className="truncate text-muted-foreground text-xs"
-							>
-								{subjectLabel}
-							</span>
-						)}
-					</div>
+		<div className="flex flex-col overflow-hidden rounded-2xl">
+			<header className="flex items-center gap-2.5 px-5 pt-5 pb-3">
+				<BoltMark />
+				<div className="flex min-w-0 flex-col">
+					<span className="font-extrabold font-heading text-base text-system-text-primary tracking-tight">
+						Today&rsquo;s Bolt
+					</span>
+					<span className="truncate text-muted-foreground text-xs">
+						{subjectLabel}
+					</span>
 				</div>
-				<Button variant="outline" size="sm" onClick={onSkip}>
-					{skipLabel}
-				</Button>
 			</header>
 
-			<main className="relative z-content flex flex-1 flex-col overflow-y-auto px-5 pb-8">
+			<main className="flex flex-1 flex-col overflow-y-auto px-5 pb-8">
 				<AnimatePresence mode="wait" initial={false}>
 					{showLoading && (
 						<m.section
@@ -242,10 +211,10 @@ export function DailyBoltOverlay({
 								correct={boltResult?.correct ?? false}
 								subjectLabel={subjectLabel}
 								streak={streak}
-								onContinue={() => boltResult && onComplete(boltResult)}
-								onPracticeMore={
-									onPracticeMore ? () => onPracticeMore(subject) : undefined
-								}
+								onContinue={() => {
+									if (boltResult) onComplete(boltResult);
+									onClose();
+								}}
 							/>
 						</m.section>
 					)}
@@ -261,7 +230,7 @@ export function DailyBoltOverlay({
 						>
 							<BoltErrorState
 								onRetry={handleRetry}
-								onSkip={onSkip}
+								onClose={onClose}
 								isRetrying={isFetching}
 							/>
 						</m.section>
@@ -279,7 +248,7 @@ export function DailyBoltOverlay({
 							<BoltEmptyState
 								subjectLabel={subjectLabel}
 								onRetry={handleRetry}
-								onSkip={onSkip}
+								onClose={onClose}
 								isRetrying={isFetching}
 							/>
 						</m.section>
@@ -290,24 +259,20 @@ export function DailyBoltOverlay({
 	);
 }
 
-function BoltMark({ reduceMotion }: { reduceMotion: boolean }) {
+function BoltMark() {
 	return (
 		<m.div
-			initial={reduceMotion ? false : { scale: 0.6, rotate: -10, opacity: 0 }}
+			initial={{ scale: 0.6, rotate: -10, opacity: 0 }}
 			animate={{ scale: 1, rotate: 0, opacity: 1 }}
 			transition={{ duration: 0.55, ease: iOSEase }}
 			className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-warning/15 shadow-level-1 ring-1 ring-warning/25"
 			aria-hidden="true"
 		>
 			<m.div
-				animate={
-					reduceMotion
-						? undefined
-						: { scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }
-				}
+				animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }}
 				transition={{
 					duration: 2.4,
-					repeat: Infinity,
+					repeat: Number.POSITIVE_INFINITY,
 					ease: "easeInOut",
 				}}
 				className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
@@ -318,31 +283,6 @@ function BoltMark({ reduceMotion }: { reduceMotion: boolean }) {
 				strokeWidth={2.25}
 			/>
 		</m.div>
-	);
-}
-
-function BoltAmbientBackground({ reduceMotion }: { reduceMotion: boolean }) {
-	return (
-		<div
-			className="pointer-events-none absolute inset-0 overflow-hidden"
-			aria-hidden="true"
-		>
-			<div className="absolute inset-0 bg-linear-to-b from-warning/8 via-transparent to-transparent dark:from-warning/6" />
-			<m.div
-				animate={
-					reduceMotion ? undefined : { x: [0, 24, -8, 0], y: [0, -18, 12, 0] }
-				}
-				transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-				className="absolute -top-32 -right-24 size-72 rounded-full bg-warning/15 blur-3xl"
-			/>
-			<m.div
-				animate={
-					reduceMotion ? undefined : { x: [0, -20, 14, 0], y: [0, 16, -10, 0] }
-				}
-				transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-				className="absolute -bottom-40 -left-20 size-80 rounded-full bg-system-accent/10 blur-3xl"
-			/>
-		</div>
 	);
 }
 
@@ -380,11 +320,11 @@ function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
 
 function BoltErrorState({
 	onRetry,
-	onSkip,
+	onClose,
 	isRetrying,
 }: {
 	onRetry: () => void;
-	onSkip: () => void;
+	onClose: () => void;
 	isRetrying: boolean;
 }) {
 	return (
@@ -403,17 +343,17 @@ function BoltErrorState({
 				</h2>
 				<p className="max-w-sm text-balance text-muted-foreground text-sm">
 					Something tripped while loading today&rsquo;s question. Give it
-					another try, or head back to the dashboard and pick a different start.
+					another try, or close and pick a different start.
 				</p>
 			</div>
 			<div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
 				<Button
 					variant="outline"
-					onClick={onSkip}
+					onClick={onClose}
 					className="w-full sm:w-auto"
 					disabled={isRetrying}
 				>
-					Back to Dashboard
+					Close
 				</Button>
 				<Button
 					onClick={onRetry}
@@ -434,12 +374,12 @@ function BoltErrorState({
 function BoltEmptyState({
 	subjectLabel,
 	onRetry,
-	onSkip,
+	onClose,
 	isRetrying,
 }: {
 	subjectLabel: string;
 	onRetry: () => void;
-	onSkip: () => void;
+	onClose: () => void;
 	isRetrying: boolean;
 }) {
 	return (
@@ -457,17 +397,17 @@ function BoltEmptyState({
 				</h2>
 				<p className="max-w-sm text-balance text-muted-foreground text-sm">
 					We couldn&rsquo;t pull a fresh question for you right now. Try again
-					in a moment, or jump into the dashboard to browse your topics.
+					in a moment, or close and browse your topics.
 				</p>
 			</div>
 			<div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
 				<Button
 					variant="outline"
-					onClick={onSkip}
+					onClick={onClose}
 					className="w-full sm:w-auto"
 					disabled={isRetrying}
 				>
-					Back to Dashboard
+					Close
 				</Button>
 				<Button
 					onClick={onRetry}
