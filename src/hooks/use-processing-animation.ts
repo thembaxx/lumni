@@ -35,12 +35,14 @@ export function useProcessingAnimation(
 
 	useEffect(() => {
 		const animRef = processingAnimationRef;
+		let cancelled = false;
 
 		if (processing && !active) {
 			let time = 0;
 			transitionProgressRef.current = 0;
 
 			const animateProcessing = () => {
+				if (cancelled) return;
 				time += 0.03;
 				transitionProgressRef.current = Math.min(
 					1,
@@ -125,6 +127,7 @@ export function useProcessingAnimation(
 			animateProcessing();
 
 			return () => {
+				cancelled = true;
 				if (animRef.current) {
 					cancelAnimationFrame(animRef.current);
 				}
@@ -137,7 +140,9 @@ export function useProcessingAnimation(
 
 			if (hasData) {
 				let fadeProgress = 0;
+				let fadeAnimId: number;
 				const fadeToIdle = () => {
+					if (cancelled) return;
 					fadeProgress += 0.03;
 					if (fadeProgress < 1) {
 						if (mode === "static") {
@@ -150,7 +155,7 @@ export function useProcessingAnimation(
 							);
 						}
 						needsRedrawRef.current = true;
-						requestAnimationFrame(fadeToIdle);
+						fadeAnimId = requestAnimationFrame(fadeToIdle);
 					} else {
 						if (mode === "static") {
 							staticBarsRef.current = [];
@@ -160,8 +165,19 @@ export function useProcessingAnimation(
 					}
 				};
 				fadeToIdle();
+
+				return () => {
+					cancelled = true;
+					if (fadeAnimId) {
+						cancelAnimationFrame(fadeAnimId);
+					}
+				};
 			}
 		}
+
+		return () => {
+			cancelled = true;
+		};
 	}, [
 		processing,
 		active,

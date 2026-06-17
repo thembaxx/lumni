@@ -1,4 +1,3 @@
-import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { makeCacheKey } from "@/lib/db/repositories/visual-cache";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
@@ -28,6 +27,7 @@ export async function loadVisualFromAppwrite(
 	subject: string,
 ): Promise<VisualContent | null> {
 	try {
+		const { databases } = await import("@/lib/appwrite.server");
 		const response = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
 			COLLECTION_ID,

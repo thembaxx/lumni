@@ -9,14 +9,19 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 
 	useEffect(() => {
 		let animationId: number;
+		let unmounted = false;
 		if (data.type === "transverse" || data.type === "standing") {
 			const animate = () => {
+				if (unmounted) return;
 				setPhase((p) => (p + 0.1) % 100);
 				animationId = requestAnimationFrame(animate);
 			};
 			animationId = requestAnimationFrame(animate);
 		}
-		return () => cancelAnimationFrame(animationId);
+		return () => {
+			unmounted = true;
+			cancelAnimationFrame(animationId);
+		};
 	}, [data.type]);
 
 	const waveLines = useMemo(() => {

@@ -20,6 +20,10 @@ export function StatsRow() {
 	const { data: progressData, isLoading: isProgressLoading } =
 		useUserProgress(userId);
 
+	if (!userId) {
+		return null;
+	}
+
 	if (!isGamificationLoaded || isProgressLoading) {
 		return (
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

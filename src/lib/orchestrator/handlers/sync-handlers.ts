@@ -7,7 +7,6 @@ type SyncHandlerDb = SyncDataAccess & Pick<FlashcardDataAccess, "flashcards">;
 
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
-import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { JobHandler } from "./index";
 import {
 	createAppendHandler,
@@ -21,6 +20,9 @@ function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
 }
 
 const appwriteSync: JobHandler = async (payload) => {
+	const { syncQuestionsToAppwrite } = await import(
+		"@/lib/question-engine/persistence"
+	);
 	const data = payload as JobPayloadByType["appwrite-sync"];
 	await syncQuestionsToAppwrite(data.questions, data.subject, data.topic);
 };

@@ -9,6 +9,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { useAuth } from "@/lib/auth/auth-context";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const PREMIUM_KEY = "lumni_premium_status";
@@ -84,6 +85,9 @@ const VERIFY_API = "/api/premium/verify";
 const PAYFAST_CHECKOUT_API = "/api/payfast/checkout";
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
+	const { user } = useAuth();
+	const isLoggedIn = !!user;
+
 	const [state, setState] = useState<PremiumState>(() => {
 		const saved = loadFromStorage<PremiumState>(PREMIUM_KEY, {
 			isPremium: false,
@@ -117,6 +121,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				expiresAt?: string;
 			} | null>;
 		},
+		enabled: isLoggedIn,
 	});
 
 	const { mutate: verifyPremium } = useMutation({

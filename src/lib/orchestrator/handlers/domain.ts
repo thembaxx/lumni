@@ -1,5 +1,4 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite.server";
 import { dexieDataAccess, type QuizDataAccess } from "@/lib/db";
 import {
 	APPWRITE_DATABASE_ID,
@@ -23,6 +22,7 @@ export function __setDepsForTesting(deps: { db: QuizDataAccess }) {
 }
 
 export const analyticsSync: JobHandler = async (payload) => {
+	const { databases } = await import("@/lib/appwrite.server");
 	const { events } = payload as JobPayloadByType["analytics-sync"];
 	await safePersist("analytics sync", async () => {
 		const batchSize = 50;

@@ -18,7 +18,11 @@ export function NextBestActionCard() {
 	const [dismissed, setDismissed] = useState(false);
 
 	const refresh = useCallback(async () => {
-		const a = await resolveNextAction(user?.$id);
+		if (!user?.$id) {
+			setAction(null);
+			return;
+		}
+		const a = await resolveNextAction(user.$id);
 		setAction(a);
 		setDismissed(false);
 	}, [user?.$id]);

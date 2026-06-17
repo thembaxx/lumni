@@ -18,6 +18,7 @@ export function useUserProgress(userId: string): UseQueryResult<UserProgress> {
 			const progress = await fetchUserProgress(targetUserId);
 			return progress;
 		},
+		enabled: !!targetUserId,
 		staleTime: 1000 * 60 * 5,
 		retry: 3,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),

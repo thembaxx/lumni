@@ -111,28 +111,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 		let cancelled = false;
 
-		const delayedRetry = (ms: number) =>
-			new Promise<void>((resolve) => {
-				const id = setTimeout(() => {
-					if (!cancelled) resolve();
-				}, ms);
-				if (cancelled) clearTimeout(id);
-			});
-
-		async function retryGetAccount(
-			retries = 2,
-			delay = 1000,
-		): Promise<Models.User<Models.Preferences>> {
-			try {
-				return await account.get();
-			} catch (err) {
-				if (retries <= 0) throw err;
-				await delayedRetry(delay);
-				if (cancelled) throw new DOMException("Cancelled", "AbortError");
-				return retryGetAccount(retries - 1, delay * 2);
-			}
-		}
-
 		const init = async () => {
 			if (
 				typeof window !== "undefined" &&
@@ -149,7 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			}
 
 			try {
-				const currentUser = await retryGetAccount();
+				const currentUser = await account.get();
 				if (cancelled) return;
 				const isAnon = currentUser.labels?.includes("anonymous") ?? false;
 				dispatch({

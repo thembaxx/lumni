@@ -47,7 +47,10 @@ export function HomeContent() {
 						</div>
 						<span>{t("home.brand")}</span>
 					</Link>
-					<div className="flex items-center gap-1.5">
+					<div
+						className="flex items-center gap-1.5"
+						key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}
+					>
 						{isAuthenticated ? (
 							<Link href="/dashboard">
 								<Button size="sm" className="flex items-center">

@@ -9,14 +9,19 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 
 	useEffect(() => {
 		let animationId: number;
+		let unmounted = false;
 		if (data.projectiles && data.projectiles.length > 0) {
 			const animate = () => {
+				if (unmounted) return;
 				setAnimationFrame((f) => (f + 0.5) % 100);
 				animationId = requestAnimationFrame(animate);
 			};
 			animationId = requestAnimationFrame(animate);
 		}
-		return () => cancelAnimationFrame(animationId);
+		return () => {
+			unmounted = true;
+			cancelAnimationFrame(animationId);
+		};
 	}, [data.projectiles]);
 
 	const projectileElements = useMemo(() => {

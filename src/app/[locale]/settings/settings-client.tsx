@@ -65,8 +65,10 @@ function SettingsContent() {
 	const [activeTab, setActiveTab] = useState("profile");
 
 	useEffect(() => {
-		initializeNotificationSchedulers();
-	}, []);
+		if (isLoggedIn) {
+			initializeNotificationSchedulers();
+		}
+	}, [isLoggedIn]);
 	const [isSaving, setIsSaving] = useState(false);
 
 	const visibleTabs = useMemo(

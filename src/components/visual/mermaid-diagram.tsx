@@ -50,6 +50,9 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 
 		return () => {
 			cancelled = true;
+			if (containerRef.current) {
+				containerRef.current.innerHTML = "";
+			}
 		};
 	}, [code]);
 

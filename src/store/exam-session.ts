@@ -136,7 +136,6 @@ const dexiePersistStorage = {
 	},
 };
 
-
 export const useExamSessionStore = create<ExamSessionState>()(
 	persist(
 		(set, get) => ({

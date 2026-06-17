@@ -205,8 +205,10 @@ export function DashboardContent({
 	const isLoggedIn = !!user && !isAnonymous;
 
 	useEffect(() => {
-		initializeNotificationSchedulers();
-	}, []);
+		if (isLoggedIn) {
+			initializeNotificationSchedulers();
+		}
+	}, [isLoggedIn]);
 
 	const stats = {
 		questionsAnswered:
