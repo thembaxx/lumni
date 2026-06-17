@@ -250,7 +250,7 @@ export function DashboardClient({
 							<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
 						</div>
 
-						<div className="flex-1">
+						<div className="min-h-0 flex-1 overflow-hidden">
 							<AnimatePresence initial={false} mode="wait">
 								{quizActive ? (
 									<m.div
@@ -270,6 +270,7 @@ export function DashboardClient({
 								) : (
 									<m.div
 										key={activeTab}
+										className="h-full"
 										initial={{ opacity: 0, y: 4 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{
