@@ -12,7 +12,9 @@ vi.mock("@/hooks/use-gamification", () => ({
 vi.mock("@/components/dashboard/daily-challenge-dialog", () => ({
 	DailyChallengeDialog: ({ onClose }: { onClose: () => void }) => (
 		<div data-testid="dialog">
-			<button type="button" onClick={onClose}>Close</button>
+			<button type="button" onClick={onClose}>
+				Close
+			</button>
 		</div>
 	),
 	resolveWeakestSubject: vi.fn(() => "mathematics"),
