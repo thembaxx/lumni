@@ -11,6 +11,22 @@ const mockFetch =
 		(url: string | URL | Request, init?: RequestInit) => Promise<Response>
 	>();
 
+vi.mock("@/lib/auth/auth-context", () => ({
+	useAuth: () => ({
+		user: { $id: "test-user", name: "Test User" },
+		status: "authenticated",
+		isAnonymous: false,
+		error: null,
+		authReady: true,
+		signIn: vi.fn(),
+		signUp: vi.fn(),
+		signInWithMagicLink: vi.fn(),
+		signOut: vi.fn(),
+		verifyEmail: vi.fn(),
+		updateProfile: vi.fn(),
+	}),
+}));
+
 vi.mock("@/lib/utils/storage", () => ({
 	loadFromStorage: (key: string, defaultValue: unknown) =>
 		mockStorage.has(key) ? mockStorage.get(key) : defaultValue,
