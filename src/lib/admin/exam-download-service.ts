@@ -305,6 +305,15 @@ export class ExamDownloadService {
 	async download(request: DownloadRequest): Promise<DownloadResponse> {
 		const { year, examTypes, includeMemo, subjectIds } = request;
 
+		if (subjectIds.length === 0) {
+			return {
+				success: true,
+				downloaded: 0,
+				message: "No subjects specified",
+				results: [],
+			};
+		}
+
 		const subjectQueries = subjectIds.flatMap((id) => [
 			Query.equal("code", id),
 		]);
