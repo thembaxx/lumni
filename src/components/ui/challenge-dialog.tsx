@@ -30,15 +30,19 @@ export function ChallengeDialog({
 		[onClose],
 	);
 
+	const handleKeyDownRef = useRef(handleKeyDown);
+	handleKeyDownRef.current = handleKeyDown;
+
 	useEffect(() => {
 		if (!open) return;
-		document.addEventListener("keydown", handleKeyDown);
+		const handler = (e: KeyboardEvent) => handleKeyDownRef.current(e);
+		document.addEventListener("keydown", handler);
 		document.body.style.overflow = "hidden";
 		return () => {
-			document.removeEventListener("keydown", handleKeyDown);
+			document.removeEventListener("keydown", handler);
 			document.body.style.overflow = "";
 		};
-	}, [open, handleKeyDown]);
+	}, [open]);
 
 	useEffect(() => {
 		if (open && contentRef.current) {

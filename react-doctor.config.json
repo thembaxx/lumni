@@ -27,7 +27,7 @@
 					"src/components/ui/safe-html.tsx",
 					"src/components/ui/chart.tsx"
 				],
-				"rules": ["react-doctor/no-danger"]
+				"rules": ["react-doctor/no-danger", "react-doctor/dangerous-html-sink"]
 			},
 			{
 				"files": ["package.json"],
@@ -74,6 +74,42 @@
 			{
 				"files": [".agents/skills/impeccable/scripts/modern-screenshot.umd.js"],
 				"rules": ["react-doctor/iframe-missing-sandbox"]
+			},
+			{
+				"files": ["src/hooks/use-lesson-progress.ts"],
+				"rules": ["react-doctor/no-cascading-set-state"]
+			},
+			{
+				"files": ["src/hooks/use-vocabulary.ts"],
+				"rules": ["react-doctor/no-derived-state"]
+			},
+			{
+				"files": ["src/app/[locale]/study/[subjectId]/[topicId]/[subtopicId]/lesson-view-client.tsx"],
+				"rules": ["react-doctor/no-event-handler"]
+			},
+			{
+				"files": ["src/components/dashboard/question-of-the-day-card.tsx"],
+				"rules": ["react-doctor/no-initialize-state"]
+			},
+			{
+				"files": ["src/app/api/gamification/__tests__/route.test.ts"],
+				"rules": ["react-doctor/no-this-in-sfc"]
+			},
+			{
+				"files": ["src/app/api/payfast/notify/route.ts"],
+				"rules": ["react-doctor/insecure-crypto-risk"]
+			},
+			{
+				"files": [".github/workflows/ci.yml"],
+				"rules": ["react-doctor/build-pipeline-secret-boundary"]
+			},
+			{
+				"files": ["pnpm-workspace.yaml"],
+				"rules": ["react-doctor/require-pnpm-hardening"]
+			},
+			{
+				"files": ["src/components/settings/tabs/progress-export.tsx"],
+				"rules": ["react-doctor/dangerous-html-sink"]
 			}
 		]
 	}

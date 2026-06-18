@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
 import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
@@ -80,8 +80,8 @@ export function DailyChallengeDialog({
 	onClose,
 	streak,
 }: DailyChallengeDialogProps) {
-	const [phase, setPhase] = useState<BoltPhase>("loading");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
+	const [isCelebrating, setIsCelebrating] = useState(false);
 
 	const engineParams = useMemo(
 		() => ({
@@ -99,19 +99,17 @@ export function DailyChallengeDialog({
 	const question = questions[0];
 	const subjectLabel = useMemo(() => formatSubjectLabel(subject), [subject]);
 
-	useEffect(() => {
-		if (phase !== "loading") return;
-		if (isLoading) return;
-		if (isError) {
-			setPhase("error");
-			return;
-		}
-		if (question) {
-			setPhase("answering");
-		} else if (!isFetching) {
-			setPhase("empty");
-		}
-	}, [isLoading, isError, question, isFetching, phase]);
+	const phase: BoltPhase = isCelebrating
+		? "celebrating"
+		: isLoading
+			? "loading"
+			: isError
+				? "error"
+				: question
+					? "answering"
+					: !isFetching
+						? "empty"
+						: "loading";
 
 	const handleAnswered = useCallback(
 		(correct: boolean) => {
@@ -122,11 +120,10 @@ export function DailyChallengeDialog({
 	);
 
 	const handleFinish = useCallback(() => {
-		setPhase("celebrating");
+		setIsCelebrating(true);
 	}, []);
 
 	const handleRetry = useCallback(() => {
-		setPhase("loading");
 		void refetch();
 	}, [refetch]);
 

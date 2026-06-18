@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OfflineTracker } from "./offline-tracker";
 
 export const dynamic = "force-static";
@@ -33,18 +34,18 @@ export default function OfflinePage() {
 				</p>
 			</div>
 			<div className="flex flex-wrap justify-center gap-3">
-				<a
+				<Link
 					href="/quiz"
 					className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground text-sm"
 				>
 					Practice Offline
-				</a>
-				<a
+				</Link>
+				<Link
 					href="/flashcards"
 					className="inline-flex items-center gap-2 rounded-xl bg-muted px-5 py-3 font-medium text-foreground text-sm"
 				>
 					Review Flashcards
-				</a>
+				</Link>
 			</div>
 		</div>
 	);

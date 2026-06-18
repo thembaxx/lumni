@@ -24,6 +24,7 @@ export function useVocabulary(userId: string) {
 		}
 	}, [userId]);
 
+	// react-doctor/no-derived-state — async data fetch, cannot derive during render
 	useEffect(() => {
 		refresh();
 	}, [refresh]);

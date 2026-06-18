@@ -127,6 +127,7 @@ export function LessonViewClient({
 		enabled: !!subjectId && !!subtopicId,
 	});
 
+	// react-doctor/no-event-handler — analytics tracking on completion state change
 	useEffect(() => {
 		if (isComplete && lesson) {
 			const score = Math.round(

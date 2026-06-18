@@ -42,6 +42,7 @@ export function QuestionOfTheDayCard() {
 
 	const [shown, setShown] = useState(false);
 
+	// react-doctor/no-initialize-state — hydration guard + localStorage read, must run after mount
 	useEffect(() => {
 		setMounted(true);
 		const lastShown = localStorage.getItem(QOTD_KEY);

@@ -24,6 +24,7 @@ export function useLessonProgress(userId: string, lessonId: string) {
 
 	const key = buildLessonKey(userId, lessonId);
 
+	// react-doctor/no-cascading-set-state — React 18 batches these into 1 redraw
 	useEffect(() => {
 		let cancelled = false;
 		_deps.db.lessonProgress

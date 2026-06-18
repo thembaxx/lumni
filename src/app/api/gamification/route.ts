@@ -6,7 +6,7 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { getAuthenticatedUserName } from "@/lib/server/auth";
 
 const GamificationUpdateSchema = z
-	.object({
+	.strictObject({
 		totalXp: z.number().optional(),
 		currentStreak: z.number().optional(),
 		longestStreak: z.number().optional(),
@@ -17,7 +17,6 @@ const GamificationUpdateSchema = z
 		achievements: z.array(z.string()).optional(),
 		streakFreezes: z.number().optional(),
 	})
-	.strict()
 	.refine((obj) => Object.keys(obj).length > 0, {
 		message: "At least one field must be provided",
 	});
