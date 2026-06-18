@@ -146,15 +146,15 @@ const ComparativeAnalyticsPanel = dynamic(
 
 function BentoStatRow({
 	questionsAnswered,
-	accuracy,
+	streak,
 }: {
 	questionsAnswered: number;
-	accuracy: number;
+	streak: number;
 }) {
 	return (
 		<div className="grid grid-cols-12 gap-3">
 			<div className="col-span-12 sm:col-span-8">
-				<StatsCards questionsAnswered={questionsAnswered} accuracy={accuracy} />
+				<StatsCards questionsAnswered={questionsAnswered} streak={streak} />
 			</div>
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
@@ -199,15 +199,17 @@ export function DashboardContent({
 	activeTab,
 	onBoltComplete,
 	boltStreak,
+	id,
 }: {
 	onStartQuiz: (subject: string) => void;
 	activeTab: TabValue;
 	onBoltComplete: (result: BoltResult) => void;
 	boltStreak: number;
+	id?: string;
 }) {
 	const t = useTranslations();
 	const { user, isAnonymous } = useAuth();
-	const { gamification } = useGamification();
+	const { gamification, currentStreak } = useGamification();
 	const isLoggedIn = !!user && !isAnonymous;
 
 	useEffect(() => {
@@ -219,10 +221,9 @@ export function DashboardContent({
 	const stats = {
 		questionsAnswered:
 			gamification.totalXp > 0 ? Math.floor(gamification.totalXp / 25) : 0,
-		accuracy: 0,
 	};
 
-	const showPractice = activeTab === "today" || activeTab === "spaces";
+	const showPractice = activeTab === "today" || activeTab === "practice";
 	const showAnalytics = activeTab === "today" || activeTab === "analytics";
 
 	const handleRefresh = refreshPage;
@@ -232,42 +233,14 @@ export function DashboardContent({
 
 	return (
 		<PullToRefresh
+			id={id}
 			data-scroll-container
 			onRefresh={handleRefresh}
 			className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
 		>
-			<PageContainer className="gap-8 pb-16">
+			<PageContainer className="gap-6 pb-16">
 				<LoginBanner />
 				{activeTab === "today" && <HeroBanner />}
-				{activeTab === "today" && isLoggedIn && (
-					<StaggeredSection>
-						<DailyChallengeCard
-							onComplete={onBoltComplete}
-							streak={boltStreak}
-						/>
-					</StaggeredSection>
-				)}
-				{activeTab === "today" && boltDone && (
-					<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/8 px-4 py-3 transition-[background-color] duration-300">
-						<div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
-							<HugeiconsIcon
-								icon={SparklesIcon}
-								className="size-5 text-success"
-							/>
-						</div>
-						<div className="flex min-w-0 flex-col gap-0.5">
-							<span className="font-semibold text-sm text-success-foreground">
-								Today&rsquo;s Bolt complete
-							</span>
-							<span className="text-success-foreground/70 text-xs">
-								Come back tomorrow to keep learning
-							</span>
-						</div>
-						<div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">
-							<HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
-						</div>
-					</div>
-				)}
 				{isAnonymous && (
 					<LocalDataNotice
 						page="dashboard"
@@ -275,115 +248,203 @@ export function DashboardContent({
 					/>
 				)}
 				{activeTab === "today" && isLoggedIn && <CountdownHeader />}
-				<StaggerProvider baseDelay={0.02}>
-					{activeTab === "today" && (
-						<StaggeredSection>
-							<GettingStartedCard />
-						</StaggeredSection>
-					)}
-					{activeTab === "today" && (
+
+				{activeTab === "today" && (
+					<section className="flex flex-col gap-3" aria-label="Get started">
+						{isLoggedIn && (
+							<StaggeredSection>
+								<DailyChallengeCard
+									onComplete={onBoltComplete}
+									streak={boltStreak}
+								/>
+							</StaggeredSection>
+						)}
+						{isLoggedIn && boltDone && (
+							<StaggeredSection>
+								<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/8 px-4 py-3 transition-[background-color] duration-300">
+									<div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											className="size-5 text-success"
+										/>
+									</div>
+									<div className="flex min-w-0 flex-col gap-0.5">
+										<span className="font-semibold text-sm text-success-foreground">
+											Daily Challenge complete
+										</span>
+										<span className="text-success-foreground/70 text-xs">
+											Come back tomorrow to keep learning
+										</span>
+									</div>
+									<div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">
+										<HugeiconsIcon
+											icon={Lightning}
+											className="size-4 text-warning"
+										/>
+									</div>
+								</div>
+							</StaggeredSection>
+						)}
+						{isLoggedIn && (
+							<StaggeredSection>
+								<AppErrorBoundary>
+									<NextBestActionCard />
+								</AppErrorBoundary>
+							</StaggeredSection>
+						)}
+						{isLoggedIn && (
+							<StaggeredSection>
+								<TodayFocusCard />
+							</StaggeredSection>
+						)}
+						{isLoggedIn && (
+							<StaggeredSection>
+								<GettingStartedCard />
+							</StaggeredSection>
+						)}
 						<StaggeredSection>
 							<NotificationNudge />
 						</StaggeredSection>
-					)}
-					{showAnalytics && isLoggedIn && (
+					</section>
+				)}
+
+				{activeTab === "today" && isLoggedIn && (
+					<section className="flex flex-col gap-3" aria-label="Your progress">
 						<StaggeredSection>
 							<BentoStatRow
 								questionsAnswered={stats.questionsAnswered}
-								accuracy={stats.accuracy}
+								streak={currentStreak}
 							/>
 						</StaggeredSection>
-					)}
-					{showPractice && (
+						<StaggeredSection>
+							<StreakCard />
+						</StaggeredSection>
+					</section>
+				)}
+
+				{activeTab === "today" && (
+					<section className="flex flex-col gap-3" aria-label="Study tools">
+						<StaggeredSection>
+							<FocusTimerCard />
+						</StaggeredSection>
+						<StaggeredSection>
+							<QuestionOfTheDayCard />
+						</StaggeredSection>
+						{isLoggedIn && (
+							<StaggeredSection>
+								<LessonLibraryCard />
+							</StaggeredSection>
+						)}
+						{isLoggedIn && (
+							<StaggeredSection>
+								<VocabularyListCard />
+							</StaggeredSection>
+						)}
+						<StaggeredSection>
+							<StaggerList>
+								<QuickActions />
+							</StaggerList>
+						</StaggeredSection>
+					</section>
+				)}
+
+				{activeTab === "today" && isAnonymous && (
+					<StaggeredSection>
+						<AnonymousUpsell />
+					</StaggeredSection>
+				)}
+
+				<StaggerProvider baseDelay={0.02}>
+					{showPractice && activeTab !== "today" && (
 						<StaggeredSection>
 							<FocusTimerCard />
 						</StaggeredSection>
 					)}
-					{isAnonymous && (
+					{showPractice && activeTab !== "today" && isAnonymous && (
 						<StaggeredSection>
 							<AnonymousUpsell />
 						</StaggeredSection>
 					)}
-					{showPractice && (
+					{showPractice && activeTab !== "today" && (
 						<StaggeredSection>
 							<QuestionOfTheDayCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<AppErrorBoundary>
 								<NextBestActionCard />
 							</AppErrorBoundary>
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<TodayFocusCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<LessonLibraryCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<VocabularyListCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<AppErrorBoundary>
 								<LearningMapCard />
 							</AppErrorBoundary>
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<MyAssignments />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<StudyCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<StreakCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<RecentQuestionsCard />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<StudyPlanOverview />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<CompetencyOverview />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<BloomTaxonomyWidget />
 						</StaggeredSection>
 					)}
-					{showPractice && (
+					{showPractice && activeTab !== "today" && (
 						<StaggeredSection>
 							<OfflinePackManager />
 						</StaggeredSection>
 					)}
-					{showPractice && isLoggedIn && (
+					{showPractice && activeTab !== "today" && isLoggedIn && (
 						<StaggeredSection>
 							<DailyChallenges />
 						</StaggeredSection>
 					)}
-					{showPractice && (
+					{showPractice && activeTab !== "today" && (
 						<StaggeredSection>
 							<QuizStartCard onStart={onStartQuiz} />
 						</StaggeredSection>
@@ -427,7 +488,7 @@ export function DashboardContent({
 							</Card>
 						</StaggeredSection>
 					)}
-					{showPractice && (
+					{showPractice && activeTab !== "today" && (
 						<StaggeredSection>
 							<StaggerList>
 								<QuickActions />

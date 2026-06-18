@@ -20,7 +20,7 @@ import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface StatsCardsProps {
 	questionsAnswered: number;
-	accuracy: number;
+	streak: number;
 }
 
 interface StatItemProps {
@@ -102,7 +102,7 @@ function StatCard({
 	);
 }
 
-export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
+export function StatsCards({ questionsAnswered, streak }: StatsCardsProps) {
 	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
 	const finalShouldReduceMotion = shouldReduceMotionOpt;
 
@@ -118,11 +118,11 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 					index: 0,
 				},
 				{
-					label: "Accuracy",
-					value: accuracy,
+					label: "Day Streak",
+					value: streak,
 					icon: CheckmarkCircle01Icon,
-					colorClass: "text-success",
-					accentClass: "hover:text-success/80",
+					colorClass: "text-warning",
+					accentClass: "hover:text-warning/80",
 					index: 1,
 				},
 			].map(({ label, value, icon, colorClass, accentClass, index }) => (

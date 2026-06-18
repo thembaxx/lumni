@@ -1,1 +1,1 @@
-export type TabValue = "today" | "spaces" | "analytics";
+export type TabValue = "today" | "practice" | "analytics";

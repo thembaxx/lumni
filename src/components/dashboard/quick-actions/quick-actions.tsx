@@ -21,7 +21,7 @@ import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 const quickActions = [
-	{ icon: Brain02FreeIcons, label: "Practice", route: "/quiz" },
+	{ icon: Brain02FreeIcons, label: "Practice", route: "/quiz", primary: true },
 	{
 		icon: DocumentValidationFreeIcons,
 		label: "Exam Papers",
@@ -38,6 +38,7 @@ function ActionButton({
 	icon,
 	label,
 	onClick,
+	primary,
 }: {
 	icon: readonly (readonly [
 		string,
@@ -45,6 +46,7 @@ function ActionButton({
 	])[];
 	label: string;
 	onClick?: () => void;
+	primary?: boolean;
 }) {
 	const shouldReduceMotion = useReducedMotion();
 	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
@@ -66,22 +68,36 @@ function ActionButton({
 			onClick={onClick}
 			aria-label={label}
 		>
-			<Button
-				variant="secondary"
-				className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
-			>
-				<span className="text-accent">
-					<PerpetualFloat floatRange={1.5} speed={3}>
+			{primary ? (
+				<Button className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-white">
+					<span>
 						<HugeiconsIcon
 							icon={icon}
-							className="size-4 text-foreground"
+							className="size-4"
 							data-icon
 							aria-hidden="true"
 						/>
-					</PerpetualFloat>
-				</span>
-				<span className="font-medium text-sm">{label}</span>
-			</Button>
+					</span>
+					<span className="font-medium text-sm">{label}</span>
+				</Button>
+			) : (
+				<Button
+					variant="secondary"
+					className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
+				>
+					<span className="text-accent">
+						<PerpetualFloat floatRange={1.5} speed={3}>
+							<HugeiconsIcon
+								icon={icon}
+								className="size-4 text-foreground"
+								data-icon
+								aria-hidden="true"
+							/>
+						</PerpetualFloat>
+					</span>
+					<span className="font-medium text-sm">{label}</span>
+				</Button>
+			)}
 		</m.div>
 	);
 }
@@ -105,6 +121,7 @@ export function QuickActions() {
 								icon={action.icon}
 								label={action.label}
 								onClick={() => push(action.route ?? "/")}
+								primary={action.primary}
 							/>
 						)}
 					</li>
