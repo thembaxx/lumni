@@ -84,7 +84,9 @@
 				"rules": ["react-doctor/no-derived-state"]
 			},
 			{
-				"files": ["src/app/[locale]/study/[subjectId]/[topicId]/[subtopicId]/lesson-view-client.tsx"],
+				"files": [
+					"src/app/[locale]/study/[subjectId]/[topicId]/[subtopicId]/lesson-view-client.tsx"
+				],
 				"rules": ["react-doctor/no-event-handler"]
 			},
 			{
