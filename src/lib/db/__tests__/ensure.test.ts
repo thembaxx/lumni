@@ -156,6 +156,15 @@ vi.mock("@/lib/db/client", () => ({
 	},
 }));
 
+vi.mock("@/lib/appwrite.server", () => ({
+	databases: {},
+	serverAccount: {},
+	serverClient: {},
+	APPWRITE_ENDPOINT: "https://test.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
+}));
+
 vi.mock("node-appwrite", () => ({
 	Client: class {
 		setEndpoint() {

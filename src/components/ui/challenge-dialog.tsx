@@ -2,7 +2,6 @@
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
 import { iOSDecelerate } from "@/lib/utils/animation";
 
 interface ChallengeDialogProps {
@@ -50,12 +49,10 @@ export function ChallengeDialog({
 		}
 	}, [open]);
 
-	if (typeof window === "undefined") return null;
-
-	return createPortal(
-		<>
-			<AnimatePresence>
-				{open && (
+	return (
+		<AnimatePresence>
+			{open && (
+				<>
 					<m.div
 						key="challenge-dialog-backdrop"
 						initial={shouldReduceMotion ? false : { opacity: 0 }}
@@ -66,10 +63,6 @@ export function ChallengeDialog({
 						onClick={onClose}
 						aria-hidden="true"
 					/>
-				)}
-			</AnimatePresence>
-			<AnimatePresence>
-				{open && (
 					<m.div
 						key="challenge-dialog-content"
 						ref={contentRef}
@@ -85,9 +78,8 @@ export function ChallengeDialog({
 					>
 						{children}
 					</m.div>
-				)}
-			</AnimatePresence>
-		</>,
-		document.body,
+				</>
+			)}
+		</AnimatePresence>
 	);
 }

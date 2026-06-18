@@ -110,9 +110,8 @@ let requireAdmin: () => Promise<string>;
 let getAuthenticatedUserName: () => Promise<string | null>;
 
 beforeAll(async () => {
-	const mod = await import(
-		`../auth?_auth_test=${Date.now()}_${Math.random().toString(36).slice(2)}`
-	);
+	vi.resetModules();
+	const mod = await import("../auth");
 	verifyAuth = mod.verifyAuth;
 	getAuthenticatedUserId = mod.getAuthenticatedUserId;
 	requireAdmin = mod.requireAdmin;
