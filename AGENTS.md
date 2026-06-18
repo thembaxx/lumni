@@ -754,3 +754,20 @@ const systemPrompt = webContext.xml
 - **TypeScript**: `npx tsc --noEmit` — 0 errors.
 - **Biome**: `npx biome check` — 0 errors.
 - **Tests**: `bun test` — 1271 pass, 0 fail.
+
+### Session 37 — Architectural deepening + service extractions (June 2026)
+
+- **Goal**: Collapse AI provider singleton, replace lastRagContext sidecar with structured return, create `CachedAIGenerator<T>`, extract route handler logic into services, remove dead code.
+- **Candidate 1: AI provider singleton collapsed**: `QuestionProcessor` and `Grader` now accept `ai?: AIClient` in constructor. `QuestionEngine` creates AI client once, threads through `ProcessorRegistry`. `getAI()` removed from question-engine path (still exported for backward compat). 10 files changed.
+- **Candidate 2: lastRagContext sidecar replaced**: `QuestionEngine.generate()` now returns `GenerateResult { questions, ragContext }` instead of `Question[]`. `lastRagContext` kept during execution (reset at start) because `cachingStrategy.resolve()` calls `generateInternal()` as side effect. Orchestrator reads `ragContext` from return value. 6 files changed.
+- **Candidate 3: `CachedAIGenerator<T>`**: New generic at `src/lib/ai/cached-ai-generator.ts`. Pattern: Dexie lookup → stale? → AI generate → cache → return. Config object with `buildCacheEntry`/`extractData` for heterogeneous Dexie entry shapes. Knowledge-graph and study-guide refactored to use it. 5 files changed.
+- **Candidate 4: AnalyticsService**: `src/lib/analytics/analytics-service.ts` with `SessionStore` interface. Trends and comparative routes reduced from ~50-90 lines to ~20 lines each. 4 files changed.
+- **Candidate 5: Dead Zustand store removed**: `useFlashcardsStore` deleted (82 lines) + test (86 lines). 3 files changed.
+- **Candidate 6: Retention DI leak fixed**: `_dexieDa.retentionRecurrence` → `_deps.db.retentionRecurrence`. 1 file changed.
+- **Service extractions** (6 services): `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines each.
+- **Dead code cleanup (~200 lines)**: `tts-service.ts` (SUPPORTED_LANGUAGES, getLanguageForText, PronunciationExercise, SAMPLE_EXERCISES, getExercisesForLanguage), `integration/service.ts` (flagLessonForReview, getPronunciationWords, trackComprehensionScore, getPastQuestionsForQuiz), `animation.ts` (normalTransition), `study-planner.ts` (mergeNationalExamDates + unused ExamSlot import), `snap-answer.ts` (onSnapAnswer), `orchestrator/handlers/index.ts` (getAllHandlers).
+- **Tests**: `bun run test` — 1264 pass, 0 fail. (`bun test` runs Bun's native runner which doesn't read vitest.config.ts — always use `bun run test`.)
+- **ADR-0012**: Service extraction pattern documented.
+- **TypeScript**: `npx tsc --noEmit` — 0 errors.
+- **Biome**: `npx biome check` — 0 errors on all changed files.
+- **Commit**: `f2c3edb8` — 39 files, +766/−893 lines.

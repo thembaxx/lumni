@@ -6,9 +6,11 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1271 tests pass, 0 fail.
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1264 tests pass, 0 fail.
 
 **Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
+
+**Architectural deepening (June 2026)** — 6 candidates implemented: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic created for fetch→cache→generate pattern, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. Service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`.
 
 ## System at a Glance
 

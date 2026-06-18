@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** 2026-06-09 (sessions 1-35, June 2026)
+**Last synced:** 2026-06-18 (sessions 1-37, June 2026)
 
 ---
 
@@ -294,6 +294,12 @@ erDiagram
 | **CachingStrategy** | Generic multi-tier caching (parallel tier check) | TypeScript | `src/lib/caching-strategy/` |
 | **UniformAIAdapter** | Factory for pluggable AI providers (OpenAI/Gemini request normalizers) | TypeScript | `src/lib/ai/uniform-adapter.ts` |
 | **SearchService** | Chunked parallel Dexie search with relevance scoring | Dexie | `src/lib/search/chunked-search.ts` |
+| **DigestService** | Weekly stats computation + push notification delivery | DataAccess + web-push | `src/lib/digest/digest-service.ts` |
+| **PlatformAnalyticsService** | Platform-wide analytics aggregation (active users, question counts, subject breakdown) | DataAccess + Appwrite | `src/lib/admin/analytics-service.ts` |
+| **ExamDownloadService** | Appwrite PDF assembly, per-student/per-paper queries, analytics | Appwrite SDK + DataAccess | `src/lib/admin/exam-download-service.ts` |
+| **ExamUploadService** | File parsing, Appwrite document creation, analytics | Appwrite SDK + DataAccess | `src/lib/admin/exam-upload-service.ts` |
+| **SubmissionService** | Assignment validation, auto-grading, comment creation, analytics | DataAccess + QuestionEngine | `src/lib/assignments/submission-service.ts` |
+| **AuthRateLimitService** | IP extraction, Redis rate limiting, analytics | Redis + DataAccess | `src/lib/auth/rate-limit-service.ts` |
 | **i18n** | Locale-based routing ([locale] prefix), en/af/zu translations | Next.js middleware | `src/i18n/` |
 
 ### Backend (External)
