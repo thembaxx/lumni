@@ -1,12 +1,12 @@
-import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { Query } from "appwrite";
-import { UTApi, UTFile } from "uploadthing/server";
+import { uploadToUploadThing } from "@/lib/admin/upload-shared";
 import {
 	COLLECTIONS,
 	createDocument,
 	listDocuments,
+	type Subject,
 	updateDocument,
 } from "@/lib/db/client";
 
@@ -29,7 +29,7 @@ interface ExamsData {
 	exams: ExamPaperEntry[];
 }
 
-interface DownloadRequest {
+export interface DownloadRequest {
 	year: number;
 	examTypes: string[];
 	includeMemo: boolean;
@@ -76,13 +76,13 @@ export class ExamDownloadService {
 			.replace(/^-|-$/g, "");
 	}
 
-	private async findExamPaperUrl(
+	private findExamPaperUrl(
 		subjectName: string,
 		year: number,
 		paperNumber: number,
 		type: "paper" | "memo",
 		session: string,
-	): Promise<{ url: string; title: string } | null> {
+	): { url: string; title: string } | null {
 		const exams = this.getExamsFromJson(
 			year,
 			session,
@@ -117,22 +117,6 @@ export class ExamDownloadService {
 		}
 	}
 
-	private async uploadToUploadThing(
-		buffer: Buffer,
-		fileName: string,
-	): Promise<{ url: string; key: string } | null> {
-		try {
-			const utApi = new UTApi();
-			const uint8Array = new Uint8Array(buffer);
-			const utFile = new UTFile([uint8Array], fileName);
-			const result = await utApi.uploadFiles(utFile);
-			if (!result?.data) return null;
-			return { url: result.data.ufsUrl, key: result.data.key };
-		} catch {
-			return null;
-		}
-	}
-
 	private async saveToDatabase(
 		subjectId: string,
 		year: number,
@@ -143,8 +127,7 @@ export class ExamDownloadService {
 		originalFileName: string,
 	): Promise<boolean> {
 		try {
-			const id = randomUUID();
-			await createDocument(COLLECTIONS.EXAM_PAPERS, {
+			const id = await createDocument(COLLECTIONS.EXAM_PAPERS, {
 				subjectId,
 				year,
 				paperNumber,
@@ -154,7 +137,9 @@ export class ExamDownloadService {
 				originalFileName,
 			});
 			if (type === "paper") {
-				const existingMemo = await listDocuments(COLLECTIONS.EXAM_PAPERS, [
+				const existingMemo = await listDocuments<{
+					$id: string;
+				}>(COLLECTIONS.EXAM_PAPERS, [
 					Query.equal("subjectId", subjectId),
 					Query.equal("year", year),
 					Query.equal("paperNumber", paperNumber),
@@ -162,11 +147,9 @@ export class ExamDownloadService {
 					Query.limit(1),
 				]);
 				if (existingMemo.length > 0) {
-					await updateDocument(
-						COLLECTIONS.EXAM_PAPERS,
-						(existingMemo[0] as Record<string, unknown>).$id as string,
-						{ memoId: id },
-					);
+					await updateDocument(COLLECTIONS.EXAM_PAPERS, existingMemo[0].$id, {
+						memoId: id,
+					});
 				}
 			}
 			return true;
@@ -197,7 +180,7 @@ export class ExamDownloadService {
 		} = params;
 		const label = type === "paper" ? `P${paperNum}` : `Memo P${paperNum}`;
 
-		const examInfo = await this.findExamPaperUrl(
+		const examInfo = this.findExamPaperUrl(
 			subjectName,
 			year,
 			paperNum,
@@ -219,8 +202,8 @@ export class ExamDownloadService {
 			};
 		}
 
-		const uploadResult = await this.uploadToUploadThing(
-			pdfData.buffer,
+		const uploadResult = await uploadToUploadThing(
+			new Uint8Array(pdfData.buffer),
 			fileName,
 		);
 		if (!uploadResult) {
@@ -252,46 +235,50 @@ export class ExamDownloadService {
 	}
 
 	private async downloadSubjectPapers(params: {
-		subject: unknown;
+		subject: Subject;
 		examType: string;
 		session: string;
 		year: number;
 		paperNumbers: number[];
 		includeMemo: boolean | undefined;
 	}): Promise<{ downloadedForSubj: number; allErrors: string[] }> {
-		const subjRecord = params.subject as Record<string, unknown>;
-		const subjectName = subjRecord.name as string;
-		const subjectId = subjRecord.$id as string;
-		const subjectCode = subjRecord.code as string;
+		const {
+			subject: subj,
+			examType,
+			session,
+			year,
+			paperNumbers,
+			includeMemo,
+		} = params;
 
 		const paperResults = await Promise.all(
-			params.paperNumbers.map(async (paperNum) => {
-				const fileName = `${params.year}_${params.examType}_${subjectCode}_p${paperNum}.pdf`;
-				const memoFileName = `${params.year}_${params.examType}_${subjectCode}_p${paperNum}_memo.pdf`;
+			paperNumbers.map(async (paperNum) => {
+				const fileName = `${year}_${examType}_${subj.code}_p${paperNum}.pdf`;
+				const memoFileName = `${year}_${examType}_${subj.code}_p${paperNum}_memo.pdf`;
 
 				const flows: Promise<{ downloaded: number; errors: string[] }>[] = [
 					this.processExamFlow({
-						subjectName,
-						subjectId,
-						year: params.year,
+						subjectName: subj.name,
+						subjectId: subj.$id,
+						year,
 						paperNum,
-						examType: params.examType,
+						examType,
 						type: "paper",
-						session: params.session,
+						session,
 						fileName,
 					}),
 				];
 
-				if (params.includeMemo) {
+				if (includeMemo) {
 					flows.push(
 						this.processExamFlow({
-							subjectName,
-							subjectId,
-							year: params.year,
+							subjectName: subj.name,
+							subjectId: subj.$id,
+							year,
 							paperNum,
-							examType: params.examType,
+							examType,
 							type: "memo",
-							session: params.session,
+							session,
 							fileName: memoFileName,
 						}),
 					);
@@ -318,8 +305,13 @@ export class ExamDownloadService {
 	async download(request: DownloadRequest): Promise<DownloadResponse> {
 		const { year, examTypes, includeMemo, subjectIds } = request;
 
-		const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
-			Query.equal("code", subjectIds.join(",")),
+		const subjectQueries = subjectIds.flatMap((id) => [
+			Query.equal("code", id),
+		]);
+		const subjects = await listDocuments<Subject>(COLLECTIONS.SUBJECTS, [
+			...(subjectQueries.length > 1
+				? [Query.or(subjectQueries)]
+				: subjectQueries),
 		]);
 
 		const errors: string[] = [];
@@ -345,7 +337,7 @@ export class ExamDownloadService {
 		for (const { subj, downloadedForSubj, allErrors } of taskResults) {
 			errors.push(...allErrors);
 			results.push({
-				subject: (subj as Record<string, unknown>).name as string,
+				subject: subj.name,
 				papers: downloadedForSubj,
 				status: allErrors.length === 0 ? "success" : "partial",
 			});

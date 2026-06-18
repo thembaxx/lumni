@@ -25,11 +25,22 @@ interface GradedAnswer {
 }
 
 interface SubmissionResult {
-	success: boolean;
 	score: number;
 	total: number;
 	correctCount: number;
 	gradedAnswers: GradedAnswer[];
+}
+
+interface AssignmentSubmission {
+	$id: string;
+	assignmentId: string;
+	studentId: string;
+	score: number;
+	maxScore: number;
+	totalQuestions: number;
+	correctCount: number;
+	completedAt: string;
+	gradedAnswers: string;
 }
 
 async function sendAssignmentGradedPush(
@@ -56,18 +67,19 @@ async function sendAssignmentGradedPush(
 			VAPID_PRIVATE_KEY,
 		);
 
-		const subscriptions = await listDocs<Record<string, unknown>>(
-			"push_subscriptions",
-			[AQuery.equal("userId", userId)],
-		);
+		const subscriptions = await listDocs<{
+			endpoint: string;
+			auth: string;
+			p256dh: string;
+		}>("push_subscriptions", [AQuery.equal("userId", userId)]);
 
 		await Promise.allSettled(
 			subscriptions.map((sub) => {
 				const pushSub = {
-					endpoint: sub.endpoint as string,
+					endpoint: sub.endpoint,
 					keys: {
-						auth: sub.auth as string,
-						p256dh: sub.p256dh as string,
+						auth: sub.auth,
+						p256dh: sub.p256dh,
 					},
 				};
 				return webpushModule.default.sendNotification(
@@ -93,7 +105,9 @@ export class SubmissionService {
 		subject: string,
 		topic?: string,
 	): Promise<SubmissionResult> {
-		const assignment = await listDocuments(COLLECTIONS.TEACHER_ASSIGNMENTS, [
+		const assignment = await listDocuments<{
+			$id: string;
+		}>(COLLECTIONS.TEACHER_ASSIGNMENTS, [
 			Query.equal("$id", assignmentId),
 			Query.limit(1),
 		]);
@@ -171,15 +185,18 @@ export class SubmissionService {
 
 		const correctCount = gradedAnswers.filter((g) => g.correct).length;
 
-		const existing = await listDocuments(COLLECTIONS.ASSIGNMENT_SUBMISSIONS, [
-			Query.equal("assignmentId", assignmentId),
-			Query.equal("studentId", userId),
-		]);
+		const existing = await listDocuments<AssignmentSubmission>(
+			COLLECTIONS.ASSIGNMENT_SUBMISSIONS,
+			[
+				Query.equal("assignmentId", assignmentId),
+				Query.equal("studentId", userId),
+			],
+		);
 
 		if (existing.length > 0) {
 			await updateDocument(
 				COLLECTIONS.ASSIGNMENT_SUBMISSIONS,
-				(existing[0] as Record<string, unknown>).$id as string,
+				existing[0].$id,
 				{
 					score: totalScore,
 					maxScore: totalMaxScore,
@@ -205,7 +222,6 @@ export class SubmissionService {
 		await sendAssignmentGradedPush(userId, subject, totalScore, totalMaxScore);
 
 		return {
-			success: true,
 			score: totalScore,
 			total: totalMaxScore,
 			correctCount,

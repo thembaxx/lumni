@@ -2,6 +2,10 @@ import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
+const MAX_SIGNIN_ATTEMPTS = 3;
+const MAX_MAGICLINK_ATTEMPTS = 1;
+
 interface RateLimitResult {
 	allowed: boolean;
 	resetAt?: number;
@@ -23,7 +27,7 @@ export class AuthRateLimitService {
 
 	private async logAttempt(
 		email: string,
-		subjectId: string,
+		action: string,
 		ip: string,
 	): Promise<void> {
 		await databases.createDocument(
@@ -33,7 +37,7 @@ export class AuthRateLimitService {
 			{
 				eventType: "auth_attempt",
 				userId: email,
-				subjectId,
+				subjectId: action,
 				metadata: JSON.stringify({ ip }),
 				timestamp: new Date().toISOString(),
 			},
@@ -61,7 +65,7 @@ export class AuthRateLimitService {
 			oldestDocs.documents.length > 0
 				? new Date(oldestDocs.documents[0].timestamp).getTime()
 				: Date.now();
-		return oldestTime + 5 * 60 * 1000;
+		return oldestTime + RATE_LIMIT_WINDOW_MS;
 	}
 
 	async check(
@@ -77,7 +81,7 @@ export class AuthRateLimitService {
 		}
 
 		const now = Date.now();
-		const fiveMinutesAgo = new Date(now - 5 * 60 * 1000).toISOString();
+		const windowStart = new Date(now - RATE_LIMIT_WINDOW_MS).toISOString();
 
 		if (action === "success") {
 			await this.logAttempt(normalizedEmail, "success", ip);
@@ -92,7 +96,7 @@ export class AuthRateLimitService {
 					Query.equal("eventType", "auth_attempt"),
 					Query.equal("userId", normalizedEmail),
 					Query.equal("subjectId", "success"),
-					Query.greaterThanEqual("timestamp", fiveMinutesAgo),
+					Query.greaterThanEqual("timestamp", windowStart),
 					Query.orderDesc("timestamp"),
 					Query.limit(1),
 				],
@@ -101,7 +105,7 @@ export class AuthRateLimitService {
 			const sinceTime =
 				successDocs.documents.length > 0
 					? successDocs.documents[0].timestamp
-					: fiveMinutesAgo;
+					: windowStart;
 
 			const signinDocs = await databases.listDocuments(
 				APPWRITE_DATABASE_ID,
@@ -115,7 +119,7 @@ export class AuthRateLimitService {
 				],
 			);
 
-			if (signinDocs.total >= 3) {
+			if (signinDocs.total >= MAX_SIGNIN_ATTEMPTS) {
 				const resetAt = await this.getOldestResetAt(
 					normalizedEmail,
 					"signin",
@@ -141,16 +145,16 @@ export class AuthRateLimitService {
 					Query.equal("eventType", "auth_attempt"),
 					Query.equal("userId", normalizedEmail),
 					Query.equal("subjectId", "magiclink"),
-					Query.greaterThanEqual("timestamp", fiveMinutesAgo),
+					Query.greaterThanEqual("timestamp", windowStart),
 					Query.limit(1),
 				],
 			);
 
-			if (magicDocs.total >= 1) {
+			if (magicDocs.total >= MAX_MAGICLINK_ATTEMPTS) {
 				const resetAt = await this.getOldestResetAt(
 					normalizedEmail,
 					"magiclink",
-					fiveMinutesAgo,
+					windowStart,
 				);
 				const waitMinutes = Math.ceil((resetAt - now) / 60000);
 				return {
