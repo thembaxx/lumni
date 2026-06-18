@@ -234,7 +234,7 @@ export function DashboardContent({
 		<PullToRefresh
 			data-scroll-container
 			onRefresh={handleRefresh}
-			className="flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))]"
+			className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
 		>
 			<PageContainer className="gap-8 pb-16">
 				<LoginBanner />
