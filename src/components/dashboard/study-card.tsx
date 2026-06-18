@@ -22,7 +22,7 @@ export function StudyCard() {
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
 		>
 			<Card
-				className="cursor-pointer overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
+				className="cursor-pointer overflow-hidden rounded-2xl shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
 				onClick={() => push("/dashboard")}
 				role="button"
 				tabIndex={0}

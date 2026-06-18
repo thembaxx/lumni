@@ -138,7 +138,7 @@ export function DailyChallengeDialog({
 				<BoltMark />
 				<div className="flex min-w-0 flex-col">
 					<span className="font-extrabold font-heading text-base text-system-text-primary tracking-tight">
-						Today&rsquo;s Bolt
+						Today&rsquo;s Challenge
 					</span>
 					<span className="truncate text-muted-foreground text-xs">
 						{subjectLabel}
@@ -293,7 +293,7 @@ function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
 						<span className="relative inline-flex size-2 rounded-full bg-warning" />
 					</span>
 					<span className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
-						Charging your bolt
+						Loading your challenge
 					</span>
 				</div>
 				<h2 className="ios-title-3 max-w-md text-balance text-foreground">
@@ -336,7 +336,7 @@ function BoltErrorState({
 			</div>
 			<div className="flex flex-col gap-2">
 				<h2 className="ios-title-3 text-balance text-foreground">
-					We couldn&rsquo;t charge your bolt
+					We couldn&rsquo;t load your challenge
 				</h2>
 				<p className="max-w-sm text-balance text-muted-foreground text-sm">
 					Something tripped while loading today&rsquo;s question. Give it

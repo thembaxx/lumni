@@ -56,7 +56,7 @@ export function RecentQuestionsCard() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
 		>
-			<Card className="overflow-hidden rounded-3xl shadow-level-1">
+			<Card className="overflow-hidden rounded-2xl shadow-level-1">
 				<CardHeader>
 					<CardTitle className="font-extrabold text-lg">
 						Recent Questions

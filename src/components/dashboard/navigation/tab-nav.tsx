@@ -22,7 +22,7 @@ interface TabConfig {
 
 const tabs: TabConfig[] = [
 	{ value: "today", label: "Today", icon: Calendar01Icon },
-	{ value: "spaces", label: "Practice", icon: GridIcon },
+	{ value: "practice", label: "Practice", icon: GridIcon },
 	{ value: "analytics", label: "Analytics", icon: ChartUpIcon },
 ];
 
@@ -74,7 +74,7 @@ export function TabNav({
 								"absolute top-0.5 bottom-0.5 rounded-xl border border-border/30 bg-background shadow-sm transition-[left,width] duration-300 ease-ios",
 								activeTab === "today"
 									? "left-0.5 w-[calc(33.33%-4px)]"
-									: activeTab === "spaces"
+									: activeTab === "practice"
 										? "left-[calc(33.33%+2px)] w-[calc(33.33%-4px)]"
 										: activeTab === "analytics"
 											? "left-[calc(66.66%+2px)] w-[calc(33.33%-4px)]"
