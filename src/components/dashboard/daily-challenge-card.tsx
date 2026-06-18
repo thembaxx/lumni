@@ -66,11 +66,7 @@ export function DailyChallengeCard({
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: iOSEase }}
 		>
-			<ChallengeDialog
-				open={isOpen}
-				onClose={handleClose}
-				layoutId="daily-challenge"
-			>
+			<ChallengeDialog open={isOpen} onClose={handleClose} layoutId="">
 				<DailyChallengeDialog
 					subject={subject}
 					onComplete={handleComplete}

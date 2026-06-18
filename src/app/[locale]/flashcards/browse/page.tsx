@@ -17,6 +17,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
@@ -150,20 +157,24 @@ export default function FlashcardBrowsePage() {
 						className="pl-9"
 					/>
 				</div>
-				<select
+				<Select
 					value={subjectFilter}
-					onChange={(e) => {
-						dispatch({ type: "SET_SUBJECT_FILTER", payload: e.target.value });
-					}}
-					className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
+					onValueChange={(v) =>
+						dispatch({ type: "SET_SUBJECT_FILTER", payload: v ?? "all" })
+					}
 				>
-					<option value="all">{t("flashcards.allSubjects")}</option>
-					{subjects.map((s) => (
-						<option key={s} value={s}>
-							{s}
-						</option>
-					))}
-				</select>
+					<SelectTrigger>
+						<SelectValue placeholder={t("flashcards.allSubjects")} />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="all">{t("flashcards.allSubjects")}</SelectItem>
+						{subjects.map((s) => (
+							<SelectItem key={s} value={s}>
+								{s}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 				<Button variant="outline" size="sm" onClick={loadCards}>
 					<HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
 					{t("flashcards.refresh")}

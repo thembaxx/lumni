@@ -1,5 +1,12 @@
 import { useMemo } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import type { NotificationSettings } from "@/lib/utils/storage";
 
@@ -172,23 +179,27 @@ export function NotificationsTab({
 
 	const reminderHourTrailing = useMemo(
 		() => (
-			<select
-				value={notifications.reminderHour}
+			<Select
+				value={String(notifications.reminderHour)}
 				disabled={!notifications.enabled}
-				onChange={(e) =>
+				onValueChange={(v) =>
 					onNotificationsChange({
 						...notifications,
-						reminderHour: Number(e.target.value),
+						reminderHour: Number(v),
 					})
 				}
-				className="h-8 rounded-lg border border-border/60 bg-system-surface px-2 font-medium text-foreground text-sm"
 			>
-				{HOURS.map((h) => (
-					<option key={h} value={h}>
-						{formatHour(h)}
-					</option>
-				))}
-			</select>
+				<SelectTrigger>
+					<SelectValue />
+				</SelectTrigger>
+				<SelectContent>
+					{HOURS.map((h) => (
+						<SelectItem key={h} value={String(h)}>
+							{formatHour(h)}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 		),
 		[notifications, onNotificationsChange],
 	);

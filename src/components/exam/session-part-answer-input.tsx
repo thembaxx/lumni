@@ -2,6 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 import type { QuestionPart } from "@/types/exam-paper";
 
@@ -66,12 +68,12 @@ export function SessionPartAnswerInput({
 
 	if (part.type === "short-answer") {
 		return (
-			<input
+			<Input
 				type="text"
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				className="rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Short answer input"
 			/>
@@ -80,12 +82,12 @@ export function SessionPartAnswerInput({
 
 	if (part.type === "long-answer" || part.type === "essay") {
 		return (
-			<textarea
+			<Textarea
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				rows={6}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderLongAnswer")}
 				aria-label="Long answer input"
 			/>
@@ -94,13 +96,13 @@ export function SessionPartAnswerInput({
 
 	if (part.type === "calculation") {
 		return (
-			<input
+			<Input
 				type="text"
 				inputMode="decimal"
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 font-mono outline-none focus:border-[--system-accent]"
+				className="rounded-xl border-2 border-border p-3 font-mono focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderCalculation")}
 				aria-label="Calculation answer input"
 			/>
@@ -109,12 +111,12 @@ export function SessionPartAnswerInput({
 
 	if (part.type === "matching") {
 		return (
-			<input
+			<Input
 				type="text"
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				className="rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderMatching")}
 				aria-label="Matching pairs input"
 			/>
@@ -128,12 +130,12 @@ export function SessionPartAnswerInput({
 		return (
 			<div className="flex flex-col gap-2">
 				<p className="text-muted-foreground text-sm">{instructions}</p>
-				<textarea
+				<Textarea
 					value={(Array.isArray(value) ? value[0] : value) ?? ""}
 					onChange={(e) => onChange(e.target.value)}
 					disabled={disabled}
 					rows={4}
-					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+					className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 					placeholder={t("exam.placeholderShortAnswer")}
 					aria-label="Diagram answer input"
 				/>
@@ -143,12 +145,12 @@ export function SessionPartAnswerInput({
 
 	if (part.type === "programming") {
 		return (
-			<textarea
+			<Textarea
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				rows={8}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
+				className="resize-y rounded-xl border-2 border-border p-3 font-mono text-sm focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderCode")}
 				aria-label="Programming answer input"
 			/>
@@ -161,12 +163,12 @@ export function SessionPartAnswerInput({
 		part.type === "mixed"
 	) {
 		return (
-			<textarea
+			<Textarea
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				rows={4}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Response input"
 			/>
@@ -178,12 +180,12 @@ export function SessionPartAnswerInput({
 			<p className="text-muted-foreground text-sm">
 				{t("exam.unsupportedType", { type: part.type })}
 			</p>
-			<textarea
+			<Textarea
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				rows={4}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
 				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Freeform answer input"
 			/>

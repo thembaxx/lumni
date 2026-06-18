@@ -3,6 +3,7 @@
 import { Cancel01Icon, GraduationCapIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -55,17 +56,18 @@ export function NextBestActionCard() {
 
 	return (
 		<Card className="relative border border-system-accent/20 bg-system-accent/[0.04]">
-			<button
-				type="button"
+			<Button
+				variant="ghost"
+				size="icon-sm"
 				onClick={() => {
 					dismissAction(action.kind);
 					setDismissed(true);
 				}}
-				className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-full text-muted-foreground/50 hover:bg-muted/50 hover:text-foreground"
+				className="absolute top-2 right-2 text-muted-foreground/50 hover:text-foreground"
 				aria-label="Dismiss suggestion"
 			>
 				<HugeiconsIcon icon={Cancel01Icon} size={14} />
-			</button>
+			</Button>
 			<CardHeader className="flex-row items-center gap-2">
 				<div className="flex size-8 items-center justify-center rounded-lg bg-system-accent/10">
 					<HugeiconsIcon

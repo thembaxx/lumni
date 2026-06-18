@@ -2,6 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/shared";
 
 const BLOOM_ORDER = [
@@ -95,18 +102,21 @@ export function MasteryHeatmap() {
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center gap-3">
-				<select
+				<Select
 					value={selectedSubject}
-					onChange={(e) => setSelectedSubject(e.target.value)}
-					className="flex-1 rounded-lg border border-border bg-card px-3 py-1.5 text-sm"
+					onValueChange={(v) => setSelectedSubject(v ?? "")}
 				>
-					<option value="">Select a subject</option>
-					{(Array.isArray(subjects) ? subjects : []).map((s) => (
-						<option key={s.id || s.code} value={s.code || s.id}>
-							{s.name}
-						</option>
-					))}
-				</select>
+					<SelectTrigger className="w-full">
+						<SelectValue placeholder="Select a subject" />
+					</SelectTrigger>
+					<SelectContent>
+						{(Array.isArray(subjects) ? subjects : []).map((s) => (
+							<SelectItem key={s.id || s.code} value={s.code || s.id}>
+								{s.name}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 			</div>
 
 			{subjectsErr && (

@@ -7,6 +7,13 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { curriculumRegistry } from "@/curriculum";
 import type { SubjectCurriculum } from "@/curriculum/types";
@@ -320,80 +327,104 @@ export function QuestionBankClient() {
 
 						{curriculum && (
 							<div className="min-w-[160px] flex-1">
-								<select
-									value={selectedTopic}
-									onChange={(e) => {
-										dispatch({ type: "setTopic", topic: e.target.value });
-									}}
-									className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
-									aria-label="Filter by topic"
+								<Select
+									value={selectedTopic || "__all"}
+									onValueChange={(v) =>
+										dispatch({
+											type: "setTopic",
+											topic: v === "__all" ? "" : (v ?? ""),
+										})
+									}
 								>
-									<option value="">All Topics</option>
-									{curriculum.topics.map((t) => (
-										<option key={t.id} value={t.id}>
-											{t.name}
-										</option>
-									))}
-								</select>
+									<SelectTrigger aria-label="Filter by topic">
+										<SelectValue placeholder="All Topics" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="__all">All Topics</SelectItem>
+										{curriculum.topics.map((t) => (
+											<SelectItem key={t.id} value={t.id}>
+												{t.name}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
 							</div>
 						)}
 
 						{currentTopic && currentTopic.subtopics.length > 0 && (
 							<div className="min-w-[160px] flex-1">
-								<select
-									value={selectedSubtopic}
-									onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-										dispatch({ type: "setSubtopic", subtopic: e.target.value })
+								<Select
+									value={selectedSubtopic || "__all"}
+									onValueChange={(v) =>
+										dispatch({
+											type: "setSubtopic",
+											subtopic: v === "__all" ? "" : (v ?? ""),
+										})
 									}
-									className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
-									aria-label="Filter by subtopic"
 								>
-									<option value="">All Subtopics</option>
-									{currentTopic.subtopics.map((st) => (
-										<option key={st.id} value={st.id}>
-											{st.name}
-										</option>
-									))}
-								</select>
+									<SelectTrigger aria-label="Filter by subtopic">
+										<SelectValue placeholder="All Subtopics" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="__all">All Subtopics</SelectItem>
+										{currentTopic.subtopics.map((st) => (
+											<SelectItem key={st.id} value={st.id}>
+												{st.name}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
 							</div>
 						)}
 
 						<div className="min-w-[120px] flex-1">
-							<select
-								value={selectedType}
-								onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-									dispatch({ type: "setType", type_: e.target.value })
+							<Select
+								value={selectedType || "__all"}
+								onValueChange={(v) =>
+									dispatch({
+										type: "setType",
+										type_: v === "__all" ? "" : (v ?? ""),
+									})
 								}
-								className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
-								aria-label="Filter by question type"
 							>
-								{QUESTION_TYPES.map((t) => (
-									<option key={t.value} value={t.value}>
-										{t.label}
-									</option>
-								))}
-							</select>
+								<SelectTrigger aria-label="Filter by question type">
+									<SelectValue placeholder="All Types" />
+								</SelectTrigger>
+								<SelectContent>
+									{QUESTION_TYPES.map((t) => (
+										<SelectItem
+											key={t.value || "__all"}
+											value={t.value || "__all"}
+										>
+											{t.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 						</div>
 
 						<div className="min-w-[100px] flex-1">
-							<select
-								value={selectedYear ?? ""}
-								onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+							<Select
+								value={selectedYear ? String(selectedYear) : "__all"}
+								onValueChange={(v) =>
 									dispatch({
 										type: "setYear",
-										year: e.target.value ? Number(e.target.value) : undefined,
+										year: v === "__all" ? undefined : Number(v ?? "0"),
 									})
 								}
-								className="flex h-10 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2"
-								aria-label="Filter by year"
 							>
-								<option value="">All Years</option>
-								{years.map((y) => (
-									<option key={y} value={y}>
-										{y}
-									</option>
-								))}
-							</select>
+								<SelectTrigger aria-label="Filter by year">
+									<SelectValue placeholder="All Years" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="__all">All Years</SelectItem>
+									{years.map((y) => (
+										<SelectItem key={y} value={String(y)}>
+											{y}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 						</div>
 					</div>
 

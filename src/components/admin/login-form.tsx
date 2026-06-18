@@ -7,6 +7,7 @@ import { OTPDialog } from "@/components/auth/otp-dialog";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
@@ -81,10 +82,9 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											>
 												Admin Email
 											</Label>
-											<input
+											<Input
 												id="email"
 												type="email"
-												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="admin@lumni.co.za"
 												aria-label="Admin email"
 											/>
@@ -96,10 +96,9 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											>
 												Password
 											</Label>
-											<input
+											<Input
 												id="password"
 												type="password"
-												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="••••••••"
 												aria-label="Admin password"
 											/>

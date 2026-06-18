@@ -3,6 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { cn } from "@/lib/shared";
 
@@ -52,36 +59,40 @@ export default function AdminPastPapersPage() {
 			<h1 className={cn("font-extrabold text-2xl")}>Past Paper Questions</h1>
 
 			<div className={cn("flex flex-wrap items-center gap-2")}>
-				<select
+				<Select
 					value={subjectFilter}
-					onChange={(e) => setSubjectFilter(e.target.value)}
-					className={cn(
-						"rounded-lg border border-border bg-card px-3 py-1.5 text-sm",
-					)}
-					aria-label="Filter by subject"
+					onValueChange={(v) =>
+						setSubjectFilter(v === "__all" ? "" : (v ?? ""))
+					}
 				>
-					<option value="">All subjects</option>
-					{subjects.map((s) => (
-						<option key={s} value={s}>
-							{s}
-						</option>
-					))}
-				</select>
-				<select
+					<SelectTrigger aria-label="Filter by subject">
+						<SelectValue placeholder="All subjects" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="__all">All subjects</SelectItem>
+						{subjects.map((s) => (
+							<SelectItem key={s} value={s}>
+								{s}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+				<Select
 					value={typeFilter}
-					onChange={(e) => setTypeFilter(e.target.value)}
-					className={cn(
-						"rounded-lg border border-border bg-card px-3 py-1.5 text-sm",
-					)}
-					aria-label="Filter by question type"
+					onValueChange={(v) => setTypeFilter(v === "__all" ? "" : (v ?? ""))}
 				>
-					<option value="">All types</option>
-					{types.map((t) => (
-						<option key={t} value={t}>
-							{t}
-						</option>
-					))}
-				</select>
+					<SelectTrigger aria-label="Filter by question type">
+						<SelectValue placeholder="All types" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="__all">All types</SelectItem>
+						{types.map((t) => (
+							<SelectItem key={t} value={t}>
+								{t}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 				<span className={cn("ml-auto text-muted-foreground text-sm")}>
 					{questions.length} questions
 				</span>

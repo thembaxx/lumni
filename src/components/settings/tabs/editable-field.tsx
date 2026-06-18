@@ -7,6 +7,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 interface EditableFieldProps {
@@ -76,35 +77,36 @@ export function EditableField({
 						className={`h-9 rounded-lg border-border/40 bg-system-surface text-sm ${icon ? "pl-9" : ""}`}
 					/>
 				</div>
-				<button
-					type="button"
+				<Button
+					size="icon-sm"
 					onClick={handleSave}
 					disabled={saving || !draft.trim()}
 					aria-label="Save profile changes"
-					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
+					className="size-8 shrink-0 rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
 				>
 					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
+					size="icon-sm"
+					variant="ghost"
 					onClick={handleCancel}
 					aria-label="Cancel editing"
-					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80"
+					className="size-8 shrink-0 rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80"
 				>
 					<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
-				</button>
+				</Button>
 			</div>
 		);
 	}
 
 	return (
-		<button
-			type="button"
+		<Button
+			variant="ghost"
 			onClick={() => {
 				setDraft(value);
 				setEditing(true);
 			}}
-			className="group flex w-full items-center gap-2 text-left"
+			className="group w-full justify-start text-left"
 		>
 			<span className="flex-1 truncate font-medium text-foreground text-sm">
 				{value || placeholder || "Not set"}
@@ -113,6 +115,6 @@ export function EditableField({
 				icon={PencilIcon}
 				className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
 			/>
-		</button>
+		</Button>
 	);
 }

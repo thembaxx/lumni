@@ -64,17 +64,18 @@ export function LocalDataNotice({
 				>
 					Sign Up
 				</Button>
-				<button
-					type="button"
+				<Button
+					variant="ghost"
+					size="icon-sm"
 					onClick={handleDismiss}
-					className="-mr-1.5 rounded-md p-2 transition-colors hover:bg-muted/50"
+					className="-mr-1.5"
 					aria-label="Dismiss"
 				>
 					<HugeiconsIcon
 						icon={Cancel01Icon}
 						className="size-4 text-muted-foreground"
 					/>
-				</button>
+				</Button>
 			</div>
 		</m.div>
 	);

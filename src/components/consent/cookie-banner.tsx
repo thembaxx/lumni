@@ -59,13 +59,14 @@ export function CookieBanner() {
 							{t("consent.cookieBanner.acceptAll")}
 						</Button>
 					</div>
-					<button
-						type="button"
+					<Button
+						variant="link"
+						size="sm"
 						onClick={() => setShowSettings(true)}
-						className="mt-3 text-sm text-system-accent underline"
+						className="mt-3 h-auto p-0 text-sm text-system-accent"
 					>
 						{t("consent.cookieBanner.cookieSettings")}
-					</button>
+					</Button>
 				</Card>
 			</div>
 

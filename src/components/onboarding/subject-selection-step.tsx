@@ -3,6 +3,7 @@
 import { ArrowDownIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
 import { SubjectCard } from "./subject-card";
 
@@ -43,12 +44,11 @@ export function SubjectSelectionStep({
 	return (
 		<>
 			<div className="mb-4">
-				<input
+				<Input
 					type="text"
 					value={searchTerm}
 					onChange={(e) => onSearchChange(e.target.value)}
 					placeholder="Search subjects…"
-					className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
 					aria-label="Search subjects"
 				/>
 			</div>
