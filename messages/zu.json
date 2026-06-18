@@ -82,6 +82,7 @@
     "navDashboard": "Idashbodi",
     "navSignIn": "Ngena",
     "navGetStarted": "Thola Izindlela",
+    "navTryQuiz": "Zama I-Quiz",
     "heroTagline": "Ungapheli ngempumelelo eMatric",
     "heroTitle": "Funda uMatric ",
     "heroTitleHighlight": "ngempumelelo",
@@ -164,7 +165,11 @@
     "footerPrivacy": "I-Privacy Policy",
     "footerTerms": "I-Terms of Service",
     "footerCopyright": " {year} I-Lumni. Zonke izipheko zisithiwe.",
-    "footerContact": "Thola Thina"
+    "footerContact": "Thola Thina",
+    "skipToContent": "Yiya ku-content",
+    "ctaHeading": "Ukulungile ukupasa imibono yakho?",
+    "ctaDescription": "Join abafundi abaningi beMatric abalungiselela nge-Lumni. Qala mahhala, akukho credit card idingekayo.",
+    "opensInNewTab": "(ivula kulayini entsha)"
   },
   "auth": {
     "welcomeBack": "Sawubona kabisa ku-Lumni",

@@ -83,6 +83,7 @@
     "navDashboard": "Dashboard",
     "navSignIn": "Sign In",
     "navGetStarted": "Get Started",
+    "navTryQuiz": "Try a Quiz",
     "heroTagline": "Your Matric advantage",
     "heroTitle": "Pass your Matric ",
     "heroTitleHighlight": "with confidence",
@@ -165,7 +166,11 @@
     "footerPrivacy": "Privacy Policy",
     "footerTerms": "Terms of Service",
     "footerCopyright": "© {year} Lumni. All rights reserved.",
-    "footerContact": "Contact"
+    "footerContact": "Contact",
+    "skipToContent": "Skip to main content",
+    "ctaHeading": "Ready to ace your exams?",
+    "ctaDescription": "Join thousands of Matric students already preparing with Lumni. Start free, no credit card required.",
+    "opensInNewTab": "(opens in new tab)"
   },
   "auth": {
     "welcomeBack": "Welcome back to Lumni",

@@ -2,31 +2,31 @@
 
 import { StarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 
-const testimonials = [
-	{
-		quote:
-			"Lumni completely changed how I prepare for exams. The AI quizzes adapt to what I actually need to practice, not just random questions.",
-		name: "Thandi M.",
-		achievement: "78% → 92% in Mathematics",
-	},
-	{
-		quote:
-			"The study planner helped me organise my time across all 7 subjects. I finally feel in control of my revision.",
-		name: "Sipho K.",
-		achievement: "Accepted to UCT Engineering",
-	},
-	{
-		quote:
-			"Being able to practice past papers on my phone during taxi rides was a game changer. Every spare minute counts.",
-		name: "Lerato N.",
-		achievement: "3 distinctions in Sciences",
-	},
-];
-
 export function TestimonialsSection() {
+	const t = useTranslations("home");
+	const prefersReducedMotion = useReducedMotion();
+
+	const testimonials = [
+		{
+			quote: t("testimonial1Text"),
+			name: t("testimonial1Author"),
+			achievement: t("testimonial1Detail"),
+		},
+		{
+			quote: t("testimonial2Text"),
+			name: t("testimonial2Author"),
+			achievement: t("testimonial2Detail"),
+		},
+		{
+			quote: t("testimonial3Text"),
+			name: t("testimonial3Author"),
+			achievement: t("testimonial3Detail"),
+		},
+	];
 	return (
 		<section className="py-16 md:py-20">
 			<div className="mx-auto max-w-6xl px-4">
@@ -34,12 +34,12 @@ export function TestimonialsSection() {
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
+					transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="ios-title-1 mb-3">Trusted by Matric students</h2>
+					<h2 className="ios-title-1 mb-3">{t("testimonialsHeading")}</h2>
 					<p className="ios-body mx-auto max-w-lg text-muted-foreground">
-						Thousands of South African students use Lumni to prepare for their
-						final exams.
+						{t("testimonialsSubheading")}
 					</p>
 				</m.div>
 
@@ -50,11 +50,15 @@ export function TestimonialsSection() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							transition={{ delay: i * 0.1, duration: 0.4 }}
+							transition={
+								prefersReducedMotion
+									? undefined
+									: { delay: i * 0.1, duration: 0.4 }
+							}
 						>
 							<Card className="h-full">
 								<CardContent className="flex flex-col gap-4 p-6">
-									<div className="flex gap-1">
+									<div className="flex gap-1" aria-hidden="true">
 										{[0, 1, 2, 3, 4].map((si) => (
 											<HugeiconsIcon
 												key={`star-${si}`}

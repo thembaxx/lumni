@@ -82,6 +82,7 @@
     "navDashboard": "Paneelbord",
     "navSignIn": "Teken In",
     "navGetStarted": "Begin",
+    "navTryQuiz": "Probeer 'n Vasvra",
     "heroTagline": "Jou Matriek voordeel",
     "heroTitle": "Slaag jou Matriek ",
     "heroTitleHighlight": "met vertroue",
@@ -164,7 +165,11 @@
     "footerPrivacy": "Privaatheidsbeleid",
     "footerTerms": "Diensbepalings",
     "footerCopyright": "© {year} Lumni. Alle regte voorbehou.",
-    "footerContact": "Kontak"
+    "footerContact": "Kontak",
+    "skipToContent": "Spring na inhoud",
+    "ctaHeading": "Gereed om jou eksamens te slaag?",
+    "ctaDescription": "Sluit aan by duisende Matriek-studente wat reeds voorberei met Lumni. Begin gratis, geen kredietkaart nodig nie.",
+    "opensInNewTab": "(open in nuwe oortjie)"
   },
   "auth": {
     "welcomeBack": "Welkom terug by Lumni",

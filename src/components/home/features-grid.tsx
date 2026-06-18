@@ -9,56 +9,53 @@ import {
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
-const features = [
-	{
-		icon: BrainIcon,
-		title: "AI-Powered Practice",
-		description:
-			"Adaptive questions generated for your subjects and topics. Get instant feedback and explanations.",
-		accent: "before:bg-[var(--system-accent-alpha-10)]",
-	},
-	{
-		icon: BookOpen01Icon,
-		title: "Past Exam Papers",
-		description:
-			"Practice with real Matric papers from 2021-2025. Timed exams or free practice mode.",
-		accent: "before:bg-chart-4/10",
-	},
-	{
-		icon: ChartBar,
-		title: "Progress Tracking",
-		description:
-			"See how you're doing per subject and topic. Spot your strengths and find what needs work at a glance.",
-		accent: "before:bg-chart-2/10",
-	},
-	{
-		icon: BulbIcon,
-		title: "Smart Flashcards",
-		description:
-			"Flashcards that adapt to your pace. Review what you need, when you need it, and the app remembers what to show you next.",
-		accent: "before:bg-chart-3/10",
-	},
-	{
-		icon: Target01Icon,
-		title: "Study Planner",
-		description:
-			"Personalized study schedules based on your goals and exam dates. Stay on track with daily sessions.",
-		accent: "before:bg-chart-5/10",
-	},
-	{
-		icon: GlobeIcon,
-		title: "Study Offline",
-		description:
-			"Study anywhere, anytime. Your progress syncs automatically when you're back online.",
-		accent: "before:bg-chart-1/10",
-	},
-];
-
 export function FeaturesGrid() {
+	const t = useTranslations("home");
+	const prefersReducedMotion = useReducedMotion();
+
+	const features = [
+		{
+			icon: BrainIcon,
+			title: t("featureAIPractice"),
+			description: t("featureAIPracticeDesc"),
+			accent: "before:bg-[var(--system-accent-alpha-10)]",
+		},
+		{
+			icon: BookOpen01Icon,
+			title: t("featurePastPapers"),
+			description: t("featurePastPapersDesc"),
+			accent: "before:bg-chart-4/10",
+		},
+		{
+			icon: ChartBar,
+			title: t("featureTracking"),
+			description: t("featureTrackingDesc"),
+			accent: "before:bg-chart-2/10",
+		},
+		{
+			icon: BulbIcon,
+			title: t("featureFlashcards"),
+			description: t("featureFlashcardsDesc"),
+			accent: "before:bg-chart-3/10",
+		},
+		{
+			icon: Target01Icon,
+			title: t("featurePlanner"),
+			description: t("featurePlannerDesc"),
+			accent: "before:bg-chart-5/10",
+		},
+		{
+			icon: GlobeIcon,
+			title: t("featureOffline"),
+			description: t("featureOfflineDesc"),
+			accent: "before:bg-chart-1/10",
+		},
+	];
 	return (
 		<section className="relative py-16 md:py-20">
 			<div className="mx-auto max-w-6xl px-4">
@@ -66,14 +63,12 @@ export function FeaturesGrid() {
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
+					transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="ios-title-1 mb-3">
-						Everything you need to ace your exams
-					</h2>
+					<h2 className="ios-title-1 mb-3">{t("featuresHeading")}</h2>
 					<p className="ios-body mx-auto max-w-lg text-muted-foreground">
-						AI practice, real past papers, and study tools that adapt to how you
-						learn. Built for the CAPS curriculum.
+						{t("featuresSubheading")}
 					</p>
 				</m.div>
 
@@ -84,7 +79,11 @@ export function FeaturesGrid() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							transition={{ delay: i * 0.05, duration: 0.4, ease: iOSEase }}
+							transition={
+								prefersReducedMotion
+									? undefined
+									: { delay: i * 0.05, duration: 0.4, ease: iOSEase }
+							}
 							className={cn(
 								"group relative before:pointer-events-none before:absolute before:inset-0 before:rounded-lg before:opacity-0 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
 								feature.accent,

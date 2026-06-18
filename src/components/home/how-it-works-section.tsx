@@ -2,31 +2,31 @@
 
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { iOSEase } from "@/lib/utils/animation";
 
-const steps = [
-	{
-		number: "01",
-		title: "Choose Your Subjects",
-		description:
-			"Select from all CAPS Matric subjects. Pick the ones you're taking and set your target APS.",
-	},
-	{
-		number: "02",
-		title: "Practice Smart",
-		description:
-			"AI quizzes, past papers, and flashcards tailored to your syllabus. Focus on your weak areas.",
-	},
-	{
-		number: "03",
-		title: "Track & Improve",
-		description:
-			"Track your progress, earn points for studying, unlock achievements, and walk into exams confident.",
-	},
-];
-
 export function HowItWorksSection() {
+	const t = useTranslations("home");
+	const prefersReducedMotion = useReducedMotion();
+
+	const steps = [
+		{
+			number: "01",
+			title: t("howStep1Title"),
+			description: t("howStep1Desc"),
+		},
+		{
+			number: "02",
+			title: t("howStep2Title"),
+			description: t("howStep2Desc"),
+		},
+		{
+			number: "03",
+			title: t("howStep3Title"),
+			description: t("howStep3Desc"),
+		},
+	];
 	return (
 		<section className="bg-system-background-secondary py-20 md:py-28">
 			<div className="mx-auto max-w-6xl px-4">
@@ -34,11 +34,12 @@ export function HowItWorksSection() {
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
+					transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="ios-title-1 mb-3">How it works</h2>
+					<h2 className="ios-title-1 mb-3">{t("howHeading")}</h2>
 					<p className="ios-body mx-auto max-w-lg text-muted-foreground">
-						Three simple steps to start mastering your subjects.
+						{t("howSubheading")}
 					</p>
 				</m.div>
 
@@ -49,7 +50,11 @@ export function HowItWorksSection() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							transition={{ delay: i * 0.1, duration: 0.4, ease: iOSEase }}
+							transition={
+								prefersReducedMotion
+									? undefined
+									: { delay: i * 0.1, duration: 0.4, ease: iOSEase }
+							}
 							className="relative text-center"
 						>
 							<div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-(--system-accent-alpha-10)">

@@ -7,7 +7,7 @@ import { appConfig } from "../../../app.config";
 const CURRENT_YEAR = new Date().getFullYear();
 
 export function SiteFooter() {
-	const t = useTranslations();
+	const t = useTranslations("home");
 
 	return (
 		<footer className="border-border/50 border-t py-12">
@@ -18,77 +18,76 @@ export function SiteFooter() {
 							href="/"
 							className="py-1.5 font-extrabold text-lg tracking-tight"
 						>
-							{t("home.footerBrand")}
+							{t("footerBrand")}
 						</Link>
 						<p className="mt-2 max-w-xs text-muted-foreground text-sm">
-							{t("home.footerDesc")}
+							{t("footerDesc")}
 						</p>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">
-							{t("home.footerProduct")}
-						</h4>
+						<h4 className="mb-3 font-semibold text-sm">{t("footerProduct")}</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<Link
 								href="/quiz"
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerQuiz")}
+								{t("footerQuiz")}
 							</Link>
 							<Link
 								href="/past-papers"
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerPapers")}
+								{t("footerPapers")}
 							</Link>
 							<Link
 								href="/flashcards"
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerFlashcards")}
+								{t("footerFlashcards")}
 							</Link>
 							<Link
 								href="/study-plan"
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerPlan")}
+								{t("footerPlan")}
 							</Link>
 							<Link
 								href="/solve"
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerHomework")}
+								{t("footerHomework")}
 							</Link>
 						</div>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">
-							{t("home.footerSupport")}
-						</h4>
+						<h4 className="mb-3 font-semibold text-sm">{t("footerSupport")}</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<a
 								href={appConfig.links.support}
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								{t("home.footerHelp")}
+								{t("footerHelp")}
+								<span className="sr-only">{t("opensInNewTab")}</span>
 							</a>
 							<a
 								href={`mailto:${appConfig.contact.supportEmail}`}
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerEmail")}
+								{t("footerEmail")}
 							</a>
 							<Link
 								href={appConfig.links.privacy}
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerPrivacy")}
+								{t("footerPrivacy")}
 							</Link>
 							<Link
 								href={appConfig.links.terms}
-								className="py-1.5 transition-colors hover:text-foreground"
+								className="min-h-11 py-1.5 transition-colors hover:text-foreground"
 							>
-								{t("home.footerTerms")}
+								{t("footerTerms")}
 							</Link>
 						</div>
 					</div>
@@ -100,9 +99,9 @@ export function SiteFooter() {
 					<div className="flex items-center gap-4">
 						<a
 							href={`mailto:${appConfig.contact.email}`}
-							className="py-1.5 text-muted-foreground transition-colors hover:text-foreground"
+							className="min-h-11 py-1.5 text-muted-foreground transition-colors hover:text-foreground"
 						>
-							<span className="text-xs">{t("home.footerContact")}</span>
+							<span className="text-xs">{t("footerContact")}</span>
 						</a>
 					</div>
 				</div>

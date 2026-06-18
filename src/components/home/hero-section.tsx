@@ -10,7 +10,7 @@ import {
 	Timer01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, useScroll, useTransform } from "framer-motion";
+import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -22,12 +22,22 @@ interface HeroSectionProps {
 
 export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 	const t = useTranslations();
+	const prefersReducedMotion = useReducedMotion();
 	const { scrollYProgress } = useScroll();
-	const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-	const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
+	const heroOpacity = useTransform(
+		scrollYProgress,
+		[0, 0.15],
+		[1, prefersReducedMotion ? 1 : 0],
+	);
+	const heroScale = useTransform(
+		scrollYProgress,
+		[0, 0.15],
+		[1, prefersReducedMotion ? 1 : 0.98],
+	);
 
 	return (
 		<m.section
+			id="main-content"
 			style={{ opacity: heroOpacity, scale: heroScale }}
 			className="relative flex min-h-dvh items-center pt-14"
 		>
@@ -93,7 +103,7 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 							</div>
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
-								<span>AI-powered</span>
+								<span>{t("home.heroBadgeAi")}</span>
 							</div>
 						</m.div>
 					</div>

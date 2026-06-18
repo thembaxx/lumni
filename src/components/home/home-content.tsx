@@ -7,11 +7,11 @@ import {
 	StarIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { CtaSection } from "./cta-section";
 import { FeaturesGrid } from "./features-grid";
 import { HeroSection } from "./hero-section";
 import { HowItWorksSection } from "./how-it-works-section";
@@ -33,6 +33,12 @@ export function HomeContent() {
 
 	return (
 		<div className="min-h-screen overflow-x-hidden bg-background pb-16">
+			<a
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[var(--z-skip-link)] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:outline-none"
+			>
+				{t("home.skipToContent")}
+			</a>
 			<nav className="glass-thin fixed top-0 right-0 left-0 z-header border-border/50 border-b">
 				<div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
 					<Link
@@ -67,7 +73,7 @@ export function HomeContent() {
 										className="flex items-center"
 									>
 										<HugeiconsIcon icon={Quiz01Icon} className="size-5" />
-										Try a Quiz
+										{t("home.navTryQuiz")}
 									</Button>
 								</Link>
 								<Link href="/dashboard">
@@ -102,48 +108,7 @@ export function HomeContent() {
 			<TestimonialsSection />
 			<PricingComparisonSection />
 
-			<section className="relative py-16 md:py-20">
-				<div className="absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
-				<div className="relative mx-auto max-w-2xl px-4 text-center">
-					<m.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-					>
-						<h2 className="ios-title-1 mb-4">Ready to ace your exams?</h2>
-						<p className="ios-body mx-auto mb-8 max-w-md text-muted-foreground">
-							Join thousands of Matric students already preparing with Lumni.
-							Start free, no credit card required.
-						</p>
-						<div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-							<Link
-								href={
-									isAuthenticated || isAnonymous
-										? "/dashboard"
-										: "/auth/sign-up"
-								}
-							>
-								<Button size="lg">
-									{isAuthenticated || isAnonymous
-										? t("home.heroDashboard")
-										: t("home.heroStartFree")}
-									<HugeiconsIcon
-										icon={ArrowRight01Icon}
-										data-icon="inline-end"
-									/>
-								</Button>
-							</Link>
-							{!isAuthenticated && (
-								<Link href="/auth/sign-in">
-									<Button variant="ghost" size="lg">
-										{t("home.navSignIn")}
-									</Button>
-								</Link>
-							)}
-						</div>
-					</m.div>
-				</div>
-			</section>
+			<CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
 
 			<SiteFooter />
 		</div>
