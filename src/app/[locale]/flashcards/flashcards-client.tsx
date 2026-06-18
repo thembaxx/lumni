@@ -334,7 +334,7 @@ export function FlashcardsClient() {
 							const count = competencies.filter(
 								(c) => c.topicId === topicId,
 							).length;
-							topicScores.set(topicId, total / count);
+							topicScores.set(topicId, count > 0 ? total / count : 0);
 						}
 						allSm2.sort((a, b) => {
 							const aScore = topicScores.get(a.topic ?? "") ?? 100;

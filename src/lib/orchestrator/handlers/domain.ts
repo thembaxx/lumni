@@ -142,9 +142,9 @@ export const questionRegen: JobHandler = async (payload) => {
 	);
 
 	if (!("content" in result) || !result.content) {
-		console.error(
-			"[JobProcessor] AI regen failed for question:",
-			data.questionId,
+		logError(
+			"JobProcessor.RegenFailed",
+			new Error(`AI regen failed for question: ${data.questionId}`),
 		);
 		return;
 	}
@@ -152,9 +152,9 @@ export const questionRegen: JobHandler = async (payload) => {
 	const newText = result.content.trim();
 
 	if (newText.length < 10) {
-		console.error(
-			"[JobProcessor] Regenerated question too short, skipping:",
-			data.questionId,
+		logError(
+			"JobProcessor.RegenTooShort",
+			new Error(`Regenerated question too short, skipping: ${data.questionId}`),
 		);
 		return;
 	}
@@ -242,7 +242,7 @@ export const generateEmbedding: JobHandler = async (payload) => {
 			dexieDataAccess.questionEmbeddings,
 		);
 	} catch (err) {
-		console.error("[Embedding] Error generating embedding:", err);
+		logError("Embedding.Generate", err);
 	}
 };
 

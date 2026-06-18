@@ -1,4 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const FREE_TTS_API_URL = "https://api.freetts.org/v1/synthesizes";
@@ -34,7 +35,10 @@ export const POST = withRateLimit(
 
 			if (!response.ok) {
 				const errorText = await response.text();
-				console.error("FreeTTS API error:", response.status, errorText);
+				logError(
+					"TTS",
+					new Error(`FreeTTS API error ${response.status}: ${errorText}`),
+				);
 				throw new HttpError(503, "TTS service unavailable");
 			}
 

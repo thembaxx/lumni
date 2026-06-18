@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
+import { logError } from "@/lib/shared/logger";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
@@ -83,8 +84,8 @@ const dexiePersistStorage = {
 					},
 				};
 			}
-		} catch {
-			// fall through
+		} catch (e) {
+			logError("ExamSessionPersist.load", e);
 		}
 		// Fallback to localStorage for backward compat
 		if (typeof window !== "undefined") {
@@ -92,8 +93,8 @@ const dexiePersistStorage = {
 			if (raw) {
 				try {
 					return JSON.parse(raw) as { state: PersistedState };
-				} catch {
-					// ignore
+				} catch (e) {
+					logError("ExamSessionPersist.localFallback", e);
 				}
 			}
 		}
@@ -116,8 +117,8 @@ const dexiePersistStorage = {
 					lastSavedAt: Date.now(),
 					completed: state.completed || false,
 				});
-			} catch {
-				// ignore storage errors
+			} catch (e) {
+				logError("ExamSessionPersist.save", e);
 			}
 		}
 		if (typeof window !== "undefined") {
@@ -130,8 +131,8 @@ const dexiePersistStorage = {
 			if (typeof window !== "undefined") {
 				localStorage.removeItem(name);
 			}
-		} catch {
-			// ignore
+		} catch (e) {
+			logError("ExamSessionPersist.remove", e);
 		}
 	},
 };

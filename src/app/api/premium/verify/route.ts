@@ -2,6 +2,7 @@ import { Client, Databases, Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(
@@ -50,7 +51,7 @@ export const POST = withRateLimit(
 						};
 					}
 				} catch (stripeErr) {
-					console.error("Stripe verify error:", stripeErr);
+					logError("PremiumVerify", stripeErr);
 				}
 			}
 
@@ -75,7 +76,7 @@ export const POST = withRateLimit(
 					expiresAt: doc?.expiresAt,
 				};
 			} catch (dbErr) {
-				console.error("Premium DB query error:", dbErr);
+				logError("PremiumVerify", dbErr);
 				return { verified: true, isPremium: false };
 			}
 		},

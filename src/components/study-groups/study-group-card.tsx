@@ -54,10 +54,14 @@ export function StudyGroupCard({ group }: Props) {
 		? challengeData.entries.reduce((s, e) => s + e.combinedScore, 0)
 		: 0;
 
-	const copyInviteCode = () => {
-		navigator.clipboard.writeText(group.inviteCode);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
+	const copyInviteCode = async () => {
+		try {
+			await navigator.clipboard.writeText(group.inviteCode);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		} catch {
+			// clipboard write failed — ignore silently
+		}
 	};
 
 	return (

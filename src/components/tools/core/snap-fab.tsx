@@ -23,6 +23,7 @@ const _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 import { dispatchSnapAnswer } from "@/lib/shared/snap-answer";
 import { getImageHash, preprocessImage } from "@/lib/utils/image-preprocess";
 import { CameraPreview } from "../communication/camera-preview";
@@ -142,7 +143,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
 			setExtractedText(text);
 			setPhase("confirm");
 		} catch (err) {
-			console.error("Snap error:", err);
+			logError("SnapFab.capture", err);
 			setError(
 				"Couldn't read the problem from the image. Try typing it instead.",
 			);
@@ -214,7 +215,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
 				setExtractedText(text);
 				setPhase("confirm");
 			} catch (err) {
-				console.error("Snap error:", err);
+				logError("SnapFab.fileCapture", err);
 				setError(
 					"Couldn't read the problem from the image. Try typing it instead.",
 				);

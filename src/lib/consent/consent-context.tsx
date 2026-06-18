@@ -12,6 +12,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 import { updateAnalyticsConsent } from "@/lib/consent/sentry-gate";
 import { userConsentService } from "@/lib/services/user-consent-service";
+import { logError } from "@/lib/shared/logger";
 import type { UserConsent } from "@/types/user-consent";
 import { appConfig } from "../../../app.config";
 
@@ -58,16 +59,16 @@ function readAnonymousConsent(): UserConsent | null {
 function writeAnonymousConsent(consent: UserConsent): void {
 	try {
 		localStorage.setItem(ANONYMOUS_STORAGE_KEY, JSON.stringify(consent));
-	} catch {
-		/* storage full or unavailable */
+	} catch (e) {
+		logError("ConsentPersist.write", e);
 	}
 }
 
 function clearAnonymousConsent(): void {
 	try {
 		localStorage.removeItem(ANONYMOUS_STORAGE_KEY);
-	} catch {
-		/* noop */
+	} catch (e) {
+		logError("ConsentPersist.clear", e);
 	}
 }
 

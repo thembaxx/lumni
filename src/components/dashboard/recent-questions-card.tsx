@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
+import { logError } from "@/lib/shared/logger";
 
 export function RecentQuestionsCard() {
 	const { getWrongAnswers } = useWrongAnswerJournal();
@@ -17,10 +18,15 @@ export function RecentQuestionsCard() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getWrongAnswers(undefined, undefined, 5).then((data) => {
-			setEntries(data);
-			setLoading(false);
-		});
+		getWrongAnswers(undefined, undefined, 5)
+			.then((data) => {
+				setEntries(data);
+				setLoading(false);
+			})
+			.catch((err) => {
+				logError("RecentQuestionsCard", err);
+				setLoading(false);
+			});
 	}, [getWrongAnswers]);
 
 	if (entries.length === 0 && !loading) return null;

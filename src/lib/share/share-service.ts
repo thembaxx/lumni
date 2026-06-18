@@ -2,6 +2,7 @@ import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { ContentDataAccess } from "@/lib/db/data-access";
+import type { SharedQuestionRecord } from "@/lib/db/schema";
 import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -54,8 +55,9 @@ export async function shareQuestion(
 	};
 
 	try {
-		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
-		await _deps.db.sharedQuestions.add(record as any);
+		await _deps.db.sharedQuestions.add(
+			record as unknown as SharedQuestionRecord,
+		);
 	} catch (err) {
 		logError("ShareQuestionDexie", err);
 	}
@@ -127,8 +129,7 @@ export async function incrementViewCount(id: string): Promise<void> {
 		await _deps.db.sharedQuestions
 			.where("id")
 			.equals(id)
-			// biome-ignore lint/suspicious/noExplicitAny: Dexie modify callback type is schema's SharedQuestionRecord
-			.modify((rec: any) => {
+			.modify((rec: { viewCount?: number }) => {
 				rec.viewCount = (rec.viewCount ?? 0) + 1;
 			});
 	} catch (err) {
@@ -176,8 +177,9 @@ export async function shareAssignment(
 	};
 
 	try {
-		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
-		await _deps.db.sharedQuestions.add(record as any);
+		await _deps.db.sharedQuestions.add(
+			record as unknown as SharedQuestionRecord,
+		);
 	} catch (err) {
 		logError("ShareAssignmentDexie", err);
 	}
@@ -207,8 +209,9 @@ async function _shareFlashcardDeck(
 	};
 
 	try {
-		// biome-ignore lint/suspicious/noExplicitAny: Dexie table expects JsonValue for question
-		await _deps.db.sharedQuestions.add(record as any);
+		await _deps.db.sharedQuestions.add(
+			record as unknown as SharedQuestionRecord,
+		);
 	} catch (err) {
 		logError("ShareFlashcardDeck", err);
 	}

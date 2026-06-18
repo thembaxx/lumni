@@ -39,7 +39,7 @@ function LazySyntaxHighlighter({
 			})
 			.catch((error) => {
 				if (cancelled) return;
-				console.error("Failed to load syntax highlighter:", error);
+				logError("SyntaxHighlighter", error);
 				setLoaded(true);
 			});
 		return () => {
@@ -71,6 +71,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 interface ProgrammingInputProps {
 	value?: string | undefined;

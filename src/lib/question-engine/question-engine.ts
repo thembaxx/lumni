@@ -341,7 +341,8 @@ export class QuestionEngine {
 						year: q.year,
 					}));
 			}
-		} catch {
+		} catch (e) {
+			logError("QuestionEngineEmbedding", e);
 			// Fallback to keyword search if embedding fails
 		}
 

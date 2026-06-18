@@ -42,12 +42,7 @@ export async function saveQuestionsToAppwrite(
 								fullData: safeJsonStringify(q),
 								createdAt: new Date().toISOString(),
 							})
-							.catch((err: Error) =>
-								console.error(
-									"[Persistence] Save error:",
-									err instanceof Error ? err.message : "Unknown",
-								),
-							),
+							.catch((err: Error) => logError("Persistence.SaveQuestion", err)),
 					),
 				),
 			);
@@ -55,7 +50,6 @@ export async function saveQuestionsToAppwrite(
 		await Promise.all(batchPromises);
 	} catch (error) {
 		logError("SaveQuestionsToAppwrite", error);
-		console.error("[Persistence] Failed to save to Appwrite:", error);
 	}
 }
 
@@ -88,7 +82,6 @@ export async function loadQuestionsFromAppwrite(
 		);
 	} catch (error) {
 		logError("LoadQuestionsFromAppwrite", error);
-		console.error("[Persistence] Failed to load from Appwrite:", error);
 		return [];
 	}
 }
@@ -115,7 +108,6 @@ export async function syncQuestionsToAppwrite(
 		return { saved: newQuestions.length, existing: existing.length };
 	} catch (error) {
 		logError("SyncQuestionsToAppwrite", error);
-		console.error("[Persistence] Sync error:", error);
 		return { saved: 0, existing: 0 };
 	}
 }

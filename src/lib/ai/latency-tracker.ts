@@ -156,7 +156,10 @@ export function getAILatencyStats() {
 						stats.calls > 0
 							? Math.round(stats.totalDurationMs / stats.calls)
 							: 0,
-					successRate: Math.round((stats.successes / stats.calls) * 100),
+					successRate:
+						stats.calls > 0
+							? Math.round((stats.successes / stats.calls) * 100)
+							: 0,
 					totalCostCents: Math.round(stats.totalCostCents * 100) / 100,
 				},
 			]),

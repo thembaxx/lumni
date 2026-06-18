@@ -3,6 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 
 interface ListenToLessonProps {
 	text: string;
@@ -127,7 +128,7 @@ export function ListenToLesson({
 				);
 			}
 		} catch (error) {
-			console.error("TTS API error, falling back to browser:", error);
+			logError("TtsApi", error);
 		}
 
 		playBrowserVoice(text);

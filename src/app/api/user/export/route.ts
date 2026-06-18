@@ -2,6 +2,17 @@ import { NextResponse } from "next/server";
 import { Query } from "node-appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
+
+const INTERNAL_KEYS = new Set(["$id", "$collectionId", "$permissions"]);
+
+function stripInternals(doc: Record<string, unknown>): Record<string, unknown> {
+	const clean: Record<string, unknown> = {};
+	for (const [k, v] of Object.entries(doc)) {
+		if (!INTERNAL_KEYS.has(k)) clean[k] = v;
+	}
+	return clean;
+}
 
 const EXPORT_COLLECTIONS = [
 	COLLECTIONS.USER_SUBJECTS,
@@ -28,7 +39,7 @@ export async function GET() {
 					const docs = await listDocuments<Record<string, unknown>>(col, [
 						Query.equal("userId", userId),
 					]);
-					return [col, docs] as const;
+					return [col, docs.map(stripInternals)] as const;
 				} catch {
 					return [col, []] as const;
 				}
@@ -48,7 +59,7 @@ export async function GET() {
 			},
 		});
 	} catch (error) {
-		console.error("[user/export] Failed:", error);
+		logError("UserExport", error);
 		return NextResponse.json(
 			{ error: "Failed to export data" },
 			{ status: 500 },

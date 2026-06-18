@@ -1,4 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function formatSubjectName(subject: string): string {
@@ -49,7 +50,7 @@ export const POST = withRateLimit(
 					fileName,
 				};
 			} catch (error) {
-				console.error("Upload error:", error);
+				logError("UploadQA", error);
 				throw new HttpError(500, "Upload failed");
 			}
 		},

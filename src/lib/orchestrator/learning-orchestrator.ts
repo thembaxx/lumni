@@ -7,6 +7,7 @@ import type {
 	Question,
 	UserAnswer,
 } from "@/lib/question-engine/types";
+import { logError } from "@/lib/shared/logger";
 import { serializeQuestionType } from "@/lib/shared/question-type";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 import { enqueueGradeSideEffects } from "./grading";
@@ -108,7 +109,8 @@ export class LearningOrchestrator {
 				},
 			);
 			return top.length > 0;
-		} catch {
+		} catch (e) {
+			logError("LearningOrchestrator.dedup", e);
 			return false;
 		}
 	}

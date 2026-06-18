@@ -12,6 +12,7 @@ import {
 	elementEaseOutQuint,
 } from "@/lib/data/element-categories";
 import { type Element, elements } from "@/lib/data/elements";
+import { logError } from "@/lib/shared/logger";
 import { ElementCard } from "./element-card";
 import { ElementDetailModal } from "./element-detail-modal";
 
@@ -67,7 +68,7 @@ export function PeriodicTable() {
 			queryClient.invalidateQueries({ queryKey: ["element-facts"] });
 		},
 		onError: (error) => {
-			console.error("Failed to generate interesting fact:", error);
+			logError("ElementFact", error);
 			setInterestingFact(null);
 		},
 	});

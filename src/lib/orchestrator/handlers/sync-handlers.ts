@@ -7,6 +7,7 @@ type SyncHandlerDb = SyncDataAccess & Pick<FlashcardDataAccess, "flashcards">;
 
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
+import { logError } from "@/lib/shared/logger";
 import type { JobHandler } from "./index";
 import {
 	createAppendHandler,
@@ -102,7 +103,8 @@ const appwriteFlashcardPull: JobHandler = async (payload) => {
 			try {
 				const state = await _deps.db.flashcardSyncState.get("default");
 				lastSync = state?.lastSyncTimestamp ?? 0;
-			} catch {
+			} catch (e) {
+				logError("SyncHandler.flashcardSyncState", e);
 				const legacy = localStorage.getItem("lumni_flashcard_last_sync");
 				lastSync = Number.parseInt(legacy ?? "0", 10) || 0;
 			}
@@ -165,7 +167,8 @@ const appwriteFlashcardPull: JobHandler = async (payload) => {
 					userId: "default",
 					lastSyncTimestamp: Date.now(),
 				});
-			} catch {
+			} catch (e) {
+				logError("SyncHandler.flashcardSyncSave", e);
 				localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
 			}
 		}

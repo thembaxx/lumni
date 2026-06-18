@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { logError } from "@/lib/shared/logger";
 import { useExamSessionStore } from "@/store/exam-session";
 
 const EXAM_SESSION_STORAGE_KEY = "exam-session-storage";
@@ -16,8 +17,8 @@ export function useExamSessionSync() {
 					if (parsed?.state) {
 						useExamSessionStore.setState(parsed.state);
 					}
-				} catch {
-					console.warn("[ExamSession] Failed to parse cross-tab sync data");
+				} catch (e) {
+					logError("ExamSessionSync", e);
 				}
 			}
 		};

@@ -39,7 +39,7 @@ function saveTracker(tracker: UploadedTracker[]) {
 	try {
 		writeFileSync(TRACKER_PATH, JSON.stringify(tracker, null, 2), "utf-8");
 	} catch (error) {
-		console.error("[sync-exam-papers] Failed to save tracker:", error);
+		logError("SyncExamPapers.SaveTracker", error);
 	}
 }
 
@@ -81,7 +81,7 @@ export async function ensureExamPapersSynced(): Promise<void> {
 		await syncExamPapersInternal();
 		syncCompleted = true;
 	} catch (error) {
-		console.error("[sync-exam-papers] Sync failed:", error);
+		logError("SyncExamPapers.SyncFailed", error);
 	} finally {
 		syncInProgress = false;
 	}

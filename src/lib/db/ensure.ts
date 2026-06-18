@@ -104,9 +104,11 @@ async function ensureCollectionSchema(
 						);
 					} catch (e) {
 						if (!(e instanceof AppwriteException && e.code === 409)) {
-							console.error(
-								`Failed to update attribute ${attrName}:`,
-								String(e),
+							logError(
+								"DbEnsure.UpdateAttribute",
+								new Error(
+									`Failed to update attribute ${attrName}: ${String(e)}`,
+								),
 							);
 						}
 					}
@@ -150,7 +152,10 @@ async function ensureCollectionSchema(
 				}
 			} catch (e) {
 				if (!(e instanceof AppwriteException && e.code === 409)) {
-					console.error(`Failed to create attribute ${attrName}:`, String(e));
+					logError(
+						"DbEnsure.CreateAttribute",
+						new Error(`Failed to create attribute ${attrName}: ${String(e)}`),
+					);
 				}
 			}
 		}),
@@ -175,8 +180,11 @@ async function ensureCollectionSchema(
 				existingAttrMap.has(a),
 			);
 			if (!allAttrsAvailable) {
-				console.error(
-					`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrMap.has(a)).join(", ")}`,
+				logError(
+					"DbEnsure.CreateIndex",
+					new Error(
+						`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrMap.has(a)).join(", ")}`,
+					),
 				);
 				return;
 			}
@@ -192,7 +200,10 @@ async function ensureCollectionSchema(
 				indexesCreated++;
 			} catch (e) {
 				if (!(e instanceof AppwriteException && e.code === 409)) {
-					console.error(`Failed to create index ${idx.key}:`, String(e));
+					logError(
+						"DbEnsure.CreateIndex",
+						new Error(`Failed to create index ${idx.key}: ${String(e)}`),
+					);
 				}
 			}
 		}),

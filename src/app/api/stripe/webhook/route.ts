@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 
 function getStripe(): Stripe {
 	const key = process.env.STRIPE_SECRET_KEY;
@@ -67,7 +68,7 @@ export const POST = createRouteHandler({
 						expiresAt,
 					});
 				} catch (writeErr) {
-					console.error("Appwrite write error:", writeErr);
+					logError("StripeWebhook", writeErr);
 				}
 				break;
 			}
@@ -87,7 +88,7 @@ export const POST = createRouteHandler({
 						),
 					);
 				} catch (err) {
-					console.error("Subscription delete handler error:", err);
+					logError("StripeWebhook", err);
 				}
 				break;
 			}

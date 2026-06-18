@@ -155,9 +155,14 @@ export function ScientificCalculator() {
 	);
 
 	const handleCopy = useCallback(() => {
-		navigator.clipboard.writeText(state.result).then(() => {
-			toast({ type: "success", message: "Copied to clipboard!" });
-		});
+		navigator.clipboard.writeText(state.result).then(
+			() => {
+				toast({ type: "success", message: "Copied to clipboard!" });
+			},
+			() => {
+				toast({ type: "error", message: "Failed to copy" });
+			},
+		);
 	}, [state.result]);
 
 	const handleKeyDown = useCallback(

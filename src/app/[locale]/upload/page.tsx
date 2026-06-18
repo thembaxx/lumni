@@ -13,6 +13,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { extractSubjectFromFileName } from "@/lib/upload";
+import { logError } from "@/lib/shared/logger";
 import { UploadButton } from "@/lib/uploadthing";
 
 export default function UploadPage() {
@@ -90,7 +91,7 @@ export default function UploadPage() {
 								endpoint="qaUploader"
 								onClientUploadComplete={handleUploadComplete}
 								onUploadError={(error: Error) => {
-									console.error("Upload error:", error);
+									logError("Upload", error);
 								}}
 							/>
 

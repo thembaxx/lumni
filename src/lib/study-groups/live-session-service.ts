@@ -57,7 +57,8 @@ export async function getLiveSession(
 ): Promise<LiveSession | null> {
 	try {
 		return await getDocument<LiveSession>(COLLECTIONS.LIVE_SESSIONS, sessionId);
-	} catch {
+	} catch (e) {
+		logError("LiveSession.get", e);
 		return null;
 	}
 }
@@ -76,7 +77,8 @@ export async function getActiveSession(
 			],
 		);
 		return sessions[0] ?? null;
-	} catch {
+	} catch (e) {
+		logError("LiveSession.getActive", e);
 		return null;
 	}
 }
@@ -137,7 +139,8 @@ export async function getParticipants(
 			COLLECTIONS.LIVE_SESSION_PARTICIPANTS,
 			[`equal("sessionId", "${sessionId}")`, `equal("status", "active")`],
 		);
-	} catch {
+	} catch (e) {
+		logError("LiveSession.getParticipants", e);
 		return [];
 	}
 }

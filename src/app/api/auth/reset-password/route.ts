@@ -1,5 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { account } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(
@@ -22,7 +23,7 @@ export const POST = withRateLimit(
 			try {
 				await account.updateRecovery(userId, secret, password);
 			} catch (error) {
-				console.error("Reset password error:", error);
+				logError("ResetPassword", error);
 				const message =
 					error instanceof Error ? error.message : "Failed to reset password";
 				throw new HttpError(400, message);

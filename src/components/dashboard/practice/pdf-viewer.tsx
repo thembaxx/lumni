@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/shared";
+import { logError } from "@/lib/shared/logger";
 import type { PaperListing } from "@/types/exam";
 
 type PdfState = {
@@ -169,7 +170,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	);
 
 	const onDocumentLoadError = useCallback((err: Error) => {
-		console.error("PDF load error:", err);
+		logError("PdfLoadError", err);
 		dispatchPdf({
 			type: "LOAD_ERROR",
 			message: err?.message ?? "Failed to load PDF",

@@ -1,4 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const PRICE_IDS: Record<string, string> = {
@@ -43,7 +44,7 @@ export const POST = withRateLimit(
 
 				if (!stripeRes.ok) {
 					const errBody = await stripeRes.text();
-					console.error("Stripe checkout error:", errBody);
+					logError("PremiumCheckout", new Error(errBody));
 					return { url: null };
 				}
 

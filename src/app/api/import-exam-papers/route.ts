@@ -1,6 +1,7 @@
 import { Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function normalizeSubjectCode(code: string) {
@@ -83,7 +84,7 @@ export const POST = withRateLimit(
 					imported++;
 				} catch (err) {
 					const msg = err instanceof Error ? err.message : "Unknown error";
-					console.error(`Error processing ${originalFileName}:`, msg);
+					logError(`ImportExamPapers:${originalFileName}`, err);
 					errors.push(`${originalFileName}: ${msg}`);
 				}
 			}

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { Question } from "@/lib/question-engine/types";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { safeJsonStringify } from "@/lib/shared/json";
+import { logError } from "@/lib/shared/logger";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
@@ -57,7 +58,7 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 
 		return NextResponse.json({ success: true, storageBytes });
 	} catch (error) {
-		console.error("[quiz-packs/generate] Error:", error);
+		logError("QuizPacksGenerate", error);
 		return NextResponse.json(
 			{ error: error instanceof Error ? error.message : "Generation failed" },
 			{ status: 500 },

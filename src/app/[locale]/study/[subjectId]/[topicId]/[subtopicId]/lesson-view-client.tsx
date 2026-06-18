@@ -130,9 +130,10 @@ export function LessonViewClient({
 	// react-doctor/no-event-handler — analytics tracking on completion state change
 	useEffect(() => {
 		if (isComplete && lesson) {
-			const score = Math.round(
-				(completedSections.size / lesson.sections.length) * 100,
-			);
+			const score =
+				lesson.sections.length > 0
+					? Math.round((completedSections.size / lesson.sections.length) * 100)
+					: 0;
 			trackLessonCompletion(
 				user?.$id ?? "anonymous",
 				subjectId,

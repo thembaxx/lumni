@@ -1,6 +1,7 @@
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 
 const TTL_DAYS = 30;
 const CLEANUP_PAGE_SIZE = 100;
@@ -31,7 +32,7 @@ export async function cleanupOldQuestions(): Promise<{
 	} catch (error) {
 		const message =
 			error instanceof Error ? error.message : "Unknown cleanup error";
-		console.error("[Cleanup] Failed:", message);
+		logError("Cleanup.Failed", new Error(message));
 		return { deleted: 0, remaining: 0, error: message };
 	}
 }
@@ -60,12 +61,7 @@ async function cleanupPage(
 	const deletePromises = docs.map((doc) =>
 		databases
 			.deleteDocument(APPWRITE_DATABASE_ID, COLLECTIONS.QUESTIONS, doc.$id)
-			.catch((err: Error) =>
-				console.error(
-					"[Cleanup] Delete error:",
-					err instanceof Error ? err.message : "Unknown",
-				),
-			),
+			.catch((err: Error) => logError("Cleanup.DeletePage", err)),
 	);
 
 	await Promise.allSettled(deletePromises);

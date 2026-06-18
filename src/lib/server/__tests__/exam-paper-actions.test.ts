@@ -80,7 +80,10 @@ vi.mock("@/lib/server/auth", () => ({
 	},
 	verifyAuth: async () => {},
 	getAuthenticatedUserId: async () => mockUserId.val,
-	requireAdmin: async () => mockUserId.val,
+	requireAdmin: async () => {
+		if (!mockUserId.val) throw new Error("Authentication required");
+		return mockUserId.val;
+	},
 	getAuthenticatedUserName: async () => "Test User",
 }));
 

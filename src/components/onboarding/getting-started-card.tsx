@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -86,12 +86,19 @@ export function GettingStartedCard() {
 		return 3;
 	});
 	const shouldReduceMotion = useReducedMotion();
+	const timeoutRef = useRef<NodeJS.Timeout>(null);
+
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+		};
+	}, []);
 
 	const allDone = steps.quiz && steps.settings && steps.explore;
 
 	const handleDismiss = useCallback(() => {
 		setCollapsing(true);
-		setTimeout(() => {
+		timeoutRef.current = setTimeout(() => {
 			setDismissed(true);
 			const current = Number.parseInt(
 				localStorage.getItem(FIRST_VISITS_KEY) ?? "1",

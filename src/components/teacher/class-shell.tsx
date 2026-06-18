@@ -72,7 +72,9 @@ export function ClassShell({
 				setGhostCopied(true);
 				setTimeout(() => setGhostCopied(false), 2000);
 			},
-			() => {},
+			(err) => {
+				logError("GhostLinkCopy", err);
+			},
 		);
 	};
 

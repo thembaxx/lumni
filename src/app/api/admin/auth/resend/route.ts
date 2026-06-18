@@ -1,5 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { serverAccount } from "@/lib/appwrite.server";
+import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
 	auth: "none",
@@ -17,7 +18,8 @@ export const POST = createRouteHandler({
 				email,
 				`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
 			);
-		} catch {
+		} catch (error) {
+			logError("AdminResend", error);
 			throw new HttpError(500, "Failed to resend magic link");
 		}
 

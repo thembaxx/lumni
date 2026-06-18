@@ -5,6 +5,7 @@ import { runWithAICallContext } from "@/lib/ai/call-context";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { getAuthenticatedUserId, requireAdmin } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export type AuthMode = "none" | "optional" | "required" | "admin";
@@ -160,7 +161,7 @@ export function createRouteHandler<
 					{ status: error.status },
 				);
 			}
-			console.error(`[${errorLabel}] Error:`, error);
+			logError(errorLabel, error);
 			return NextResponse.json(
 				{
 					error:

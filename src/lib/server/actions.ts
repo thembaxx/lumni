@@ -12,6 +12,7 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 import { auth, requireAdmin, verifyAuth } from "@/lib/server/auth";
+import { logError } from "@/lib/shared/logger";
 
 function mapSubject(s: Subject) {
 	return { ...s, id: s.code || s.$id };
@@ -191,7 +192,7 @@ export async function getUserAccounts(_userId: string) {
 			createdAt: u.$createdAt,
 		}));
 	} catch (error) {
-		console.error("Failed to fetch user accounts:", error);
+		logError("GetUserAccounts", error);
 		return [];
 	}
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import DOMPurify from "dompurify";
 import { useEffect, useRef, useState } from "react";
 
 interface MermaidDiagramProps {
@@ -31,11 +32,11 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 				const { svg } = await mermaid.render(id, code);
 
 				if (!cancelled && containerRef.current) {
-					const sanitized = svg
-						.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
-						.replace(/on\w+\s*=\s*"[^"]*"/gi, "")
-						.replace(/on\w+\s*=\s*'[^']*'/gi, "")
-						.replace(/javascript\s*:/gi, "");
+					const sanitized = DOMPurify.sanitize(svg, {
+						USE_PROFILES: { svg: true, svgFilters: true },
+						ADD_TAGS: ["style"],
+						ADD_ATTR: ["viewBox", "xmlns"],
+					});
 					containerRef.current.innerHTML = sanitized;
 					setStatus("ready");
 				}

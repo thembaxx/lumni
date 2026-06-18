@@ -53,7 +53,7 @@ export async function verifyAuth(userId: string): Promise<void> {
 		const cookieStore = await cookies();
 		const projectId = APPWRITE_PROJECT;
 		if (!projectId) {
-			console.error("[verifyAuth] APPWRITE_PROJECT is not set");
+			logError("VerifyAuthConfig", new Error("APPWRITE_PROJECT is not set"));
 			throw new Error("Configuration error: APPWRITE_PROJECT is missing");
 		}
 
@@ -99,7 +99,6 @@ export async function verifyAuth(userId: string): Promise<void> {
 		}
 	} catch (err) {
 		logError("VerifyAuth", err);
-		console.error("[verifyAuth] Auth failure:", err);
 		throw new Error("Authentication required");
 	}
 }
@@ -109,7 +108,10 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 		const cookieStore = await cookies();
 		const projectId = APPWRITE_PROJECT;
 		if (!projectId) {
-			console.error("[getAuthenticatedUserId] APPWRITE_PROJECT is not set");
+			logError(
+				"GetAuthenticatedUserIdConfig",
+				new Error("APPWRITE_PROJECT is not set"),
+			);
 			return null;
 		}
 
@@ -146,7 +148,6 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 		return user.$id;
 	} catch (err) {
 		logError("GetAuthenticatedUserId", err);
-		console.error("[getAuthenticatedUserId] Auth error:", err);
 		return null;
 	}
 }

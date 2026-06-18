@@ -1,5 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { account } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 
 export const GET = createRouteHandler({
 	auth: "optional",
@@ -17,7 +18,7 @@ export const GET = createRouteHandler({
 				isAnonymous: user.labels?.includes("anonymous") ?? false,
 			};
 		} catch (err) {
-			console.error("Session fetch error:", err);
+			logError("Session", err);
 			return {
 				userId: null,
 				name: null,

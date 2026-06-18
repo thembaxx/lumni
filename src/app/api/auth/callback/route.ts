@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { account } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
 			new URL("/dashboard?auth=success", request.url),
 		);
 	} catch (error) {
-		console.error("[Auth Callback] Error:", error);
+		logError("AuthCallback", error);
 		return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
 	}
 }

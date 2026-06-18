@@ -21,11 +21,18 @@ export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
 				type="button"
 				onClick={async () => {
 					if (userId) {
-						await navigator.clipboard.writeText(userId);
-						toast({
-							type: "success",
-							message: "User ID copied to clipboard",
-						});
+						try {
+							await navigator.clipboard.writeText(userId);
+							toast({
+								type: "success",
+								message: "User ID copied to clipboard",
+							});
+						} catch {
+							toast({
+								type: "error",
+								message: "Failed to copy",
+							});
+						}
 					}
 				}}
 				className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"

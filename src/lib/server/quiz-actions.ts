@@ -5,10 +5,9 @@ import { auth } from "@/lib/server/auth";
 
 export async function fetchQuestions(subjectIds: string[]) {
 	if (subjectIds.length === 0) return [];
-	const [_userId, topicDocs] = await Promise.all([
-		auth(),
-		listDocuments(COLLECTIONS.TOPICS),
-	]);
+	const _userId = await auth();
+
+	const topicDocs = await listDocuments(COLLECTIONS.TOPICS);
 
 	const typedTopicDocs = topicDocs as { $id: string; subjectId: string }[];
 

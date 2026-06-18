@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import type { AIProvider, AIRequest } from "../types";
 import {
 	createUniformProvider,
@@ -26,7 +27,7 @@ async function geminiWithImagesNormalizer(
 						});
 					}
 				} catch (e) {
-					console.error("Failed to fetch image for Gemini:", e);
+					logError("Gemini.FetchImage", e);
 				}
 			}
 

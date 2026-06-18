@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import type { ShareCardParams } from "@/lib/share/card-generator";
 import { generateShareCard } from "@/lib/share/card-generator";
+import { logError } from "@/lib/shared/logger";
 
 interface ShareButtonProps {
 	cardParams: ShareCardParams;
@@ -29,7 +30,8 @@ export function ShareResultButton({
 			let blob: Blob | undefined;
 			try {
 				blob = await generateShareCard(cardParams);
-			} catch {
+			} catch (err) {
+				logError("ShareCardGenerate", err);
 				blob = undefined;
 			}
 

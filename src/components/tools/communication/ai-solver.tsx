@@ -7,6 +7,7 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
+import { logError } from "@/lib/shared/logger";
 import { CameraPreview } from "./camera-preview";
 import { SolverInputTools } from "./solver-input-tools";
 import { SolverResultView } from "./solver-result-view";
@@ -106,7 +107,7 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 			setQuestion(data.solution || "");
 			setPhase("confirm");
 		} catch (err) {
-			console.error("Extract error:", err);
+			logError("AiSolverExtract", err);
 			setError(
 				"Couldn't read the problem from the image. Try typing it instead.",
 			);
@@ -150,7 +151,7 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 			setResult(data);
 			setPhase("result");
 		} catch (err) {
-			console.error("Solver error:", err);
+			logError("AiSolverSolve", err);
 			setError("Failed to solve the problem. Please try again.");
 			setPhase("input");
 		}

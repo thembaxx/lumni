@@ -64,49 +64,39 @@ export class AIClient {
 
 		let lastError = "";
 
-		const results = await Promise.allSettled(
-			this.providers.map(async (provider) => {
-				const start = performance.now();
-				try {
-					const response = await provider.generate(request);
-					const durationMs = Math.round(performance.now() - start);
-					trackAILatency({
-						provider: provider.name,
-						durationMs,
-						success: true,
-						callType,
-						timestamp: new Date().toISOString(),
-					});
-					return { ...response, provider: provider.name };
-				} catch (err) {
-					logError("AiClientCallProvider", err);
-					const durationMs = Math.round(performance.now() - start);
-					trackAILatency({
-						provider: provider.name,
-						durationMs,
-						success: false,
-						callType,
-						timestamp: new Date().toISOString(),
-					});
-					lastError = err instanceof Error ? err.message : String(err);
-					const isRateLimit =
-						lastError.includes("429") ||
-						lastError.includes("RESOURCE_EXHAUSTED");
-					if (isRateLimit) {
-						console.warn(
-							`[AI] Provider ${provider.name} rate-limited, trying next...`,
-						);
-					} else {
-						console.error(`[AI] Provider failed: ${provider.name}`, lastError);
-					}
-					throw err;
+		for (const provider of this.providers) {
+			const start = performance.now();
+			try {
+				const response = await provider.generate(request);
+				const durationMs = Math.round(performance.now() - start);
+				trackAILatency({
+					provider: provider.name,
+					durationMs,
+					success: true,
+					callType,
+					timestamp: new Date().toISOString(),
+				});
+				return { ...response, provider: provider.name };
+			} catch (err) {
+				logError("AiClientCallProvider", err);
+				const durationMs = Math.round(performance.now() - start);
+				trackAILatency({
+					provider: provider.name,
+					durationMs,
+					success: false,
+					callType,
+					timestamp: new Date().toISOString(),
+				});
+				lastError = err instanceof Error ? err.message : String(err);
+				const isRateLimit =
+					lastError.includes("429") || lastError.includes("RESOURCE_EXHAUSTED");
+				if (isRateLimit) {
+					console.warn(
+						`[AI] Provider ${provider.name} rate-limited, trying next...`,
+					);
+				} else {
+					console.error(`[AI] Provider failed: ${provider.name}`, lastError);
 				}
-			}),
-		);
-
-		for (const result of results) {
-			if (result.status === "fulfilled") {
-				return result.value;
 			}
 		}
 

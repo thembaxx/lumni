@@ -63,9 +63,10 @@ class AnalyticsService {
 				(attempts.find(
 					(r): r is PromiseRejectedResult => r.status === "rejected",
 				)?.reason as Error | undefined) ?? null;
-			console.error(
-				"Failed to get comparative analytics after retries:",
-				lastError,
+			logError(
+				"AnalyticsService.ComparativeRetries",
+				lastError ??
+					new Error("Failed to get comparative analytics after retries"),
 			);
 			return success({
 				userPercentile: 50,
@@ -99,7 +100,6 @@ class AnalyticsService {
 			return success(await res.json());
 		} catch (error) {
 			logError("AnalyticsService", error);
-			console.error("Failed to get subject trend:", error);
 			return success({ dates: [], accuracies: [], trend: "stable" });
 		}
 	}

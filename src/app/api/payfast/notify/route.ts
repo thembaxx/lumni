@@ -2,6 +2,7 @@ import { Client, Databases, ID } from "appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 
 const PF_SANDBOX = process.env.PAYFAST_SANDBOX === "true";
 const PF_VALIDATE_HOST = PF_SANDBOX
@@ -53,7 +54,7 @@ export const POST = createRouteHandler({
 
 		const expectedSignature = await generateSignature(pfData);
 		if (receivedSignature !== expectedSignature) {
-			console.error("Payfast IPN: invalid signature");
+			logError("PayfastNotify", new Error("Invalid signature"));
 			throw new HttpError(403, "Invalid signature");
 		}
 
@@ -70,11 +71,11 @@ export const POST = createRouteHandler({
 			const text = await validateRes.text();
 			pfValid = text === "VALID";
 		} catch (e) {
-			console.error("Payfast IPN validation error:", e);
+			logError("PayfastNotify", e);
 		}
 
 		if (!pfValid) {
-			console.error("Payfast IPN: validation failed");
+			logError("PayfastNotify", new Error("IPN validation failed"));
 			throw new HttpError(403, "Invalid");
 		}
 
@@ -106,7 +107,7 @@ export const POST = createRouteHandler({
 					},
 				);
 			} catch (dbErr) {
-				console.error("Payfast IPN DB error:", dbErr);
+				logError("PayfastNotify", dbErr);
 			}
 		}
 

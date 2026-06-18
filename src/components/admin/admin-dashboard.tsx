@@ -9,7 +9,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, m } from "framer-motion";
-import { useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
@@ -128,6 +128,13 @@ export function AdminDashboard() {
 	const [admin, dispatch] = useReducer(adminReducer, adminInitialState);
 	const { selectedSubjects, editSubject, newSubject, activeTab, showSuccess } =
 		admin;
+	const successTimeoutRef = useRef<NodeJS.Timeout[]>([]);
+
+	useEffect(() => {
+		return () => {
+			for (const id of successTimeoutRef.current) clearTimeout(id);
+		};
+	}, []);
 
 	const { data: subjectsData, isLoading } = useQuery({
 		queryKey: ["admin-subjects"],
@@ -162,7 +169,9 @@ export function AdminDashboard() {
 			dispatch({ type: "SET_EDIT_SUBJECT", payload: null });
 			dispatch({ type: "RESET_FORM_DATA" });
 			dispatch({ type: "SHOW_SUCCESS" });
-			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
+			successTimeoutRef.current.push(
+				setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000),
+			);
 		},
 	});
 
@@ -177,7 +186,9 @@ export function AdminDashboard() {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
 			dispatch({ type: "SHOW_SUCCESS" });
-			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
+			successTimeoutRef.current.push(
+				setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000),
+			);
 		},
 	});
 
@@ -192,7 +203,9 @@ export function AdminDashboard() {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
 			dispatch({ type: "SHOW_SUCCESS" });
-			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
+			successTimeoutRef.current.push(
+				setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000),
+			);
 		},
 	});
 

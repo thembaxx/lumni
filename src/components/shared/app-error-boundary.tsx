@@ -7,6 +7,7 @@ import {
 	type ReactNode,
 } from "react";
 import { Button } from "@/components/ui/button";
+import { logError } from "@/lib/shared/logger";
 
 interface Props {
 	children: ReactNode;
@@ -34,7 +35,7 @@ export class AppErrorBoundary extends Component<Props, State> {
 	}
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-		console.error("Error boundary caught:", error, errorInfo);
+		logError("ErrorBoundary", error);
 		this.props.onError?.(error, errorInfo);
 	}
 

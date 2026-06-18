@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useReducer, useRef } from "react";
+import { logError } from "@/lib/shared/logger";
 
 interface SafeHTMLProps {
 	html: string;
@@ -28,76 +29,80 @@ export function SafeHTML({ html, className, as: Tag = "div" }: SafeHTMLProps) {
 			purifyPromise = import("dompurify");
 		}
 		let cancelled = false;
-		purifyPromise.then(({ default: DOMPurify }) => {
-			if (cancelled) return;
-			sanitizedRef.current = DOMPurify.sanitize(html, {
-				ALLOWED_TAGS: [
-					"b",
-					"i",
-					"em",
-					"strong",
-					"a",
-					"p",
-					"br",
-					"ul",
-					"ol",
-					"li",
-					"code",
-					"pre",
-					"span",
-					"div",
-					"sub",
-					"sup",
-					"math",
-					"mi",
-					"mo",
-					"mn",
-					"msup",
-					"msub",
-					"mfrac",
-					"msqrt",
-					"mover",
-					"munder",
-					"mtable",
-					"mtr",
-					"mtd",
-					"semantics",
-					"annotation",
-					"svg",
-					"path",
-					"circle",
-					"rect",
-					"line",
-					"text",
-					"g",
-					"defs",
-				],
-				ALLOWED_ATTR: [
-					"href",
-					"target",
-					"rel",
-					"class",
-					"style",
-					"xmlns",
-					"viewBox",
-					"d",
-					"cx",
-					"cy",
-					"r",
-					"x",
-					"y",
-					"width",
-					"height",
-					"fill",
-					"stroke",
-					"stroke-width",
-					"transform",
-					"id",
-					"display",
-				],
+		purifyPromise
+			.then(({ default: DOMPurify }) => {
+				if (cancelled) return;
+				sanitizedRef.current = DOMPurify.sanitize(html, {
+					ALLOWED_TAGS: [
+						"b",
+						"i",
+						"em",
+						"strong",
+						"a",
+						"p",
+						"br",
+						"ul",
+						"ol",
+						"li",
+						"code",
+						"pre",
+						"span",
+						"div",
+						"sub",
+						"sup",
+						"math",
+						"mi",
+						"mo",
+						"mn",
+						"msup",
+						"msub",
+						"mfrac",
+						"msqrt",
+						"mover",
+						"munder",
+						"mtable",
+						"mtr",
+						"mtd",
+						"semantics",
+						"annotation",
+						"svg",
+						"path",
+						"circle",
+						"rect",
+						"line",
+						"text",
+						"g",
+						"defs",
+					],
+					ALLOWED_ATTR: [
+						"href",
+						"target",
+						"rel",
+						"class",
+						"style",
+						"xmlns",
+						"viewBox",
+						"d",
+						"cx",
+						"cy",
+						"r",
+						"x",
+						"y",
+						"width",
+						"height",
+						"fill",
+						"stroke",
+						"stroke-width",
+						"transform",
+						"id",
+						"display",
+					],
+				});
+				forceUpdate();
+			})
+			.catch((err) => {
+				logError("SafeHTML", err);
 			});
-			forceUpdate();
-		});
 		return () => {
 			cancelled = true;
 		};

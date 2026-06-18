@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { QuizView } from "@/components/quiz";
+import { logError } from "@/lib/shared/logger";
 
 function handleQuit() {
 	window.history.back();
@@ -33,8 +34,8 @@ function handleFinish(
 			totalQuestions: results.totalQuestions,
 			correctCount: results.correctAnswers,
 		}),
-	}).catch(() => {
-		/* silent fail */
+	}).catch((err) => {
+		logError("AssignmentSubmit", err);
 	});
 }
 

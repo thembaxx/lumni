@@ -1,5 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { account } from "@/lib/appwrite";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(
@@ -14,7 +15,8 @@ export const POST = withRateLimit(
 
 			try {
 				await account.updateVerification(userId, secret);
-			} catch {
+			} catch (error) {
+				logError("EmailVerification", error);
 				throw new HttpError(500, "Failed to verify email");
 			}
 

@@ -7,7 +7,7 @@ import { UTApi, UTFile } from "uploadthing/server";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/exams/helpers";
-import { auth } from "@/lib/server/auth";
+import { auth, requireAdmin } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 import type { AppwriteExamPaperRecord } from "@/types/exam";
 
@@ -54,7 +54,7 @@ function appwriteDocToRecord(doc: Record<string, unknown>): ExamPaperRecord {
 export async function uploadExamPaper(
 	options: UploadExamPaperOptions,
 ): Promise<ExamPaperRecord> {
-	const _userId = await auth();
+	const _userId = await requireAdmin();
 
 	const utapi = new UTApi();
 
@@ -243,10 +243,13 @@ export async function getExamPaperUrl(
 }
 
 export async function deleteExamPaper(id: string): Promise<void> {
-	const [_userId, doc] = await Promise.all([
-		auth(),
-		databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id),
-	]);
+	const _userId = await requireAdmin();
+
+	const doc = await databases.getDocument(
+		APPWRITE_DATABASE_ID,
+		COLLECTIONS.EXAM_PAPERS,
+		id,
+	);
 
 	if (!doc) {
 		throw new Error("Exam paper not found");

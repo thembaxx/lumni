@@ -16,11 +16,11 @@ import {
 	Upload01Icon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
+import type { IconSvgElement } from "@hugeicons/react";
 export interface NavItem {
 	id: string;
 	label: string;
-	// biome-ignore lint/suspicious/noExplicitAny: HugeIcons icon type varies
-	icon: any;
+	icon: IconSvgElement;
 	route: string;
 	primary?: boolean;
 }

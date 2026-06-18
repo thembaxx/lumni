@@ -7,6 +7,7 @@ import type {
 	UserSubject,
 } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function mapSubject(s: Subject) {
@@ -21,9 +22,7 @@ export const GET = withRateLimit(
 			try {
 				subjects = await listDocuments<Subject>(COLLECTIONS.SUBJECTS);
 			} catch (dbError: unknown) {
-				const msg =
-					dbError instanceof Error ? dbError.message : "Unknown database error";
-				console.error("Database error:", msg);
+				logError("Subjects", dbError);
 				throw new HttpError(503, "Database unavailable");
 			}
 

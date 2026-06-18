@@ -96,7 +96,6 @@ async function _subscribeToPush(): Promise<PushSubscription | null> {
 		return subscription;
 	} catch (error) {
 		logError("SubscribeToPush", error);
-		console.error("Failed to subscribe to push:", error);
 		return null;
 	}
 }
