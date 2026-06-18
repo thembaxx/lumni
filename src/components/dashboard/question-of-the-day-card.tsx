@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ function getSubjectsForQotd(): string[] {
 export function QuestionOfTheDayCard() {
 	const { push } = useRouter();
 	const [showAnswer, setShowAnswer] = useState(false);
+	const [mounted, setMounted] = useState(false);
 
 	const subjects = useMemo(() => getSubjectsForQotd(), []);
 	const randomSubject = useMemo(
@@ -39,12 +40,15 @@ export function QuestionOfTheDayCard() {
 		[subjects],
 	);
 
-	const [shown] = useState(() => {
+	const [shown, setShown] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
 		const lastShown = localStorage.getItem(QOTD_KEY);
-		if (lastShown === getTodayKey()) return false;
+		if (lastShown === getTodayKey()) return;
 		localStorage.setItem(QOTD_KEY, getTodayKey());
-		return true;
-	});
+		setShown(true);
+	}, []);
 
 	const { data, isPending } = usePastQuestions({
 		subject: randomSubject,
@@ -52,7 +56,7 @@ export function QuestionOfTheDayCard() {
 		enabled: shown,
 	});
 
-	if (!shown || isPending) return null;
+	if (!mounted || !shown || isPending) return null;
 	if (!data || data.questions.length === 0) return null;
 
 	const question = data.questions[0];
