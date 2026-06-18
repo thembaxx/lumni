@@ -867,3 +867,7 @@ npx next build        → clean build
 ## 🔵 P3 — 404 routes (wrong URLs)
 
 - [ ] **Add redirects** — `/exams` (should be `/dashboard/exams`), `/sign-in` (should be `/auth/sign-in`), `/sign-up` (should be `/auth/sign-up`). Add page files at these paths that redirect, or configure in `next.config`.
+
+## 🔵 P3 — Firecrawl scaling
+
+- [ ] **Move from keyless to API key** — Firecrawl keyless provides 1,000 free credits/month (1 credit per page). When usage exceeds this, add `FIRECRAWL_API_KEY` env var and pass `Authorization: Bearer <key>` header in `convertWithFirecrawl()`. See `src/lib/server/exam-markdown.ts`.

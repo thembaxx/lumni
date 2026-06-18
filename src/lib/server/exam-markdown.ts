@@ -4,8 +4,45 @@ import { auth } from "@/lib/server/auth";
 
 export interface GetExamMarkdownResult {
 	content: string;
-	source: "uploadthing" | "markdown.new" | "error";
+	source: "uploadthing" | "firecrawl" | "markdown.new" | "error";
 	error?: string;
+}
+
+async function convertWithFirecrawl(
+	url: string,
+): Promise<{ content: string | null; ok: boolean }> {
+	try {
+		const controller = new AbortController();
+		const timeout = setTimeout(() => controller.abort(), 10_000);
+
+		const response = await fetch("https://api.firecrawl.dev/v2/scrape", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ url, formats: ["markdown"] }),
+			signal: controller.signal,
+		});
+
+		clearTimeout(timeout);
+
+		if (!response.ok) {
+			return { content: null, ok: false };
+		}
+
+		const data = await response.json();
+		const markdown = data?.data?.markdown;
+
+		if (
+			!markdown ||
+			typeof markdown !== "string" ||
+			markdown.trim().length === 0
+		) {
+			return { content: null, ok: false };
+		}
+
+		return { content: markdown, ok: true };
+	} catch {
+		return { content: null, ok: false };
+	}
 }
 
 export async function getExamMarkdown(
@@ -46,6 +83,19 @@ export async function getExamMarkdown(
 		}
 	} catch {
 		// Markdown not found on uploadthing, try conversion
+	}
+
+	try {
+		const firecrawl = await convertWithFirecrawl(fileUrl);
+
+		if (firecrawl.ok && firecrawl.content) {
+			return {
+				content: firecrawl.content,
+				source: "firecrawl",
+			};
+		}
+	} catch {
+		// Firecrawl failed, try next provider
 	}
 
 	try {
