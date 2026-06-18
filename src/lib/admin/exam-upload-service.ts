@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
-import { access, readdir } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { Query } from "node-appwrite";
-import { UTApi, UTFile } from "uploadthing/server";
+import { uploadToUploadThing } from "@/lib/admin/upload-shared";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
@@ -16,25 +16,12 @@ interface ParsedFile {
 	originalFileName: string;
 }
 
-const SUBJECT_CODE_MAP: Record<string, string> = {
-	"agricultural-management-practices": "agricultural-management-practices",
-	"agricultural-sciences": "agricultural-sciences",
-	"agricultural-technology": "agricultural-technology",
-	"business-studies": "business-studies",
-	"computer-applications-technology": "computer-applications-technology",
-	"consumer-studies": "consumer-studies",
-	"dramatic-arts": "dramatic-arts",
-	economics: "economics",
-	"engineering-graphics-and-design": "engineering-graphics-and-design",
-	geography: "geography",
-	history: "history",
-	"information-technology": "information-technology",
-	"life-sciences": "life-sciences",
-	mathematics: "mathematics",
-	"physical-sciences": "physical-sciences",
-	tourism: "tourism",
-	"visual-arts": "visual-arts",
-};
+interface ParsedFileWithPaths extends ParsedFile {
+	fileName: string;
+	normalizedCode: string;
+	subjectName: string;
+	filePath: string;
+}
 
 interface UploadResult {
 	uploaded: number;
@@ -59,31 +46,8 @@ export class ExamUploadService {
 		};
 	}
 
-	private normalizeSubjectCode(code: string): string {
-		const normalized = code.replace(/_/g, "-");
-		return SUBJECT_CODE_MAP[normalized] || normalized;
-	}
-
 	private toTitleCase(str: string): string {
 		return str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-	}
-
-	private async uploadToUploadThing(
-		filePath: string,
-		fileName: string,
-	): Promise<{ url: string; key: string } | null> {
-		try {
-			const fsPromises = await import("node:fs/promises");
-			const fileBuffer = await fsPromises.readFile(filePath);
-			const uint8Array = new Uint8Array(fileBuffer);
-			const utFile = new UTFile([uint8Array], fileName);
-			const utapi = new UTApi();
-			const result = await utapi.uploadFiles(utFile);
-			if (!result?.data) return null;
-			return { url: result.data.ufsUrl, key: result.data.key };
-		} catch {
-			return null;
-		}
 	}
 
 	async upload(folderPath?: string): Promise<UploadResult> {
@@ -106,43 +70,30 @@ export class ExamUploadService {
 		let updated = 0;
 		const errors: string[] = [];
 
-		const parsedFiles = files.flatMap((fileName) => {
+		const parsedFiles: ParsedFileWithPaths[] = files.flatMap((fileName) => {
 			const parsed = this.parseFilename(fileName);
 			if (!parsed) {
 				errors.push(`Could not parse filename: ${fileName}`);
 				return [];
 			}
-			const { year, subjectCode, paperNumber, type, originalFileName } = parsed;
-			const normalizedCode = this.normalizeSubjectCode(subjectCode);
+			const normalizedCode = parsed.subjectCode.replace(/_/g, "-");
 			const subjectName = this.toTitleCase(normalizedCode);
-			const filePath = path.join(targetFolder, fileName);
 			return [
 				{
+					...parsed,
 					fileName,
-					year,
 					normalizedCode,
 					subjectName,
-					paperNumber,
-					type,
-					originalFileName,
-					filePath,
+					filePath: path.join(targetFolder, fileName),
 				},
 			];
-		}) as Array<{
-			fileName: string;
-			year: number;
-			normalizedCode: string;
-			subjectName: string;
-			paperNumber: number;
-			type: "paper" | "memo";
-			originalFileName: string;
-			filePath: string;
-		}>;
+		});
 
 		const uploadResults = await Promise.all(
 			parsedFiles.map(async (f) => {
-				const uploadResult = await this.uploadToUploadThing(
-					f.filePath,
+				const fileBuffer = await readFile(f.filePath);
+				const uploadResult = await uploadToUploadThing(
+					new Uint8Array(fileBuffer),
 					f.originalFileName,
 				);
 				if (!uploadResult) return { ...f, uploadResult: null };

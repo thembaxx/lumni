@@ -1,12 +1,6 @@
 import { ExamDownloadService } from "@/lib/admin";
+import type { DownloadRequest } from "@/lib/admin/exam-download-service";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-
-interface DownloadRequest {
-	year: number;
-	examTypes: string[];
-	includeMemo: boolean;
-	subjectIds: string[];
-}
 
 export const POST = createRouteHandler({
 	auth: "admin",
