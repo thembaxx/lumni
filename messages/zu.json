@@ -327,7 +327,8 @@
     "answerPlaceholder": "Ijibu lakho...",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Nikela Zonke Izinhlobo",
-    "pointsParenthetical": "({points} pts)"
+    "pointsParenthetical": "({points} pts)",
+    "pastPaperMode": "Indlela Yephepha Elidala: imibuzo ekamelwe ngokufanisa nephepha lokuhlola le-NSC"
   },
   "flashcards": {
     "title": "Iflashikadi",
@@ -745,7 +746,9 @@
     "signInDescription": "Dala ikhonti yakho noma ngena ukuze uhlisi ukwazisa kwakho, thola i-Xp yakho na izistriki, vula izikweletu, futhi linganisa ukuzwileka kwakho kwi-subjects zonke.",
     "signInAction": "Ngena",
     "createAccount": "Dala Ikhwenti",
-    "localDataDescription": "Ukukhanya kwakho, i-Xp, na izistriki zikhiwe ngendlela yakho. Ngena ukuze zibeke zibe ngendlela zonke zakho."
+    "localDataDescription": "Ukukhanya kwakho, i-Xp, na izistriki zikhiwe ngendlela yakho. Ngena ukuze zibeke zibe ngendlela zonke zakho.",
+    "boltCompleteTitle": "Isihlupho seLanga seliphelele",
+    "boltCompleteDescription": "Buyela ngomuso ukuze uqhubeke nokufunda"
   },
   "consent": {
     "cookieBanner": {

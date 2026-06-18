@@ -3,6 +3,7 @@
 import { File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { animate, m, useMotionValue } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
@@ -43,6 +44,7 @@ export function QuizView({
 	onQuit,
 	onFinish,
 }: QuizViewProps) {
+	const t = useTranslations();
 	const { setImmersive } = useImmersiveMode();
 	const {
 		selectedSubject,
@@ -133,7 +135,7 @@ export function QuizView({
 	if (isError) {
 		return (
 			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-(--space-20) md:col-span-7">
 					<QuizNoQuestionsState
 						selectedSubject={selectedSubject}
 						onBack={handleStop}
@@ -184,7 +186,7 @@ export function QuizView({
 				{pastPaperMode && (
 					<div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs">
 						<HugeiconsIcon icon={File01Icon} className="size-4" />
-						<span>Past Paper Mode: questions styled after NSC exam papers</span>
+						<span>{t("quiz.pastPaperMode")}</span>
 					</div>
 				)}
 

@@ -327,7 +327,8 @@
     "answerPlaceholder": "Jou antwoord...",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Dien Alle Dele In",
-    "pointsParenthetical": "({points} pte)"
+    "pointsParenthetical": "({points} pte)",
+    "pastPaperMode": "Vorige Examplar Modus: vrae gestileer na NSC-eksamens"
   },
   "flashcards": {
     "title": "Flitskaarte",
@@ -734,7 +735,9 @@
     "signInDescription": "Skep 'n rekening of teken in om jou studiegeskiedenis te stoor, jou XP en reekse te volg, prestasies te ontsluit, en jou prestasie oor vakke te vergelyk.",
     "signInAction": "Teken In",
     "createAccount": "Skep Rekening",
-    "localDataDescription": "Jou vordering, XP en reekse word op hierdie toestel gestoor. Teken in om dit oor al jou toestelle te hou."
+    "localDataDescription": "Jou vordering, XP en reekse word op hierdie toestel gestoor. Teken in om dit oor al jou toestelle te hou.",
+    "boltCompleteTitle": "Daaglikse uitdaging voltooi",
+    "boltCompleteDescription": "Môre terug om aan te hou leer"
   },
   "consent": {
     "cookieBanner": {

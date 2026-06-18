@@ -61,7 +61,7 @@ const CompetencyOverview = dynamic(
 		import("@/components/dashboard/competency-overview").then(
 			(m) => m.CompetencyOverview,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
 );
 
 const OfflinePackManager = dynamic(
@@ -69,7 +69,7 @@ const OfflinePackManager = dynamic(
 		import("@/components/dashboard/offline-packs").then(
 			(m) => m.OfflinePackManager,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
 );
 
 const MyAssignments = dynamic(
@@ -79,7 +79,7 @@ const MyAssignments = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="h-32 rounded-3xl" />,
+		loading: () => <Skeleton className="h-32 rounded-4xl" />,
 	},
 );
 
@@ -90,7 +90,7 @@ const BloomTaxonomyWidget = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="h-48 rounded-3xl" />,
+		loading: () => <Skeleton className="h-48 rounded-4xl" />,
 	},
 );
 
@@ -101,7 +101,7 @@ const DailyProgressRing = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="size-full rounded-3xl" />,
+		loading: () => <Skeleton className="size-full rounded-4xl" />,
 	},
 );
 
@@ -110,7 +110,7 @@ const FocusTimerCard = dynamic(
 		import("@/components/dashboard/focus-timer-card").then(
 			(m) => m.FocusTimerCard,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-3xl" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-4xl" /> },
 );
 
 const LessonLibraryCard = dynamic(
@@ -118,7 +118,7 @@ const LessonLibraryCard = dynamic(
 		import("@/components/dashboard/lesson-library-card").then(
 			(m) => m.LessonLibraryCard,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
 );
 
 const VocabularyListCard = dynamic(
@@ -126,7 +126,7 @@ const VocabularyListCard = dynamic(
 		import("@/components/vocabulary/vocabulary-list-card").then(
 			(m) => m.VocabularyListCard,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
 );
 
 const ComparativeAnalyticsPanel = dynamic(
@@ -137,8 +137,8 @@ const ComparativeAnalyticsPanel = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex h-64 items-center justify-center rounded-3xl border border-dashed bg-system-surface">
-				<Skeleton className="h-full w-full rounded-3xl" />
+			<div className="flex h-64 items-center justify-center rounded-4xl border border-dashed bg-system-surface">
+				<Skeleton className="h-full w-full rounded-4xl" />
 			</div>
 		),
 	},
@@ -158,7 +158,7 @@ function BentoStatRow({
 			</div>
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
-					<Card className="flex h-full items-center justify-center rounded-3xl shadow-level-1">
+					<Card className="flex h-full items-center justify-center rounded-4xl shadow-level-1">
 						<CardContent className="p-4">
 							<DailyProgressRing />
 						</CardContent>
@@ -178,7 +178,7 @@ function AnonymousUpsell() {
 		window.location.href = "/auth/sign-up?redirect=/dashboard";
 	}, []);
 	return (
-		<div className="rounded-3xl border border-dashed bg-system-surface p-8 shadow-level-1">
+		<div className="rounded-4xl border border-dashed bg-system-surface p-8 shadow-level-1">
 			<EmptyStateWithIllustration
 				icon={Login01Icon}
 				title={t("dashboard.signInTitle")}
@@ -263,19 +263,19 @@ export function DashboardContent({
 						)}
 						{isLoggedIn && boltDone && (
 							<StaggeredSection>
-								<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/8 px-4 py-3 transition-[background-color] duration-300">
+								<div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/5 px-4 py-3 transition-[background-color] duration-300">
 									<div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
 										<HugeiconsIcon
 											icon={SparklesIcon}
 											className="size-5 text-success"
 										/>
 									</div>
-									<div className="flex min-w-0 flex-col gap-0.5">
+									<div className="flex min-w-0 flex-col gap-1">
 										<span className="font-semibold text-sm text-success-foreground">
-											Daily Challenge complete
+											{t("dashboard.boltCompleteTitle")}
 										</span>
 										<span className="text-success-foreground/70 text-xs">
-											Come back tomorrow to keep learning
+											{t("dashboard.boltCompleteDescription")}
 										</span>
 									</div>
 									<div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">

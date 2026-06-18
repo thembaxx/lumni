@@ -119,7 +119,7 @@ export function SwipeableCardDeck({
 				role="alert"
 				className="flex flex-col items-center justify-center gap-4 py-12"
 			>
-				<div className="text-6xl" aria-hidden="true">
+				<div className="text-5xl" aria-hidden="true">
 					🎉
 				</div>
 				<h3 className="font-semibold text-xl">Deck Complete!</h3>
@@ -161,7 +161,7 @@ export function SwipeableCardDeck({
 			</div>
 
 			{/* Card stack */}
-			<div className="relative mx-auto w-full max-w-md" style={{ height: 400 }}>
+			<div className="relative mx-auto h-[min(400px,60vh)] w-full max-w-md">
 				<AnimatePresence mode="popLayout">
 					{visibleCards.map((card, idx) => {
 						const isTopCard = idx === 0 && !showPicker;

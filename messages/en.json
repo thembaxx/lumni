@@ -328,7 +328,8 @@
     "answerPlaceholder": "Your answer...",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Submit All Parts",
-    "pointsParenthetical": "({points} pts)"
+    "pointsParenthetical": "({points} pts)",
+    "pastPaperMode": "Past Paper Mode: questions styled after NSC exam papers"
   },
   "flashcards": {
     "title": "Flashcards",
@@ -747,7 +748,9 @@
     "signInDescription": "Create an account or sign in to save your study history, track your XP and streaks, unlock achievements, and compare your performance across subjects.",
     "signInAction": "Sign In",
     "createAccount": "Create Account",
-    "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices."
+    "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices.",
+    "boltCompleteTitle": "Daily Challenge complete",
+    "boltCompleteDescription": "Come back tomorrow to keep learning"
   },
   "consent": {
     "cookieBanner": {

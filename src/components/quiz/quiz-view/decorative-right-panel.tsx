@@ -21,7 +21,7 @@ export function DecorativeRightPanel({
 			/>
 			<div className="absolute inset-0 flex items-center justify-center p-8">
 				<div
-					className={`aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl ${bgColor} blur-2xl`}
+					className={`aspect-square h-full w-full max-w-xs animate-float-slow rounded-4xl ${bgColor} blur-2xl`}
 				/>
 			</div>
 		</div>

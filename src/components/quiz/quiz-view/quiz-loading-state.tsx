@@ -22,7 +22,7 @@ export function QuizLoadingState({
 
 	return (
 		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-(--space-20) md:col-span-7">
 				<Card size="sm" className="w-full max-w-md">
 					<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
 						<m.div
