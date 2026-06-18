@@ -8,7 +8,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
@@ -171,6 +171,12 @@ function BentoStatRow({
 
 function AnonymousUpsell() {
 	const t = useTranslations();
+	const handleSignIn = useCallback(() => {
+		window.location.href = "/auth/sign-in?redirect=/dashboard";
+	}, []);
+	const handleSignUp = useCallback(() => {
+		window.location.href = "/auth/sign-up?redirect=/dashboard";
+	}, []);
 	return (
 		<div className="rounded-3xl border border-dashed bg-system-surface p-8 shadow-level-1">
 			<EmptyStateWithIllustration
@@ -179,15 +185,11 @@ function AnonymousUpsell() {
 				description={t("dashboard.signInDescription")}
 				action={{
 					label: t("dashboard.signInAction"),
-					onClick: () => {
-						window.location.href = "/auth/sign-in?redirect=/dashboard";
-					},
+					onClick: handleSignIn,
 				}}
 				secondaryAction={{
 					label: t("dashboard.createAccount"),
-					onClick: () => {
-						window.location.href = "/auth/sign-up?redirect=/dashboard";
-					},
+					onClick: handleSignUp,
 				}}
 			/>
 		</div>

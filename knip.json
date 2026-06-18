@@ -19,7 +19,6 @@
 		"sharp",
 		"tailwind-scrollbar-hide",
 		"tw-animate-css",
-		"web-vitals",
 		"dotenv",
 		"zod"
 	],

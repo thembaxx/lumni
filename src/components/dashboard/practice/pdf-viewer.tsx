@@ -11,11 +11,28 @@ import {
 	ShrinkDotIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import dynamic from "next/dynamic";
+import {
+	Suspense,
+	useCallback,
+	useEffect,
+	useReducer,
+	useRef,
+	useState,
+} from "react";
 import { useCachedPdfUrl } from "@/hooks/use-pdf-cache";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+
+const PdfDocument = dynamic(
+	() => import("react-pdf").then((mod) => ({ default: mod.Document })),
+	{ ssr: false },
+);
+const PdfPage = dynamic(
+	() => import("react-pdf").then((mod) => ({ default: mod.Page })),
+	{ ssr: false },
+);
+
 import { EmptyState } from "@/components/shared/empty-state";
 import { LoadingOverlay } from "@/components/shared/loading-spinner";
 import { Badge } from "@/components/ui/badge";
@@ -102,10 +119,13 @@ const iconTransition =
 export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const [pdfState, dispatchPdf] = useReducer(pdfReducer, initialPdfState);
 	const { pdfPage, totalPages, isLoading, error, scale } = pdfState;
-	const [workerReady] = useState(() => {
-		pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-		return true;
-	});
+	const [workerReady, setWorkerReady] = useState(false);
+	useEffect(() => {
+		import("react-pdf").then((mod) => {
+			mod.pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+			setWorkerReady(true);
+		});
+	}, []);
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -213,20 +233,29 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 						) : pdfUrl ? (
 							<div className="h-full w-full overflow-auto">
 								<div className="flex min-h-full items-start justify-center p-3 sm:p-4">
-									<Document
-										file={pdfUrl}
-										onLoadSuccess={onDocumentLoadSuccess}
-										onLoadError={onDocumentLoadError}
-										loading={null}
+									<Suspense
+										fallback={
+											<LoadingOverlay
+												message="Loading PDF renderer..."
+												spinnerSize="md"
+											/>
+										}
 									>
-										<Page
-											pageNumber={pdfPage}
-											scale={scale}
-											renderTextLayer={false}
-											renderAnnotationLayer={false}
-											className="bg-background shadow-lg"
-										/>
-									</Document>
+										<PdfDocument
+											file={pdfUrl}
+											onLoadSuccess={onDocumentLoadSuccess}
+											onLoadError={onDocumentLoadError}
+											loading={null}
+										>
+											<PdfPage
+												pageNumber={pdfPage}
+												scale={scale}
+												renderTextLayer={false}
+												renderAnnotationLayer={false}
+												className="bg-background shadow-lg"
+											/>
+										</PdfDocument>
+									</Suspense>
 								</div>
 							</div>
 						) : (

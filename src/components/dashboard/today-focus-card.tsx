@@ -7,7 +7,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
@@ -59,7 +59,7 @@ const actionConfig: Record<
 	},
 };
 
-export function TodayFocusCard() {
+export const TodayFocusCard = memo(function TodayFocusCard() {
 	const { push } = useRouter();
 	const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
 		null,
@@ -227,4 +227,4 @@ export function TodayFocusCard() {
 			</Card>
 		</m.div>
 	);
-}
+});

@@ -1,8 +1,12 @@
+import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
+const withBundleAnalyzerEnabled = withBundleAnalyzer({
+	enabled: process.env.ANALYZE === "true",
+});
 
 const SENTRY_TUNNEL_ROUTE = "/api/telemetry";
 const CSP_REPORT_GROUP = "csp-endpoint";
@@ -158,4 +162,4 @@ const config =
 		? withSentryConfig(nextConfig, sentryOptions)
 		: nextConfig;
 
-export default withNextIntl(config);
+export default withBundleAnalyzerEnabled(withNextIntl(config));

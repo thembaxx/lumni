@@ -12,7 +12,7 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { iOSEase } from "@/lib/utils/animation";
@@ -102,7 +102,10 @@ function StatCard({
 	);
 }
 
-export function StatsCards({ questionsAnswered, streak }: StatsCardsProps) {
+export const StatsCards = memo(function StatsCards({
+	questionsAnswered,
+	streak,
+}: StatsCardsProps) {
 	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
 	const finalShouldReduceMotion = shouldReduceMotionOpt;
 
@@ -151,4 +154,4 @@ export function StatsCards({ questionsAnswered, streak }: StatsCardsProps) {
 			))}
 		</div>
 	);
-}
+});

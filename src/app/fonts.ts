@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 
 export const fontSans = Geist({
-	weight: ["400", "500", "600", "800"],
+	weight: ["400", "500", "600"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-sans",
@@ -9,7 +9,7 @@ export const fontSans = Geist({
 });
 
 export const fontMono = Geist_Mono({
-	weight: ["400", "500", "700"],
+	weight: ["400"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-geist-mono",
@@ -17,7 +17,7 @@ export const fontMono = Geist_Mono({
 });
 
 export const fontHeading = Outfit({
-	weight: ["400", "500", "600", "700", "800"],
+	weight: ["600", "800"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-heading",

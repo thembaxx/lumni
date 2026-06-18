@@ -5,7 +5,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import type { ChatMessage } from "@/hooks/use-chat";
@@ -22,7 +22,10 @@ interface MessageBubbleProps {
 	onRetry?: (messageId: string) => void;
 }
 
-export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
+export const MessageBubble = memo(function MessageBubble({
+	message,
+	onRetry,
+}: MessageBubbleProps) {
 	const isUser = message.role === "user";
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [imageViewerOpen, setImageViewerOpen] = useState(false);
@@ -271,4 +274,4 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			<MarkdownRenderer content={message.content} />
 		</m.div>
 	);
-}
+});

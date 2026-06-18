@@ -12,6 +12,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
@@ -20,7 +21,9 @@ interface HeroSectionProps {
 	isAuthenticated: boolean;
 }
 
-export function HeroSection({ isAuthenticated }: HeroSectionProps) {
+export const HeroSection = memo(function HeroSection({
+	isAuthenticated,
+}: HeroSectionProps) {
 	const t = useTranslations();
 	const prefersReducedMotion = useReducedMotion();
 	const { scrollYProgress } = useScroll();
@@ -203,4 +206,4 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 			</div>
 		</m.section>
 	);
-}
+});
