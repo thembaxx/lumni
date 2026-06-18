@@ -14,7 +14,3 @@ export function getHandler(type: JobType): JobHandler {
 	if (!handler) throw new Error(`No handler registered for job type: ${type}`);
 	return handler;
 }
-
-export function getAllHandlers(): Partial<Record<JobType, JobHandler>> {
-	return registry;
-}

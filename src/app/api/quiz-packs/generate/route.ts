@@ -32,24 +32,22 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 		const engine = await QuestionEngine.initialize();
 		const topicParam = topic && typeof topic === "string" ? topic : undefined;
 
-		const questions = await engine.generate({
+		const { questions } = await engine.generate({
 			subject,
 			topic: topicParam,
 			count: Math.min(count, 20),
 			questionType: "any",
 		});
 
-		const questionData = (questions as Question[]).map(
-			(q: Question, i: number) => ({
-				questionIndex: i,
-				questionText: q.questionText,
-				options: safeJsonStringify("options" in q.body ? q.body.options : []),
-				correctAnswer: extractCorrectAnswer(q) ?? "",
-				explanation: q.explanation ?? null,
-				difficulty: q.difficulty ?? "Medium",
-				type: q.type,
-			}),
-		);
+		const questionData = questions.map((q: Question, i: number) => ({
+			questionIndex: i,
+			questionText: q.questionText,
+			options: safeJsonStringify("options" in q.body ? q.body.options : []),
+			correctAnswer: extractCorrectAnswer(q) ?? "",
+			explanation: q.explanation ?? null,
+			difficulty: q.difficulty ?? "Medium",
+			type: q.type,
+		}));
 
 		await quizPackService.storeQuestions(packId, questionData);
 

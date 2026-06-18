@@ -263,6 +263,11 @@ export interface HintParams {
 	studentAnswer?: UserAnswer;
 }
 
+export interface GenerateResult {
+	questions: Question[];
+	ragContext: import("./prompt-manager").RagContext | null;
+}
+
 export type QuestionProcessor<T extends QuestionType = QuestionType> = {
 	type: T;
 	generate(

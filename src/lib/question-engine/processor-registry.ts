@@ -1,3 +1,4 @@
+import type { AIClient } from "@/lib/ai/client";
 import { TypedQuestionProcessor } from "./processors/processor";
 import { processorConfigs } from "./processors/processor-configs";
 import { PromptManager } from "./prompt-manager";
@@ -6,7 +7,7 @@ import type { QuestionProcessor, QuestionType } from "./types";
 export class ProcessorRegistry {
 	private processors = new Map<QuestionType, QuestionProcessor>();
 
-	constructor(prompts?: PromptManager) {
+	constructor(prompts?: PromptManager, ai?: AIClient) {
 		const pm = prompts ?? new PromptManager();
 		for (const config of processorConfigs) {
 			const processor = new TypedQuestionProcessor(
@@ -15,6 +16,7 @@ export class ProcessorRegistry {
 				config.grade,
 				config.hint,
 				pm,
+				ai,
 			);
 			this.register(config.type as QuestionType, processor);
 		}

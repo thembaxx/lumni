@@ -1,4 +1,4 @@
-import { getAI } from "@/lib/ai";
+import type { AIClient } from "@/lib/ai/client";
 import { getTextResponse, parseAIResponse } from "@/lib/ai/parse-response";
 import type { PromptManager } from "../../prompt-manager";
 import type {
@@ -13,6 +13,7 @@ export async function aiGradeResult(
 	q: Question,
 	a: UserAnswer,
 	prompts: PromptManager,
+	ai: AIClient,
 	ctxBuilder: (q: Question, a: UserAnswer) => string,
 	fallback?: (q: Question, a: UserAnswer) => GradingResult | null,
 ): Promise<GradingResult> {
@@ -26,7 +27,7 @@ export async function aiGradeResult(
 	}
 	const ctx = ctxBuilder(q, a);
 	const prompt = prompts.getGradePrompt(q.type);
-	const result = await getAI().generateWithSystem(
+	const result = await ai.generateWithSystem(
 		prompt.system,
 		`${prompt.user}\n\n${ctx}`,
 		{ temperature: 0.2, maxTokens: 1024 },
@@ -62,7 +63,7 @@ export async function aiGradeResult(
 const compositeGrade = (
 	ctxBuilder: (q: Question, _a: UserAnswer) => string,
 ): GradeFn => {
-	return (q, a, prompts) => aiGradeResult(q, a, prompts, ctxBuilder);
+	return (q, a, prompts, ai) => aiGradeResult(q, a, prompts, ai, ctxBuilder);
 };
 
 /* Consolidated graders for types that delegate directly to compositeGrade */
@@ -110,11 +111,12 @@ export const hintSourceBased: HintFn = (q) => {
 export const aiHintFactory = (): ((
 	q: Question,
 	prompts: PromptManager,
+	ai: AIClient,
 ) => Promise<string>) => {
-	return async (q, prompts) => {
+	return async (q, prompts, ai) => {
 		const prompt = prompts.getHintPrompt(q.type);
 		const ctx = `Question: ${q.questionText}`;
-		const result = await getAI().generateWithSystem(
+		const result = await ai.generateWithSystem(
 			prompt.system,
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.5, maxTokens: 256 },

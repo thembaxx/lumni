@@ -2,7 +2,7 @@ import type { Question, QuestionBody, UserAnswer } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult } from "./shared";
 
-export const grade: GradeFn = (q, a, prompts) => {
+export const grade: GradeFn = (q, a, prompts, ai) => {
 	const student = a.value as string;
 	if (!student) {
 		return Promise.resolve({
@@ -22,7 +22,7 @@ export const grade: GradeFn = (q, a, prompts) => {
 			feedback: `Answer too short (${words} words, minimum ${body.minWords}).`,
 		});
 	}
-	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+	return aiGradeResult(q, a, prompts, ai, (q: Question, _a: UserAnswer) => {
 		const b = q.body as QuestionBody["long-answer"];
 		return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nStudent: ${_a.value as string}`;
 	});

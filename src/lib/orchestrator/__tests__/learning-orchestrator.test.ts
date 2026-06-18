@@ -10,7 +10,7 @@ describe("LearningOrchestrator", () => {
 		expect(orchestrator).toBeDefined();
 	});
 
-	test("generateQuestionSet surfaces engine.lastRagContext as sources", async () => {
+	test("generateQuestionSet surfaces ragContext as sources", async () => {
 		const questions: Question[] = [
 			{
 				id: "q1",
@@ -35,26 +35,28 @@ describe("LearningOrchestrator", () => {
 		];
 
 		const fakeEngine = {
-			generate: vi.fn(async (_params: GenerationParams) => questions),
-			getLastRagContext: vi.fn(() => ({
-				sources: [
-					{
-						url: "https://www.education.gov.za/Curriculum/",
-						title: "DBE Curriculum",
-						snippet: "...",
-						content: "...",
-						contentTruncated: false,
-					},
-					{
-						url: "https://wced.school.za",
-						title: "WCED Past Papers",
-						snippet: "...",
-						content: "...",
-						contentTruncated: false,
-					},
-				],
-				xml: "<reference_material ...></reference_material>",
-				domainsQueried: ["education.gov.za", "wced.school.za"],
+			generate: vi.fn(async (_params: GenerationParams) => ({
+				questions,
+				ragContext: {
+					sources: [
+						{
+							url: "https://www.education.gov.za/Curriculum/",
+							title: "DBE Curriculum",
+							snippet: "...",
+							content: "...",
+							contentTruncated: false,
+						},
+						{
+							url: "https://wced.school.za",
+							title: "WCED Past Papers",
+							snippet: "...",
+							content: "...",
+							contentTruncated: false,
+						},
+					],
+					xml: "<reference_material ...></reference_material>",
+					domainsQueried: ["education.gov.za", "wced.school.za"],
+				},
 			})),
 		};
 
@@ -101,8 +103,10 @@ describe("LearningOrchestrator", () => {
 		];
 
 		const fakeEngine = {
-			generate: vi.fn(async (_params: GenerationParams) => questions),
-			getLastRagContext: vi.fn(() => null),
+			generate: vi.fn(async (_params: GenerationParams) => ({
+				questions,
+				ragContext: null,
+			})),
 		};
 
 		const orchestrator = new LearningOrchestrator(

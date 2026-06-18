@@ -2,7 +2,7 @@ import type { Question, QuestionBody, UserAnswer } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult } from "./shared";
 
-export const grade: GradeFn = (q, a, prompts) => {
+export const grade: GradeFn = (q, a, prompts, ai) => {
 	const student = a.value as string;
 	if (!student || student.trim().length < 20) {
 		return Promise.resolve({
@@ -12,7 +12,7 @@ export const grade: GradeFn = (q, a, prompts) => {
 			feedback: "Essay is too short to grade.",
 		});
 	}
-	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+	return aiGradeResult(q, a, prompts, ai, (q: Question, _a: UserAnswer) => {
 		const b = q.body as QuestionBody["essay"];
 		return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nModel answer: ${b.modelAnswer}\nStudent essay: ${_a.value as string}`;
 	});

@@ -1,6 +1,5 @@
 export { useBookmarksStore } from "./bookmarks";
 export { useExamSessionStore } from "./exam-session";
-export { useFlashcardsStore } from "./flashcards";
 export {
 	isAppInitialized,
 	onAppInit,

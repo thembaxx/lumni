@@ -29,7 +29,9 @@ export class LearningOrchestrator {
 		const startTime = Date.now();
 		const { questionType, subject, topic, count } = params;
 
-		let questions = await this.engine.generate(params);
+		const { questions: rawQuestions, ragContext } =
+			await this.engine.generate(params);
+		let questions = rawQuestions;
 
 		// Dedup: check AI-generated questions against pool
 		const poolQuestions = questions.filter(
@@ -74,7 +76,6 @@ export class LearningOrchestrator {
 			duration: Date.now() - startTime,
 		});
 
-		const ragContext = this.engine.getLastRagContext();
 		const sources =
 			ragContext?.sources.map((s) => ({ url: s.url, title: s.title })) ?? [];
 

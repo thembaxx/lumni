@@ -2,7 +2,7 @@ import type { Question, QuestionBody, UserAnswer } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult } from "./shared";
 
-export const grade: GradeFn = (q, a, prompts) => {
+export const grade: GradeFn = (q, a, prompts, ai) => {
 	const code = a.value as string;
 	if (!code) {
 		return Promise.resolve({
@@ -12,7 +12,7 @@ export const grade: GradeFn = (q, a, prompts) => {
 			feedback: "No code submitted.",
 		});
 	}
-	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+	return aiGradeResult(q, a, prompts, ai, (q: Question, _a: UserAnswer) => {
 		const body = q.body as QuestionBody["programming"];
 		return `Problem: ${q.questionText}\nLanguage: ${body.language}\nTest cases: ${JSON.stringify(body.testCases)}\nStudent code:\n${_a.value as string}`;
 	});

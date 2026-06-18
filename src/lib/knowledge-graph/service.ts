@@ -1,16 +1,9 @@
+import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { CacheDataAccess } from "@/lib/db/data-access";
-import { logError } from "@/lib/shared/logger";
+import type { DataAccess } from "@/lib/db/data-access";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import type { CachedGraph, KnowledgeGraph } from "./types";
-
-const DEFAULT_DEPS = { db: dexieDataAccess };
-let _deps: { db: CacheDataAccess } = DEFAULT_DEPS;
-
-function __setDepsForTesting(deps: { db: CacheDataAccess }) {
-	_deps = deps;
-}
 
 const KNOWLEDGE_GRAPH_TTL = 7 * 24 * 60 * 60 * 1000;
 
@@ -21,39 +14,52 @@ const SYSTEM_PROMPT = `You are a knowledge graph generator for educational topic
 }
 Each node must have a unique id. Connect nodes with meaningful relation labels like "requires", "leads_to", "builds_on", "includes". Return 5-15 nodes total.`;
 
+const config = {
+	systemPrompt: SYSTEM_PROMPT,
+	ttlMs: KNOWLEDGE_GRAPH_TTL,
+	buildCacheKey: buildKnowledgeCacheKey,
+	buildPrompt: (subject: string, topic: string) =>
+		`Subject: ${subject}\nTopic: ${topic}\n\nGenerate a knowledge graph for this topic showing prerequisites, core concepts, and advanced topics.`,
+	parseResponse: (content: string) => JSON.parse(content) as KnowledgeGraph,
+	emptyResult: { nodes: [], edges: [] } as KnowledgeGraph,
+	isEmpty: (result: KnowledgeGraph) => result.nodes.length === 0,
+	getTable: (db: DataAccess) => ({
+		get: (key: string) => db.knowledgeGraph.get(key),
+		put: (entry: unknown) => db.knowledgeGraph.put(entry as CachedGraph),
+	}),
+	buildCacheEntry: (key: string, data: KnowledgeGraph, ttlMs: number) =>
+		({
+			key,
+			graph: data,
+			createdAt: Date.now(),
+			expiresAt: Date.now() + ttlMs,
+		}) satisfies CachedGraph,
+	extractData: (cached: unknown) => (cached as CachedGraph).graph,
+	errorLabel: "KnowledgeGraphService",
+};
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+
+function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
+
+function createGenerator() {
+	return new CachedAIGenerator(config, getAI(), _deps.db);
+}
+
 export async function fetchGraph(
 	subject: string,
 	topic: string,
 ): Promise<KnowledgeGraph> {
-	const ai = getAI();
-	const prompt = `Subject: ${subject}\nTopic: ${topic}\n\nGenerate a knowledge graph for this topic showing prerequisites, core concepts, and advanced topics.`;
-	const result = await ai.generateWithSystem(SYSTEM_PROMPT, prompt);
-	if (!("content" in result) || !result.content) {
-		return { nodes: [], edges: [] };
-	}
-	try {
-		const parsed = JSON.parse(result.content) as KnowledgeGraph;
-		return parsed;
-	} catch (err) {
-		logError("KnowledgeGraphService", err);
-		return { nodes: [], edges: [] };
-	}
+	return createGenerator().generate(subject, topic);
 }
 
 export async function getCachedGraph(
 	subject: string,
 	topic: string,
 ): Promise<KnowledgeGraph | null> {
-	try {
-		const key = buildKnowledgeCacheKey(subject, topic);
-		const cached = await _deps.db.knowledgeGraph.get(key);
-		if (cached && cached.expiresAt > Date.now()) {
-			return cached.graph;
-		}
-	} catch {
-		// IndexedDB unavailable (server-side)
-	}
-	return null;
+	return createGenerator().getCached(subject, topic);
 }
 
 export async function storeGraph(
@@ -61,16 +67,5 @@ export async function storeGraph(
 	topic: string,
 	graph: KnowledgeGraph,
 ): Promise<void> {
-	try {
-		const key = buildKnowledgeCacheKey(subject, topic);
-		const entry: CachedGraph = {
-			key,
-			graph,
-			createdAt: Date.now(),
-			expiresAt: Date.now() + KNOWLEDGE_GRAPH_TTL,
-		};
-		await _deps.db.knowledgeGraph.put(entry);
-	} catch {
-		// IndexedDB unavailable (server-side)
-	}
+	return createGenerator().store(subject, topic, graph);
 }

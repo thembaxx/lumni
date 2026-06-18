@@ -160,7 +160,7 @@ async function getOverdueRetentionItems(): Promise<
 > {
 	try {
 		const now = Date.now();
-		const items = await _dexieDa.retentionRecurrence
+		const items = await _deps.db.retentionRecurrence
 			.where("scheduledAt")
 			.belowOrEqual(now)
 			.toArray();

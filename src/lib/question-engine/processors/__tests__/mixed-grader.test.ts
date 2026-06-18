@@ -1,17 +1,20 @@
 import { describe, expect, test, vi } from "vitest";
 
-vi.mock("@/lib/ai", () => ({
-	getAI: () => ({
-		generateWithSystem: async () => ({
-			content: "not valid json",
-			provider: "mock",
-			model: "mock",
-		}),
+const mockAI = {
+	generateWithSystem: async () => ({
+		content: "not valid json",
+		provider: "mock",
+		model: "mock",
 	}),
+};
+
+vi.mock("@/lib/ai", () => ({
+	getAI: () => mockAI,
 	isAIConfigured: () => true,
 	initAI: () => {},
 }));
 
+import type { AIClient } from "@/lib/ai/client";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
 import { gradeMixed as grade } from "../graders/shared";
@@ -65,13 +68,23 @@ function makeQuestion(
 describe("Mixed Grader", () => {
 	test("empty answer is handled", async () => {
 		const q = makeQuestion();
-		const result = await grade(q, { type: "mixed", value: "{}" }, prompts);
+		const result = await grade(
+			q,
+			{ type: "mixed", value: "{}" },
+			prompts,
+			mockAI as unknown as AIClient,
+		);
 		expect(result.correct).toBe(false);
 	});
 
 	test("null answer is handled", async () => {
 		const q = makeQuestion();
-		const result = await grade(q, { type: "mixed", value: null }, prompts);
+		const result = await grade(
+			q,
+			{ type: "mixed", value: null },
+			prompts,
+			mockAI as unknown as AIClient,
+		);
 		expect(result.correct).toBe(false);
 	});
 });

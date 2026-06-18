@@ -1,3 +1,4 @@
+import type { AIClient } from "@/lib/ai";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
@@ -10,6 +11,7 @@ import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager, type RagContext } from "./prompt-manager";
 import { fetchRagContext, type RagDeps } from "./rag-enricher";
 import type {
+	GenerateResult,
 	GenerationParams,
 	GradingResult,
 	HintParams,
@@ -30,10 +32,11 @@ export class QuestionEngine {
 	constructor(
 		ragDeps?: RagDeps,
 		caching?: CacheResolver<Question[], GenerationParams>,
+		ai?: AIClient,
 	) {
 		this.ragDeps = ragDeps;
 		this.prompts = new PromptManager(ragDeps);
-		this.registry = new ProcessorRegistry(this.prompts);
+		this.registry = new ProcessorRegistry(this.prompts, ai);
 		this.cachingStrategy =
 			caching ??
 			createCachingStrategy<Question[], GenerationParams>(
@@ -90,19 +93,23 @@ export class QuestionEngine {
 			);
 	}
 
-	static async initialize(ragDeps?: RagDeps): Promise<QuestionEngine> {
+	static async initialize(
+		ragDeps?: RagDeps,
+		ai?: AIClient,
+	): Promise<QuestionEngine> {
 		if (!isAIConfigured()) {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
 			});
 		}
-		return new QuestionEngine(ragDeps);
+		return new QuestionEngine(ragDeps, undefined, ai);
 	}
 
-	async generate(params: GenerationParams): Promise<Question[]> {
+	async generate(params: GenerationParams): Promise<GenerateResult> {
+		this.lastRagContext = null;
 		const generated = await this.cachingStrategy.resolve(params);
-		return generated ?? [];
+		return { questions: generated ?? [], ragContext: this.lastRagContext };
 	}
 
 	private async generateInternal(
@@ -476,9 +483,5 @@ export class QuestionEngine {
 
 	getPromptManager(): PromptManager {
 		return this.prompts;
-	}
-
-	getLastRagContext(): RagContext | null {
-		return this.lastRagContext;
 	}
 }

@@ -6,7 +6,7 @@ function normalize(s: string): string {
 	return s.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
-export const grade: GradeFn = (q, a, prompts) => {
+export const grade: GradeFn = (q, a, prompts, ai) => {
 	const student = ((a.value as string) ?? "").trim();
 	if (!student) {
 		return Promise.resolve({
@@ -33,7 +33,7 @@ export const grade: GradeFn = (q, a, prompts) => {
 		});
 	}
 
-	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+	return aiGradeResult(q, a, prompts, ai, (q: Question, _a: UserAnswer) => {
 		const body = q.body as QuestionBody["short-answer"];
 		return `Question: ${q.questionText}\nModel answer: ${body.modelAnswer}\nAcceptable answers: ${body.acceptableAnswers.join(" | ")}\nStudent answer: ${_a.value as string}`;
 	});

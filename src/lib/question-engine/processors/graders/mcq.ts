@@ -1,4 +1,3 @@
-import { getAI } from "@/lib/ai";
 import { getTextResponse } from "@/lib/ai/parse-response";
 import type { Option, QuestionBody } from "../../types";
 import type { GradeFn, HintFn } from "../types";
@@ -23,11 +22,11 @@ export const grade: GradeFn = (q, a) => {
 	};
 };
 
-export const hint: HintFn = async (q, prompts) => {
+export const hint: HintFn = async (q, prompts, ai) => {
 	const prompt = prompts.getHintPrompt("multiple-choice");
 	const opts = q.body as QuestionBody["multiple-choice"];
 	const ctx = `Question: ${q.questionText}\nOptions: ${JSON.stringify(opts.options)}`;
-	const result = await getAI().generateWithSystem(
+	const result = await ai.generateWithSystem(
 		prompt.system,
 		`${prompt.user}\n\n${ctx}`,
 		{ temperature: 0.5, maxTokens: 256 },
