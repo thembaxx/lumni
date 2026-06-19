@@ -1,6 +1,6 @@
 "use client";
 
-import { BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
+import { Book02Icon, BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -17,11 +17,13 @@ import { Button } from "@/components/ui/button";
 interface FlashcardsIdleProps {
 	onSelect: (subject: string) => void;
 	onReviewMistakes: (subject: string) => void;
+	onReviewVocabulary: (subject: string) => void;
 }
 
 export function FlashcardsIdle({
 	onSelect,
 	onReviewMistakes,
+	onReviewVocabulary,
 }: FlashcardsIdleProps) {
 	const t = useTranslations();
 	return (
@@ -57,6 +59,15 @@ export function FlashcardsIdle({
 											{t("flashcards.reviewMistakes")}
 											<HugeiconsIcon
 												icon={RefreshIcon}
+												className="ml-1 size-4"
+											/>
+										</Button>
+									</SubjectsDrawer>
+									<SubjectsDrawer onSelect={onReviewVocabulary}>
+										<Button variant="outline">
+											Review Vocabulary
+											<HugeiconsIcon
+												icon={Book02Icon}
 												className="ml-1 size-4"
 											/>
 										</Button>

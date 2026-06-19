@@ -22,6 +22,7 @@ import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
 import { RecentQuestionsCard } from "@/components/dashboard/recent-questions-card";
 import { StudyCard } from "@/components/dashboard/study-card";
+import { WeakTopicsCard } from "@/components/dashboard/weak-topics-card";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 
 async function refreshPage(): Promise<void> {
@@ -332,6 +333,11 @@ export function DashboardContent({
 						<StaggeredSection>
 							<QuestionOfTheDayCard />
 						</StaggeredSection>
+						{isLoggedIn && (
+							<StaggeredSection>
+								<WeakTopicsCard />
+							</StaggeredSection>
+						)}
 						{isLoggedIn && (
 							<StaggeredSection>
 								<LessonLibraryCard />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
 	useCallback,
@@ -25,6 +26,7 @@ import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { Question } from "@/lib/question-engine/types";
+import { getSavedWords } from "@/lib/vocabulary/service";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
@@ -41,7 +43,7 @@ interface FlashcardItem {
 	rawQuestion: Question;
 }
 
-type FlashcardSource = "ai" | "mistakes";
+type FlashcardSource = "ai" | "mistakes" | "vocabulary";
 
 interface SessionState {
 	selectedSubject: string;
@@ -136,6 +138,8 @@ function cardsReducer(state: CardsState, action: CardsAction): CardsState {
 
 export function FlashcardsClient() {
 	const t = useTranslations();
+	const searchParams = useSearchParams();
+	const autoMode = searchParams.get("mode") as FlashcardSource | null;
 	useEffect(() => {
 		migrateLegacyFlashcards().catch((e) => {
 			console.warn("Legacy flashcard migration:", e);
@@ -274,7 +278,7 @@ export function FlashcardsClient() {
 	const sm2Available = session.source === "ai" && cards.sm2Cards.length > 0;
 	const displayCards = sm2Available
 		? cards.sm2Cards
-		: session.source === "mistakes"
+		: session.source === "mistakes" || session.source === "vocabulary"
 			? cards.mistakeCards
 			: generatedCards;
 	const totalCards = displayCards.length;
@@ -309,6 +313,34 @@ export function FlashcardsClient() {
 							bloomTaxonomy: "understand",
 							points: 1,
 							body: { modelAnswer: wa.correctAnswer || wa.explanation },
+						} as Question,
+					})),
+				});
+			} else if (src === "vocabulary") {
+				const words = await getSavedWords("", {
+					language: subject.toLowerCase(),
+				});
+				dispatchCards({
+					type: "SET_MISTAKE_CARDS",
+					payload: words.map((w) => ({
+						id: `vocab_${w.id}`,
+						front: w.word,
+						back: w.partOfSpeech
+							? `${w.definition} (${w.partOfSpeech})`
+							: w.definition,
+						topic: "vocabulary",
+						difficulty: "Medium",
+						rawQuestion: {
+							id: `vocab_${w.id}`,
+							questionText: w.word,
+							explanation: w.definition,
+							subject: w.language,
+							topic: "vocabulary",
+							type: "short-answer",
+							difficulty: "Medium",
+							bloomTaxonomy: "understand",
+							points: 1,
+							body: { modelAnswer: w.definition },
 						} as Question,
 					})),
 				});
@@ -373,6 +405,12 @@ export function FlashcardsClient() {
 		[getWrongAnswers],
 	);
 
+	useEffect(() => {
+		if (autoMode && !session.isActive) {
+			startSession("vocabulary", autoMode);
+		}
+	}, [autoMode, session.isActive, startSession]);
+
 	const stopSession = useCallback(() => {
 		dispatchSession({ type: "STOP_SESSION" });
 	}, []);
@@ -422,6 +460,7 @@ export function FlashcardsClient() {
 				<FlashcardsIdle
 					onSelect={(subject) => startSession(subject, "ai")}
 					onReviewMistakes={(subject) => startSession(subject, "mistakes")}
+					onReviewVocabulary={(subject) => startSession(subject, "vocabulary")}
 				/>
 			</div>
 		);

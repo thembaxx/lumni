@@ -314,16 +314,28 @@ export function StoryReaderClient() {
 												More Stories
 											</Button>
 											{overallScore < 50 && (
-												<Button
-													variant="ghost"
-													size="sm"
-													className="rounded-full"
-													onClick={() =>
-														(window.location.href = `/stories?lang=${encodeURIComponent(story.language)}&level=easy`)
-													}
-												>
-													Try an Easier Story
-												</Button>
+												<>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="rounded-full"
+														onClick={() =>
+															(window.location.href = `/stories?lang=${encodeURIComponent(story.language)}&level=easy`)
+														}
+													>
+														Try an Easier Story
+													</Button>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="rounded-full"
+														onClick={() =>
+															(window.location.href = `/dictionary?q=${encodeURIComponent(story.vocabulary[0]?.term ?? "")}`)
+														}
+													>
+														Review Vocabulary
+													</Button>
+												</>
 											)}
 											<Button
 												variant="ghost"

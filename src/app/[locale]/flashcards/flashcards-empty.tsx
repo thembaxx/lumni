@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface FlashcardsEmptyProps {
 	subject: string;
 	onGoBack: () => void;
-	mode?: "ai" | "mistakes";
+	mode?: "ai" | "mistakes" | "vocabulary";
 }
 
 export function FlashcardsEmpty({

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { DictionaryClient } from "./dictionary-client";
 
 export const metadata: Metadata = {
 	title: "Dictionary - Lumni",
-	description: "Look up word definitions, pronunciations, and examples",
+	description: "Look up word definitions, pronunciation, and save vocabulary",
 };
 
 export default function DictionaryPage() {
@@ -14,10 +14,10 @@ export default function DictionaryPage() {
 		<AppErrorBoundary>
 			<Suspense
 				fallback={
-					<div className="mx-auto flex max-w-2xl flex-col gap-4 px-4 pt-8">
-						<Skeleton className="h-10 w-48 rounded-2xl" />
-						<Skeleton className="h-12 w-full rounded-3xl" />
-						<Skeleton className="h-64 w-full rounded-3xl" />
+					<div className="flex flex-col gap-4 p-6">
+						<Skeleton className="h-10 w-full rounded-xl" />
+						<Skeleton className="h-32 w-full rounded-xl" />
+						<Skeleton className="h-32 w-full rounded-xl" />
 					</div>
 				}
 			>

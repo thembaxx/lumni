@@ -50,7 +50,7 @@ const mockTables = tableNames.map((name) => ({
 
 class MockOfflineDB {
 	readonly name = "lumni-offline";
-	readonly verno = 25;
+	readonly verno = 36;
 	readonly tables = mockTables;
 	table(name: string) {
 		return mockTables.find((t) => t.name === name);
@@ -86,8 +86,8 @@ describe("LumniOfflineDB", () => {
 		expect(offlineDB.name).toBe("lumni-offline");
 	});
 
-	test("version is 25", () => {
-		expect(offlineDB.verno).toBe(25);
+	test("version is 36", () => {
+		expect(offlineDB.verno).toBe(36);
 	});
 
 	test("has all expected tables", () => {
