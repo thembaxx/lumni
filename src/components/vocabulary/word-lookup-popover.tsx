@@ -7,13 +7,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Popover } from "@/components/ui/popover";
 import { PopoverContent } from "@/components/ui/popover-content";
 import { PopoverTrigger } from "@/components/ui/popover-trigger";
 import { lookupWord } from "@/lib/dictionary/service";
-import type { DictionaryEntry } from "@/lib/dictionary/types";
+import type { DictionaryResult } from "@/lib/dictionary/types";
 import { createFlashcardFromVocabulary } from "@/lib/integration/service";
 import { logError } from "@/lib/shared/logger";
 import { isWordSaved, removeWord, saveWord } from "@/lib/vocabulary/service";
@@ -32,32 +31,30 @@ export function WordLookupPopover({
 	children,
 }: WordLookupPopoverProps) {
 	const [open, setOpen] = useState(false);
-	const [results, setResults] = useState<DictionaryEntry[] | null>(null);
+	const [result, setResult] = useState<DictionaryResult | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [saved, setSaved] = useState(false);
 	const [saving, setSaving] = useState(false);
 
-	const entry = results?.[0];
-
 	const handleOpenChange = useCallback(
 		async (isOpen: boolean) => {
 			setOpen(isOpen);
-			if (isOpen && results === null) {
+			if (isOpen && result === null) {
 				setLoading(true);
 				try {
 					const data = await lookupWord(word, language);
-					setResults(data);
+					setResult(data);
 					const alreadySaved = await isWordSaved(userId, word);
 					setSaved(alreadySaved);
 				} catch (err) {
 					logError("WordLookupPopover.lookup", err);
-					setResults([]);
+					setResult(null);
 				} finally {
 					setLoading(false);
 				}
 			}
 		},
-		[word, language, userId, results],
+		[word, language, userId, result],
 	);
 
 	const playAudio = useCallback((url?: string) => {
@@ -74,8 +71,8 @@ export function WordLookupPopover({
 				await removeWord(userId, word);
 				setSaved(false);
 			} else {
-				const def = entry?.meanings[0]?.definitions[0]?.definition ?? "";
-				const pos = entry?.meanings[0]?.partOfSpeech;
+				const def = result?.definitions[0]?.definition ?? "";
+				const pos = result?.definitions[0]?.partOfSpeech;
 				await saveWord(
 					userId,
 					word,
@@ -93,7 +90,7 @@ export function WordLookupPopover({
 		} finally {
 			setSaving(false);
 		}
-	}, [saving, saved, userId, word, language, entry]);
+	}, [saving, saved, userId, word, language, result]);
 
 	return (
 		<Popover open={open} onOpenChange={handleOpenChange}>
@@ -111,46 +108,36 @@ export function WordLookupPopover({
 							<span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
 							Looking up...
 						</div>
-					) : entry ? (
+					) : result ? (
 						<>
 							<div className="flex items-center gap-2">
-								<span className="font-extrabold text-base">{entry.word}</span>
-								{entry.phonetic && (
+								<span className="font-extrabold text-base">{result.word}</span>
+								{result.phonetic && (
 									<span className="text-muted-foreground text-xs">
-										{entry.phonetic}
+										{result.phonetic}
 									</span>
 								)}
-								{entry.audio && (
+								{result.audio && (
 									<Button
 										variant="ghost"
 										size="icon"
 										className="ml-auto size-7 shrink-0 rounded-full"
-										onClick={() => playAudio(entry.audio)}
-										aria-label={`Listen to ${entry.word}`}
+										onClick={() => playAudio(result.audio)}
+										aria-label={`Listen to ${result.word}`}
 									>
 										<HugeiconsIcon icon={VolumeUpIcon} className="size-3.5" />
 									</Button>
 								)}
 							</div>
-							{entry.origin && (
-								<Badge
-									variant="secondary"
-									className="w-fit rounded-full text-[10px]"
-								>
-									{entry.origin}
-								</Badge>
-							)}
-							{entry.meanings.slice(0, 2).map((meaning) => (
-								<div key={meaning.partOfSpeech} className="flex flex-col gap-1">
+							{result.definitions.slice(0, 2).map((def) => (
+								<div key={def.definition} className="flex flex-col gap-1">
 									<span className="w-fit rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent] text-[10px]">
-										{meaning.partOfSpeech}
+										{def.partOfSpeech}
 									</span>
-									<p className="text-sm leading-relaxed">
-										{meaning.definitions[0]?.definition ?? "—"}
-									</p>
-									{meaning.definitions[0]?.example && (
+									<p className="text-sm leading-relaxed">{def.definition}</p>
+									{def.example && (
 										<p className="text-muted-foreground text-xs italic">
-											&ldquo;{meaning.definitions[0].example}&rdquo;
+											&ldquo;{def.example}&rdquo;
 										</p>
 									)}
 								</div>

@@ -124,7 +124,7 @@ const CATEGORY_ORDER: string[] = [
 ];
 
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
-	const { data, completeOnboarding, updateProgress } = useOnboarding();
+	const { data, completeOnboarding } = useOnboarding();
 	const [wizard, dispatchWizard] = useReducer(wizardReducer, {
 		step: data.currentStep,
 		selectedSubjects: data.selectedSubjects,
@@ -148,15 +148,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	const [isCompleting, setIsCompleting] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
 	const completeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	useEffect(() => {
-		updateProgress({
-			currentStep: step,
-			selectedSubjects,
-			targetAps,
-			dailyStudyMinutes: dailyMinutes,
-		});
-	}, [step, selectedSubjects, targetAps, dailyMinutes, updateProgress]);
 
 	useEffect(() => {
 		const timerAtMount = completeTimerRef.current;

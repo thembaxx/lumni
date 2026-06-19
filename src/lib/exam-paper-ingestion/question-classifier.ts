@@ -1,116 +1,103 @@
-import { curriculumRegistry } from "@/curriculum";
-import { getAI } from "@/lib/ai/client";
+import { type AIClient, getAI } from "@/lib/ai/client";
 import { logError } from "@/lib/shared/logger";
-import type { PastPaperQuestion } from "./past-paper-question-types";
 
 const BATCH_SIZE = 50;
-const MAX_RETRIES = 2;
 
-export interface ClassificationResult {
+interface CurriculumTopic {
 	id: string;
-	subtopicId: string | null;
+	subject: string;
+	topic: string;
+	subtopic: string;
 }
 
-async function buildCurriculumContext(subjectId: string): Promise<string> {
-	const curriculum = await curriculumRegistry.getSubject(subjectId);
-	if (!curriculum) return "";
-	return curriculum.topics
-		.map(
-			(t) =>
-				`Topic: "${t.name}" (id: ${t.id})\n${t.subtopics.map((st) => `  - Subtopic: "${st.name}" (id: ${st.id})`).join("\n")}`,
-		)
-		.join("\n\n");
-}
-
-function buildBatchPrompt(
-	subjectId: string,
-	batch: PastPaperQuestion[],
-	curriculumContext: string,
+function buildPrompt(
+	batch: Array<{ id: string; questionText: string; subject: string }>,
+	curriculumTopics: CurriculumTopic[],
 ): string {
+	const topicsList = curriculumTopics
+		.map((t) => `  - id: "${t.id}" | ${t.topic} → ${t.subtopic}`)
+		.join("\n");
+
 	const questionsJson = batch.map((q) => ({
 		id: q.id,
 		questionText: q.questionText.slice(0, 500),
-		marks: q.marks,
-		topic: q.topic || null,
 	}));
 
-	return `You are classifying past exam questions against the CAPS curriculum for "${subjectId}".
+	return `You are classifying past exam questions against curriculum subtopics.
 
-Curriculum structure (topic → subtopics):
-${curriculumContext}
+Curriculum subtopics:
+${topicsList}
 
 Questions to classify:
 ${JSON.stringify(questionsJson, null, 2)}
 
-For each question, assign the subtopicId that best matches. If no good match exists, return null.
-Return ONLY valid JSON array: [{"id": "<questionId>", "subtopicId": "<subtopicId>" | null}, ...]`;
+For each question, assign the subtopic id that best matches. Use only ids from the curriculum list above. If no good match exists, return null for that question.
+
+Return ONLY valid JSON: {"questionId": "subtopicId" | null, ...}`;
 }
 
-function parseClassificationResponse(raw: string): ClassificationResult[] {
+function parseResponse(
+	raw: string,
+	validIds: Set<string>,
+): Map<string, string> {
+	const result = new Map<string, string>();
 	try {
-		const parsed = JSON.parse(raw);
-		if (!Array.isArray(parsed)) return [];
-		return parsed.filter(
-			(r): r is ClassificationResult =>
-				typeof r === "object" &&
-				r !== null &&
-				typeof r.id === "string" &&
-				(r.subtopicId === null || typeof r.subtopicId === "string"),
-		);
+		const parsed = JSON.parse(raw) as Record<string, unknown>;
+		if (
+			typeof parsed !== "object" ||
+			parsed === null ||
+			Array.isArray(parsed)
+		) {
+			return result;
+		}
+		for (const [questionId, subtopicId] of Object.entries(parsed)) {
+			if (
+				typeof questionId === "string" &&
+				typeof subtopicId === "string" &&
+				validIds.has(subtopicId)
+			) {
+				result.set(questionId, subtopicId);
+			}
+		}
 	} catch {
-		return [];
+		// Return empty map on parse failure
 	}
+	return result;
 }
 
 export async function classifyQuestions(
-	questions: PastPaperQuestion[],
-	subjectId: string,
-): Promise<ClassificationResult[]> {
-	if (questions.length === 0) return [];
+	questions: Array<{ id: string; questionText: string; subject: string }>,
+	curriculumTopics: CurriculumTopic[],
+	ai?: AIClient,
+): Promise<Map<string, string>> {
+	if (questions.length === 0) return new Map();
 
-	const curriculumContext = await buildCurriculumContext(subjectId);
-	if (!curriculumContext) {
-		logError(
-			"QuestionClassifier",
-			new Error(`No curriculum found for ${subjectId}`),
-		);
-		return [];
-	}
-
-	const results: ClassificationResult[] = [];
-	const ai = getAI();
+	const client = ai ?? getAI();
+	const validIds = new Set(curriculumTopics.map((t) => t.id));
+	const classifications = new Map<string, string>();
 
 	for (let i = 0; i < questions.length; i += BATCH_SIZE) {
 		const batch = questions.slice(i, i + BATCH_SIZE);
-		const prompt = buildBatchPrompt(subjectId, batch, curriculumContext);
-		let lastError: Error | null = null;
+		const prompt = buildPrompt(batch, curriculumTopics);
 
-		for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-			try {
-				const response = await ai.generateWithSystem(
-					"You are a CAPS curriculum expert. Classify questions accurately. Return ONLY valid JSON.",
-					prompt,
-				);
-				if (!("content" in response) || !response.content) {
-					throw new Error("Empty response");
-				}
-				const batchResults = parseClassificationResponse(response.content);
-				if (batchResults.length === 0) {
-					throw new Error("Failed to parse classification results");
-				}
-				results.push(...batchResults);
-				break;
-			} catch (err) {
-				lastError = err instanceof Error ? err : new Error(String(err));
-				if (attempt < MAX_RETRIES) continue;
-				logError("QuestionClassifier", lastError, {
-					batch: i / BATCH_SIZE,
-					subjectId,
-				});
-				results.push(...batch.map((q) => ({ id: q.id, subtopicId: null })));
+		try {
+			const response = await client.generateWithSystem(
+				"You are a CAPS curriculum expert. Classify questions accurately. Return ONLY valid JSON.",
+				prompt,
+			);
+			if (!("content" in response) || !response.content) {
+				throw new Error("Empty AI response");
 			}
+			const batchClassifications = parseResponse(response.content, validIds);
+			for (const [k, v] of batchClassifications) {
+				classifications.set(k, v);
+			}
+		} catch (err) {
+			logError("QuestionClassifier", err, {
+				batchIndex: Math.floor(i / BATCH_SIZE),
+			});
 		}
 	}
 
-	return results;
+	return classifications;
 }

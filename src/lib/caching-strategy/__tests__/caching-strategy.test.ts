@@ -1,7 +1,11 @@
 import { describe, expect, test, vi } from "vitest";
 import { CachingStrategy, createCachingStrategy } from "../caching-strategy";
 
-function makeTier(name: string, readResult: unknown = null, shouldFail = false) {
+function makeTier(
+	name: string,
+	readResult: unknown = null,
+	shouldFail = false,
+) {
 	const readMock = shouldFail
 		? vi.fn().mockRejectedValue(new Error(`${name} read fail`))
 		: vi.fn().mockResolvedValue(readResult);

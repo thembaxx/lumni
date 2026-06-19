@@ -1,96 +1,113 @@
-"use client";
-
+import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { StoryDataAccess } from "@/lib/db/data-access";
-import type { Question } from "@/lib/question-engine/types";
-import { logError } from "@/lib/shared/logger";
-import type { CachedStory, Story, StoryQuestionSet } from "./types";
+import type { DataAccess } from "@/lib/db/data-access";
+import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
-const _deps: { db: StoryDataAccess } = { db: dexieDataAccess };
+// Dexie v33 adds storyCache + storyQuestions tables.
 
-const STORY_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
-const QUESTION_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
+const QUESTIONS_TTL = 30 * 24 * 60 * 60 * 1000;
 
-const SYSTEM_PROMPT = `You are a comprehension question generator for students.
-Given a story text and a subject, generate 3-5 comprehension questions covering:
-- Literal (recall facts from the text)
-- Inferential (read between the lines)
-- Critical (evaluate or judge)
+const QUESTIONS_SYSTEM_PROMPT = `You are a reading comprehension question generator. Given a short story, produce 3-5 comprehension questions that test literal recall, inferential understanding, and critical analysis. Mix question types between multiple-choice and short-answer. Format your response as a JSON array of objects with this schema:
+[
+  {
+    "id": "q1",
+    "storyId": "the-story-id",
+    "questionText": "The question text",
+    "questionType": "mcq",
+    "options": ["A", "B", "C", "D"],
+    "correctAnswer": "A",
+    "explanation": "Why this answer is correct",
+    "bloomLevel": "remember"
+  }
+]
+For short-answer questions, omit the options field and set correctAnswer to a brief expected response. Use Bloom's taxonomy levels: remember, understand, apply, analyze, evaluate, create. Return ONLY valid JSON.`;
 
-Return valid JSON as an array of Question objects (use the Question type from the question engine).
-Each question must have: id, type, subject, topic, questionText, options (for multiple-choice), correctAnswer, explanation, difficulty, bloomLevel, marks.`;
+const questionsConfig = {
+	systemPrompt: QUESTIONS_SYSTEM_PROMPT,
+	ttlMs: QUESTIONS_TTL,
+	buildPrompt: (_subject: string, storyText: string) =>
+		`Story:\n\n${storyText}\n\nGenerate 3-5 comprehension questions covering literal recall, inference, and critical analysis. Mix mcq and short-answer types.`,
+	parseResponse: (content: string) => JSON.parse(content) as StoryQuestion[],
+	emptyResult: [] as StoryQuestion[],
+	isEmpty: (result: StoryQuestion[]) => result.length === 0,
+	getTable: (db: DataAccess) => ({
+		get: (key: string) => db.storyQuestions.get(key),
+		put: (entry: unknown) => db.storyQuestions.put(entry as StoryQuestionSet),
+	}),
+	buildCacheEntry: (
+		key: string,
+		data: StoryQuestion[],
+		ttlMs: number,
+		storyId: string,
+		_subject: string,
+	) =>
+		({
+			key,
+			storyId,
+			questions: data,
+			createdAt: Date.now(),
+			expiresAt: Date.now() + ttlMs,
+		}) satisfies StoryQuestionSet,
+	extractData: (cached: unknown) => (cached as StoryQuestionSet).questions,
+	errorLabel: "StoryService",
+	buildCacheKey: (storyId: string, _storyText: string) =>
+		`questions:${storyId}`,
+};
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+
+function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
+
+function createQuestionsGenerator() {
+	return new CachedAIGenerator(questionsConfig, getAI(), _deps.db);
+}
 
 export async function getStory(id: string): Promise<Story | null> {
 	try {
-		const key = `story-${id}`;
+		const key = `story:${id}`;
 		const cached = await _deps.db.storyCache.get(key);
 		if (cached && cached.expiresAt > Date.now()) {
 			return cached.story;
 		}
 	} catch {
-		// cache unavailable
+		// IndexedDB unavailable (server-side)
 	}
 	return null;
 }
 
 export async function cacheStory(id: string, story: Story): Promise<void> {
 	try {
-		const key = `story-${id}`;
-		const entry: CachedStory = {
+		const key = `story:${id}`;
+		const entry = {
 			key,
 			story,
-			fetchedAt: Date.now(),
-			expiresAt: Date.now() + STORY_CACHE_TTL,
+			createdAt: Date.now(),
+			expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
 		};
 		await _deps.db.storyCache.put(entry);
 	} catch {
-		// cache write fail silently
+		// IndexedDB unavailable (server-side)
 	}
-}
-
-export async function getCachedQuestions(
-	storyId: string,
-): Promise<Question[] | null> {
-	try {
-		const cached = await _deps.db.storyQuestions.get(storyId);
-		if (cached && cached.expiresAt > Date.now()) {
-			return cached.questions;
-		}
-	} catch {
-		// cache unavailable
-	}
-	return null;
 }
 
 export async function generateComprehensionQuestions(
 	story: Story,
-): Promise<Question[]> {
-	const cached = await getCachedQuestions(story.id);
-	if (cached) return cached;
+): Promise<StoryQuestion[]> {
+	return createQuestionsGenerator().generate(story.id, story.content);
+}
 
-	const ai = getAI();
-	const prompt = `Subject: ${story.subjectId}\nStory title: ${story.title}\nStory text:\n\n${story.content}\n\nGenerate 3-5 comprehension questions. Return valid JSON array.`;
+export async function getCachedQuestions(
+	storyId: string,
+): Promise<StoryQuestion[] | null> {
+	return createQuestionsGenerator().getCached(storyId, "");
+}
 
-	try {
-		const result = await ai.generateWithSystem(SYSTEM_PROMPT, prompt);
-		if (!("content" in result) || !result.content) return [];
-
-		const parsed = JSON.parse(result.content) as Question[];
-		const questionSet: StoryQuestionSet = {
-			storyId: story.id,
-			questions: parsed,
-			generatedAt: Date.now(),
-			expiresAt: Date.now() + QUESTION_CACHE_TTL,
-		};
-		try {
-			await _deps.db.storyQuestions.put(questionSet);
-		} catch {
-			// cache write fail silently
-		}
-		return parsed;
-	} catch (err) {
-		logError("StoryService.generateQuestions", err);
-		return [];
-	}
+export async function storeQuestions(
+	storyId: string,
+	questions: StoryQuestion[],
+): Promise<void> {
+	return createQuestionsGenerator().store(storyId, "", questions);
 }

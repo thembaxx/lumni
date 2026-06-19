@@ -1,27 +1,22 @@
-export interface DictionaryEntry {
-	word: string;
-	phonetic?: string;
-	audio?: string;
-	origin?: string;
-	meanings: DictionaryMeaning[];
-	sourceUrls: string[];
+export interface DictionaryDefinition {
+	partOfSpeech: string;
+	definition: string;
+	example?: string;
 }
 
-export interface DictionaryMeaning {
-	partOfSpeech: string;
-	definitions: {
-		definition: string;
-		example?: string;
-		synonyms: string[];
-		antonyms: string[];
-	}[];
+export interface DictionaryResult {
+	word: string;
+	phonetic: string;
+	audio: string;
+	definitions: DictionaryDefinition[];
+	synonyms: string[];
+	antonyms: string[];
 }
 
 export interface DictionaryCacheEntry {
 	key: string;
 	word: string;
-	language: string;
-	result: DictionaryEntry[];
+	result: DictionaryResult;
 	fetchedAt: number;
 	expiresAt: number;
 }

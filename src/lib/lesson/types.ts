@@ -1,29 +1,44 @@
+export type SectionType =
+	| "introduction"
+	| "concept"
+	| "worked-example"
+	| "comprehension-check"
+	| "summary"
+	| "practice";
+
 export interface LessonSection {
 	id: string;
+	type: SectionType;
 	title: string;
 	content: string;
-	type: "concept" | "example" | "activity" | "summary";
-	keyPoints?: string[];
+	keyPoints: string[];
 }
 
 export interface VocabWord {
-	term: string;
+	word: string;
 	definition: string;
+	partOfSpeech: string;
+	pronunciation: string;
+	language: string;
 }
 
 export interface Lesson {
+	id: string;
+	subjectId: string;
+	topicId: string;
+	subtopicId: string;
+	title: string;
+	order: number;
+	prerequisites: string[];
 	sections: LessonSection[];
-	summary: string;
+	vocabulary: VocabWord[];
+	difficulty: "easy" | "medium" | "hard";
 	estimatedMinutes: number;
-	vocabulary?: VocabWord[];
 }
 
 export interface CachedLesson {
 	key: string;
 	lesson: Lesson;
-	subject: string;
-	topic: string;
-	subtopic: string;
 	createdAt: number;
 	expiresAt: number;
 }

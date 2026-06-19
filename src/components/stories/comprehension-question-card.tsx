@@ -11,11 +11,19 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Option, Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 
+export interface ComprehensionQuestion {
+	id: string;
+	questionText: string;
+	questionType: "mcq" | "short-answer";
+	options?: string[];
+	correctAnswer: string;
+	explanation: string;
+}
+
 interface ComprehensionQuestionCardProps {
-	question: Question;
+	question: ComprehensionQuestion;
 	questionNumber: number;
 	onGraded?: (score: number) => void;
 }
@@ -54,42 +62,26 @@ export function ComprehensionQuestionCard({
 
 	const handleMCQSubmit = useCallback(() => {
 		if (!selectedOption) return;
-		const body = question.body as {
-			options: Option[];
-			correctOptionId: string;
-		};
-		const correct = selectedOption === body.correctOptionId;
+		const correct = selectedOption === question.correctAnswer;
 		const s = correct ? 100 : 0;
 		setIsCorrect(correct);
 		setScore(s);
 		setIsGraded(true);
 		onGraded?.(s);
-	}, [selectedOption, question.body, onGraded]);
+	}, [selectedOption, question.correctAnswer, onGraded]);
 
 	const handleShortAnswerSubmit = useCallback(() => {
 		const text = textInput.trim();
 		if (!text) return;
-		const body = question.body as {
-			modelAnswer: string;
-			acceptableAnswers: string[];
-		};
-		const acceptable = [body.modelAnswer, ...body.acceptableAnswers];
-		const correct = fuzzyMatch(text, acceptable);
+		const correct = fuzzyMatch(text, [question.correctAnswer]);
 		const s = correct ? 100 : 0;
 		setIsCorrect(correct);
 		setScore(s);
 		setIsGraded(true);
 		onGraded?.(s);
-	}, [textInput, question.body, onGraded]);
+	}, [textInput, question.correctAnswer, onGraded]);
 
-	const body = question.body as {
-		options?: Option[];
-		modelAnswer?: string;
-	};
-
-	const isMCQ = question.type === "multiple-choice";
-	const isShortAnswer =
-		question.type === "short-answer" || question.type === "long-answer";
+	const isMCQ = question.questionType === "mcq";
 
 	return (
 		<m.div
@@ -117,18 +109,18 @@ export function ComprehensionQuestionCard({
 					</div>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3 px-5 pt-0 pb-5">
-					{isMCQ && body.options && (
+					{isMCQ && question.options && (
 						<div className="flex flex-col gap-2">
-							{body.options.map((option) => {
-								const isSelected = selectedOption === option.id;
+							{question.options.map((option) => {
+								const isSelected = selectedOption === option;
 								const showResult = isGraded;
-								const isOptionCorrect = option.isCorrect;
+								const isOptionCorrect = option === question.correctAnswer;
 								return (
 									<button
-										key={option.id}
+										key={option}
 										type="button"
 										disabled={isGraded}
-										onClick={() => setSelectedOption(option.id)}
+										onClick={() => setSelectedOption(option)}
 										className={cn(
 											"flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors",
 											!showResult &&
@@ -175,9 +167,7 @@ export function ComprehensionQuestionCard({
 												{isSelected ? "✓" : ""}
 											</span>
 										)}
-										<span className="leading-relaxed">
-											<MarkdownRenderer content={option.text} />
-										</span>
+										<span className="leading-relaxed">{option}</span>
 									</button>
 								);
 							})}
@@ -194,7 +184,7 @@ export function ComprehensionQuestionCard({
 						</div>
 					)}
 
-					{isShortAnswer && (
+					{!isMCQ && (
 						<div className="flex flex-col gap-2">
 							<Textarea
 								value={textInput}
@@ -251,15 +241,14 @@ export function ComprehensionQuestionCard({
 								</div>
 							)}
 
-							{!isCorrect && isMCQ && body.options && (
+							{!isCorrect && isMCQ && question.options && (
 								<div className="mt-2 text-muted-foreground text-xs">
-									Correct answer:{" "}
-									{body.options.find((o) => o.isCorrect)?.text ?? "—"}
+									Correct answer: {question.correctAnswer}
 								</div>
 							)}
-							{!isCorrect && isShortAnswer && body.modelAnswer && (
+							{!isCorrect && !isMCQ && (
 								<div className="mt-2 text-muted-foreground text-xs">
-									Model answer: {body.modelAnswer}
+									Model answer: {question.correctAnswer}
 								</div>
 							)}
 						</m.div>

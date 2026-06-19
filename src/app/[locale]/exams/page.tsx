@@ -1,7 +1,5 @@
-import { getLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { redirect } from "next/navigation";
 
-export default async function ExamsRedirectPage() {
-	const locale = await getLocale();
-	redirect({ href: "/dashboard/exams", locale });
+export default function ExamsRedirect() {
+	redirect("/dashboard/exams");
 }

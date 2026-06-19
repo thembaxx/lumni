@@ -1,95 +1,88 @@
 "use client";
 
 import { dexieDataAccess } from "@/lib/db";
-import type { DictionaryDataAccess } from "@/lib/db/data-access";
+import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
-import type { DictionaryCacheEntry, DictionaryEntry } from "./types";
+import type { DictionaryCacheEntry, DictionaryResult } from "./types";
 
-const _deps: { db: DictionaryDataAccess } = { db: dexieDataAccess };
+// Dexie v33: dictionaryCache table (key, word, result, fetchedAt, expiresAt)
 
-const PRIMARY_API = "https://api.dictionaryapi.dev/api/v2/entries";
-const FALLBACK_API = "https://api.freeDictionaryAPI.com/v2/entries";
+const API_BASE = "https://api.dictionaryapi.dev/api/v2/entries";
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-const WIKTIONARY_SUBDOMAINS: Record<string, string> = {
-	en: "en",
-	af: "af",
-	zu: "zu",
-	xh: "xh",
-	st: "st",
-	tn: "tn",
-	nso: "nso",
-	ts: "ts",
-	ss: "ss",
-	ve: "ve",
-	nd: "nd",
-};
+interface ApiPhonetic {
+	text?: string;
+	audio?: string;
+}
+
+interface ApiDefinition {
+	definition: string;
+	example?: string;
+	synonyms?: string[];
+	antonyms?: string[];
+}
+
+interface ApiMeaning {
+	partOfSpeech: string;
+	definitions: ApiDefinition[];
+	synonyms?: string[];
+	antonyms?: string[];
+}
+
+interface ApiEntry {
+	word: string;
+	phonetic?: string;
+	phonetics?: ApiPhonetic[];
+	meanings?: ApiMeaning[];
+}
 
 function buildCacheKey(word: string, language: string): string {
-	return `dict-${language}-${word.toLowerCase().trim()}`;
+	return `${word.toLowerCase().trim()}:${language}`;
 }
 
-interface WiktionaryPage {
-	pageid: number;
-	title: string;
-	extract?: string;
-}
+function parseApiResponse(data: ApiEntry[]): DictionaryResult | null {
+	if (!data.length) return null;
+	const entry = data[0];
+	if (!entry) return null;
 
-async function lookupWiktionary(
-	word: string,
-	language: string,
-): Promise<DictionaryEntry[]> {
-	const subdomain = WIKTIONARY_SUBDOMAINS[language];
-	if (!subdomain) return [];
+	const definitions: DictionaryResult["definitions"] = [];
+	const synonyms: string[] = [];
+	const antonyms: string[] = [];
 
-	try {
-		const url = `https://${subdomain}.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(word)}&prop=extracts&exintro&explaintext&format=json&origin=*`;
-		const res = await fetch(url);
-		if (!res.ok) return [];
+	for (const meaning of entry.meanings ?? []) {
+		if (meaning.synonyms) synonyms.push(...meaning.synonyms);
+		if (meaning.antonyms) antonyms.push(...meaning.antonyms);
 
-		const data = (await res.json()) as {
-			query?: { pages?: Record<string, WiktionaryPage> };
-		};
-		const pages = data.query?.pages;
-		if (!pages) return [];
-
-		const page = Object.values(pages).find(
-			(p: WiktionaryPage) => p.pageid > 0 && p.extract,
-		);
-		if (!page?.extract) return [];
-
-		return [
-			{
-				word: page.title,
-				phonetic: undefined,
-				origin: language === "af" ? "Afrikaans" : undefined,
-				meanings: [
-					{
-						partOfSpeech: "unknown",
-						definitions: [
-							{
-								definition: page.extract.split("\n")[0] ?? page.extract,
-								synonyms: [],
-								antonyms: [],
-							},
-						],
-					},
-				],
-				sourceUrls: [
-					`https://${subdomain}.wiktionary.org/wiki/${encodeURIComponent(word)}`,
-				],
-			},
-		];
-	} catch (err) {
-		logError("DictionaryService.wiktionary", err);
-		return [];
+		for (const def of meaning.definitions) {
+			definitions.push({
+				partOfSpeech: meaning.partOfSpeech,
+				definition: def.definition,
+				example: def.example,
+			});
+			if (def.synonyms) synonyms.push(...def.synonyms);
+			if (def.antonyms) antonyms.push(...def.antonyms);
+		}
 	}
+
+	return {
+		word: entry.word,
+		phonetic: entry.phonetic ?? "",
+		audio: entry.phonetics?.[0]?.audio ?? "",
+		definitions,
+		synonyms: [...new Set(synonyms)],
+		antonyms: [...new Set(antonyms)],
+	};
+}
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
 }
 
 export async function lookupWord(
 	word: string,
 	language = "en",
-): Promise<DictionaryEntry[]> {
+): Promise<DictionaryResult | null> {
 	const key = buildCacheKey(word, language);
 
 	try {
@@ -101,39 +94,19 @@ export async function lookupWord(
 		// cache unavailable
 	}
 
-	let data: DictionaryEntry[] | null = null;
+	try {
+		const url = `${API_BASE}/${encodeURIComponent(language)}/${encodeURIComponent(word)}`;
+		const res = await fetch(url);
+		if (!res.ok) return null;
 
-	// Try Free Dictionary API for English
-	if (language === "en") {
-		const urls = [
-			`${PRIMARY_API}/${language}/${encodeURIComponent(word)}`,
-			`${FALLBACK_API}/${language}/${encodeURIComponent(word)}`,
-		];
-		try {
-			const res = await Promise.any(
-				urls.map(async (url) => {
-					const response = await fetch(url);
-					if (!response.ok) throw new Error(`Failed: ${url}`);
-					return response.json() as Promise<DictionaryEntry[]>;
-				}),
-			);
-			data = res;
-		} catch {
-			// both failed
-		}
-	}
+		const data = (await res.json()) as ApiEntry[];
+		const result = parseApiResponse(data);
+		if (!result) return null;
 
-	// Fallback to Wiktionary for all languages (including SA languages)
-	if (!data) {
-		data = await lookupWiktionary(word, language);
-	}
-
-	if (data) {
 		const entry: DictionaryCacheEntry = {
 			key,
 			word: word.toLowerCase(),
-			language,
-			result: data,
+			result,
 			fetchedAt: Date.now(),
 			expiresAt: Date.now() + CACHE_TTL,
 		};
@@ -142,8 +115,25 @@ export async function lookupWord(
 		} catch {
 			// cache write fail silently
 		}
-		return data;
+		return result;
+	} catch (err) {
+		logError("DictionaryService.lookupWord", err);
+		return null;
 	}
+}
 
-	return [];
+export async function getCachedLookup(
+	word: string,
+	language = "en",
+): Promise<DictionaryResult | null> {
+	const key = buildCacheKey(word, language);
+	try {
+		const cached = await _deps.db.dictionaryCache.get(key);
+		if (cached && cached.expiresAt > Date.now()) {
+			return cached.result;
+		}
+	} catch {
+		// cache unavailable
+	}
+	return null;
 }

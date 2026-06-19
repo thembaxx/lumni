@@ -12,7 +12,9 @@ export async function GET(request: NextRequest) {
 			? Number.parseInt(yearParam, 10)
 			: matricResultsYears[0];
 
-		if (!matricResultsYears.includes(year as never)) {
+		if (
+			!matricResultsYears.includes(year as (typeof matricResultsYears)[number])
+		) {
 			return NextResponse.json(
 				{ error: `Invalid year. Supported: ${matricResultsYears.join(", ")}` },
 				{ status: 400 },

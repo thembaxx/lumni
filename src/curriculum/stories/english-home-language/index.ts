@@ -13,5 +13,6 @@ export const storyMetas: StoryMeta[] = [
 		source: "project-gutenberg",
 		sourceUrl: "https://www.gutenberg.org/ebooks/20753",
 		readTimeMinutes: 45,
+		topics: [],
 	},
 ];

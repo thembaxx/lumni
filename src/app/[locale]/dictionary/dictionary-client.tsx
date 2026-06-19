@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { lookupWord } from "@/lib/dictionary";
-import type { DictionaryEntry } from "@/lib/dictionary/types";
+import type { DictionaryResult } from "@/lib/dictionary/types";
 import { logError } from "@/lib/shared/logger";
 
 export function DictionaryClient() {
 	const [query, setQuery] = useState("");
-	const [results, setResults] = useState<DictionaryEntry[] | null>(null);
+	const [result, setResult] = useState<DictionaryResult | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [searched, setSearched] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -27,10 +27,10 @@ export function DictionaryClient() {
 		setSearched(true);
 		try {
 			const data = await lookupWord(word);
-			setResults(data);
+			setResult(data);
 		} catch (err) {
 			logError("DictionaryClient.search", err);
-			setResults([]);
+			setResult(null);
 		} finally {
 			setLoading(false);
 		}
@@ -88,7 +88,7 @@ export function DictionaryClient() {
 				</div>
 			)}
 
-			{searched && !loading && results?.length === 0 && (
+			{searched && !loading && !result && (
 				<div className="flex flex-col items-center gap-3 py-16 text-center">
 					<p className="font-semibold text-lg">No results found</p>
 					<p className="text-muted-foreground text-sm">
@@ -97,9 +97,9 @@ export function DictionaryClient() {
 				</div>
 			)}
 
-			{results?.map((entry) => (
+			{result && (
 				<m.div
-					key={entry.word}
+					key={result.word}
 					initial={{ opacity: 0, y: 16 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
@@ -109,102 +109,91 @@ export function DictionaryClient() {
 							<div className="flex items-center gap-3">
 								<div className="flex flex-col">
 									<span className="font-extrabold text-2xl tracking-tight">
-										{entry.word}
+										{result.word}
 									</span>
-									{entry.phonetic && (
+									{result.phonetic && (
 										<span className="text-muted-foreground text-sm">
-											{entry.phonetic}
+											{result.phonetic}
 										</span>
 									)}
 								</div>
-								{entry.audio && (
+								{result.audio && (
 									<Button
 										variant="ghost"
 										size="icon"
 										className="size-10 rounded-full"
-										onClick={() => playAudio(entry.audio)}
-										aria-label={`Listen to pronunciation of ${entry.word}`}
+										onClick={() => playAudio(result.audio)}
+										aria-label={`Listen to pronunciation of ${result.word}`}
 									>
 										<HugeiconsIcon icon={VolumeUpIcon} className="size-5" />
 									</Button>
 								)}
-								{entry.origin && (
-									<Badge
-										variant="secondary"
-										className="ml-auto rounded-full text-xs"
-									>
-										{entry.origin}
-									</Badge>
-								)}
 							</div>
 
-							{entry.meanings.map((meaning) => (
+							{result.definitions.map((def) => (
 								<div
-									key={`${meaning.partOfSpeech}-${meaning.definitions[0]?.definition.slice(0, 20)}`}
+									key={`${def.partOfSpeech}-${def.definition.slice(0, 20)}`}
 									className="flex flex-col gap-3"
 								>
 									<div className="flex items-center gap-2">
 										<span className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[--system-accent] text-xs">
-											{meaning.partOfSpeech}
+											{def.partOfSpeech}
 										</span>
 									</div>
 									<div className="flex flex-col gap-3">
-										{meaning.definitions.map((def, di) => (
-											// biome-ignore lint/suspicious/noArrayIndexKey: static definitions, no stable id
-											<div key={di} className="flex flex-col gap-1">
-												<p className="leading-relaxed">
-													{di + 1}. {def.definition}
+										<div className="flex flex-col gap-1">
+											<p className="leading-relaxed">{def.definition}</p>
+											{def.example && (
+												<p className="text-muted-foreground text-sm italic">
+													&ldquo;{def.example}&rdquo;
 												</p>
-												{def.example && (
-													<p className="text-muted-foreground text-sm italic">
-														&ldquo;{def.example}&rdquo;
-													</p>
-												)}
-												{def.synonyms.length > 0 && (
-													<div className="flex flex-wrap items-center gap-1.5">
-														<span className="text-muted-foreground text-xs">
-															Synonyms:
-														</span>
-														{def.synonyms.slice(0, 5).map((syn) => (
-															<Badge
-																key={syn}
-																variant="outline"
-																className="cursor-pointer rounded-full text-xs hover:bg-muted"
-																onClick={() => {
-																	setQuery(syn);
-																	void lookupWord(syn).then(setResults);
-																}}
-															>
-																{syn}
-															</Badge>
-														))}
-													</div>
-												)}
-												{def.antonyms.length > 0 && (
-													<div className="flex flex-wrap items-center gap-1.5">
-														<span className="text-muted-foreground text-xs">
-															Antonyms:
-														</span>
-														{def.antonyms.slice(0, 5).map((ant) => (
-															<Badge
-																key={ant}
-																variant="outline"
-																className="cursor-pointer rounded-full text-xs hover:bg-muted"
-															>
-																{ant}
-															</Badge>
-														))}
-													</div>
-												)}
-											</div>
-										))}
+											)}
+										</div>
 									</div>
 								</div>
 							))}
+
+							{result.synonyms.length > 0 && (
+								<div className="flex flex-wrap items-center gap-1.5">
+									<span className="text-muted-foreground text-xs">
+										Synonyms:
+									</span>
+									{result.synonyms.slice(0, 5).map((syn) => (
+										<Badge
+											key={syn}
+											variant="outline"
+											className="cursor-pointer rounded-full text-xs hover:bg-muted"
+											onClick={() => {
+												setQuery(syn);
+												void lookupWord(syn).then(setResult);
+											}}
+										>
+											{syn}
+										</Badge>
+									))}
+								</div>
+							)}
+
+							{result.antonyms.length > 0 && (
+								<div className="flex flex-wrap items-center gap-1.5">
+									<span className="text-muted-foreground text-xs">
+										Antonyms:
+									</span>
+									{result.antonyms.slice(0, 5).map((ant) => (
+										<Badge
+											key={ant}
+											variant="outline"
+											className="cursor-pointer rounded-full text-xs hover:bg-muted"
+										>
+											{ant}
+										</Badge>
+									))}
+								</div>
+							)}
 						</CardContent>
 					</Card>
 				</m.div>
-			))}
+			)}
 		</PageContainer>
 	);
 }

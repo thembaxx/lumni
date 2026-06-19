@@ -1,19 +1,6 @@
-import type { Story } from "./types";
+import type { Story, StoryMeta } from "./types";
 
-export interface StoryMeta {
-	id: string;
-	title: string;
-	author: string;
-	language: string;
-	languageId: string;
-	gradeLevel: string;
-	wordCount: number;
-	subjects: string[];
-	source: "african-storybook" | "project-gutenberg" | "ai-generated" | "other";
-	sourceUrl?: string;
-	audioUrl?: string;
-	readTimeMinutes?: number;
-}
+export type { StoryMeta } from "./types";
 
 const STORY_IMPORTS: Record<string, () => Promise<StoryMeta[]>> = {
 	"english-home-language": () =>
@@ -39,7 +26,7 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
 		"south-african-folk-tales": () =>
 			import(
 				"@/curriculum/stories/english-home-language/south-african-folk-tales.json"
-			).then((m) => ({ default: m.default as Story })),
+			).then((m) => ({ default: m.default as unknown as Story })),
 	};
 
 let metasCache: StoryMeta[] | null = null;

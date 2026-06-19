@@ -3,5 +3,13 @@ export {
 	generateComprehensionQuestions,
 	getCachedQuestions,
 	getStory,
+	storeQuestions,
 } from "./service";
-export type { Story, StoryLicense, StoryQuestionSet } from "./types";
+export type {
+	Story,
+	StoryLicense,
+	StoryMeta,
+	StoryQuestion,
+	StoryQuestionSet,
+	VocabWord,
+} from "./types";

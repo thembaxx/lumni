@@ -1,36 +1,57 @@
-import type { VocabWord } from "@/lib/lesson/types";
-import type { Question } from "@/lib/question-engine/types";
+export type StoryLicense = "cc-by" | "public-domain" | "ai-generated";
 
-export type StoryLicense = "cc-by" | "public-domain" | "ai-generated" | "other";
+export interface VocabWord {
+	term: string;
+	definition: string;
+	partOfSpeech: string;
+	pronunciation: string;
+	language: string;
+}
 
-export interface Story {
+export interface StoryMeta {
 	id: string;
 	title: string;
 	author: string;
-	content: string;
 	language: string;
-	subjectId: string;
-	source: "african-storybook" | "project-gutenberg" | "ai-generated" | "other";
-	sourceUrl?: string;
-	license: StoryLicense;
-	audioUrl?: string;
+	languageId: string;
 	gradeLevel: string;
 	wordCount: number;
-	vocabulary: VocabWord[];
-	topics: string[];
+	subjects: string[];
+	source: "african-storybook" | "project-gutenberg" | "ai-generated" | "other";
+	sourceUrl?: string;
+	audioUrl?: string;
 	readTimeMinutes?: number;
+	topics: string[];
+	license?: string;
+}
+
+export interface Story extends StoryMeta {
+	content: string;
+	vocabulary: VocabWord[];
 }
 
 export interface CachedStory {
 	key: string;
 	story: Story;
-	fetchedAt: number;
+	createdAt: number;
 	expiresAt: number;
 }
 
-export interface StoryQuestionSet {
+export interface StoryQuestion {
+	id: string;
 	storyId: string;
-	questions: Question[];
-	generatedAt: number;
+	questionText: string;
+	questionType: "mcq" | "short-answer";
+	options?: string[];
+	correctAnswer: string;
+	explanation: string;
+	bloomLevel: string;
+}
+
+export interface StoryQuestionSet {
+	key: string;
+	storyId: string;
+	questions: StoryQuestion[];
+	createdAt: number;
 	expiresAt: number;
 }

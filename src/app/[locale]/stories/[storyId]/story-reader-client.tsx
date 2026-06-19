@@ -21,11 +21,10 @@ import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { trackComprehensionResult } from "@/lib/competency-engine";
-import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
-import type { Story } from "@/lib/stories/types";
+import type { Story, StoryQuestion } from "@/lib/stories/types";
 
 export function StoryReaderClient() {
 	const { storyId } = useParams<{ storyId: string }>();
@@ -33,7 +32,7 @@ export function StoryReaderClient() {
 	const { user } = useAuth();
 	const [story, setStory] = useState<Story | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [questions, setQuestions] = useState<Question[] | null>(null);
+	const [questions, setQuestions] = useState<StoryQuestion[] | null>(null);
 	const [questionsLoading, setQuestionsLoading] = useState(false);
 	const [showQuestions, setShowQuestions] = useState(false);
 	const [scores, setScores] = useState<Map<string, number>>(new Map());

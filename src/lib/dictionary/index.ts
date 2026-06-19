@@ -1,2 +1,6 @@
-export { lookupWord } from "./service";
-export type { DictionaryEntry, DictionaryMeaning } from "./types";
+export { getCachedLookup, lookupWord } from "./service";
+export type {
+	DictionaryCacheEntry,
+	DictionaryDefinition,
+	DictionaryResult,
+} from "./types";

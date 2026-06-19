@@ -15,9 +15,17 @@ async function convertWithFirecrawl(
 		const controller = new AbortController();
 		const timeout = setTimeout(() => controller.abort(), 10_000);
 
+		const headers: Record<string, string> = {
+			"Content-Type": "application/json",
+		};
+		const apiKey = process.env.FIRECRAWL_API_KEY;
+		if (apiKey) {
+			headers.Authorization = `Bearer ${apiKey}`;
+		}
+
 		const response = await fetch("https://api.firecrawl.dev/v2/scrape", {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers,
 			body: JSON.stringify({ url, formats: ["markdown"] }),
 			signal: controller.signal,
 		});

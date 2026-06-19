@@ -1,7 +1,5 @@
-import { getLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { redirect } from "next/navigation";
 
-export default async function SignInRedirectPage() {
-	const locale = await getLocale();
-	redirect({ href: "/auth/sign-in", locale });
+export default function SignInRedirect() {
+	redirect("/auth/sign-in");
 }
