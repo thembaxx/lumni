@@ -2,7 +2,6 @@
 
 import { FireIcon, PlayFreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,11 +17,7 @@ export const StreakCard = memo(function StreakCard() {
 	const practicedToday = gamification.lastPracticeDate === today;
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-		>
+		<div className="card-entrance">
 			<Card
 				className={cn(
 					"overflow-hidden rounded-2xl shadow-level-1 transition-colors",
@@ -41,10 +36,7 @@ export const StreakCard = memo(function StreakCard() {
 									: "bg-muted text-muted-foreground",
 							)}
 						>
-							<HugeiconsIcon
-								icon={FireIcon}
-								className={cn("size-7", currentStreak > 0 && "animate-pulse")}
-							/>
+							<HugeiconsIcon icon={FireIcon} className="size-7" />
 						</div>
 						<div className="flex-1">
 							<div className="flex items-baseline gap-2">
@@ -77,6 +69,6 @@ export const StreakCard = memo(function StreakCard() {
 					</div>
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 });

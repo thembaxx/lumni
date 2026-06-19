@@ -16,7 +16,6 @@ import {
 	UserStar02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +26,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { useAuth } from "@/lib/auth/auth-context";
-import { iOSEase } from "@/lib/utils/animation";
 
 const DISMISS_KEY = "lumni_login_banner_dismissed";
 
@@ -169,12 +167,7 @@ export function LoginBanner() {
 	if (isLoggedIn || localDismissed) return null;
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: -6 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.3, ease: iOSEase }}
-			className="flex w-full flex-col gap-6 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
-		>
+		<div className="card-entrance-down flex w-full flex-col gap-6 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
 			<div className="flex gap-3">
 				<div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
 					<HugeiconsIcon
@@ -218,6 +211,6 @@ export function LoginBanner() {
 					/>
 				</Button>
 			</div>
-		</m.div>
+		</div>
 	);
 }

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChallengeDialog } from "@/components/ui/challenge-dialog";
 import { useGamification } from "@/hooks/use-gamification";
-import { iOSEase } from "@/lib/utils/animation";
 
 interface DailyChallengeCardProps {
 	onComplete: (result: BoltResult) => void;
@@ -61,11 +60,7 @@ export function DailyChallengeCard({
 	if (!isDue) return null;
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: iOSEase }}
-		>
+		<div className="card-entrance">
 			<ChallengeDialog open={isOpen} onClose={handleClose} layoutId="">
 				<DailyChallengeDialog
 					subject={subject}
@@ -87,7 +82,7 @@ export function DailyChallengeCard({
 									}}
 									transition={{
 										duration: 2.4,
-										repeat: Number.POSITIVE_INFINITY,
+										repeat: 2,
 										ease: "easeInOut",
 									}}
 									className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
@@ -131,6 +126,6 @@ export function DailyChallengeCard({
 					</Card>
 				</m.div>
 			)}
-		</m.div>
+		</div>
 	);
 }

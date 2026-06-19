@@ -160,11 +160,7 @@ export function CompetencyOverview() {
 	}
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-		>
+		<div className="card-entrance">
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
@@ -229,15 +225,22 @@ export function CompetencyOverview() {
 												return (
 													<div
 														key={level}
-														className={cn(
-															"h-1.5 rounded-full transition-[width]",
-															level === "novice" && "bg-destructive",
-															level === "developing" && "bg-warning",
-															level === "proficient" && "bg-[--system-accent]",
-															level === "mastered" && "bg-success",
-														)}
-														style={{ width: `${Math.max(pct, 4)}%` }}
-													/>
+														className="h-1.5 w-full overflow-hidden rounded-full bg-border/20"
+													>
+														<div
+															className={cn(
+																"h-full origin-left rounded-full transition-[transform]",
+																level === "novice" && "bg-destructive",
+																level === "developing" && "bg-warning",
+																level === "proficient" &&
+																	"bg-[--system-accent]",
+																level === "mastered" && "bg-success",
+															)}
+															style={{
+																transform: `scaleX(${Math.max(pct, 4) / 100})`,
+															}}
+														/>
+													</div>
 												);
 											})}
 										</div>
@@ -254,40 +257,47 @@ export function CompetencyOverview() {
 								</m.div>
 							</button>
 
-							{expandedSubject === sc.subjectId && sc.topics.length > 0 && (
-								<m.div
-									initial={{ opacity: 0, height: 0 }}
-									animate={{ opacity: 1, height: "auto" }}
-									exit={{ opacity: 0, height: 0 }}
-									className="mt-1 mb-2 ml-4 flex flex-col gap-0.5 rounded-lg border border-system-separator bg-system-surface-secondary/50 p-3"
+							{sc.topics.length > 0 && (
+								<div
+									className="mt-1 mb-2 ml-4 grid transition-[grid-template-rows,opacity] duration-300 ease-iOSEase"
+									style={{
+										gridTemplateRows:
+											expandedSubject === sc.subjectId ? "1fr" : "0fr",
+										opacity: expandedSubject === sc.subjectId ? 1 : 0,
+									}}
 								>
-									{sc.topics.map((t) => (
-										<div
-											key={t.topicId}
-											className="flex items-center justify-between py-1 text-xs"
-										>
-											<span className="truncate capitalize">
-												{t.topicId.replace(/-/g, " ")}
-											</span>
-											<span
-												className={cn(
-													"ml-2 shrink-0 font-medium tabular-nums",
-													t.level === "novice" && "text-destructive",
-													t.level === "developing" && "text-warning",
-													t.level === "proficient" && "text-[--system-accent]",
-													t.level === "mastered" && "text-success",
-												)}
-											>
-												{t.score}%
-											</span>
+									<div className="overflow-hidden">
+										<div className="flex flex-col gap-0.5 rounded-lg border border-system-separator bg-system-surface-secondary/50 p-3">
+											{sc.topics.map((t) => (
+												<div
+													key={t.topicId}
+													className="flex items-center justify-between py-1 text-xs"
+												>
+													<span className="truncate capitalize">
+														{t.topicId.replace(/-/g, " ")}
+													</span>
+													<span
+														className={cn(
+															"ml-2 shrink-0 font-medium tabular-nums",
+															t.level === "novice" && "text-destructive",
+															t.level === "developing" && "text-warning",
+															t.level === "proficient" &&
+																"text-[--system-accent]",
+															t.level === "mastered" && "text-success",
+														)}
+													>
+														{t.score}%
+													</span>
+												</div>
+											))}
 										</div>
-									))}
-								</m.div>
+									</div>
+								</div>
 							)}
 						</div>
 					))}
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 }

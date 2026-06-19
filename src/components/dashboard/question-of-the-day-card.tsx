@@ -1,6 +1,5 @@
 "use client";
 
-import { m } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
@@ -63,11 +62,7 @@ export function QuestionOfTheDayCard() {
 	const question = data.questions[0];
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-		>
+		<div className="card-entrance">
 			<Card className="overflow-hidden rounded-2xl shadow-level-1">
 				<CardHeader>
 					<CardTitle className="font-extrabold text-lg">
@@ -123,6 +118,6 @@ export function QuestionOfTheDayCard() {
 					</div>
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 }

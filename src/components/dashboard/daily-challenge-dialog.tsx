@@ -269,7 +269,7 @@ function BoltMark() {
 				animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }}
 				transition={{
 					duration: 2.4,
-					repeat: Number.POSITIVE_INFINITY,
+					repeat: 2,
 					ease: "easeInOut",
 				}}
 				className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"

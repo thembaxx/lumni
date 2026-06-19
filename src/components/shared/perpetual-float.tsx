@@ -12,6 +12,8 @@ interface PerpetualFloatProps {
 	speed?: number;
 	duration?: number;
 	offsetY?: number;
+	/** Number of float cycles before stopping. Undefined = infinite. */
+	cycles?: number;
 }
 
 export const PerpetualFloat = memo(function PerpetualFloat({
@@ -21,10 +23,10 @@ export const PerpetualFloat = memo(function PerpetualFloat({
 	speed,
 	duration,
 	offsetY,
+	cycles,
 }: PerpetualFloatProps) {
 	const { shouldReduceMotion } = useOptimizedAnimation();
 
-	// Don't animate if user prefers reduced motion or if we're exceeding budget
 	const isAnimated = !shouldReduceMotion;
 
 	const resolvedSpeed = speed ?? duration ?? 3;
@@ -37,22 +39,20 @@ export const PerpetualFloat = memo(function PerpetualFloat({
 	);
 
 	useEffect(() => {
-		// Skip animation entirely if reduced motion is preferred
 		if (!isAnimated) {
-			// Set to a static position
 			y.set(0);
 			return;
 		}
 
 		const controls = animate(y, [0, -resolvedRange, 0], {
 			duration: resolvedSpeed,
-			repeat: Infinity,
+			repeat: cycles != null ? cycles - 1 : Number.POSITIVE_INFINITY,
 			repeatType: "reverse",
 			ease: "easeInOut",
 		});
 
 		return () => controls.stop();
-	}, [y, resolvedRange, resolvedSpeed, isAnimated]);
+	}, [y, resolvedRange, resolvedSpeed, isAnimated, cycles]);
 
 	return (
 		<m.div

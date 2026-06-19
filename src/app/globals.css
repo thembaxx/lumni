@@ -413,7 +413,6 @@
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-rendering: optimizeLegibility;
-		scroll-behavior: smooth;
 	}
 
 	body {
@@ -589,6 +588,68 @@
 .animate-stagger > *:nth-child(3) { animation-delay: 100ms; }
 .animate-stagger > *:nth-child(4) { animation-delay: 150ms; }
 .animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
+
+/* @starting-style card entrances — CSS-native mount animations */
+.card-entrance {
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 400ms var(--ease-ios),
+		transform 400ms var(--ease-ios);
+}
+
+@starting-style {
+	.card-entrance {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+}
+
+.card-entrance-sm {
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 350ms var(--ease-ios),
+		transform 350ms var(--ease-ios);
+}
+
+@starting-style {
+	.card-entrance-sm {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+}
+
+.card-entrance-down {
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 300ms var(--ease-ios),
+		transform 300ms var(--ease-ios);
+}
+
+@starting-style {
+	.card-entrance-down {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.card-entrance,
+	.card-entrance-sm,
+	.card-entrance-down {
+		transition: opacity 200ms var(--ease-ios);
+		transform: none;
+	}
+	@starting-style {
+		.card-entrance,
+		.card-entrance-sm,
+		.card-entrance-down {
+			transform: none;
+		}
+	}
+}
 
 /* ========================================
    TOUCH TARGET & ACCESSIBILITY

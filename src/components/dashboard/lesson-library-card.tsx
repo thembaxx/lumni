@@ -105,8 +105,8 @@ export function LessonLibraryCard() {
 									<div className="mt-1 flex items-center gap-2">
 										<div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
 											<div
-												className="h-full rounded-full bg-[--system-accent] transition-[width]"
-												style={{ width: `${pct}%` }}
+												className="h-full origin-left rounded-full bg-[--system-accent] transition-[transform]"
+												style={{ transform: `scaleX(${pct / 100})` }}
 											/>
 										</div>
 										<span className="text-[10px] text-muted-foreground tabular-nums">

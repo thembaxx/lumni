@@ -81,7 +81,7 @@ function StatCard({
 			<Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
 				<CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
 					<div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
-						<PerpetualFloat floatRange={2} speed={4}>
+						<PerpetualFloat floatRange={2} speed={4} cycles={3}>
 							<HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
 						</PerpetualFloat>
 					</div>

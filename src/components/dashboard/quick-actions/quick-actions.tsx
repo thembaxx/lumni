@@ -14,7 +14,6 @@ import { m, useReducedMotion } from "framer-motion";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { ReferralSheet } from "@/components/referral/referral-sheet";
-import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
@@ -86,14 +85,12 @@ function ActionButton({
 					className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
 				>
 					<span className="text-accent">
-						<PerpetualFloat floatRange={1.5} speed={3}>
-							<HugeiconsIcon
-								icon={icon}
-								className="size-4 text-foreground"
-								data-icon
-								aria-hidden="true"
-							/>
-						</PerpetualFloat>
+						<HugeiconsIcon
+							icon={icon}
+							className="size-4 text-foreground"
+							data-icon
+							aria-hidden="true"
+						/>
 					</span>
 					<span className="font-medium text-sm">{label}</span>
 				</Button>

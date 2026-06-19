@@ -1,6 +1,5 @@
 "use client";
 
-import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -57,11 +56,7 @@ export function RecentQuestionsCard() {
 	}
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-		>
+		<div className="card-entrance">
 			<Card className="overflow-hidden rounded-2xl shadow-level-1">
 				<CardHeader>
 					<CardTitle className="font-extrabold text-lg">
@@ -99,6 +94,6 @@ export function RecentQuestionsCard() {
 					</Button>
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 }

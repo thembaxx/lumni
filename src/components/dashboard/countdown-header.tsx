@@ -321,7 +321,7 @@ export function CountdownHeader() {
 									}
 									transition={{
 										duration: 1,
-										repeat: Infinity,
+										repeat: 2,
 										ease: iOSEase,
 									}}
 									className="text-sm"

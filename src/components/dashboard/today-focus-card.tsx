@@ -134,14 +134,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
 	}, [showSuccess]);
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 8 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{
-				duration: shouldReduceMotion ? 0 : 0.35,
-				ease: iOSEase,
-			}}
-		>
+		<div className="card-entrance-sm">
 			<Card className="border border-border/80 transition-colors hover:border-foreground/15">
 				<CardHeader>
 					<div className="flex items-center gap-3">
@@ -199,7 +192,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
 									animate={{ scale: 1, opacity: 1 }}
 									exit={{ y: 4, opacity: 0, scale: 0.96 }}
 									transition={{
-										duration: shouldReduceMotion ? 0 : 0.25,
+										duration: shouldReduceMotion ? 0 : 0.15,
 										ease: iOSEase,
 									}}
 									className="flex items-center gap-1.5"
@@ -214,7 +207,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
 									animate={{ scale: 1, opacity: 1 }}
 									exit={{ y: 4, opacity: 0, scale: 0.96 }}
 									transition={{
-										duration: shouldReduceMotion ? 0 : 0.2,
+										duration: shouldReduceMotion ? 0 : 0.15,
 										ease: iOSEase,
 									}}
 								>
@@ -225,6 +218,6 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
 					</Button>
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 });

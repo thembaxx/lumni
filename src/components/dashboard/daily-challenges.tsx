@@ -10,7 +10,7 @@ import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/shared";
-import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
+import { iOSDecelerate } from "@/lib/utils/animation";
 
 const challengeIcons: Record<string, typeof Target01Icon> = {
 	questions: Target01Icon,
@@ -40,11 +40,7 @@ export function DailyChallenges() {
 	const allCompleted = completed.length === gamification.dailyChallenges.length;
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: iOSEase }}
-		>
+		<div className="card-entrance">
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between px-5 pt-5 pb-0">
 					<CardTitle className="font-extrabold text-base tracking-tight">
@@ -124,16 +120,16 @@ export function DailyChallenges() {
 										<div className="flex items-center gap-2 pt-1">
 											<div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
 												<m.div
-													initial={{ width: 0 }}
+													initial={{ scaleX: 0 }}
 													animate={{
-														width: `${Math.min(progress, 100)}%`,
+														scaleX: Math.min(progress, 100) / 100,
 													}}
 													transition={{
 														duration: 0.6,
 														ease: iOSDecelerate,
 														delay: index * 0.08 + 0.2,
 													}}
-													className="h-full rounded-full bg-[--system-accent]"
+													className="h-full origin-left rounded-full bg-[--system-accent]"
 												/>
 											</div>
 											<span className="font-medium text-muted-foreground text-xs tabular-nums">
@@ -147,6 +143,6 @@ export function DailyChallenges() {
 					})}
 				</CardContent>
 			</Card>
-		</m.div>
+		</div>
 	);
 }
