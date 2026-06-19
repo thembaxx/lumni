@@ -1,8 +1,8 @@
-<!-- LAST_SYNC: 2026-06-09 -->
+<!-- LAST_SYNC: 2026-06-18 -->
 # System Design — Lumni
 
 ## Overview & Goals
-Lumni is a mobile-first South African Matric exam prep platform. It provides offline-capable practice, AI-powered grading, algorithmic study planning, and web-grounded RAG injection for both solve and quiz generation (via TinyFish). The platform prioritizes offline availability through local AI generation (Quiz Packs), on-device caching (Dexie), and immersive focus modes.
+Lumni is a mobile-first South African Matric exam prep platform. It provides offline-capable practice, AI-powered grading, algorithmic study planning, and web-grounded RAG injection for both solve and quiz generation (via TinyFish). The platform prioritizes offline availability through local AI generation (Quiz Packs), on-device caching (Dexie), and immersive focus modes. **Session 37**: AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6 services extracted, ~200 lines dead code removed.
 
 ## Architecture Diagram
 ```mermaid
@@ -11,12 +11,12 @@ graph TD
     Dexie[(Dexie L1 Cache<br/>v32, 35+ tables)]
     Appwrite[(Appwrite L2 Storage)]
     API[Next.js API Routes]
-    Engine[Question Engine]
+    Engine[Question Engine<br/>GenerateResult return]
     Visual[Visual Engine]
-    KG[Knowledge Graph<br/>AI topic deps, 7d TTL]
-    SG[Study Guide<br/>AI guides, 30d TTL]
+    KG[Knowledge Graph<br/>AI topic deps, 7d TTL<br/>CachedAIGenerator]
+    SG[Study Guide<br/>AI guides, 30d TTL<br/>CachedAIGenerator]
     Pack[Quiz Pack Service]
-    AI[AI: Gemini/Nvidia/Groq]
+    AI[AI: Gemini/Nvidia/Groq<br/>Singleton collapsed]
     Wiki[Wikimedia Commons]
     RAG[TinyFish RAG<br/>search + fetch]
     Queue[QueueCore Job Queue]
@@ -27,6 +27,9 @@ graph TD
     Share[Share Service<br/>public + ghost]
     Digest[Weekly Digest<br/>cron push]
     Report[Student Report API]
+    CAG[CachedAIGenerator<br/>Generic fetch→cache→generate]
+    Analytics[AnalyticsService<br/>SessionStore interface]
+    Services[Service Extraction<br/>ADR-0012: 6 services]
 
     Client <--> Dexie
     Client <--> Auth
@@ -44,11 +47,16 @@ graph TD
     API --> Redis
     API --> Digest
     API --> Report
+    API --> Analytics
     Engine <--> AI
     Engine --> RAG
     Visual <--> AI
     Visual <--> Wiki
     Pack <--> Engine
+    KG --> CAG
+    SG --> CAG
+    CAG <--> Dexie
+    CAG <--> AI
     Queue <--> Dexie
     Queue <--> Appwrite
 ```
@@ -57,16 +65,17 @@ graph TD
 1. **Multi-Tier Caching**: User requests content. L1 (Dexie) is primary; L2 (Appwrite) is secondary; L3 (AI/Wiki/TinyFish) is fallback. All DB access via `DataAccess` interface (10 domain sub-interfaces, 33 accessors).
 2. **Web-Grounded AI (RAG)**: `/api/solve` and `/api/engine/generate` call `src/lib/tinyfish/` to inject live CAPS/DBE sources into the AI prompt. Cached for 14d (quiz) or 24h (solve). In-flight dedup + 3s timeout fail-open. 24-subject allowlist + per-user daily cap.
 3. **Offline Practice**: `QuizPackService` enables bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
-4. **Question Processing**: Grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`. Source attribution via `source-mapper.ts`.
+4. **Question Processing**: Grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`. Source attribution via `source-mapper.ts`. `QuestionEngine.generate()` returns `GenerateResult { questions, ragContext }` (Session 37).
 5. **Competency tracking**: Progress is assessed via `trackQuestionResult()`, updating the local `competency` table and syncing to Appwrite `competencies` collection. Per-paper (P1/P2) split supported.
-6. **Knowledge Graph**: AI generates topic dependency graphs (prerequisites/core/advanced). Cached 7d in Dexie v29. Two UIs: `LearningMapCard` (dashboard) + `TopicGraph` (per-question).
-7. **Study Guides**: AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
+6. **Knowledge Graph**: AI generates topic dependency graphs (prerequisites/core/advanced). Cached 7d in Dexie v29. Uses `CachedAIGenerator<T>`. Two UIs: `LearningMapCard` (dashboard) + `TopicGraph` (per-question).
+7. **Study Guides**: AI generates structured guides with sections + summary. Cached 30d in Dexie v32. Uses `CachedAIGenerator<T>`. `/study-guide` page with subject/topic input.
 8. **Live Sessions**: Real-time collaborative study sessions via Appwrite. `useLiveSession()` hook with 15s polling.
 9. **Monetization**: [Removed June 2026] All features are free. `PremiumProvider` and `PremiumService` infra retained for potential future monetization but no UI-level gating (no ContentLock, no `usePremium` checks). Auth-required standalone pages (problems, support) show login banners for unauthenticated users.
 10. **B2B2C Flows**: Teachers manage assignments via `teacher_assignments`; parents monitor progress via `ParentShell`. Ghost links (Appwrite-backed) for anonymous B2B2C access. Observations + assignment messages stored in Dexie.
 11. **Observability**: `latency-tracker` monitors AI performance; `events.ts` tracks usage events. Centralized `logger.ts` with Sentry production integration.
 12. **Retention Loop**: Wrong-answer re-encounter via `retentionRecurrence` table. Auto-insert 3 wrong answers into next eligible quiz. Next-best-action dashboard card.
 13. **Weekly/Daily Digest**: `POST /api/cron/weekly-digest` sends web push to all subscribers with weekly stats. `scheduleDailyDigest()` sends local notification each day.
+14. **Service Extraction (ADR-0012)**: 6 services extracted from route handlers: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines.
 
 ## Tech Stack
 - **Frontend**: Next.js 16.2.7, React 19.2.7, Tailwind CSS 4, Framer Motion 12.
@@ -74,25 +83,28 @@ graph TD
 - **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq Cloud (Last resort). TinyFish (RAG) for web-grounded solve + quiz. Uniform AI adapter for pluggable provider normalizers.
 - **Visualization**: Konva (STEM diagrams), Mermaid.js, Recharts 3.
 - **Rate Limiting**: MapStore (in-memory) + RedisStore (Upstash Redis for production).
-- **Verification**: Playwright (E2E + visual tests), Storybook (UI, 18 stories), Bun (1258 tests), Knip (dead code detection).
+- **Verification**: Playwright (E2E + visual tests), Storybook (UI, 18 stories), Bun (1264 tests), Knip (dead code detection).
 - **Monitoring**: Sentry (error tracking), centralized logger, observability events.
 
 ## Key Abstractions
-- **QuestionEngine**: Single source of truth for generation/grading/validation of 11 question types. RAG-augmented via `PromptManager`.
+- **QuestionEngine**: Single source of truth for generation/grading/validation of 11 question types. RAG-augmented via `PromptManager`. Returns `GenerateResult { questions, ragContext }` (Session 37). AIClient singleton collapsed.
 - **FlashcardEngine**: Unified SM-2/FSRS engine wrapping DataAccess, limits, and recovery logic.
 - **DataAccess**: Typed interface over 33 accessors via 10 domain sub-interfaces. `DexieDataAccess` (production) + `InMemoryDataAccess` (tests with `seed()`). `Collection.offset(n)` for pagination.
-- **LearningOrchestrator**: Orchestrates engines and manages side effects (sync, analytics, jobs).
+- **LearningOrchestrator**: Orchestrates engines and manages side effects (sync, analytics, jobs). Reads `ragContext` from `GenerateResult`.
+- **CachedAIGenerator<T>**: Generic fetch→cache→generate pattern (Session 37). Dexie lookup → stale? → AI generate → cache → return. Used by KnowledgeGraph and StudyGuide.
 - **TinyFish RAG**: 7 modules — client, cache (Dexie 14d), in-flight dedup, 24-subject allowlist, XML wrap + prompt framing, types, index barrel.
-- **KnowledgeGraph**: AI-generated topic dependency graphs with 7d cache.
-- **StudyGuide**: AI-generated structured study guides with 30d cache.
+- **KnowledgeGraph**: AI-generated topic dependency graphs with 7d cache. Uses `CachedAIGenerator`.
+- **StudyGuide**: AI-generated structured study guides with 30d cache. Uses `CachedAIGenerator`.
 - **LiveSessionService**: Appwrite-backed real-time study sessions with 15s polling.
 - **UniformAIAdapter**: Factory for pluggable AI provider normalizers (`openaiNormalizer`, `geminiNormalizer`).
+- **AnalyticsService**: Platform analytics with `SessionStore` interface (Session 37). Trends/comparative routes ~20 lines each.
 - **ShareService**: Public share links, ghost links (Appwrite), assignment sharing.
 - **createRouteHandler**: Declarative factory for API routes with auth and Zod validation.
 - **ImmersiveMode**: Context-driven UI state for focus (auto-hides nav bars).
 - **SwipeableCardDeck**: Tinder-style interaction for spaced-repetition flashcards.
 - **CachingStrategy**: Generic multi-tier caching framework.
 - **WeeklyDigest**: `POST /api/cron/weekly-digest` admin push to all subscribers via web-push.
+- **Service Extraction (ADR-0012)**: 6 services with constructor injection; route handlers reduced to 10-25 lines.
 
 ## External Integrations
 - **Appwrite**: Authentication, Database, Storage, Live Sessions.
@@ -112,6 +124,7 @@ graph TD
 - **WeeklyDigest cron**: No external cron service configured — relies on manual/admin triggering.
 
 ## Recent Changes Log (Last 7 Days)
+- **Session 37 — Architectural deepening + service extractions (June 2026)**: AI provider singleton collapsed (`QuestionProcessor`/`Grader` accept `ai?: AIClient`). `GenerateResult { questions, ragContext }` structured return replaces `lastRagContext` sidecar. `CachedAIGenerator<T>` generic at `src/lib/ai/cached-ai-generator.ts` — Dexie lookup → stale? → AI generate → cache → return. `AnalyticsService` with `SessionStore` interface. Dead Zustand store removed (`useFlashcardsStore`). Retention DI leak fixed. 6 services extracted: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ~200 lines dead code cleaned. ADR-0012 documented. 1264 tests pass, 0 fail. Commit `f2c3edb8` — 39 files, +766/−893 lines.
 - **Premium gating removed (June 2026)**: All ContentLock wrappers purged from 5 dashboard components (analytics, study-plan, scheduler, visual-content, offline-packs). `usePremium`/`isPremium`/`isPriority` checks stripped from visual engine hook and support page. Visual engine always fetches. Support page shows priority to all. Problems page shows login banner via `useAuth()` when unauthenticated. View transitions consolidated — `useNavigationDirection` owns full lifecycle; `experimental.viewTransition: true` removed from next.config. `NavigationPointerOff01Icon` → `Cancel01Icon`. `tsc --noEmit` zero, `biome check` zero, 1271 tests pass 0 fail.
 - **React Doctor 100/100**: 194 issues fixed (5 errors, 189 warnings). 114 unused exports removed, 250+ lines dead code deleted. Knowledge-graph consumers converted from `useMutation+useEffect` → `useQuery`. Added `GET /api/engine/knowledge-graph` route. Biome zero errors across 1260 files.
 - **DataAccess domain split**: 10 domain sub-interfaces (33 accessors, 11 dead removed). `Collection.offset(n)` pagination. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain kept composite.
@@ -126,4 +139,4 @@ graph TD
 - **WeeklyReportPanel**: Replaced hash-based random mastery with subject-score-derived values.
 - **DataAccess re-addition**: `teacherObservations` + `assignmentMessages` re-added to all DataAccess implementations (had real consumers now).
 - **Konva renderer registry**: `switch` → `diagramRegistry` map in `diagram-renderer.tsx`.
-- **ADR-0011**: Updated for 33 tables, 10 sub-interfaces, current API surface.
+- **ADR-0012**: Service extraction pattern documented.

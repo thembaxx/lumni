@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-08 -->
+<!-- LAST_SYNC: 2026-06-18 -->
 # Memory Index — Lumni
 
 ## Heuristics & Conventions
@@ -42,6 +42,11 @@
 - [2026-06-07] **Daily Bolt simplification**: Removed two-step; `BoltCelebration` with 800ms auto-advance.
 - [2026-06-07] **Item-bank pruning**: `"prune-stale-questions"` job type; `pruned?: boolean` on Question.
 - [2026-06-08] **React Doctor 100/100**: 194 issues fixed (5 errors + 189 warnings). Removed 114 unused exports, 250+ lines dead code. Converted `useMutation+useEffect` → `useQuery` for knowledge-graph consumers. Added `GET /api/engine/knowledge-graph` route. Biome zero errors across 1260 files.
+- [2026-06-18] **AI provider singleton collapsed**: `QuestionProcessor`/`Grader` accept `ai?: AIClient`; `QuestionEngine` creates once, threads through `ProcessorRegistry`. 10 files.
+- [2026-06-18] **GenerateResult structured return**: `QuestionEngine.generate()` returns `{ questions, ragContext }`. Orchestrator reads `ragContext` from return. 6 files.
+- [2026-06-18] **CachedAIGenerator<T>**: Generic fetch→cache→generate at `src/lib/ai/cached-ai-generator.ts`. Dexie lookup → stale? → AI generate → cache → return. 5 files.
+- [2026-06-18] **AnalyticsService extraction**: `SessionStore` interface. Trends/comparative routes ~20 lines each. 4 files.
+- [2026-06-18] **Service extraction (ADR-0012)**: 6 services: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. 39 files, +766/−893.
 
 ## Past Bugs & Failures
 - **Competency Field**: Mismatch between `proficiency` and `score` fields. Standardized on `score`.
@@ -61,6 +66,7 @@
 - **National Exam Dates spec**: `SPEC.md`
 - **TinyFish RAG spec**: `docs/adr/0010-tinyfish-rag-integration.md` (status: Implemented)
 - **DataAccess spec**: `docs/adr/0011-data-access-seam.md` (status: Implemented Phase 1-4)
+- **Service extraction spec**: `docs/adr/0012-service-extraction-pattern.md` (status: Accepted)
 - **Theme Chrome spec**: `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md`
 - **Navigation Sidebar spec**: `docs/superpowers/specs/2026-06-03-nav-sidebar-design.md`
 - **UI/UX Audit**: `.agents/skills/impeccable/`

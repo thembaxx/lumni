@@ -1,8 +1,8 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** 2026-06-08 (Sessions 22-34, including Batch 1-6, Data Consolidation, Theme Chrome, Navigation Sidebar, DataAccess domain split, Teacher localStorage fixes, Weekly/Daily digest)
-**Sources:** MEMORY.md, AGENTS.md (Sessions 1-32), implementation-notes.md, CONTEXT.md, docs/adr/
+**Last updated:** 2026-06-18 (Sessions 22-37, including Batch 1-6, Data Consolidation, Theme Chrome, Navigation Sidebar, DataAccess domain split, Teacher localStorage fixes, Weekly/Daily digest, Architectural deepening, Service extractions)
+**Sources:** MEMORY.md, AGENTS.md (Sessions 1-37), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -70,6 +70,11 @@
 | D057 | Teacher report fetches from Appwrite | `GET /api/teacher/students/[studentId]/report` replaces local Dexie read; now shows actual student data across devices | 2026-06-08 |
 | D058 | Daily digest notification | `scheduleDailyDigest()` in notification-service — local notification with today's quiz count + average score, respects `dailyDigest` settings toggle | 2026-06-08 |
 | D059 | WeeklyReportPanel real data | Replaced hash-based random mastery (`40 + hash % 55`) with values derived from subject's actual score (±8 pts per topic) | 2026-06-08 |
+| D060 | AI provider singleton collapsed | `QuestionProcessor` and `Grader` accept `ai?: AIClient` in constructor; `QuestionEngine` creates AI client once, threads through `ProcessorRegistry`. 10 files changed | 2026-06-18 |
+| D061 | GenerateResult structured return | `QuestionEngine.generate()` returns `GenerateResult { questions, ragContext }` instead of `Question[]`. Orchestrator reads `ragContext` from return value. `lastRagContext` kept during execution as side effect. 6 files changed | 2026-06-18 |
+| D062 | CachedAIGenerator<T> | Generic fetch→cache→generate pattern at `src/lib/ai/cached-ai-generator.ts`. Dexie lookup → stale? → AI generate → cache → return. Config with `buildCacheEntry`/`extractData`. Used by knowledge-graph and study-guide. 5 files changed | 2026-06-18 |
+| D063 | AnalyticsService extraction | `SessionStore` interface. Trends/comparative routes reduced from ~50-90 lines to ~20 lines each. 4 files changed | 2026-06-18 |
+| D064 | Service extraction (ADR-0012) | 6 services extracted: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines. 39 files changed | 2026-06-18 |
 
 ### Reversals
 
@@ -110,6 +115,10 @@
 - **Centralized logger pattern**: `logError(context, error, meta?)` — dev: console.error, prod: Sentry.captureException via withScope(). Catch blocks pass context tag.
 - **Theme chrome pattern**: React `useEffect` reads `getComputedStyle(document.documentElement).getPropertyValue('--system-background')` and writes to `<meta name="theme-color">`. SSR fallback via `viewport` export.
 - **Sidebar search pattern**: Client-side filter over nav config entries with real-time input. `SidebarStateProvider` context manages open/close + hamburger toggle.
+- **CachedAIGenerator pattern**: `new CachedAIGenerator({ buildCacheEntry, extractData, ttlMs })` → Dexie lookup → stale? → AI generate → cache → return. Heterogeneous entry shapes via config.
+- **GenerateResult pattern**: Engine returns `{ questions, ragContext }` instead of `Question[]`. Orchestrator reads sidecar from return value. Avoids getter sidecar pattern.
+- **Service extraction pattern**: `{ db, config }` config objects for constructor injection. Raw `Request` for IP extraction. Route handler = parse + construct + call + respond.
+- **AIClient threading pattern**: Singleton created once in `QuestionEngine`, threaded through `ProcessorRegistry` to `QuestionProcessor` and `Grader`. No global `getAI()`.
 
 ---
 
@@ -144,7 +153,7 @@
 | PDF scraping for exam dates? | ✅ Manual extraction from web sources for now | 2026-05-26 |
 | GDPR/POPIA legal compliance? | ✅ Consent management, cookie banner, TOS versioning, account deletion, data export | 2026-05-29 |
 | Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19), round 2 a11y (Session 30) | 2026-06-07 |
-| Test suite health? | ✅ 1258 pass, 0 fail | 2026-06-08 |
+| Test suite health? | ✅ 1264 pass, 0 fail | 2026-06-18 |
 | Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs + Q7/Q4 follow-ups. 1225 pass. | 2026-06-02 |
 | DataAccess seam? | ✅ Phase 1-4 complete. All 38+ tables migrated. | 2026-06-07 |
 | Knowledge graph + study guides? | ✅ Both shipped. Knowledge graph (v29, 7d TTL). Study guides (v32, 30d TTL). | 2026-06-07 |
@@ -168,6 +177,7 @@
 | ADR-0001 | `docs/adr/0001-question-engine-composition.md` | QuestionEngine composition decision |
 | ADR-0010 | `docs/adr/0010-tinyfish-rag-integration.md` | TinyFish RAG injection (status: Implemented) |
 | ADR-0011 | `docs/adr/0011-data-access-seam.md` | DataAccess seam (status: Implemented — Phase 1-4) |
+| ADR-0012 | `docs/adr/0012-service-extraction-pattern.md` | Service extraction pattern (status: Accepted) |
 | Lottie migration | `docs/issues/lottie-web-unpin.md` | Resolved: migrated from lottie-react to @lottiefiles/dotlottie-react |
 | Theme chrome takeover | `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md` | Dynamic theme-color, accent-tinted glass, PWA titlebar |
 | Design specs | `docs/superpowers/specs/` | All batch design documents |

@@ -1,4 +1,4 @@
-# Context Manifest — 2026-06-09
+# Context Manifest — 2026-06-18
 
 ## Identity
 
@@ -6,11 +6,11 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. 1264 tests pass, 0 fail.
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. **1264 tests pass, 0 fail.**
 
 **Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
 
-**Architectural deepening (June 2026)** — 6 candidates implemented: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic created for fetch→cache→generate pattern, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. Service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`.
+**Architectural deepening (June 2026)** — 6 candidates implemented: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic created for fetch→cache→generate pattern, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines each. ADR-0012 documented.
 
 ## System at a Glance
 
@@ -31,13 +31,16 @@ Browser (React 19 + Next.js 16)
         │
 Next.js API Routes (~50 groups, most via createRouteHandler factory)
   ├── QuestionEngine     → Gemini → Nvidia NIM → Groq (AI chain)
-  │     └── PromptManager injects TinyFish <reference_material> XML + sourceRefs appendix
+  │     ├── AIClient threaded through processors (singleton collapsed)
+  │     ├── GenerateResult { questions, ragContext } (structured return)
+  │     ├── PromptManager injects TinyFish <reference_material> XML + sourceRefs appendix
   │     └── source-mapper: attachWebSources hybrid AI-cite + fallback
   ├── VisualEngine       → Konva (STEM) or Wikimedia (non-STEM)
+  ├── CachedAIGenerator<T> → Dexie lookup → stale? → AI generate → cache → return
   ├── KnowledgeGraph     → AI topic dependency graphs (Dexie 7d cache)
   ├── StudyGuide         → AI structured guides (Dexie 30d cache)
   ├── QuizPackService    → bulk generate → Dexie storage
-  ├── LearningOrchestrator → composes Engine + queued side effects
+  ├── LearningOrchestrator → composes Engine + reads ragContext from GenerateResult
   ├── TinyFish RAG       → searchWithRAG (3-source) + getSourceForQuestion (1-source)
   │     ├── Dexie v25 cache (tinyfishCache, 14d TTL)
   │     ├── In-flight dedup (in-memory Map<key, Promise>)
@@ -49,12 +52,13 @@ Next.js API Routes (~50 groups, most via createRouteHandler factory)
   ├── LiveSessionService → real-time study sessions via Appwrite (15s polling)
   ├── ShareService       → public shares, ghost links, assignment sharing
   ├── RetentionService   → wrong-answer re-encounter, next-best-action
-├── QueueCore          → Dexie-backed job queue (retry + backoff)
-├── RateLimiter+TokenTracker → auth limits + AI budget caps (MapStore or RedisStore)
-├── UniformAIAdapter   → factory for pluggable provider normalizers
-├── WeeklyDigest       → POST /api/cron/weekly-digest (admin push to all subscribers)
-├── DailyDigest        → scheduleDailyDigest() in notification-service (per-day local notification)
-└── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
+  ├── AnalyticsService   → trends + comparative routes (SessionStore interface)
+  ├── QueueCore          → Dexie-backed job queue (retry + backoff)
+  ├── RateLimiter+TokenTracker → auth limits + AI budget caps (MapStore or RedisStore)
+  ├── UniformAIAdapter   → factory for pluggable provider normalizers
+  ├── WeeklyDigest       → POST /api/cron/weekly-digest (admin push to all subscribers)
+  ├── DailyDigest        → scheduleDailyDigest() in notification-service (per-day local notification)
+  └── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
         │
 Appwrite Cloud
   ├── Auth (anonymous → email/password)
@@ -74,16 +78,21 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
+| `src/lib/ai/cached-ai-generator.ts` | New generic CachedAIGenerator<T> |
+| `src/lib/question-engine/` | GenerateResult structured return, AIClient threading |
+| `src/lib/analytics/analytics-service.ts` | SessionStore interface, extracted from routes |
+| `src/lib/admin/exam-download-service.ts` | Extracted from route handler |
+| `src/lib/admin/exam-upload-service.ts` | Extracted from route handler |
+| `src/lib/assignments/submission-service.ts` | Extracted from route handler |
+| `src/lib/auth/rate-limit-service.ts` | Extracted from route handler |
+| `src/lib/digest/digest-service.ts` | Extracted from route handler |
 | `src/app/[locale]/problems/page.tsx` | Login gate (useAuth) for unauthenticated users |
 | `src/hooks/use-visual-engine.ts` | Removed usePremium, enabled flag simplified |
 | `src/app/[locale]/support/page.tsx` | Removed isPriority, always shows best support |
-| `src/components/dashboard/analytics/comparative-analytics-panel.tsx` | ContentLock removed |
-| `src/components/dashboard/offline-packs.tsx` | ContentLock removed |
-| `src/components/visual/visual-content.tsx` | ContentLock removed |
 | `src/hooks/use-navigation-direction.ts` | Owns view transitions, direction-based nav |
 | `next.config.ts` | Removed `experimental.viewTransition: true` |
-| `system-design.md` | Updated for premium removal |
-| `CONTEXT.md` | Updated for premium removal |
+| `system-design.md` | Updated for Session 37 |
+| `CONTEXT.md` | Updated for Session 37 |
 | `.context/` | Memory files updated |
 
 ## Background Knowledge
@@ -93,9 +102,12 @@ Appwrite Cloud
 - **Swipeable flashcard deck**: `SwipeableCardDeck` (3-card cascade, drag-to-swipe, tap-to-flip), `QualityPicker` (6-level SM-2), `useSwipeDeck` (state machine with undo stack).
 - **Immersive mode**: `ImmersiveModeProvider` context — auto-hides nav during active quiz/exam. Floating exit pill.
 - **Route handler factory**: `src/lib/api/create-route-handler.ts` — `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, validation, error wrapping, optional rate limiting.
-- **AI provider chain**: Gemini 2.0 Flash Lite (primary) → Nvidia NIM meta/llama-3.3-70b-instruct → Groq llama-3.3-70b-versatile. Defined in `src/lib/ai/client.ts`. `uniform-adapter.ts` provides pluggable normalizers.
+- **AI provider chain**: Gemini 2.0 Flash Lite (primary) → Nvidia NIM meta/llama-3.3-70b-instruct → Groq llama-3.3-70b-versatile. Defined in `src/lib/ai/client.ts`. `uniform-adapter.ts` provides pluggable normalizers. **Singleton collapsed (Session 37)**: `QuestionProcessor` and `Grader` accept `ai?: AIClient` in constructor; `QuestionEngine` creates AI client once, threads through `ProcessorRegistry`.
 - **Competency levels**: novice→Easy/remember, developing→Medium/understand/apply, proficient→Medium/apply/analyze/evaluate, mastered→Hard/evaluate/create. Mapped in `src/lib/question-engine/competency-mapper.ts`. Supports per-paper (P1/P2) split.
 - **Caching tiers**: Dexie L1 (fastest, per-device) → Appwrite L2 (cross-session) → AI/Wikimedia L3 (on-demand fallback). New `CachingStrategy` module for generic multi-tier caching.
+- **CachedAIGenerator<T>** (Session 37): Generic fetch→cache→generate pattern at `src/lib/ai/cached-ai-generator.ts`. Dexie lookup → stale? → AI generate → cache → return. Config object with `buildCacheEntry`/`extractData` for heterogeneous Dexie entry shapes. Used by knowledge-graph and study-guide.
+- **GenerateResult** (Session 37): `QuestionEngine.generate()` returns `GenerateResult { questions, ragContext }` instead of `Question[]`. Orchestrator reads `ragContext` from return value. `lastRagContext` kept during execution as side effect.
+- **AnalyticsService** (Session 37): `src/lib/analytics/analytics-service.ts` with `SessionStore` interface. Trends and comparative routes reduced from ~50-90 lines to ~20 lines each.
 - **Diagrams**: STEM subjects (30) → Konva renderers (geometry, chart, chemistry, graph, force-vector, circuit, wave, motion, node-flow, custom-svg). Non-STEM → Wikimedia. Fallback: Mermaid.
 - **Knowledge graph**: `src/lib/knowledge-graph/` — AI generates `{ nodes, edges }` topic graphs. Cached 7d in Dexie v29. Two UIs: dashboard `LearningMapCard` + per-question `TopicGraph`.
 - **Study guides**: `src/lib/study-guide/` — AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
@@ -161,7 +173,7 @@ Appwrite Cloud
 | `prompt-catalog.md` | Catalog of all discoverable prompt contexts | Reference |
 | `memory.md` | All decisions (ADR-lite), patterns, failures, open questions, resources | High |
 | `system-design.md` | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High |
-| `AGENTS.md` | Engine architecture, math conventions, session 1-32 history, Dexie schema progression | High |
+| `AGENTS.md` | Engine architecture, math conventions, session 1-37 history, Dexie schema progression | High |
 | `CONTEXT.md` | Domain glossary — prepend to any agent prompt | High |
 | `DESIGN.md` | "The Emerald Study Room" design system (342 lines) | Medium |
 | `TODO.md` | Outstanding tasks and completed work log | Medium |

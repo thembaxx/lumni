@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** 2026-06-18 (sessions 1-37, June 2026)
+**Last synced:** 2026-06-18 (sessions 1-37, including architectural deepening + service extractions)
 
 ---
 
@@ -49,12 +49,13 @@ graph TB
     end
 
     subgraph Engines [Engine Layer]
-        S[QuestionEngine<br/>11 types, RAG-augmented]
+        S[QuestionEngine<br/>11 types, RAG-augmented<br/>GenerateResult return]
         T[VisualEngine<br/>Konva + Wikimedia]
         U[FlashcardEngine<br/>SM-2/FSRS]
         V[CompetencyEngine<br/>Bloom's + Paths]
-        W[KnowledgeGraph<br/>AI topic deps]
-        X[StudyGuide<br/>AI guides]
+        W[KnowledgeGraph<br/>AI topic deps, CachedAIGenerator]
+        X[StudyGuide<br/>AI guides, CachedAIGenerator]
+        Y[CachedAIGenerator<br/>Generic fetch→cache→generate]
     end
 
     A --> E
@@ -77,6 +78,9 @@ graph TB
     E --> T
     E --> W
     E --> X
+    E --> Y
+    W --> Y
+    X --> Y
 
     classDef client fill:#e1f5fe
     classDef server fill:#fff3e0
@@ -273,15 +277,17 @@ erDiagram
 
 | Module | Responsibility | Tech | Location |
 |--------|---------------|------|----------|
-| **QuestionEngine** | AI question generation, grading, hinting, validation | 11-type processor pipeline; RAG-augmented via PromptManager | `src/lib/question-engine/` |
+| **QuestionEngine** | AI question generation, grading, hinting, validation. Returns `GenerateResult { questions, ragContext }`. AIClient singleton collapsed (Session 37) | 11-type processor pipeline; RAG-augmented via PromptManager | `src/lib/question-engine/` |
 | **VisualEngine** | AI diagram generation (Konva) + Wikimedia search | STEM vs non-STEM routing | `src/lib/visual-engine/` |
 | **TinyFish RAG** | Web-grounded reference material for solve + quiz generation | searchWithRAG (3-source, 14d cache) + getSourceForQuestion (1-source, 24h cache); 24-subject allowlist; per-user daily limit; 3s timeout fail-open; XML wrap + prompt framing | `src/lib/tinyfish/` |
 | **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed via DataAccess | `src/lib/flashcard-engine/` |
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
-| **KnowledgeGraph** | AI-generated topic dependency graphs (prerequisites, core, advanced), GET+POST endpoints | AI generation + Dexie 7d cache | `src/lib/knowledge-graph/` |
-| **StudyGuide** | AI-generated structured study guides with sections + summary | AI generation + Dexie 30d cache | `src/lib/study-guide/` |
-| **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
+| **CachedAIGenerator** | Generic fetch→cache→generate pattern (Session 37). Dexie lookup → stale? → AI generate → cache → return. Config with `buildCacheEntry`/`extractData` | TypeScript | `src/lib/ai/cached-ai-generator.ts` |
+| **KnowledgeGraph** | AI-generated topic dependency graphs (prerequisites, core, advanced). Uses CachedAIGenerator. GET+POST endpoints | AI generation + Dexie 7d cache | `src/lib/knowledge-graph/` |
+| **StudyGuide** | AI-generated structured study guides with sections + summary. Uses CachedAIGenerator | AI generation + Dexie 30d cache | `src/lib/study-guide/` |
+| **LearningOrchestrator** | Orchestrates generate+grade+queue side effects. Reads `ragContext` from `GenerateResult` | Composes QuestionEngine | `src/lib/orchestrator/` |
 | **QuizPackService** | Offline AI quiz pack lifecycle (generate, persist, expire) | DataAccess + QuestionEngine | `src/lib/quiz-packs/` |
+| **AnalyticsService** | Platform analytics with `SessionStore` interface (Session 37). Trends/comparative routes ~20 lines each | DataAccess + Appwrite | `src/lib/analytics/analytics-service.ts` |
 | **Services Barrel** | All 15+ services (analytics, competency, progress, flashcard, notification, consent, search, leaderboard, question-rating, chat, exam-dates, etc.) | ServiceResult\<T\> | `src/lib/services/` |
 | **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
 | **SyncService** | Offline-to-online data reconciliation | DataAccess→Appwrite flush | `src/lib/sync/` |
@@ -294,12 +300,12 @@ erDiagram
 | **CachingStrategy** | Generic multi-tier caching (parallel tier check) | TypeScript | `src/lib/caching-strategy/` |
 | **UniformAIAdapter** | Factory for pluggable AI providers (OpenAI/Gemini request normalizers) | TypeScript | `src/lib/ai/uniform-adapter.ts` |
 | **SearchService** | Chunked parallel Dexie search with relevance scoring | Dexie | `src/lib/search/chunked-search.ts` |
-| **DigestService** | Weekly stats computation + push notification delivery | DataAccess + web-push | `src/lib/digest/digest-service.ts` |
-| **PlatformAnalyticsService** | Platform-wide analytics aggregation (active users, question counts, subject breakdown) | DataAccess + Appwrite | `src/lib/admin/analytics-service.ts` |
-| **ExamDownloadService** | Appwrite PDF assembly, per-student/per-paper queries, analytics | Appwrite SDK + DataAccess | `src/lib/admin/exam-download-service.ts` |
-| **ExamUploadService** | File parsing, Appwrite document creation, analytics | Appwrite SDK + DataAccess | `src/lib/admin/exam-upload-service.ts` |
-| **SubmissionService** | Assignment validation, auto-grading, comment creation, analytics | DataAccess + QuestionEngine | `src/lib/assignments/submission-service.ts` |
-| **AuthRateLimitService** | IP extraction, Redis rate limiting, analytics | Redis + DataAccess | `src/lib/auth/rate-limit-service.ts` |
+| **DigestService** | Weekly stats computation + push notification delivery (Session 37: extracted) | DataAccess + web-push | `src/lib/digest/digest-service.ts` |
+| **PlatformAnalyticsService** | Platform-wide analytics aggregation (active users, question counts, subject breakdown) (Session 37: extracted) | DataAccess + Appwrite | `src/lib/admin/analytics-service.ts` |
+| **ExamDownloadService** | Appwrite PDF assembly, per-student/per-paper queries, analytics (Session 37: extracted) | Appwrite SDK + DataAccess | `src/lib/admin/exam-download-service.ts` |
+| **ExamUploadService** | File parsing, Appwrite document creation, analytics (Session 37: extracted) | Appwrite SDK + DataAccess | `src/lib/admin/exam-upload-service.ts` |
+| **SubmissionService** | Assignment validation, auto-grading, comment creation, analytics (Session 37: extracted) | DataAccess + QuestionEngine | `src/lib/assignments/submission-service.ts` |
+| **AuthRateLimitService** | IP extraction, Redis rate limiting, analytics (Session 37: extracted) | Redis + DataAccess | `src/lib/auth/rate-limit-service.ts` |
 | **i18n** | Locale-based routing ([locale] prefix), en/af/zu translations | Next.js middleware | `src/i18n/` |
 
 ### Backend (External)
@@ -386,8 +392,8 @@ Client -> POST /api/engine/generate
     -> VisualEngine: background pre-cache for each question
     -> Analytics: enqueue analytics-sync job
     -> Item pruning: enqueue prune-stale-questions job
-    -> engine.getLastRagContext() -> sources: { url, title }[]
-    -> Response: Question[] + sources[]
+    -> Return: GenerateResult { questions, sources: { url, title }[] }
+    -> Orchestrator reads ragContext from GenerateResult
 ```
 
 **Quiz Answer + Grade:**
@@ -407,20 +413,22 @@ Client -> POST /api/engine/grade
 **Knowledge Graph Generation:**
 ```
 Client -> GET /api/engine/knowledge-graph?subject=X&topic=Y
-  -> check Dexie cache (7d TTL)
-  -> cache hit -> Response: graph
-  -> cache miss -> POST internally or AI generate
-  -> store in Dexie knowledgeGraph table
-  -> Response: { nodes: KnowledgeNode[], edges: KnowledgeEdge[] }
+  -> CachedAIGenerator<T>
+    -> Dexie lookup (knowledgeGraph table, 7d TTL)
+    -> cache hit -> Response: graph
+    -> cache miss -> AI generate (fetchGraph)
+    -> store in Dexie knowledgeGraph table via buildCacheEntry
+    -> Response: { nodes: KnowledgeNode[], edges: KnowledgeEdge[] }
 ```
 
 **Study Guide Generation:**
 ```
 Client -> POST /api/engine/study-guide { subject, topic }
-  -> check Dexie cache (30d TTL)
-  -> cache miss -> AI generate structured guide
-  -> store in Dexie studyGuides table
-  -> Response: { sections: StudyGuideSection[], summary: string }
+  -> CachedAIGenerator<T>
+    -> Dexie lookup (studyGuides table, 30d TTL)
+    -> cache miss -> AI generate structured guide
+    -> store in Dexie studyGuides table via buildCacheEntry
+    -> Response: { sections: StudyGuideSection[], summary: string }
 ```
 
 **Live Study Session Flow:**
@@ -502,6 +510,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | **E2E coverage** | Smoke + visual tests for core flows | Playwright 1.60.0 |
 | **UI documentation** | Storybook for component library | Storybook 10.4.1 (18 stories) |
 | **Dead code detection** | Knip static analysis | knip@6.15.0 |
+| **Test baseline** | 1264 pass, 0 fail | `bun run test` (vitest) |
 
 ### Scalability Bottlenecks
 
