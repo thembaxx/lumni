@@ -16,8 +16,8 @@ import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import type { SearchResultItem } from "@/lib/services/search-service";
 import { searchAll, searchWeb } from "@/lib/services/search-service";
-import { cn } from "@/lib/utils";
 import { logError } from "@/lib/shared/logger";
+import { cn } from "@/lib/utils";
 
 const typeConfig: Record<
 	SearchResultItem["type"],

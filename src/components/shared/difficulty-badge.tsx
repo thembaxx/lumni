@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { normalizeDifficulty } from "@/lib/shared/difficulty";
+import { cn } from "@/lib/utils";
 import { getDifficultyColor, getQuizDifficultyColor } from "@/lib/utils/colors";
 
 export type DifficultyBadgeVariant = "default" | "quiz";

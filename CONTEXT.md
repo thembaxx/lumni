@@ -1,4 +1,4 @@
-# Context Manifest — 2026-06-18
+# Context Manifest — 2026-06-20
 
 ## Identity
 
@@ -6,11 +6,13 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. **1264 tests pass, 0 fail.**
+All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + pagination support. DataAccess split into 10 domain sub-interfaces (33 accessors, 11 dead removed). 19 consumers narrowed from `DataAccess` to sub-interfaces. Teacher localStorage bugs fixed (ghost links→Appwrite, observations→Dexie, messages→Dexie). Weekly digest cron endpoint, daily digest notifications, teacher report fixed. Quality dashboard rating chart. 18 Storybook stories. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. **1321 tests pass, 1 pre-existing failure.**
 
 **Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
 
-**Architectural deepening (June 2026)** — 6 candidates implemented: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic created for fetch→cache→generate pattern, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines each. ADR-0012 documented.
+**Architectural deepening (June 2026)** — 8 candidates implemented:
+- **Session 37**: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ADR-0012 documented.
+- **Session 38**: QuizResultProcessor (discriminated union, 4 sources), enrichment pipeline (3 ports: CurriculumSource/EmbeddingSource/PastPaperSource), TinyFish barrel separation (withRagGuards HOF), PushDeliveryService (lazy VAPID, consolidated web-push), StudyPlannerService (state/sync/mutations, event emission), GamificationService (state/persist/sync, mutation results), DataAccess bypass sealing (5 files), flashcard/exam/dashboard consumers updated.
 
 ## System at a Glance
 
@@ -40,7 +42,12 @@ Next.js API Routes (~50 groups, most via createRouteHandler factory)
   ├── KnowledgeGraph     → AI topic dependency graphs (Dexie 7d cache)
   ├── StudyGuide         → AI structured guides (Dexie 30d cache)
   ├── QuizPackService    → bulk generate → Dexie storage
-  ├── LearningOrchestrator → composes Engine + reads ragContext from GenerateResult
+  ├── QuizResultProcessor → discriminated union (bolt|quiz|exam|flashcard), single orchestration point
+  ├── EnrichmentPipeline → 3 ports (Curriculum/Embedding/PastPaper), DI via EnrichmentDeps
+  ├── PushDeliveryService → lazy VAPID init, sendToUser/sendToAll, consolidated web-push
+  ├── StudyPlannerService → state/sync/mutations, event emission, generatePlan
+  ├── GamificationService → state/persist/sync, mutation results (XpResult/AchievementResult/ChestResult)
+  ├── LearningOrchestrator → composes Engine + reads ragContext from GenerateResult + DI db for dedup
   ├── TinyFish RAG       → searchWithRAG (3-source) + getSourceForQuestion (1-source)
   │     ├── Dexie v25 cache (tinyfishCache, 14d TTL)
   │     ├── In-flight dedup (in-memory Map<key, Promise>)
@@ -78,22 +85,29 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
-| `src/lib/ai/cached-ai-generator.ts` | New generic CachedAIGenerator<T> |
+| `src/lib/services/quiz-result-processor.ts` | New — quiz completion orchestration (4 sources) |
+| `src/lib/question-engine/enrichment-pipeline.ts` | New — 3-port enrichment (Curriculum/Embedding/PastPaper) |
+| `src/lib/tinyfish/rag-pipeline.ts` | New — withRagGuards HOF, barrel separation |
+| `src/lib/services/push-delivery.ts` | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
+| `src/lib/services/study-planner-service.ts` | New — StudyPlannerService (state/sync/mutations) |
+| `src/lib/gamification-engine/service.ts` | New — GamificationService (state/persist/sync) |
+| `src/lib/ai/cached-ai-generator.ts` | Generic CachedAIGenerator<T> |
 | `src/lib/question-engine/` | GenerateResult structured return, AIClient threading |
 | `src/lib/analytics/analytics-service.ts` | SessionStore interface, extracted from routes |
-| `src/lib/admin/exam-download-service.ts` | Extracted from route handler |
-| `src/lib/admin/exam-upload-service.ts` | Extracted from route handler |
-| `src/lib/assignments/submission-service.ts` | Extracted from route handler |
-| `src/lib/auth/rate-limit-service.ts` | Extracted from route handler |
-| `src/lib/digest/digest-service.ts` | Extracted from route handler |
-| `src/app/[locale]/problems/page.tsx` | Login gate (useAuth) for unauthenticated users |
-| `src/hooks/use-visual-engine.ts` | Removed usePremium, enabled flag simplified |
-| `src/app/[locale]/support/page.tsx` | Removed isPriority, always shows best support |
-| `src/hooks/use-navigation-direction.ts` | Owns view transitions, direction-based nav |
-| `next.config.ts` | Removed `experimental.viewTransition: true` |
-| `system-design.md` | Updated for Session 37 |
-| `CONTEXT.md` | Updated for Session 37 |
-| `.context/` | Memory files updated |
+| `src/lib/assignments/submission-service.ts` | Uses PushDeliveryService |
+| `src/lib/digest/digest-service.ts` | Uses PushDeliveryService |
+| `src/lib/integration/service.ts` | DataAccess seam sealed (_deps pattern) |
+| `src/lib/orchestrator/learning-orchestrator.ts` | DI db for dedup, constructor injection |
+| `src/lib/orchestrator/handlers/domain.ts` | DomainDb type expanded, generateEmbedding sealed |
+| `src/app/api/exam-papers/classify/route.ts` | Factory DI (createClassifyHandler) |
+| `src/app/api/exam-papers/[id]/extract/route.ts` | _deps pattern for Dexie access |
+| `src/components/dashboard/dashboard-client.tsx` | Uses QuizResultProcessor |
+| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | Uses QuizResultProcessor |
+| `src/app/[locale]/flashcards/flashcards-client.tsx` | Uses QuizResultProcessor |
+| `src/hooks/use-gamification.ts` | Thin subscriber to GamificationService |
+| `src/hooks/use-study-planner.ts` | Thin subscriber to StudyPlannerService |
+| `system-design.md` | Updated for Session 38 |
+| `CONTEXT.md` | Updated for Session 38 |
 
 ## Background Knowledge
 

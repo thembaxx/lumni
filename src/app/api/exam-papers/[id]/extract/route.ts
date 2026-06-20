@@ -1,7 +1,9 @@
 import { UTApi } from "uploadthing/server";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
+import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import type { DataAccess } from "@/lib/db/data-access";
 import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-extractor";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper } from "@/types/exam-paper";
@@ -9,6 +11,8 @@ import type { ExamPaper } from "@/types/exam-paper";
 export const runtime = "nodejs";
 
 const utapi = new UTApi();
+
+const _deps: { db: DataAccess } = { db: dexieDataAccess };
 
 async function fetchParsedPaper(id: string): Promise<ExamPaper | null> {
 	try {
@@ -90,8 +94,7 @@ export const POST = createRouteHandler({
 		}
 
 		try {
-			const { dexieDataAccess } = await import("@/lib/db");
-			await dexieDataAccess.pastPaperQuestions.bulkPut(questions);
+			await _deps.db.pastPaperQuestions.bulkPut(questions);
 		} catch {
 			// Dexie unavailable server-side
 		}

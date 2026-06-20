@@ -11,8 +11,8 @@ import { VerifiedByPill } from "@/components/tools/communication/verified-by-pil
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
-import { cn } from "@/lib/utils";
 import { logError } from "@/lib/shared/logger";
+import { cn } from "@/lib/utils";
 
 interface FetchedData {
 	id: string;

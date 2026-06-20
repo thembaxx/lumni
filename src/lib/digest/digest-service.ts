@@ -1,6 +1,5 @@
-import { databases } from "@/lib/appwrite.server";
-import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 import type { DataAccess } from "@/lib/db/data-access";
+import { PushDeliveryService } from "@/lib/services/push-delivery";
 import { logError } from "@/lib/shared/logger";
 
 export interface WeeklyStats {
@@ -19,7 +18,11 @@ export interface DigestDeps {
 }
 
 export class DigestService {
-	constructor(private readonly deps: DigestDeps) {}
+	private pushService: PushDeliveryService;
+
+	constructor(private readonly deps: DigestDeps) {
+		this.pushService = new PushDeliveryService();
+	}
 
 	async computeWeeklyStats(): Promise<WeeklyStats> {
 		const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -76,45 +79,15 @@ export class DigestService {
 		title: string,
 		body: string,
 	): Promise<DigestResult> {
-		let sent = 0;
-		let total = 0;
-
 		try {
-			const docs = await databases.listDocuments(
-				APPWRITE_DATABASE_ID,
-				"push_subscriptions",
-			);
-			total = docs.documents.length;
-
-			if (total > 0) {
-				const { default: webpush } = await import("web-push");
-				webpush.setVapidDetails(
-					"mailto:study@lumni.app",
-					process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
-					process.env.VAPID_PRIVATE_KEY ?? "",
-				);
-
-				const results = await Promise.allSettled(
-					docs.documents.map((sub: Record<string, unknown>) => {
-						const subscription = {
-							endpoint: sub.endpoint as string,
-							keys: {
-								auth: sub.auth as string,
-								p256dh: sub.p256dh as string,
-							},
-						};
-						return webpush.sendNotification(
-							subscription,
-							JSON.stringify({ title, body, url: "/dashboard" }),
-						);
-					}),
-				);
-				sent = results.filter((r) => r.status === "fulfilled").length;
-			}
+			return await this.pushService.sendToAll({
+				title,
+				body,
+				url: "/dashboard",
+			});
 		} catch (e) {
 			logError("WeeklyDigestPush", e);
+			return { sent: 0, total: 0 };
 		}
-
-		return { sent, total };
 	}
 }

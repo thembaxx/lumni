@@ -1,5 +1,11 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
+
+let _deps: { db: DataAccess } = { db: dexieDataAccess };
+export function __setDepsForTesting(deps: { db: DataAccess }) {
+	_deps = deps;
+}
 
 // ── Integration 1: Lesson→Past Questions loop ──
 // When a lesson is completed, suggest 3 related past questions.
@@ -11,7 +17,7 @@ export async function suggestQuestionsForLesson(
 	{ id: string; questionText: string; year: number; marks: number }[]
 > {
 	try {
-		const all = await dexieDataAccess.pastPaperQuestions
+		const all = await _deps.db.pastPaperQuestions
 			.where("subject")
 			.equals(subject)
 			.toArray();
@@ -39,10 +45,10 @@ export async function createFlashcardFromVocabulary(
 ): Promise<void> {
 	try {
 		const cardId = `vocab-${userId}-${word.toLowerCase()}`;
-		const existing = await dexieDataAccess.flashcards.get(cardId);
+		const existing = await _deps.db.flashcards.get(cardId);
 		if (existing) return;
 		const now = Date.now();
-		await dexieDataAccess.flashcards.put({
+		await _deps.db.flashcards.put({
 			id: cardId,
 			subject,
 			topic: "vocabulary",

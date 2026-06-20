@@ -6,6 +6,7 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
+import type { DataAccess } from "@/lib/db/data-access";
 import { safePersist } from "@/lib/db/persist";
 import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
@@ -16,8 +17,9 @@ import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 
-let _deps: { db: QuizDataAccess } = { db: dexieDataAccess };
-export function __setDepsForTesting(deps: { db: QuizDataAccess }) {
+type DomainDb = QuizDataAccess & Pick<DataAccess, "questionEmbeddings">;
+let _deps: { db: DomainDb } = { db: dexieDataAccess as DomainDb };
+export function __setDepsForTesting(deps: { db: DomainDb }) {
 	_deps = deps;
 }
 
@@ -220,12 +222,8 @@ export const generateEmbedding: JobHandler = async (payload) => {
 	const { questionId, questionText, subject } =
 		payload as JobPayloadByType["generate-embedding"];
 	try {
-		const [{ embedText }, { storeEmbedding }, { dexieDataAccess }] =
-			await Promise.all([
-				import("@/lib/embedding/client"),
-				import("@/lib/embedding/cache"),
-				import("@/lib/db").then((m) => m),
-			]);
+		const { embedText } = await import("@/lib/embedding/client");
+		const { storeEmbedding } = await import("@/lib/embedding/cache");
 		const values = await embedText(questionText);
 		if (!values) {
 			console.warn("[Embedding] Failed to generate for:", questionId);
@@ -239,7 +237,7 @@ export const generateEmbedding: JobHandler = async (payload) => {
 				subject,
 				updatedAt: new Date().toISOString(),
 			},
-			dexieDataAccess.questionEmbeddings,
+			_deps.db.questionEmbeddings,
 		);
 	} catch (err) {
 		logError("Embedding.Generate", err);

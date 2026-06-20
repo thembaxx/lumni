@@ -17,12 +17,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useDeleteGroup, useLeaveGroup } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/utils";
 import type {
 	GroupChallenge,
 	GroupChallengeEntry,
 } from "@/lib/study-groups/challenge-types";
 import type { StudyGroup } from "@/lib/study-groups/types";
+import { cn } from "@/lib/utils";
 
 interface Props {
 	group: StudyGroup;

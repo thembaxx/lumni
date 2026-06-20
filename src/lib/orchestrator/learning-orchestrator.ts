@@ -1,4 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
+import type { DataAccess } from "@/lib/db/data-access";
 import { embedText } from "@/lib/embedding/client";
 import { findTopK } from "@/lib/embedding/similarity";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
@@ -16,9 +17,11 @@ import type { GenerateResult, GradeResult } from "./types";
 
 export class LearningOrchestrator {
 	private engine: QuestionEngine;
+	private db: DataAccess;
 
-	constructor(engine: QuestionEngine) {
+	constructor(engine: QuestionEngine, db: DataAccess = dexieDataAccess) {
 		this.engine = engine;
+		this.db = db;
 	}
 
 	static async initialize(): Promise<LearningOrchestrator> {
@@ -104,8 +107,8 @@ export class LearningOrchestrator {
 					threshold: 0.85,
 				},
 				{
-					questionEmbeddings: dexieDataAccess.questionEmbeddings,
-					pastPaperQuestions: dexieDataAccess.pastPaperQuestions,
+					questionEmbeddings: this.db.questionEmbeddings,
+					pastPaperQuestions: this.db.pastPaperQuestions,
 				},
 			);
 			return top.length > 0;

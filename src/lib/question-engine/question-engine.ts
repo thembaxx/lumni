@@ -2,11 +2,10 @@ import type { AIClient } from "@/lib/ai";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
-import { dexieDataAccess as _dexieDa } from "@/lib/db";
-import { embedText } from "@/lib/embedding/client";
-import { findTopK } from "@/lib/embedding/similarity";
-import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
-import { logError } from "@/lib/shared/logger";
+import {
+	createEnrichmentPipeline,
+	type EnrichmentPipeline,
+} from "./enrichment-pipeline";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager, type RagContext } from "./prompt-manager";
 import { fetchRagContext, type RagDeps } from "./rag-enricher";
@@ -28,15 +27,18 @@ export class QuestionEngine {
 	private ragDeps?: RagDeps;
 	private cachingStrategy: CacheResolver<Question[], GenerationParams>;
 	private lastRagContext: RagContext | null = null;
+	private enrichmentPipeline: EnrichmentPipeline;
 
 	constructor(
 		ragDeps?: RagDeps,
 		caching?: CacheResolver<Question[], GenerationParams>,
 		ai?: AIClient,
+		enrichment?: EnrichmentPipeline,
 	) {
 		this.ragDeps = ragDeps;
 		this.prompts = new PromptManager(ragDeps);
 		this.registry = new ProcessorRegistry(this.prompts, ai);
+		this.enrichmentPipeline = enrichment ?? createEnrichmentPipeline();
 		this.cachingStrategy =
 			caching ??
 			createCachingStrategy<Question[], GenerationParams>(
@@ -288,141 +290,7 @@ export class QuestionEngine {
 	private async enrichParams(
 		params: GenerationParams,
 	): Promise<GenerationParams> {
-		const curriculumContext = await this.retrieveCurriculumContext(
-			params.subject,
-			params.topic,
-		);
-		const exampleCount = params.pastPaperMode ? 5 : 3;
-
-		const poolQuestions: NonNullable<GenerationParams["poolQuestions"]> = [];
-		let pastPaperExamples: GenerationParams["pastPaperExamples"] = [];
-
-		// Try semantic pool search first
-		try {
-			const queryText = params.topic
-				? `${params.subject}: ${params.topic}`
-				: params.subject;
-			const embedding = await embedText(queryText);
-			if (embedding) {
-				const scored = await findTopK(
-					{
-						subject: params.subject,
-						queryEmbedding: new Float32Array(embedding),
-						k: exampleCount + 2,
-						threshold: 0.5,
-					},
-					{
-						questionEmbeddings: _dexieDa.questionEmbeddings,
-						pastPaperQuestions: _dexieDa.pastPaperQuestions,
-					},
-				);
-				for (const sq of scored) {
-					if (sq.similarity > 0.8) {
-						poolQuestions.push({
-							id: sq.questionId,
-							questionText: sq.questionText,
-							answerText: sq.answerText,
-							marks: sq.marks,
-							year: sq.year,
-							paperNumber: sq.paperNumber,
-							topic: sq.topic,
-							similarity: sq.similarity,
-							type: sq.type,
-						});
-					}
-				}
-				pastPaperExamples = scored
-					.filter((q) => q.similarity >= 0.5 && q.similarity <= 0.8)
-					.slice(0, exampleCount)
-					.map((q) => ({
-						questionText: q.questionText,
-						answerText: q.answerText,
-						marks: q.marks,
-						year: q.year,
-					}));
-			}
-		} catch (e) {
-			logError("QuestionEngineEmbedding", e);
-			// Fallback to keyword search if embedding fails
-		}
-
-		// Fallback if pool search returned nothing
-		if (pastPaperExamples.length === 0) {
-			const fallback = await this.retrievePastPaperExamples(
-				params.subject,
-				params.topic,
-				exampleCount,
-			);
-			pastPaperExamples = fallback;
-		}
-
-		return {
-			...params,
-			...(curriculumContext ? { curriculumContext } : {}),
-			...(poolQuestions.length > 0 ? { poolQuestions } : {}),
-			...(pastPaperExamples.length > 0 ? { pastPaperExamples } : {}),
-		};
-	}
-
-	private async retrievePastPaperExamples(
-		subject: string,
-		topic?: string,
-		limit: number = 3,
-	): Promise<
-		{ questionText: string; answerText: string; marks: number; year: number }[]
-	> {
-		if (!subject) return [];
-		try {
-			const url = new URL(
-				`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/exam-papers/questions`,
-			);
-			url.searchParams.set("subject", subject);
-			if (topic) url.searchParams.set("topic", topic);
-			url.searchParams.set("limit", String(limit));
-
-			const res = await fetch(url.toString(), { cache: "no-store" });
-			if (!res.ok) return [];
-			const data = await res.json();
-			return (data.questions as PastPaperQuestion[])
-				.slice(0, limit)
-				.map((q) => ({
-					questionText: q.questionText,
-					answerText: q.answerText,
-					marks: q.marks,
-					year: q.year,
-				}));
-		} catch (err) {
-			logError("RetrievePastPaperExamples", err);
-			return [];
-		}
-	}
-
-	private async retrieveCurriculumContext(
-		_subject: string,
-		topic?: string,
-	): Promise<string | null> {
-		if (!topic) return null;
-		try {
-			const [{ listDocuments }, { Query }, { COLLECTIONS }] = await Promise.all(
-				[
-					import("@/lib/db/client"),
-					import("appwrite"),
-					import("@/lib/db/client"),
-				],
-			);
-			const results = await listDocuments(COLLECTIONS.TOPICS, [
-				Query.equal("name", topic),
-				Query.limit(1),
-			]);
-			if (results.length > 0) {
-				const doc = results[0] as Record<string, unknown>;
-				return (doc.description as string) ?? null;
-			}
-			return null;
-		} catch (e) {
-			console.warn("Retrieve curriculum context failed:", e);
-			return null;
-		}
+		return this.enrichmentPipeline.enrich(params);
 	}
 
 	private async generateMixed(

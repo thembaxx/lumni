@@ -9,8 +9,8 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/shared/time";
+import { cn } from "@/lib/utils";
 
 interface ExamHeaderProps {
 	paperCode?: string;

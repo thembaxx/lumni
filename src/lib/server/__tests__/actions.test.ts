@@ -232,7 +232,10 @@ describe("adminUploadExamPaper", () => {
 	test("returns auth error when not authenticated", async () => {
 		mockUserId.val = null;
 		const formData = new FormData();
-		formData.set("file", new File([""], "test.pdf", { type: "application/pdf" }));
+		formData.set(
+			"file",
+			new File([""], "test.pdf", { type: "application/pdf" }),
+		);
 		formData.set("subjectId", "sub1");
 		formData.set("year", "2024");
 		formData.set("paperNumber", "1");

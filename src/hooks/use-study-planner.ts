@@ -1,30 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
-import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
-import { logError } from "@/lib/shared/logger";
 import {
-	addExamDate,
-	addStudySession,
-	autoScheduleSessions,
-	clearPlanStale,
-	deleteExamDate,
-	deleteStudySession,
-	type ExamDate,
-	type ExamDateInfo,
-	getStudyStats,
-	getTodaySessions,
-	getUpcomingExams,
-	getUpcomingSessions,
-	loadStudyPlan,
-	loadStudyPlanFromDexie,
-	markPlanStale,
-	type StudyPlan,
-	type StudySession,
-	saveStudyPlan,
-	syncStudyPlanToAppwrite,
-	updateStudySession,
+	type PlannerSnapshot,
+	StudyPlannerService,
+} from "@/lib/services/study-planner-service";
+import { logError } from "@/lib/shared/logger";
+import type {
+	ExamDate,
+	StudyPlan,
+	StudySession,
 } from "@/lib/utils/study-planner";
 
 export interface GeneratePlanSettings {
@@ -39,7 +25,7 @@ export interface UseStudyPlannerReturn {
 	todaySessions: StudySession[];
 	upcomingSessions: StudySession[];
 	upcomingExams: ExamDate[];
-	stats: ReturnType<typeof getStudyStats>;
+	stats: PlannerSnapshot["stats"];
 	stale: boolean;
 	addSession: (session: Omit<StudySession, "id">) => void;
 	updateSession: (id: string, updates: Partial<StudySession>) => void;
@@ -56,239 +42,113 @@ export interface UseStudyPlannerReturn {
 	refresh: () => void;
 }
 
+let _serviceInstance: StudyPlannerService | null = null;
+function getService(): StudyPlannerService {
+	if (!_serviceInstance) {
+		_serviceInstance = new StudyPlannerService();
+	}
+	return _serviceInstance;
+}
+
 export function useStudyPlanner(): UseStudyPlannerReturn {
 	const { user } = useAuth();
-	const [plan, setPlan] = useState<StudyPlan>(() => loadStudyPlan());
-	const [todaySessions, setTodaySessions] = useState<StudySession[]>([]);
-	const [upcomingSessions, setUpcomingSessions] = useState<StudySession[]>([]);
-	const [upcomingExams, setUpcomingExams] = useState<ExamDate[]>([]);
-	const [stats, setStats] = useState(() => getStudyStats());
+	const service = useMemo(() => getService(), []);
+
+	const [snapshot, setSnapshot] = useState<PlannerSnapshot>(() =>
+		service.getSnapshot(),
+	);
 	const [isGenerating, setIsGenerating] = useState(false);
 
-	const refresh = useCallback(() => {
-		const p = loadStudyPlan();
-		setPlan(p);
-		setTodaySessions(getTodaySessions());
-		setUpcomingSessions(getUpcomingSessions(7));
-		setUpcomingExams(getUpcomingExams());
-		setStats(getStudyStats());
-	}, []);
-
-	// Load from Dexie on mount (overrides localStorage initial value)
 	useEffect(() => {
-		loadStudyPlanFromDexie().then((dexiePlan) => {
-			setPlan(dexiePlan);
+		service.setUserId(user?.$id ?? null);
+	}, [service, user?.$id]);
+
+	useEffect(() => {
+		const unsub = service.subscribe(() => {
+			setSnapshot(service.getSnapshot());
 		});
-	}, []);
+		return unsub;
+	}, [service]);
 
-	const refreshIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
-		null,
-	);
 	useEffect(() => {
-		if (!refreshIntervalRef.current) {
-			refreshIntervalRef.current = setInterval(refresh, 60000);
-		}
+		service
+			.loadFromDexie()
+			.catch((err) => logError("useStudyPlannerLoadDexie", err));
+	}, [service]);
+
+	useEffect(() => {
+		const interval = setInterval(() => service.refresh(), 60000);
 		const onVisibility = () => {
-			if (document.visibilityState === "visible") refresh();
+			if (document.visibilityState === "visible") service.refresh();
 		};
-		const onFocus = () => refresh();
+		const onFocus = () => service.refresh();
 		document.addEventListener("visibilitychange", onVisibility);
 		window.addEventListener("focus", onFocus);
 		return () => {
-			if (refreshIntervalRef.current) {
-				clearInterval(refreshIntervalRef.current);
-				refreshIntervalRef.current = null;
-			}
+			clearInterval(interval);
 			document.removeEventListener("visibilitychange", onVisibility);
 			window.removeEventListener("focus", onFocus);
 		};
-	}, [refresh]);
+	}, [service]);
 
 	const addSession = useCallback(
-		(session: Omit<StudySession, "id">) => {
-			addStudySession(session);
-			schedulePlanAwareReminder();
-			if (user?.$id)
-				syncStudyPlanToAppwrite(user.$id).catch((e) =>
-					console.warn("Sync session failed:", e),
-				);
-			refresh();
-		},
-		[refresh, user],
+		(session: Omit<StudySession, "id">) => service.addSession(session),
+		[service],
 	);
 
 	const updateSession = useCallback(
-		(id: string, updates: Partial<StudySession>) => {
-			updateStudySession(id, updates);
-			refresh();
-		},
-		[refresh],
+		(id: string, updates: Partial<StudySession>) =>
+			service.updateSession(id, updates),
+		[service],
 	);
 
 	const removeSession = useCallback(
-		(id: string) => {
-			deleteStudySession(id);
-			if (user?.$id)
-				syncStudyPlanToAppwrite(user.$id).catch((e) =>
-					console.warn("Sync session failed:", e),
-				);
-			refresh();
-		},
-		[refresh, user],
+		(id: string) => service.removeSession(id),
+		[service],
 	);
 
 	const markComplete = useCallback(
-		(id: string) => {
-			updateStudySession(id, {
-				completed: true,
-				completedAt: Date.now(),
-			});
-			markPlanStale();
-			if (user?.$id)
-				syncStudyPlanToAppwrite(user.$id).catch((e) =>
-					console.warn("Sync markComplete failed:", e),
-				);
-			refresh();
-		},
-		[refresh, user],
+		(id: string) => service.markComplete(id),
+		[service],
 	);
 
 	const addExam = useCallback(
-		(exam: Omit<ExamDate, "id" | "daysUntil">) => {
-			addExamDate(exam);
-			if (user?.$id)
-				syncStudyPlanToAppwrite(user.$id).catch((e) =>
-					console.warn("Sync addExam failed:", e),
-				);
-			refresh();
-		},
-		[refresh, user],
+		(exam: Omit<ExamDate, "id" | "daysUntil">) => service.addExam(exam),
+		[service],
 	);
 
 	const removeExam = useCallback(
-		(id: string) => {
-			deleteExamDate(id);
-			if (user?.$id)
-				syncStudyPlanToAppwrite(user.$id).catch((e) =>
-					console.warn("Sync removeExam failed:", e),
-				);
-			refresh();
-		},
-		[refresh, user],
+		(id: string) => service.removeExam(id),
+		[service],
 	);
 
 	const autoSchedule = useCallback(
-		(subjects: string[], weakTopics: Record<string, string[]>) => {
-			autoScheduleSessions(subjects, weakTopics);
-			schedulePlanAwareReminder();
-			refresh();
-		},
-		[refresh],
+		(subjects: string[], weakTopics: Record<string, string[]>) =>
+			service.autoSchedule(subjects, weakTopics),
+		[service],
 	);
 
 	const generatePlan = useCallback(
 		async (settings?: GeneratePlanSettings) => {
 			setIsGenerating(true);
 			try {
-				const { getStudyPlannerService } = await import(
-					"@/lib/study-planner/study-planner-service"
-				);
-
-				const today = new Date();
-				const horizonDays = settings?.horizonDays ?? 30;
-				const endDate = new Date(today);
-				endDate.setDate(endDate.getDate() + horizonDays);
-				const studyDays = settings?.includeWeekends
-					? [0, 1, 2, 3, 4, 5, 6]
-					: [1, 2, 3, 4, 5];
-
-				const planSettings = {
-					targetAps: settings?.targetAps ?? 25,
-					dailyStudyMinutes: settings?.dailyStudyMinutes ?? 30,
-					preferredStudyTime: "morning" as const,
-					studyDays,
-					startDate: today.toISOString().split("T")[0],
-					endDate: endDate.toISOString().split("T")[0],
-				};
-
-				// Load plan to get exam dates for the algorithm
-				const existingPlan = loadStudyPlan();
-				const examDateInfos: ExamDateInfo[] = existingPlan.examDates.map(
-					(ed) => ({
-						subjectId: ed.subject,
-						date: new Date(ed.date).toISOString().split("T")[0],
-					}),
-				);
-
-				const service = getStudyPlannerService();
-				const algorithmPlan = await service.generateStudyPlan(
-					planSettings,
-					examDateInfos,
-				);
-
-				// Build exam date lookup for type conversion
-				const examSubjectsByDate = new Map<string, Set<string>>();
-				for (const ed of existingPlan.examDates) {
-					const dateStr = new Date(ed.date).toISOString().split("T")[0];
-					if (!examSubjectsByDate.has(dateStr))
-						examSubjectsByDate.set(dateStr, new Set());
-					examSubjectsByDate.get(dateStr)?.add(ed.subject);
-				}
-
-				const newSessions: Omit<StudySession, "id">[] = [];
-				for (const t of algorithmPlan.topics) {
-					const scheduledDate = t.scheduledDate;
-					if (scheduledDate) {
-						const isExamDay = examSubjectsByDate
-							.get(scheduledDate)
-							?.has(t.subjectId);
-						newSessions.push({
-							subject: t.subjectId,
-							topic: t.topicId,
-							type: isExamDay ? "review" : ("quiz" as const),
-							scheduledAt: new Date(scheduledDate).getTime(),
-							duration: Math.round(t.estimatedMinutes),
-							completed: t.isCompleted,
-						});
-					}
-				}
-
-				// Replace old auto-scheduled sessions
-				existingPlan.sessions = existingPlan.sessions.filter(
-					(s) => s.type !== "quiz" || s.topic === undefined,
-				);
-				for (const s of newSessions) {
-					existingPlan.sessions.push({
-						...s,
-						id: `plan_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-					});
-				}
-				existingPlan.generatedAt = Date.now();
-				clearPlanStale();
-				saveStudyPlan(existingPlan);
-				schedulePlanAwareReminder();
-				if (user?.$id)
-					syncStudyPlanToAppwrite(user.$id).catch((e) =>
-						console.warn("Sync plan failed:", e),
-					);
-				refresh();
-			} catch (error) {
-				logError("GenerateStudyPlan", error);
-				console.error("Failed to generate study plan:", error);
+				await service.generatePlan(settings);
 			} finally {
 				setIsGenerating(false);
 			}
 		},
-		[refresh, user?.$id],
+		[service],
 	);
 
+	const refresh = useCallback(() => service.refresh(), [service]);
+
 	return {
-		plan,
-		todaySessions,
-		upcomingSessions,
-		upcomingExams,
-		stats,
-		stale: plan.stale,
+		plan: snapshot.plan,
+		todaySessions: snapshot.todaySessions,
+		upcomingSessions: snapshot.upcomingSessions,
+		upcomingExams: snapshot.upcomingExams,
+		stats: snapshot.stats,
+		stale: snapshot.plan.stale,
 		addSession,
 		updateSession,
 		removeSession,

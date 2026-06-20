@@ -26,6 +26,10 @@ import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import type { Question } from "@/lib/question-engine/types";
+import {
+	processQuizResult,
+	type QuizResultDeps,
+} from "@/lib/services/quiz-result-processor";
 import { getSavedWords } from "@/lib/vocabulary/service";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
@@ -169,6 +173,34 @@ export function FlashcardsClient() {
 	const gamification = useGamification();
 	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
 
+	const quizResultDeps: QuizResultDeps = useMemo(
+		() => ({
+			updateStreak: gamification.updateStreak,
+			addXp: gamification.addXp,
+			checkAndUnlockAchievements: gamification.checkAndUnlockAchievements,
+			checkForRewardChests: gamification.checkForRewardChests,
+			addWrongAnswer,
+			flashcardEngine,
+			trackQuestionResult,
+			enqueue,
+			addStudySession: () => {},
+			markPlanStale: () => {},
+			currentStreak: gamification.currentStreak,
+			totalQuestionsAnswered: gamification.totalQuestionsAnswered,
+			levelInfo: gamification.levelInfo,
+		}),
+		[
+			gamification.updateStreak,
+			gamification.addXp,
+			gamification.checkAndUnlockAchievements,
+			gamification.checkForRewardChests,
+			gamification.currentStreak,
+			gamification.totalQuestionsAnswered,
+			gamification.levelInfo,
+			addWrongAnswer,
+		],
+	);
+
 	const knownCount = Array.from(cards.qualityMap.values()).filter(
 		(q) => q >= 3,
 	).length;
@@ -180,65 +212,21 @@ export function FlashcardsClient() {
 			qualities: Map<string, number>,
 			subject: string,
 		) => {
-			const totalCards = sessionCards.length;
-			const passedCount = Array.from(qualities.values()).filter(
-				(q) => q >= 3,
-			).length;
-			const accuracy =
-				totalCards > 0 ? Math.round((passedCount / totalCards) * 100) : 0;
-
-			gamification.updateStreak();
-			gamification.addXp(totalCards, accuracy, gamification.currentStreak);
-			gamification.checkAndUnlockAchievements(
-				gamification.totalQuestionsAnswered + totalCards,
-				accuracy,
-				gamification.currentStreak,
-				gamification.levelInfo.level,
-				accuracy === 100,
-			);
-
 			const isSm2Session =
 				sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
 
-			const cardPromises: Promise<unknown>[] = [];
-			for (const card of sessionCards) {
-				const quality = qualities.get(card.id) ?? 0;
-				const isKnown = quality >= 3;
-				const cardTopic = card.rawQuestion.topic;
-
-				if (isSm2Session) {
-					cardPromises.push(flashcardEngine.review(card.id, quality));
-				} else {
-					trackQuestionResult({
-						subjectId: subject,
-						topicId: cardTopic,
-						bloomLevel: card.rawQuestion.bloomTaxonomy,
-						score: isKnown ? 1 : 0,
-						maxScore: 1,
-					});
-				}
-
-				if (!isKnown) {
-					addWrongAnswer({
-						questionId: card.id,
-						questionText: card.front,
-						subject,
-						topic: cardTopic,
-						correctAnswer: card.back,
-						userAnswer: "",
-						explanation: card.back,
-					});
-					if (!isSm2Session) {
-						cardPromises.push(
-							flashcardEngine.create(card.front, card.back, subject, cardTopic),
-						);
-					}
-				}
-			}
-
-			await Promise.all(cardPromises);
+			await processQuizResult(
+				{
+					source: "flashcard",
+					cards: sessionCards,
+					qualities,
+					subject,
+					isSm2: isSm2Session,
+				},
+				quizResultDeps,
+			);
 		},
-		[gamification, addWrongAnswer],
+		[quizResultDeps],
 	);
 
 	const engineParams = useMemo(

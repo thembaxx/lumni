@@ -31,7 +31,12 @@ import {
 	parseDuration,
 } from "@/lib/exam/helpers";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
+import {
+	processQuizResult,
+	type QuizResultDeps,
+} from "@/lib/services/quiz-result-processor";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import { ExamHeader } from "./exam-session/exam-header";
@@ -168,6 +173,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		addXp,
 		updateStreak,
 		checkAndUnlockAchievements,
+		checkForRewardChests,
 		currentStreak,
 		levelInfo,
 		totalQuestionsAnswered,
@@ -175,6 +181,34 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { setImmersive } = useImmersiveMode();
+
+	const quizResultDeps: QuizResultDeps = useMemo(
+		() => ({
+			updateStreak,
+			addXp,
+			checkAndUnlockAchievements,
+			checkForRewardChests,
+			addWrongAnswer,
+			flashcardEngine,
+			trackQuestionResult,
+			enqueue,
+			addStudySession,
+			markPlanStale,
+			currentStreak,
+			totalQuestionsAnswered,
+			levelInfo,
+		}),
+		[
+			updateStreak,
+			addXp,
+			checkAndUnlockAchievements,
+			checkForRewardChests,
+			addWrongAnswer,
+			currentStreak,
+			totalQuestionsAnswered,
+			levelInfo,
+		],
+	);
 
 	useExamSessionSync();
 	useExamSessionAutoSave(id);
@@ -291,7 +325,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		completeSession();
 		if (timerRef.current) clearInterval(timerRef.current);
 
-		const partResults = flatParts.map((item) => {
+		const examParts = flatParts.map((item) => {
 			const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
 			const answer = answers[fullId];
 			let correct = false;
@@ -303,92 +337,30 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					(o) => o.id === selected && o.isCorrect,
 				);
 			}
-			return { partId: fullId, correct, score: correct ? 1 : 0 };
+			return {
+				partId: fullId,
+				correct,
+				score: correct ? 1 : 0,
+				sectionId: item.sectionId,
+				questionId: item.questionId,
+				part: item.part,
+				userAnswer: getAnswerText(item.part, answers[fullId]),
+				correctAnswerText: getCorrectAnswerText(item.part),
+			};
 		});
 
-		const correctCount = partResults.filter((r) => r.correct).length;
-		const totalCount = partResults.length;
-		const accuracy =
-			totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
-
-		updateStreak();
-		addXp(totalCount, accuracy, currentStreak);
-		checkAndUnlockAchievements(
-			totalQuestionsAnswered + totalCount,
-			accuracy,
-			currentStreak,
-			levelInfo.level,
-			accuracy === 100,
+		await processQuizResult(
+			{
+				source: "exam",
+				parts: examParts,
+				subject: paperData?.metadata.subject ?? "unknown",
+				paperId: paperData?.metadata.id,
+			},
+			quizResultDeps,
 		);
 
-		const flashcardPromises: Promise<unknown>[] = [];
-		for (let i = 0; i < flatParts.length; i++) {
-			const item = flatParts[i];
-			const result = partResults[i];
-			const topic = item.sectionId;
-			const subject = paperData?.metadata.subject ?? "unknown";
-
-			const maxScore =
-				typeof item.part.marks === "number" ? item.part.marks : result.score;
-			trackQuestionResult({
-				subjectId: subject,
-				topicId: topic,
-				bloomLevel: "apply",
-				score: result.score,
-				maxScore,
-				paperId: paperData?.metadata.id,
-			});
-
-			if (!result.correct) {
-				const partText = item.part.text ?? `Question ${item.questionId}`;
-				addWrongAnswer({
-					questionId: result.partId,
-					questionText: partText,
-					subject,
-					topic,
-					correctAnswer: getCorrectAnswerText(item.part),
-					userAnswer: getAnswerText(item.part, answers[result.partId]),
-					explanation: "",
-				});
-				flashcardPromises.push(
-					flashcardEngine.create(
-						partText,
-						getCorrectAnswerText(item.part) || "Review this topic",
-						subject,
-					),
-				);
-			}
-		}
-		await Promise.all(flashcardPromises);
-
-		markPlanStale();
-
-		const weakCount = partResults.filter((r) => !r.correct).length;
-		if (weakCount > 0) {
-			const now = Date.now();
-			addStudySession({
-				subject: paperData?.metadata.subject ?? "unknown",
-				type: "exam",
-				scheduledAt: now + 24 * 60 * 60 * 1000,
-				duration: Math.min(weakCount * 5, 45),
-				completed: false,
-			});
-		}
-
 		setPhase("results");
-	}, [
-		flatParts,
-		answers,
-		completeSession,
-		updateStreak,
-		addXp,
-		currentStreak,
-		checkAndUnlockAchievements,
-		totalQuestionsAnswered,
-		levelInfo.level,
-		paperData,
-		addWrongAnswer,
-	]);
+	}, [flatParts, answers, completeSession, paperData, quizResultDeps]);
 
 	const { back } = useRouter();
 	const { push } = useNavigationDirection();

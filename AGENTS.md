@@ -771,3 +771,25 @@ const systemPrompt = webContext.xml
 - **TypeScript**: `npx tsc --noEmit` — 0 errors.
 - **Biome**: `npx biome check` — 0 errors on all changed files.
 - **Commit**: `f2c3edb8` — 39 files, +766/−893 lines.
+
+### Session 38 — Architectural deepening batch 2 (June 2026)
+
+**8 candidates implemented:**
+
+- **Candidate 1 — QuizResultProcessor**: `src/lib/services/quiz-result-processor.ts` — single `processQuizResult()` with discriminated union input (`bolt | quiz | exam | flashcard`). 3 consumers updated: `dashboard-client.tsx` (bolt + quiz), `exam-session-client.tsx` (exam), `flashcards-client.tsx` (flashcard). `QuizResultDeps` interface with `useMemo` in all consumers.
+- **Candidate 2 — Enrichment pipeline**: `src/lib/question-engine/enrichment-pipeline.ts` — 3 ports (`CurriculumSource`, `EmbeddingSource`, `PastPaperSource`) grouped as `EnrichmentDeps`. `QuestionEngine` constructor accepts optional `EnrichmentPipeline`, `enrichParams` delegates to it. Scoring/splitting logic (pool > 0.8, examples 0.5–0.8) moved into `EmbeddingSource`.
+- **Candidate 3 — TinyFish barrel separation**: `src/lib/tinyfish/rag-pipeline.ts` — `withRagGuards()` HOF encapsulates consent/configured/usage-limit/cache/fetch pipeline. `index.ts` becomes pure barrel re-exports.
+- **Candidate 4 — CachedAIGenerator**: Already done (Session 37). No changes needed.
+- **Candidate 5 — Push delivery consolidation**: `src/lib/services/push-delivery.ts` — `PushDeliveryService` with lazy VAPID init, `sendToUser()` / `sendToAll()`. `submission-service.ts` and `digest-service.ts` updated to use it (removed ~50 lines of duplicated web-push code each).
+- **Candidate 6 — Study planner service**: `src/lib/services/study-planner-service.ts` — `StudyPlannerService` owns state/sync/mutations, event emission replaces 60s polling. `use-study-planner.ts` reduced to thin subscriber (~160 lines from 303). Same 16-field return surface preserved.
+- **Candidate 7 — DataAccess bypass sealing**: 5 bypass points sealed:
+  - `integration/service.ts`: `_deps` + `__setDepsForTesting`, 3 `dexieDataAccess` → `_deps.db`
+  - `learning-orchestrator.ts`: `db: DataAccess` constructor param, `checkDuplicate` uses `this.db`
+  - `handlers/domain.ts`: `DomainDb` type expanded (`QuizDataAccess + questionEmbeddings`), `generateEmbedding` uses `_deps.db`
+  - `classify/route.ts`: `createClassifyHandler(db)` factory
+  - `extract/route.ts`: `_deps.db.pastPaperQuestions`
+- **Candidate 8 — Gamification state machine**: `src/lib/gamification-engine/service.ts` — `GamificationService` class owns state/persist/sync. Mutations return result objects (`XpResult`, `AchievementResult`, `ChestResult`, `StreakResult`, `FreezeResult`). `subscribe()` listener pattern. `use-gamification.ts` reduced to thin subscriber (~210 lines from 369). 19-field return surface preserved. Renamed `useStreakFreeze` → `consumeStreakFreeze` (biome hook lint).
+
+**Tests**: `bun run test` — 1321 pass, 1 pre-existing failure (next-intl module resolution in `quiz-result.test.tsx`). No regressions.
+**TypeScript**: `npx tsc --noEmit` — 0 errors.
+**Biome**: `npx biome check` — 0 errors on all changed files.

@@ -8,6 +8,7 @@ import {
 import { enqueueGradeSideEffects } from "@/lib/orchestrator/grading";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
+import { PushDeliveryService } from "@/lib/services/push-delivery";
 import { logError } from "@/lib/shared/logger";
 
 interface AnswerEntry {
@@ -43,6 +44,8 @@ interface AssignmentSubmission {
 	gradedAnswers: string;
 }
 
+const pushService = new PushDeliveryService();
+
 async function sendAssignmentGradedPush(
 	userId: string,
 	subject: string,
@@ -50,48 +53,11 @@ async function sendAssignmentGradedPush(
 	total: number,
 ): Promise<void> {
 	try {
-		const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-		const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
-		if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) return;
-
-		const [webpushModule, { Query: AQuery }, { listDocuments: listDocs }] =
-			await Promise.all([
-				import("web-push"),
-				import("appwrite"),
-				import("@/lib/db/client"),
-			]);
-
-		webpushModule.default.setVapidDetails(
-			"mailto:study@lumni.app",
-			VAPID_PUBLIC_KEY,
-			VAPID_PRIVATE_KEY,
-		);
-
-		const subscriptions = await listDocs<{
-			endpoint: string;
-			auth: string;
-			p256dh: string;
-		}>("push_subscriptions", [AQuery.equal("userId", userId)]);
-
-		await Promise.allSettled(
-			subscriptions.map((sub) => {
-				const pushSub = {
-					endpoint: sub.endpoint,
-					keys: {
-						auth: sub.auth,
-						p256dh: sub.p256dh,
-					},
-				};
-				return webpushModule.default.sendNotification(
-					pushSub,
-					JSON.stringify({
-						title: "Assignment Graded",
-						body: `Your ${subject} assignment received a score of ${score}/${total}`,
-						url: "/dashboard",
-					}),
-				);
-			}),
-		);
+		await pushService.sendToUser(userId, {
+			title: "Assignment Graded",
+			body: `Your ${subject} assignment received a score of ${score}/${total}`,
+			url: "/dashboard",
+		});
 	} catch {
 		// Push notification delivery is best-effort
 	}
