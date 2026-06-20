@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { Skeleton } from "@/components/ui/skeleton";
 import { DictionaryClient } from "./dictionary-client";
 
 export const metadata: Metadata = {

@@ -361,6 +361,7 @@
     "generateOrReview": "Generate new flashcards or review your past mistakes.",
     "generateAiFlashcards": "Generate AI Flashcards",
     "reviewMistakes": "Review Mistakes",
+    "reviewVocabulary": "Review Vocabulary",
     "quit": "Quit",
     "knownCount": "{count} known",
     "reviewCount": "{count} review",

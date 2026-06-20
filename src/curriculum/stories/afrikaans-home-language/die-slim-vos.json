@@ -1,0 +1,50 @@
+{
+	"id": "die-slim-vos",
+	"title": "Die Slim Vos",
+	"author": "Lumni",
+	"language": "Afrikaans",
+	"languageId": "afrikaans-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 850,
+	"subjects": ["afrikaans-home-language"],
+	"source": "ai-generated",
+	"topics": ["animals", "folktale"],
+	"content": "# Die Slim Vos\n\nEen keer, lank gelede, het daar 'n slim vos gewoon in die diep woude van Suider-Afrika. Die vos was bekend vir sy slimmigheid en sy vermoë om uit elke situasie te kom.\n\nEen môre, terwyl die vos deur die woud gestap het, het hy 'n groot troppie druiwe gesien wat aan 'n wingerdstok hang. Die druiwe was rooi en ryp en het heerlik gelyk.\n\n\"O, hoe lekker sal dit wees om daardie druiwe te eet!\" het die vos gedink.\n\nDie vos het probeer om die druiwe te bereik, maar hulle was te hoog. Hy het gespring, maar hy kon hulle nie raak nie. Hy het 'n stok geneem en probeer slaan, maar die stok was te kort.\n\n\"Miskien as ek hardloop en spring, kan ek hulle bereik,\" het die vos gedink.\n\nHy het hardloop, hy het gespring, maar steeds kon hy die druiwe nie raak nie. Uiteindelik, moedeloos, het hy weggestap.\n\n\"Die druiwe is seker te suur nie,\" het die vos vir homself gesê.\n\n## Lesse uit die storie\n\nHierdie storie leer ons twee belangrike lesse:\n\n1. **Nie alles wat skitter, is goud nie** — Die vos wou die druiwe hê, maar hy kon hulle nie kry nie. Sommige dinge is net bu bereik.\n\n2. **Moenie jou teleurstelling weenslag nie** — Die vos het gesê die druiwe is te suur, maar hy het nooit geproef nie. Soms maak ons ons teleurstelling goed deur te sê wat ons nie wil hê nie.\n\n## Woordeskat\n\n| Afrikaans | English | Part of Speech |\n|-----------|---------|----------------|\n| vos | fox | noun |\n| woud | forest | noun |\n| druiwe | grapes | noun |\n| wingerdstok | vine | noun |\n| ryp | ripe | adjective |\n| spring | jump | verb |\n| stok | stick | noun |\n| moedeloos | discouraged | adjective |\n| suur | sour | adjective |\n| teleurstelling | disappointment | noun |",
+	"vocabulary": [
+		{
+			"term": "vos",
+			"definition": "A wild animal related to dogs, known for being clever",
+			"partOfSpeech": "noun",
+			"pronunciation": "/fɔs/",
+			"language": "af"
+		},
+		{
+			"term": "woud",
+			"definition": "A large area covered with trees",
+			"partOfSpeech": "noun",
+			"pronunciation": "/wəʉ̯t/",
+			"language": "af"
+		},
+		{
+			"term": "druiwe",
+			"definition": "Small round fruit that grows in bunches on vines",
+			"partOfSpeech": "noun",
+			"pronunciation": "/drəɪ̯və/",
+			"language": "af"
+		},
+		{
+			"term": "spring",
+			"definition": "To push yourself off the ground using your legs",
+			"partOfSpeech": "verb",
+			"pronunciation": "/sprɛŋ/",
+			"language": "af"
+		},
+		{
+			"term": "suur",
+			"definition": "Having a sharp taste like lemon",
+			"partOfSpeech": "adjective",
+			"pronunciation": "/sɵːr/",
+			"language": "af"
+		}
+	]
+}

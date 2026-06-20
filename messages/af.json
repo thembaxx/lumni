@@ -360,6 +360,7 @@
     "generateOrReview": "Genereer nuwe flitskaarte of hersien jou vorige foute.",
     "generateAiFlashcards": "Genereer AI Flitskaarte",
     "reviewMistakes": "Hersien Foute",
+    "reviewVocabulary": "Hersien Woordeskat",
     "quit": "Staak",
     "knownCount": "{count} bekend",
     "reviewCount": "{count} hersien",

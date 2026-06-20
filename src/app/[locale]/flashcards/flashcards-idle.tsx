@@ -65,7 +65,7 @@ export function FlashcardsIdle({
 									</SubjectsDrawer>
 									<SubjectsDrawer onSelect={onReviewVocabulary}>
 										<Button variant="outline">
-											Review Vocabulary
+											{t("flashcards.reviewVocabulary")}
 											<HugeiconsIcon
 												icon={Book02Icon}
 												className="ml-1 size-4"

@@ -30,7 +30,12 @@ export function WeakTopicsCard() {
 		staleTime: 1000 * 60 * 60,
 	});
 
-	const { data: weakTopics, isLoading } = useQuery({
+	const {
+		data: weakTopics,
+		isLoading,
+		isError,
+		refetch,
+	} = useQuery({
 		queryKey: ["weak-topics"],
 		queryFn: async () => {
 			const topics: WeakTopic[] = [];
@@ -57,7 +62,7 @@ export function WeakTopicsCard() {
 
 	if (isLoading) {
 		return (
-			<Card className="overflow-hidden rounded-3xl shadow-level-1">
+			<Card className="overflow-hidden rounded-2xl shadow-level-1">
 				<CardHeader>
 					<CardTitle className="font-extrabold text-lg">
 						Practice Weak Topics
@@ -66,6 +71,31 @@ export function WeakTopicsCard() {
 				<CardContent className="flex flex-col gap-3 p-5 pt-0">
 					<Skeleton className="h-16 w-full rounded-xl" />
 					<Skeleton className="h-16 w-full rounded-xl" />
+				</CardContent>
+			</Card>
+		);
+	}
+
+	if (isError) {
+		return (
+			<Card className="overflow-hidden rounded-2xl shadow-level-1">
+				<CardHeader>
+					<CardTitle className="font-extrabold text-lg">
+						Practice Weak Topics
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="p-5 pt-0">
+					<p className="text-muted-foreground text-sm">
+						Could not load weak topics.
+					</p>
+					<Button
+						variant="outline"
+						size="sm"
+						className="mt-2"
+						onClick={() => refetch()}
+					>
+						Retry
+					</Button>
 				</CardContent>
 			</Card>
 		);
@@ -84,6 +114,7 @@ export function WeakTopicsCard() {
 						<HugeiconsIcon
 							icon={Target01Icon}
 							className="size-5 text-muted-foreground"
+							aria-hidden="true"
 						/>
 					</div>
 				</CardHeader>
@@ -91,7 +122,7 @@ export function WeakTopicsCard() {
 					{weakTopics.map((topic) => (
 						<div
 							key={`${topic.subjectId}-${topic.topicId}`}
-							className="flex items-center justify-between rounded-2xl border bg-card p-3"
+							className="flex items-center justify-between rounded-xl border bg-card p-3"
 						>
 							<div className="flex min-w-0 flex-col gap-1">
 								<div className="flex items-center gap-2">
@@ -111,6 +142,7 @@ export function WeakTopicsCard() {
 								variant="outline"
 								size="sm"
 								className="shrink-0 text-xs"
+								aria-label={`Practice ${topic.topicId}`}
 								onClick={() =>
 									push(
 										`/quiz?subject=${encodeURIComponent(topic.subjectId)}&topic=${encodeURIComponent(topic.topicId)}&count=5`,

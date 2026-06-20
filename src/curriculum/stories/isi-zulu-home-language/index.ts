@@ -1,1 +1,17 @@
-export const storyMetas: import("@/lib/stories/story-data").StoryMeta[] = [];
+import type { StoryMeta } from "@/lib/stories/story-data";
+
+export const storyMetas: StoryMeta[] = [
+	{
+		id: "inkosi-yangaphandle",
+		title: "Inkosi Yangaphandle",
+		author: "Lumni",
+		language: "isiZulu",
+		languageId: "isi-zulu-home-language",
+		gradeLevel: "4–6",
+		wordCount: 900,
+		subjects: ["isi-zulu-home-language"],
+		source: "ai-generated",
+		topics: ["animals", "folktale"],
+		readTimeMinutes: 6,
+	},
+];
