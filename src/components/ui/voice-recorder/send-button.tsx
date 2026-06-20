@@ -7,7 +7,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface SendButtonProps {
 	recorderState:

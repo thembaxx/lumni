@@ -16,7 +16,7 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { type NavItem, navConfig } from "@/lib/navigation/config";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface SidebarState {
 	open: boolean;

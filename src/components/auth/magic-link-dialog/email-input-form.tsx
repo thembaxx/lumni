@@ -4,7 +4,7 @@ import { AlertCircleIcon, FlashIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { buttonStyles } from "../auth-styles";
 import { LoadingDots } from "../loading-dots";
 

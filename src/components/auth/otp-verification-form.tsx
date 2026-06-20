@@ -16,7 +16,7 @@ import {
 	InputOTPGroup,
 	InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { buttonStyles, countdownStyles, iconStyles } from "./auth-styles";
 import { formatCountdown } from "./countdown-utils";

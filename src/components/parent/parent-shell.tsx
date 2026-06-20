@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface ParentShellProps {
 	children: ReactNode;

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface SmartImageProps {
 	src: string;

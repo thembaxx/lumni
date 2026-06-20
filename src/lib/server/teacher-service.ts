@@ -78,52 +78,56 @@ export async function getTeacherStudents(
 	);
 
 	const usersApi = new Users(serverClient);
-	const userMap = new Map<string, { name: string; grade: string }>();
-	try {
-		const userEntries = await Promise.all(
-			studentIds.map(async (sid) => {
-				try {
-					const u = await usersApi.get(sid);
-					return [
-						sid,
-						{
-							name: u.name || "Unknown",
-							grade: (u.prefs?.grade as string) || "Matric",
-						},
-					] as const;
-				} catch (innerErr) {
-					logError("GetTeacherStudentsUser", innerErr);
-					return [sid, { name: "Unknown", grade: "Matric" }] as const;
-				}
-			}),
-		);
-		for (const [sid, entry] of userEntries) {
-			userMap.set(sid, entry);
-		}
-	} catch (err) {
-		logError("GetTeacherStudents", err);
-	}
 
-	const [allCompetencies, allProgress, allSessions] = await Promise.all([
-		Promise.all(
-			studentIds.map((sid) =>
-				listDocuments(COLLECTIONS.COMPETENCIES, [Query.equal("userId", sid)]),
+	const [userEntries, [allCompetencies, allProgress, allSessions]] =
+		await Promise.all([
+			Promise.all(
+				studentIds.map(async (sid) => {
+					try {
+						const u = await usersApi.get(sid);
+						return [
+							sid,
+							{
+								name: u.name || "Unknown",
+								grade: (u.prefs?.grade as string) || "Matric",
+							},
+						] as const;
+					} catch (innerErr) {
+						logError("GetTeacherStudentsUser", innerErr);
+						return [sid, { name: "Unknown", grade: "Matric" }] as const;
+					}
+				}),
 			),
-		),
-		Promise.all(
-			studentIds.map((sid) =>
-				listDocuments(COLLECTIONS.USER_PROGRESS, [
-					Query.equal("userId", sid),
-					Query.limit(1),
-				]),
-			),
-		),
-		Promise.all(
-			studentIds.map((sid) =>
-				listDocuments(COLLECTIONS.STUDY_SESSIONS, [Query.equal("userId", sid)]),
-			),
-		),
-	]);
+			Promise.all([
+				Promise.all(
+					studentIds.map((sid) =>
+						listDocuments(COLLECTIONS.COMPETENCIES, [
+							Query.equal("userId", sid),
+						]),
+					),
+				),
+				Promise.all(
+					studentIds.map((sid) =>
+						listDocuments(COLLECTIONS.USER_PROGRESS, [
+							Query.equal("userId", sid),
+							Query.limit(1),
+						]),
+					),
+				),
+				Promise.all(
+					studentIds.map((sid) =>
+						listDocuments(COLLECTIONS.STUDY_SESSIONS, [
+							Query.equal("userId", sid),
+						]),
+					),
+				),
+			]),
+		]);
+
+	const userMap = new Map<string, { name: string; grade: string }>();
+	for (const [sid, entry] of userEntries) {
+		userMap.set(sid, entry);
+	}
 
 	const competencies = allCompetencies.flat();
 	const _progressDocs = allProgress.flat();

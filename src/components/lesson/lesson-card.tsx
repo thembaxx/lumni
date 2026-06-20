@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { ListenToLesson } from "../listen-to-lesson";
 import { PracticeButton } from "../study/practice-button";

@@ -19,7 +19,7 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
 import { getPrimaryItems } from "@/lib/navigation/config";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { useToolsStore } from "@/store/tools";
 
 interface BottomNavItem {

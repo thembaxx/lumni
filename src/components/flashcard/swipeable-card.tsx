@@ -4,7 +4,7 @@ import { animate, m, useMotionValue, useTransform } from "framer-motion";
 import { memo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
 
 interface SwipeableCardProps {

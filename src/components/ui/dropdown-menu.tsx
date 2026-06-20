@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as ListPrimitive } from "@base-ui/react/menu";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 function DropdownMenu({ ...props }: ListPrimitive.Root.Props) {
 	return <ListPrimitive.Root data-slot="dropdown-menu" {...props} />;

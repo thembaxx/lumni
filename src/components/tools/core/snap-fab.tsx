@@ -23,7 +23,7 @@ const _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
 
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { logError } from "@/lib/shared/logger";
 import { dispatchSnapAnswer } from "@/lib/shared/snap-answer";
 import { getImageHash, preprocessImage } from "@/lib/utils/image-preprocess";

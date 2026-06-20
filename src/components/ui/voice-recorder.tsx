@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { ControlButtons } from "./voice-recorder/control-buttons";
 import { SendButton } from "./voice-recorder/send-button";
 import { StatusDisplay } from "./voice-recorder/status-display";

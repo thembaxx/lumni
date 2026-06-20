@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const childSelectorVariants = cva(
 	"flex items-center gap-3 rounded-xl border bg-card p-3 transition-colors hover:bg-accent/50",

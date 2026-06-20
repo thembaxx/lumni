@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface ConsentGateProps extends React.ComponentProps<typeof Card> {
 	studentName: string;

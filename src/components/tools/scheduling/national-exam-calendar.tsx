@@ -19,7 +19,7 @@ import {
 	generateIcal,
 } from "@/lib/exam-dates/calendar-export";
 import type { ExamSlot } from "@/lib/exam-dates/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { ExamDetailDialog } from "../communication/exam-detail-dialog";
 
 export function NationalExamCalendar() {

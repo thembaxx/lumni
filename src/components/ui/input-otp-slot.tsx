@@ -2,7 +2,7 @@
 
 import { OTPInputContext } from "input-otp";
 import * as React from "react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 export function InputOTPSlot({
 	index,

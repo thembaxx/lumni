@@ -7,17 +7,17 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useDeletePost } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/shared";
 import type {
 	GroupComment,
 	GroupPost,
 	GroupReaction,
 } from "@/lib/study-groups/types";
+import { cn } from "@/lib/utils";
 import { CommentForm } from "./comment-form";
 import { CommentThread } from "./comment-thread";
 import { ReactionBar } from "./reaction-bar";
@@ -50,18 +50,24 @@ export function PostCard({
 	const isOwner = user?.$id === post.userId;
 	const [showComments, setShowComments] = useState(false);
 
-	const postReactions = (reactions ?? []).filter((r) => r.postId === post.$id);
-	const aggregatedReactions = postReactions.reduce<
-		{ emoji: string; userId: string; count: number }[]
-	>((acc, r) => {
-		const existing = acc.find((a) => a.emoji === r.emoji);
-		if (existing) {
-			existing.count++;
-		} else {
-			acc.push({ emoji: r.emoji, userId: r.userId, count: 1 });
+	const aggregatedReactions = useMemo(() => {
+		const postReactions = (reactions ?? []).filter(
+			(r) => r.postId === post.$id,
+		);
+		const map = new Map<
+			string,
+			{ emoji: string; userId: string; count: number }
+		>();
+		for (const r of postReactions) {
+			const existing = map.get(r.emoji);
+			if (existing) {
+				existing.count++;
+			} else {
+				map.set(r.emoji, { emoji: r.emoji, userId: r.userId, count: 1 });
+			}
 		}
-		return acc;
-	}, []);
+		return [...map.values()];
+	}, [reactions, post.$id]);
 
 	const commentCount = (comments ?? []).length;
 

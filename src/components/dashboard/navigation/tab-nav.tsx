@@ -10,7 +10,7 @@ import { m } from "framer-motion";
 import { startTransition, useRef } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import type { TabValue } from "../types";
 

@@ -20,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";

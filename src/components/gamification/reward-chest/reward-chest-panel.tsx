@@ -4,7 +4,7 @@ import { GiftIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useGamification } from "@/hooks/use-gamification";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { rarityBorder } from "@/lib/utils/gamification";
 
 const rarityColors: Record<string, string> = {

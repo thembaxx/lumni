@@ -295,22 +295,28 @@ export function getStudyStats(): {
 	totalPlannedMinutes: number;
 } {
 	const plan = loadStudyPlan();
-
-	const completed = plan.sessions.filter((s) => s.completed);
 	const now = Date.now();
-	const upcoming = plan.sessions.filter(
-		(s) => !s.completed && s.scheduledAt >= now,
-	);
 	const upcomingExams = plan.examDates
 		.filter((e) => e.daysUntil > 0)
 		.sort((a, b) => a.date - b.date);
 
-	const planned = plan.sessions.filter((s) => s.duration > 0);
-	const totalPlannedMinutes = planned.reduce((sum, s) => sum + s.duration, 0);
-	const totalActualMinutes = completed.reduce(
-		(sum, s) => sum + (s.actualDuration ?? s.duration),
-		0,
-	);
+	let completedSessions = 0;
+	let upcomingSessions = 0;
+	let totalPlannedMinutes = 0;
+	let totalActualMinutes = 0;
+
+	for (const s of plan.sessions) {
+		if (s.completed) {
+			completedSessions++;
+			totalActualMinutes += s.actualDuration ?? s.duration;
+		} else if (s.scheduledAt >= now) {
+			upcomingSessions++;
+		}
+		if (s.duration > 0) {
+			totalPlannedMinutes += s.duration;
+		}
+	}
+
 	const progress =
 		totalPlannedMinutes > 0
 			? Math.round((totalActualMinutes / totalPlannedMinutes) * 100)
@@ -318,8 +324,8 @@ export function getStudyStats(): {
 
 	return {
 		totalSessions: plan.sessions.length,
-		completedSessions: completed.length,
-		upcomingSessions: upcoming.length,
+		completedSessions: completedSessions,
+		upcomingSessions: upcomingSessions,
 		studyTimeMinutes: totalActualMinutes,
 		examCount: plan.examDates.length,
 		daysUntilNextExam: upcomingExams[0]?.daysUntil || null,

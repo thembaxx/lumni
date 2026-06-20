@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { ACHIEVEMENTS, LEVELS } from "@/types/gamification";
 
 interface LeaderboardEntry {

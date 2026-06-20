@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePdfCache } from "@/hooks/use-pdf-cache";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import type { PaperListing } from "@/types/exam";
 import { PdfViewer } from "./pdf-viewer-client";
 import { SmartViewDialog } from "./smart-view-dialog";

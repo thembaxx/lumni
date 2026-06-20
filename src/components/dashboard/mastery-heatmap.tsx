@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Select,
 	SelectContent,
@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const BLOOM_ORDER = [
 	"remember",
@@ -80,24 +80,40 @@ export function MasteryHeatmap() {
 	});
 
 	const topics = [...new Set(competencies.map((c) => c.topicId))].toSorted();
-	const overallByTopic = topics.map((topic) => {
-		const topicComps = competencies.filter((c) => c.topicId === topic);
-		const avgScore =
-			topicComps.length > 0
-				? Math.round(
-						topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length,
-					)
-				: 0;
-		const avgLevel =
-			avgScore >= 85
-				? "mastered"
-				: avgScore >= 65
-					? "proficient"
-					: avgScore >= 40
-						? "developing"
-						: "novice";
-		return { topic, avgScore, avgLevel };
-	});
+
+	const compMap = useMemo(() => {
+		const map = new Map<string, CompetencyRecord>();
+		for (const c of competencies) {
+			map.set(`${c.topicId}:${c.bloomLevel}`, c);
+		}
+		return map;
+	}, [competencies]);
+
+	const overallByTopic = useMemo(() => {
+		const map = new Map<
+			string,
+			{ topic: string; avgScore: number; avgLevel: string }
+		>();
+		for (const topic of topics) {
+			const topicComps = competencies.filter((c) => c.topicId === topic);
+			const avgScore =
+				topicComps.length > 0
+					? Math.round(
+							topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length,
+						)
+					: 0;
+			const avgLevel =
+				avgScore >= 85
+					? "mastered"
+					: avgScore >= 65
+						? "proficient"
+						: avgScore >= 40
+							? "developing"
+							: "novice";
+			map.set(topic, { topic, avgScore, avgLevel });
+		}
+		return map;
+	}, [competencies, topics]);
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -175,7 +191,7 @@ export function MasteryHeatmap() {
 							</thead>
 							<tbody>
 								{topics.map((topic) => {
-									const overall = overallByTopic.find((o) => o.topic === topic);
+									const overall = overallByTopic.get(topic);
 									return (
 										<tr key={topic} className="border-border/40 border-t">
 											<td
@@ -185,9 +201,7 @@ export function MasteryHeatmap() {
 												{topic}
 											</td>
 											{BLOOM_ORDER.map((bloom) => {
-												const rec = competencies.find(
-													(c) => c.topicId === topic && c.bloomLevel === bloom,
-												);
+												const rec = compMap.get(`${topic}:${bloom}`);
 												return (
 													<td key={bloom} className="p-1">
 														{rec ? (

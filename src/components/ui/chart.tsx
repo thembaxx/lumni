@@ -9,7 +9,7 @@ import type {
 	TooltipValueType,
 } from "recharts";
 
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const ResponsiveContainer = dynamic(
 	() => import("recharts").then((m) => m.ResponsiveContainer),

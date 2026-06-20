@@ -3,7 +3,7 @@
 import { FlashIcon, RadialIcon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { buttonStyles, countdownStyles, iconStyles } from "../auth-styles";
 import { formatCountdown } from "../countdown-utils";
 

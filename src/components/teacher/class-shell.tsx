@@ -11,7 +11,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { logError } from "@/lib/shared/logger";
 
 interface ClassShellProps extends React.ComponentProps<"div"> {

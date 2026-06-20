@@ -1,7 +1,7 @@
 "use client";
 
 import { LiveWaveform } from "@/components/ui/live-waveform";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface WaveformDisplayProps {
 	isRecording: boolean;

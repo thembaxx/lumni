@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface PracticeButtonProps {
 	className?: string;

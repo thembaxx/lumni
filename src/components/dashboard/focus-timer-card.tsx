@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useInterval } from "@/hooks/use-interval";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_TIME = 25 * 60;
 const MAX_TIME = 60 * 60;

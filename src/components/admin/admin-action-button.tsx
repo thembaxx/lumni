@@ -3,7 +3,7 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface AdminActionButtonProps {
 	children: React.ReactNode;

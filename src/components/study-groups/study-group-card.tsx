@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useDeleteGroup, useLeaveGroup } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import type {
 	GroupChallenge,
 	GroupChallengeEntry,

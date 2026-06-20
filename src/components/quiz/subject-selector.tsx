@@ -29,7 +29,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useFilteredSubjects } from "@/hooks";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { Skeleton } from "../ui/skeleton";
 

@@ -10,7 +10,7 @@ import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface TopicInfo {
 	topicId: string;

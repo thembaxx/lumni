@@ -1,7 +1,7 @@
 import type * as React from "react";
 
 import { NavigationBar } from "@/components/ui/navigation-bar";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface PageShellProps {
 	children: React.ReactNode;

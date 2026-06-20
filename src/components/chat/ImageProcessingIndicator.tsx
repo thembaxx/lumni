@@ -3,7 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface ImageProcessingIndicatorProps {

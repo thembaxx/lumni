@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import type { QuestionPart } from "@/types/exam-paper";
 
 interface PartAnswerInputProps {

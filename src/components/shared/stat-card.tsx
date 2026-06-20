@@ -3,7 +3,7 @@
 import { ChartDownIcon, ChartUpIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";

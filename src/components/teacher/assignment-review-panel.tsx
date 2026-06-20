@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface SubmissionSummary {
 	studentId: string;

@@ -2,7 +2,7 @@
 
 import { animate, m, useMotionValue, useTransform } from "framer-motion";
 import { memo, type ReactNode, useEffect } from "react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface PerpetualFloatProps {

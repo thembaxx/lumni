@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { cva } from "class-variance-authority";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface ActivityItem {
 	id: string;

@@ -2,7 +2,7 @@
 
 import { Copy01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface CalculatorDisplayProps {
 	expression: string;

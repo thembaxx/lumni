@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { normalizeDifficulty } from "@/lib/shared/difficulty";
 import { getDifficultyColor, getQuizDifficultyColor } from "@/lib/utils/colors";
 

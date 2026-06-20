@@ -13,7 +13,7 @@ import {
 	getWeeklyLeaderboard,
 	type LeaderboardEntry,
 } from "@/lib/services/leaderboard-service";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const rankColors = [
 	"text-amber-400 dark:text-amber-300",

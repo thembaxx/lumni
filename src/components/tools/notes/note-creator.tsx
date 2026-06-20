@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useNoteStorage } from "@/hooks/use-note-storage";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { exportNoteAsMarkdown } from "@/lib/utils/note-export";
 import { NoteForm } from "./note-form";

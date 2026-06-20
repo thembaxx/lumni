@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { competencyService } from "@/lib/competency-engine";
 import type { CompetencyLevel } from "@/lib/competency-engine/types";
 import type { BloomLevel } from "@/lib/question-engine/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const BLOOM_ORDER: BloomLevel[] = [
 	"remember",

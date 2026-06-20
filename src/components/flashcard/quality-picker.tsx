@@ -2,7 +2,7 @@
 
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { SM2_QUALITIES } from "@/lib/flashcard-engine";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface QualityPickerProps {
 	polarity: "correct" | "incorrect";

@@ -3,7 +3,7 @@
 import { m } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface TabItem {
 	value: string;

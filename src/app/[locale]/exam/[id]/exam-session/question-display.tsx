@@ -12,7 +12,7 @@ import { SessionPartAnswerInput } from "@/components/exam";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import type { QuestionPart } from "@/types/exam-paper";
 

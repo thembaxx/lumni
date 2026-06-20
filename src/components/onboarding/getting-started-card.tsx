@@ -85,6 +85,7 @@ export function GettingStartedCard() {
 		}
 		return 3;
 	});
+	const visitsLeftRef = useRef(visitsLeft);
 	const shouldReduceMotion = useReducedMotion();
 	const timeoutRef = useRef<NodeJS.Timeout>(null);
 
@@ -100,11 +101,10 @@ export function GettingStartedCard() {
 		setCollapsing(true);
 		timeoutRef.current = setTimeout(() => {
 			setDismissed(true);
-			const current = Number.parseInt(
-				localStorage.getItem(FIRST_VISITS_KEY) ?? "1",
-				10,
+			localStorage.setItem(
+				FIRST_VISITS_KEY,
+				String(Math.max(0, visitsLeftRef.current - 1)),
 			);
-			localStorage.setItem(FIRST_VISITS_KEY, String(Math.max(0, current - 1)));
 		}, 250);
 	}, []);
 

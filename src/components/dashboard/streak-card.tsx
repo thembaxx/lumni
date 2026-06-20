@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 export const StreakCard = memo(function StreakCard() {
 	const { gamification, currentStreak } = useGamification();

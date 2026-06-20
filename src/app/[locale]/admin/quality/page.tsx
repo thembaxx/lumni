@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import {
 	clearAnalytics,
 	getAnalyticsSummary,

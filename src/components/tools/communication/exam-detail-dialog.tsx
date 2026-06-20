@@ -28,7 +28,7 @@ import {
 	getSubjectColor,
 } from "@/lib/exam-dates";
 import type { ExamSlot } from "@/lib/exam-dates/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface ExamDetailDialogProps {
 	exam: ExamSlot | null;

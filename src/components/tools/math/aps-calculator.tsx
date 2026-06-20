@@ -11,8 +11,8 @@ import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/shared";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
+import { cn } from "@/lib/utils";
 
 interface Subject {
 	id: string;
@@ -92,9 +92,10 @@ export function APSCalculator() {
 	};
 
 	const removeSubject = (id: string) => {
-		if (subjects.length > 1) {
-			setSubjects(subjects.filter((s) => s.id !== id));
-		}
+		setSubjects((prev) => {
+			if (prev.length <= 1) return prev;
+			return prev.filter((s) => s.id !== id);
+		});
 	};
 
 	const updateSubject = (
@@ -102,8 +103,8 @@ export function APSCalculator() {
 		field: "name" | "percentage",
 		value: string | number,
 	) => {
-		setSubjects(
-			subjects.map((s) => (s.id === id ? { ...s, [field]: value } : s)),
+		setSubjects((prev) =>
+			prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)),
 		);
 	};
 

@@ -31,7 +31,7 @@ import {
 	parseDuration,
 } from "@/lib/exam/helpers";
 import { flashcardEngine } from "@/lib/flashcard-engine";
-import { trackQuestionResult } from "@/lib/orchestrator";
+import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import { ExamHeader } from "./exam-session/exam-header";

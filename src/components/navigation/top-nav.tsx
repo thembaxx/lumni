@@ -31,7 +31,7 @@ import { useSyncStatus } from "@/hooks/use-sync-status";
 import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { getRouteLabel } from "@/lib/navigation/config";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { getRandomName } from "@/lib/utils/random-name";
 
 interface TopNavProps {

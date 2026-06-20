@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const RechartsRadarChart = dynamic(
 	() => import("recharts").then((m) => m.RadarChart),

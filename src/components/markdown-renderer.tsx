@@ -14,7 +14,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { getSubjectOklchColor } from "@/lib/subjects";
 
 function LazyCodeBlock({

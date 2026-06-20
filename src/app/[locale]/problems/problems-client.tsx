@@ -24,7 +24,7 @@ import {
 } from "@/hooks/use-curated-problems";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;
 

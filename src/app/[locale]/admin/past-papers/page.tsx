@@ -11,7 +11,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 async function fetchQuestions(
 	subject?: string,

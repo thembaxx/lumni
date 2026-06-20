@@ -4,7 +4,7 @@ import type { IconSvgElement } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 /* ─── Subcomponents (from @/components/ui/empty) ─── */

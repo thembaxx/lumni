@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useRouter } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const FEATURES = [
 	{

@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 export function PricingComparisonSection() {
 	const t = useTranslations("home");

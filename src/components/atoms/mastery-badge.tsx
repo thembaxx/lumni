@@ -2,7 +2,7 @@
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const masteryBadgeVariants = cva("font-medium", {
 	variants: {

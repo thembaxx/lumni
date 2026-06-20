@@ -1,12 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
+import type {
+	KnowledgeGraph,
+	KnowledgeNode,
+} from "@/lib/knowledge-graph/types";
 
 const NODE_COLORS: Record<string, string> = {
 	prerequisite: "fill-amber-500 stroke-amber-600",
@@ -47,6 +51,24 @@ export function LearningMapCard() {
 		enabled: !!subjectForQuery,
 	});
 
+	const { nodeMap, layers } = useMemo(() => {
+		const map = new Map<string, KnowledgeNode>();
+		const l = {
+			prerequisite: [] as KnowledgeNode[],
+			core: [] as KnowledgeNode[],
+			advanced: [] as KnowledgeNode[],
+		};
+		if (graph) {
+			for (const node of graph.nodes) {
+				map.set(node.id, node);
+				if (node.type in l) {
+					l[node.type as keyof typeof l].push(node);
+				}
+			}
+		}
+		return { nodeMap: map, layers: l };
+	}, [graph]);
+
 	if (isAnonymous || enrolledSubjects.length === 0) return null;
 
 	if (isPending) {
@@ -78,12 +100,6 @@ export function LearningMapCard() {
 			</Card>
 		);
 	}
-
-	const layers = {
-		prerequisite: graph.nodes.filter((n) => n.type === "prerequisite"),
-		core: graph.nodes.filter((n) => n.type === "core"),
-		advanced: graph.nodes.filter((n) => n.type === "advanced"),
-	};
 
 	const maxNodes = Math.max(
 		layers.prerequisite.length,
@@ -135,27 +151,25 @@ export function LearningMapCard() {
 						aria-label="Knowledge graph showing prerequisite, core, and advanced topics"
 					>
 						{graph.edges.map((edge) => {
-							const fromNode = graph.nodes.find((n) => n.id === edge.from);
-							const toNode = graph.nodes.find((n) => n.id === edge.to);
+							const fromNode = nodeMap.get(edge.from);
+							const toNode = nodeMap.get(edge.to);
 							if (!fromNode || !toNode) return null;
+							const fromType = fromNode.type as keyof typeof layers;
+							const toType = toNode.type as keyof typeof layers;
 							const fromLayer = LAYER_KEYS.indexOf(
 								fromNode.type as (typeof LAYER_KEYS)[number],
 							);
 							const toLayer = LAYER_KEYS.indexOf(
 								toNode.type as (typeof LAYER_KEYS)[number],
 							);
-							const fromIdx = layers[fromNode.type].indexOf(fromNode);
-							const toIdx = layers[toNode.type].indexOf(toNode);
+							const fromIdx = layers[fromType].indexOf(fromNode);
+							const toIdx = layers[toType].indexOf(toNode);
 							const from = getNodeCenter(
 								fromLayer,
 								fromIdx,
-								layers[fromNode.type].length,
+								layers[fromType].length,
 							);
-							const to = getNodeCenter(
-								toLayer,
-								toIdx,
-								layers[toNode.type].length,
-							);
+							const to = getNodeCenter(toLayer, toIdx, layers[toType].length);
 							const midY = (from.y + to.y) / 2;
 							const d = `M ${from.x} ${from.y} Q ${from.x} ${midY} ${from.x + (to.x - from.x) / 2} ${midY} T ${to.x} ${to.y}`;
 							return (

@@ -16,7 +16,7 @@ import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import {
 	SourceAttributionPill,

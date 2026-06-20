@@ -4,7 +4,7 @@ import { Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { MasteryBadge } from "@/components/atoms/mastery-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface TopicCellData {
 	topic: string;

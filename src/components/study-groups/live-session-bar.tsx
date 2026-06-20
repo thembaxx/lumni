@@ -17,7 +17,7 @@ import {
 	useStartSession,
 } from "@/hooks/use-live-session";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import type { LiveSessionParticipant } from "@/lib/study-groups/live-session-types";
 
 function ParticipantAvatar({

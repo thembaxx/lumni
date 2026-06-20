@@ -10,7 +10,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface StepByStepProps {
 	steps: string[];

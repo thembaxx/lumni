@@ -2,7 +2,7 @@
 
 import { AlertCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -30,6 +30,8 @@ export function UploadDialogRenderer({
 	const [items, setItems] = useState<FileUploadState[]>([]);
 	const [endpoint, setEndpoint] = useState("generalUploader" as const);
 	const pendingFilesRef = useRef<File[]>([]);
+	const completedCountRef = useRef(0);
+	const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 	const startUploadRef = useRef<
 		((files: File[]) => Promise<UploadedFile[] | undefined> | undefined) | null
 	>(null);
@@ -52,6 +54,8 @@ export function UploadDialogRenderer({
 					};
 				}),
 			);
+			completedCountRef.current += res.length;
+			checkAllDone();
 		},
 		onUploadError: (error: Error) => {
 			const msg = error?.message ?? "Upload failed";
@@ -63,6 +67,8 @@ export function UploadDialogRenderer({
 					return item;
 				}),
 			);
+			completedCountRef.current += 1;
+			checkAllDone();
 		},
 		onUploadProgress: (progress: number) => {
 			setItems((prev) =>
@@ -76,10 +82,23 @@ export function UploadDialogRenderer({
 		},
 	});
 
+	const checkAllDone = useCallback(() => {
+		const total = fileNameToItemRef.current?.size ?? 0;
+		if (total > 0 && completedCountRef.current >= total) {
+			if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+			closeTimerRef.current = setTimeout(() => setIsOpen(false), 1500);
+		}
+	}, []);
+
 	startUploadRef.current = startUpload;
 
 	const open = useCallback((files: File[], ep?: "generalUploader") => {
 		if (ep) setEndpoint(ep);
+		completedCountRef.current = 0;
+		if (closeTimerRef.current) {
+			clearTimeout(closeTimerRef.current);
+			closeTimerRef.current = null;
+		}
 		const newItems = files.map((file) => ({
 			file,
 			name: file.name,
@@ -104,24 +123,23 @@ export function UploadDialogRenderer({
 
 	setOpenUploadHandler(open);
 
-	useEffect(() => {
-		if (items.length === 0 || isUploading) return;
-		const allDone = items.every(
-			(item) => item.status === "complete" || item.status === "error",
-		);
-		if (allDone) {
-			const timer = setTimeout(() => setIsOpen(false), 1500);
-			return () => clearTimeout(timer);
-		}
-	}, [items, isUploading]);
-
 	const close = useCallback(() => {
+		if (closeTimerRef.current) {
+			clearTimeout(closeTimerRef.current);
+			closeTimerRef.current = null;
+		}
+		completedCountRef.current = 0;
 		setIsOpen(false);
 		setItems([]);
 		pendingFilesRef.current = [];
 	}, []);
 
 	const cancel = useCallback(() => {
+		if (closeTimerRef.current) {
+			clearTimeout(closeTimerRef.current);
+			closeTimerRef.current = null;
+		}
+		completedCountRef.current = 0;
 		setIsOpen(false);
 		setItems([]);
 		pendingFilesRef.current = [];

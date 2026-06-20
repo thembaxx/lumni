@@ -9,7 +9,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface Subject {
 	id: string;

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 import { fontHeading, fontMono, fontSans } from "./fonts";
 

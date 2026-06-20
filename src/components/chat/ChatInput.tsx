@@ -16,7 +16,7 @@ import {
 	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { ImageProcessingIndicator } from "./ImageProcessingIndicator";
 
 interface ChatInputProps {

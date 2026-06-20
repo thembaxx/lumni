@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { rarityColors, rarityGlow } from "@/lib/utils/gamification";
 import type { Achievement } from "@/types/gamification";
 
@@ -11,9 +12,23 @@ interface AchievementsProps {
 
 export function Achievements({ achievements }: AchievementsProps) {
 	const t = useTranslations();
-	const earnedCount = achievements.filter((a) => a.earnedAt).length;
-	const earnedAchievements = achievements.filter((a) => a.earnedAt);
-	const lockedAchievements = achievements.filter((a) => !a.earnedAt);
+	const { earnedCount, earnedAchievements, lockedAchievements } =
+		useMemo(() => {
+			const earned: Achievement[] = [];
+			const locked: Achievement[] = [];
+			for (const a of achievements) {
+				if (a.earnedAt) {
+					earned.push(a);
+				} else {
+					locked.push(a);
+				}
+			}
+			return {
+				earnedCount: earned.length,
+				earnedAchievements: earned,
+				lockedAchievements: locked,
+			};
+		}, [achievements]);
 
 	return (
 		<div className="flex flex-col gap-3">

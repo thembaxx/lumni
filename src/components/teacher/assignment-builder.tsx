@@ -29,7 +29,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface AssignmentBuilderProps extends React.ComponentProps<typeof Card> {
 	topics: string[];

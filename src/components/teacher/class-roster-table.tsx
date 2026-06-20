@@ -11,7 +11,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface StudentRow {
 	id: string;

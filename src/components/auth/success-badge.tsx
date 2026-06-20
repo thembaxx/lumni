@@ -6,7 +6,7 @@ import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 	const [show, setShow] = useState(true);

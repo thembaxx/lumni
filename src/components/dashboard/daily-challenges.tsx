@@ -7,9 +7,10 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSDecelerate } from "@/lib/utils/animation";
 
 const challengeIcons: Record<string, typeof Target01Icon> = {
@@ -32,8 +33,18 @@ const VARIANTS = {
 export function DailyChallenges() {
 	const { gamification } = useGamification();
 
-	const active = gamification.dailyChallenges.filter((c) => !c.completed);
-	const completed = gamification.dailyChallenges.filter((c) => c.completed);
+	const { active, completed } = useMemo(() => {
+		const a: typeof gamification.dailyChallenges = [];
+		const c: typeof gamification.dailyChallenges = [];
+		for (const challenge of gamification.dailyChallenges) {
+			if (challenge.completed) {
+				c.push(challenge);
+			} else {
+				a.push(challenge);
+			}
+		}
+		return { active: a, completed: c };
+	}, [gamification.dailyChallenges]);
 
 	if (active.length === 0 && completed.length === 0) return null;
 

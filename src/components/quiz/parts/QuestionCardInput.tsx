@@ -24,7 +24,7 @@ import type {
 	Option,
 	UserAnswer,
 } from "@/lib/question-engine/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface QuestionCardInputProps {

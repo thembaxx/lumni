@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import type { GroupComment, GroupReaction } from "@/lib/study-groups/types";
 import { CommentForm } from "./comment-form";
 import { ReactionBar } from "./reaction-bar";

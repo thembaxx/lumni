@@ -105,19 +105,19 @@ export async function toggleUserSubject(userId: string, subjectId: string) {
 export async function adminUploadExamPaper(
 	formData: FormData,
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+	const file = formData.get("file") as File | null;
+	const subjectId = formData.get("subjectId") as string;
+	const year = parseInt(formData.get("year") as string, 10);
+	const paperNumber = parseInt(formData.get("paperNumber") as string, 10);
+	const type = formData.get("type") as "paper" | "memo";
+
+	if (!file || !subjectId || !year || !paperNumber || !type) {
+		return { success: false, error: "Missing required fields" };
+	}
+
 	await auth();
 	await requireAdmin();
 	try {
-		const file = formData.get("file") as File | null;
-		const subjectId = formData.get("subjectId") as string;
-		const year = parseInt(formData.get("year") as string, 10);
-		const paperNumber = parseInt(formData.get("paperNumber") as string, 10);
-		const type = formData.get("type") as "paper" | "memo";
-
-		if (!file || !subjectId || !year || !paperNumber || !type) {
-			return { success: false, error: "Missing required fields" };
-		}
-
 		const bytes = await file.arrayBuffer();
 		const buffer = Buffer.from(bytes);
 		const utFile = new UTFile([buffer], file.name);

@@ -2,7 +2,7 @@ import { HeadphonesIcon, StopCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { logError } from "@/lib/shared/logger";
 
 interface ListenToLessonProps {

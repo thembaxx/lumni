@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface ListGroupProps {
 	children: React.ReactNode;

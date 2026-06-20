@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/lib/question-engine/types";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 import { _deps } from "./daily-challenge-dialog-deps";
 

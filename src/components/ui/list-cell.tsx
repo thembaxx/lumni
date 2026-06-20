@@ -2,7 +2,7 @@
 
 import type * as React from "react";
 
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { ListGroup } from "./list-group";
 import { ListSection } from "./list-section";
 

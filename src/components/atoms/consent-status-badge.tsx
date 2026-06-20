@@ -8,7 +8,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 const consentStatusBadgeVariants = cva("gap-1.5 font-medium", {
 	variants: {

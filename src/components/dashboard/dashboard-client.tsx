@@ -18,8 +18,8 @@ import { toast } from "@/hooks/use-toast";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { flashcardEngine } from "@/lib/flashcard-engine";
-import { trackQuestionResult } from "@/lib/orchestrator";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { iOSEase } from "@/lib/utils/animation";
 import { markPlanStale } from "@/lib/utils/study-planner";
 

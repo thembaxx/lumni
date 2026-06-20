@@ -4,7 +4,7 @@ import { m, useReducedMotion } from "framer-motion";
 import { useEffect, useReducer, useRef, useSyncExternalStore } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 const NSC_FINAL_DATE = new Date("2026-10-12");

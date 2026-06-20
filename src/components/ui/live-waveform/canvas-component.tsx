@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/shared";
+import { cn } from "@/lib/utils";
 
 interface CanvasComponentProps {
 	containerRef: React.RefObject<HTMLDivElement | null>;
