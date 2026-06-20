@@ -22,6 +22,7 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useExamSessionSync } from "@/hooks/use-exam-session-sync";
 import { useGamification } from "@/hooks/use-gamification";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
 import {
@@ -390,6 +391,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	]);
 
 	const { back } = useRouter();
+	const { push } = useNavigationDirection();
 
 	const handleDashboard = useCallback(() => {
 		resetSession();
@@ -500,7 +502,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				onDashboard={handleDashboard}
 				onReview={() => {
 					resetSession();
-					window.location.href = "/flashcards";
+					push("/flashcards");
 				}}
 			/>
 		);

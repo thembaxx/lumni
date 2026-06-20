@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -24,6 +25,7 @@ export function LocalDataNotice({
 	description,
 }: LocalDataNoticeProps) {
 	const { isAnonymous } = useAuth();
+	const { push } = useNavigationDirection();
 	const storageKey = `${DISMISS_PREFIX}_${page}`;
 	const [localDismissed, setLocalDismissed] = useState(() => {
 		if (typeof window === "undefined") return true;
@@ -59,7 +61,8 @@ export function LocalDataNotice({
 					variant="default"
 					className="h-8 px-3 text-xs"
 					onClick={() => {
-						window.location.href = `/auth/sign-up?redirect=${window.location.pathname}`;
+						const currentPath = window.location.pathname;
+						push(`/auth/sign-up?redirect=${currentPath}`);
 					}}
 				>
 					Sign Up

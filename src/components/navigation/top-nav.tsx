@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -44,6 +45,7 @@ export function TopNav({ title, className }: TopNavProps) {
 	const { user, status, isAnonymous, signOut } = useAuth();
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
+	const { push } = useNavigationDirection();
 
 	const userLabels = user?.labels ?? [];
 	const isTeacher = userLabels.includes("teacher");
@@ -170,7 +172,7 @@ export function TopNav({ title, className }: TopNavProps) {
 									size="sm"
 									onClick={() => {
 										const redirect = encodeURIComponent(pathname);
-										window.location.href = `/auth/sign-in?redirect=${redirect}`;
+										push(`/auth/sign-in?redirect=${redirect}`);
 									}}
 									className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
 								>
@@ -205,7 +207,7 @@ export function TopNav({ title, className }: TopNavProps) {
 											<DropdownListItem
 												className="rounded-md"
 												onClick={() => {
-													window.location.href = "/settings?tab=profile";
+													push("/settings?tab=profile");
 												}}
 											>
 												<HugeiconsIcon icon={UserIcon} className="size-4" />
@@ -215,7 +217,7 @@ export function TopNav({ title, className }: TopNavProps) {
 												<DropdownListItem
 													className="rounded-md"
 													onClick={() => {
-														window.location.href = "/teacher";
+														push("/teacher");
 													}}
 												>
 													<HugeiconsIcon
@@ -229,7 +231,7 @@ export function TopNav({ title, className }: TopNavProps) {
 												<DropdownListItem
 													className="rounded-md"
 													onClick={() => {
-														window.location.href = "/parent";
+														push("/parent");
 													}}
 												>
 													<HugeiconsIcon icon={UserIcon} className="size-4" />
@@ -239,7 +241,7 @@ export function TopNav({ title, className }: TopNavProps) {
 											<DropdownListItem
 												className="rounded-md"
 												onClick={() => {
-													window.location.href = "/settings";
+													push("/settings");
 												}}
 											>
 												<HugeiconsIcon

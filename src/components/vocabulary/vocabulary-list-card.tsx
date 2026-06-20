@@ -6,11 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
 import { getSavedWords } from "@/lib/vocabulary/service";
 
 export function VocabularyListCard() {
 	const { user } = useAuth();
+	const { push } = useNavigationDirection();
 	const userId = user?.$id ?? "anonymous";
 
 	const { data: words } = useQuery({
@@ -45,9 +47,7 @@ export function VocabularyListCard() {
 								variant="outline"
 								size="sm"
 								className="rounded-full text-xs"
-								onClick={() =>
-									(window.location.href = "/flashcards?mode=vocabulary")
-								}
+								onClick={() => push("/flashcards?mode=vocabulary")}
 							>
 								Review
 							</Button>

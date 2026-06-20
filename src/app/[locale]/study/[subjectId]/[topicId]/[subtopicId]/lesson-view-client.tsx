@@ -340,7 +340,9 @@ export function LessonViewClient({
 											className="rounded-full"
 											aria-label={`Practice pronouncing ${v.term}`}
 											onClick={() =>
-												(window.location.href = `/pronunciation?text=${encodeURIComponent(v.term)}`)
+												push(
+													`/pronunciation?text=${encodeURIComponent(v.term)}`,
+												)
 											}
 										>
 											<HugeiconsIcon icon={Mic01Icon} className="size-4" />

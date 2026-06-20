@@ -13,6 +13,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
 import { dexieDataAccess } from "@/lib/db";
@@ -69,6 +70,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 	const { isOnboarding } = useOnboarding();
+	const { push } = useNavigationDirection();
 
 	const isOnQuizOrFlashcards =
 		pathname.startsWith("/quiz") || pathname.startsWith("/flashcards");
@@ -275,8 +277,8 @@ export function SnapFab({ inline }: { inline?: boolean }) {
 		const params = new URLSearchParams({
 			question: extractedText,
 		});
-		window.location.href = `/solve?${params.toString()}`;
-	}, [extractedText]);
+		push(`/solve?${params.toString()}`);
+	}, [extractedText, push]);
 
 	const handleDismiss = useCallback(() => {
 		setShowDialog(false);

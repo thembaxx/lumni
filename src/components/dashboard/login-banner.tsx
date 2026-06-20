@@ -25,6 +25,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
 
 const DISMISS_KEY = "lumni_login_banner_dismissed";
@@ -95,6 +96,7 @@ const LOCKED_FEATURES: LockedFeature[] = [
 
 function FeatureDialog() {
 	const [open, setOpen] = useState(false);
+	const { push } = useNavigationDirection();
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -138,7 +140,7 @@ function FeatureDialog() {
 					<Button
 						className="h-10 w-full gap-2 text-sm"
 						onClick={() => {
-							window.location.href = "/auth/sign-in?redirect=/dashboard";
+							push("/auth/sign-in?redirect=/dashboard");
 						}}
 					>
 						<HugeiconsIcon icon={Login01Icon} className="size-4" />
@@ -152,6 +154,7 @@ function FeatureDialog() {
 
 export function LoginBanner() {
 	const { user, isAnonymous } = useAuth();
+	const { push } = useNavigationDirection();
 	const isLoggedIn = !!user && !isAnonymous;
 
 	const [localDismissed, setLocalDismissed] = useState(() => {
@@ -191,7 +194,7 @@ export function LoginBanner() {
 						variant="default"
 						className="h-8 px-3 text-xs"
 						onClick={() => {
-							window.location.href = "/auth/sign-in?redirect=/dashboard";
+							push("/auth/sign-in?redirect=/dashboard");
 						}}
 					>
 						Log In

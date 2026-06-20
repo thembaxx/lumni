@@ -8,6 +8,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { useExams } from "@/hooks/use-exams";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useToolsStore } from "@/store/tools";
 import { ExamEmptyState } from "./exams-browse/exam-empty-state";
 import { ExamErrorState } from "./exams-browse/exam-error-state";
@@ -18,6 +19,7 @@ import { ExamSearchBar } from "./exams-browse/exam-search-bar";
 
 export function ExamsBrowse() {
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
+	const { push } = useNavigationDirection();
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);
 	const [selectedSession, setSelectedSession] = useState<string>("all");
 	const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
@@ -78,7 +80,7 @@ export function ExamsBrowse() {
 										const params = new URLSearchParams({
 											pastPaperMode: "true",
 										});
-										window.location.href = `/quiz?${params.toString()}`;
+										push(`/quiz?${params.toString()}`);
 									}}
 									className="gap-1.5 rounded-full text-xs"
 								>

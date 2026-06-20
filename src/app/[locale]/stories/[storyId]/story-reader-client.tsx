@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SaveVocabularyButton } from "@/components/vocabulary/save-vocabulary-button";
 import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { trackComprehensionResult } from "@/lib/competency-engine";
@@ -29,6 +30,7 @@ import type { Story, StoryQuestion } from "@/lib/stories/types";
 export function StoryReaderClient() {
 	const { storyId } = useParams<{ storyId: string }>();
 	const { back } = useRouter();
+	const { push } = useNavigationDirection();
 	const { user } = useAuth();
 	const [story, setStory] = useState<Story | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -309,7 +311,7 @@ export function StoryReaderClient() {
 												variant="outline"
 												size="sm"
 												className="rounded-full"
-												onClick={() => (window.location.href = `/stories`)}
+												onClick={() => push(`/stories`)}
 											>
 												More Stories
 											</Button>
@@ -320,7 +322,9 @@ export function StoryReaderClient() {
 														size="sm"
 														className="rounded-full"
 														onClick={() =>
-															(window.location.href = `/stories?lang=${encodeURIComponent(story.language)}&level=easy`)
+															push(
+																`/stories?lang=${encodeURIComponent(story.language)}&level=easy`,
+															)
 														}
 													>
 														Try an Easier Story
@@ -330,7 +334,9 @@ export function StoryReaderClient() {
 														size="sm"
 														className="rounded-full"
 														onClick={() =>
-															(window.location.href = `/dictionary?q=${encodeURIComponent(story.vocabulary[0]?.term ?? "")}`)
+															push(
+																`/dictionary?q=${encodeURIComponent(story.vocabulary[0]?.term ?? "")}`,
+															)
 														}
 													>
 														Review Vocabulary
@@ -342,7 +348,9 @@ export function StoryReaderClient() {
 												size="sm"
 												className="rounded-full"
 												onClick={() =>
-													(window.location.href = `/quiz?subject=${encodeURIComponent(story.language)}&count=5`)
+													push(
+														`/quiz?subject=${encodeURIComponent(story.language)}&count=5`,
+													)
 												}
 											>
 												Practice Quiz

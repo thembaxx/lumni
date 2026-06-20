@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useConsent } from "@/lib/consent/consent-context";
 import { appConfig } from "../../../../app.config";
 
@@ -31,6 +32,7 @@ async function exportUserData(): Promise<void> {
 export function PrivacyTab() {
 	const t = useTranslations();
 	const { consent, updateConsent } = useConsent();
+	const { push } = useNavigationDirection();
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 	const [deleting, setDeleting] = useState(false);
 
@@ -49,7 +51,7 @@ export function PrivacyTab() {
 		try {
 			const res = await fetch("/api/user/account", { method: "DELETE" });
 			if (res.ok) {
-				window.location.href = "/";
+				push("/");
 			}
 		} finally {
 			setDeleting(false);

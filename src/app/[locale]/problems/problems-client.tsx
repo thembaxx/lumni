@@ -22,6 +22,7 @@ import {
 	type CuratedProblem,
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
 
@@ -120,6 +121,7 @@ function ProblemCard({
 
 export function ProblemsClient() {
 	const { user, isAnonymous } = useAuth();
+	const { push } = useNavigationDirection();
 	const isLoggedIn = !!user && !isAnonymous;
 
 	const [selectedSubject, setSelectedSubject] = useState("");
@@ -167,14 +169,14 @@ export function ProblemsClient() {
 					<Button
 						variant="outline"
 						onClick={() => {
-							window.location.href = "/auth/sign-up?redirect=/problems";
+							push("/auth/sign-up?redirect=/problems");
 						}}
 					>
 						Create Account
 					</Button>
 					<Button
 						onClick={() => {
-							window.location.href = "/auth/sign-in?redirect=/problems";
+							push("/auth/sign-in?redirect=/problems");
 						}}
 					>
 						Sign In

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
 
@@ -29,6 +30,7 @@ function parseLessonId(lessonId: string) {
 
 export function LessonLibraryCard() {
 	const { user } = useAuth();
+	const { push } = useNavigationDirection();
 	const userId = user?.$id ?? "anonymous";
 
 	const { data: recentLessons } = useQuery({
@@ -119,7 +121,7 @@ export function LessonLibraryCard() {
 									size="sm"
 									className="shrink-0 rounded-full text-xs"
 									onClick={() =>
-										(window.location.href = `/study/${subjectId}/${topicId}/${subtopicId}`)
+										push(`/study/${subjectId}/${topicId}/${subtopicId}`)
 									}
 								>
 									Resume
@@ -140,7 +142,7 @@ export function LessonLibraryCard() {
 							variant="outline"
 							size="sm"
 							className="rounded-full"
-							onClick={() => (window.location.href = "/study")}
+							onClick={() => push("/study")}
 						>
 							Browse Lessons
 						</Button>

@@ -8,6 +8,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { competencyService } from "@/lib/competency-engine";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 
@@ -24,6 +25,7 @@ export function NextActions({
 	totalQuestions,
 	onPracticeTopic,
 }: NextActionsProps) {
+	const { push } = useNavigationDirection();
 	const { data, isError, error } = useQuery({
 		queryKey: ["next-actions", subject.toLowerCase()],
 		queryFn: async () => {
@@ -71,7 +73,7 @@ export function NextActions({
 						variant="ghost"
 						size="sm"
 						className="h-auto justify-start gap-2 py-2"
-						onClick={() => (window.location.href = "/flashcards")}
+						onClick={() => push("/flashcards")}
 					>
 						<HugeiconsIcon icon={FlashIcon} className="size-4" />
 						<span className="text-xs">
@@ -88,7 +90,9 @@ export function NextActions({
 							if (onPracticeTopic) {
 								onPracticeTopic(weakestTopic);
 							} else {
-								window.location.href = `/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(weakestTopic)}&count=10`;
+								push(
+									`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(weakestTopic)}&count=10`,
+								);
 							}
 						}}
 					>
@@ -103,7 +107,7 @@ export function NextActions({
 						variant="ghost"
 						size="sm"
 						className="h-auto justify-start gap-2 py-2"
-						onClick={() => (window.location.href = "/review")}
+						onClick={() => push("/review")}
 					>
 						<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
 						<span className="text-xs">Review {wrongCount} wrong answers</span>

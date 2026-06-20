@@ -24,6 +24,7 @@ import { RecentQuestionsCard } from "@/components/dashboard/recent-questions-car
 import { StudyCard } from "@/components/dashboard/study-card";
 import { WeakTopicsCard } from "@/components/dashboard/weak-topics-card";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 
 async function refreshPage(): Promise<void> {
 	window.location.reload();
@@ -172,12 +173,13 @@ function BentoStatRow({
 
 function AnonymousUpsell() {
 	const t = useTranslations();
+	const { push } = useNavigationDirection();
 	const handleSignIn = useCallback(() => {
-		window.location.href = "/auth/sign-in?redirect=/dashboard";
-	}, []);
+		push("/auth/sign-in?redirect=/dashboard");
+	}, [push]);
 	const handleSignUp = useCallback(() => {
-		window.location.href = "/auth/sign-up?redirect=/dashboard";
-	}, []);
+		push("/auth/sign-up?redirect=/dashboard");
+	}, [push]);
 	return (
 		<div className="rounded-4xl border border-dashed bg-system-surface p-8 shadow-level-1">
 			<EmptyStateWithIllustration
