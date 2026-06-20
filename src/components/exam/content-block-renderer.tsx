@@ -54,7 +54,7 @@ function LazyCodeBlock({
 
 	if (!loaded || !HighlighterRef.current || !styleRef.current) {
 		return (
-			<pre className="my-3 overflow-hidden rounded border bg-muted p-4 font-mono text-sm">
+			<pre className="overflow-wrap-anywhere my-3 overflow-hidden rounded border bg-muted p-4 font-mono text-sm">
 				<code>{value}</code>
 			</pre>
 		);
@@ -76,7 +76,7 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 	switch (block.type) {
 		case "text":
 			return (
-				<p className="whitespace-pre-wrap text-sm leading-relaxed">
+				<p className="overflow-wrap-anywhere whitespace-pre-wrap text-sm leading-relaxed">
 					{block.value}
 				</p>
 			);

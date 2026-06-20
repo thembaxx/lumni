@@ -35,8 +35,8 @@ export function ChestUnlock({
 				<m.div
 					initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
 					animate={{ opacity: 1, scale: 1, rotate: 0 }}
-					transition={{ type: "spring", stiffness: 400, damping: 15 }}
-					className="relative"
+					transition={{ type: "spring", stiffness: 400, damping: 26 }}
+					className="relative motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<div
 						className={`absolute inset-0 rounded-3xl blur-xl ${rarityGlowStrong[rarity as keyof typeof rarityGlowStrong]}`}

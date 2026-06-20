@@ -40,7 +40,7 @@ export function SuccessState({ email, error }: SuccessStateProps) {
 							transition: {
 								type: "spring",
 								stiffness: 350,
-								damping: 18,
+								damping: 26,
 							},
 						}}
 					>

@@ -27,8 +27,8 @@ export function LevelUp({
 				<m.div
 					initial={{ scale: 0.5, y: 100 }}
 					animate={{ scale: 1, y: 0 }}
-					transition={{ type: "spring", stiffness: 300, damping: 15 }}
-					className="relative w-full max-w-sm"
+					transition={{ type: "spring", stiffness: 300, damping: 26 }}
+					className="relative w-full max-w-sm motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<m.div
 						className="absolute inset-0 rounded-3xl bg-warning opacity-40 blur-xl"
@@ -39,7 +39,7 @@ export function LevelUp({
 						transition={{ duration: 2, repeat: Infinity }}
 					/>
 
-					<div className="relative rounded-3xl border-2 border-warning bg-card p-8 text-center shadow-2xl shadow-warning/30">
+					<div className="relative rounded-3xl border-2 border-warning bg-card p-8 text-center shadow-level-3 shadow-warning/30">
 						<m.div
 							initial={{ y: -30, opacity: 0 }}
 							animate={{ y: 0, opacity: 1 }}

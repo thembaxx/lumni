@@ -287,7 +287,7 @@ export function QuestionBankClient() {
 					<div className="text-muted-foreground" aria-hidden="true">
 						<LockIcon />
 					</div>
-					<h1 className="text-center font-semibold text-xl">
+					<h1 className="text-center font-semibold text-2xl">
 						Past Exam Questions
 					</h1>
 					<p className="max-w-xs text-center text-muted-foreground text-sm">

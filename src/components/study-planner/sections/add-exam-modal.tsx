@@ -23,7 +23,7 @@ export function AddExamModal({
 	return (
 		<Dialog open onOpenChange={(o) => !o && onClose()}>
 			<DialogContent className="max-w-md sm:max-w-md">
-				<DialogTitle className="font-heading font-medium text-sm">
+				<DialogTitle className="font-medium font-sans text-sm">
 					{t("studyPlanner.addExamModalTitle")}
 				</DialogTitle>
 				<FieldGroup>

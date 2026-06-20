@@ -53,7 +53,7 @@ function ChildCard({ child }: { child: ChildData }) {
 	return (
 		<Card className="flex flex-col">
 			<CardHeader className="pb-2">
-				<CardTitle className="flex items-center gap-2 font-heading text-base">
+				<CardTitle className="flex items-center gap-2 text-base">
 					<span className="flex size-7 items-center justify-center rounded-full bg-primary font-medium text-primary-foreground text-xs">
 						{child.initials}
 					</span>

@@ -65,7 +65,7 @@ export function ActivityTimeline({
 
 	return (
 		<Card className={cn("p-4", className)} {...props}>
-			<h3 className="mb-4 font-heading font-semibold text-sm tracking-tight">
+			<h3 className="mb-4 font-sans font-semibold text-sm tracking-tight">
 				Recent Activity
 			</h3>
 			<ScrollArea className="h-72">

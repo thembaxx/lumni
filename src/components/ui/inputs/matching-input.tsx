@@ -67,7 +67,7 @@ export function MatchingInput({
 							disabled={disabled}
 						>
 							<SelectTrigger id={selectId} className="w-full">
-								<SelectValue placeholder="Select..." />
+								<SelectValue placeholder="Select…" />
 							</SelectTrigger>
 							<SelectContent>
 								{rightOptions.map((opt) => (

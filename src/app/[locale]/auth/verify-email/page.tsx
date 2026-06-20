@@ -47,7 +47,7 @@ function VerifyEmailContent() {
 	if (error) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-semibold text-xl">
+				<h1 className="font-heading font-semibold text-2xl">
 					{t("auth.verificationFailed")}
 				</h1>
 				<p className="text-muted-foreground text-sm">{error}</p>
@@ -75,7 +75,9 @@ function VerifyEmailContent() {
 				/>
 			</div>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">{t("auth.emailVerified")}</h1>
+				<h1 className="font-heading font-semibold text-2xl">
+					{t("auth.emailVerified")}
+				</h1>
 				<p className="text-muted-foreground text-sm">
 					{t("auth.emailVerifiedDesc")}
 				</p>

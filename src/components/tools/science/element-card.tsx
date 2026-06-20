@@ -23,7 +23,7 @@ export const ElementCard = memo(
 	}) => {
 		const [isHovered, setIsHovered] = useState(false);
 		const scale = useSpring(1, { stiffness: 400, damping: 30 });
-		const glowIntensity = useSpring(0, { stiffness: 300, damping: 25 });
+		const glowIntensity = useSpring(0, { stiffness: 300, damping: 26 });
 
 		useEffect(() => {
 			if (isHovered && isActive) {

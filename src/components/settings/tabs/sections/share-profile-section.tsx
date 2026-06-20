@@ -2,7 +2,7 @@
 
 import { Copy01Icon, LinkSquare01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { toast } from "@/hooks/use-toast";
 
@@ -11,6 +11,7 @@ interface ShareProfileSectionProps {
 }
 
 export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
+	const [copying, setCopying] = useState(false);
 	const shareLeading = useMemo(
 		() => <HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />,
 		[],
@@ -20,7 +21,8 @@ export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
 			<button
 				type="button"
 				onClick={async () => {
-					if (userId) {
+					if (userId && !copying) {
+						setCopying(true);
 						try {
 							await navigator.clipboard.writeText(userId);
 							toast({
@@ -32,16 +34,19 @@ export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
 								type: "error",
 								message: "Failed to copy",
 							});
+						} finally {
+							setCopying(false);
 						}
 					}
 				}}
-				className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
+				disabled={copying}
+				className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
 				aria-label="Copy user ID"
 			>
 				<HugeiconsIcon icon={Copy01Icon} className="size-4" />
 			</button>
 		),
-		[userId],
+		[userId, copying],
 	);
 
 	return (

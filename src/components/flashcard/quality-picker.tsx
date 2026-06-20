@@ -62,7 +62,7 @@ export function QualityPicker({
 							type="button"
 							onClick={() => handleSelect(q.quality)}
 							className={cn(
-								"flex flex-col items-center gap-0.5 rounded-xl border px-4 py-2 text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
+								"flex flex-col items-center gap-0.5 rounded-xl border px-4 py-2 text-xs transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
 								polarity === "correct"
 									? "border-success/30 text-success hover:bg-success/10"
 									: "border-destructive/30 text-destructive hover:bg-destructive/10",

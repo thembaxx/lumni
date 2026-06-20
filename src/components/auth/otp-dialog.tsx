@@ -234,7 +234,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent className="shadow-lg sm:max-w-md">
+			<DialogContent className="shadow-level-3 sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
 						<HugeiconsIcon

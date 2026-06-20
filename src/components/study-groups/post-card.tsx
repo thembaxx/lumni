@@ -85,6 +85,7 @@ export function PostCard({
 						size="icon-sm"
 						className="size-7 text-muted-foreground hover:text-destructive"
 						onClick={() => deletePost(post.$id)}
+						aria-label="Delete post"
 					>
 						<HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
 					</Button>
@@ -92,12 +93,14 @@ export function PostCard({
 			</div>
 
 			{post.questionText && (
-				<div className="rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
+				<div className="overflow-wrap-anywhere rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
 					{post.questionText}
 				</div>
 			)}
 
-			<p className="whitespace-pre-wrap text-sm">{post.content}</p>
+			<p className="overflow-wrap-anywhere whitespace-pre-wrap text-sm">
+				{post.content}
+			</p>
 
 			{post.subject && (
 				<div className="flex gap-2">

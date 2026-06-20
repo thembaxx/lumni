@@ -56,7 +56,7 @@ export function SolverResultView({
 
 	return (
 		<div className="animate-fade-in-up px-5 pb-10">
-			<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
+			<div className="overflow-hidden rounded-card border border-border bg-card shadow-level-2">
 				<div className="p-6">
 					{subject !== "general" && (
 						<div className="mb-4">

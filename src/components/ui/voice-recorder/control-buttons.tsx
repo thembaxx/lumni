@@ -69,7 +69,7 @@ export function ControlButtons({
 						? "bg-destructive text-destructive-foreground shadow-level-2"
 						: showPermissionError
 							? "cursor-not-allowed bg-muted text-muted-foreground"
-							: "bg-foreground text-background hover:scale-105 hover:shadow-foreground/20 hover:shadow-xl",
+							: "bg-foreground text-background hover:scale-105 hover:shadow-foreground/20 hover:shadow-level-2",
 					isPaperPlaneing && "pointer-events-none opacity-50",
 				)}
 				aria-label={isRecording ? "Stop recording" : "Start recording"}
@@ -112,7 +112,7 @@ export function ControlButtons({
 				className={cn(
 					"rounded-lg",
 					audioBlob && !isRecording
-						? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-xl"
+						? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-level-2"
 						: "bg-muted/30 text-muted-foreground/30",
 					isPaperPlaneing && "pointer-events-none opacity-50",
 				)}

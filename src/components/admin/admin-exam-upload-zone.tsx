@@ -138,7 +138,7 @@ export function AdminExamUploadZone({
 						<p className="text-destructive/80 text-xs">{message}</p>
 					</div>
 					<Button variant="outline" size="sm" onClick={() => setState("idle")}>
-						Try Again
+						Try again
 					</Button>
 				</div>
 			)}

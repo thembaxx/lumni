@@ -56,6 +56,7 @@ function ActionButton({
 			whileHover={finalShouldReduceMotion ? {} : { scale: 1.03 }}
 			whileTap={finalShouldReduceMotion ? {} : { scale: 0.96 }}
 			transition={{ duration: 0.2, ease: iOSEase }}
+			className="motion-reduce:animate-none motion-reduce:transition-none"
 			role="button"
 			tabIndex={onClick ? 0 : -1}
 			onKeyDown={(e) => {

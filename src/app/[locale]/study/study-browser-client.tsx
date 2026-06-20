@@ -162,7 +162,7 @@ export function StudyBrowserClient() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.3 }}
 						>
-							<Card className="overflow-hidden rounded-2xl shadow-level-1">
+							<Card className="overflow-hidden rounded-card shadow-level-1">
 								<CardHeader className="pb-3">
 									<div className="flex items-center justify-between">
 										<CardTitle className="font-extrabold text-lg">

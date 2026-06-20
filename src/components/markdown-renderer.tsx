@@ -300,7 +300,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 	return (
 		<div
 			className={cn(
-				"markdown-content",
+				"markdown-content overflow-wrap-anywhere",
 				isTabularSubject && "tabular-nums",
 				className,
 			)}

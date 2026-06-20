@@ -28,7 +28,7 @@ export function ProfileAvatarSection({
 		<div className="flex flex-col items-center justify-center gap-4 py-8">
 			<div className="group relative">
 				<label htmlFor="avatar-upload" className="block cursor-pointer">
-					<Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-500 group-hover:scale-105">
+					<Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-300 group-hover:scale-105">
 						<AvatarImage
 							src={
 								avatarUrl ??

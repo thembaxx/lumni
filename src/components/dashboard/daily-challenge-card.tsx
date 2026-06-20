@@ -72,7 +72,7 @@ export function DailyChallengeCard({
 
 			{!isOpen && (
 				<m.div layoutId="daily-challenge">
-					<Card className="overflow-hidden rounded-2xl shadow-level-1 ring-1 ring-warning/15 transition-[background-color] duration-300 hover:bg-muted/30">
+					<Card className="overflow-hidden rounded-card shadow-level-1 ring-1 ring-warning/15 transition-[background-color] duration-300 hover:bg-muted/30">
 						<CardContent className="flex items-center gap-4 p-5">
 							<div className="relative flex size-12 shrink-0 items-center justify-center rounded-2xl bg-warning/15">
 								<m.div
@@ -85,7 +85,7 @@ export function DailyChallengeCard({
 										repeat: 2,
 										ease: "easeInOut",
 									}}
-									className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
+									className="absolute inset-0 rounded-2xl bg-warning/30 blur-md motion-reduce:animate-none"
 								/>
 								<HugeiconsIcon
 									icon={SparklesIcon}
@@ -95,7 +95,7 @@ export function DailyChallengeCard({
 							</div>
 							<div className="flex min-w-0 flex-1 flex-col gap-1">
 								<div className="flex items-center gap-2">
-									<h3 className="font-extrabold font-heading text-sm text-system-text-primary tracking-tight">
+									<h3 className="font-extrabold font-sans text-sm text-system-text-primary tracking-tight">
 										Today&rsquo;s Challenge
 									</h3>
 									{streak > 1 && (

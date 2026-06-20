@@ -43,7 +43,7 @@ export function ConsentGate({
 				{...props}
 			>
 				<CardHeader className="pb-3">
-					<CardTitle className="flex items-center gap-2 font-heading text-base">
+					<CardTitle className="flex items-center gap-2 text-base">
 						<HugeiconsIcon
 							icon={ShieldCheck}
 							size={20}
@@ -78,7 +78,7 @@ export function ConsentGate({
 	return (
 		<Card className={cn(className)} {...props}>
 			<CardHeader className="pb-3">
-				<CardTitle className="flex items-center gap-2 font-heading text-base">
+				<CardTitle className="flex items-center gap-2 text-base">
 					<HugeiconsIcon
 						icon={UserCheck01Icon}
 						size={20}
@@ -127,7 +127,7 @@ export function ConsentGate({
 					disabled={!agreed || isProcessing}
 					className="w-full"
 				>
-					{isProcessing ? "Processing..." : "Grant Consent"}
+					{isProcessing ? "Processing…" : "Grant Consent"}
 				</Button>
 			</CardContent>
 		</Card>

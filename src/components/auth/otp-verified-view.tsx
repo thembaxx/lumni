@@ -17,7 +17,7 @@ export function OtpVerifiedView() {
 				transition: {
 					type: "spring",
 					stiffness: 300,
-					damping: 20,
+					damping: 26,
 					delay: 0.05,
 				},
 			}}
@@ -31,7 +31,7 @@ export function OtpVerifiedView() {
 						transition: {
 							type: "spring",
 							stiffness: 350,
-							damping: 18,
+							damping: 26,
 						},
 					}}
 				>

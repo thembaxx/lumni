@@ -101,7 +101,7 @@ export function SharedQuestionClient() {
 				<div className="flex size-16 items-center justify-center rounded-full bg-muted">
 					<span className="text-2xl">?</span>
 				</div>
-				<h1 className="font-bold text-xl">Question Not Found</h1>
+				<h1 className="font-bold font-heading text-2xl">Question Not Found</h1>
 				<p className="max-w-md text-muted-foreground text-sm">
 					This question may have been removed or the link is invalid.
 				</p>

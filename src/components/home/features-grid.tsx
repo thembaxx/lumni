@@ -85,7 +85,7 @@ export function FeaturesGrid() {
 									: { delay: i * 0.05, duration: 0.4, ease: iOSEase }
 							}
 							className={cn(
-								"group relative before:pointer-events-none before:absolute before:inset-0 before:rounded-lg before:opacity-0 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
+								"group relative before:pointer-events-none before:absolute before:inset-0 before:rounded-lg before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100",
 								feature.accent,
 								i === 0 && "sm:col-span-2 lg:col-span-4 lg:row-span-2",
 								i === 1 && "lg:col-span-2",

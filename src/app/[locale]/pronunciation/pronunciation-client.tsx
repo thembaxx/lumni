@@ -224,7 +224,7 @@ export function PronunciationClient() {
 						disabled={loading}
 						className="rounded-full"
 					>
-						{loading ? "Transcribing..." : "Analyze Pronunciation"}
+						{loading ? "Transcribing…" : "Analyze Pronunciation"}
 					</Button>
 				)}
 
@@ -235,7 +235,7 @@ export function PronunciationClient() {
 						onClick={handleReset}
 						className="rounded-full"
 					>
-						Try Again
+						Try again
 					</Button>
 				)}
 			</div>

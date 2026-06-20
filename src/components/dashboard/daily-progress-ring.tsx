@@ -27,7 +27,7 @@ export function DailyProgressRing() {
 				duration: shouldReduceMotion ? 0 : 0.5,
 				ease: iOSEase,
 			}}
-			className="flex flex-col items-center py-4"
+			className="flex flex-col items-center py-4 motion-reduce:animate-none motion-reduce:transition-none"
 		>
 			<RadialChart
 				value={progress * 100}

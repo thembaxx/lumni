@@ -173,7 +173,7 @@ function TeacherDashboardInner() {
 						onClick={() => linkStudent.mutate(linkId)}
 						disabled={!linkId.trim() || linkStudent.isPending}
 					>
-						{linkStudent.isPending ? "Linking..." : "Link"}
+						{linkStudent.isPending ? "Linking…" : "Link"}
 					</Button>
 				</div>
 			</div>

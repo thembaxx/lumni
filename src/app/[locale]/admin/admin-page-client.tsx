@@ -120,7 +120,7 @@ export function AdminPageClient() {
 								}
 								onClick={handleSeed}
 								disabled={isSeeding}
-								className="size-14 rounded-full shadow-lg shadow-shadow/20"
+								className="size-14 rounded-full shadow-level-2 shadow-shadow/20"
 								title="Seed Database"
 								aria-label="Seed Database"
 							>

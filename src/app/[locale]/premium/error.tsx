@@ -31,7 +31,7 @@ export default function PremiumError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">Something went wrong</h2>
+					<h2 className="ios-title-2 text-foreground">Premium unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Couldn&apos;t load premium information. Please try again.
 					</p>

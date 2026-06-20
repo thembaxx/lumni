@@ -114,7 +114,9 @@ function ResetPasswordForm() {
 	if (!userId || !secret) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-semibold text-xl">{t("auth.invalidResetLink")}</h1>
+				<h1 className="font-heading font-semibold text-2xl">
+					{t("auth.invalidResetLink")}
+				</h1>
 				<p className="text-muted-foreground text-sm">
 					{t("auth.invalidResetLinkDesc")}
 				</p>
@@ -137,7 +139,9 @@ function ResetPasswordForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">{t("auth.setNewPassword")}</h1>
+				<h1 className="font-heading font-semibold text-2xl">
+					{t("auth.setNewPassword")}
+				</h1>
 				<p className="text-muted-foreground text-sm">
 					{success ? t("auth.resetSuccess") : t("auth.passwordHint")}
 				</p>

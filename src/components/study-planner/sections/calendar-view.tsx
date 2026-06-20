@@ -119,7 +119,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
 		<Card>
 			<CardHeader className="pb-3">
 				<div className="flex items-center justify-between">
-					<CardTitle className="font-heading text-base">Calendar</CardTitle>
+					<CardTitle className="text-base">Calendar</CardTitle>
 					<div className="flex items-center gap-1">
 						<Button
 							variant="ghost"

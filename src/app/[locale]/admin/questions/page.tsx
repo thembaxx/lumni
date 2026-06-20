@@ -113,7 +113,7 @@ export default function AdminQuestionsPage() {
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-6 bg-background p-6">
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<header>
-					<h2 className="font-heading font-medium text-sm">
+					<h2 className="font-medium font-sans text-sm">
 						Question Engine Admin
 					</h2>
 				</header>
@@ -126,7 +126,7 @@ export default function AdminQuestionsPage() {
 							className="flex-1"
 						/>
 						<Button onClick={fetchQuestions} disabled={loading.fetch}>
-							{loading.fetch ? "Loading..." : "Generate Mixed"}
+							{loading.fetch ? "Loading…" : "Generate Mixed"}
 						</Button>
 					</div>
 					<div className="flex flex-wrap gap-2">
@@ -203,7 +203,7 @@ export default function AdminQuestionsPage() {
 											<span className="font-medium">Topic:</span> {q.topic}
 										</div>
 									</div>
-									<div className="rounded-lg bg-muted/30 p-3 text-sm">
+									<div className="overflow-wrap-anywhere rounded-lg bg-muted/30 p-3 text-sm">
 										<p className="mb-1 font-medium text-muted-foreground text-xs">
 											Hint:
 										</p>
@@ -225,7 +225,9 @@ export default function AdminQuestionsPage() {
 											</p>
 											<ol className="flex list-inside list-decimal flex-col gap-1">
 												{q.steps.map((s) => (
-													<li key={s}>{s}</li>
+													<li key={s} className="overflow-wrap-anywhere">
+														{s}
+													</li>
 												))}
 											</ol>
 										</div>

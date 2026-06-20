@@ -171,7 +171,11 @@ export default function AdminPastPapersPage() {
 										>
 											Question
 										</h4>
-										<p className={cn("whitespace-pre-wrap text-sm")}>
+										<p
+											className={cn(
+												"overflow-wrap-anywhere whitespace-pre-wrap text-sm",
+											)}
+										>
 											{q.questionText}
 										</p>
 									</div>
@@ -186,7 +190,7 @@ export default function AdminPastPapersPage() {
 											</h4>
 											<p
 												className={cn(
-													"whitespace-pre-wrap text-sm text-success",
+													"overflow-wrap-anywhere whitespace-pre-wrap text-sm text-success",
 												)}
 											>
 												{q.answerText}

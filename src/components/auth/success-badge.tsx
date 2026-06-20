@@ -21,7 +21,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 	return (
 		<Anim>
 			<m.div
-				className="absolute -top-1 -right-1"
+				className="absolute -top-1 -right-1 motion-reduce:animate-none motion-reduce:transition-none"
 				initial={{ scale: 0.95, opacity: 0 }}
 				animate={{
 					scale: 1,
@@ -29,7 +29,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					transition: {
 						type: "spring",
 						stiffness: 400,
-						damping: 15,
+						damping: 26,
 					},
 				}}
 				exit={{ scale: 0.95, opacity: 0 }}
@@ -57,7 +57,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					transition: {
 						type: "spring",
 						stiffness: 400,
-						damping: 15,
+						damping: 26,
 						delay: 0.1,
 					},
 				}}

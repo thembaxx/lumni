@@ -36,15 +36,15 @@ export function AchievementUnlock({
 				<m.div
 					initial={{ opacity: 0, scale: 0.95, y: 50 }}
 					animate={{ scale: 1, y: 0 }}
-					transition={{ type: "spring", stiffness: 300, damping: 20 }}
-					className="relative"
+					transition={{ type: "spring", stiffness: 300, damping: 26 }}
+					className="relative motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<div
 						className={`absolute inset-0 rounded-3xl bg-opacity-50 blur-xl ${raritySolid[rarity]}`}
 					/>
 
 					<div
-						className={`relative border-2 bg-card ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-2xl ${rarityGlowStrong[rarity]}`}
+						className={`relative border-2 bg-card ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-level-3 ${rarityGlowStrong[rarity]}`}
 					>
 						<m.div
 							initial={{ opacity: 0, scale: 0.95, rotate: -180 }}

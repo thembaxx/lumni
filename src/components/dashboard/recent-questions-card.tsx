@@ -57,7 +57,7 @@ export function RecentQuestionsCard() {
 
 	return (
 		<div className="card-entrance">
-			<Card className="overflow-hidden rounded-2xl shadow-level-1">
+			<Card className="overflow-hidden rounded-card shadow-level-1">
 				<CardHeader>
 					<CardTitle className="font-extrabold text-lg">
 						Recent Questions

@@ -298,6 +298,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
 				ref={hiddenFileRef}
 				type="file"
 				accept="image/*"
+				aria-label="Upload photo"
 				onChange={handleFileCapture}
 				className="hidden"
 			/>

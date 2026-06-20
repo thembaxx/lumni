@@ -246,7 +246,7 @@ export function ProgressExport() {
 				className="w-full"
 			>
 				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
-				{exportState === "exporting" ? "Generating..." : "Download JSON Report"}
+				{exportState === "exporting" ? "Generating…" : "Download JSON Report"}
 			</Button>
 			<Button
 				variant="outline"
@@ -256,7 +256,7 @@ export function ProgressExport() {
 			>
 				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
 				{exportState === "csv-exporting"
-					? "Generating..."
+					? "Generating…"
 					: "Download CSV Report"}
 			</Button>
 			<Button
@@ -266,7 +266,7 @@ export function ProgressExport() {
 				className="w-full"
 			>
 				<HugeiconsIcon icon={PrinterIcon} data-icon="inline-start" />
-				{exportState === "printing" ? "Preparing..." : "Print / Save as PDF"}
+				{exportState === "printing" ? "Preparing…" : "Print / Save as PDF"}
 			</Button>
 		</div>
 	);

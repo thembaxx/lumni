@@ -64,7 +64,7 @@ describe("BoltCelebration", () => {
 		expect(hasText(container, /streak/i)).toBe(false);
 	});
 
-	test("renders Done button", () => {
+	test("renders Continue button", () => {
 		const { container } = render(
 			<BoltCelebration
 				correct
@@ -75,7 +75,7 @@ describe("BoltCelebration", () => {
 		);
 		const button = container.getElementsByTagName("button")[0];
 		expect(button).toBeTruthy();
-		expect(hasText(container, /Done/)).toBe(true);
+		expect(hasText(container, /Continue/)).toBe(true);
 	});
 
 	test("calls onContinue when button clicked", () => {

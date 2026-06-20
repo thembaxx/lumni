@@ -68,7 +68,7 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 					<DialogTitle>Ask your study group</DialogTitle>
 				</DialogHeader>
 				<div className="flex flex-col gap-4">
-					<div className="rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
+					<div className="overflow-wrap-anywhere rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
 						{questionText}
 					</div>
 
@@ -116,7 +116,7 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 							onClick={handleSubmit}
 							disabled={!selectedGroup || !content.trim() || isPending}
 						>
-							{isPending ? "Posting..." : "Post to group"}
+							{isPending ? "Posting…" : "Post to group"}
 						</Button>
 					</div>
 				</div>

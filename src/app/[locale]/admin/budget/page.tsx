@@ -45,7 +45,9 @@ export default function AdminBudgetPage() {
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-6 bg-background p-6">
 			<div className="flex items-center justify-between">
 				<div className="min-w-0">
-					<h1 className="font-semibold text-xl tracking-tight">Token Budget</h1>
+					<h1 className="font-heading font-semibold text-2xl tracking-tight">
+						Token Budget
+					</h1>
 					<p className="mt-1 text-muted-foreground text-sm">
 						AI call usage for this session. Resets at midnight.
 					</p>

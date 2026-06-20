@@ -152,8 +152,8 @@ export function NationalExamCalendar() {
 						<m.div
 							initial={{ opacity: 0, scale: 0.96 }}
 							animate={{ opacity: 1, scale: 1 }}
-							transition={{ type: "spring", stiffness: 120, damping: 18 }}
-							className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-level-1"
+							transition={{ type: "spring", stiffness: 120, damping: 26 }}
+							className="overflow-hidden rounded-card border border-border/60 bg-card shadow-level-1"
 						>
 							<div className="flex items-center justify-between border-border/40 border-b px-4 py-2.5">
 								<span className="ios-caption-3 font-semibold text-muted-foreground uppercase tracking-wider">

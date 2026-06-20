@@ -25,7 +25,7 @@ export function TopicMasteryHeatmap({
 	return (
 		<Card className={cn(className)} {...props}>
 			<CardHeader className="pb-3">
-				<CardTitle className="flex items-center gap-2 font-heading text-base">
+				<CardTitle className="flex items-center gap-2 text-base">
 					<HugeiconsIcon
 						icon={Target01Icon}
 						size={20}

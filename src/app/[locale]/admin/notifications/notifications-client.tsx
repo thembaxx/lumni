@@ -115,7 +115,7 @@ export function NotificationsClient() {
 							disabled={!title || !body || sendMutation.isPending}
 						>
 							{sendMutation.isPending
-								? "Sending..."
+								? "Sending…"
 								: sendMutation.data
 									? `Sent to ${sendMutation.data.sent} / ${sendMutation.data.total}`
 									: "Send Notification"}

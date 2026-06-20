@@ -17,7 +17,7 @@ export function UpcomingExamsCard({
 	return (
 		<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 			<header className="rounded-t-card-lg border-border/80 border-t pb-2">
-				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
+				<h2 className="flex items-center gap-2 font-medium font-sans text-base">
 					<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
 					{t("studyPlanner.upcomingExams")}
 				</h2>

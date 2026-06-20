@@ -191,6 +191,7 @@ export function APSCalculator() {
 								onClick={() => removeSubject(subject.id)}
 								disabled={subjects.length === 1}
 								className="size-9"
+								aria-label="Remove subject"
 							>
 								<HugeiconsIcon icon={Delete01Icon} data-icon />
 							</Button>
@@ -248,7 +249,7 @@ export function APSCalculator() {
 					<div className="mt-4 h-2 overflow-hidden rounded-full bg-system-background-tertiary">
 						<div
 							className={cn(
-								"h-full rounded-full transition-[width] duration-500",
+								"h-full rounded-full transition-[width] duration-300",
 								scoreLevel === "high" && "bg-success",
 								scoreLevel === "medium" && "bg-warning",
 								scoreLevel === "low" && "bg-destructive",

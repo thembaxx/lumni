@@ -73,7 +73,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 							}}
 						>
 							<form onSubmit={handleSubmit}>
-								<Card className="shadow-lg">
+								<Card className="shadow-level-2">
 									<CardContent className="flex flex-col gap-4 p-6">
 										<div className="flex flex-col gap-1.5">
 											<Label

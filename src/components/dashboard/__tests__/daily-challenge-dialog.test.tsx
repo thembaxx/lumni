@@ -99,7 +99,7 @@ describe("DailyChallengeDialog", () => {
 			{ wrapper: createWrapper() },
 		);
 		expect(hasText(container, /Today/)).toBe(true);
-		expect(hasText(container, /Bolt/)).toBe(true);
+		expect(hasText(container, /Challenge/)).toBe(true);
 	});
 
 	test("shows empty state when no questions returned", async () => {

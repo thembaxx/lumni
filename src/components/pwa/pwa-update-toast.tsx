@@ -15,7 +15,7 @@ export function PWAUpdateToast() {
 
 	return (
 		<div className="fixed right-4 bottom-4 left-4 z-toast md:right-4 md:left-auto md:max-w-sm">
-			<div className="flex items-start gap-3 rounded-lg border border-border bg-background p-4 shadow-lg">
+			<div className="flex items-start gap-3 rounded-lg border border-border bg-background p-4 shadow-level-2">
 				<div className="mt-0.5 flex-shrink-0">
 					<HugeiconsIcon
 						icon={RefreshIcon}
@@ -66,7 +66,7 @@ export function PWAInstallPrompt() {
 
 	return (
 		<div className="fixed right-4 bottom-4 left-4 z-toast md:right-4 md:left-auto md:max-w-sm">
-			<div className="rounded-lg border border-border bg-background p-4 shadow-lg">
+			<div className="rounded-lg border border-border bg-background p-4 shadow-level-2">
 				<div className="flex items-center gap-3">
 					<div className="flex-shrink-0">
 						<div className="flex size-10 items-center justify-center rounded-lg bg-[--system-accent]/10">

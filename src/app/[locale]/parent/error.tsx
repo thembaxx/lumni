@@ -31,9 +31,7 @@ export default function ParentError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">
-						Parent dashboard unavailable
-					</h2>
+					<h2 className="ios-title-2 text-foreground">Parent unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Couldn&apos;t load parent dashboard. Please try again.
 					</p>

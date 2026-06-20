@@ -116,7 +116,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
 	return (
 		<Card className={cn(className)}>
 			<CardHeader className="pb-3">
-				<CardTitle className="flex items-center gap-2 font-heading text-base">
+				<CardTitle className="flex items-center gap-2 text-base">
 					Assignment Review
 				</CardTitle>
 				<CardDescription>

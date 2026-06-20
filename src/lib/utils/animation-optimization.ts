@@ -127,7 +127,7 @@ const createOptimizedPresets = () => {
 			transition: {
 				type: "spring",
 				stiffness: 100,
-				damping: 20,
+				damping: 26,
 			},
 		},
 
@@ -136,7 +136,7 @@ const createOptimizedPresets = () => {
 			transition: {
 				type: "spring",
 				stiffness: 260,
-				damping: 20,
+				damping: 26,
 			},
 		},
 
@@ -145,7 +145,7 @@ const createOptimizedPresets = () => {
 			transition: {
 				type: "spring",
 				stiffness: 400,
-				damping: 20,
+				damping: 26,
 			},
 		},
 
@@ -154,7 +154,7 @@ const createOptimizedPresets = () => {
 			transition: {
 				type: "spring",
 				stiffness: 120,
-				damping: 20,
+				damping: 26,
 			},
 		},
 	};

@@ -31,7 +31,7 @@ export default function BookmarksError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">Something went wrong</h2>
+					<h2 className="ios-title-2 text-foreground">Bookmarks unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Couldn&apos;t load your bookmarks. Please try again.
 					</p>

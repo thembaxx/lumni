@@ -52,7 +52,9 @@ export default function SharedAssignmentPage() {
 				<div className="flex size-16 items-center justify-center rounded-full bg-muted">
 					<span className="text-2xl">?</span>
 				</div>
-				<h1 className="font-bold text-xl">Assignment Not Found</h1>
+				<h1 className="font-bold font-heading text-2xl">
+					Assignment Not Found
+				</h1>
 				<p className="max-w-md text-muted-foreground text-sm">
 					This assignment link may have expired or is invalid.
 				</p>

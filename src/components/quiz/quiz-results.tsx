@@ -74,7 +74,7 @@ const ITEM_VARIANTS = {
 		transition: {
 			type: "spring" as const,
 			stiffness: 300,
-			damping: 25,
+			damping: 26,
 			bounce: 0,
 		},
 	},
@@ -136,7 +136,7 @@ export function QuizResultsCard({
 				>
 					<Badge
 						variant="secondary"
-						className="flex items-center gap-2 px-4 py-2 shadow-lg"
+						className="flex items-center gap-2 px-4 py-2 shadow-level-2"
 					>
 						<HugeiconsIcon icon={Award01Icon} className="size-5" />
 						<span className="font-extrabold">{t("quiz.perfectScore")}</span>
@@ -369,7 +369,7 @@ export function QuizResultsCard({
 																		<p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
 																			Your Answer
 																		</p>
-																		<p className="text-sm">
+																		<p className="overflow-wrap-anywhere text-sm">
 																			{getUserAnswerText(userAns)}
 																		</p>
 																	</div>
@@ -385,7 +385,7 @@ export function QuizResultsCard({
 																	<p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
 																		{isCorrect ? "Answer" : "Correct Answer"}
 																	</p>
-																	<p className="text-sm">
+																	<p className="overflow-wrap-anywhere text-sm">
 																		{getCorrectAnswerText(q)}
 																	</p>
 																</div>

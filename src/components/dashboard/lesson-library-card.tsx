@@ -61,7 +61,7 @@ export function LessonLibraryCard() {
 	const hasProgress = recentLessons && recentLessons.length > 0;
 
 	return (
-		<Card className="overflow-hidden rounded-2xl shadow-level-1">
+		<Card className="overflow-hidden rounded-card shadow-level-1">
 			<CardHeader>
 				<div className="flex items-center justify-between">
 					<CardTitle className="font-extrabold text-lg">

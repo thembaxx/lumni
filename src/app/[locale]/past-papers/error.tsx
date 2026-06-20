@@ -32,7 +32,7 @@ export default function PastPapersError({
 				</div>
 				<div>
 					<h2 className="ios-title-2 text-foreground">
-						Couldn&apos;t load past papers
+						Past papers unavailable
 					</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Something went wrong fetching exam papers. Please try again.

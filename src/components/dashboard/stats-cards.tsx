@@ -43,7 +43,7 @@ function AnimatedNumber({
 	const motionValue = useMotionValue(0);
 	const springValue = useSpring(motionValue, {
 		stiffness: 80,
-		damping: 20,
+		damping: 26,
 	});
 	const rounded = useTransform(springValue, (v) => Math.round(v));
 

@@ -49,7 +49,7 @@ export default function GhostDashboardPage({
 
 	return (
 		<div className="mx-auto max-w-2xl space-y-6 p-8">
-			<h1 className="font-bold font-heading text-xl">School Dashboard</h1>
+			<h1 className="font-bold font-heading text-2xl">School Dashboard</h1>
 			<div className="grid grid-cols-2 gap-4">
 				<Card>
 					<CardHeader>

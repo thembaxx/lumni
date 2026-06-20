@@ -44,7 +44,9 @@ export default function ForgotPasswordPage() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<h1 className="font-semibold text-xl">{t("auth.checkEmail")}</h1>
+					<h1 className="font-heading font-semibold text-2xl">
+						{t("auth.checkEmail")}
+					</h1>
 					<p className="text-muted-foreground text-sm">
 						{t.rich("auth.resetEmailSent", {
 							email,
@@ -71,7 +73,9 @@ export default function ForgotPasswordPage() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">{t("auth.resetPassword")}</h1>
+				<h1 className="font-heading font-semibold text-2xl">
+					{t("auth.resetPassword")}
+				</h1>
 				<p className="text-muted-foreground text-sm">
 					{t("auth.resetPasswordSubtitle")}
 				</p>

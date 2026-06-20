@@ -43,11 +43,11 @@ export const SwipeableCard = memo(function SwipeableCard({
 		x,
 		[-200, -100, 0, 100, 200],
 		[
-			"linear-gradient(135deg, rgba(239,68,68,0.15) 0%, transparent 100%)",
-			"linear-gradient(135deg, rgba(239,68,68,0.08) 0%, transparent 100%)",
+			"linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 15%, transparent) 0%, transparent 100%)",
+			"linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 8%, transparent) 0%, transparent 100%)",
 			"transparent",
-			"linear-gradient(135deg, rgba(34,197,94,0.08) 0%, transparent 100%)",
-			"linear-gradient(135deg, rgba(34,197,94,0.15) 0%, transparent 100%)",
+			"linear-gradient(135deg, color-mix(in oklch, var(--color-success) 8%, transparent) 0%, transparent 100%)",
+			"linear-gradient(135deg, color-mix(in oklch, var(--color-success) 15%, transparent) 0%, transparent 100%)",
 		],
 	);
 
@@ -71,7 +71,7 @@ export const SwipeableCard = memo(function SwipeableCard({
 				},
 			});
 		} else {
-			animate(x, 0, { type: "spring", stiffness: 300, damping: 25 });
+			animate(x, 0, { type: "spring", stiffness: 300, damping: 26 });
 		}
 	}
 
@@ -98,7 +98,7 @@ export const SwipeableCard = memo(function SwipeableCard({
 	return (
 		<m.div
 			className={cn(
-				"absolute inset-0",
+				"absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none",
 				isTop ? "z-10" : "pointer-events-none z-0",
 			)}
 			style={{ ...style, x, rotate, opacity }}

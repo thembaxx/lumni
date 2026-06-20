@@ -105,7 +105,7 @@ export const LessonCard = memo(function LessonCard({
 			<AnimatePresence mode="popLayout" initial={false}>
 				{!isCardOpen && (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
-						<Card className="w-full rounded-2xl text-left shadow-sm">
+						<Card className="w-full rounded-card text-left shadow-sm">
 							<CardContent className="p-5">
 								<Button
 									variant="ghost"

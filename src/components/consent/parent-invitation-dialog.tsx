@@ -117,7 +117,7 @@ export function ParentInvitationDialog({
 					</Button>
 					<Button onClick={handleSend} disabled={!email.trim() || isSending}>
 						<HugeiconsIcon icon={SentIcon} size={16} />
-						{isSending ? "Sending..." : "Send Invitation"}
+						{isSending ? "Sending…" : "Send Invitation"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

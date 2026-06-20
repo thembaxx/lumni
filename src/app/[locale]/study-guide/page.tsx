@@ -29,7 +29,7 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
 					initial={{ opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: i * 0.08, duration: 0.3 }}
-					className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2"
+					className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
 				>
 					<div className="p-6">
 						<h2 className="mb-4 font-semibold text-foreground text-xl tracking-tight">
@@ -47,7 +47,7 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
 									{section.keyPoints.map((point) => (
 										<li
 											key={point}
-											className="flex items-start gap-2 text-foreground/70 text-sm"
+											className="overflow-wrap-anywhere flex items-start gap-2 text-foreground/70 text-sm"
 										>
 											<span className="mt-0.5 block size-1.5 shrink-0 rounded-full bg-foreground/30" />
 											{point}
@@ -70,7 +70,7 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
 					<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
 						Summary
 					</p>
-					<p className="text-foreground/70 text-sm leading-relaxed">
+					<p className="overflow-wrap-anywhere text-foreground/70 text-sm leading-relaxed">
 						{guide.summary}
 					</p>
 				</m.div>

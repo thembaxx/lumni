@@ -31,9 +31,7 @@ export default function ProblemsError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">
-						Couldn&apos;t load problems
-					</h2>
+					<h2 className="ios-title-2 text-foreground">Problems unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Something went wrong. Please try again.
 					</p>

@@ -51,7 +51,7 @@ export function BoltCelebration({
 					variants={variants}
 					initial="hidden"
 					animate="visible"
-					className="relative"
+					className="relative motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<div
 						className={
@@ -73,7 +73,7 @@ export function BoltCelebration({
 							transition={{
 								type: "spring",
 								stiffness: 250,
-								damping: 14,
+								damping: 26,
 								delay: 0.15,
 							}}
 						>
@@ -149,7 +149,7 @@ export function BoltCelebration({
 					size="lg"
 					className="min-h-12 gap-2 px-8 text-base"
 				>
-					Done
+					Continue
 				</Button>
 			</m.div>
 		</div>

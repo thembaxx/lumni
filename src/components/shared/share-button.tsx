@@ -96,7 +96,7 @@ export function ShareResultButton({
 			className="gap-2"
 		>
 			<HugeiconsIcon icon={Share08Icon} className="size-4" />
-			{loading ? "Generating..." : label}
+			{loading ? "Generating…" : label}
 		</Button>
 	);
 }

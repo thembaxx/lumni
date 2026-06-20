@@ -39,7 +39,7 @@ export function AnimatedDialogContent({
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						transition={{
 							type: "spring",
-							damping: 25,
+							damping: 26,
 							stiffness: 300,
 						}}
 					>

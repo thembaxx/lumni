@@ -50,7 +50,7 @@ export function StudentReportClient({
 	return (
 		<div className="mx-auto max-w-3xl space-y-6 p-8">
 			<div className="flex items-center justify-between">
-				<h1 className="font-bold font-heading text-xl">
+				<h1 className="font-bold font-heading text-2xl">
 					Student Progress Report
 				</h1>
 				<Button onClick={() => window.print()} size="sm">

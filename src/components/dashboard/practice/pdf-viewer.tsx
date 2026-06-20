@@ -252,7 +252,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 												scale={scale}
 												renderTextLayer={false}
 												renderAnnotationLayer={false}
-												className="bg-background shadow-lg"
+												className="bg-background shadow-level-1"
 											/>
 										</PdfDocument>
 									</Suspense>

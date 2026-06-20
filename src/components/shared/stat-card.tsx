@@ -83,7 +83,7 @@ export function StatCard({
 							delay: delay + 0.2,
 							type: "spring",
 							stiffness: 300,
-							damping: 25,
+							damping: 26,
 						}}
 					>
 						{Icon && <Icon className={cn("size-5", colorClass)} />}

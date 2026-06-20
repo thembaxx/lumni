@@ -76,7 +76,7 @@ export function QuestionRatingsDashboard() {
 
 			{stats.total > 0 && (
 				<div className="rounded-2xl border border-border/80 bg-card p-4">
-					<h3 className="mb-3 font-heading font-medium text-sm">
+					<h3 className="mb-3 font-medium font-sans text-sm">
 						Rating Distribution
 					</h3>
 					<div className="h-48">
@@ -92,7 +92,7 @@ export function QuestionRatingsDashboard() {
 
 			{lowRated.length > 0 && (
 				<div className="rounded-2xl border border-destructive/30 bg-card p-4">
-					<h3 className="mb-3 font-heading font-medium text-destructive text-sm">
+					<h3 className="mb-3 font-medium text-destructive text-sm">
 						Low-Rated Questions ({lowRated.length})
 					</h3>
 					<div className="flex flex-col gap-2">
@@ -118,9 +118,7 @@ export function QuestionRatingsDashboard() {
 			)}
 
 			<div className="rounded-2xl border border-border/80 bg-card p-4">
-				<h3 className="mb-3 font-heading font-medium text-sm">
-					Recent Ratings
-				</h3>
+				<h3 className="mb-3 font-medium font-sans text-sm">Recent Ratings</h3>
 				{allRatings.length === 0 ? (
 					<p className="text-muted-foreground text-sm">No ratings yet</p>
 				) : (

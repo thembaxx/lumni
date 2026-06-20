@@ -72,7 +72,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
 					size="sm"
 					className="shrink-0"
 				>
-					{sending ? "Sending..." : "Send"}
+					{sending ? "Sending…" : "Send"}
 				</Button>
 			</div>
 			<div className="max-h-64 space-y-2 overflow-y-auto">

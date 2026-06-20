@@ -165,7 +165,7 @@ export default function EmbedBackfillPage() {
 				className="w-fit"
 			>
 				{running
-					? "Processing..."
+					? "Processing…"
 					: stats && stats.pending > 0
 						? `Start Backfill (${stats.pending} questions)`
 						: "All Embedded"}

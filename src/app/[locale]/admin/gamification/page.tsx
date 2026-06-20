@@ -111,7 +111,7 @@ export default function AdminGamificationPage() {
 							<header className={cn("p-4 pb-2")}>
 								<h2
 									className={cn(
-										"font-heading font-medium text-muted-foreground text-sm",
+										"font-medium font-sans text-muted-foreground text-sm",
 									)}
 								>
 									Total Users
@@ -129,7 +129,7 @@ export default function AdminGamificationPage() {
 							<header className={cn("p-4 pb-2")}>
 								<h2
 									className={cn(
-										"font-heading font-medium text-muted-foreground text-sm",
+										"font-medium font-sans text-muted-foreground text-sm",
 									)}
 								>
 									Total XP
@@ -149,7 +149,7 @@ export default function AdminGamificationPage() {
 							<header className={cn("p-4 pb-2")}>
 								<h2
 									className={cn(
-										"font-heading font-medium text-muted-foreground text-sm",
+										"font-medium font-sans text-muted-foreground text-sm",
 									)}
 								>
 									Avg XP / User
@@ -169,7 +169,7 @@ export default function AdminGamificationPage() {
 							<header className={cn("p-4 pb-2")}>
 								<h2
 									className={cn(
-										"font-heading font-medium text-muted-foreground text-sm",
+										"font-medium font-sans text-muted-foreground text-sm",
 									)}
 								>
 									Avg Streak

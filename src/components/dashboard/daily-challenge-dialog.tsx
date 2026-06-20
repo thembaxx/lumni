@@ -137,7 +137,7 @@ export function DailyChallengeDialog({
 			<header className="flex items-center gap-2.5 px-5 pt-5 pb-3">
 				<BoltMark />
 				<div className="flex min-w-0 flex-col">
-					<span className="font-extrabold font-heading text-base text-system-text-primary tracking-tight">
+					<span className="font-extrabold text-base text-system-text-primary tracking-tight">
 						Today&rsquo;s Challenge
 					</span>
 					<span className="truncate text-muted-foreground text-xs">
@@ -361,7 +361,7 @@ function BoltErrorState({
 						icon={RefreshIcon}
 						className={cn("size-4", isRetrying && "animate-spin")}
 					/>
-					{isRetrying ? "Retrying…" : "Try Again"}
+					{isRetrying ? "Retrying…" : "Try again"}
 				</Button>
 			</div>
 		</div>

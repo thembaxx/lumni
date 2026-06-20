@@ -172,7 +172,9 @@ export default function DevEnginePage() {
 
 	return (
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
-			<h1 className="font-semibold text-xl">Engine Integration Test</h1>
+			<h1 className="font-heading font-semibold text-2xl">
+				Engine Integration Test
+			</h1>
 
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="flex flex-col gap-3 p-4 px-4 group-data-[size=sm]/card:px-3">
@@ -224,7 +226,7 @@ export default function DevEnginePage() {
 						disabled={state.isLoading}
 						className="w-full"
 					>
-						{state.isLoading ? "Generating..." : "Generate"}
+						{state.isLoading ? "Generating…" : "Generate"}
 					</Button>
 				</div>
 			</div>
@@ -243,7 +245,7 @@ export default function DevEnginePage() {
 				<>
 					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
-							<h2 className="font-heading font-medium text-sm text-sm">
+							<h2 className="font-medium font-sans text-sm">
 								Questions ({state.questions.length})
 							</h2>
 						</header>
@@ -297,9 +299,7 @@ export default function DevEnginePage() {
 
 					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
-							<h2 className="font-heading font-medium text-sm text-sm">
-								Raw Response
-							</h2>
+							<h2 className="font-medium font-sans text-sm">Raw Response</h2>
 						</header>
 						<div className="p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
 							<Textarea

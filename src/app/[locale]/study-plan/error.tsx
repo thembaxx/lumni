@@ -32,7 +32,7 @@ export default function StudyPlanError({
 				</div>
 				<div>
 					<h2 className="ios-title-2 text-foreground">
-						Couldn&apos;t load study plan
+						Study plan unavailable
 					</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Something went wrong. Please try again.

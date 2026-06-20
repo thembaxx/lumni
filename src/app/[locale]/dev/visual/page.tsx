@@ -125,7 +125,9 @@ export default function DevVisualPage() {
 
 	return (
 		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
-			<h1 className="font-semibold text-xl">Visual Engine Test</h1>
+			<h1 className="font-heading font-semibold text-2xl">
+				Visual Engine Test
+			</h1>
 
 			<div className="overflow-hidden rounded-card-lg bg-card shadow-level-2">
 				<div className="flex flex-col gap-3 p-4">
@@ -159,7 +161,7 @@ export default function DevVisualPage() {
 							disabled={state.isLoading}
 							variant="default"
 						>
-							{state.isLoading ? "Resolving..." : "Resolve Visual"}
+							{state.isLoading ? "Resolving…" : "Resolve Visual"}
 						</Button>
 					</div>
 				</div>

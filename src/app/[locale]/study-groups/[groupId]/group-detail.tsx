@@ -225,7 +225,7 @@ export function GroupDetail() {
 															})
 														}
 														className="text-destructive hover:text-destructive/80"
-														title={t("common.remove") || "Remove"}
+														aria-label={t("common.remove") || "Remove member"}
 													>
 														<HugeiconsIcon
 															icon={Minimize01Icon}

@@ -136,7 +136,7 @@ export function CameraPreview({ onCapture, onClose }: CameraPreviewProps) {
 				<button
 					type="button"
 					onClick={capture}
-					className="flex size-14 items-center justify-center rounded-full border-4 border-white bg-[--system-accent] shadow-lg transition-transform active:scale-90"
+					className="flex size-14 items-center justify-center rounded-full border-4 border-white bg-[--system-accent] shadow-level-2 transition-transform active:scale-90"
 					aria-label="Capture photo"
 				>
 					<div className="size-10 rounded-full bg-white" />

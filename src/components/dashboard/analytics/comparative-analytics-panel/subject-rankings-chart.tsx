@@ -41,6 +41,7 @@ export function SubjectRankingsChart({
 						variant="ghost"
 						size="icon"
 						onClick={() => setShowSubjectDetail((v) => !v)}
+						aria-label="Toggle subject details"
 					>
 						<svg
 							className="size-4 text-muted-foreground"
@@ -98,13 +99,15 @@ export function SubjectRankingsChart({
 								data: Object.values(subjectRankings).map((rank) =>
 									Math.min(100, rank * 2),
 								),
-								backgroundColor: "rgba(59, 130, 246, 0.2)",
+								backgroundColor:
+									"color-mix(in oklch, var(--system-accent) 20%, transparent)",
 								borderColor: "var(--system-accent)",
 							},
 							{
 								label: "Average User",
 								data: Object.keys(subjectRankings).map(() => 50),
-								backgroundColor: "rgba(100, 116, 139, 0.1)",
+								backgroundColor:
+									"color-mix(in oklch, var(--system-muted) 10%, transparent)",
 								borderColor: "var(--system-muted)",
 							},
 						],

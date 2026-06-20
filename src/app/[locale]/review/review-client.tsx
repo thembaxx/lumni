@@ -238,13 +238,17 @@ export function ReviewClient() {
 											<p className="mb-1 font-medium text-destructive text-xs">
 												Your answer
 											</p>
-											<p className="text-sm">{entry.userAnswer}</p>
+											<p className="overflow-wrap-anywhere text-sm">
+												{entry.userAnswer}
+											</p>
 										</div>
 										<div className="rounded-lg bg-success/5 p-3">
 											<p className="mb-1 font-medium text-success text-xs">
 												Correct answer
 											</p>
-											<p className="text-sm">{entry.correctAnswer}</p>
+											<p className="overflow-wrap-anywhere text-sm">
+												{entry.correctAnswer}
+											</p>
 										</div>
 									</div>
 									{entry.explanation && (

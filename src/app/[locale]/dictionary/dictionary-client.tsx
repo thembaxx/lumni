@@ -132,7 +132,7 @@ export function DictionaryClient() {
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0 }}
 						>
-							<Card className="rounded-2xl">
+							<Card className="rounded-card">
 								<CardContent className="flex flex-col items-center gap-2 p-8 text-center">
 									<p className="text-muted-foreground text-sm">
 										No definition found for &ldquo;{query}&rdquo;
@@ -149,7 +149,7 @@ export function DictionaryClient() {
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0 }}
 						>
-							<Card className="overflow-hidden rounded-2xl shadow-level-1">
+							<Card className="overflow-hidden rounded-card shadow-level-1">
 								<CardContent className="flex flex-col gap-4 p-5">
 									<div className="flex items-start justify-between">
 										<div className="flex flex-col gap-1">

@@ -76,7 +76,7 @@ export default function UploadPage() {
 				<div className="flex flex-col gap-[--space-4] pb-[--space-8]">
 					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header>
-							<h2 className="flex flex-col items-center gap-3 text-center font-heading font-medium text-sm">
+							<h2 className="flex flex-col items-center gap-3 text-center font-medium font-sans text-sm">
 								<span className="flex items-center gap-2">
 									<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
 									Upload
@@ -148,7 +148,7 @@ export default function UploadPage() {
 
 					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header>
-							<h2 className="flex items-center gap-2 font-heading font-medium text-sm">
+							<h2 className="flex items-center gap-2 font-medium font-sans text-sm">
 								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
 								Database
 							</h2>

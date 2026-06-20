@@ -116,7 +116,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							disabled={isGenerating}
 							className={cn(
 								"group flex h-auto w-full flex-col items-start justify-start rounded-2xl border border-border/60 p-4 text-left",
-								"hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-lg dark:hover:shadow-black/20",
+								"hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-level-2 dark:hover:shadow-black/20",
 								"focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/30",
 								"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
 								isSelected &&

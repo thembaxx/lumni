@@ -10,7 +10,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function TeacherError({
+export default function SupportError({
 	error,
 	reset,
 }: {
@@ -31,9 +31,9 @@ export default function TeacherError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">Teacher unavailable</h2>
+					<h2 className="ios-title-2 text-foreground">Support unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
-						Couldn&apos;t load teacher dashboard. Please try again.
+						Something went wrong loading support. Please try again.
 					</p>
 				</div>
 				<div className="flex gap-3">

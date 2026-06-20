@@ -23,7 +23,7 @@ function SolveContent() {
 					help.
 				</p>
 			</div>
-			<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
+			<div className="overflow-hidden rounded-card border border-border bg-card shadow-level-2">
 				<AiSolver initialQuestion={initialQuestion} />
 			</div>
 		</div>

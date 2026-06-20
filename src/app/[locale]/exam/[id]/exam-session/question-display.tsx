@@ -86,6 +86,7 @@ export function QuestionDisplay({
 											? "bg-warning/10 text-warning"
 											: "text-muted-foreground hover:bg-muted",
 									)}
+									aria-label="Flag question for review"
 								>
 									<HugeiconsIcon
 										icon={Flag01Icon}

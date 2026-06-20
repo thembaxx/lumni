@@ -21,7 +21,7 @@ function StatCard({
 	return (
 		<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 			<header className="rounded-t-card-lg border-border/80 border-t p-4 pb-2">
-				<h2 className="font-heading font-medium text-muted-foreground text-sm">
+				<h2 className="font-medium font-sans text-muted-foreground text-sm">
 					{label}
 				</h2>
 			</header>

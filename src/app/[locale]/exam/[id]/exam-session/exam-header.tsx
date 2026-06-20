@@ -50,6 +50,7 @@ export function ExamHeader({
 						type="button"
 						onClick={onBack}
 						className="-ml-2 rounded-xl p-2 transition-colors hover:bg-muted"
+						aria-label="Go back"
 					>
 						<HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
 					</button>
@@ -86,6 +87,7 @@ export function ExamHeader({
 							type="button"
 							onClick={onTogglePause}
 							className="rounded-xl p-2 transition-colors hover:bg-muted"
+							aria-label={paused ? "Resume timer" : "Pause timer"}
 						>
 							{paused ? (
 								<HugeiconsIcon icon={PlayFreeIcons} className="size-5" />

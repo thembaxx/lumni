@@ -29,10 +29,10 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 				<DialogTitle className="sr-only">Celebration</DialogTitle>
 				<Confetti trigger={true} />
 				<m.div
-					initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
+					initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.95 }}
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ duration: 0.6, ease: iOSEase }}
-					className="flex max-w-sm flex-col items-center px-6 text-center"
+					className="flex max-w-sm flex-col items-center px-6 text-center motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<div className="mb-6 size-36">
 						<WelcomeSVG />

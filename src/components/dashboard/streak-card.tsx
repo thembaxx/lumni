@@ -20,7 +20,7 @@ export const StreakCard = memo(function StreakCard() {
 		<div className="card-entrance">
 			<Card
 				className={cn(
-					"overflow-hidden rounded-2xl shadow-level-1 transition-colors",
+					"overflow-hidden rounded-card shadow-level-1 transition-colors",
 					currentStreak > 0
 						? "border border-warning/20 bg-warning/5"
 						: "border border-border/80",

@@ -122,7 +122,7 @@ export function UploadFileItem({
 						onClick={onRetry}
 						className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
 					>
-						Retry
+						Try again
 					</Button>
 				)}
 			</div>

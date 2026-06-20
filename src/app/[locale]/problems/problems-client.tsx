@@ -48,7 +48,7 @@ function ProblemCard({
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: index * 0.06, duration: 0.3 }}
-			className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2"
+			className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
 		>
 			<div className="p-5">
 				<div className="mb-3 flex items-center justify-between gap-3">

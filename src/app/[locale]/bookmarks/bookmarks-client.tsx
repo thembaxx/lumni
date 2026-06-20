@@ -83,7 +83,9 @@ export function BookmarksClient() {
 											<p className="mb-1 font-medium text-muted-foreground text-xs">
 												Note
 											</p>
-											<p className="text-sm">{bm.note}</p>
+											<p className="overflow-wrap-anywhere text-sm">
+												{bm.note}
+											</p>
 										</div>
 									)}
 								</CardContent>

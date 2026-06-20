@@ -332,7 +332,7 @@ export function StudyPlanOverview() {
 						<div className="mt-2 flex items-center gap-2">
 							<div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
 								<div
-									className="h-full rounded-full bg-[--system-accent] transition-all"
+									className="h-full rounded-full bg-[--system-accent] transition-[width]"
 									style={{ width: `${Math.min(stats.progress, 100)}%` }}
 								/>
 							</div>

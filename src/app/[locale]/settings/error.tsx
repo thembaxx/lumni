@@ -9,7 +9,9 @@ export default function SettingsError({
 }) {
 	return (
 		<div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8">
-			<h2 className="font-semibold text-xl">Settings error</h2>
+			<h2 className="font-heading font-semibold text-2xl">
+				Settings unavailable
+			</h2>
 			<p className="max-w-md text-center text-muted-foreground text-sm">
 				{error?.message || "Something went wrong loading settings."}
 			</p>

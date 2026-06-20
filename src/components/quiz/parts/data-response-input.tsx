@@ -17,7 +17,7 @@ export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
 
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
+			<div className="overflow-wrap-anywhere whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
 				{typeof body.data === "string"
 					? body.data
 					: JSON.stringify(body.data, null, 2)}

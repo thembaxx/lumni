@@ -59,7 +59,7 @@ export const MessageBubble = memo(function MessageBubble({
 				<m.div
 					initial={{ opacity: 0, y: 10, scale: 0.95 }}
 					animate={{ opacity: 1, y: 0, scale: 1 }}
-					transition={{ type: "spring", stiffness: 300, damping: 25 }}
+					transition={{ type: "spring", stiffness: 300, damping: 26 }}
 					className={cn(
 						"ml-auto max-w-[calc(100%-3rem)]",
 						isUser ? "mr-0" : "mr-auto",
@@ -161,7 +161,7 @@ export const MessageBubble = memo(function MessageBubble({
 			<m.div
 				initial={{ opacity: 0, y: 10, scale: 0.95 }}
 				animate={{ opacity: 1, y: 0, scale: 1 }}
-				transition={{ type: "spring", stiffness: 300, damping: 25 }}
+				transition={{ type: "spring", stiffness: 300, damping: 26 }}
 				className={cn(
 					"flex max-w-[calc(100%-3rem)] items-center gap-4 rounded-lg p-4 text-sm",
 					isUser
@@ -263,9 +263,9 @@ export const MessageBubble = memo(function MessageBubble({
 		<m.div
 			initial={{ opacity: 0, y: 10, scale: 0.95 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
-			transition={{ type: "spring", stiffness: 300, damping: 25 }}
+			transition={{ type: "spring", stiffness: 300, damping: 26 }}
 			className={cn(
-				"max-w-[calc(100%-3rem)] rounded-lg p-4 font-medium text-sm leading-relaxed",
+				"overflow-wrap-anywhere max-w-[calc(100%-3rem)] rounded-lg p-4 font-medium text-sm leading-relaxed motion-reduce:animate-none motion-reduce:transition-none",
 				isUser
 					? "ml-auto rounded-br-none bg-system-accent text-white shadow-level-2"
 					: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",

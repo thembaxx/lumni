@@ -31,9 +31,7 @@ export default function ReviewError({
 					/>
 				</div>
 				<div>
-					<h2 className="ios-title-2 text-foreground">
-						Couldn&apos;t load review journal
-					</h2>
+					<h2 className="ios-title-2 text-foreground">Review unavailable</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
 						Something went wrong. Please try again.
 					</p>
