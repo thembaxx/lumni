@@ -1,6 +1,7 @@
 export type {
 	CacheDataAccess,
 	Collection,
+	CommunityDataAccess,
 	CompetencyDataAccess,
 	ContentDataAccess,
 	DataAccess,

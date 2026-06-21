@@ -1,8 +1,10 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
+	createCustomChallenge,
 	getChallengeEntries,
 	getOrCreateChallenge,
 } from "@/lib/study-groups/challenge-service";
+import type { ChallengeType } from "@/lib/study-groups/challenge-types";
 
 export const GET = createRouteHandler({
 	auth: "required",
@@ -22,5 +24,25 @@ export const GET = createRouteHandler({
 			challenge: challengeResult.data,
 			entries,
 		};
+	},
+});
+
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "CreateChallenge",
+	execute: async ({ params, body }) => {
+		const groupId = params?.groupId as string;
+		const { challengeType } = body as { challengeType: ChallengeType };
+
+		if (!challengeType) {
+			throw new HttpError(400, "challengeType is required");
+		}
+
+		const result = await createCustomChallenge(groupId, challengeType);
+		if (!result.success) {
+			throw new HttpError(500, result.error);
+		}
+
+		return { challenge: result.data };
 	},
 });

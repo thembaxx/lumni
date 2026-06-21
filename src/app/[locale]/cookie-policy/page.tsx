@@ -4,6 +4,7 @@ import { PageContainer } from "@/components/layout/page-container";
 
 export const metadata: Metadata = {
 	title: "Cookie Policy - Lumni",
+	description: "How Lumni uses cookies and similar technologies",
 };
 
 export default async function CookiePolicyPage() {

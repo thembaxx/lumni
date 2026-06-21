@@ -21,9 +21,11 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { toast } from "@/hooks/use-toast";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { useAuth } from "@/lib/auth/auth-context";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import type { FlashcardDeckCard } from "@/lib/flashcard-engine/deck-types";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
@@ -32,6 +34,7 @@ import {
 	processQuizResult,
 	type QuizResultDeps,
 } from "@/lib/services/quiz-result-processor";
+import { shareFlashcardDeck } from "@/lib/share/share-service";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
@@ -274,6 +277,27 @@ export function FlashcardsClient() {
 			? cards.mistakeCards
 			: generatedCards;
 	const totalCards = displayCards.length;
+	const { user } = useAuth();
+
+	const handleShareDeck = useCallback(async () => {
+		const shareCards: FlashcardDeckCard[] = displayCards.map((c) => ({
+			front: c.front,
+			back: c.back,
+		}));
+		const shareId = await shareFlashcardDeck(
+			{
+				title: `${session.selectedSubject} Flashcard Session`,
+				subject: session.selectedSubject,
+				cards: shareCards,
+				cardCount: shareCards.length,
+				createdBy: user?.$id ?? "anonymous",
+			},
+			user?.$id ?? "anonymous",
+		);
+		const url = `${window.location.origin}/shared/deck/${shareId}`;
+		await navigator.clipboard.writeText(url);
+		toast({ type: "success", message: "Deck link copied to clipboard!" });
+	}, [displayCards, session.selectedSubject, user?.$id]);
 
 	const startSession = useCallback(
 		async (subject: string, src: FlashcardSource = "ai") => {
@@ -508,6 +532,7 @@ export function FlashcardsClient() {
 				subject={session.selectedSubject || "Flashcards"}
 				onGoHouse={stopSession}
 				onRestart={handleRestart}
+				onShareDeck={handleShareDeck}
 			/>
 		);
 	}

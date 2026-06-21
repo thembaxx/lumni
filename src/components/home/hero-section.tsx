@@ -10,15 +10,40 @@ import {
 	Timer01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+	m,
+	useInView,
+	useReducedMotion,
+	useScroll,
+	useTransform,
+} from "framer-motion";
 import { useTranslations } from "next-intl";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface HeroSectionProps {
 	isAuthenticated: boolean;
+}
+
+function AnimatedCounter({
+	value,
+	suffix = "",
+}: {
+	value: number;
+	suffix?: string;
+}) {
+	const ref = useRef<HTMLSpanElement>(null);
+	const isInView = useInView(ref, { once: true });
+	const displayValue = isInView ? value : 0;
+
+	return (
+		<span ref={ref} className="tabular-nums">
+			{displayValue.toLocaleString()}
+			{suffix}
+		</span>
+	);
 }
 
 export const HeroSection = memo(function HeroSection({
@@ -77,14 +102,31 @@ export const HeroSection = memo(function HeroSection({
 						>
 							{isAuthenticated ? (
 								<Link href="/dashboard">
-									<Button size="lg" className="w-full sm:w-auto">
+									<Button
+										size="lg"
+										className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
+									>
 										{t("home.heroDashboard")}
 									</Button>
 								</Link>
 							) : (
 								<Link href="/dashboard">
-									<Button size="lg" className="w-full sm:w-auto">
+									<Button
+										size="lg"
+										className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
+									>
 										{t("home.heroStartFree")}
+									</Button>
+								</Link>
+							)}
+							{!isAuthenticated && (
+								<Link href="/auth/sign-in">
+									<Button
+										variant="outline"
+										size="lg"
+										className="w-full sm:w-auto"
+									>
+										{t("home.navSignIn")}
 									</Button>
 								</Link>
 							)}
@@ -94,7 +136,7 @@ export const HeroSection = memo(function HeroSection({
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ duration: 0.4, delay: 0.2 }}
-							className="flex items-center gap-6 text-muted-foreground text-sm"
+							className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm"
 						>
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
@@ -107,6 +149,38 @@ export const HeroSection = memo(function HeroSection({
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
 								<span>{t("home.heroBadgeAi")}</span>
+							</div>
+						</m.div>
+
+						<m.div
+							initial={{ opacity: 0, y: 16 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.4, delay: 0.3, ease: iOSEase }}
+							className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-2"
+						>
+							<div className="flex flex-col">
+								<span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
+									<AnimatedCounter value={50000} suffix="+" />
+								</span>
+								<span className="text-muted-foreground text-xs">
+									Questions answered
+								</span>
+							</div>
+							<div className="flex flex-col">
+								<span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
+									<AnimatedCounter value={14} suffix="" />
+								</span>
+								<span className="text-muted-foreground text-xs">
+									NSC Subjects
+								</span>
+							</div>
+							<div className="flex flex-col">
+								<span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
+									<AnimatedCounter value={1000} suffix="+" />
+								</span>
+								<span className="text-muted-foreground text-xs">
+									Past papers
+								</span>
 							</div>
 						</m.div>
 					</div>

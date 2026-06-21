@@ -16,6 +16,7 @@ import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { ChallengeBanner } from "@/components/study-groups/challenge/challenge-banner";
 import { ChallengeLeaderboard } from "@/components/study-groups/challenge/challenge-leaderboard";
+import { CreateChallengeDialog } from "@/components/study-groups/challenge/create-challenge-dialog";
 import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { LiveSessionBar } from "@/components/study-groups/live-session-bar";
 import { Badge } from "@/components/ui/badge";
@@ -130,9 +131,17 @@ export function GroupDetail() {
 							groupId={groupId}
 						/>
 						<Card className="flex flex-col gap-3 p-4">
-							<div className="flex items-center gap-2">
-								<HugeiconsIcon icon={Award01Icon} className="size-5" />
-								<h2 className="font-semibold">This Week&apos;s Leaderboard</h2>
+							<div className="flex items-center justify-between">
+								<div className="flex items-center gap-2">
+									<HugeiconsIcon icon={Award01Icon} className="size-5" />
+									<h2 className="font-semibold">
+										This Week&apos;s Leaderboard
+									</h2>
+								</div>
+								<CreateChallengeDialog
+									groupId={groupId}
+									onCreated={() => window.location.reload()}
+								/>
 							</div>
 							<ChallengeLeaderboard
 								entries={challengeData.entries}

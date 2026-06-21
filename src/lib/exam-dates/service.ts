@@ -2,6 +2,7 @@ import { dexieDataAccess } from "@/lib/db";
 import type { StudyDataAccess } from "@/lib/db/data-access";
 import { EXAM_SLOTS_2026_MAY } from "./data-2026-may";
 import { EXAM_SLOTS_2026_NOV } from "./data-2026-nov";
+import { EXAM_SLOTS_2027_MAY } from "./data-2027-may";
 import { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 import type { ExamSlot } from "./types";
 
@@ -17,6 +18,7 @@ export { getSubjectAbbr, getSubjectColor };
 const SEED_DATA: Record<string, ExamSlot[]> = {
 	"may-june_2026": EXAM_SLOTS_2026_MAY,
 	"oct-nov_2026": EXAM_SLOTS_2026_NOV,
+	"may-june_2027": EXAM_SLOTS_2027_MAY,
 };
 
 export function getSeedData(session: string, year: number): ExamSlot[] {

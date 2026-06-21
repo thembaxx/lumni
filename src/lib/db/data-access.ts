@@ -11,6 +11,7 @@ import type {
 	CachedSubject,
 	CachedVisual,
 	ChatMessageRecord,
+	CompetitionScoreRecord,
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
@@ -187,6 +188,10 @@ export interface EmbeddingDataAccess {
 	questionEmbeddings: DataAccessTable<QuestionEmbedding, string>;
 }
 
+export interface CommunityDataAccess {
+	competitionScores: DataAccessTable<CompetitionScoreRecord, number>;
+}
+
 export interface LegacyDataAccess {
 	subjects: DataAccessTable<CachedSubject, number>;
 	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
@@ -212,4 +217,5 @@ export interface DataAccess
 		SocialDataAccess,
 		CacheDataAccess,
 		EmbeddingDataAccess,
+		CommunityDataAccess,
 		LegacyDataAccess {}

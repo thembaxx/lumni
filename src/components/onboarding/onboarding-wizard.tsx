@@ -302,15 +302,35 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				<ParticleField step={step} />
 
 				<PageContainer className="relative z-elevated min-h-full py-4 md:py-8">
-					<StepIndicator step={step} totalSteps={STEPS_COPY.length} />
+					<div className="mb-2 flex items-center justify-between">
+						<StepIndicator step={step} totalSteps={STEPS_COPY.length} />
+						<div className="ml-4 flex shrink-0 items-center gap-3">
+							<span className="font-medium text-muted-foreground text-xs tabular-nums">
+								Step {step + 1} of {STEPS_COPY.length}
+							</span>
+							{step < STEPS_COPY.length - 1 && (
+								<button
+									type="button"
+									onClick={complete}
+									className="font-medium text-primary text-xs underline decoration-primary/30 underline-offset-2 transition-all hover:decoration-primary"
+								>
+									Skip to dashboard
+								</button>
+							)}
+						</div>
+					</div>
 
 					<AnimatePresence mode="wait" initial={false}>
 						<m.div
 							key={`step-${step}`}
-							initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={shouldReduceMotion ? {} : { opacity: 0, y: -8 }}
-							transition={{ duration: 0.25, ease: iOSEase }}
+							initial={
+								shouldReduceMotion ? {} : { opacity: 0, y: 20, scale: 0.98 }
+							}
+							animate={{ opacity: 1, y: 0, scale: 1 }}
+							exit={
+								shouldReduceMotion ? {} : { opacity: 0, y: -12, scale: 0.98 }
+							}
+							transition={{ duration: 0.35, ease: iOSEase }}
 							className="flex-1"
 						>
 							{step < 3 ? (

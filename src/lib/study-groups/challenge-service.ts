@@ -9,6 +9,7 @@ import { logError } from "@/lib/shared/logger";
 import type { ServiceResult } from "@/lib/shared/service-result";
 import { failure, success } from "@/lib/shared/service-result";
 import type {
+	ChallengeType,
 	GroupBadge,
 	GroupChallenge,
 	GroupChallengeEntry,
@@ -31,6 +32,7 @@ function computeCombinedScore(
 
 export async function getOrCreateChallenge(
 	groupId: string,
+	challengeType: ChallengeType = "most-quizzes",
 ): Promise<ServiceResult<GroupChallenge>> {
 	try {
 		const { start, end } = getWeekRange();
@@ -41,7 +43,10 @@ export async function getOrCreateChallenge(
 		);
 
 		const activeChallenge = existing.find(
-			(c) => c.weekStart <= end && c.weekEnd >= start,
+			(c) =>
+				c.weekStart <= end &&
+				c.weekEnd >= start &&
+				c.challengeType === challengeType,
 		);
 		if (activeChallenge) return success(activeChallenge);
 
@@ -59,6 +64,7 @@ export async function getOrCreateChallenge(
 			weekStart: start,
 			weekEnd: end,
 			status: "active",
+			challengeType,
 			createdAt: now,
 		});
 
@@ -72,6 +78,35 @@ export async function getOrCreateChallenge(
 		logError("StudyGroupsChallengeService", err);
 		return failure(
 			err instanceof Error ? err.message : "Failed to get challenge",
+		);
+	}
+}
+
+export async function createCustomChallenge(
+	groupId: string,
+	challengeType: ChallengeType,
+): Promise<ServiceResult<GroupChallenge>> {
+	try {
+		const { start, end } = getWeekRange();
+		const now = new Date().toISOString();
+		const challengeId = await createDocument(COLLECTIONS.GROUP_CHALLENGES, {
+			groupId,
+			weekStart: start,
+			weekEnd: end,
+			status: "active",
+			challengeType,
+			createdAt: now,
+		});
+		const challenge = await getDocument<GroupChallenge>(
+			COLLECTIONS.GROUP_CHALLENGES,
+			challengeId,
+		);
+		if (!challenge) return failure("Failed to create challenge");
+		return success(challenge);
+	} catch (err) {
+		logError("StudyGroupsChallengeService", err);
+		return failure(
+			err instanceof Error ? err.message : "Failed to create challenge",
 		);
 	}
 }

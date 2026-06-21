@@ -190,7 +190,7 @@ export async function shareAssignment(
 	};
 }
 
-async function _shareFlashcardDeck(
+export async function shareFlashcardDeck(
 	deck: Omit<FlashcardDeck, "id" | "createdAt">,
 	userId: string,
 ): Promise<string> {

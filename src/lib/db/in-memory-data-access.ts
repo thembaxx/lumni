@@ -17,6 +17,7 @@ import type {
 	CachedSubject,
 	CachedVisual,
 	ChatMessageRecord,
+	CompetitionScoreRecord,
 	ExamSessionSnapshot,
 	ExtractionCache,
 	FlashcardSyncState,
@@ -310,4 +311,5 @@ export class InMemoryDataAccess implements DataAccess {
 	vocabularyList = new InMemoryTable<VocabularyEntry>();
 	lessonProgress = new InMemoryTable<LessonProgress, string>();
 	onboardingState = new InMemoryTable<OnboardingState, string>();
+	competitionScores = new InMemoryTable<CompetitionScoreRecord>();
 }

@@ -195,6 +195,7 @@ class DexieDataAccess implements DataAccess {
 	vocabularyList = tableAdapter(offlineDB.vocabularyList);
 	lessonProgress = tableAdapter(offlineDB.lessonProgress);
 	onboardingState = tableAdapter(offlineDB.onboardingState);
+	competitionScores = tableAdapter(offlineDB.competitionScores);
 }
 
 export const dexieDataAccess =

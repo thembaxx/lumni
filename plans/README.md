@@ -43,6 +43,10 @@ Commit baseline: `8a6fadbe`
 | 032 | PWA install polish + offline page | P3 | S | LOW | — | DONE |
 | 033 | More stories — AI-generated + more Gutenberg | P3 | L | LOW | — | DONE |
 | 034 | Polish/hardening — a11y, error handling, performance | P2 | S | LOW | — | DONE |
+| 038 | Community — shared flashcards, competitions, study groups | P2 | M | MED | — | DONE |
+| 037 | Go to market — SEO, landing page, onboarding | P1 | S | LOW | — | DONE |
+| 036 | Content expansion — exam papers + question banks | P3 | L | LOW | — | DONE |
+| 035 | Quality hardening — Lighthouse audit + edge case hardening | P2 | S | LOW | — | DONE |
 
 ## Execution phases
 

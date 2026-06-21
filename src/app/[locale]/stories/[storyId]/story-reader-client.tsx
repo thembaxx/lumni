@@ -192,7 +192,7 @@ export function StoryReaderClient() {
 			saveProgress(finalPct, completedRef.current, timeSpentRef.current);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [saveProgress]);
 
 	useEffect(() => {
 		if (completedRef.current) return;

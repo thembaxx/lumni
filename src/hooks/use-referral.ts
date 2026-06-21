@@ -1,7 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+
+const REFERRAL_STORAGE_KEY = "lumni_referral_source";
 
 export interface ReferralInfo {
 	code: string;
@@ -23,6 +25,7 @@ interface UseReferralReturn {
 	error: string | null;
 	refetch: () => Promise<void>;
 	share: () => Promise<void>;
+	referralSource: string | null;
 }
 
 async function fetchReferralInfo(): Promise<ReferralInfo | null> {
@@ -35,14 +38,47 @@ async function fetchReferralInfo(): Promise<ReferralInfo | null> {
 	return res.json();
 }
 
+function readReferralFromUrl(): string | null {
+	if (typeof window === "undefined") return null;
+	const params = new URLSearchParams(window.location.search);
+	return params.get("ref");
+}
+
+function persistReferralSource(code: string): void {
+	try {
+		const existing = localStorage.getItem(REFERRAL_STORAGE_KEY);
+		if (!existing) {
+			localStorage.setItem(REFERRAL_STORAGE_KEY, code);
+		}
+	} catch {
+		/* localStorage unavailable */
+	}
+}
+
+function getStoredReferralSource(): string | null {
+	try {
+		return localStorage.getItem(REFERRAL_STORAGE_KEY);
+	} catch {
+		return null;
+	}
+}
+
 export function useReferral(): UseReferralReturn {
 	const { data, isPending, error, refetch } = useQuery({
 		queryKey: ["referral-info"],
 		queryFn: fetchReferralInfo,
 	});
 
+	useEffect(() => {
+		const refCode = readReferralFromUrl();
+		if (refCode) {
+			persistReferralSource(refCode);
+		}
+	}, []);
+
 	const info = data ?? null;
 	const isLoading = isPending;
+	const referralSource = getStoredReferralSource();
 
 	const share = useCallback(async () => {
 		if (!info) return;
@@ -65,5 +101,6 @@ export function useReferral(): UseReferralReturn {
 			await refetch();
 		},
 		share,
+		referralSource,
 	};
 }

@@ -5,6 +5,7 @@ import { PageContainer } from "@/components/layout/page-container";
 
 export const metadata: Metadata = {
 	title: "Privacy Policy - Lumni",
+	description: "How Lumni collects, uses, and protects your personal data",
 };
 
 export default async function PrivacyPage() {

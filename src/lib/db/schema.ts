@@ -336,6 +336,15 @@ export interface StoryProgressRecord {
 	timeSpentSeconds: number;
 }
 
+export interface CompetitionScoreRecord {
+	id?: number;
+	userId: string;
+	weekStart: string;
+	weekEnd: string;
+	xpEarned: number;
+	updatedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -390,6 +399,7 @@ export class LumniOfflineDB extends Dexie {
 	storyQuestions!: Table<StoryQuestionSet, string>;
 	seenPastPaperQuestions!: Table<SeenPastPaperQuestion, number>;
 	storyProgress!: Table<StoryProgressRecord, number>;
+	competitionScores!: Table<CompetitionScoreRecord, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -1154,6 +1164,11 @@ export class LumniOfflineDB extends Dexie {
 		this.version(38).stores({
 			storyProgress:
 				"++id, &[userId+storyId], userId, storyId, completed, lastReadAt",
+		});
+
+		// v39: competitionScores for weekly competition leaderboards
+		this.version(39).stores({
+			competitionScores: "++id, userId, weekStart, weekEnd, xpEarned",
 		});
 	}
 }

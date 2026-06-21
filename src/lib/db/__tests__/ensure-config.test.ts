@@ -12,10 +12,10 @@ describe("ensure-config", () => {
 		expect(seedConfig.subjects.matchField).toBe("code");
 	});
 
-	test("subjects documents are static array with 8 entries", () => {
+	test("subjects documents are static array with 24 entries", () => {
 		const docs = seedConfig.subjects.documents;
 		expect(Array.isArray(docs)).toBe(true);
-		expect(docs).toHaveLength(8);
+		expect(docs).toHaveLength(24);
 	});
 
 	test("subjects include mathematics with correct props", () => {
@@ -41,7 +41,7 @@ describe("ensure-config", () => {
 		const docs = await (
 			docsFn as (s: typeof seeded) => Array<Record<string, unknown>>
 		)(seeded);
-		expect(docs).toHaveLength(9);
+		expect(docs).toHaveLength(30);
 
 		const calculus = docs.find((d) => d.name === "Calculus");
 		expect(calculus).toBeDefined();

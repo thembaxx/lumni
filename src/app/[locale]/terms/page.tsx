@@ -3,6 +3,7 @@ import { PageContainer } from "@/components/layout/page-container";
 
 export const metadata: Metadata = {
 	title: "Terms of Service - Lumni",
+	description: "Terms and conditions for using Lumni study tools",
 };
 
 export default function TermsPage() {

@@ -6,16 +6,17 @@ import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { BentoStatRow } from "@/components/dashboard/bento-stat-row";
+import { CompetitionCard } from "@/components/dashboard/competition-card";
 import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
 import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
-import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { StreakCard } from "@/components/dashboard/streak-card";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import { WeakTopicsCard } from "@/components/dashboard/weak-topics-card";
+import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { RewardChestPanel } from "@/components/gamification/reward-chest/reward-chest-panel";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
@@ -180,6 +181,11 @@ export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
 				{isLoggedIn && (
 					<StaggeredSection>
 						<RewardChestPanel />
+					</StaggeredSection>
+				)}
+				{isLoggedIn && (
+					<StaggeredSection>
+						<CompetitionCard />
 					</StaggeredSection>
 				)}
 				<StaggeredSection>

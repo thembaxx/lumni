@@ -1,5 +1,9 @@
 export type ChallengeStatus = "active" | "completed";
 export type BadgeTier = "bronze" | "silver" | "gold";
+export type ChallengeType =
+	| "most-quizzes"
+	| "highest-accuracy"
+	| "most-flashcards";
 
 export interface GroupChallenge {
 	$id: string;
@@ -7,8 +11,21 @@ export interface GroupChallenge {
 	weekStart: string;
 	weekEnd: string;
 	status: ChallengeStatus;
+	challengeType: ChallengeType;
 	createdAt: string;
 }
+
+export const CHALLENGE_TYPE_LABELS: Record<ChallengeType, string> = {
+	"most-quizzes": "Most Quizzes Completed",
+	"highest-accuracy": "Highest Accuracy",
+	"most-flashcards": "Most Flashcards Reviewed",
+};
+
+export const CHALLENGE_TYPE_ICONS: Record<ChallengeType, string> = {
+	"most-quizzes": "📝",
+	"highest-accuracy": "🎯",
+	"most-flashcards": "🃏",
+};
 
 export interface GroupChallengeEntry {
 	$id: string;

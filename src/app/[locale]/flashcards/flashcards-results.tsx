@@ -1,6 +1,11 @@
 "use client";
 
-import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
+import {
+	Home01Icon,
+	Share08Icon,
+	Target01Icon,
+	UndoIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Confetti } from "@/components/celebration";
@@ -14,6 +19,7 @@ interface FlashcardsResultsProps {
 	subject: string;
 	onGoHouse: () => void;
 	onRestart: () => void;
+	onShareDeck?: () => void;
 }
 
 export function FlashcardsResults({
@@ -23,6 +29,7 @@ export function FlashcardsResults({
 	subject,
 	onGoHouse,
 	onRestart,
+	onShareDeck,
 }: FlashcardsResultsProps) {
 	const t = useTranslations();
 	const accuracy =
@@ -91,7 +98,19 @@ export function FlashcardsResults({
 										{t("flashcards.tryAgain")}
 									</Button>
 								</div>
-								<div className="col-span-12">
+								{onShareDeck && (
+									<div className="col-span-6">
+										<Button
+											variant="outline"
+											className="w-full gap-2"
+											onClick={onShareDeck}
+										>
+											<HugeiconsIcon icon={Share08Icon} className="size-4" />
+											Share Deck
+										</Button>
+									</div>
+								)}
+								<div className={onShareDeck ? "col-span-6" : "col-span-12"}>
 									<ShareResultButton
 										cardParams={{
 											score: knownCount,
