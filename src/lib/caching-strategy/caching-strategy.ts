@@ -32,22 +32,14 @@ export class CachingStrategy<T, P> implements CacheResolver<T, P> {
 	) {}
 
 	async resolve(params: P): Promise<T | null> {
-		const results = await Promise.allSettled(
-			this.tiers.map((tier) => tier.read(params)),
-		);
-		for (const [i, result] of results.entries()) {
-			if (
-				result.status === "fulfilled" &&
-				result.value !== null &&
-				result.value !== undefined
-			) {
-				return result.value;
-			}
-			if (result.status === "rejected") {
-				console.warn(
-					`Cache read from tier ${this.tiers[i]?.name ?? i} failed:`,
-					result.reason,
-				);
+		for (const tier of this.tiers) {
+			try {
+				const value = await tier.read(params);
+				if (value !== null && value !== undefined) {
+					return value;
+				}
+			} catch (e) {
+				console.warn(`Cache read from tier ${tier.name} failed:`, e);
 			}
 		}
 
