@@ -37,15 +37,17 @@ vi.mock("@/lib/utils/storage", () => ({
 
 globalThis.fetch = mockFetch as unknown as typeof fetch;
 
-const FREE_FEATURES = ["ai-tutor", "unlimited-flashcards"];
-const PREMIUM_FEATURES = [
+const ALL_FEATURES = [
 	"ai-tutor",
 	"advanced-analytics",
 	"unlimited-flashcards",
 	"custom-study-plans",
 	"exam-simulator",
 	"priority-support",
-];
+	"offline-quiz-packs",
+	"problem-library",
+	"visual-engine",
+] as const;
 
 function createPremiumWrapper() {
 	const qc = new QueryClient({
@@ -66,20 +68,14 @@ describe("usePremium", () => {
 		mockFetch.mockReset();
 	});
 
-	test("initial state is free tier", () => {
+	test("initial state is free tier with all features available", () => {
 		const { result } = renderHook(() => usePremium(), {
 			wrapper: createPremiumWrapper(),
 		});
 
 		expect(result.current.isPremium).toBe(false);
-		for (const f of FREE_FEATURES) {
-			expect(result.current.hasFeature(f)).toBe(true);
-		}
-		const freeSet = new Set(FREE_FEATURES);
-		for (const f of PREMIUM_FEATURES) {
-			if (!freeSet.has(f)) {
-				expect(result.current.hasFeature(f)).toBe(false);
-			}
+		for (const f of ALL_FEATURES) {
+			expect(result.current.hasFeature(f as PremiumFeature)).toBe(true);
 		}
 	});
 
@@ -93,8 +89,8 @@ describe("usePremium", () => {
 		});
 
 		expect(result.current.isPremium).toBe(true);
-		for (const f of PREMIUM_FEATURES) {
-			expect(result.current.hasFeature(f)).toBe(true);
+		for (const f of ALL_FEATURES) {
+			expect(result.current.hasFeature(f as PremiumFeature)).toBe(true);
 		}
 	});
 
@@ -113,8 +109,8 @@ describe("usePremium", () => {
 		});
 
 		expect(result.current.isPremium).toBe(false);
-		for (const f of FREE_FEATURES) {
-			expect(result.current.hasFeature(f)).toBe(true);
+		for (const f of ALL_FEATURES) {
+			expect(result.current.hasFeature(f as PremiumFeature)).toBe(true);
 		}
 	});
 
@@ -125,7 +121,7 @@ describe("usePremium", () => {
 
 		expect(result.current.hasFeature("ai-tutor" as PremiumFeature)).toBe(true);
 		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(
-			false,
+			true,
 		);
 
 		await act(async () => {

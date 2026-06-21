@@ -32,8 +32,6 @@ export type PremiumFeature =
 	| "problem-library"
 	| "visual-engine";
 
-const FREE_FEATURES: PremiumFeature[] = ["ai-tutor", "unlimited-flashcards"];
-
 const PREMIUM_FEATURES: PremiumFeature[] = [
 	"ai-tutor",
 	"advanced-analytics",
@@ -45,6 +43,8 @@ const PREMIUM_FEATURES: PremiumFeature[] = [
 	"problem-library",
 	"visual-engine",
 ];
+
+const FREE_FEATURES: PremiumFeature[] = PREMIUM_FEATURES;
 
 const YEARLY_PRICE_ID = "price_premium_yearly";
 const MONTHLY_PRICE_ID = "price_premium_monthly";

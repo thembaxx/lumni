@@ -3,8 +3,7 @@ import { PremiumClient } from "./premium-client";
 
 export const metadata: Metadata = {
 	title: "Premium - Lumni",
-	description:
-		"Upgrade to Lumni Premium for advanced features and priority support",
+	description: "All Lumni features are free",
 };
 
 export default function PremiumPage() {
