@@ -5,7 +5,6 @@ import {
 	createContext,
 	use,
 	useCallback,
-	useEffect,
 	useMemo,
 	useState,
 } from "react";
@@ -31,10 +30,6 @@ export function ImmersiveModeProvider({
 }) {
 	const [isImmersive, setIsImmersive] = useState(false);
 	const _pathname = usePathname();
-
-	useEffect(() => {
-		setIsImmersive(false);
-	}, []);
 
 	const setImmersive = useCallback((v: boolean) => {
 		setIsImmersive(v);

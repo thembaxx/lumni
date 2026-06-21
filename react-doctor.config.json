@@ -59,7 +59,10 @@
 				"rules": ["react-doctor/no-initialize-state"]
 			},
 			{
-				"files": ["src/lib/z-integration/integration.int-test.ts"],
+				"files": [
+					"src/lib/z-integration/integration.int-test.ts",
+					"src/lib/server/exam-paper-actions.ts"
+				],
 				"rules": ["react-doctor/server-sequential-independent-await"]
 			},
 			{

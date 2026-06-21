@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,27 +10,39 @@ import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
 import { logError } from "@/lib/shared/logger";
 
+type State = { entries: WrongAnswerEntry[]; loading: boolean };
+type Action =
+	| { type: "loaded"; entries: WrongAnswerEntry[] }
+	| { type: "error" };
+
+const initialState: State = { entries: [], loading: true };
+
+function reducer(_state: State, action: Action): State {
+	switch (action.type) {
+		case "loaded":
+			return { entries: action.entries, loading: false };
+		case "error":
+			return { entries: [], loading: false };
+	}
+}
+
 export function RecentQuestionsCard() {
 	const { getWrongAnswers } = useWrongAnswerJournal();
 	const { push } = useRouter();
-	const [entries, setEntries] = useState<WrongAnswerEntry[]>([]);
-	const [loading, setLoading] = useState(true);
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	useEffect(() => {
 		getWrongAnswers(undefined, undefined, 5)
-			.then((data) => {
-				setEntries(data);
-				setLoading(false);
-			})
+			.then((data) => dispatch({ type: "loaded", entries: data }))
 			.catch((err) => {
 				logError("RecentQuestionsCard", err);
-				setLoading(false);
+				dispatch({ type: "error" });
 			});
 	}, [getWrongAnswers]);
 
-	if (entries.length === 0 && !loading) return null;
+	if (state.entries.length === 0 && !state.loading) return null;
 
-	if (loading) {
+	if (state.loading) {
 		return (
 			<Card className="overflow-hidden rounded-3xl shadow-level-1">
 				<CardHeader>
@@ -64,7 +76,7 @@ export function RecentQuestionsCard() {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3 p-5 pt-0">
-					{entries.map((entry) => (
+					{state.entries.map((entry) => (
 						<div
 							key={entry.id}
 							className="rounded-2xl border bg-card p-4 text-sm"

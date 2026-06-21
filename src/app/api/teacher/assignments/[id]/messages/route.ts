@@ -5,6 +5,8 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 
+const VALID_ROLES = ["teacher", "student", "parent"];
+
 export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ id: string }> },
@@ -81,8 +83,7 @@ export async function POST(
 		);
 	}
 
-	const validRoles = ["teacher", "student", "parent"];
-	const role = validRoles.includes(senderRole || "") ? senderRole : "teacher";
+	const role = VALID_ROLES.includes(senderRole || "") ? senderRole : "teacher";
 
 	const msg = {
 		assignmentId: id,

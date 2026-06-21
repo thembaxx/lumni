@@ -257,14 +257,12 @@ export async function deleteExamPaper(id: string): Promise<void> {
 
 	const utapi = new UTApi();
 
-	// Delete associated file keys from UploadThing
 	const rawKeys = doc.fileKeys as string | undefined;
 	if (rawKeys) {
 		try {
 			const keys = JSON.parse(rawKeys) as string[];
 			await utapi.deleteFiles(keys);
 		} catch {
-			// fileKeys may already be parsed or in single-key format
 			if (typeof rawKeys === "string" && rawKeys.length > 0) {
 				await utapi.deleteFiles(rawKeys);
 			}

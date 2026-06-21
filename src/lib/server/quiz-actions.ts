@@ -7,27 +7,34 @@ export async function fetchQuestions(subjectIds: string[]) {
 	if (subjectIds.length === 0) return [];
 	const _userId = await auth();
 
-	const topicDocs = await listDocuments(COLLECTIONS.TOPICS);
+	const subjectSet = new Set(subjectIds);
+
+	const [topicDocs, questionsData] = await Promise.all([
+		listDocuments(COLLECTIONS.TOPICS),
+		listDocuments(COLLECTIONS.QUESTIONS) as Promise<{
+			$id: string;
+			topicId: string;
+			options: string;
+		}[]>,
+	]);
 
 	const typedTopicDocs = topicDocs as { $id: string; subjectId: string }[];
 
-	const topicIds = typedTopicDocs.reduce((acc, t) => {
-		if (subjectIds.includes(t.subjectId)) acc.push(t.$id);
-		return acc;
-	}, [] as string[]);
+	const topicIds = new Set<string>();
+	for (const t of typedTopicDocs) {
+		if (subjectSet.has(t.subjectId)) topicIds.add(t.$id);
+	}
 
-	if (topicIds.length === 0) return [];
+	if (topicIds.size === 0) return [];
 
-	const questionsData = (await listDocuments(COLLECTIONS.QUESTIONS)) as {
-		$id: string;
-		topicId: string;
-		options: string;
-	}[];
-
-	const filtered = questionsData.filter((q) => topicIds.includes(q.topicId));
-
-	return filtered.map((q) => ({
-		...q,
-		options: q.options ? JSON.parse(q.options) : null,
-	}));
+	const result: { $id: string; topicId: string; options: unknown }[] = [];
+	for (const q of questionsData) {
+		if (topicIds.has(q.topicId)) {
+			result.push({
+				...q,
+				options: q.options ? JSON.parse(q.options) : null,
+			});
+		}
+	}
+	return result;
 }

@@ -222,8 +222,10 @@ export const generateEmbedding: JobHandler = async (payload) => {
 	const { questionId, questionText, subject } =
 		payload as JobPayloadByType["generate-embedding"];
 	try {
-		const { embedText } = await import("@/lib/embedding/client");
-		const { storeEmbedding } = await import("@/lib/embedding/cache");
+		const [{ embedText }, { storeEmbedding }] = await Promise.all([
+			import("@/lib/embedding/client"),
+			import("@/lib/embedding/cache"),
+		]);
 		const values = await embedText(questionText);
 		if (!values) {
 			console.warn("[Embedding] Failed to generate for:", questionId);

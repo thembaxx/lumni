@@ -90,8 +90,9 @@ export function GettingStartedCard() {
 	const timeoutRef = useRef<NodeJS.Timeout>(null);
 
 	useEffect(() => {
+		const ref = timeoutRef;
 		return () => {
-			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+			if (ref.current) clearTimeout(ref.current);
 		};
 	}, []);
 

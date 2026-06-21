@@ -131,8 +131,9 @@ export function AdminDashboard() {
 	const successTimeoutRef = useRef<NodeJS.Timeout[]>([]);
 
 	useEffect(() => {
+		const ref = successTimeoutRef;
 		return () => {
-			for (const id of successTimeoutRef.current) clearTimeout(id);
+			for (const id of ref.current) clearTimeout(id);
 		};
 	}, []);
 

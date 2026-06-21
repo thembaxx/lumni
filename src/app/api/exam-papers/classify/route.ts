@@ -43,13 +43,18 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
 				.equals(subject)
 				.toArray();
 
-			const unclassified = all
-				.filter((q) => !q.subtopicId)
-				.map((q) => ({
-					id: q.id,
-					questionText: q.questionText,
-					subject: q.subject,
-				}));
+			const allById = new Map(all.map((q) => [q.id, q]));
+
+			const unclassified = all.reduce<{
+				id: string;
+				questionText: string;
+				subject: string;
+			}[]>((acc, q) => {
+				if (!q.subtopicId) {
+					acc.push({ id: q.id, questionText: q.questionText, subject: q.subject });
+				}
+				return acc;
+			}, []);
 
 			if (unclassified.length === 0) {
 				return NextResponse.json({
@@ -59,12 +64,15 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
 				});
 			}
 
-			const curriculumTopics = all
-				.filter((q) => q.topic)
-				.map((q) => {
-					const topic = q.topic ?? "";
-					return { id: topic, subject: q.subject, topic, subtopic: topic };
-				});
+			const curriculumTopics = all.reduce<
+				{ id: string; subject: string; topic: string; subtopic: string }[]
+			>((acc, q) => {
+				if (q.topic) {
+					const topic = q.topic;
+					acc.push({ id: topic, subject: q.subject, topic, subtopic: topic });
+				}
+				return acc;
+			}, []);
 
 			const classifications = await classifyQuestions(
 				unclassified,
@@ -72,7 +80,7 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
 			);
 
 			for (const [questionId, subtopicId] of classifications) {
-				const question = all.find((q) => q.id === questionId);
+				const question = allById.get(questionId);
 				if (question) {
 					await pastPaperQuestions.update(questionId, { subtopicId });
 				}

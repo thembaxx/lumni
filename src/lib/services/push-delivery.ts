@@ -58,8 +58,10 @@ async function fetchAllSubscriptions(): Promise<
 	{ endpoint: string; auth: string; p256dh: string }[]
 > {
 	try {
-		const { databases } = await import("@/lib/appwrite.server");
-		const { APPWRITE_DATABASE_ID } = await import("@/lib/db/client");
+		const [{ databases }, { APPWRITE_DATABASE_ID }] = await Promise.all([
+			import("@/lib/appwrite.server"),
+			import("@/lib/db/client"),
+		]);
 		const docs = await databases.listDocuments(
 			APPWRITE_DATABASE_ID,
 			"push_subscriptions",
@@ -78,8 +80,10 @@ async function fetchSubscriptionsByUser(
 	userId: string,
 ): Promise<{ endpoint: string; auth: string; p256dh: string }[]> {
 	try {
-		const { Query } = await import("appwrite");
-		const { listDocuments } = await import("@/lib/db/client");
+		const [{ Query }, { listDocuments }] = await Promise.all([
+			import("appwrite"),
+			import("@/lib/db/client"),
+		]);
 		const docs = await listDocuments<{
 			endpoint: string;
 			auth: string;
