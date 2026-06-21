@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type { RateLimitConfig } from "@/lib/rate-limiter/core";
+import { logError } from "@/lib/shared/logger";
 import { checkRateLimit, getRateLimitHeaders } from "./rate-limit";
 
 export type RouteHandler = (
@@ -20,10 +21,11 @@ export function withRateLimit(
 		let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
 		try {
 			rateLimit = await checkRateLimit(ip, apiConfig);
-		} catch {
+		} catch (e) {
+			logError("RateLimit", e);
 			rateLimit = {
-				allowed: true,
-				remaining: Infinity,
+				allowed: false,
+				remaining: 0,
 				resetAt: Date.now() + apiConfig.windowMs,
 			};
 		}
