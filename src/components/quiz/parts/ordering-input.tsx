@@ -4,6 +4,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useDragSort } from "@/hooks/use-drag-sort";
 import type { OrderingItem } from "@/lib/question-engine/types";
 
 interface OrderingInputProps {
@@ -19,34 +20,19 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 			[items],
 		),
 	);
-	const [draggedId, setDraggedId] = useState<string | null>(null);
-	const [dragOverId, setDragOverId] = useState<string | null>(null);
 
-	const handleDragStart = useCallback((e: React.DragEvent, id: string) => {
-		setDraggedId(id);
-		e.dataTransfer.effectAllowed = "move";
-		e.dataTransfer.setData("text/plain", id);
-	}, []);
-
-	const handleDragOver = useCallback((e: React.DragEvent, id: string) => {
-		e.preventDefault();
-		e.dataTransfer.dropEffect = "move";
-		setDragOverId(id);
-	}, []);
-
-	const handleDragEnd = useCallback(() => {
-		setDraggedId(null);
-		setDragOverId(null);
-	}, []);
+	const {
+		draggedId,
+		hoveredId,
+		handleDragStart,
+		handleDragOver,
+		handleDragEnd,
+	} = useDragSort();
 
 	const handleDrop = useCallback((e: React.DragEvent, targetId: string) => {
 		e.preventDefault();
 		const sourceId = e.dataTransfer.getData("text/plain");
-		if (!sourceId || sourceId === targetId) {
-			setDraggedId(null);
-			setDragOverId(null);
-			return;
-		}
+		if (!sourceId || sourceId === targetId) return;
 
 		setOrderedIds((prev) => {
 			const newOrder = prev.filter((id) => id !== sourceId);
@@ -58,8 +44,6 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 			);
 			return newOrder;
 		});
-		setDraggedId(null);
-		setDragOverId(null);
 	}, []);
 
 	const moveUp = useCallback((id: string) => {
@@ -94,7 +78,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 					{orderedIds.map((id, idx) => {
 						const item = itemMap[id];
 						const isDragging = draggedId === id;
-						const isOver = dragOverId === id && draggedId !== id;
+						const isOver = hoveredId === id && draggedId !== id;
 						return (
 							<m.div
 								key={id}

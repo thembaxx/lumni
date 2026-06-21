@@ -4,6 +4,7 @@ import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useDragSort } from "@/hooks/use-drag-sort";
 import type { SequenceBlank, SequenceSlot } from "@/lib/question-engine/types";
 
 interface FillInSequenceInputProps {
@@ -42,28 +43,17 @@ export function FillInSequenceInput({
 	}, [blanks, shuffleDistractors]);
 
 	const [assigned, setAssigned] = useState<Record<string, string>>({});
-	const [draggedOpt, setDraggedOpt] = useState<string | null>(null);
-	const [hoveredBlank, setHoveredBlank] = useState<string | null>(null);
+	const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
 
 	const unassignedOptions = useMemo(
 		() => allOptions.filter((opt) => !Object.values(assigned).includes(opt.id)),
 		[allOptions, assigned],
 	);
 
-	const handleOptDragStart = useCallback(
-		(e: React.DragEvent, optId: string) => {
-			setDraggedOpt(optId);
-			e.dataTransfer.effectAllowed = "move";
-			e.dataTransfer.setData("text/plain", optId);
-		},
-		[],
-	);
-
 	const handleBlankDragOver = useCallback(
-		(e: React.DragEvent, blankId: string) => {
+		(e: React.DragEvent, _blankId: string) => {
 			e.preventDefault();
 			e.dataTransfer.dropEffect = "move";
-			setHoveredBlank(blankId);
 		},
 		[],
 	);
@@ -72,13 +62,11 @@ export function FillInSequenceInput({
 		(e: React.DragEvent, blankId: string) => {
 			e.preventDefault();
 			const optId = e.dataTransfer.getData("text/plain");
-			if (optId) {
+			if (optId && allOptions.find((o) => o.id === optId)) {
 				setAssigned((prev) => ({ ...prev, [blankId]: optId }));
 			}
-			setDraggedOpt(null);
-			setHoveredBlank(null);
 		},
-		[],
+		[allOptions],
 	);
 
 	const handleRemoveFromBlank = useCallback((blankId: string) => {
@@ -87,10 +75,6 @@ export function FillInSequenceInput({
 			delete next[blankId];
 			return next;
 		});
-	}, []);
-
-	const handleBlankDragOverEnd = useCallback(() => {
-		setHoveredBlank(null);
 	}, []);
 
 	const getAssignedText = useCallback(
@@ -109,7 +93,6 @@ export function FillInSequenceInput({
 					if (slot.blankId) {
 						const blankId = slot.blankId;
 						const assignedText = getAssignedText(blankId);
-						const isHovered = hoveredBlank === blankId;
 						return (
 							<button
 								type="button"
@@ -117,7 +100,7 @@ export function FillInSequenceInput({
 								onDragOver={(e: React.DragEvent) =>
 									handleBlankDragOver(e, blankId)
 								}
-								onDragLeave={handleBlankDragOverEnd}
+								onDragLeave={handleDragEnd}
 								onDrop={(e: React.DragEvent) => handleDropOnBlank(e, blankId)}
 								onClick={() => {
 									if (assignedText) handleRemoveFromBlank(blankId);
@@ -130,9 +113,7 @@ export function FillInSequenceInput({
 								className={`inline-flex min-w-[80px] items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-all ${
 									assignedText
 										? "cursor-pointer border-(--system-accent) bg-(--system-accent-alpha-10)"
-										: isHovered
-											? "border-(--system-accent) bg-(--system-accent-alpha-5)"
-											: "border-muted-foreground/30"
+										: "border-muted-foreground/30"
 								}`}
 								aria-label={
 									assignedText
@@ -157,7 +138,7 @@ export function FillInSequenceInput({
 			{unassignedOptions.length > 0 && (
 				<div className="flex flex-wrap gap-2">
 					{unassignedOptions.map((opt) => {
-						const isDragging = draggedOpt === opt.id;
+						const isDragging = draggedId === opt.id;
 						return (
 							<m.div
 								key={opt.id}
@@ -173,9 +154,9 @@ export function FillInSequenceInput({
 									draggable
 									aria-grabbed={isDragging}
 									onDragStart={(e: React.DragEvent) =>
-										handleOptDragStart(e, opt.id)
+										handleDragStart(e, opt.id)
 									}
-									onDragEnd={handleBlankDragOverEnd}
+									onDragEnd={handleDragEnd}
 									onKeyDown={(e) => {
 										if (e.key === "Enter" || e.key === " ") {
 											e.preventDefault();

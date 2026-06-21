@@ -4,6 +4,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useDragSort } from "@/hooks/use-drag-sort";
 
 interface MatchPairsInputProps {
 	leftItems: { id: string; text: string }[];
@@ -18,8 +19,7 @@ export function MatchPairsInput({
 }: MatchPairsInputProps) {
 	const t = useTranslations();
 	const [matches, setMatches] = useState<Record<string, string>>({});
-	const [draggedLeftId, setDraggedLeftId] = useState<string | null>(null);
-	const [hoveredRightId, setHoveredRightId] = useState<string | null>(null);
+	const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
 
 	const shuffledRight = useMemo(
 		() => [...rightItems].sort(() => Math.random() - 0.5),
@@ -40,20 +40,10 @@ export function MatchPairsInput({
 		[matches],
 	);
 
-	const handleLeftDragStart = useCallback(
-		(e: React.DragEvent, leftId: string) => {
-			setDraggedLeftId(leftId);
-			e.dataTransfer.effectAllowed = "move";
-			e.dataTransfer.setData("text/plain", leftId);
-		},
-		[],
-	);
-
 	const handleRightDragOver = useCallback(
-		(e: React.DragEvent, rightId: string) => {
+		(e: React.DragEvent, _rightId: string) => {
 			e.preventDefault();
 			e.dataTransfer.dropEffect = "move";
-			setHoveredRightId(rightId);
 		},
 		[],
 	);
@@ -62,22 +52,11 @@ export function MatchPairsInput({
 		(e: React.DragEvent, rightId: string) => {
 			e.preventDefault();
 			const leftId = e.dataTransfer.getData("text/plain");
-			if (!leftId || isRightUsed(rightId)) {
-				setDraggedLeftId(null);
-				setHoveredRightId(null);
-				return;
-			}
+			if (!leftId || isRightUsed(rightId)) return;
 			setMatches((prev) => ({ ...prev, [leftId]: rightId }));
-			setDraggedLeftId(null);
-			setHoveredRightId(null);
 		},
 		[isRightUsed],
 	);
-
-	const handleDragEnd = useCallback(() => {
-		setDraggedLeftId(null);
-		setHoveredRightId(null);
-	}, []);
 
 	const removeMatch = useCallback((leftId: string) => {
 		setMatches((prev) => {
@@ -133,9 +112,9 @@ export function MatchPairsInput({
 									<button
 										type="button"
 										draggable
-										aria-grabbed={draggedLeftId === item.id}
+										aria-grabbed={draggedId === item.id}
 										onDragStart={(e: React.DragEvent) =>
-											handleLeftDragStart(e, item.id)
+											handleDragStart(e, item.id)
 										}
 										onDragEnd={handleDragEnd}
 										className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing"
@@ -154,7 +133,6 @@ export function MatchPairsInput({
 					</p>
 					{shuffledRight.map((item) => {
 						const used = isRightUsed(item.id);
-						const isHovered = hoveredRightId === item.id && !used;
 						return (
 							<button
 								type="button"
@@ -168,9 +146,7 @@ export function MatchPairsInput({
 								className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all ${
 									used
 										? "border-muted bg-muted/50 text-muted-foreground line-through"
-										: isHovered
-											? "scale-[1.02] border-(--system-accent) bg-(--system-accent-alpha-5)"
-											: "border-muted-foreground/30 border-dashed bg-transparent"
+										: "border-muted-foreground/30 border-dashed bg-transparent"
 								}`}
 							>
 								{item.text}
