@@ -306,9 +306,10 @@ export class QuestionEngine {
 		ragContext: RagContext,
 	): Promise<Question[]> {
 		const batches: QuestionType[][] = [
-			["multiple-choice", "matching"],
+			["multiple-choice", "matching", "match-pairs"],
 			["short-answer", "long-answer", "essay"],
-			["calculation", "diagram"],
+			["calculation", "diagram", "ordering"],
+			["fill-in-sequence"],
 			["source-based", "data-response"],
 			["programming"],
 			["mixed"],
