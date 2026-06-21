@@ -14,6 +14,9 @@ export const POST = createRouteHandler({
 		) {
 			return "Invalid role";
 		}
+		if (body.role !== "student") {
+			return "Only student role can be set by users. Teacher/parent roles require admin setup.";
+		}
 		return null;
 	},
 	execute: async ({ userId, body }) => {

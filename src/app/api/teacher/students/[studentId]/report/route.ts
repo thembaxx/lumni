@@ -6,10 +6,36 @@ import { logError } from "@/lib/shared/logger";
 export const GET = createRouteHandler({
 	auth: "required",
 	errorLabel: "StudentReport",
-	execute: async ({ params }: { params?: Record<string, string> }) => {
+	execute: async ({
+		userId,
+		params,
+	}: {
+		userId: string | null;
+		params?: Record<string, string>;
+	}) => {
+		if (!userId) {
+			return { competencies: [], quizAttempts: [], subjects: [] };
+		}
 		const studentId = params?.studentId;
 		if (!studentId) return { competencies: [], quizAttempts: [], subjects: [] };
+
 		try {
+			const teacherLinks = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
+				Query.equal("teacherId", userId),
+				Query.equal("studentId", studentId),
+			]);
+			const parentLinks = await listDocuments(COLLECTIONS.PARENT_STUDENTS, [
+				Query.equal("parentId", userId),
+				Query.equal("studentId", studentId),
+			]);
+			if (teacherLinks.length === 0 && parentLinks.length === 0) {
+				return {
+					competencies: [],
+					quizAttempts: [],
+					subjects: [],
+					error: "Not authorized to view this student's report",
+				};
+			}
 			const competencies = (await listDocuments(COLLECTIONS.COMPETENCIES, [
 				Query.equal("userId", studentId),
 			])) as Record<string, unknown>[];

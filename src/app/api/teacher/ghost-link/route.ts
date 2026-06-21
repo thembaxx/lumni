@@ -5,12 +5,12 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
-	auth: "none",
-	execute: async () => {
+	auth: "required",
+	execute: async ({ userId }) => {
 		const token = crypto.randomUUID();
 		const link = {
 			token,
-			teacherId: "ghost",
+			teacherId: userId,
 			createdAt: Date.now(),
 			expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
 			revoked: false,
@@ -35,8 +35,15 @@ export const POST = createRouteHandler({
 });
 
 export const DELETE = createRouteHandler({
-	auth: "none",
-	execute: async ({ body }: { body: { token?: string } }) => {
+	auth: "required",
+	execute: async ({
+		body,
+		userId,
+	}: {
+		body: { token?: string };
+		userId: string | null;
+	}) => {
+		if (!userId) return { success: false, error: "Unauthorized" };
 		if (body.token) {
 			try {
 				const docs = await databases.listDocuments(
@@ -45,10 +52,14 @@ export const DELETE = createRouteHandler({
 					[Query.equal("token", body.token)],
 				);
 				if (docs.documents.length > 0) {
+					const link = docs.documents[0];
+					if (link.teacherId !== userId) {
+						return { success: false, error: "Not authorized" };
+					}
 					await databases.deleteDocument(
 						APPWRITE_DATABASE_ID,
 						COLLECTIONS.GHOST_LINKS,
-						docs.documents[0].$id,
+						link.$id,
 					);
 				}
 			} catch (e) {

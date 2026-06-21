@@ -17,6 +17,7 @@ export const POST = createRouteHandler({
 	validate: (body) => {
 		if (!body.subject) return "Subject is required";
 		if (!body.count || body.count < 1) return "Count must be at least 1";
+		if (body.count > 50) return "Count must be 50 or less";
 		return null;
 	},
 	execute: async ({ body, userId }) => {
