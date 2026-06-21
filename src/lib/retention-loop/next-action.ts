@@ -6,7 +6,7 @@ import { logError } from "@/lib/shared/logger";
 const DEFAULT_DEPS = { db: _dexieDa };
 let _deps = DEFAULT_DEPS;
 
-function __setDepsForTesting(deps: { db: DataAccess }) {
+export function __setDepsForTesting(deps: { db: DataAccess }) {
 	_deps = deps;
 }
 
