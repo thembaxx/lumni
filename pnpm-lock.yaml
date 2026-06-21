@@ -17,9 +17,6 @@ importers:
       '@base-ui/react':
         specifier: ^1.5.0
         version: 1.5.0(@date-fns/tz@1.5.0)(@types/react@19.2.17)(date-fns@4.4.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      '@formatjs/intl-localematcher':
-        specifier: ^0.8.10
-        version: 0.8.10
       '@hugeicons/core-free-icons':
         specifier: ^4.2.0
         version: 4.2.0
