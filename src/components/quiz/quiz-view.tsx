@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
+import type { Question } from "@/lib/question-engine/types";
 import type { QuizCompleteResult } from "@/lib/quiz";
 import { useQuizView } from "./hooks/use-quiz-view";
 import { QuizFooter } from "./quiz-footer";
@@ -29,6 +30,7 @@ export interface QuizViewProps {
 	questionCount?: number;
 	maxTime?: number;
 	pastPaperMode?: boolean;
+	packQuestions?: Question[];
 	onQuit?: () => void;
 	onFinish?: (results: QuizResults) => void;
 	className?: string;
@@ -41,6 +43,7 @@ export function QuizView({
 	questionCount = 10,
 	maxTime = 90 * 60,
 	pastPaperMode,
+	packQuestions,
 	onQuit,
 	onFinish,
 }: QuizViewProps) {
@@ -73,6 +76,7 @@ export function QuizView({
 		questionCount,
 		maxTime,
 		pastPaperMode,
+		packQuestions,
 		onQuit,
 		onFinish,
 	});

@@ -5,6 +5,7 @@ import {
 	CloudOffIcon,
 	Delete02Icon,
 	FileDownloadIcon,
+	PlayIcon,
 	StoreIcon,
 	Time03Icon,
 } from "@hugeicons/core-free-icons";
@@ -55,6 +56,7 @@ export function OfflinePackManager() {
 		storageLimit,
 		generate,
 		remove,
+		playPack,
 	} = useQuizPacks();
 	const { data: subjectsData } = useSubjects();
 	const subjects = subjectsData?.subjects ?? [];
@@ -177,14 +179,24 @@ export function OfflinePackManager() {
 									</p>
 								</div>
 								{pack.status === "ready" && (
-									<Button
-										variant="ghost"
-										size="icon"
-										onClick={() => remove(pack.id)}
-										aria-label="Delete pack"
-									>
-										<HugeiconsIcon icon={Delete02Icon} className="size-4" />
-									</Button>
+									<div className="flex items-center gap-1">
+										<Button
+											variant="ghost"
+											size="icon"
+											onClick={() => playPack(pack.id)}
+											aria-label="Start quiz from pack"
+										>
+											<HugeiconsIcon icon={PlayIcon} className="size-4" />
+										</Button>
+										<Button
+											variant="ghost"
+											size="icon"
+											onClick={() => remove(pack.id)}
+											aria-label="Delete pack"
+										>
+											<HugeiconsIcon icon={Delete02Icon} className="size-4" />
+										</Button>
+									</div>
 								)}
 							</div>
 						))}

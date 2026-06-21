@@ -11,6 +11,7 @@ export function useQuizView({
 	questionCount = 10,
 	maxTime = 90 * 60,
 	pastPaperMode,
+	packQuestions,
 	onQuit,
 	onFinish,
 }: QuizViewProps) {
@@ -33,6 +34,7 @@ export function useQuizView({
 		maxTime,
 		enabled: sessionActive && !!selectedSubject,
 		pastPaperMode,
+		preloadedQuestions: packQuestions,
 		suggestedBloomLevel: competencyData.suggestedBloomLevel,
 		suggestedDifficulty: competencyData.suggestedDifficulty,
 		topicCompetencyLevel: competencyData.topicCompetencyLevel,

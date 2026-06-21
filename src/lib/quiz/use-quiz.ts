@@ -39,6 +39,7 @@ export function useQuiz(params: UseQuizParams) {
 		maxTime,
 		enabled = true,
 		pastPaperMode,
+		preloadedQuestions,
 		suggestedBloomLevel,
 		suggestedDifficulty,
 		topicCompetencyLevel,
@@ -71,10 +72,20 @@ export function useQuiz(params: UseQuizParams) {
 		],
 	);
 
-	const { questions, sources, isLoading, isError } = useQuestionEngine(
-		engineParams,
-		{ enabled: enabled && !!subject },
+	const usePreloaded = Boolean(
+		preloadedQuestions && preloadedQuestions.length > 0,
 	);
+
+	const engineResult = useQuestionEngine(engineParams, {
+		enabled: enabled && !!subject && !usePreloaded,
+	});
+
+	const questions = usePreloaded
+		? (preloadedQuestions as Question[])
+		: engineResult.questions;
+	const sources = usePreloaded ? [] : engineResult.sources;
+	const isLoading = usePreloaded ? false : engineResult.isLoading;
+	const isError = usePreloaded ? false : engineResult.isError;
 
 	const { state, actions } = useQuizSession(questions ?? [], { maxTime });
 

@@ -21,6 +21,7 @@ export interface UseQuizParams {
 	maxTime?: number;
 	enabled?: boolean;
 	pastPaperMode?: boolean;
+	preloadedQuestions?: Question[];
 	suggestedBloomLevel?: BloomLevel;
 	suggestedDifficulty?: Difficulty;
 	topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";

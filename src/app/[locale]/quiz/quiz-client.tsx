@@ -1,8 +1,9 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { QuizView } from "@/components/quiz";
+import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 
 function handleQuit() {
@@ -49,6 +50,22 @@ function QuizClientContent() {
 	const maxTime = timeParam ? parseInt(timeParam, 10) : undefined;
 	const pastPaperMode = searchParams.get("pastPaperMode") === "true";
 	const assignmentId = searchParams.get("assignmentId") || null;
+	const packId = searchParams.get("packId") || null;
+
+	const [packQuestions, setPackQuestions] = useState<Question[] | null>(null);
+
+	useEffect(() => {
+		if (!packId) return;
+		try {
+			const stored = sessionStorage.getItem(`lumni_pack_${packId}`);
+			if (stored) {
+				setPackQuestions(JSON.parse(stored));
+				sessionStorage.removeItem(`lumni_pack_${packId}`);
+			}
+		} catch (err) {
+			logError("PackQuestionLoad", err);
+		}
+	}, [packId]);
 
 	return (
 		<QuizView
@@ -57,6 +74,7 @@ function QuizClientContent() {
 			questionCount={questionCount}
 			maxTime={maxTime}
 			pastPaperMode={pastPaperMode}
+			packQuestions={packQuestions ?? undefined}
 			onQuit={handleQuit}
 			onFinish={(results) => handleFinish(results, assignmentId)}
 		/>
