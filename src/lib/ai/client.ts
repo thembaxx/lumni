@@ -88,7 +88,7 @@ export class AIClient {
 					timestamp: new Date().toISOString(),
 				});
 				lastError = err instanceof Error ? err.message : String(err);
-			const isRateLimit = /429|RESOURCE_EXHAUSTED/.test(lastError);
+				const isRateLimit = /429|RESOURCE_EXHAUSTED/.test(lastError);
 				if (isRateLimit) {
 					console.warn(
 						`[AI] Provider ${provider.name} rate-limited, trying next...`,

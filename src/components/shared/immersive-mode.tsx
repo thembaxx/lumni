@@ -1,13 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import {
-	createContext,
-	use,
-	useCallback,
-	useMemo,
-	useState,
-} from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { iOSDecelerate } from "@/lib/utils/animation";
 

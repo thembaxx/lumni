@@ -1,11 +1,11 @@
-<!-- LAST_SYNC: 2026-06-18 -->
+<!-- LAST_SYNC: 2026-06-21 -->
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194 issues fixed). Biome lint zero. **1264 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6 services extracted, ~200 lines dead code removed.
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
@@ -65,6 +65,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D058] **CachedAIGenerator<T>**: Generic fetch→cache→generate pattern at `src/lib/ai/cached-ai-generator.ts`. Dexie lookup → stale? → AI generate → cache → return. Used by knowledge-graph and study-guide.
 - [D059] **AnalyticsService extraction**: `SessionStore` interface. Trends/comparative routes reduced from ~50-90 lines to ~20 lines.
 - [D060] **Service extraction (ADR-0012)**: 6 services extracted: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines.
+- [D061] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved. Parallelized independent awaits (Promise.all), combined chained iterations into single passes, replaced Array.includes with Set.has, replaced array.find in loops with Map.get, merged dual useState into useReducer, removed redundant useEffect state reset, moved static arrays to module scope, captured refs in cleanup effects, combined string includes() into regex test. 12 files, +96/−65. Commit `a1bd5de4`.
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)

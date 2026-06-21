@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** 2026-06-18 (sessions 1-37, including architectural deepening + service extractions)
+**Last synced:** 2026-06-21 (sessions 1-39, including React Doctor 100/100 resolution)
 
 ---
 
@@ -510,7 +510,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | **E2E coverage** | Smoke + visual tests for core flows | Playwright 1.60.0 |
 | **UI documentation** | Storybook for component library | Storybook 10.4.1 (18 stories) |
 | **Dead code detection** | Knip static analysis | knip@6.15.0 |
-| **Test baseline** | 1264 pass, 0 fail | `bun run test` (vitest) |
+| **Test baseline** | 1271 pass, 0 fail | `bun run test` (vitest) |
 
 ### Scalability Bottlenecks
 
@@ -554,6 +554,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | P1 | Web-grounded AI — TinyFish RAG (foundation + solve + quiz) | 3 PRs: `f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout | ✅ Done |
 | P1 | DataAccess seam (Phase 1-4) | Abstraction over Dexie for testability; all 38+ tables migrated | ✅ Done |
 | P1 | Codebase Hardening | Centralized logger, 148 catch-block sweep, aria-labels, loading.tsx | ✅ Done |
+| P1 | React Doctor 100/100 | 194+16 issues fixed across sessions 35 + 39; parallelized awaits, Set/Map lookups, useReducer, regex checks | ✅ Done |
 | P2 | Per-question source persistence on `Question` type | Solved in `f769f322` — `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate); hybrid AI-cite with fallback via `source-mapper.ts`; `<SourceAttributionPill>` | ✅ Done |
 | P2 | VerifiedByPill on quiz results page | Q7 follow-up — `getLastRagContext()` surfaces batch RAG sources | ✅ Done |
 | P2 | Knowledge graph (AI topic dependencies) | AI-generated prerequisite/core/advanced topic graphs | ✅ Done |
@@ -567,6 +568,7 @@ Client -> POST /api/study-groups/[groupId]/live-session
 | P2 | Theme chrome takeover | Dynamic `theme-color`, accent-tinted nav glass, SSR viewport | ✅ Done |
 | P2 | Navigation sidebar overhaul | 64px icon column → full categorized sidebar with search | ✅ Done |
 | P2 | Daily Bolt simplification | Remove two-step, streamlined celebration | ✅ Done |
+| P2 | Architectural deepening (S37-38) | AI provider singleton collapsed, GenerateResult, CachedAIGenerator, 6+ service extractions | ✅ Done |
 | P3 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | ✅ Done (RedisStore implemented) |
 | P3 | Keyboard-accessible flashcard deck | Full redesign for keyboard-only operation | Planned |
 | P3 | Live study sessions | Real-time collaborative sessions via Appwrite | ✅ Done |

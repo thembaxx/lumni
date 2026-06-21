@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-18 -->
+<!-- LAST_SYNC: 2026-06-21 -->
 # Memory Index — Lumni
 
 ## Heuristics & Conventions
@@ -47,6 +47,7 @@
 - [2026-06-18] **CachedAIGenerator<T>**: Generic fetch→cache→generate at `src/lib/ai/cached-ai-generator.ts`. Dexie lookup → stale? → AI generate → cache → return. 5 files.
 - [2026-06-18] **AnalyticsService extraction**: `SessionStore` interface. Trends/comparative routes ~20 lines each. 4 files.
 - [2026-06-18] **Service extraction (ADR-0012)**: 6 services: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. 39 files, +766/−893.
+- [2026-06-21] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved across 10 files. Parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks. Commit `a1bd5de4`.
 
 ## Past Bugs & Failures
 - **Competency Field**: Mismatch between `proficiency` and `score` fields. Standardized on `score`.

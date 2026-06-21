@@ -1,4 +1,4 @@
-# Context Manifest — 2026-06-20
+# Context Manifest — 2026-06-21
 
 ## Identity
 
@@ -13,6 +13,7 @@ All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + paginatio
 **Architectural deepening (June 2026)** — 8 candidates implemented:
 - **Session 37**: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ADR-0012 documented.
 - **Session 38**: QuizResultProcessor (discriminated union, 4 sources), enrichment pipeline (3 ports: CurriculumSource/EmbeddingSource/PastPaperSource), TinyFish barrel separation (withRagGuards HOF), PushDeliveryService (lazy VAPID, consolidated web-push), StudyPlannerService (state/sync/mutations, event emission), GamificationService (state/persist/sync, mutation results), DataAccess bypass sealing (5 files), flashcard/exam/dashboard consumers updated.
+- **Session 39**: React Doctor 100/100 — resolved remaining 16 issues (6 bugs, 9 perf, 1 maintainability) across 10 files. Parallelized independent awaits (quiz-actions, domain, push-delivery), combined chained iterations (classify/route, quiz-actions), replaced Array.includes in loops with Set.has, replaced array.find in loop with Map.get, merged dual useState into useReducer (recent-questions-card), removed redundant useEffect state reset (immersive-mode), moved static array to module scope (messages/route), captured refs in cleanup effects (admin-dashboard, getting-started-card), combined string .includes() into single regex test (ai/client). 12 files changed, +96/−65 lines. Commit `a1bd5de4`.
 
 ## System at a Glance
 

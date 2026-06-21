@@ -45,13 +45,19 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
 
 			const allById = new Map(all.map((q) => [q.id, q]));
 
-			const unclassified = all.reduce<{
-				id: string;
-				questionText: string;
-				subject: string;
-			}[]>((acc, q) => {
+			const unclassified = all.reduce<
+				{
+					id: string;
+					questionText: string;
+					subject: string;
+				}[]
+			>((acc, q) => {
 				if (!q.subtopicId) {
-					acc.push({ id: q.id, questionText: q.questionText, subject: q.subject });
+					acc.push({
+						id: q.id,
+						questionText: q.questionText,
+						subject: q.subject,
+					});
 				}
 				return acc;
 			}, []);

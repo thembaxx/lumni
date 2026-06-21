@@ -11,11 +11,13 @@ export async function fetchQuestions(subjectIds: string[]) {
 
 	const [topicDocs, questionsData] = await Promise.all([
 		listDocuments(COLLECTIONS.TOPICS),
-		listDocuments(COLLECTIONS.QUESTIONS) as Promise<{
-			$id: string;
-			topicId: string;
-			options: string;
-		}[]>,
+		listDocuments(COLLECTIONS.QUESTIONS) as Promise<
+			{
+				$id: string;
+				topicId: string;
+				options: string;
+			}[]
+		>,
 	]);
 
 	const typedTopicDocs = topicDocs as { $id: string; subjectId: string }[];
