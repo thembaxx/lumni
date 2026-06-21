@@ -1,8 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
@@ -62,8 +69,9 @@ export function LearningMapCard() {
 	const { push } = useRouter();
 	const { isAnonymous } = useAuth();
 	const { enrolledSubjects } = useEnrolledSubjects();
+	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
-	const subjectForQuery = enrolledSubjects[0]?.name;
+	const subjectForQuery = selectedSubject ?? enrolledSubjects[0]?.name;
 
 	const {
 		data: graph,
@@ -219,10 +227,30 @@ export function LearningMapCard() {
 
 	return (
 		<Card>
-			<CardHeader>
+			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className="font-extrabold text-sm tracking-tight">
 					Learning Map
 				</CardTitle>
+				{enrolledSubjects.length > 1 && (
+					<Select
+						value={subjectForQuery ?? ""}
+						onValueChange={(value) => setSelectedSubject(value)}
+					>
+						<SelectTrigger
+							className="h-6 w-auto min-w-[100px] text-[10px]"
+							size="sm"
+						>
+							<SelectValue placeholder="Subject" />
+						</SelectTrigger>
+						<SelectContent>
+							{enrolledSubjects.map((s) => (
+								<SelectItem key={s.name} value={s.name}>
+									{s.name}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+				)}
 			</CardHeader>
 			<CardContent>
 				<div className="overflow-x-auto">
@@ -280,14 +308,14 @@ export function LearningMapCard() {
 									key={node.id}
 									className="cursor-pointer"
 									tabIndex={0}
-									href={`/quiz?subject=${encodeURIComponent(enrolledSubjects[0]?.name ?? "")}&topic=${encodeURIComponent(node.label)}`}
+									href={`/quiz?subject=${encodeURIComponent(subjectForQuery ?? "")}&topic=${encodeURIComponent(node.label)}`}
 									onKeyDown={(e) => {
 										if (
 											(e as React.KeyboardEvent).key === "Enter" ||
 											(e as React.KeyboardEvent).key === " "
 										) {
 											push(
-												`/quiz?subject=${encodeURIComponent(enrolledSubjects[0]?.name ?? "")}&topic=${encodeURIComponent(node.label)}`,
+												`/quiz?subject=${encodeURIComponent(subjectForQuery ?? "")}&topic=${encodeURIComponent(node.label)}`,
 											);
 										}
 									}}

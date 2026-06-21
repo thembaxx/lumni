@@ -55,6 +55,64 @@ export function useEndSession(groupId: string) {
 				`/api/study-groups/${groupId}/live-session/${sessionId}`,
 				{
 					method: "PATCH",
+					body: JSON.stringify({ action: "end" }),
+				},
+			);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["live-session", groupId] });
+		},
+	});
+}
+
+export function useJoinSession(groupId: string, sessionId: string) {
+	const queryClient = useQueryClient();
+
+	return useMutation<void, Error>({
+		mutationFn: async () => {
+			await apiFetch<void>(
+				`/api/study-groups/${groupId}/live-session/${sessionId}`,
+				{
+					method: "PATCH",
+					body: JSON.stringify({ action: "join" }),
+				},
+			);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["live-session", groupId] });
+		},
+	});
+}
+
+export function useLeaveSession(groupId: string, sessionId: string) {
+	const queryClient = useQueryClient();
+
+	return useMutation<void, Error>({
+		mutationFn: async () => {
+			await apiFetch<void>(
+				`/api/study-groups/${groupId}/live-session/${sessionId}`,
+				{
+					method: "PATCH",
+					body: JSON.stringify({ action: "leave" }),
+				},
+			);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["live-session", groupId] });
+		},
+	});
+}
+
+export function useUpdateActivity(groupId: string, sessionId: string) {
+	const queryClient = useQueryClient();
+
+	return useMutation<void, Error, string>({
+		mutationFn: async (activity) => {
+			await apiFetch<void>(
+				`/api/study-groups/${groupId}/live-session/${sessionId}`,
+				{
+					method: "PATCH",
+					body: JSON.stringify({ action: "activity", activity }),
 				},
 			);
 		},

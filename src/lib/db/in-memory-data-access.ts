@@ -29,6 +29,7 @@ import type {
 	RetentionRecurrence,
 	SeenPastPaperQuestion,
 	SharedQuestionRecord,
+	StoryProgressRecord,
 	StudyPlanRecord,
 	SyncConflict,
 	TeacherObservation,
@@ -305,6 +306,7 @@ export class InMemoryDataAccess implements DataAccess {
 	dictionaryCache = new InMemoryTable<DictionaryCacheEntry, string>();
 	storyCache = new InMemoryTable<CachedStory, string>();
 	storyQuestions = new InMemoryTable<StoryQuestionSet, string>();
+	storyProgress = new InMemoryTable<StoryProgressRecord>();
 	vocabularyList = new InMemoryTable<VocabularyEntry>();
 	lessonProgress = new InMemoryTable<LessonProgress, string>();
 	onboardingState = new InMemoryTable<OnboardingState, string>();

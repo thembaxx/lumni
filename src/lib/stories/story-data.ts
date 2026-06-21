@@ -19,6 +19,34 @@ const STORY_IMPORTS: Record<string, () => Promise<StoryMeta[]>> = {
 		import("@/curriculum/stories/isi-xhosa-home-language/index").then(
 			(m) => m.storyMetas,
 		),
+	"sesotho-home-language": () =>
+		import("@/curriculum/stories/sesotho-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"setswana-home-language": () =>
+		import("@/curriculum/stories/setswana-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"sepedi-home-language": () =>
+		import("@/curriculum/stories/sepedi-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"xitsonga-home-language": () =>
+		import("@/curriculum/stories/xitsonga-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"siswati-home-language": () =>
+		import("@/curriculum/stories/siswati-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"tshivenda-home-language": () =>
+		import("@/curriculum/stories/tshivenda-home-language/index").then(
+			(m) => m.storyMetas,
+		),
+	"isi-ndebele-home-language": () =>
+		import("@/curriculum/stories/isi-ndebele-home-language/index").then(
+			(m) => m.storyMetas,
+		),
 };
 
 const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
@@ -26,6 +54,46 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
 		"south-african-folk-tales": () =>
 			import(
 				"@/curriculum/stories/english-home-language/south-african-folk-tales.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"die-slim-vos": () =>
+			import(
+				"@/curriculum/stories/afrikaans-home-language/die-slim-vos.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"inkosi-yangaphandle": () =>
+			import(
+				"@/curriculum/stories/isi-zulu-home-language/inkosi-yangaphandle.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"intaka-eflayo": () =>
+			import(
+				"@/curriculum/stories/isi-xhosa-home-language/intaka-eflayo.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"lekgwapa-le-phiri": () =>
+			import(
+				"@/curriculum/stories/sesotho-home-language/lekgwapa-le-phiri.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"kgwedi-le-bjana": () =>
+			import(
+				"@/curriculum/stories/setswana-home-language/kgwedi-le-bjana.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"thuto-ya-khuru": () =>
+			import(
+				"@/curriculum/stories/sepedi-home-language/thuto-ya-khuru.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"tindzuwa-na-nhwanyana": () =>
+			import(
+				"@/curriculum/stories/xitsonga-home-language/tindzuwa-na-nhwanyana.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"indvuku-na-manja": () =>
+			import(
+				"@/curriculum/stories/siswati-home-language/indvuku-na-manja.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"tshifhiwo-na-phalaphala": () =>
+			import(
+				"@/curriculum/stories/tshivenda-home-language/tshifhiwo-na-phalaphala.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"inkabi-nengwenya": () =>
+			import(
+				"@/curriculum/stories/isi-ndebele-home-language/inkabi-nengwenya.json"
 			).then((m) => ({ default: m.default as unknown as Story })),
 	};
 
@@ -80,6 +148,13 @@ export function getLanguageLabel(languageId: string): string {
 		"afrikaans-home-language": "Afrikaans",
 		"isi-zulu-home-language": "isiZulu",
 		"isi-xhosa-home-language": "isiXhosa",
+		"sesotho-home-language": "Sesotho",
+		"setswana-home-language": "Setswana",
+		"sepedi-home-language": "Sepedi",
+		"xitsonga-home-language": "Xitsonga",
+		"siswati-home-language": "siSwati",
+		"tshivenda-home-language": "Tshivenda",
+		"isi-ndebele-home-language": "isiNdebele",
 	};
 	return map[languageId] ?? languageId;
 }

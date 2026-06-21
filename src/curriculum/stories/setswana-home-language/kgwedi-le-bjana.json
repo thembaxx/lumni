@@ -1,0 +1,50 @@
+{
+	"id": "kgwedi-le-bjana",
+	"title": "Kgwedi le Bjana",
+	"author": "Lumni",
+	"language": "Setswana",
+	"languageId": "setswana-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 870,
+	"subjects": ["setswana-home-language"],
+	"source": "ai-generated",
+	"topics": ["animals", "folktale"],
+	"content": "# Kgwedi le Bjana\n\nKgafung, kgwedi le bjana ba ne ba dulang ka go tsamaya ka ga. Kgwedi ke kgwedi e kgolo, e nang le diatla tše dikgolo tša go feta tša bjana. Bjana ke kgwedi e nyane, e nang le maatla a mangata.\n\nBjana o ne a rata go ja dihloko tša batho. O ne a tla ka nako e 'ngoe le e 'ngoe go ja tša batho. Kgafung, bjana o ne a tla le dihloko tše dintši tša go feta tša kgwedi.\n\n\"Kgafung, ke kopa o mphe dihloko tša go feta tša bjana,\" kgwedi o ile a kopa. Bjana o ile a tšohla. \"Ke kopa o mphele, ke tla go fa tša go feta tša bjana,\" bjana o ile a araba.\n\nKgwedi o ile a tla le dihloko tše dikgolo tša go feta tša bjana. O ne a sa tsebe hore bjana o ne a tšepa hore kgwedi tla fela ka go ja tša go feta tša bjana.\n\nBjana o ile a tšehla ka hore kgwedi o jele tša go feta tša bjana. O ne a sa tsebe hore kgwedi o ne a tšepa hore bjana tla fela ka go ja tša go feta tša bjana.\n\nKgafung, kgwedi le bjana ba ne ba fapane ka nako e telele. Ba ne ba utloa a sa hlomphwa ke mang. Kgafung, kgwedi o ne a utloa a sa tsebe hore bjana o ne a mpho e setseng.\n\n## Lintlha tša Thuto\n\n1. **Ke ntho e moleho go ba le takatso** — Kgwedi le bjana ba ne ba fapane ka takatso e fapaneng. Ba ne ba sa Rate go buisana ka ntho e 'ngoe.\n2. **Boleng bo botle ke go ba le takatso** — Kgwedi o ne a na le takatso e se nang le phallo, empa bjana o ne a fapane ka hore a rata go ja fela.\n\n## Mantswe a Maemo\n\n| Setswana | English | Part of Speech |\n|----------|---------|----------------|\n| kgwedi | hyena | noun |\n| bjana | hare | noun |\n| dihloko | vegetables | noun |\n| thaka | share | verb |\n| takatso | desire | noun |",
+	"vocabulary": [
+		{
+			"term": "kgwedi",
+			"definition": "A wild animal known for making laughing sounds at night",
+			"partOfSpeech": "noun",
+			"pronunciation": "/kʰwɛ.di/",
+			"language": "tn"
+		},
+		{
+			"term": "bjana",
+			"definition": "A small, fast animal related to rabbits, known for being clever",
+			"partOfSpeech": "noun",
+			"pronunciation": "/bja.na/",
+			"language": "tn"
+		},
+		{
+			"term": "dihloko",
+			"definition": "Plants and vegetables that people grow and eat",
+			"partOfSpeech": "noun",
+			"pronunciation": "/di.ʰlɔ.kɔ/",
+			"language": "tn"
+		},
+		{
+			"term": "thaka",
+			"definition": "To give a part of something to someone else",
+			"partOfSpeech": "verb",
+			"pronunciation": "/tʰa.ka/",
+			"language": "tn"
+		},
+		{
+			"term": "takatso",
+			"definition": "A strong feeling of wanting something",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ta.ka.t͡sʰɔ/",
+			"language": "tn"
+		}
+	]
+}

@@ -331,26 +331,25 @@ export class QuestionEngine {
 				needed = Math.min(needed, count - results.length);
 				if (needed <= 0) continue;
 
-				const candidates = await Promise.allSettled(
-					available.map((_, j) => {
-						const tryType = available[(i + j) % available.length];
-						const processor = this.registry.getProcessor(tryType);
-						return processor.generate(
-							{
-								...params,
-								count: needed,
-								questionType: tryType,
-							},
+				let generated = false;
+				for (let j = 0; j < available.length && !generated; j++) {
+					const tryType = available[(i + j) % available.length];
+					const processor = this.registry.getProcessor(tryType);
+					try {
+						const questions = await processor.generate(
+							{ ...params, count: needed, questionType: tryType },
 							ragContext,
 						);
-					}),
-				);
-				for (const result of candidates) {
-					if (result.status === "fulfilled") {
-						results.push(...result.value);
-						break;
+						if (questions.length > 0) {
+							results.push(...questions);
+							generated = true;
+						}
+					} catch (e) {
+						console.error(
+							`[QuestionEngine] Generation failed for ${tryType}:`,
+							e,
+						);
 					}
-					console.error(`[QuestionEngine] Generation failed:`, result.reason);
 				}
 			}
 		}

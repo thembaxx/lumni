@@ -2,6 +2,7 @@
 
 import { dexieDataAccess, type VocabularyDataAccess } from "@/lib/db";
 import type { VocabularyEntry } from "@/lib/db/schema";
+import { createVocabularyCard } from "@/lib/flashcard-engine/vocabulary-bridge";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: VocabularyDataAccess } = { db: dexieDataAccess };
@@ -47,7 +48,9 @@ export async function saveWord(
 			reviewCount: 0,
 		};
 		const id = await _deps.db.vocabularyList.add(entry);
-		return { ...entry, id };
+		const savedEntry = { ...entry, id };
+		await createVocabularyCard(savedEntry).catch(() => {});
+		return savedEntry;
 	} catch (err) {
 		logError("VocabularyService.saveWord", err);
 		return null;

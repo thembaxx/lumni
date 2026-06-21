@@ -326,6 +326,16 @@ export interface SeenPastPaperQuestion {
 	seenAt: number;
 }
 
+export interface StoryProgressRecord {
+	id?: number;
+	userId: string;
+	storyId: string;
+	scrollPercent: number;
+	completed: boolean;
+	lastReadAt: number;
+	timeSpentSeconds: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -379,6 +389,7 @@ export class LumniOfflineDB extends Dexie {
 	storyCache!: Table<CachedStory, string>;
 	storyQuestions!: Table<StoryQuestionSet, string>;
 	seenPastPaperQuestions!: Table<SeenPastPaperQuestion, number>;
+	storyProgress!: Table<StoryProgressRecord, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -1137,6 +1148,12 @@ export class LumniOfflineDB extends Dexie {
 		// v37: seenPastPaperQuestions for adaptive quiz dedup
 		this.version(37).stores({
 			seenPastPaperQuestions: "++id, &questionId, subject, seenAt",
+		});
+
+		// v38: storyProgress for reading progress tracking
+		this.version(38).stores({
+			storyProgress:
+				"++id, &[userId+storyId], userId, storyId, completed, lastReadAt",
 		});
 	}
 }

@@ -1,0 +1,50 @@
+{
+	"id": "lekgwapa-le-phiri",
+	"title": "Lekgwapa le Phiri",
+	"author": "Lumni",
+	"language": "Sesotho",
+	"languageId": "sesotho-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 850,
+	"subjects": ["sesotho-home-language"],
+	"source": "ai-generated",
+	"topics": ["animals", "folktale"],
+	"content": "# Lekgwapa le Phiri\n\nEe, ka nako e 'ngoe, ho ne ho na le lekgwapa le le leng le phiri. Lekgwapa le ne le holile haholo, empa phiri o ne a bitša hore ke le nyane. Ba ne ba phela ka seterateng se setle, ba ja le ho nka tšimo tša batho.\n\nLekgwapa le ne le rata go thaka le phiri, empa phiri o ne a sa Rate go kwa le lekgwapa ka le lehla. O ne a tšepa hore lekgwapa le tla fela ka go ja merogo eo e se nang letho.\n\nLehodimong, lekgwapa le ile la tla phiri le lula. \"Phiri, wena, ke batla go bua le wena ka ntho e 'ngoe,\" le kwaleletse. Phiri o ile a tshwerwe ke kutlo e mpe, empa o ne a tseba hore lekgwapa le na le maatla a mangata.\n\n\"Ke kopa go tla, re buisane ka nako e tlang,\" lekgwapa le kile la tšehla. Phiri o ile a tla, ba ileng ba lula fa tafoleng. Lekgwapa le ne le ileng la tla le merogo e mengata: merogo, lešesa, le maswabi a mangata.\n\n\"Wena phiri, o jele mang?\" le kgwapa le fetsa. Phiri o ile a tšohla. \"Ke jele dihlopha tša go feta tša lekgwapa,\" phiri o ile a araba. Lekgwapa le ile la tšehla haholo.\n\n\"Ke thabile hore o jele tša go feta tša lekgwapa,\" le kwaleletse. \"Empa ke kopa o mphelesetse. Ke batla go ja merogo e teng hae.\"\n\nPhiri o ile a iponela ka hore lekgwapa le batla go ja merogo e teng hae. O ne a sa tsebe hore lekgwapa le rata go thaka le teng hae. O ile a tla le lekgwapa le hae, le ile la ja merogo e mengata ka hohle.\n\nLekgwapa le ile la feta ka nako e telele, le ile la tšela bophelo bo botle. Phiri o ile a fela a sa tsebe hore le kgwapa le ne le le mpho e setseng. Ka lehla, phiri o ile a utloa a sa hlomphwa ke mang.\n\n## Lintlha tša Thuto\n\n1. **Ke ntho e moleho go ba le takatso** — Lekgwapa le ne le rata go thaka, empa phiri o ne a sa rate. Ba ne ba fapane ka takatso.\n2. **Boleng bo botle ke go ba le takatso** — Lekgwapa le ne le na le takatso e se nang le phallo, empa phiri o ne a fapane ka hore a rata go ja fela.\n\n## Mantswe a Maemo\n\n| Sesotho | English | Part of Speech |\n|---------|---------|----------------|\n| lekgwapa | hare | noun |\n| phiri | jackal | noun |\n| merogo | vegetables | noun |\n| thaka | share | verb |\n| takatso | desire | noun |",
+	"vocabulary": [
+		{
+			"term": "lekgwapa",
+			"definition": "A small, fast animal related to rabbits, known for being clever",
+			"partOfSpeech": "noun",
+			"pronunciation": "/lɛˈkʷɑ.pɑ/",
+			"language": "st"
+		},
+		{
+			"term": "phiri",
+			"definition": "A wild animal similar to a dog, known for being cunning",
+			"partOfSpeech": "noun",
+			"pronunciation": "/pʰi.ri/",
+			"language": "st"
+		},
+		{
+			"term": "merogo",
+			"definition": "Plants and vegetables that people eat",
+			"partOfSpeech": "noun",
+			"pronunciation": "/mɛ.ˈrɔ.ŋɔ/",
+			"language": "st"
+		},
+		{
+			"term": "thaka",
+			"definition": "To give a part of something to someone else",
+			"partOfSpeech": "verb",
+			"pronunciation": "/tʰa.ka/",
+			"language": "st"
+		},
+		{
+			"term": "takatso",
+			"definition": "A strong feeling of wanting something",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ta.ka.t͡sʰɔ/",
+			"language": "st"
+		}
+	]
+}

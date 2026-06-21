@@ -17,8 +17,8 @@ function classifyTopic(
 		.values()
 		.some((t) => t.prerequisites.includes(topic.id));
 
-	if (hasPrereqs && !hasDependents) return "prerequisite";
-	if (!hasPrereqs && hasDependents) return "advanced";
+	if (hasPrereqs && !hasDependents) return "advanced";
+	if (!hasPrereqs && hasDependents) return "prerequisite";
 	if (hasPrereqs && hasDependents) return "core";
 
 	return "core";
@@ -97,7 +97,7 @@ export function buildGraphFromCurriculum(
 						edges.push({
 							from: prereqTopic.id,
 							to: t.id,
-							relation: "requires",
+							relation: "leads_to",
 						});
 					}
 				}
@@ -129,7 +129,7 @@ export function buildGraphFromCurriculum(
 						edges.push({
 							from: prereqTopic.id,
 							to: topic.id,
-							relation: "requires",
+							relation: "leads_to",
 						});
 					}
 				}

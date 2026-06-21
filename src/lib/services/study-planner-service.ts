@@ -191,15 +191,17 @@ export class StudyPlannerService {
 					}
 				}
 				if (combinedGraph.nodes.length > 0) {
-					sortedTopics = topologicalSort(
+					const sortedRefs = topologicalSort(
 						algorithmPlan.topics.map((t) => ({
 							topicId: t.topicId,
 							subjectId: t.subjectId,
 						})),
 						combinedGraph,
-					).map((sorted) => ({
-						...algorithmPlan.topics.find((t) => t.topicId === sorted.topicId)!,
-					}));
+					);
+					const sortedIds = sortedRefs.map((s) => s.topicId);
+					sortedTopics = algorithmPlan.topics.filter((t) =>
+						sortedIds.includes(t.topicId),
+					);
 				}
 			} catch {
 				// Knowledge graph unavailable — use algorithm order as-is
@@ -310,7 +312,8 @@ function topologicalSort(
 
 	const sorted: string[] = [];
 	while (queue.length > 0) {
-		const current = queue.shift()!;
+		const current = queue[0];
+		queue.shift();
 		sorted.push(current);
 		for (const neighbor of adjacency.get(current) ?? []) {
 			const newDegree = (inDegree.get(neighbor) ?? 1) - 1;

@@ -8,10 +8,12 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
+import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { ComprehensionQuestionCard } from "@/components/stories/comprehension-question-card";
+import { StoryProgressBar } from "@/components/stories/story-progress-bar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,10 +24,32 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { trackComprehensionResult } from "@/lib/competency-engine";
+import { offlineDB } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion } from "@/lib/stories/types";
+
+const COMPLETION_THRESHOLD = 90;
+const SAVE_DEBOUNCE_MS = 2000;
+const TIME_TRACK_INTERVAL_MS = 30000;
+
+function getLangCode(languageId: string): string {
+	const map: Record<string, string> = {
+		"english-home-language": "en",
+		"afrikaans-home-language": "af",
+		"isi-zulu-home-language": "zu",
+		"isi-xhosa-home-language": "xh",
+		"sesotho-home-language": "st",
+		"setswana-home-language": "tn",
+		"sepedi-home-language": "nso",
+		"xitsonga-home-language": "ts",
+		"siswati-home-language": "ss",
+		"tshivenda-home-language": "ve",
+		"isi-ndebele-home-language": "nd",
+	};
+	return map[languageId] ?? "en";
+}
 
 export function StoryReaderClient() {
 	const { storyId } = useParams<{ storyId: string }>();
@@ -39,6 +63,18 @@ export function StoryReaderClient() {
 	const [showQuestions, setShowQuestions] = useState(false);
 	const [scores, setScores] = useState<Map<string, number>>(new Map());
 	const [allGraded, setAllGraded] = useState(false);
+	const [scrollPercent, setScrollPercent] = useState(0);
+	const [completed, setCompleted] = useState(false);
+
+	const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const timeRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const progressLoadedRef = useRef(false);
+	const progressIdRef = useRef<number | undefined>(undefined);
+	const scrollPercentRef = useRef(0);
+	const completedRef = useRef(false);
+	const timeSpentRef = useRef(0);
+
+	const userId = user?.$id ?? "anonymous";
 
 	useEffect(() => {
 		if (!storyId) return;
@@ -46,12 +82,126 @@ export function StoryReaderClient() {
 			setStory(s);
 			setLoading(false);
 			if (s) {
-				cacheStory(storyId, s).catch((err) =>
+				cacheStory(storyId, s).catch((err: unknown) =>
 					logError("story-reader.cacheStory", err),
 				);
 			}
 		});
 	}, [storyId]);
+
+	useEffect(() => {
+		if (!storyId || !userId || loading || progressLoadedRef.current) return;
+		progressLoadedRef.current = true;
+		offlineDB.storyProgress
+			.where("[userId+storyId]")
+			.equals([userId, storyId])
+			.first()
+			.then((record) => {
+				if (record) {
+					progressIdRef.current = record.id;
+					scrollPercentRef.current = record.scrollPercent;
+					completedRef.current = record.completed;
+					timeSpentRef.current = record.timeSpentSeconds;
+					setScrollPercent(record.scrollPercent);
+					setCompleted(record.completed);
+				}
+			})
+			.catch((err: unknown) => logError("story-reader.loadProgress", err));
+	}, [storyId, userId, loading]);
+
+	const saveProgress = useCallback(
+		(pct: number, done: boolean, seconds: number) => {
+			if (!userId || !storyId) return;
+			const id = progressIdRef.current;
+			if (id !== undefined) {
+				offlineDB.storyProgress
+					.update(id, {
+						scrollPercent: pct,
+						completed: done,
+						lastReadAt: Date.now(),
+						timeSpentSeconds: seconds,
+					})
+					.catch((err: unknown) => logError("story-reader.saveProgress", err));
+			} else {
+				offlineDB.storyProgress
+					.add({
+						userId,
+						storyId,
+						scrollPercent: pct,
+						completed: done,
+						lastReadAt: Date.now(),
+						timeSpentSeconds: seconds,
+					})
+					.then((newId) => {
+						progressIdRef.current = newId;
+					})
+					.catch((err: unknown) => logError("story-reader.saveProgress", err));
+			}
+		},
+		[userId, storyId],
+	);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight =
+				document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const pct = Math.round((scrollTop / docHeight) * 100);
+			scrollPercentRef.current = pct;
+			setScrollPercent(pct);
+
+			if (pct >= COMPLETION_THRESHOLD) {
+				completedRef.current = true;
+				setCompleted(true);
+			}
+
+			if (saveTimerRef.current) {
+				clearTimeout(saveTimerRef.current);
+			}
+			saveTimerRef.current = setTimeout(() => {
+				saveProgress(
+					scrollPercentRef.current,
+					completedRef.current,
+					timeSpentRef.current,
+				);
+			}, SAVE_DEBOUNCE_MS);
+		};
+
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			if (saveTimerRef.current) {
+				clearTimeout(saveTimerRef.current);
+			}
+		};
+	}, [saveProgress]);
+
+	useEffect(() => {
+		timeRef.current = setInterval(() => {
+			timeSpentRef.current += 30;
+		}, TIME_TRACK_INTERVAL_MS);
+		return () => {
+			if (timeRef.current) clearInterval(timeRef.current);
+		};
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			const finalPct = completedRef.current ? 100 : scrollPercentRef.current;
+			saveProgress(finalPct, completedRef.current, timeSpentRef.current);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (completedRef.current) return;
+		if (scrollPercent >= COMPLETION_THRESHOLD) {
+			completedRef.current = true;
+			setCompleted(true);
+			saveProgress(100, true, timeSpentRef.current);
+		}
+	}, [scrollPercent, saveProgress]);
 
 	const handleLoadQuestions = useCallback(async () => {
 		if (!story) return;
@@ -82,13 +232,13 @@ export function StoryReaderClient() {
 			setAllGraded(true);
 			const allScores = questions.map((q) => scores.get(q.id) ?? 0);
 			trackComprehensionResult(
-				user?.$id ?? "anonymous",
+				userId,
 				storyId as string,
 				story?.language ?? "english",
 				allScores,
-			).catch((err) => logError("trackComprehensionResult", err));
+			).catch((err: unknown) => logError("trackComprehensionResult", err));
 		}
-	}, [questions, scores, allGraded, user?.$id, storyId, story?.language]);
+	}, [questions, scores, allGraded, userId, storyId, story?.language]);
 
 	const overallScore =
 		scores.size > 0
@@ -131,16 +281,18 @@ export function StoryReaderClient() {
 
 	return (
 		<PageContainer className="gap-6 pt-8">
-			<Button
-				variant="ghost"
-				size="sm"
-				onClick={() => back()}
-				className="self-start rounded-full"
-				aria-label="Go back to stories"
-			>
-				<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
-				Back
-			</Button>
+			<div className="flex items-center justify-between">
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => back()}
+					className="rounded-full"
+					aria-label="Go back to stories"
+				>
+					<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+					Back
+				</Button>
+			</div>
 
 			<m.div
 				initial={{ opacity: 0, y: 16 }}
@@ -153,6 +305,10 @@ export function StoryReaderClient() {
 							<Badge variant="secondary" className="rounded-full text-xs">
 								{story.language}
 							</Badge>
+							<ListenToLesson
+								text={story.content}
+								lang={getLangCode(story.languageId)}
+							/>
 							{story.gradeLevel && (
 								<Badge variant="outline" className="rounded-full text-xs">
 									Grade {story.gradeLevel}
@@ -181,6 +337,12 @@ export function StoryReaderClient() {
 							{story.title}
 						</CardTitle>
 						<p className="text-muted-foreground text-sm">by {story.author}</p>
+						<div className="mt-3">
+							<StoryProgressBar
+								scrollPercent={scrollPercent}
+								completed={completed}
+							/>
+						</div>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-6 p-5 pt-0">
 						<div className="text-base/7 leading-[1.75]">
@@ -222,7 +384,7 @@ export function StoryReaderClient() {
 										language={story.language}
 										sourceType="story"
 										sourceId={story.id}
-										userId={user?.$id ?? "anonymous"}
+										userId={userId}
 									/>
 								</div>
 							))}

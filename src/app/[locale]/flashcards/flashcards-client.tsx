@@ -32,7 +32,6 @@ import {
 	processQuizResult,
 	type QuizResultDeps,
 } from "@/lib/services/quiz-result-processor";
-import { getSavedWords } from "@/lib/vocabulary/service";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
@@ -266,10 +265,12 @@ export function FlashcardsClient() {
 				}, [])
 			: [];
 
-	const sm2Available = session.source === "ai" && cards.sm2Cards.length > 0;
+	const sm2Available =
+		(session.source === "ai" || session.source === "vocabulary") &&
+		cards.sm2Cards.length > 0;
 	const displayCards = sm2Available
 		? cards.sm2Cards
-		: session.source === "mistakes" || session.source === "vocabulary"
+		: session.source === "mistakes"
 			? cards.mistakeCards
 			: generatedCards;
 	const totalCards = displayCards.length;
@@ -308,33 +309,39 @@ export function FlashcardsClient() {
 					})),
 				});
 			} else if (src === "vocabulary") {
-				const words = await getSavedWords("", {
-					language: subject.toLowerCase(),
-				});
-				dispatchCards({
-					type: "SET_MISTAKE_CARDS",
-					payload: words.map((w) => ({
-						id: `vocab_${w.id}`,
-						front: w.word,
-						back: w.partOfSpeech
-							? `${w.definition} (${w.partOfSpeech})`
-							: w.definition,
-						topic: "vocabulary",
-						difficulty: "Medium",
-						rawQuestion: {
-							id: `vocab_${w.id}`,
-							questionText: w.word,
-							explanation: w.definition,
-							subject: w.language,
-							topic: "vocabulary",
-							type: "short-answer",
+				const sm2Due = await flashcardEngine.getDueCards(subject.toLowerCase());
+				const sm2New = await flashcardEngine.getNewCards(
+					subject.toLowerCase(),
+					10,
+				);
+				const allVocab = [...sm2Due, ...sm2New].filter(
+					(c) => c.topic === "vocabulary",
+				);
+				hasSm2Ref.current = allVocab.length > 0;
+				if (allVocab.length > 0) {
+					dispatchCards({
+						type: "SET_SM2_CARDS",
+						payload: allVocab.map((c) => ({
+							id: c.id,
+							front: c.front,
+							back: c.back,
+							topic: c.topic ?? subject,
 							difficulty: "Medium",
-							bloomTaxonomy: "understand",
-							points: 1,
-							body: { modelAnswer: w.definition },
-						} as Question,
-					})),
-				});
+							rawQuestion: {
+								id: c.id,
+								questionText: c.front,
+								explanation: c.back,
+								subject: c.subject,
+								topic: c.topic ?? subject,
+								type: "short-answer",
+								difficulty: "Medium",
+								bloomTaxonomy: "understand",
+								points: 1,
+								body: { modelAnswer: c.back },
+							} as Question,
+						})),
+					});
+				}
 			} else {
 				const sm2Due = await flashcardEngine.getDueCards(subject.toLowerCase());
 				const sm2New = await flashcardEngine.getNewCards(

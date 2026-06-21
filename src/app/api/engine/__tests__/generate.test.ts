@@ -95,6 +95,21 @@ describe("POST /api/engine/generate", () => {
 		expect(body).toEqual({ error: "Count must be at least 1" });
 	});
 
+	test("validate: count > 50 returns 400", async () => {
+		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+
+		const req = new NextRequest("http://localhost/api/engine/generate", {
+			method: "POST",
+			body: JSON.stringify({ subject: "math", count: 100 }),
+		});
+
+		const res = await POST(req);
+		const body = await res.json();
+
+		expect(res.status).toBe(400);
+		expect(body).toEqual({ error: "Count must be 50 or less" });
+	});
+
 	test("execute returns questions with count and type", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockGenerateQuestionSet.mockResolvedValue({

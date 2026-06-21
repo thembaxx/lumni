@@ -83,7 +83,7 @@ export async function getActiveSession(
 	}
 }
 
-async function _joinSession(
+export async function joinSession(
 	sessionId: string,
 	userId: string,
 	userName?: string,
@@ -96,6 +96,15 @@ async function _joinSession(
 			joinedAt: new Date().toISOString(),
 			status: "active",
 		});
+		const session = await getDocument<LiveSession>(
+			COLLECTIONS.LIVE_SESSIONS,
+			sessionId,
+		);
+		if (session) {
+			await updateDocument(COLLECTIONS.LIVE_SESSIONS, sessionId, {
+				participantCount: (session.participantCount ?? 0) + 1,
+			});
+		}
 		return true;
 	} catch (err) {
 		logError("LiveSessionService.join", err);
@@ -103,7 +112,7 @@ async function _joinSession(
 	}
 }
 
-async function _leaveSession(
+export async function leaveSession(
 	sessionId: string,
 	userId: string,
 ): Promise<boolean> {
@@ -123,6 +132,15 @@ async function _leaveSession(
 				participants[0].$id,
 				{ status: "left" },
 			);
+			const session = await getDocument<LiveSession>(
+				COLLECTIONS.LIVE_SESSIONS,
+				sessionId,
+			);
+			if (session) {
+				await updateDocument(COLLECTIONS.LIVE_SESSIONS, sessionId, {
+					participantCount: Math.max(0, (session.participantCount ?? 1) - 1),
+				});
+			}
 		}
 		return true;
 	} catch (err) {
@@ -145,7 +163,7 @@ export async function getParticipants(
 	}
 }
 
-async function _updateActivity(
+export async function updateActivity(
 	sessionId: string,
 	userId: string,
 	activity: string,

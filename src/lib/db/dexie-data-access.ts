@@ -191,6 +191,7 @@ class DexieDataAccess implements DataAccess {
 	dictionaryCache = tableAdapter(offlineDB.dictionaryCache);
 	storyCache = tableAdapter(offlineDB.storyCache);
 	storyQuestions = tableAdapter(offlineDB.storyQuestions);
+	storyProgress = tableAdapter(offlineDB.storyProgress);
 	vocabularyList = tableAdapter(offlineDB.vocabularyList);
 	lessonProgress = tableAdapter(offlineDB.lessonProgress);
 	onboardingState = tableAdapter(offlineDB.onboardingState);

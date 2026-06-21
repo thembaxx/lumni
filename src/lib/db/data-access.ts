@@ -23,6 +23,7 @@ import type {
 	RetentionRecurrence,
 	SeenPastPaperQuestion,
 	SharedQuestionRecord,
+	StoryProgressRecord,
 	StudyPlanRecord,
 	SyncConflict,
 	TeacherObservation,
@@ -145,6 +146,7 @@ export interface DictionaryDataAccess {
 export interface StoryDataAccess {
 	storyCache: DataAccessTable<CachedStory, string>;
 	storyQuestions: DataAccessTable<StoryQuestionSet, string>;
+	storyProgress: DataAccessTable<StoryProgressRecord, number>;
 }
 
 export interface SyncDataAccess {
