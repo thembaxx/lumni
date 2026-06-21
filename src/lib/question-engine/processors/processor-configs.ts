@@ -1,8 +1,11 @@
 import * as calculation from "./graders/calculation";
 import * as essay from "./graders/essay";
+import * as fillInSequence from "./graders/fill-in-sequence";
 import * as longAnswer from "./graders/long-answer";
+import * as matchPairs from "./graders/match-pairs";
 import * as matching from "./graders/matching";
 import * as mcq from "./graders/mcq";
+import * as ordering from "./graders/ordering";
 import * as programming from "./graders/programming";
 import {
 	gradeDataResponse,
@@ -74,4 +77,22 @@ export const processorConfigs: ProcessorConfig[] = [
 		hint: hintDataResponse,
 	},
 	{ type: "mixed", temperature: 0.8, grade: gradeMixed, hint: hintMixed },
+	{
+		type: "ordering",
+		temperature: 0.6,
+		grade: ordering.grade,
+		hint: ordering.hint,
+	},
+	{
+		type: "fill-in-sequence",
+		temperature: 0.6,
+		grade: fillInSequence.grade,
+		hint: fillInSequence.hint,
+	},
+	{
+		type: "match-pairs",
+		temperature: 0.6,
+		grade: matchPairs.grade,
+		hint: matchPairs.hint,
+	},
 ];

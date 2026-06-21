@@ -3,10 +3,13 @@ import { validate as validateCalculation } from "./per-type/calculation";
 import { validate as validateDataResponse } from "./per-type/data-response";
 import { validate as validateDiagram } from "./per-type/diagram";
 import { validate as validateEssay } from "./per-type/essay";
+import { validate as validateFillInSequence } from "./per-type/fill-in-sequence";
 import { validate as validateLongAnswer } from "./per-type/long-answer";
+import { validate as validateMatchPairs } from "./per-type/match-pairs";
 import { validate as validateMatching } from "./per-type/matching";
 import { validate as validateMcq } from "./per-type/mcq";
 import { validate as validateMixed } from "./per-type/mixed";
+import { validate as validateOrdering } from "./per-type/ordering";
 import { validate as validateProgramming } from "./per-type/programming";
 import { validate as validateShortAnswer } from "./per-type/short-answer";
 import { validate as validateSourceBased } from "./per-type/source-based";
@@ -34,6 +37,9 @@ const typeValidators: Record<string, (question: Question) => ValidatorResult> =
 		programming: validateProgramming,
 		"data-response": validateDataResponse,
 		mixed: validateMixed,
+		ordering: validateOrdering,
+		"fill-in-sequence": validateFillInSequence,
+		"match-pairs": validateMatchPairs,
 	};
 
 function scoreResult(

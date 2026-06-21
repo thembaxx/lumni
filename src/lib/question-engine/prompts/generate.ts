@@ -232,6 +232,69 @@ Each question must have:
 
 Return ONLY valid JSON array.`,
 		},
+
+		ordering: {
+			system: `You are an expert at creating ordering questions for ${subject}. Create questions where students arrange items (steps, events, processes, or values) in the correct sequence by dragging them into order.`,
+			user: `${buildBaseUser("ordering", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
+
+Each question must have:
+- id, type: "ordering", subject, topic, difficulty, bloomTaxonomy, points
+- questionText: instructions for ordering (e.g., "Arrange these steps in the correct order")
+- body.items: [{id: string, text: string}] — the items to be ordered (in correct order, engine will shuffle)
+- body.correctOrder: [string] — array of item IDs in the correct sequence
+- body.shuffle: true
+- steps: string[] (optional step-by-step explanation of the correct order)
+- hint, explanation
+
+Good for: steps in a proof, chronological events, process stages, sorting by magnitude/priority.
+Items should be distinct and unambiguous.
+Use $...$ for LaTeX math notation.
+Points should be 2-5 depending on the number of items.
+
+Return ONLY valid JSON array.`,
+		},
+
+		"fill-in-sequence": {
+			system: `You are an expert at creating fill-in-sequence questions for ${subject}. Create questions where students drag items into blank slots to complete a sequence, formula, or text passage.`,
+			user: `${buildBaseUser("fill-in-sequence", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
+
+Each question must have:
+- id, type: "fill-in-sequence", subject, topic, difficulty, bloomTaxonomy, points
+- questionText: instructions (e.g., "Complete the sequence by filling in the blanks")
+- body.sequence: [{text: string, blankId?: string}] — the sequence of text segments with optional blank slots
+- body.blanks: [{id: string, correctAnswer: string, distractors?: string[]}] — the blank definitions with correct answers and optional distractors
+- body.shuffleDistractors: true
+- steps: string[] (optional step-by-step explanation)
+- hint, explanation
+
+Good for: completing chemical equations, filling in math formula terms, completing sentences, filling in diagram labels.
+Use $...$ for LaTeX math notation.
+Points should be 2-5 depending on the number of blanks.
+
+Return ONLY valid JSON array.`,
+		},
+
+		"match-pairs": {
+			system: `You are an expert at creating match-pairs questions for ${subject}. Create questions where students drag items from a left column to connect with correct matches on the right.`,
+			user: `${buildBaseUser("match-pairs", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
+
+Each question must have:
+- id, type: "match-pairs", subject, topic, difficulty, bloomTaxonomy, points
+- questionText: instructions (e.g., "Match each term with its definition")
+- body.leftItems: [{id: string, text: string}] — the items to be matched (terms, concepts, questions)
+- body.rightItems: [{id: string, text: string}] — the target matches (definitions, answers, descriptions)
+- body.correctMatches: [{leftId: string, rightId: string}] — the correct pairings
+- body.shuffle: true
+- steps: string[] (optional step-by-step explanation of each pairing)
+- hint, explanation
+
+Good for: term-definition matching, cause-effect matching, concept-example matching, formula-name matching.
+Each left item must have exactly one correct right match.
+Use $...$ for LaTeX math notation.
+Points should be 2-5 depending on the number of pairs.
+
+Return ONLY valid JSON array.`,
+		},
 	};
 
 	return prompts[type] ?? prompts["multiple-choice"];

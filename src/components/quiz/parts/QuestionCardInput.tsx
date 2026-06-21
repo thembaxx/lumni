@@ -4,8 +4,11 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { DiagramInput } from "@/components/quiz/parts/diagram-input";
+import { FillInSequenceInput } from "@/components/quiz/parts/fill-in-sequence-input";
+import { MatchPairsInput } from "@/components/quiz/parts/match-pairs-input";
 import { MCQOptions } from "@/components/quiz/parts/mcq-options";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
+import { OrderingInput } from "@/components/quiz/parts/ordering-input";
 import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -229,6 +232,57 @@ export function QuestionCardInput({
 				| Record<string, unknown>[]
 				| undefined;
 			return <MixedPartsInput parts={parts} onGrade={handleGrade} />;
+		}
+
+		case "ordering": {
+			const items = getBodyField(question, "items") as
+				| { id: string; text: string }[]
+				| undefined;
+			if (!items) return null;
+			return (
+				<OrderingInput
+					items={items}
+					onSubmit={(orderedIds) =>
+						handleGrade({ type: "ordered-items", value: orderedIds })
+					}
+				/>
+			);
+		}
+
+		case "fill-in-sequence": {
+			const seq = getBodyField(question, "sequence") as
+				| { text: string; blankId?: string }[]
+				| undefined;
+			const blanks = getBodyField(question, "blanks") as
+				| { id: string; correctAnswer: string; distractors?: string[] }[]
+				| undefined;
+			if (!seq || !blanks) return null;
+			return (
+				<FillInSequenceInput
+					sequence={seq}
+					blanks={blanks}
+					onSubmit={(answers) =>
+						handleGrade({ type: "sequence-blanks", value: answers })
+					}
+				/>
+			);
+		}
+
+		case "match-pairs": {
+			const leftItems = getBodyField(question, "leftItems") as
+				| { id: string; text: string }[]
+				| undefined;
+			const rightItems = getBodyField(question, "rightItems") as
+				| { id: string; text: string }[]
+				| undefined;
+			if (!leftItems || !rightItems) return null;
+			return (
+				<MatchPairsInput
+					leftItems={leftItems}
+					rightItems={rightItems}
+					onSubmit={(matches) => handleGrade({ type: "pairs", value: matches })}
+				/>
+			);
 		}
 
 		default:

@@ -9,7 +9,10 @@ export type QuestionType =
 	| "source-based"
 	| "programming"
 	| "data-response"
-	| "mixed";
+	| "mixed"
+	| "ordering"
+	| "fill-in-sequence"
+	| "match-pairs";
 
 export type Difficulty = "Easy" | "Medium" | "Hard";
 
@@ -25,6 +28,22 @@ export interface Option {
 	id: string;
 	text: string;
 	isCorrect: boolean;
+}
+
+export interface OrderingItem {
+	id: string;
+	text: string;
+}
+
+export interface SequenceBlank {
+	id: string;
+	correctAnswer: string;
+	distractors?: string[];
+}
+
+export interface SequenceSlot {
+	text: string;
+	blankId?: string;
 }
 
 export interface RubricCriterion {
@@ -163,6 +182,22 @@ export interface QuestionBody {
 	mixed: {
 		parts: MixedPart[];
 	};
+	ordering: {
+		items: OrderingItem[];
+		correctOrder: string[];
+		shuffle: boolean;
+	};
+	"fill-in-sequence": {
+		sequence: SequenceSlot[];
+		blanks: SequenceBlank[];
+		shuffleDistractors: boolean;
+	};
+	"match-pairs": {
+		leftItems: { id: string; text: string }[];
+		rightItems: { id: string; text: string }[];
+		correctMatches: { leftId: string; rightId: string }[];
+		shuffle: boolean;
+	};
 }
 
 export interface QuestionMetadata {
@@ -206,7 +241,9 @@ export interface UserAnswer {
 		| "code"
 		| "numeric"
 		| "coordinates"
-		| "mixed";
+		| "mixed"
+		| "ordered-items"
+		| "sequence-blanks";
 	value: unknown;
 }
 
