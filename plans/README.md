@@ -34,6 +34,8 @@ Commit baseline: `8a6fadbe`
 | 022 | i18n — Fill 64 missing keys for 8 SA languages | P2 | M | LOW | — | DONE |
 | 024 | Offline stories bundle — cache stories on first sync | P3 | S | LOW | — | DONE |
 | 023 | Cross-domain search — stories + lessons + vocabulary | P2 | M | LOW | — | DONE |
+| 025 | Story exercises — fill-in-blank, true-false, matching | P2 | M | MED | — | DONE |
+| 026 | Offline dictionary pre-cache | P3 | S | LOW | — | DONE |
 
 ## Execution phases
 

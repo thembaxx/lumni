@@ -1,4 +1,4 @@
-export { getCachedLookup, lookupWord } from "./service";
+export { getCachedLookup, lookupWord, preCacheCommonWords } from "./service";
 export type {
 	DictionaryCacheEntry,
 	DictionaryDefinition,

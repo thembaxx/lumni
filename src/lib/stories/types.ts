@@ -41,11 +41,18 @@ export interface StoryQuestion {
 	id: string;
 	storyId: string;
 	questionText: string;
-	questionType: "mcq" | "short-answer";
+	questionType:
+		| "mcq"
+		| "short-answer"
+		| "fill-in-blank"
+		| "true-false"
+		| "matching";
 	options?: string[];
 	correctAnswer: string;
 	explanation: string;
 	bloomLevel: string;
+	sentenceTemplate?: string;
+	pairs?: { left: string; right: string }[];
 }
 
 export interface StoryQuestionSet {

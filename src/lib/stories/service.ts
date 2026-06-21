@@ -9,7 +9,7 @@ import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
 const QUESTIONS_TTL = 30 * 24 * 60 * 60 * 1000;
 
-const QUESTIONS_SYSTEM_PROMPT = `You are a reading comprehension question generator. Given a short story, produce 3-5 comprehension questions that test literal recall, inferential understanding, and critical analysis. Mix question types between multiple-choice and short-answer. Format your response as a JSON array of objects with this schema:
+const QUESTIONS_SYSTEM_PROMPT = `You are a reading comprehension question generator. Given a short story, produce 3-5 comprehension questions that test literal recall, inferential understanding, and critical analysis. Mix question types across these 5 types: mcq, short-answer, fill-in-blank, true-false, matching. Format your response as a JSON array of objects with this schema:
 [
   {
     "id": "q1",
@@ -22,13 +22,17 @@ const QUESTIONS_SYSTEM_PROMPT = `You are a reading comprehension question genera
     "bloomLevel": "remember"
   }
 ]
-For short-answer questions, omit the options field and set correctAnswer to a brief expected response. Use Bloom's taxonomy levels: remember, understand, apply, analyze, evaluate, create. Return ONLY valid JSON.`;
+For short-answer questions, omit the options field and set correctAnswer to a brief expected response.
+For fill-in-blank: Create fill-in-the-blank questions by replacing a key word with "___" in a sentence. Set questionType to "fill-in-blank", provide the sentence in questionText, the missing word as correctAnswer, and the full sentence in sentenceTemplate.
+For true-false: Create true/false statements about the story. Set questionType to "true-false", write the statement in questionText, set correctAnswer to "True" or "False".
+For matching: Create matching exercises with items in two columns. Set questionType to "matching", write instructions in questionText, provide pairs in pairs array with left and right strings. The correctAnswer should be a string joining left-right pairs.
+Use Bloom's taxonomy levels: remember, understand, apply, analyze, evaluate, create. Return ONLY valid JSON.`;
 
 const questionsConfig = {
 	systemPrompt: QUESTIONS_SYSTEM_PROMPT,
 	ttlMs: QUESTIONS_TTL,
 	buildPrompt: (_subject: string, storyText: string) =>
-		`Story:\n\n${storyText}\n\nGenerate 3-5 comprehension questions covering literal recall, inference, and critical analysis. Mix mcq and short-answer types.`,
+		`Story:\n\n${storyText}\n\nGenerate 3-5 comprehension questions covering literal recall, inference, and critical analysis. Mix mcq, short-answer, fill-in-blank, true-false, and matching types.`,
 	parseResponse: (content: string) => JSON.parse(content) as StoryQuestion[],
 	emptyResult: [] as StoryQuestion[],
 	isEmpty: (result: StoryQuestion[]) => result.length === 0,

@@ -8,14 +8,15 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
-import { lookupWord } from "@/lib/dictionary/service";
+import { dexieDataAccess } from "@/lib/db";
+import { lookupWord, preCacheCommonWords } from "@/lib/dictionary/service";
 import type { DictionaryResult } from "@/lib/dictionary/types";
 import { logError } from "@/lib/shared/logger";
 import { isWordSaved, removeWord, saveWord } from "@/lib/vocabulary/service";
@@ -29,6 +30,12 @@ export function DictionaryClient() {
 	const [searched, setSearched] = useState(false);
 	const [saved, setSaved] = useState(false);
 	const [saving, setSaving] = useState(false);
+
+	useEffect(() => {
+		preCacheCommonWords(dexieDataAccess).catch(() => {
+			// background pre-cache failure is non-critical
+		});
+	}, []);
 
 	const handleSearch = useCallback(
 		async (e: React.FormEvent) => {

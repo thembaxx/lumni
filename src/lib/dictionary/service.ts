@@ -3,6 +3,7 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
+import { COMMON_WORDS } from "./seed-words";
 import type { DictionaryCacheEntry, DictionaryResult } from "./types";
 
 // Dexie v33: dictionaryCache table (key, word, result, fetchedAt, expiresAt)
@@ -136,4 +137,23 @@ export async function getCachedLookup(
 		// cache unavailable
 	}
 	return null;
+}
+
+export async function preCacheCommonWords(db: DataAccess): Promise<void> {
+	try {
+		const count = await db.dictionaryCache.count();
+		if (count >= 200) return;
+	} catch {
+		return;
+	}
+
+	for (const word of COMMON_WORDS) {
+		try {
+			await lookupWord(word);
+		} catch {
+			// individual word failure is ok
+		}
+		// small delay to avoid rate limiting
+		await new Promise((resolve) => setTimeout(resolve, 100));
+	}
 }
