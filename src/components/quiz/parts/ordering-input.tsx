@@ -103,7 +103,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 									onDragOver={(e: React.DragEvent) => handleDragOver(e, id)}
 									onDragEnd={handleDragEnd}
 									onDrop={(e: React.DragEvent) => handleDrop(e, id)}
-									className="flex flex-1 cursor-grab items-center gap-3 bg-transparent text-left active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-(--system-accent) rounded-lg"
+									className="flex flex-1 cursor-grab items-center gap-3 rounded-lg bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing"
 								>
 									<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-muted font-medium text-muted-foreground text-xs tabular-nums">
 										{idx + 1}
@@ -115,7 +115,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 										type="button"
 										onClick={() => moveUp(id)}
 										disabled={idx === 0}
-										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
+										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-95 disabled:opacity-20"
 										aria-label="Move up"
 									>
 										↑
@@ -124,7 +124,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 										type="button"
 										onClick={() => moveDown(id)}
 										disabled={idx === orderedIds.length - 1}
-										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
+										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-95 disabled:opacity-20"
 										aria-label="Move down"
 									>
 										↓

@@ -1,9 +1,6 @@
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import type { JobType } from "@/lib/orchestrator/types";
-import {
-	formatCorrectAnswer,
-	formatUserAnswer,
-} from "@/lib/question-engine/answer-formatter";
+import { formatCorrectAnswer } from "@/lib/question-engine/answer-formatter";
 import type {
 	BloomLevel,
 	Question,

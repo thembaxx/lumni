@@ -3,18 +3,14 @@
 import { File02Icon } from "@hugeicons/core-free-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import ReactMarkdown from "react-markdown";
-import rehypeKatex from "rehype-katex";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
 import { EmptyState } from "@/components/shared/empty-state";
 import { FullscreenDialog } from "@/components/shared/fullscreen-dialog";
 import { LoadingSpinner } from "@/components/shared/loading-spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import type { PaperListing } from "@/types/exam";
+import { SmartViewMarkdown } from "./smart-view-markdown";
 
 interface SmartViewDialogProps {
 	open: boolean;
@@ -90,12 +86,7 @@ export function SmartViewDialog({
 				) : result?.content ? (
 					<div className="p-4 sm:p-6">
 						<div className="prose prose-sm sm:prose dark:prose-invert max-w-none">
-							<ReactMarkdown
-								remarkPlugins={[remarkGfm, remarkMath]}
-								rehypePlugins={[rehypeKatex]}
-							>
-								{normalizeMathDelimiters(result.content)}
-							</ReactMarkdown>
+							<SmartViewMarkdown content={result.content} />
 						</div>
 					</div>
 				) : (

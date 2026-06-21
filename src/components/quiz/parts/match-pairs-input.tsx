@@ -92,7 +92,7 @@ export function MatchPairsInput({
 										<button
 											type="button"
 											onClick={() => removeMatch(item.id)}
-											className="ml-1 flex min-h-7 min-w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
+											className="ml-1 flex min-h-7 min-w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-95"
 											aria-label={`Remove match for ${item.text}`}
 										>
 											✕
@@ -117,7 +117,7 @@ export function MatchPairsInput({
 											handleDragStart(e, item.id)
 										}
 										onDragEnd={handleDragEnd}
-										className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-(--system-accent) rounded-md"
+										className="w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing"
 									>
 										{item.text}
 									</button>
@@ -143,7 +143,7 @@ export function MatchPairsInput({
 								}
 								onDragLeave={handleDragEnd}
 								onDrop={(e: React.DragEvent) => handleDropOnRight(e, item.id)}
-								className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all focus-visible:ring-2 focus-visible:ring-(--system-accent) ${
+								className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
 									used
 										? "border-muted bg-muted/50 text-muted-foreground line-through"
 										: "border-muted-foreground/30 border-dashed bg-transparent"

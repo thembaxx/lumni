@@ -1,4 +1,4 @@
-import type { Question, QuestionBody } from "./types";
+import type { Question } from "./types";
 
 export function formatCorrectAnswer(question: Question): string {
 	const body = question.body as Record<string, unknown>;
@@ -41,7 +41,8 @@ export function formatCorrectAnswer(question: Question): string {
 			const rightMap = new Map(rightItems.map((i) => [i.id, i.text]));
 			return correctMatches
 				.map(
-					(m) => `${leftMap.get(m.leftId) ?? m.leftId} → ${rightMap.get(m.rightId) ?? m.rightId}`,
+					(m) =>
+						`${leftMap.get(m.leftId) ?? m.leftId} → ${rightMap.get(m.rightId) ?? m.rightId}`,
 				)
 				.join("\n");
 		}
@@ -84,7 +85,10 @@ export function formatCorrectAnswer(question: Question): string {
 	}
 }
 
-export function formatUserAnswer(question: Question, answerValue: unknown): string {
+export function formatUserAnswer(
+	question: Question,
+	answerValue: unknown,
+): string {
 	switch (question.type) {
 		case "ordering": {
 			const ids = answerValue as string[];

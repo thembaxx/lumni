@@ -2,7 +2,6 @@
 
 import { m } from "framer-motion";
 import { createContext, use, useCallback, useMemo, useState } from "react";
-import { usePathname } from "@/i18n/navigation";
 import { iOSDecelerate } from "@/lib/utils/animation";
 
 interface ImmersiveModeContextValue {
@@ -23,7 +22,6 @@ export function ImmersiveModeProvider({
 	children: React.ReactNode;
 }) {
 	const [isImmersive, setIsImmersive] = useState(false);
-	const _pathname = usePathname();
 
 	const setImmersive = useCallback((v: boolean) => {
 		setIsImmersive(v);

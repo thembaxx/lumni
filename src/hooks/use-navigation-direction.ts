@@ -21,11 +21,15 @@ function navigateWithVt(
 	const currentPath = stripLocale(window.location.pathname);
 	const targetPath = stripLocale(href);
 
-	const currentDepth = navHierarchy[currentPath] ?? 0;
-	const targetDepth = navHierarchy[targetPath] ?? currentDepth;
-	const direction = targetDepth >= currentDepth ? "forward" : "back";
+	const currentDepth = navHierarchy[currentPath] ?? 1;
+	const targetDepth = navHierarchy[targetPath] ?? 1;
 
-	document.documentElement.dataset.vtDirection = direction;
+	if (currentDepth !== targetDepth) {
+		const direction = targetDepth > currentDepth ? "forward" : "back";
+		document.documentElement.dataset.vtDirection = direction;
+	} else {
+		delete document.documentElement.dataset.vtDirection;
+	}
 
 	const doNav = () => {
 		if (isReplace) {

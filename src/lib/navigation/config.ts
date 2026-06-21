@@ -220,10 +220,8 @@ export function getRouteLabel(route: string): string | undefined {
 }
 
 export function getNavHierarchy(): Record<string, number> {
-	const depthMap: Record<string, number> = {};
-	const allItems = navConfig.flatMap((cat) => cat.items);
-	allItems.forEach((item, index) => {
-		depthMap[item.route] = index < 2 ? 0 : 1;
-	});
-	return depthMap;
+	return {
+		"/": 0,
+		"/dashboard": 0,
+	};
 }

@@ -33,7 +33,6 @@ interface DiagramLabellingInputProps {
 
 export function DiagramLabellingInput({
 	imageUrl,
-	svgContent,
 	width,
 	height,
 	regions,
