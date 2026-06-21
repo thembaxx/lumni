@@ -14,11 +14,29 @@ const mockShowBudgetToast = vi.fn<(error: unknown) => void>();
 
 vi.mock("@/lib/shared/api-fetch", () => ({
 	apiFetch: mockApiFetch,
+	budgetFetch: async (url: string, options: RequestInit) => {
+		try {
+			return await mockApiFetch(url, options);
+		} catch (error) {
+			if (
+				error instanceof Error &&
+				"limitReached" in error &&
+				(error as Record<string, unknown>).limitReached === true
+			) {
+				mockShowBudgetToast(error);
+			}
+			throw error;
+		}
+	},
 	isBudgetExceeded: (err: unknown) =>
 		err instanceof Error &&
 		"limitReached" in err &&
 		(err as Record<string, unknown>).limitReached === true,
 	showBudgetToast: mockShowBudgetToast,
+}));
+
+vi.mock("@/lib/shared/logger", () => ({
+	logError: vi.fn(),
 }));
 
 const { useQuestionEngine } = await import("@/hooks/use-question-engine");

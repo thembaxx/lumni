@@ -9,12 +9,6 @@ import type { FlashcardDataAccess } from "@/lib/db/data-access";
 const _deps: { db: FlashcardDataAccess } = { db: dexieDataAccess };
 
 import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
-import {
 	Field,
 	FieldDescription,
 	FieldGroup,
@@ -31,6 +25,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { iOSEase } from "@/lib/utils/animation";
 import type { StudySet } from "./hooks/use-study-set-storage";
+import { ItemPickerDialog } from "./item-picker-dialog";
+import { TagChips } from "./tag-chips";
 
 interface StudySetFormProps {
 	onSubmit: (data: StudySet) => void;
@@ -188,48 +184,16 @@ export function StudySetForm({
 						<p className="mb-1 font-medium text-sm">
 							Select flashcards to include:
 						</p>
-						{formData.flashcardIds.length > 0 ? (
-							<div className="flex flex-wrap gap-1">
-								{formData.flashcardIds.flatMap((id) => {
-									const card = formData.flashcards?.find((c) => c.id === id);
-									if (!card) return [];
-									return [
-										<span
-											key={id}
-											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
-										>
-											{card.front.substring(0, 20)}...
-											<Button
-												variant="ghost"
-												size="icon"
-												onClick={() => handleFlashcardSelect(id)}
-												aria-label="Remove flashcard"
-											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="12"
-													height="12"
-													viewBox="0 0 24 24"
-													fill="none"
-													stroke="currentColor"
-													strokeWidth={1}
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												>
-													<title>Remove flashcard</title>
-													<path d="M18 6L6 18" />
-													<path d="M6 6l12 12" />
-												</svg>
-											</Button>
-										</span>,
-									];
-								})}
-							</div>
-						) : (
-							<p className="text-muted-foreground text-xs italic">
-								No flashcards selected
-							</p>
-						)}
+						<TagChips
+							items={availableFlashcards.map((c) => ({
+								id: c.id,
+								label: c.front,
+							}))}
+							selectedIds={formData.flashcardIds}
+							onRemove={handleFlashcardSelect}
+							emptyMessage="No flashcards selected"
+							ariaLabel="Remove flashcard"
+						/>
 						<Button
 							variant="outline"
 							size="sm"
@@ -241,97 +205,33 @@ export function StudySetForm({
 					</div>
 				</Field>
 
-				<Dialog
+				<ItemPickerDialog
 					open={showFlashcardPicker}
 					onOpenChange={setShowFlashcardPicker}
-				>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Select Flashcards</DialogTitle>
-						</DialogHeader>
-						<div className="flex max-h-60 flex-col gap-1 overflow-y-auto">
-							{availableFlashcards.length === 0 ? (
-								<p className="text-muted-foreground text-xs italic">
-									No flashcards available. Create some first.
-								</p>
-							) : (
-								availableFlashcards.map((card) => {
-									const selected = formData.flashcardIds.includes(card.id);
-									return (
-										<button
-											key={card.id}
-											type="button"
-											onClick={() => handleFlashcardSelect(card.id)}
-											className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted ${
-												selected ? "bg-accent/20 font-medium" : ""
-											}`}
-										>
-											<input
-												type="checkbox"
-												checked={selected}
-												readOnly
-												className="size-4"
-											/>
-											<span className="truncate">{card.front}</span>
-										</button>
-									);
-								})
-							)}
-						</div>
-						<div className="flex justify-end pt-2">
-							<Button size="sm" onClick={() => setShowFlashcardPicker(false)}>
-								Done
-							</Button>
-						</div>
-					</DialogContent>
-				</Dialog>
+					title="Select Flashcards"
+					items={availableFlashcards.map((c) => ({
+						id: c.id,
+						label: c.front,
+					}))}
+					selectedIds={formData.flashcardIds}
+					onToggle={handleFlashcardSelect}
+					emptyMessage="No flashcards available. Create some first."
+				/>
 
 				<Field>
 					<FieldLabel htmlFor="notes">Notes</FieldLabel>
 					<div className="flex flex-col gap-2">
 						<p className="mb-1 font-medium text-sm">Select notes to include:</p>
-						{formData.noteIds.length > 0 ? (
-							<div className="flex flex-wrap gap-1">
-								{formData.noteIds.flatMap((id) => {
-									const note = formData.notes?.find((n) => n.id === id);
-									if (!note) return [];
-									return [
-										<span
-											key={id}
-											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
-										>
-											{note.title.substring(0, 20)}...
-											<Button
-												variant="ghost"
-												size="icon"
-												onClick={() => handleNoteSelect(id)}
-												aria-label="Remove note"
-											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="12"
-													height="12"
-													viewBox="0 0 24 24"
-													fill="none"
-													stroke="currentColor"
-													strokeWidth={1}
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												>
-													<title>Remove note</title>
-													<path d="M18 6L6 18" />
-													<path d="M6 6l12 12" />
-												</svg>
-											</Button>
-										</span>,
-									];
-								})}
-							</div>
-						) : (
-							<p className="text-muted-foreground text-xs italic">
-								No notes selected
-							</p>
-						)}
+						<TagChips
+							items={availableNotes.map((n) => ({
+								id: n.id,
+								label: n.title,
+							}))}
+							selectedIds={formData.noteIds}
+							onRemove={handleNoteSelect}
+							emptyMessage="No notes selected"
+							ariaLabel="Remove note"
+						/>
 						<Button
 							variant="outline"
 							size="sm"
@@ -343,47 +243,18 @@ export function StudySetForm({
 					</div>
 				</Field>
 
-				<Dialog open={showNotesPicker} onOpenChange={setShowNotesPicker}>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Select Notes</DialogTitle>
-						</DialogHeader>
-						<div className="flex max-h-60 flex-col gap-1 overflow-y-auto">
-							{availableNotes.length === 0 ? (
-								<p className="text-muted-foreground text-xs italic">
-									No notes available. Create some first.
-								</p>
-							) : (
-								availableNotes.map((note) => {
-									const selected = formData.noteIds.includes(note.id);
-									return (
-										<button
-											key={note.id}
-											type="button"
-											onClick={() => handleNoteSelect(note.id)}
-											className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted ${
-												selected ? "bg-accent/20 font-medium" : ""
-											}`}
-										>
-											<input
-												type="checkbox"
-												checked={selected}
-												readOnly
-												className="size-4"
-											/>
-											<span className="truncate">{note.title}</span>
-										</button>
-									);
-								})
-							)}
-						</div>
-						<div className="flex justify-end pt-2">
-							<Button size="sm" onClick={() => setShowNotesPicker(false)}>
-								Done
-							</Button>
-						</div>
-					</DialogContent>
-				</Dialog>
+				<ItemPickerDialog
+					open={showNotesPicker}
+					onOpenChange={setShowNotesPicker}
+					title="Select Notes"
+					items={availableNotes.map((n) => ({
+						id: n.id,
+						label: n.title,
+					}))}
+					selectedIds={formData.noteIds}
+					onToggle={handleNoteSelect}
+					emptyMessage="No notes available. Create some first."
+				/>
 
 				<Field>
 					<FieldLabel htmlFor="tags">Tags (Optional)</FieldLabel>

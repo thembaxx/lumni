@@ -1,179 +1,18 @@
 "use client";
 
-import {
-	Calendar01Icon,
-	Clock01Icon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import { Calendar01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-
-interface StudySession {
-	day: string;
-	subject: string;
-	topic: string;
-	duration: number;
-	type: "new" | "review" | "practice";
-}
-
-interface SchedulerInput {
-	subjects: {
-		id: string;
-		name: string;
-		difficulty: "easy" | "medium" | "hard";
-	}[];
-	hoursPerDay: number;
-	examDate: Date;
-	startDate: Date;
-}
-
-const subjectOptions = [
-	{ id: "mathematics", name: "Mathematics" },
-	{ id: "physical-sciences", name: "Physical Sciences" },
-	{ id: "life-sciences", name: "Life Sciences" },
-	{ id: "english-home-language", name: "English HL" },
-	{ id: "afrikaans-home-language", name: "Afrikaans HL" },
-	{ id: "geography", name: "Geography" },
-	{ id: "history", name: "History" },
-	{ id: "accounting", name: "Accounting" },
-	{ id: "business-studies", name: "Business Studies" },
-	{ id: "economics", name: "Economics" },
-];
-
-const topicSuggestions: Record<string, string[]> = {
-	mathematics: [
-		"Algebra",
-		"Calculus",
-		"Geometry",
-		"Statistics",
-		"Trigonometry",
-	],
-	"physical-sciences": [
-		"Mechanics",
-		"Waves",
-		"Optics",
-		"Chemistry",
-		"Thermodynamics",
-	],
-	"life-sciences": [
-		"Cell Biology",
-		"Genetics",
-		"Evolution",
-		"Ecology",
-		"Human Anatomy",
-	],
-	"english-home-language": [
-		"Literature",
-		"Poetry",
-		"Essay Writing",
-		"Comprehension",
-		"Language",
-	],
-};
-
-function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
-	const sessions: StudySession[] = [];
-	const { subjects, hoursPerDay, examDate, startDate } = input;
-
-	const daysUntilExam = Math.ceil(
-		(examDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
-	);
-	const totalDays = Math.min(daysUntilExam, 30);
-
-	const difficultyWeights = { easy: 1, medium: 1.5, hard: 2 };
-	const _totalWeight = subjects.reduce(
-		(sum, s) => sum + difficultyWeights[s.difficulty],
-		0,
-	);
-
-	const dayNames = [
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-		"Sunday",
-	];
-
-	for (let day = 0; day < totalDays; day++) {
-		const currentDate = new Date(startDate);
-		currentDate.setDate(startDate.getDate() + day);
-		const dayName = dayNames[currentDate.getDay()];
-
-		const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
-		const effectiveHours = isWeekend ? hoursPerDay * 1.5 : hoursPerDay;
-
-		let remainingMinutes = effectiveHours * 60;
-
-		const sortedSubjects = subjects.toSorted((a, b) => {
-			const aWeight =
-				difficultyWeights[a.difficulty] * (Math.random() * 0.3 + 0.7);
-			const bWeight =
-				difficultyWeights[b.difficulty] * (Math.random() * 0.3 + 0.7);
-			return bWeight - aWeight;
-		});
-
-		const topicsPerSubject: Record<string, string[]> = {};
-		sortedSubjects.forEach((subj) => {
-			topicsPerSubject[subj.id] = topicSuggestions[subj.id] || [
-				`${subj.name} Study`,
-			];
-		});
-
-		const subjectIndexMap = new Map(sortedSubjects.map((s, i) => [s, i]));
-
-		for (const subject of sortedSubjects) {
-			if (remainingMinutes <= 0) break;
-
-			const isNew = Math.random() > 0.4;
-			const type = isNew ? "new" : "review";
-
-			const topics = topicsPerSubject[subject.id];
-			const topic = topics[Math.floor(Math.random() * topics.length)];
-
-			const sessionDuration = Math.min(
-				Math.floor(
-					remainingMinutes /
-						(subjects.length - (subjectIndexMap.get(subject) ?? 0) || 1),
-				),
-				subject.difficulty === "hard"
-					? 60
-					: subject.difficulty === "medium"
-						? 45
-						: 30,
-			);
-
-			if (sessionDuration >= 20) {
-				sessions.push({
-					day: dayName,
-					subject: subject.name,
-					topic: topic,
-					duration: sessionDuration,
-					type: type,
-				});
-				remainingMinutes -= sessionDuration;
-			}
-		}
-
-		if (remainingMinutes >= 15) {
-			sessions.push({
-				day: dayName,
-				subject: "Break",
-				topic: "Short break & refresh",
-				duration: remainingMinutes,
-				type: "practice",
-			});
-		}
-	}
-
-	return sessions.slice(0, 50);
-}
+import {
+	generateDeterministicSchedule,
+	type SchedulerInput,
+	type StudySession,
+	SUBJECT_OPTIONS,
+} from "./schedule-generator";
+import { ScheduleView } from "./schedule-view";
 
 export function SmartScheduler() {
 	const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
@@ -214,7 +53,7 @@ export function SmartScheduler() {
 		const input: SchedulerInput = {
 			subjects: selectedSubjects.map((id) => ({
 				id,
-				name: subjectOptions.find((s) => s.id === id)?.name || id,
+				name: SUBJECT_OPTIONS.find((s) => s.id === id)?.name || id,
 				difficulty: difficultyMap[id] || "medium",
 			})),
 			hoursPerDay,
@@ -226,33 +65,6 @@ export function SmartScheduler() {
 		setSchedule(generatedSchedule);
 		setIsGenerating(false);
 	};
-
-	const getTypeColor = (type: string) => {
-		switch (type) {
-			case "new":
-				return "bg-[--system-accent]/10 text-muted-foreground";
-			case "review":
-				return "bg-accent/20 text-accent";
-			case "practice":
-				return "bg-success/20 text-success";
-			default:
-				return "bg-muted/50 text-muted-foreground";
-		}
-	};
-
-	const daysOrder = [
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-		"Sunday",
-	];
-	const scheduleByDay = daysOrder.map((day) => ({
-		day,
-		sessions: schedule.filter((s) => s.day === day),
-	}));
 
 	return (
 		<div className="flex h-full flex-col overflow-y-auto">
@@ -275,7 +87,7 @@ export function SmartScheduler() {
 						<Field>
 							<FieldLabel>Select Subjects</FieldLabel>
 							<div className="grid grid-cols-2 gap-2">
-								{subjectOptions.map((subject) => (
+								{SUBJECT_OPTIONS.map((subject) => (
 									<div key={subject.id}>
 										<Button
 											variant={
@@ -362,81 +174,7 @@ export function SmartScheduler() {
 					</div>
 				</div>
 			) : (
-				<div className="flex-1 overflow-y-auto px-5 pb-10">
-					<div className="mb-4 flex items-center justify-between">
-						<h3 className="font-semibold">Your Study Plan</h3>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => setSchedule([])}
-							className="rounded-xl"
-						>
-							Reset
-						</Button>
-					</div>
-
-					<div className="flex flex-col gap-4">
-						{scheduleByDay.flatMap((day, idx) =>
-							day.sessions.length > 0
-								? [
-										<m.div
-											key={day.day}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ delay: idx * 0.05 }}
-										>
-											<h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
-												<HugeiconsIcon
-													icon={Calendar01Icon}
-													className="size-4 text-[--system-accent]"
-												/>
-												{day.day}
-											</h4>
-											<div className="flex flex-col gap-2">
-												{day.sessions.map((session) => (
-													<div
-														key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
-														className={cn(
-															"rounded-xl border border-border bg-card p-3 shadow-level-1",
-															session.subject === "Break" && "bg-muted/50",
-														)}
-													>
-														<div className="flex items-center justify-between">
-															<div>
-																<span className="font-medium text-sm">
-																	{session.subject}
-																</span>
-																<span className="ml-2 text-muted-foreground text-sm">
-																	- {session.topic}
-																</span>
-															</div>
-															<div className="flex items-center gap-2">
-																<span
-																	className={cn(
-																		"rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
-																		getTypeColor(session.type),
-																	)}
-																>
-																	{session.type}
-																</span>
-																<span className="flex items-center gap-1 text-muted-foreground text-sm tabular-nums">
-																	<HugeiconsIcon
-																		icon={Clock01Icon}
-																		className="size-3"
-																	/>
-																	{session.duration}min
-																</span>
-															</div>
-														</div>
-													</div>
-												))}
-											</div>
-										</m.div>,
-									]
-								: [],
-						)}
-					</div>
-				</div>
+				<ScheduleView schedule={schedule} onReset={() => setSchedule([])} />
 			)}
 		</div>
 	);

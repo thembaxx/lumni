@@ -2,17 +2,17 @@
 
 import { useQuery } from "@tanstack/react-query";
 import type { Question } from "@/lib/question-engine/types";
-import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
-import { logError } from "@/lib/shared/logger";
+import { budgetFetch } from "@/lib/shared/api-fetch";
 import type { VisualContent } from "@/lib/visual-engine/types";
 
 interface VisualResult {
 	visual: VisualContent | null;
 }
 
-async function fetchVisual(question: Question): Promise<VisualResult> {
-	try {
-		return await apiFetch<VisualResult>("/api/engine/visual", {
+function fetchVisual(question: Question): Promise<VisualResult> {
+	return budgetFetch<VisualResult>(
+		"/api/engine/visual",
+		{
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -21,12 +21,9 @@ async function fetchVisual(question: Question): Promise<VisualResult> {
 				subject: question.subject,
 				topic: question.topic,
 			}),
-		});
-	} catch (error) {
-		logError("FetchVisual", error);
-		showBudgetToast(error);
-		throw error;
-	}
+		},
+		"FetchVisual",
+	);
 }
 
 export function useVisualEngine(question: Question | null) {

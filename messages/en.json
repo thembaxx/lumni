@@ -675,7 +675,10 @@
     "cancelConfirm": "Are you sure you want to cancel?",
     "reactivate": "Reactivate",
     "alreadyPremium": "You're a Premium member!",
-    "expiresOn": "Expires on {date}"
+    "expiresOn": "Expires on {date}",
+    "gatedTitle": "Premium Feature",
+    "gatedDescription": "Upgrade to unlock {feature}",
+    "freeQuizzesLeft": "{count} free quizzes remaining today"
   },
   "settings": {
     "title": "Settings",

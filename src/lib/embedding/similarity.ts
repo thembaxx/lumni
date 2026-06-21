@@ -66,6 +66,8 @@ export async function findTopK(
 			topic: pq.topic,
 			similarity: s.score,
 			type: pq.questionType,
+			bloomLevel: pq.bloomLevel,
+			subtopicId: pq.subtopicId,
 		});
 	}
 	return result;

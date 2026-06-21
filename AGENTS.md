@@ -793,3 +793,35 @@ const systemPrompt = webContext.xml
 **Tests**: `bun run test` — 1321 pass, 1 pre-existing failure (next-intl module resolution in `quiz-result.test.tsx`). No regressions.
 **TypeScript**: `npx tsc --noEmit` — 0 errors.
 **Biome**: `npx biome check` — 0 errors on all changed files.
+
+### Session 39 — Hook factories + large component extraction + test fix (June 2026)
+
+**Hook factory abstractions:**
+- **`use-hook-factories.ts`**: `createApiQuery<TData, TParams>` + `createInvalidatingMutation<TInput, TOutput, TMappedOutput>` — generic factories eliminating boilerplate across query and mutation hooks. Dynamic `queryKey`/`enabled` via function params.
+- **8 hooks refactored**: `use-exam-paper.ts` (1 query), `use-user-progress.ts` (1 query), `use-study-groups.ts` (3 queries + 7 mutations — biggest win), `use-group-comments.ts` (1 query + 2 mutations), `use-group-reactions.ts` (1 query + 1 mutation)
+- **Consumer update**: `post-card-with-comments.tsx` updated to use new object-param API for comments/reactions hooks
+
+**Large component extractions:**
+- **`smart-scheduler.tsx`**: 405→167 lines — extracted `schedule-generator.ts` (pure `generateDeterministicSchedule()` + types + constants) + `schedule-view.tsx` (day-grouped schedule display with animations)
+- **`QuestionCardInput.tsx`**: 440→224 lines — extracted `mcq-options.tsx` (MCQ grid with animations + TTS) + `diagram-input.tsx` (draw/upload canvas with mode tabs)
+- **`snap-fab.tsx`**: 467→380 lines — extracted `snap-dialog.tsx` (SnapDialog + SnapPhase/SolveResult types) + shared `extractFromImage()` helper (deduplicates OCR extraction between camera and file capture)
+- **`study-set-editor.tsx`**: 467→383 lines — extracted `item-picker-dialog.tsx` (reusable ItemPickerDialog) + `tag-chips.tsx` (reusable TagChips with remove button)
+
+**Pre-existing test failure fixed:**
+- **`quiz-result.test.tsx`**: Added mocks for `next/navigation`, `next-intl/navigation`, and `next-intl/server` — resolved `Cannot find module 'next/navigation'` error from `next-intl` transitive dependency. All 5 tests now pass.
+
+**Hook simplification:**
+- **`use-question-engine.ts`**: Removed redundant `generatedQuestions` useState (duplicated query data). `generate()` now returns `result.questions` directly. `queryKey` memoized. `grade`/`hint` callbacks simplified. 185→156 lines.
+
+**New files (7):**
+- `src/components/tools/core/snap-dialog.tsx` — SnapDialog component + types
+- `src/components/tools/scheduling/schedule-generator.ts` — pure schedule generation logic
+- `src/components/tools/scheduling/schedule-view.tsx` — schedule display component
+- `src/components/tools/study-sets/item-picker-dialog.tsx` — reusable picker dialog
+- `src/components/tools/study-sets/tag-chips.tsx` — reusable tag chip display
+- `src/components/quiz/parts/mcq-options.tsx` — MCQ options grid component
+- `src/components/quiz/parts/diagram-input.tsx` — diagram draw/upload component
+
+**Tests**: `bun run test` — **1326 pass, 0 failures**. Pre-existing failure resolved.
+**TypeScript**: `npx tsc --noEmit` — 0 errors.
+**Biome**: `npx biome check` — 0 errors on all changed files.

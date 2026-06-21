@@ -4,6 +4,10 @@ import { embedText } from "@/lib/embedding/client";
 import { findTopK } from "@/lib/embedding/similarity";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { logError } from "@/lib/shared/logger";
+import {
+	recordSeenQuestions,
+	selectAdaptiveQuestions,
+} from "./adaptive-selector";
 import type { GenerationParams } from "./types";
 
 export interface EnrichmentDeps {
@@ -29,6 +33,7 @@ interface EmbeddingSource {
 		subject: string,
 		topic?: string,
 		exampleCount?: number,
+		pastPaperMode?: boolean,
 	): Promise<{
 		poolQuestions: GenerationParams["poolQuestions"];
 		pastPaperExamples: GenerationParams["pastPaperExamples"];
@@ -82,6 +87,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
 			subject: string,
 			topic?: string,
 			exampleCount = 3,
+			pastPaperMode = false,
 		): Promise<{
 			poolQuestions: GenerationParams["poolQuestions"];
 			pastPaperExamples: GenerationParams["pastPaperExamples"];
@@ -94,12 +100,15 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
 				const embedding = await embedText(queryText);
 				if (!embedding) return { poolQuestions, pastPaperExamples };
 
+				const fetchK = pastPaperMode
+					? Math.max(exampleCount * 3, 15)
+					: exampleCount + 2;
 				const scored = await findTopK(
 					{
 						subject,
 						queryEmbedding: new Float32Array(embedding),
-						k: exampleCount + 2,
-						threshold: 0.5,
+						k: fetchK,
+						threshold: 0.4,
 					},
 					{
 						questionEmbeddings: db.questionEmbeddings,
@@ -107,8 +116,21 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
 					},
 				);
 
-				for (const sq of scored) {
-					if (sq.similarity > 0.8) {
+				if (pastPaperMode && scored.length > 0) {
+					const selected = await selectAdaptiveQuestions(
+						scored,
+						subject,
+						exampleCount,
+						{ db },
+					);
+
+					await recordSeenQuestions(
+						selected.map((q) => q.questionId),
+						subject,
+						{ db },
+					);
+
+					for (const sq of selected) {
 						poolQuestions.push({
 							id: sq.questionId,
 							questionText: sq.questionText,
@@ -119,7 +141,27 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
 							topic: sq.topic,
 							similarity: sq.similarity,
 							type: sq.type,
+							bloomLevel: sq.bloomLevel,
+							subtopicId: sq.subtopicId,
 						});
+					}
+				} else {
+					for (const sq of scored) {
+						if (sq.similarity > 0.8) {
+							poolQuestions.push({
+								id: sq.questionId,
+								questionText: sq.questionText,
+								answerText: sq.answerText,
+								marks: sq.marks,
+								year: sq.year,
+								paperNumber: sq.paperNumber,
+								topic: sq.topic,
+								similarity: sq.similarity,
+								type: sq.type,
+								bloomLevel: sq.bloomLevel,
+								subtopicId: sq.subtopicId,
+							});
+						}
 					}
 				}
 
@@ -208,6 +250,7 @@ export function createEnrichmentPipeline(
 					params.subject,
 					params.topic,
 					exampleCount,
+					params.pastPaperMode,
 				);
 
 			let pastPaperExamples = embeddingExamples ?? [];

@@ -61,7 +61,46 @@ function extractQuestionText(
 		.join("\n\n");
 }
 
-function inferBloomLevel(_questionType: string, marks: number): string {
+function inferBloomLevel(
+	_questionType: string,
+	marks: number,
+	questionText: string,
+): string {
+	const text = questionText.toLowerCase();
+
+	if (/\b(define|name|state|list|recall|identify|label)\b/.test(text))
+		return "remember";
+	if (
+		/\b(explain|describe|summarise|summarize|compare|contrast|interpret|paraphrase)\b/.test(
+			text,
+		)
+	)
+		return "understand";
+	if (
+		/\b(apply|calculate|solve|compute|demonstrate|use|perform|implement|classify|categorise|categorize)\b/.test(
+			text,
+		)
+	)
+		return "apply";
+	if (
+		/\b(analy[sz]e|examine|differentiate|organise|organize|distinguish|break down|investigate|compare and)\b/.test(
+			text,
+		)
+	)
+		return "analyze";
+	if (
+		/\b(evaluate|justify|assess|critique|judge|argue|defend|recommend|prioritise|prioritize)\b/.test(
+			text,
+		)
+	)
+		return "evaluate";
+	if (
+		/\b(create|design|construct|develop|formulate|compose|propose|generate)\b/.test(
+			text,
+		)
+	)
+		return "create";
+
 	if (marks <= 2) return "remember";
 	if (marks <= 4) return "understand";
 	if (marks <= 6) return "apply";
@@ -99,9 +138,13 @@ export function extractQuestionsFromPaper(
 	subject: string,
 	year: number,
 	paperNumber: number,
-): PastPaperQuestion[] {
+): {
+	questions: PastPaperQuestion[];
+	stats: { total: number; withAnswer: number; withoutAnswer: number };
+} {
 	const questions: PastPaperQuestion[] = [];
 	const now = new Date().toISOString();
+	let withAnswer = 0;
 
 	for (let si = 0; si < paper.sections.length; si++) {
 		const section = paper.sections[si];
@@ -128,6 +171,8 @@ export function extractQuestionsFromPaper(
 				const answerText = memoPart
 					? extractAnswerText({ ...memoQuestion, parts: [memoPart] })
 					: "";
+				const hasAnswer = answerText.trim().length > 0;
+				if (hasAnswer) withAnswer++;
 
 				questions.push({
 					id: nanoid(),
@@ -142,12 +187,23 @@ export function extractQuestionsFromPaper(
 					answerText,
 					marks,
 					questionType: determineQuestionType(part.type || "short-answer"),
-					bloomLevel: inferBloomLevel(part.type || "short-answer", marks),
+					bloomLevel: inferBloomLevel(
+						part.type || "short-answer",
+						marks,
+						questionText,
+					),
 					createdAt: now,
 				});
 			}
 		}
 	}
 
-	return questions;
+	return {
+		questions,
+		stats: {
+			total: questions.length,
+			withAnswer,
+			withoutAnswer: questions.length - withAnswer,
+		},
+	};
 }

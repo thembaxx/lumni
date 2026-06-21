@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { budgetFetch } from "@/lib/shared/api-fetch";
 import type { StudyGuide } from "@/lib/study-guide/types";
 
 interface UseStudyGuideParams {
@@ -11,18 +12,16 @@ interface UseStudyGuideParams {
 export function useStudyGuide() {
 	const queryClient = useQueryClient();
 	return useMutation<StudyGuide, Error, UseStudyGuideParams>({
-		mutationFn: async ({ subject, topic }) => {
-			const res = await fetch("/api/engine/study-guide", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ subject, topic }),
-			});
-			if (!res.ok) {
-				const err = await res.json().catch(() => ({}));
-				throw new Error(err.error || "Failed to generate study guide");
-			}
-			return res.json();
-		},
+		mutationFn: ({ subject, topic }) =>
+			budgetFetch<StudyGuide>(
+				"/api/engine/study-guide",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ subject, topic }),
+				},
+				"GenerateStudyGuide",
+			),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["study-guide"] });
 		},

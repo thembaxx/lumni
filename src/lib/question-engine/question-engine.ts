@@ -10,11 +10,13 @@ import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager, type RagContext } from "./prompt-manager";
 import { fetchRagContext, type RagDeps } from "./rag-enricher";
 import type {
+	BloomLevel,
 	GenerateResult,
 	GenerationParams,
 	GradingResult,
 	HintParams,
 	Question,
+	QuestionBody,
 	QuestionProcessor,
 	QuestionType,
 	UserAnswer,
@@ -124,23 +126,49 @@ export class QuestionEngine {
 		const poolCount = poolQuestions.length;
 		const remainingCount = Math.max(0, enriched.count - poolCount);
 
-		if (remainingCount === 0 && poolCount > 0) {
-			return poolQuestions.map((pq) => ({
+		const mapPoolToQuestion = (
+			pq: NonNullable<GenerationParams["poolQuestions"]>[number],
+		): Question => {
+			const qType = (pq.type as QuestionType) ?? "short-answer";
+			const bloom = (pq.bloomLevel as BloomLevel) ?? "understand";
+
+			let body: QuestionBody[typeof qType];
+			if (qType === "multiple-choice") {
+				body = {
+					options: [
+						{ id: "a", text: pq.answerText, isCorrect: true },
+						{ id: "b", text: "None of the above", isCorrect: false },
+					],
+					correctOptionId: "a",
+					allowMultiple: false,
+				} as QuestionBody["multiple-choice"];
+			} else if (qType === "calculation") {
+				body = {
+					formula: "",
+					correctValue: Number.NaN,
+					unit: "",
+					tolerance: 0,
+				} as QuestionBody["calculation"];
+			} else {
+				body = {
+					modelAnswer: pq.answerText,
+					acceptableAnswers: [pq.answerText],
+					maxLength: 500,
+				} as QuestionBody["short-answer"];
+			}
+
+			return {
 				id: pq.id,
-				type: (pq.type as QuestionType) ?? "short-answer",
+				type: qType,
 				subject: enriched.subject,
 				topic: pq.topic ?? enriched.topic ?? "",
 				difficulty: "Medium" as const,
-				bloomTaxonomy: "understand" as const,
+				bloomTaxonomy: bloom,
 				points: pq.marks,
 				questionText: pq.questionText,
 				hint: "",
 				explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
-				body: {
-					modelAnswer: pq.answerText,
-					acceptableAnswers: [pq.answerText],
-					maxLength: 500,
-				},
+				body,
 				metadata: {
 					createdAt: Date.now(),
 					source: "imported",
@@ -151,7 +179,13 @@ export class QuestionEngine {
 						url: "#",
 					},
 				],
-			}));
+				sourcePaperId: pq.id,
+				sourcePastPaperQuestionId: pq.id,
+			};
+		};
+
+		if (remainingCount === 0 && poolCount > 0) {
+			return poolQuestions.map(mapPoolToQuestion);
 		}
 
 		const ragContext = await fetchRagContext(
@@ -181,33 +215,7 @@ export class QuestionEngine {
 
 		// Prepend pool questions
 		if (poolCount > 0) {
-			const directQuestions: Question[] = poolQuestions.map((pq) => ({
-				id: pq.id,
-				type: (pq.type as QuestionType) ?? "short-answer",
-				subject: enriched.subject,
-				topic: pq.topic ?? enriched.topic ?? "",
-				difficulty: "Medium" as const,
-				bloomTaxonomy: "understand" as const,
-				points: pq.marks,
-				questionText: pq.questionText,
-				hint: "",
-				explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
-				body: {
-					modelAnswer: pq.answerText,
-					acceptableAnswers: [pq.answerText],
-					maxLength: 500,
-				},
-				metadata: {
-					createdAt: Date.now(),
-					source: "imported",
-				},
-				webSources: [
-					{
-						title: `${enriched.subject} ${pq.year} Paper ${pq.paperNumber}`,
-						url: "#",
-					},
-				],
-			}));
+			const directQuestions: Question[] = poolQuestions.map(mapPoolToQuestion);
 			questions = [...directQuestions, ...questions];
 		}
 

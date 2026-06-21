@@ -1,59 +1,60 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/shared/api-fetch";
 import type { GroupComment } from "@/lib/study-groups/types";
+import {
+	createApiQuery,
+	createInvalidatingMutation,
+} from "./use-hook-factories";
 
 interface CommentsResponse {
 	comments: GroupComment[];
 }
 
-export function useGroupComments(groupId: string, postId: string) {
-	return useQuery<GroupComment[]>({
-		queryKey: ["group-comments", postId],
-		queryFn: async () => {
-			const res = await apiFetch<CommentsResponse>(
-				`/api/study-groups/${groupId}/posts/${postId}/comments`,
-				{},
-			);
-			return res.comments;
-		},
-	});
+export const useGroupComments = createApiQuery<
+	GroupComment[],
+	{ groupId: string; postId: string }
+>({
+	queryKey: ({ postId }) => ["group-comments", postId],
+	fetchFn: async ({ groupId, postId }) => {
+		const res = await fetch(
+			`/api/study-groups/${groupId}/posts/${postId}/comments`,
+		);
+		if (!res.ok) throw new Error("Failed to fetch comments");
+		const data = (await res.json()) as CommentsResponse;
+		return data.comments;
+	},
+});
+
+interface CreateCommentInput {
+	groupId: string;
+	postId: string;
+	content: string;
+	parentId?: string;
 }
 
-export function useCreateComment(groupId: string, postId: string) {
-	const queryClient = useQueryClient();
+export const useCreateComment = createInvalidatingMutation<
+	CreateCommentInput,
+	{ comment: GroupComment },
+	GroupComment
+>({
+	endpoint: (input) =>
+		`/api/study-groups/${input.groupId}/posts/${input.postId}/comments`,
+	invalidateKey: (input) => ["group-comments", input.postId],
+	transformResponse: (res) => res.comment,
+});
 
-	return useMutation({
-		mutationFn: async (input: { content: string; parentId?: string }) => {
-			const res = await apiFetch<{ comment: GroupComment }>(
-				`/api/study-groups/${groupId}/posts/${postId}/comments`,
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(input),
-				},
-			);
-			return res.comment;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["group-comments", postId] });
-		},
-	});
+interface DeleteCommentInput {
+	postId: string;
+	commentId: string;
 }
 
-export function useDeleteComment(postId: string) {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (commentId: string) => {
-			await apiFetch<{ success: boolean }>(
-				`/api/study-groups/comments/${commentId}`,
-				{ method: "DELETE" },
-			);
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["group-comments", postId] });
-		},
-	});
-}
+export const useDeleteComment = createInvalidatingMutation<
+	DeleteCommentInput,
+	{ success: boolean },
+	void
+>({
+	endpoint: (input) => `/api/study-groups/comments/${input.commentId}`,
+	method: "DELETE",
+	invalidateKey: (input) => ["group-comments", input.postId],
+	transformResponse: () => undefined,
+});

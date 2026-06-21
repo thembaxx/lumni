@@ -11,6 +11,7 @@ import {
 } from "@/components/pwa/pwa-update-toast";
 import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
 import { ThemeProvider } from "@/components/theme";
+import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
 import { useJobProcessor } from "@/hooks/use-job-processor";
 import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
@@ -24,6 +25,7 @@ import { setAppInitialized } from "@/store";
 
 function JobProcessorWrapper() {
 	useJobProcessor();
+	useAnalyticsTracking();
 	return null;
 }
 

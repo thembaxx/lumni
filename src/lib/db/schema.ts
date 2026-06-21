@@ -319,6 +319,13 @@ export interface FlashcardSyncState {
 	lastSyncTimestamp: number;
 }
 
+export interface SeenPastPaperQuestion {
+	id?: number;
+	questionId: string;
+	subject: string;
+	seenAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -371,6 +378,7 @@ export class LumniOfflineDB extends Dexie {
 	lessonProgress!: Table<LessonProgress, string>;
 	storyCache!: Table<CachedStory, string>;
 	storyQuestions!: Table<StoryQuestionSet, string>;
+	seenPastPaperQuestions!: Table<SeenPastPaperQuestion, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -1124,6 +1132,11 @@ export class LumniOfflineDB extends Dexie {
 				"++id, userId, word, language, sourceType, sourceId, addedAt, reviewCount",
 			lessonProgress:
 				"&[userId+lessonId], userId, lessonId, completedAt, score",
+		});
+
+		// v37: seenPastPaperQuestions for adaptive quiz dedup
+		this.version(37).stores({
+			seenPastPaperQuestions: "++id, &questionId, subject, seenAt",
 		});
 	}
 }

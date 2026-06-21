@@ -69,6 +69,16 @@ const typeConfig: Record<
 		color: "text-teal-500 dark:text-teal-400",
 	},
 	web: { label: "Web", icon: World, color: "text-sky-500 dark:text-sky-400" },
+	"study-guide": {
+		label: "Study Guide",
+		icon: BookOpen01Icon,
+		color: "text-indigo-500 dark:text-indigo-400",
+	},
+	dictionary: {
+		label: "Dictionary",
+		icon: BookOpen01Icon,
+		color: "text-violet-500 dark:text-violet-400",
+	},
 };
 
 interface SearchResultsProps {

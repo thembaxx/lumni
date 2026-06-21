@@ -673,7 +673,10 @@
     "cancelConfirm": "Uyacela ukuthi uyakwazi ukuthi ufuna ukansela?",
     "reactivate": "Setha kabusha",
     "alreadyPremium": "Uyisememba we-Premium!",
-    "expiresOn": "Izokwenzeka ku-{date}"
+    "expiresOn": "Izokwenzeka ku-{date}",
+    "gatedTitle": "Inhlaka ye-Premium",
+    "gatedDescription": "Setha ku-Premium ukuze uvule i-{feature}",
+    "freeQuizzesLeft": "Izivivinyo ezi- {count} zamaMahhala ekupheleni kwalo mkhathi"
   },
   "settings": {
     "title": "Izilungiselelo",

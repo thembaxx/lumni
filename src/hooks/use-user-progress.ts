@@ -1,7 +1,7 @@
 "use client";
 
-import { type UseQueryResult, useQuery } from "@tanstack/react-query";
 import { fetchUserProgress } from "@/lib/server";
+import { createApiQuery } from "./use-hook-factories";
 
 export interface UserProgress {
 	streak: number;
@@ -9,20 +9,16 @@ export interface UserProgress {
 	accuracy: number;
 }
 
-export function useUserProgress(userId: string): UseQueryResult<UserProgress> {
-	const targetUserId = userId;
-
-	return useQuery<UserProgress>({
-		queryKey: ["user-progress", targetUserId],
-		queryFn: async () => {
-			const progress = await fetchUserProgress(targetUserId);
-			return progress;
-		},
-		enabled: !!targetUserId,
-		staleTime: 1000 * 60 * 5,
-		retry: 3,
-		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+export const useUserProgress = createApiQuery<UserProgress, string>({
+	queryKey: (userId) => ["user-progress", userId],
+	fetchFn: fetchUserProgress,
+	staleTime: 1000 * 60 * 5,
+	enabled: (userId) => !!userId,
+	retry: 3,
+	extraOptions: {
+		retryDelay: (attemptIndex: number) =>
+			Math.min(1000 * 2 ** attemptIndex, 10000),
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,
-	});
-}
+	},
+});

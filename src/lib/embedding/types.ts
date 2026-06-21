@@ -16,6 +16,8 @@ export interface ScoredPoolQuestion {
 	topic?: string;
 	similarity: number;
 	type?: string;
+	bloomLevel?: string;
+	subtopicId?: string;
 }
 
 export interface FindTopKParams {

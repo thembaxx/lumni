@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	KnowledgeGraph,
 	KnowledgeNode,
@@ -16,6 +17,37 @@ const NODE_COLORS: Record<string, string> = {
 	prerequisite: "fill-amber-500 stroke-amber-600",
 	core: "fill-blue-500 stroke-blue-600",
 	advanced: "fill-emerald-500 stroke-emerald-600",
+};
+
+const MASTERY_COLORS: Record<
+	string,
+	{ fill: string; stroke: string; text: string }
+> = {
+	novice: {
+		fill: "fill-red-400 stroke-red-500",
+		stroke: "stroke-red-500",
+		text: "#ef4444",
+	},
+	developing: {
+		fill: "fill-amber-400 stroke-amber-500",
+		stroke: "stroke-amber-500",
+		text: "#f59e0b",
+	},
+	proficient: {
+		fill: "fill-blue-400 stroke-blue-500",
+		stroke: "stroke-blue-500",
+		text: "#3b82f6",
+	},
+	mastered: {
+		fill: "fill-emerald-400 stroke-emerald-500",
+		stroke: "stroke-emerald-500",
+		text: "#10b981",
+	},
+	untested: {
+		fill: "fill-slate-300 stroke-slate-400",
+		stroke: "stroke-slate-400",
+		text: "#94a3b8",
+	},
 };
 
 const LAYER_KEYS = ["prerequisite", "core", "advanced"] as const;
@@ -50,6 +82,38 @@ export function LearningMapCard() {
 		},
 		enabled: !!subjectForQuery,
 	});
+
+	const { data: competencies } = useQuery({
+		queryKey: ["competencies", subjectForQuery],
+		queryFn: async () => {
+			const res = await fetch(
+				`/api/engine/competencies?subject=${encodeURIComponent(subjectForQuery ?? "")}`,
+			);
+			if (!res.ok) return [];
+			const data = await res.json();
+			return (data.competencies ?? []) as CompetencyRecord[];
+		},
+		enabled: !!subjectForQuery,
+		staleTime: 60_000,
+	});
+
+	const masteryMap = useMemo(() => {
+		const map = new Map<string, string>();
+		if (!competencies) return map;
+		for (const c of competencies) {
+			const existing = map.get(c.topicId);
+			if (
+				!existing ||
+				c.score >
+					(competencies.find(
+						(x) => x.topicId === c.topicId && x.level === existing,
+					)?.score ?? 0)
+			) {
+				map.set(c.topicId, c.level);
+			}
+		}
+		return map;
+	}, [competencies]);
 
 	const { nodeMap, layers } = useMemo(() => {
 		const map = new Map<string, KnowledgeNode>();
@@ -134,6 +198,25 @@ export function LearningMapCard() {
 		};
 	}
 
+	function getNodeMastery(nodeId: string): string {
+		return masteryMap.get(nodeId) ?? "untested";
+	}
+
+	function getNodeStyle(nodeId: string, nodeType: string) {
+		const mastery = getNodeMastery(nodeId);
+		const masteryStyle = MASTERY_COLORS[mastery];
+		if (mastery !== "untested") {
+			return {
+				fillClass: masteryStyle.fill,
+				textColor: masteryStyle.text,
+			};
+		}
+		return {
+			fillClass: NODE_COLORS[nodeType] ?? NODE_COLORS.core,
+			textColor: NODE_TEXT_COLORS[nodeType] ?? "#2563eb",
+		};
+	}
+
 	return (
 		<Card>
 			<CardHeader>
@@ -148,7 +231,7 @@ export function LearningMapCard() {
 						className="w-full max-w-full"
 						style={{ minWidth: svgW, minHeight: svgH }}
 						role="img"
-						aria-label="Knowledge graph showing prerequisite, core, and advanced topics"
+						aria-label="Knowledge graph showing prerequisite, core, and advanced topics colored by mastery level"
 					>
 						{graph.edges.map((edge) => {
 							const fromNode = nodeMap.get(edge.from);
@@ -191,7 +274,7 @@ export function LearningMapCard() {
 							const nodeIndex = row.indexOf(node);
 							const _x = getNodeX(nodeIndex, row.length);
 							const _y = getNodeY(rowIndex);
-							const _fillClass = NODE_COLORS[node.type] ?? NODE_COLORS.core;
+							const style = getNodeStyle(node.id, node.type);
 							return (
 								<a
 									key={node.id}
@@ -215,7 +298,7 @@ export function LearningMapCard() {
 										width={nodeW}
 										height={nodeH}
 										rx={6}
-										className={_fillClass}
+										className={style.fillClass}
 										fillOpacity={0.15}
 										strokeWidth={1.5}
 									/>
@@ -223,9 +306,7 @@ export function LearningMapCard() {
 										<div className="flex h-full items-center justify-center px-1">
 											<span
 												className="truncate text-center font-medium text-[10px] leading-tight"
-												style={{
-													color: NODE_TEXT_COLORS[node.type] ?? "#2563eb",
-												}}
+												style={{ color: style.textColor }}
 											>
 												{node.label}
 											</span>
@@ -235,6 +316,19 @@ export function LearningMapCard() {
 							);
 						})}
 					</svg>
+					{competencies && competencies.length > 0 && (
+						<div className="mt-2 flex flex-wrap gap-3 text-[10px]">
+							{Object.entries(MASTERY_COLORS).map(([level, colors]) => (
+								<span key={level} className="flex items-center gap-1">
+									<span
+										className="inline-block size-2 rounded-full"
+										style={{ backgroundColor: colors.text }}
+									/>
+									{level.charAt(0).toUpperCase() + level.slice(1)}
+								</span>
+							))}
+						</div>
+					)}
 				</div>
 			</CardContent>
 		</Card>

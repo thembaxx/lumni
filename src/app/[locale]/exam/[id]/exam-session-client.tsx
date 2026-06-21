@@ -14,6 +14,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTrackExamEvents } from "@/hooks/use-analytics-tracking";
 import { useExamPaper } from "@/hooks/use-exam-paper";
 import {
 	clearSavedSession,
@@ -181,6 +182,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { setImmersive } = useImmersiveMode();
+	const { trackExamStart, trackExamComplete } = useTrackExamEvents();
 
 	const quizResultDeps: QuizResultDeps = useMemo(
 		() => ({
@@ -278,8 +280,12 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		const first = flatParts[0];
 		if (first)
 			setCurrentPart(`${first.sectionId}-${first.questionId}-${first.part.id}`);
+		trackExamStart(
+			paperData?.metadata.subject ?? "unknown",
+			paperData?.metadata.id,
+		);
 		setPhase("active");
-	}, [flatParts, setCurrentPart]);
+	}, [flatParts, setCurrentPart, paperData, trackExamStart]);
 
 	const currentPartIndex = useMemo(
 		() =>
@@ -349,6 +355,13 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			};
 		});
 
+		const correctCount = examParts.filter((p) => p.correct).length;
+		trackExamComplete(
+			paperData?.metadata.subject ?? "unknown",
+			correctCount,
+			examParts.length,
+		);
+
 		await processQuizResult(
 			{
 				source: "exam",
@@ -360,7 +373,14 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		);
 
 		setPhase("results");
-	}, [flatParts, answers, completeSession, paperData, quizResultDeps]);
+	}, [
+		flatParts,
+		answers,
+		completeSession,
+		paperData,
+		quizResultDeps,
+		trackExamComplete,
+	]);
 
 	const { back } = useRouter();
 	const { push } = useNavigationDirection();

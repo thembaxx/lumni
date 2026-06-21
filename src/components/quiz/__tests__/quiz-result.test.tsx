@@ -1,8 +1,31 @@
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
+vi.mock("next/navigation", () => ({
+	useRouter: () => ({ push: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
+	usePathname: () => "/quiz",
+	useSearchParams: () => new URLSearchParams(),
+}));
+
 vi.mock("next-intl", () => ({
 	useTranslations: () => (key: string) => key,
+}));
+
+vi.mock("next-intl/navigation", () => ({
+	createNavigation: () => ({
+		Link: ({ children, ...props }: Record<string, unknown>) => ({
+			...props,
+			children,
+		}),
+		redirect: vi.fn(),
+		useRouter: () => ({ push: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
+		usePathname: () => "/quiz",
+		useSearchParams: () => new URLSearchParams(),
+	}),
+}));
+
+vi.mock("next-intl/server", () => ({
+	getRequestConfig: vi.fn(),
 }));
 
 import { QuizResultsCard } from "@/components/quiz/quiz-results";

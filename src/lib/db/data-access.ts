@@ -21,6 +21,7 @@ import type {
 	QuizAttempt,
 	QuizSessionState,
 	RetentionRecurrence,
+	SeenPastPaperQuestion,
 	SharedQuestionRecord,
 	StudyPlanRecord,
 	SyncConflict,
@@ -187,6 +188,7 @@ export interface EmbeddingDataAccess {
 export interface LegacyDataAccess {
 	subjects: DataAccessTable<CachedSubject, number>;
 	pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
+	seenPastPaperQuestions: DataAccessTable<SeenPastPaperQuestion, number>;
 }
 
 // ──────────────────────────────────────────────

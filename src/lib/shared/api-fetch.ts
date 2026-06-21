@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 const BUDGET_EXCEEDED_MESSAGE =
 	"Daily generation limit reached. Your saved questions are still available.";
 
@@ -84,5 +86,19 @@ export function showBudgetToast(error: unknown): void {
 				duration: 6000,
 			});
 		});
+	}
+}
+
+export async function budgetFetch<T>(
+	url: string,
+	options: RequestInit,
+	context: string,
+): Promise<T> {
+	try {
+		return await apiFetch<T>(url, options);
+	} catch (error) {
+		logError(context, error);
+		showBudgetToast(error);
+		throw error;
 	}
 }

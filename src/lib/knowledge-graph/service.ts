@@ -1,8 +1,10 @@
+import { curriculumRegistry } from "@/curriculum";
 import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { buildKnowledgeCacheKey } from "./cache-key";
+import { buildGraphFromCurriculum } from "./curriculum-graph";
 import type { CachedGraph, KnowledgeGraph } from "./types";
 
 const KNOWLEDGE_GRAPH_TTL = 7 * 24 * 60 * 60 * 1000;
@@ -48,10 +50,29 @@ function createGenerator() {
 	return new CachedAIGenerator(config, getAI(), _deps.db);
 }
 
+async function buildFromCurriculum(
+	subject: string,
+	topic: string,
+): Promise<KnowledgeGraph | null> {
+	try {
+		const curriculum = await curriculumRegistry.getSubject(subject);
+		if (!curriculum) return null;
+
+		const focusTopic = topic && topic !== "general" ? topic : undefined;
+		const graph = buildGraphFromCurriculum(curriculum, focusTopic);
+		return graph.nodes.length > 0 ? graph : null;
+	} catch {
+		return null;
+	}
+}
+
 export async function fetchGraph(
 	subject: string,
 	topic: string,
 ): Promise<KnowledgeGraph> {
+	const curriculumGraph = await buildFromCurriculum(subject, topic);
+	if (curriculumGraph) return curriculumGraph;
+
 	return createGenerator().generate(subject, topic);
 }
 

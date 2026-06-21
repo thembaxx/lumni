@@ -1,12 +1,14 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/shared/api-fetch";
 import type {
 	GroupMember,
 	GroupPost,
 	StudyGroup,
 } from "@/lib/study-groups/types";
+import {
+	createApiQuery,
+	createInvalidatingMutation,
+} from "./use-hook-factories";
 
 interface GroupsResponse {
 	groups: StudyGroup[];
@@ -17,183 +19,136 @@ interface GroupDetailResponse {
 	members: GroupMember[];
 }
 
-export function useStudyGroups() {
-	return useQuery<StudyGroup[]>({
-		queryKey: ["study-groups"],
-		queryFn: async () => {
-			const res = await apiFetch<GroupsResponse>("/api/study-groups", {});
-			return res.groups;
-		},
-	});
+// ─── Queries ─────────────────────────────────────────────────────────────────
+
+export const useStudyGroups = createApiQuery<StudyGroup[], void>({
+	queryKey: ["study-groups"],
+	fetchFn: async () => {
+		const res = await fetch("/api/study-groups");
+		if (!res.ok) throw new Error("Failed to fetch study groups");
+		const data = (await res.json()) as GroupsResponse;
+		return data.groups;
+	},
+});
+
+export const useGroupDetail = createApiQuery<
+	GroupDetailResponse | null,
+	string | undefined
+>({
+	queryKey: (groupId) => ["study-group", groupId],
+	fetchFn: async (groupId) => {
+		if (!groupId) return null;
+		const res = await fetch(`/api/study-groups/${groupId}`);
+		if (!res.ok) throw new Error("Failed to fetch group detail");
+		return res.json() as Promise<GroupDetailResponse>;
+	},
+	enabled: (groupId) => !!groupId,
+});
+
+export const useGroupPosts = createApiQuery<GroupPost[], string | undefined>({
+	queryKey: (groupId) => ["group-posts", groupId],
+	fetchFn: async (groupId) => {
+		if (!groupId) return [];
+		const res = await fetch(`/api/study-groups/${groupId}/posts`);
+		if (!res.ok) throw new Error("Failed to fetch group posts");
+		const data = (await res.json()) as { posts: GroupPost[] };
+		return data.posts;
+	},
+	enabled: (groupId) => !!groupId,
+});
+
+// ─── Mutations ───────────────────────────────────────────────────────────────
+
+interface CreateGroupInput {
+	name: string;
+	description?: string;
+	subjectId?: string;
 }
 
-export function useGroupDetail(groupId: string | undefined) {
-	return useQuery<GroupDetailResponse | null>({
-		queryKey: ["study-group", groupId],
-		queryFn: async () => {
-			if (!groupId) return null;
-			return apiFetch<GroupDetailResponse>(`/api/study-groups/${groupId}`, {});
-		},
-		enabled: !!groupId,
-	});
+export const useCreateGroup = createInvalidatingMutation<
+	CreateGroupInput,
+	{ group: StudyGroup },
+	StudyGroup
+>({
+	endpoint: "/api/study-groups",
+	invalidateKey: ["study-groups"],
+	transformResponse: (res) => res.group,
+});
+
+export const useJoinGroup = createInvalidatingMutation<
+	string,
+	{ group: StudyGroup },
+	StudyGroup
+>({
+	endpoint: "/api/study-groups/join",
+	invalidateKey: ["study-groups"],
+	bodySerializer: (inviteCode) => ({ inviteCode }),
+	transformResponse: (res) => res.group,
+});
+
+export const useLeaveGroup = createInvalidatingMutation<
+	string,
+	{ success: boolean },
+	void
+>({
+	endpoint: (groupId) => `/api/study-groups/${groupId}/leave`,
+	invalidateKey: ["study-groups"],
+	transformResponse: () => undefined,
+});
+
+interface CreatePostInput {
+	groupId: string;
+	content: string;
+	questionText?: string;
+	subject?: string;
+	topic?: string;
 }
 
-export function useCreateGroup() {
-	const queryClient = useQueryClient();
+export const useCreatePost = createInvalidatingMutation<
+	CreatePostInput,
+	{ post: GroupPost },
+	GroupPost
+>({
+	endpoint: (input) => `/api/study-groups/${input.groupId}/posts`,
+	invalidateKey: (input) => ["group-posts", input.groupId],
+	transformResponse: (res) => res.post,
+});
 
-	return useMutation({
-		mutationFn: async (input: {
-			name: string;
-			description?: string;
-			subjectId?: string;
-		}) => {
-			const res = await apiFetch<{ group: StudyGroup }>("/api/study-groups", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(input),
-			});
-			return res.group;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["study-groups"] });
-		},
-	});
+export const useDeletePost = createInvalidatingMutation<
+	string,
+	{ success: boolean },
+	void
+>({
+	endpoint: (postId) => `/api/study-groups/posts/${postId}`,
+	method: "DELETE",
+	invalidateKey: ["group-posts"],
+	transformResponse: () => undefined,
+});
+
+interface RemoveMemberInput {
+	groupId: string;
+	memberId: string;
 }
 
-export function useJoinGroup() {
-	const queryClient = useQueryClient();
+export const useRemoveMember = createInvalidatingMutation<
+	RemoveMemberInput,
+	{ success: boolean },
+	void
+>({
+	endpoint: (input) =>
+		`/api/study-groups/${input.groupId}/members/${input.memberId}`,
+	method: "DELETE",
+	invalidateKey: (input) => ["study-group", input.groupId],
+	transformResponse: () => undefined,
+});
 
-	return useMutation({
-		mutationFn: async (inviteCode: string) => {
-			const res = await apiFetch<{ group: StudyGroup }>(
-				"/api/study-groups/join",
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ inviteCode }),
-				},
-			);
-			return res.group;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["study-groups"] });
-		},
-	});
-}
-
-export function useLeaveGroup() {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (groupId: string) => {
-			await apiFetch<{ success: boolean }>(
-				`/api/study-groups/${groupId}/leave`,
-				{ method: "POST" },
-			);
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["study-groups"] });
-		},
-	});
-}
-
-export function useGroupPosts(groupId: string | undefined) {
-	return useQuery<GroupPost[]>({
-		queryKey: ["group-posts", groupId],
-		queryFn: async () => {
-			if (!groupId) return [];
-			const res = await apiFetch<{ posts: GroupPost[] }>(
-				`/api/study-groups/${groupId}/posts`,
-				{},
-			);
-			return res.posts;
-		},
-		enabled: !!groupId,
-	});
-}
-
-export function useCreatePost() {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (input: {
-			groupId: string;
-			content: string;
-			questionText?: string;
-			subject?: string;
-			topic?: string;
-		}) => {
-			const res = await apiFetch<{ post: GroupPost }>(
-				`/api/study-groups/${input.groupId}/posts`,
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(input),
-				},
-			);
-			return res.post;
-		},
-		onSuccess: (_data, variables) => {
-			queryClient.invalidateQueries({
-				queryKey: ["group-posts", variables.groupId],
-			});
-		},
-	});
-}
-
-export function useDeletePost() {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (postId: string) => {
-			await apiFetch<{ success: boolean }>(
-				`/api/study-groups/posts/${postId}`,
-				{
-					method: "DELETE",
-				},
-			);
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["group-posts"] });
-		},
-	});
-}
-
-export function useRemoveMember() {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async ({
-			groupId,
-			memberId,
-		}: {
-			groupId: string;
-			memberId: string;
-		}) => {
-			await apiFetch<{ success: boolean }>(
-				`/api/study-groups/${groupId}/members/${memberId}`,
-				{ method: "DELETE" },
-			);
-		},
-		onSuccess: (_data, variables) => {
-			queryClient.invalidateQueries({
-				queryKey: ["study-group", variables.groupId],
-			});
-		},
-	});
-}
-
-export function useDeleteGroup() {
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (groupId: string) => {
-			await apiFetch<{ success: boolean }>(`/api/study-groups/${groupId}`, {
-				method: "DELETE",
-			});
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["study-groups"] });
-		},
-	});
-}
+export const useDeleteGroup = createInvalidatingMutation<
+	string,
+	{ success: boolean },
+	void
+>({
+	endpoint: (groupId) => `/api/study-groups/${groupId}`,
+	method: "DELETE",
+	invalidateKey: ["study-groups"],
+	transformResponse: () => undefined,
+});

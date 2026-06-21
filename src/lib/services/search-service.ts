@@ -4,7 +4,13 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 
 type SearchDb = Pick<
 	DataAccess,
-	"questions" | "wrongAnswers" | "quizAttempts" | "examSessions" | "progress"
+	| "questions"
+	| "wrongAnswers"
+	| "quizAttempts"
+	| "examSessions"
+	| "progress"
+	| "studyGuides"
+	| "dictionaryCache"
 >;
 const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
@@ -28,7 +34,9 @@ export interface SearchResultItem {
 		| "web"
 		| "quiz-attempt"
 		| "exam-session"
-		| "progress";
+		| "progress"
+		| "study-guide"
+		| "dictionary";
 	title: string;
 	snippet: string;
 	subject: string;
@@ -214,6 +222,58 @@ function searchDexieProgress(query: string): Promise<SearchResultItem[]> {
 	});
 }
 
+async function searchDexieStudyGuides(
+	query: string,
+): Promise<SearchResultItem[]> {
+	try {
+		const guides = await _deps.db.studyGuides.toArray();
+		const results: SearchResultItem[] = [];
+		for (const g of guides) {
+			if (textRelevant(g.key, query)) {
+				results.push({
+					id: `sg-${g.key}`,
+					type: "study-set",
+					title: g.key,
+					snippet: `Study guide — expires ${new Date(g.expiresAt).toLocaleDateString()}`,
+					subject: g.key.split(":")[0] ?? "",
+					createdAt: g.createdAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	} catch {
+		return [];
+	}
+}
+
+async function searchDexieDictionary(
+	query: string,
+): Promise<SearchResultItem[]> {
+	try {
+		const entries = await _deps.db.dictionaryCache.toArray();
+		const results: SearchResultItem[] = [];
+		for (const e of entries) {
+			const defs =
+				e.result?.definitions?.map((d) => d.definition).join(" ") ?? "";
+			if (textRelevant(e.word, query) || textRelevant(defs, query)) {
+				results.push({
+					id: `dict-${e.key}`,
+					type: "note",
+					title: e.word,
+					snippet: defs.slice(0, 150),
+					subject: "Dictionary",
+					createdAt: Date.now(),
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	} catch {
+		return [];
+	}
+}
+
 async function searchAppwrite(query: string): Promise<SearchResultItem[]> {
 	try {
 		const res = await fetch(
@@ -240,6 +300,8 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
 		searchDexieQuizAttempts(query),
 		searchDexieExamSessions(query),
 		searchDexieProgress(query),
+		searchDexieStudyGuides(query),
+		searchDexieDictionary(query),
 	]);
 
 	const localResults = local.flat();
@@ -286,6 +348,10 @@ export async function searchByType(
 			return searchDexieExamSessions(query);
 		case "progress":
 			return searchDexieProgress(query);
+		case "study-guide":
+			return searchDexieStudyGuides(query);
+		case "dictionary":
+			return searchDexieDictionary(query);
 		default:
 			return [];
 	}

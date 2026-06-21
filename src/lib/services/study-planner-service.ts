@@ -1,5 +1,8 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { StudyDataAccess } from "@/lib/db/data-access";
+import { getCachedGraph } from "@/lib/knowledge-graph/service";
+import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
+import { enrichPlanWithAI } from "@/lib/services/ai-planner-enricher";
 import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
@@ -174,6 +177,37 @@ export class StudyPlannerService {
 				examDateInfos,
 			);
 
+			let sortedTopics = algorithmPlan.topics;
+			try {
+				const subjects = [
+					...new Set(algorithmPlan.topics.map((t) => t.subjectId)),
+				];
+				const combinedGraph: KnowledgeGraph = { nodes: [], edges: [] };
+				for (const subject of subjects) {
+					const graph = await getCachedGraph(subject, "general");
+					if (graph) {
+						combinedGraph.nodes.push(...graph.nodes);
+						combinedGraph.edges.push(...graph.edges);
+					}
+				}
+				if (combinedGraph.nodes.length > 0) {
+					sortedTopics = topologicalSort(
+						algorithmPlan.topics.map((t) => ({
+							topicId: t.topicId,
+							subjectId: t.subjectId,
+						})),
+						combinedGraph,
+					).map((sorted) => ({
+						...algorithmPlan.topics.find((t) => t.topicId === sorted.topicId)!,
+					}));
+				}
+			} catch {
+				// Knowledge graph unavailable — use algorithm order as-is
+			}
+
+			const enrichedTopics = await enrichPlanWithAI(sortedTopics);
+			const enrichedMap = new Map(enrichedTopics.map((e) => [e.topicId, e]));
+
 			const examSubjectsByDate = new Map<string, Set<string>>();
 			for (const ed of existingPlan.examDates) {
 				const dateStr = new Date(ed.date).toISOString().split("T")[0];
@@ -183,19 +217,22 @@ export class StudyPlannerService {
 			}
 
 			const newSessions: Omit<StudySession, "id">[] = [];
-			for (const t of algorithmPlan.topics) {
+			for (const t of sortedTopics) {
 				const scheduledDate = t.scheduledDate;
 				if (scheduledDate) {
 					const isExamDay = examSubjectsByDate
 						.get(scheduledDate)
 						?.has(t.subjectId);
+					const enriched = enrichedMap.get(t.topicId);
 					newSessions.push({
 						subject: t.subjectId,
 						topic: t.topicId,
 						type: isExamDay ? "review" : ("quiz" as const),
 						scheduledAt: new Date(scheduledDate).getTime(),
-						duration: Math.round(t.estimatedMinutes),
+						duration:
+							enriched?.suggestedMinutes ?? Math.round(t.estimatedMinutes),
 						completed: t.isCompleted,
+						notes: enriched?.studyTip,
 					});
 				}
 			}
@@ -243,5 +280,50 @@ async function syncStudyPlanToAppwrite(userId: string): Promise<void> {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ userId, plan: JSON.stringify(plan) }),
+	});
+}
+
+function topologicalSort(
+	topics: Array<{ topicId: string; subjectId: string }>,
+	graph: KnowledgeGraph,
+): Array<{ topicId: string; subjectId: string }> {
+	if (graph.nodes.length === 0 || graph.edges.length === 0) return topics;
+
+	const _nodeMap = new Map(graph.nodes.map((n) => [n.id, n]));
+	const inDegree = new Map<string, number>();
+	const adjacency = new Map<string, string[]>();
+
+	for (const node of graph.nodes) {
+		inDegree.set(node.id, 0);
+		adjacency.set(node.id, []);
+	}
+
+	for (const edge of graph.edges) {
+		inDegree.set(edge.to, (inDegree.get(edge.to) ?? 0) + 1);
+		adjacency.get(edge.from)?.push(edge.to);
+	}
+
+	const queue: string[] = [];
+	for (const [id, degree] of inDegree) {
+		if (degree === 0) queue.push(id);
+	}
+
+	const sorted: string[] = [];
+	while (queue.length > 0) {
+		const current = queue.shift()!;
+		sorted.push(current);
+		for (const neighbor of adjacency.get(current) ?? []) {
+			const newDegree = (inDegree.get(neighbor) ?? 1) - 1;
+			inDegree.set(neighbor, newDegree);
+			if (newDegree === 0) queue.push(neighbor);
+		}
+	}
+
+	const topicOrder = new Map(sorted.map((id, i) => [id, i]));
+
+	return [...topics].sort((a, b) => {
+		const aIdx = topicOrder.get(a.topicId) ?? 999;
+		const bIdx = topicOrder.get(b.topicId) ?? 999;
+		return aIdx - bIdx;
 	});
 }

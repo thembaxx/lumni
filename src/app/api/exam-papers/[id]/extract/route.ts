@@ -68,7 +68,7 @@ export const POST = createRouteHandler({
 			memo = await fetchParsedPaper(memoId);
 		}
 
-		const questions = extractQuestionsFromPaper(
+		const { questions, stats } = extractQuestionsFromPaper(
 			paper,
 			memo,
 			subject,
@@ -113,6 +113,7 @@ export const POST = createRouteHandler({
 			success: true,
 			extracted: questions.length,
 			stored,
+			stats,
 		};
 	},
 });

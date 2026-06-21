@@ -194,6 +194,8 @@ export type Question<T extends QuestionType = QuestionType> = {
 	metadata?: QuestionMetadata;
 	webSources?: QuestionSource[];
 	pruned?: boolean;
+	sourcePaperId?: string;
+	sourcePastPaperQuestionId?: string;
 };
 
 export interface UserAnswer {
@@ -254,6 +256,8 @@ export interface GenerationParams {
 		topic?: string;
 		similarity: number;
 		type?: string;
+		bloomLevel?: string;
+		subtopicId?: string;
 	}>;
 }
 

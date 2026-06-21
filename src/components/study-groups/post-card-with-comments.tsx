@@ -19,24 +19,24 @@ interface Props {
 }
 
 export function PostCardWithComments({ post, groupId }: Props) {
-	const { data: comments } = useGroupComments(groupId, post.$id);
+	const { data: comments } = useGroupComments({ groupId, postId: post.$id });
 	const { data: reactions } = usePostReactions(post.$id);
-	const { mutate: createComment } = useCreateComment(groupId, post.$id);
-	const { mutate: deleteComment } = useDeleteComment(post.$id);
-	const { mutate: toggleReaction } = useTogglePostReaction(post.$id);
+	const { mutate: createComment } = useCreateComment();
+	const { mutate: deleteComment } = useDeleteComment();
+	const { mutate: toggleReaction } = useTogglePostReaction();
 
 	const handleToggleReaction = useCallback(
 		(_postId: string, emoji: string) => {
-			toggleReaction(emoji);
+			toggleReaction({ postId: post.$id, emoji });
 		},
-		[toggleReaction],
+		[toggleReaction, post.$id],
 	);
 
 	const handleCreateComment = useCallback(
 		(_postId: string, content: string, parentId?: string) => {
-			createComment({ content, parentId });
+			createComment({ groupId, postId: post.$id, content, parentId });
 		},
-		[createComment],
+		[createComment, groupId, post.$id],
 	);
 
 	return (
@@ -47,7 +47,9 @@ export function PostCardWithComments({ post, groupId }: Props) {
 			reactions={reactions}
 			onToggleReaction={handleToggleReaction}
 			onCreateComment={handleCreateComment}
-			onDeleteComment={(commentId) => deleteComment(commentId)}
+			onDeleteComment={(commentId) =>
+				deleteComment({ postId: post.$id, commentId })
+			}
 		/>
 	);
 }

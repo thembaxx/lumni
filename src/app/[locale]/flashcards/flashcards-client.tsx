@@ -16,11 +16,13 @@ import {
 	XPGainPopup,
 } from "@/components/celebration";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
+import { useTrackFlashcardEvents } from "@/hooks/use-analytics-tracking";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { toast } from "@/hooks/use-toast";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { competencyService } from "@/lib/competency-engine/competency-service";
+import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { enqueue } from "@/lib/orchestrator/job-queue";
@@ -172,6 +174,7 @@ export function FlashcardsClient() {
 
 	const gamification = useGamification();
 	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
+	const { trackFlashcardReview } = useTrackFlashcardEvents();
 
 	const quizResultDeps: QuizResultDeps = useMemo(
 		() => ({
@@ -403,15 +406,36 @@ export function FlashcardsClient() {
 		dispatchSession({ type: "STOP_SESSION" });
 	}, []);
 
-	const handleReview = useCallback((cardId: string, quality: number) => {
-		dispatchCards({ type: "SET_QUALITY", payload: { cardId, quality } });
-		if (quality >= 3) {
-			setShowConfetti(true);
-			setShowXPGain(true);
-			setTimeout(() => setShowConfetti(false), 1500);
-			setTimeout(() => setShowXPGain(false), 1000);
-		}
-	}, []);
+	const handleReview = useCallback(
+		(cardId: string, quality: number) => {
+			dispatchCards({ type: "SET_QUALITY", payload: { cardId, quality } });
+			trackFlashcardReview(session.selectedSubject, quality);
+			if (quality >= 3) {
+				setShowConfetti(true);
+				setShowXPGain(true);
+				setTimeout(() => setShowConfetti(false), 1500);
+				setTimeout(() => setShowXPGain(false), 1000);
+			}
+			if (quality < 3) {
+				const card = displayCards.find((c) => c.id === cardId);
+				if (card) {
+					dexieDataAccess.retentionRecurrence
+						.add({
+							questionId: cardId,
+							subject: session.selectedSubject,
+							topic: card.topic,
+							questionText: card.front,
+							correctAnswer: card.back,
+							explanation: card.hint ?? "",
+							scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+							completed: false,
+						})
+						.catch(() => {});
+				}
+			}
+		},
+		[session.selectedSubject, trackFlashcardReview, displayCards],
+	);
 
 	const handleSessionComplete = useCallback(() => {
 		dispatchSession({ type: "COMPLETE_SESSION" });

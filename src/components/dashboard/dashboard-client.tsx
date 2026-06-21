@@ -13,6 +13,7 @@ import type { TabValue } from "@/components/dashboard/types";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTrackQuizEvents } from "@/hooks/use-analytics-tracking";
 import { useGamification } from "@/hooks/use-gamification";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
@@ -59,8 +60,10 @@ export function DashboardClient({
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
+	const { trackQuizStart, trackQuizComplete } = useTrackQuizEvents();
 
 	const handleStartQuiz = (subject: string) => {
+		trackQuizStart(subject, 10);
 		startViewTransition(() => {
 			setQuizSubject(subject);
 			setQuizActive(true);
@@ -106,6 +109,11 @@ export function DashboardClient({
 	);
 
 	const handleFinishQuiz = async (results: QuizResults) => {
+		trackQuizComplete(
+			results.questions[0]?.subject ?? quizSubject,
+			results.correctAnswers,
+			results.totalQuestions,
+		);
 		await processQuizResult({ source: "quiz", results }, quizResultDeps);
 		setQuizActive(false);
 		setQuizSubject("");

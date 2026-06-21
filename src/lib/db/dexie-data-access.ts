@@ -178,6 +178,7 @@ class DexieDataAccess implements DataAccess {
 	tinyfishCache = tableAdapter(offlineDB.tinyfishCache);
 	tinyfishUsage = tableAdapter(offlineDB.tinyfishUsage);
 	pastPaperQuestions = tableAdapter(offlineDB.pastPaperQuestions);
+	seenPastPaperQuestions = tableAdapter(offlineDB.seenPastPaperQuestions);
 	jobs = tableAdapter(offlineDB.jobs);
 	conflicts = tableAdapter(offlineDB.conflicts);
 	userConsents = tableAdapter(offlineDB.userConsents);

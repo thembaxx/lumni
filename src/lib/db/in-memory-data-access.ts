@@ -27,6 +27,7 @@ import type {
 	QuizAttempt,
 	QuizSessionState,
 	RetentionRecurrence,
+	SeenPastPaperQuestion,
 	SharedQuestionRecord,
 	StudyPlanRecord,
 	SyncConflict,
@@ -290,6 +291,7 @@ export class InMemoryDataAccess implements DataAccess {
 	tinyfishCache = new InMemoryTable<TinyFishCacheEntry, string>();
 	tinyfishUsage = new InMemoryTable<TinyFishUsageEntry>();
 	pastPaperQuestions = new InMemoryTable<PastPaperQuestion, string>();
+	seenPastPaperQuestions = new InMemoryTable<SeenPastPaperQuestion, number>();
 	jobs = new InMemoryTable<JobRecord>();
 	conflicts = new InMemoryTable<SyncConflict>();
 	userConsents = new InMemoryTable<UserConsent, string>();
