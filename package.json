@@ -141,11 +141,11 @@
 		"unrs-resolver"
 	],
 	"overrides": {
-		"tmp": "^0.2.6",
 		"protobufjs": "7.6.3",
 		"postcss": "8.5.15",
-		"dompurify": ">=3.4.9",
 		"@opentelemetry/core": ">=2.8.0",
-		"esbuild": ">=0.28.1"
+		"esbuild": ">=0.28.1",
+		"undici": ">=6.27.0",
+		"dompurify": ">=3.4.11"
 	}
 }
