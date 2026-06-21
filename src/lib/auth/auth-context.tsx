@@ -67,7 +67,9 @@ async function syncGoogleAvatar(
 		const data = (await res.json()) as { picture?: string };
 		if (!data.picture) return;
 
-		await account.updatePrefs({ ...prefs, avatarUrl: data.picture });
+		const freshUser = await account.get();
+		const freshPrefs = freshUser.prefs as Record<string, unknown>;
+		await account.updatePrefs({ ...freshPrefs, avatarUrl: data.picture });
 	} catch (err) {
 		logError("sync-google-avatar", err);
 	}
