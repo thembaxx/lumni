@@ -2,6 +2,7 @@ import * as calculation from "./graders/calculation";
 import * as diagramLabelling from "./graders/diagram-labelling";
 import * as essay from "./graders/essay";
 import * as fillInSequence from "./graders/fill-in-sequence";
+import * as hotSpot from "./graders/hot-spot";
 import * as longAnswer from "./graders/long-answer";
 import * as matchPairs from "./graders/match-pairs";
 import * as matching from "./graders/matching";
@@ -101,5 +102,11 @@ export const processorConfigs: ProcessorConfig[] = [
 		temperature: 0.6,
 		grade: diagramLabelling.grade,
 		hint: diagramLabelling.hint,
+	},
+	{
+		type: "hot-spot",
+		temperature: 0.6,
+		grade: hotSpot.grade,
+		hint: hotSpot.hint,
 	},
 ];

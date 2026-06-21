@@ -309,7 +309,7 @@ export class QuestionEngine {
 			["multiple-choice", "matching", "match-pairs"],
 			["short-answer", "long-answer", "essay"],
 			["calculation", "diagram", "ordering"],
-			["fill-in-sequence", "diagram-labelling"],
+			["fill-in-sequence", "diagram-labelling", "hot-spot"],
 			["source-based", "data-response"],
 			["programming"],
 			["mixed"],

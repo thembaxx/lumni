@@ -54,6 +54,10 @@ export function buildGradePrompt(type: string): PromptTemplate {
 			system: `You evaluate diagram-labelling questions. Check if the student placed labels on the correct regions. Return JSON.`,
 			user: `Evaluate the diagram-labelling answer. Compare each placement against the correct label-region pairings. Return JSON: { correct: boolean, score: number (0-100), feedback: string }`,
 		},
+		"hot-spot": {
+			system: `You evaluate hot-spot questions. Check if the student clicked the correct region. Return JSON.`,
+			user: `Evaluate the hot-spot answer. Compare the selected region ID against the correct region ID. Return JSON: { correct: boolean, score: number (0-100), feedback: string }`,
+		},
 	};
 
 	return gradePrompts[type] ?? gradePrompts["short-answer"];

@@ -6,6 +6,7 @@ import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { DiagramInput } from "@/components/quiz/parts/diagram-input";
 import { DiagramLabellingInput } from "@/components/quiz/parts/diagram-labelling-input";
 import { FillInSequenceInput } from "@/components/quiz/parts/fill-in-sequence-input";
+import { HotSpotInput } from "@/components/quiz/parts/hot-spot-input";
 import { MatchPairsInput } from "@/components/quiz/parts/match-pairs-input";
 import { MCQOptions } from "@/components/quiz/parts/mcq-options";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
@@ -264,6 +265,36 @@ export function QuestionCardInput({
 					blanks={blanks}
 					onSubmit={(answers) =>
 						handleGrade({ type: "sequence-blanks", value: answers })
+					}
+				/>
+			);
+		}
+
+		case "hot-spot": {
+			const hsRegions = getBodyField(question, "regions") as
+				| {
+						id: string;
+						label: string;
+						x: number;
+						y: number;
+						width: number;
+						height: number;
+				  }[]
+				| undefined;
+			const hsWidth = getBodyField(question, "width") as number | undefined;
+			const hsHeight = getBodyField(question, "height") as number | undefined;
+			const hsImageUrl = getBodyField(question, "imageUrl") as
+				| string
+				| undefined;
+			if (!hsRegions || !hsWidth || !hsHeight) return null;
+			return (
+				<HotSpotInput
+					imageUrl={hsImageUrl}
+					width={hsWidth}
+					height={hsHeight}
+					regions={hsRegions}
+					onSubmit={(regionId) =>
+						handleGrade({ type: "region-click", value: regionId })
 					}
 				/>
 			);

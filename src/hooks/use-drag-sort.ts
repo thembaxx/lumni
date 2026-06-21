@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 
-export interface DragSortState {
-	draggedId: string | null;
-	hoveredId: string | null;
-}
-
 export function useDragSort() {
 	const [draggedId, setDraggedId] = useState<string | null>(null);
 	const [hoveredId, setHoveredId] = useState<string | null>(null);
+	const [touchSelected, setTouchSelected] = useState<string | null>(null);
+
+	const isTouchDevice =
+		typeof window !== "undefined" &&
+		("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
 	const handleDragStart = useCallback((e: React.DragEvent, id: string) => {
 		setDraggedId(id);
@@ -26,48 +26,40 @@ export function useDragSort() {
 		setHoveredId(null);
 	}, []);
 
-	const handleDrop = useCallback(
-		(
-			e: React.DragEvent,
-			callback: (sourceId: string, targetId: string) => void,
-		) => {
-			e.preventDefault();
-			const sourceId = e.dataTransfer.getData("text/plain");
-			if (sourceId) {
-				const targetId = hoveredId;
-				callback(sourceId, targetId ?? "");
+	const handleTouchSelect = useCallback(
+		(id: string) => {
+			if (touchSelected === id) {
+				setTouchSelected(null);
+			} else {
+				setTouchSelected(id);
 			}
-			setDraggedId(null);
-			setHoveredId(null);
 		},
-		[hoveredId],
+		[touchSelected],
 	);
 
-	const handleDropOnTarget = useCallback(
-		(
-			e: React.DragEvent,
-			targetId: string,
-			isUsed?: (id: string) => boolean,
-		) => {
-			e.preventDefault();
-			const sourceId = e.dataTransfer.getData("text/plain");
-			if (!sourceId || (isUsed?.(targetId) ?? false)) {
-				setDraggedId(null);
-				setHoveredId(null);
-				return;
-			}
+	const handleTouchPlace = useCallback(
+		(_targetId: string) => {
+			const sourceId = touchSelected;
+			setTouchSelected(null);
 			return sourceId;
 		},
-		[],
+		[touchSelected],
 	);
+
+	const handleTouchCancel = useCallback(() => {
+		setTouchSelected(null);
+	}, []);
 
 	return {
 		draggedId,
 		hoveredId,
+		touchSelected,
+		isTouchDevice,
 		handleDragStart,
 		handleDragOver,
 		handleDragEnd,
-		handleDrop,
-		handleDropOnTarget,
+		handleTouchSelect,
+		handleTouchPlace,
+		handleTouchCancel,
 	};
 }

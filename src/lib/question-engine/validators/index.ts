@@ -5,6 +5,7 @@ import { validate as validateDiagram } from "./per-type/diagram";
 import { validate as validateDiagramLabelling } from "./per-type/diagram-labelling";
 import { validate as validateEssay } from "./per-type/essay";
 import { validate as validateFillInSequence } from "./per-type/fill-in-sequence";
+import { validate as validateHotSpot } from "./per-type/hot-spot";
 import { validate as validateLongAnswer } from "./per-type/long-answer";
 import { validate as validateMatchPairs } from "./per-type/match-pairs";
 import { validate as validateMatching } from "./per-type/matching";
@@ -42,6 +43,7 @@ const typeValidators: Record<string, (question: Question) => ValidatorResult> =
 		"fill-in-sequence": validateFillInSequence,
 		"match-pairs": validateMatchPairs,
 		"diagram-labelling": validateDiagramLabelling,
+		"hot-spot": validateHotSpot,
 	};
 
 function scoreResult(

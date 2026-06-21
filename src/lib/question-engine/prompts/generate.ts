@@ -254,6 +254,26 @@ Points should be 2-5 depending on the number of items.
 Return ONLY valid JSON array.`,
 		},
 
+		"hot-spot": {
+			system: `You are an expert at creating hot-spot questions for ${subject}. Create questions where students click on the correct region of a diagram or image.`,
+			user: `${buildBaseUser("hot-spot", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
+
+Each question must have:
+- id, type: "hot-spot", subject, topic, difficulty, bloomTaxonomy, points
+- questionText: instructions (e.g., "Click on the correct region")
+- body.width, body.height: dimensions of the diagram area
+- body.regions: [{id: string, label: string, x: number, y: number, width: number, height: number}] — the clickable regions
+- body.correctRegionId: string — the id of the correct region
+- body.imageUrl: string (optional URL to an image)
+- steps: string[] (optional step-by-step identification guide)
+- hint, explanation
+
+Good for: map skills, diagram identification, graph reading, anatomy.
+Points should be 1-3 as this is a single-click answer.
+
+Return ONLY valid JSON array.`,
+		},
+
 		"diagram-labelling": {
 			system: `You are an expert at creating diagram-labelling questions for ${subject}. Create questions where students drag text labels onto the correct regions of a diagram.`,
 			user: `${buildBaseUser("diagram-labelling", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
