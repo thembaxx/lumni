@@ -239,19 +239,20 @@ export function createEnrichmentPipeline(
 
 	return {
 		async enrich(params: GenerationParams): Promise<GenerationParams> {
-			const curriculumContext = await curriculum.fetchCurriculumContext(
-				params.subject,
-				params.topic,
-			);
 			const exampleCount = params.pastPaperMode ? 5 : 3;
 
-			const { poolQuestions, pastPaperExamples: embeddingExamples } =
-				await embeddings.fetchEmbeddingResults(
+			const [curriculumContext, embeddingResults] = await Promise.all([
+				curriculum.fetchCurriculumContext(params.subject, params.topic),
+				embeddings.fetchEmbeddingResults(
 					params.subject,
 					params.topic,
 					exampleCount,
 					params.pastPaperMode,
-				);
+				),
+			]);
+
+			const { poolQuestions, pastPaperExamples: embeddingExamples } =
+				embeddingResults;
 
 			let pastPaperExamples = embeddingExamples ?? [];
 
