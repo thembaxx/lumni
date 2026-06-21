@@ -4,13 +4,23 @@ import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 export async function checkBudget(
 	req: NextRequest,
 	type: AICallType,
+	sessionUserId?: string | null,
 ): Promise<{
 	allowed: boolean;
 	response?: NextResponse;
 	userId: string;
 }> {
+	const forwardedFor = req.headers.get("x-forwarded-for");
+	if (forwardedFor?.includes(",")) {
+		console.warn(
+			"[Budget] Multiple X-Forwarded-For values detected:",
+			forwardedFor,
+		);
+	}
+
 	const userId =
-		req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+		sessionUserId ||
+		forwardedFor?.split(",")[0]?.trim() ||
 		req.headers.get("x-real-ip")?.trim() ||
 		"anonymous";
 

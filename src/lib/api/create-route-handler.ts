@@ -72,8 +72,12 @@ export function createRouteHandler<
 		try {
 			let userId: string | null = null;
 
+			if (budget && auth !== "none" && auth !== "admin") {
+				userId = await getAuthenticatedUserId();
+			}
+
 			if (budget) {
-				const budgetResult = await checkBudget(req, budget);
+				const budgetResult = await checkBudget(req, budget, userId);
 				if (!budgetResult.allowed) {
 					return (
 						budgetResult.response ??
@@ -95,10 +99,8 @@ export function createRouteHandler<
 						}
 						throw new HttpError(403, msg);
 					}
-				} else {
-					if (!budget) {
-						userId = await getAuthenticatedUserId();
-					}
+				} else if (!budget) {
+					userId = await getAuthenticatedUserId();
 					if (auth === "required" && !userId) {
 						throw new HttpError(401, "Not authenticated");
 					}
