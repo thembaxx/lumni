@@ -1,5 +1,7 @@
 "use client";
 
+import { Mic01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { memo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -9,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "@/i18n/navigation";
+import type { VocabWord } from "@/lib/lesson/types";
 import { cn } from "@/lib/utils";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { ListenToLesson } from "../listen-to-lesson";
@@ -25,6 +28,7 @@ export interface LessonCardData {
 	subtopicId?: string;
 	prerequisites?: string[];
 	order?: number;
+	vocabulary?: VocabWord[];
 }
 
 export const LessonCard = memo(function LessonCard({
@@ -33,6 +37,7 @@ export const LessonCard = memo(function LessonCard({
 	difficulty,
 	title,
 	summary,
+	vocabulary,
 }: LessonCardData) {
 	const { push } = useRouter();
 	const { setOpenId, isOpen } = useLessonCardContext();
@@ -72,6 +77,47 @@ export const LessonCard = memo(function LessonCard({
 										<MarkdownRenderer content={summary} />
 									</div>
 								</div>
+
+								{vocabulary && vocabulary.length > 0 && (
+									<div className="flex flex-col gap-2 pt-1">
+										<span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+											Vocabulary
+										</span>
+										<div className="flex flex-col gap-2">
+											{vocabulary.map((v) => (
+												<div
+													key={v.word}
+													className="flex items-center justify-between rounded-xl bg-muted/50 px-3 py-2"
+												>
+													<div className="flex flex-col gap-0.5">
+														<span className="font-medium text-sm">
+															{v.word}
+														</span>
+														<span className="text-muted-foreground text-xs">
+															{v.definition}
+														</span>
+													</div>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="rounded-full"
+														aria-label={`Practice pronouncing ${v.word}`}
+														onClick={() =>
+															push(
+																`/pronunciation?text=${encodeURIComponent(v.word)}`,
+															)
+														}
+													>
+														<HugeiconsIcon
+															icon={Mic01Icon}
+															className="size-4"
+														/>
+													</Button>
+												</div>
+											))}
+										</div>
+									</div>
+								)}
 
 								<div className="flex items-center gap-2 pt-2">
 									<div className={isPlaying ? "animate-pulse" : ""}>

@@ -1,3 +1,4 @@
+import { Query } from "appwrite";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -189,5 +190,51 @@ export async function updateActivity(
 	} catch (err) {
 		logError("LiveSessionService.updateActivity", err);
 		return false;
+	}
+}
+
+export async function getSessionsByTeacher(
+	teacherId: string,
+): Promise<LiveSession[]> {
+	try {
+		const relationships = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
+			Query.equal("teacherId", teacherId),
+		]);
+		if (relationships.length === 0) return [];
+
+		const studentIds = relationships.map(
+			(r) => (r as Record<string, unknown>).studentId as string,
+		);
+
+		const membersByStudent = await Promise.all(
+			studentIds.map((sid) =>
+				listDocuments(COLLECTIONS.GROUP_MEMBERS, [Query.equal("userId", sid)]),
+			),
+		);
+
+		const groupIds = [
+			...new Set(
+				membersByStudent
+					.flat()
+					.map((m) => (m as Record<string, unknown>).groupId as string),
+			),
+		];
+
+		if (groupIds.length === 0) return [];
+
+		const sessionsByGroup = await Promise.all(
+			groupIds.map((gid) =>
+				listDocuments<LiveSession>(COLLECTIONS.LIVE_SESSIONS, [
+					Query.equal("groupId", gid),
+					Query.equal("status", "active"),
+					Query.orderDesc("startedAt"),
+				]),
+			),
+		);
+
+		return sessionsByGroup.flat();
+	} catch (err) {
+		logError("LiveSessionService.getSessionsByTeacher", err);
+		return [];
 	}
 }

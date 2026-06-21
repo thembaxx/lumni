@@ -7,6 +7,7 @@ import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
 import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-panel";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
+import { LiveSessionMonitor } from "@/components/teacher/live-session-monitor";
 import { StudentDetailDialog } from "@/components/teacher/student-detail-dialog";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
 import { Button } from "@/components/ui/button";
@@ -206,6 +207,7 @@ function TeacherDashboardInner() {
 							/>
 						</div>
 					)}
+					<LiveSessionMonitor />
 					<AssignmentReviewPanel />
 					<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 						<div className="flex flex-col gap-6 lg:col-span-2">

@@ -1,0 +1,17 @@
+{
+	"id": "native-life-south-africa",
+	"title": "Native Life in South Africa",
+	"author": "Sol. T. Plaatje",
+	"language": "English",
+	"languageId": "english-home-language",
+	"gradeLevel": "10-12",
+	"wordCount": 130000,
+	"subjects": ["english-home-language", "history"],
+	"source": "project-gutenberg",
+	"sourceUrl": "https://www.gutenberg.org/ebooks/1452",
+	"license": "public-domain",
+	"topics": ["history","south-africa","politics","land-rights"],
+	"readTimeMinutes": 300,
+	"content": "Native Life in South Africa by Sol. T. Plaatje. A first-hand account of the impact of the 1913 Natives Land Act. Full text available at https://www.gutenberg.org/ebooks/1452",
+	"vocabulary": []
+}

@@ -95,6 +95,22 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
 			import(
 				"@/curriculum/stories/isi-ndebele-home-language/inkabi-nengwenya.json"
 			).then((m) => ({ default: m.default as unknown as Story })),
+		"outa-karels-stories": () =>
+			import(
+				"@/curriculum/stories/english-home-language/outa-karels-stories.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"reynard-fox-south-africa": () =>
+			import(
+				"@/curriculum/stories/english-home-language/reynard-fox-south-africa.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"thoughts-on-south-africa": () =>
+			import(
+				"@/curriculum/stories/english-home-language/thoughts-on-south-africa.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"native-life-south-africa": () =>
+			import(
+				"@/curriculum/stories/english-home-language/native-life-south-africa.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
 	};
 
 let metasCache: StoryMeta[] | null = null;

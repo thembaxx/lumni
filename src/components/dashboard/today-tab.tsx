@@ -11,6 +11,7 @@ import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
+import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { StreakCard } from "@/components/dashboard/streak-card";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
@@ -150,6 +151,9 @@ export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
 				</StaggeredSection>
 				<StaggeredSection>
 					<QuestionOfTheDayCard />
+				</StaggeredSection>
+				<StaggeredSection>
+					<WordOfDayCard />
 				</StaggeredSection>
 				{isLoggedIn && (
 					<StaggeredSection>

@@ -2,9 +2,9 @@
 
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
-import { logError } from "@/lib/shared/logger";
-import { COMMON_WORDS } from "./seed-words";
+import { ALL_SEED_WORDS, COMMON_WORDS } from "./seed-words";
 import type { DictionaryCacheEntry, DictionaryResult } from "./types";
+import { lookupWiktionary } from "./wiktionary-service";
 
 // Dexie v33: dictionaryCache table (key, word, result, fetchedAt, expiresAt)
 
@@ -80,6 +80,43 @@ export function __setDepsForTesting(deps: { db: DataAccess }) {
 	_deps = deps;
 }
 
+async function tryFreeDictionary(
+	word: string,
+	language: string,
+): Promise<DictionaryResult | null> {
+	try {
+		const url = `${API_BASE}/${encodeURIComponent(language)}/${encodeURIComponent(word)}`;
+		const res = await fetch(url);
+		if (!res.ok) return null;
+
+		const data = (await res.json()) as ApiEntry[];
+		return parseApiResponse(data);
+	} catch {
+		return null;
+	}
+}
+
+async function cacheResult(
+	word: string,
+	language: string,
+	result: DictionaryResult,
+): Promise<DictionaryResult> {
+	const key = buildCacheKey(word, language);
+	const entry: DictionaryCacheEntry = {
+		key,
+		word: word.toLowerCase(),
+		result,
+		fetchedAt: Date.now(),
+		expiresAt: Date.now() + CACHE_TTL,
+	};
+	try {
+		await _deps.db.dictionaryCache.put(entry);
+	} catch {
+		// cache write fail silently
+	}
+	return result;
+}
+
 export async function lookupWord(
 	word: string,
 	language = "en",
@@ -95,32 +132,15 @@ export async function lookupWord(
 		// cache unavailable
 	}
 
-	try {
-		const url = `${API_BASE}/${encodeURIComponent(language)}/${encodeURIComponent(word)}`;
-		const res = await fetch(url);
-		if (!res.ok) return null;
-
-		const data = (await res.json()) as ApiEntry[];
-		const result = parseApiResponse(data);
-		if (!result) return null;
-
-		const entry: DictionaryCacheEntry = {
-			key,
-			word: word.toLowerCase(),
-			result,
-			fetchedAt: Date.now(),
-			expiresAt: Date.now() + CACHE_TTL,
-		};
-		try {
-			await _deps.db.dictionaryCache.put(entry);
-		} catch {
-			// cache write fail silently
-		}
-		return result;
-	} catch (err) {
-		logError("DictionaryService.lookupWord", err);
-		return null;
+	if (language === "en") {
+		const result = await tryFreeDictionary(word, language);
+		if (result) return cacheResult(word, language, result);
 	}
+
+	const result = await lookupWiktionary(word, language);
+	if (result) return cacheResult(word, language, result);
+
+	return null;
 }
 
 export async function getCachedLookup(
@@ -137,6 +157,29 @@ export async function getCachedLookup(
 		// cache unavailable
 	}
 	return null;
+}
+
+function dateSeed(date: Date): number {
+	const str = date.toISOString().slice(0, 10);
+	let hash = 0;
+	for (let i = 0; i < str.length; i++) {
+		hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+	}
+	return Math.abs(hash);
+}
+
+export function getWordOfDay(
+	_language: string,
+	date: Date = new Date(),
+): string {
+	const seed = dateSeed(date);
+	const pool = ALL_SEED_WORDS;
+	return pool[seed % pool.length];
+}
+
+export function getRandomWord(): string {
+	const pool = ALL_SEED_WORDS;
+	return pool[Math.floor(Math.random() * pool.length)];
 }
 
 export async function preCacheCommonWords(db: DataAccess): Promise<void> {

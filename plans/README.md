@@ -36,6 +36,9 @@ Commit baseline: `8a6fadbe`
 | 023 | Cross-domain search — stories + lessons + vocabulary | P2 | M | LOW | — | DONE |
 | 025 | Story exercises — fill-in-blank, true-false, matching | P2 | M | MED | — | DONE |
 | 026 | Offline dictionary pre-cache | P3 | S | LOW | — | DONE |
+| 027 | Dictionary C2 — Wiktionary API for SA languages + Word of the Day | P2 | M | LOW | — | DONE |
+| 029 | Teacher tools — live session monitoring | P2 | M | MED | — | DONE |
+| 030 | Pronunciation C1 — phoneme assessment + lesson integration | P3 | M | MED | — | DONE |
 
 ## Execution phases
 

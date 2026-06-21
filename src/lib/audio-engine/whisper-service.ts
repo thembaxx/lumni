@@ -1,5 +1,6 @@
 "use client";
 
+import { assessPhonemes } from "@/lib/audio-engine/phoneme-service";
 import { logError } from "@/lib/shared/logger";
 
 type WhisperModelSize = "tiny" | "base" | "small" | "medium" | "large";
@@ -15,10 +16,19 @@ interface WhisperResult {
 	confidence: number;
 }
 
+export interface PhonemeDetail {
+	expected: string;
+	actual: string;
+	correct: boolean;
+	position: number;
+}
+
 interface PronunciationAssessment {
 	overallScore: number;
 	wordScores: { word: string; accuracy: number; isCorrect: boolean }[];
 	fluencyScore: number;
+	phonemeAccuracy: number;
+	phonemeDetails: PhonemeDetail[];
 }
 
 type LoadState = "idle" | "loading" | "loaded" | "error";
@@ -168,6 +178,11 @@ export class WhisperService {
 				? Math.round((correctCount / wordScores.length) * 100)
 				: 0;
 
+		const { phonemeAccuracy, phonemeDetails } = assessPhonemes(
+			studentText,
+			expectedText,
+		);
+
 		return {
 			overallScore,
 			wordScores,
@@ -177,6 +192,8 @@ export class WhisperService {
 						Math.max(expectedWords.length, 1)) *
 					100,
 			),
+			phonemeAccuracy,
+			phonemeDetails,
 		};
 	}
 
