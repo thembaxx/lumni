@@ -11,10 +11,20 @@ import {
 	elementEaseOutQuart,
 	elementEaseOutQuint,
 } from "@/lib/data/element-categories";
-import type { Element } from "@/lib/data/elements";
+import {
+	type Element,
+	getGroup,
+	getPeriod,
+	getStateAtRoomTemp,
+} from "@/lib/data/elements";
+import { ElectronShellVisual } from "./electron-shell-visual";
 
-const getBg = (category: string) =>
-	elementCategoryConfig[category]?.bg || "bg-gray-500/90";
+const STATE_ICONS: Record<string, string> = {
+	Solid: "\u2B22",
+	Liquid: "\u25C7",
+	Gas: "\u2734",
+	Unknown: "\u2753",
+};
 
 interface ElementDetailModalProps {
 	element: Element | null;
@@ -79,7 +89,7 @@ export function ElementDetailModal({
 									duration: 0.35,
 									ease: elementEaseOutQuint,
 								}}
-								className="mb-6 flex items-start gap-5"
+								className="mb-5 flex items-start gap-5"
 							>
 								<m.div
 									initial={{ scale: 0.8, rotate: -10 }}
@@ -89,12 +99,12 @@ export function ElementDetailModal({
 										duration: 0.4,
 										ease: elementEaseOutBack,
 									}}
-									className={`flex size-20 items-center justify-center rounded-2xl ${getBg(selectedElement.category)}`}
+									className={`${elementCategoryConfig[selectedElement.category]?.bg} flex size-20 items-center justify-center rounded-2xl text-white`}
 									style={{
 										boxShadow: `0 0 30px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.5), 0 0 60px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 									}}
 								>
-									<span className="font-extrabold text-3xl text-white">
+									<span className="font-extrabold text-3xl">
 										{selectedElement.symbol}
 									</span>
 								</m.div>
@@ -111,7 +121,7 @@ export function ElementDetailModal({
 								</div>
 							</m.div>
 
-							<div className="mb-4 grid grid-cols-2 gap-3">
+							<div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
 								<m.div
 									initial={{ opacity: 0, y: 15 }}
 									animate={{ opacity: 1, y: 0 }}
@@ -120,31 +130,66 @@ export function ElementDetailModal({
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}
-									className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
+									className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10"
 								>
-									<p className="mb-1.5 text-muted-foreground text-xs">
-										Category
-									</p>
+									<p className="mb-1 text-muted-foreground text-xs">Period</p>
 									<p className="font-semibold text-sm">
-										{elementCategoryConfig[selectedElement.category]?.label ||
-											selectedElement.category}
+										{getPeriod(selectedElement.row)}
 									</p>
 								</m.div>
 								<m.div
 									initial={{ opacity: 0, y: 15 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{
-										delay: 0.18,
+										delay: 0.17,
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}
-									className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
+									className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10"
 								>
-									<p className="mb-1.5 text-muted-foreground text-xs">
-										Electron Config
-									</p>
+									<p className="mb-1 text-muted-foreground text-xs">Group</p>
 									<p className="font-semibold text-sm">
-										{selectedElement.electronConfig}
+										{getGroup(selectedElement.col, selectedElement.category)}
+									</p>
+								</m.div>
+								<m.div
+									initial={{ opacity: 0, y: 15 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{
+										delay: 0.19,
+										duration: 0.3,
+										ease: elementEaseOutQuart,
+									}}
+									className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10"
+								>
+									<p className="mb-1 text-muted-foreground text-xs">
+										State (25\u00B0C)
+									</p>
+									<p className="flex items-center gap-1.5 font-semibold text-sm">
+										<span className="text-xs">
+											{
+												STATE_ICONS[
+													getStateAtRoomTemp(selectedElement.atomicNumber)
+												]
+											}
+										</span>
+										{getStateAtRoomTemp(selectedElement.atomicNumber)}
+									</p>
+								</m.div>
+								<m.div
+									initial={{ opacity: 0, y: 15 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{
+										delay: 0.21,
+										duration: 0.3,
+										ease: elementEaseOutQuart,
+									}}
+									className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10"
+								>
+									<p className="mb-1 text-muted-foreground text-xs">Category</p>
+									<p className="font-semibold text-sm">
+										{elementCategoryConfig[selectedElement.category]?.label ||
+											selectedElement.category}
 									</p>
 								</m.div>
 							</div>
@@ -153,11 +198,32 @@ export function ElementDetailModal({
 								initial={{ opacity: 0, y: 15 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{
-									delay: 0.22,
+									delay: 0.23,
 									duration: 0.3,
 									ease: elementEaseOutQuart,
 								}}
-								className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
+								className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
+							>
+								<p className="mb-2 text-muted-foreground text-xs">
+									Electron Configuration
+								</p>
+								<p className="mb-3 font-semibold text-sm">
+									{selectedElement.electronConfig}
+								</p>
+								<ElectronShellVisual
+									electronConfig={selectedElement.electronConfig}
+								/>
+							</m.div>
+
+							<m.div
+								initial={{ opacity: 0, y: 15 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{
+									delay: 0.26,
+									duration: 0.3,
+									ease: elementEaseOutQuart,
+								}}
+								className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
 							>
 								<p className="mb-1.5 text-muted-foreground text-xs">
 									Discovery
@@ -175,7 +241,7 @@ export function ElementDetailModal({
 									initial={{ opacity: 0, y: 15 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{
-										delay: 0.26,
+										delay: 0.29,
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}

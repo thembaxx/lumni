@@ -1,3 +1,5 @@
+export type ElementState = "Solid" | "Liquid" | "Gas" | "Unknown";
+
 export interface Element {
 	atomicNumber: number;
 	symbol: string;
@@ -9,6 +11,28 @@ export interface Element {
 	namedAfter: string;
 	row: number;
 	col: number;
+}
+
+const LIQUID_ELEMENTS = new Set([35, 80]);
+const GAS_ELEMENTS = new Set([1, 2, 7, 8, 9, 10, 17, 18, 36, 54, 86]);
+const UNKNOWN_STATE_ELEMENTS = new Set([
+	109, 110, 111, 112, 113, 114, 115, 116, 117, 118,
+]);
+
+export function getStateAtRoomTemp(atomicNumber: number): ElementState {
+	if (UNKNOWN_STATE_ELEMENTS.has(atomicNumber)) return "Unknown";
+	if (GAS_ELEMENTS.has(atomicNumber)) return "Gas";
+	if (LIQUID_ELEMENTS.has(atomicNumber)) return "Liquid";
+	return "Solid";
+}
+
+export function getPeriod(row: number): number {
+	return row;
+}
+
+export function getGroup(col: number, category: string): string {
+	if (category === "lanthanide" || category === "actinide") return "—";
+	return String(col);
 }
 
 export const elements: Element[] = [

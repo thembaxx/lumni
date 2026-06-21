@@ -58,7 +58,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
 	};
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="flex gap-2">
 				<Textarea
 					value={newMessage}
@@ -75,7 +75,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
 					{sending ? "Sending…" : "Send"}
 				</Button>
 			</div>
-			<div className="max-h-64 space-y-2 overflow-y-auto">
+			<div className="flex max-h-64 flex-col gap-2 overflow-y-auto">
 				{messages.length === 0 ? (
 					<p className="text-muted-foreground text-xs">No messages yet</p>
 				) : (

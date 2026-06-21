@@ -40,7 +40,7 @@ export function AchievementUnlock({
 					className="relative motion-reduce:animate-none motion-reduce:transition-none"
 				>
 					<div
-						className={`absolute inset-0 rounded-3xl bg-opacity-50 blur-xl ${raritySolid[rarity]}`}
+						className={`absolute inset-0 rounded-3xl blur-xl ${raritySolid[rarity]}/50`}
 					/>
 
 					<div

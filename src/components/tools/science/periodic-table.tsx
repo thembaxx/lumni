@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
 	elementCategoryConfig,
+	elementCategoryVariables,
 	elementEaseOutQuart,
 	elementEaseOutQuint,
 } from "@/lib/data/element-categories";
@@ -100,6 +101,8 @@ export function PeriodicTable() {
 					"radial-gradient(ellipse at 50% 0%, oklch(52.5% 0.142 274° / 0.08) 0%, transparent 60%)",
 			}}
 		>
+			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: static CSS variables, no user content */}
+			<style dangerouslySetInnerHTML={{ __html: elementCategoryVariables }} />
 			<div className="mx-auto w-full max-w-5xl">
 				<div className="pt-5 pb-3">
 					<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
@@ -135,6 +138,7 @@ export function PeriodicTable() {
 					<Input
 						type="text"
 						placeholder="Search by name, symbol, or number…"
+						aria-label="Search periodic table elements"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						onFocus={() => setIsSearchFocused(true)}
@@ -189,6 +193,7 @@ export function PeriodicTable() {
 							onClick={() =>
 								setActiveCategory(activeCategory === key ? null : key)
 							}
+							aria-pressed={activeCategory === key}
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{
@@ -204,10 +209,7 @@ export function PeriodicTable() {
 							whileTap={{ scale: 0.95 }}
 						>
 							<m.span
-								className={`size-2.5 rounded-full ${config.bg.replace(
-									"/90",
-									"",
-								)}`}
+								className={`${config.bg} size-2.5 rounded-full`}
 								animate={
 									activeCategory === key ? { scale: [1, 1.3, 1] } : { scale: 1 }
 								}

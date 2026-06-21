@@ -141,7 +141,7 @@ export function APSCalculator() {
 						icon={CalculatorIcon}
 						className="size-5 text-[--system-accent]"
 					/>
-					APS CalculatorIcon
+					APS Calculator
 				</h2>
 				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 					Calculate your Admission Point Score for university applications.

@@ -68,7 +68,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
 	if (loading) return <Skeleton className="h-32 rounded-lg" />;
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="flex gap-2">
 				<Textarea
 					value={newNote}
@@ -88,7 +88,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
 			{observations.length === 0 ? (
 				<p className="text-muted-foreground text-xs">No observations yet</p>
 			) : (
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					{observations.map((obs, i) => (
 						<div key={obs.id ?? i} className="rounded-lg border p-3">
 							<p className="text-sm">{obs.content}</p>

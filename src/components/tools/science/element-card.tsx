@@ -8,9 +8,6 @@ import {
 } from "@/lib/data/element-categories";
 import type { Element } from "@/lib/data/elements";
 
-const getBg = (category: string) =>
-	elementCategoryConfig[category]?.bg || "bg-gray-500/90";
-
 export const ElementCard = memo(
 	({
 		el,
@@ -25,6 +22,8 @@ export const ElementCard = memo(
 		const scale = useSpring(1, { stiffness: 400, damping: 30 });
 		const glowIntensity = useSpring(0, { stiffness: 300, damping: 26 });
 
+		const config = elementCategoryConfig[el.category];
+
 		useEffect(() => {
 			if (isHovered && isActive) {
 				glowIntensity.set(1);
@@ -37,8 +36,8 @@ export const ElementCard = memo(
 			glowIntensity,
 			[0, 1],
 			[
-				`0 0 12px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.4)`,
-				`0 0 24px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.8), 0 0 48px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.4)`,
+				`0 0 12px oklch(${config?.rgb} / 0.4)`,
+				`0 0 24px oklch(${config?.rgb} / 0.8), 0 0 48px oklch(${config?.rgb} / 0.4)`,
 			],
 		);
 
@@ -47,6 +46,7 @@ export const ElementCard = memo(
 		return (
 			<m.button
 				onClick={() => onClick(el.atomicNumber)}
+				aria-label={`Select element ${el.name}`}
 				onHoverStart={() => setIsHovered(true)}
 				onHoverEnd={() => setIsHovered(false)}
 				style={{ scale, boxShadow }}
@@ -62,18 +62,18 @@ export const ElementCard = memo(
 					ease: elementEaseOutQuint,
 				}}
 				whileTap={isActive ? { scale: 0.95 } : {}}
-				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2 dark:border-white/20`}
+				className={`${config?.bg} relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-white/10 p-2 text-white dark:border-white/20`}
 			>
 				<span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums opacity-50">
 					{el.atomicNumber}
 				</span>
 				<m.span
 					style={{ scale: symbolScale }}
-					className="font-extrabold text-white text-xl drop-shadow-lg"
+					className="font-extrabold text-xl drop-shadow-lg"
 				>
 					{el.symbol}
 				</m.span>
-				<span className="ios-caption-3 mt-0.5 text-center leading-tight opacity-60">
+				<span className="ios-caption-3 mt-0.5 text-center leading-tight opacity-70">
 					{el.name}
 				</span>
 				<div
