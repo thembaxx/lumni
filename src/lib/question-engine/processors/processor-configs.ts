@@ -1,4 +1,5 @@
 import * as calculation from "./graders/calculation";
+import * as diagramLabelling from "./graders/diagram-labelling";
 import * as essay from "./graders/essay";
 import * as fillInSequence from "./graders/fill-in-sequence";
 import * as longAnswer from "./graders/long-answer";
@@ -94,5 +95,11 @@ export const processorConfigs: ProcessorConfig[] = [
 		temperature: 0.6,
 		grade: matchPairs.grade,
 		hint: matchPairs.hint,
+	},
+	{
+		type: "diagram-labelling",
+		temperature: 0.6,
+		grade: diagramLabelling.grade,
+		hint: diagramLabelling.hint,
 	},
 ];

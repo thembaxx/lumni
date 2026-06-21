@@ -1,0 +1,332 @@
+[
+  {
+    "id": "seed-ordering-001",
+    "type": "ordering",
+    "subject": "mathematics",
+    "topic": "algebra",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "understand",
+    "points": 3,
+    "questionText": "Arrange these steps in the correct order to solve $2x + 5 = 13$",
+    "hint": "Think about inverse operations — undo addition before multiplication.",
+    "explanation": "First subtract 5 from both sides ($2x = 8$), then divide by 2 ($x = 4$).",
+    "body": {
+      "items": [
+        { "id": "a", "text": "Subtract 5 from both sides: $2x = 8$" },
+        { "id": "b", "text": "Divide both sides by 2: $x = 4$" },
+        { "id": "c", "text": "Check: $2(4) + 5 = 13$ ✓" },
+        { "id": "d", "text": "Write the original equation: $2x + 5 = 13$" }
+      ],
+      "correctOrder": ["d", "a", "b", "c"],
+      "shuffle": true
+    },
+    "steps": ["Start with the equation", "Isolate the variable term", "Solve for the variable", "Verify the solution"],
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-ordering-002",
+    "type": "ordering",
+    "subject": "physical-sciences",
+    "topic": "mechanics",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "apply",
+    "points": 4,
+    "questionText": "Arrange the steps of the scientific method in the correct order.",
+    "hint": "Start with observing a phenomenon.",
+    "explanation": "The scientific method follows a logical progression from observation to conclusion.",
+    "body": {
+      "items": [
+        { "id": "a", "text": "Draw a conclusion" },
+        { "id": "b", "text": "Form a hypothesis" },
+        { "id": "c", "text": "Analyse the data" },
+        { "id": "d", "text": "Conduct the experiment" },
+        { "id": "e", "text": "Ask a question or identify a problem" },
+        { "id": "f", "text": "Collect and record data" }
+      ],
+      "correctOrder": ["e", "b", "d", "f", "c", "a"],
+      "shuffle": true
+    },
+    "steps": ["Identify a problem", "Propose a hypothesis", "Test it experimentally", "Gather data", "Interpret results", "Conclude"],
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-ordering-003",
+    "type": "ordering",
+    "subject": "life-sciences",
+    "topic": "ecology",
+    "difficulty": "Easy",
+    "bloomTaxonomy": "remember",
+    "points": 3,
+    "questionText": "Arrange these trophic levels from lowest to highest energy level.",
+    "hint": "Producers are at the bottom of the food chain.",
+    "explanation": "Energy flows from producers (plants) up through consumers in a food chain.",
+    "body": {
+      "items": [
+        { "id": "a", "text": "Primary consumers (herbivores)" },
+        { "id": "b", "text": "Producers (plants)" },
+        { "id": "c", "text": "Secondary consumers (carnivores)" },
+        { "id": "d", "text": "Tertiary consumers (apex predators)" }
+      ],
+      "correctOrder": ["b", "a", "c", "d"],
+      "shuffle": true
+    },
+    "steps": ["Start with producers", "Add primary consumers", "Add secondary consumers", "End with apex predators"],
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-ordering-004",
+    "type": "ordering",
+    "subject": "geography",
+    "topic": "geomorphology",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "understand",
+    "points": 3,
+    "questionText": "Arrange these river course stages from source to mouth.",
+    "hint": "Rivers start in highlands and end at the sea.",
+    "explanation": "A river progresses from the upper course (youthful) through the middle course to the lower course (old age).",
+    "body": {
+      "items": [
+        { "id": "a", "text": "Lower course (floodplain and delta)" },
+        { "id": "b", "text": "Upper course (V-shaped valley)" },
+        { "id": "c", "text": "Middle course (meanders)" }
+      ],
+      "correctOrder": ["b", "c", "a"],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-ordering-005",
+    "type": "ordering",
+    "subject": "mathematics",
+    "topic": "functions",
+    "difficulty": "Hard",
+    "bloomTaxonomy": "analyze",
+    "points": 5,
+    "questionText": "Arrange these steps to find the inverse of $f(x) = 3x - 7$",
+    "hint": "Replace $f(x)$ with $y$, swap $x$ and $y$, then solve for $y$.",
+    "explanation": "The inverse function reverses the original mapping.",
+    "body": {
+      "items": [
+        { "id": "a", "text": "Swap $x$ and $y$: $x = 3y - 7$" },
+        { "id": "b", "text": "Add 7: $x + 7 = 3y$" },
+        { "id": "c", "text": "Write $f(x) = 3x - 7$ as $y = 3x - 7$" },
+        { "id": "d", "text": "Divide by 3: $y = \\frac{x + 7}{3}$" },
+        { "id": "e", "text": "Write $f^{-1}(x) = \\frac{x + 7}{3}$" }
+      ],
+      "correctOrder": ["c", "a", "b", "d", "e"],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-fill-seq-001",
+    "type": "fill-in-sequence",
+    "subject": "physical-sciences",
+    "topic": "chemistry",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "apply",
+    "points": 3,
+    "questionText": "Complete the balanced chemical equation for the combustion of methane:",
+    "hint": "Balance the number of atoms on each side. Start with carbon, then hydrogen, then oxygen.",
+    "explanation": "$CH_4 + 2O_2 \\rightarrow CO_2 + 2H_2O$ — one carbon, four hydrogens, four oxygens on each side.",
+    "body": {
+      "sequence": [
+        { "text": "$CH_4 +$ " },
+        { "text": "", "blankId": "b1" },
+        { "text": "$O_2 \\rightarrow$ " },
+        { "text": "", "blankId": "b2" },
+        { "text": " + 2H₂O" }
+      ],
+      "blanks": [
+        { "id": "b1", "correctAnswer": "2", "distractors": ["1", "3", "4"] },
+        { "id": "b2", "correctAnswer": "CO₂", "distractors": ["CO", "C", "CH₄"] }
+      ],
+      "shuffleDistractors": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-fill-seq-002",
+    "type": "fill-in-sequence",
+    "subject": "mathematics",
+    "topic": "algebra",
+    "difficulty": "Easy",
+    "bloomTaxonomy": "understand",
+    "points": 2,
+    "questionText": "Complete the quadratic formula:",
+    "hint": "The formula solves $ax^2 + bx + c = 0$.",
+    "explanation": "The quadratic formula is $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$.",
+    "body": {
+      "sequence": [
+        { "text": "$x = \\frac{-b \\pm \\sqrt{" },
+        { "text": "", "blankId": "b1" },
+        { "text": "}}{2a}$" }
+      ],
+      "blanks": [
+        { "id": "b1", "correctAnswer": "b^2 - 4ac", "distractors": ["b^2 + 4ac", "b - 4ac", "b^2 - 2ac"] }
+      ],
+      "shuffleDistractors": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-fill-seq-003",
+    "type": "fill-in-sequence",
+    "subject": "physical-sciences",
+    "topic": "electricity",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "apply",
+    "points": 3,
+    "questionText": "Complete Ohm's law formula:",
+    "hint": "Ohm's law relates voltage, current, and resistance.",
+    "explanation": "$V = IR$ — voltage equals current times resistance.",
+    "body": {
+      "sequence": [
+        { "text": "" },
+        { "text": "", "blankId": "b1" },
+        { "text": " = " },
+        { "text": "", "blankId": "b2" },
+        { "text": " × " },
+        { "text": "", "blankId": "b3" }
+      ],
+      "blanks": [
+        { "id": "b1", "correctAnswer": "V", "distractors": ["I", "R", "P"] },
+        { "id": "b2", "correctAnswer": "I", "distractors": ["V", "R", "W"] },
+        { "id": "b3", "correctAnswer": "R", "distractors": ["V", "I", "A"] }
+      ],
+      "shuffleDistractors": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-match-001",
+    "type": "match-pairs",
+    "subject": "mathematics",
+    "topic": "geometry",
+    "difficulty": "Easy",
+    "bloomTaxonomy": "remember",
+    "points": 4,
+    "questionText": "Match each 2D shape to its number of sides.",
+    "hint": "Count the sides of each shape.",
+    "explanation": "Triangle has 3, quadrilateral has 4, pentagon has 5, hexagon has 6.",
+    "body": {
+      "leftItems": [
+        { "id": "t", "text": "Triangle" },
+        { "id": "q", "text": "Quadrilateral" },
+        { "id": "p", "text": "Pentagon" },
+        { "id": "h", "text": "Hexagon" }
+      ],
+      "rightItems": [
+        { "id": "r3", "text": "3 sides" },
+        { "id": "r4", "text": "4 sides" },
+        { "id": "r5", "text": "5 sides" },
+        { "id": "r6", "text": "6 sides" }
+      ],
+      "correctMatches": [
+        { "leftId": "t", "rightId": "r3" },
+        { "leftId": "q", "rightId": "r4" },
+        { "leftId": "p", "rightId": "r5" },
+        { "leftId": "h", "rightId": "r6" }
+      ],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-match-002",
+    "type": "match-pairs",
+    "subject": "physical-sciences",
+    "topic": "chemistry",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "remember",
+    "points": 3,
+    "questionText": "Match each chemical symbol to its element name.",
+    "hint": "Think about the periodic table.",
+    "explanation": "Fe = Iron, Na = Sodium, Au = Gold, Pb = Lead.",
+    "body": {
+      "leftItems": [
+        { "id": "fe", "text": "Fe" },
+        { "id": "na", "text": "Na" },
+        { "id": "au", "text": "Au" }
+      ],
+      "rightItems": [
+        { "id": "iron", "text": "Iron" },
+        { "id": "sodium", "text": "Sodium" },
+        { "id": "gold", "text": "Gold" }
+      ],
+      "correctMatches": [
+        { "leftId": "fe", "rightId": "iron" },
+        { "leftId": "na", "rightId": "sodium" },
+        { "leftId": "au", "rightId": "gold" }
+      ],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-match-003",
+    "type": "match-pairs",
+    "subject": "life-sciences",
+    "topic": "cell-biology",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "remember",
+    "points": 4,
+    "questionText": "Match each cell organelle to its function.",
+    "hint": "Think about what each organelle does in the cell.",
+    "explanation": "Mitochondria produce energy, nucleus contains DNA, ribosomes make proteins, Golgi packages proteins.",
+    "body": {
+      "leftItems": [
+        { "id": "mito", "text": "Mitochondria" },
+        { "id": "nuc", "text": "Nucleus" },
+        { "id": "ribo", "text": "Ribosome" },
+        { "id": "golgi", "text": "Golgi apparatus" }
+      ],
+      "rightItems": [
+        { "id": "energy", "text": "Energy production (ATP)" },
+        { "id": "dna", "text": "Contains genetic material (DNA)" },
+        { "id": "protein", "text": "Protein synthesis" },
+        { "id": "package", "text": "Modifies and packages proteins" }
+      ],
+      "correctMatches": [
+        { "leftId": "mito", "rightId": "energy" },
+        { "leftId": "nuc", "rightId": "dna" },
+        { "leftId": "ribo", "rightId": "protein" },
+        { "leftId": "golgi", "rightId": "package" }
+      ],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  },
+  {
+    "id": "seed-match-004",
+    "type": "match-pairs",
+    "subject": "mathematics",
+    "topic": "functions",
+    "difficulty": "Medium",
+    "bloomTaxonomy": "understand",
+    "points": 3,
+    "questionText": "Match each function to its graph shape.",
+    "hint": "Think about the general form of each function type.",
+    "explanation": "Linear is a straight line, quadratic is a parabola, exponential curves upward.",
+    "body": {
+      "leftItems": [
+        { "id": "lin", "text": "$f(x) = mx + c$" },
+        { "id": "quad", "text": "$f(x) = ax^2 + bx + c$" },
+        { "id": "exp", "text": "$f(x) = a \\cdot b^x$" }
+      ],
+      "rightItems": [
+        { "id": "straight", "text": "Straight line" },
+        { "id": "para", "text": "Parabola (U-shaped)" },
+        { "id": "curve", "text": "Exponential curve" }
+      ],
+      "correctMatches": [
+        { "leftId": "lin", "rightId": "straight" },
+        { "leftId": "quad", "rightId": "para" },
+        { "leftId": "exp", "rightId": "curve" }
+      ],
+      "shuffle": true
+    },
+    "metadata": { "source": "generated", "version": 1 }
+  }
+]

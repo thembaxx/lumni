@@ -50,6 +50,10 @@ export function buildGradePrompt(type: string): PromptTemplate {
 			system: `You evaluate match-pairs questions. Check if the student correctly matched all pairs. Return JSON.`,
 			user: `Evaluate the match-pairs answer. Compare each match against the correct pairings. Return JSON: { correct: boolean, score: number (0-100), feedback: string }`,
 		},
+		"diagram-labelling": {
+			system: `You evaluate diagram-labelling questions. Check if the student placed labels on the correct regions. Return JSON.`,
+			user: `Evaluate the diagram-labelling answer. Compare each placement against the correct label-region pairings. Return JSON: { correct: boolean, score: number (0-100), feedback: string }`,
+		},
 	};
 
 	return gradePrompts[type] ?? gradePrompts["short-answer"];

@@ -21,6 +21,7 @@ import { AuthProvider } from "@/lib/auth/auth-context";
 import { ConsentProvider } from "@/lib/consent/consent-context";
 import { PremiumProvider } from "@/lib/premium/premium-context";
 import { queryClient } from "@/lib/query-client";
+import { seedInteractiveQuestions } from "@/lib/seed-questions";
 import { setAppInitialized } from "@/store";
 
 function JobProcessorWrapper() {
@@ -49,7 +50,10 @@ export function Providers({
 }: ProvidersProps) {
 	useEffect(() => {
 		const handlePrefetch = async () => {
-			await prefetchUploadSubjects(queryClient);
+			await Promise.all([
+				prefetchUploadSubjects(queryClient),
+				seedInteractiveQuestions(),
+			]);
 			setAppInitialized(true);
 		};
 		handlePrefetch();

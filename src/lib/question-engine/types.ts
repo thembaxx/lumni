@@ -12,7 +12,8 @@ export type QuestionType =
 	| "mixed"
 	| "ordering"
 	| "fill-in-sequence"
-	| "match-pairs";
+	| "match-pairs"
+	| "diagram-labelling";
 
 export type Difficulty = "Easy" | "Medium" | "Hard";
 
@@ -198,6 +199,22 @@ export interface QuestionBody {
 		correctMatches: { leftId: string; rightId: string }[];
 		shuffle: boolean;
 	};
+	"diagram-labelling": {
+		imageUrl?: string;
+		svgContent?: string;
+		width: number;
+		height: number;
+		regions: {
+			id: string;
+			label: string;
+			x: number;
+			y: number;
+			width: number;
+			height: number;
+		}[];
+		labels: { id: string; text: string }[];
+		correctPlacements: { labelId: string; regionId: string }[];
+	};
 }
 
 export interface QuestionMetadata {
@@ -243,7 +260,8 @@ export interface UserAnswer {
 		| "coordinates"
 		| "mixed"
 		| "ordered-items"
-		| "sequence-blanks";
+		| "sequence-blanks"
+		| "label-placements";
 	value: unknown;
 }
 

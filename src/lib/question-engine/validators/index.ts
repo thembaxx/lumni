@@ -2,6 +2,7 @@ import type { Question, ValidationError, ValidationResult } from "../types";
 import { validate as validateCalculation } from "./per-type/calculation";
 import { validate as validateDataResponse } from "./per-type/data-response";
 import { validate as validateDiagram } from "./per-type/diagram";
+import { validate as validateDiagramLabelling } from "./per-type/diagram-labelling";
 import { validate as validateEssay } from "./per-type/essay";
 import { validate as validateFillInSequence } from "./per-type/fill-in-sequence";
 import { validate as validateLongAnswer } from "./per-type/long-answer";
@@ -40,6 +41,7 @@ const typeValidators: Record<string, (question: Question) => ValidatorResult> =
 		ordering: validateOrdering,
 		"fill-in-sequence": validateFillInSequence,
 		"match-pairs": validateMatchPairs,
+		"diagram-labelling": validateDiagramLabelling,
 	};
 
 function scoreResult(

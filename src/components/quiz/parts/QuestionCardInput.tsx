@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { DiagramInput } from "@/components/quiz/parts/diagram-input";
+import { DiagramLabellingInput } from "@/components/quiz/parts/diagram-labelling-input";
 import { FillInSequenceInput } from "@/components/quiz/parts/fill-in-sequence-input";
 import { MatchPairsInput } from "@/components/quiz/parts/match-pairs-input";
 import { MCQOptions } from "@/components/quiz/parts/mcq-options";
@@ -263,6 +264,40 @@ export function QuestionCardInput({
 					blanks={blanks}
 					onSubmit={(answers) =>
 						handleGrade({ type: "sequence-blanks", value: answers })
+					}
+				/>
+			);
+		}
+
+		case "diagram-labelling": {
+			const imgUrl = getBodyField(question, "imageUrl") as string | undefined;
+			const svg = getBodyField(question, "svgContent") as string | undefined;
+			const w = getBodyField(question, "width") as number | undefined;
+			const h = getBodyField(question, "height") as number | undefined;
+			const regions = getBodyField(question, "regions") as
+				| {
+						id: string;
+						label: string;
+						x: number;
+						y: number;
+						width: number;
+						height: number;
+				  }[]
+				| undefined;
+			const labels = getBodyField(question, "labels") as
+				| { id: string; text: string }[]
+				| undefined;
+			if (!regions || !labels || !w || !h) return null;
+			return (
+				<DiagramLabellingInput
+					imageUrl={imgUrl}
+					svgContent={svg}
+					width={w}
+					height={h}
+					regions={regions}
+					labels={labels}
+					onSubmit={(placements) =>
+						handleGrade({ type: "label-placements", value: placements })
 					}
 				/>
 			);

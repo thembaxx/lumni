@@ -254,6 +254,29 @@ Points should be 2-5 depending on the number of items.
 Return ONLY valid JSON array.`,
 		},
 
+		"diagram-labelling": {
+			system: `You are an expert at creating diagram-labelling questions for ${subject}. Create questions where students drag text labels onto the correct regions of a diagram.`,
+			user: `${buildBaseUser("diagram-labelling", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
+
+Each question must have:
+- id, type: "diagram-labelling", subject, topic, difficulty, bloomTaxonomy, points
+- questionText: instructions for labelling the diagram
+- body.width, body.height: dimensions of the diagram area (e.g. 400, 300)
+- body.regions: [{id: string, label: string, x: number, y: number, width: number, height: number}] — the clickable regions on the diagram
+- body.labels: [{id: string, text: string}] — the draggable labels (will be shuffled for display)
+- body.correctPlacements: [{labelId: string, regionId: string}] — which label goes where
+- body.svgContent: string (optional inline SVG for the diagram)
+- body.imageUrl: string (optional URL to an image)
+- steps: string[] (optional step-by-step identification guide)
+- hint, explanation
+
+Good for: labelling diagrams of cells, apparatus, graphs, maps, anatomical structures.
+Use $...$ for LaTeX math notation.
+Points should be 2-5 depending on the number of labels.
+
+Return ONLY valid JSON array.`,
+		},
+
 		"fill-in-sequence": {
 			system: `You are an expert at creating fill-in-sequence questions for ${subject}. Create questions where students drag items into blank slots to complete a sequence, formula, or text passage.`,
 			user: `${buildBaseUser("fill-in-sequence", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
