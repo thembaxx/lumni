@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import type { Models } from "appwrite";
+import { type Models, OAuthProvider } from "appwrite";
 import {
 	createContext,
 	use,
@@ -36,6 +36,7 @@ interface AuthContextValue {
 		name: string,
 	) => Promise<string | undefined>;
 	signInWithMagicLink: (email: string) => Promise<void>;
+	signInWithGoogle: () => Promise<void>;
 	signOut: () => Promise<void>;
 	verifyEmail: () => Promise<void>;
 	updateProfile: (fields: {
@@ -47,6 +48,30 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 const ANONYMOUS_ATTEMPTED_KEY = "lumni_anonymous_attempted";
+
+async function syncGoogleAvatar(
+	user: Models.User<Models.Preferences>,
+): Promise<void> {
+	try {
+		const prefs = user.prefs as Record<string, unknown>;
+		if (prefs?.avatarUrl) return;
+
+		const session = await account.getSession("current");
+		if (session.provider !== "google" || !session.providerAccessToken) return;
+
+		const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+			headers: { Authorization: `Bearer ${session.providerAccessToken}` },
+		});
+		if (!res.ok) return;
+
+		const data = (await res.json()) as { picture?: string };
+		if (!data.picture) return;
+
+		await account.updatePrefs({ ...prefs, avatarUrl: data.picture });
+	} catch (err) {
+		logError("sync-google-avatar", err);
+	}
+}
 
 interface AuthState {
 	user: Models.User<Models.Preferences> | null;
@@ -136,6 +161,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					status: "authenticated",
 					isAnonymous: isAnon,
 				});
+				if (!isAnon) {
+					syncGoogleAvatar(currentUser);
+				}
 			} catch (err) {
 				if (cancelled) return;
 				logError("auth-init", err);
@@ -257,6 +285,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
+	const signInWithGoogle = useCallback(async () => {
+		dispatch({ type: "SET_ERROR", error: null });
+		try {
+			const successUrl =
+				typeof window !== "undefined"
+					? `${window.location.origin}/dashboard?auth=success`
+					: "/dashboard?auth=success";
+			const failureUrl =
+				typeof window !== "undefined"
+					? `${window.location.origin}/auth/sign-in?error=oauth_failed`
+					: "/auth/sign-in?error=oauth_failed";
+
+			account.createOAuth2Session({
+				provider: OAuthProvider.Google,
+				success: successUrl,
+				failure: failureUrl,
+			});
+		} catch (err) {
+			dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+			throw err;
+		}
+	}, []);
+
 	const signOut = useCallback(async () => {
 		try {
 			await account.deleteSession("current");
@@ -317,6 +368,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			signIn,
 			signUp,
 			signInWithMagicLink,
+			signInWithGoogle,
 			signOut,
 			verifyEmail,
 			updateProfile,
@@ -330,6 +382,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			signIn,
 			signUp,
 			signInWithMagicLink,
+			signInWithGoogle,
 			signOut,
 			verifyEmail,
 			updateProfile,
