@@ -18,9 +18,7 @@
 		"react-day-picker",
 		"sharp",
 		"tailwind-scrollbar-hide",
-		"tw-animate-css",
-		"dotenv",
-		"zod"
+		"tw-animate-css"
 	],
 	"rules": {
 		"files": "off",
