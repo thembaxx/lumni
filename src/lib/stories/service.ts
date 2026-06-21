@@ -2,6 +2,7 @@ import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
+import { getAllStoryMetas, loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
 // Dexie v33 adds storyCache + storyQuestions tables.
@@ -76,6 +77,25 @@ export async function getStory(id: string): Promise<Story | null> {
 		// IndexedDB unavailable (server-side)
 	}
 	return null;
+}
+
+export async function cacheAllStories(): Promise<void> {
+	try {
+		const metas = await getAllStoryMetas();
+		const cachedCount = await _deps.db.storyCache.count();
+		if (cachedCount >= metas.length) return;
+		for (const meta of metas) {
+			const key = `story:${meta.id}`;
+			const exists = await _deps.db.storyCache.get(key);
+			if (exists) continue;
+			const story = await loadStoryContent(meta.id);
+			if (story) {
+				await cacheStory(meta.id, story);
+			}
+		}
+	} catch {
+		// fail silently — background caching is non-critical
+	}
 }
 
 export async function cacheStory(id: string, story: Story): Promise<void> {

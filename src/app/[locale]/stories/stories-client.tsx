@@ -13,6 +13,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import type { StoryProgressRecord } from "@/lib/db/schema";
 import { offlineDB } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
+import { cacheAllStories } from "@/lib/stories/service";
 import type { StoryMeta } from "@/lib/stories/story-data";
 import { getAllStoryMetas, getLanguageLabel } from "@/lib/stories/story-data";
 
@@ -34,6 +35,7 @@ export function StoriesClient() {
 			const langs = [...new Set(all.map((s) => s.languageId))];
 			setLanguages(langs);
 		});
+		cacheAllStories().catch((err) => logError("stories-client.cacheAll", err));
 	}, []);
 
 	useEffect(() => {
@@ -137,7 +139,7 @@ export function StoriesClient() {
 										{isCompleted && (
 											<Badge
 												variant="default"
-												className="shrink-0 rounded-full bg-emerald-500/15 text-emerald-600 text-[10px] dark:bg-emerald-500/20 dark:text-emerald-400"
+												className="shrink-0 rounded-full bg-emerald-500/15 text-[10px] text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
 											>
 												✓ Completed
 											</Badge>

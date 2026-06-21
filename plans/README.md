@@ -31,6 +31,9 @@ Commit baseline: `8a6fadbe`
 | 019 | Sync handler + gamification service tests | P2 | M | LOW | — | DONE (44 tests) |
 | 020 | Knowledge graph improvements | P2 | M | MED | — | DONE |
 | 021 | Live session join/leave/activity | P2 | M | MED | — | DONE |
+| 022 | i18n — Fill 64 missing keys for 8 SA languages | P2 | M | LOW | — | DONE |
+| 024 | Offline stories bundle — cache stories on first sync | P3 | S | LOW | — | DONE |
+| 023 | Cross-domain search — stories + lessons + vocabulary | P2 | M | LOW | — | DONE |
 
 ## Execution phases
 

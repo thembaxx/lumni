@@ -69,6 +69,14 @@
     "searchPlaceholder": "Tafola sepe...",
     "skipToContent": "Tsaya go ya kwa mokwalo"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "quiz": "Pitsa",
+    "flashcards": "Karete e e tsamayang",
+    "settings": "Dikgetho",
+    "studyGroups": "Dikgoro",
+    "studyPlanner": "Mokgoro wa thuto"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Dashboard",
@@ -156,7 +164,12 @@
     "footerPrivacy": "Privacy Policy",
     "footerTerms": "Terms of Service",
     "footerCopyright": "© {year} Lumni. All rights reserved.",
-    "footerContact": "Contact"
+    "footerContact": "Contact",
+    "navTryQuiz": "Leka Pitsa",
+    "skipToContent": "Tlola go ya kwa mokwalo",
+    "ctaHeading": "O ikemiseditse go fenya ditlhatlhobo tsa gago?",
+    "ctaDescription": "Tsena mo diketeng tsa baithuti ba Matric ba ba nnang ba itokisetsa ka Lumni. Simolola mahala, ga go karete ya mokitlane e e tlhokegang.",
+    "opensInNewTab": "(e bula mo tab e ntshwa)"
   },
   "auth": {
     "welcomeBack": "Amogela motswedi go Lumni",
@@ -314,7 +327,8 @@
     "answerPlaceholder": "Your answer...",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Submit All Parts",
-    "pointsParenthetical": "({points} pts)"
+    "pointsParenthetical": "({points} pts)",
+    "pastPaperMode": "Mokgwa wa Pampiri ya Tlhatlhobo: dipotso di tlhomilwe jaaka dipampiri tsa NSC"
   },
   "flashcards": {
     "title": "Flashcards",
@@ -394,7 +408,8 @@
     "pageInfo": "Page {page} of {totalPages}",
     "browseError": "Couldn't load flashcards",
     "browseErrorDesc": "Something went wrong. Please try again.",
-    "goHome": "Go Home"
+    "goHome": "Go Home",
+    "reviewVocabulary": "Hlahloba Tlotlontswe"
   },
   "exam": {
     "title": "Exam",
@@ -658,7 +673,10 @@
     "cancelConfirm": "Are you sure you want to cancel?",
     "reactivate": "Reactivate",
     "alreadyPremium": "You're a Premium member!",
-    "expiresOn": "Expires on {date}"
+    "expiresOn": "Expires on {date}",
+    "gatedTitle": "Tšobotsi ya Premium",
+    "gatedDescription": "Ntlafatsa go notlolla {feature}",
+    "freeQuizzesLeft": "{count} dipotso tsa mahala tse setseng gompieno"
   },
   "settings": {
     "title": "Settings",
@@ -732,7 +750,67 @@
     "signInDescription": "Create an account or sign in to save your study history, track your XP and streaks, unlock achievements, and compare your performance across subjects.",
     "signInAction": "Sign In",
     "createAccount": "Create Account",
-    "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices."
+    "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices.",
+    "boltCompleteTitle": "Phephetsho ya letsatsi e weditswe",
+    "boltCompleteDescription": "Booya kamoso go tswelela ka go ithuta"
+  },
+  "consent": {
+    "cookieBanner": {
+      "title": "Re tlotla sephiri sa gago",
+      "description": "Re dirisa di-cookie tsa botlhokwa gore app e dire. Di-cookie tsa tlhatlhobo di re thusa go tokafatsa. O ka kgetha se o dumelang go sona.",
+      "essentialOnly": "Tsa botlhokwa fela",
+      "acceptAnalytics": "Amogela tlhatlhobo",
+      "acceptAll": "Amogela tsotlhe",
+      "cookieSettings": "Dikgetho tsa di-cookie"
+    },
+    "cookieSettings": {
+      "title": "Dikgetho tsa Di-cookie",
+      "description": "Kgetha dipampi tsa di-cookie tse o batlang go di dumela.",
+      "essential": "Tsa botlhokwa",
+      "essentialDesc": "Di a tlhokega gore app e dire (seshene, puo).",
+      "analytics": "Tlhatlhobo",
+      "analyticsDesc": "Di thusa go tokafatsa ka datha ya tirisiso (Sentry, maqephe a a tshegetsweng).",
+      "marketing": "Papatso",
+      "marketingDesc": "Dipuisano tsa papatso ka ga dikarolo le dintlafatso.",
+      "dataSharing": "Kabo ya Datha",
+      "dataSharingDesc": "Kabelano ya datha le bafani ba AI ba boraro bakeng sa botho.",
+      "savePreferences": "Boloka dikgetho"
+    },
+    "tosBanner": {
+      "title": "Dipeelo tsa rona di ntlafaditswe",
+      "description": "Ka kopo, sekaseka o bo o amogele Dipeelo tsa Tirelo tse di ntlafaditsweng go tswelela go dirisa Lumni.",
+      "accept": "Amogela",
+      "viewChanges": "Bona diphetogo"
+    },
+    "privacyTab": {
+      "noConsent": "Bea dikgetho tsa gago tsa di-cookie go laola tshireletso ya sephiri.",
+      "consentPreferences": "Dikgetho tsa Tumalano",
+      "analytics": "Tlhatlhobo",
+      "analyticsDesc": "Datha ya tirisiso le pego ya phoso (Sentry)",
+      "marketing": "Papatso",
+      "marketingDesc": "Dipuisano tsa papatso",
+      "dataSharing": "Kabo ya Datha",
+      "dataSharingDesc": "Kabelano ya datha le bafani ba AI bakeng sa botho",
+      "policyVersions": "Diphetolo tsa Pholisi",
+      "termsOfService": "Dipeelo tsa Tirelo",
+      "privacyPolicy": "Pholisi ya Sephiri",
+      "notAccepted": "Ga e a amogelwa",
+      "notAcknowledged": "Ga e a ananelwa",
+      "currentLabel": "Jaana",
+      "yourData": "Datha ya Gago",
+      "exportData": "Ntsha datha ya me",
+      "deleteAccount": "Phimola akhaonto",
+      "deleteTitle": "Phimola akhaonto ya gago?",
+      "deleteDescription": "Se se tla phimola ruri datha yotlhe ya gago go akaretsa hisitori ya dipotso, dikarete, merero ya thuto, le tswelelopele. Tiragalo ena ga e kgone go busetswa morago.",
+      "cancel": "Kganela",
+      "deletePermanently": "Phimola ruri",
+      "deleting": "E a phimola..."
+    },
+    "cookiePolicy": {
+      "title": "Pholisi ya Di-cookie - Lumni",
+      "heading": "Pholisi ya Di-cookie",
+      "lastUpdated": "E ntlafaditswe la bofelo: Motsheganong 2026"
+    }
   },
   "errors": {
     "general": "Something went wrong",

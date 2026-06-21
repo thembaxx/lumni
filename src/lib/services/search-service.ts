@@ -11,6 +11,9 @@ type SearchDb = Pick<
 	| "progress"
 	| "studyGuides"
 	| "dictionaryCache"
+	| "storyCache"
+	| "lessonCache"
+	| "vocabularyList"
 >;
 const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
@@ -36,7 +39,10 @@ export interface SearchResultItem {
 		| "exam-session"
 		| "progress"
 		| "study-guide"
-		| "dictionary";
+		| "dictionary"
+		| "story"
+		| "lesson"
+		| "vocabulary";
 	title: string;
 	snippet: string;
 	subject: string;
@@ -247,6 +253,121 @@ async function searchDexieStudyGuides(
 	}
 }
 
+async function searchDexieStories(query: string): Promise<SearchResultItem[]> {
+	try {
+		const entries = await _deps.db.storyCache.toArray();
+		const results: SearchResultItem[] = [];
+		for (const e of entries) {
+			const story = e.story;
+			if (
+				textRelevant(story.title, query) ||
+				textRelevant(story.content, query) ||
+				textRelevant(story.author, query) ||
+				(story.topics || []).some((t) => textRelevant(t, query))
+			) {
+				results.push({
+					id: `story-${story.id}`,
+					type: "story",
+					title: story.title,
+					snippet: story.content.slice(0, 150),
+					subject: (story.subjects || []).join(", "),
+					createdAt: e.createdAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	} catch {
+		return [];
+	}
+}
+
+async function searchDexieLessons(query: string): Promise<SearchResultItem[]> {
+	try {
+		const entries = await _deps.db.lessonCache.toArray();
+		const results: SearchResultItem[] = [];
+		for (const e of entries) {
+			const lesson = e.lesson;
+			if (textRelevant(lesson.title, query)) {
+				results.push({
+					id: `lesson-${lesson.id}`,
+					type: "lesson",
+					title: lesson.title,
+					snippet: `Lesson — ${lesson.sections.length} sections`,
+					subject: lesson.subjectId,
+					topic: lesson.topicId,
+					createdAt: e.createdAt,
+				});
+				if (results.length >= 10) break;
+			}
+			const sectionMatch = lesson.sections.find(
+				(s) =>
+					textRelevant(s.content, query) ||
+					(s.keyPoints || []).some((kp) => textRelevant(kp, query)),
+			);
+			if (sectionMatch) {
+				results.push({
+					id: `lesson-${lesson.id}`,
+					type: "lesson",
+					title: lesson.title,
+					snippet: sectionMatch.content.slice(0, 150),
+					subject: lesson.subjectId,
+					topic: lesson.topicId,
+					createdAt: e.createdAt,
+				});
+				if (results.length >= 10) break;
+			}
+			const vocabMatch = (lesson.vocabulary || []).find(
+				(v) => textRelevant(v.word, query) || textRelevant(v.definition, query),
+			);
+			if (vocabMatch) {
+				results.push({
+					id: `lesson-${lesson.id}`,
+					type: "lesson",
+					title: lesson.title,
+					snippet: `${vocabMatch.word}: ${vocabMatch.definition.slice(0, 100)}`,
+					subject: lesson.subjectId,
+					topic: lesson.topicId,
+					createdAt: e.createdAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	} catch {
+		return [];
+	}
+}
+
+async function searchDexieVocabulary(
+	query: string,
+): Promise<SearchResultItem[]> {
+	try {
+		const entries = await _deps.db.vocabularyList.toArray();
+		const results: SearchResultItem[] = [];
+		for (const e of entries) {
+			if (
+				textRelevant(e.word, query) ||
+				textRelevant(e.definition, query) ||
+				textRelevant(e.sourceLesson || "", query)
+			) {
+				results.push({
+					id: `vocab-${e.id}`,
+					type: "vocabulary",
+					title: e.word,
+					snippet: e.definition.slice(0, 150),
+					subject: e.language,
+					createdAt: e.addedAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	} catch {
+		return [];
+	}
+}
+
 async function searchDexieDictionary(
 	query: string,
 ): Promise<SearchResultItem[]> {
@@ -259,7 +380,7 @@ async function searchDexieDictionary(
 			if (textRelevant(e.word, query) || textRelevant(defs, query)) {
 				results.push({
 					id: `dict-${e.key}`,
-					type: "note",
+					type: "dictionary",
 					title: e.word,
 					snippet: defs.slice(0, 150),
 					subject: "Dictionary",
@@ -302,6 +423,9 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
 		searchDexieProgress(query),
 		searchDexieStudyGuides(query),
 		searchDexieDictionary(query),
+		searchDexieStories(query),
+		searchDexieLessons(query),
+		searchDexieVocabulary(query),
 	]);
 
 	const localResults = local.flat();
@@ -352,6 +476,12 @@ export async function searchByType(
 			return searchDexieStudyGuides(query);
 		case "dictionary":
 			return searchDexieDictionary(query);
+		case "story":
+			return searchDexieStories(query);
+		case "lesson":
+			return searchDexieLessons(query);
+		case "vocabulary":
+			return searchDexieVocabulary(query);
 		default:
 			return [];
 	}

@@ -69,6 +69,14 @@
     "searchPlaceholder": "Tlhatlhoba ha ho motho...",
     "skipToContent": "Hlola ho ya dipale"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "quiz": "Pitsa",
+    "flashcards": "Karti e tsamaisoang",
+    "settings": "Dihlatse",
+    "studyGroups": "Makolo a ithuti",
+    "studyPlanner": "Mokhatlo wa ithuti"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Dashboard",
@@ -156,7 +164,12 @@
     "footerPrivacy": "Privacy Policy",
     "footerTerms": "Terms of Service",
     "footerCopyright": "© {year} Lumni. All rights reserved.",
-    "footerContact": "Contact"
+    "footerContact": "Contact",
+    "navTryQuiz": "Leka Pitsa",
+    "skipToContent": "Tlola ho ya dipale",
+    "ctaHeading": "O ikemiseditse ho hlola dihlahlobo tsa hao?",
+    "ctaDescription": "Kena ho dikete tsa baithuti ba Matric ba ntseng ba itokisetsa ka Lumni. Qala mahala, ha ho karete ya mokitlane e hlokehang.",
+    "opensInNewTab": "(e bula ka tab e ncha)"
   },
   "auth": {
     "welcomeBack": "Kena ka kgwele ya hae Lumni",
@@ -314,7 +327,8 @@
     "answerPlaceholder": "Araba ya hao…",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Romella Dipoelo tsohle",
-    "pointsParenthetical": "({points} dipono)"
+    "pointsParenthetical": "({points} dipono)",
+    "pastPaperMode": "Mokgwa wa Pampiri ya Tlhahlobo: dipotso tse hlophisitsweng jwalo ka pampiri ya NSC"
   },
   "flashcards": {
     "title": "Karti ea Flash",
@@ -394,7 +408,8 @@
     "pageInfo": "Pee {page} ho tsoa {totalPages}",
     "browseError": "Ha ho karti ea flash",
     "browseErrorDesc": "E ne e sa lekane. Tsoa hape",
-    "goHome": "Tsoa hae"
+    "goHome": "Tsoa hae",
+    "reviewVocabulary": "Hlahloba Tlotlontswe"
   },
   "exam": {
     "title": "Exam",
@@ -658,7 +673,10 @@
     "cancelConfirm": "Na u na le tsholo ho hesa?",
     "reactivate": "Buisa",
     "alreadyPremium": "U memba wa Premium!",
-    "expiresOn": "E fela ka {date}"
+    "expiresOn": "E fela ka {date}",
+    "gatedTitle": "Tšobotsi ya Premium",
+    "gatedDescription": "Ntlafatsa ho notlolla {feature}",
+    "freeQuizzesLeft": "{count} dipotso tsa mahala tse setseng kajeno"
   },
   "settings": {
     "title": "Tlhaho",
@@ -732,7 +750,67 @@
     "signInDescription": "Hlahisa akaandi kapa tsenoa ho sireletsa histori ya hau ya thuto, tsamma XP le mafolofolo, lumela mafolofolo, ema tsebo ya hau ka mafolofolo a mafolofolo.",
     "signInAction": "Tsenoa",
     "createAccount": "Hlahisa Akaandi",
-    "localDataDescription": "Tsebo, XP, le mafolofolo ya hau e tsoaletsoe moqoqong wo. Tsenoa ho di sireletsa ka mafolofolo a hau a device."
+    "localDataDescription": "Tsebo, XP, le mafolofolo ya hau e tsoaletsoe moqoqong wo. Tsenoa ho di sireletsa ka mafolofolo a hau a device.",
+    "boltCompleteTitle": "Phephetso ya letsatsi e phethilwe",
+    "boltCompleteDescription": "Kgutla hosane ho tswela pele ka ho ithuta"
+  },
+  "consent": {
+    "cookieBanner": {
+      "title": "Re a tlotla lekunutu la hao",
+      "description": "Re sebedisa di-cookie tsa bohlokwa hore app e sebetse. Di-cookie tsa manollo di re thusa ho ntlafatsa. O ka kgetha seo o dumellang sona.",
+      "essentialOnly": "Tsa bohlokwa feela",
+      "acceptAnalytics": "Amogela manollo",
+      "acceptAll": "Amogela tsohle",
+      "cookieSettings": "Dihlatse tsa di-cookie"
+    },
+    "cookieSettings": {
+      "title": "Dihlatse tsa Di-cookie",
+      "description": "Kgetha di-cookie tseo o batlang ho di dumella.",
+      "essential": "Tsa bohlokwa",
+      "essentialDesc": "Di hlokahala hore app e sebetse (seshene, puo).",
+      "analytics": "Manollo",
+      "analyticsDesc": "Di thusa ho ntlafatsa ka datha ya tshebediso (Sentry, maqephe a shebiloeng).",
+      "marketing": "Papatso",
+      "marketingDesc": "Dipuisano tsa papatso mabapi le dikarolo le dintlafatso.",
+      "dataSharing": "Ho Arolelana Datha",
+      "dataSharingDesc": "Arolelana datha le bafani ba AI ba boraro bakeng sa botho.",
+      "savePreferences": "Boloka dikgetho"
+    },
+    "tosBanner": {
+      "title": "Dipehelo tsa rona di ntlafaditswe",
+      "description": "Ka kopo, hlahloba le ho amohela Dipehelo tsa Tshebetso tse ntlafaditsweng ho tswela pele ho sebedisa Lumni.",
+      "accept": "Amogela",
+      "viewChanges": "Bona diphetoho"
+    },
+    "privacyTab": {
+      "noConsent": "Beha dikgetho tsa hao tsa di-cookie ho laola dihlatse tsa lekunutu.",
+      "consentPreferences": "Dikgetho tsa Tumello",
+      "analytics": "Manollo",
+      "analyticsDesc": "Datha ya tshebediso le tlaleho ya phoso (Sentry)",
+      "marketing": "Papatso",
+      "marketingDesc": "Dipuisano tsa papatso",
+      "dataSharing": "Ho Arolelana Datha",
+      "dataSharingDesc": "Arolelana datha le bafani ba AI bakeng sa botho",
+      "policyVersions": "Diphetolelo tsa Leano",
+      "termsOfService": "Dipehelo tsa Tshebetso",
+      "privacyPolicy": "Leano la Lekunutu",
+      "notAccepted": "Ha e amohelwe",
+      "notAcknowledged": "Ha e ananelwe",
+      "currentLabel": "Hona joale",
+      "yourData": "Datha ya Hao",
+      "exportData": "Ntsha datha ya ka",
+      "deleteAccount": "Hlakola akhaonto",
+      "deleteTitle": "Hlakola akhaonto ya hao?",
+      "deleteDescription": "Sena se tla hlakola ruri datha yohle ya hao ho kenyeletsa nalane ya dipotso, dikarti, merero ya thuto, le tswelopele. Ketso ena e ke ke ya khutlisoa.",
+      "cancel": "Hlakola",
+      "deletePermanently": "Hlakola ruri",
+      "deleting": "E a hlakola..."
+    },
+    "cookiePolicy": {
+      "title": "Leano la Di-cookie - Lumni",
+      "heading": "Leano la Di-cookie",
+      "lastUpdated": "La ho qetela le ntlafatsoa: Motsheanong 2026"
+    }
   },
   "errors": {
     "general": "Setho se etsang",

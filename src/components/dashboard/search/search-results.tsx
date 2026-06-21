@@ -2,6 +2,7 @@
 
 import {
 	AlertCircleIcon,
+	BookBookmark01Icon,
 	BookOpen01Icon,
 	ChartBarIncreasingIcon,
 	Clock01Icon,
@@ -78,6 +79,21 @@ const typeConfig: Record<
 		label: "Dictionary",
 		icon: BookOpen01Icon,
 		color: "text-violet-500 dark:text-violet-400",
+	},
+	story: {
+		label: "Story",
+		icon: BookOpen01Icon,
+		color: "text-pink-500 dark:text-pink-400",
+	},
+	lesson: {
+		label: "Lesson",
+		icon: BookOpen01Icon,
+		color: "text-cyan-500 dark:text-cyan-400",
+	},
+	vocabulary: {
+		label: "Vocabulary",
+		icon: BookBookmark01Icon,
+		color: "text-emerald-500 dark:text-emerald-400",
 	},
 };
 

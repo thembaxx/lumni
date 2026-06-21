@@ -69,6 +69,14 @@
     "searchPlaceholder": "Search anything...",
     "skipToContent": "Skip to content"
   },
+  "nav": {
+    "dashboard": "Ideshbodi",
+    "quiz": "Iphulo",
+    "flashcards": "Iiflashikhadi",
+    "settings": "Useto",
+    "studyGroups": "Amaqela okufunda",
+    "studyPlanner": "Isicwangciso sokufunda"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Ideshbodi",
@@ -156,7 +164,12 @@
     "footerPrivacy": "Inkxaso yeposi",
     "footerTerms": "Izifundo zokuthenga",
     "footerCopyright": " Imfundo ka{year} Lumni. Konke imfundo ithakazela.",
-    "footerContact": "Thatha"
+    "footerContact": "Thatha",
+    "navTryQuiz": "Zama Iphulo",
+    "skipToContent": "Tsiba ukuya kumxholo",
+    "ctaHeading": "Ulungile ukuphumelela iimviwo zakho?",
+    "ctaDescription": "Joyina amawaka abafundi beMatric abasele belungiselela ngeLumni. Qala simahla, akukho khadi letyala lifunekayo.",
+    "opensInNewTab": "(ivula kwithebhu entsha)"
   },
   "auth": {
     "welcomeBack": "Welcome back to Lumni",
@@ -314,7 +327,8 @@
     "answerPlaceholder": "Your answer...",
     "sourceAttribution": ": {attribution}",
     "submitAllParts": "Submit All Parts",
-    "pointsParenthetical": "({points} pts)"
+    "pointsParenthetical": "({points} pts)",
+    "pastPaperMode": "Imo yePhepha leMviwo: imibuzo ihlelwe njengamaphepha eeNSC"
   },
   "flashcards": {
     "title": "Iiflashikadi",
@@ -394,7 +408,8 @@
     "pageInfo": "Ipheji {page} kwe {totalPages}",
     "browseError": "Haikho ifashikadi",
     "browseErrorDesc": "Kumele kwenzeke nto. Nceda zama kwakhona.",
-    "goHome": "Buya kweziko"
+    "goHome": "Buya kweziko",
+    "reviewVocabulary": "Phinda ujonge isigama"
   },
   "exam": {
     "title": "Exam",
@@ -658,7 +673,10 @@
     "cancelConfirm": "Uxholela ukuthi ufuna ukukanxela?",
     "reactivate": "Susa ukwazi",
     "alreadyPremium": "Uyisazi sika-Premium!",
-    "expiresOn": "Izothatha ngesigqibo {date}"
+    "expiresOn": "Izothatha ngesigqibo {date}",
+    "gatedTitle": "Into yePremium",
+    "gatedDescription": "Phucula ukuze uvule {feature}",
+    "freeQuizzesLeft": "{count} iiquiz zasimahla zisele namhlanje"
   },
   "settings": {
     "title": "Izilungiso",
@@ -732,7 +750,67 @@
     "signInDescription": "Dala ikhonto awukenge ngena ukwazisa ukwenza kwaye ukusela isihlahla sakho somfundo, bhalisa i-XP yakho nemihla yakho, vula iziphumo, kwaye lingana ngempumelelo yakho kwiizifundo zonke.",
     "signInAction": "Ngena",
     "createAccount": "Dala Ikonto",
-    "localDataDescription": "Ukwenza kwakho, i-XP yakho, kwaye imihla yakho ziikhonzelwe kwi-divayisi ethu. Ngena ukwazisa ukwenza kwaye uziqhubeke kwi-divayisi zonke zakho."
+    "localDataDescription": "Ukwenza kwakho, i-XP yakho, kwaye imihla yakho ziikhonzelwe kwi-divayisi ethu. Ngena ukwazisa ukwenza kwaye uziqhubeke kwi-divayisi zonke zakho.",
+    "boltCompleteTitle": "Umceli mngeni weDaily Challenge ugqityiwe",
+    "boltCompleteDescription": "Buya ngomso ukuze uqhubeke nokufunda"
+  },
+  "consent": {
+    "cookieBanner": {
+      "title": "Siyayihlonipha imfihlo yakho",
+      "description": "Sisebenzisa iicookies eziyimfuneko ukuze i-app isebenze. Iicookies zohlalutyo zisinceda siphucule. Ungakhetha into ovumela yona.",
+      "essentialOnly": "Eziyimfuneko kuphela",
+      "acceptAnalytics": "Yamkela  uhlalutyo",
+      "acceptAll": "Yamkela zonke",
+      "cookieSettings": "Useto lwecookies"
+    },
+    "cookieSettings": {
+      "title": "Useto lweeCookies",
+      "description": "Khetha eziphi iicookies ofuna ukuvuma zona.",
+      "essential": "Eziyimfuneko",
+      "essentialDesc": "Ziyafuneka ukuze i-app isebenze (iseshoni, ulwimi).",
+      "analytics": "Uhlalutyo",
+      "analyticsDesc": "Zinceda ukuphucula ngedatha yokusetyenziswa (Sentry, ukujonga amaphepha).",
+      "marketing": "Ukuthengisa",
+      "marketingDesc": "Unxibelelwano lwentengiso malunga neempawu kunye nohlaziyo.",
+      "dataSharing": "Ukwahlula iDatha",
+      "dataSharingDesc": "Yabelana ngedatha nababoneleli be-AI besithathu ukuze wenziwe ngokwakho.",
+      "savePreferences": "Gcina izinto ozikhethayo"
+    },
+    "tosBanner": {
+      "title": "Imigaqo yethu ihlaziyiwe",
+      "description": "Nceda uhlonze kwaye wamkele iMigaqo yeNkonzo ehlaziyiweyo ukuze uqhubeke usebenzisa iLumni.",
+      "accept": "Yamkela",
+      "viewChanges": "Jonga utshintsho"
+    },
+    "privacyTab": {
+      "noConsent": "Cwangcisa izinto ozikhethayo zeCookie ukuze ulawule useto lwemfihlo.",
+      "consentPreferences": "Izinto ozikhethayo zesiVumelwano",
+      "analytics": "Uhlalutyo",
+      "analyticsDesc": "Idatha yokusetyenziswa kunye nengxelo yempazamo (Sentry)",
+      "marketing": "Ukuthengisa",
+      "marketingDesc": "Unxibelelwano lwentengiso",
+      "dataSharing": "Ukwahlula iDatha",
+      "dataSharingDesc": "Yabelana ngedatha nababoneleli be-AI ukuze wenziwe ngokwakho",
+      "policyVersions": "Iinguqulelo zoMgaqo-nkqubo",
+      "termsOfService": "Imigaqo yeNkonzo",
+      "privacyPolicy": "Umgaqo-nkqubo wokuFihla",
+      "notAccepted": "Ayamkelwanga",
+      "notAcknowledged": "Ayivunywa",
+      "currentLabel": "Ngoku",
+      "yourData": "Idatha Yakho",
+      "exportData": "Khupha idatha yam",
+      "deleteAccount": "Cima iakhawunti",
+      "deleteTitle": "Cima iakhawunti yakho?",
+      "deleteDescription": "Oku kuya kucima ngokusisigxina yonke idatha yakho kuquka imbali yequiz, iiflashikhadi, izicwangciso zokufunda, kunye nenkqubela. Esi senzo asinakuguqulwa.",
+      "cancel": "Rhoxisa",
+      "deletePermanently": "Cima ngokusisigxina",
+      "deleting": "Iyacima..."
+    },
+    "cookiePolicy": {
+      "title": "Umgaqo-nkqubo weeCookies - Lumni",
+      "heading": "Umgaqo-nkqubo weeCookies",
+      "lastUpdated": "Ihlaziywe okokugqibela: ngoMeyi 2026"
+    }
   },
   "errors": {
     "general": "Kukho into ezifunekayo",
