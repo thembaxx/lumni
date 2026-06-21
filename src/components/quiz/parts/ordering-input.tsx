@@ -87,7 +87,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0, scale: 0.95 }}
 								transition={{ duration: 0.2 }}
-								className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-[background-color,box-shadow] ${
+								className={`flex min-h-11 items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-[background-color,box-shadow] ${
 									isDragging
 										? "border-(--system-accent) bg-(--system-accent-alpha-10) opacity-50 shadow-level-1"
 										: isOver
@@ -103,7 +103,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 									onDragOver={(e: React.DragEvent) => handleDragOver(e, id)}
 									onDragEnd={handleDragEnd}
 									onDrop={(e: React.DragEvent) => handleDrop(e, id)}
-									className="flex flex-1 cursor-grab items-center gap-3 bg-transparent text-left active:cursor-grabbing"
+									className="flex flex-1 cursor-grab items-center gap-3 bg-transparent text-left active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-(--system-accent) rounded-lg"
 								>
 									<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-muted font-medium text-muted-foreground text-xs tabular-nums">
 										{idx + 1}
@@ -115,7 +115,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 										type="button"
 										onClick={() => moveUp(id)}
 										disabled={idx === 0}
-										className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20"
+										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
 										aria-label="Move up"
 									>
 										↑
@@ -124,7 +124,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 										type="button"
 										onClick={() => moveDown(id)}
 										disabled={idx === orderedIds.length - 1}
-										className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20"
+										className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 disabled:opacity-20 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
 										aria-label="Move down"
 									>
 										↓

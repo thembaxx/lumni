@@ -110,7 +110,7 @@ export function FillInSequenceInput({
 										handleRemoveFromBlank(blankId);
 									}
 								}}
-								className={`inline-flex min-w-[80px] items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-all ${
+								className={`inline-flex min-h-9 min-w-[80px] items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-all focus-visible:ring-2 focus-visible:ring-(--system-accent) ${
 									assignedText
 										? "cursor-pointer border-(--system-accent) bg-(--system-accent-alpha-10)"
 										: "border-muted-foreground/30"
@@ -162,7 +162,7 @@ export function FillInSequenceInput({
 											e.preventDefault();
 										}
 									}}
-									className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing"
+									className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-(--system-accent) rounded-md"
 								>
 									{opt.text}
 								</button>

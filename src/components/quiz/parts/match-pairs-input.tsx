@@ -84,7 +84,7 @@ export function MatchPairsInput({
 										initial={{ opacity: 0, y: -4 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, scale: 0.95 }}
-										className="flex items-center gap-2 rounded-xl border border-(--system-accent) bg-(--system-accent-alpha-10) px-3 py-2.5 text-sm"
+										className="flex min-h-11 items-center gap-2 rounded-xl border border-(--system-accent) bg-(--system-accent-alpha-10) px-3 py-2.5 text-sm"
 									>
 										<span className="flex-1">{item.text}</span>
 										<span className="text-muted-foreground">→</span>
@@ -92,7 +92,7 @@ export function MatchPairsInput({
 										<button
 											type="button"
 											onClick={() => removeMatch(item.id)}
-											className="ml-1 flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95"
+											className="ml-1 flex min-h-7 min-w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted active:scale-95 focus-visible:ring-2 focus-visible:ring-(--system-accent)"
 											aria-label={`Remove match for ${item.text}`}
 										>
 											✕
@@ -117,7 +117,7 @@ export function MatchPairsInput({
 											handleDragStart(e, item.id)
 										}
 										onDragEnd={handleDragEnd}
-										className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing"
+										className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-(--system-accent) rounded-md"
 									>
 										{item.text}
 									</button>
@@ -143,7 +143,7 @@ export function MatchPairsInput({
 								}
 								onDragLeave={handleDragEnd}
 								onDrop={(e: React.DragEvent) => handleDropOnRight(e, item.id)}
-								className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all ${
+								className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all focus-visible:ring-2 focus-visible:ring-(--system-accent) ${
 									used
 										? "border-muted bg-muted/50 text-muted-foreground line-through"
 										: "border-muted-foreground/30 border-dashed bg-transparent"
