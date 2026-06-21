@@ -94,6 +94,25 @@ test.describe("generate → grade cycle", () => {
 		expect(Array.isArray(q.body.correctMatches)).toBe(true);
 	});
 
+	test("API returns hot-spot questions with valid schema", async ({ request }) => {
+		const res = await request.post("/api/engine/generate", {
+			data: {
+				subject: "geography",
+				topic: "map-skills",
+				count: 1,
+				questionType: "hot-spot",
+				difficulty: "Medium",
+			},
+		});
+		expect(res.ok()).toBe(true);
+		const body = await res.json();
+		const q = body.questions?.[0];
+		expect(q).toBeDefined();
+		expect(q.type).toBe("hot-spot");
+		expect(Array.isArray(q.body.regions)).toBe(true);
+		expect(typeof q.body.correctRegionId).toBe("string");
+	});
+
 	test("API grades an ordering question", async ({ request }) => {
 		const genRes = await request.post("/api/engine/generate", {
 			data: {

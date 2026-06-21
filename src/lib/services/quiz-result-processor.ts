@@ -1,5 +1,9 @@
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import type { JobType } from "@/lib/orchestrator/types";
+import {
+	formatCorrectAnswer,
+	formatUserAnswer,
+} from "@/lib/question-engine/answer-formatter";
 import type {
 	BloomLevel,
 	Question,
@@ -166,18 +170,19 @@ async function processBolt(
 	});
 
 	if (!correct) {
+		const correctAnswer = formatCorrectAnswer(question);
 		deps.addWrongAnswer({
 			questionId: question.id,
 			questionText: question.questionText,
 			subject: question.subject,
 			topic: question.topic,
-			correctAnswer: question.explanation,
+			correctAnswer,
 			userAnswer: "(see quiz history)",
 			explanation: question.explanation,
 		});
 		await deps.flashcardEngine.create(
 			question.questionText,
-			question.explanation,
+			correctAnswer,
 			question.subject,
 			question.topic,
 		);
@@ -229,19 +234,20 @@ async function processQuiz(
 		});
 
 		if (!correct) {
+			const correctAnswer = formatCorrectAnswer(question);
 			deps.addWrongAnswer({
 				questionId: question.id,
 				questionText: question.questionText,
 				subject: question.subject,
 				topic: question.topic,
-				correctAnswer: question.explanation,
+				correctAnswer,
 				userAnswer: "(see quiz history)",
 				explanation: question.explanation,
 			});
 			flashcardPromises.push(
 				deps.flashcardEngine.create(
 					question.questionText,
-					question.explanation,
+					correctAnswer,
 					question.subject,
 					question.topic,
 				),
