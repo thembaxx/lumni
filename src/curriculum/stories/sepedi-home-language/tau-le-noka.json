@@ -1,0 +1,50 @@
+{
+	"id": "tau-le-noka",
+	"title": "Tau le Noka",
+	"author": "Lumni",
+	"language": "Sepedi",
+	"languageId": "sepedi-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 860,
+	"subjects": ["sepedi-home-language"],
+	"source": "ai-generated",
+	"topics": ["nature", "environment", "respect"],
+	"content": "# Tau le Noka\n\nGo be go na le motse wa go kgahliša kua fase ga thaba ye kgolo. Go phalla noka ye kgolo go ralala motse woo. Noka yeo e be e bitšwa Noka ya Bophelo ka ge e be e fa meetse diphoofolo le batho.\n\nMo motseng woo go be go dula mosemane yo mongwe wa go bitšwa Kabelo. O be a rata go bapala ka thoko ga noka. O be a bogela dihlapi di rutha meetšeng le dinonyana di opela ka difateng.\n\nKa letšatši le lengwe, Kabelo a bona banna ba šomiša motšhene wo mogolo kua nokeng. Ba be ba phula meetse a mantiši bakeng sa go rema difate. Meetse a noka a thoma go fokotšega.\n\n\"Mma, ke tšhogile ka noka,\" Kabelo a re go mmagwe. \"Banna bao ba tšea meetse a mantiši gomme noka e tla omella.\"\n\nMmagwe Kabelo a re: \"O lokile, ngwanaka. Re swanetše go šoma le bahuštši go šireletša noka.\"\n\nKabelo a ngwala lengwalo go huštši ya motse. A kgoboketša bagwera ba gagwe go thusa. Ba hlwekisa dinakana tše di tšhetšego meetšeng. Ba bjalla difate go šireletša mabopi a noka.\n\nHuštši ya bona gore Kabelo o na le nnete. A emiša mošomo wa go phula meetse go fihlela ba hwetša tsela ye botse. Banna bao ba dumelela go šomiša meetse a se kalo.\n\nKa nako ye telele, noka ya boela go ba le meetse a mantši. Dinonyana tša boa go opela difateng. Kabelo le bagwera ba gagwe ba ithuta gore ba ka šireletša noka.\n\n## Lintlha tša Thuto\n\n1. **Šireletša tlhago** — Re swanetše go šireletša dinoka, difate, le diphoofolo ka ge di le bohlokwa bophelong bja rena.\n2. **Lena la go šoma** — Ge re šoma mmogo le ba bangwe, re ka fihlelela dilo tše kgolo.\n3. **E ba le sebete** — Kabelo o be a na le sebete sa go bolela le bahuštši.\n\n## Mantswe a Maemo\n\n| Sepedi | English | Part of Speech |\n|--------|---------|----------------|\n| noka | river | noun |\n| meetse | water | noun |\n| šireletša | protect | verb |\n| tlhago | nature | noun |\n| sebete | courage | noun |",
+	"vocabulary": [
+		{
+			"term": "noka",
+			"definition": "A river; a large natural stream of water",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ˈnɔːka/",
+			"language": "nso"
+		},
+		{
+			"term": "meetse",
+			"definition": "Water; a clear liquid essential for life",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ˈmeːtsɛ/",
+			"language": "nso"
+		},
+		{
+			"term": "šireletša",
+			"definition": "To protect or guard something from harm",
+			"partOfSpeech": "verb",
+			"pronunciation": "/ʃiɾɛˈlɛtʃa/",
+			"language": "nso"
+		},
+		{
+			"term": "tlhago",
+			"definition": "Nature; the natural world around us",
+			"partOfSpeech": "noun",
+			"pronunciation": "/tɬʰaːɣo/",
+			"language": "nso"
+		},
+		{
+			"term": "sebete",
+			"definition": "Courage; bravery in facing difficulties",
+			"partOfSpeech": "noun",
+			"pronunciation": "/sɛˈbeːtɛ/",
+			"language": "nso"
+		}
+	]
+}

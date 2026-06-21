@@ -204,6 +204,7 @@ export function ComprehensionQuestionCard({
 													key={option}
 													type="button"
 													disabled={isGraded}
+													aria-pressed={isSelected}
 													onClick={() => setSelectedOption(option)}
 													className={cn(
 														"flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors",
@@ -335,6 +336,8 @@ export function ComprehensionQuestionCard({
 															key={`left-${item}`}
 															type="button"
 															disabled={showResult}
+															aria-pressed={isSelected}
+															aria-label={`Match item: ${item}`}
 															onClick={() => handleLeftClick(idx)}
 															className={cn(
 																"rounded-xl border px-3 py-2 text-left text-sm transition-colors",
@@ -373,6 +376,7 @@ export function ComprehensionQuestionCard({
 															key={`right-${item}`}
 															type="button"
 															disabled={showResult || isTaken}
+															aria-label={`Match target: ${item}`}
 															onClick={() => handleRightClick(idx)}
 															className={cn(
 																"rounded-xl border px-3 py-2 text-left text-sm transition-colors",

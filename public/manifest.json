@@ -43,14 +43,14 @@
 			"short_name": "Quiz",
 			"description": "Start a new quiz session",
 			"url": "/quiz",
-			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192" }]
+			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }]
 		},
 		{
 			"name": "Flashcards",
 			"short_name": "Cards",
 			"description": "Review your flashcards",
 			"url": "/flashcards",
-			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192" }]
+			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }]
 		}
 	],
 	"share_target": {

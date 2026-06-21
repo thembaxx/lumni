@@ -1,0 +1,50 @@
+{
+	"id": "ubuntfu",
+	"title": "Ubuntfu",
+	"author": "Lumni",
+	"language": "siSwati",
+	"languageId": "siswati-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 840,
+	"subjects": ["siswati-home-language"],
+	"source": "ai-generated",
+	"topics": ["ubuntu", "humanity", "community"],
+	"content": "# Ubuntfu\n\nEmkhatsini wemaganga lamanyenti, kwakunekaya la kwakuhlala khona bantfu labanyenti. Bakuleso sigodzi babewati kahle umtsetfo weUbuntfu — kutsi umuntfu ngumuntfu ngebantfu.\n\nNgalelinye lilanga, intfombatana lebitwa nguNomsa yahamba waya emfuleni kute ayotfola emanti. Endleleni, wahlangana nemuntfu lowagula. Wambuta: \"Kutsiwa kunjani, Mkhulu? Ungakwati kuhamba?\"\n\n\"Nami ngingakwati kuhamba,\" kuphendula lowo muntfu. \"Ngidiniwe futsi ngilambe kakhulu.\"\n\nNomsa wakhumbula umtsetfo weUbuntfu. Wabeka emanti emhlabatsini, wakhuluma nalowo muntfu. \"Ngiphe sikhatsi, Mkhulu, ngitawubita bantfu labanye.\"\n\nWagijima waya emkhatsini wekaya. Watsi: \"Make, babe! Kunemuntfu lolambe emfuleni. Asime size.\"\n\nBantfu bakuleso sigodzi bahlangana. Bapheka kudla, baletsa emanti, bakha indlu yekugcina loyo muntfu. Nomsa wagcina loyo muntfu ahlantekile.\n\nNgemalanga lamanyenti, loyo muntfu waphila. Watsi: \"Nomsa, ubuntfu bakho bukhulu kakhulu. Ngifundzile kutsi bantfu labahle bakhona.\"\n\nNomsa wamoyitela. Wati: \"Mkhulu, ubuntfu akusiko kupha nje. Ubuntfu kukubona loko lokunye lokuhle ebantfwini. Sonkhe siyingxenye yalomndeni lomkhulu, umndeni webantfu.\"\n\n## Tindlela Tekufundza\n\n1. **Ubuntfu** — Umuntfu ngumuntfu ngebantfu. Sonkhe siyahlobana.\n2. **Kuhle kwemoya** — Ngesikhatsi sisita labanye, siyatisita natsi.\n3. **Kuhlangana** — Lapho sihlangene, sinemandla lamanyenti.\n\n## Tintfo Tekufundza\n\n| siSwati | English | Part of Speech |\n|---------|---------|----------------|\n| ubuntfu | humanity/kindness | noun |\n| umuntfu | person | noun |\n| emanti | water | noun |\n| kusita | to help | verb |\n| umndeni | family | noun |",
+	"vocabulary": [
+		{
+			"term": "ubuntfu",
+			"definition": "Humanity; the quality of being human and kind to others",
+			"partOfSpeech": "noun",
+			"pronunciation": "/uˈɓuntfu/",
+			"language": "ss"
+		},
+		{
+			"term": "umuntfu",
+			"definition": "A person; a human being",
+			"partOfSpeech": "noun",
+			"pronunciation": "/uˈmuntfu/",
+			"language": "ss"
+		},
+		{
+			"term": "emanti",
+			"definition": "Water; a clear liquid essential for life",
+			"partOfSpeech": "noun",
+			"pronunciation": "/eˈmaːnti/",
+			"language": "ss"
+		},
+		{
+			"term": "kusita",
+			"definition": "To help or assist someone in need",
+			"partOfSpeech": "verb",
+			"pronunciation": "/kuˈsiːta/",
+			"language": "ss"
+		},
+		{
+			"term": "umndeni",
+			"definition": "Family; a group of related people",
+			"partOfSpeech": "noun",
+			"pronunciation": "/uˈmndɛːni/",
+			"language": "ss"
+		}
+	]
+}

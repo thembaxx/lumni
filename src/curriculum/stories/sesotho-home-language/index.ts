@@ -14,4 +14,17 @@ export const storyMetas: StoryMeta[] = [
 		topics: ["animals", "folktale"],
 		readTimeMinutes: 5,
 	},
+	{
+		id: "hlompho",
+		title: "Hlompho",
+		author: "Lumni",
+		language: "Sesotho",
+		languageId: "sesotho-home-language",
+		gradeLevel: "4–6",
+		wordCount: 840,
+		subjects: ["sesotho-home-language"],
+		source: "ai-generated",
+		topics: ["respect", "elders", "community"],
+		readTimeMinutes: 5,
+	},
 ];

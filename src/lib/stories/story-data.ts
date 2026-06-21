@@ -95,6 +95,46 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
 			import(
 				"@/curriculum/stories/isi-ndebele-home-language/inkabi-nengwenya.json"
 			).then((m) => ({ default: m.default as unknown as Story })),
+		ukukhuthala: () =>
+			import(
+				"@/curriculum/stories/isi-ndebele-home-language/ukukhuthala.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		"die-mooi-rivier": () =>
+			import(
+				"@/curriculum/stories/afrikaans-home-language/die-mooi-rivier.json"
+			).then((m) => ({ default: m.default as unknown as Story })),
+		umusa: () =>
+			import("@/curriculum/stories/isi-zulu-home-language/umusa.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		ubuntu: () =>
+			import("@/curriculum/stories/isi-xhosa-home-language/ubuntu.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		"tau-le-noka": () =>
+			import("@/curriculum/stories/sepedi-home-language/tau-le-noka.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		botsalano: () =>
+			import("@/curriculum/stories/setswana-home-language/botsalano.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		hlompho: () =>
+			import("@/curriculum/stories/sesotho-home-language/hlompho.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		nhluvuko: () =>
+			import("@/curriculum/stories/xitsonga-home-language/nhluvuko.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		ubuntfu: () =>
+			import("@/curriculum/stories/siswati-home-language/ubuntfu.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
+		vhufunzi: () =>
+			import("@/curriculum/stories/tshivenda-home-language/vhufunzi.json").then(
+				(m) => ({ default: m.default as unknown as Story }),
+			),
 		"outa-karels-stories": () =>
 			import(
 				"@/curriculum/stories/english-home-language/outa-karels-stories.json"

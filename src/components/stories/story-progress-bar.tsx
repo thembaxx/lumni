@@ -23,7 +23,14 @@ export function StoryProgressBar({
 
 	return (
 		<div className="flex items-center gap-3">
-			<div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+			<div
+				className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-muted"
+				role="progressbar"
+				aria-valuenow={pct}
+				aria-valuemin={0}
+				aria-valuemax={100}
+				aria-label={`Reading progress: ${pct}%`}
+			>
 				<div
 					className={cn(
 						"absolute inset-y-0 left-0 rounded-full transition-all duration-300",

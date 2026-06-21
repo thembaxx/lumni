@@ -84,13 +84,18 @@ export function LiveSessionMonitor() {
 					<Skeleton className="h-20 rounded-xl" />
 				</div>
 			) : isError ? (
-				<p className="text-destructive text-sm">Failed to load live sessions</p>
+				<p className="text-destructive text-sm" role="status">
+					Failed to load live sessions
+				</p>
 			) : sessions.length === 0 ? (
-				<p className="py-6 text-center text-muted-foreground text-sm">
+				<p
+					className="py-6 text-center text-muted-foreground text-sm"
+					role="status"
+				>
 					No active study sessions from your students
 				</p>
 			) : (
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2" aria-live="polite">
 					{sessions.map((session) => {
 						const mins = getDuration(session.startedAt);
 						return (

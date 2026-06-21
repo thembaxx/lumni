@@ -39,6 +39,10 @@ Commit baseline: `8a6fadbe`
 | 027 | Dictionary C2 — Wiktionary API for SA languages + Word of the Day | P2 | M | LOW | — | DONE |
 | 029 | Teacher tools — live session monitoring | P2 | M | MED | — | DONE |
 | 030 | Pronunciation C1 — phoneme assessment + lesson integration | P3 | M | MED | — | DONE |
+| 031 | i18n quality audit — 8 SA locale files | P2 | M | LOW | 022 | DONE |
+| 032 | PWA install polish + offline page | P3 | S | LOW | — | DONE |
+| 033 | More stories — AI-generated + more Gutenberg | P3 | L | LOW | — | DONE |
+| 034 | Polish/hardening — a11y, error handling, performance | P2 | S | LOW | — | DONE |
 
 ## Execution phases
 

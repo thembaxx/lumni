@@ -1,0 +1,50 @@
+{
+	"id": "botsalano",
+	"title": "Botsalano le Botho",
+	"author": "Lumni",
+	"language": "Setswana",
+	"languageId": "setswana-home-language",
+	"gradeLevel": "4–6",
+	"wordCount": 870,
+	"subjects": ["setswana-home-language"],
+	"source": "ai-generated",
+	"topics": ["kindness", "friendship", "community"],
+	"content": "# Botsalano le Botho\n\nKwa motseng wa ga Mmapula, go ne go na le mosetsana yo o bidiwang Kealeboga. O ne a itse gore botho ke eng — go tshwara batho ka tlhompho le go ba thusa fa ba tlhoka thuso.\n\nKa letsatsi lengwe, mosimane yo o bidiwang Tumelo o ne a tla sekolong a le mokopela mme a le botsho. O ne a jele moetlo kwa lapeng la gagwe mme a tshwenyega gore ba bangwe ba tla mo tshega.\n\nKealeboga a bona fa Tumelo a sa ja dijo. Ya re: \"Tumelo, o ka ja senotlolo se ke se tlisitseng. Go na le borotho le masi.\"\n\n\"Ke a leboga, Kealeboga,\" Tumelo a araba a nyemile. \"Eleruri o mosa thata.\"\n\nMo motshegareng, morutabana wa bona a thusa baithuti ka tiro ya bona. Kealeboga a bona fa Mosidi a sa tlhaloganye thuto. Ya re: \"Mosidi, a nka go thusa? Tiro e, e a kgathatsa, mme fa re e dira mmogo, re tla e tlhaloganya sentle.\"\n\nMosidi a leboga thata. Ba ne ba dira mmogo go fitlha Mosidi a tlhaloganya sentle.\n\nKa nako ya pholo, bana ba ne ba tshameka kwa lebaleng. Monna yo mongwe wa mogolo a tsamaya a paletswe ke morwalo o boima. Kealeboga a siana go mo thusa.\n\nFa a gorogela kwa gae, Mmapula a mmotsa: \"Keleboga, letsatsi la gago le ne le ntsejang?\"\n\nKealeboga a bega ka botlalo mme a re: \"Mme, botho ke selo se se botoka mo lefatsheng.\"\n\n## Lintlha tsa Thuto\n\n1. **Botho** — Go tshwara batho ba bangwe ka tlhompho le kutlwelobotlhoko.\n2. **Go thusa** — Fa o thusa ba bangwe, o ithuta go nna le lerato le bobelo.\n3. **Botsalano** — Botsalano bo tsosa fa re nang le botho mo diphiring tsa rona.\n\n## Mantswe a Maemo\n\n| Setswana | English | Part of Speech |\n|----------|---------|----------------|\n| botho | kindness/humanity | noun |\n| botsalano | friendship | noun |\n| tlhompho | respect | noun |\n| thusa | to help | verb |\n| mosa | kindness | noun |",
+	"vocabulary": [
+		{
+			"term": "botho",
+			"definition": "Kindness and humanity; treating others with dignity",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ˈbɔːtʰɔ/",
+			"language": "tn"
+		},
+		{
+			"term": "botsalano",
+			"definition": "Friendship; a close relationship between people",
+			"partOfSpeech": "noun",
+			"pronunciation": "/bot͡saˈlaːnɔ/",
+			"language": "tn"
+		},
+		{
+			"term": "tlhompho",
+			"definition": "Respect; showing honour towards others",
+			"partOfSpeech": "noun",
+			"pronunciation": "/tɬʰɔmˈpʰɔ/",
+			"language": "tn"
+		},
+		{
+			"term": "thusa",
+			"definition": "To help or assist someone in need",
+			"partOfSpeech": "verb",
+			"pronunciation": "/ˈtʰuːsa/",
+			"language": "tn"
+		},
+		{
+			"term": "mosa",
+			"definition": "Kindness; the quality of being gentle and caring",
+			"partOfSpeech": "noun",
+			"pronunciation": "/ˈmɔːsa/",
+			"language": "tn"
+		}
+	]
+}

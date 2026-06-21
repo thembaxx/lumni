@@ -14,4 +14,17 @@ export const storyMetas: StoryMeta[] = [
 		topics: ["animals", "folktale"],
 		readTimeMinutes: 5,
 	},
+	{
+		id: "die-mooi-rivier",
+		title: "Die Mooi Rivier",
+		author: "Lumni",
+		language: "Afrikaans",
+		languageId: "afrikaans-home-language",
+		gradeLevel: "4–6",
+		wordCount: 880,
+		subjects: ["afrikaans-home-language"],
+		source: "ai-generated",
+		topics: ["nature", "environment", "water"],
+		readTimeMinutes: 6,
+	},
 ];

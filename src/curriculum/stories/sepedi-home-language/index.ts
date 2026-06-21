@@ -14,4 +14,17 @@ export const storyMetas: StoryMeta[] = [
 		topics: ["animals", "folktale"],
 		readTimeMinutes: 5,
 	},
+	{
+		id: "tau-le-noka",
+		title: "Tau le Noka",
+		author: "Lumni",
+		language: "Sepedi",
+		languageId: "sepedi-home-language",
+		gradeLevel: "4–6",
+		wordCount: 860,
+		subjects: ["sepedi-home-language"],
+		source: "ai-generated",
+		topics: ["nature", "environment", "respect"],
+		readTimeMinutes: 5,
+	},
 ];
