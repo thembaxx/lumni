@@ -2,7 +2,8 @@
 
 import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, useMotionValueEvent, useScroll } from "framer-motion";
+import { useMotionValueEvent, useScroll } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 

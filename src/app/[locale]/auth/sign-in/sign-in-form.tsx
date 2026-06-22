@@ -5,7 +5,7 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import ViewIcon from "@hugeicons/core-free-icons/ViewIcon";
 import ViewOffIcon from "@hugeicons/core-free-icons/ViewOffIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useReducer } from "react";

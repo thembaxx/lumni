@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/utils";

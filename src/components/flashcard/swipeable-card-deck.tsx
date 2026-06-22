@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, useState } from "react";
 import { QualityPicker } from "@/components/flashcard/quality-picker";
 import { SwipeableCard } from "@/components/flashcard/swipeable-card";

@@ -4,7 +4,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";

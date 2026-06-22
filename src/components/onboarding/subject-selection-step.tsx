@@ -2,7 +2,8 @@
 
 import ArrowDownIcon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
 import { SubjectCard } from "./subject-card";

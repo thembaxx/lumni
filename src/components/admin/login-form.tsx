@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { startTransition, useCallback, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";

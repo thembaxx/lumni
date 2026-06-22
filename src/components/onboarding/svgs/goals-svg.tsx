@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 
 export function GoalsSVG() {
 	return (

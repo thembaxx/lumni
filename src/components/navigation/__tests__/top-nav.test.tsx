@@ -169,19 +169,14 @@ vi.mock("@/lib/utils", () => ({
 	cn: (...args: unknown[]) => args.filter(Boolean).join(" "),
 }));
 
-vi.mock("framer-motion", () => ({
-	m: {
-		div: ({
-			children,
-			...rest
-		}: {
-			children: React.ReactNode;
-			[k: string]: unknown;
-		}) => <div {...rest}>{children}</div>,
-	},
-	AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-		<>{children}</>
-	),
+vi.mock("motion/react-m", () => ({
+	div: ({
+		children,
+		...rest
+	}: {
+		children: React.ReactNode;
+		[k: string]: unknown;
+	}) => <div {...rest}>{children}</div>,
 }));
 
 vi.mock("@hugeicons/react", () => ({

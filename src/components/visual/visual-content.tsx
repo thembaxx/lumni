@@ -2,7 +2,8 @@
 
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { memo } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";

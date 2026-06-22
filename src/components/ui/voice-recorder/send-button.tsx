@@ -3,7 +3,8 @@
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

@@ -3,7 +3,8 @@
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";

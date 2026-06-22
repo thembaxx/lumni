@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m, type Variants } from "framer-motion";
+import { AnimatePresence, type Variants } from "motion/react";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 
 interface StaggerListProps {

@@ -3,7 +3,8 @@
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Fire02FreeIcons from "@hugeicons/core-free-icons/Fire02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useGamification } from "@/hooks/use-gamification";

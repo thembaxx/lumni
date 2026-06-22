@@ -1,6 +1,7 @@
 "use client";
 
-import { m, type Transition, type Variants } from "framer-motion";
+import { type Transition, type Variants } from "motion/react";
+import * as m from "motion/react-m";
 
 interface AnimProps {
 	children: React.ReactNode;

@@ -2,7 +2,7 @@
 
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";

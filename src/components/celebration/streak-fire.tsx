@@ -2,7 +2,7 @@
 
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { getStreakMessage } from "@/lib/utils/gamification";
 
 interface StreakFireProps {

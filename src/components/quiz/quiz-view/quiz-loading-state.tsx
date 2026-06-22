@@ -2,7 +2,7 @@
 
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { DecorativeRightPanel } from "./decorative-right-panel";

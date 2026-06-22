@@ -3,7 +3,8 @@
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";

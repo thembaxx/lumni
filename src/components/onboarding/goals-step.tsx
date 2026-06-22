@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { iOSEase } from "@/lib/utils/animation";

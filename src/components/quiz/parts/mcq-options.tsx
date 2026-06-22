@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";

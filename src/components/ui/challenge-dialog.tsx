@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { iOSDecelerate } from "@/lib/utils/animation";
 

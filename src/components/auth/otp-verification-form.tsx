@@ -6,7 +6,7 @@ import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import {

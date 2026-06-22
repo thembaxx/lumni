@@ -9,12 +9,12 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	m,
 	useInView,
 	useReducedMotion,
 	useScroll,
 	useTransform,
-} from "framer-motion";
+} from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { memo, useRef } from "react";
 import { Button } from "@/components/ui/button";

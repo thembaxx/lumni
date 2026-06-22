@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

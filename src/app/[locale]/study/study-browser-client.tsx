@@ -5,7 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";

@@ -4,7 +4,7 @@ import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Anim } from "@/components/shared/anim";
 import { iOSEase } from "@/lib/utils/animation";
 import { SuccessBadge } from "../success-badge";

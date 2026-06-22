@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { Button } from "@/components/ui/button";

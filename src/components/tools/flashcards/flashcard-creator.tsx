@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useCallback, useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";

@@ -7,7 +7,7 @@ import NoteEditIcon from "@hugeicons/core-free-icons/NoteEditIcon";
 import Quiz02Icon from "@hugeicons/core-free-icons/Quiz02Icon";
 import TimeScheduleIcon from "@hugeicons/core-free-icons/TimeScheduleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useCallback, useEffect, useState } from "react";
 import {
 	Dialog,

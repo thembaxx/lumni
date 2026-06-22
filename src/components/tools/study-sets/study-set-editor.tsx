@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { dexieDataAccess } from "@/lib/db";

@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useMemo } from "react";
 
 interface ConfettiPiece {

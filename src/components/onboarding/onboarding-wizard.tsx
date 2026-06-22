@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import {
 	useCallback,

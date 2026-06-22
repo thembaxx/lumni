@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { rarityColors, rarityGlow } from "@/lib/utils/gamification";

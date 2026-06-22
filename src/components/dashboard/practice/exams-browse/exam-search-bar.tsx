@@ -3,7 +3,8 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 

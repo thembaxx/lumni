@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine";

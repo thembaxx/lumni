@@ -2,7 +2,7 @@ import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import SquareIcon from "@hugeicons/core-free-icons/SquareIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { memo, useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";

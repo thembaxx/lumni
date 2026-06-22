@@ -3,7 +3,7 @@
 import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 interface LevelUpProps {

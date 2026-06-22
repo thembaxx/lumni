@@ -1,6 +1,7 @@
 "use client";
 
-import { animate, m, useMotionValue, useTransform } from "framer-motion";
+import { animate, useMotionValue, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { memo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";

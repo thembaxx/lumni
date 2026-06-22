@@ -1,4 +1,4 @@
-import type { Transition } from "framer-motion";
+import type { Transition } from "motion/react";
 
 /* ============ iOS Motion Curves ============ */
 /* Apple HIG: decelerate (arrival), accelerate (departure), spring (gestures) */

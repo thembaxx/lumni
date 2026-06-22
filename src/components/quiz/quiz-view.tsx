@@ -2,7 +2,8 @@
 
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { animate, m, useMotionValue } from "framer-motion";
+import { animate, useMotionValue } from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";

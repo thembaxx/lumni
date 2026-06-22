@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";

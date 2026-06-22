@@ -7,7 +7,7 @@ import Lightning from "@hugeicons/core-free-icons/FlashIcon";
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useEffect, useMemo } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

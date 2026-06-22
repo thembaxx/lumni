@@ -5,7 +5,7 @@ import CalculatorIcon from "@hugeicons/core-free-icons/CalculatorIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

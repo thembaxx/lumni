@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 
 interface HistoryPanelProps {
 	show: boolean;

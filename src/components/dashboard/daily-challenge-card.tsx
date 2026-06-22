@@ -3,7 +3,7 @@
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import ZapIcon from "@hugeicons/core-free-icons/ZapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import {

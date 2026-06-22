@@ -3,7 +3,8 @@
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import Download02Icon from "@hugeicons/core-free-icons/Download02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";

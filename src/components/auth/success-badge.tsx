@@ -3,7 +3,7 @@
 import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";

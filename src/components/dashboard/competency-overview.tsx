@@ -4,7 +4,7 @@ import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";

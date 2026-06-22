@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { iOSEase } from "@/lib/utils/animation";

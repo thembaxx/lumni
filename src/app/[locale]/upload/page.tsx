@@ -5,7 +5,7 @@ import CloudUploadIcon from "@hugeicons/core-free-icons/CloudUploadIcon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";

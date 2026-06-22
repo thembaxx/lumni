@@ -2,7 +2,7 @@
 
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 
 interface AdminActionButtonProps {

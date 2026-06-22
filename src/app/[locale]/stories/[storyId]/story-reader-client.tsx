@@ -4,7 +4,7 @@ import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Lightning from "@hugeicons/core-free-icons/FlashIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";

@@ -2,7 +2,8 @@
 
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 

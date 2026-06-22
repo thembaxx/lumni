@@ -3,7 +3,7 @@
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { StudySession } from "./schedule-generator";

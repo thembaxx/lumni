@@ -3,7 +3,7 @@
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import StopCircleIcon from "@hugeicons/core-free-icons/StopCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";

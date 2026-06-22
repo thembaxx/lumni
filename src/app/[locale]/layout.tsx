@@ -1,5 +1,5 @@
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { domAnimation, LazyMotion } from "framer-motion";
+import { domAnimation, LazyMotion } from "motion/react";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";

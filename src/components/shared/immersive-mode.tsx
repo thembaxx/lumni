@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { createContext, use, useCallback, useMemo, useState } from "react";
 import { iOSDecelerate } from "@/lib/utils/animation";
 

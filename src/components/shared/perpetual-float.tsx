@@ -1,6 +1,7 @@
 "use client";
 
-import { animate, m, useMotionValue, useTransform } from "framer-motion";
+import { animate, useMotionValue, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { memo, type ReactNode, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";

@@ -2,7 +2,7 @@
 
 import GiftIcon from "@hugeicons/core-free-icons/GiftIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/utils";
 import { rarityBorder } from "@/lib/utils/gamification";

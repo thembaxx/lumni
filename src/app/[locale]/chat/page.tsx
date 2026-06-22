@@ -4,7 +4,7 @@ import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import StarsIcon from "@hugeicons/core-free-icons/StarsIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { useEffect, useRef } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";

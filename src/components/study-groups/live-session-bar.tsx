@@ -5,7 +5,8 @@ import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import UserMultipleIcon from "@hugeicons/core-free-icons/UserMultipleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

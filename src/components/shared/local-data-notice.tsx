@@ -3,7 +3,7 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";

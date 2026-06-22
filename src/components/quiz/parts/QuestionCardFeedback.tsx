@@ -7,7 +7,7 @@ import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";

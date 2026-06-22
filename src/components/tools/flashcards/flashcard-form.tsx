@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";

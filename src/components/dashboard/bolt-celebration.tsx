@@ -5,7 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { iOSDecelerate } from "@/lib/utils/animation";
 import {

@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useReducer, useRef, useSyncExternalStore } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";

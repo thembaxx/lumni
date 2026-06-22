@@ -4,7 +4,7 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";

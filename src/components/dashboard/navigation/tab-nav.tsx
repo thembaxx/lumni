@@ -4,7 +4,7 @@ import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import GridIcon from "@hugeicons/core-free-icons/GridIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { startTransition, useRef } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";

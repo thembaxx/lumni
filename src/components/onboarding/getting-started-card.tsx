@@ -6,7 +6,8 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
 import { Button } from "@/components/ui/button";

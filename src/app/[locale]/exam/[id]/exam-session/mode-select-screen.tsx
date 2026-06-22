@@ -4,7 +4,7 @@ import Alert01Icon from "@hugeicons/core-free-icons/Alert01Icon";
 import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

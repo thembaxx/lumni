@@ -3,7 +3,7 @@
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";

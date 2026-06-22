@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { SessionQuestionNavigator } from "@/components/exam";
 import type { QuestionPart } from "@/types/exam-paper";

@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { iOSEase } from "@/lib/utils/animation";
 

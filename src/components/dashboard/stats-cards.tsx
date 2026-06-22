@@ -4,12 +4,12 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	m,
 	useMotionValue,
 	useReducedMotion,
 	useSpring,
 	useTransform,
-} from "framer-motion";
+} from "motion/react";
+import * as m from "motion/react-m";
 import { memo, useEffect } from "react";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

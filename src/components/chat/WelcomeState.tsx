@@ -1,6 +1,6 @@
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { iOSEase } from "@/lib/utils/animation";
 
 export function WelcomeState() {

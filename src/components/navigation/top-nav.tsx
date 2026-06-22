@@ -7,7 +7,7 @@ import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
 import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
 import { SidebarHamburger } from "@/components/navigation/sidebar-nav";

@@ -3,7 +3,7 @@
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useState } from "react";
 import {
 	Empty,

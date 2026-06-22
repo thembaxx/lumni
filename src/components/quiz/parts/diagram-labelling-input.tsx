@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";

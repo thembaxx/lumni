@@ -3,7 +3,7 @@
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { Confetti } from "@/components/celebration";

@@ -4,7 +4,8 @@ import ComputerIcon from "@hugeicons/core-free-icons/ComputerIcon";
 import MoonIcon from "@hugeicons/core-free-icons/MoonIcon";
 import Sun01Icon from "@hugeicons/core-free-icons/Sun01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useTheme } from "@/components/theme";
 import { Button } from "@/components/ui/button";
 

@@ -3,7 +3,7 @@
 import ChartDownIcon from "@hugeicons/core-free-icons/ChartDownIcon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 

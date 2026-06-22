@@ -4,7 +4,7 @@ import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {

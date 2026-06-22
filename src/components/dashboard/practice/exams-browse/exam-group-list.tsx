@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

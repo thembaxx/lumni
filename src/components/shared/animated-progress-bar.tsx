@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 

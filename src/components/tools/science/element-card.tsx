@@ -1,6 +1,7 @@
 "use client";
 
-import { m, useSpring, useTransform } from "framer-motion";
+import { useSpring, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { memo, useEffect, useState } from "react";
 import {
 	elementCategoryConfig,
