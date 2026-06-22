@@ -677,5 +677,5 @@ npx next build        → clean build
 
 ## 🔵 GitHub Issues Cleanup
 
-- [ ] **Close issues #54-#60 on GitHub** — All 7 feature issues are implemented and checked off above, but remain open on GitHub. Requires `gh auth login` then `gh issue close <N>` for each.
-- [ ] **Close or merge 5 dependabot PRs (#61-#65)** — happy-dom, @hugeicons/react, knip, storybook, @biomejs/biome bumps. Requires `gh auth login` then review + merge.
+- [x] **Close issues #54-#60 on GitHub** — Already closed.
+- [x] **Close or merge 5 dependabot PRs (#61-#65)** — Already handled (no open PRs).
