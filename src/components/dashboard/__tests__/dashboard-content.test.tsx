@@ -61,7 +61,11 @@ vi.mock("@/components/layout/page-container", () => ({
 	}: {
 		children: React.ReactNode;
 		className?: string;
-	}) => <div data-testid="page-container" className={className}>{children}</div>,
+	}) => (
+		<div data-testid="page-container" className={className}>
+			{children}
+		</div>
+	),
 }));
 
 vi.mock("@/components/shared/local-data-notice", () => ({
@@ -111,9 +115,9 @@ vi.mock("next/dynamic", () => ({
 	},
 }));
 
+import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
-import { DashboardContent } from "@/components/dashboard/dashboard-content";
 
 const defaultProps = {
 	onStartQuiz: vi.fn(),

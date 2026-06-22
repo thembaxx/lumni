@@ -9,7 +9,13 @@ vi.mock("@/i18n/navigation", () => ({
 
 vi.mock("@/lib/auth/auth-context", () => ({
 	useAuth: vi.fn(() => ({
-		user: { $id: "user-1", name: "Test User", email: "test@example.com", labels: [], prefs: {} },
+		user: {
+			$id: "user-1",
+			name: "Test User",
+			email: "test@example.com",
+			labels: [],
+			prefs: {},
+		},
 		status: "authenticated",
 		isAnonymous: false,
 		signOut: vi.fn(),
@@ -40,7 +46,11 @@ vi.mock("@/components/shared/immersive-mode", () => ({
 }));
 
 vi.mock("@/components/navigation/sidebar-nav", () => ({
-	SidebarHamburger: () => <button type="button" data-testid="sidebar-hamburger">Menu</button>,
+	SidebarHamburger: () => (
+		<button type="button" data-testid="sidebar-hamburger">
+			Menu
+		</button>
+	),
 }));
 
 vi.mock("@/components/i18n/locale-switcher", () => ({
@@ -48,8 +58,16 @@ vi.mock("@/components/i18n/locale-switcher", () => ({
 }));
 
 vi.mock("@/components/ui/avatar", () => ({
-	Avatar: ({ children, className }: { children: React.ReactNode; className?: string }) => (
-		<div data-testid="avatar" className={className}>{children}</div>
+	Avatar: ({
+		children,
+		className,
+	}: {
+		children: React.ReactNode;
+		className?: string;
+	}) => (
+		<div data-testid="avatar" className={className}>
+			{children}
+		</div>
 	),
 	AvatarImage: ({ src, alt }: { src: string | null; alt: string }) => (
 		<img data-testid="avatar-image" src={src ?? undefined} alt={alt} />
@@ -85,7 +103,11 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
 		open: boolean;
 		onOpenChange: (v: boolean) => void;
 	}) => (
-		<div data-testid="dropdown-list" data-open={open} onClick={() => onOpenChange(!open)}>
+		<div
+			data-testid="dropdown-list"
+			data-open={open}
+			onClick={() => onOpenChange(!open)}
+		>
 			{children}
 		</div>
 	),
@@ -135,17 +157,27 @@ vi.mock("@/lib/utils", () => ({
 
 vi.mock("framer-motion", () => ({
 	m: {
-		div: ({ children, ...rest }: { children: React.ReactNode; [k: string]: unknown }) => (
-			<div {...rest}>{children}</div>
-		),
+		div: ({
+			children,
+			...rest
+		}: {
+			children: React.ReactNode;
+			[k: string]: unknown;
+		}) => <div {...rest}>{children}</div>,
 	},
-	AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+	AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+		<>{children}</>
+	),
 }));
 
 vi.mock("@hugeicons/react", () => ({
-	HugeiconsIcon: ({ icon: _icon, className }: { icon: unknown; className?: string }) => (
-		<span data-testid="icon" className={className} />
-	),
+	HugeiconsIcon: ({
+		icon: _icon,
+		className,
+	}: {
+		icon: unknown;
+		className?: string;
+	}) => <span data-testid="icon" className={className} />,
 }));
 
 vi.mock("@hugeicons/core-free-icons", () => ({
@@ -157,13 +189,13 @@ vi.mock("@hugeicons/core-free-icons", () => ({
 	UserIcon: "user",
 }));
 
-import { useAuth } from "@/lib/auth/auth-context";
-import { useGamification } from "@/hooks/use-gamification";
-import { useSyncStatus } from "@/hooks/use-sync-status";
-import { useImmersiveMode } from "@/components/shared/immersive-mode";
-import { usePathname } from "@/i18n/navigation";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { TopNav } from "@/components/navigation/top-nav";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
+import { useGamification } from "@/hooks/use-gamification";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { useSyncStatus } from "@/hooks/use-sync-status";
+import { usePathname } from "@/i18n/navigation";
+import { useAuth } from "@/lib/auth/auth-context";
 
 describe("TopNav", () => {
 	afterEach(() => {
@@ -203,7 +235,9 @@ describe("TopNav", () => {
 		});
 
 		it("renders null in immersive mode", () => {
-			vi.mocked(useImmersiveMode).mockReturnValue({ isImmersive: true } as ReturnType<typeof useImmersiveMode>);
+			vi.mocked(useImmersiveMode).mockReturnValue({
+				isImmersive: true,
+			} as ReturnType<typeof useImmersiveMode>);
 			const { container } = render(<TopNav />);
 			expect(container.firstChild).toBeNull();
 		});
@@ -238,12 +272,10 @@ describe("TopNav", () => {
 			expect(container.textContent).toContain("Unknown-route");
 		});
 
-		it("falls back to Lumni for root path", () => {
-			// Override the visibility check: root "/" returns null, so test with a
-			// path that has no matching route and no segments
+		it("does not show Lumni fallback when route label exists", () => {
 			vi.mocked(usePathname).mockReturnValue("/dashboard");
-			// Already tested - just verify Lumni isn't shown when there's a label
 			const { container } = render(<TopNav />);
+			expect(container.textContent).toContain("Dashboard");
 			expect(container.textContent).not.toContain("Lumni");
 		});
 	});
@@ -252,7 +284,13 @@ describe("TopNav", () => {
 		beforeEach(() => {
 			vi.mocked(usePathname).mockReturnValue("/dashboard");
 			vi.mocked(useAuth).mockReturnValue({
-				user: { $id: "user-1", name: "Test User", email: "test@example.com", labels: [], prefs: {} },
+				user: {
+					$id: "user-1",
+					name: "Test User",
+					email: "test@example.com",
+					labels: [],
+					prefs: {},
+				},
 				status: "authenticated",
 				isAnonymous: false,
 				signOut: vi.fn(),
@@ -365,7 +403,9 @@ describe("TopNav", () => {
 
 		it("navigates to sign-in with redirect on Sign In click", () => {
 			const mockPush = vi.fn();
-			vi.mocked(useNavigationDirection).mockReturnValue({ push: mockPush } as ReturnType<typeof useNavigationDirection>);
+			vi.mocked(useNavigationDirection).mockReturnValue({
+				push: mockPush,
+			} as ReturnType<typeof useNavigationDirection>);
 			vi.mocked(usePathname).mockReturnValue("/dashboard");
 
 			const { getByTestId } = render(<TopNav />);
@@ -519,7 +559,9 @@ describe("TopNav", () => {
 
 			const { getByTestId } = render(<TopNav />);
 			const avatarImg = getByTestId("avatar-image");
-			expect(avatarImg.getAttribute("src")).toBe("https://example.com/avatar.png");
+			expect(avatarImg.getAttribute("src")).toBe(
+				"https://example.com/avatar.png",
+			);
 		});
 
 		it("falls back to dicebear avatar when no avatarUrl in prefs", () => {
@@ -565,12 +607,16 @@ describe("TopNav", () => {
 
 		it("navigates to settings on Settings click", () => {
 			const mockPush = vi.fn();
-			vi.mocked(useNavigationDirection).mockReturnValue({ push: mockPush } as ReturnType<typeof useNavigationDirection>);
+			vi.mocked(useNavigationDirection).mockReturnValue({
+				push: mockPush,
+			} as ReturnType<typeof useNavigationDirection>);
 
 			const { getAllByTestId } = render(<TopNav />);
 			const items = getAllByTestId("dropdown-item");
-			const settingsItem = Array.from(items).find((el) =>
-				el.textContent?.includes("Settings") && !el.textContent?.includes("View Profile"),
+			const settingsItem = Array.from(items).find(
+				(el) =>
+					el.textContent?.includes("Settings") &&
+					!el.textContent?.includes("View Profile"),
 			);
 			settingsItem?.click();
 			expect(mockPush).toHaveBeenCalledWith("/settings");
@@ -578,7 +624,9 @@ describe("TopNav", () => {
 
 		it("navigates to profile on View Profile click", () => {
 			const mockPush = vi.fn();
-			vi.mocked(useNavigationDirection).mockReturnValue({ push: mockPush } as ReturnType<typeof useNavigationDirection>);
+			vi.mocked(useNavigationDirection).mockReturnValue({
+				push: mockPush,
+			} as ReturnType<typeof useNavigationDirection>);
 
 			const { getAllByTestId } = render(<TopNav />);
 			const items = getAllByTestId("dropdown-item");

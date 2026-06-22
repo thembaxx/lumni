@@ -42,14 +42,11 @@ vi.mock("@/components/ui/card", () => ({
 }));
 
 // Mock all dynamic sub-components to avoid loading heavy modules
-vi.mock(
-	"@/components/dashboard/analytics/comparative-analytics-panel",
-	() => ({
-		ComparativeAnalyticsPanel: () => (
-			<div data-testid="comparative-analytics-panel" />
-		),
-	}),
-);
+vi.mock("@/components/dashboard/analytics/comparative-analytics-panel", () => ({
+	ComparativeAnalyticsPanel: () => (
+		<div data-testid="comparative-analytics-panel" />
+	),
+}));
 
 vi.mock("@/components/dashboard/stats-row", () => ({
 	StatsRow: () => <div data-testid="stats-row" />,
@@ -94,8 +91,8 @@ vi.mock("next/dynamic", () => ({
 	},
 }));
 
-import { useAuth } from "@/lib/auth/auth-context";
 import { AnalyticsTab } from "@/components/dashboard/analytics-tab";
+import { useAuth } from "@/lib/auth/auth-context";
 
 // Intersection Observer mock
 function createMockIntersectionObserver(
@@ -107,7 +104,12 @@ function createMockIntersectionObserver(
 				if (triggerImmediately) {
 					act(() => {
 						callback(
-							[{ isIntersecting: true, target: el } as IntersectionObserverEntry],
+							[
+								{
+									isIntersecting: true,
+									target: el,
+								} as IntersectionObserverEntry,
+							],
 							instance as unknown as IntersectionObserver,
 						);
 					});
@@ -268,7 +270,10 @@ describe("LazySection behavior via AnalyticsTab", () => {
 	it("creates IntersectionObserver with 200px rootMargin", () => {
 		const capturedOptions: IntersectionObserverInit[] = [];
 		globalThis.IntersectionObserver = vi.fn(
-			(_cb: IntersectionObserverCallback, options?: IntersectionObserverInit) => {
+			(
+				_cb: IntersectionObserverCallback,
+				options?: IntersectionObserverInit,
+			) => {
 				if (options) capturedOptions.push(options);
 				return {
 					observe: vi.fn(),
