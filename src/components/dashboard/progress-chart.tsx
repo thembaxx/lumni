@@ -1,6 +1,7 @@
 "use client";
 
-import { Chart03Icon, PlayFreeIcons } from "@hugeicons/core-free-icons";
+import Chart03Icon from "@hugeicons/core-free-icons/Chart03Icon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

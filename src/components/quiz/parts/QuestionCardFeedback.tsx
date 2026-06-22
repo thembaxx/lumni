@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	Cancel01Icon,
-	Chat01Icon,
-	CheckmarkCircle01Icon,
-	MailSend01Icon,
-	RadialIcon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

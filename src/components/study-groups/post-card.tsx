@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Delete02Icon,
-	Message01Icon,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import Message01Icon from "@hugeicons/core-free-icons/Message01Icon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { format } from "date-fns";
 import { useMemo, useState } from "react";

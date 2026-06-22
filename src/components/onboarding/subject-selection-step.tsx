@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownIcon } from "@hugeicons/core-free-icons";
+import ArrowDownIcon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { Input } from "@/components/ui/input";

@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	ChampionIcon,
-	Login01Icon,
-	Logout01Icon,
-	Settings01Icon,
-	UserGroupIcon,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
+import ChampionIcon from "@hugeicons/core-free-icons/ChampionIcon";
+import Login01Icon from "@hugeicons/core-free-icons/Login01Icon";
+import Logout01Icon from "@hugeicons/core-free-icons/Logout01Icon";
+import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";

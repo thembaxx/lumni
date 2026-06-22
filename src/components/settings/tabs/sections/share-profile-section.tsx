@@ -1,6 +1,7 @@
 "use client";
 
-import { Copy01Icon, LinkSquare01Icon } from "@hugeicons/core-free-icons";
+import Copy01Icon from "@hugeicons/core-free-icons/Copy01Icon";
+import LinkSquare01Icon from "@hugeicons/core-free-icons/LinkSquare01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMemo, useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";

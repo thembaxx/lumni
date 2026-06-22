@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	Award01Icon,
-	BookOpen01Icon,
-	Clock01Icon,
-	Mortarboard01Icon,
-	Target01Icon,
-	WorkoutSportIcon,
-} from "@hugeicons/core-free-icons";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
+import WorkoutSportIcon from "@hugeicons/core-free-icons/WorkoutSportIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";

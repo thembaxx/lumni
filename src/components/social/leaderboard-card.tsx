@@ -1,6 +1,8 @@
 "use client";
 
-import { Award01Icon, CrownIcon, FireIcon } from "@hugeicons/core-free-icons";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";

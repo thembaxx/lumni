@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckListIcon } from "@hugeicons/core-free-icons";
+import CheckListIcon from "@hugeicons/core-free-icons/CheckListIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";

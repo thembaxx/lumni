@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Add01Icon,
-	CalculatorIcon,
-	CheckmarkCircle01Icon,
-	Delete01Icon,
-} from "@hugeicons/core-free-icons";
+import Add01Icon from "@hugeicons/core-free-icons/Add01Icon";
+import CalculatorIcon from "@hugeicons/core-free-icons/CalculatorIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useState } from "react";

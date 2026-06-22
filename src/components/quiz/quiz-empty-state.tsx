@@ -1,6 +1,7 @@
 "use client";
 
-import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

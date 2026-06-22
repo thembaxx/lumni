@@ -109,7 +109,7 @@ vi.mock("next/dynamic", () => ({
 	) => {
 		// Return a component that renders the loading state (the skeleton markup)
 		const DynamicPlaceholder = () =>
-			options?.loading ? <>{options.loading()}</> : null;
+			options?.loading ? options.loading() : null;
 		DynamicPlaceholder.displayName = "DynamicPlaceholder";
 		return DynamicPlaceholder;
 	},

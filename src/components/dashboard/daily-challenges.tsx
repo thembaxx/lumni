@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	FireIcon,
-	Target01Icon,
-} from "@hugeicons/core-free-icons";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useMemo } from "react";

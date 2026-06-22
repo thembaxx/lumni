@@ -1,20 +1,18 @@
 "use client";
 
-import {
-	Award01Icon,
-	BatteryFullIcon,
-	BookOpen02Icon,
-	Cancel01Icon,
-	ChartBarBigIcon,
-	ChartLineData01Icon,
-	FireIcon,
-	GoldIcon,
-	Login01Icon,
-	Presentation01Icon,
-	StarCircleIcon,
-	UserMultipleIcon,
-	UserStar02Icon,
-} from "@hugeicons/core-free-icons";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import BatteryFullIcon from "@hugeicons/core-free-icons/BatteryFullIcon";
+import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import ChartBarBigIcon from "@hugeicons/core-free-icons/ChartBarBigIcon";
+import ChartLineData01Icon from "@hugeicons/core-free-icons/ChartLineData01Icon";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import GoldIcon from "@hugeicons/core-free-icons/GoldIcon";
+import Login01Icon from "@hugeicons/core-free-icons/Login01Icon";
+import Presentation01Icon from "@hugeicons/core-free-icons/Presentation01Icon";
+import StarCircleIcon from "@hugeicons/core-free-icons/StarCircleIcon";
+import UserMultipleIcon from "@hugeicons/core-free-icons/UserMultipleIcon";
+import UserStar02Icon from "@hugeicons/core-free-icons/UserStar02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";

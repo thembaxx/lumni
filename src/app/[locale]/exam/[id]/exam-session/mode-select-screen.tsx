@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Alert01Icon,
-	Clock01Icon,
-	PlayFreeIcons,
-} from "@hugeicons/core-free-icons";
+import Alert01Icon from "@hugeicons/core-free-icons/Alert01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

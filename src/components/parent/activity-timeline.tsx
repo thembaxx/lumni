@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen01Icon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva } from "class-variance-authority";
 import { Card } from "@/components/ui/card";

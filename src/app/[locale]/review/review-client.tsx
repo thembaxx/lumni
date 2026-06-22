@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	CheckmarkCircle01Icon,
-	Delete01Icon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";

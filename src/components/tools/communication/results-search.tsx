@@ -1,6 +1,7 @@
 "use client";
 
-import { Search01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useState } from "react";

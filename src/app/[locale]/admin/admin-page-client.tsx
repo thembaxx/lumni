@@ -1,6 +1,7 @@
 "use client";
 
-import { DatabaseIcon, RadialIcon } from "@hugeicons/core-free-icons";
+import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useState } from "react";

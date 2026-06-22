@@ -1,4 +1,4 @@
-import { Timer01Icon } from "@hugeicons/core-free-icons";
+import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { formatTime } from "@/lib/shared/time";
 import { cn } from "@/lib/utils";

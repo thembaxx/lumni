@@ -1,6 +1,6 @@
 "use client";
 
-import { UserGroupIcon } from "@hugeicons/core-free-icons";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

@@ -1,8 +1,6 @@
-import {
-	PlayFreeIcons,
-	RefreshIcon,
-	SquareIcon,
-} from "@hugeicons/core-free-icons";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
+import SquareIcon from "@hugeicons/core-free-icons/SquareIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { memo, useRef, useState } from "react";

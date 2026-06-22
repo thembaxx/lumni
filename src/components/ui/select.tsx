@@ -1,12 +1,10 @@
 "use client";
 
 import { Select as SelectPrimitive } from "@base-ui/react/select";
-import {
-	ArrowDown01Icon,
-	ArrowUp01Icon,
-	ArrowUpDownIcon,
-	CheckmarkCircle01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
+import ArrowUp01Icon from "@hugeicons/core-free-icons/ArrowUp01Icon";
+import ArrowUpDownIcon from "@hugeicons/core-free-icons/ArrowUpDownIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type * as React from "react";
 import { cn } from "@/lib/utils";

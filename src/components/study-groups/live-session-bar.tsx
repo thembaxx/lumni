@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Logout01Icon,
-	PlayIcon,
-	UserGroupIcon,
-	UserMultipleIcon,
-} from "@hugeicons/core-free-icons";
+import Logout01Icon from "@hugeicons/core-free-icons/Logout01Icon";
+import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
+import UserMultipleIcon from "@hugeicons/core-free-icons/UserMultipleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";

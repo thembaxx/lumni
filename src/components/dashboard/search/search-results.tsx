@@ -1,17 +1,15 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	BookBookmark01Icon,
-	BookOpen01Icon,
-	ChartBarIncreasingIcon,
-	Clock01Icon,
-	File01Icon,
-	File02Icon,
-	NoteIcon,
-	StarSquareIcon,
-	World,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import BookBookmark01Icon from "@hugeicons/core-free-icons/BookBookmark01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import ChartBarIncreasingIcon from "@hugeicons/core-free-icons/ChartBarIncreasingIcon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import File01Icon from "@hugeicons/core-free-icons/File01Icon";
+import File02Icon from "@hugeicons/core-free-icons/File02Icon";
+import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
+import StarSquareIcon from "@hugeicons/core-free-icons/StarSquareIcon";
+import World from "@hugeicons/core-free-icons/GlobeIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";

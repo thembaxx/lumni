@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	ArrowDown01Icon,
-	CheckmarkCircle01Icon,
-	LinkSquare01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import LinkSquare01Icon from "@hugeicons/core-free-icons/LinkSquare01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 

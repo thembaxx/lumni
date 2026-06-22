@@ -1,6 +1,7 @@
 "use client";
 
-import { CrownIcon, StarIcon } from "@hugeicons/core-free-icons";
+import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";

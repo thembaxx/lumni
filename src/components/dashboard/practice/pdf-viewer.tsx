@@ -1,15 +1,13 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	Download01Icon,
-	ExpandIcon,
-	File02Icon,
-	SearchAddIcon,
-	SearchMinusIcon,
-	ShrinkDotIcon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Download01Icon from "@hugeicons/core-free-icons/Download01Icon";
+import ExpandIcon from "@hugeicons/core-free-icons/ExpandIcon";
+import File02Icon from "@hugeicons/core-free-icons/File02Icon";
+import SearchAddIcon from "@hugeicons/core-free-icons/SearchAddIcon";
+import SearchMinusIcon from "@hugeicons/core-free-icons/SearchMinusIcon";
+import ShrinkDotIcon from "@hugeicons/core-free-icons/ShrinkDotIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import {

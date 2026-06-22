@@ -1,17 +1,15 @@
 "use client";
 
-import {
-	ArrowLeftIcon,
-	Bell,
-	BookOpen01Icon,
-	Chat01Icon,
-	DatabaseIcon,
-	PaintBrushIcon,
-	RadialIcon,
-	Share07Icon,
-	ShieldCheck,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeftIcon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import Bell from "@hugeicons/core-free-icons/Notification01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
+import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
+import PaintBrushIcon from "@hugeicons/core-free-icons/PaintBrush01Icon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
+import ShieldCheck from "@hugeicons/core-free-icons/SecurityCheckIcon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";

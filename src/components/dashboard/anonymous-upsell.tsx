@@ -1,6 +1,6 @@
 "use client";
 
-import { Login01Icon } from "@hugeicons/core-free-icons";
+import Login01Icon from "@hugeicons/core-free-icons/Login01Icon";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";

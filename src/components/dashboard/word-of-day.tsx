@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen01Icon, SpeakerIcon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import SpeakerIcon from "@hugeicons/core-free-icons/SpeakerIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";

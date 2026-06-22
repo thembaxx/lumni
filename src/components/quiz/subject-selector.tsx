@@ -1,30 +1,28 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	CalculatorIcon,
-	ChartUpIcon,
-	ColorsIcon,
-	ConstructionIcon,
-	DnaIcon,
-	EcoEnergyIcon,
-	FavouriteIcon,
-	FlashIcon,
-	GlobeIcon,
-	LandmarkIcon,
-	LaptopIcon,
-	MapPinIcon,
-	MapsIcon,
-	MusicNote01Icon,
-	PenTool01Icon,
-	PhysicsIcon,
-	ReceiptTextIcon,
-	Restaurant01Icon,
-	Search01Icon,
-	ShoppingCart01Icon,
-	ToolsIcon,
-	WorkIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CalculatorIcon from "@hugeicons/core-free-icons/CalculatorIcon";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
+import ColorsIcon from "@hugeicons/core-free-icons/ColorsIcon";
+import ConstructionIcon from "@hugeicons/core-free-icons/ConstructionIcon";
+import DnaIcon from "@hugeicons/core-free-icons/DnaIcon";
+import EcoEnergyIcon from "@hugeicons/core-free-icons/EcoEnergyIcon";
+import FavouriteIcon from "@hugeicons/core-free-icons/FavouriteIcon";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import GlobeIcon from "@hugeicons/core-free-icons/GlobeIcon";
+import LandmarkIcon from "@hugeicons/core-free-icons/LandmarkIcon";
+import LaptopIcon from "@hugeicons/core-free-icons/LaptopIcon";
+import MapPinIcon from "@hugeicons/core-free-icons/MapPinIcon";
+import MapsIcon from "@hugeicons/core-free-icons/MapsIcon";
+import MusicNote01Icon from "@hugeicons/core-free-icons/MusicNote01Icon";
+import PenTool01Icon from "@hugeicons/core-free-icons/PenTool01Icon";
+import PhysicsIcon from "@hugeicons/core-free-icons/PhysicsIcon";
+import ReceiptTextIcon from "@hugeicons/core-free-icons/ReceiptTextIcon";
+import Restaurant01Icon from "@hugeicons/core-free-icons/Restaurant01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import ShoppingCart01Icon from "@hugeicons/core-free-icons/ShoppingCart01Icon";
+import ToolsIcon from "@hugeicons/core-free-icons/ToolsIcon";
+import WorkIcon from "@hugeicons/core-free-icons/WorkIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

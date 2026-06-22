@@ -1,6 +1,7 @@
 "use client";
 
-import { ChartDownIcon, ChartUpIcon } from "@hugeicons/core-free-icons";
+import ChartDownIcon from "@hugeicons/core-free-icons/ChartDownIcon";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { cn } from "@/lib/utils";

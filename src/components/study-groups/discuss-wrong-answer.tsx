@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageAdd01Icon } from "@hugeicons/core-free-icons";
+import MessageAdd01Icon from "@hugeicons/core-free-icons/MessageAdd01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	ArrowRight01Icon,
-	CheckmarkCircle01Icon,
-	Copy02Icon,
-	Delete02Icon,
-	Logout04Icon,
-	UserGroupIcon,
-} from "@hugeicons/core-free-icons";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Copy02Icon from "@hugeicons/core-free-icons/Copy02Icon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import Logout04Icon from "@hugeicons/core-free-icons/Logout04Icon";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";

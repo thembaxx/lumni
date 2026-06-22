@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	Clock01Icon,
-	Pause,
-	PlayFreeIcons,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import Pause from "@hugeicons/core-free-icons/PauseIcon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";

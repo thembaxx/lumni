@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	MinusSignFreeIcons,
-	PauseFreeIcons,
-	PlayFreeIcons,
-	PlusSignFreeIcons,
-	RotateClockwiseFreeIcons,
-} from "@hugeicons/core-free-icons";
+import MinusSignFreeIcons from "@hugeicons/core-free-icons/MinusSignIcon";
+import PauseFreeIcons from "@hugeicons/core-free-icons/PauseIcon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
+import PlusSignFreeIcons from "@hugeicons/core-free-icons/PlusSignIcon";
+import RotateClockwiseFreeIcons from "@hugeicons/core-free-icons/RotateClockwiseIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

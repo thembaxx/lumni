@@ -1,6 +1,6 @@
 "use client";
 
-import { File01Icon } from "@hugeicons/core-free-icons";
+import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { animate, m, useMotionValue } from "framer-motion";
 import { useTranslations } from "next-intl";

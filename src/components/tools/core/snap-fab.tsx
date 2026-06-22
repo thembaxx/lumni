@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera01Icon } from "@hugeicons/core-free-icons";
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";

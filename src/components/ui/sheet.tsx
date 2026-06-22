@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
-import { CancelCircleIcon } from "@hugeicons/core-free-icons";
+import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type * as React from "react";
 import { Button } from "@/components/ui/button";

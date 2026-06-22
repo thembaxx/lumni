@@ -1,6 +1,8 @@
 "use client";
 
-import { Book02Icon, BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
+import Book02Icon from "@hugeicons/core-free-icons/Book02Icon";
+import BulbIcon from "@hugeicons/core-free-icons/BulbIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";

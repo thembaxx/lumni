@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	Clock01Icon,
-	Target01Icon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";

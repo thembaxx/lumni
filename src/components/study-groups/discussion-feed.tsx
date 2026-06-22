@@ -1,6 +1,6 @@
 "use client";
 
-import { Message02Icon } from "@hugeicons/core-free-icons";
+import Message02Icon from "@hugeicons/core-free-icons/Message02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupPosts } from "@/hooks/use-study-groups";

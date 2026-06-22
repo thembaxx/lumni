@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck } from "@hugeicons/core-free-icons";
+import ShieldCheck from "@hugeicons/core-free-icons/SecurityCheckIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	startTransition,

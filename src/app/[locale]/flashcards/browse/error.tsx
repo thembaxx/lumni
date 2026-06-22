@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Alert01Icon,
-	Home01Icon,
-	RefreshIcon,
-} from "@hugeicons/core-free-icons";
+import Alert01Icon from "@hugeicons/core-free-icons/Alert01Icon";
+import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as Sentry from "@sentry/nextjs";
 import { useTranslations } from "next-intl";

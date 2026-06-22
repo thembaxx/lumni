@@ -1,22 +1,46 @@
 "use client";
 
-import {
-	Activity02Icon,
-	ArrowRight01Icon,
-	Quiz01Icon,
-	StarIcon,
-} from "@hugeicons/core-free-icons";
+import Activity02Icon from "@hugeicons/core-free-icons/Activity02Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Quiz01Icon from "@hugeicons/core-free-icons/Quiz01Icon";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { CtaSection } from "./cta-section";
-import { FeaturesGrid } from "./features-grid";
 import { HeroSection } from "./hero-section";
-import { HowItWorksSection } from "./how-it-works-section";
-import { PricingComparisonSection } from "./pricing-comparison-section";
-import { TestimonialsSection } from "./testimonials-section";
+
+const FeaturesGrid = dynamic(
+	() => import("./features-grid").then((m) => ({ default: m.FeaturesGrid })),
+	{ ssr: false },
+);
+const HowItWorksSection = dynamic(
+	() =>
+		import("./how-it-works-section").then((m) => ({
+			default: m.HowItWorksSection,
+		})),
+	{ ssr: false },
+);
+const TestimonialsSection = dynamic(
+	() =>
+		import("./testimonials-section").then((m) => ({
+			default: m.TestimonialsSection,
+		})),
+	{ ssr: false },
+);
+const PricingComparisonSection = dynamic(
+	() =>
+		import("./pricing-comparison-section").then((m) => ({
+			default: m.PricingComparisonSection,
+		})),
+	{ ssr: false },
+);
+const CtaSection = dynamic(
+	() => import("./cta-section").then((m) => ({ default: m.CtaSection })),
+	{ ssr: false },
+);
 
 export function HomeContent() {
 	const t = useTranslations();

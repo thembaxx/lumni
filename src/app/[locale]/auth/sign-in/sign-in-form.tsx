@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Mail01Icon,
-	SparklesIcon,
-	ViewIcon,
-	ViewOffIcon,
-} from "@hugeicons/core-free-icons";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
+import ViewIcon from "@hugeicons/core-free-icons/ViewIcon";
+import ViewOffIcon from "@hugeicons/core-free-icons/ViewOffIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useSearchParams } from "next/navigation";

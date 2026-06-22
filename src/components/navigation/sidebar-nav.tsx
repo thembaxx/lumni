@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu01Icon } from "@hugeicons/core-free-icons";
+import Menu01Icon from "@hugeicons/core-free-icons/Menu01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createContext, use, useCallback, useMemo, useState } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";

@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Calendar01Icon,
-	CheckmarkCircle01Icon,
-	Delete02Icon,
-} from "@hugeicons/core-free-icons";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";

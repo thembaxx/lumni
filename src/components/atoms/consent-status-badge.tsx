@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	CheckmarkBadge01Icon,
-	HelpCircleIcon,
-	UserCheck01Icon,
-} from "@hugeicons/core-free-icons";
+import CheckmarkBadge01Icon from "@hugeicons/core-free-icons/CheckmarkBadge01Icon";
+import HelpCircleIcon from "@hugeicons/core-free-icons/HelpCircleIcon";
+import UserCheck01Icon from "@hugeicons/core-free-icons/UserCheck01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Badge } from "@/components/ui/badge";

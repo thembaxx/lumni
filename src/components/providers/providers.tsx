@@ -1,14 +1,11 @@
 "use client";
 
 import { QueryClientProvider } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
 import { I18nProvider } from "@/components/i18n/i18n-provider";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
-import {
-	PWAInstallPrompt,
-	PWAUpdateToast,
-} from "@/components/pwa/pwa-update-toast";
 import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
 import { ThemeProvider } from "@/components/theme";
 import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
@@ -23,6 +20,21 @@ import { PremiumProvider } from "@/lib/premium/premium-context";
 import { queryClient } from "@/lib/query-client";
 import { seedInteractiveQuestions } from "@/lib/seed-questions";
 import { setAppInitialized } from "@/store";
+
+const PWAUpdateToast = dynamic(
+	() =>
+		import("@/components/pwa/pwa-update-toast").then((m) => ({
+			default: m.PWAUpdateToast,
+		})),
+	{ ssr: false },
+);
+const PWAInstallPrompt = dynamic(
+	() =>
+		import("@/components/pwa/pwa-update-toast").then((m) => ({
+			default: m.PWAInstallPrompt,
+		})),
+	{ ssr: false },
+);
 
 function JobProcessorWrapper() {
 	useJobProcessor();
@@ -49,14 +61,20 @@ export function Providers({
 	children,
 }: ProvidersProps) {
 	useEffect(() => {
-		const handlePrefetch = async () => {
-			await Promise.all([
+		// Defer non-critical initialization to idle period
+		if ("requestIdleCallback" in window) {
+			requestIdleCallback(() => {
+				Promise.all([
+					prefetchUploadSubjects(queryClient),
+					seedInteractiveQuestions(),
+				]).then(() => setAppInitialized(true));
+			});
+		} else {
+			Promise.all([
 				prefetchUploadSubjects(queryClient),
 				seedInteractiveQuestions(),
-			]);
-			setAppInitialized(true);
-		};
-		handlePrefetch();
+			]).then(() => setAppInitialized(true));
+		}
 	}, []);
 
 	return (

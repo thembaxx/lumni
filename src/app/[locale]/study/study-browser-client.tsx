@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	CheckmarkCircle01Icon,
-	PlayIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";

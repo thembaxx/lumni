@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	Mic01Icon,
-	MicOff01Icon,
-	PauseFreeIcons,
-	PlayFreeIcons,
-	UndoIcon,
-} from "@hugeicons/core-free-icons";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
+import MicOff01Icon from "@hugeicons/core-free-icons/MicOff01Icon";
+import PauseIcon from "@hugeicons/core-free-icons/PauseIcon";
+import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
+import UndoIcon from "@hugeicons/core-free-icons/UndoIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -120,7 +118,7 @@ export function ControlButtons({
 			>
 				<span className="relative flex items-center justify-center">
 					<HugeiconsIcon
-						icon={PauseFreeIcons}
+						icon={PauseIcon}
 						className="absolute size-4 transition-[opacity,transform] duration-200"
 						style={{
 							opacity: isPlaying ? 1 : 0,
@@ -129,7 +127,7 @@ export function ControlButtons({
 						}}
 					/>
 					<HugeiconsIcon
-						icon={PlayFreeIcons}
+						icon={PlayIcon}
 						className="ml-0.5 size-4 transition-[opacity,transform] duration-200"
 						style={{
 							opacity: isPlaying ? 0 : 1,

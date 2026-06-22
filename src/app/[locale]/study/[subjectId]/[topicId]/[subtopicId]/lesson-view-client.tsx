@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	BookOpen01Icon,
-	CheckmarkCircle01Icon,
-	Lightning,
-	Mic01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Lightning from "@hugeicons/core-free-icons/FlashIcon";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";

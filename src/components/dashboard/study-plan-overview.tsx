@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Bookmark02Icon,
-	Cancel01Icon,
-	CheckListIcon,
-	RefreshIcon,
-} from "@hugeicons/core-free-icons";
+import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import CheckListIcon from "@hugeicons/core-free-icons/CheckListIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

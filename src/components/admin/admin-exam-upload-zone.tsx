@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	CheckmarkCircle01Icon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

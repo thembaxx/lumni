@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowDown01Icon, ArrowUp01Icon } from "@hugeicons/core-free-icons";
+import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
+import ArrowUp01Icon from "@hugeicons/core-free-icons/ArrowUp01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";

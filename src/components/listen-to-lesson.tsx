@@ -1,4 +1,5 @@
-import { HeadphonesIcon, StopCircleIcon } from "@hugeicons/core-free-icons";
+import HeadphonesIcon from "@hugeicons/core-free-icons/HeadphonesIcon";
+import StopCircleIcon from "@hugeicons/core-free-icons/StopCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

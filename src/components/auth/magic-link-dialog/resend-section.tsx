@@ -1,6 +1,8 @@
 "use client";
 
-import { FlashIcon, RadialIcon, RefreshIcon } from "@hugeicons/core-free-icons";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

@@ -1,14 +1,12 @@
 "use client";
 
-import {
-	BrainIcon,
-	CancelCircleIcon,
-	ChartUpIcon,
-	CheckmarkCircle01Icon,
-	Mortarboard01Icon,
-	SparklesIcon,
-	Timer01Icon,
-} from "@hugeicons/core-free-icons";
+import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
+import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
+import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	m,

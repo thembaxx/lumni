@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeft01Icon, Award01Icon } from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { PageContainer } from "@/components/layout/page-container";

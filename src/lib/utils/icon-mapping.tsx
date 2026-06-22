@@ -1,19 +1,17 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	ArrowLeft01Icon,
-	Award01Icon,
-	CancelCircleIcon,
-	CheckmarkCircle01Icon,
-	CrownIcon,
-	FireIcon,
-	Confetti as PhosphorConfetti,
-	RadialIcon,
-	Search01Icon,
-	SparklesIcon,
-	Upload01Icon,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import PartyIcon from "@hugeicons/core-free-icons/PartyIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
+import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import type { ComponentProps } from "react";
@@ -61,7 +59,7 @@ const animationTransitions: Record<
 
 const animationMapping: Record<string, IconMappingEntry> = {
 	"achievement-unlock": { icon: Award01Icon, size: 12, animation: "scale" },
-	confetti: { icon: PhosphorConfetti, size: 16 },
+	confetti: { icon: PartyIcon, size: 16 },
 	"empty-search": { icon: Search01Icon, size: 12, animation: "pulse" },
 	"empty-upload": { icon: Upload01Icon, size: 12, animation: "bounce" },
 	"error-state": { icon: AlertCircleIcon, size: 16, animation: "shake" },

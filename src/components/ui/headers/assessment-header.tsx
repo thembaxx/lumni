@@ -1,6 +1,6 @@
 "use client";
 
-import { Target01Icon } from "@hugeicons/core-free-icons";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Badge } from "@/components/ui/badge";

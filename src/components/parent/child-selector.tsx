@@ -1,6 +1,6 @@
 "use client";
 
-import { ProfileIcon } from "@hugeicons/core-free-icons";
+import ProfileIcon from "@hugeicons/core-free-icons/ProfileIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";

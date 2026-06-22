@@ -1,6 +1,7 @@
 "use client";
 
-import { ChartUpIcon, Mortarboard01Icon } from "@hugeicons/core-free-icons";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";

@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Copy01Icon,
-	Share07Icon,
-	Tick01Icon,
-} from "@hugeicons/core-free-icons";
+import Copy01Icon from "@hugeicons/core-free-icons/Copy01Icon";
+import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
+import Tick01Icon from "@hugeicons/core-free-icons/Tick01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useState } from "react";

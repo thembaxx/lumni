@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	LinkSquare01Icon,
-	TeacherIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import LinkSquare01Icon from "@hugeicons/core-free-icons/LinkSquare01Icon";
+import TeacherIcon from "@hugeicons/core-free-icons/TeacherIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";

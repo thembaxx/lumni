@@ -1,6 +1,7 @@
 "use client";
 
-import { VolumeMute01Icon, VolumeUpIcon } from "@hugeicons/core-free-icons";
+import VolumeMute01Icon from "@hugeicons/core-free-icons/VolumeMute01Icon";
+import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

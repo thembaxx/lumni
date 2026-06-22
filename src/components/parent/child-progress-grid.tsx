@@ -1,6 +1,6 @@
 "use client";
 
-import { Target01Icon } from "@hugeicons/core-free-icons";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";

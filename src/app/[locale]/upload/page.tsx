@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	CloudUploadIcon,
-	DatabaseIcon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import CloudUploadIcon from "@hugeicons/core-free-icons/CloudUploadIcon";
+import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useState } from "react";

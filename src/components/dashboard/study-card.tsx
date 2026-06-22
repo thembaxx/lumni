@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen01Icon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFilteredSubjects } from "@/hooks/use-subjects";

@@ -1,9 +1,7 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	Search01Icon,
-} from "@hugeicons/core-free-icons";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useRef, useState } from "react";

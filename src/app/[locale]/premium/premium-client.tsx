@@ -1,6 +1,6 @@
 "use client";
 
-import { CrownIcon } from "@hugeicons/core-free-icons";
+import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { PageContainer } from "@/components/layout/page-container";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Target01Icon } from "@hugeicons/core-free-icons";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";

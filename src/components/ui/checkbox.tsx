@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
-import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "@/lib/utils";
 

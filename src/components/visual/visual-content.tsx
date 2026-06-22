@@ -1,6 +1,6 @@
 "use client";
 
-import { RadialIcon } from "@hugeicons/core-free-icons";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion } from "framer-motion";
 import { memo } from "react";

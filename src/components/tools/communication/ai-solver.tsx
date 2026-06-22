@@ -1,6 +1,7 @@
 "use client";
 
-import { RadialIcon, SparklesIcon } from "@hugeicons/core-free-icons";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useRef, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";

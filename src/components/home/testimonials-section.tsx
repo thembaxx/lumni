@@ -1,6 +1,6 @@
 "use client";
 
-import { StarIcon } from "@hugeicons/core-free-icons";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";

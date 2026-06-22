@@ -1,9 +1,7 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	MailSend01Icon,
-} from "@hugeicons/core-free-icons";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Button } from "@/components/ui/button";

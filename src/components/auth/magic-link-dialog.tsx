@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail01Icon } from "@hugeicons/core-free-icons";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { z } from "zod";

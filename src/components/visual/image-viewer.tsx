@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import ArrowUpRight01Icon from "@hugeicons/core-free-icons/ArrowUpRight01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useState } from "react";

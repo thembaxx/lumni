@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	CancelCircleIcon,
-	CheckmarkCircle01Icon,
-	CloudUploadIcon,
-	FileIcon,
-	ImageIcon,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import CloudUploadIcon from "@hugeicons/core-free-icons/CloudUploadIcon";
+import File01Icon from "@hugeicons/core-free-icons/File01Icon";
+import Image01Icon from "@hugeicons/core-free-icons/Image01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,8 +20,8 @@ function formatFileSize(bytes: number): string {
 }
 
 function getFileIcon(type: string) {
-	if (type.startsWith("image/")) return ImageIcon;
-	return FileIcon;
+	if (type.startsWith("image/")) return Image01Icon;
+	return File01Icon;
 }
 
 export type FileUploadState = {

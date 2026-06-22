@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Delete02Icon,
-	PencilIcon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import PencilIcon from "@hugeicons/core-free-icons/PencilIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Button } from "@/components/ui/button";

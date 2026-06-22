@@ -1,9 +1,7 @@
 "use client";
 
-import {
-	BookOpen02Icon,
-	CheckmarkCircle01Icon,
-} from "@hugeicons/core-free-icons";
+import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

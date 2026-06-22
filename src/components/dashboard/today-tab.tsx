@@ -1,6 +1,7 @@
 "use client";
 
-import { Lightning, SparklesIcon } from "@hugeicons/core-free-icons";
+import Lightning from "@hugeicons/core-free-icons/FlashIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";

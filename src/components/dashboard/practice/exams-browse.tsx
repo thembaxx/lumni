@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen01Icon, Calendar01Icon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";

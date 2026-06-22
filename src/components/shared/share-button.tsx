@@ -1,6 +1,6 @@
 "use client";
 
-import { Share08Icon } from "@hugeicons/core-free-icons";
+import Share08Icon from "@hugeicons/core-free-icons/Share08Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

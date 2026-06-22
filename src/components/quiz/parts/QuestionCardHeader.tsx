@@ -1,4 +1,4 @@
-import { Camera01Icon } from "@hugeicons/core-free-icons";
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";

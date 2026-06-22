@@ -1,6 +1,7 @@
 "use client";
 
-import { SparklesIcon, ZapIcon } from "@hugeicons/core-free-icons";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
+import ZapIcon from "@hugeicons/core-free-icons/ZapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";

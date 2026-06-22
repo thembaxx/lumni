@@ -1,14 +1,12 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	Delete02Icon,
-	Download03Icon,
-	FilterIcon,
-	Search01Icon,
-	Upload04Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import Download03Icon from "@hugeicons/core-free-icons/Download03Icon";
+import FilterIcon from "@hugeicons/core-free-icons/FilterIcon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import Upload04Icon from "@hugeicons/core-free-icons/Upload04Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";

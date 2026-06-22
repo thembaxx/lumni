@@ -1,9 +1,7 @@
 "use client";
 
-import {
-	ArrowDown01Icon,
-	CheckmarkCircle01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";

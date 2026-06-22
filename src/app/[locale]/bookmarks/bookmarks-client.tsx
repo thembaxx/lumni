@@ -1,6 +1,7 @@
 "use client";
 
-import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
+import Bookmark01Icon from "@hugeicons/core-free-icons/Bookmark01Icon";
+import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect } from "react";
 import { PageContainer } from "@/components/layout/page-container";

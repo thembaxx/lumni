@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Camera01Icon,
-	Cancel01Icon,
-	Image03FreeIcons,
-} from "@hugeicons/core-free-icons";
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import Image03Icon from "@hugeicons/core-free-icons/Image03Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -60,7 +58,7 @@ export function SolverInputTools({
 										return (
 											<div className="flex items-center gap-2 text-foreground text-sm">
 												<HugeiconsIcon
-													icon={Image03FreeIcons}
+													icon={Image03Icon}
 													className="size-4"
 													data-icon
 												/>

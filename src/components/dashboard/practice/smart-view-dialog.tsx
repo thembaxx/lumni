@@ -1,6 +1,6 @@
 "use client";
 
-import { File02Icon } from "@hugeicons/core-free-icons";
+import File02Icon from "@hugeicons/core-free-icons/File02Icon";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { EmptyState } from "@/components/shared/empty-state";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Search01Icon } from "@hugeicons/core-free-icons";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

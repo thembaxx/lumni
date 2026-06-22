@@ -1,6 +1,7 @@
 "use client";
 
-import { Download01Icon, PrinterIcon } from "@hugeicons/core-free-icons";
+import Download01Icon from "@hugeicons/core-free-icons/Download01Icon";
+import PrinterIcon from "@hugeicons/core-free-icons/PrinterIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,7 @@
 "use client";
 
-import { Add01Icon, Download03Icon } from "@hugeicons/core-free-icons";
+import Add01Icon from "@hugeicons/core-free-icons/Add01Icon";
+import Download03Icon from "@hugeicons/core-free-icons/Download03Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";

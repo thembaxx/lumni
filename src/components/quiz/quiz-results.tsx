@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Award01Icon,
-	DashboardSquare01Icon,
-	Refresh01Icon,
-} from "@hugeicons/core-free-icons";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import DashboardSquare01Icon from "@hugeicons/core-free-icons/DashboardSquare01Icon";
+import Refresh01Icon from "@hugeicons/core-free-icons/Refresh01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

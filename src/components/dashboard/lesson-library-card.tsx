@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen01Icon, GraduationCapIcon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";

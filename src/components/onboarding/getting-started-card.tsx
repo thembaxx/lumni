@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	ArrowRight01Icon,
-	Cancel01Icon,
-	CheckmarkCircle01Icon,
-	PlayFreeIcons,
-	Settings01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
+import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";

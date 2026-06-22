@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Home01Icon,
-	Share08Icon,
-	Target01Icon,
-	UndoIcon,
-} from "@hugeicons/core-free-icons";
+import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
+import Share08Icon from "@hugeicons/core-free-icons/Share08Icon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
+import UndoIcon from "@hugeicons/core-free-icons/UndoIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Confetti } from "@/components/celebration";

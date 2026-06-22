@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy01Icon } from "@hugeicons/core-free-icons";
+import Copy01Icon from "@hugeicons/core-free-icons/Copy01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "@/lib/utils";
 

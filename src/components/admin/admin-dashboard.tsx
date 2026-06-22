@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	CheckmarkCircle01Icon,
-	File02Icon,
-	Logout01Icon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import File02Icon from "@hugeicons/core-free-icons/File02Icon";
+import Logout01Icon from "@hugeicons/core-free-icons/Logout01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, m } from "framer-motion";

@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	CancelCircleIcon,
-	CheckmarkCircle01Icon,
-	Refresh01Icon,
-} from "@hugeicons/core-free-icons";
+import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import Refresh01Icon from "@hugeicons/core-free-icons/Refresh01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

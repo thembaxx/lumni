@@ -1,6 +1,7 @@
 "use client";
 
-import { Calendar01Icon, Download02Icon } from "@hugeicons/core-free-icons";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import Download02Icon from "@hugeicons/core-free-icons/Download02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";

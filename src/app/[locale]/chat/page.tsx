@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Cancel01Icon,
-	Chat01Icon,
-	StarsIcon,
-} from "@hugeicons/core-free-icons";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
+import StarsIcon from "@hugeicons/core-free-icons/StarsIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";

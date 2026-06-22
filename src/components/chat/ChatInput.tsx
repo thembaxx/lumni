@@ -1,9 +1,7 @@
-import {
-	Camera01Icon,
-	MailSend01Icon,
-	Mic01Icon,
-	Upload01Icon,
-} from "@hugeicons/core-free-icons";
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
+import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
+import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";

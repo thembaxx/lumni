@@ -1,6 +1,6 @@
 "use client";
 
-import { CloudDownloadIcon } from "@hugeicons/core-free-icons";
+import CloudDownloadIcon from "@hugeicons/core-free-icons/CloudDownloadIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";

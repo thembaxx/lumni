@@ -1,6 +1,7 @@
 "use client";
 
-import { Calendar01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

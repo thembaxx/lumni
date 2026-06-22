@@ -1,6 +1,7 @@
 "use client";
 
-import { CompassIcon, Login01Icon } from "@hugeicons/core-free-icons";
+import CompassIcon from "@hugeicons/core-free-icons/CompassIcon";
+import Login01Icon from "@hugeicons/core-free-icons/Login01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useState } from "react";

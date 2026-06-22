@@ -1,6 +1,6 @@
 "use client";
 
-import { UserIcon } from "@hugeicons/core-free-icons";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMemo } from "react";
 import { RoleSelector } from "@/components/settings/tabs/role-selector";

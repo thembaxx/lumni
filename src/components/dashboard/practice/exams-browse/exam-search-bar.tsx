@@ -1,6 +1,7 @@
 "use client";
 
-import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { Button } from "@/components/ui/button";

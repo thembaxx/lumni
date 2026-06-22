@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	ArrowUpRight01Icon,
-	Delete02Icon,
-	File02Icon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import ArrowUpRight01Icon from "@hugeicons/core-free-icons/ArrowUpRight01Icon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import File02Icon from "@hugeicons/core-free-icons/File02Icon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail01Icon } from "@hugeicons/core-free-icons";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMemo } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";

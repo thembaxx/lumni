@@ -1,6 +1,7 @@
 "use client";
 
-import { GridIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import GridIcon from "@hugeicons/core-free-icons/GridIcon";
+import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import {

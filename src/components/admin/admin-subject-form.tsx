@@ -1,6 +1,6 @@
 "use client";
 
-import { CloudUploadIcon } from "@hugeicons/core-free-icons";
+import CloudUploadIcon from "@hugeicons/core-free-icons/CloudUploadIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

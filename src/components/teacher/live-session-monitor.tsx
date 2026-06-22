@@ -1,6 +1,6 @@
 "use client";
 
-import { Refresh01Icon } from "@hugeicons/core-free-icons";
+import Refresh01Icon from "@hugeicons/core-free-icons/Refresh01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";

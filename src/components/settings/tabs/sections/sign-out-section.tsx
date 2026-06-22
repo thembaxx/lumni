@@ -1,6 +1,6 @@
 "use client";
 
-import { Logout01Icon } from "@hugeicons/core-free-icons";
+import Logout01Icon from "@hugeicons/core-free-icons/Logout01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 

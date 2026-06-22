@@ -1,6 +1,7 @@
 "use client";
 
-import { Clock01Icon, UndoIcon } from "@hugeicons/core-free-icons";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import UndoIcon from "@hugeicons/core-free-icons/UndoIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import type { AngleMode } from "@/lib/calculator/engine";

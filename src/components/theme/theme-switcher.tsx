@@ -1,6 +1,8 @@
 "use client";
 
-import { ComputerIcon, MoonIcon, Sun01Icon } from "@hugeicons/core-free-icons";
+import ComputerIcon from "@hugeicons/core-free-icons/ComputerIcon";
+import MoonIcon from "@hugeicons/core-free-icons/MoonIcon";
+import Sun01Icon from "@hugeicons/core-free-icons/Sun01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "@/components/theme";

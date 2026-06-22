@@ -1,6 +1,7 @@
 "use client";
 
-import { FlashIcon, SparklesIcon } from "@hugeicons/core-free-icons";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useEffect, useState } from "react";

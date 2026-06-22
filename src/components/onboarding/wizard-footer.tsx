@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 

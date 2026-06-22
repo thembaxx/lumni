@@ -1,6 +1,7 @@
 "use client";
 
-import { ShieldCheck, UserCheck01Icon } from "@hugeicons/core-free-icons";
+import ShieldCheck from "@hugeicons/core-free-icons/SecurityCheckIcon";
+import UserCheck01Icon from "@hugeicons/core-free-icons/UserCheck01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { ConsentStatusBadge } from "@/components/atoms/consent-status-badge";

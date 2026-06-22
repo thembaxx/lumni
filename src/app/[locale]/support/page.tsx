@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	HeadphonesIcon,
-	Mail01Icon,
-	Message01Icon,
-} from "@hugeicons/core-free-icons";
+import HeadphonesIcon from "@hugeicons/core-free-icons/HeadphonesIcon";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
+import Message01Icon from "@hugeicons/core-free-icons/Message01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen01Icon, SentIcon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import SentIcon from "@hugeicons/core-free-icons/SentIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";

@@ -72,17 +72,17 @@ vi.mock("@/components/dashboard/mastery-heatmap", () => ({
 // overrides the actual component so dynamic just passes it through.
 vi.mock("next/dynamic", () => ({
 	default: (
-		loader: () => Promise<{ default: React.ComponentType }>,
+		_loader: () => Promise<{ default: React.ComponentType }>,
 		options?: { loading?: () => React.ReactNode },
 	) => {
 		// Return a component that renders the loader result synchronously via the
 		// mock module (which are already resolved synchronously by Vitest's mock).
 		// We return a wrapper that React can render.
-		const LazyComp = (props: Record<string, unknown>) => {
+		const LazyComp = (_props: Record<string, unknown>) => {
 			// The mocks make each module available synchronously, so we just use
 			// the loading placeholder if provided, otherwise a simple div.
 			return options?.loading ? (
-				<>{options.loading()}</>
+				options.loading()
 			) : (
 				<div data-testid="dynamic-placeholder" />
 			);

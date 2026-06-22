@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	NoteIcon,
-	Quiz03Icon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
+import Quiz03Icon from "@hugeicons/core-free-icons/Quiz03Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";

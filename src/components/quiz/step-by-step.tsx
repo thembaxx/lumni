@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	Mortarboard01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";

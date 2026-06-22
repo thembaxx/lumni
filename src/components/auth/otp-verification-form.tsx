@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	CheckmarkCircle01Icon,
-	FlashIcon,
-	RadialIcon,
-	RefreshIcon,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Anim } from "@/components/shared/anim";

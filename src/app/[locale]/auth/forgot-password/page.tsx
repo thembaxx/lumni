@@ -1,6 +1,7 @@
 "use client";
 
-import { Mail01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";

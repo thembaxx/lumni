@@ -1,6 +1,6 @@
 "use client";
 
-import { Mic01Icon } from "@hugeicons/core-free-icons";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { memo, useState } from "react";

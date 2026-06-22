@@ -1,6 +1,7 @@
 "use client";
 
-import { Calendar01Icon, Clock01Icon } from "@hugeicons/core-free-icons";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { StudySession } from "@/lib/utils/study-planner";
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { Mail01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { Models } from "appwrite";
 import { useMemo } from "react";

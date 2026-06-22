@@ -1,6 +1,7 @@
 "use client";
 
-import { Book01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import Book01Icon from "@hugeicons/core-free-icons/Book01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useRef, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";

@@ -1,6 +1,7 @@
 "use client";
 
-import { FireIcon, PlayFreeIcons } from "@hugeicons/core-free-icons";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";

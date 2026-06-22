@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	AlertCircleIcon,
-	BookOpenIcon,
-	RefreshIcon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
+import BookOpenIcon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";

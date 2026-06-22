@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	FlashIcon,
-	TargetIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import TargetIcon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";

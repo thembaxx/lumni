@@ -1,6 +1,6 @@
 "use client";
 
-import { StarIcon } from "@hugeicons/core-free-icons";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";

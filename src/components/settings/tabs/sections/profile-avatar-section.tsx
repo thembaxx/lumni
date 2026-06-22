@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera01Icon } from "@hugeicons/core-free-icons";
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getRandomName } from "@/lib/utils/random-name";

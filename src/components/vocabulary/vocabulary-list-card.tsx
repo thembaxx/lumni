@@ -1,6 +1,7 @@
 "use client";
 
-import { Bookmark02Icon, BookOpen01Icon } from "@hugeicons/core-free-icons";
+import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useMotionValueEvent, useScroll } from "framer-motion";
 import { useRef, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Award01Icon } from "@hugeicons/core-free-icons";
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";

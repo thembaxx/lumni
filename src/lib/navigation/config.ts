@@ -1,21 +1,19 @@
-import {
-	Bookmark02Icon,
-	BookOpen01Icon,
-	Calendar01Icon,
-	Chat01Icon,
-	CompassIcon,
-	DatabaseIcon,
-	File01Icon,
-	FlashIcon,
-	Mic01Icon,
-	Mortarboard01Icon,
-	Quiz01Icon,
-	Search01Icon,
-	Settings01Icon,
-	Target01Icon,
-	Upload01Icon,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
+import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
+import CompassIcon from "@hugeicons/core-free-icons/CompassIcon";
+import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
+import File01Icon from "@hugeicons/core-free-icons/File01Icon";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
+import Quiz01Icon from "@hugeicons/core-free-icons/Quiz01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
+import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
+import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import type { IconSvgElement } from "@hugeicons/react";
 export interface NavItem {
 	id: string;

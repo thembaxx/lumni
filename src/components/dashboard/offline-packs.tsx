@@ -1,14 +1,12 @@
 "use client";
 
-import {
-	CloudDownloadIcon,
-	CloudOffIcon,
-	Delete02Icon,
-	FileDownloadIcon,
-	PlayIcon,
-	StoreIcon,
-	Time03Icon,
-} from "@hugeicons/core-free-icons";
+import CloudDownloadIcon from "@hugeicons/core-free-icons/CloudDownloadIcon";
+import CloudOffIcon from "@hugeicons/core-free-icons/CloudOffIcon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
+import FileDownloadIcon from "@hugeicons/core-free-icons/FileDownloadIcon";
+import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
+import StoreIcon from "@hugeicons/core-free-icons/Store01Icon";
+import Time03Icon from "@hugeicons/core-free-icons/Time03Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";

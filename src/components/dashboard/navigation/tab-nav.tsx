@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Calendar01Icon,
-	ChartUpIcon,
-	GridIcon,
-} from "@hugeicons/core-free-icons";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
+import GridIcon from "@hugeicons/core-free-icons/GridIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { startTransition, useRef } from "react";

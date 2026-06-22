@@ -17,8 +17,6 @@ import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { CardSkeleton } from "@/components/ui/skeletons";
-import { Toaster } from "@/components/ui/toast";
-import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
 import { isValidLocale, locales } from "@/i18n/locales";
 import { timeZone } from "@/i18n/request";
 import { ourFileRouter } from "../api/uploadthing/core";
@@ -47,6 +45,15 @@ const TosBanner = dynamic(() =>
 	import("@/components/consent/tos-banner").then((m) => ({
 		default: m.TosBanner,
 	})),
+);
+const Toaster = dynamic(
+	() => import("@/components/ui/toast").then((m) => ({ default: m.Toaster })),
+);
+const UploadDialogRenderer = dynamic(
+	() =>
+		import("@/components/upload/upload-dialog-renderer").then((m) => ({
+			default: m.UploadDialogRenderer,
+		})),
 );
 
 async function Utssr() {

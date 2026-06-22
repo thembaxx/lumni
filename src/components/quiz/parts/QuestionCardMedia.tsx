@@ -1,4 +1,5 @@
-import { Add01Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
+import Add01Icon from "@hugeicons/core-free-icons/Add01Icon";
+import MinusSignIcon from "@hugeicons/core-free-icons/MinusSignIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";

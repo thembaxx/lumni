@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";

@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	Bookmark02Icon,
-	Bookmark03Icon,
-	Search01Icon,
-	VolumeUpIcon,
-} from "@hugeicons/core-free-icons";
+import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
+import Bookmark03Icon from "@hugeicons/core-free-icons/Bookmark03Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";

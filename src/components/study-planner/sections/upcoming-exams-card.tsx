@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpen01Icon, Delete02Icon } from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";

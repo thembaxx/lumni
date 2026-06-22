@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	Bookmark02Icon,
-	Bookmark03Icon,
-	VolumeUpIcon,
-} from "@hugeicons/core-free-icons";
+import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
+import Bookmark03Icon from "@hugeicons/core-free-icons/Bookmark03Icon";
+import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";

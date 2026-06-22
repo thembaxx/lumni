@@ -1,6 +1,7 @@
 "use client";
 
-import { MapPinIcon, Mortarboard01Icon } from "@hugeicons/core-free-icons";
+import MapPinIcon from "@hugeicons/core-free-icons/MapPinIcon";
+import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMemo } from "react";
 import { EditableField } from "@/components/settings/tabs/editable-field";

@@ -1,6 +1,6 @@
 "use client";
 
-import { SparklesIcon } from "@hugeicons/core-free-icons";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 

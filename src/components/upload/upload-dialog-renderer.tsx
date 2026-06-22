@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircleIcon } from "@hugeicons/core-free-icons";
+import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

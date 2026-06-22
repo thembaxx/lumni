@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	BookOpen01Icon,
-	Lightning,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Lightning from "@hugeicons/core-free-icons/FlashIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useParams } from "next/navigation";

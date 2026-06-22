@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	FlashIcon,
-	PlayFreeIcons,
-	Timer01Icon,
-} from "@hugeicons/core-free-icons";
+import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
+import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
+import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

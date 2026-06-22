@@ -1,6 +1,7 @@
 "use client";
 
-import { CloudUploadIcon, Delete02Icon } from "@hugeicons/core-free-icons";
+import CloudUploadIcon from "@hugeicons/core-free-icons/CloudUploadIcon";
+import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useRef, useState } from "react";

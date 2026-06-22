@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	Flag01Icon,
-} from "@hugeicons/core-free-icons";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
+import Flag01Icon from "@hugeicons/core-free-icons/Flag01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";

@@ -1,11 +1,9 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	BookOpen02Icon,
-	RadialIcon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";

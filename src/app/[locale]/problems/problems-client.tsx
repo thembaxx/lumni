@@ -1,12 +1,10 @@
 "use client";
 
-import {
-	ArrowDown01Icon,
-	BookOpen01Icon,
-	LockIcon,
-	RadialIcon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import LockIcon from "@hugeicons/core-free-icons/LockIcon";
+import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useMemo, useState } from "react";

@@ -1,13 +1,11 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	Calendar01Icon,
-	Clock01Icon,
-	NoteEditIcon,
-	Quiz02Icon,
-	TimeScheduleIcon,
-} from "@hugeicons/core-free-icons";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import NoteEditIcon from "@hugeicons/core-free-icons/NoteEditIcon";
+import Quiz02Icon from "@hugeicons/core-free-icons/Quiz02Icon";
+import TimeScheduleIcon from "@hugeicons/core-free-icons/TimeScheduleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
