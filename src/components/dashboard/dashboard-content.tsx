@@ -1,22 +1,59 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import { AnalyticsTab } from "@/components/dashboard/analytics-tab";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LoginBanner } from "@/components/dashboard/login-banner";
-import { PracticeTab } from "@/components/dashboard/practice-tab";
 import { TodayTab } from "@/components/dashboard/today-tab";
 import type { TabValue } from "@/components/dashboard/types";
 import { PageContainer } from "@/components/layout/page-container";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggeredSection } from "@/components/shared/stagger-provider";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+
+const PracticeTab = dynamic(
+	() =>
+		import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),
+	{
+		ssr: false,
+		loading: () => (
+			<div className="flex flex-col gap-4 px-4">
+				<Skeleton className="h-32 rounded-3xl" />
+				<div className="grid grid-cols-2 gap-3">
+					<Skeleton className="h-24 rounded-3xl" />
+					<Skeleton className="h-24 rounded-3xl" />
+				</div>
+				<Skeleton className="h-40 rounded-3xl" />
+			</div>
+		),
+	},
+);
+
+const AnalyticsTab = dynamic(
+	() =>
+		import("@/components/dashboard/analytics-tab").then((m) => m.AnalyticsTab),
+	{
+		ssr: false,
+		loading: () => (
+			<div className="flex flex-col gap-4 px-4">
+				<div className="grid grid-cols-3 gap-3">
+					<Skeleton className="h-20 rounded-3xl" />
+					<Skeleton className="h-20 rounded-3xl" />
+					<Skeleton className="h-20 rounded-3xl" />
+				</div>
+				<Skeleton className="h-48 rounded-3xl" />
+				<Skeleton className="h-64 rounded-3xl" />
+			</div>
+		),
+	},
+);
 
 async function refreshPage(): Promise<void> {
 	window.location.reload();
