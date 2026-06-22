@@ -94,11 +94,13 @@ vi.mock("next/dynamic", () => ({
 import { AnalyticsTab } from "@/components/dashboard/analytics-tab";
 import { useAuth } from "@/lib/auth/auth-context";
 
-// Intersection Observer mock
 function createMockIntersectionObserver(
-	triggerImmediately = false,
+	triggerImmediately: boolean,
 ): typeof IntersectionObserver {
-	return vi.fn((callback: IntersectionObserverCallback) => {
+	return vi.fn(function (
+		this: IntersectionObserver,
+		callback: IntersectionObserverCallback,
+	) {
 		const instance = {
 			observe: vi.fn((el: Element) => {
 				if (triggerImmediately) {
@@ -206,47 +208,51 @@ describe("LazySection behavior via AnalyticsTab", () => {
 
 	it("disconnects observer after becoming visible", () => {
 		const disconnectSpy = vi.fn();
-		const observeSpy = vi.fn((el: Element) => {
-			// trigger immediately
-			act(() => {
-				callback(
-					[
-						{
-							isIntersecting: true,
-							target: el,
-						} as IntersectionObserverEntry,
-					],
-					null as unknown as IntersectionObserver,
-				);
-			});
-		});
 
-		let callback: IntersectionObserverCallback = () => {};
-		globalThis.IntersectionObserver = vi.fn(
-			(cb: IntersectionObserverCallback) => {
-				callback = cb;
-				return {
-					observe: observeSpy,
-					disconnect: disconnectSpy,
-					unobserve: vi.fn(),
-					takeRecords: vi.fn(() => []),
-					root: null,
-					rootMargin: "",
-					thresholds: [],
-				};
-			},
-		) as unknown as typeof IntersectionObserver;
+		let capturedCallback: IntersectionObserverCallback = () => {};
+		// biome-ignore lint/complexity/useArrowFunction: must be regular function for constructor usage
+		globalThis.IntersectionObserver = function (
+			cb: IntersectionObserverCallback,
+			_options?: IntersectionObserverInit,
+		) {
+			capturedCallback = cb;
+			const instance: IntersectionObserver = {
+				observe: vi.fn((el: Element) => {
+					act(() => {
+						capturedCallback(
+							[
+								{
+									isIntersecting: true,
+									target: el,
+								} as IntersectionObserverEntry,
+							],
+							instance,
+						);
+					});
+				}),
+				disconnect: disconnectSpy,
+				unobserve: vi.fn(),
+				takeRecords: vi.fn(() => []),
+				root: null,
+				rootMargin: "",
+				thresholds: [],
+			};
+			return instance;
+		} as unknown as typeof IntersectionObserver;
 
 		render(<AnalyticsTab />);
 
-		// disconnect should have been called once visible (once per lazy section that triggered)
 		expect(disconnectSpy).toHaveBeenCalled();
 	});
 
 	it("does not show children before intersection is triggered", () => {
 		// Observer that never calls back
-		globalThis.IntersectionObserver = vi.fn(
-			(_cb: IntersectionObserverCallback) => ({
+		// biome-ignore lint/complexity/useArrowFunction: must be regular function for constructor usage
+		globalThis.IntersectionObserver = function (
+			_cb: IntersectionObserverCallback,
+			_options?: IntersectionObserverInit,
+		) {
+			return {
 				observe: vi.fn(),
 				disconnect: vi.fn(),
 				unobserve: vi.fn(),
@@ -254,42 +260,36 @@ describe("LazySection behavior via AnalyticsTab", () => {
 				root: null,
 				rootMargin: "",
 				thresholds: [],
-			}),
-		) as unknown as typeof IntersectionObserver;
+			} as unknown as IntersectionObserver;
+		} as unknown as typeof IntersectionObserver;
 
 		const { queryByTestId } = render(<AnalyticsTab />);
 
-		// The leaderboard and mastery-heatmap are behind LazySection and should
-		// not be rendered until intersection is triggered. Since dynamic mocks
-		// return loading placeholders, the skeletons are shown instead.
-		// The children (leaderboard-card, mastery-heatmap) should not be visible.
 		expect(queryByTestId("leaderboard-card")).toBeNull();
 		expect(queryByTestId("mastery-heatmap")).toBeNull();
 	});
 
 	it("creates IntersectionObserver with 200px rootMargin", () => {
 		const capturedOptions: IntersectionObserverInit[] = [];
-		globalThis.IntersectionObserver = vi.fn(
-			(
-				_cb: IntersectionObserverCallback,
-				options?: IntersectionObserverInit,
-			) => {
-				if (options) capturedOptions.push(options);
-				return {
-					observe: vi.fn(),
-					disconnect: vi.fn(),
-					unobserve: vi.fn(),
-					takeRecords: vi.fn(() => []),
-					root: null,
-					rootMargin: "",
-					thresholds: [],
-				};
-			},
-		) as unknown as typeof IntersectionObserver;
+		// biome-ignore lint/complexity/useArrowFunction: must be regular function for constructor usage
+		globalThis.IntersectionObserver = function (
+			_cb: IntersectionObserverCallback,
+			options?: IntersectionObserverInit,
+		) {
+			if (options) capturedOptions.push(options);
+			return {
+				observe: vi.fn(),
+				disconnect: vi.fn(),
+				unobserve: vi.fn(),
+				takeRecords: vi.fn(() => []),
+				root: null,
+				rootMargin: "",
+				thresholds: [],
+			} as unknown as IntersectionObserver;
+		} as unknown as typeof IntersectionObserver;
 
 		render(<AnalyticsTab />);
 
-		// All lazy sections should use rootMargin: "200px"
 		expect(capturedOptions.length).toBeGreaterThan(0);
 		for (const opts of capturedOptions) {
 			expect(opts.rootMargin).toBe("200px");

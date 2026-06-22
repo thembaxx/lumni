@@ -70,8 +70,12 @@ vi.mock("@/components/ui/avatar", () => ({
 		</div>
 	),
 	AvatarImage: ({ src, alt }: { src: string | null; alt: string }) => (
-		<img data-testid="avatar-image" src={src ?? undefined} alt={alt} />
+		<>
+			{/* biome-ignore lint/performance/noImgElement: test mock */}
+			<img data-testid="avatar-image" src={src ?? undefined} alt={alt} />
+		</>
 	),
+
 	AvatarFallback: ({ children }: { children: React.ReactNode }) => (
 		<div data-testid="avatar-fallback">{children}</div>
 	),
@@ -103,14 +107,19 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
 		open: boolean;
 		onOpenChange: (v: boolean) => void;
 	}) => (
-		<div
-			data-testid="dropdown-list"
-			data-open={open}
-			onClick={() => onOpenChange(!open)}
-		>
-			{children}
-		</div>
+		<>
+			{/* biome-ignore lint/a11y/useKeyWithClickEvents: test mock */}
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: test mock */}
+			<div
+				data-testid="dropdown-list"
+				data-open={open}
+				onClick={() => onOpenChange(!open)}
+			>
+				{children}
+			</div>
+		</>
 	),
+
 	DropdownListTrigger: ({ children }: { children: React.ReactNode }) => (
 		<div data-testid="dropdown-trigger">{children}</div>
 	),
@@ -124,10 +133,15 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
 		children: React.ReactNode;
 		onClick?: () => void;
 	}) => (
-		<div data-testid="dropdown-item" role="menuitem" onClick={onClick}>
-			{children}
-		</div>
+		<>
+			{/* biome-ignore lint/a11y/useFocusableInteractive: test mock */}
+			{/* biome-ignore lint/a11y/useKeyWithClickEvents: test mock */}
+			<div data-testid="dropdown-item" role="menuitem" onClick={onClick}>
+				{children}
+			</div>
+		</>
 	),
+
 	DropdownListSeparator: () => <hr data-testid="dropdown-separator" />,
 }));
 
@@ -201,6 +215,30 @@ describe("TopNav", () => {
 	afterEach(() => {
 		cleanup();
 		vi.clearAllMocks();
+	});
+
+	beforeEach(() => {
+		vi.mocked(usePathname).mockReturnValue("/dashboard");
+		vi.mocked(useAuth).mockReturnValue({
+			user: {
+				$id: "user-1",
+				name: "Test User",
+				email: "test@example.com",
+				labels: [],
+				prefs: {},
+			},
+			status: "authenticated",
+			isAnonymous: false,
+			signOut: vi.fn(),
+		});
+		vi.mocked(useGamification).mockReturnValue({
+			levelInfo: { level: 5, progress: 60 },
+		});
+		vi.mocked(useSyncStatus).mockReturnValue({
+			isOnline: true,
+			pendingCount: 0,
+		});
+		vi.mocked(useImmersiveMode).mockReturnValue({ isImmersive: false });
 	});
 
 	describe("visibility conditions", () => {

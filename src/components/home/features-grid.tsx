@@ -1,9 +1,9 @@
 "use client";
 
+import ChartBar from "@hugeicons/core-free-icons/BarChartIcon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
 import BulbIcon from "@hugeicons/core-free-icons/BulbIcon";
-import ChartBar from "@hugeicons/core-free-icons/BarChartIcon";
 import GlobeIcon from "@hugeicons/core-free-icons/GlobeIcon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";

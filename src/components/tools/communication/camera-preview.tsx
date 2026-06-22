@@ -1,7 +1,7 @@
 "use client";
 
-import FlashlightIcon from "@hugeicons/core-free-icons/FlashlightIcon";
 import SwitchCamera from "@hugeicons/core-free-icons/CameraRotated01Icon";
+import FlashlightIcon from "@hugeicons/core-free-icons/FlashlightIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

@@ -7,9 +7,9 @@ import ChartBarIncreasingIcon from "@hugeicons/core-free-icons/ChartBarIncreasin
 import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import File02Icon from "@hugeicons/core-free-icons/File02Icon";
+import World from "@hugeicons/core-free-icons/GlobeIcon";
 import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
 import StarSquareIcon from "@hugeicons/core-free-icons/StarSquareIcon";
-import World from "@hugeicons/core-free-icons/GlobeIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";

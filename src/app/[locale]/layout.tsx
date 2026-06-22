@@ -46,14 +46,13 @@ const TosBanner = dynamic(() =>
 		default: m.TosBanner,
 	})),
 );
-const Toaster = dynamic(
-	() => import("@/components/ui/toast").then((m) => ({ default: m.Toaster })),
+const Toaster = dynamic(() =>
+	import("@/components/ui/toast").then((m) => ({ default: m.Toaster })),
 );
-const UploadDialogRenderer = dynamic(
-	() =>
-		import("@/components/upload/upload-dialog-renderer").then((m) => ({
-			default: m.UploadDialogRenderer,
-		})),
+const UploadDialogRenderer = dynamic(() =>
+	import("@/components/upload/upload-dialog-renderer").then((m) => ({
+		default: m.UploadDialogRenderer,
+	})),
 );
 
 async function Utssr() {
