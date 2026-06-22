@@ -29,6 +29,7 @@ When generating mixed-type questions, the inner loop fires `Promise.allSettled(a
 ## Current state
 
 **`src/lib/question-engine/question-engine.ts:334-347`**:
+
 ```typescript
 const candidates = await Promise.allSettled(
   available.map((_, j) => {
@@ -59,18 +60,20 @@ The `available.map(...)` fires N generators in parallel. The `break` after the f
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/question-engine/question-engine.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                      | Expected on success |
+| --------- | ------------------------------------------------------------ | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                           | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/question-engine/question-engine.ts` | 0 errors            |
+| Tests     | `bun run test`                                               | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/question-engine/question-engine.ts` (lines 334-355)
 
 **Out of scope**:
+
 - `src/lib/question-engine/processors/` — do not change processor logic
 - Other generation methods in question-engine.ts
 

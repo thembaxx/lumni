@@ -35,7 +35,11 @@
       "subtopics": [
         { "id": "egd-prisms-pyramids", "name": "Prisms and Pyramids", "order": 1 },
         { "id": "egd-cylinders-cones", "name": "Cylinders and Cones", "order": 2 },
-        { "id": "egd-intersections-developments", "name": "Intersections and Developments", "order": 3 }
+        {
+          "id": "egd-intersections-developments",
+          "name": "Intersections and Developments",
+          "order": 3
+        }
       ]
     },
     {

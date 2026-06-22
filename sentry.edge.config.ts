@@ -6,13 +6,13 @@
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
-	dsn:
-		process.env.NEXT_PUBLIC_SENTRY_DSN ||
-		"https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104",
+  dsn:
+    process.env.NEXT_PUBLIC_SENTRY_DSN ||
+    "https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104",
 
-	tracesSampleRate: process.env.NODE_ENV === "production" ? 0.25 : 1.0,
+  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.25 : 1.0,
 
-	enableLogs: process.env.NODE_ENV !== "production",
+  enableLogs: process.env.NODE_ENV !== "production",
 
-	sendDefaultPii: false,
+  sendDefaultPii: false,
 });

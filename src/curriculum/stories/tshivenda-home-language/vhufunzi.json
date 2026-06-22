@@ -1,50 +1,50 @@
 {
-	"id": "vhufunzi",
-	"title": "Vhufunzi",
-	"author": "Lumni",
-	"language": "Tshivenda",
-	"languageId": "tshivenda-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 850,
-	"subjects": ["tshivenda-home-language"],
-	"source": "ai-generated",
-	"topics": ["honesty", "truth", "values"],
-	"content": "# Vhufunzi\n\nNgei kusini kwa tshikolo, ho ne hu na mushumanyi wa vhukuma wa vhunzhi. Mushumanyi uyu o vha a tshi pfi Mukondeleli. O vha a tshi divha uri vhufunzi ndi zwa ndeme kha vhuthu.\n\nNgei tshikoloni tsha vhupo, ho vha hu na musidzana o no vhofholowa a tshi pfi Nyambeni. Nyambeni o vha a sa tendi uri vhufunzi vhu a thusa. O vha a tshi humbula uri u vhuya ndi nḓila khwine ya u ita.\n\nNgunwe ḓuvha, vhakololo vha vha netshedza mushumo wa u ṅwala zwiimo zwa phosiso kha ḓorobo. Nyambeni o vha a si na mushumo wa u ita. O vha a songo ita mushumo wawe. Nga u vhuya, o ri o ita mushumo wawe ngeno a sa ita.\n\nVhagudisi vha vha tshi khou toda uri vhakololo vha ambe zwa vhukuma. Vha ri: \"Ndi nnyi ane a nga ri amba uri zwo itea hani?\"\n\nMukondeleli o ima. O vha o vhona Nyambeni a tshi vhuya. O ri: \"Mme Mufunzi, ndi nga humbela u amba tshithu?\"\n\n\"Ee, Mukondeleli, amba.\"\n\n\"Ndi khou vhona uri vhune ha itea kha mushumo wa Nyambeni a si wa vhukuma. Ndi khou humbela uri ri thome u shuma vhukuma.\"\n\nNyambeni o vha o pfuka. O vha o tangana na tshilidzi. O ri: \"Ndi a livhuwa, Mukondeleli. U mphudza u vhona uri vhufunzi vhu a thusa u fhira u vhuya.\"\n\nU bva ngunwe iṋe, Nyambeni o shanduka. A thoma u amba vhukuma nga nyambo dzawe. A wana uri vhathu vha a mu fulufhela nga nṱha ha izwi. Mushumo wa vhukuma wo mu thusa u vha na vhuthu vhutanzi.\n\n## Pfunzo dza ndeme\n\n1. **Vhufunzi** — U amba vhukuma hu u ita zwavhuḓi. Vhathu vha a u fulufhela musi u tshi amba vhukuma.\n2. **U shanduka** — Hu si kale u nga shanduka na u ita zwa vhukuma.\n3. **Vhuthu** — Vhufunzi vhu a thusa u vha na vhuthu vhutanzi.\n\n## Maipfi a ndeme\n\n| Tshivenda | English | Part of Speech |\n|-----------|---------|----------------|\n| vhufunzi | honesty | noun |\n| vhukuma | truth | noun |\n| fulufhela | trust | verb |\n| shanduka | to change | verb |\n| ndeme | importance | noun |",
-	"vocabulary": [
-		{
-			"term": "vhufunzi",
-			"definition": "Honesty; the quality of being truthful",
-			"partOfSpeech": "noun",
-			"pronunciation": "/vʰuˈfuːnzi/",
-			"language": "ve"
-		},
-		{
-			"term": "vhukuma",
-			"definition": "Truth; what is true and real",
-			"partOfSpeech": "noun",
-			"pronunciation": "/vʰuˈkuːma/",
-			"language": "ve"
-		},
-		{
-			"term": "fulufhela",
-			"definition": "To trust or have confidence in someone",
-			"partOfSpeech": "verb",
-			"pronunciation": "/fuˈluːfɦɛla/",
-			"language": "ve"
-		},
-		{
-			"term": "shanduka",
-			"definition": "To change or transform from one state to another",
-			"partOfSpeech": "verb",
-			"pronunciation": "/ʃaˈnduːka/",
-			"language": "ve"
-		},
-		{
-			"term": "ndeme",
-			"definition": "Importance; the quality of being significant",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈndɛːmɛ/",
-			"language": "ve"
-		}
-	]
+  "id": "vhufunzi",
+  "title": "Vhufunzi",
+  "author": "Lumni",
+  "language": "Tshivenda",
+  "languageId": "tshivenda-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 850,
+  "subjects": ["tshivenda-home-language"],
+  "source": "ai-generated",
+  "topics": ["honesty", "truth", "values"],
+  "content": "# Vhufunzi\n\nNgei kusini kwa tshikolo, ho ne hu na mushumanyi wa vhukuma wa vhunzhi. Mushumanyi uyu o vha a tshi pfi Mukondeleli. O vha a tshi divha uri vhufunzi ndi zwa ndeme kha vhuthu.\n\nNgei tshikoloni tsha vhupo, ho vha hu na musidzana o no vhofholowa a tshi pfi Nyambeni. Nyambeni o vha a sa tendi uri vhufunzi vhu a thusa. O vha a tshi humbula uri u vhuya ndi nḓila khwine ya u ita.\n\nNgunwe ḓuvha, vhakololo vha vha netshedza mushumo wa u ṅwala zwiimo zwa phosiso kha ḓorobo. Nyambeni o vha a si na mushumo wa u ita. O vha a songo ita mushumo wawe. Nga u vhuya, o ri o ita mushumo wawe ngeno a sa ita.\n\nVhagudisi vha vha tshi khou toda uri vhakololo vha ambe zwa vhukuma. Vha ri: \"Ndi nnyi ane a nga ri amba uri zwo itea hani?\"\n\nMukondeleli o ima. O vha o vhona Nyambeni a tshi vhuya. O ri: \"Mme Mufunzi, ndi nga humbela u amba tshithu?\"\n\n\"Ee, Mukondeleli, amba.\"\n\n\"Ndi khou vhona uri vhune ha itea kha mushumo wa Nyambeni a si wa vhukuma. Ndi khou humbela uri ri thome u shuma vhukuma.\"\n\nNyambeni o vha o pfuka. O vha o tangana na tshilidzi. O ri: \"Ndi a livhuwa, Mukondeleli. U mphudza u vhona uri vhufunzi vhu a thusa u fhira u vhuya.\"\n\nU bva ngunwe iṋe, Nyambeni o shanduka. A thoma u amba vhukuma nga nyambo dzawe. A wana uri vhathu vha a mu fulufhela nga nṱha ha izwi. Mushumo wa vhukuma wo mu thusa u vha na vhuthu vhutanzi.\n\n## Pfunzo dza ndeme\n\n1. **Vhufunzi** — U amba vhukuma hu u ita zwavhuḓi. Vhathu vha a u fulufhela musi u tshi amba vhukuma.\n2. **U shanduka** — Hu si kale u nga shanduka na u ita zwa vhukuma.\n3. **Vhuthu** — Vhufunzi vhu a thusa u vha na vhuthu vhutanzi.\n\n## Maipfi a ndeme\n\n| Tshivenda | English | Part of Speech |\n|-----------|---------|----------------|\n| vhufunzi | honesty | noun |\n| vhukuma | truth | noun |\n| fulufhela | trust | verb |\n| shanduka | to change | verb |\n| ndeme | importance | noun |",
+  "vocabulary": [
+    {
+      "term": "vhufunzi",
+      "definition": "Honesty; the quality of being truthful",
+      "partOfSpeech": "noun",
+      "pronunciation": "/vʰuˈfuːnzi/",
+      "language": "ve"
+    },
+    {
+      "term": "vhukuma",
+      "definition": "Truth; what is true and real",
+      "partOfSpeech": "noun",
+      "pronunciation": "/vʰuˈkuːma/",
+      "language": "ve"
+    },
+    {
+      "term": "fulufhela",
+      "definition": "To trust or have confidence in someone",
+      "partOfSpeech": "verb",
+      "pronunciation": "/fuˈluːfɦɛla/",
+      "language": "ve"
+    },
+    {
+      "term": "shanduka",
+      "definition": "To change or transform from one state to another",
+      "partOfSpeech": "verb",
+      "pronunciation": "/ʃaˈnduːka/",
+      "language": "ve"
+    },
+    {
+      "term": "ndeme",
+      "definition": "Importance; the quality of being significant",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈndɛːmɛ/",
+      "language": "ve"
+    }
+  ]
 }

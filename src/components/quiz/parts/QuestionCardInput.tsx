@@ -14,348 +14,313 @@ import { OrderingInput } from "@/components/quiz/parts/ordering-input";
 import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
 import { Button } from "@/components/ui/button";
 import {
-	CalculationInput,
-	EssayInput,
-	LongAnswerInput,
-	MatchingInput,
-	ProgrammingInput,
-	ShortAnswerInput,
+  CalculationInput,
+  EssayInput,
+  LongAnswerInput,
+  MatchingInput,
+  ProgrammingInput,
+  ShortAnswerInput,
 } from "@/components/ui/inputs";
-import type {
-	MediaContent,
-	Option,
-	UserAnswer,
-} from "@/lib/question-engine/types";
+import type { MediaContent, Option, UserAnswer } from "@/lib/question-engine/types";
 
 interface QuestionCardInputProps {
-	question: {
-		id: string;
-		type: string;
-		body: unknown;
-		points: number;
-		media?: MediaContent[];
-		hint?: string;
-		explanation?: string;
-		steps?: string[];
-	};
-	effectiveSubject: string;
-	state: {
-		isSubmitted: boolean;
-		selectedOption: string | null;
-		calcValue: string;
-		code: string;
-	};
-	options: Option[];
-	calcValue: string;
-	setCalcValue: React.Dispatch<React.SetStateAction<string>>;
-	code: string;
-	setCode: React.Dispatch<React.SetStateAction<string>>;
-	handleMCQSelect: (optionId: string) => void;
-	handleMCQSubmit: () => void;
-	handleGrade: (answer: UserAnswer) => Promise<void>;
+  question: {
+    id: string;
+    type: string;
+    body: unknown;
+    points: number;
+    media?: MediaContent[];
+    hint?: string;
+    explanation?: string;
+    steps?: string[];
+  };
+  effectiveSubject: string;
+  state: {
+    isSubmitted: boolean;
+    selectedOption: string | null;
+    calcValue: string;
+    code: string;
+  };
+  options: Option[];
+  calcValue: string;
+  setCalcValue: React.Dispatch<React.SetStateAction<string>>;
+  code: string;
+  setCode: React.Dispatch<React.SetStateAction<string>>;
+  handleMCQSelect: (optionId: string) => void;
+  handleMCQSubmit: () => void;
+  handleGrade: (answer: UserAnswer) => Promise<void>;
 }
 
 function getBodyField(body: unknown, field: string): unknown {
-	const b = body as Record<string, unknown>;
-	const inner = b.body as Record<string, unknown> | undefined;
-	return inner?.[field];
+  const b = body as Record<string, unknown>;
+  const inner = b.body as Record<string, unknown> | undefined;
+  return inner?.[field];
 }
 
 export function QuestionCardInput({
-	question,
-	effectiveSubject,
-	state,
-	options,
-	calcValue,
-	setCalcValue,
-	code,
-	setCode,
-	handleMCQSelect,
-	handleMCQSubmit,
-	handleGrade,
+  question,
+  effectiveSubject,
+  state,
+  options,
+  calcValue,
+  setCalcValue,
+  code,
+  setCode,
+  handleMCQSelect,
+  handleMCQSubmit,
+  handleGrade,
 }: QuestionCardInputProps) {
-	const t = useTranslations();
-	const [textInputValue, setTextInputValue] = useState("");
-	const [longAnswerValue, setLongAnswerValue] = useState("");
-	const [essayValue, setEssayValue] = useState("");
-	const [unitValue, setUnitValue] = useState("");
+  const t = useTranslations();
+  const [textInputValue, setTextInputValue] = useState("");
+  const [longAnswerValue, setLongAnswerValue] = useState("");
+  const [essayValue, setEssayValue] = useState("");
+  const [unitValue, setUnitValue] = useState("");
 
-	if (state.isSubmitted) {
-		return null;
-	}
+  if (state.isSubmitted) {
+    return null;
+  }
 
-	switch (question.type) {
-		case "multiple-choice":
-			return (
-				<MCQOptions
-					options={options}
-					selectedOption={state.selectedOption}
-					effectiveSubject={effectiveSubject}
-					onSelect={handleMCQSelect}
-					onSubmit={handleMCQSubmit}
-				/>
-			);
+  switch (question.type) {
+    case "multiple-choice":
+      return (
+        <MCQOptions
+          options={options}
+          selectedOption={state.selectedOption}
+          effectiveSubject={effectiveSubject}
+          onSelect={handleMCQSelect}
+          onSubmit={handleMCQSubmit}
+        />
+      );
 
-		case "matching": {
-			const pairs =
-				(getBodyField(question, "pairs") as Record<string, unknown>[])?.map(
-					(p) => [p.left as string, p.right as string],
-				) ?? [];
-			return (
-				<MatchingInput
-					table={{
-						headers: [t("quiz.items"), t("quiz.match")],
-						rows: pairs,
-					}}
-					onChange={(pairs: Record<string, unknown>) =>
-						handleGrade({ type: "pairs", value: pairs })
-					}
-				/>
-			);
-		}
+    case "matching": {
+      const pairs =
+        (getBodyField(question, "pairs") as Record<string, unknown>[])?.map((p) => [
+          p.left as string,
+          p.right as string,
+        ]) ?? [];
+      return (
+        <MatchingInput
+          table={{
+            headers: [t("quiz.items"), t("quiz.match")],
+            rows: pairs,
+          }}
+          onChange={(pairs: Record<string, unknown>) =>
+            handleGrade({ type: "pairs", value: pairs })
+          }
+        />
+      );
+    }
 
-		case "short-answer":
-			return (
-				<ShortAnswerInput
-					value={textInputValue}
-					onChange={setTextInputValue}
-					maxLength={getBodyField(question, "maxLength") as number | undefined}
-					onSubmit={(answer: string) =>
-						handleGrade({ type: "text", value: answer })
-					}
-				/>
-			);
+    case "short-answer":
+      return (
+        <ShortAnswerInput
+          value={textInputValue}
+          onChange={setTextInputValue}
+          maxLength={getBodyField(question, "maxLength") as number | undefined}
+          onSubmit={(answer: string) => handleGrade({ type: "text", value: answer })}
+        />
+      );
 
-		case "long-answer":
-			return (
-				<LongAnswerInput
-					value={longAnswerValue}
-					onChange={setLongAnswerValue}
-					minWords={getBodyField(question, "minWords") as number | undefined}
-					maxWords={getBodyField(question, "maxWords") as number | undefined}
-					onSubmit={(answer: string) =>
-						handleGrade({ type: "text", value: answer })
-					}
-				/>
-			);
+    case "long-answer":
+      return (
+        <LongAnswerInput
+          value={longAnswerValue}
+          onChange={setLongAnswerValue}
+          minWords={getBodyField(question, "minWords") as number | undefined}
+          maxWords={getBodyField(question, "maxWords") as number | undefined}
+          onSubmit={(answer: string) => handleGrade({ type: "text", value: answer })}
+        />
+      );
 
-		case "essay":
-			return (
-				<EssayInput
-					value={essayValue}
-					onChange={setEssayValue}
-					wordLimit={getBodyField(question, "wordLimit") as number | undefined}
-					rubric={
-						getBodyField(question, "rubric") as
-							| { name: string; description: string; maxScore: number }[]
-							| undefined
-					}
-					onSubmit={(answer: string) =>
-						handleGrade({ type: "text", value: answer })
-					}
-				/>
-			);
+    case "essay":
+      return (
+        <EssayInput
+          value={essayValue}
+          onChange={setEssayValue}
+          wordLimit={getBodyField(question, "wordLimit") as number | undefined}
+          rubric={
+            getBodyField(question, "rubric") as
+              | { name: string; description: string; maxScore: number }[]
+              | undefined
+          }
+          onSubmit={(answer: string) => handleGrade({ type: "text", value: answer })}
+        />
+      );
 
-		case "calculation": {
-			const unit = getBodyField(question, "unit") as string | undefined;
-			return (
-				<div className="flex flex-col gap-3">
-					<CalculationInput
-						value={calcValue}
-						onChange={setCalcValue}
-						unit={unitValue}
-						onUnitChange={setUnitValue}
-					/>
-					{unit && (
-						<p className="text-muted-foreground text-xs">
-							Expected unit: {unit}
-						</p>
-					)}
-					<Button
-						onClick={() => {
-							const numeric = parseFloat(calcValue);
-							handleGrade({
-								type: "numeric",
-								value: Number.isNaN(numeric)
-									? calcValue
-									: { value: numeric, unit: unitValue || undefined },
-							});
-						}}
-						disabled={!calcValue.trim()}
-					>
-						{t("quiz.submitAnswer")}
-					</Button>
-				</div>
-			);
-		}
+    case "calculation": {
+      const unit = getBodyField(question, "unit") as string | undefined;
+      return (
+        <div className="flex flex-col gap-3">
+          <CalculationInput
+            value={calcValue}
+            onChange={setCalcValue}
+            unit={unitValue}
+            onUnitChange={setUnitValue}
+          />
+          {unit && <p className="text-muted-foreground text-xs">Expected unit: {unit}</p>}
+          <Button
+            onClick={() => {
+              const numeric = parseFloat(calcValue);
+              handleGrade({
+                type: "numeric",
+                value: Number.isNaN(numeric)
+                  ? calcValue
+                  : { value: numeric, unit: unitValue || undefined },
+              });
+            }}
+            disabled={!calcValue.trim()}
+          >
+            {t("quiz.submitAnswer")}
+          </Button>
+        </div>
+      );
+    }
 
-		case "diagram":
-			return <DiagramInput onGrade={handleGrade} />;
+    case "diagram":
+      return <DiagramInput onGrade={handleGrade} />;
 
-		case "programming":
-			return (
-				<div className="flex flex-col gap-3">
-					<ProgrammingInput
-						value={code}
-						onChange={setCode}
-						language={getBodyField(question, "language") as string | undefined}
-						starterCode={
-							getBodyField(question, "starterCode") as string | undefined
-						}
-					/>
-					<Button
-						onClick={() => handleGrade({ type: "code", value: code })}
-						disabled={!code.trim()}
-					>
-						{t("quiz.submitAnswer")}
-					</Button>
-				</div>
-			);
+    case "programming":
+      return (
+        <div className="flex flex-col gap-3">
+          <ProgrammingInput
+            value={code}
+            onChange={setCode}
+            language={getBodyField(question, "language") as string | undefined}
+            starterCode={getBodyField(question, "starterCode") as string | undefined}
+          />
+          <Button
+            onClick={() => handleGrade({ type: "code", value: code })}
+            disabled={!code.trim()}
+          >
+            {t("quiz.submitAnswer")}
+          </Button>
+        </div>
+      );
 
-		case "source-based":
-			return (
-				<SourceBasedInput
-					body={getBodyField(question, "") as Record<string, unknown>}
-					effectiveSubject={effectiveSubject}
-					onGrade={handleGrade}
-				/>
-			);
+    case "source-based":
+      return (
+        <SourceBasedInput
+          body={getBodyField(question, "") as Record<string, unknown>}
+          effectiveSubject={effectiveSubject}
+          onGrade={handleGrade}
+        />
+      );
 
-		case "data-response":
-			return (
-				<DataResponseInput
-					body={getBodyField(question, "") as Record<string, unknown>}
-					onGrade={handleGrade}
-				/>
-			);
+    case "data-response":
+      return (
+        <DataResponseInput
+          body={getBodyField(question, "") as Record<string, unknown>}
+          onGrade={handleGrade}
+        />
+      );
 
-		case "mixed": {
-			const parts = getBodyField(question, "parts") as
-				| Record<string, unknown>[]
-				| undefined;
-			return <MixedPartsInput parts={parts} onGrade={handleGrade} />;
-		}
+    case "mixed": {
+      const parts = getBodyField(question, "parts") as Record<string, unknown>[] | undefined;
+      return <MixedPartsInput parts={parts} onGrade={handleGrade} />;
+    }
 
-		case "ordering": {
-			const items = getBodyField(question, "items") as
-				| { id: string; text: string }[]
-				| undefined;
-			if (!items) return null;
-			return (
-				<OrderingInput
-					items={items}
-					onSubmit={(orderedIds) =>
-						handleGrade({ type: "ordered-items", value: orderedIds })
-					}
-				/>
-			);
-		}
+    case "ordering": {
+      const items = getBodyField(question, "items") as { id: string; text: string }[] | undefined;
+      if (!items) return null;
+      return (
+        <OrderingInput
+          items={items}
+          onSubmit={(orderedIds) => handleGrade({ type: "ordered-items", value: orderedIds })}
+        />
+      );
+    }
 
-		case "fill-in-sequence": {
-			const seq = getBodyField(question, "sequence") as
-				| { text: string; blankId?: string }[]
-				| undefined;
-			const blanks = getBodyField(question, "blanks") as
-				| { id: string; correctAnswer: string; distractors?: string[] }[]
-				| undefined;
-			if (!seq || !blanks) return null;
-			return (
-				<FillInSequenceInput
-					sequence={seq}
-					blanks={blanks}
-					onSubmit={(answers) =>
-						handleGrade({ type: "sequence-blanks", value: answers })
-					}
-				/>
-			);
-		}
+    case "fill-in-sequence": {
+      const seq = getBodyField(question, "sequence") as
+        | { text: string; blankId?: string }[]
+        | undefined;
+      const blanks = getBodyField(question, "blanks") as
+        | { id: string; correctAnswer: string; distractors?: string[] }[]
+        | undefined;
+      if (!seq || !blanks) return null;
+      return (
+        <FillInSequenceInput
+          sequence={seq}
+          blanks={blanks}
+          onSubmit={(answers) => handleGrade({ type: "sequence-blanks", value: answers })}
+        />
+      );
+    }
 
-		case "hot-spot": {
-			const hsRegions = getBodyField(question, "regions") as
-				| {
-						id: string;
-						label: string;
-						x: number;
-						y: number;
-						width: number;
-						height: number;
-				  }[]
-				| undefined;
-			const hsWidth = getBodyField(question, "width") as number | undefined;
-			const hsHeight = getBodyField(question, "height") as number | undefined;
-			const hsImageUrl = getBodyField(question, "imageUrl") as
-				| string
-				| undefined;
-			if (!hsRegions || !hsWidth || !hsHeight) return null;
-			return (
-				<HotSpotInput
-					imageUrl={hsImageUrl}
-					width={hsWidth}
-					height={hsHeight}
-					regions={hsRegions}
-					onSubmit={(regionId) =>
-						handleGrade({ type: "region-click", value: regionId })
-					}
-				/>
-			);
-		}
+    case "hot-spot": {
+      const hsRegions = getBodyField(question, "regions") as
+        | {
+            id: string;
+            label: string;
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+          }[]
+        | undefined;
+      const hsWidth = getBodyField(question, "width") as number | undefined;
+      const hsHeight = getBodyField(question, "height") as number | undefined;
+      const hsImageUrl = getBodyField(question, "imageUrl") as string | undefined;
+      if (!hsRegions || !hsWidth || !hsHeight) return null;
+      return (
+        <HotSpotInput
+          imageUrl={hsImageUrl}
+          width={hsWidth}
+          height={hsHeight}
+          regions={hsRegions}
+          onSubmit={(regionId) => handleGrade({ type: "region-click", value: regionId })}
+        />
+      );
+    }
 
-		case "diagram-labelling": {
-			const imgUrl = getBodyField(question, "imageUrl") as string | undefined;
-			const svg = getBodyField(question, "svgContent") as string | undefined;
-			const w = getBodyField(question, "width") as number | undefined;
-			const h = getBodyField(question, "height") as number | undefined;
-			const regions = getBodyField(question, "regions") as
-				| {
-						id: string;
-						label: string;
-						x: number;
-						y: number;
-						width: number;
-						height: number;
-				  }[]
-				| undefined;
-			const labels = getBodyField(question, "labels") as
-				| { id: string; text: string }[]
-				| undefined;
-			if (!regions || !labels || !w || !h) return null;
-			return (
-				<DiagramLabellingInput
-					imageUrl={imgUrl}
-					svgContent={svg}
-					width={w}
-					height={h}
-					regions={regions}
-					labels={labels}
-					onSubmit={(placements) =>
-						handleGrade({ type: "label-placements", value: placements })
-					}
-				/>
-			);
-		}
+    case "diagram-labelling": {
+      const imgUrl = getBodyField(question, "imageUrl") as string | undefined;
+      const svg = getBodyField(question, "svgContent") as string | undefined;
+      const w = getBodyField(question, "width") as number | undefined;
+      const h = getBodyField(question, "height") as number | undefined;
+      const regions = getBodyField(question, "regions") as
+        | {
+            id: string;
+            label: string;
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+          }[]
+        | undefined;
+      const labels = getBodyField(question, "labels") as { id: string; text: string }[] | undefined;
+      if (!regions || !labels || !w || !h) return null;
+      return (
+        <DiagramLabellingInput
+          imageUrl={imgUrl}
+          svgContent={svg}
+          width={w}
+          height={h}
+          regions={regions}
+          labels={labels}
+          onSubmit={(placements) => handleGrade({ type: "label-placements", value: placements })}
+        />
+      );
+    }
 
-		case "match-pairs": {
-			const leftItems = getBodyField(question, "leftItems") as
-				| { id: string; text: string }[]
-				| undefined;
-			const rightItems = getBodyField(question, "rightItems") as
-				| { id: string; text: string }[]
-				| undefined;
-			if (!leftItems || !rightItems) return null;
-			return (
-				<MatchPairsInput
-					leftItems={leftItems}
-					rightItems={rightItems}
-					onSubmit={(matches) => handleGrade({ type: "pairs", value: matches })}
-				/>
-			);
-		}
+    case "match-pairs": {
+      const leftItems = getBodyField(question, "leftItems") as
+        | { id: string; text: string }[]
+        | undefined;
+      const rightItems = getBodyField(question, "rightItems") as
+        | { id: string; text: string }[]
+        | undefined;
+      if (!leftItems || !rightItems) return null;
+      return (
+        <MatchPairsInput
+          leftItems={leftItems}
+          rightItems={rightItems}
+          onSubmit={(matches) => handleGrade({ type: "pairs", value: matches })}
+        />
+      );
+    }
 
-		default:
-			return (
-				<p className="text-muted-foreground text-sm">
-					{t("quiz.unsupportedType")}
-				</p>
-			);
-	}
+    default:
+      return <p className="text-muted-foreground text-sm">{t("quiz.unsupportedType")}</p>;
+  }
 }

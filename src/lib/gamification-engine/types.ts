@@ -1,8 +1,8 @@
 import type { DailyChallenge, StreakMilestone } from "@/types/gamification";
 
 export interface StoredAchievement {
-	id: string;
-	earnedAt: string;
+  id: string;
+  earnedAt: string;
 }
 
 /** Storage-facing gamification shape. Uses StoredAchievement[] (id+earnedAt only) for
@@ -10,32 +10,32 @@ export interface StoredAchievement {
     (types/gamification.ts) which uses full Achievement[] enriched with definition data
     for the UI layer. The use-gamification hook bridges the two. */
 export interface StoredGamification {
-	xp: number;
-	totalXp: number;
-	achievements: StoredAchievement[];
-	dailyChallenges: DailyChallenge[];
-	streakMilestones: StreakMilestone[];
-	lastPracticeDate: string | null;
-	currentStreak: number;
-	totalQuestionsAnswered: number;
-	claimedChests: StoredRewardChest[];
-	streakFreezes: number;
-	subjectQuestionCounts: Record<string, number>;
+  xp: number;
+  totalXp: number;
+  achievements: StoredAchievement[];
+  dailyChallenges: DailyChallenge[];
+  streakMilestones: StreakMilestone[];
+  lastPracticeDate: string | null;
+  currentStreak: number;
+  totalQuestionsAnswered: number;
+  claimedChests: StoredRewardChest[];
+  streakFreezes: number;
+  subjectQuestionCounts: Record<string, number>;
 }
 
 export interface GamificationResult {
-	xpAwarded: number;
-	newLevel: number | null;
-	newStreak: number;
-	unlockedAchievements: string[];
+  xpAwarded: number;
+  newLevel: number | null;
+  newStreak: number;
+  unlockedAchievements: string[];
 }
 
 export interface AchievementCheckResult {
-	unlocked: string[];
-	pending: string[];
+  unlocked: string[];
+  pending: string[];
 }
 
 export interface StoredRewardChest {
-	id: string;
-	claimedAt: string | null;
+  id: string;
+  claimedAt: string | null;
 }

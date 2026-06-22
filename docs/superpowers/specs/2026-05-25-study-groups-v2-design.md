@@ -39,13 +39,13 @@ Constraint: exactly one of `postId` or `commentId`. Unique index on `[postId/com
 
 ## API Routes
 
-| Method | Route | Handler |
-|--------|-------|---------|
-| GET | `/api/study-groups/[groupId]/posts/[postId]/comments` | `listComments(postId)` |
-| POST | `/api/study-groups/[groupId]/posts/[postId]/comments` | `createComment(postId, userId, userName, content, parentId?)` |
-| DELETE | `/api/study-groups/comments/[commentId]` | `deleteComment(commentId, userId)` |
-| POST | `/api/study-groups/[groupId]/posts/[postId]/reactions` | `togglePostReaction(postId, userId, emoji)` |
-| POST | `/api/study-groups/comments/[commentId]/reactions` | `toggleCommentReaction(commentId, userId, emoji)` |
+| Method | Route                                                  | Handler                                                       |
+| ------ | ------------------------------------------------------ | ------------------------------------------------------------- |
+| GET    | `/api/study-groups/[groupId]/posts/[postId]/comments`  | `listComments(postId)`                                        |
+| POST   | `/api/study-groups/[groupId]/posts/[postId]/comments`  | `createComment(postId, userId, userName, content, parentId?)` |
+| DELETE | `/api/study-groups/comments/[commentId]`               | `deleteComment(commentId, userId)`                            |
+| POST   | `/api/study-groups/[groupId]/posts/[postId]/reactions` | `togglePostReaction(postId, userId, emoji)`                   |
+| POST   | `/api/study-groups/comments/[commentId]/reactions`     | `toggleCommentReaction(commentId, userId, emoji)`             |
 
 All routes require auth (userId from session).
 
@@ -78,6 +78,7 @@ All mutations use React Query with optimistic updates + rollback on error.
 ## Files Changed
 
 **New (11 files):**
+
 - `src/app/api/study-groups/[groupId]/posts/[postId]/comments/route.ts`
 - `src/app/api/study-groups/comments/[commentId]/route.ts`
 - `src/app/api/study-groups/[groupId]/posts/[postId]/reactions/route.ts`
@@ -91,6 +92,7 @@ All mutations use React Query with optimistic updates + rollback on error.
 - `src/components/study-groups/post-reactions.tsx`
 
 **Modified (4 files):**
+
 - `src/lib/study-groups/service.ts`
 - `src/lib/db/schema.ts`
 - `src/components/study-groups/post-card.tsx`

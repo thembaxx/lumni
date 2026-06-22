@@ -34,18 +34,20 @@
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/retention-loop/__tests__/next-action.test.ts` | 0 errors |
-| Tests     | `bun run test -- next-action` | all new tests pass |
+| Purpose   | Command                                                                | Expected on success |
+| --------- | ---------------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                                     | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/retention-loop/__tests__/next-action.test.ts` | 0 errors            |
+| Tests     | `bun run test -- next-action`                                          | all new tests pass  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/retention-loop/__tests__/next-action.test.ts` (create)
 
 **Out of scope**:
+
 - `src/lib/retention-loop/next-action.ts` — do not modify the source
 - Other retention-loop files
 
@@ -59,6 +61,7 @@
 ### Step 1: Read the full source
 
 Read `src/lib/retention-loop/next-action.ts` fully. Identify:
+
 - The `_deps` interface and `__setDepsForTesting()` function
 - All 6 priority branches
 - `localStorage` usage (exam_dates, dismissals)

@@ -10,6 +10,7 @@ Replace the current tap-to-flip + button-based flashcard review UI with a Tinder
 ## Components
 
 ### `SwipeableCardDeck` (new)
+
 - **Path:** `src/components/flashcard/swipeable-card-deck.tsx`
 - **Props:**
   - `cards: FlashcardCardData[]` — cards to review
@@ -20,6 +21,7 @@ Replace the current tap-to-flip + button-based flashcard review UI with a Tinder
 - **Undo:** Brief "Undo" button for 3s after each swipe; maintains a stack of `{cardId, direction}`
 
 ### `SwipeableCard` (new)
+
 - **Path:** `src/components/flashcard/swipeable-card.tsx`
 - Renders a single draggable card with flip and swipe
 - **Tap** to flip (rotateY via framer-motion, existing animation)
@@ -33,6 +35,7 @@ Replace the current tap-to-flip + button-based flashcard review UI with a Tinder
 - **Respects reduced motion:** skip rotation/spring, instant transitions
 
 ### `QualityPicker` (new, SM-2 mode only)
+
 - **Path:** `src/components/flashcard/quality-picker.tsx`
 - Appears briefly after card exits (slides up from bottom of card area)
 - **Swiped RIGHT:** "Hard" (3) / "Good" (4, default) / "Easy" (5) — green tones
@@ -43,6 +46,7 @@ Replace the current tap-to-flip + button-based flashcard review UI with a Tinder
 ## Hook
 
 ### `useSwipeDeck` (new)
+
 - **Path:** `src/hooks/use-swipe-deck.ts`
 - Manages:
   - Deck order and `currentIndex`
@@ -53,27 +57,27 @@ Replace the current tap-to-flip + button-based flashcard review UI with a Tinder
 
 ## Migration
 
-| File | Change |
-|---|---|
+| File                                                | Change                                                                             |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `src/app/[locale]/flashcards/flashcards-active.tsx` | Replace card rendering block (~lines 80-190) with `<SwipeableCardDeck mode="sm2">` |
-| `src/components/quiz/flashcard.tsx` | Replace or wrap with `<SwipeableCardDeck mode="simple">` — keep as fallback export |
-| `src/components/study/sm2-study-session.tsx` | Replace with `<SwipeableCardDeck mode="sm2">` |
-| `src/app/[locale]/flashcards/flashcards-client.tsx` | Minimal — same data flow, passes same `cards` and `onReview` |
+| `src/components/quiz/flashcard.tsx`                 | Replace or wrap with `<SwipeableCardDeck mode="simple">` — keep as fallback export |
+| `src/components/study/sm2-study-session.tsx`        | Replace with `<SwipeableCardDeck mode="sm2">`                                      |
+| `src/app/[locale]/flashcards/flashcards-client.tsx` | Minimal — same data flow, passes same `cards` and `onReview`                       |
 
 All existing features preserved: confetti, XP gain popup, keyboard shortcuts (Space/Enter=flip, ArrowLeft/ArrowRight=swipe substitute, Esc=undo), progress counter, empty state.
 
 ## Edge Cases
 
-| Case | Handling |
-|---|---|
-| 0 cards | Render `<EmptyState>` |
-| 1 card | No cascade, single card, swipe works normally |
-| Rapid swipes | `pendingRef` guard during exit animation |
-| Swipe while flipped | Auto-flip back before advancing |
-| Undo on last card | Reinserts, deck re-opens |
-| Reduced motion | Skip rotation/spring, instant transitions |
-| Keyboard access | ArrowLeft/ArrowRight as swipe substitute |
-| Touch + mouse | framer-motion `drag` handles both |
+| Case                | Handling                                      |
+| ------------------- | --------------------------------------------- |
+| 0 cards             | Render `<EmptyState>`                         |
+| 1 card              | No cascade, single card, swipe works normally |
+| Rapid swipes        | `pendingRef` guard during exit animation      |
+| Swipe while flipped | Auto-flip back before advancing               |
+| Undo on last card   | Reinserts, deck re-opens                      |
+| Reduced motion      | Skip rotation/spring, instant transitions     |
+| Keyboard access     | ArrowLeft/ArrowRight as swipe substitute      |
+| Touch + mouse       | framer-motion `drag` handles both             |
 
 ## Testing
 

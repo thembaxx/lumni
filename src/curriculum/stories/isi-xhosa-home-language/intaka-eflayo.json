@@ -1,50 +1,50 @@
 {
-	"id": "intaka-eflayo",
-	"title": "Intaka Eflayo",
-	"author": "Lumni",
-	"language": "isiXhosa",
-	"languageId": "isi-xhosa-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 800,
-	"subjects": ["isi-xhosa-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Intaka Eflayo\n\nKudala, kwakusehlane elikhulu, kwakukho intaka enkulu eyayiflayo ngaphezu kwawo onke amahlathi. Intaka le yayibizwa ngokuba yiNkosi Yezulu.\n\nNgenye imini, intaka yona ibonakalisa ubukhulu bayo. Yaqala ukubhala phantsi ngamaphiko ayo amakhulu, yenza umoya omkhulu owawuphambanisa zonke izinto ezisesikhaleni.\n\n\"Yho!\" kwala umthi omkhulu. \"Ungabi nangxolo, Nkosi Yezulu! Wena unqoba wonke umoya, kodwa mna ndiyimithi emile ngaphantsi kwembewu.\"\n\nIntaka yamangaliswa. Yaphinda yabuza: \"Kodwa ngawo amaphiko am, ndinamandla ngaphezu kwakho konke!\"\n\nUmthi waphendula: \"Amaphiko akho amkhulu, kodwa ndimile phantsi kwembewu. Ndimi xa umoya uvuka, ndimila xa ilanga liba. Awunakho ukundiphambanisa.\"\n\nIntaka yaqonda. Yaqonda ukuthi amandla ayengenawo yonke into. Umthi wayenesibindi esingakhuphi moya.\n\n## Amehluko\n\nLe stori ifundisa:\n\n1. **Ukuzithemba** — Intaka yayizithemba ngamaphiko ayo, kodwa umthi wayenesibindi esingakhuphi moya.\n\n2. **Ukubukeka komumo** — Intaka yaqonda ukuthi ayinawo onke amandla.\n\n3. **Ukuhlakanipha** — Umthi wafundisa intaka ngokuzithemba nokunqoba.\n\n## Igama\n\n| isiXhosa | English | I-Part of Speech |\n|----------|---------|------------------|\n| intaka | bird | noun |\n| eflayo | that flies | verb |\n| ehlane | in the wild | locative |\n| inkosi | chief/king | noun |\n| izulu | sky/heaven | noun |\n| amaphiko | wings | noun |\n| umoya | wind | noun |\n| umthi | tree | noun |\n| imbewu | seed | noun |\n| isibindi | courage | noun |",
-	"vocabulary": [
-		{
-			"term": "intaka",
-			"definition": "A bird",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iŋtaka/",
-			"language": "xh"
-		},
-		{
-			"term": "amaphiko",
-			"definition": "Wings; the parts a bird uses to fly",
-			"partOfSpeech": "noun",
-			"pronunciation": "/amaphiko/",
-			"language": "xh"
-		},
-		{
-			"term": "umoya",
-			"definition": "Wind; air that moves",
-			"partOfSpeech": "noun",
-			"pronunciation": "/umɔya/",
-			"language": "xh"
-		},
-		{
-			"term": "umthi",
-			"definition": "A tree or plant",
-			"partOfSpeech": "noun",
-			"pronunciation": "/umtʰi/",
-			"language": "xh"
-		},
-		{
-			"term": "isibindi",
-			"definition": "Courage; bravery",
-			"partOfSpeech": "noun",
-			"pronunciation": "/isibindi/",
-			"language": "xh"
-		}
-	]
+  "id": "intaka-eflayo",
+  "title": "Intaka Eflayo",
+  "author": "Lumni",
+  "language": "isiXhosa",
+  "languageId": "isi-xhosa-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 800,
+  "subjects": ["isi-xhosa-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Intaka Eflayo\n\nKudala, kwakusehlane elikhulu, kwakukho intaka enkulu eyayiflayo ngaphezu kwawo onke amahlathi. Intaka le yayibizwa ngokuba yiNkosi Yezulu.\n\nNgenye imini, intaka yona ibonakalisa ubukhulu bayo. Yaqala ukubhala phantsi ngamaphiko ayo amakhulu, yenza umoya omkhulu owawuphambanisa zonke izinto ezisesikhaleni.\n\n\"Yho!\" kwala umthi omkhulu. \"Ungabi nangxolo, Nkosi Yezulu! Wena unqoba wonke umoya, kodwa mna ndiyimithi emile ngaphantsi kwembewu.\"\n\nIntaka yamangaliswa. Yaphinda yabuza: \"Kodwa ngawo amaphiko am, ndinamandla ngaphezu kwakho konke!\"\n\nUmthi waphendula: \"Amaphiko akho amkhulu, kodwa ndimile phantsi kwembewu. Ndimi xa umoya uvuka, ndimila xa ilanga liba. Awunakho ukundiphambanisa.\"\n\nIntaka yaqonda. Yaqonda ukuthi amandla ayengenawo yonke into. Umthi wayenesibindi esingakhuphi moya.\n\n## Amehluko\n\nLe stori ifundisa:\n\n1. **Ukuzithemba** — Intaka yayizithemba ngamaphiko ayo, kodwa umthi wayenesibindi esingakhuphi moya.\n\n2. **Ukubukeka komumo** — Intaka yaqonda ukuthi ayinawo onke amandla.\n\n3. **Ukuhlakanipha** — Umthi wafundisa intaka ngokuzithemba nokunqoba.\n\n## Igama\n\n| isiXhosa | English | I-Part of Speech |\n|----------|---------|------------------|\n| intaka | bird | noun |\n| eflayo | that flies | verb |\n| ehlane | in the wild | locative |\n| inkosi | chief/king | noun |\n| izulu | sky/heaven | noun |\n| amaphiko | wings | noun |\n| umoya | wind | noun |\n| umthi | tree | noun |\n| imbewu | seed | noun |\n| isibindi | courage | noun |",
+  "vocabulary": [
+    {
+      "term": "intaka",
+      "definition": "A bird",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iŋtaka/",
+      "language": "xh"
+    },
+    {
+      "term": "amaphiko",
+      "definition": "Wings; the parts a bird uses to fly",
+      "partOfSpeech": "noun",
+      "pronunciation": "/amaphiko/",
+      "language": "xh"
+    },
+    {
+      "term": "umoya",
+      "definition": "Wind; air that moves",
+      "partOfSpeech": "noun",
+      "pronunciation": "/umɔya/",
+      "language": "xh"
+    },
+    {
+      "term": "umthi",
+      "definition": "A tree or plant",
+      "partOfSpeech": "noun",
+      "pronunciation": "/umtʰi/",
+      "language": "xh"
+    },
+    {
+      "term": "isibindi",
+      "definition": "Courage; bravery",
+      "partOfSpeech": "noun",
+      "pronunciation": "/isibindi/",
+      "language": "xh"
+    }
+  ]
 }

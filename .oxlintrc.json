@@ -1,0 +1,64 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y", "nextjs", "vitest", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-await-in-loop": "warn",
+    "no-underscore-dangle": ["warn", { "allow": ["__filename", "__dirname"] }],
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": "off",
+    "vitest/require-mock-type-parameters": "off",
+    "vitest/no-conditional-expect": "off",
+    "vitest/expect-expect": "off",
+    "vitest/no-standalone-expect": "off",
+    "vitest/hoisted-apis-on-top": "off",
+    "jsx-a11y/prefer-tag-over-role": "warn",
+    "jsx-a11y/control-has-associated-label": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/namespace": "warn",
+    "unicorn/no-array-reverse": "warn",
+    "no-unused-vars": "error",
+    "typescript/no-unused-vars": "error"
+  },
+  "env": {
+    "builtin": true
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**", "**/*.test.*", "**/*.spec.*", "**/*.int-test.*"],
+      "plugins": ["vitest"],
+      "rules": {
+        "no-console": "off",
+        "vitest/require-mock-type-parameters": "off",
+        "vitest/no-conditional-expect": "off",
+        "vitest/no-standalone-expect": "off",
+        "vitest/hoisted-apis-on-top": "off",
+        "vitest/require-to-throw-message": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/interactive-supports-focus": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "nextjs/no-img-element": "off",
+        "no-unused-vars": "warn"
+      }
+    },
+    {
+      "files": ["src/components/tools/math/scientific-calculator.tsx"],
+      "rules": {
+        "jsx-a11y/no-noninteractive-element-interactions": "off"
+      }
+    },
+    {
+      "files": ["scripts/**", "e2e/**", "public/sw.js"],
+      "rules": {
+        "no-console": "off",
+        "no-unused-vars": "warn"
+      }
+    }
+  ]
+}

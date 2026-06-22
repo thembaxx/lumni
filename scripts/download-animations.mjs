@@ -67,11 +67,11 @@ async function main() {
       "https://assets1.lottiefiles.com/packages/lf20_T9pceQ.json",
       "https://assets6.lottiefiles.com/packages/lf20_T9pceQ.json",
     ],
-    "celebration": [
+    celebration: [
       "https://assets1.lottiefiles.com/packages/lf20_gKQRQx.json",
       "https://assets1.lottiefiles.com/packages/lf20_jiiqivn5.json",
     ],
-    "book": [
+    book: [
       "https://assets2.lottiefiles.com/packages/lf20_9xq5tvxm.json",
       "https://assets3.lottiefiles.com/packages/lf20_9xq5tvxm.json",
     ],
@@ -86,9 +86,7 @@ async function main() {
       if (data) {
         const outPath = resolve(OUT, `${id}.json`);
         writeFileSync(outPath, JSON.stringify(data));
-        console.log(
-          `✓ ${id} (${(JSON.stringify(data).length / 1024).toFixed(1)} KB) - v${data.v}`,
-        );
+        console.log(`✓ ${id} (${(JSON.stringify(data).length / 1024).toFixed(1)} KB) - v${data.v}`);
         success++;
       } else {
         console.log(`✗ ${id}: All URLs failed`);

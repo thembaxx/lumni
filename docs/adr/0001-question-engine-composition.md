@@ -25,12 +25,15 @@ This violated the **depth** principle: neither module was deep. `QuestionEngine`
 ## Consequences
 
 **Positive:**
+
 - Question-generation logic lives in one module (`QuestionEngine`). Bugs in prompt schema, type batching, or curriculum enrichment are fixed in one place
 - `LearningOrchestrator`'s interface shrinks to just orchestration. Callers who need questions use `QuestionEngine` directly; callers who need the full pipeline use the orchestrator
 - Testability: `QuestionEngine` can be tested in isolation without mocking jobs/analytics. `LearningOrchestrator` tests verify only orchestration (did it delegate to generate + enqueue the right jobs?)
 
 **Negative:**
+
 - `LearningOrchestrator.initialize()` now calls `QuestionEngine.initialize()`, adding one level of indirection at startup
 
 **Risks:**
+
 - If a future feature needs different `ProcessorRegistry` or `PromptManager` instances for orchestrated vs. non-orchestrated paths, composition could be replaced by an interface seam. For now, a single shared engine is correct

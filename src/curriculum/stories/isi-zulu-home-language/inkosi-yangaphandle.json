@@ -1,50 +1,50 @@
 {
-	"id": "inkosi-yangaphandle",
-	"title": "Inkosi Yangaphandle",
-	"author": "Lumni",
-	"language": "isiZulu",
-	"languageId": "isi-zulu-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 900,
-	"subjects": ["isi-zulu-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Inkosi Yangaphandle\n\nKudala, kwakunenkosi yendle eyayihlala esihlahleni esikhulu. Le nkosi yayinamandla amakhulu futhi yayihlonishwa yizo zonke izilwane.\n\nNgenye imini, inkosi yabona ihlwele yezinkomo eziyimpuphu zidla grass esigodini. Inkosi yaqala ukugawula umuthi omkhulu ukuze izinkomo zingadli lapho.\n\n\"Kodwa Inkosi,\" kwaphendula inyoka eyayilala eduze, \"kungani ususe izinkomo lapho zidla khona? Izinkomo zidedela umuthi omuhle esikhundleni sayo.\"\n\nInkosi yabheka phansi. Yaqonda ukuthi inyoka ayilungile. Izinkomo zaidla igqabi elidlulile, kodwa umuthi wayo wasala ukukhula.\n\n\"Ngiyabonga, nyoka,\" yasho inkosi. \"Ungumuntu ohlakaniphile. Anginakho ukwenza konke ngokwami.\"\n\n## Amehluko\n\nLe stori yesifiso ifundisa:\n\n1. **Ukuhlakanipha kwabantu** — Inkosi yakwazi ukuzwa amacebiso abantu abahlakaniphile.\n\n2. **Ukubukeka komumo** — Inkosi yaqonda ukuthi ayikwazi ukwenza konke ngokwami.\n\n3. **Ukubonga** — Inkosi yabonga inyoka ngamacebiso ayo.\n\n## Igama\n\n| isiZulu | English | I-Part of Speech |\n|---------|---------|------------------|\n| inkosi | chief/king | noun |\n| indle | wild/veld | noun |\n| ihlwele | herd | noun |\n| umuthi | tree | noun |\n| inyoka | snake | noun |\n| amandla | strength | noun |\n| ukuhlakanipha | wisdom | noun |\n| igqabi | leaf | noun |\n| isigodini | small field | noun |\n| ukuze | so that | conjunction |",
-	"vocabulary": [
-		{
-			"term": "inkosi",
-			"definition": "A chief or king; a leader of a community",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iŋkɔsi/",
-			"language": "zu"
-		},
-		{
-			"term": "indle",
-			"definition": "The open wild land or veld",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iŋdɮe/",
-			"language": "zu"
-		},
-		{
-			"term": "ihlwele",
-			"definition": "A herd of animals, especially cattle",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iɬwele/",
-			"language": "zu"
-		},
-		{
-			"term": "umuthi",
-			"definition": "A tree or plant",
-			"partOfSpeech": "noun",
-			"pronunciation": "/umʊːti/",
-			"language": "zu"
-		},
-		{
-			"term": "inyoka",
-			"definition": "A snake",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iɲɔka/",
-			"language": "zu"
-		}
-	]
+  "id": "inkosi-yangaphandle",
+  "title": "Inkosi Yangaphandle",
+  "author": "Lumni",
+  "language": "isiZulu",
+  "languageId": "isi-zulu-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 900,
+  "subjects": ["isi-zulu-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Inkosi Yangaphandle\n\nKudala, kwakunenkosi yendle eyayihlala esihlahleni esikhulu. Le nkosi yayinamandla amakhulu futhi yayihlonishwa yizo zonke izilwane.\n\nNgenye imini, inkosi yabona ihlwele yezinkomo eziyimpuphu zidla grass esigodini. Inkosi yaqala ukugawula umuthi omkhulu ukuze izinkomo zingadli lapho.\n\n\"Kodwa Inkosi,\" kwaphendula inyoka eyayilala eduze, \"kungani ususe izinkomo lapho zidla khona? Izinkomo zidedela umuthi omuhle esikhundleni sayo.\"\n\nInkosi yabheka phansi. Yaqonda ukuthi inyoka ayilungile. Izinkomo zaidla igqabi elidlulile, kodwa umuthi wayo wasala ukukhula.\n\n\"Ngiyabonga, nyoka,\" yasho inkosi. \"Ungumuntu ohlakaniphile. Anginakho ukwenza konke ngokwami.\"\n\n## Amehluko\n\nLe stori yesifiso ifundisa:\n\n1. **Ukuhlakanipha kwabantu** — Inkosi yakwazi ukuzwa amacebiso abantu abahlakaniphile.\n\n2. **Ukubukeka komumo** — Inkosi yaqonda ukuthi ayikwazi ukwenza konke ngokwami.\n\n3. **Ukubonga** — Inkosi yabonga inyoka ngamacebiso ayo.\n\n## Igama\n\n| isiZulu | English | I-Part of Speech |\n|---------|---------|------------------|\n| inkosi | chief/king | noun |\n| indle | wild/veld | noun |\n| ihlwele | herd | noun |\n| umuthi | tree | noun |\n| inyoka | snake | noun |\n| amandla | strength | noun |\n| ukuhlakanipha | wisdom | noun |\n| igqabi | leaf | noun |\n| isigodini | small field | noun |\n| ukuze | so that | conjunction |",
+  "vocabulary": [
+    {
+      "term": "inkosi",
+      "definition": "A chief or king; a leader of a community",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iŋkɔsi/",
+      "language": "zu"
+    },
+    {
+      "term": "indle",
+      "definition": "The open wild land or veld",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iŋdɮe/",
+      "language": "zu"
+    },
+    {
+      "term": "ihlwele",
+      "definition": "A herd of animals, especially cattle",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iɬwele/",
+      "language": "zu"
+    },
+    {
+      "term": "umuthi",
+      "definition": "A tree or plant",
+      "partOfSpeech": "noun",
+      "pronunciation": "/umʊːti/",
+      "language": "zu"
+    },
+    {
+      "term": "inyoka",
+      "definition": "A snake",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iɲɔka/",
+      "language": "zu"
+    }
+  ]
 }

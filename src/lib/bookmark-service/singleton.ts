@@ -3,6 +3,6 @@ import type { DataAccess } from "@/lib/db/data-access";
 import { DexieBookmarkService } from "./service";
 
 function createBookmarkService(db: DataAccess = dexieDataAccess) {
-	return new DexieBookmarkService(db);
+  return new DexieBookmarkService(db);
 }
 export const bookmarkService = createBookmarkService();

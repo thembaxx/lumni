@@ -20,27 +20,27 @@ The localStorage `StudyPlan` object gains two fields:
 ```typescript
 interface StudyPlan {
   // ...existing fields...
-  stale: boolean;                     // true when events suggest a rebalance
-  lastCompetencyRefresh: number;      // epoch ms of last competency read
+  stale: boolean; // true when events suggest a rebalance
+  lastCompetencyRefresh: number; // epoch ms of last competency read
 }
 ```
 
 ### Events that set `stale = true`
 
-| Event | Trigger location |
-|---|---|
-| Quiz finished | `dashboard-client.tsx` after `handleFinishQuiz` |
-| Exam submitted | `exam-session-client.tsx` after submit |
-| Session completed | `use-study-planner.ts` `markComplete()` |
-| Plan settings changed | `StudyPlanOverview` form submit |
-| National exam dates loaded | After `getExamDates()` returns data |
+| Event                      | Trigger location                                |
+| -------------------------- | ----------------------------------------------- |
+| Quiz finished              | `dashboard-client.tsx` after `handleFinishQuiz` |
+| Exam submitted             | `exam-session-client.tsx` after submit          |
+| Session completed          | `use-study-planner.ts` `markComplete()`         |
+| Plan settings changed      | `StudyPlanOverview` form submit                 |
+| National exam dates loaded | After `getExamDates()` returns data             |
 
 ### Events that clear `stale = false`
 
-| Event | Location |
-|---|---|
-| Plan regenerated | `use-study-planner.ts` `generatePlan()` exit |
-| Auto-refresh completes | `StudyPlanOverview` weekly check |
+| Event                  | Location                                     |
+| ---------------------- | -------------------------------------------- |
+| Plan regenerated       | `use-study-planner.ts` `generatePlan()` exit |
+| Auto-refresh completes | `StudyPlanOverview` weekly check             |
 
 ### UI: Stale banner
 
@@ -73,17 +73,17 @@ The `generateStudyPlan()` algorithm gains an `examDates: ExamSlot[]` parameter:
 
 ## Files Changed
 
-| File | Change |
-|---|---|
-| `src/lib/utils/study-planner.ts` | `stale` + `lastCompetencyRefresh` fields, `markPlanStale()`, `mergeNationalExamDates()`, `getWeekOldTimestamp()` |
-| `src/lib/utils/study-planner.ts` | `saveStudyPlan()` sets `stale: false` on save |
-| `src/hooks/use-study-planner.ts` | `markComplete()` calls `markPlanStale()`, `isStale` computed property, `generatePlan()` clears stale |
-| `src/lib/study-planner/study-planner-service.ts` | `generateStudyPlan()` accepts `examDates: ExamSlot[]`, calls `mergeNationalExamDates()`, passes to algorithm |
-| `src/lib/study-planner/algorithms.ts` | `generateStudyPlan()` gains `examDates` param: exam-aware endDate, weight boost, rest days |
-| `src/lib/study-planner/types.ts` | No changes (algorithm types already separate from storage types) |
-| `src/components/dashboard/study-plan-overview.tsx` | Stale banner, weekly auto-refresh check, three-dot regenerate |
-| `src/components/dashboard/dashboard-client.tsx` | After `handleFinishQuiz()`, import and call `markPlanStale()` |
-| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | After submit, import and call `markPlanStale()` |
+| File                                                 | Change                                                                                                           |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `src/lib/utils/study-planner.ts`                     | `stale` + `lastCompetencyRefresh` fields, `markPlanStale()`, `mergeNationalExamDates()`, `getWeekOldTimestamp()` |
+| `src/lib/utils/study-planner.ts`                     | `saveStudyPlan()` sets `stale: false` on save                                                                    |
+| `src/hooks/use-study-planner.ts`                     | `markComplete()` calls `markPlanStale()`, `isStale` computed property, `generatePlan()` clears stale             |
+| `src/lib/study-planner/study-planner-service.ts`     | `generateStudyPlan()` accepts `examDates: ExamSlot[]`, calls `mergeNationalExamDates()`, passes to algorithm     |
+| `src/lib/study-planner/algorithms.ts`                | `generateStudyPlan()` gains `examDates` param: exam-aware endDate, weight boost, rest days                       |
+| `src/lib/study-planner/types.ts`                     | No changes (algorithm types already separate from storage types)                                                 |
+| `src/components/dashboard/study-plan-overview.tsx`   | Stale banner, weekly auto-refresh check, three-dot regenerate                                                    |
+| `src/components/dashboard/dashboard-client.tsx`      | After `handleFinishQuiz()`, import and call `markPlanStale()`                                                    |
+| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | After submit, import and call `markPlanStale()`                                                                  |
 
 ## What's NOT in scope
 

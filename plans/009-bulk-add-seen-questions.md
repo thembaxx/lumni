@@ -29,6 +29,7 @@
 ## Current state
 
 **`src/lib/question-engine/adaptive-selector.ts:71-88`**:
+
 ```typescript
 export async function recordSeenQuestions(
   questionIds: string[],
@@ -54,18 +55,20 @@ The `DataAccess` interface exposes `bulkAdd()` on table accessors. The `seenPast
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/question-engine/adaptive-selector.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                        | Expected on success |
+| --------- | -------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                             | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/question-engine/adaptive-selector.ts` | 0 errors            |
+| Tests     | `bun run test`                                                 | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/question-engine/adaptive-selector.ts` (lines 71-88)
 
 **Out of scope**:
+
 - Other adaptive-selector logic
 - DataAccess interface changes
 

@@ -22,87 +22,76 @@ import { seedInteractiveQuestions } from "@/lib/seed-questions";
 import { setAppInitialized } from "@/store";
 
 const PWAUpdateToast = dynamic(
-	() =>
-		import("@/components/pwa/pwa-update-toast").then((m) => ({
-			default: m.PWAUpdateToast,
-		})),
-	{ ssr: false },
+  () =>
+    import("@/components/pwa/pwa-update-toast").then((m) => ({
+      default: m.PWAUpdateToast,
+    })),
+  { ssr: false },
 );
 const PWAInstallPrompt = dynamic(
-	() =>
-		import("@/components/pwa/pwa-update-toast").then((m) => ({
-			default: m.PWAInstallPrompt,
-		})),
-	{ ssr: false },
+  () =>
+    import("@/components/pwa/pwa-update-toast").then((m) => ({
+      default: m.PWAInstallPrompt,
+    })),
+  { ssr: false },
 );
 
 function JobProcessorWrapper() {
-	useJobProcessor();
-	useAnalyticsTracking();
-	return null;
+  useJobProcessor();
+  useAnalyticsTracking();
+  return null;
 }
 
 function ServiceWorkerWrapper() {
-	useServiceWorker();
-	return null;
+  useServiceWorker();
+  return null;
 }
 
 interface ProvidersProps {
-	locale: Locale;
-	messages: Record<string, unknown>;
-	timeZone: string;
-	children: React.ReactNode;
+  locale: Locale;
+  messages: Record<string, unknown>;
+  timeZone: string;
+  children: React.ReactNode;
 }
 
-export function Providers({
-	locale,
-	messages,
-	timeZone,
-	children,
-}: ProvidersProps) {
-	useEffect(() => {
-		// Defer non-critical initialization to idle period
-		if ("requestIdleCallback" in window) {
-			requestIdleCallback(() => {
-				Promise.all([
-					prefetchUploadSubjects(queryClient),
-					seedInteractiveQuestions(),
-				]).then(() => setAppInitialized(true));
-			});
-		} else {
-			Promise.all([
-				prefetchUploadSubjects(queryClient),
-				seedInteractiveQuestions(),
-			]).then(() => setAppInitialized(true));
-		}
-	}, []);
+export function Providers({ locale, messages, timeZone, children }: ProvidersProps) {
+  useEffect(() => {
+    // Defer non-critical initialization to idle period
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => {
+        Promise.all([prefetchUploadSubjects(queryClient), seedInteractiveQuestions()]).then(() =>
+          setAppInitialized(true),
+        );
+      });
+    } else {
+      Promise.all([prefetchUploadSubjects(queryClient), seedInteractiveQuestions()]).then(() =>
+        setAppInitialized(true),
+      );
+    }
+  }, []);
 
-	return (
-		<QueryClientProvider client={queryClient}>
-			<ThemeProvider>
-				<AuthProvider>
-					<ConsentProvider>
-						<JoyProvider>
-							<PremiumProvider>
-								<I18nProvider
-									locale={locale}
-									messages={messages}
-									timeZone={timeZone}
-								>
-									<OnboardingProvider>
-										<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
-									</OnboardingProvider>
-								</I18nProvider>
-							</PremiumProvider>
-							<OnlineStatusIndicator />
-							<JobProcessorWrapper />
-							<ServiceWorkerWrapper />
-							<PWAUpdateToast />
-							<PWAInstallPrompt />
-						</JoyProvider>
-					</ConsentProvider>
-				</AuthProvider>
-			</ThemeProvider>
-		</QueryClientProvider>
-	);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <ConsentProvider>
+            <JoyProvider>
+              <PremiumProvider>
+                <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
+                  <OnboardingProvider>
+                    <ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+                  </OnboardingProvider>
+                </I18nProvider>
+              </PremiumProvider>
+              <OnlineStatusIndicator />
+              <JobProcessorWrapper />
+              <ServiceWorkerWrapper />
+              <PWAUpdateToast />
+              <PWAInstallPrompt />
+            </JoyProvider>
+          </ConsentProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 }

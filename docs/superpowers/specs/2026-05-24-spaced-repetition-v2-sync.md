@@ -19,7 +19,7 @@ Add two-way cloud sync between local Dexie storage and Appwrite for flashcards a
 export interface FlashcardSM2 {
   // ...existing fields...
   createdAt: number;
-  updatedAt: number;  // NEW — set to Date.now() on every write
+  updatedAt: number; // NEW — set to Date.now() on every write
   lastReview: number | null;
   // ...existing fields...
 }
@@ -27,9 +27,9 @@ export interface FlashcardSM2 {
 
 ### Appwrite collections
 
-| Collection | Documents | Key |
-|---|---|---|
-| `flashcards` | `FlashcardSM2` | `$id = card.id` |
+| Collection          | Documents         | Key                               |
+| ------------------- | ----------------- | --------------------------------- |
+| `flashcards`        | `FlashcardSM2`    | `$id = card.id`                   |
 | `flashcard_reviews` | `FlashcardReview` | `$id = hash(cardId + reviewedAt)` |
 
 The review `$id` is `${cardId}_${reviewedAt}` — a simple string key that ensures idempotency: pushing the same review twice overwrites the same doc rather than creating duplicates.
@@ -39,6 +39,7 @@ The review `$id` is `${cardId}_${reviewedAt}` — a simple string key that ensur
 ### Push path (existing job — `appwriteFlashcardSync`)
 
 Every mutation method in `FlashcardEngine`:
+
 1. Sets `card.updatedAt = Date.now()`
 2. Writes to local Dexie (fast, synchronous)
 3. Calls `enqueue("appwrite-flashcard-sync", { cardId: card.id })` (fire-and-forget)
@@ -78,15 +79,15 @@ Triggered when `flashcards-client.tsx` mounts:
 
 ### Modified
 
-| File | Change |
-|---|---|
-| `src/lib/flashcard-engine/types.ts` | Add `updatedAt: number` to `FlashcardSM2` |
-| `src/lib/flashcard-engine/engine.ts` | Set `updatedAt` on all mutations, enqueue sync job, also push reviews from `saveReview()` |
-| `src/lib/db/schema.ts` | Version 15 — add `updatedAt` index to `flashcards` table |
-| `src/lib/orchestrator/handlers/sync-handlers.ts` | Extend `appwriteFlashcardSync` to also push reviews |
-| `src/lib/orchestrator/job-queue.ts` | Register `appwrite-flashcard-pull` job type (priority 60, maxRetries 3) |
-| `src/app/flashcards/flashcards-client.tsx` | Enqueue `appwrite-flashcard-pull` on mount |
-| `src/lib/orchestrator/handlers/domain.ts` | Already enqueues `appwriteFlashcardSync` — add `updatedAt` to the card before enqueue |
+| File                                             | Change                                                                                    |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `src/lib/flashcard-engine/types.ts`              | Add `updatedAt: number` to `FlashcardSM2`                                                 |
+| `src/lib/flashcard-engine/engine.ts`             | Set `updatedAt` on all mutations, enqueue sync job, also push reviews from `saveReview()` |
+| `src/lib/db/schema.ts`                           | Version 15 — add `updatedAt` index to `flashcards` table                                  |
+| `src/lib/orchestrator/handlers/sync-handlers.ts` | Extend `appwriteFlashcardSync` to also push reviews                                       |
+| `src/lib/orchestrator/job-queue.ts`              | Register `appwrite-flashcard-pull` job type (priority 60, maxRetries 3)                   |
+| `src/app/flashcards/flashcards-client.tsx`       | Enqueue `appwrite-flashcard-pull` on mount                                                |
+| `src/lib/orchestrator/handlers/domain.ts`        | Already enqueues `appwriteFlashcardSync` — add `updatedAt` to the card before enqueue     |
 
 ## Edge Cases
 

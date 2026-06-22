@@ -2,228 +2,202 @@
 
 import type React from "react";
 import { useMemo } from "react";
-import {
-	Arc,
-	Circle,
-	Layer,
-	Line,
-	RegularPolygon,
-	Stage,
-	Text,
-} from "react-konva";
+import { Arc, Circle, Layer, Line, RegularPolygon, Stage, Text } from "react-konva";
 
 interface GeometryShape {
-	type:
-		| "circle"
-		| "line"
-		| "polygon"
-		| "arc"
-		| "point"
-		| "angle-mark"
-		| "right-angle-mark"
-		| "grid"
-		| "dimension";
-	x: number;
-	y: number;
-	props: Record<string, unknown>;
-	label?: string;
-	labelX?: number;
-	labelY?: number;
-	dashed?: boolean;
-	stroke?: string;
-	fill?: string;
-	strokeWidth?: number;
+  type:
+    | "circle"
+    | "line"
+    | "polygon"
+    | "arc"
+    | "point"
+    | "angle-mark"
+    | "right-angle-mark"
+    | "grid"
+    | "dimension";
+  x: number;
+  y: number;
+  props: Record<string, unknown>;
+  label?: string;
+  labelX?: number;
+  labelY?: number;
+  dashed?: boolean;
+  stroke?: string;
+  fill?: string;
+  strokeWidth?: number;
 }
 
 interface GeometryData {
-	shapes: GeometryShape[];
-	viewBox?: { x: number; y: number; width: number; height: number };
+  shapes: GeometryShape[];
+  viewBox?: { x: number; y: number; width: number; height: number };
 }
 
 function renderShape(shape: GeometryShape) {
-	const stroke = shape.stroke || "oklch(32.5% 0.012 264°)";
-	const fill = shape.fill || "transparent";
-	const sw = shape.strokeWidth ?? 2;
-	const shapeKey = `${shape.type}-${shape.x}-${shape.y}`;
+  const stroke = shape.stroke || "oklch(32.5% 0.012 264°)";
+  const fill = shape.fill || "transparent";
+  const sw = shape.strokeWidth ?? 2;
+  const shapeKey = `${shape.type}-${shape.x}-${shape.y}`;
 
-	switch (shape.type) {
-		case "circle":
-			return (
-				<Circle
-					key={shapeKey}
-					x={shape.x}
-					y={shape.y}
-					radius={(shape.props.radius as number) || 30}
-					stroke={stroke}
-					strokeWidth={sw}
-					fill={fill}
-					dash={shape.dashed ? [6, 3] : undefined}
-				/>
-			);
+  switch (shape.type) {
+    case "circle":
+      return (
+        <Circle
+          key={shapeKey}
+          x={shape.x}
+          y={shape.y}
+          radius={(shape.props.radius as number) || 30}
+          stroke={stroke}
+          strokeWidth={sw}
+          fill={fill}
+          dash={shape.dashed ? [6, 3] : undefined}
+        />
+      );
 
-		case "line":
-			return (
-				<Line
-					key={shapeKey}
-					points={[
-						shape.x,
-						shape.y,
-						(shape.props.x2 as number) || 0,
-						(shape.props.y2 as number) || 0,
-					]}
-					stroke={stroke}
-					strokeWidth={sw}
-					dash={shape.dashed ? [6, 3] : undefined}
-				/>
-			);
+    case "line":
+      return (
+        <Line
+          key={shapeKey}
+          points={[
+            shape.x,
+            shape.y,
+            (shape.props.x2 as number) || 0,
+            (shape.props.y2 as number) || 0,
+          ]}
+          stroke={stroke}
+          strokeWidth={sw}
+          dash={shape.dashed ? [6, 3] : undefined}
+        />
+      );
 
-		case "polygon":
-			return (
-				<RegularPolygon
-					key={shapeKey}
-					x={shape.x}
-					y={shape.y}
-					sides={(shape.props.sides as number) || 3}
-					radius={(shape.props.radius as number) || 40}
-					stroke={stroke}
-					strokeWidth={sw}
-					fill={fill}
-					rotation={(shape.props.rotation as number) || 0}
-				/>
-			);
+    case "polygon":
+      return (
+        <RegularPolygon
+          key={shapeKey}
+          x={shape.x}
+          y={shape.y}
+          sides={(shape.props.sides as number) || 3}
+          radius={(shape.props.radius as number) || 40}
+          stroke={stroke}
+          strokeWidth={sw}
+          fill={fill}
+          rotation={(shape.props.rotation as number) || 0}
+        />
+      );
 
-		case "arc":
-			return (
-				<Arc
-					key={shapeKey}
-					x={shape.x}
-					y={shape.y}
-					innerRadius={0}
-					outerRadius={(shape.props.outerRadius as number) || 30}
-					angle={(shape.props.angle as number) || 90}
-					stroke={stroke}
-					strokeWidth={sw}
-					fill={fill}
-				/>
-			);
+    case "arc":
+      return (
+        <Arc
+          key={shapeKey}
+          x={shape.x}
+          y={shape.y}
+          innerRadius={0}
+          outerRadius={(shape.props.outerRadius as number) || 30}
+          angle={(shape.props.angle as number) || 90}
+          stroke={stroke}
+          strokeWidth={sw}
+          fill={fill}
+        />
+      );
 
-		case "point":
-			return (
-				<Circle
-					key={shapeKey}
-					x={shape.x}
-					y={shape.y}
-					radius={3}
-					fill={stroke}
-				/>
-			);
+    case "point":
+      return <Circle key={shapeKey} x={shape.x} y={shape.y} radius={3} fill={stroke} />;
 
-		case "angle-mark":
-			return (
-				<Arc
-					key={shapeKey}
-					x={shape.x}
-					y={shape.y}
-					innerRadius={0}
-					outerRadius={(shape.props.radius as number) || 20}
-					angle={(shape.props.angle as number) || 90}
-					rotation={(shape.props.rotation as number) || 0}
-					stroke={stroke}
-					strokeWidth={sw}
-					fill={fill || "oklch(70% 0.05 80 / 0.2)"}
-				/>
-			);
+    case "angle-mark":
+      return (
+        <Arc
+          key={shapeKey}
+          x={shape.x}
+          y={shape.y}
+          innerRadius={0}
+          outerRadius={(shape.props.radius as number) || 20}
+          angle={(shape.props.angle as number) || 90}
+          rotation={(shape.props.rotation as number) || 0}
+          stroke={stroke}
+          strokeWidth={sw}
+          fill={fill || "oklch(70% 0.05 80 / 0.2)"}
+        />
+      );
 
-		case "right-angle-mark":
-			return (
-				<Line
-					key={shapeKey}
-					points={[
-						shape.x,
-						shape.y,
-						shape.x + ((shape.props.size as number) || 10),
-						shape.y,
-						shape.x + ((shape.props.size as number) || 10),
-						shape.y - ((shape.props.size as number) || 10),
-						shape.x,
-						shape.y - ((shape.props.size as number) || 10),
-						shape.x,
-						shape.y,
-					]}
-					stroke={stroke}
-					strokeWidth={sw}
-					closed
-				/>
-			);
+    case "right-angle-mark":
+      return (
+        <Line
+          key={shapeKey}
+          points={[
+            shape.x,
+            shape.y,
+            shape.x + ((shape.props.size as number) || 10),
+            shape.y,
+            shape.x + ((shape.props.size as number) || 10),
+            shape.y - ((shape.props.size as number) || 10),
+            shape.x,
+            shape.y - ((shape.props.size as number) || 10),
+            shape.x,
+            shape.y,
+          ]}
+          stroke={stroke}
+          strokeWidth={sw}
+          closed
+        />
+      );
 
-		case "grid":
-			return null;
+    case "grid":
+      return null;
 
-		case "dimension":
-			return null;
+    case "dimension":
+      return null;
 
-		default:
-			return null;
-	}
+    default:
+      return null;
+  }
 }
 
 function renderLabel(shape: GeometryShape) {
-	if (!shape.label) return null;
-	return (
-		<Text
-			key={`label-${shape.type}-${shape.x}-${shape.y}`}
-			x={shape.labelX ?? shape.x + 5}
-			y={shape.labelY ?? shape.y - 20}
-			text={shape.label}
-			fontSize={12}
-			fill={shape.stroke || "oklch(32.5% 0.012 264°)"}
-			fontStyle="italic"
-		/>
-	);
+  if (!shape.label) return null;
+  return (
+    <Text
+      key={`label-${shape.type}-${shape.x}-${shape.y}`}
+      x={shape.labelX ?? shape.x + 5}
+      y={shape.labelY ?? shape.y - 20}
+      text={shape.label}
+      fontSize={12}
+      fill={shape.stroke || "oklch(32.5% 0.012 264°)"}
+      fontStyle="italic"
+    />
+  );
 }
 
 export function GeometryDiagram({ data }: { data: GeometryData }) {
-	const shapes = useMemo(() => data.shapes || [], [data.shapes]);
+  const shapes = useMemo(() => data.shapes || [], [data.shapes]);
 
-	const gridLines = useMemo(() => {
-		const lines: React.ReactNode[] = [];
-		if (!shapes.some((s) => s.type === "grid")) return lines;
+  const gridLines = useMemo(() => {
+    const lines: React.ReactNode[] = [];
+    if (!shapes.some((s) => s.type === "grid")) return lines;
 
-		for (let x = 0; x <= 350; x += 25) {
-			lines.push(
-				<Line
-					key={`gv-${x}`}
-					points={[x, 0, x, 350]}
-					stroke="oklch(90% 0 0)"
-					strokeWidth={0.5}
-				/>,
-			);
-		}
-		for (let y = 0; y <= 350; y += 25) {
-			lines.push(
-				<Line
-					key={`gh-${y}`}
-					points={[0, y, 350, y]}
-					stroke="oklch(90% 0 0)"
-					strokeWidth={0.5}
-				/>,
-			);
-		}
-		return lines;
-	}, [shapes]);
+    for (let x = 0; x <= 350; x += 25) {
+      lines.push(
+        <Line key={`gv-${x}`} points={[x, 0, x, 350]} stroke="oklch(90% 0 0)" strokeWidth={0.5} />,
+      );
+    }
+    for (let y = 0; y <= 350; y += 25) {
+      lines.push(
+        <Line key={`gh-${y}`} points={[0, y, 350, y]} stroke="oklch(90% 0 0)" strokeWidth={0.5} />,
+      );
+    }
+    return lines;
+  }, [shapes]);
 
-	return (
-		<Stage
-			width={400}
-			height={350}
-			className="w-full rounded-2xl border bg-background/40"
-			ariaLabel="Geometry diagram with shapes and labels"
-		>
-			<Layer>
-				{gridLines}
-				{shapes.map((s) => renderShape(s))}
-				{shapes.map((s) => renderLabel(s))}
-			</Layer>
-		</Stage>
-	);
+  return (
+    <Stage
+      width={400}
+      height={350}
+      className="w-full rounded-2xl border bg-background/40"
+      ariaLabel="Geometry diagram with shapes and labels"
+    >
+      <Layer>
+        {gridLines}
+        {shapes.map((s) => renderShape(s))}
+        {shapes.map((s) => renderLabel(s))}
+      </Layer>
+    </Stage>
+  );
 }

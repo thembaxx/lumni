@@ -29,6 +29,7 @@ The AI budget tracker derives anonymous user identity from `x-forwarded-for` or 
 ## Current state
 
 **`src/lib/ai/with-budget.ts:12-15`**:
+
 ```typescript
 const userId =
   req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
@@ -39,6 +40,7 @@ const userId =
 This value is used as the budget key for `dailyCallTracker.check(type, userId)`.
 
 **`src/app/api/engine/generate/route.ts:8-9`**:
+
 ```typescript
 auth: "none",
 budget: "generate",
@@ -50,19 +52,21 @@ The route is `auth: "none"` but has `budget: "generate"`. The `createRouteHandle
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/ai/` | 0 errors       |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                       | Expected on success |
+| --------- | ----------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`            | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/ai/` | 0 errors            |
+| Tests     | `bun run test`                | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/ai/with-budget.ts`
 - `src/lib/ai/daily-call-tracker.ts` (if interface changes needed)
 
 **Out of scope**:
+
 - `src/app/api/engine/generate/route.ts` — do not change `auth: "none"` (anonymous users must be able to generate)
 - `src/lib/api/create-route-handler.ts` — do not modify the factory
 - Any Appwrite collection changes

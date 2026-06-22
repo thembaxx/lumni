@@ -18,6 +18,7 @@ Replace the existing 64px icon-only `DesktopSidebar` with a full-width categoriz
 Single source of truth for all route metadata. Exports a typed config array: categories, items, icons, primary flag, and optional role gating.
 
 Consumed by:
+
 - `sidebar-nav.tsx` — renders the full categorized sidebar
 - `bottom-nav.tsx` — reads `primary` items for the 6-column grid
 - `top-nav.tsx` — reads route→title mapping (replaces inline `routeTitleKeys`)
@@ -44,9 +45,9 @@ layout.tsx
 
 ### Responsive Behavior
 
-| Breakpoint | Sidebar | Trigger |
-|------------|---------|---------|
-| Desktop (md+) | Persistent panel, 240px | None needed |
+| Breakpoint    | Sidebar                        | Trigger             |
+| ------------- | ------------------------------ | ------------------- |
+| Desktop (md+) | Persistent panel, 240px        | None needed         |
 | Mobile (< md) | Hidden, opens as Sheet overlay | Hamburger in TopNav |
 
 Bottom nav unchanged across all breakpoints.
@@ -70,15 +71,15 @@ interface NavItem {
 
 ### Link Inventory
 
-| Category | Items | Primary |
-|----------|-------|---------|
-| **Learn** | Quiz (`/quiz`), Flashcards (`/flashcards`), Problems (`/problems`) | Quiz, Problems |
-| **Practice** | Exams (`/exam`), Past Papers (`/past-papers`), Review Mistakes (`/review`) | — |
-| **Tools** | Chat (`/chat`), Solve (`/solve`), Search (`/search`), Upload (`/upload`) | Chat |
-| **Progress** | Study Plan (`/study-plan`), Bookmarks (`/bookmarks`), Settings (`/settings`) | Settings |
-| **Teacher** | Teacher Dashboard (`/teacher`) | — |
-| **Parent** | Parent Dashboard (`/parent`) | — |
-| **Admin** | Admin Panel (`/admin`) | — |
+| Category     | Items                                                                        | Primary        |
+| ------------ | ---------------------------------------------------------------------------- | -------------- |
+| **Learn**    | Quiz (`/quiz`), Flashcards (`/flashcards`), Problems (`/problems`)           | Quiz, Problems |
+| **Practice** | Exams (`/exam`), Past Papers (`/past-papers`), Review Mistakes (`/review`)   | —              |
+| **Tools**    | Chat (`/chat`), Solve (`/solve`), Search (`/search`), Upload (`/upload`)     | Chat           |
+| **Progress** | Study Plan (`/study-plan`), Bookmarks (`/bookmarks`), Settings (`/settings`) | Settings       |
+| **Teacher**  | Teacher Dashboard (`/teacher`)                                               | —              |
+| **Parent**   | Parent Dashboard (`/parent`)                                                 | —              |
+| **Admin**    | Admin Panel (`/admin`)                                                       | —              |
 
 Bottom nav renders: Home (`/dashboard`), Quiz, Problems, Chat, Study Groups (`/study-groups`), Settings = 6 items.
 
@@ -94,15 +95,15 @@ Bottom nav renders: Home (`/dashboard`), Quiz, Problems, Chat, Study Groups (`/s
 
 ## File Changes
 
-| File | Action |
-|------|--------|
-| `src/lib/navigation/config.ts` | **Create** — typed config object |
-| `src/components/navigation/sidebar-nav.tsx` | **Create** — sidebar component (desktop + mobile paths) |
-| `src/components/navigation/desktop-sidebar.tsx` | **Delete** — replaced by sidebar-nav |
-| `src/components/navigation/top-nav.tsx` | **Edit** — add hamburger button (mobile), read title from config |
-| `src/components/navigation/bottom-nav.tsx` | **Edit** — read primary items from config instead of hardcoded array |
-| `src/app/[locale]/layout.tsx` | **Edit** — swap DesktopSidebar for SidebarNav in layout flex row |
-| `src/hooks/use-navigation-direction.ts` | **Edit** (minor) — derive hierarchy from config if needed |
+| File                                            | Action                                                               |
+| ----------------------------------------------- | -------------------------------------------------------------------- |
+| `src/lib/navigation/config.ts`                  | **Create** — typed config object                                     |
+| `src/components/navigation/sidebar-nav.tsx`     | **Create** — sidebar component (desktop + mobile paths)              |
+| `src/components/navigation/desktop-sidebar.tsx` | **Delete** — replaced by sidebar-nav                                 |
+| `src/components/navigation/top-nav.tsx`         | **Edit** — add hamburger button (mobile), read title from config     |
+| `src/components/navigation/bottom-nav.tsx`      | **Edit** — read primary items from config instead of hardcoded array |
+| `src/app/[locale]/layout.tsx`                   | **Edit** — swap DesktopSidebar for SidebarNav in layout flex row     |
+| `src/hooks/use-navigation-direction.ts`         | **Edit** (minor) — derive hierarchy from config if needed            |
 
 ## Non-Goals
 

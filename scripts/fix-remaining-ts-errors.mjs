@@ -83,10 +83,7 @@ for (const filePath of allFiles) {
       if (oldName === newName) continue;
 
       // Rename in import statements (with word boundary)
-      content = content.replace(
-        new RegExp(`\\b${escapeRegex(oldName)}\\b`, "g"),
-        newName,
-      );
+      content = content.replace(new RegExp(`\\b${escapeRegex(oldName)}\\b`, "g"), newName);
     }
 
     // ── Fix 2: Deduplicate import specifiers ─────────────────────
@@ -95,13 +92,13 @@ for (const filePath of allFiles) {
     for (let i = 0; i < lines.length; i++) {
       const match = lines[i].match(/import\s*\{([^}]+)\}\s*from\s*["']/);
       if (!match) continue;
-      const specs = match[1].split(",").map((s) => s.trim()).filter(Boolean);
+      const specs = match[1]
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
       const unique = [...new Set(specs)];
       if (unique.length < specs.length) {
-        lines[i] = lines[i].replace(
-          match[1],
-          unique.join(", "),
-        );
+        lines[i] = lines[i].replace(match[1], unique.join(", "));
       }
     }
     content = lines.join("\n");
@@ -109,9 +106,7 @@ for (const filePath of allFiles) {
     if (content !== original) {
       writeFileSync(filePath, content, "utf-8");
       changed++;
-      const rel = filePath.startsWith(ROOT)
-        ? filePath.slice(ROOT.length + 1)
-        : filePath;
+      const rel = filePath.startsWith(ROOT) ? filePath.slice(ROOT.length + 1) : filePath;
       process.stdout.write(`  FIXED  ${rel}\n`);
     }
   } catch (err) {

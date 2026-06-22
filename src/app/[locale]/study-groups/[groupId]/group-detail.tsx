@@ -25,238 +25,215 @@ import { useGroupDetail, useRemoveMember } from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { apiFetch } from "@/lib/shared/api-fetch";
-import type {
-	GroupChallenge,
-	GroupChallengeEntry,
-} from "@/lib/study-groups/challenge-types";
+import type { GroupChallenge, GroupChallengeEntry } from "@/lib/study-groups/challenge-types";
 
 export function GroupDetail() {
-	const t = useTranslations();
-	const params = useParams<{ groupId: string }>();
-	const groupId = params.groupId;
-	const { data, isLoading, error } = useGroupDetail(groupId);
-	const { user } = useAuth();
-	const { mutate: removeMemberAction } = useRemoveMember();
-	const [copied, setCopied] = useState(false);
+  const t = useTranslations();
+  const params = useParams<{ groupId: string }>();
+  const groupId = params.groupId;
+  const { data, isLoading, error } = useGroupDetail(groupId);
+  const { user } = useAuth();
+  const { mutate: removeMemberAction } = useRemoveMember();
+  const [copied, setCopied] = useState(false);
 
-	const { data: challengeData } = useQuery<{
-		challenge: GroupChallenge;
-		entries: GroupChallengeEntry[];
-	}>({
-		queryKey: ["group-challenge", groupId],
-		queryFn: async () =>
-			apiFetch<{ challenge: GroupChallenge; entries: GroupChallengeEntry[] }>(
-				`/api/study-groups/${groupId}/challenge`,
-				{},
-			),
-		refetchInterval: 30000,
-	});
+  const { data: challengeData } = useQuery<{
+    challenge: GroupChallenge;
+    entries: GroupChallengeEntry[];
+  }>({
+    queryKey: ["group-challenge", groupId],
+    queryFn: async () =>
+      apiFetch<{ challenge: GroupChallenge; entries: GroupChallengeEntry[] }>(
+        `/api/study-groups/${groupId}/challenge`,
+        {},
+      ),
+    refetchInterval: 30000,
+  });
 
-	const copyInviteCode = () => {
-		if (data?.group?.inviteCode) {
-			navigator.clipboard.writeText(data.group.inviteCode);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		}
-	};
+  const copyInviteCode = () => {
+    if (data?.group?.inviteCode) {
+      navigator.clipboard.writeText(data.group.inviteCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
-	if (isLoading) {
-		return (
-			<PageContainer>
-				<div className="flex flex-col gap-6 py-6">
-					<Skeleton className="h-8 w-48 rounded" />
-					<Skeleton className="h-64" />
-				</div>
-			</PageContainer>
-		);
-	}
+  if (isLoading) {
+    return (
+      <PageContainer>
+        <div className="flex flex-col gap-6 py-6">
+          <Skeleton className="h-8 w-48 rounded" />
+          <Skeleton className="h-64" />
+        </div>
+      </PageContainer>
+    );
+  }
 
-	if (error || !data) {
-		return (
-			<PageContainer>
-				<div className="flex flex-col gap-6 py-6">
-					<Link
-						href="/study-groups"
-						className="flex w-fit items-center gap-1 text-muted-foreground text-sm hover:text-foreground"
-					>
-						<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
-						{t("common.back")}
-					</Link>
-					<Card className="flex flex-col items-center justify-center gap-3 p-12 text-center">
-						<p className="text-lg text-muted-foreground">{t("common.error")}</p>
-						<Button variant="outline" asChild>
-							<Link href="/study-groups">{t("common.back")}</Link>
-						</Button>
-					</Card>
-				</div>
-			</PageContainer>
-		);
-	}
+  if (error || !data) {
+    return (
+      <PageContainer>
+        <div className="flex flex-col gap-6 py-6">
+          <Link
+            href="/study-groups"
+            className="flex w-fit items-center gap-1 text-muted-foreground text-sm hover:text-foreground"
+          >
+            <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+            {t("common.back")}
+          </Link>
+          <Card className="flex flex-col items-center justify-center gap-3 p-12 text-center">
+            <p className="text-lg text-muted-foreground">{t("common.error")}</p>
+            <Button variant="outline" asChild>
+              <Link href="/study-groups">{t("common.back")}</Link>
+            </Button>
+          </Card>
+        </div>
+      </PageContainer>
+    );
+  }
 
-	const { group, members } = data;
+  const { group, members } = data;
 
-	const userNames: Record<string, string> = {};
-	for (const m of members || []) {
-		userNames[m.userId] = m.userName || m.userEmail || m.userId;
-	}
+  const userNames: Record<string, string> = {};
+  for (const m of members || []) {
+    userNames[m.userId] = m.userName || m.userEmail || m.userId;
+  }
 
-	return (
-		<PageContainer>
-			<div className="flex flex-col gap-6 py-6">
-				<Link
-					href="/study-groups"
-					className="flex w-fit items-center gap-1 text-muted-foreground text-sm hover:text-foreground"
-				>
-					<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
-					{t("common.back")}
-				</Link>
+  return (
+    <PageContainer>
+      <div className="flex flex-col gap-6 py-6">
+        <Link
+          href="/study-groups"
+          className="flex w-fit items-center gap-1 text-muted-foreground text-sm hover:text-foreground"
+        >
+          <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+          {t("common.back")}
+        </Link>
 
-				<div className="flex items-start justify-between">
-					<div className="flex flex-col gap-1">
-						<h1 className="font-bold text-2xl">{group.name}</h1>
-						{group.description && (
-							<p className="text-muted-foreground">{group.description}</p>
-						)}
-					</div>
-				</div>
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-1">
+            <h1 className="font-bold text-2xl">{group.name}</h1>
+            {group.description && <p className="text-muted-foreground">{group.description}</p>}
+          </div>
+        </div>
 
-				{challengeData && (
-					<>
-						<ChallengeBanner
-							challenge={challengeData.challenge}
-							entries={challengeData.entries}
-							subjectId={data?.group?.subjectId}
-							groupId={groupId}
-						/>
-						<Card className="flex flex-col gap-3 p-4">
-							<div className="flex items-center justify-between">
-								<div className="flex items-center gap-2">
-									<HugeiconsIcon icon={Award01Icon} className="size-5" />
-									<h2 className="font-semibold">
-										This Week&apos;s Leaderboard
-									</h2>
-								</div>
-								<CreateChallengeDialog
-									groupId={groupId}
-									onCreated={() => window.location.reload()}
-								/>
-							</div>
-							<ChallengeLeaderboard
-								entries={challengeData.entries}
-								userNames={userNames}
-							/>
-						</Card>
-					</>
-				)}
+        {challengeData && (
+          <>
+            <ChallengeBanner
+              challenge={challengeData.challenge}
+              entries={challengeData.entries}
+              subjectId={data?.group?.subjectId}
+              groupId={groupId}
+            />
+            <Card className="flex flex-col gap-3 p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <HugeiconsIcon icon={Award01Icon} className="size-5" />
+                  <h2 className="font-semibold">This Week&apos;s Leaderboard</h2>
+                </div>
+                <CreateChallengeDialog
+                  groupId={groupId}
+                  onCreated={() => window.location.reload()}
+                />
+              </div>
+              <ChallengeLeaderboard entries={challengeData.entries} userNames={userNames} />
+            </Card>
+          </>
+        )}
 
-				<LiveSessionBar groupId={groupId} />
+        <LiveSessionBar groupId={groupId} />
 
-				<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-					<Card className="flex flex-col gap-4 p-4">
-						<h2 className="font-semibold">{t("studyGroups.inviteCode")}</h2>
-						<div className="flex items-center gap-2">
-							<code className="flex-1 rounded bg-muted px-3 py-2 font-mono text-sm">
-								{group.inviteCode}
-							</code>
-							<Button variant="outline" size="sm" onClick={copyInviteCode}>
-								<HugeiconsIcon
-									icon={copied ? CheckmarkCircle01Icon : Copy02Icon}
-									className="size-3.5"
-								/>
-								{copied ? t("common.copied") : t("studyGroups.copyCode")}
-							</Button>
-						</div>
-						<p className="text-muted-foreground text-xs">
-							{t("studyGroups.createdBy")}: {group.createdBy}
-						</p>
-						{group.subjectId && (
-							<Badge variant="secondary" className="w-fit">
-								{group.subjectId}
-							</Badge>
-						)}
-					</Card>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card className="flex flex-col gap-4 p-4">
+            <h2 className="font-semibold">{t("studyGroups.inviteCode")}</h2>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 rounded bg-muted px-3 py-2 font-mono text-sm">
+                {group.inviteCode}
+              </code>
+              <Button variant="outline" size="sm" onClick={copyInviteCode}>
+                <HugeiconsIcon
+                  icon={copied ? CheckmarkCircle01Icon : Copy02Icon}
+                  className="size-3.5"
+                />
+                {copied ? t("common.copied") : t("studyGroups.copyCode")}
+              </Button>
+            </div>
+            <p className="text-muted-foreground text-xs">
+              {t("studyGroups.createdBy")}: {group.createdBy}
+            </p>
+            {group.subjectId && (
+              <Badge variant="secondary" className="w-fit">
+                {group.subjectId}
+              </Badge>
+            )}
+          </Card>
 
-					<Card className="flex flex-col gap-4 p-4">
-						<div className="flex items-center gap-2">
-							<HugeiconsIcon icon={UserGroupIcon} className="size-5" />
-							<h2 className="font-semibold">
-								{t("studyGroups.membersLabel")} (
-								{members?.length || group.memberCount})
-							</h2>
-						</div>
-						{members && members.length > 0 ? (
-							<div className="flex flex-col gap-2">
-								{members.map((member) => (
-									<div
-										key={member.$id}
-										className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2"
-									>
-										<div className="flex flex-col">
-											<span className="font-medium text-sm">
-												{member.userName || member.userEmail || member.userId}
-											</span>
-											<div className="flex items-center gap-2">
-												{member.userEmail && member.userName && (
-													<span className="text-muted-foreground text-xs">
-														{member.userEmail}
-													</span>
-												)}
-												{member.questionsAnswered !== undefined && (
-													<span className="text-muted-foreground text-xs">
-														{member.questionsAnswered} Q
-													</span>
-												)}
-												{member.currentStreak !== undefined && (
-													<span className="text-muted-foreground text-xs">
-														🔥 {member.currentStreak}
-													</span>
-												)}
-											</div>
-										</div>
-										<div className="flex items-center gap-2">
-											<Badge
-												variant={
-													member.role === "admin" ? "default" : "secondary"
-												}
-											>
-												{member.role}
-											</Badge>
-											{user?.$id === group.createdBy &&
-												member.role !== "admin" && (
-													<button
-														type="button"
-														onClick={() =>
-															removeMemberAction({
-																groupId: group.$id,
-																memberId: member.$id,
-															})
-														}
-														className="text-destructive hover:text-destructive/80"
-														aria-label={t("common.remove") || "Remove member"}
-													>
-														<HugeiconsIcon
-															icon={Minimize01Icon}
-															className="size-3.5"
-														/>
-													</button>
-												)}
-										</div>
-									</div>
-								))}
-							</div>
-						) : (
-							<p className="text-muted-foreground text-sm">
-								{t("studyGroups.empty")}
-							</p>
-						)}
-					</Card>
-				</div>
+          <Card className="flex flex-col gap-4 p-4">
+            <div className="flex items-center gap-2">
+              <HugeiconsIcon icon={UserGroupIcon} className="size-5" />
+              <h2 className="font-semibold">
+                {t("studyGroups.membersLabel")} ({members?.length || group.memberCount})
+              </h2>
+            </div>
+            {members && members.length > 0 ? (
+              <div className="flex flex-col gap-2">
+                {members.map((member) => (
+                  <div
+                    key={member.$id}
+                    className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2"
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-medium text-sm">
+                        {member.userName || member.userEmail || member.userId}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {member.userEmail && member.userName && (
+                          <span className="text-muted-foreground text-xs">{member.userEmail}</span>
+                        )}
+                        {member.questionsAnswered !== undefined && (
+                          <span className="text-muted-foreground text-xs">
+                            {member.questionsAnswered} Q
+                          </span>
+                        )}
+                        {member.currentStreak !== undefined && (
+                          <span className="text-muted-foreground text-xs">
+                            🔥 {member.currentStreak}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={member.role === "admin" ? "default" : "secondary"}>
+                        {member.role}
+                      </Badge>
+                      {user?.$id === group.createdBy && member.role !== "admin" && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            removeMemberAction({
+                              groupId: group.$id,
+                              memberId: member.$id,
+                            })
+                          }
+                          className="text-destructive hover:text-destructive/80"
+                          aria-label={t("common.remove") || "Remove member"}
+                        >
+                          <HugeiconsIcon icon={Minimize01Icon} className="size-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-sm">{t("studyGroups.empty")}</p>
+            )}
+          </Card>
+        </div>
 
-				<div className="flex flex-col gap-4">
-					<h2 className="font-semibold text-lg">Discussions</h2>
-					<DiscussionFeed groupId={groupId} />
-				</div>
-			</div>
-		</PageContainer>
-	);
+        <div className="flex flex-col gap-4">
+          <h2 className="font-semibold text-lg">Discussions</h2>
+          <DiscussionFeed groupId={groupId} />
+        </div>
+      </div>
+    </PageContainer>
+  );
 }

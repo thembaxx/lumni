@@ -29,6 +29,7 @@ Users download offline quiz packs (spending AI quota and storage) but can never 
 ## Current state
 
 **`src/lib/quiz-packs/service.ts:85-90`**:
+
 ```typescript
 async getQuestions(packId: string): Promise<QuizPackQuestion[]> {
   return this.db.packQuestions
@@ -46,20 +47,22 @@ Zero callers. The `packQuestions` table has compound index `[packId+questionInde
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check` on changed files | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                            | Expected on success |
+| --------- | ---------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                 | exit 0, no errors   |
+| Lint      | `npx biome check` on changed files | 0 errors            |
+| Tests     | `bun run test`                     | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/hooks/use-quiz-packs.ts` — add `playPack` method
 - `src/components/dashboard/offline-packs.tsx` — add "Start Quiz" button
 - `src/lib/quiz-packs/service.ts` — `getQuestions` already exists
 
 **Out of scope**:
+
 - `src/lib/question-engine/` — do not modify the quiz engine
 - `src/app/[locale]/quiz/` — quiz page routing
 
@@ -75,12 +78,15 @@ Zero callers. The `packQuestions` table has compound index `[packId+questionInde
 In `src/hooks/use-quiz-packs.ts`, add a `playPack(id)` method:
 
 ```typescript
-const playPack = useCallback(async (packId: string) => {
-  const questions = await quizPackService.getQuestions(packId);
-  // Map QuizPackQuestion[] to Question[] format expected by quiz engine
-  // Navigate to /quiz?packId={packId}
-  // Or return questions for the caller to use
-}, [quizPackService]);
+const playPack = useCallback(
+  async (packId: string) => {
+    const questions = await quizPackService.getQuestions(packId);
+    // Map QuizPackQuestion[] to Question[] format expected by quiz engine
+    // Navigate to /quiz?packId={packId}
+    // Or return questions for the caller to use
+  },
+  [quizPackService],
+);
 ```
 
 The mapping from `QuizPackQuestion` to `Question` is the critical part. Read both types to understand the shape difference.
@@ -90,16 +96,15 @@ The mapping from `QuizPackQuestion` to `Question` is the critical part. Read bot
 In `src/components/dashboard/offline-packs.tsx`, for packs with status `"ready"`, add a "Start Quiz" button next to the "Delete" button:
 
 ```tsx
-{pack.status === "ready" && (
-  <Button onClick={() => playPack(pack.id)}>
-    Start Quiz
-  </Button>
-)}
+{
+  pack.status === "ready" && <Button onClick={() => playPack(pack.id)}>Start Quiz</Button>;
+}
 ```
 
 ### Step 3: Handle the quiz flow
 
 The quiz page (`/quiz`) needs to accept a `packId` query parameter and load questions from the pack instead of generating new ones via AI. This may require:
+
 - A new route or query parameter on the existing quiz route
 - A hook that loads pack questions and feeds them into the quiz engine
 

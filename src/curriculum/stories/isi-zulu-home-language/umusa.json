@@ -1,50 +1,50 @@
 {
-	"id": "umusa",
-	"title": "Umusa",
-	"author": "Lumni",
-	"language": "isiZulu",
-	"languageId": "isi-zulu-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 860,
-	"subjects": ["isi-zulu-home-language"],
-	"source": "ai-generated",
-	"topics": ["kindness", "community", "ubuntu"],
-	"content": "# Umusa\n\nKudala, kwakukhona intombazane encane egama linguThandi. Wayehlala emzini omncane eduze kwehlathi elikhulu. Thandi wayaziwa ngobuhle benhliziyo yakhe — wayehlale esiza wonke umuntu owayeswele.\n\nNgenye imini, uThandi wahamba eya esikoleni. Endleleni wabona indoda endala ehleli emthunzini womuthi. Wayebukeka ekhathele futhi elambile.\n\n\"Sawubona, Mkhulu,\" kusho uThandi. \"Kungani uhlala lapha wedwa?\"\n\n\"Sawubona, ngane yami,\" kuphendula indoda. \"Ngihamba ibanga elide kodwa anginamandla okuqhubeka.\"\n\nUThandi wakhipha isinkwa sakhe esincane nesiphuzo samanzi. \"Nansi into yokudla, Mkhulu. Akukuningi, kodwa ngiyakwabelana nawe.\"\n\nIndoda yamamatheka. \"Ngiyabonga, ngane yami. Umusa wakho mkhulu kunokudla ongipha khona.\"\n\nUThandi waqhubeka nendlela yakhe. Ngalolo suku, wenzé izehlo eziningi zomusa. Wasiza umfanyana owayekhale ngoba wayelahlekelwe yibhola lakhe. Wasiza umama owayethwele umthwalo osindayo. Watshela utishala wakhe ngenkosazana eyayingenawo amapensela.\n\nNtambama, uThandi wafika ekhaya. Umama wakhe wambuza: \"Kwenzenjani namuhla esikoleni, ndodakazi yami?\"\n\nUThandi waxoxa konke okwenzekile. Umama wakhe wamgona futhi wathi: \"Umusa wakho ufana nembewu encane. Uma uyitshala, ikhula ibe yisihlahla esikhulu. Namuhla utshale izimbewu eziningi zomusa.\"\n\nNgakusasa, uThandi wathola into emangalisayo. Abantu ababemsizile babemlethele izipho. Indoda endala yamlethela izithelo ezinhle. Umfanyana wamlethela umqhele wezimbali. Intokozo yagcwalisa inhliziyo kaThandi.\n\n## Izifundo\n\n1. **Umusa uyatheleleka** — Uma wenza okuhle kwabanye, ukuhle kuyabuya kuwe.\n2. **Akukuningi okudingekayo** — Ngisho isenzo esincane somusa singashintsha usuku lomuntu.\n3. **Ukuhlanganyela** — Ukwabelana nalabo abaswele kusenza sibe ngabantu abangcono.\n\n## Igama\n\n| isiZulu | English | Part of Speech |\n|---------|---------|----------------|\n| umusa | kindness | noun |\n| intombazane | girl | noun |\n| isinkwa | bread | noun |\n| ukwabelana | to share | verb |\n| intokozo | joy | noun |",
-	"vocabulary": [
-		{
-			"term": "umusa",
-			"definition": "Kindness; the quality of being friendly and caring",
-			"partOfSpeech": "noun",
-			"pronunciation": "/uˈmuːsa/",
-			"language": "zu"
-		},
-		{
-			"term": "intombazane",
-			"definition": "A young girl",
-			"partOfSpeech": "noun",
-			"pronunciation": "/intɔmbaˈzaːne/",
-			"language": "zu"
-		},
-		{
-			"term": "isinkwa",
-			"definition": "Bread; a staple food",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iˈsiːnkwa/",
-			"language": "zu"
-		},
-		{
-			"term": "ukwabelana",
-			"definition": "To share; to give part of what you have to others",
-			"partOfSpeech": "verb",
-			"pronunciation": "/ukwaˈbɛːlana/",
-			"language": "zu"
-		},
-		{
-			"term": "intokozo",
-			"definition": "Joy; great happiness",
-			"partOfSpeech": "noun",
-			"pronunciation": "/intɔˈkɔːzɔ/",
-			"language": "zu"
-		}
-	]
+  "id": "umusa",
+  "title": "Umusa",
+  "author": "Lumni",
+  "language": "isiZulu",
+  "languageId": "isi-zulu-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 860,
+  "subjects": ["isi-zulu-home-language"],
+  "source": "ai-generated",
+  "topics": ["kindness", "community", "ubuntu"],
+  "content": "# Umusa\n\nKudala, kwakukhona intombazane encane egama linguThandi. Wayehlala emzini omncane eduze kwehlathi elikhulu. Thandi wayaziwa ngobuhle benhliziyo yakhe — wayehlale esiza wonke umuntu owayeswele.\n\nNgenye imini, uThandi wahamba eya esikoleni. Endleleni wabona indoda endala ehleli emthunzini womuthi. Wayebukeka ekhathele futhi elambile.\n\n\"Sawubona, Mkhulu,\" kusho uThandi. \"Kungani uhlala lapha wedwa?\"\n\n\"Sawubona, ngane yami,\" kuphendula indoda. \"Ngihamba ibanga elide kodwa anginamandla okuqhubeka.\"\n\nUThandi wakhipha isinkwa sakhe esincane nesiphuzo samanzi. \"Nansi into yokudla, Mkhulu. Akukuningi, kodwa ngiyakwabelana nawe.\"\n\nIndoda yamamatheka. \"Ngiyabonga, ngane yami. Umusa wakho mkhulu kunokudla ongipha khona.\"\n\nUThandi waqhubeka nendlela yakhe. Ngalolo suku, wenzé izehlo eziningi zomusa. Wasiza umfanyana owayekhale ngoba wayelahlekelwe yibhola lakhe. Wasiza umama owayethwele umthwalo osindayo. Watshela utishala wakhe ngenkosazana eyayingenawo amapensela.\n\nNtambama, uThandi wafika ekhaya. Umama wakhe wambuza: \"Kwenzenjani namuhla esikoleni, ndodakazi yami?\"\n\nUThandi waxoxa konke okwenzekile. Umama wakhe wamgona futhi wathi: \"Umusa wakho ufana nembewu encane. Uma uyitshala, ikhula ibe yisihlahla esikhulu. Namuhla utshale izimbewu eziningi zomusa.\"\n\nNgakusasa, uThandi wathola into emangalisayo. Abantu ababemsizile babemlethele izipho. Indoda endala yamlethela izithelo ezinhle. Umfanyana wamlethela umqhele wezimbali. Intokozo yagcwalisa inhliziyo kaThandi.\n\n## Izifundo\n\n1. **Umusa uyatheleleka** — Uma wenza okuhle kwabanye, ukuhle kuyabuya kuwe.\n2. **Akukuningi okudingekayo** — Ngisho isenzo esincane somusa singashintsha usuku lomuntu.\n3. **Ukuhlanganyela** — Ukwabelana nalabo abaswele kusenza sibe ngabantu abangcono.\n\n## Igama\n\n| isiZulu | English | Part of Speech |\n|---------|---------|----------------|\n| umusa | kindness | noun |\n| intombazane | girl | noun |\n| isinkwa | bread | noun |\n| ukwabelana | to share | verb |\n| intokozo | joy | noun |",
+  "vocabulary": [
+    {
+      "term": "umusa",
+      "definition": "Kindness; the quality of being friendly and caring",
+      "partOfSpeech": "noun",
+      "pronunciation": "/uˈmuːsa/",
+      "language": "zu"
+    },
+    {
+      "term": "intombazane",
+      "definition": "A young girl",
+      "partOfSpeech": "noun",
+      "pronunciation": "/intɔmbaˈzaːne/",
+      "language": "zu"
+    },
+    {
+      "term": "isinkwa",
+      "definition": "Bread; a staple food",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iˈsiːnkwa/",
+      "language": "zu"
+    },
+    {
+      "term": "ukwabelana",
+      "definition": "To share; to give part of what you have to others",
+      "partOfSpeech": "verb",
+      "pronunciation": "/ukwaˈbɛːlana/",
+      "language": "zu"
+    },
+    {
+      "term": "intokozo",
+      "definition": "Joy; great happiness",
+      "partOfSpeech": "noun",
+      "pronunciation": "/intɔˈkɔːzɔ/",
+      "language": "zu"
+    }
+  ]
 }

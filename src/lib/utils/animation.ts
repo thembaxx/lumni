@@ -7,7 +7,7 @@ export const iOSDecelerate: [number, number, number, number] = [0, 0, 0.2, 1];
 
 /* ============ Spring Transitions ============ */
 export const springTransition: Transition = {
-	type: "spring",
-	stiffness: 400,
-	damping: 30,
+  type: "spring",
+  stiffness: 400,
+  damping: 30,
 };

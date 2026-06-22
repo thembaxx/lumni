@@ -1,7 +1,9 @@
 <!-- LAST_SYNC: 2026-06-21 -->
+
 # Memory Index — Lumni
 
 ## Heuristics & Conventions
+
 - **Math Delimiters**: Strictly use `$...$` for inline and `$$...$$` for display math.
 - **Design Tokens**: No arbitrary pixels. Use `--space-*`, `--fs-*`, `shadow-level-*`, `rounded-card-lg`.
 - **Layout**: Use `<PageContainer>` for all standard pages. Avoid `space-y-*`, use `flex-col` + `gap-*`.
@@ -13,6 +15,7 @@
 - **Rate limiting**: Use `new RateLimiter(new MapStore(), config)` for dev, `new RateLimiter(new RedisStore(redis), config)` for production.
 
 ## Architectural Decisions
+
 - [2026-05-11] **Multi-Tier Caching**: Dexie L1 (Primary) → Appwrite L2 → AI/Wiki/TinyFish L3 (Fallback).
 - [2026-05-13] **AI Provider Chain**: Gemini 2.0 Flash Lite → Nvidia NIM → Groq (DeepSeek removed).
 - [2026-05-15] **Composition Rule**: `LearningOrchestrator` composes `QuestionEngine` for orchestration side effects.
@@ -50,6 +53,7 @@
 - [2026-06-21] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved across 10 files. Parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks. Commit `a1bd5de4`.
 
 ## Past Bugs & Failures
+
 - **Competency Field**: Mismatch between `proficiency` and `score` fields. Standardized on `score`.
 - **Lottie Unpin**: `lottie-react` unpin issue resolved by migrating to `@lottiefiles/dotlottie-react`.
 - **Next.js Worker**: Build fails with `bunx --bun next build`. Use `npx next build`.
@@ -61,6 +65,7 @@
 - **In-memory-only RateLimiter**: Didn't survive server restarts. Fixed with `RedisStore` implementation.
 
 ## Contacts / Resources
+
 - **Domain glossary**: `CONTEXT.md`
 - **Design system**: `DESIGN.md`
 - **Product context**: `PRODUCT.md`

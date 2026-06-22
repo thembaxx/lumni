@@ -22,7 +22,11 @@
           "description": "Exported singleton instance of FlashcardEngine."
         }
       ],
-      "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/fsrs", "@/lib/orchestrator/job-queue"]
+      "internalDependencies": [
+        "@/lib/db/schema",
+        "@/lib/orchestrator/fsrs",
+        "@/lib/orchestrator/job-queue"
+      ]
     },
     {
       "path": "src/lib/question-engine/question-engine.ts",

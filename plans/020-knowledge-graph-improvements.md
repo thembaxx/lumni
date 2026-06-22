@@ -18,6 +18,7 @@
 ## Why this matters
 
 The knowledge graph has three bugs and missing features that make it less useful:
+
 1. **Curriculum graph classification bug**: Topics with prerequisites but no dependents are classified as "prerequisite" (starting point) when they should be "advanced" (endpoint). This inverts the visual hierarchy.
 2. **Edge relations all "requires"**: Curriculum graphs only create `"requires"` edges, but `PathEngine.getAdvancedFromGraph()` filters on `"leads_to"` — so path traversal never finds curriculum-generated edges.
 3. **Hardcoded first-subject**: `LearningMapCard` always shows the first enrolled subject with no way to switch.
@@ -25,11 +26,13 @@ The knowledge graph has three bugs and missing features that make it less useful
 ## Scope
 
 **In scope**:
+
 - `src/lib/knowledge-graph/curriculum-graph.ts` — fix classification bug + edge relations
 - `src/components/dashboard/learning-map-card.tsx` — add subject selector
 - `src/lib/knowledge-graph/service.test.ts` — add tests for curriculum graph
 
 **Out of scope**:
+
 - SVG layout improvements (separate effort)
 - AI graph generation changes
 - Graph caching changes
@@ -41,14 +44,16 @@ The knowledge graph has three bugs and missing features that make it less useful
 In `curriculum-graph.ts`, the `classifyTopic()` function at line ~20:
 
 Current (broken):
+
 ```typescript
 if (hasPrereqs && !hasDependents) return "prerequisite";
 if (!hasPrereqs && hasDependents) return "advanced";
 ```
 
 Fixed:
+
 ```typescript
-if (hasPrereqs && !hasDependents) return "advanced";   // leaf node
+if (hasPrereqs && !hasDependents) return "advanced"; // leaf node
 if (!hasPrereqs && hasDependents) return "prerequisite"; // starting node
 ```
 
@@ -59,11 +64,13 @@ A topic with prerequisites but no dependents is an endpoint (advanced). A topic 
 In `curriculum-graph.ts`, change edge creation to use `"leads_to"` for forward edges:
 
 Current:
+
 ```typescript
 edges.push({ from: prereq.id, to: topic.id, relation: "requires" });
 ```
 
 Fixed:
+
 ```typescript
 edges.push({ from: prereq.id, to: topic.id, relation: "leads_to" });
 ```
@@ -73,6 +80,7 @@ This allows `PathEngine.getAdvancedFromGraph()` to traverse curriculum-generated
 ### Step 3: Add subject selector to LearningMapCard
 
 In `learning-map-card.tsx`:
+
 - Add a `<Select>` dropdown showing all enrolled subjects
 - Store selected subject in local state
 - Re-fetch graph when subject changes

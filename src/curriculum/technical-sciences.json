@@ -21,7 +21,11 @@
       "prerequisites": ["tech-sci-mechanics"],
       "bloomTarget": "understand",
       "subtopics": [
-        { "id": "tech-sci-transverse-longitudinal", "name": "Transverse and Longitudinal Waves", "order": 1 },
+        {
+          "id": "tech-sci-transverse-longitudinal",
+          "name": "Transverse and Longitudinal Waves",
+          "order": 1
+        },
         { "id": "tech-sci-sound-properties", "name": "Sound Properties", "order": 2 },
         { "id": "tech-sci-doppler-effect", "name": "Doppler Effect", "order": 3 }
       ]
@@ -71,7 +75,11 @@
       "subtopics": [
         { "id": "tech-sci-heat-temperature", "name": "Heat and Temperature", "order": 1 },
         { "id": "tech-sci-gas-laws", "name": "Gas Laws", "order": 2 },
-        { "id": "tech-sci-first-law-thermodynamics", "name": "First Law of Thermodynamics", "order": 3 }
+        {
+          "id": "tech-sci-first-law-thermodynamics",
+          "name": "First Law of Thermodynamics",
+          "order": 3
+        }
       ]
     }
   ]

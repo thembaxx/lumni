@@ -52,7 +52,11 @@ async function callGemini(prompt) {
 
 async function callGroq(prompt) {
   const messages = [
-    { role: "system", content: "You are a professional translator. Return ONLY valid JSON — no explanation, no markdown, no code fences." },
+    {
+      role: "system",
+      content:
+        "You are a professional translator. Return ONLY valid JSON — no explanation, no markdown, no code fences.",
+    },
     { role: "user", content: prompt },
   ];
   const response = await fetch(GROQ_URL, {
@@ -75,7 +79,11 @@ async function callGroq(prompt) {
 
 async function callNvidia(prompt) {
   const messages = [
-    { role: "system", content: "You are a professional translator. Return ONLY valid JSON — no explanation, no markdown, no code fences." },
+    {
+      role: "system",
+      content:
+        "You are a professional translator. Return ONLY valid JSON — no explanation, no markdown, no code fences.",
+    },
     { role: "user", content: prompt },
   ];
   const response = await fetch(NVIDIA_URL, {
@@ -147,7 +155,11 @@ async function translateLanguage(locale, languageName, enSource) {
     const section = sections[i];
     const sourceSection = enSource[section];
 
-    if (typeof sourceSection === "object" && sourceSection !== null && !Array.isArray(sourceSection)) {
+    if (
+      typeof sourceSection === "object" &&
+      sourceSection !== null &&
+      !Array.isArray(sourceSection)
+    ) {
       try {
         result[section] = await translateSection(sourceSection, section, locale, languageName);
       } catch (err) {
@@ -191,7 +203,8 @@ async function fillAfrikaansGaps(enSource, afPath) {
   }
 
   const totalMissing = Object.values(missingKeys).reduce(
-    (sum, v) => sum + (typeof v === "object" ? Object.keys(v).length : 1), 0
+    (sum, v) => sum + (typeof v === "object" ? Object.keys(v).length : 1),
+    0,
   );
 
   if (totalMissing === 0) {

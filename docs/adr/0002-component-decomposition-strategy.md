@@ -11,6 +11,7 @@ Lumni has grown to 14 components with >400 lines of code each. Components like `
 ## Decision
 
 Adopt **domain-driven atomic design**:
+
 - Decompose by educational domain (Quiz, Exam, Flashcard, Planner, Parent)
 - Enforce atomic size constraints:
   - Atoms: <50 lines, single responsibility, `cva` variants

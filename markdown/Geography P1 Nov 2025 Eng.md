@@ -68,14 +68,14 @@ This question paper consists of 16 pages.
 
 - 2.2 Match the description in COLUMN Y with the term in COLUMN X. Write only Y or Z next to the question numbers.
 
-| COLUMN X | COLUMN Y |
-|---|---|
-| 2.2.1 Meander | Y A bend in the river course |
-| | Z A lake formed by river deposition |
-| 2.2.2 Levee | Y A raised bank along a river channel |
-| | Z A deep pool in the river bed |
+| COLUMN X         | COLUMN Y                                        |
+| ---------------- | ----------------------------------------------- |
+| 2.2.1 Meander    | Y A bend in the river course                    |
+|                  | Z A lake formed by river deposition             |
+| 2.2.2 Levee      | Y A raised bank along a river channel           |
+|                  | Z A deep pool in the river bed                  |
 | 2.2.3 Oxbow lake | Y A horseshoe-shaped lake formed from a meander |
-| | Z A lake formed behind a dam |
+|                  | Z A lake formed behind a dam                    |
 
 (3 x 2) (6)
 
@@ -113,5 +113,5 @@ Refer to Source 4A and FIGURE 4.1 to answer the following questions:
 (12)
 
 | TOTAL SECTION B: | 100 |
-|---|---|
-| GRAND TOTAL: | 150 |
+| ---------------- | --- |
+| GRAND TOTAL:     | 150 |

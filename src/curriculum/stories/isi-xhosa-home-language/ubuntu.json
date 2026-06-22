@@ -1,50 +1,50 @@
 {
-	"id": "ubuntu",
-	"title": "Ubuntu",
-	"author": "Lumni",
-	"language": "isiXhosa",
-	"languageId": "isi-xhosa-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 850,
-	"subjects": ["isi-xhosa-home-language"],
-	"source": "ai-generated",
-	"topics": ["ubuntu", "community", "togetherness"],
-	"content": "# Ubuntu\n\nKwakukho ilali encinci esiqithini esintle. Abantu bali lali babehlala ngoxolo nangemvisiswano. Babesazi ukuba umntu ngumntu ngabantu.\n\nNgenye imini, umntwana omncinci ogama linguLunga wahamba waya kutyelela umakhulu wakhe. Umalume wakhe wayegula kakhulu kwaye engakwazi ukuphuma endlwini.\n\n\"Makhulu, kutheni umalume engaphumi ngaphandle?\" wabuza uLunga.\n\n\"Umalume wakho ugula,\" kuphendula umakhulu. \"Iintlungu zamathambo ziyamkhathaza. Ufuna uncedo lwethu.\"\n\nULunga wacinga kancinci. Wathi: \"Makhulu, mandibize abahlobo bam ukuba size sincede?\"\n\nUmakhulu wamomotheka. \"Yintoni ebanzi eyi-Ubuntu, ndodana yam. Kukwazi ukusebenza nabanye ukunceda umntu osweleyo.\"\n\nULunga wabiza abahlobo bakhe. Kwafika uThemba, uNomsa, uSipho, noZola. Bacenga abanye abantwana. Kungekudala, wonke umntu elalini wayesebenza.\n\nAmadoda akha indlu entsha yokupheka umakhulu. Abafazi bapheka ukutya okuninzi. Abantwana baqokelela iinkuni nomculo owawonwabisa wonke umntu.\n\nNgentsimbi yesithandathu, ingxangxasi enkulu yayilungile. Wonke umntu weza nento yokutya. Bahleli phantsi, bedla, behleka, becula.\n\nULunga wajonga umakhulu wakhe. Umakhulu wayelila iinyembezi zovuyo. \"Uyabona, ndodana yam? Lo ngumoya we-Ubuntu. Akukho mntu ulambileyo xa wonke umntu esebenza.\"\n\n## Amehluko\n\n1. **Ubuntu** — Umntu ngumntu ngabantu. Senza ubomi bube ngcono xa sisebenza kunye.\n2. **Imvisiswano** — Xa sisebenza kunye, sinako ukwenza izinto ezinkulu.\n3. **Uthando** — Ukusebenza nabanye ngothando kuphila iintliziyo.\n\n## Igama\n\n| isiXhosa | English | Part of Speech |\n|----------|---------|----------------|\n| ubuntu | humanity/kindness | noun |\n| ilali | village | noun |\n| umakhulu | grandmother | noun |\n| unmgeni | neighbour | noun |\n| uncedo | help | noun |",
-	"vocabulary": [
-		{
-			"term": "ubuntu",
-			"definition": "The belief that we are all connected; humanity towards others",
-			"partOfSpeech": "noun",
-			"pronunciation": "/uˈɓuːntu/",
-			"language": "xh"
-		},
-		{
-			"term": "ilali",
-			"definition": "A small village or rural settlement",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iˈlaːli/",
-			"language": "xh"
-		},
-		{
-			"term": "umakhulu",
-			"definition": "A grandmother; an elderly woman",
-			"partOfSpeech": "noun",
-			"pronunciation": "/umaˈkʰuːlu/",
-			"language": "xh"
-		},
-		{
-			"term": "uncedo",
-			"definition": "Help or assistance offered to someone",
-			"partOfSpeech": "noun",
-			"pronunciation": "/uˈŋkɛːdo/",
-			"language": "xh"
-		},
-		{
-			"term": "imvisiswano",
-			"definition": "Unity; working together in harmony",
-			"partOfSpeech": "noun",
-			"pronunciation": "/imvisiˈsʷaːno/",
-			"language": "xh"
-		}
-	]
+  "id": "ubuntu",
+  "title": "Ubuntu",
+  "author": "Lumni",
+  "language": "isiXhosa",
+  "languageId": "isi-xhosa-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 850,
+  "subjects": ["isi-xhosa-home-language"],
+  "source": "ai-generated",
+  "topics": ["ubuntu", "community", "togetherness"],
+  "content": "# Ubuntu\n\nKwakukho ilali encinci esiqithini esintle. Abantu bali lali babehlala ngoxolo nangemvisiswano. Babesazi ukuba umntu ngumntu ngabantu.\n\nNgenye imini, umntwana omncinci ogama linguLunga wahamba waya kutyelela umakhulu wakhe. Umalume wakhe wayegula kakhulu kwaye engakwazi ukuphuma endlwini.\n\n\"Makhulu, kutheni umalume engaphumi ngaphandle?\" wabuza uLunga.\n\n\"Umalume wakho ugula,\" kuphendula umakhulu. \"Iintlungu zamathambo ziyamkhathaza. Ufuna uncedo lwethu.\"\n\nULunga wacinga kancinci. Wathi: \"Makhulu, mandibize abahlobo bam ukuba size sincede?\"\n\nUmakhulu wamomotheka. \"Yintoni ebanzi eyi-Ubuntu, ndodana yam. Kukwazi ukusebenza nabanye ukunceda umntu osweleyo.\"\n\nULunga wabiza abahlobo bakhe. Kwafika uThemba, uNomsa, uSipho, noZola. Bacenga abanye abantwana. Kungekudala, wonke umntu elalini wayesebenza.\n\nAmadoda akha indlu entsha yokupheka umakhulu. Abafazi bapheka ukutya okuninzi. Abantwana baqokelela iinkuni nomculo owawonwabisa wonke umntu.\n\nNgentsimbi yesithandathu, ingxangxasi enkulu yayilungile. Wonke umntu weza nento yokutya. Bahleli phantsi, bedla, behleka, becula.\n\nULunga wajonga umakhulu wakhe. Umakhulu wayelila iinyembezi zovuyo. \"Uyabona, ndodana yam? Lo ngumoya we-Ubuntu. Akukho mntu ulambileyo xa wonke umntu esebenza.\"\n\n## Amehluko\n\n1. **Ubuntu** — Umntu ngumntu ngabantu. Senza ubomi bube ngcono xa sisebenza kunye.\n2. **Imvisiswano** — Xa sisebenza kunye, sinako ukwenza izinto ezinkulu.\n3. **Uthando** — Ukusebenza nabanye ngothando kuphila iintliziyo.\n\n## Igama\n\n| isiXhosa | English | Part of Speech |\n|----------|---------|----------------|\n| ubuntu | humanity/kindness | noun |\n| ilali | village | noun |\n| umakhulu | grandmother | noun |\n| unmgeni | neighbour | noun |\n| uncedo | help | noun |",
+  "vocabulary": [
+    {
+      "term": "ubuntu",
+      "definition": "The belief that we are all connected; humanity towards others",
+      "partOfSpeech": "noun",
+      "pronunciation": "/uˈɓuːntu/",
+      "language": "xh"
+    },
+    {
+      "term": "ilali",
+      "definition": "A small village or rural settlement",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iˈlaːli/",
+      "language": "xh"
+    },
+    {
+      "term": "umakhulu",
+      "definition": "A grandmother; an elderly woman",
+      "partOfSpeech": "noun",
+      "pronunciation": "/umaˈkʰuːlu/",
+      "language": "xh"
+    },
+    {
+      "term": "uncedo",
+      "definition": "Help or assistance offered to someone",
+      "partOfSpeech": "noun",
+      "pronunciation": "/uˈŋkɛːdo/",
+      "language": "xh"
+    },
+    {
+      "term": "imvisiswano",
+      "definition": "Unity; working together in harmony",
+      "partOfSpeech": "noun",
+      "pronunciation": "/imvisiˈsʷaːno/",
+      "language": "xh"
+    }
+  ]
 }

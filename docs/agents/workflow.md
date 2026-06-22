@@ -18,11 +18,11 @@ A TSX script at `scripts/sync-todo-to-linear.ts` pushes TODO.md changes to Linea
 
 ### How it works
 
-| TODO.md annotation | Purpose |
-|---|---|
-| `<!-- linear-id: LUM-42 -->` | Links a task to its Linear issue |
+| TODO.md annotation            | Purpose                                       |
+| ----------------------------- | --------------------------------------------- |
+| `<!-- linear-id: LUM-42 -->`  | Links a task to its Linear issue              |
 | `<!-- linear-priority: N -->` | Section-level priority (`2`=High, `3`=Normal) |
-| `- [ ]` / `- [x]` | Maps to Linear state: Backlog / Done |
+| `- [ ]` / `- [x]`             | Maps to Linear state: Backlog / Done          |
 
 ### Running
 
@@ -31,6 +31,7 @@ npm run todo:sync
 ```
 
 The script:
+
 1. Parses every checklist item in TODO.md
 2. Items **with** a `linear-id` → updates title, priority, and state in Linear
 3. Items **without** a `linear-id` → creates a new Linear issue, writes the ID back into TODO.md
@@ -54,12 +55,12 @@ Linear App → Settings → Integrations → GitHub
 
 ### What it enables
 
-| Trigger | Action |
-|---|---|
-| Branch created from Linear | Auto-named `lum-42-task-name` |
-| PR with `LUM-42` in branch/PR body | Links PR to Linear issue |
-| PR merged with "Closes LUM-42" | Moves Linear issue → **Done** |
-| Linear issue → In Progress | Creates GitHub branch (optional) |
+| Trigger                            | Action                           |
+| ---------------------------------- | -------------------------------- |
+| Branch created from Linear         | Auto-named `lum-42-task-name`    |
+| PR with `LUM-42` in branch/PR body | Links PR to Linear issue         |
+| PR merged with "Closes LUM-42"     | Moves Linear issue → **Done**    |
+| Linear issue → In Progress         | Creates GitHub branch (optional) |
 
 ### Branch naming convention
 
@@ -86,11 +87,11 @@ Sentry → Settings → Integrations → Linear → Connect Workspace
 
 ### What it does
 
-| Threshold | Action |
-|---|---|
-| New error group | Auto-creates Linear bug (Bug label) |
-| 10 users affected | Triggers issue creation |
-| Error reoccurs after fix | Reopens Linear issue |
+| Threshold                | Action                              |
+| ------------------------ | ----------------------------------- |
+| New error group          | Auto-creates Linear bug (Bug label) |
+| 10 users affected        | Triggers issue creation             |
+| Error reoccurs after fix | Reopens Linear issue                |
 
 ### Setup steps
 
@@ -99,18 +100,19 @@ Sentry → Settings → Integrations → Linear → Connect Workspace
 3. **Select project**: Pick the **Lumni (LUM)** team from the dropdown
 4. **Configure thresholds** (defaults are sane, but review):
 
-   | Setting | Recommended | Notes |
-   |---------|------------|-------|
-   | Create issue on new error group | ✅ Enabled | Auto-creates LUM-xxx bug |
-   | Minimum users affected | `10` | Avoids noise from isolated errors |
-   | Reopen when error reoccurs | ✅ Enabled | Reopens a Done issue |
-   | Label | `Bug` | Applies the Bug label automatically |
+   | Setting                         | Recommended | Notes                               |
+   | ------------------------------- | ----------- | ----------------------------------- |
+   | Create issue on new error group | ✅ Enabled  | Auto-creates LUM-xxx bug            |
+   | Minimum users affected          | `10`        | Avoids noise from isolated errors   |
+   | Reopen when error reoccurs      | ✅ Enabled  | Reopens a Done issue                |
+   | Label                           | `Bug`       | Applies the Bug label automatically |
 
 5. **Save** the configuration
 
 ### After setup
 
 Verify by triggering a test error in production or staging. Within ~5 minutes a new `LUM-xxx` issue should appear in the Linear Backlog with:
+
 - Sentry error title as the issue title
 - Stack trace in the description
 - Environment, release version, user count
@@ -119,14 +121,15 @@ Verify by triggering a test error in production or staging. Within ~5 minutes a 
 
 ### Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| No issues created after errors | Check Sentry → Settings → Integrations → Linear → Activity Log |
-| Wrong Linear team | Disconnect and reconnect, selecting the correct team |
-| Duplicate issues | Linear deduplicates by default — check if errors are grouped in Sentry |
-| Issues created but no stack trace | Ensure source maps are uploaded in the CI `sentry-release` job |
+| Issue                             | Fix                                                                    |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| No issues created after errors    | Check Sentry → Settings → Integrations → Linear → Activity Log         |
+| Wrong Linear team                 | Disconnect and reconnect, selecting the correct team                   |
+| Duplicate issues                  | Linear deduplicates by default — check if errors are grouped in Sentry |
+| Issues created but no stack trace | Ensure source maps are uploaded in the CI `sentry-release` job         |
 
 Every new error that reaches the threshold auto-creates a `LUM-xxx` issue with:
+
 - Stack trace in the description
 - Environment, release, and user count
 - "Bug" label applied
@@ -147,13 +150,13 @@ This is **optional** — no urgent need until you have Sentry releases wired up.
 
 ## Linear Configuration
 
-| Setting | Value |
-|---|---|
-| Team | **Lumni (LUM)** |
-| Team ID | `86d9eadf-8428-4e38-8bdf-4028e66e0037` |
-| Project ID | `6eaef6d1-6e88-4ca9-8f61-b34ba2d099d7` |
+| Setting         | Value                                           |
+| --------------- | ----------------------------------------------- |
+| Team            | **Lumni (LUM)**                                 |
+| Team ID         | `86d9eadf-8428-4e38-8bdf-4028e66e0037`          |
+| Project ID      | `6eaef6d1-6e88-4ca9-8f61-b34ba2d099d7`          |
 | Workflow states | Backlog → Todo → In Progress → In Review → Done |
-| Labels | Bug, Feature, Improvement |
+| Labels          | Bug, Feature, Improvement                       |
 
 ### Issue numbering
 
@@ -170,27 +173,27 @@ LUM-20  Component tests
 
 The repo has four CI jobs in `.github/workflows/ci.yml`:
 
-| Job | Runs on | Purpose |
-|---|---|---|
-| `quality` | PR + push to main | tsc, biome, test, build |
-| `bundle-size` | PR + push to main | Build with analyzer |
-| `todo-sync` | Push to main only | `npm run todo:sync` after merge |
-| `sentry-release` | Push to main only | Create Sentry release |
+| Job              | Runs on           | Purpose                         |
+| ---------------- | ----------------- | ------------------------------- |
+| `quality`        | PR + push to main | tsc, biome, test, build         |
+| `bundle-size`    | PR + push to main | Build with analyzer             |
+| `todo-sync`      | Push to main only | `npm run todo:sync` after merge |
+| `sentry-release` | Push to main only | Create Sentry release           |
 
 ### Required GitHub secrets
 
-| Secret | Purpose | Value |
-|---|---|---|
-| `LINEAR_API_KEY` | For the `todo-sync` job | Set via CI secret |
-| `SENTRY_DSN` | Enables Sentry source map upload | `https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104` |
-| `SENTRY_AUTH_TOKEN` | For the `sentry-release` job | Create in Sentry → Settings → Auth Tokens |
+| Secret              | Purpose                          | Value                                                                                             |
+| ------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `LINEAR_API_KEY`    | For the `todo-sync` job          | Set via CI secret                                                                                 |
+| `SENTRY_DSN`        | Enables Sentry source map upload | `https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104` |
+| `SENTRY_AUTH_TOKEN` | For the `sentry-release` job     | Create in Sentry → Settings → Auth Tokens                                                         |
 
 ### Required GitHub variables
 
-| Variable | Purpose | Value |
-|---|---|---|
-| `SENTRY_ORG` | Sentry org slug | `org1128` |
-| `SENTRY_PROJECT` | Sentry project slug | `lumni` |
+| Variable         | Purpose             | Value     |
+| ---------------- | ------------------- | --------- |
+| `SENTRY_ORG`     | Sentry org slug     | `org1128` |
+| `SENTRY_PROJECT` | Sentry project slug | `lumni`   |
 
 ### Setting them up
 
@@ -204,11 +207,13 @@ Add the two **variables** (not secrets — they're non-sensitive).
 ### Checking it works
 
 After adding DSN to `.env.local`:
+
 1. Run `npm run dev` locally
 2. Trigger an error (visit a broken route)
 3. Check sentry.io → lumni project → Issues
 
 After first deploy with the GitHub secrets set:
+
 1. Merge a PR to main
 2. The `sentry-release` job creates a release
 3. Sentry links errors to that release

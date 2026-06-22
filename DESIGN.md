@@ -139,6 +139,7 @@ The interface translates this room into pixels. Warm paper surfaces that do not 
 This system forbids anything that feels like an exam hall. No cold clinical whites. No purple gradients or neon accents. No glassmorphism that distracts rather than frames. No generic SaaS landing page theatre with big numbers and smaller labels. The student is here to study, not to be marketed at. The interface disappears into the task.
 
 **Key Characteristics:**
+
 - Generous rounded corners (20px cards, 12px buttons) make the app feel physically safe, not sharp
 - Single emerald accent (Study Green) on 10% or less of surfaces: rarity creates meaning
 - iOS-inspired type scale with OS-quality tracking and dynamic type: reading should feel effortless, not engineered
@@ -150,10 +151,12 @@ This system forbids anything that feels like an exam hall. No cold clinical whit
 Restrained by design, not by accident. Warm neutrals carry the room. Study Green arrives only to guide. The palette is a pact: the surface stays quiet so the accent can speak.
 
 ### Primary
+
 - **Study Green** (`oklch(52% 0.18 146)`): The accent that says "press here." Used for primary buttons, active states, selection fills, and focus rings. Never decorative. Its chroma is high enough to feel alive, its lightness controlled enough to never shout. On dark surfaces, it glows instead of glaring.
 - **Study Green Bright** (`oklch(65% 0.18 146)`): Dark mode primary accent. Same hue, same chroma, lifted lightness so it reads legibly against the deep background. The same voice, tuned for a darker room.
 
 ### Neutral
+
 - **Warm Paper** (`oklch(100% 0 0)`): The page itself. Pure white pulled just barely away from pure white by the absence of blue. Bright but not clinical.
 - **Warm Paper Secondary** (`oklch(97% 0.003 60)`): The surface beneath a card, the fill of a grouped table. A whisper of warmth at 60deg hue, imperceptible until you see what cold gray feels like next to it.
 - **Warm Paper Tertiary** (`oklch(95% 0.005 60)`): Pressed states, subtle fill areas, the background of a selected list row. One step warmer, one step lower.
@@ -164,17 +167,20 @@ Restrained by design, not by accident. Warm neutrals carry the room. Study Green
 - **Separator** (`oklch(0% 0 0 / 0.06)`): Borders, dividers, hairline rules. Almost invisible on purpose. Structure should be felt, not seen.
 
 ### Semantic
+
 - **Destructive** (`oklch(55% 0.18 25)`): Errors, wrong answers, destructive actions. A red with warmth (25deg hue) so it reads as urgent, not cold.
 - **Success** (`oklch(65% 0.2 145)`): Correct answers, completions, positive feedback. A green with higher chroma than Study Green so it reads as achievement, not action.
 - **Warning** (`oklch(75% 0.15 70)`): Medium difficulty, cautionary feedback. Amber warmth that catches the eye without alarming.
 - **Info** (`oklch(60% 0.15 240)`): Informational badges, help indicators. Neutral blue, no emotional charge.
 
 ### Named Rules
+
 **The One Voice Rule.** Study Green is used on 10% or less of any given screen. Its rarity is the point. When everything is highlighted, nothing is.
 
 **The Warm Base Rule.** Every neutral surface is tinted toward a warm 60deg hue at chroma 0.0030.005. Pure gray reads cold; warm reads supportive.
 
 ### Dark Mode
+
 Dark mode inverts the tonal stack: the base layer deepens to `oklch(10% 0.01 264)`, elevated surfaces brighten to `oklch(20% 0.02 264)`, and Study Green Bright (`oklch(65% 0.18 146)`) maintains the accent's legibility. The ambient warmth shifts cooler (264deg hue) to match the dark environment while keeping a subtle blue note. Separators become lighter (`oklch(100% 0 0 / 0.12)`) against the dark foundation.
 
 ## 3. Typography
@@ -186,6 +192,7 @@ Dark mode inverts the tonal stack: the base layer deepens to `oklch(10% 0.01 264
 **Character:** Two voices, one room. Outfit is the friendly classmate who explains the hard concept. Its geometric roundness makes headlines feel confident without aggression, approachable without childishness. Geist is the quiet one who writes the notes. Clean, fast, no wasted strokes. It sets down body text and labels with the economy of someone who knows you are in a hurry. Together they read like a study session where someone actually knows the material.
 
 ### Hierarchy
+
 - **Display** (800, 2.125rem / 34px, 1.2, +0.012em tracking): Page titles and large hero headings. Reserved for top-level screens. Applies dynamic type scale via `--text-scale`.
 - **Headline** (800, 1.75rem / 28px, 1.22, +0.014em tracking): Section headers and major content area titles.
 - **Title** (800, 1.375rem / 22px, 1.27, -0.012em tracking): Card titles, subsection headers, and sheet titles.
@@ -195,6 +202,7 @@ Dark mode inverts the tonal stack: the base layer deepens to `oklch(10% 0.01 264
 - **Caption 2** (400, 0.6875rem / 11px, 1.2, +0.006em tracking): Legal text, tertiary metadata. Use sparingly.
 
 ### Named Rules
+
 **The OS Tracking Rule.** Letter-spacing values match Apple HIG specifications at every size. Do not override with generic 0.05em or 0.1em values; use the project's `--tracking-*` custom properties.
 
 **The Dynamic Type Rule.** All text sizes are multiplied by `--text-scale` (default 1.0, adjustable via JS). The system respects user font size preferences without breaking layout.
@@ -204,17 +212,20 @@ Dark mode inverts the tonal stack: the base layer deepens to `oklch(10% 0.01 264
 If you set a sheet of paper on a desk in afternoon light, it casts a shadow so soft you barely notice it, just enough to know the paper is not the desk. That is the depth of this system. Surfaces do not float; they rest. Hierarchy comes from lightness, not from shadow. A card is not a card because it casts a shadow. It is a card because it sits on a surface one step lighter or darker than its surroundings. Shadows are atmospheric. They are the quality of light in the room, not scaffolding.
 
 ### Shadow Vocabulary
+
 - **Level 1** (`0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02)`): The resting float. List groups, small cards. If you squint, you might not see it. That is the point.
 - **Level 2** (`0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02)`): Popovers, dropdowns, elevated cards. Present enough to separate, soft enough to not cast hard edges.
 - **Level 3** (4-layer float up to `0 32px 64px oklch(0% 0 0 / 0.015)`): Modals, sheets, dialogs. The most elevated thing in the room. Still soft. Still atmospheric.
 - **Solver Glow** (`0 2px 8px oklch(52% 0.18 146 / 0.15)`): The only colored shadow in the system. A green-tinted halo around the Solve button, the one action that says "I can help you with this." It glows because it matters.
 
 ### Named Rules
+
 **The Ambient Float Rule.** Shadows tint foreground surfaces upward; they do not carve depth into the page. Hierarchy is established by background lightness first, shadow second. A level-3 surface is still primarily distinguished by being lighter, not by its shadow being larger.
 
 ## 5. Components
 
 ### Buttons
+
 Buttons answer when you touch them. Every variant scales down on press (`scale-[0.96]`) like a physical button giving under your finger. The 44px touch target (Apple HIG minimum) means thumbs on a crowded bus stop do not miss.
 
 - **Shape:** Gently rounded corners (12px radius via `--radius-button`).
@@ -227,6 +238,7 @@ Buttons answer when you touch them. Every variant scales down on press (`scale-[
 - **Sizes:** default (44px h), sm (36px h), lg (48px h), xs (20px h), icon (44x44px circle).
 
 ### Cards
+
 Cards have corners so generous (20px, 40px at the shell) they feel safe to rest on. A near-invisible Separator border and level-1 shadow do the quiet work of containment. Cards are containers, not navigation. Content grouped inside them reads as belonging together.
 
 - **Corner Style:** `rounded-card-lg` (40px) at the outermost wrapper. Use `rounded-lg` (20px) for standard cards.
@@ -237,6 +249,7 @@ Cards have corners so generous (20px, 40px at the shell) they feel safe to rest 
 - **States:** None at rest. Hover not applicable (cards are containers, not interactive targets).
 
 ### List Groups
+
 Where cards contain, list groups navigate. They are the table of contents of the study room: rounded containers (24px) with iOS-style sections, each cell a full-width target begging to be tapped.
 
 - **ListCell:** 56px minimum height, 20px horizontal padding, full-width touch target. Interactive cells highlight on hover and scale down on press.
@@ -244,6 +257,7 @@ Where cards contain, list groups navigate. They are the table of contents of the
 - **Group Footer:** Caption-size text (12px) in Ink Faint.
 
 ### Inputs / Fields
+
 Inputs borrow the same rounded language as buttons (12px) because the hand should not recalibrate between typing and tapping. A subtle fill replaces the hard bordered rectangle. The field sits in the page, not on top of it.
 
 - **Style:** Warm Paper Secondary background, Separator border, 12px radius.
@@ -252,6 +266,7 @@ Inputs borrow the same rounded language as buttons (12px) because the hand shoul
 - **Touch Target:** Minimum 44px height for all interactive controls via `--touch-target-min`.
 
 ### Navigation Bar
+
 A bar that knows when you are at the top of the page and when you are deep in content. At the top, the title is large and proud (34px, Outfit 800) like a chapter heading. On scroll, it shrinks to body-size (16px) and pulls back behind a glass blur, a hairline separator appearing at its feet to say "you have left the surface."
 
 - **Background:** Glass material (`--system-background / 90%` with `backdrop-filter: blur(24px)`).
@@ -259,15 +274,18 @@ A bar that knows when you are at the top of the page and when you are deep in co
 - **Back Button:** 36x36px ghost icon button, Study Green tint.
 
 ### Tabs / Segmented Control
+
 Two systems, two densities. Both feel alive under your finger.
 
 - **AnimatedTabs:** A unified background pill with a spring-animated Study Green indicator that follows your tap. Active text sits white on green; inactive sits quiet. For when the choice matters and you want to feel it.
 - **SegmentedControl:** A Surface Secondary tray with a floating Surface pill that tracks selection. Active text is Study Green; inactive is Ink Muted. For filter groups and view toggles where speed matters more than drama.
 
 ### Glass Materials
+
 Liquid Glass is not for permanent architecture. It is for moments that come and go: a sheet sliding up, a popover dismissing with a tap, a navigation bar that blurs the content behind it. Six tiers from barely frosted (10px blur) to fully opaque (40px blur) let transient surfaces exist in their own layer without pretending to be solid. A card is never glass. Glass is for things that do not stay.
 
 ### PageContainer
+
 Every page that is not the home feed or admin dashboard should be wrapped in `<PageContainer>`. This ensures consistent max-width, horizontal padding, and responsive behavior across the app. No page should declare its own `max-w-*` or `px-*` — that is the container's job.
 
 - **Default:** `mx-auto w-full max-w-3xl px-4 sm:px-6 lg:max-w-4xl xl:max-w-6xl`
@@ -275,35 +293,40 @@ Every page that is not the home feed or admin dashboard should be wrapped in `<P
 - **No bleed:** Hero banners and full-blee sections stay inside the container. Apple HIG avoids full-bleed banners inside narrow content zones.
 
 ### Chips / Badges
+
 Small, fast, expressive. 20px tall with 8px radius, they label without taking space. Five variants mirror the button vocabulary so a chip feels like a button's smaller cousin: default (Study Green) for active filters, secondary for neutral tags, destructive for error badges, outline for boundaries, ghost for the quietest annotation. Difficulty labels, subject tags, status indicators: chips tell you what something is without asking you to stop.
 
 ## 6. Z-Index Hierarchy
+
 All z-index values must reference semantic CSS custom properties. No magic numbers.
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--z-content` | 0 | Default content, text, images |
-| `--z-elevated` | 10 | Cards on hover, floating labels |
-| `--z-sticky` | 20 | Sticky headers, pinned columns |
-| `--z-header` | 30 | Top navigation bar |
-| `--z-drawer` | 40 | Side drawers, bottom sheets |
-| `--z-modal` | 50 | Dialogs, overlays, popovers |
-| `--z-toast` | 60 | Notification toasts |
-| `--z-skip-link` | 100 | Accessibility skip link (always on top) |
+| Token           | Value | Usage                                   |
+| --------------- | ----- | --------------------------------------- |
+| `--z-content`   | 0     | Default content, text, images           |
+| `--z-elevated`  | 10    | Cards on hover, floating labels         |
+| `--z-sticky`    | 20    | Sticky headers, pinned columns          |
+| `--z-header`    | 30    | Top navigation bar                      |
+| `--z-drawer`    | 40    | Side drawers, bottom sheets             |
+| `--z-modal`     | 50    | Dialogs, overlays, popovers             |
+| `--z-toast`     | 60    | Notification toasts                     |
+| `--z-skip-link` | 100   | Accessibility skip link (always on top) |
 
 **Rule:** If you need a z-index, import `--z-*` from the design system. Never write `z-50` directly in a component.
 
 ## 7. Spacing & Layout Rules
 
 ### Vertical Rhythm
+
 Use `gap-*` (flexbox/grid `gap`) for all vertical spacing between siblings. Do not use `space-y-*` or manual `mt-*` / `mb-*` combinations. `gap` is the modern standard, works uniformly in flex and grid, and avoids Tailwind `space-y` specificity gotchas.
 
 ### Arbitrary Values
+
 Do not write arbitrary pixel values (`w-[200px]`, `text-[13px]`, `min-h-[250px]`). Use the design system's spacing scale (`--space-1` through `--space-16`) and typography scale (`--fs-caption-2` through `--fs-large-title`). If a value does not exist in the token set, add the token rather than hardcoding the value.
 
 ## 8. Do's and Don'ts
 
 ### Do:
+
 - Do let Study Green be rare. 10% or less of any surface. When it appears, it should mean something: a button, a focus ring, a selected state. Rarity is its authority.
 - Do tint every neutral toward 60deg warmth at chroma 0.0030.005. Pure gray reads like a hospital. Warm reads like a desk lamp.
 - Do use Outfit 800 for headings and Geist 400 for body. This pairing is the voice of a friend who knows the material: confident in the big ideas, clear in the details.
@@ -318,6 +341,7 @@ Do not write arbitrary pixel values (`w-[200px]`, `text-[13px]`, `min-h-[250px]`
 - Do use design tokens for shadows (`shadow-level-2`), radii (`rounded-card-lg`), and z-index (`--z-*`). Tokens keep dark mode, responsive behaviour, and accessibility in sync automatically.
 
 ### Don't:
+
 - Don't use gradient text. Not once. `background-clip: text` with a gradient is decoration pretending to be typography. Use solid Study Green or Ink. Emphasis comes from weight and size.
 - Don't use side-stripe borders. A 3px `border-left` in Study Green on a card is not a design decision. It is a reflex. Use full borders, background tints, a leading number or icon, or nothing.
 - Don't make cards out of glass. Glass materials (backdrop-filter blur) are for transient surfaces that slide in and out. Cards are furniture. Furniture is solid.

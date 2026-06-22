@@ -19,98 +19,92 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
 
 const PracticeTab = dynamic(
-	() =>
-		import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),
-	{
-		ssr: false,
-		loading: () => (
-			<div className="flex flex-col gap-4 px-4">
-				<Skeleton className="h-32 rounded-3xl" />
-				<div className="grid grid-cols-2 gap-3">
-					<Skeleton className="h-24 rounded-3xl" />
-					<Skeleton className="h-24 rounded-3xl" />
-				</div>
-				<Skeleton className="h-40 rounded-3xl" />
-			</div>
-		),
-	},
+  () => import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex flex-col gap-4 px-4">
+        <Skeleton className="h-32 rounded-3xl" />
+        <div className="grid grid-cols-2 gap-3">
+          <Skeleton className="h-24 rounded-3xl" />
+          <Skeleton className="h-24 rounded-3xl" />
+        </div>
+        <Skeleton className="h-40 rounded-3xl" />
+      </div>
+    ),
+  },
 );
 
 const AnalyticsTab = dynamic(
-	() =>
-		import("@/components/dashboard/analytics-tab").then((m) => m.AnalyticsTab),
-	{
-		ssr: false,
-		loading: () => (
-			<div className="flex flex-col gap-4 px-4">
-				<div className="grid grid-cols-3 gap-3">
-					<Skeleton className="h-20 rounded-3xl" />
-					<Skeleton className="h-20 rounded-3xl" />
-					<Skeleton className="h-20 rounded-3xl" />
-				</div>
-				<Skeleton className="h-48 rounded-3xl" />
-				<Skeleton className="h-64 rounded-3xl" />
-			</div>
-		),
-	},
+  () => import("@/components/dashboard/analytics-tab").then((m) => m.AnalyticsTab),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex flex-col gap-4 px-4">
+        <div className="grid grid-cols-3 gap-3">
+          <Skeleton className="h-20 rounded-3xl" />
+          <Skeleton className="h-20 rounded-3xl" />
+          <Skeleton className="h-20 rounded-3xl" />
+        </div>
+        <Skeleton className="h-48 rounded-3xl" />
+        <Skeleton className="h-64 rounded-3xl" />
+      </div>
+    ),
+  },
 );
 
 async function refreshPage(): Promise<void> {
-	window.location.reload();
+  window.location.reload();
 }
 
 export function DashboardContent({
-	onStartQuiz,
-	activeTab,
-	onBoltComplete,
-	boltStreak,
-	id,
+  onStartQuiz,
+  activeTab,
+  onBoltComplete,
+  boltStreak,
+  id,
 }: {
-	onStartQuiz: (subject: string) => void;
-	activeTab: TabValue;
-	onBoltComplete: (result: BoltResult) => void;
-	boltStreak: number;
-	id?: string;
+  onStartQuiz: (subject: string) => void;
+  activeTab: TabValue;
+  onBoltComplete: (result: BoltResult) => void;
+  boltStreak: number;
+  id?: string;
 }) {
-	const t = useTranslations();
-	const { user, isAnonymous } = useAuth();
-	const isLoggedIn = !!user && !isAnonymous;
+  const t = useTranslations();
+  const { user, isAnonymous } = useAuth();
+  const isLoggedIn = !!user && !isAnonymous;
 
-	useEffect(() => {
-		if (isLoggedIn) {
-			initializeNotificationSchedulers();
-		}
-	}, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      initializeNotificationSchedulers();
+    }
+  }, [isLoggedIn]);
 
-	return (
-		<PullToRefresh
-			id={id}
-			data-scroll-container
-			onRefresh={refreshPage}
-			className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
-		>
-			<PageContainer className="gap-6 pb-16">
-				<LoginBanner />
-				{activeTab === "today" && <HeroBanner />}
-				{isAnonymous && (
-					<LocalDataNotice
-						page="dashboard"
-						description={t("dashboard.localDataDescription")}
-					/>
-				)}
-				{activeTab === "today" && isLoggedIn && <CountdownHeader />}
-				{activeTab === "today" && (
-					<TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
-				)}
-				{activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
-				{activeTab === "analytics" && <AnalyticsTab />}
-				{(activeTab === "practice" || activeTab === "analytics") &&
-					isAnonymous && (
-						<StaggeredSection>
-							<AnonymousUpsell />
-						</StaggeredSection>
-					)}
-			</PageContainer>
-		</PullToRefresh>
-	);
+  return (
+    <PullToRefresh
+      id={id}
+      data-scroll-container
+      onRefresh={refreshPage}
+      className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
+    >
+      <PageContainer className="gap-6 pb-16">
+        <LoginBanner />
+        {activeTab === "today" && <HeroBanner />}
+        {isAnonymous && (
+          <LocalDataNotice page="dashboard" description={t("dashboard.localDataDescription")} />
+        )}
+        {activeTab === "today" && isLoggedIn && <CountdownHeader />}
+        {activeTab === "today" && (
+          <TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
+        )}
+        {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
+        {activeTab === "analytics" && <AnalyticsTab />}
+        {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
+          <StaggeredSection>
+            <AnonymousUpsell />
+          </StaggeredSection>
+        )}
+      </PageContainer>
+    </PullToRefresh>
+  );
 }

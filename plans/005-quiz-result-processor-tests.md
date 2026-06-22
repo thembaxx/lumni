@@ -29,6 +29,7 @@
 ## Current state
 
 **`src/lib/services/quiz-result-processor.ts`**: 463 lines, single `processQuizResult()` function with a discriminated union input (`bolt | quiz | exam | flashcard`). Each branch wires different deps:
+
 - `processBolt`: tracks wrong answers, creates flashcards for incorrect, enqueues analytics
 - `processQuiz`: accuracy calculation, batch flashcard creation, study session scheduling, analytics
 - `processExam`: multi-part handling, marks resolution, wrong answer tracking
@@ -40,18 +41,20 @@
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/services/__tests__/quiz-result-processor.test.ts` | 0 errors |
-| Tests     | `bun run test -- quiz-result-processor` | all new tests pass |
+| Purpose   | Command                                                                    | Expected on success |
+| --------- | -------------------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                                         | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/services/__tests__/quiz-result-processor.test.ts` | 0 errors            |
+| Tests     | `bun run test -- quiz-result-processor`                                    | all new tests pass  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/services/__tests__/quiz-result-processor.test.ts` (create)
 
 **Out of scope**:
+
 - `src/lib/services/quiz-result-processor.ts` — do not modify the source
 - Other service files
 
@@ -145,6 +148,7 @@ describe("processQuizResult", () => {
 ### Step 3: Implement each test case
 
 Read the source file carefully and implement each test. The key pattern:
+
 1. Create mock deps with `vi.fn()` for every method
 2. Call `processQuizResult(result, deps)` with appropriate input
 3. Assert that the correct deps methods were called with correct arguments

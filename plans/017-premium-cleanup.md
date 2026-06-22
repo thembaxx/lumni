@@ -31,16 +31,24 @@ Session 36 removed all premium gating (all features are free), but ~400 lines of
 **`src/components/ui/premium-gate.tsx`**: `PremiumGate` component, zero import sites (confirmed via grep).
 
 **`src/lib/premium/premium-context.tsx:35`**:
+
 ```typescript
 const FREE_FEATURES: PremiumFeature[] = ["ai-tutor", "unlimited-flashcards"];
 ```
 
 **`src/lib/premium/premium-context.tsx:37-47`**:
+
 ```typescript
 const PREMIUM_FEATURES: PremiumFeature[] = [
-  "ai-tutor", "advanced-analytics", "unlimited-flashcards",
-  "custom-study-plans", "exam-simulator", "priority-support",
-  "offline-quiz-packs", "problem-library", "visual-engine",
+  "ai-tutor",
+  "advanced-analytics",
+  "unlimited-flashcards",
+  "custom-study-plans",
+  "exam-simulator",
+  "priority-support",
+  "offline-quiz-packs",
+  "problem-library",
+  "visual-engine",
 ];
 ```
 
@@ -50,20 +58,22 @@ const PREMIUM_FEATURES: PremiumFeature[] = [
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check` on changed files | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                            | Expected on success |
+| --------- | ---------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                 | exit 0, no errors   |
+| Lint      | `npx biome check` on changed files | 0 errors            |
+| Tests     | `bun run test`                     | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/components/ui/premium-gate.tsx` — delete
 - `src/lib/premium/premium-context.tsx` — collapse `FREE_FEATURES` = `PREMIUM_FEATURES`
 - `src/app/[locale]/premium/premium-client.tsx` — simplify or remove checkout UI
 
 **Out of scope**:
+
 - `src/lib/api/create-route-handler.ts` — `budget` field still works with collapsed features
 - Stripe/Payfast API routes — may be needed for future monetization
 - `src/lib/premium/` directory — keep the provider for `hasFeature` compatibility
@@ -91,9 +101,15 @@ In `src/lib/premium/premium-context.tsx`:
 
 ```typescript
 const FREE_FEATURES: PremiumFeature[] = [
-  "ai-tutor", "advanced-analytics", "unlimited-flashcards",
-  "custom-study-plans", "exam-simulator", "priority-support",
-  "offline-quiz-packs", "problem-library", "visual-engine",
+  "ai-tutor",
+  "advanced-analytics",
+  "unlimited-flashcards",
+  "custom-study-plans",
+  "exam-simulator",
+  "priority-support",
+  "offline-quiz-packs",
+  "problem-library",
+  "visual-engine",
 ];
 ```
 

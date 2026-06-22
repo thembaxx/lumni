@@ -35,19 +35,19 @@ src/app/api/engine/visual/route.ts  # POST /api/engine/visual
 
 ## Subject Classification (Broad STEM)
 
-| Category | Subjects | Engine |
-|---|---|---|
-| **Sciences** (6) | Mathematics, Technical Mathematics, Mathematical Literacy, Physical Sciences, Life Sciences, Agricultural Sciences, Technical Sciences | AI → Konva / Mermaid |
-| **Technology** (6) | Civil Tech, CAT, Electrical Tech, EGD, IT, Mechanical Tech | AI → Konva / Mermaid |
-| **Agriculture** (2) | Agricultural Management Practices, Agricultural Technology | AI → Konva / Mermaid |
-| **Business** (3) | Accounting, Business Studies, Economics | AI → Konva / Mermaid |
-| **Geography** (1) | Geography | AI → Konva / Mermaid |
-| **Design/Arts** (2) | Design, Visual Arts | AI → Konva / Mermaid |
-| **Languages** (16) | All Home/FAL languages | Image search |
-| **Humanities** (2) | History, Religion Studies | Image search |
-| **Arts** (3) | Dance Studies, Dramatic Arts, Music | Image search |
-| **Services** (3) | Consumer Studies, Hospitality Studies, Tourism | Image search |
-| **Compulsory** (1) | Life Orientation | Image search |
+| Category            | Subjects                                                                                                                               | Engine               |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| **Sciences** (6)    | Mathematics, Technical Mathematics, Mathematical Literacy, Physical Sciences, Life Sciences, Agricultural Sciences, Technical Sciences | AI → Konva / Mermaid |
+| **Technology** (6)  | Civil Tech, CAT, Electrical Tech, EGD, IT, Mechanical Tech                                                                             | AI → Konva / Mermaid |
+| **Agriculture** (2) | Agricultural Management Practices, Agricultural Technology                                                                             | AI → Konva / Mermaid |
+| **Business** (3)    | Accounting, Business Studies, Economics                                                                                                | AI → Konva / Mermaid |
+| **Geography** (1)   | Geography                                                                                                                              | AI → Konva / Mermaid |
+| **Design/Arts** (2) | Design, Visual Arts                                                                                                                    | AI → Konva / Mermaid |
+| **Languages** (16)  | All Home/FAL languages                                                                                                                 | Image search         |
+| **Humanities** (2)  | History, Religion Studies                                                                                                              | Image search         |
+| **Arts** (3)        | Dance Studies, Dramatic Arts, Music                                                                                                    | Image search         |
+| **Services** (3)    | Consumer Studies, Hospitality Studies, Tourism                                                                                         | Image search         |
+| **Compulsory** (1)  | Life Orientation                                                                                                                       | Image search         |
 
 ## Diagram Generation Flow (STEM)
 
@@ -74,11 +74,11 @@ Question + Subject
 
 ## Caching Strategy (Hybrid)
 
-| Layer | Storage | Expiry | Purpose |
-|---|---|---|---|
-| L1 | Dexie (IndexedDB) | 7 days | Fast offline retrieval |
-| L2 | Appwrite `visuals` collection | Indefinite | Cross-session persistence |
-| L3 | AI generation / Wikimedia API | On-demand | Fallback when uncached |
+| Layer | Storage                       | Expiry     | Purpose                   |
+| ----- | ----------------------------- | ---------- | ------------------------- |
+| L1    | Dexie (IndexedDB)             | 7 days     | Fast offline retrieval    |
+| L2    | Appwrite `visuals` collection | Indefinite | Cross-session persistence |
+| L3    | AI generation / Wikimedia API | On-demand  | Fallback when uncached    |
 
 ## Data Flow
 
@@ -108,6 +108,7 @@ Question generated/loaded
 ## Files to Create (18 new files)
 
 ### Engine Layer
+
 - `src/lib/visual-engine/types.ts`
 - `src/lib/visual-engine/prompts.ts`
 - `src/lib/visual-engine/diagram-mapper.ts`
@@ -117,21 +118,25 @@ Question generated/loaded
 - `src/lib/visual-engine/index.ts`
 
 ### Visual UI Components
+
 - `src/components/visual/visual-content.tsx`
 - `src/components/visual/diagram-renderer.tsx`
 - `src/components/visual/mermaid-diagram.tsx`
 - `src/components/visual/image-viewer.tsx`
 
 ### New Konva Diagram Renderers
+
 - `src/components/quiz/diagrams/geometry.tsx`
 - `src/components/quiz/diagrams/chart.tsx`
 - `src/components/quiz/diagrams/chemistry.tsx`
 - `src/components/quiz/diagrams/graph.tsx`
 
 ### API + Hooks
+
 - `src/app/api/engine/visual/route.ts`
 - `src/hooks/use-visual-engine.ts`
 
 ## Files to Modify (2 files)
+
 - `src/components/quiz/question-card.tsx` — Insert `<VisualContent>` above question text
 - `package.json` — Add `"mermaid": "^11"` dependency

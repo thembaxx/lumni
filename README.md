@@ -24,26 +24,26 @@ npx next build    # Production build
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 (App Router), React 19 |
-| Language | TypeScript 6 (strict mode) |
-| Styling | Tailwind CSS 4, shadcn/ui, class-variance-authority |
-| Animation | framer-motion 12, Three.js (onboarding), view-transitions |
-| State | Zustand 5 (client), TanStack Query 5 (server) |
-| Icons | HugeIcons, Lucide |
-| Charts | recharts 3 |
-| Diagrams | Konva, Mermaid.js, React Flow (`@xyflow/react`) |
-| Math | KaTeX (remark-math, rehype-katex) |
-| Offline DB | Dexie 4 (IndexedDB, 23 tables, v18 schema), sql.js (SQLite WASM) |
-| Backend | Appwrite Cloud (auth, DB, storage, functions) |
-| AI | Gemini 2.0 Flash Lite → Nvidia NIM → Groq (cascading) |
-| Upload | UploadThing |
-| Push Notifications | Web Push (`web-push`) |
-| Quality | Biome, bun test |
-| E2E Tests | Playwright 1.60.0 |
-| UI Docs | Storybook 10.4.1 |
-| Deployment | Vercel |
+| Layer              | Technology                                                       |
+| ------------------ | ---------------------------------------------------------------- |
+| Framework          | Next.js 16 (App Router), React 19                                |
+| Language           | TypeScript 6 (strict mode)                                       |
+| Styling            | Tailwind CSS 4, shadcn/ui, class-variance-authority              |
+| Animation          | framer-motion 12, Three.js (onboarding), view-transitions        |
+| State              | Zustand 5 (client), TanStack Query 5 (server)                    |
+| Icons              | HugeIcons, Lucide                                                |
+| Charts             | recharts 3                                                       |
+| Diagrams           | Konva, Mermaid.js, React Flow (`@xyflow/react`)                  |
+| Math               | KaTeX (remark-math, rehype-katex)                                |
+| Offline DB         | Dexie 4 (IndexedDB, 23 tables, v18 schema), sql.js (SQLite WASM) |
+| Backend            | Appwrite Cloud (auth, DB, storage, functions)                    |
+| AI                 | Gemini 2.0 Flash Lite → Nvidia NIM → Groq (cascading)            |
+| Upload             | UploadThing                                                      |
+| Push Notifications | Web Push (`web-push`)                                            |
+| Quality            | Biome, bun test                                                  |
+| E2E Tests          | Playwright 1.60.0                                                |
+| UI Docs            | Storybook 10.4.1                                                 |
+| Deployment         | Vercel                                                           |
 
 ---
 

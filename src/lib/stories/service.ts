@@ -29,109 +29,101 @@ For matching: Create matching exercises with items in two columns. Set questionT
 Use Bloom's taxonomy levels: remember, understand, apply, analyze, evaluate, create. Return ONLY valid JSON.`;
 
 const questionsConfig = {
-	systemPrompt: QUESTIONS_SYSTEM_PROMPT,
-	ttlMs: QUESTIONS_TTL,
-	buildPrompt: (_subject: string, storyText: string) =>
-		`Story:\n\n${storyText}\n\nGenerate 3-5 comprehension questions covering literal recall, inference, and critical analysis. Mix mcq, short-answer, fill-in-blank, true-false, and matching types.`,
-	parseResponse: (content: string) => JSON.parse(content) as StoryQuestion[],
-	emptyResult: [] as StoryQuestion[],
-	isEmpty: (result: StoryQuestion[]) => result.length === 0,
-	getTable: (db: DataAccess) => ({
-		get: (key: string) => db.storyQuestions.get(key),
-		put: (entry: unknown) => db.storyQuestions.put(entry as StoryQuestionSet),
-	}),
-	buildCacheEntry: (
-		key: string,
-		data: StoryQuestion[],
-		ttlMs: number,
-		storyId: string,
-		_subject: string,
-	) =>
-		({
-			key,
-			storyId,
-			questions: data,
-			createdAt: Date.now(),
-			expiresAt: Date.now() + ttlMs,
-		}) satisfies StoryQuestionSet,
-	extractData: (cached: unknown) => (cached as StoryQuestionSet).questions,
-	errorLabel: "StoryService",
-	buildCacheKey: (storyId: string, _storyText: string) =>
-		`questions:${storyId}`,
+  systemPrompt: QUESTIONS_SYSTEM_PROMPT,
+  ttlMs: QUESTIONS_TTL,
+  buildPrompt: (_subject: string, storyText: string) =>
+    `Story:\n\n${storyText}\n\nGenerate 3-5 comprehension questions covering literal recall, inference, and critical analysis. Mix mcq, short-answer, fill-in-blank, true-false, and matching types.`,
+  parseResponse: (content: string) => JSON.parse(content) as StoryQuestion[],
+  emptyResult: [] as StoryQuestion[],
+  isEmpty: (result: StoryQuestion[]) => result.length === 0,
+  getTable: (db: DataAccess) => ({
+    get: (key: string) => db.storyQuestions.get(key),
+    put: (entry: unknown) => db.storyQuestions.put(entry as StoryQuestionSet),
+  }),
+  buildCacheEntry: (
+    key: string,
+    data: StoryQuestion[],
+    ttlMs: number,
+    storyId: string,
+    _subject: string,
+  ) =>
+    ({
+      key,
+      storyId,
+      questions: data,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + ttlMs,
+    }) satisfies StoryQuestionSet,
+  extractData: (cached: unknown) => (cached as StoryQuestionSet).questions,
+  errorLabel: "StoryService",
+  buildCacheKey: (storyId: string, _storyText: string) => `questions:${storyId}`,
 };
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
 
 function __setDepsForTesting(deps: { db: DataAccess }) {
-	_deps = deps;
+  _deps = deps;
 }
 
 function createQuestionsGenerator() {
-	return new CachedAIGenerator(questionsConfig, getAI(), _deps.db);
+  return new CachedAIGenerator(questionsConfig, getAI(), _deps.db);
 }
 
 export async function getStory(id: string): Promise<Story | null> {
-	try {
-		const key = `story:${id}`;
-		const cached = await _deps.db.storyCache.get(key);
-		if (cached && cached.expiresAt > Date.now()) {
-			return cached.story;
-		}
-	} catch {
-		// IndexedDB unavailable (server-side)
-	}
-	return null;
+  try {
+    const key = `story:${id}`;
+    const cached = await _deps.db.storyCache.get(key);
+    if (cached && cached.expiresAt > Date.now()) {
+      return cached.story;
+    }
+  } catch {
+    // IndexedDB unavailable (server-side)
+  }
+  return null;
 }
 
 export async function cacheAllStories(): Promise<void> {
-	try {
-		const metas = await getAllStoryMetas();
-		const cachedCount = await _deps.db.storyCache.count();
-		if (cachedCount >= metas.length) return;
-		for (const meta of metas) {
-			const key = `story:${meta.id}`;
-			const exists = await _deps.db.storyCache.get(key);
-			if (exists) continue;
-			const story = await loadStoryContent(meta.id);
-			if (story) {
-				await cacheStory(meta.id, story);
-			}
-		}
-	} catch {
-		// fail silently — background caching is non-critical
-	}
+  try {
+    const metas = await getAllStoryMetas();
+    const cachedCount = await _deps.db.storyCache.count();
+    if (cachedCount >= metas.length) return;
+    for (const meta of metas) {
+      const key = `story:${meta.id}`;
+      const exists = await _deps.db.storyCache.get(key);
+      if (exists) continue;
+      const story = await loadStoryContent(meta.id);
+      if (story) {
+        await cacheStory(meta.id, story);
+      }
+    }
+  } catch {
+    // fail silently — background caching is non-critical
+  }
 }
 
 export async function cacheStory(id: string, story: Story): Promise<void> {
-	try {
-		const key = `story:${id}`;
-		const entry = {
-			key,
-			story,
-			createdAt: Date.now(),
-			expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
-		};
-		await _deps.db.storyCache.put(entry);
-	} catch {
-		// IndexedDB unavailable (server-side)
-	}
+  try {
+    const key = `story:${id}`;
+    const entry = {
+      key,
+      story,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+    };
+    await _deps.db.storyCache.put(entry);
+  } catch {
+    // IndexedDB unavailable (server-side)
+  }
 }
 
-export async function generateComprehensionQuestions(
-	story: Story,
-): Promise<StoryQuestion[]> {
-	return createQuestionsGenerator().generate(story.id, story.content);
+export async function generateComprehensionQuestions(story: Story): Promise<StoryQuestion[]> {
+  return createQuestionsGenerator().generate(story.id, story.content);
 }
 
-export async function getCachedQuestions(
-	storyId: string,
-): Promise<StoryQuestion[] | null> {
-	return createQuestionsGenerator().getCached(storyId, "");
+export async function getCachedQuestions(storyId: string): Promise<StoryQuestion[] | null> {
+  return createQuestionsGenerator().getCached(storyId, "");
 }
 
-export async function storeQuestions(
-	storyId: string,
-	questions: StoryQuestion[],
-): Promise<void> {
-	return createQuestionsGenerator().store(storyId, "", questions);
+export async function storeQuestions(storyId: string, questions: StoryQuestion[]): Promise<void> {
+  return createQuestionsGenerator().store(storyId, "", questions);
 }

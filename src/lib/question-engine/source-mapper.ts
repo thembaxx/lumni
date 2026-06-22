@@ -12,23 +12,23 @@ type SourceLike = { url?: unknown; title?: unknown };
  * `undefined` as "fall back to attaching ALL sources".
  */
 export function mapSourceRefs(
-	raw: unknown,
-	sources: ReadonlyArray<SourceLike>,
+  raw: unknown,
+  sources: ReadonlyArray<SourceLike>,
 ): QuestionSource[] | undefined {
-	if (!Array.isArray(raw)) return undefined;
-	if (raw.length === 0) return [];
+  if (!Array.isArray(raw)) return undefined;
+  if (raw.length === 0) return [];
 
-	const result: QuestionSource[] = [];
-	for (const entry of raw) {
-		if (typeof entry !== "number" || !Number.isInteger(entry)) return undefined;
-		if (entry < 0 || entry >= sources.length) return undefined;
-		const src = sources[entry];
-		if (!src || typeof src.url !== "string" || typeof src.title !== "string") {
-			return undefined;
-		}
-		result.push({ url: src.url, title: src.title });
-	}
-	return result;
+  const result: QuestionSource[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== "number" || !Number.isInteger(entry)) return undefined;
+    if (entry < 0 || entry >= sources.length) return undefined;
+    const src = sources[entry];
+    if (!src || typeof src.url !== "string" || typeof src.title !== "string") {
+      return undefined;
+    }
+    result.push({ url: src.url, title: src.title });
+  }
+  return result;
 }
 
 /**
@@ -45,24 +45,24 @@ export function mapSourceRefs(
  * sources, the question is left untouched (no `webSources` field).
  */
 export function attachWebSources(
-	question: RawQuestion,
-	ragContext: { sources: ReadonlyArray<SourceLike> } | undefined,
+  question: RawQuestion,
+  ragContext: { sources: ReadonlyArray<SourceLike> } | undefined,
 ): Question {
-	if (!ragContext || ragContext.sources.length === 0) {
-		delete (question as { sourceRefs?: unknown }).sourceRefs;
-		return question;
-	}
+  if (!ragContext || ragContext.sources.length === 0) {
+    delete (question as { sourceRefs?: unknown }).sourceRefs;
+    return question;
+  }
 
-	const mapped = mapSourceRefs(question.sourceRefs, ragContext.sources);
-	if (mapped !== undefined) {
-		question.webSources = mapped;
-	} else {
-		question.webSources = ragContext.sources.map((s) => ({
-			url: String(s.url),
-			title: String(s.title),
-		}));
-	}
+  const mapped = mapSourceRefs(question.sourceRefs, ragContext.sources);
+  if (mapped !== undefined) {
+    question.webSources = mapped;
+  } else {
+    question.webSources = ragContext.sources.map((s) => ({
+      url: String(s.url),
+      title: String(s.title),
+    }));
+  }
 
-	delete (question as { sourceRefs?: unknown }).sourceRefs;
-	return question;
+  delete (question as { sourceRefs?: unknown }).sourceRefs;
+  return question;
 }

@@ -29,21 +29,18 @@ The `getComparativeAnalytics` method uses `Promise.allSettled([1, 2].map(...))` 
 ## Current state
 
 **`src/lib/services/analytics-service.ts:31-49`**:
+
 ```typescript
 const attempts = await Promise.allSettled(
   [1, 2].map(async (attempt) => {
     try {
-      const res = await fetch(
-        `/api/analytics/comparative?userId=${encodeURIComponent(userId)}`,
-      );
+      const res = await fetch(`/api/analytics/comparative?userId=${encodeURIComponent(userId)}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (error) {
       logError("AnalyticsService", error);
       if (attempt < 2) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, 1000 * attempt),
-        );
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
       }
       throw error;
     }
@@ -55,18 +52,20 @@ const attempts = await Promise.allSettled(
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/services/analytics-service.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                 | Expected on success |
+| --------- | ------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                      | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/services/analytics-service.ts` | 0 errors            |
+| Tests     | `bun run test`                                          | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/services/analytics-service.ts` (lines 30-50)
 
 **Out of scope**:
+
 - Other analytics methods
 - The comparative analytics API route
 

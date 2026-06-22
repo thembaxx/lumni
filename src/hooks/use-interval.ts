@@ -3,28 +3,28 @@
 import { useEffect, useRef } from "react";
 
 interface UseIntervalOptions {
-	enabled?: boolean;
+  enabled?: boolean;
 }
 
 export function useInterval(
-	callback: () => void,
-	delay: number | null,
-	options: UseIntervalOptions = {},
+  callback: () => void,
+  delay: number | null,
+  options: UseIntervalOptions = {},
 ) {
-	const { enabled = true } = options;
-	const savedCallback = useRef(callback);
+  const { enabled = true } = options;
+  const savedCallback = useRef(callback);
 
-	useEffect(() => {
-		savedCallback.current = callback;
-	}, [callback]);
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
 
-	useEffect(() => {
-		if (!enabled || delay === null) {
-			return;
-		}
+  useEffect(() => {
+    if (!enabled || delay === null) {
+      return;
+    }
 
-		const id = setInterval(() => savedCallback.current(), delay);
+    const id = setInterval(() => savedCallback.current(), delay);
 
-		return () => clearInterval(id);
-	}, [delay, enabled]);
+    return () => clearInterval(id);
+  }, [delay, enabled]);
 }

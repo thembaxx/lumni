@@ -3,15 +3,18 @@
 ## Status: In Progress
 
 ## Problem
+
 Across 30 plans and many features, some polish items have accumulated: keyboard navigation gaps, unhandled promise rejections, animation performance, loading states.
 
 ## Scope
+
 - Accessibility fixes for new components (story exercises, word of day, live session monitor, teacher dashboard)
 - Error boundary coverage for new routes
 - Loading states for dictionary search, story content, Gutenberg imports
 - Performance: lazy loading for large story JSON files, memo-ization for new components
 
 ## Steps
+
 1. Check all components created in plans 018-030 for:
    - Keyboard navigation (focus rings, tab order)
    - aria-labels on icon-only buttons
@@ -22,6 +25,7 @@ Across 30 plans and many features, some polish items have accumulated: keyboard 
 4. Verify: `npx tsc --noEmit`, `npx biome check`, `bun run test`
 
 ## Done criteria
+
 - All icon buttons in new components have aria-labels
 - New async routes/components have error boundaries
 - Story imports use dynamic import pattern

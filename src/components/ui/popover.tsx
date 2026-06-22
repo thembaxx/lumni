@@ -5,7 +5,7 @@ import type { PopoverContent } from "./popover-content";
 import type { PopoverTrigger } from "./popover-trigger";
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
-	return <PopoverPrimitive.Root data-slot="popover" {...props} />;
+  return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
 export { Popover, type PopoverContent, type PopoverTrigger };

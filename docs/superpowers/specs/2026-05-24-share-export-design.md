@@ -6,12 +6,12 @@ Add share buttons to quiz/exam/flashcard results pages (branded PNG card via Web
 
 ## Content Types
 
-| Page | Share Format | Export |
-|---|---|---|
-| Quiz results | PNG card + text | — |
-| Exam results | PNG card + text | — |
-| Flashcard results | PNG card + text | — |
-| Notes | — | Markdown (.md) download |
+| Page              | Share Format    | Export                  |
+| ----------------- | --------------- | ----------------------- |
+| Quiz results      | PNG card + text | —                       |
+| Exam results      | PNG card + text | —                       |
+| Flashcard results | PNG card + text | —                       |
+| Notes             | —               | Markdown (.md) download |
 
 ## Card Generator
 
@@ -33,6 +33,7 @@ generateShareCard(params: ShareCardParams): Blob   // image/png
 ```
 
 **Card template (top to bottom):**
+
 1. "LUMNI" header watermark (letter-spaced, 0.65rem, opacity 0.7)
 2. Percentage score (2.5rem, bold, white)
 3. Detail line (0.8rem, opacity 0.8) — "17 / 20 Correct"
@@ -41,6 +42,7 @@ generateShareCard(params: ShareCardParams): Blob   // image/png
 6. Subtitle footer (0.65rem, opacity 0.6)
 
 **Background gradient by type:**
+
 - quiz: `#4f46e5 → #7c3aed` (indigo/purple)
 - exam: `#059669 → #10b981` (green)
 - flashcard: `#d97706 → #f59e0b` (amber)
@@ -50,16 +52,18 @@ generateShareCard(params: ShareCardParams): Blob   // image/png
 **File:** `src/lib/share/share-button.tsx`
 
 Props:
+
 ```typescript
 interface ShareButtonProps {
-  text: string               // "I scored 85% on my Mathematics quiz on Lumni!"
-  cardBlob?: Blob            // from generateShareCard
-  onShare?: () => void       // analytics hook
-  label?: string             // defaults to "Share Result"
+  text: string; // "I scored 85% on my Mathematics quiz on Lumni!"
+  cardBlob?: Blob; // from generateShareCard
+  onShare?: () => void; // analytics hook
+  label?: string; // defaults to "Share Result"
 }
 ```
 
 Behavior:
+
 1. Try `navigator.share({ text, files: [cardBlob] })` if Web Share + files supported
 2. Fallback: download PNG as `result-{type}-{date}.png`, copy text to clipboard with toast
 3. Shows loading spinner while canvas renders
@@ -74,14 +78,14 @@ Behavior:
 
 ## Files Changed
 
-| File | Action | Lines |
-|---|---|---|
-| `src/lib/share/card-generator.ts` | **New** | ~80 |
-| `src/lib/share/share-button.tsx` | **New** | ~60 |
-| `src/components/quiz/quiz-results.tsx` | **Modify** | +5 |
-| `src/app/exam/[id]/exam-session-client.tsx` | **Modify** | +5 |
-| `src/app/flashcards/flashcards-results.tsx` | **Modify** | +5 |
-| `src/components/tools/notes/note-creator.tsx` | **Modify** | +10 |
+| File                                          | Action     | Lines |
+| --------------------------------------------- | ---------- | ----- |
+| `src/lib/share/card-generator.ts`             | **New**    | ~80   |
+| `src/lib/share/share-button.tsx`              | **New**    | ~60   |
+| `src/components/quiz/quiz-results.tsx`        | **Modify** | +5    |
+| `src/app/exam/[id]/exam-session-client.tsx`   | **Modify** | +5    |
+| `src/app/flashcards/flashcards-results.tsx`   | **Modify** | +5    |
+| `src/components/tools/notes/note-creator.tsx` | **Modify** | +10   |
 
 ## Error Handling
 

@@ -1,50 +1,50 @@
 {
-	"id": "hlompho",
-	"title": "Hlompho",
-	"author": "Lumni",
-	"language": "Sesotho",
-	"languageId": "sesotho-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 840,
-	"subjects": ["sesotho-home-language"],
-	"source": "ai-generated",
-	"topics": ["respect", "elders", "community"],
-	"content": "# Hlompho\n\nMotseng o monyenyane oa Lithoteng, ho ne ho na le ngoana e motle ea bitsoang Mpho. Mpho o ne a tseba hore ho hlompha ba bang ke ntho ea bohlokoa. E ne e le ngoana ea kollang, a lumelisa batho ba baholo ka tlhompho.\n\nNgoana e mong oa sekolong, ea bitsoang Karabo, o ne a tseba ho se hlomphe. O ne a sa lumelise batho ba baholo, a sa mamele ha baruti ba bua, a bile a hlekefetsa ba bang.\n\nKa letsatsi le leng, Karabo o ile a utsoa pene ea Mpho. Eaba Mpho o re: \"Karabo, ke tseba hore u nkile pene ea ka. Ke kopa u nkutloe le hlompho — u e nketse hantle, ke tla u tšoarela.\"\n\nKarabo o ile a makala. O ne a lebelletse hore Mpho o tla koma mokhosi. Empa Mpho o ile a mo sebetsa ka mosa.\n\nBosiung boo, Ntate Moholo oa Karabo o ile a bua le eena. \"Karabo, hlompho ke letsoai la bophelo. Ha u na hlompho, u joalo ka dijo tse se nang letsoai — ha li latsoehe.\"\n\nKarabo o ile a lla. A hlokomela hore o entse phoso. Hoseng, o ile a khutlisetsa pene ea Mpho mme a kopa tšoarelo.\n\nMpho o ile a mo tšoarela ka thabo. Ho tloha ka letsatsi leo, Karabo o ile a qala ho fetoha. A lumelisa batho ka tlhompho, a mamela baruti le batsamaisi.\n\n## Lintlha tša Thuto\n\n1. **Hlompho** — Ho hlompha ba bang ho bontša hore u na le seriti le tlhompho.\n2. **Tšoarelo** — Ho tšoarela ba re foselitseng ho bontša boholo ba pelo.\n3. **Phetoho** — Ha re hlokomela liphoso tsa rona, re ka fetoha le ho ba batho ba betere.\n\n## Mantswe a Maemo\n\n| Sesotho | English | Part of Speech |\n|---------|---------|----------------|\n| hlompho | respect | noun |\n| tšoarelo | forgiveness | noun |\n| khutlisetsa | to return | verb |\n| mosa | kindness | noun |\n| boitšoaro | behaviour | noun |",
-	"vocabulary": [
-		{
-			"term": "hlompho",
-			"definition": "Respect; showing honour and high regard for others",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈɬɔm.pʰɔ/",
-			"language": "st"
-		},
-		{
-			"term": "tšoarelo",
-			"definition": "Forgiveness; letting go of anger towards someone who wronged you",
-			"partOfSpeech": "noun",
-			"pronunciation": "/t͡ʃʰwaˈrɛ.lɔ/",
-			"language": "st"
-		},
-		{
-			"term": "khutlisetsa",
-			"definition": "To return something to its owner or place",
-			"partOfSpeech": "verb",
-			"pronunciation": "/kʰu.tliˈsɛ.t͡sa/",
-			"language": "st"
-		},
-		{
-			"term": "mosa",
-			"definition": "Kindness; gentle and caring behaviour towards others",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈmɔːsa/",
-			"language": "st"
-		},
-		{
-			"term": "boitšoaro",
-			"definition": "Behaviour; the way a person acts or conducts themselves",
-			"partOfSpeech": "noun",
-			"pronunciation": "/bo.i.t͡ʃʰwaːro/",
-			"language": "st"
-		}
-	]
+  "id": "hlompho",
+  "title": "Hlompho",
+  "author": "Lumni",
+  "language": "Sesotho",
+  "languageId": "sesotho-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 840,
+  "subjects": ["sesotho-home-language"],
+  "source": "ai-generated",
+  "topics": ["respect", "elders", "community"],
+  "content": "# Hlompho\n\nMotseng o monyenyane oa Lithoteng, ho ne ho na le ngoana e motle ea bitsoang Mpho. Mpho o ne a tseba hore ho hlompha ba bang ke ntho ea bohlokoa. E ne e le ngoana ea kollang, a lumelisa batho ba baholo ka tlhompho.\n\nNgoana e mong oa sekolong, ea bitsoang Karabo, o ne a tseba ho se hlomphe. O ne a sa lumelise batho ba baholo, a sa mamele ha baruti ba bua, a bile a hlekefetsa ba bang.\n\nKa letsatsi le leng, Karabo o ile a utsoa pene ea Mpho. Eaba Mpho o re: \"Karabo, ke tseba hore u nkile pene ea ka. Ke kopa u nkutloe le hlompho — u e nketse hantle, ke tla u tšoarela.\"\n\nKarabo o ile a makala. O ne a lebelletse hore Mpho o tla koma mokhosi. Empa Mpho o ile a mo sebetsa ka mosa.\n\nBosiung boo, Ntate Moholo oa Karabo o ile a bua le eena. \"Karabo, hlompho ke letsoai la bophelo. Ha u na hlompho, u joalo ka dijo tse se nang letsoai — ha li latsoehe.\"\n\nKarabo o ile a lla. A hlokomela hore o entse phoso. Hoseng, o ile a khutlisetsa pene ea Mpho mme a kopa tšoarelo.\n\nMpho o ile a mo tšoarela ka thabo. Ho tloha ka letsatsi leo, Karabo o ile a qala ho fetoha. A lumelisa batho ka tlhompho, a mamela baruti le batsamaisi.\n\n## Lintlha tša Thuto\n\n1. **Hlompho** — Ho hlompha ba bang ho bontša hore u na le seriti le tlhompho.\n2. **Tšoarelo** — Ho tšoarela ba re foselitseng ho bontša boholo ba pelo.\n3. **Phetoho** — Ha re hlokomela liphoso tsa rona, re ka fetoha le ho ba batho ba betere.\n\n## Mantswe a Maemo\n\n| Sesotho | English | Part of Speech |\n|---------|---------|----------------|\n| hlompho | respect | noun |\n| tšoarelo | forgiveness | noun |\n| khutlisetsa | to return | verb |\n| mosa | kindness | noun |\n| boitšoaro | behaviour | noun |",
+  "vocabulary": [
+    {
+      "term": "hlompho",
+      "definition": "Respect; showing honour and high regard for others",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈɬɔm.pʰɔ/",
+      "language": "st"
+    },
+    {
+      "term": "tšoarelo",
+      "definition": "Forgiveness; letting go of anger towards someone who wronged you",
+      "partOfSpeech": "noun",
+      "pronunciation": "/t͡ʃʰwaˈrɛ.lɔ/",
+      "language": "st"
+    },
+    {
+      "term": "khutlisetsa",
+      "definition": "To return something to its owner or place",
+      "partOfSpeech": "verb",
+      "pronunciation": "/kʰu.tliˈsɛ.t͡sa/",
+      "language": "st"
+    },
+    {
+      "term": "mosa",
+      "definition": "Kindness; gentle and caring behaviour towards others",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈmɔːsa/",
+      "language": "st"
+    },
+    {
+      "term": "boitšoaro",
+      "definition": "Behaviour; the way a person acts or conducts themselves",
+      "partOfSpeech": "noun",
+      "pronunciation": "/bo.i.t͡ʃʰwaːro/",
+      "language": "st"
+    }
+  ]
 }

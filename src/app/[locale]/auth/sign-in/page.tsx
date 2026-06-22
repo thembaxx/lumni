@@ -5,14 +5,14 @@ import { Suspense } from "react";
 import { FormSkeleton } from "@/components/ui/skeletons";
 
 const SignInForm = dynamic(
-	() => import("./sign-in-form").then((m) => ({ default: m.SignInForm })),
-	{ ssr: false },
+  () => import("./sign-in-form").then((m) => ({ default: m.SignInForm })),
+  { ssr: false },
 );
 
 export default function SignInPage() {
-	return (
-		<Suspense fallback={<FormSkeleton />}>
-			<SignInForm />
-		</Suspense>
-	);
+  return (
+    <Suspense fallback={<FormSkeleton />}>
+      <SignInForm />
+    </Suspense>
+  );
 }

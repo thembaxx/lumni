@@ -41,9 +41,7 @@ async function createIssue(
   description: string,
   priority: number,
 ): Promise<string | null> {
-  const desc = description
-    ? description.replace(/"/g, '\\"').replace(/\n/g, "\\n")
-    : " ";
+  const desc = description ? description.replace(/"/g, '\\"').replace(/\n/g, "\\n") : " ";
   const query = `mutation {
     issueCreate(input: {
       teamId: "${TEAM_ID}"
@@ -56,18 +54,18 @@ async function createIssue(
   }`;
   const result = await gql(query);
   if (result.errors) {
-    console.error(`  FAIL create "${title}":`, (result.errors as Array<{ message: string }>).map((e: { message: string }) => e.message).join("; "));
+    console.error(
+      `  FAIL create "${title}":`,
+      (result.errors as Array<{ message: string }>)
+        .map((e: { message: string }) => e.message)
+        .join("; "),
+    );
     return null;
   }
   return result.data.issueCreate.issue.identifier;
 }
 
-async function updateIssue(
-  issueId: string,
-  title: string,
-  priority: number,
-  isDone: boolean,
-) {
+async function updateIssue(issueId: string, title: string, priority: number, isDone: boolean) {
   const stateId = isDone ? LUM_DONE : LUM_BACKLOG;
   const query = `mutation {
     issueUpdate(id: "${issueId}", input: {
@@ -78,7 +76,12 @@ async function updateIssue(
   }`;
   const result = await gql(query);
   if (result.errors) {
-    console.error(`  FAIL update ${issueId}:`, (result.errors as Array<{ message: string }>).map((e: { message: string }) => e.message).join("; "));
+    console.error(
+      `  FAIL update ${issueId}:`,
+      (result.errors as Array<{ message: string }>)
+        .map((e: { message: string }) => e.message)
+        .join("; "),
+    );
   } else {
     console.log(`  Updated ${issueId} -> ${isDone ? "Done" : "Backlog"}: ${title}`);
   }
@@ -87,10 +90,10 @@ async function updateIssue(
 // ── Parse TODO.md ───────────────────────────────────────────────────────────
 
 interface TodoItem {
-  raw: string;            // full line text
-  checkbox: " " | "x";   // [ ] or [x]
-  title: string;          // task title
-  description: string;    // everything after the title (if any)
+  raw: string; // full line text
+  checkbox: " " | "x"; // [ ] or [x]
+  title: string; // task title
+  description: string; // everything after the title (if any)
   linearId: string | null; // from <!-- linear-id: LUM-xx -->
   sectionPriority: number; // from parent section <!-- linear-priority: N -->
 }
@@ -134,7 +137,9 @@ function parseTodo(content: string): Section[] {
     }
 
     // Alternate task format (without bold)
-    const taskMatch2 = raw.match(/^-\s+\[([ x])\]\s+(.+?)(\s+<!--\s*linear-id:\s*(\S+)\s*-->)?\s*$/);
+    const taskMatch2 = raw.match(
+      /^-\s+\[([ x])\]\s+(.+?)(\s+<!--\s*linear-id:\s*(\S+)\s*-->)?\s*$/,
+    );
     if (!taskMatch && taskMatch2 && currentSection) {
       const linearIdMatch = raw.match(/<!--\s*linear-id:\s*(\S+)\s*-->/);
       currentSection.items.push({
@@ -186,10 +191,7 @@ async function main() {
     for (const c of created) {
       // Match the first unchecked bold item matching the title without an existing linear-id comment
       const escaped = c.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(
-        `^(- \\[ \\] \\*\\*)(${escaped})(\\*\\*.*)$`,
-        "m",
-      );
+      const regex = new RegExp(`^(- \\[ \\] \\*\\*)(${escaped})(\\*\\*.*)$`, "m");
       updated = updated.replace(regex, (match, prefix, title, rest) => {
         if (match.includes("linear-id:")) return match; // already has one
         return `${prefix}${title}${rest} <!-- linear-id: ${c.id} -->`;

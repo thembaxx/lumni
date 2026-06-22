@@ -22,12 +22,14 @@ Stories have a complete content pipeline (11 languages, reader, comprehension qu
 ## Scope
 
 **In scope**:
+
 - `src/app/[locale]/stories/[storyId]/story-reader-client.tsx` — add TTS listen button + reading progress indicator
 - `src/components/stories/` — new `StoryProgressBar.tsx` component
 - `src/lib/stories/types.ts` — no changes needed (`audioUrl` field exists)
 - Dexie v37 — new `storyProgress` table for tracking read position + completion
 
 **Out of scope**:
+
 - Story content changes (already done in plan 016)
 - Comprehension question improvements
 - Vocabulary quiz mode
@@ -66,6 +68,7 @@ New file: `src/components/stories/story-progress-bar.tsx`
 ### Step 3: Wire TTS into story reader
 
 In `story-reader-client.tsx`:
+
 - Import `ListenToLesson` from `@/components/listen-to-lesson`
 - Add "Listen to Story" button in the story card header (next to badges)
 - Pass full story content as text, language as lang code
@@ -74,6 +77,7 @@ In `story-reader-client.tsx`:
 ### Step 4: Wire reading progress into story reader
 
 In `story-reader-client.tsx`:
+
 - Import `StoryProgressBar`
 - On mount: load existing progress from Dexie, scroll to saved position
 - On scroll: debounced save to Dexie (2s)
@@ -84,6 +88,7 @@ In `story-reader-client.tsx`:
 ### Step 5: Add progress to story listing
 
 In `stories-client.tsx`:
+
 - Fetch user's story progress for displayed stories
 - Show completion badge (✓) on completed stories
 - Show "Continue" button on partially-read stories

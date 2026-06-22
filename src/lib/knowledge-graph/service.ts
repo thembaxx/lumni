@@ -17,76 +17,70 @@ const SYSTEM_PROMPT = `You are a knowledge graph generator for educational topic
 Each node must have a unique id. Connect nodes with meaningful relation labels like "requires", "leads_to", "builds_on", "includes". Return 5-15 nodes total.`;
 
 const config = {
-	systemPrompt: SYSTEM_PROMPT,
-	ttlMs: KNOWLEDGE_GRAPH_TTL,
-	buildCacheKey: buildKnowledgeCacheKey,
-	buildPrompt: (subject: string, topic: string) =>
-		`Subject: ${subject}\nTopic: ${topic}\n\nGenerate a knowledge graph for this topic showing prerequisites, core concepts, and advanced topics.`,
-	parseResponse: (content: string) => JSON.parse(content) as KnowledgeGraph,
-	emptyResult: { nodes: [], edges: [] } as KnowledgeGraph,
-	isEmpty: (result: KnowledgeGraph) => result.nodes.length === 0,
-	getTable: (db: DataAccess) => ({
-		get: (key: string) => db.knowledgeGraph.get(key),
-		put: (entry: unknown) => db.knowledgeGraph.put(entry as CachedGraph),
-	}),
-	buildCacheEntry: (key: string, data: KnowledgeGraph, ttlMs: number) =>
-		({
-			key,
-			graph: data,
-			createdAt: Date.now(),
-			expiresAt: Date.now() + ttlMs,
-		}) satisfies CachedGraph,
-	extractData: (cached: unknown) => (cached as CachedGraph).graph,
-	errorLabel: "KnowledgeGraphService",
+  systemPrompt: SYSTEM_PROMPT,
+  ttlMs: KNOWLEDGE_GRAPH_TTL,
+  buildCacheKey: buildKnowledgeCacheKey,
+  buildPrompt: (subject: string, topic: string) =>
+    `Subject: ${subject}\nTopic: ${topic}\n\nGenerate a knowledge graph for this topic showing prerequisites, core concepts, and advanced topics.`,
+  parseResponse: (content: string) => JSON.parse(content) as KnowledgeGraph,
+  emptyResult: { nodes: [], edges: [] } as KnowledgeGraph,
+  isEmpty: (result: KnowledgeGraph) => result.nodes.length === 0,
+  getTable: (db: DataAccess) => ({
+    get: (key: string) => db.knowledgeGraph.get(key),
+    put: (entry: unknown) => db.knowledgeGraph.put(entry as CachedGraph),
+  }),
+  buildCacheEntry: (key: string, data: KnowledgeGraph, ttlMs: number) =>
+    ({
+      key,
+      graph: data,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + ttlMs,
+    }) satisfies CachedGraph,
+  extractData: (cached: unknown) => (cached as CachedGraph).graph,
+  errorLabel: "KnowledgeGraphService",
 };
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
 
 function __setDepsForTesting(deps: { db: DataAccess }) {
-	_deps = deps;
+  _deps = deps;
 }
 
 function createGenerator() {
-	return new CachedAIGenerator(config, getAI(), _deps.db);
+  return new CachedAIGenerator(config, getAI(), _deps.db);
 }
 
-async function buildFromCurriculum(
-	subject: string,
-	topic: string,
-): Promise<KnowledgeGraph | null> {
-	try {
-		const curriculum = await curriculumRegistry.getSubject(subject);
-		if (!curriculum) return null;
+async function buildFromCurriculum(subject: string, topic: string): Promise<KnowledgeGraph | null> {
+  try {
+    const curriculum = await curriculumRegistry.getSubject(subject);
+    if (!curriculum) return null;
 
-		const focusTopic = topic && topic !== "general" ? topic : undefined;
-		const graph = buildGraphFromCurriculum(curriculum, focusTopic);
-		return graph.nodes.length > 0 ? graph : null;
-	} catch {
-		return null;
-	}
+    const focusTopic = topic && topic !== "general" ? topic : undefined;
+    const graph = buildGraphFromCurriculum(curriculum, focusTopic);
+    return graph.nodes.length > 0 ? graph : null;
+  } catch {
+    return null;
+  }
 }
 
-export async function fetchGraph(
-	subject: string,
-	topic: string,
-): Promise<KnowledgeGraph> {
-	const curriculumGraph = await buildFromCurriculum(subject, topic);
-	if (curriculumGraph) return curriculumGraph;
+export async function fetchGraph(subject: string, topic: string): Promise<KnowledgeGraph> {
+  const curriculumGraph = await buildFromCurriculum(subject, topic);
+  if (curriculumGraph) return curriculumGraph;
 
-	return createGenerator().generate(subject, topic);
+  return createGenerator().generate(subject, topic);
 }
 
 export async function getCachedGraph(
-	subject: string,
-	topic: string,
+  subject: string,
+  topic: string,
 ): Promise<KnowledgeGraph | null> {
-	return createGenerator().getCached(subject, topic);
+  return createGenerator().getCached(subject, topic);
 }
 
 export async function storeGraph(
-	subject: string,
-	topic: string,
-	graph: KnowledgeGraph,
+  subject: string,
+  topic: string,
+  graph: KnowledgeGraph,
 ): Promise<void> {
-	return createGenerator().store(subject, topic, graph);
+  return createGenerator().store(subject, topic, graph);
 }

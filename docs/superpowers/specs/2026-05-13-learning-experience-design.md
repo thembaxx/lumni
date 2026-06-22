@@ -58,6 +58,7 @@ interface SubjectCurriculum {
 ```
 
 **CurriculumRegistry** — loads all curriculum JSON files, provides lookups:
+
 - `getSubject(subjectId)` → `SubjectCurriculum | null`
 - `getTopic(subjectId, topicId)` → `CurriculumTopic | null`
 - `getAvailableTopics(subjectId, masteredTopics)` → topics whose prerequisites are met
@@ -75,7 +76,7 @@ interface CompetencyRecord {
   subjectId: string;
   topicId: string;
   bloomLevel: BloomLevel;
-  score: number;            // 0-100, weighted rolling average
+  score: number; // 0-100, weighted rolling average
   attempts: number;
   lastAssessed: number;
   level: CompetencyLevel;
@@ -87,12 +88,14 @@ type CompetencyLevel = "novice" | "developing" | "proficient" | "mastered";
 Thresholds: `novice < 40 < developing < 65 < proficient < 85 < mastered`
 
 **Scoring formula** (weighted rolling average):
+
 ```
 newScore = (existingScore * existingAttempts + questionScore * weight) / (existingAttempts + weight)
 weight = 1.0 if question.bloomLevel <= topic.bloomTarget, else 0.5
 ```
 
 **CompetencyService**:
+
 - `update(subjectId, topicId, bloomLevel, score)` — upserts Dexie record, enqueues Appwrite sync
 - `getCompetencies(subjectId)` — returns all records for a subject
 - `getCompetency(subjectId, topicId)` — single record
@@ -116,23 +119,26 @@ class PathEngine {
     dailyGoalMinutes?: number,
   ): StudyPlanDay[];
 
-  getNextAction(
-    subjects: string[],
-    competencies: Map<string, CompetencyRecord>,
-  ): NextAction;
+  getNextAction(subjects: string[], competencies: Map<string, CompetencyRecord>): NextAction;
 }
 
 interface TopicRecommendation {
   topicId: string;
   name: string;
   level: CompetencyLevel;
-  reason: "prerequisite-not-met" | "ready-to-start" | "needs-practice" | "needs-review" | "mastered";
+  reason:
+    | "prerequisite-not-met"
+    | "ready-to-start"
+    | "needs-practice"
+    | "needs-review"
+    | "mastered";
   action: "study" | "practice" | "review" | "skip";
   estimatedMinutes: number;
 }
 ```
 
 **Recommendation Algorithm:**
+
 1. Get topics sorted by curriculum order
 2. Filter to available (prerequisites met)
 3. For each: check competency level → assign reason/action
@@ -142,11 +148,13 @@ interface TopicRecommendation {
 ### 4. Integration with Phase 1
 
 **New job type** added to existing orchestrator:
+
 ```
 "competency-update"  priority: 60,  retries: 2  → CompetencyService.update()
 ```
 
 **LearningOrchestrator.gradeAndTrack()** adds one line:
+
 ```typescript
 const competencyJobId = await jobQueue.enqueue("competency-update", {
   subject: question.subject,
@@ -158,30 +166,30 @@ const competencyJobId = await jobQueue.enqueue("competency-update", {
 
 ## New Files
 
-| File | Purpose |
-|------|---------|
-| `src/curriculum/types.ts` | CurriculumTopic, SubjectCurriculum |
-| `src/curriculum/index.ts` | CurriculumRegistry class |
-| `src/curriculum/*.json` | Per-subject topic trees (11 core) |
-| `src/lib/competency-engine/types.ts` | CompetencyRecord, CompetencyLevel |
-| `src/lib/competency-engine/competency-service.ts` | CRUD + scoring |
-| `src/lib/competency-engine/path-engine.ts` | Recommendation engine |
-| `src/lib/competency-engine/index.ts` | Barrel |
-| `src/hooks/use-competencies.ts` | React Query hook |
-| `src/hooks/use-next-topics.ts` | PathEngine recommendation hook |
-| `src/hooks/use-study-plan.ts` | Study plan generation hook |
-| `src/app/api/engine/next-topics/route.ts` | Next topics endpoint |
-| `src/app/api/engine/study-plan/route.ts` | Study plan endpoint |
+| File                                              | Purpose                            |
+| ------------------------------------------------- | ---------------------------------- |
+| `src/curriculum/types.ts`                         | CurriculumTopic, SubjectCurriculum |
+| `src/curriculum/index.ts`                         | CurriculumRegistry class           |
+| `src/curriculum/*.json`                           | Per-subject topic trees (11 core)  |
+| `src/lib/competency-engine/types.ts`              | CompetencyRecord, CompetencyLevel  |
+| `src/lib/competency-engine/competency-service.ts` | CRUD + scoring                     |
+| `src/lib/competency-engine/path-engine.ts`        | Recommendation engine              |
+| `src/lib/competency-engine/index.ts`              | Barrel                             |
+| `src/hooks/use-competencies.ts`                   | React Query hook                   |
+| `src/hooks/use-next-topics.ts`                    | PathEngine recommendation hook     |
+| `src/hooks/use-study-plan.ts`                     | Study plan generation hook         |
+| `src/app/api/engine/next-topics/route.ts`         | Next topics endpoint               |
+| `src/app/api/engine/study-plan/route.ts`          | Study plan endpoint                |
 
 ## Modified Files
 
-| File | Change |
-|------|--------|
-| `src/lib/db/offline.ts` | v5 migration: add `competencies` table |
-| `src/lib/orchestrator/learning-orchestrator.ts` | Enqueue competency-update job |
-| `src/lib/orchestrator/job-processor.ts` | Add competency-update handler |
-| `src/lib/orchestrator/types.ts` | Add "competency-update" job type |
-| `src/lib/db/client.ts` | Add `COMPETENCIES` to COLLECTIONS |
+| File                                            | Change                                 |
+| ----------------------------------------------- | -------------------------------------- |
+| `src/lib/db/offline.ts`                         | v5 migration: add `competencies` table |
+| `src/lib/orchestrator/learning-orchestrator.ts` | Enqueue competency-update job          |
+| `src/lib/orchestrator/job-processor.ts`         | Add competency-update handler          |
+| `src/lib/orchestrator/types.ts`                 | Add "competency-update" job type       |
+| `src/lib/db/client.ts`                          | Add `COMPETENCIES` to COLLECTIONS      |
 
 ## Implementation Order
 

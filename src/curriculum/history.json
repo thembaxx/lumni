@@ -1,55 +1,65 @@
 {
-	"subjectId": "history",
-	"subjectName": "History",
-	"topics": [
-		{
-			"id": "cold-war",
-			"name": "The Cold War",
-			"order": 1, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "hist-cw-origins", "name": "Origins of the Cold War", "order": 1 },
-				{ "id": "hist-cw-crises", "name": "Cold War Crises", "order": 2 },
-				{ "id": "hist-cw-end", "name": "End of the Cold War", "order": 3 }
-			]
-		},
-		{
-			"id": "independent-africa",
-			"name": "Independent Africa",
-			"order": 2, "prerequisites": ["cold-war"], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "hist-africa-decolonization", "name": "Decolonization", "order": 1 },
-				{ "id": "hist-africa-nation-building", "name": "Nation Building", "order": 2 },
-				{ "id": "hist-africa-conflicts", "name": "African Conflicts", "order": 3 }
-			]
-		},
-		{
-			"id": "civil-society",
-			"name": "Civil Society Protests",
-			"order": 3, "prerequisites": ["cold-war"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "hist-civil-us", "name": "US Civil Rights", "order": 1 },
-				{ "id": "hist-civil-sa", "name": "SA Anti-Apartheid", "order": 2 },
-				{ "id": "hist-civil-global", "name": "Global Protests", "order": 3 }
-			]
-		},
-		{
-			"id": "sa-history",
-			"name": "South African History",
-			"order": 4, "prerequisites": ["civil-society"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "hist-sa-colonial", "name": "Colonial SA", "order": 1 },
-				{ "id": "hist-sa-apartheid", "name": "Apartheid", "order": 2 },
-				{ "id": "hist-sa-democracy", "name": "Democratic SA", "order": 3 }
-			]
-		},
-		{
-			"id": "source-analysis",
-			"name": "Source Analysis and Essay Writing",
-			"order": 5, "prerequisites": [], "bloomTarget": "create",
-			"subtopics": [
-				{ "id": "hist-source-evaluation", "name": "Source Evaluation", "order": 1 },
-				{ "id": "hist-essay-writing", "name": "Essay Writing", "order": 2 }
-			]
-		}
-	]
+  "subjectId": "history",
+  "subjectName": "History",
+  "topics": [
+    {
+      "id": "cold-war",
+      "name": "The Cold War",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "hist-cw-origins", "name": "Origins of the Cold War", "order": 1 },
+        { "id": "hist-cw-crises", "name": "Cold War Crises", "order": 2 },
+        { "id": "hist-cw-end", "name": "End of the Cold War", "order": 3 }
+      ]
+    },
+    {
+      "id": "independent-africa",
+      "name": "Independent Africa",
+      "order": 2,
+      "prerequisites": ["cold-war"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "hist-africa-decolonization", "name": "Decolonization", "order": 1 },
+        { "id": "hist-africa-nation-building", "name": "Nation Building", "order": 2 },
+        { "id": "hist-africa-conflicts", "name": "African Conflicts", "order": 3 }
+      ]
+    },
+    {
+      "id": "civil-society",
+      "name": "Civil Society Protests",
+      "order": 3,
+      "prerequisites": ["cold-war"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "hist-civil-us", "name": "US Civil Rights", "order": 1 },
+        { "id": "hist-civil-sa", "name": "SA Anti-Apartheid", "order": 2 },
+        { "id": "hist-civil-global", "name": "Global Protests", "order": 3 }
+      ]
+    },
+    {
+      "id": "sa-history",
+      "name": "South African History",
+      "order": 4,
+      "prerequisites": ["civil-society"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "hist-sa-colonial", "name": "Colonial SA", "order": 1 },
+        { "id": "hist-sa-apartheid", "name": "Apartheid", "order": 2 },
+        { "id": "hist-sa-democracy", "name": "Democratic SA", "order": 3 }
+      ]
+    },
+    {
+      "id": "source-analysis",
+      "name": "Source Analysis and Essay Writing",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "hist-source-evaluation", "name": "Source Evaluation", "order": 1 },
+        { "id": "hist-essay-writing", "name": "Essay Writing", "order": 2 }
+      ]
+    }
+  ]
 }

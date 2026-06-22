@@ -1,50 +1,50 @@
 {
-	"id": "thuto-ya-khuru",
-	"title": "Thuto ya Khuru",
-	"author": "Lumni",
-	"language": "Sepedi",
-	"languageId": "sepedi-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 840,
-	"subjects": ["sepedi-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Thuto ya Khuru\n\nKgauswi, khuru le phiri ba ne ba dulang ka go tsamaya ka ga. Khuru ke khuru e nyane, e nang le maatla a mangata. Phiri ke phiri e kgolo, e nang le diatla tše dikgolo tša go feta tša khuru.\n\nKhuru o ne a rata go ja dihloko tša batho. O ne a tla ka nako e 'ngoe le e 'ngoe go ja tša batho. Kgauswi, khuru o ne a tla le dihloko tše dintši tša go feta tša phiri.\n\n\"Kgauswi, ke kopa o mphe dihloko tša go feta tša khuru,\" phiri o ile a kopa. Khuru o ile a tšohla. \"Ke kopa o mphele, ke tla go fa tša go feta tša khuru,\" khuru o ile a araba.\n\nPhiri o ile a tla le dihloko tše dikgolo tša go feta tša khuru. O ne a sa tsebe hore khuru o ne a tšepa hore phiri tla fela ka go ja tša go feta tša khuru.\n\nKhuru o ile a tšehla ka hore phiri o jele tša go feta tša khuru. O ne a sa tsebe hore phiri o ne a tšepa hore khuru tla fela ka go ja tša go feta tša khuru.\n\nKgauswi, khuru le phiri ba ne ba fapane ka nako e telele. Ba ne ba utloa a sa hlomphwa ke mang. Kgauswi, khuru o ne a utloa a sa tsebe hore phiri o ne a mpho e setseng.\n\n## Lintlha tša Thuto\n\n1. **Ke ntho e moleho go ba le takatso** — Khuru le phiri ba ne ba fapane ka takatso e fapaneng. Ba ne ba sa Rate go buisana ka ntho e 'ngoe.\n2. **Boleng bo botle ke go ba le takatso** — Khuru o ne a na le takatso e se nang le phallo, empa phiri o ne a fapane ka hore a rata go ja fela.\n\n## Mantswe a Maemo\n\n| Sepedi | English | Part of Speech |\n|--------|---------|----------------|\n| khuru | hare | noun |\n| phiri | jackal | noun |\n| dihloko | vegetables | noun |\n| thaka | share | verb |\n| takatso | desire | noun |",
-	"vocabulary": [
-		{
-			"term": "khuru",
-			"definition": "A small, fast animal related to rabbits, known for being clever",
-			"partOfSpeech": "noun",
-			"pronunciation": "/xʊ.ˈɾu/",
-			"language": "nso"
-		},
-		{
-			"term": "phiri",
-			"definition": "A wild animal similar to a dog, known for being cunning",
-			"partOfSpeech": "noun",
-			"pronunciation": "/pʰi.ɾi/",
-			"language": "nso"
-		},
-		{
-			"term": "dihloko",
-			"definition": "Plants and vegetables that people grow and eat",
-			"partOfSpeech": "noun",
-			"pronunciation": "/di.ˈʰlɔ.kɔ/",
-			"language": "nso"
-		},
-		{
-			"term": "thaka",
-			"definition": "To give a part of something to someone else",
-			"partOfSpeech": "verb",
-			"pronunciation": "/tʰa.ka/",
-			"language": "nso"
-		},
-		{
-			"term": "takatso",
-			"definition": "A strong feeling of wanting something",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ta.ka.t͡sʰɔ/",
-			"language": "nso"
-		}
-	]
+  "id": "thuto-ya-khuru",
+  "title": "Thuto ya Khuru",
+  "author": "Lumni",
+  "language": "Sepedi",
+  "languageId": "sepedi-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 840,
+  "subjects": ["sepedi-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Thuto ya Khuru\n\nKgauswi, khuru le phiri ba ne ba dulang ka go tsamaya ka ga. Khuru ke khuru e nyane, e nang le maatla a mangata. Phiri ke phiri e kgolo, e nang le diatla tše dikgolo tša go feta tša khuru.\n\nKhuru o ne a rata go ja dihloko tša batho. O ne a tla ka nako e 'ngoe le e 'ngoe go ja tša batho. Kgauswi, khuru o ne a tla le dihloko tše dintši tša go feta tša phiri.\n\n\"Kgauswi, ke kopa o mphe dihloko tša go feta tša khuru,\" phiri o ile a kopa. Khuru o ile a tšohla. \"Ke kopa o mphele, ke tla go fa tša go feta tša khuru,\" khuru o ile a araba.\n\nPhiri o ile a tla le dihloko tše dikgolo tša go feta tša khuru. O ne a sa tsebe hore khuru o ne a tšepa hore phiri tla fela ka go ja tša go feta tša khuru.\n\nKhuru o ile a tšehla ka hore phiri o jele tša go feta tša khuru. O ne a sa tsebe hore phiri o ne a tšepa hore khuru tla fela ka go ja tša go feta tša khuru.\n\nKgauswi, khuru le phiri ba ne ba fapane ka nako e telele. Ba ne ba utloa a sa hlomphwa ke mang. Kgauswi, khuru o ne a utloa a sa tsebe hore phiri o ne a mpho e setseng.\n\n## Lintlha tša Thuto\n\n1. **Ke ntho e moleho go ba le takatso** — Khuru le phiri ba ne ba fapane ka takatso e fapaneng. Ba ne ba sa Rate go buisana ka ntho e 'ngoe.\n2. **Boleng bo botle ke go ba le takatso** — Khuru o ne a na le takatso e se nang le phallo, empa phiri o ne a fapane ka hore a rata go ja fela.\n\n## Mantswe a Maemo\n\n| Sepedi | English | Part of Speech |\n|--------|---------|----------------|\n| khuru | hare | noun |\n| phiri | jackal | noun |\n| dihloko | vegetables | noun |\n| thaka | share | verb |\n| takatso | desire | noun |",
+  "vocabulary": [
+    {
+      "term": "khuru",
+      "definition": "A small, fast animal related to rabbits, known for being clever",
+      "partOfSpeech": "noun",
+      "pronunciation": "/xʊ.ˈɾu/",
+      "language": "nso"
+    },
+    {
+      "term": "phiri",
+      "definition": "A wild animal similar to a dog, known for being cunning",
+      "partOfSpeech": "noun",
+      "pronunciation": "/pʰi.ɾi/",
+      "language": "nso"
+    },
+    {
+      "term": "dihloko",
+      "definition": "Plants and vegetables that people grow and eat",
+      "partOfSpeech": "noun",
+      "pronunciation": "/di.ˈʰlɔ.kɔ/",
+      "language": "nso"
+    },
+    {
+      "term": "thaka",
+      "definition": "To give a part of something to someone else",
+      "partOfSpeech": "verb",
+      "pronunciation": "/tʰa.ka/",
+      "language": "nso"
+    },
+    {
+      "term": "takatso",
+      "definition": "A strong feeling of wanting something",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ta.ka.t͡sʰɔ/",
+      "language": "nso"
+    }
+  ]
 }

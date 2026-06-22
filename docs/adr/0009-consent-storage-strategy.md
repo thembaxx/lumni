@@ -24,6 +24,7 @@ Four storage options were considered: Appwrite user `prefs` object, a dedicated 
 - **Read path**: Always reads from Dexie. Appwrite is the fallback if Dexie is empty (first visit or data cleared).
 
 Alternatives rejected:
+
 - **Appwrite user `prefs`**: Not queryable, no audit trail, no structure. Rejected.
 - **Appwrite collection only**: Breaks offline consent gating — Analytics/Sentry initialise before network resolves. Rejected.
 - **Dexie only**: No server-side enforcement, lost on device clear. Rejected.

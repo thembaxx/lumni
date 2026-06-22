@@ -12,31 +12,32 @@ Complete the teacher→student assignment pipeline and wire push notifications i
 
 ### Appwrite `teacher_assignments` — extended schema
 
-| Field | Type | Notes |
-|---|---|---|
-| `teacherId` | string (100) | existing |
-| `topicIds` | string (2000) | existing, JSON stringified |
-| `status` | string (20) | existing, "pending" |
-| `createdAt` | datetime | existing |
+| Field         | Type            | Notes                        |
+| ------------- | --------------- | ---------------------------- |
+| `teacherId`   | string (100)    | existing                     |
+| `topicIds`    | string (2000)   | existing, JSON stringified   |
+| `status`      | string (20)     | existing, "pending"          |
+| `createdAt`   | datetime        | existing                     |
 | **`dueDate`** | **string (20)** | **new — ISO date, optional** |
 
 ### New Appwrite collection: `assignment_submissions`
 
-| Field | Type | Notes |
-|---|---|---|
-| `$id` | auto | Appwrite document ID |
-| `assignmentId` | string (100) | FK to teacher_assignments |
-| `studentId` | string (100) | FK to user |
-| `score` | number | total score |
-| `maxScore` | number | maximum possible |
-| `totalQuestions` | number | question count |
-| `correctCount` | number | correct answers |
-| `completedAt` | datetime | submission timestamp |
-| `teacherComment` | string (2000) | nullable, set by teacher |
+| Field            | Type          | Notes                     |
+| ---------------- | ------------- | ------------------------- |
+| `$id`            | auto          | Appwrite document ID      |
+| `assignmentId`   | string (100)  | FK to teacher_assignments |
+| `studentId`      | string (100)  | FK to user                |
+| `score`          | number        | total score               |
+| `maxScore`       | number        | maximum possible          |
+| `totalQuestions` | number        | question count            |
+| `correctCount`   | number        | correct answers           |
+| `completedAt`    | datetime      | submission timestamp      |
+| `teacherComment` | string (2000) | nullable, set by teacher  |
 
 ### Student-side type (`StudentAssignment`)
 
 Extended from existing:
+
 ```typescript
 interface StudentAssignment {
   id: string;
@@ -80,6 +81,7 @@ interface StudentAssignment {
 ### No quiz-view.tsx changes needed in the component itself
 
 The quiz flow already supports `subject=X&topic=Y&count=N` query params. We add:
+
 - URL param `assignmentId` read at quiz session end
 - Single API call after the quiz result is computed
 - No changes to quiz rendering or state machine
@@ -142,6 +144,7 @@ Existing function already queries Dexie `quizAttempts` for last 7 days. Enhance:
 ### No new API needed
 
 The digest uses existing data sources:
+
 - `offlineDB.quizAttempts` for per-subject question counts and accuracy
 - `offlineDB.competencies` for weak topics (score < 65%)
 - localStorage gamification for streak
@@ -149,12 +152,14 @@ The digest uses existing data sources:
 ## Files Changed / Created
 
 ### New files
+
 - `src/app/api/assignments/[id]/submit/route.ts` — POST submission
 - `src/app/api/assignments/[id]/comment/route.ts` — POST teacher comment
 - `src/app/api/teacher/assignments/route.ts` — GET teacher's assignments with submissions
 - `src/components/teacher/assignment-review-panel.tsx` — teacher review UI
 
 ### Modified files
+
 - `src/lib/db/ensure-schema.ts` — add `dueDate` to `teacher_assignments`, add `assignment_submissions` collection
 - `src/components/teacher/assignment-builder.tsx` — add date picker for dueDate
 - `src/components/dashboard/my-assignments.tsx` — enhanced with submission + practice button

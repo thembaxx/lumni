@@ -35,21 +35,28 @@ QuestionEngine (orchestrator)
 
 ### Question Types (12 types, 4 families)
 
-| Family | Types | Grade Method |
-|--------|-------|-------------|
-| Selected Response | `multiple-choice`, `matching` | Deterministic (compare to key) |
-| Constructed Response | `short-answer`, `long-answer`, `essay` | AI-graded |
-| STEM / Technical | `calculation`, `diagram`, `programming` | AI-graded |
-| Context / Mixed | `source-based`, `data-response`, `mixed` | AI-graded |
+| Family               | Types                                    | Grade Method                   |
+| -------------------- | ---------------------------------------- | ------------------------------ |
+| Selected Response    | `multiple-choice`, `matching`            | Deterministic (compare to key) |
+| Constructed Response | `short-answer`, `long-answer`, `essay`   | AI-graded                      |
+| STEM / Technical     | `calculation`, `diagram`, `programming`  | AI-graded                      |
+| Context / Mixed      | `source-based`, `data-response`, `mixed` | AI-graded                      |
 
 ### Type Definitions
 
 ```typescript
 type QuestionType =
-  | "multiple-choice" | "matching"
-  | "short-answer" | "long-answer" | "essay"
-  | "calculation" | "diagram" | "programming"
-  | "source-based" | "data-response" | "mixed";
+  | "multiple-choice"
+  | "matching"
+  | "short-answer"
+  | "long-answer"
+  | "essay"
+  | "calculation"
+  | "diagram"
+  | "programming"
+  | "source-based"
+  | "data-response"
+  | "mixed";
 
 interface QuestionBase<T extends QuestionType> {
   id: string;
@@ -69,16 +76,21 @@ interface QuestionBase<T extends QuestionType> {
 
 interface QuestionBody {
   "multiple-choice": { options: Option[]; correctOptionId: string; allowMultiple: boolean };
-  "matching":        { pairs: { left: string; right: string }[]; shuffle: boolean };
-  "short-answer":    { modelAnswer: string; acceptableAnswers: string[]; maxLength: number };
-  "long-answer":     { rubric: RubricCriterion[]; modelAnswer: string; minWords: number; maxWords: number };
-  "essay":           { rubric: RubricCriterion[]; modelAnswer: string; wordLimit: number };
-  "calculation":     { formula: string; correctValue: number; unit: string; tolerance: number };
-  "diagram":         { diagramData: DiagramSpec; instructions: string };
-  "source-based":    { source: Source; subQuestions: SubQuestion[] };
-  "programming":     { language: string; starterCode?: string; testCases: TestCase[]; timeLimit: number };
-  "data-response":   { data: DataSet; questions: SubQuestion[] };
-  "mixed":           { parts: MixedPart[] };
+  matching: { pairs: { left: string; right: string }[]; shuffle: boolean };
+  "short-answer": { modelAnswer: string; acceptableAnswers: string[]; maxLength: number };
+  "long-answer": {
+    rubric: RubricCriterion[];
+    modelAnswer: string;
+    minWords: number;
+    maxWords: number;
+  };
+  essay: { rubric: RubricCriterion[]; modelAnswer: string; wordLimit: number };
+  calculation: { formula: string; correctValue: number; unit: string; tolerance: number };
+  diagram: { diagramData: DiagramSpec; instructions: string };
+  "source-based": { source: Source; subQuestions: SubQuestion[] };
+  programming: { language: string; starterCode?: string; testCases: TestCase[]; timeLimit: number };
+  "data-response": { data: DataSet; questions: SubQuestion[] };
+  mixed: { parts: MixedPart[] };
 }
 ```
 
@@ -177,17 +189,18 @@ UserAnswer → QuestionEngine.grade()
 
 ## Error Handling
 
-| Failure | Behavior |
-|---------|----------|
-| All providers fail | Return cached if available, else error |
-| Malformed JSON | Retry × 2 with stricter prompt |
-| Low validation score | Reject + regenerate (max 3 attempts) |
-| Rate limited | 429 with Retry-After |
-| Grading AI fails | Partial score with explanatory note |
+| Failure              | Behavior                               |
+| -------------------- | -------------------------------------- |
+| All providers fail   | Return cached if available, else error |
+| Malformed JSON       | Retry × 2 with stricter prompt         |
+| Low validation score | Reject + regenerate (max 3 attempts)   |
+| Rate limited         | 429 with Retry-After                   |
+| Grading AI fails     | Partial score with explanatory note    |
 
 ## File Cleanup Plan
 
 **Files to delete:**
+
 - `src/types/questions.ts`
 - `src/hooks/use-subject-questions.ts`
 - `src/hooks/use-ai-generate-questions.ts`
@@ -204,6 +217,7 @@ UserAnswer → QuestionEngine.grade()
 - `src/lib/server/sync-qa.ts`
 
 **Files to refactor:**
+
 - `src/components/quiz/question-card.tsx` → use new Question type
 - `src/components/quiz/quiz-view.tsx` → use new engine hooks
 - `src/components/quiz/question-diagram.tsx` → use MediaResolver
@@ -267,4 +281,5 @@ POST /api/engine/hint           → QuestionEngine.generateHint()
 ```typescript
 useQuestionEngine(params) → { questions, isLoading, error, generate, grade, hint }
 ```
+
 Single hook replaces: useSubjectQuestions, useAIGenerateQuestions, useQuizEngine.

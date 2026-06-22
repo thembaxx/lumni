@@ -28,10 +28,12 @@ Complete the payment integration for Lumni by adding the missing Stripe webhook,
 **Endpoint:** `src/app/api/stripe/webhook/route.ts`
 
 **Events to handle:**
+
 - `checkout.session.completed` — Extract `client_reference_id` (userId), write Appwrite `premium_subscriptions` doc with status `active`, provider `stripe`, subscriptionId, expiresAt (1 year from now)
 - `customer.subscription.deleted` — Update Appwrite doc status to `cancelled`
 
 **Flow:**
+
 1. Read `stripe-signature` header
 2. Verify using `stripe.webhooks.constructEvent()` with `STRIPE_WEBHOOK_SECRET`
 3. Parse event type
@@ -45,6 +47,7 @@ Complete the payment integration for Lumni by adding the missing Stripe webhook,
 **File:** `src/lib/premium/premium-context.tsx`
 
 **Changes:**
+
 - On mount (inside `useEffect` in the provider), call `POST /api/premium/verify`
 - If server returns `isPremium: true`, update local state with the server's `expiresAt`
 - If server returns `isPremium: false` but local state says premium, downgrade locally
@@ -57,6 +60,7 @@ Complete the payment integration for Lumni by adding the missing Stripe webhook,
 **Problem:** The cancel route requires `subscriptionId` in the body, but the premium context doesn't store or send it.
 
 **Changes:**
+
 - Extend `PremiumState` to include `subscriptionId?: string`
 - Store `subscriptionId` when it comes from Stripe (from verify endpoint response) or Payfast
 - PremiumContext `cancelSubscription()` reads `subscriptionId` from state and sends it
@@ -65,6 +69,7 @@ Complete the payment integration for Lumni by adding the missing Stripe webhook,
 ### 4. Monthly Pricing Option
 
 **Changes:**
+
 - **Stripe:** Add `PRICE_PREMIUM_MONTHLY` env var with a monthly Stripe price ID
 - **Payfast:** Pass `billingFrequency: "monthly" | "yearly"` to the checkout route
 - **Premium page:** Add a billing toggle (monthly/yearly) before the checkout buttons
@@ -79,16 +84,16 @@ bun add stripe
 
 ## Files Changed
 
-| File | Change |
-|------|--------|
-| `package.json` | Add `stripe` dependency |
-| `src/app/api/stripe/webhook/route.ts` | **New** — webhook handler |
-| `src/lib/premium/premium-context.tsx` | Add `syncPremium` on mount, `subscriptionId` in state, cancel fix |
-| `src/app/api/premium/verify/route.ts` | Add rate limiting |
-| `src/app/[locale]/premium/page.tsx` | Add billing toggle (monthly/yearly), pass billing frequency |
-| `src/app/api/premium/checkout/route.ts` | Accept `billing` param for monthly/yearly |
-| `src/app/api/payfast/checkout/route.ts` | Accept `billing` param |
-| `.env.example` | Add `PRICE_PREMIUM_MONTHLY`, `PAYFAST_MERCHANT_ID` etc. |
+| File                                    | Change                                                            |
+| --------------------------------------- | ----------------------------------------------------------------- |
+| `package.json`                          | Add `stripe` dependency                                           |
+| `src/app/api/stripe/webhook/route.ts`   | **New** — webhook handler                                         |
+| `src/lib/premium/premium-context.tsx`   | Add `syncPremium` on mount, `subscriptionId` in state, cancel fix |
+| `src/app/api/premium/verify/route.ts`   | Add rate limiting                                                 |
+| `src/app/[locale]/premium/page.tsx`     | Add billing toggle (monthly/yearly), pass billing frequency       |
+| `src/app/api/premium/checkout/route.ts` | Accept `billing` param for monthly/yearly                         |
+| `src/app/api/payfast/checkout/route.ts` | Accept `billing` param                                            |
+| `.env.example`                          | Add `PRICE_PREMIUM_MONTHLY`, `PAYFAST_MERCHANT_ID` etc.           |
 
 ## Testing
 

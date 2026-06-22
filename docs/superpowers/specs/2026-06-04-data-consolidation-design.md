@@ -31,16 +31,16 @@ Complete the Phase 1 DataAccess seam from ADR-0011. All 37+ consumers migrate fr
 
 ### Steps
 
-| Step | Files | What Changes |
-|------|-------|--------------|
-| 1a. Fix InMemoryDataAccess types | `src/lib/db/in-memory-data-access.ts` | Replace `any` with proper type bridging for all 38 tables |
-| 1b. Migrate quiz domain | `use-quiz-session.ts`, `use-quiz.ts`, `quiz-engine.tsx`, quiz-session reducer, quiz-results | Replace `offlineDB.quizSessions`, `offlineDB.questions` |
-| 1c. Migrate gamification | `use-gamification.ts`, `gamification-engine.ts` | Replace `offlineDB.gamification` |
-| 1d. Migrate bookmarks + notes | `bookmark-service.ts`, `use-note-storage.ts`, `search.ts`, bookmark/note hooks | Replace `offlineDB.bookmarks`, `offlineDB.notes` |
-| 1e. Migrate wrong-answers + ratings | `wrong-answer-journal.tsx`, `question-rating-service.ts` | Replace `offlineDB.wrongAnswers`, `offlineDB.questionRatings` |
-| 1f. Migrate chat + visual cache | `use-chat.ts`, `visual-engine.ts` | Replace `offlineDB.chatMessages`, `offlineDB.visuals` |
-| 1g. Migrate TinyFish cache | `src/lib/tinyfish/cache.ts` | Inject DataAccess instead of importing `dexieDataAccess` directly |
-| 1h. Migrate remaining domains | group posts/comments/reactions, challenges, badges, analytics, retention, shared questions, teacher features | Replace ~10 files' direct `offlineDB` calls |
+| Step                                | Files                                                                                                        | What Changes                                                      |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| 1a. Fix InMemoryDataAccess types    | `src/lib/db/in-memory-data-access.ts`                                                                        | Replace `any` with proper type bridging for all 38 tables         |
+| 1b. Migrate quiz domain             | `use-quiz-session.ts`, `use-quiz.ts`, `quiz-engine.tsx`, quiz-session reducer, quiz-results                  | Replace `offlineDB.quizSessions`, `offlineDB.questions`           |
+| 1c. Migrate gamification            | `use-gamification.ts`, `gamification-engine.ts`                                                              | Replace `offlineDB.gamification`                                  |
+| 1d. Migrate bookmarks + notes       | `bookmark-service.ts`, `use-note-storage.ts`, `search.ts`, bookmark/note hooks                               | Replace `offlineDB.bookmarks`, `offlineDB.notes`                  |
+| 1e. Migrate wrong-answers + ratings | `wrong-answer-journal.tsx`, `question-rating-service.ts`                                                     | Replace `offlineDB.wrongAnswers`, `offlineDB.questionRatings`     |
+| 1f. Migrate chat + visual cache     | `use-chat.ts`, `visual-engine.ts`                                                                            | Replace `offlineDB.chatMessages`, `offlineDB.visuals`             |
+| 1g. Migrate TinyFish cache          | `src/lib/tinyfish/cache.ts`                                                                                  | Inject DataAccess instead of importing `dexieDataAccess` directly |
+| 1h. Migrate remaining domains       | group posts/comments/reactions, challenges, badges, analytics, retention, shared questions, teacher features | Replace ~10 files' direct `offlineDB` calls                       |
 
 ### DI Pattern
 
@@ -62,17 +62,17 @@ Move all non-preference localStorage data into Dexie behind the DataAccess inter
 
 ### Domains to Migrate
 
-| Domain | localStorage Keys | Target Dexie Table | Migration Strategy |
-|--------|------------------|-------------------|--------------------|
-| Gamification | `lumni_gamification`, `lumni_display_name`, `lumni_last_streak_alert_notification`, `lumni_last_checked_achievement_count` | `gamification` (already exists) | Stop dual-write. Flip read path from localStorage-first to Dexie-first. Legacy key as fallback during migration window, then drop. |
-| Bookmarks | `lumni_bookmarks` (zustand persist) | `bookmarks` (already exists) | Remove `persist(localStorage)` from zustand store. DataAccess bookmarks table becomes source. Cross-tab sync via Dexie `on('changes')`. |
-| Chat | `lumni_chat_history` | `chatMessages` (already exists) | Stop writing both. Dexie-only. Legacy read + drop. |
-| Study plan | `lumni_study_plan`, `lumni_plan_target_aps`, `lumni_plan_daily_minutes` | `studyPlans` (new, v31) | New Dexie table. Migration read from localStorage on first load. |
-| Engine analytics | `lumni_engine_quality`, `lumni_engine_analytics`, `lumni_ai_latency`, `lumni_usage_events` | `analyticsEvents` (exists, `eventType` column) | Consolidate all 4 arrays into existing table. |
-| Exam session | `exam-session-storage` (zustand persist) | `examSessions` (already exists) | Remove `persist`. Session state loaded from Dexie on mount, auto-saved on changes. |
-| Onboarding | `lumni_onboarding`, `lumni_has_visited`, `lumni_first_visits_remaining` | `onboardingState` (new, v31) — small table, single row per user | Migrate on first read. |
-| SR daily budget | `lumni_sr_daily_budget` | `srDailyBudget` (new, v31) | Small cache-like data, but it's state not preference. Move to Dexie. |
-| Flashcard sync | `lumni_flashcard_last_sync` | `flashcardSyncState` (new, v31) | Single-value state. Move to Dexie. |
+| Domain           | localStorage Keys                                                                                                          | Target Dexie Table                                              | Migration Strategy                                                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Gamification     | `lumni_gamification`, `lumni_display_name`, `lumni_last_streak_alert_notification`, `lumni_last_checked_achievement_count` | `gamification` (already exists)                                 | Stop dual-write. Flip read path from localStorage-first to Dexie-first. Legacy key as fallback during migration window, then drop.      |
+| Bookmarks        | `lumni_bookmarks` (zustand persist)                                                                                        | `bookmarks` (already exists)                                    | Remove `persist(localStorage)` from zustand store. DataAccess bookmarks table becomes source. Cross-tab sync via Dexie `on('changes')`. |
+| Chat             | `lumni_chat_history`                                                                                                       | `chatMessages` (already exists)                                 | Stop writing both. Dexie-only. Legacy read + drop.                                                                                      |
+| Study plan       | `lumni_study_plan`, `lumni_plan_target_aps`, `lumni_plan_daily_minutes`                                                    | `studyPlans` (new, v31)                                         | New Dexie table. Migration read from localStorage on first load.                                                                        |
+| Engine analytics | `lumni_engine_quality`, `lumni_engine_analytics`, `lumni_ai_latency`, `lumni_usage_events`                                 | `analyticsEvents` (exists, `eventType` column)                  | Consolidate all 4 arrays into existing table.                                                                                           |
+| Exam session     | `exam-session-storage` (zustand persist)                                                                                   | `examSessions` (already exists)                                 | Remove `persist`. Session state loaded from Dexie on mount, auto-saved on changes.                                                      |
+| Onboarding       | `lumni_onboarding`, `lumni_has_visited`, `lumni_first_visits_remaining`                                                    | `onboardingState` (new, v31) — small table, single row per user | Migrate on first read.                                                                                                                  |
+| SR daily budget  | `lumni_sr_daily_budget`                                                                                                    | `srDailyBudget` (new, v31)                                      | Small cache-like data, but it's state not preference. Move to Dexie.                                                                    |
+| Flashcard sync   | `lumni_flashcard_last_sync`                                                                                                | `flashcardSyncState` (new, v31)                                 | Single-value state. Move to Dexie.                                                                                                      |
 
 ### localStorage Keys That Stay (Preferences)
 
@@ -116,21 +116,21 @@ Convert Appwrite from a client-readable store to a write-only sync target. All c
 
 ### Client-Side Appwrite Reads to Eliminate
 
-| Hook | Replacement |
-|------|-------------|
-| `useSubjects()` | Read from Dexie `subjects` table (synced periodically) |
-| `useExamPaper()` | Read from Dexie `cachedPdfs` + `examSessions` |
-| `useExams()` | Read from Dexie `examDates` |
+| Hook               | Replacement                                                   |
+| ------------------ | ------------------------------------------------------------- |
+| `useSubjects()`    | Read from Dexie `subjects` table (synced periodically)        |
+| `useExamPaper()`   | Read from Dexie `cachedPdfs` + `examSessions`                 |
+| `useExams()`       | Read from Dexie `examDates`                                   |
 | `useStudyGroups()` | Read from Dexie `groupPosts`/`groupComments`/`groupReactions` |
 
 ### Dual-Writes to Collapse
 
-| Domain | Current | New |
-|--------|---------|-----|
-| Bookmarks | Dexie + Appwrite inline | Dexie only → SyncManager |
-| Shared questions | Dexie + Appwrite inline | Dexie only → SyncManager |
-| User consents | Dexie + Appwrite job enqueue | Dexie only → SyncManager |
-| Visuals | Dexie + Appwrite inline | Dexie only → SyncManager |
+| Domain           | Current                      | New                      |
+| ---------------- | ---------------------------- | ------------------------ |
+| Bookmarks        | Dexie + Appwrite inline      | Dexie only → SyncManager |
+| Shared questions | Dexie + Appwrite inline      | Dexie only → SyncManager |
+| User consents    | Dexie + Appwrite job enqueue | Dexie only → SyncManager |
+| Visuals          | Dexie + Appwrite inline      | Dexie only → SyncManager |
 
 ### Server-Side Appwrite Reads That Stay
 
@@ -175,12 +175,12 @@ Each phase verified independently:
 
 ## Timeline
 
-| Phase | Estimated File Changes | Risk |
-|-------|----------------------|------|
-| Phase 1: DataAccess seam | ~35 files | Medium — mechanical but wide surface |
-| Phase 2: localStorage → Dexie | ~20 files | Medium — legacy migration paths |
-| Phase 3: Sync consolidation | ~15 files | Low — new code, no consumer API changes |
-| Phase 4: SQLite removal | ~5 files | Low — server-only, well-scoped |
+| Phase                         | Estimated File Changes | Risk                                    |
+| ----------------------------- | ---------------------- | --------------------------------------- |
+| Phase 1: DataAccess seam      | ~35 files              | Medium — mechanical but wide surface    |
+| Phase 2: localStorage → Dexie | ~20 files              | Medium — legacy migration paths         |
+| Phase 3: Sync consolidation   | ~15 files              | Low — new code, no consumer API changes |
+| Phase 4: SQLite removal       | ~5 files               | Low — server-only, well-scoped          |
 
 ---
 

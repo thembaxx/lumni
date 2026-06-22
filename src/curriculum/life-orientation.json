@@ -38,7 +38,11 @@
         { "id": "career-choices", "name": "Career Choices", "order": 1 },
         { "id": "subject-choices", "name": "Subject Choices", "order": 2 },
         { "id": "tertiary-education", "name": "Tertiary Education", "order": 3 },
-        { "id": "entrepreneurship-opportunities", "name": "Entrepreneurship Opportunities", "order": 4 }
+        {
+          "id": "entrepreneurship-opportunities",
+          "name": "Entrepreneurship Opportunities",
+          "order": 4
+        }
       ]
     },
     {

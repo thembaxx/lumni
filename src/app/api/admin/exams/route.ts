@@ -5,28 +5,25 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 export const runtime = "nodejs";
 
 export const GET = createRouteHandler({
-	auth: "admin",
-	errorLabel: "List Exams",
-	execute: async () => {
-		const response = await databases.listDocuments(
-			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
-		);
+  auth: "admin",
+  errorLabel: "List Exams",
+  execute: async () => {
+    const response = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS);
 
-		const exams = response.documents.map((doc) => ({
-			id: doc.$id,
-			subject: doc.subject,
-			paperCode: doc.paperCode,
-			examPeriod: doc.examPeriod,
-			year: doc.year,
-			grade: doc.grade,
-			language: doc.language,
-			totalMarks: doc.totalMarks,
-			duration: doc.duration,
-			fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
-			uploadedAt: doc.uploadedAt,
-		}));
+    const exams = response.documents.map((doc) => ({
+      id: doc.$id,
+      subject: doc.subject,
+      paperCode: doc.paperCode,
+      examPeriod: doc.examPeriod,
+      year: doc.year,
+      grade: doc.grade,
+      language: doc.language,
+      totalMarks: doc.totalMarks,
+      duration: doc.duration,
+      fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
+      uploadedAt: doc.uploadedAt,
+    }));
 
-		return { exams, total: exams.length };
-	},
+    return { exams, total: exams.length };
+  },
 });

@@ -1,10 +1,13 @@
 <!-- LAST_SYNC: 2026-06-21 -->
+
 # System Design — Lumni
 
 ## Overview & Goals
+
 Lumni is a mobile-first South African Matric exam prep platform. It provides offline-capable practice, AI-powered grading, algorithmic study planning, and web-grounded RAG injection for both solve and quiz generation (via TinyFish). The platform prioritizes offline availability through local AI generation (Quiz Packs), on-device caching (Dexie), and immersive focus modes. **Session 37-38**: Architectural deepening — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, QuizResultProcessor, enrichment pipeline, TinyFish barrel separation, PushDeliveryService, StudyPlannerService, GamificationService, 6+ service extractions. **Session 39**: React Doctor 100/100 — 16 issues resolved (parallelized awaits, Set/Map lookups, useReducer, regex checks).
 
 ## Architecture Diagram
+
 ```mermaid
 graph TD
     Client[Browser: Next.js/React]
@@ -62,6 +65,7 @@ graph TD
 ```
 
 ## Data Flow
+
 1. **Multi-Tier Caching**: User requests content. L1 (Dexie) is primary; L2 (Appwrite) is secondary; L3 (AI/Wiki/TinyFish) is fallback. All DB access via `DataAccess` interface (10 domain sub-interfaces, 33 accessors).
 2. **Web-Grounded AI (RAG)**: `/api/solve` and `/api/engine/generate` call `src/lib/tinyfish/` to inject live CAPS/DBE sources into the AI prompt. Cached for 14d (quiz) or 24h (solve). In-flight dedup + 3s timeout fail-open. 24-subject allowlist + per-user daily cap.
 3. **Offline Practice**: `QuizPackService` enables bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
@@ -78,6 +82,7 @@ graph TD
 14. **Service Extraction (ADR-0012)**: 6 services extracted from route handlers: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines.
 
 ## Tech Stack
+
 - **Frontend**: Next.js 16.2.7, React 19.2.7, Tailwind CSS 4, Framer Motion 12.
 - **Persistence**: Dexie 4 (IndexedDB, v32 schema — 35+ tables), Appwrite Cloud, sql.js (SQLite).
 - **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq Cloud (Last resort). TinyFish (RAG) for web-grounded solve + quiz. Uniform AI adapter for pluggable provider normalizers.
@@ -87,6 +92,7 @@ graph TD
 - **Monitoring**: Sentry (error tracking), centralized logger, observability events.
 
 ## Key Abstractions
+
 - **QuestionEngine**: Single source of truth for generation/grading/validation of 11 question types. RAG-augmented via `PromptManager`. Returns `GenerateResult { questions, ragContext }` (Session 37). AIClient singleton collapsed.
 - **FlashcardEngine**: Unified SM-2/FSRS engine wrapping DataAccess, limits, and recovery logic.
 - **DataAccess**: Typed interface over 33 accessors via 10 domain sub-interfaces. `DexieDataAccess` (production) + `InMemoryDataAccess` (tests with `seed()`). `Collection.offset(n)` for pagination.
@@ -107,6 +113,7 @@ graph TD
 - **Service Extraction (ADR-0012)**: 6 services with constructor injection; route handlers reduced to 10-25 lines.
 
 ## External Integrations
+
 - **Appwrite**: Authentication, Database, Storage, Live Sessions.
 - **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
 - **RAG**: TinyFish (search + fetch, free tier, consent-gated).
@@ -116,6 +123,7 @@ graph TD
 - **Sentry**: Error tracking (client + server + edge).
 
 ## Current Limitations & TODOs
+
 - **OCR text extraction**: Official PDF timetables require OCR for automated ingestion.
 - **Comparative analytics**: Scaling depends on cross-user data aggregation in Appwrite.
 - **PWA titlebar theming**: Gap 3 of Theme Chrome Takeover not yet implemented.
@@ -124,6 +132,7 @@ graph TD
 - **WeeklyDigest cron**: No external cron service configured — relies on manual/admin triggering.
 
 ## Recent Changes Log (Last 7 Days)
+
 - **Session 39 — React Doctor 100/100 (June 2026)**: 16 remaining issues resolved across 10 files. Parallelized independent awaits with `Promise.all` (quiz-actions, domain, push-delivery). Combined chained `.filter().map()` iterations into single `for` loops (classify/route, quiz-actions). Replaced `Array.includes()` in loops with `Set.has()` (quiz-actions). Replaced `array.find()` in loop with `Map.get()` (classify/route). Merged dual `useState` into `useReducer` (recent-questions-card). Removed redundant `useEffect` state reset (immersive-mode). Moved static `validRoles` array to module scope (messages/route). Captured refs in cleanup effects to fix missing deps warnings (admin-dashboard, getting-started-card). Combined two `string.includes()` checks into single regex test (ai/client). Added false-positive override for sequential await in exam-paper-actions.ts. 12 files changed, +96/−65 lines. TypeScript 0 errors, Biome 0 errors. Commit `a1bd5de4`.
 - **Session 37-38 — Architectural deepening (June 2026)**: AI provider singleton collapsed. `GenerateResult` structured return. `CachedAIGenerator<T>` generic. QuizResultProcessor (discriminated union). Enrichment pipeline (3 ports). TinyFish barrel separation. PushDeliveryService, StudyPlannerService, GamificationService. DataAccess bypass sealing. 6+ service extractions. ~200 lines dead code removed. ADR-0012 documented.
 - **Premium gating removed (June 2026)**: All ContentLock wrappers purged from 5 dashboard components (analytics, study-plan, scheduler, visual-content, offline-packs). `usePremium`/`isPremium`/`isPriority` checks stripped from visual engine hook and support page. Visual engine always fetches. Support page shows priority to all. Problems page shows login banner via `useAuth()` when unauthenticated. View transitions consolidated — `useNavigationDirection` owns full lifecycle; `experimental.viewTransition: true` removed from next.config. `NavigationPointerOff01Icon` → `Cancel01Icon`. `tsc --noEmit` zero, `biome check` zero, 1271 tests pass 0 fail.

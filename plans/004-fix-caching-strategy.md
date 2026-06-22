@@ -29,6 +29,7 @@ The `CachingStrategy.resolve()` reads all cache tiers in parallel via `Promise.a
 ## Current state
 
 **`src/lib/caching-strategy/caching-strategy.ts:34-52`**:
+
 ```typescript
 async resolve(params: P): Promise<T | null> {
   const results = await Promise.allSettled(
@@ -59,18 +60,20 @@ The `Promise.allSettled` resolves only when ALL promises settle. Even if Dexie r
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/caching-strategy/caching-strategy.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                        | Expected on success |
+| --------- | -------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                             | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/caching-strategy/caching-strategy.ts` | 0 errors            |
+| Tests     | `bun run test`                                                 | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/caching-strategy/caching-strategy.ts`
 
 **Out of scope**:
+
 - Consumers of `CachingStrategy` (question-engine, knowledge-graph, etc.)
 - Tier implementations (DexieDataAccess, Appwrite)
 

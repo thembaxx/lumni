@@ -3,110 +3,107 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface SolverSource {
-	url: string;
-	title: string;
+  url: string;
+  title: string;
 }
 
 interface SolverResult {
-	solution: string;
-	steps: string[];
-	provider: string;
-	sources?: SolverSource[];
+  solution: string;
+  steps: string[];
+  provider: string;
+  sources?: SolverSource[];
 }
 
 interface FollowUpResult {
-	answer: string;
-	provider: string;
+  answer: string;
+  provider: string;
 }
 
 interface SolveParams {
-	question: string;
-	subject?: string;
+  question: string;
+  subject?: string;
 }
 
 interface FollowUpParams {
-	question: string;
-	context: { role: "user" | "assistant"; content: string }[];
-	subject?: string;
+  question: string;
+  context: { role: "user" | "assistant"; content: string }[];
+  subject?: string;
 }
 
-async function solveProblem({
-	question,
-	subject,
-}: SolveParams): Promise<SolverResult> {
-	const response = await fetch("/api/solve", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-			question,
-			subject: subject || undefined,
-			mode: "solve",
-		}),
-	});
+async function solveProblem({ question, subject }: SolveParams): Promise<SolverResult> {
+  const response = await fetch("/api/solve", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      question,
+      subject: subject || undefined,
+      mode: "solve",
+    }),
+  });
 
-	if (!response.ok) {
-		const error = await response.json().catch(() => ({}));
-		throw new Error(error.error || "Failed to solve the problem");
-	}
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || "Failed to solve the problem");
+  }
 
-	return response.json();
+  return response.json();
 }
 
 async function sendFollowUp({
-	question,
-	context,
-	subject,
+  question,
+  context,
+  subject,
 }: FollowUpParams): Promise<FollowUpResult> {
-	const response = await fetch("/api/solve", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-			question,
-			subject: subject || undefined,
-			mode: "solve",
-			context,
-			followUp: true,
-		}),
-	});
+  const response = await fetch("/api/solve", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      question,
+      subject: subject || undefined,
+      mode: "solve",
+      context,
+      followUp: true,
+    }),
+  });
 
-	if (!response.ok) {
-		const error = await response.json().catch(() => ({}));
-		throw new Error(error.error || "Failed to get answer");
-	}
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || "Failed to get answer");
+  }
 
-	return response.json();
+  return response.json();
 }
 
 interface UseSolverOptions {
-	onSuccess?: (result: SolverResult) => void;
-	onError?: (error: Error) => void;
+  onSuccess?: (result: SolverResult) => void;
+  onError?: (error: Error) => void;
 }
 
 export function useSolver(options?: UseSolverOptions) {
-	const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-	const solve = useMutation({
-		mutationFn: solveProblem,
-		onSuccess: (result) => {
-			options?.onSuccess?.(result);
-			queryClient.invalidateQueries({ queryKey: ["solver"] });
-		},
-		onError: options?.onError,
-	});
+  const solve = useMutation({
+    mutationFn: solveProblem,
+    onSuccess: (result) => {
+      options?.onSuccess?.(result);
+      queryClient.invalidateQueries({ queryKey: ["solver"] });
+    },
+    onError: options?.onError,
+  });
 
-	const followUp = useMutation({
-		mutationFn: sendFollowUp,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["solver"] });
-		},
-	});
+  const followUp = useMutation({
+    mutationFn: sendFollowUp,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["solver"] });
+    },
+  });
 
-	return {
-		...solve,
-		solve: solve.mutate,
-		followUp: followUp.mutate,
-		followUpData: followUp.data,
-		isSendingFollowUp: followUp.isPending,
-		followUpError: followUp.error,
-	};
+  return {
+    ...solve,
+    solve: solve.mutate,
+    followUp: followUp.mutate,
+    followUpData: followUp.data,
+    isSendingFollowUp: followUp.isPending,
+    followUpError: followUp.error,
+  };
 }

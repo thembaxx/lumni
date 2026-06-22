@@ -1,50 +1,50 @@
 {
-	"id": "tshifhiwo-na-phalaphala",
-	"title": "Tshifhiwo na Phalaphala",
-	"author": "Lumni",
-	"language": "Tshivenda",
-	"languageId": "tshivenda-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 850,
-	"subjects": ["tshivenda-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Tshifhiwo na Phalaphala\n\nVhukuma, tshifhiwo na phalaphala vha ne vha tshila nga maanda. Tshifhiwo i tshifhiwo tshine i na masimbe yo tala. Phalaphala i phalaphala tshine i na masimbe yo fela.\n\nPhalaphala u tshilwa vhutshilo hau vhana vha murimi. U tshilwa vhutshilo hau vhana vha murimi. Vhukuma, tshifhiwo u tshilwa vhutshilo hau vhana vha murimi.\n\n\"Vhukuma, ndi khou humbula vhutshilo hau vhana vha murimi,\" tshifhiwo ya khou siani. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\nTshifhiwo ya tshilwa vhutshilo hau vhana vha murimi. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\nVhukuma, tshifhiwo na phalaphala vha ne vha tshila nga maanda. Vha ne vha sa tshilwa vhutshilo hau vhana vha murimi.\n\n## Tshumelo dza Ndulamiso\n\n1. **Vhutshilo hu na masimbe** — Tshifhiwo na phalaphala vha ne vha tshila nga maanda. Vha ne vha sa tshilwa vhutshilo hau vhana vha murimi.\n2. **Masimbe o fela nga vhukuma** — Tshifhiwo u tshilwa vhutshilo hau vhana vha murimi. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\n## Madzhi a Ndulamiso\n\n| Tshivenda | English | Part of Speech |\n|-----------|---------|----------------|\n| tshifhiwo | hare | noun |\n| phalaphala | jackal | noun |\n| masimbe | vegetables | noun |\n| tshilwa | share | verb |\n| vhutshilo | desire | noun |",
-	"vocabulary": [
-		{
-			"term": "tshifhiwo",
-			"definition": "A small, fast animal related to rabbits, known for being clever",
-			"partOfSpeech": "noun",
-			"pronunciation": "/t͡ʃi.ˈfʷi.vo/",
-			"language": "ve"
-		},
-		{
-			"term": "phalaphala",
-			"definition": "A wild animal similar to a dog, known for being cunning",
-			"partOfSpeech": "noun",
-			"pronunciation": "/pʰa.la.ˈpʰa.la/",
-			"language": "ve"
-		},
-		{
-			"term": "masimbe",
-			"definition": "Plants and vegetables that people grow and eat",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ma.ˈsim.bɛ/",
-			"language": "ve"
-		},
-		{
-			"term": "tshilwa",
-			"definition": "To give a part of something to someone else",
-			"partOfSpeech": "verb",
-			"pronunciation": "/ˈt͡ʃi.lʷa/",
-			"language": "ve"
-		},
-		{
-			"term": "vhutshilo",
-			"definition": "A strong feeling of wanting something",
-			"partOfSpeech": "noun",
-			"pronunciation": "/vʰu.ˈt͡ʃi.lo/",
-			"language": "ve"
-		}
-	]
+  "id": "tshifhiwo-na-phalaphala",
+  "title": "Tshifhiwo na Phalaphala",
+  "author": "Lumni",
+  "language": "Tshivenda",
+  "languageId": "tshivenda-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 850,
+  "subjects": ["tshivenda-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Tshifhiwo na Phalaphala\n\nVhukuma, tshifhiwo na phalaphala vha ne vha tshila nga maanda. Tshifhiwo i tshifhiwo tshine i na masimbe yo tala. Phalaphala i phalaphala tshine i na masimbe yo fela.\n\nPhalaphala u tshilwa vhutshilo hau vhana vha murimi. U tshilwa vhutshilo hau vhana vha murimi. Vhukuma, tshifhiwo u tshilwa vhutshilo hau vhana vha murimi.\n\n\"Vhukuma, ndi khou humbula vhutshilo hau vhana vha murimi,\" tshifhiwo ya khou siani. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\nTshifhiwo ya tshilwa vhutshilo hau vhana vha murimi. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\nVhukuma, tshifhiwo na phalaphala vha ne vha tshila nga maanda. Vha ne vha sa tshilwa vhutshilo hau vhana vha murimi.\n\n## Tshumelo dza Ndulamiso\n\n1. **Vhutshilo hu na masimbe** — Tshifhiwo na phalaphala vha ne vha tshila nga maanda. Vha ne vha sa tshilwa vhutshilo hau vhana vha murimi.\n2. **Masimbe o fela nga vhukuma** — Tshifhiwo u tshilwa vhutshilo hau vhana vha murimi. Phalaphala u tshilwa vhutshilo hau vhana vha murimi.\n\n## Madzhi a Ndulamiso\n\n| Tshivenda | English | Part of Speech |\n|-----------|---------|----------------|\n| tshifhiwo | hare | noun |\n| phalaphala | jackal | noun |\n| masimbe | vegetables | noun |\n| tshilwa | share | verb |\n| vhutshilo | desire | noun |",
+  "vocabulary": [
+    {
+      "term": "tshifhiwo",
+      "definition": "A small, fast animal related to rabbits, known for being clever",
+      "partOfSpeech": "noun",
+      "pronunciation": "/t͡ʃi.ˈfʷi.vo/",
+      "language": "ve"
+    },
+    {
+      "term": "phalaphala",
+      "definition": "A wild animal similar to a dog, known for being cunning",
+      "partOfSpeech": "noun",
+      "pronunciation": "/pʰa.la.ˈpʰa.la/",
+      "language": "ve"
+    },
+    {
+      "term": "masimbe",
+      "definition": "Plants and vegetables that people grow and eat",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ma.ˈsim.bɛ/",
+      "language": "ve"
+    },
+    {
+      "term": "tshilwa",
+      "definition": "To give a part of something to someone else",
+      "partOfSpeech": "verb",
+      "pronunciation": "/ˈt͡ʃi.lʷa/",
+      "language": "ve"
+    },
+    {
+      "term": "vhutshilo",
+      "definition": "A strong feeling of wanting something",
+      "partOfSpeech": "noun",
+      "pronunciation": "/vʰu.ˈt͡ʃi.lo/",
+      "language": "ve"
+    }
+  ]
 }

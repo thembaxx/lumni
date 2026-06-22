@@ -1,8 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
-import type {
-	CompetencyDataAccess,
-	StudyDataAccess,
-} from "@/lib/db/data-access";
+import type { CompetencyDataAccess, StudyDataAccess } from "@/lib/db/data-access";
 
 type NotifDb = StudyDataAccess & Pick<CompetencyDataAccess, "quizAttempts">;
 
@@ -15,563 +12,528 @@ import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 function __setDepsForTesting(deps: { db: NotifDb }) {
-	_deps = deps;
+  _deps = deps;
 }
 
 const NOTIF_KEY = "lumni_notification_subscription";
 const NOTIF_SETTINGS_KEY = "lumni_notification_settings";
 const VAPID_PUBLIC_KEY =
-	"BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
+  "BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
 
 export interface NotificationSettings {
-	enabled: boolean;
-	studyReminders: boolean;
-	streakAlerts: boolean;
-	quizReminders: boolean;
-	achievementNotifications: boolean;
-	weeklyProgress: boolean;
-	reminderHour: number;
-	examAlerts: boolean;
-	assignmentDue: boolean;
-	marketing: boolean;
-	dailyDigest: boolean;
+  enabled: boolean;
+  studyReminders: boolean;
+  streakAlerts: boolean;
+  quizReminders: boolean;
+  achievementNotifications: boolean;
+  weeklyProgress: boolean;
+  reminderHour: number;
+  examAlerts: boolean;
+  assignmentDue: boolean;
+  marketing: boolean;
+  dailyDigest: boolean;
 }
 
 const DEFAULT_SETTINGS: NotificationSettings = {
-	enabled: false,
-	studyReminders: true,
-	streakAlerts: true,
-	quizReminders: false,
-	achievementNotifications: true,
-	weeklyProgress: false,
-	reminderHour: 18,
-	examAlerts: true,
-	assignmentDue: true,
-	marketing: false,
-	dailyDigest: false,
+  enabled: false,
+  studyReminders: true,
+  streakAlerts: true,
+  quizReminders: false,
+  achievementNotifications: true,
+  weeklyProgress: false,
+  reminderHour: 18,
+  examAlerts: true,
+  assignmentDue: true,
+  marketing: false,
+  dailyDigest: false,
 };
 
 export function getSettings(): NotificationSettings {
-	return {
-		...DEFAULT_SETTINGS,
-		...loadFromStorage<Partial<NotificationSettings>>(NOTIF_SETTINGS_KEY, {}),
-	};
+  return {
+    ...DEFAULT_SETTINGS,
+    ...loadFromStorage<Partial<NotificationSettings>>(NOTIF_SETTINGS_KEY, {}),
+  };
 }
 
 function _saveSettings(settings: NotificationSettings): void {
-	saveToStorage(NOTIF_SETTINGS_KEY, settings);
+  saveToStorage(NOTIF_SETTINGS_KEY, settings);
 }
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
-	const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-	const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
-	const rawData = atob(base64);
-	return new Uint8Array([...rawData].map((c) => c.charCodeAt(0)));
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = atob(base64);
+  return new Uint8Array([...rawData].map((c) => c.charCodeAt(0)));
 }
 
 async function _subscribeToPush(): Promise<PushSubscription | null> {
-	if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
-		console.warn("Push not supported");
-		return null;
-	}
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+    console.warn("Push not supported");
+    return null;
+  }
 
-	try {
-		const registration = await navigator.serviceWorker.ready;
-		const existing = await registration.pushManager.getSubscription();
-		if (existing) {
-			saveToStorage(NOTIF_KEY, JSON.stringify(existing));
-			syncSubscriptionToServer(existing);
-			return existing;
-		}
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const existing = await registration.pushManager.getSubscription();
+    if (existing) {
+      saveToStorage(NOTIF_KEY, JSON.stringify(existing));
+      syncSubscriptionToServer(existing);
+      return existing;
+    }
 
-		const subscription = await registration.pushManager.subscribe({
-			userVisibleOnly: true,
-			applicationServerKey: urlBase64ToUint8Array(
-				VAPID_PUBLIC_KEY,
-			) as BufferSource,
-		});
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as BufferSource,
+    });
 
-		saveToStorage(NOTIF_KEY, JSON.stringify(subscription));
-		syncSubscriptionToServer(subscription);
-		return subscription;
-	} catch (error) {
-		logError("SubscribeToPush", error);
-		return null;
-	}
+    saveToStorage(NOTIF_KEY, JSON.stringify(subscription));
+    syncSubscriptionToServer(subscription);
+    return subscription;
+  } catch (error) {
+    logError("SubscribeToPush", error);
+    return null;
+  }
 }
 
-async function syncSubscriptionToServer(
-	subscription: PushSubscription,
-): Promise<void> {
-	try {
-		await fetch("/api/push/subscribe", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				subscription: subscription.toJSON(),
-				userId: loadFromStorage<string>("lumni_user_id", ""),
-			}),
-		});
-	} catch (err) {
-		logError("SyncSubscriptionToServer", err);
-		console.warn("Failed to sync subscription to server:", err);
-	}
+async function syncSubscriptionToServer(subscription: PushSubscription): Promise<void> {
+  try {
+    await fetch("/api/push/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        subscription: subscription.toJSON(),
+        userId: loadFromStorage<string>("lumni_user_id", ""),
+      }),
+    });
+  } catch (err) {
+    logError("SyncSubscriptionToServer", err);
+    console.warn("Failed to sync subscription to server:", err);
+  }
 }
 
 async function _unsubscribeFromPush(): Promise<boolean> {
-	try {
-		const registration = await navigator.serviceWorker.ready;
-		const subscription = await registration.pushManager.getSubscription();
-		if (subscription) {
-			const json = subscription.toJSON();
-			await subscription.unsubscribe();
-			try {
-				await fetch("/api/push/subscribe", {
-					method: "DELETE",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ endpoint: json.endpoint }),
-				} as NotificationOptions);
-			} catch (e) {
-				logError("UnsubscribeFromPushSync", e);
-				console.warn("Failed to sync unsubscribe to server:", e);
-			}
-		}
-		localStorage.removeItem(NOTIF_KEY);
-		return true;
-	} catch (e) {
-		logError("UnsubscribeFromPush", e);
-		console.warn("Failed to unsubscribe from push:", e);
-		return false;
-	}
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+    if (subscription) {
+      const json = subscription.toJSON();
+      await subscription.unsubscribe();
+      try {
+        await fetch("/api/push/subscribe", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ endpoint: json.endpoint }),
+        } as NotificationOptions);
+      } catch (e) {
+        logError("UnsubscribeFromPushSync", e);
+        console.warn("Failed to sync unsubscribe to server:", e);
+      }
+    }
+    localStorage.removeItem(NOTIF_KEY);
+    return true;
+  } catch (e) {
+    logError("UnsubscribeFromPush", e);
+    console.warn("Failed to unsubscribe from push:", e);
+    return false;
+  }
 }
 
 async function _requestPermission(): Promise<boolean> {
-	if (!("Notification" in window)) return false;
+  if (!("Notification" in window)) return false;
 
-	const result = await Notification.requestPermission();
-	return result === "granted";
+  const result = await Notification.requestPermission();
+  return result === "granted";
 }
 
-export function sendLocalNotification(
-	title: string,
-	body: string,
-	url = "/dashboard",
-): void {
-	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-	if (Notification.permission !== "granted") return;
+export function sendLocalNotification(title: string, body: string, url = "/dashboard"): void {
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
 
-	navigator.serviceWorker.ready.then((registration) => {
-		registration.showNotification(title, {
-			body,
-			icon: "/web-app-manifest-192x192.png",
-			badge: "/web-app-manifest-192x192.png",
-			data: { url, timestamp: Date.now() },
-			actions: [
-				{ action: "study", title: "Open" },
-				{ action: "snooze", title: "Later" },
-			],
-		} as unknown as NotificationOptions);
-	});
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.showNotification(title, {
+      body,
+      icon: "/web-app-manifest-192x192.png",
+      badge: "/web-app-manifest-192x192.png",
+      data: { url, timestamp: Date.now() },
+      actions: [
+        { action: "study", title: "Open" },
+        { action: "snooze", title: "Later" },
+      ],
+    } as unknown as NotificationOptions);
+  });
 }
 
-export async function scheduleStudyReminder(
-	settings = getSettings(),
-): Promise<void> {
-	if (!settings.enabled || !settings.studyReminders) return;
+export async function scheduleStudyReminder(settings = getSettings()): Promise<void> {
+  if (!settings.enabled || !settings.studyReminders) return;
 
-	if (typeof window !== "undefined" && "indexedDB" in window) {
-		const reminder = await buildReminder(settings);
-		if (reminder) {
-			saveToStorage("lumni_next_reminder", reminder);
-			scheduleTimeout(reminder, settings);
-		}
-	}
+  if (typeof window !== "undefined" && "indexedDB" in window) {
+    const reminder = await buildReminder(settings);
+    if (reminder) {
+      saveToStorage("lumni_next_reminder", reminder);
+      scheduleTimeout(reminder, settings);
+    }
+  }
 }
 
-export async function schedulePlanAwareReminder(
-	settings = getSettings(),
-): Promise<void> {
-	if (!settings.enabled || !settings.studyReminders) return;
+export async function schedulePlanAwareReminder(settings = getSettings()): Promise<void> {
+  if (!settings.enabled || !settings.studyReminders) return;
 
-	if (typeof window !== "undefined" && "indexedDB" in window) {
-		const sessions = await getTodayPlanSessions();
-		const reminder = await buildReminder(settings, sessions);
-		if (reminder) {
-			const existing = getNextReminder();
-			if (existing && existing.scheduledAt > Date.now()) {
-				return;
-			}
-			saveToStorage("lumni_next_reminder", reminder);
-			scheduleTimeout(reminder, settings);
-		}
-	}
+  if (typeof window !== "undefined" && "indexedDB" in window) {
+    const sessions = await getTodayPlanSessions();
+    const reminder = await buildReminder(settings, sessions);
+    if (reminder) {
+      const existing = getNextReminder();
+      if (existing && existing.scheduledAt > Date.now()) {
+        return;
+      }
+      saveToStorage("lumni_next_reminder", reminder);
+      scheduleTimeout(reminder, settings);
+    }
+  }
 }
 
-async function getTodayPlanSessions(): Promise<
-	{ subject: string; topic?: string }[]
-> {
-	try {
-		const record = await _deps.db.studyPlans.get("default");
-		if (!record) return [];
-		const plan = JSON.parse(record.plan) as {
-			sessions: { scheduledAt: number; subject: string; topic?: string }[];
-		};
-		const today = new Date();
-		const startOfDay = new Date(
-			today.getFullYear(),
-			today.getMonth(),
-			today.getDate(),
-		).getTime();
-		const endOfDay = startOfDay + 24 * 60 * 60 * 1000;
-		return (plan.sessions || []).filter(
-			(s) => s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
-		);
-	} catch (err) {
-		logError("GetTodayPlanSessions", err);
-		return [];
-	}
+async function getTodayPlanSessions(): Promise<{ subject: string; topic?: string }[]> {
+  try {
+    const record = await _deps.db.studyPlans.get("default");
+    if (!record) return [];
+    const plan = JSON.parse(record.plan) as {
+      sessions: { scheduledAt: number; subject: string; topic?: string }[];
+    };
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const endOfDay = startOfDay + 24 * 60 * 60 * 1000;
+    return (plan.sessions || []).filter(
+      (s) => s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
+    );
+  } catch (err) {
+    logError("GetTodayPlanSessions", err);
+    return [];
+  }
 }
 
 async function getDueCardCount(): Promise<number> {
-	try {
-		const cards = await flashcardEngine.getDueCards();
-		return cards.length;
-	} catch (err) {
-		logError("GetDueCardCount", err);
-		return 0;
-	}
+  try {
+    const cards = await flashcardEngine.getDueCards();
+    return cards.length;
+  } catch (err) {
+    logError("GetDueCardCount", err);
+    return 0;
+  }
 }
 
 async function buildReminder(
-	settings: NotificationSettings,
-	sessions?: { subject: string; topic?: string }[],
+  settings: NotificationSettings,
+  sessions?: { subject: string; topic?: string }[],
 ): Promise<StudyReminder | null> {
-	const now = new Date();
-	const target = new Date(now);
-	target.setHours(settings.reminderHour, 0, 0, 0);
+  const now = new Date();
+  const target = new Date(now);
+  target.setHours(settings.reminderHour, 0, 0, 0);
 
-	if (target <= now) {
-		target.setDate(target.getDate() + 1);
-	}
+  if (target <= now) {
+    target.setDate(target.getDate() + 1);
+  }
 
-	const msUntilReminder = target.getTime() - now.getTime();
-	const dueCount = await getDueCardCount();
-	const dueSuffix = dueCount > 0 ? ` · ${dueCount} flashcards due` : "";
+  const msUntilReminder = target.getTime() - now.getTime();
+  const dueCount = await getDueCardCount();
+  const dueSuffix = dueCount > 0 ? ` · ${dueCount} flashcards due` : "";
 
-	if (sessions && sessions.length > 0) {
-		const names = sessions.map((s) => s.topic || s.subject).join(", ");
-		return {
-			id: crypto.randomUUID(),
-			title: "Study Time!",
-			body: `You have sessions today: ${names}${dueSuffix}`,
-			url: "/dashboard",
-			scheduledAt: Date.now() + msUntilReminder,
-			createdAt: Date.now(),
-		};
-	}
+  if (sessions && sessions.length > 0) {
+    const names = sessions.map((s) => s.topic || s.subject).join(", ");
+    return {
+      id: crypto.randomUUID(),
+      title: "Study Time!",
+      body: `You have sessions today: ${names}${dueSuffix}`,
+      url: "/dashboard",
+      scheduledAt: Date.now() + msUntilReminder,
+      createdAt: Date.now(),
+    };
+  }
 
-	if (dueCount > 0) {
-		return {
-			id: crypto.randomUUID(),
-			title: `${dueCount} flashcards due!`,
-			body: "You have flashcards waiting for review. Keep your streak going!",
-			url: "/flashcards",
-			scheduledAt: Date.now() + msUntilReminder,
-			createdAt: Date.now(),
-		};
-	}
+  if (dueCount > 0) {
+    return {
+      id: crypto.randomUUID(),
+      title: `${dueCount} flashcards due!`,
+      body: "You have flashcards waiting for review. Keep your streak going!",
+      url: "/flashcards",
+      scheduledAt: Date.now() + msUntilReminder,
+      createdAt: Date.now(),
+    };
+  }
 
-	return {
-		id: crypto.randomUUID(),
-		title: "Study Time!",
-		body: "Time for your daily study session. Stay consistent!",
-		url: "/dashboard",
-		scheduledAt: Date.now() + msUntilReminder,
-		createdAt: Date.now(),
-	};
+  return {
+    id: crypto.randomUUID(),
+    title: "Study Time!",
+    body: "Time for your daily study session. Stay consistent!",
+    url: "/dashboard",
+    scheduledAt: Date.now() + msUntilReminder,
+    createdAt: Date.now(),
+  };
 }
 
-function scheduleTimeout(
-	reminder: StudyReminder,
-	settings: NotificationSettings,
-): void {
-	const delay = reminder.scheduledAt - Date.now();
-	if (delay <= 0) return;
+function scheduleTimeout(reminder: StudyReminder, settings: NotificationSettings): void {
+  const delay = reminder.scheduledAt - Date.now();
+  if (delay <= 0) return;
 
-	setTimeout(() => {
-		sendLocalNotification(reminder.title, reminder.body, reminder.url);
-		localStorage.removeItem("lumni_next_reminder");
-		scheduleStudyReminder(settings);
-	}, delay);
+  setTimeout(() => {
+    sendLocalNotification(reminder.title, reminder.body, reminder.url);
+    localStorage.removeItem("lumni_next_reminder");
+    scheduleStudyReminder(settings);
+  }, delay);
 }
 
 function getNextReminder(): StudyReminder | null {
-	return loadFromStorage<StudyReminder | null>("lumni_next_reminder", null);
+  return loadFromStorage<StudyReminder | null>("lumni_next_reminder", null);
 }
 
 function _cancelScheduledReminder(): void {
-	localStorage.removeItem("lumni_next_reminder");
+  localStorage.removeItem("lumni_next_reminder");
 }
 
 function getGamificationData(): {
-	currentStreak: number;
-	lastPracticeDate: string | null;
-	achievements: { id: string; earnedAt: string }[];
+  currentStreak: number;
+  lastPracticeDate: string | null;
+  achievements: { id: string; earnedAt: string }[];
 } | null {
-	try {
-		const raw = localStorage.getItem("lumni_gamification");
-		if (!raw) return null;
-		return JSON.parse(raw);
-	} catch (err) {
-		logError("GetGamificationData", err);
-		return null;
-	}
+  try {
+    const raw = localStorage.getItem("lumni_gamification");
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (err) {
+    logError("GetGamificationData", err);
+    return null;
+  }
 }
 
 const STREAK_ALERT_KEY = "lumni_last_streak_alert_notification";
 
 function scheduleStreakAlert(settings = getSettings()): void {
-	if (!settings.enabled || !settings.streakAlerts) return;
+  if (!settings.enabled || !settings.streakAlerts) return;
 
-	const lastAlertDay = loadFromStorage<string>(STREAK_ALERT_KEY, "");
-	const today = new Date().toDateString();
-	if (lastAlertDay === today) return;
+  const lastAlertDay = loadFromStorage<string>(STREAK_ALERT_KEY, "");
+  const today = new Date().toDateString();
+  if (lastAlertDay === today) return;
 
-	const gamification = getGamificationData();
-	if (!gamification) return;
+  const gamification = getGamificationData();
+  if (!gamification) return;
 
-	if (gamification.lastPracticeDate === today) return;
+  if (gamification.lastPracticeDate === today) return;
 
-	if (gamification.currentStreak > 0) {
-		sendLocalNotification(
-			"Streak at Risk!",
-			"Your streak is at risk! Practice now to keep it alive.",
-		);
-		saveToStorage(STREAK_ALERT_KEY, today);
-	}
+  if (gamification.currentStreak > 0) {
+    sendLocalNotification(
+      "Streak at Risk!",
+      "Your streak is at risk! Practice now to keep it alive.",
+    );
+    saveToStorage(STREAK_ALERT_KEY, today);
+  }
 }
 
 const WEEKLY_NOTIF_KEY = "lumni_last_weekly_notification";
 
 async function scheduleWeeklyProgress(settings = getSettings()): Promise<void> {
-	if (!settings.enabled || !settings.weeklyProgress) return;
+  if (!settings.enabled || !settings.weeklyProgress) return;
 
-	const lastNotif = loadFromStorage<number>(WEEKLY_NOTIF_KEY, 0);
-	const now = Date.now();
-	if (now - lastNotif < 7 * 24 * 60 * 60 * 1000) return;
+  const lastNotif = loadFromStorage<number>(WEEKLY_NOTIF_KEY, 0);
+  const now = Date.now();
+  if (now - lastNotif < 7 * 24 * 60 * 60 * 1000) return;
 
-	try {
-		const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-		const allAttempts = await _deps.db.quizAttempts.toArray();
-		const attempts = allAttempts.filter((a) => a.completedAt >= sevenDaysAgo);
+  try {
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+    const allAttempts = await _deps.db.quizAttempts.toArray();
+    const attempts = allAttempts.filter((a) => a.completedAt >= sevenDaysAgo);
 
-		const totalAttempts = attempts.length;
-		let totalScore = 0;
-		const subjectStats = new Map<
-			string,
-			{ count: number; totalScore: number }
-		>();
-		for (const a of attempts) {
-			totalScore += a.score;
-			const sub = a.odSubject;
-			if (sub) {
-				const prev = subjectStats.get(sub) ?? { count: 0, totalScore: 0 };
-				prev.count += 1;
-				prev.totalScore += a.score;
-				subjectStats.set(sub, prev);
-			}
-		}
-		const avgScore =
-			totalAttempts > 0 ? Math.round(totalScore / totalAttempts) : 0;
+    const totalAttempts = attempts.length;
+    let totalScore = 0;
+    const subjectStats = new Map<string, { count: number; totalScore: number }>();
+    for (const a of attempts) {
+      totalScore += a.score;
+      const sub = a.odSubject;
+      if (sub) {
+        const prev = subjectStats.get(sub) ?? { count: 0, totalScore: 0 };
+        prev.count += 1;
+        prev.totalScore += a.score;
+        subjectStats.set(sub, prev);
+      }
+    }
+    const avgScore = totalAttempts > 0 ? Math.round(totalScore / totalAttempts) : 0;
 
-		const gamification = getGamificationData();
-		const streak = gamification?.currentStreak ?? 0;
+    const gamification = getGamificationData();
+    const streak = gamification?.currentStreak ?? 0;
 
-		const subjectLines = [...subjectStats.entries()]
-			.slice(0, 3)
-			.map(([sub, st]) => {
-				const subAvg = Math.round(st.totalScore / st.count);
-				return `${sub}: ${st.count} quiz, ${subAvg}%`;
-			})
-			.join(" · ");
+    const subjectLines = [...subjectStats.entries()]
+      .slice(0, 3)
+      .map(([sub, st]) => {
+        const subAvg = Math.round(st.totalScore / st.count);
+        return `${sub}: ${st.count} quiz, ${subAvg}%`;
+      })
+      .join(" · ");
 
-		const body = `${totalAttempts} quizzes, ${avgScore}% avg. ${subjectLines ? `${subjectLines}. ` : ""}Streak: ${streak}d`;
+    const body = `${totalAttempts} quizzes, ${avgScore}% avg. ${subjectLines ? `${subjectLines}. ` : ""}Streak: ${streak}d`;
 
-		sendLocalNotification("Weekly Progress", body);
+    sendLocalNotification("Weekly Progress", body);
 
-		saveToStorage(WEEKLY_NOTIF_KEY, now);
-	} catch (err) {
-		logError("ScheduleWeeklyProgress", err);
-	}
+    saveToStorage(WEEKLY_NOTIF_KEY, now);
+  } catch (err) {
+    logError("ScheduleWeeklyProgress", err);
+  }
 }
 
 const ASSIGNMENT_ALERT_KEY = "lumni_assignment_alerts";
 
-async function scheduleAssignmentReminders(
-	settings = getSettings(),
-): Promise<void> {
-	if (!settings.enabled || !settings.assignmentDue) return;
-	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-	if (Notification.permission !== "granted") return;
+async function scheduleAssignmentReminders(settings = getSettings()): Promise<void> {
+  if (!settings.enabled || !settings.assignmentDue) return;
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
 
-	try {
-		const res = await fetch("/api/student/assignments");
-		if (!res.ok) return;
-		const data = (await res.json()) as {
-			assignments: {
-				id: string;
-				topics: string[];
-				dueDate?: string;
-			}[];
-		};
+  try {
+    const res = await fetch("/api/student/assignments");
+    if (!res.ok) return;
+    const data = (await res.json()) as {
+      assignments: {
+        id: string;
+        topics: string[];
+        dueDate?: string;
+      }[];
+    };
 
-		const now = Date.now();
-		const existing = loadFromStorage<{ id: string; scheduledAt: number }[]>(
-			ASSIGNMENT_ALERT_KEY,
-			[],
-		);
+    const now = Date.now();
+    const existing = loadFromStorage<{ id: string; scheduledAt: number }[]>(
+      ASSIGNMENT_ALERT_KEY,
+      [],
+    );
 
-		for (const a of data.assignments) {
-			if (!a.dueDate) continue;
-			if (a.dueDate && new Date(a.dueDate).getTime() <= now) continue;
+    for (const a of data.assignments) {
+      if (!a.dueDate) continue;
+      if (a.dueDate && new Date(a.dueDate).getTime() <= now) continue;
 
-			const alertTime = new Date(a.dueDate).getTime() - 24 * 60 * 60 * 1000;
-			if (alertTime <= now) continue;
+      const alertTime = new Date(a.dueDate).getTime() - 24 * 60 * 60 * 1000;
+      if (alertTime <= now) continue;
 
-			if (existing.some((e) => e.id === a.id && e.scheduledAt === alertTime)) {
-				continue;
-			}
+      if (existing.some((e) => e.id === a.id && e.scheduledAt === alertTime)) {
+        continue;
+      }
 
-			const delay = alertTime - now;
-			setTimeout(() => {
-				sendLocalNotification(
-					"Assignment Due Tomorrow!",
-					`Your assignment on ${a.topics.join(", ")} is due tomorrow. Complete it now!`,
-					"/dashboard",
-				);
-			}, delay);
+      const delay = alertTime - now;
+      setTimeout(() => {
+        sendLocalNotification(
+          "Assignment Due Tomorrow!",
+          `Your assignment on ${a.topics.join(", ")} is due tomorrow. Complete it now!`,
+          "/dashboard",
+        );
+      }, delay);
 
-			existing.push({ id: a.id, scheduledAt: alertTime });
-			saveToStorage(ASSIGNMENT_ALERT_KEY, existing);
-		}
-	} catch (err) {
-		logError("ScheduleAssignmentReminders", err);
-	}
+      existing.push({ id: a.id, scheduledAt: alertTime });
+      saveToStorage(ASSIGNMENT_ALERT_KEY, existing);
+    }
+  } catch (err) {
+    logError("ScheduleAssignmentReminders", err);
+  }
 }
 
 const DAILY_DIGEST_KEY = "lumni_daily_digest";
 
 async function scheduleDailyDigest(settings = getSettings()): Promise<void> {
-	if (!settings.enabled || !settings.dailyDigest) return;
-	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-	if (Notification.permission !== "granted") return;
+  if (!settings.enabled || !settings.dailyDigest) return;
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
 
-	const lastDigest = loadFromStorage<number>(DAILY_DIGEST_KEY, 0);
-	const now = Date.now();
-	if (now - lastDigest < 24 * 60 * 60 * 1000) return;
+  const lastDigest = loadFromStorage<number>(DAILY_DIGEST_KEY, 0);
+  const now = Date.now();
+  if (now - lastDigest < 24 * 60 * 60 * 1000) return;
 
-	try {
-		const todayStart = new Date();
-		todayStart.setHours(0, 0, 0, 0);
-		const todayMs = todayStart.getTime();
+  try {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayMs = todayStart.getTime();
 
-		const allAttempts = await _deps.db.quizAttempts.toArray();
-		const todayAttempts = allAttempts.filter((a) => a.completedAt >= todayMs);
+    const allAttempts = await _deps.db.quizAttempts.toArray();
+    const todayAttempts = allAttempts.filter((a) => a.completedAt >= todayMs);
 
-		const totalScore = todayAttempts.reduce((s, a) => s + a.score, 0);
-		const avgScore =
-			todayAttempts.length > 0
-				? Math.round(totalScore / todayAttempts.length)
-				: 0;
+    const totalScore = todayAttempts.reduce((s, a) => s + a.score, 0);
+    const avgScore = todayAttempts.length > 0 ? Math.round(totalScore / todayAttempts.length) : 0;
 
-		const body =
-			todayAttempts.length > 0
-				? `You completed ${todayAttempts.length} quiz${todayAttempts.length === 1 ? "" : "zes"} today with ${avgScore}% average.`
-				: "You haven't studied yet today. Time for a quick quiz!";
+    const body =
+      todayAttempts.length > 0
+        ? `You completed ${todayAttempts.length} quiz${todayAttempts.length === 1 ? "" : "zes"} today with ${avgScore}% average.`
+        : "You haven't studied yet today. Time for a quick quiz!";
 
-		sendLocalNotification("Daily Study Report", body, "/dashboard");
-		saveToStorage(DAILY_DIGEST_KEY, now);
-	} catch (err) {
-		logError("ScheduleDailyDigest", err);
-	}
+    sendLocalNotification("Daily Study Report", body, "/dashboard");
+    saveToStorage(DAILY_DIGEST_KEY, now);
+  } catch (err) {
+    logError("ScheduleDailyDigest", err);
+  }
 }
 
 export function initializeNotificationSchedulers(): void {
-	const settings = getSettings();
-	if (!settings.enabled) return;
+  const settings = getSettings();
+  if (!settings.enabled) return;
 
-	scheduleStudyReminder(settings);
-	scheduleStreakAlert(settings);
+  scheduleStudyReminder(settings);
+  scheduleStreakAlert(settings);
 
-	if (typeof window !== "undefined" && "indexedDB" in window) {
-		scheduleWeeklyProgress(settings);
-		scheduleDailyDigest(settings);
-		scheduleAssignmentReminders(settings);
-		scheduleExamAlertsFromSession(settings);
-	}
+  if (typeof window !== "undefined" && "indexedDB" in window) {
+    scheduleWeeklyProgress(settings);
+    scheduleDailyDigest(settings);
+    scheduleAssignmentReminders(settings);
+    scheduleExamAlertsFromSession(settings);
+  }
 }
 
-async function scheduleExamAlertsFromSession(
-	settings: NotificationSettings,
-): Promise<void> {
-	try {
-		const { getCurrentSession } = await import("@/lib/exam-dates/types");
-		const { getExamDates } = await import("@/lib/exam-dates/service");
-		const { session, year } = getCurrentSession();
-		const slots = await getExamDates(session, year);
-		if (slots.length === 0) return;
-		await scheduleExamAlerts(slots, settings);
-	} catch (err) {
-		logError("ScheduleExamAlertsFromSession", err);
-	}
+async function scheduleExamAlertsFromSession(settings: NotificationSettings): Promise<void> {
+  try {
+    const { getCurrentSession } = await import("@/lib/exam-dates/types");
+    const { getExamDates } = await import("@/lib/exam-dates/service");
+    const { session, year } = getCurrentSession();
+    const slots = await getExamDates(session, year);
+    if (slots.length === 0) return;
+    await scheduleExamAlerts(slots, settings);
+  } catch (err) {
+    logError("ScheduleExamAlertsFromSession", err);
+  }
 }
 
 export async function scheduleExamAlerts(
-	slots: { subject: string; date: string; startTime: string }[],
-	settings?: NotificationSettings,
+  slots: { subject: string; date: string; startTime: string }[],
+  settings?: NotificationSettings,
 ): Promise<void> {
-	const prefs = settings ?? getSettings();
-	if (!prefs.enabled || !prefs.examAlerts) return;
-	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
-	if (Notification.permission !== "granted") return;
+  const prefs = settings ?? getSettings();
+  if (!prefs.enabled || !prefs.examAlerts) return;
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
 
-	for (const slot of slots) {
-		const examDate = new Date(`${slot.date}T${slot.startTime}:00`);
-		const now = Date.now();
-		const alertTime = examDate.getTime() - 24 * 60 * 60 * 1000;
+  for (const slot of slots) {
+    const examDate = new Date(`${slot.date}T${slot.startTime}:00`);
+    const now = Date.now();
+    const alertTime = examDate.getTime() - 24 * 60 * 60 * 1000;
 
-		if (alertTime <= now) continue;
+    if (alertTime <= now) continue;
 
-		const delay = alertTime - now;
-		const existing = loadFromStorage<
-			{ examSubject: string; scheduledAt: number }[]
-		>("lumni_exam_alerts", []);
-		if (
-			existing.some(
-				(e) => e.examSubject === slot.subject && e.scheduledAt === alertTime,
-			)
-		) {
-			continue;
-		}
+    const delay = alertTime - now;
+    const existing = loadFromStorage<{ examSubject: string; scheduledAt: number }[]>(
+      "lumni_exam_alerts",
+      [],
+    );
+    if (existing.some((e) => e.examSubject === slot.subject && e.scheduledAt === alertTime)) {
+      continue;
+    }
 
-		setTimeout(() => {
-			sendLocalNotification(
-				`${slot.subject} exam tomorrow!`,
-				`Your ${slot.subject} exam starts at ${slot.startTime}. Good luck!`,
-				"/dashboard",
-			);
-		}, delay);
+    setTimeout(() => {
+      sendLocalNotification(
+        `${slot.subject} exam tomorrow!`,
+        `Your ${slot.subject} exam starts at ${slot.startTime}. Good luck!`,
+        "/dashboard",
+      );
+    }, delay);
 
-		existing.push({ examSubject: slot.subject, scheduledAt: alertTime });
-		saveToStorage("lumni_exam_alerts", existing);
-	}
+    existing.push({ examSubject: slot.subject, scheduledAt: alertTime });
+    saveToStorage("lumni_exam_alerts", existing);
+  }
 }
 
 export interface StudyReminder {
-	id: string;
-	title: string;
-	body: string;
-	url: string;
-	scheduledAt: number;
-	createdAt: number;
+  id: string;
+  title: string;
+  body: string;
+  url: string;
+  scheduledAt: number;
+  createdAt: number;
 }

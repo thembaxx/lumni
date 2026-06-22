@@ -20,12 +20,12 @@ Result: students see repeated AI-generated questions, the AI wastes tokens on ob
 
 ### Why not alternatives
 
-| Approach | Rejected because |
-|----------|-----------------|
-| Appwrite vector search | No vector index support in Appwrite free tier |
-| Server-side pgvector | No Postgres in the stack |
-| External vector DB (Pinecone) | Adds infra complexity, latency, and cost for <10K vectors |
-| WebWorker background search | Overengineering for pool this small; main-thread sync is fine |
+| Approach                      | Rejected because                                              |
+| ----------------------------- | ------------------------------------------------------------- |
+| Appwrite vector search        | No vector index support in Appwrite free tier                 |
+| Server-side pgvector          | No Postgres in the stack                                      |
+| External vector DB (Pinecone) | Adds infra complexity, latency, and cost for <10K vectors     |
+| WebWorker background search   | Overengineering for pool this small; main-thread sync is fine |
 
 ## Architecture
 
@@ -77,11 +77,11 @@ Result: students see repeated AI-generated questions, the AI wastes tokens on ob
 
 ```typescript
 interface QuestionEmbedding {
-  id: string;            // `questionId` from PastPaperQuestion
-  questionId: string;    // same — primary key
-  vector: Float32Array;  // 512-dim embedding (stored as ArrayBuffer in IndexedDB)
-  subject: string;       // for filtered queries
-  updatedAt: string;     // ISO timestamp
+  id: string; // `questionId` from PastPaperQuestion
+  questionId: string; // same — primary key
+  vector: Float32Array; // 512-dim embedding (stored as ArrayBuffer in IndexedDB)
+  subject: string; // for filtered queries
+  updatedAt: string; // ISO timestamp
 }
 ```
 
@@ -138,6 +138,7 @@ Nvidia NIM and Groq do not expose compatible text embedding endpoints. The provi
 ### Fallback strategy
 
 When embedding generation fails (network, rate limit, API error):
+
 - The `questions/route.ts` topic filter falls back to the existing client-side `String.includes()` behavior
 - The `findTopK()` function returns `[]` (no semantic match → AI generation continues as before)
 - The dedup check in `generate/route.ts` returns `false` (question passes as non-duplicate)
@@ -148,7 +149,9 @@ When embedding generation fails (network, rate limit, API error):
 
 ```typescript
 function cosineSimilarity(a: Float32Array, b: Float32Array): number {
-  let dot = 0, na = 0, nb = 0;
+  let dot = 0,
+    na = 0,
+    nb = 0;
   for (let i = 0; i < a.length; i++) {
     dot += a[i] * b[i];
     na += a[i] * a[i];
@@ -196,6 +199,7 @@ New:     findTopK() → if poolQuestions.length > 0:
 ```
 
 The `generate()` route handler needs to:
+
 1. Accept `poolQuestions` in `GenerationParams`
 2. When present, serve them first (no AI generation needed)
 3. Adjust `count` for remaining AI-generated questions
@@ -244,32 +248,32 @@ Add `topic` as a string attribute (size 255, optional). This enables server-side
 
 ## Test Plan
 
-| Test file | Tests | What it covers |
-|-----------|-------|----------------|
-| `src/lib/embedding/__tests__/client.test.ts` | 2 | Raw request shape, error handling |
-| `src/lib/embedding/__tests__/similarity.test.ts` | 4 | `cosineSimilarity` (identical, orthogonal, opposite, partial) + `findTopK` |
-| `src/lib/embedding/__tests__/cache.test.ts` | 3 | CRUD via `questionEmbeddings` table in InMemoryDataAccess |
-| `src/lib/question-engine/__tests__/adaptive-pool.test.ts` | 3 | `findTopK` integration, enrichParams with pool, dedup flow |
-| `src/app/api/exam-papers/__tests__/questions-route.test.ts` | 1 | Topic filter uses server-side Query.equal |
+| Test file                                                   | Tests | What it covers                                                             |
+| ----------------------------------------------------------- | ----- | -------------------------------------------------------------------------- |
+| `src/lib/embedding/__tests__/client.test.ts`                | 2     | Raw request shape, error handling                                          |
+| `src/lib/embedding/__tests__/similarity.test.ts`            | 4     | `cosineSimilarity` (identical, orthogonal, opposite, partial) + `findTopK` |
+| `src/lib/embedding/__tests__/cache.test.ts`                 | 3     | CRUD via `questionEmbeddings` table in InMemoryDataAccess                  |
+| `src/lib/question-engine/__tests__/adaptive-pool.test.ts`   | 3     | `findTopK` integration, enrichParams with pool, dedup flow                 |
+| `src/app/api/exam-papers/__tests__/questions-route.test.ts` | 1     | Topic filter uses server-side Query.equal                                  |
 
 ## Integration Points
 
-| File | Change |
-|------|--------|
-| `src/lib/embedding/` | New module (6 files) |
-| `src/lib/db/schema.ts` | Dexie v33 + `questionEmbeddings` table |
-| `src/lib/db/data-access.ts` | Add `EmbeddingDataAccess` sub-interface |
-| `src/lib/db/dexie-data-access.ts` | Wire `questionEmbeddings` adapter |
-| `src/lib/db/in-memory-data-access.ts` | Wire `InMemoryTable<QuestionEmbedding, string>` |
-| `src/lib/db/index.ts` | Export `EmbeddingDataAccess` |
-| `src/lib/db/ensure-schema.ts` | Add `past_paper_questions` topic attribute |
-| `src/lib/exam-paper-ingestion/question-extractor.ts` | Populate `topic` from `section.title` |
-| `src/app/api/exam-papers/[id]/extract/route.ts` | Enqueue embedding generation job after extraction |
-| `src/app/api/exam-papers/questions/route.ts` | Replace client-side topic filter with `Query.equal` |
-| `src/lib/question-engine/question-engine.ts` | Enhance `enrichParams()` with `findTopK()` |
-| `src/lib/question-engine/types.ts` | Add `poolQuestions` to `GenerationParams` |
-| `src/lib/orchestrator/index.ts` | Wire dedup after `generateQuestionSet` |
-| `src/app/api/engine/generate/route.ts` | Add dedup check after AI generation |
+| File                                                 | Change                                              |
+| ---------------------------------------------------- | --------------------------------------------------- |
+| `src/lib/embedding/`                                 | New module (6 files)                                |
+| `src/lib/db/schema.ts`                               | Dexie v33 + `questionEmbeddings` table              |
+| `src/lib/db/data-access.ts`                          | Add `EmbeddingDataAccess` sub-interface             |
+| `src/lib/db/dexie-data-access.ts`                    | Wire `questionEmbeddings` adapter                   |
+| `src/lib/db/in-memory-data-access.ts`                | Wire `InMemoryTable<QuestionEmbedding, string>`     |
+| `src/lib/db/index.ts`                                | Export `EmbeddingDataAccess`                        |
+| `src/lib/db/ensure-schema.ts`                        | Add `past_paper_questions` topic attribute          |
+| `src/lib/exam-paper-ingestion/question-extractor.ts` | Populate `topic` from `section.title`               |
+| `src/app/api/exam-papers/[id]/extract/route.ts`      | Enqueue embedding generation job after extraction   |
+| `src/app/api/exam-papers/questions/route.ts`         | Replace client-side topic filter with `Query.equal` |
+| `src/lib/question-engine/question-engine.ts`         | Enhance `enrichParams()` with `findTopK()`          |
+| `src/lib/question-engine/types.ts`                   | Add `poolQuestions` to `GenerationParams`           |
+| `src/lib/orchestrator/index.ts`                      | Wire dedup after `generateQuestionSet`              |
+| `src/app/api/engine/generate/route.ts`               | Add dedup check after AI generation                 |
 
 ## Rollout Plan
 

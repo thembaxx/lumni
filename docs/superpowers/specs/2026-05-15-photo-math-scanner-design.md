@@ -40,12 +40,12 @@ On quiz (`/quiz`), flashcards (`/flashcards`), and exam session (`/exam/[id]`) s
 
 ### 4. Files Changed
 
-| File | Change |
-|------|--------|
-| `src/components/tools/ai-solver.tsx` | Add camera capture button, image preview, auto-extract flow, "solving" states |
-| `src/app/api/solve/route.ts` | Add math-specific image-parse prompt, lower temp when image present |
-| `src/components/tools/tools-dialog.tsx` | Add `initialTab` prop support for programmatic tab selection |
-| `src/components/quiz/question-card.tsx` | Add "Snap" FAB on math-subject quiz/exam screens |
+| File                                    | Change                                                                        |
+| --------------------------------------- | ----------------------------------------------------------------------------- |
+| `src/components/tools/ai-solver.tsx`    | Add camera capture button, image preview, auto-extract flow, "solving" states |
+| `src/app/api/solve/route.ts`            | Add math-specific image-parse prompt, lower temp when image present           |
+| `src/components/tools/tools-dialog.tsx` | Add `initialTab` prop support for programmatic tab selection                  |
+| `src/components/quiz/question-card.tsx` | Add "Snap" FAB on math-subject quiz/exam screens                              |
 
 ## Constraints
 

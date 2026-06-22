@@ -7,16 +7,16 @@ import { SettingsClient } from "./settings-client";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-	title: "Settings - Lumni",
-	description: "Manage your account settings and preferences",
+  title: "Settings - Lumni",
+  description: "Manage your account settings and preferences",
 };
 
 export default function SettingsPage() {
-	return (
-		<AppErrorBoundary>
-			<Suspense fallback={<Skeleton className="h-96 rounded-2xl" />}>
-				<SettingsClient />
-			</Suspense>
-		</AppErrorBoundary>
-	);
+  return (
+    <AppErrorBoundary>
+      <Suspense fallback={<Skeleton className="h-96 rounded-2xl" />}>
+        <SettingsClient />
+      </Suspense>
+    </AppErrorBoundary>
+  );
 }

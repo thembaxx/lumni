@@ -174,35 +174,14 @@
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "COLUMN X",
-                  "COLUMN Y"
-                ],
+                "headers": ["COLUMN X", "COLUMN Y"],
                 "rows": [
-                  [
-                    "2.2.1 Meander",
-                    "Y A bend in the river course"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed by river deposition"
-                  ],
-                  [
-                    "2.2.2 Levee",
-                    "Y A raised bank along a river channel"
-                  ],
-                  [
-                    "",
-                    "Z A deep pool in the river bed"
-                  ],
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["2.2.1 Meander", "Y A bend in the river course"],
+                  ["", "Z A lake formed by river deposition"],
+                  ["2.2.2 Levee", "Y A raised bank along a river channel"],
+                  ["", "Z A deep pool in the river bed"],
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             },
@@ -213,125 +192,60 @@
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "2.2.1 Meander",
-                  "Y A bend in the river course"
-                ],
+                "headers": ["2.2.1 Meander", "Y A bend in the river course"],
                 "rows": [
-                  [
-                    "",
-                    "Z A lake formed by river deposition"
-                  ],
-                  [
-                    "2.2.2 Levee",
-                    "Y A raised bank along a river channel"
-                  ],
-                  [
-                    "",
-                    "Z A deep pool in the river bed"
-                  ],
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["", "Z A lake formed by river deposition"],
+                  ["2.2.2 Levee", "Y A raised bank along a river channel"],
+                  ["", "Z A deep pool in the river bed"],
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             },
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "",
-                  "Z A lake formed by river deposition"
-                ],
+                "headers": ["", "Z A lake formed by river deposition"],
                 "rows": [
-                  [
-                    "2.2.2 Levee",
-                    "Y A raised bank along a river channel"
-                  ],
-                  [
-                    "",
-                    "Z A deep pool in the river bed"
-                  ],
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["2.2.2 Levee", "Y A raised bank along a river channel"],
+                  ["", "Z A deep pool in the river bed"],
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             },
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "2.2.2 Levee",
-                  "Y A raised bank along a river channel"
-                ],
+                "headers": ["2.2.2 Levee", "Y A raised bank along a river channel"],
                 "rows": [
-                  [
-                    "",
-                    "Z A deep pool in the river bed"
-                  ],
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["", "Z A deep pool in the river bed"],
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             },
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "",
-                  "Z A deep pool in the river bed"
-                ],
+                "headers": ["", "Z A deep pool in the river bed"],
                 "rows": [
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             },
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "2.2.3 Oxbow lake",
-                  "Y A horseshoe-shaped lake formed from a meander"
-                ],
-                "rows": [
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
-                ]
+                "headers": ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                "rows": [["", "Z A lake formed behind a dam"]]
               }
             },
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "",
-                  "Z A lake formed behind a dam"
-                ],
+                "headers": ["", "Z A lake formed behind a dam"],
                 "rows": []
               }
             },
@@ -377,35 +291,14 @@
               "marks": "(3 x 2) (6)",
               "answerFormat": "dropdown-pairs",
               "table": {
-                "headers": [
-                  "COLUMN X",
-                  "COLUMN Y"
-                ],
+                "headers": ["COLUMN X", "COLUMN Y"],
                 "rows": [
-                  [
-                    "2.2.1 Meander",
-                    "Y A bend in the river course"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed by river deposition"
-                  ],
-                  [
-                    "2.2.2 Levee",
-                    "Y A raised bank along a river channel"
-                  ],
-                  [
-                    "",
-                    "Z A deep pool in the river bed"
-                  ],
-                  [
-                    "2.2.3 Oxbow lake",
-                    "Y A horseshoe-shaped lake formed from a meander"
-                  ],
-                  [
-                    "",
-                    "Z A lake formed behind a dam"
-                  ]
+                  ["2.2.1 Meander", "Y A bend in the river course"],
+                  ["", "Z A lake formed by river deposition"],
+                  ["2.2.2 Levee", "Y A raised bank along a river channel"],
+                  ["", "Z A deep pool in the river bed"],
+                  ["2.2.3 Oxbow lake", "Y A horseshoe-shaped lake formed from a meander"],
+                  ["", "Z A lake formed behind a dam"]
                 ]
               }
             }
@@ -488,16 +381,8 @@
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "TOTAL SECTION B:",
-                  "100"
-                ],
-                "rows": [
-                  [
-                    "GRAND TOTAL:",
-                    150
-                  ]
-                ]
+                "headers": ["TOTAL SECTION B:", "100"],
+                "rows": [["GRAND TOTAL:", 150]]
               }
             },
             {
@@ -507,10 +392,7 @@
             {
               "type": "table",
               "tableData": {
-                "headers": [
-                  "GRAND TOTAL:",
-                  "150"
-                ],
+                "headers": ["GRAND TOTAL:", "150"],
                 "rows": []
               }
             }
@@ -558,20 +440,10 @@
                 }
               ],
               "table": {
-                "headers": [
-                  "TOTAL SECTION B:",
-                  "100"
-                ],
-                "rows": [
-                  [
-                    "GRAND TOTAL:",
-                    150
-                  ]
-                ]
+                "headers": ["TOTAL SECTION B:", "100"],
+                "rows": [["GRAND TOTAL:", 150]]
               },
-              "sourceRefs": [
-                "4A"
-              ]
+              "sourceRefs": ["4A"]
             }
           ],
           "totalMarks": null

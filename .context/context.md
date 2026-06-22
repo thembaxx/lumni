@@ -1,13 +1,17 @@
 <!-- LAST_SYNC: 2026-06-21 -->
+
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
+
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
+
 All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65.
 
 ## KEY_CONSTRAINTS
+
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
 - **RAG Allowlist**: 24 subjects (STEM + humanities); off-grid subjects skip RAG entirely.
 - **Offline-First**: Dexie is the source of truth for all client reads; all writes must be queued via `QueueCore`. All DB access via `DataAccess` interface.
@@ -16,6 +20,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **DataAccess**: Never use `offlineDB` directly — always go through `DexieDataAccess` or `InMemoryDataAccess`.
 
 ## DEFINITIONS
+
 - **QuestionEngine**: Single source of truth for all 11 question types. RAG-augmented via `PromptManager`. Returns `GenerateResult { questions, ragContext }`.
 - **TinyFish RAG**: Web-grounded reference material injected into solve + quiz prompts. 7 modules in `src/lib/tinyfish/`.
 - **FlashcardEngine**: Unified SR logic (SM-2/FSRS) + daily limits + leech detection.
@@ -34,6 +39,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Service Extraction**: Route handlers reduced to 10-25 lines via service classes with constructor injection (ADR-0012).
 
 ## DECISION_LOG
+
 - [D030] **Mega-component breakdown**: Overgrown files split into co-located subdirs.
 - [D031] **Unified SR**: SM-2/FSRS logic unified into `src/lib/flashcard-engine/`.
 - [D032] **Generic API**: Migrated routes to `createRouteHandler` factory.
@@ -68,6 +74,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D061] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved. Parallelized independent awaits (Promise.all), combined chained iterations into single passes, replaced Array.includes with Set.has, replaced array.find in loops with Map.get, merged dual useState into useReducer, removed redundant useEffect state reset, moved static arrays to module scope, captured refs in cleanup effects, combined string includes() into regex test. 12 files, +96/−65. Commit `a1bd5de4`.
 
 ## KNOWLEDGE_GRAPH
+
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
 - `LearningOrchestrator` → `QuestionEngine.generate()` → `GenerateResult { questions, ragContext }`
 - `LearningOrchestrator` → `QuestionEngine` → `TinyFish RAG` (3s timeout, 14d cache)
@@ -91,6 +98,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - `aiClient` → `UniformAdapter` (openaiNormalizer/geminiNormalizer) → provider chain
 
 ## REUSABLE_SNIPPETS
+
 - **API Route**: `export const POST = createRouteHandler({ auth: 'required', schema: z.object({...}), handler: async (data, ctx) => {...} });`
 - **Math Rendering**: `<MarkdownRenderer content="$E=mc^2$" subject="physical-sciences" />`
 - **Competency Tracking**: `await trackQuestionResult(questionId, score, subject, topic);`
@@ -110,6 +118,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Study guide**: `const { data: guide } = useMutation({ mutationFn: ({ subject, topic }) => generateGuide(subject, topic) });`
 
 ## AVOID_LIST
+
 - **Space-y**: Avoid `space-y-*`, use `flex-col` + `gap-*`.
 - **Arbitrary Values**: Prohibited `w-[200px]`, `z-50`, `rounded-[2.5rem]`.
 - **Direct Appwrite Writes**: Use `QueueCore` for sync consistency.
@@ -120,6 +129,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **`lottie-react`**: Already migrated to `@lottiefiles/dotlottie-react`.
 
 ## PROMPT_LOOKUP_TABLE
+
 - If working on **Engines**, check `prompt-index.md` > `agent-engine-architecture`.
 - If working on **UI/Design**, check `prompt-index.md` > `design-system-emerald`.
 - If performing a **UI Audit**, check `prompt-index.md` > `impeccable-ui-audit`.

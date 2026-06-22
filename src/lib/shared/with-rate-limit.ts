@@ -4,48 +4,45 @@ import { logError } from "@/lib/shared/logger";
 import { checkRateLimit, getRateLimitHeaders } from "./rate-limit";
 
 export type RouteHandler = (
-	req: NextRequest,
+  req: NextRequest,
 ) => Promise<NextResponse<unknown>> | NextResponse<unknown>;
 
-export function withRateLimit(
-	handler: RouteHandler,
-	config?: RateLimitConfig,
-): RouteHandler {
-	const apiConfig = config ?? { max: 10, windowMs: 60 * 1000 };
-	return async (req: NextRequest) => {
-		const ip =
-			req.headers.get("x-forwarded-for")?.split(",")[0] ||
-			req.headers.get("x-real-ip") ||
-			"unknown";
+export function withRateLimit(handler: RouteHandler, config?: RateLimitConfig): RouteHandler {
+  const apiConfig = config ?? { max: 10, windowMs: 60 * 1000 };
+  return async (req: NextRequest) => {
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0] ||
+      req.headers.get("x-real-ip") ||
+      "unknown";
 
-		let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
-		try {
-			rateLimit = await checkRateLimit(ip, apiConfig);
-		} catch (e) {
-			logError("RateLimit", e);
-			rateLimit = {
-				allowed: false,
-				remaining: 0,
-				resetAt: Date.now() + apiConfig.windowMs,
-			};
-		}
+    let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
+    try {
+      rateLimit = await checkRateLimit(ip, apiConfig);
+    } catch (e) {
+      logError("RateLimit", e);
+      rateLimit = {
+        allowed: false,
+        remaining: 0,
+        resetAt: Date.now() + apiConfig.windowMs,
+      };
+    }
 
-		if (!rateLimit.allowed) {
-			return NextResponse.json(
-				{ error: "Rate limit exceeded" },
-				{ status: 429, headers: getRateLimitHeaders(rateLimit) },
-			);
-		}
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" },
+        { status: 429, headers: getRateLimitHeaders(rateLimit) },
+      );
+    }
 
-		const response = await handler(req);
+    const response = await handler(req);
 
-		if (response.headers) {
-			const rlHeaders = getRateLimitHeaders(rateLimit);
-			for (const [key, value] of Object.entries(rlHeaders)) {
-				response.headers.set(key, value);
-			}
-		}
+    if (response.headers) {
+      const rlHeaders = getRateLimitHeaders(rateLimit);
+      for (const [key, value] of Object.entries(rlHeaders)) {
+        response.headers.set(key, value);
+      }
+    }
 
-		return response;
-	};
+    return response;
+  };
 }

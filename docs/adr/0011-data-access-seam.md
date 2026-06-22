@@ -65,18 +65,18 @@ export interface Collection<T> {
 
 The `DataAccess` was split into 10 domain sub-interfaces. Each is independently importable and has a single architectural concern:
 
-| Interface | Tables | Typical consumers |
-|-----------|--------|-------------------|
-| `FlashcardDataAccess` | `flashcards`, `reviewHistory` | flashcard-engine, study-set-editor |
-| `CompetencyDataAccess` | `competencies`, `progress`, `quizAttempts` | analytics-engine, competency-service |
-| `QuizDataAccess` | `questions`, `quizPacks`, `packQuestions`, `quizSessions` | quiz-session repository, domain handlers |
-| `ContentDataAccess` | `notes`, `bookmarks`, `sharedQuestions`, `visuals`, `cachedPdfs`, `extractionCache` | share-service, snap-fab, note-storage |
-| `StudyDataAccess` | `studyPlans`, `studyGuides`, `examDates` | study-guide service, study-planner |
-| `SyncDataAccess` | `wrongAnswers`, `retentionRecurrence`, `examSessions`, `chatMessages`, `questionRatings`, `jobs`, `conflicts`, `flashcardSyncState` | sync-handler, retention-service, wrong-answer-journal |
-| `ObservabilityDataAccess` | `analyticsEvents`, `gamification` | events tracker, use-gamification |
-| `SocialDataAccess` | `userConsents` | user-consent service |
-| `CacheDataAccess` | `tinyfishCache`, `tinyfishUsage`, `knowledgeGraph` | tinyfish cache, knowledge-graph service |
-| `LegacyDataAccess` | `subjects`, `pastPaperQuestions` | use-subjects, past-paper extractor |
+| Interface                 | Tables                                                                                                                              | Typical consumers                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `FlashcardDataAccess`     | `flashcards`, `reviewHistory`                                                                                                       | flashcard-engine, study-set-editor                    |
+| `CompetencyDataAccess`    | `competencies`, `progress`, `quizAttempts`                                                                                          | analytics-engine, competency-service                  |
+| `QuizDataAccess`          | `questions`, `quizPacks`, `packQuestions`, `quizSessions`                                                                           | quiz-session repository, domain handlers              |
+| `ContentDataAccess`       | `notes`, `bookmarks`, `sharedQuestions`, `visuals`, `cachedPdfs`, `extractionCache`                                                 | share-service, snap-fab, note-storage                 |
+| `StudyDataAccess`         | `studyPlans`, `studyGuides`, `examDates`                                                                                            | study-guide service, study-planner                    |
+| `SyncDataAccess`          | `wrongAnswers`, `retentionRecurrence`, `examSessions`, `chatMessages`, `questionRatings`, `jobs`, `conflicts`, `flashcardSyncState` | sync-handler, retention-service, wrong-answer-journal |
+| `ObservabilityDataAccess` | `analyticsEvents`, `gamification`                                                                                                   | events tracker, use-gamification                      |
+| `SocialDataAccess`        | `userConsents`                                                                                                                      | user-consent service                                  |
+| `CacheDataAccess`         | `tinyfishCache`, `tinyfishUsage`, `knowledgeGraph`                                                                                  | tinyfish cache, knowledge-graph service               |
+| `LegacyDataAccess`        | `subjects`, `pastPaperQuestions`                                                                                                    | use-subjects, past-paper extractor                    |
 
 The composite `DataAccess` extends all 10 sub-interfaces for backward compat. Cross-domain consumers (sync-handler, search-service, etc.) keep the full composite.
 
@@ -112,13 +112,13 @@ Map-backed, for unit tests. No external dependencies. Implements the full 33-tab
 
 ## All phases complete
 
-| Phase | What | Migrated to DataAccess |
-|-------|------|----------------------|
-| 1 | Foundation | `FlashcardEngine`, `CompetencyService` |
-| 2 | Top consumers | `AnalyticsEngine`, `RetentionService`, `QuizPackService`, `WrongAnswerJournal` |
-| 3 | Expand + batch migrate | 20+ files: sync-handler, knowledge-graph, chat-context, notification-service, search-service, share-service, exam-dates, export, chunked-search, 4 repositories |
-| 4 | localStorage → Dexie | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState` |
-| — | Domain split (Session 33) | 10 sub-interfaces, 11 dead accessors removed, 4 consumers narrowed to sub-interfaces, 19 narrowed in `_deps` pattern |
+| Phase | What                      | Migrated to DataAccess                                                                                                                                          |
+| ----- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Foundation                | `FlashcardEngine`, `CompetencyService`                                                                                                                          |
+| 2     | Top consumers             | `AnalyticsEngine`, `RetentionService`, `QuizPackService`, `WrongAnswerJournal`                                                                                  |
+| 3     | Expand + batch migrate    | 20+ files: sync-handler, knowledge-graph, chat-context, notification-service, search-service, share-service, exam-dates, export, chunked-search, 4 repositories |
+| 4     | localStorage → Dexie      | `studyPlans`, `onboardingState`, `srDailyBudget`, `flashcardSyncState`                                                                                          |
+| —     | Domain split (Session 33) | 10 sub-interfaces, 11 dead accessors removed, 4 consumers narrowed to sub-interfaces, 19 narrowed in `_deps` pattern                                            |
 
 ## Excluded from scope
 

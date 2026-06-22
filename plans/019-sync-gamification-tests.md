@@ -22,10 +22,12 @@ The sync handler was significantly changed in plan 011 (sequential processing) b
 ## Scope
 
 **In scope**:
+
 - `src/lib/sync/__tests__/sync-handler.test.ts` — expand from 8 to ~25 tests
 - `src/lib/gamification-engine/__tests__/gamification-service.test.ts` — new file, ~20 tests
 
 **Out of scope**:
+
 - Sync manager tests (separate module)
 - Gamification engine tests (already have 20 tests)
 - Hook-level tests (use-gamification.test.tsx exists)
@@ -43,31 +45,38 @@ File: `src/lib/sync/__tests__/sync-handler.test.ts`
 Add tests for the 6 untested tables:
 
 **competencies** (3 tests):
+
 - Enqueues `appwrite-competency-sync` with correct payload
 - Maps `score` field to `proficiency` in payload
 - Handles empty competencies array
 
 **flashcards** (2 tests):
+
 - Enqueues `appwrite-flashcard-sync` with correct payload
 - Handles empty flashcards array
 
 **wrongAnswers** (2 tests):
+
 - Enqueues `appwrite-wrong-answer-sync` with correct payload
 - Handles empty wrongAnswers array
 
 **chatMessages** (2 tests):
+
 - Enqueues `appwrite-chat-sync` with correct payload
 - Handles empty chatMessages array
 
 **questionRatings** (2 tests):
+
 - Enqueues `appwrite-rating-sync` with correct payload
 - Does NOT include userId in payload (verify this is intentional)
 
 **bookmarks** (2 tests):
+
 - Enqueues `appwrite-bookmark-sync` with correct payload
 - Handles empty bookmarks array
 
 **Error handling** (3 tests):
+
 - Table.toArray() rejection: logs error, other tables still process
 - enqueue() rejection: fire-and-forget, no propagation
 - Unknown table name: processTable falls through switch, no-op
@@ -79,6 +88,7 @@ Add tests for the 6 untested tables:
 New file: `src/lib/gamification-engine/__tests__/gamification-service.test.ts`
 
 Mock all dependencies:
+
 - `@/lib/db` — mock `gamification` table accessor
 - `@/lib/gamification-engine` — mock `gamificationEngine` with vi.fn()
 - `@/lib/services/leaderboard-service` — mock `saveWeeklySnapshot`
@@ -88,36 +98,44 @@ Mock all dependencies:
 Tests:
 
 **subscribe/notify** (3 tests):
+
 - Listener receives state on mutation
 - Unsubscribe stops notifications
 - Multiple listeners all notified
 
 **addXp** (3 tests):
+
 - Delegates to engine, returns correct XpResult
 - Persists to Dexie after mutation
 - Notifies listeners after mutation
 
 **addAchievement** (2 tests):
+
 - Delegates to engine, returns correct AchievementResult
 - Persists + notifies
 
 **updateStreak** (2 tests):
+
 - Delegates, persists, notifies
 - Returns StreakResult with correct shape
 
 **consumeStreakFreeze** (2 tests):
+
 - Success: persists + syncs + notifies
 - Failure (0 freezes): does NOT persist or notify
 
 **checkForRewardChests** (2 tests):
+
 - With claimable chest: persists + notifies
 - Without claimable chest: still notifies, no persist
 
 **Error handling** (2 tests):
+
 - Dexie persist failure: swallowed, logged
 - API sync failure: swallowed, logged
 
 **Debounce** (2 tests):
+
 - Rapid addXp calls: only one sync fires after 2s
 - Uses vi.useFakeTimers()
 

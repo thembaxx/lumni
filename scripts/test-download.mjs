@@ -28,7 +28,9 @@ async function main() {
     console.log(`✓ typing-indicator.lottie (${(data.length / 1024).toFixed(1)} KB)`);
     // Check raw bytes
     const firstBytes = data.slice(0, 2).toString("hex");
-    console.log(`  First 2 bytes: ${firstBytes} (${firstBytes === "504b" ? "Valid ZIP" : "Not ZIP"})`);
+    console.log(
+      `  First 2 bytes: ${firstBytes} (${firstBytes === "504b" ? "Valid ZIP" : "Not ZIP"})`,
+    );
   } catch (e) {
     console.log(`✗ typing-indicator: ${e.message}`);
   }

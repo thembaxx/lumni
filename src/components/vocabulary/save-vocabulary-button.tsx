@@ -8,64 +8,51 @@ import { Button } from "@/components/ui/button";
 import { useVocabulary } from "@/hooks/use-vocabulary";
 
 interface SaveVocabularyButtonProps {
-	word: string;
-	definition: string;
-	language: string;
-	sourceType: "lesson" | "story" | "manual";
-	sourceId: string;
-	userId: string;
+  word: string;
+  definition: string;
+  language: string;
+  sourceType: "lesson" | "story" | "manual";
+  sourceId: string;
+  userId: string;
 }
 
 export function SaveVocabularyButton({
-	word,
-	definition,
-	language,
-	sourceType,
-	sourceId,
-	userId,
+  word,
+  definition,
+  language,
+  sourceType,
+  sourceId,
+  userId,
 }: SaveVocabularyButtonProps) {
-	const { isWordSaved, saveWord, removeWord } = useVocabulary(userId);
-	const saved = isWordSaved(word);
-	const [pending, setPending] = useState(false);
+  const { isWordSaved, saveWord, removeWord } = useVocabulary(userId);
+  const saved = isWordSaved(word);
+  const [pending, setPending] = useState(false);
 
-	const handleToggle = useCallback(async () => {
-		if (pending) return;
-		setPending(true);
-		try {
-			if (saved) {
-				await removeWord(word);
-			} else {
-				await saveWord(word, definition, language, sourceType, sourceId);
-			}
-		} finally {
-			setPending(false);
-		}
-	}, [
-		saved,
-		pending,
-		word,
-		definition,
-		language,
-		sourceType,
-		sourceId,
-		saveWord,
-		removeWord,
-	]);
+  const handleToggle = useCallback(async () => {
+    if (pending) return;
+    setPending(true);
+    try {
+      if (saved) {
+        await removeWord(word);
+      } else {
+        await saveWord(word, definition, language, sourceType, sourceId);
+      }
+    } finally {
+      setPending(false);
+    }
+  }, [saved, pending, word, definition, language, sourceType, sourceId, saveWord, removeWord]);
 
-	return (
-		<Button
-			variant={saved ? "default" : "ghost"}
-			size="sm"
-			className="shrink-0 rounded-full"
-			onClick={handleToggle}
-			disabled={pending}
-			aria-label={saved ? `Unsave ${word}` : `Save ${word}`}
-		>
-			<HugeiconsIcon
-				icon={saved ? Bookmark03Icon : Bookmark02Icon}
-				className="size-4"
-			/>
-			{saved ? "Saved" : "Save"}
-		</Button>
-	);
+  return (
+    <Button
+      variant={saved ? "default" : "ghost"}
+      size="sm"
+      className="shrink-0 rounded-full"
+      onClick={handleToggle}
+      disabled={pending}
+      aria-label={saved ? `Unsave ${word}` : `Save ${word}`}
+    >
+      <HugeiconsIcon icon={saved ? Bookmark03Icon : Bookmark02Icon} className="size-4" />
+      {saved ? "Saved" : "Save"}
+    </Button>
+  );
 }

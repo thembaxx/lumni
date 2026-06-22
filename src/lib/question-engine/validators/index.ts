@@ -15,78 +15,67 @@ import { validate as validateOrdering } from "./per-type/ordering";
 import { validate as validateProgramming } from "./per-type/programming";
 import { validate as validateShortAnswer } from "./per-type/short-answer";
 import { validate as validateSourceBased } from "./per-type/source-based";
-import {
-	checkDifficulty,
-	checkLength,
-	checkPoints,
-} from "./shared-quality-checks";
+import { checkDifficulty, checkLength, checkPoints } from "./shared-quality-checks";
 
 interface ValidatorResult {
-	errors: ValidationError[];
-	warnings: ValidationError[];
+  errors: ValidationError[];
+  warnings: ValidationError[];
 }
 
-const typeValidators: Record<string, (question: Question) => ValidatorResult> =
-	{
-		"multiple-choice": validateMcq,
-		matching: validateMatching,
-		"short-answer": validateShortAnswer,
-		"long-answer": validateLongAnswer,
-		essay: validateEssay,
-		calculation: validateCalculation,
-		diagram: validateDiagram,
-		"source-based": validateSourceBased,
-		programming: validateProgramming,
-		"data-response": validateDataResponse,
-		mixed: validateMixed,
-		ordering: validateOrdering,
-		"fill-in-sequence": validateFillInSequence,
-		"match-pairs": validateMatchPairs,
-		"diagram-labelling": validateDiagramLabelling,
-		"hot-spot": validateHotSpot,
-	};
+const typeValidators: Record<string, (question: Question) => ValidatorResult> = {
+  "multiple-choice": validateMcq,
+  matching: validateMatching,
+  "short-answer": validateShortAnswer,
+  "long-answer": validateLongAnswer,
+  essay: validateEssay,
+  calculation: validateCalculation,
+  diagram: validateDiagram,
+  "source-based": validateSourceBased,
+  programming: validateProgramming,
+  "data-response": validateDataResponse,
+  mixed: validateMixed,
+  ordering: validateOrdering,
+  "fill-in-sequence": validateFillInSequence,
+  "match-pairs": validateMatchPairs,
+  "diagram-labelling": validateDiagramLabelling,
+  "hot-spot": validateHotSpot,
+};
 
-function scoreResult(
-	errors: ValidationError[],
-	warnings: ValidationError[],
-): ValidationResult {
-	const score = Math.max(0, 100 - errors.length * 15 - warnings.length * 5);
-	return {
-		isValid: errors.filter((e) => e.severity === "error").length === 0,
-		errors: errors.filter((e) => e.severity === "error"),
-		warnings: warnings.filter((w) => w.severity === "warning"),
-		score,
-	};
+function scoreResult(errors: ValidationError[], warnings: ValidationError[]): ValidationResult {
+  const score = Math.max(0, 100 - errors.length * 15 - warnings.length * 5);
+  return {
+    isValid: errors.filter((e) => e.severity === "error").length === 0,
+    errors: errors.filter((e) => e.severity === "error"),
+    warnings: warnings.filter((w) => w.severity === "warning"),
+    score,
+  };
 }
 
 export function validateQuestion(question: Question): ValidationResult {
-	const errors: ValidationError[] = [];
-	const warnings: ValidationError[] = [];
+  const errors: ValidationError[] = [];
+  const warnings: ValidationError[] = [];
 
-	if (!question.body) {
-		errors.push({
-			type: "schema",
-			field: "body",
-			message: "Question body is missing",
-			severity: "error",
-		});
-		return scoreResult(errors, warnings);
-	}
+  if (!question.body) {
+    errors.push({
+      type: "schema",
+      field: "body",
+      message: "Question body is missing",
+      severity: "error",
+    });
+    return scoreResult(errors, warnings);
+  }
 
-	const minTextLen =
-		question.type === "essay" || question.type === "programming" ? 20 : 10;
-	errors.push(
-		...checkLength(question.questionText, "questionText", minTextLen),
-	);
-	errors.push(...checkDifficulty(question.difficulty, "difficulty"));
-	errors.push(...checkPoints(question.points, "points"));
+  const minTextLen = question.type === "essay" || question.type === "programming" ? 20 : 10;
+  errors.push(...checkLength(question.questionText, "questionText", minTextLen));
+  errors.push(...checkDifficulty(question.difficulty, "difficulty"));
+  errors.push(...checkPoints(question.points, "points"));
 
-	const typeValidator = typeValidators[question.type];
-	if (typeValidator) {
-		const result = typeValidator(question);
-		errors.push(...result.errors);
-		warnings.push(...result.warnings);
-	}
+  const typeValidator = typeValidators[question.type];
+  if (typeValidator) {
+    const result = typeValidator(question);
+    errors.push(...result.errors);
+    warnings.push(...result.warnings);
+  }
 
-	return scoreResult(errors, warnings);
+  return scoreResult(errors, warnings);
 }

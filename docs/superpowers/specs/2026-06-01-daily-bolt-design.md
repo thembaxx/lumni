@@ -60,14 +60,14 @@ Dashboard entry
 
 ## Gamification Integration
 
-| System | Behavior |
-|--------|----------|
-| **Streak** | Bolt answer calls `updateStreak()` — this is the habit hook |
-| **XP** | 15 base (10 + 5 if correct) + 20 bolt bonus (once/day) |
-| **Sprint XP** | Standard XP only, no additional bolt bonus |
+| System               | Behavior                                                                                 |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| **Streak**           | Bolt answer calls `updateStreak()` — this is the habit hook                              |
+| **XP**               | 15 base (10 + 5 if correct) + 20 bolt bonus (once/day)                                   |
+| **Sprint XP**        | Standard XP only, no additional bolt bonus                                               |
 | **Daily Challenges** | All questions count toward `daily_questions`, `daily_accuracy` via existing `addXp` path |
-| **Achievements** | No new achievements — bolt feeds existing streak milestones |
-| **Skip** | No XP, no streak update, no penalty |
+| **Achievements**     | No new achievements — bolt feeds existing streak milestones                              |
+| **Skip**             | No XP, no streak update, no penalty                                                      |
 
 ## State & Persistence
 
@@ -78,27 +78,30 @@ Dashboard entry
 
 ## Edge Cases
 
-| Case | Behavior |
-|------|----------|
-| Anonymous user | Bolt still shows, random subject, `lastPracticeDate` tracked in localStorage |
-| Generation fails | Error overlay with "Retry" + "Skip to Dashboard" |
-| User skips, returns | Bolt re-presents (lastPracticeDate unchanged) |
-| User completes, returns | Bolt suppressed (lastPracticeDate === today) |
-| Midnight open | Bolt done for this session; re-appears on next dashboard navigation |
-| Sprint + full quiz same day | Both call `handleFinishQuiz`, gamification stacks correctly |
-| 0 subjects enrolled | Random general question or suppress bolt |
-| Pre-fetch | Bolt question fetched during gamification load to avoid flicker |
+| Case                        | Behavior                                                                     |
+| --------------------------- | ---------------------------------------------------------------------------- |
+| Anonymous user              | Bolt still shows, random subject, `lastPracticeDate` tracked in localStorage |
+| Generation fails            | Error overlay with "Retry" + "Skip to Dashboard"                             |
+| User skips, returns         | Bolt re-presents (lastPracticeDate unchanged)                                |
+| User completes, returns     | Bolt suppressed (lastPracticeDate === today)                                 |
+| Midnight open               | Bolt done for this session; re-appears on next dashboard navigation          |
+| Sprint + full quiz same day | Both call `handleFinishQuiz`, gamification stacks correctly                  |
+| 0 subjects enrolled         | Random general question or suppress bolt                                     |
+| Pre-fetch                   | Bolt question fetched during gamification load to avoid flicker              |
 
 ## Implementation Plan
 
 ### Files to create
+
 1. `src/components/dashboard/daily-bolt-overlay.tsx` — New overlay component
 
 ### Files to modify
+
 1. `src/components/dashboard/dashboard-client.tsx` — Add `showDailyBolt` state, render overlay
 2. `src/types/gamification.ts` — Add `XP_BOLT_BONUS = 20` constant (optional)
 
 ### Component: DailyBoltOverlay
+
 - Uses `ImmersiveMode` (hides nav)
 - Internal state machine: `idle → loading → answering → answered → branching`
 - Fetches single question via `useQuestionEngine({ subject: weakest, count: 1 })`
@@ -109,6 +112,7 @@ Dashboard entry
 - "Skip" link always visible
 
 ### Integration in DashboardClient
+
 ```
 const [showDailyBolt, setShowDailyBolt] = useState(true) // derived from lastPracticeDate
 const [boltSubject, setBoltSubject] = useState("")

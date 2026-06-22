@@ -12,11 +12,11 @@ A "live" exam calendar for South African NSC/SC exams that auto-detects the curr
 
 ### 2.1 Tiered Cache (CachingStrategy pattern)
 
-| Tier | Storage | Key | TTL |
-|------|---------|-----|-----|
-| L1 (fastest) | Dexie (`lumni-offline` → `examDates` table) | `{session}_{year}` | 24h |
-| L2 (cross-session) | Appwrite (`exam_dates` collection) | `{session}_{year}` | 24h |
-| L3 (live) | `GET /api/exam-dates` | `{session}_{year}` | — |
+| Tier               | Storage                                     | Key                | TTL |
+| ------------------ | ------------------------------------------- | ------------------ | --- |
+| L1 (fastest)       | Dexie (`lumni-offline` → `examDates` table) | `{session}_{year}` | 24h |
+| L2 (cross-session) | Appwrite (`exam_dates` collection)          | `{session}_{year}` | 24h |
+| L3 (live)          | `GET /api/exam-dates`                       | `{session}_{year}` | —   |
 
 ### 2.2 Data shape
 
@@ -24,15 +24,15 @@ A "live" exam calendar for South African NSC/SC exams that auto-detects the curr
 interface ExamSlot {
   id: string;
   subject: string;
-  subjectId: string;           // slug for routing (e.g. "mathematics")
-  paperNumber: number;         // 1 | 2 | 3
+  subjectId: string; // slug for routing (e.g. "mathematics")
+  paperNumber: number; // 1 | 2 | 3
   session: "may-june" | "oct-nov";
   year: number;
-  date: string;                // ISO date ("2026-05-11")
-  startTime: string;           // "09:00"
-  endTime: string;             // "14:00"
-  durationHours: number;       // 2 | 2.5 | 3
-  isSC?: boolean;              // asterisk = available to SC candidates
+  date: string; // ISO date ("2026-05-11")
+  startTime: string; // "09:00"
+  endTime: string; // "14:00"
+  durationHours: number; // 2 | 2.5 | 3
+  isSC?: boolean; // asterisk = available to SC candidates
 }
 ```
 
@@ -86,8 +86,8 @@ function getCurrentSession(): { session: "may-june" | "oct-nov"; year: number } 
   const month = now.getMonth() + 1; // 1-indexed
   const year = now.getFullYear();
 
-  if (month <= 6) return { session: "may-june", year };          // Jan-Jun → current year's May/June exams
-  if (month >= 10) return { session: "oct-nov", year };          // Oct-Dec → current year's Oct/Nov exams
+  if (month <= 6) return { session: "may-june", year }; // Jan-Jun → current year's May/June exams
+  if (month >= 10) return { session: "oct-nov", year }; // Oct-Dec → current year's Oct/Nov exams
   // Jul-Sep: transition period — check if May exams have passed
   // The May exams end late June, so Jul-Sep means Oct/Nov of same year
   return { session: "oct-nov", year };
@@ -127,9 +127,11 @@ function getCurrentSession(): { session: "may-june" | "oct-nov"; year: number } 
 ## 8. Integration Points
 
 ### 8.1 Tools Dialog
+
 Replace the existing `ExamCalendar` in the `tools-dialog.tsx` with `NationalExamCalendar`. The "Exams" tab shows the new component.
 
 ### 8.2 Exams Page Button
+
 Add a button to the `exams-browse.tsx` page that opens the tools dialog to the "calendar" tab (using the existing `useToolsStore().openTools("calendar")`).
 
 ---

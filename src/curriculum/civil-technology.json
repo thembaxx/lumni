@@ -67,7 +67,11 @@
       "prerequisites": ["civil-drawing"],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "civil-quantities-measurements", "name": "Quantities and Measurements", "order": 1 },
+        {
+          "id": "civil-quantities-measurements",
+          "name": "Quantities and Measurements",
+          "order": 1
+        },
         { "id": "civil-cost-estimation", "name": "Cost Estimation", "order": 2 }
       ]
     }

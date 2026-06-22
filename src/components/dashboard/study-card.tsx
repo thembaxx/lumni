@@ -7,43 +7,37 @@ import { useFilteredSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
 
 export function StudyCard() {
-	const { push } = useRouter();
-	const { subjects } = useFilteredSubjects("", true);
+  const { push } = useRouter();
+  const { subjects } = useFilteredSubjects("", true);
 
-	if (subjects.length === 0) return null;
+  if (subjects.length === 0) return null;
 
-	const first = subjects[0];
+  const first = subjects[0];
 
-	return (
-		<div className="card-entrance">
-			<Card
-				className="cursor-pointer overflow-hidden rounded-card shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
-				onClick={() => push("/dashboard")}
-				role="button"
-				tabIndex={0}
-				aria-label={`Start studying ${first.name}`}
-			>
-				<CardHeader>
-					<CardTitle className="font-extrabold text-lg">
-						Continue Studying
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="flex items-center gap-4 p-5 pt-0">
-					<div className="flex size-12 items-center justify-center rounded-2xl bg-[--system-accent]/10">
-						<HugeiconsIcon
-							icon={BookOpen01Icon}
-							className="size-6 text-[--system-accent]"
-						/>
-					</div>
-					<div className="flex flex-col">
-						<span className="font-semibold text-sm">{first.name}</span>
-						<span className="text-muted-foreground text-xs">
-							{subjects.length} subject{subjects.length !== 1 ? "s" : ""}{" "}
-							available
-						</span>
-					</div>
-				</CardContent>
-			</Card>
-		</div>
-	);
+  return (
+    <div className="card-entrance">
+      <Card
+        className="cursor-pointer overflow-hidden rounded-card shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
+        onClick={() => push("/dashboard")}
+        role="button"
+        tabIndex={0}
+        aria-label={`Start studying ${first.name}`}
+      >
+        <CardHeader>
+          <CardTitle className="font-extrabold text-lg">Continue Studying</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center gap-4 p-5 pt-0">
+          <div className="flex size-12 items-center justify-center rounded-2xl bg-[--system-accent]/10">
+            <HugeiconsIcon icon={BookOpen01Icon} className="size-6 text-[--system-accent]" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">{first.name}</span>
+            <span className="text-muted-foreground text-xs">
+              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} available
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

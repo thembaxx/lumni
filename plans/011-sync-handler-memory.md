@@ -29,12 +29,18 @@
 ## Current state
 
 **`src/lib/sync/sync-handler.ts:9-28`**:
+
 ```typescript
 export async function flushOfflineData(userId: string): Promise<void> {
   const [
-    allProgress, allAttempts, allCompetencies,
-    allFlashcards, allWrongAnswers, allChatMessages,
-    allRatings, allBookmarks,
+    allProgress,
+    allAttempts,
+    allCompetencies,
+    allFlashcards,
+    allWrongAnswers,
+    allChatMessages,
+    allRatings,
+    allBookmarks,
   ] = await Promise.all([
     _deps.db.progress.toArray(),
     _deps.db.quizAttempts.toArray(),
@@ -53,18 +59,20 @@ All 8 tables are loaded simultaneously. Each table's records are then enqueued i
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/sync/sync-handler.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                        | Expected on success |
+| --------- | ---------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                             | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/sync/sync-handler.ts` | 0 errors            |
+| Tests     | `bun run test`                                 | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/sync/sync-handler.ts`
 
 **Out of scope**:
+
 - `src/lib/orchestrator/job-queue.ts` — do not change enqueue semantics
 - Appwrite sync endpoints
 

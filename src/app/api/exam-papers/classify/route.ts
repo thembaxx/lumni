@@ -6,99 +6,86 @@ import { requireAdmin } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function createClassifyHandler(db: DataAccess = dexieDataAccess) {
-	return withRateLimit(
-		async (req: NextRequest) => {
-			try {
-				await requireAdmin();
-			} catch (err) {
-				const msg =
-					err instanceof Error ? err.message : "Admin access required";
-				if (msg.includes("Authentication required")) {
-					return NextResponse.json({ error: msg }, { status: 401 });
-				}
-				return NextResponse.json({ error: msg }, { status: 403 });
-			}
+  return withRateLimit(
+    async (req: NextRequest) => {
+      try {
+        await requireAdmin();
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Admin access required";
+        if (msg.includes("Authentication required")) {
+          return NextResponse.json({ error: msg }, { status: 401 });
+        }
+        return NextResponse.json({ error: msg }, { status: 403 });
+      }
 
-			let body: { subject?: string };
-			try {
-				body = await req.json();
-			} catch {
-				return NextResponse.json(
-					{ error: "Invalid JSON in request body" },
-					{ status: 400 },
-				);
-			}
+      let body: { subject?: string };
+      try {
+        body = await req.json();
+      } catch {
+        return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
+      }
 
-			const subject = body?.subject;
-			if (!subject) {
-				return NextResponse.json(
-					{ error: "subject is required" },
-					{ status: 400 },
-				);
-			}
+      const subject = body?.subject;
+      if (!subject) {
+        return NextResponse.json({ error: "subject is required" }, { status: 400 });
+      }
 
-			const pastPaperQuestions = db.pastPaperQuestions;
-			const all = await pastPaperQuestions
-				.where("subject")
-				.equals(subject)
-				.toArray();
+      const pastPaperQuestions = db.pastPaperQuestions;
+      const all = await pastPaperQuestions.where("subject").equals(subject).toArray();
 
-			const allById = new Map(all.map((q) => [q.id, q]));
+      const allById = new Map(all.map((q) => [q.id, q]));
 
-			const unclassified = all.reduce<
-				{
-					id: string;
-					questionText: string;
-					subject: string;
-				}[]
-			>((acc, q) => {
-				if (!q.subtopicId) {
-					acc.push({
-						id: q.id,
-						questionText: q.questionText,
-						subject: q.subject,
-					});
-				}
-				return acc;
-			}, []);
+      const unclassified = all.reduce<
+        {
+          id: string;
+          questionText: string;
+          subject: string;
+        }[]
+      >((acc, q) => {
+        if (!q.subtopicId) {
+          acc.push({
+            id: q.id,
+            questionText: q.questionText,
+            subject: q.subject,
+          });
+        }
+        return acc;
+      }, []);
 
-			if (unclassified.length === 0) {
-				return NextResponse.json({
-					total: 0,
-					classified: 0,
-					message: "All questions already classified",
-				});
-			}
+      if (unclassified.length === 0) {
+        return NextResponse.json({
+          total: 0,
+          classified: 0,
+          message: "All questions already classified",
+        });
+      }
 
-			const curriculumTopics = all.reduce<
-				{ id: string; subject: string; topic: string; subtopic: string }[]
-			>((acc, q) => {
-				if (q.topic) {
-					const topic = q.topic;
-					acc.push({ id: topic, subject: q.subject, topic, subtopic: topic });
-				}
-				return acc;
-			}, []);
+      const curriculumTopics = all.reduce<
+        { id: string; subject: string; topic: string; subtopic: string }[]
+      >((acc, q) => {
+        if (q.topic) {
+          const topic = q.topic;
+          acc.push({ id: topic, subject: q.subject, topic, subtopic: topic });
+        }
+        return acc;
+      }, []);
 
-			const classifications = await classifyQuestions(
-				unclassified,
-				curriculumTopics,
-			);
+      const classifications = await classifyQuestions(unclassified, curriculumTopics);
 
-			for (const [questionId, subtopicId] of classifications) {
-				const question = allById.get(questionId);
-				if (question) {
-					await pastPaperQuestions.update(questionId, { subtopicId });
-				}
-			}
+      for (const [questionId, subtopicId] of classifications) {
+        const question = allById.get(questionId);
+        if (question) {
+          await pastPaperQuestions.update(questionId, { subtopicId });
+        }
+      }
 
-			return NextResponse.json({
-				total: unclassified.length,
-				classified: classifications.size,
-			});
-		},
-		{ max: 3, windowMs: 120000 },
-	);
+      return NextResponse.json({
+        total: unclassified.length,
+        classified: classifications.size,
+      });
+    },
+    { max: 3, windowMs: 120000 },
+  );
 }
 
 export const POST = createClassifyHandler();

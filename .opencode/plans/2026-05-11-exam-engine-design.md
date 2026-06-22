@@ -112,10 +112,12 @@ No changes to existing `src/types/exam.ts` (upload model — will be deprecated)
 **Location:** `src/lib/exam-parser/`
 
 Files:
+
 - `src/lib/exam-parser/index.ts` — Public API, `convertMarkdownToJson()`
 - `src/lib/exam-parser/markdown-exam-parser.ts` — `MarkdownExamParser` class (moved from `scripts/markdown-to-json.ts`, enhanced)
 
 **Enhancements to existing parser:**
+
 1. `answerFormat` field based on detected type
 2. `context` on Question: extract source materials/tables before sub-questions
 3. `subParts` nesting: `(a)`, `(b)` as subParts of parent
@@ -154,13 +156,14 @@ Delete exam paper from Appwrite + all 3 artifacts from UploadThing.
 
 Added to existing admin-dashboard.tsx Exam tab:
 
-| Component | Purpose |
-|-----------|---------|
+| Component                    | Purpose                                                                       |
+| ---------------------------- | ----------------------------------------------------------------------------- |
 | `admin-exam-upload-zone.tsx` | Drag-and-drop zone using `@uploadthing/react` `UploadButton`/`UploadDropzone` |
-| `admin-exam-list.tsx` | Table/cards showing uploaded exams with status (processing/done/error) |
-| `admin-exam-row.tsx` | Single exam row with delete, view on engine link |
+| `admin-exam-list.tsx`        | Table/cards showing uploaded exams with status (processing/done/error)        |
+| `admin-exam-row.tsx`         | Single exam row with delete, view on engine link                              |
 
 **Flow in the Exam tab:**
+
 1. Admin sees existing Download/Upload buttons (can be removed or kept)
 2. New drag-and-drop zone below for uploading PDFs
 3. Upload progress shown inline
@@ -203,13 +206,13 @@ src/components/exam/
 
 ### Content Block Rendering
 
-| Block | Implementation |
-|-------|----------------|
-| text | `<p>` with preserved whitespace |
-| image | `<img>` with `alt` |
-| table | shadcn `<Table>` (TableHeader + TableBody) |
-| formula | Existing `<Equation>` (KaTeX) |
-| code | `<SyntaxHighlighter>` with language |
+| Block   | Implementation                             |
+| ------- | ------------------------------------------ |
+| text    | `<p>` with preserved whitespace            |
+| image   | `<img>` with `alt`                         |
+| table   | shadcn `<Table>` (TableHeader + TableBody) |
+| formula | Existing `<Equation>` (KaTeX)              |
+| code    | `<SyntaxHighlighter>` with language        |
 
 ### Layout
 
@@ -228,42 +231,42 @@ Actions: initSession, setAnswer, toggleFlag, setCurrentPart, tick, submitExam, r
 
 ### Persistence
 
-| Layer | Mechanism | Behavior |
-|-------|-----------|----------|
-| Dexie IndexedDB | `exam_sessions` table | Auto-save answers (debounced 2s), timer (10s), restore on load |
-| Appwrite DB | `exam_sessions` collection | Sync after Dexie (every 30s), cross-device fallback |
+| Layer           | Mechanism                  | Behavior                                                       |
+| --------------- | -------------------------- | -------------------------------------------------------------- |
+| Dexie IndexedDB | `exam_sessions` table      | Auto-save answers (debounced 2s), timer (10s), restore on load |
+| Appwrite DB     | `exam_sessions` collection | Sync after Dexie (every 30s), cross-device fallback            |
 
 ---
 
 ## API Routes
 
-| Method | Route | Purpose |
-|--------|-------|---------|
-| POST | `/api/admin/exams/upload` | Upload PDF → convert → save all artifacts + metadata |
-| GET | `/api/admin/exams` | List all exam papers |
-| DELETE | `/api/admin/exams/[id]` | Delete exam + artifacts |
-| GET | `/api/exam-papers/[id]` | Fetch parsed ExamPaper JSON (from UploadThing via Appwrite key) |
-| GET | `/api/exam-sessions` | List user exam sessions |
-| POST | `/api/exam-sessions` | Save/update session |
-| GET | `/api/exam-sessions/[id]` | Get session for restore |
-| DELETE | `/api/exam-sessions/[id]` | Delete session |
-| POST | `/api/exam-engine/submit` | Submit + score breakdown |
+| Method | Route                     | Purpose                                                         |
+| ------ | ------------------------- | --------------------------------------------------------------- |
+| POST   | `/api/admin/exams/upload` | Upload PDF → convert → save all artifacts + metadata            |
+| GET    | `/api/admin/exams`        | List all exam papers                                            |
+| DELETE | `/api/admin/exams/[id]`   | Delete exam + artifacts                                         |
+| GET    | `/api/exam-papers/[id]`   | Fetch parsed ExamPaper JSON (from UploadThing via Appwrite key) |
+| GET    | `/api/exam-sessions`      | List user exam sessions                                         |
+| POST   | `/api/exam-sessions`      | Save/update session                                             |
+| GET    | `/api/exam-sessions/[id]` | Get session for restore                                         |
+| DELETE | `/api/exam-sessions/[id]` | Delete session                                                  |
+| POST   | `/api/exam-engine/submit` | Submit + score breakdown                                        |
 
 ---
 
 ## What Gets Removed/Deprecated
 
-| File | Status | Reason |
-|------|--------|--------|
-| `src/lib/db/exams/index.ts` | Remove | SQLite replaced by Appwrite |
-| `src/lib/db/exams/schema.ts` | Remove | No longer needed |
-| `src/lib/exams/sync-exam-papers.ts` | Remove | No local files to sync |
-| `src/data/exams/index.json` | Remove | Data moves to Appwrite |
-| `src/app/api/admin/download-exam-papers/route.ts` | Remove | Replaced by admin upload UI |
-| `src/app/api/admin/upload-local-exam-papers/route.ts` | Remove | Replaced by admin upload UI |
-| `src/lib/server/exam-paper-actions.ts` | Remove | Logic moved to new API + Appwrite |
-| `scripts/pdt-to-mkdwn.ts` | Keep | Still useful for ad-hoc conversions |
-| `scripts/markdown-to-json.ts` | Keep as wrapper | Thin CLI wrapper over `@/lib/exam-parser` |
+| File                                                  | Status          | Reason                                    |
+| ----------------------------------------------------- | --------------- | ----------------------------------------- |
+| `src/lib/db/exams/index.ts`                           | Remove          | SQLite replaced by Appwrite               |
+| `src/lib/db/exams/schema.ts`                          | Remove          | No longer needed                          |
+| `src/lib/exams/sync-exam-papers.ts`                   | Remove          | No local files to sync                    |
+| `src/data/exams/index.json`                           | Remove          | Data moves to Appwrite                    |
+| `src/app/api/admin/download-exam-papers/route.ts`     | Remove          | Replaced by admin upload UI               |
+| `src/app/api/admin/upload-local-exam-papers/route.ts` | Remove          | Replaced by admin upload UI               |
+| `src/lib/server/exam-paper-actions.ts`                | Remove          | Logic moved to new API + Appwrite         |
+| `scripts/pdt-to-mkdwn.ts`                             | Keep            | Still useful for ad-hoc conversions       |
+| `scripts/markdown-to-json.ts`                         | Keep as wrapper | Thin CLI wrapper over `@/lib/exam-parser` |
 
 ---
 

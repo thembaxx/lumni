@@ -1,6 +1,7 @@
 # Exam Smart View Feature Design
 
 ## Overview
+
 Add a "Smart View" feature that displays exam content as formatted markdown in a full-screen dialog. First checks if markdown exists on uploadthing, otherwise uses markdown.new API to convert the PDF.
 
 ## User Flow
@@ -14,12 +15,14 @@ Add a "Smart View" feature that displays exam content as formatted markdown in a
 ## UI/UX Specification
 
 ### Dialog Component
+
 - **Component:** shadcn Dialog (from `@/components/ui/dialog`)
 - **Dimensions:** Full width, full viewport height (`max-w-[100vw] h-dvh max-h-dvh`)
 - **Style:** No rounded corners, no padding, no gap
 - **Animation:** Default dialog animation
 
 ### Header
+
 - Height: 56px (shrink-0)
 - Border bottom: 1px solid border color
 - Background: background color
@@ -29,6 +32,7 @@ Add a "Smart View" feature that displays exam content as formatted markdown in a
   - Close button (X icon, right aligned)
 
 ### Content Area
+
 - Scrollable container (flex-1, overflow-auto)
 - Padding: 16px (p-4)
 - Uses react-markdown with remark-gfm
@@ -40,11 +44,13 @@ Add a "Smart View" feature that displays exam content as formatted markdown in a
   - Math expressions (via remark-math, rehype-katex - already installed)
 
 ### Loading State
+
 - Centered spinner
 - Text: "Loading smart view..."
 - Full height centered
 
 ### Error State
+
 - Centered error message
 - "Failed to load content"
 - Button to open original PDF viewer
@@ -58,16 +64,15 @@ Add a "Smart View" feature that displays exam content as formatted markdown in a
 ```typescript
 interface GetExamMarkdownResult {
   content: string;
-  source: 'uploadthing' | 'markdown.new' | 'error';
+  source: "uploadthing" | "markdown.new" | "error";
   error?: string;
 }
 
-export async function getExamMarkdown(
-  fileUrl: string
-): Promise<GetExamMarkdownResult>
+export async function getExamMarkdown(fileUrl: string): Promise<GetExamMarkdownResult>;
 ```
 
 **Logic:**
+
 1. Construct markdown URL: `fileUrl.replace(/\.pdf$/i, '.md')`
 2. Try fetching markdown URL (HEAD request first, then GET if exists)
 3. If found, return content with source = 'uploadthing'
@@ -81,6 +86,7 @@ export async function getExamMarkdown(
 **Location:** `src/components/dashboard/practice/smart-view-dialog.tsx`
 
 **Props:**
+
 ```typescript
 interface SmartViewDialogProps {
   open: boolean;
@@ -91,6 +97,7 @@ interface SmartViewDialogProps {
 ```
 
 **States:**
+
 - loading: boolean
 - markdown: string | null
 - error: string | null
@@ -106,16 +113,17 @@ interface SmartViewDialogProps {
 
 ## Error Handling
 
-| Scenario | Behavior |
-|----------|----------|
-| Markdown exists on uploadthing | Display markdown directly |
-| Markdown not found, conversion succeeds | Display converted markdown |
-| Conversion fails | Show error message with PDF viewer button |
-| Network error | Show error, allow retry |
+| Scenario                                | Behavior                                  |
+| --------------------------------------- | ----------------------------------------- |
+| Markdown exists on uploadthing          | Display markdown directly                 |
+| Markdown not found, conversion succeeds | Display converted markdown                |
+| Conversion fails                        | Show error message with PDF viewer button |
+| Network error                           | Show error, allow retry                   |
 
 ## Dependencies
 
 Already installed:
+
 - `react-markdown` - Markdown rendering
 - `remark-gfm` - GitHub flavored markdown (tables, etc)
 - `remark-math` - Math support
@@ -127,6 +135,7 @@ No new dependencies needed.
 ## API Details
 
 ### markdown.new API
+
 - **Endpoint:** `GET https://markdown.new/{url}`
 - **Example:** `curl -s 'https://markdown.new/https://example.com/file.pdf'`
 - **Returns:** Plain text markdown

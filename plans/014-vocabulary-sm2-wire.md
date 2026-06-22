@@ -29,13 +29,10 @@ Language learners can save vocabulary words from lessons and stories, but the sa
 ## Current state
 
 **`src/lib/flashcard-engine/vocabulary-bridge.ts`** (12 lines):
+
 ```typescript
-export async function createVocabularyCard(
-  word: VocabularyEntry,
-): Promise<void> {
-  const back = word.partOfSpeech
-    ? `${word.definition} (${word.partOfSpeech})`
-    : word.definition;
+export async function createVocabularyCard(word: VocabularyEntry): Promise<void> {
+  const back = word.partOfSpeech ? `${word.definition} (${word.partOfSpeech})` : word.definition;
   await flashcardEngine.create(word.word, back, word.language, "vocabulary");
 }
 ```
@@ -48,20 +45,22 @@ Zero import sites confirmed via grep.
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check` on changed files | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                            | Expected on success |
+| --------- | ---------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                 | exit 0, no errors   |
+| Lint      | `npx biome check` on changed files | 0 errors            |
+| Tests     | `bun run test`                     | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/flashcard-engine/vocabulary-bridge.ts` (already exists)
 - `src/app/[locale]/flashcards/flashcards-client.tsx` (modify vocabulary mode)
 - Files that call `saveWord()` or handle `SaveVocabularyButton` clicks
 
 **Out of scope**:
+
 - `src/lib/flashcard-engine/engine.ts` — engine already supports vocabulary
 - The vocabulary data model — already exists
 

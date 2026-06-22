@@ -11,6 +11,7 @@ All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + paginatio
 **Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
 
 **Architectural deepening (June 2026)** — 8 candidates implemented:
+
 - **Session 37**: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ADR-0012 documented.
 - **Session 38**: QuizResultProcessor (discriminated union, 4 sources), enrichment pipeline (3 ports: CurriculumSource/EmbeddingSource/PastPaperSource), TinyFish barrel separation (withRagGuards HOF), PushDeliveryService (lazy VAPID, consolidated web-push), StudyPlannerService (state/sync/mutations, event emission), GamificationService (state/persist/sync, mutation results), DataAccess bypass sealing (5 files), flashcard/exam/dashboard consumers updated.
 - **Session 39**: Hook factory abstractions (`createApiQuery` + `createInvalidatingMutation`), 8 hooks refactored. Large component extractions: `smart-scheduler.tsx` (405→167L), `QuestionCardInput.tsx` (440→224L), `snap-fab.tsx` (467→380L), `study-set-editor.tsx` (467→383L). Pre-existing `quiz-result.test.tsx` failure fixed (next-intl module resolution). New files: `snap-dialog.tsx`, `schedule-generator.ts`, `schedule-view.tsx`, `item-picker-dialog.tsx`, `tag-chips.tsx`, `mcq-options.tsx`, `diagram-input.tsx`. `use-question-engine.ts` simplified (removed redundant `generatedQuestions` state). **1326 tests pass, 0 failures.**
@@ -85,31 +86,31 @@ Appwrite Cloud
 
 ## Active Surface
 
-| File/Dir | What I'm touching |
-|----------|-------------------|
-| `src/lib/services/quiz-result-processor.ts` | New — quiz completion orchestration (4 sources) |
-| `src/lib/question-engine/enrichment-pipeline.ts` | New — 3-port enrichment (Curriculum/Embedding/PastPaper) |
-| `src/lib/tinyfish/rag-pipeline.ts` | New — withRagGuards HOF, barrel separation |
-| `src/lib/services/push-delivery.ts` | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
-| `src/lib/services/study-planner-service.ts` | New — StudyPlannerService (state/sync/mutations) |
-| `src/lib/gamification-engine/service.ts` | New — GamificationService (state/persist/sync) |
-| `src/lib/ai/cached-ai-generator.ts` | Generic CachedAIGenerator<T> |
-| `src/lib/question-engine/` | GenerateResult structured return, AIClient threading |
-| `src/lib/analytics/analytics-service.ts` | SessionStore interface, extracted from routes |
-| `src/lib/assignments/submission-service.ts` | Uses PushDeliveryService |
-| `src/lib/digest/digest-service.ts` | Uses PushDeliveryService |
-| `src/lib/integration/service.ts` | DataAccess seam sealed (_deps pattern) |
-| `src/lib/orchestrator/learning-orchestrator.ts` | DI db for dedup, constructor injection |
-| `src/lib/orchestrator/handlers/domain.ts` | DomainDb type expanded, generateEmbedding sealed |
-| `src/app/api/exam-papers/classify/route.ts` | Factory DI (createClassifyHandler) |
-| `src/app/api/exam-papers/[id]/extract/route.ts` | _deps pattern for Dexie access |
-| `src/components/dashboard/dashboard-client.tsx` | Uses QuizResultProcessor |
-| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | Uses QuizResultProcessor |
-| `src/app/[locale]/flashcards/flashcards-client.tsx` | Uses QuizResultProcessor |
-| `src/hooks/use-gamification.ts` | Thin subscriber to GamificationService |
-| `src/hooks/use-study-planner.ts` | Thin subscriber to StudyPlannerService |
-| `system-design.md` | Updated for Session 38 |
-| `CONTEXT.md` | Updated for Session 38 |
+| File/Dir                                             | What I'm touching                                             |
+| ---------------------------------------------------- | ------------------------------------------------------------- |
+| `src/lib/services/quiz-result-processor.ts`          | New — quiz completion orchestration (4 sources)               |
+| `src/lib/question-engine/enrichment-pipeline.ts`     | New — 3-port enrichment (Curriculum/Embedding/PastPaper)      |
+| `src/lib/tinyfish/rag-pipeline.ts`                   | New — withRagGuards HOF, barrel separation                    |
+| `src/lib/services/push-delivery.ts`                  | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
+| `src/lib/services/study-planner-service.ts`          | New — StudyPlannerService (state/sync/mutations)              |
+| `src/lib/gamification-engine/service.ts`             | New — GamificationService (state/persist/sync)                |
+| `src/lib/ai/cached-ai-generator.ts`                  | Generic CachedAIGenerator<T>                                  |
+| `src/lib/question-engine/`                           | GenerateResult structured return, AIClient threading          |
+| `src/lib/analytics/analytics-service.ts`             | SessionStore interface, extracted from routes                 |
+| `src/lib/assignments/submission-service.ts`          | Uses PushDeliveryService                                      |
+| `src/lib/digest/digest-service.ts`                   | Uses PushDeliveryService                                      |
+| `src/lib/integration/service.ts`                     | DataAccess seam sealed (\_deps pattern)                       |
+| `src/lib/orchestrator/learning-orchestrator.ts`      | DI db for dedup, constructor injection                        |
+| `src/lib/orchestrator/handlers/domain.ts`            | DomainDb type expanded, generateEmbedding sealed              |
+| `src/app/api/exam-papers/classify/route.ts`          | Factory DI (createClassifyHandler)                            |
+| `src/app/api/exam-papers/[id]/extract/route.ts`      | \_deps pattern for Dexie access                               |
+| `src/components/dashboard/dashboard-client.tsx`      | Uses QuizResultProcessor                                      |
+| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | Uses QuizResultProcessor                                      |
+| `src/app/[locale]/flashcards/flashcards-client.tsx`  | Uses QuizResultProcessor                                      |
+| `src/hooks/use-gamification.ts`                      | Thin subscriber to GamificationService                        |
+| `src/hooks/use-study-planner.ts`                     | Thin subscriber to StudyPlannerService                        |
+| `system-design.md`                                   | Updated for Session 38                                        |
+| `CONTEXT.md`                                         | Updated for Session 38                                        |
 
 ## Background Knowledge
 
@@ -183,13 +184,13 @@ Appwrite Cloud
 
 ## Memory References
 
-| File | What's inside | Priority |
-|------|---------------|----------|
-| `repo-index.md` | Full directory tree, entry points, data flow, conventions, recent changes, TODOs | Reference |
-| `prompt-catalog.md` | Catalog of all discoverable prompt contexts | Reference |
-| `memory.md` | All decisions (ADR-lite), patterns, failures, open questions, resources | High |
-| `system-design.md` | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High |
-| `AGENTS.md` | Engine architecture, math conventions, session 1-37 history, Dexie schema progression | High |
-| `CONTEXT.md` | Domain glossary — prepend to any agent prompt | High |
-| `DESIGN.md` | "The Emerald Study Room" design system (342 lines) | Medium |
-| `TODO.md` | Outstanding tasks and completed work log | Medium |
+| File                | What's inside                                                                               | Priority  |
+| ------------------- | ------------------------------------------------------------------------------------------- | --------- |
+| `repo-index.md`     | Full directory tree, entry points, data flow, conventions, recent changes, TODOs            | Reference |
+| `prompt-catalog.md` | Catalog of all discoverable prompt contexts                                                 | Reference |
+| `memory.md`         | All decisions (ADR-lite), patterns, failures, open questions, resources                     | High      |
+| `system-design.md`  | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High      |
+| `AGENTS.md`         | Engine architecture, math conventions, session 1-37 history, Dexie schema progression       | High      |
+| `CONTEXT.md`        | Domain glossary — prepend to any agent prompt                                               | High      |
+| `DESIGN.md`         | "The Emerald Study Room" design system (342 lines)                                          | Medium    |
+| `TODO.md`           | Outstanding tasks and completed work log                                                    | Medium    |

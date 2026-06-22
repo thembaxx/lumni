@@ -1,58 +1,68 @@
 {
-	"subjectId": "geography",
-	"subjectName": "Geography",
-	"topics": [
-		{
-			"id": "climate-weather",
-			"name": "Climate and Weather",
-			"order": 1, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "geo-atmosphere", "name": "Atmosphere", "order": 1 },
-				{ "id": "geo-climate-patterns", "name": "Climate Patterns", "order": 2 },
-				{ "id": "geo-synoptic", "name": "Synoptic Weather Maps", "order": 3 },
-				{ "id": "geo-climate-change", "name": "Climate Change", "order": 4 }
-			]
-		},
-		{
-			"id": "geomorphology",
-			"name": "Geomorphology",
-			"order": 2, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "geo-earth-structure", "name": "Earth Structure", "order": 1 },
-				{ "id": "geo-fluvial", "name": "Fluvial Processes", "order": 2 },
-				{ "id": "geo-geomorphology", "name": "Landforms", "order": 3 }
-			]
-		},
-		{
-			"id": "population",
-			"name": "Population and Settlement",
-			"order": 3, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "geo-population-dynamics", "name": "Population Dynamics", "order": 1 },
-				{ "id": "geo-urbanization", "name": "Urbanization", "order": 2 },
-				{ "id": "geo-settlement", "name": "Settlement Geography", "order": 3 }
-			]
-		},
-		{
-			"id": "economic-geography",
-			"name": "Economic Geography of SA",
-			"order": 4, "prerequisites": ["population"], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "geo-agriculture", "name": "Agriculture", "order": 1 },
-				{ "id": "geo-mining", "name": "Mining", "order": 2 },
-				{ "id": "geo-industry", "name": "Industry", "order": 3 },
-				{ "id": "geo-tourism", "name": "Tourism", "order": 4 }
-			]
-		},
-		{
-			"id": "geographical-skills",
-			"name": "Geographical Skills",
-			"order": 5, "prerequisites": [], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "geo-mapwork", "name": "Mapwork", "order": 1 },
-				{ "id": "geo-gis", "name": "GIS", "order": 2 },
-				{ "id": "geo-fieldwork", "name": "Fieldwork", "order": 3 }
-			]
-		}
-	]
+  "subjectId": "geography",
+  "subjectName": "Geography",
+  "topics": [
+    {
+      "id": "climate-weather",
+      "name": "Climate and Weather",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "geo-atmosphere", "name": "Atmosphere", "order": 1 },
+        { "id": "geo-climate-patterns", "name": "Climate Patterns", "order": 2 },
+        { "id": "geo-synoptic", "name": "Synoptic Weather Maps", "order": 3 },
+        { "id": "geo-climate-change", "name": "Climate Change", "order": 4 }
+      ]
+    },
+    {
+      "id": "geomorphology",
+      "name": "Geomorphology",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "geo-earth-structure", "name": "Earth Structure", "order": 1 },
+        { "id": "geo-fluvial", "name": "Fluvial Processes", "order": 2 },
+        { "id": "geo-geomorphology", "name": "Landforms", "order": 3 }
+      ]
+    },
+    {
+      "id": "population",
+      "name": "Population and Settlement",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "geo-population-dynamics", "name": "Population Dynamics", "order": 1 },
+        { "id": "geo-urbanization", "name": "Urbanization", "order": 2 },
+        { "id": "geo-settlement", "name": "Settlement Geography", "order": 3 }
+      ]
+    },
+    {
+      "id": "economic-geography",
+      "name": "Economic Geography of SA",
+      "order": 4,
+      "prerequisites": ["population"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "geo-agriculture", "name": "Agriculture", "order": 1 },
+        { "id": "geo-mining", "name": "Mining", "order": 2 },
+        { "id": "geo-industry", "name": "Industry", "order": 3 },
+        { "id": "geo-tourism", "name": "Tourism", "order": 4 }
+      ]
+    },
+    {
+      "id": "geographical-skills",
+      "name": "Geographical Skills",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "geo-mapwork", "name": "Mapwork", "order": 1 },
+        { "id": "geo-gis", "name": "GIS", "order": 2 },
+        { "id": "geo-fieldwork", "name": "Fieldwork", "order": 3 }
+      ]
+    }
+  ]
 }

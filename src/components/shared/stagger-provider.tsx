@@ -1,53 +1,44 @@
 "use client";
 
-import {
-	createContext,
-	type ReactNode,
-	use,
-	useCallback,
-	useMemo,
-	useRef,
-} from "react";
+import { createContext, type ReactNode, use, useCallback, useMemo, useRef } from "react";
 import { SectionReveal } from "@/components/dashboard/section-reveal";
 
 interface StaggerContextValue {
-	register: () => number;
+  register: () => number;
 }
 
 const StaggerContext = createContext<StaggerContextValue>({
-	register: () => 0,
+  register: () => 0,
 });
 
 export function StaggerProvider({
-	children,
-	baseDelay = 0.05,
+  children,
+  baseDelay = 0.05,
 }: {
-	children: ReactNode;
-	baseDelay?: number;
+  children: ReactNode;
+  baseDelay?: number;
 }) {
-	const counterRef = useRef(0);
-	const register = useCallback(() => {
-		const idx = counterRef.current;
-		counterRef.current += 1;
-		return idx * baseDelay;
-	}, [baseDelay]);
+  const counterRef = useRef(0);
+  const register = useCallback(() => {
+    const idx = counterRef.current;
+    counterRef.current += 1;
+    return idx * baseDelay;
+  }, [baseDelay]);
 
-	const value = useMemo(() => ({ register }), [register]);
-	return (
-		<StaggerContext.Provider value={value}>{children}</StaggerContext.Provider>
-	);
+  const value = useMemo(() => ({ register }), [register]);
+  return <StaggerContext.Provider value={value}>{children}</StaggerContext.Provider>;
 }
 
 function useStagger(): number {
-	const { register } = use(StaggerContext);
-	const delayRef = useRef<number | null>(null);
-	if (delayRef.current === null) {
-		delayRef.current = register();
-	}
-	return delayRef.current;
+  const { register } = use(StaggerContext);
+  const delayRef = useRef<number | null>(null);
+  if (delayRef.current === null) {
+    delayRef.current = register();
+  }
+  return delayRef.current;
 }
 
 export function StaggeredSection({ children }: { children: ReactNode }) {
-	const delay = useStagger();
-	return <SectionReveal delay={delay}>{children}</SectionReveal>;
+  const delay = useStagger();
+  return <SectionReveal delay={delay}>{children}</SectionReveal>;
 }

@@ -14,8 +14,7 @@ const TODO_ITEMS: Record<string, TodoItem[]> = {
   "P3 --- Custom Domain": [
     {
       title: "Replace Vercel domain",
-      description:
-        "Change https://lumni-psi.vercel.app to custom domain in referral links.",
+      description: "Change https://lumni-psi.vercel.app to custom domain in referral links.",
       priority: 3,
     },
   ],
@@ -45,14 +44,12 @@ const TODO_ITEMS: Record<string, TodoItem[]> = {
     },
     {
       title: "Push notifications for exam dates",
-      description:
-        "Alert users 24h before each of their enrolled subjects exams.",
+      description: "Alert users 24h before each of their enrolled subjects exams.",
       priority: 2,
     },
     {
       title: "Calendar export (iCal / Google Calendar)",
-      description:
-        "iCal / Google Calendar export button in NationalExamCalendar.",
+      description: "iCal / Google Calendar export button in NationalExamCalendar.",
       priority: 2,
     },
     {
@@ -143,11 +140,9 @@ async function gql(query: string) {
 async function createIssue(
   title: string,
   description: string,
-  priority: Priority
+  priority: Priority,
 ): Promise<string> {
-  const desc = description
-    ? description.replace(/"/g, '\\"').replace(/\n/g, "\\n")
-    : " ";
+  const desc = description ? description.replace(/"/g, '\\"').replace(/\n/g, "\\n") : " ";
   const query = `mutation {
     issueCreate(input: {
       teamId: "${TEAM_ID}"

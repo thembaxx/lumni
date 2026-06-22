@@ -8,58 +8,62 @@ Commit baseline: `8a6fadbe`
 
 ## Execution order & status
 
-| Plan | Title | Priority | Effort | Risk | Depends on | Status |
-|------|-------|----------|--------|------|------------|--------|
-| 001 | Fix privilege escalation + auth on teacher endpoints | P1 | S | MED | — | DONE |
-| 002 | Harden AI budget against IP spoofing | P1 | M | MED | — | DONE |
-| 003 | Fix mixed generation redundant AI calls | P1 | S | MED | — | DONE |
-| 004 | Fix caching strategy sequential-first reads | P1 | S | LOW | — | DONE |
-| 005 | Add tests for quiz-result-processor | P2 | M | LOW | — | DONE |
-| 006 | Make rate limiter fail-closed on store error | P2 | S | LOW | — | DONE |
-| 007 | Add upper bound to question generation count | P2 | S | LOW | — | DONE |
-| 008 | Parallelize independent enrichment pipeline sources | P2 | S | LOW | — | DONE |
-| 009 | Replace sequential seen-questions writes with bulkAdd | P2 | S | LOW | — | DONE |
-| 010 | Fix analytics service parallel retry | P3 | S | LOW | — | DONE |
-| 011 | Optimize sync handler memory with streaming | P3 | M | MED | — | DONE |
-| 012 | Add tests for retention-loop next-action | P2 | M | MED | — | DONE (13 tests) |
-| 013 | Add tests for enrichment pipeline | P2 | M | MED | — | DONE |
-| 014 | Wire vocabulary saves into SM-2 flashcard engine | P2 | S | LOW | — | DONE |
-| 015 | Enable offline quiz playback from downloaded packs | P2 | M | MED | — | DONE |
-| 016 | Populate stories content library for all 11 SA languages | P3 | L | LOW | — | DONE |
-| 017 | Remove dead premium infrastructure | P3 | S | MED | — | DONE |
-| 018 | Stories TTS + reading progress tracking | P1 | M | MED | — | DONE |
-| 019 | Sync handler + gamification service tests | P2 | M | LOW | — | DONE (44 tests) |
-| 020 | Knowledge graph improvements | P2 | M | MED | — | DONE |
-| 021 | Live session join/leave/activity | P2 | M | MED | — | DONE |
-| 022 | i18n — Fill 64 missing keys for 8 SA languages | P2 | M | LOW | — | DONE |
-| 024 | Offline stories bundle — cache stories on first sync | P3 | S | LOW | — | DONE |
-| 023 | Cross-domain search — stories + lessons + vocabulary | P2 | M | LOW | — | DONE |
-| 025 | Story exercises — fill-in-blank, true-false, matching | P2 | M | MED | — | DONE |
-| 026 | Offline dictionary pre-cache | P3 | S | LOW | — | DONE |
-| 027 | Dictionary C2 — Wiktionary API for SA languages + Word of the Day | P2 | M | LOW | — | DONE |
-| 029 | Teacher tools — live session monitoring | P2 | M | MED | — | DONE |
-| 030 | Pronunciation C1 — phoneme assessment + lesson integration | P3 | M | MED | — | DONE |
-| 031 | i18n quality audit — 8 SA locale files | P2 | M | LOW | 022 | DONE |
-| 032 | PWA install polish + offline page | P3 | S | LOW | — | DONE |
-| 033 | More stories — AI-generated + more Gutenberg | P3 | L | LOW | — | DONE |
-| 034 | Polish/hardening — a11y, error handling, performance | P2 | S | LOW | — | DONE |
-| 038 | Community — shared flashcards, competitions, study groups | P2 | M | MED | — | DONE |
-| 037 | Go to market — SEO, landing page, onboarding | P1 | S | LOW | — | DONE |
-| 036 | Content expansion — exam papers + question banks | P3 | L | LOW | — | DONE |
-| 035 | Quality hardening — Lighthouse audit + edge case hardening | P2 | S | LOW | — | DONE |
+| Plan | Title                                                             | Priority | Effort | Risk | Depends on | Status          |
+| ---- | ----------------------------------------------------------------- | -------- | ------ | ---- | ---------- | --------------- |
+| 001  | Fix privilege escalation + auth on teacher endpoints              | P1       | S      | MED  | —          | DONE            |
+| 002  | Harden AI budget against IP spoofing                              | P1       | M      | MED  | —          | DONE            |
+| 003  | Fix mixed generation redundant AI calls                           | P1       | S      | MED  | —          | DONE            |
+| 004  | Fix caching strategy sequential-first reads                       | P1       | S      | LOW  | —          | DONE            |
+| 005  | Add tests for quiz-result-processor                               | P2       | M      | LOW  | —          | DONE            |
+| 006  | Make rate limiter fail-closed on store error                      | P2       | S      | LOW  | —          | DONE            |
+| 007  | Add upper bound to question generation count                      | P2       | S      | LOW  | —          | DONE            |
+| 008  | Parallelize independent enrichment pipeline sources               | P2       | S      | LOW  | —          | DONE            |
+| 009  | Replace sequential seen-questions writes with bulkAdd             | P2       | S      | LOW  | —          | DONE            |
+| 010  | Fix analytics service parallel retry                              | P3       | S      | LOW  | —          | DONE            |
+| 011  | Optimize sync handler memory with streaming                       | P3       | M      | MED  | —          | DONE            |
+| 012  | Add tests for retention-loop next-action                          | P2       | M      | MED  | —          | DONE (13 tests) |
+| 013  | Add tests for enrichment pipeline                                 | P2       | M      | MED  | —          | DONE            |
+| 014  | Wire vocabulary saves into SM-2 flashcard engine                  | P2       | S      | LOW  | —          | DONE            |
+| 015  | Enable offline quiz playback from downloaded packs                | P2       | M      | MED  | —          | DONE            |
+| 016  | Populate stories content library for all 11 SA languages          | P3       | L      | LOW  | —          | DONE            |
+| 017  | Remove dead premium infrastructure                                | P3       | S      | MED  | —          | DONE            |
+| 018  | Stories TTS + reading progress tracking                           | P1       | M      | MED  | —          | DONE            |
+| 019  | Sync handler + gamification service tests                         | P2       | M      | LOW  | —          | DONE (44 tests) |
+| 020  | Knowledge graph improvements                                      | P2       | M      | MED  | —          | DONE            |
+| 021  | Live session join/leave/activity                                  | P2       | M      | MED  | —          | DONE            |
+| 022  | i18n — Fill 64 missing keys for 8 SA languages                    | P2       | M      | LOW  | —          | DONE            |
+| 024  | Offline stories bundle — cache stories on first sync              | P3       | S      | LOW  | —          | DONE            |
+| 023  | Cross-domain search — stories + lessons + vocabulary              | P2       | M      | LOW  | —          | DONE            |
+| 025  | Story exercises — fill-in-blank, true-false, matching             | P2       | M      | MED  | —          | DONE            |
+| 026  | Offline dictionary pre-cache                                      | P3       | S      | LOW  | —          | DONE            |
+| 027  | Dictionary C2 — Wiktionary API for SA languages + Word of the Day | P2       | M      | LOW  | —          | DONE            |
+| 029  | Teacher tools — live session monitoring                           | P2       | M      | MED  | —          | DONE            |
+| 030  | Pronunciation C1 — phoneme assessment + lesson integration        | P3       | M      | MED  | —          | DONE            |
+| 031  | i18n quality audit — 8 SA locale files                            | P2       | M      | LOW  | 022        | DONE            |
+| 032  | PWA install polish + offline page                                 | P3       | S      | LOW  | —          | DONE            |
+| 033  | More stories — AI-generated + more Gutenberg                      | P3       | L      | LOW  | —          | DONE            |
+| 034  | Polish/hardening — a11y, error handling, performance              | P2       | S      | LOW  | —          | DONE            |
+| 038  | Community — shared flashcards, competitions, study groups         | P2       | M      | MED  | —          | DONE            |
+| 037  | Go to market — SEO, landing page, onboarding                      | P1       | S      | LOW  | —          | DONE            |
+| 036  | Content expansion — exam papers + question banks                  | P3       | L      | LOW  | —          | DONE            |
+| 035  | Quality hardening — Lighthouse audit + edge case hardening        | P2       | S      | LOW  | —          | DONE            |
 
 ## Execution phases
 
 **Phase 1 — Security (P1, do first):**
+
 - 001 → 002 → 006 → 007 (all independent, can be parallelized)
 
 **Phase 2 — Performance (P1, after security):**
+
 - 003 → 004 → 008 → 009 (all independent, can be parallelized)
 
 **Phase 3 — Tests (P2, after perf):**
+
 - 005 → 012 → 013 (all independent, can be parallelized)
 
 **Phase 4 — Tech debt + Direction (P2-P3):**
+
 - 010 → 011 (tech debt, independent)
 - 014 → 015 → 016 → 017 (direction, independent)
 

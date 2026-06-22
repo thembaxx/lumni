@@ -4,11 +4,11 @@ import { logError } from "@/lib/shared/logger";
 import type { TopicPlan } from "@/lib/study-planner/types";
 
 interface EnrichedSession {
-	topicId: string;
-	subjectId: string;
-	suggestedMinutes: number;
-	studyTip?: string;
-	focusArea?: string;
+  topicId: string;
+  subjectId: string;
+  suggestedMinutes: number;
+  studyTip?: string;
+  focusArea?: string;
 }
 
 const ENRICH_PROMPT = `You are an AI study planner for South African Grade 12 students. Given a list of scheduled study topics with their estimated minutes and priority levels, personalize the schedule by:
@@ -35,59 +35,59 @@ Rules:
 - Return ONLY the JSON array, no other text`;
 
 export async function enrichPlanWithAI(
-	topics: Array<TopicPlan & { scheduledDate?: string }>,
+  topics: Array<TopicPlan & { scheduledDate?: string }>,
 ): Promise<EnrichedSession[]> {
-	let ai: ReturnType<typeof getAI>;
-	try {
-		ai = getAI();
-	} catch {
-		return topics.map(mapToEnriched);
-	}
-	if (!ai) return topics.map(mapToEnriched);
+  let ai: ReturnType<typeof getAI>;
+  try {
+    ai = getAI();
+  } catch {
+    return topics.map(mapToEnriched);
+  }
+  if (!ai) return topics.map(mapToEnriched);
 
-	const input = topics.map((t) => ({
-		topicId: t.topicId,
-		subjectId: t.subjectId,
-		estimatedMinutes: Math.round(t.estimatedMinutes),
-		priority: t.priority,
-	}));
+  const input = topics.map((t) => ({
+    topicId: t.topicId,
+    subjectId: t.subjectId,
+    estimatedMinutes: Math.round(t.estimatedMinutes),
+    priority: t.priority,
+  }));
 
-	const userPrompt = `Topics to personalize:\n${JSON.stringify(input, null, 2)}`;
+  const userPrompt = `Topics to personalize:\n${JSON.stringify(input, null, 2)}`;
 
-	try {
-		const response = await ai.generateWithSystem(ENRICH_PROMPT, userPrompt);
-		if (isAIFailure(response)) {
-			logError("AIPlannerEnrich", response.error);
-			return topics.map(mapToEnriched);
-		}
+  try {
+    const response = await ai.generateWithSystem(ENRICH_PROMPT, userPrompt);
+    if (isAIFailure(response)) {
+      logError("AIPlannerEnrich", response.error);
+      return topics.map(mapToEnriched);
+    }
 
-		const parsed = JSON.parse(response.content) as EnrichedSession[];
-		if (!Array.isArray(parsed) || parsed.length === 0) {
-			return topics.map(mapToEnriched);
-		}
+    const parsed = JSON.parse(response.content) as EnrichedSession[];
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return topics.map(mapToEnriched);
+    }
 
-		const enrichedMap = new Map(parsed.map((e) => [e.topicId, e]));
-		return topics.map((t) => {
-			const aiResult = enrichedMap.get(t.topicId);
-			if (!aiResult) return mapToEnriched(t);
-			return {
-				topicId: t.topicId,
-				subjectId: t.subjectId,
-				suggestedMinutes: aiResult.suggestedMinutes,
-				studyTip: aiResult.studyTip,
-				focusArea: aiResult.focusArea,
-			};
-		});
-	} catch (e) {
-		logError("AIPlannerEnrich", e);
-		return topics.map(mapToEnriched);
-	}
+    const enrichedMap = new Map(parsed.map((e) => [e.topicId, e]));
+    return topics.map((t) => {
+      const aiResult = enrichedMap.get(t.topicId);
+      if (!aiResult) return mapToEnriched(t);
+      return {
+        topicId: t.topicId,
+        subjectId: t.subjectId,
+        suggestedMinutes: aiResult.suggestedMinutes,
+        studyTip: aiResult.studyTip,
+        focusArea: aiResult.focusArea,
+      };
+    });
+  } catch (e) {
+    logError("AIPlannerEnrich", e);
+    return topics.map(mapToEnriched);
+  }
 }
 
 function mapToEnriched(t: TopicPlan): EnrichedSession {
-	return {
-		topicId: t.topicId,
-		subjectId: t.subjectId,
-		suggestedMinutes: Math.round(t.estimatedMinutes),
-	};
+  return {
+    topicId: t.topicId,
+    subjectId: t.subjectId,
+    suggestedMinutes: Math.round(t.estimatedMinutes),
+  };
 }

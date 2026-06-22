@@ -29,6 +29,7 @@ The stack uses a `::before` pseudo-element so the accent tint layers above the f
 The `::before` covers the full area at 10% accent opacity, subtly shifting the glass from neutral to Emerald-tinted. The `pointer-events-none` ensures click targets pass through.
 
 **3 files, one variant chain each:**
+
 - `top-nav.tsx` `<header>`: add `relative before:absolute before:inset-0 before:bg-(--system-accent-alpha-10) before:pointer-events-none`
 - `bottom-nav.tsx` outer `<nav>` or inner `<div>`: same chain
 - `sidebar-nav.tsx` `<aside>`: same chain
@@ -61,14 +62,17 @@ Three sub-changes:
 #### 3a. Manifest
 
 Add `display_override` to `public/manifest.json`:
+
 ```json
 "display_override": ["window-controls-overlay", "minimal-ui", "standalone"]
 ```
+
 This tells Chromium-based browsers on desktop: prefer rendering behind the window controls. If not supported, fall back to `minimal-ui` then `standalone`.
 
 #### 3b. CSS environment variables
 
 Add to `src/app/globals.css`:
+
 ```css
 /* PWA titlebar drag region — only applies when window-controls-overlay is active */
 @media (display-mode: standalone) {
@@ -119,3 +123,4 @@ The top offset is applied via inline style (not a Tailwind class) to avoid CSS p
 - Install PWA on Windows/Linux desktop Chrome, confirm titlebar area shows themed background
 - Install PWA on macOS Safari, confirm no regression (titlebar stays native)
 - Verify all three nav bars show subtle Emerald tint in both light and dark modes
+```

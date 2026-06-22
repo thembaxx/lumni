@@ -4,5 +4,5 @@ export { FormSkeleton } from "./form-skeleton";
 export { PageSkeleton } from "./page-skeleton";
 
 export function CardSkeleton() {
-	return <Skeleton className="h-32 rounded-xl" />;
+  return <Skeleton className="h-32 rounded-xl" />;
 }

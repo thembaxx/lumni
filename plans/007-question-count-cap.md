@@ -29,6 +29,7 @@ The `/api/engine/generate` route validates `count >= 1` but has no upper bound. 
 ## Current state
 
 **`src/app/api/engine/generate/route.ts:17-21`**:
+
 ```typescript
 validate: (body) => {
   if (!body.subject) return "Subject is required";
@@ -43,18 +44,20 @@ No upper bound check.
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/app/api/engine/generate/route.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                | Expected on success |
+| --------- | ------------------------------------------------------ | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                     | exit 0, no errors   |
+| Lint      | `npx biome check src/app/api/engine/generate/route.ts` | 0 errors            |
+| Tests     | `bun run test`                                         | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/app/api/engine/generate/route.ts`
 
 **Out of scope**:
+
 - The question engine itself
 - Other API routes
 

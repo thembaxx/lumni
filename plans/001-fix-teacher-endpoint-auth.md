@@ -31,34 +31,39 @@ Together these form a privilege escalation chain: anonymous → self-assign teac
 ## Current state
 
 **File 1: `src/app/api/user/role/route.ts`**
+
 - Line 7-30: `POST` handler with `auth: "required"`, validates role is in `VALID_ROLES`, then calls `usersApi.updateLabels()` to append the role to the user's labels.
 - No check that the user is authorized for the requested role (no invitation token, no admin approval, no linked teacher-student record).
 
 **File 2: `src/app/api/teacher/ghost-link/route.ts`**
+
 - Line 7-8: `POST` with `auth: "none"` — creates a ghost link with `teacherId: "ghost"`, no rate limiting.
 - Line 37-38: `DELETE` with `auth: "none"` — deletes any ghost link by token, no ownership check.
 
 **File 3: `src/app/api/teacher/students/[studentId]/report/route.ts`**
+
 - Uses `auth: "required"` but queries Appwrite with the `studentId` from URL params without verifying the caller is linked to that student.
 
 **Repo convention for auth**: Use `createRouteHandler` with `auth: "required"` for authenticated endpoints. For teacher-specific routes, the pattern is to check a teacher-students or parent-students relationship before returning data. See `src/lib/api/create-route-handler.ts` for the factory.
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/app/api/user/role/ src/app/api/teacher/ghost-link/ src/app/api/teacher/students/` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                                                                | Expected on success |
+| --------- | ------------------------------------------------------------------------------------------------------ | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                                                                     | exit 0, no errors   |
+| Lint      | `npx biome check src/app/api/user/role/ src/app/api/teacher/ghost-link/ src/app/api/teacher/students/` | 0 errors            |
+| Tests     | `bun run test`                                                                                         | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope** (the only files you should modify):
+
 - `src/app/api/user/role/route.ts`
 - `src/app/api/teacher/ghost-link/route.ts`
 - `src/app/api/teacher/students/[studentId]/report/route.ts`
 
 **Out of scope** (do NOT touch, even though they look related):
+
 - `src/lib/api/create-route-handler.ts` — do not modify the factory
 - `src/lib/auth/` — do not change auth context
 - Any Appwrite collection schema changes — the `TEACHER_STUDENTS` collection already exists
@@ -82,10 +87,7 @@ export const POST = createRouteHandler({
   auth: "required",
   errorLabel: "UserRole",
   validate: (body) => {
-    if (
-      !body.role ||
-      !VALID_ROLES.includes(body.role as (typeof VALID_ROLES)[number])
-    ) {
+    if (!body.role || !VALID_ROLES.includes(body.role as (typeof VALID_ROLES)[number])) {
       return "Invalid role";
     }
     if (body.role !== "student") {
@@ -100,10 +102,7 @@ export const POST = createRouteHandler({
     const existingLabels = user.labels.filter(
       (l) => !VALID_ROLES.includes(l as (typeof VALID_ROLES)[number]),
     );
-    const updated = await usersApi.updateLabels(userId as string, [
-      ...existingLabels,
-      role,
-    ]);
+    const updated = await usersApi.updateLabels(userId as string, [...existingLabels, role]);
     return { labels: updated.labels };
   },
 });
@@ -124,7 +123,7 @@ export const POST = createRouteHandler({
     const token = crypto.randomUUID();
     const link = {
       token,
-      teacherId: userId,  // was: "ghost"
+      teacherId: userId, // was: "ghost"
       createdAt: Date.now(),
       expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
       revoked: false,
@@ -147,21 +146,15 @@ export const DELETE = createRouteHandler({
   execute: async ({ body, userId }: { body: { token?: string }; userId: string }) => {
     if (body.token) {
       try {
-        const docs = await databases.listDocuments(
-          APPWRITE_DATABASE_ID,
-          COLLECTIONS.GHOST_LINKS,
-          [Query.equal("token", body.token)],
-        );
+        const docs = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.GHOST_LINKS, [
+          Query.equal("token", body.token),
+        ]);
         if (docs.documents.length > 0) {
           const link = docs.documents[0];
           if (link.teacherId !== userId) {
             return { success: false, error: "Not authorized" };
           }
-          await databases.deleteDocument(
-            APPWRITE_DATABASE_ID,
-            COLLECTIONS.GHOST_LINKS,
-            link.$id,
-          );
+          await databases.deleteDocument(APPWRITE_DATABASE_ID, COLLECTIONS.GHOST_LINKS, link.$id);
         }
       } catch (e) {
         logError("GhostLinkDelete", e);

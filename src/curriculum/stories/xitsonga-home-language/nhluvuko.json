@@ -1,50 +1,50 @@
 {
-	"id": "nhluvuko",
-	"title": "Nhluvuko",
-	"author": "Lumni",
-	"language": "Xitsonga",
-	"languageId": "xitsonga-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 860,
-	"subjects": ["xitsonga-home-language"],
-	"source": "ai-generated",
-	"topics": ["community", "unity", "development"],
-	"content": "# Nhluvuko\n\nEka muganga wa ka Xigalo, a ku ri ni vaaki vo tala lava a va hanya hi ku pfumalana. Muganga lowu a wu ri ekusuhi ni nambu lowukulu, kambe a ku nga ri na khumbi leri nga hlanganisaka tinxaka leti hambaneke.\n\nSiku rin'wana, tihosi ya muganga yi vitane vanhu hinkwavo. \"Vana va ka hina,\" ku vula tihosi, \"hi fanele hi aka khumbi leri nga ta hi sirhelela eka swihlovo swa mati. Loko hi tirha swin'we, hi nga swi kota.\"\n\nVanhu va sungula ku tirha swin'we. Vavanuna va tsema mihandzu ya mfongo. Vavasati va rhwala mati ni swakudya. Vana va rhwala maribye ya le nambyeni.\n\nXitsongwani xin'wana xa vito ra N'wa-Mavala xi nga kona. N'wa-Mavala a a ri munhu wo navela swilo swa vanhu. A a nga lavi ku tirha, kambe a a lava ku vona vanhu va tsandzeka.\n\n\"Hikwalaho ka yini mi tirha tani?\" N'wa-Mavala a vutisa. \"A mi voni leswaku ku aka khumbi i ntirho wo tika?\"\n\nVan'wana va sungula ku kanakana. Kambe N'wa-Mavala a nga ri na ntiyiso. Vanhu a va fanele va aka khumbi ku sirhelela muganga.\n\nN'wa-Mavala a haha, a haha, a haha. A vula swilo swo biha leswaku vanhu va ta tshika ntirho. Kambe tihosi a yi vonile mbilu ya yena yo biha. Yi n'wi vitane yi n'wi vula: \"N'wa-Mavala, u ni mbilu yo biha. Hi fanele hi tirha swin'we.\"\n\nVanhu va yirisa N'wa-Mavala va tlhela va ya emahlweni ni ntirho wa vona. Hi nkarhunyana, khumbi ri akile. Muganga wu sirheleriwa eka swihlovo swa mati. N'wa-Mavala a va n'wi susile eka muganga.\n\n## Ntivokativi\n\n1. **Nhluvuko** — Loko hi tirha swin'we, hi nga fikelela swilo swikulu.\n2. **Ku tshembeka** — U fanele u tshembeka eka van'wana, u nga vi na mbilu yo biha.\n3. **Vuntshwa** — Loko hi hlanganile, hi ni matimba yo tala.\n\n## Tindzimu ta Mahlovo\n\n| Xitsonga | English | Part of Speech |\n|----------|---------|----------------|\n| nhluvuko | community | noun |\n| muganga | village | noun |\n| sirhelela | protect | verb |\n| khumbi | dam/wall | noun |\n| ntiyiso | truth | noun |",
-	"vocabulary": [
-		{
-			"term": "nhluvuko",
-			"definition": "Community; a group of people living together",
-			"partOfSpeech": "noun",
-			"pronunciation": "/n̩ɬuˈvuːkɔ/",
-			"language": "ts"
-		},
-		{
-			"term": "muganga",
-			"definition": "A village or rural settlement",
-			"partOfSpeech": "noun",
-			"pronunciation": "/muˈɡaːŋɡa/",
-			"language": "ts"
-		},
-		{
-			"term": "sirhelela",
-			"definition": "To protect something from harm or danger",
-			"partOfSpeech": "verb",
-			"pronunciation": "/siˈrɦɛlɛla/",
-			"language": "ts"
-		},
-		{
-			"term": "khumbi",
-			"definition": "A dam or wall built to hold water",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈkʰumbi/",
-			"language": "ts"
-		},
-		{
-			"term": "ntiyiso",
-			"definition": "Truth; honesty and sincerity",
-			"partOfSpeech": "noun",
-			"pronunciation": "/n̩tiˈjiːsɔ/",
-			"language": "ts"
-		}
-	]
+  "id": "nhluvuko",
+  "title": "Nhluvuko",
+  "author": "Lumni",
+  "language": "Xitsonga",
+  "languageId": "xitsonga-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 860,
+  "subjects": ["xitsonga-home-language"],
+  "source": "ai-generated",
+  "topics": ["community", "unity", "development"],
+  "content": "# Nhluvuko\n\nEka muganga wa ka Xigalo, a ku ri ni vaaki vo tala lava a va hanya hi ku pfumalana. Muganga lowu a wu ri ekusuhi ni nambu lowukulu, kambe a ku nga ri na khumbi leri nga hlanganisaka tinxaka leti hambaneke.\n\nSiku rin'wana, tihosi ya muganga yi vitane vanhu hinkwavo. \"Vana va ka hina,\" ku vula tihosi, \"hi fanele hi aka khumbi leri nga ta hi sirhelela eka swihlovo swa mati. Loko hi tirha swin'we, hi nga swi kota.\"\n\nVanhu va sungula ku tirha swin'we. Vavanuna va tsema mihandzu ya mfongo. Vavasati va rhwala mati ni swakudya. Vana va rhwala maribye ya le nambyeni.\n\nXitsongwani xin'wana xa vito ra N'wa-Mavala xi nga kona. N'wa-Mavala a a ri munhu wo navela swilo swa vanhu. A a nga lavi ku tirha, kambe a a lava ku vona vanhu va tsandzeka.\n\n\"Hikwalaho ka yini mi tirha tani?\" N'wa-Mavala a vutisa. \"A mi voni leswaku ku aka khumbi i ntirho wo tika?\"\n\nVan'wana va sungula ku kanakana. Kambe N'wa-Mavala a nga ri na ntiyiso. Vanhu a va fanele va aka khumbi ku sirhelela muganga.\n\nN'wa-Mavala a haha, a haha, a haha. A vula swilo swo biha leswaku vanhu va ta tshika ntirho. Kambe tihosi a yi vonile mbilu ya yena yo biha. Yi n'wi vitane yi n'wi vula: \"N'wa-Mavala, u ni mbilu yo biha. Hi fanele hi tirha swin'we.\"\n\nVanhu va yirisa N'wa-Mavala va tlhela va ya emahlweni ni ntirho wa vona. Hi nkarhunyana, khumbi ri akile. Muganga wu sirheleriwa eka swihlovo swa mati. N'wa-Mavala a va n'wi susile eka muganga.\n\n## Ntivokativi\n\n1. **Nhluvuko** — Loko hi tirha swin'we, hi nga fikelela swilo swikulu.\n2. **Ku tshembeka** — U fanele u tshembeka eka van'wana, u nga vi na mbilu yo biha.\n3. **Vuntshwa** — Loko hi hlanganile, hi ni matimba yo tala.\n\n## Tindzimu ta Mahlovo\n\n| Xitsonga | English | Part of Speech |\n|----------|---------|----------------|\n| nhluvuko | community | noun |\n| muganga | village | noun |\n| sirhelela | protect | verb |\n| khumbi | dam/wall | noun |\n| ntiyiso | truth | noun |",
+  "vocabulary": [
+    {
+      "term": "nhluvuko",
+      "definition": "Community; a group of people living together",
+      "partOfSpeech": "noun",
+      "pronunciation": "/n̩ɬuˈvuːkɔ/",
+      "language": "ts"
+    },
+    {
+      "term": "muganga",
+      "definition": "A village or rural settlement",
+      "partOfSpeech": "noun",
+      "pronunciation": "/muˈɡaːŋɡa/",
+      "language": "ts"
+    },
+    {
+      "term": "sirhelela",
+      "definition": "To protect something from harm or danger",
+      "partOfSpeech": "verb",
+      "pronunciation": "/siˈrɦɛlɛla/",
+      "language": "ts"
+    },
+    {
+      "term": "khumbi",
+      "definition": "A dam or wall built to hold water",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈkʰumbi/",
+      "language": "ts"
+    },
+    {
+      "term": "ntiyiso",
+      "definition": "Truth; honesty and sincerity",
+      "partOfSpeech": "noun",
+      "pronunciation": "/n̩tiˈjiːsɔ/",
+      "language": "ts"
+    }
+  ]
 }

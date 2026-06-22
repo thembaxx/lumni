@@ -32,6 +32,7 @@ LearningOrchestrator  (stateless, per-request)
 Stateless class instantiated per request. Two main workflows:
 
 **`generateQuestionSet(params)`**
+
 1. Call `QuestionEngine.generate()` (full Dexie → Appwrite → AI cache chain)
 2. Validate each question via `QuestionEngine.validate()`
 3. Cache questions to Dexie
@@ -40,6 +41,7 @@ Stateless class instantiated per request. Two main workflows:
 6. Return `{ questions, count, type, jobIds }`
 
 **`gradeAndTrack(question, answer)`**
+
 1. Call `QuestionEngine.grade()`
 2. Enqueue `spaced-rep-update` job
 3. Enqueue `analytics-sync` job
@@ -47,6 +49,7 @@ Stateless class instantiated per request. Two main workflows:
 5. Return `{ result: GradingResult, jobIds }`
 
 **`generateHint(question)`**
+
 1. Call `QuestionEngine.generateHint()`
 2. Return `{ hint }`
 
@@ -54,38 +57,40 @@ Stateless class instantiated per request. Two main workflows:
 
 Dexie-backed background job system. New table `jobs` in the existing `lumni-offline` database (version 4 migration).
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | `number` (auto) | Primary key |
-| `type` | `JobType` | See below |
-| `payload` | `string` (JSON) | Job-specific data |
-| `status` | `pending \| processing \| completed \| failed \| cancelled` | Current state |
-| `priority` | `number` (0-100, default 50) | Higher = processed first |
-| `attempts` | `number` | Retry count |
-| `maxRetries` | `number` | Per-type default |
-| `lastError` | `string?` | Most recent failure message |
-| `scheduledAt` | `number` (epoch ms) | Delayed execution |
-| `createdAt` | `number` | Timestamp |
-| `startedAt` | `number?` | Processing started |
-| `completedAt` | `number?` | Completed timestamp |
-| `resultSummary` | `string?` | Short status for monitoring |
+| Field           | Type                                                        | Description                 |
+| --------------- | ----------------------------------------------------------- | --------------------------- |
+| `id`            | `number` (auto)                                             | Primary key                 |
+| `type`          | `JobType`                                                   | See below                   |
+| `payload`       | `string` (JSON)                                             | Job-specific data           |
+| `status`        | `pending \| processing \| completed \| failed \| cancelled` | Current state               |
+| `priority`      | `number` (0-100, default 50)                                | Higher = processed first    |
+| `attempts`      | `number`                                                    | Retry count                 |
+| `maxRetries`    | `number`                                                    | Per-type default            |
+| `lastError`     | `string?`                                                   | Most recent failure message |
+| `scheduledAt`   | `number` (epoch ms)                                         | Delayed execution           |
+| `createdAt`     | `number`                                                    | Timestamp                   |
+| `startedAt`     | `number?`                                                   | Processing started          |
+| `completedAt`   | `number?`                                                   | Completed timestamp         |
+| `resultSummary` | `string?`                                                   | Short status for monitoring |
 
 **Job Types:**
 
-| Type | Priority | MaxRetries | Handler |
-|------|----------|------------|---------|
-| `visual-pre-cache` | 60 | 2 | VisualEngine.resolve() |
-| `appwrite-sync` | 70 | 3 | syncQuestionsToAppwrite() |
-| `analytics-sync` | 30 | 1 | AnalyticsService.sync() |
-| `spaced-rep-update` | 50 | 2 | SpacedRepService.update() |
-| `progress-update` | 50 | 2 | ProgressService.update() |
+| Type                | Priority | MaxRetries | Handler                   |
+| ------------------- | -------- | ---------- | ------------------------- |
+| `visual-pre-cache`  | 60       | 2          | VisualEngine.resolve()    |
+| `appwrite-sync`     | 70       | 3          | syncQuestionsToAppwrite() |
+| `analytics-sync`    | 30       | 1          | AnalyticsService.sync()   |
+| `spaced-rep-update` | 50       | 2          | SpacedRepService.update() |
+| `progress-update`   | 50       | 2          | ProgressService.update()  |
 
 **Public API:**
+
 - `enqueue(type, payload, opts?)` → `Promise<number>` (returns job ID)
 - `getStatus(jobId)` → `{ status, lastError? }`
 - `getStats()` → `{ pending, processing, failed, completed }`
 
 **Processing (private):**
+
 - `next()` — fetches highest-priority pending job past `scheduledAt`
 - `markProcessing(id)` / `markCompleted(id)` / `markFailed(id, error)`
 - Exponential backoff: base 1s, max 60s, with jitter (reuse `calculateBackoffDelay` from offline.ts)
@@ -98,48 +103,66 @@ Processes jobs with a handler dispatch pattern.
 type JobHandler = (payload: unknown) => Promise<void>;
 
 const handlers: Record<JobType, JobHandler> = {
-  "visual-pre-cache": async (p) => { /* VisualEngine.resolve() */ },
-  "appwrite-sync": async (p) => { /* syncQuestionsToAppwrite() */ },
-  "analytics-sync": async (p) => { /* AnalyticsService.sync() */ },
-  "spaced-rep-update": async (p) => { /* SpacedRepService.update() */ },
-  "progress-update": async (p) => { /* ProgressService.update() */ },
+  "visual-pre-cache": async (p) => {
+    /* VisualEngine.resolve() */
+  },
+  "appwrite-sync": async (p) => {
+    /* syncQuestionsToAppwrite() */
+  },
+  "analytics-sync": async (p) => {
+    /* AnalyticsService.sync() */
+  },
+  "spaced-rep-update": async (p) => {
+    /* SpacedRepService.update() */
+  },
+  "progress-update": async (p) => {
+    /* ProgressService.update() */
+  },
 };
 ```
 
 **Processing loop:**
+
 1. Fetch up to 5 pending jobs (ordered by priority DESC, scheduledAt ASC)
 2. For each: mark processing → dispatch to handler → mark completed or failed
 3. Failed jobs with remaining retries get `scheduledAt = now + backoff(attempts)`
 
 Two contexts:
+
 - **Client-side (primary):** `useJobProcessor()` hook — runs on mount + on reconnect, polls every 30s
 - **Server-side (fallback):** `POST /api/jobs/process` — for admin dashboard or future cron
 
 ### 4. Services (`src/lib/services/`)
 
 **AnalyticsService** — wraps existing `engine-analytics.ts`
+
 - `track(type, data)`: writes to localStorage immediately (non-blocking)
 - `sync(events)`: batch-writes to Appwrite analytics collection, purges synced events
 
 **SpacedRepService** — wraps core algorithm from `use-spaced-repetition.ts`
+
 - `update(question, result)`: SM-2 interval calculation, saves to Dexie progress, enqueues Appwrite sync
 
 **ProgressService** — wraps existing `saveProgress()` from offline.ts
+
 - `update(subject, result)`: updates attempts/correct/streaks in Dexie, enqueues Appwrite sync
 
 ### 5. API Route Changes
 
 **`src/app/api/engine/generate/route.ts`** — minimal diff:
+
 - Create `LearningOrchestrator` instead of `QuestionEngine`
 - Call `orchestrator.generateQuestionSet(body)`
 - Return `{ questions, count, type, jobIds }`
 
 **`src/app/api/engine/grade/route.ts`** — minimal diff:
+
 - Create `LearningOrchestrator` instead of `QuestionEngine`
 - Call `orchestrator.gradeAndTrack(question, answer)`
 - Return `{ ...gradingResult, jobIds }`
 
 **`src/app/api/jobs/process/route.ts`** (new, uses `createRouteHandler`):
+
 - Accepts optional `{ limit?: number }`
 - Calls `JobProcessor.processBatch(limit)`
 - Returns `{ processed, succeeded, failed }`
@@ -151,6 +174,7 @@ Two contexts:
 ### Question Generation Flow (before vs after)
 
 **Before:**
+
 ```
 API Route → QuestionEngine.generate()
   → AI generation
@@ -161,6 +185,7 @@ API Route → QuestionEngine.generate()
 ```
 
 **After:**
+
 ```
 API Route → Orchestrator.generateQuestionSet()
   → QuestionEngine.generate()
@@ -174,6 +199,7 @@ API Route → Orchestrator.generateQuestionSet()
 ### Grading Flow (before vs after)
 
 **Before:**
+
 ```
 API Route → QuestionEngine.grade()
   → AI grading
@@ -182,6 +208,7 @@ API Route → QuestionEngine.grade()
 ```
 
 **After:**
+
 ```
 API Route → Orchestrator.gradeAndTrack()
   → QuestionEngine.grade()
@@ -193,18 +220,19 @@ API Route → Orchestrator.gradeAndTrack()
 
 ## Error Handling
 
-| Scenario | Behavior |
-|----------|----------|
-| Job handler throws | Increment attempts; if < maxRetries, re-enqueue with backoff; else mark failed |
-| Dexie write fails | Job stays pending; retry on next cycle |
-| Appwrite unavailable | Job retries with backoff; eventually fails with error logged |
-| Client goes offline | `useJobProcessor` pauses; resumes on `online` event |
-| Server API called with no jobs | Returns `{ processed: 0 }` — no-op |
-| Orchestrator workflow fails | Throws to API route (existing error handling preserved) |
+| Scenario                       | Behavior                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| Job handler throws             | Increment attempts; if < maxRetries, re-enqueue with backoff; else mark failed |
+| Dexie write fails              | Job stays pending; retry on next cycle                                         |
+| Appwrite unavailable           | Job retries with backoff; eventually fails with error logged                   |
+| Client goes offline            | `useJobProcessor` pauses; resumes on `online` event                            |
+| Server API called with no jobs | Returns `{ processed: 0 }` — no-op                                             |
+| Orchestrator workflow fails    | Throws to API route (existing error handling preserved)                        |
 
 ## Files Changed
 
 ### New files:
+
 - `src/lib/orchestrator/index.ts` — barrel export
 - `src/lib/orchestrator/types.ts` — JobType, JobStatus, JobRecord, orchestrator types
 - `src/lib/orchestrator/learning-orchestrator.ts` — main class
@@ -218,6 +246,7 @@ API Route → Orchestrator.gradeAndTrack()
 - `src/app/api/jobs/process/route.ts` — server-side processing endpoint
 
 ### Modified files:
+
 - `src/lib/db/offline.ts` — add version 4 with `jobs` table
 - `src/app/api/engine/generate/route.ts` — use orchestrator
 - `src/app/api/engine/grade/route.ts` — use orchestrator

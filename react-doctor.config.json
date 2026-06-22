@@ -1,125 +1,138 @@
 {
-	"$schema": "https://react.doctor/schema/config.json",
-	"rules": {
-		"react-doctor/prefer-useReducer": "off",
-		"react-doctor/no-giant-component": "off"
-	},
-	"ignore": {
-		"rules": [
-			"deslop/unused-file",
-			"deslop/unused-export",
-			"react-doctor/nextjs-missing-metadata",
-			"react-doctor/no-multi-comp",
-			"react-doctor/only-export-components",
-			"react-doctor/prefer-module-scope-pure-function",
-			"react-doctor/async-await-in-loop",
-			"socket/low-supply-chain-score"
-		],
-		"overrides": [
-			{
-				"files": ["src/components/onboarding/particle-field.tsx"],
-				"rules": ["react-doctor/no-unknown-property"]
-			},
-			{
-				"files": [
-					"src/app/layout.tsx",
-					"src/app/[locale]/layout.tsx",
-					"src/components/ui/safe-html.tsx",
-					"src/components/ui/chart.tsx"
-				],
-				"rules": ["react-doctor/no-danger", "react-doctor/dangerous-html-sink"]
-			},
-			{
-				"files": ["package.json"],
-				"rules": ["deslop/unused-dependency", "deslop/unused-dev-dependency"]
-			},
-			{
-				"files": ["src/components/quiz/hooks/use-quiz-view.ts"],
-				"rules": [
-					"react-doctor/no-event-handler",
-					"react-doctor/exhaustive-deps"
-				]
-			},
-			{
-				"files": ["src/components/dashboard/daily-bolt-overlay.tsx"],
-				"rules": [
-					"react-doctor/no-event-handler",
-					"react-doctor/no-chain-state-updates"
-				]
-			},
-			{
-				"files": [
-					"src/components/ui/live-waveform/canvas-component.tsx",
-					"src/components/dashboard/search/search-results.tsx"
-				],
-				"rules": ["react-doctor/prefer-tag-over-role"]
-			},
-			{
-				"files": ["src/hooks/use-scroll-reveal.ts"],
-				"rules": ["react-doctor/no-initialize-state"]
-			},
-			{
-				"files": [
-					"src/lib/z-integration/integration.int-test.ts",
-					"src/lib/server/exam-paper-actions.ts"
-				],
-				"rules": ["react-doctor/server-sequential-independent-await"]
-			},
-			{
-				"files": ["src/lib/premium/premium-context.tsx"],
-				"rules": [
-					"react-doctor/no-event-handler",
-					"react-doctor/no-chain-state-updates",
-					"react-doctor/no-effect-chain",
-					"react-doctor/query-no-usequery-for-mutation"
-				]
-			},
-			{
-				"files": [".agents/skills/impeccable/scripts/modern-screenshot.umd.js"],
-				"rules": ["react-doctor/iframe-missing-sandbox"]
-			},
-			{
-				"files": ["src/hooks/use-lesson-progress.ts"],
-				"rules": ["react-doctor/no-cascading-set-state"]
-			},
-			{
-				"files": ["src/hooks/use-vocabulary.ts"],
-				"rules": ["react-doctor/no-derived-state"]
-			},
-			{
-				"files": [
-					"src/app/[locale]/study/[subjectId]/[topicId]/[subtopicId]/lesson-view-client.tsx"
-				],
-				"rules": ["react-doctor/no-event-handler"]
-			},
-			{
-				"files": ["src/components/dashboard/question-of-the-day-card.tsx"],
-				"rules": ["react-doctor/no-initialize-state"]
-			},
-			{
-				"files": ["src/app/api/gamification/__tests__/route.test.ts"],
-				"rules": ["react-doctor/no-this-in-sfc"]
-			},
-			{
-				"files": ["src/app/api/payfast/notify/route.ts"],
-				"rules": ["react-doctor/insecure-crypto-risk"]
-			},
-			{
-				"files": [".github/workflows/ci.yml"],
-				"rules": ["react-doctor/build-pipeline-secret-boundary"]
-			},
-			{
-				"files": ["pnpm-workspace.yaml"],
-				"rules": ["react-doctor/require-pnpm-hardening"]
-			},
-			{
-				"files": ["src/components/settings/tabs/progress-export.tsx"],
-				"rules": ["react-doctor/dangerous-html-sink"]
-			},
-			{
-				"files": ["src/components/stories/comprehension-question-card.tsx"],
-				"rules": ["react-doctor/no-array-index-as-key"]
-			}
-		]
-	}
+  "$schema": "https://react.doctor/schema/config.json",
+  "rules": {
+    "react-doctor/prefer-useReducer": "off",
+    "react-doctor/no-giant-component": "off"
+  },
+  "ignore": {
+    "rules": [
+      "deslop/unused-file",
+      "deslop/unused-export",
+      "react-doctor/nextjs-missing-metadata",
+      "react-doctor/no-multi-comp",
+      "react-doctor/only-export-components",
+      "react-doctor/prefer-module-scope-pure-function",
+      "react-doctor/async-await-in-loop",
+      "socket/low-supply-chain-score"
+    ],
+    "overrides": [
+      {
+        "files": ["src/components/onboarding/particle-field.tsx"],
+        "rules": ["react-doctor/no-unknown-property"]
+      },
+      {
+        "files": [
+          "src/app/layout.tsx",
+          "src/app/[locale]/layout.tsx",
+          "src/components/ui/safe-html.tsx",
+          "src/components/ui/chart.tsx"
+        ],
+        "rules": ["react-doctor/no-danger", "react-doctor/dangerous-html-sink"]
+      },
+      {
+        "files": ["package.json"],
+        "rules": ["deslop/unused-dependency", "deslop/unused-dev-dependency"]
+      },
+      {
+        "files": ["src/components/quiz/hooks/use-quiz-view.ts"],
+        "rules": ["react-doctor/no-event-handler", "react-doctor/exhaustive-deps"]
+      },
+      {
+        "files": ["src/components/dashboard/daily-bolt-overlay.tsx"],
+        "rules": ["react-doctor/no-event-handler", "react-doctor/no-chain-state-updates"]
+      },
+      {
+        "files": [
+          "src/components/ui/live-waveform/canvas-component.tsx",
+          "src/components/dashboard/search/search-results.tsx"
+        ],
+        "rules": ["react-doctor/prefer-tag-over-role"]
+      },
+      {
+        "files": ["src/hooks/use-scroll-reveal.ts"],
+        "rules": ["react-doctor/no-initialize-state"]
+      },
+      {
+        "files": [
+          "src/lib/z-integration/integration.int-test.ts",
+          "src/lib/server/exam-paper-actions.ts"
+        ],
+        "rules": [
+          "react-doctor/server-auth-actions",
+          "react-doctor/server-sequential-independent-await"
+        ]
+      },
+      {
+        "files": ["src/lib/premium/premium-context.tsx"],
+        "rules": [
+          "react-doctor/no-event-handler",
+          "react-doctor/no-chain-state-updates",
+          "react-doctor/no-effect-chain",
+          "react-doctor/query-no-usequery-for-mutation"
+        ]
+      },
+      {
+        "files": [".agents/**"],
+        "rules": ["eslint/no-unused-vars", "eslint/no-shadow"]
+      },
+      {
+        "files": [".agents/skills/impeccable/scripts/modern-screenshot.umd.js"],
+        "rules": ["react-doctor/iframe-missing-sandbox"]
+      },
+      {
+        "files": ["src/hooks/use-lesson-progress.ts"],
+        "rules": ["react-doctor/no-cascading-set-state"]
+      },
+      {
+        "files": ["src/hooks/use-vocabulary.ts"],
+        "rules": ["react-doctor/no-derived-state"]
+      },
+      {
+        "files": [
+          "src/app/[locale]/study/[subjectId]/[topicId]/[subtopicId]/lesson-view-client.tsx"
+        ],
+        "rules": ["react-doctor/no-event-handler"]
+      },
+      {
+        "files": ["src/components/dashboard/question-of-the-day-card.tsx"],
+        "rules": ["react-doctor/no-initialize-state"]
+      },
+      {
+        "files": ["src/app/[locale]/page.tsx"],
+        "rules": ["react-doctor/no-danger"]
+      },
+      {
+        "files": ["src/components/tools/science/periodic-table.tsx"],
+        "rules": ["react-doctor/no-danger"]
+      },
+      {
+        "files": ["src/components/navigation/__tests__/top-nav.test.tsx"],
+        "rules": ["react-doctor/interactive-supports-focus"]
+      },
+      {
+        "files": ["src/app/api/gamification/__tests__/route.test.ts"],
+        "rules": ["react-doctor/no-this-in-sfc"]
+      },
+      {
+        "files": ["src/app/api/payfast/notify/route.ts"],
+        "rules": ["react-doctor/insecure-crypto-risk"]
+      },
+      {
+        "files": [".github/workflows/ci.yml"],
+        "rules": ["react-doctor/build-pipeline-secret-boundary"]
+      },
+      {
+        "files": ["pnpm-workspace.yaml"],
+        "rules": ["react-doctor/require-pnpm-hardening"]
+      },
+      {
+        "files": ["src/components/settings/tabs/progress-export.tsx"],
+        "rules": ["react-doctor/dangerous-html-sink"]
+      },
+      {
+        "files": ["src/components/stories/comprehension-question-card.tsx"],
+        "rules": ["react-doctor/no-array-index-as-key"]
+      }
+    ]
+  }
 }

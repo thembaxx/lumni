@@ -1,49 +1,57 @@
 {
-	"subjectId": "economics",
-	"subjectName": "Economics",
-	"topics": [
-		{
-			"id": "macroeconomics",
-			"name": "Macroeconomics",
-			"order": 1, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "econ-circular-flow", "name": "Circular Flow", "order": 1 },
-				{ "id": "econ-gdp", "name": "GDP and Economic Growth", "order": 2 },
-				{ "id": "econ-business-cycles", "name": "Business Cycles", "order": 3 },
-				{ "id": "econ-multiplier", "name": "Multiplier Effect", "order": 4 }
-			]
-		},
-		{
-			"id": "microeconomics",
-			"name": "Microeconomics",
-			"order": 2, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "econ-demand-supply", "name": "Demand and Supply", "order": 1 },
-				{ "id": "econ-elasticity", "name": "Elasticity", "order": 2 },
-				{ "id": "econ-market-structures", "name": "Market Structures", "order": 3 },
-				{ "id": "econ-cost-revenue", "name": "Cost and Revenue", "order": 4 }
-			]
-		},
-		{
-			"id": "economic-pursuits",
-			"name": "Economic Pursuits",
-			"order": 3, "prerequisites": ["macroeconomics"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "econ-monetary-policy", "name": "Monetary Policy", "order": 1 },
-				{ "id": "econ-fiscal-policy", "name": "Fiscal Policy", "order": 2 },
-				{ "id": "econ-trade", "name": "International Trade", "order": 3 },
-				{ "id": "econ-development", "name": "Economic Development", "order": 4 }
-			]
-		},
-		{
-			"id": "contemporary-issues",
-			"name": "Contemporary Economic Issues",
-			"order": 4, "prerequisites": ["economic-pursuits"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "econ-inflation", "name": "Inflation", "order": 1 },
-				{ "id": "econ-unemployment", "name": "Unemployment", "order": 2 },
-				{ "id": "econ-poverty", "name": "Poverty and Inequality", "order": 3 }
-			]
-		}
-	]
+  "subjectId": "economics",
+  "subjectName": "Economics",
+  "topics": [
+    {
+      "id": "macroeconomics",
+      "name": "Macroeconomics",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "econ-circular-flow", "name": "Circular Flow", "order": 1 },
+        { "id": "econ-gdp", "name": "GDP and Economic Growth", "order": 2 },
+        { "id": "econ-business-cycles", "name": "Business Cycles", "order": 3 },
+        { "id": "econ-multiplier", "name": "Multiplier Effect", "order": 4 }
+      ]
+    },
+    {
+      "id": "microeconomics",
+      "name": "Microeconomics",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "econ-demand-supply", "name": "Demand and Supply", "order": 1 },
+        { "id": "econ-elasticity", "name": "Elasticity", "order": 2 },
+        { "id": "econ-market-structures", "name": "Market Structures", "order": 3 },
+        { "id": "econ-cost-revenue", "name": "Cost and Revenue", "order": 4 }
+      ]
+    },
+    {
+      "id": "economic-pursuits",
+      "name": "Economic Pursuits",
+      "order": 3,
+      "prerequisites": ["macroeconomics"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "econ-monetary-policy", "name": "Monetary Policy", "order": 1 },
+        { "id": "econ-fiscal-policy", "name": "Fiscal Policy", "order": 2 },
+        { "id": "econ-trade", "name": "International Trade", "order": 3 },
+        { "id": "econ-development", "name": "Economic Development", "order": 4 }
+      ]
+    },
+    {
+      "id": "contemporary-issues",
+      "name": "Contemporary Economic Issues",
+      "order": 4,
+      "prerequisites": ["economic-pursuits"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "econ-inflation", "name": "Inflation", "order": 1 },
+        { "id": "econ-unemployment", "name": "Unemployment", "order": 2 },
+        { "id": "econ-poverty", "name": "Poverty and Inequality", "order": 3 }
+      ]
+    }
+  ]
 }

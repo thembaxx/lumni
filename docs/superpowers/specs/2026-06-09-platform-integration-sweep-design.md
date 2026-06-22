@@ -19,6 +19,7 @@ A sweep of 13 integration, edge-case, and bug-fix items identified during a deep
 **Problem:** Pages at `/search`, `/upload`, `/bookmarks`, `/settings`, `/past-papers`, `/review`, `/premium`, `/support`, `/offline` crash with HTTP 000 when accessed without locale prefix. Root cause: module-level Dexie instantiation in `dexie-data-access.ts` / `schema.ts` fires during SSR where `indexedDB` is unavailable.
 
 **Fix:**
+
 - `src/lib/db/dexie-data-access.ts`: Wrap `DexieDataAccess` constructor in `typeof window === "undefined"` guard with a lazy singleton.
 - `src/app/[locale]/layout.tsx`: Add `SUPPORTED_LOCALES` check and fallback to `defaultLocale` for `params.locale`.
 
@@ -30,6 +31,7 @@ A sweep of 13 integration, edge-case, and bug-fix items identified during a deep
 **Problem:** `QuestionCardInput.tsx:232` sends `{ type: "numeric", value: calcValue }` where `calcValue` is a string. Grader at `processors/graders/calculation.ts:6` casts `a.value as { value: number; unit?: string }` — evaluates `"42".value = undefined`, producing `NaN` on every comparison. Every answer grades as incorrect. Unit partial credit path (30%) is also silently broken.
 
 **Fix (two-sided):**
+
 - **Sender** (`QuestionCardInput.tsx`): Add `unitValue` state, wire `onUnitChange` from `CalculationInput`, send `{ type: "numeric", value: { value: parseFloat(calcValue), unit: unitValue } }`.
 - **Grader** (`calculation.ts`): Add defensive parse — if `a.value` is string or number, wrap as `{ value: Number(a.value) }`.
 - Mirror fix in `exam/part-renderer.tsx` if it has the same pattern.
@@ -41,6 +43,7 @@ A sweep of 13 integration, edge-case, and bug-fix items identified during a deep
 **Problem:** `question-engine.ts:121,177` hardcodes `type: "short-answer"` for all pool questions, ignoring `pq.questionType` from `question-extractor.ts`. An MCQ becomes a short-answer text input with no options.
 
 **Fix:** Map `pq.questionType` to the correct `Question.type` with the matching body shape. A switch in `question-engine.ts` maps:
+
 - `"multiple-choice"` → type `"multiple-choice"` with `body: { options, correctOption }` (extract options from `pq.questionText` if available, otherwise fall back to short-answer)
 - `"calculation"` → type `"calculation"` with `body: { correctValue, unit?, tolerance }`
 - `"essay"` → type `"essay"` with `body: { modelAnswer, minWords, maxWords }`
@@ -68,6 +71,7 @@ The `PastPaperQuestion.questionType` field already carries the correct type — 
 **Problem:** `next-action.ts` never queries `retentionRecurrence`. Wrong answers scheduled for review via RetentionService are invisible to the "what should I do next" decision.
 
 **Fix:** Add a new tier at priority #2 in `resolveNextAction()`:
+
 > 2a. Due retention recurrences → `/quiz?subject=X&topic=Y&count=3&reviewMode=true`
 
 Check `retentionRecurrence` table for entries where `scheduledAt <= now && !completed`. If ≥1 found, suggest review. If <3 found, supplement with weakest-topic questions to make a full quiz session.
@@ -81,6 +85,7 @@ The `retentionRecurrence` DataAccess table already exists at `_deps.db.retention
 **Problem:** Error types (`concept-misunderstanding`, `calculation-error`, etc.) stored on `WrongAnswerEntry` but never consumed by the question engine or prompts.
 
 **Fix:** Add optional `remediationFocus?: string` to `GenerationParams`. When present, `PromptManager` adjusts the system prompt:
+
 - `"calculation-error"` → "Emphasize step-by-step working and unit checking"
 - `"concept-misunderstanding"` → "Reinforce foundational principles at a lower Bloom level"
 - `"misread-question"` → "Include 'what is the question asking' cues"
@@ -96,6 +101,7 @@ The `remediationFocus` follows the same injection pattern as `topicCompetencyLev
 **Problem:** `QuizEngine.tsx:45-48` calls `useQuiz` with only `{ subject, count, questionType }` — no competency data. Embedded quizzes get generic questions without personalized difficulty/Bloom level.
 
 **Fix:** Add optional `competencyProps` prop to `QuizEngine`:
+
 ```ts
 interface QuizCompetencyProps {
   topicCompetencyLevel?: CompetencyLevel;
@@ -118,6 +124,7 @@ Pass through to `useQuiz()`. Default stays as-is (no competency) for backward co
 **Problem:** Student clicks "Practice" on an assignment, takes the quiz, but no submission record is created. The teacher sees no completion data. Competency is not updated.
 
 **Fix:**
+
 1. Create `POST /api/student/assignments/[id]/submit` — accepts `{ score, maxScore, totalQuestions, correctCount }`, upserts into `ASSIGNMENT_SUBMISSIONS` Appwrite collection.
 2. Wire quiz completion (`quiz-view.tsx` state machine's complete handler) to call the submit API when `assignmentId` URL param is present.
 3. After submission, upsert `CompetencyRecord` for each assignment topic with the quiz score.
@@ -151,6 +158,7 @@ Minimal change — the chat page already has `useSearchParams()` access and a wo
 **Problem:** Study guides render as read-only content. No way to practice or create flashcards from the guide.
 
 **Fix:** Add buttons at the bottom of each generated guide:
+
 - "Practice this topic" → `/quiz?subject=X&topic=Y&count=10`
 - "Generate flashcards" → calls `flashcardEngine.createFromKeyPoints()` with section key points
 
@@ -161,6 +169,7 @@ Minimal change — the chat page already has `useSearchParams()` access and a wo
 **Problem:** Nav link to `/past-papers` at `src/lib/navigation/config.ts:72` has no corresponding page — 404 error.
 
 **Fix:** Create `src/app/[locale]/past-papers/page.tsx` with:
+
 - Subject selector (reuses `SubjectSelect` component)
 - Year grid (filtered by available extracted papers)
 - Paper list with metadata (year, paper number, question count)
@@ -179,6 +188,7 @@ The extraction pipeline (`exam-paper-ingestion/`) and `pastPaperMode` in the eng
 **Problem:** `algorithms.ts` sorts topics by mastery only (weakest first). Knowledge graph `prerequisite` edges are never consulted, so a student might be scheduled for an advanced topic before its prerequisite.
 
 **Fix:** Within the constraint-based scheduler (`algorithms.ts`), add a prerequisite-check pass:
+
 1. Before assigning a topic candidate to a date, query the cached knowledge graph edges for that topic.
 2. If any prerequisite topics are unscheduled, either:
    - Schedule the prerequisite first (shift within the same day if capacity allows)
@@ -194,6 +204,7 @@ This slots between candidate sort (line 146) and study date assignment (line 201
 **Problem:** `schedulePlanAwareReminder()` fires once on plan creation. Individual study sessions don't trigger notifications.
 
 **Fix:** On plan generation, iterate over the next 7 days of sessions and register push notifications via `notification-service.ts`:
+
 - If session is today: fire at 08:00
 - If session is in the future: fire 15 minutes before scheduled time
 
@@ -210,6 +221,7 @@ Uses existing push subscription infrastructure.
 **Problem:** `question-engine.ts:158-162` launches `MAX_RETRIES+1 = 3` parallel batches and keeps the longest result. Wastes 2/3 of AI calls.
 
 **Fix:** Change to sequential retry:
+
 1. Run batch 1. If returned count ≥ `remainingCount`, return immediately.
 2. Only if batch 1 returns fewer than needed, run batch 2 with a different seed/temperature.
 3. Same for batch 3 (rare — only if first 2 both underperform).
@@ -223,6 +235,7 @@ Target: fill `remainingCount`, not maximize. Same retry budget, ~3× cost effici
 **Problem:** Diagram questions show instructions text only. No drawing canvas or upload mechanism.
 
 **Fix:** Add a canvas/drawing area + upload button to `QuestionCardInput`'s `diagram` case:
+
 - Uses existing `useUpload()` infrastructure for image upload
 - The uploaded image is sent as part of the answer for AI grading
 - The grading path already supports image-based answers

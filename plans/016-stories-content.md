@@ -31,6 +31,7 @@ The stories feature has a complete pipeline (reader, comprehension questions, vo
 **`src/curriculum/stories/`**: Contains story JSON files and language-specific index files. Only 4 languages have content.
 
 **`src/lib/stories/story-data.ts:5-21`**: Import maps for 4 languages only:
+
 ```typescript
 const STORY_IMPORTS: Record<string, () => Promise<{ default: StoryMeta[] }>> = {
   english: () => import("@/curriculum/stories/english/index.json"),
@@ -46,19 +47,21 @@ Missing: Sepedi, Setswana, Sesotho, Xitsonga, siSwati, Tshivenda.
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check` on changed files | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                            | Expected on success |
+| --------- | ---------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                 | exit 0, no errors   |
+| Lint      | `npx biome check` on changed files | 0 errors            |
+| Tests     | `bun run test`                     | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/curriculum/stories/` — add story content for 7 missing languages
 - `src/lib/stories/story-data.ts` — add import maps for new languages
 
 **Out of scope**:
+
 - `src/app/[locale]/stories/` — story reader already works
 - Story comprehension question generation — already handled by AI
 
@@ -72,6 +75,7 @@ Missing: Sepedi, Setswana, Sesotho, Xitsonga, siSwati, Tshivenda.
 ### Step 1: Source CC-BY stories
 
 Source stories from African Storybook (https://africanstorybook.org/) or similar CC-BY repositories for:
+
 - Sepedi (Northern Sotho)
 - Setswana
 - Sesotho (Southern Sotho)
@@ -80,6 +84,7 @@ Source stories from African Storybook (https://africanstorybook.org/) or similar
 - Tshivenda
 
 Each language needs 2-5 age-appropriate stories with:
+
 - Title
 - Content (200-2000 words)
 - Language code
@@ -88,6 +93,7 @@ Each language needs 2-5 age-appropriate stories with:
 ### Step 2: Create story JSON files
 
 For each new language, create:
+
 - `src/curriculum/stories/{language}/index.json` — `StoryMeta[]` array
 - `src/curriculum/stories/{language}/{story-id}.json` — individual story content
 

@@ -5,122 +5,115 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreatePost, useStudyGroups } from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
 
 interface Props {
-	questionText: string;
-	subject: string;
-	topic?: string;
+  questionText: string;
+  subject: string;
+  topic?: string;
 }
 
 export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
-	const { data: groups } = useStudyGroups();
-	const { mutate: createPost, isPending } = useCreatePost();
-	const [open, setOpen] = useState(false);
-	const [selectedGroup, setSelectedGroup] = useState<string>("");
-	const [content, setContent] = useState("");
+  const { data: groups } = useStudyGroups();
+  const { mutate: createPost, isPending } = useCreatePost();
+  const [open, setOpen] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [content, setContent] = useState("");
 
-	const handleSubmit = () => {
-		if (!selectedGroup || !content.trim()) return;
-		createPost(
-			{
-				groupId: selectedGroup,
-				content: content.trim(),
-				questionText,
-				subject,
-				topic,
-			},
-			{
-				onSuccess: () => {
-					setContent("");
-					setSelectedGroup("");
-					setOpen(false);
-				},
-			},
-		);
-	};
+  const handleSubmit = () => {
+    if (!selectedGroup || !content.trim()) return;
+    createPost(
+      {
+        groupId: selectedGroup,
+        content: content.trim(),
+        questionText,
+        subject,
+        topic,
+      },
+      {
+        onSuccess: () => {
+          setContent("");
+          setSelectedGroup("");
+          setOpen(false);
+        },
+      },
+    );
+  };
 
-	return (
-		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger>
-				<Button variant="outline" size="sm">
-					<HugeiconsIcon icon={MessageAdd01Icon} data-icon="inline-start" />
-					Ask Group
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Ask your study group</DialogTitle>
-				</DialogHeader>
-				<div className="flex flex-col gap-4">
-					<div className="overflow-wrap-anywhere rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
-						{questionText}
-					</div>
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <Button variant="outline" size="sm">
+          <HugeiconsIcon icon={MessageAdd01Icon} data-icon="inline-start" />
+          Ask Group
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Ask your study group</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <div className="overflow-wrap-anywhere rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
+            {questionText}
+          </div>
 
-					{groups && groups.length > 0 ? (
-						<Select
-							value={selectedGroup}
-							onValueChange={(value) => setSelectedGroup(value ?? "")}
-						>
-							<SelectTrigger>
-								<SelectValue placeholder="Select a group" />
-							</SelectTrigger>
-							<SelectContent>
-								{groups.map((g) => (
-									<SelectItem key={g.$id} value={g.$id}>
-										{g.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					) : (
-						<p className="text-muted-foreground text-sm">
-							You are not in any study groups.{" "}
-							<Link href="/study-groups" className="underline">
-								Create or join one
-							</Link>
-						</p>
-					)}
+          {groups && groups.length > 0 ? (
+            <Select value={selectedGroup} onValueChange={(value) => setSelectedGroup(value ?? "")}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a group" />
+              </SelectTrigger>
+              <SelectContent>
+                {groups.map((g) => (
+                  <SelectItem key={g.$id} value={g.$id}>
+                    {g.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <p className="text-muted-foreground text-sm">
+              You are not in any study groups.{" "}
+              <Link href="/study-groups" className="underline">
+                Create or join one
+              </Link>
+            </p>
+          )}
 
-					<Textarea
-						placeholder="What do you want to ask?"
-						value={content}
-						onChange={(e) => setContent(e.target.value)}
-						rows={3}
-					/>
+          <Textarea
+            placeholder="What do you want to ask?"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            rows={3}
+          />
 
-					<div className="flex justify-end gap-2">
-						<Button
-							variant="ghost"
-							onClick={() => setOpen(false)}
-							disabled={isPending}
-						>
-							Cancel
-						</Button>
-						<Button
-							onClick={handleSubmit}
-							disabled={!selectedGroup || !content.trim() || isPending}
-						>
-							{isPending ? "Posting…" : "Post to group"}
-						</Button>
-					</div>
-				</div>
-			</DialogContent>
-		</Dialog>
-	);
+          <div className="flex justify-end gap-2">
+            <Button variant="ghost" onClick={() => setOpen(false)} disabled={isPending}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={!selectedGroup || !content.trim() || isPending}
+            >
+              {isPending ? "Posting…" : "Post to group"}
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }

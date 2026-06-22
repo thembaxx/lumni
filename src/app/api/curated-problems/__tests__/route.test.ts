@@ -10,302 +10,300 @@ const mockGetSubject = vi.fn<(subjectId: string) => unknown>();
 const mockGetTopic = vi.fn<(subjectId: string, topicId: string) => unknown>();
 
 vi.mock("@/lib/ai", () => ({
-	generateWithSystem: mockGenerateWithSystem,
-	initAI: mockInitAI,
-	isAIConfigured: mockIsAIConfigured,
+  generateWithSystem: mockGenerateWithSystem,
+  initAI: mockInitAI,
+  isAIConfigured: mockIsAIConfigured,
 }));
 
 vi.mock("@/lib/ai/with-budget", () => ({
-	checkBudget: mockCheckBudget,
-	trackUsage: mockTrackUsage,
+  checkBudget: mockCheckBudget,
+  trackUsage: mockTrackUsage,
 }));
 
 vi.mock("@/lib/shared/with-rate-limit", () => ({
-	withRateLimit: (handler: unknown) => handler,
+  withRateLimit: (handler: unknown) => handler,
 }));
 
 vi.mock("@/curriculum", () => ({
-	curriculumRegistry: {
-		getSubject: mockGetSubject,
-		getTopic: mockGetTopic,
-	},
+  curriculumRegistry: {
+    getSubject: mockGetSubject,
+    getTopic: mockGetTopic,
+  },
 }));
 
 const { NextRequest } = await import("next/server");
 const { POST } = await import("../route");
 
 describe("POST /api/curated-problems", () => {
-	beforeEach(() => {
-		mockGenerateWithSystem.mockReset();
-		mockInitAI.mockReset();
-		mockIsAIConfigured.mockReset();
-		mockCheckBudget.mockReset();
-		mockTrackUsage.mockReset();
-		mockGetSubject.mockReset();
-		mockGetTopic.mockReset();
-	});
+  beforeEach(() => {
+    mockGenerateWithSystem.mockReset();
+    mockInitAI.mockReset();
+    mockIsAIConfigured.mockReset();
+    mockCheckBudget.mockReset();
+    mockTrackUsage.mockReset();
+    mockGetSubject.mockReset();
+    mockGetTopic.mockReset();
+  });
 
-	test("missing subject returns 400", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
+  test("missing subject returns 400", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({}),
-		});
-		const res = await POST(req);
-		const body = await res.json();
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    const res = await POST(req);
+    const body = await res.json();
 
-		expect(res.status).toBe(400);
-		expect(body.error).toBe("Subject is required");
-	});
+    expect(res.status).toBe(400);
+    expect(body.error).toBe("Subject is required");
+  });
 
-	test("AI not configured returns 500", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(false);
-		mockGenerateWithSystem.mockResolvedValue({
-			available: false,
-			error: "AI not configured",
-			provider: "test",
-		});
+  test("AI not configured returns 500", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(false);
+    mockGenerateWithSystem.mockResolvedValue({
+      available: false,
+      error: "AI not configured",
+      provider: "test",
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({ subject: "mathematics" }),
-		});
-		const res = await POST(req);
-		const body = await res.json();
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({ subject: "mathematics" }),
+    });
+    const res = await POST(req);
+    const body = await res.json();
 
-		expect(res.status).toBe(500);
-		expect(body.error).toBe("AI generation failed: AI not configured");
-	});
+    expect(res.status).toBe(500);
+    expect(body.error).toBe("AI generation failed: AI not configured");
+  });
 
-	test("valid request returns problems with subject, topic, count", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "mathematics",
-			subjectName: "Mathematics",
-			topics: [{ id: "algebra", name: "Algebra", subtopics: [] }],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([
-				{
-					questionText: "Solve 2x + 3 = 7",
-					solution: "x = 2",
-					steps: ["Subtract 3", "Divide by 2"],
-					difficulty: "Easy",
-				},
-				{
-					questionText: "Factor x^2 - 4",
-					solution: "(x-2)(x+2)",
-					steps: ["Difference of squares"],
-					difficulty: "Medium",
-				},
-			]),
-			provider: "gemini",
-			available: true,
-		});
+  test("valid request returns problems with subject, topic, count", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "mathematics",
+      subjectName: "Mathematics",
+      topics: [{ id: "algebra", name: "Algebra", subtopics: [] }],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      content: JSON.stringify([
+        {
+          questionText: "Solve 2x + 3 = 7",
+          solution: "x = 2",
+          steps: ["Subtract 3", "Divide by 2"],
+          difficulty: "Easy",
+        },
+        {
+          questionText: "Factor x^2 - 4",
+          solution: "(x-2)(x+2)",
+          steps: ["Difference of squares"],
+          difficulty: "Medium",
+        },
+      ]),
+      provider: "gemini",
+      available: true,
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({
-				subject: "mathematics",
-				topic: "algebra",
-				count: 2,
-			}),
-		});
-		const res = await POST(req);
-		const body = await res.json();
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({
+        subject: "mathematics",
+        topic: "algebra",
+        count: 2,
+      }),
+    });
+    const res = await POST(req);
+    const body = await res.json();
 
-		expect(res.status).toBe(200);
-		expect(body.subject).toBe("mathematics");
-		expect(body.count).toBe(2);
-		expect(body.problems).toHaveLength(2);
-		expect(body.problems[0].questionText).toBe("Solve 2x + 3 = 7");
-		expect(body.problems[0].id).toContain("mathematics");
-		expect(body.problems[1].difficulty).toBe("Medium");
-		expect(mockTrackUsage).toHaveBeenCalledWith("generate", "test-user");
-	});
+    expect(res.status).toBe(200);
+    expect(body.subject).toBe("mathematics");
+    expect(body.count).toBe(2);
+    expect(body.problems).toHaveLength(2);
+    expect(body.problems[0].questionText).toBe("Solve 2x + 3 = 7");
+    expect(body.problems[0].id).toContain("mathematics");
+    expect(body.problems[1].difficulty).toBe("Medium");
+    expect(mockTrackUsage).toHaveBeenCalledWith("generate", "test-user");
+  });
 
-	test("curriculum integration provides topic context", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "mathematics",
-			subjectName: "Mathematics",
-			topics: [
-				{
-					id: "algebra",
-					name: "Algebra",
-					order: 1,
-					prerequisites: [],
-					bloomTarget: "apply",
-					subtopics: [
-						{
-							id: "algebra-expressions",
-							name: "Expressions and Equations",
-							order: 1,
-						},
-					],
-				},
-			],
-		});
-		mockGetTopic.mockResolvedValue({
-			id: "algebra",
-			name: "Algebra",
-			subtopics: [
-				{
-					id: "algebra-expressions",
-					name: "Expressions and Equations",
-					order: 1,
-				},
-			],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([
-				{
-					questionText: "Test",
-					solution: "Ans",
-					steps: [],
-					difficulty: "Easy",
-				},
-			]),
-			provider: "gemini",
-			available: true,
-		});
+  test("curriculum integration provides topic context", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "mathematics",
+      subjectName: "Mathematics",
+      topics: [
+        {
+          id: "algebra",
+          name: "Algebra",
+          order: 1,
+          prerequisites: [],
+          bloomTarget: "apply",
+          subtopics: [
+            {
+              id: "algebra-expressions",
+              name: "Expressions and Equations",
+              order: 1,
+            },
+          ],
+        },
+      ],
+    });
+    mockGetTopic.mockResolvedValue({
+      id: "algebra",
+      name: "Algebra",
+      subtopics: [
+        {
+          id: "algebra-expressions",
+          name: "Expressions and Equations",
+          order: 1,
+        },
+      ],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      content: JSON.stringify([
+        {
+          questionText: "Test",
+          solution: "Ans",
+          steps: [],
+          difficulty: "Easy",
+        },
+      ]),
+      provider: "gemini",
+      available: true,
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({
-				subject: "mathematics",
-				topic: "algebra",
-				count: 1,
-			}),
-		});
-		await POST(req);
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({
+        subject: "mathematics",
+        topic: "algebra",
+        count: 1,
+      }),
+    });
+    await POST(req);
 
-		expect(mockGetTopic).toHaveBeenCalledWith("mathematics", "algebra");
-	});
+    expect(mockGetTopic).toHaveBeenCalledWith("mathematics", "algebra");
+  });
 
-	test("JSON parse failure falls back with raw content", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "mathematics",
-			subjectName: "Mathematics",
-			topics: [],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			content: "Raw non-JSON response with problem text",
-			provider: "gemini",
-			available: true,
-		});
+  test("JSON parse failure falls back with raw content", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "mathematics",
+      subjectName: "Mathematics",
+      topics: [],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      content: "Raw non-JSON response with problem text",
+      provider: "gemini",
+      available: true,
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({ subject: "mathematics", count: 1 }),
-		});
-		const res = await POST(req);
-		const body = await res.json();
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({ subject: "mathematics", count: 1 }),
+    });
+    const res = await POST(req);
+    const body = await res.json();
 
-		expect(body.problems).toHaveLength(1);
-		expect(body.problems[0].questionText).toBe(
-			"Raw non-JSON response with problem text",
-		);
-		expect(body.problems[0].difficulty).toBe("Medium");
-	});
+    expect(body.problems).toHaveLength(1);
+    expect(body.problems[0].questionText).toBe("Raw non-JSON response with problem text");
+    expect(body.problems[0].difficulty).toBe("Medium");
+  });
 
-	test("STEM subjects get LaTeX in system prompt", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "mathematics",
-			subjectName: "Mathematics",
-			topics: [],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([
-				{
-					questionText: "Test",
-					solution: "Ans",
-					steps: [],
-					difficulty: "Easy",
-				},
-			]),
-			provider: "gemini",
-			available: true,
-		});
+  test("STEM subjects get LaTeX in system prompt", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "mathematics",
+      subjectName: "Mathematics",
+      topics: [],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      content: JSON.stringify([
+        {
+          questionText: "Test",
+          solution: "Ans",
+          steps: [],
+          difficulty: "Easy",
+        },
+      ]),
+      provider: "gemini",
+      available: true,
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({ subject: "mathematics", count: 1 }),
-		});
-		await POST(req);
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({ subject: "mathematics", count: 1 }),
+    });
+    await POST(req);
 
-		expect(mockGenerateWithSystem).toHaveBeenCalledWith(
-			expect.stringContaining("LaTeX math notation"),
-			expect.any(String),
-			expect.any(Object),
-		);
-	});
+    expect(mockGenerateWithSystem).toHaveBeenCalledWith(
+      expect.stringContaining("LaTeX math notation"),
+      expect.any(String),
+      expect.any(Object),
+    );
+  });
 
-	test("non-STEM subjects get plain text prompt without LaTeX", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "history",
-			subjectName: "History",
-			topics: [],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([
-				{
-					questionText: "Test",
-					solution: "Ans",
-					steps: [],
-					difficulty: "Easy",
-				},
-			]),
-			provider: "gemini",
-			available: true,
-		});
+  test("non-STEM subjects get plain text prompt without LaTeX", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "history",
+      subjectName: "History",
+      topics: [],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      content: JSON.stringify([
+        {
+          questionText: "Test",
+          solution: "Ans",
+          steps: [],
+          difficulty: "Easy",
+        },
+      ]),
+      provider: "gemini",
+      available: true,
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({ subject: "history", count: 1 }),
-		});
-		await POST(req);
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({ subject: "history", count: 1 }),
+    });
+    await POST(req);
 
-		expect(mockGenerateWithSystem).toHaveBeenCalledWith(
-			expect.not.stringContaining("LaTeX"),
-			expect.any(String),
-			expect.any(Object),
-		);
-	});
+    expect(mockGenerateWithSystem).toHaveBeenCalledWith(
+      expect.not.stringContaining("LaTeX"),
+      expect.any(String),
+      expect.any(Object),
+    );
+  });
 
-	test("AI failure throws error resulting in 500", async () => {
-		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured.mockReturnValue(true);
-		mockGetSubject.mockResolvedValue({
-			subjectId: "mathematics",
-			subjectName: "Mathematics",
-			topics: [],
-		});
-		mockGenerateWithSystem.mockResolvedValue({
-			available: false,
-			error: "All providers failed",
-			provider: "none",
-		});
+  test("AI failure throws error resulting in 500", async () => {
+    mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
+    mockIsAIConfigured.mockReturnValue(true);
+    mockGetSubject.mockResolvedValue({
+      subjectId: "mathematics",
+      subjectName: "Mathematics",
+      topics: [],
+    });
+    mockGenerateWithSystem.mockResolvedValue({
+      available: false,
+      error: "All providers failed",
+      provider: "none",
+    });
 
-		const req = new NextRequest("http://localhost/api/curated-problems", {
-			method: "POST",
-			body: JSON.stringify({ subject: "mathematics", count: 1 }),
-		});
-		const res = await POST(req);
-		const body = await res.json();
+    const req = new NextRequest("http://localhost/api/curated-problems", {
+      method: "POST",
+      body: JSON.stringify({ subject: "mathematics", count: 1 }),
+    });
+    const res = await POST(req);
+    const body = await res.json();
 
-		expect(res.status).toBe(500);
-		expect(body.error).toContain("AI generation failed");
-	});
+    expect(res.status).toBe(500);
+    expect(body.error).toContain("AI generation failed");
+  });
 });

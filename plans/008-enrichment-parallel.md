@@ -29,6 +29,7 @@ The enrichment pipeline runs `curriculum.fetchCurriculumContext()` and `embeddin
 ## Current state
 
 **`src/lib/question-engine/enrichment-pipeline.ts:241-254`**:
+
 ```typescript
 async enrich(params: GenerationParams): Promise<GenerationParams> {
   const curriculumContext = await curriculum.fetchCurriculumContext(
@@ -52,18 +53,20 @@ Both `fetchCurriculumContext` and `fetchEmbeddingResults` are awaited sequential
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/question-engine/enrichment-pipeline.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                                          | Expected on success |
+| --------- | ---------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                               | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/question-engine/enrichment-pipeline.ts` | 0 errors            |
+| Tests     | `bun run test`                                                   | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/question-engine/enrichment-pipeline.ts` (lines 241-264)
 
 **Out of scope**:
+
 - The curriculum, embedding, or pastPaper source implementations
 - Other enrichment pipeline logic
 

@@ -5,44 +5,44 @@ import { PromptManager } from "./prompt-manager";
 import type { QuestionProcessor, QuestionType } from "./types";
 
 export class ProcessorRegistry {
-	private processors = new Map<QuestionType, QuestionProcessor>();
+  private processors = new Map<QuestionType, QuestionProcessor>();
 
-	constructor(prompts?: PromptManager, ai?: AIClient) {
-		const pm = prompts ?? new PromptManager();
-		for (const config of processorConfigs) {
-			const processor = new TypedQuestionProcessor(
-				config.type as QuestionType,
-				{ generateTemperature: config.temperature },
-				config.grade,
-				config.hint,
-				pm,
-				ai,
-			);
-			this.register(config.type as QuestionType, processor);
-		}
-	}
+  constructor(prompts?: PromptManager, ai?: AIClient) {
+    const pm = prompts ?? new PromptManager();
+    for (const config of processorConfigs) {
+      const processor = new TypedQuestionProcessor(
+        config.type as QuestionType,
+        { generateTemperature: config.temperature },
+        config.grade,
+        config.hint,
+        pm,
+        ai,
+      );
+      this.register(config.type as QuestionType, processor);
+    }
+  }
 
-	private register(type: QuestionType, processor: QuestionProcessor): void {
-		this.processors.set(type, processor);
-	}
+  private register(type: QuestionType, processor: QuestionProcessor): void {
+    this.processors.set(type, processor);
+  }
 
-	getProcessor<T extends QuestionType>(type: T): QuestionProcessor<T> {
-		const processor = this.processors.get(type);
-		if (!processor) {
-			throw new Error(`No processor registered for question type: ${type}`);
-		}
-		return processor as QuestionProcessor<T>;
-	}
+  getProcessor<T extends QuestionType>(type: T): QuestionProcessor<T> {
+    const processor = this.processors.get(type);
+    if (!processor) {
+      throw new Error(`No processor registered for question type: ${type}`);
+    }
+    return processor as QuestionProcessor<T>;
+  }
 
-	getProcessors(types: QuestionType[]): QuestionProcessor[] {
-		return types.map((t) => this.getProcessor(t));
-	}
+  getProcessors(types: QuestionType[]): QuestionProcessor[] {
+    return types.map((t) => this.getProcessor(t));
+  }
 
-	hasProcessor(type: QuestionType): boolean {
-		return this.processors.has(type);
-	}
+  hasProcessor(type: QuestionType): boolean {
+    return this.processors.has(type);
+  }
 
-	listTypes(): QuestionType[] {
-		return Array.from(this.processors.keys());
-	}
+  listTypes(): QuestionType[] {
+    return Array.from(this.processors.keys());
+  }
 }

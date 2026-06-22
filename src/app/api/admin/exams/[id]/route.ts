@@ -3,18 +3,14 @@ import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export const DELETE = createRouteHandler({
-	auth: "admin",
-	execute: async ({ params }) => {
-		const id = params?.id;
-		if (!id) throw new HttpError(400, "Missing exam paper ID");
+  auth: "admin",
+  execute: async ({ params }) => {
+    const id = params?.id;
+    if (!id) throw new HttpError(400, "Missing exam paper ID");
 
-		await databases.deleteDocument(
-			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
-			id,
-		);
+    await databases.deleteDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id);
 
-		return { success: true };
-	},
-	errorLabel: "Delete exam paper",
+    return { success: true };
+  },
+  errorLabel: "Delete exam paper",
 });

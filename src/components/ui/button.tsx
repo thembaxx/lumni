@@ -5,27 +5,25 @@ import type { VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button-variants";
 
-interface ButtonProps
-	extends ButtonPrimitive.Props,
-		VariantProps<typeof buttonVariants> {
-	asChild?: boolean;
+interface ButtonProps extends ButtonPrimitive.Props, VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
 function Button({
-	className,
-	variant = "default",
-	size = "default",
-	asChild,
-	...props
+  className,
+  variant = "default",
+  size = "default",
+  asChild,
+  ...props
 }: ButtonProps) {
-	const Comp = asChild ? Slot : ButtonPrimitive;
-	return (
-		<Comp
-			data-slot="button"
-			className={cn(buttonVariants({ variant, size, className }))}
-			{...props}
-		/>
-	);
+  const Comp = asChild ? Slot : ButtonPrimitive;
+  return (
+    <Comp
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
+  );
 }
 
 export { Button };

@@ -1,65 +1,69 @@
 {
-	"name": "Lumni - Pass Your Matric",
-	"short_name": "Lumni",
-	"description": "Pass your Matric with confidence. AI-powered study companion with quizzes, flashcards, and exam papers.",
-	"start_url": "/dashboard",
-	"display": "standalone",
-	"display_override": ["window-controls-overlay", "minimal-ui", "standalone"],
-	"background_color": "#ffffff",
-	"theme_color": "#fcfaf5",
-	"orientation": "portrait-primary",
-	"scope": "/",
-	"lang": "en-ZA",
-	"icons": [
-		{
-			"src": "/web-app-manifest-192x192.png",
-			"sizes": "96x96",
-			"type": "image/png",
-			"purpose": "any maskable"
-		},
-		{
-			"src": "/web-app-manifest-192x192.png",
-			"sizes": "144x144",
-			"type": "image/png",
-			"purpose": "any maskable"
-		},
-		{
-			"src": "/web-app-manifest-192x192.png",
-			"sizes": "192x192",
-			"type": "image/png",
-			"purpose": "any maskable"
-		},
-		{
-			"src": "/web-app-manifest-512x512.png",
-			"sizes": "512x512",
-			"type": "image/png",
-			"purpose": "any maskable"
-		}
-	],
-	"categories": ["education", "productivity"],
-	"shortcuts": [
-		{
-			"name": "Start Quiz",
-			"short_name": "Quiz",
-			"description": "Start a new quiz session",
-			"url": "/quiz",
-			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }]
-		},
-		{
-			"name": "Flashcards",
-			"short_name": "Cards",
-			"description": "Review your flashcards",
-			"url": "/flashcards",
-			"icons": [{ "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }]
-		}
-	],
-	"share_target": {
-		"action": "/dashboard",
-		"method": "GET",
-		"params": {
-			"title": "title",
-			"text": "text",
-			"url": "url"
-		}
-	}
+  "name": "Lumni - Pass Your Matric",
+  "short_name": "Lumni",
+  "description": "Pass your Matric with confidence. AI-powered study companion with quizzes, flashcards, and exam papers.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "minimal-ui", "standalone"],
+  "background_color": "#ffffff",
+  "theme_color": "#fcfaf5",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-ZA",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Start Quiz",
+      "short_name": "Quiz",
+      "description": "Start a new quiz session",
+      "url": "/quiz",
+      "icons": [
+        { "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }
+      ]
+    },
+    {
+      "name": "Flashcards",
+      "short_name": "Cards",
+      "description": "Review your flashcards",
+      "url": "/flashcards",
+      "icons": [
+        { "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "purpose": "any maskable" }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/dashboard",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

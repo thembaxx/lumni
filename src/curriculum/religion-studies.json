@@ -9,7 +9,11 @@
       "prerequisites": [],
       "bloomTarget": "understand",
       "subtopics": [
-        { "id": "african-traditional-religion", "name": "African Traditional Religion", "order": 1 },
+        {
+          "id": "african-traditional-religion",
+          "name": "African Traditional Religion",
+          "order": 1
+        },
         { "id": "buddhism", "name": "Buddhism", "order": 2 },
         { "id": "christianity", "name": "Christianity", "order": 3 },
         { "id": "islam", "name": "Islam", "order": 4 }

@@ -7,80 +7,73 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
 import { dexieDataAccess } from "@/lib/db";
-import type {
-	CompetencyDataAccess,
-	SyncDataAccess,
-} from "@/lib/db/data-access";
+import type { CompetencyDataAccess, SyncDataAccess } from "@/lib/db/data-access";
 import { exportService } from "@/lib/export";
 
 type ExportTabDb = Pick<CompetencyDataAccess, "quizAttempts"> &
-	Pick<SyncDataAccess, "examSessions">;
+  Pick<SyncDataAccess, "examSessions">;
 
 const _deps: { db: ExportTabDb } = { db: dexieDataAccess };
 
 type ExportState = "idle" | "exporting" | "printing" | "csv-exporting";
 
 function escapeHtml(str: string): string {
-	return str
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;");
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export function ProgressExport() {
-	const { levelInfo } = useGamification();
-	const [exportState, setExportState] = useState<ExportState>("idle");
+  const { levelInfo } = useGamification();
+  const [exportState, setExportState] = useState<ExportState>("idle");
 
-	const handleExportJson = async () => {
-		setExportState("exporting");
-		try {
-			const report = await exportService.buildFullReport();
-			const blob = new Blob([exportService.toJSON(report)], {
-				type: "application/json",
-			});
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement("a");
-			a.href = url;
-			a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.json`;
-			a.click();
-			URL.revokeObjectURL(url);
-		} finally {
-			setExportState("idle");
-		}
-	};
+  const handleExportJson = async () => {
+    setExportState("exporting");
+    try {
+      const report = await exportService.buildFullReport();
+      const blob = new Blob([exportService.toJSON(report)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExportState("idle");
+    }
+  };
 
-	const handleExportCsv = async () => {
-		setExportState("csv-exporting");
-		try {
-			const [quizAttempts, examSessions] = await Promise.all([
-				_deps.db.quizAttempts
-					.orderBy("completedAt")
-					.reverse()
-					.limit(100)
-					.toArray(),
-				_deps.db.examSessions.toArray(),
-			]);
-			const csv = exportService.toCSV(quizAttempts, examSessions);
-			const blob = new Blob([csv], { type: "text/csv" });
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement("a");
-			a.href = url;
-			a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
-			a.click();
-			URL.revokeObjectURL(url);
-		} finally {
-			setExportState("idle");
-		}
-	};
+  const handleExportCsv = async () => {
+    setExportState("csv-exporting");
+    try {
+      const [quizAttempts, examSessions] = await Promise.all([
+        _deps.db.quizAttempts.orderBy("completedAt").reverse().limit(100).toArray(),
+        _deps.db.examSessions.toArray(),
+      ]);
+      const csv = exportService.toCSV(quizAttempts, examSessions);
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExportState("idle");
+    }
+  };
 
-	const handlePrint = async () => {
-		setExportState("printing");
-		try {
-			const report = await exportService.buildFullReport();
-			const printWindow = window.open("", "_blank");
-			if (!printWindow) return;
-			printWindow.document.write(`
+  const handlePrint = async () => {
+    setExportState("printing");
+    try {
+      const report = await exportService.buildFullReport();
+      const printWindow = window.open("", "_blank");
+      if (!printWindow) return;
+      printWindow.document.write(`
 				<!DOCTYPE html>
 				<html lang="en">
 				<head>
@@ -157,11 +150,11 @@ export function ProgressExport() {
 						</thead>
 						<tbody>
 							${Object.entries(report.competency)
-								.map(
-									([subject, data]) =>
-										`<tr><td>${escapeHtml(subject)}</td><td>${escapeHtml(String(data.topics))}</td><td>${Math.round(data.averageScore)}%</td></tr>`,
-								)
-								.join("")}
+                .map(
+                  ([subject, data]) =>
+                    `<tr><td>${escapeHtml(subject)}</td><td>${escapeHtml(String(data.topics))}</td><td>${Math.round(data.averageScore)}%</td></tr>`,
+                )
+                .join("")}
 						</tbody>
 					</table>
 
@@ -172,11 +165,11 @@ export function ProgressExport() {
 						</thead>
 						<tbody>
 							${report.achievements
-								.map(
-									(a) =>
-										`<tr><td>${escapeHtml(a.name ?? a.id)}</td><td>${escapeHtml(a.rarity ?? "—")}</td><td>${new Date(a.earnedAt).toLocaleDateString()}</td></tr>`,
-								)
-								.join("")}
+                .map(
+                  (a) =>
+                    `<tr><td>${escapeHtml(a.name ?? a.id)}</td><td>${escapeHtml(a.rarity ?? "—")}</td><td>${new Date(a.earnedAt).toLocaleDateString()}</td></tr>`,
+                )
+                .join("")}
 						</tbody>
 					</table>
 
@@ -187,12 +180,12 @@ export function ProgressExport() {
 						</thead>
 						<tbody>
 							${report.quizHistory
-								.slice(0, 50)
-								.map(
-									(q) =>
-										`<tr><td>${escapeHtml(q.subject)}</td><td>${q.score}/${q.totalQuestions}</td><td>${q.accuracy}%</td><td>${new Date(q.completedAt).toLocaleDateString()}</td></tr>`,
-								)
-								.join("")}
+                .slice(0, 50)
+                .map(
+                  (q) =>
+                    `<tr><td>${escapeHtml(q.subject)}</td><td>${q.score}/${q.totalQuestions}</td><td>${q.accuracy}%</td><td>${new Date(q.completedAt).toLocaleDateString()}</td></tr>`,
+                )
+                .join("")}
 						</tbody>
 					</table>
 
@@ -203,12 +196,12 @@ export function ProgressExport() {
 						</thead>
 						<tbody>
 							${report.examSessions
-								.slice(0, 20)
-								.map(
-									(e) =>
-										`<tr><td>${escapeHtml(e.paperId)}</td><td>${new Date(e.startedAt).toLocaleDateString()}</td><td>${e.completed ? "Yes" : "No"}</td></tr>`,
-								)
-								.join("")}
+                .slice(0, 20)
+                .map(
+                  (e) =>
+                    `<tr><td>${escapeHtml(e.paperId)}</td><td>${new Date(e.startedAt).toLocaleDateString()}</td><td>${e.completed ? "Yes" : "No"}</td></tr>`,
+                )
+                .join("")}
 						</tbody>
 					</table>
 
@@ -219,56 +212,54 @@ export function ProgressExport() {
 						</thead>
 						<tbody>
 							${report.wrongAnswers
-								.slice(0, 20)
-								.map(
-									(w) =>
-										`<tr><td>${escapeHtml(w.subject)}</td><td>${escapeHtml(w.topic)}</td><td>${w.reviewed ? "Yes" : "No"}</td></tr>`,
-								)
-								.join("")}
+                .slice(0, 20)
+                .map(
+                  (w) =>
+                    `<tr><td>${escapeHtml(w.subject)}</td><td>${escapeHtml(w.topic)}</td><td>${w.reviewed ? "Yes" : "No"}</td></tr>`,
+                )
+                .join("")}
 						</tbody>
 					</table>
 				</body>
 				</html>
 			`);
-			printWindow.document.close();
-			printWindow.focus();
-			setTimeout(() => printWindow.print(), 500);
-		} finally {
-			setExportState("idle");
-		}
-	};
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => printWindow.print(), 500);
+    } finally {
+      setExportState("idle");
+    }
+  };
 
-	return (
-		<div className="flex flex-col gap-3">
-			<Button
-				variant="outline"
-				onClick={handleExportJson}
-				disabled={exportState === "exporting"}
-				className="w-full"
-			>
-				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
-				{exportState === "exporting" ? "Generating…" : "Download JSON Report"}
-			</Button>
-			<Button
-				variant="outline"
-				onClick={handleExportCsv}
-				disabled={exportState === "csv-exporting"}
-				className="w-full"
-			>
-				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
-				{exportState === "csv-exporting"
-					? "Generating…"
-					: "Download CSV Report"}
-			</Button>
-			<Button
-				variant="outline"
-				onClick={handlePrint}
-				disabled={exportState === "printing"}
-				className="w-full"
-			>
-				<HugeiconsIcon icon={PrinterIcon} data-icon="inline-start" />
-				{exportState === "printing" ? "Preparing…" : "Print / Save as PDF"}
-			</Button>
-		</div>
-	);
+  return (
+    <div className="flex flex-col gap-3">
+      <Button
+        variant="outline"
+        onClick={handleExportJson}
+        disabled={exportState === "exporting"}
+        className="w-full"
+      >
+        <HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
+        {exportState === "exporting" ? "Generating…" : "Download JSON Report"}
+      </Button>
+      <Button
+        variant="outline"
+        onClick={handleExportCsv}
+        disabled={exportState === "csv-exporting"}
+        className="w-full"
+      >
+        <HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
+        {exportState === "csv-exporting" ? "Generating…" : "Download CSV Report"}
+      </Button>
+      <Button
+        variant="outline"
+        onClick={handlePrint}
+        disabled={exportState === "printing"}
+        className="w-full"
+      >
+        <HugeiconsIcon icon={PrinterIcon} data-icon="inline-start" />
+        {exportState === "printing" ? "Preparing…" : "Print / Save as PDF"}
+      </Button>
+    </div>
+  );
 }

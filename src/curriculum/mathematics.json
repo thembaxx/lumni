@@ -1,122 +1,122 @@
 {
-	"subjectId": "mathematics",
-	"subjectName": "Mathematics",
-	"topics": [
-		{
-			"id": "algebra",
-			"name": "Algebra",
-			"order": 1,
-			"prerequisites": [],
-			"bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "algebra-expressions", "name": "Expressions and Equations", "order": 1 },
-				{ "id": "algebra-inequalities", "name": "Inequalities", "order": 2 },
-				{ "id": "algebra-patterns", "name": "Number Patterns", "order": 3 },
-				{ "id": "algebra-sequences", "name": "Sequences and Series", "order": 4 }
-			]
-		},
-		{
-			"id": "functions",
-			"name": "Functions and Graphs",
-			"order": 2,
-			"prerequisites": ["algebra"],
-			"bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "functions-linear", "name": "Linear Functions", "order": 1 },
-				{ "id": "functions-quadratic", "name": "Quadratic Functions", "order": 2 },
-				{ "id": "functions-exponential", "name": "Exponential Functions", "order": 3 },
-				{ "id": "functions-hyperbolic", "name": "Hyperbolic Functions", "order": 4 },
-				{ "id": "functions-logarithmic", "name": "Logarithmic Functions", "order": 5 }
-			]
-		},
-		{
-			"id": "finance",
-			"name": "Finance and Growth",
-			"order": 3,
-			"prerequisites": ["algebra"],
-			"bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "finance-simple", "name": "Simple Interest", "order": 1 },
-				{ "id": "finance-compound", "name": "Compound Interest", "order": 2 },
-				{ "id": "finance-annuities", "name": "Annuities", "order": 3 }
-			]
-		},
-		{
-			"id": "trigonometry",
-			"name": "Trigonometry",
-			"order": 4,
-			"prerequisites": ["functions"],
-			"bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "trig-ratios", "name": "Trigonometric Ratios", "order": 1 },
-				{ "id": "trig-identities", "name": "Trigonometric Identities", "order": 2 },
-				{ "id": "trig-equations", "name": "Trigonometric Equations", "order": 3 },
-				{ "id": "trig-graphs", "name": "Trigonometric Graphs", "order": 4 },
-				{ "id": "trig-2d-3d", "name": "2D and 3D Trigonometry", "order": 5 }
-			]
-		},
-		{
-			"id": "euclidean-geometry",
-			"name": "Euclidean Geometry",
-			"order": 5,
-			"prerequisites": ["algebra"],
-			"bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "geometry-triangles", "name": "Triangle Geometry", "order": 1 },
-				{ "id": "geometry-circles", "name": "Circle Geometry", "order": 2 },
-				{ "id": "geometry-proportionality", "name": "Proportionality", "order": 3 }
-			]
-		},
-		{
-			"id": "analytical-geometry",
-			"name": "Analytical Geometry",
-			"order": 6,
-			"prerequisites": ["functions", "euclidean-geometry"],
-			"bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "analytical-lines", "name": "Lines and Angles", "order": 1 },
-				{ "id": "analytical-circles", "name": "Circles", "order": 2 },
-				{ "id": "analytical-conic", "name": "Conic Sections", "order": 3 }
-			]
-		},
-		{
-			"id": "statistics",
-			"name": "Statistics",
-			"order": 7,
-			"prerequisites": ["algebra"],
-			"bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "stats-central", "name": "Measures of Central Tendency", "order": 1 },
-				{ "id": "stats-spread", "name": "Measures of Spread", "order": 2 },
-				{ "id": "stats-representation", "name": "Data Representation", "order": 3 },
-				{ "id": "stats-regression", "name": "Regression and Correlation", "order": 4 }
-			]
-		},
-		{
-			"id": "probability",
-			"name": "Probability",
-			"order": 8,
-			"prerequisites": ["statistics"],
-			"bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "prob-basic", "name": "Basic Probability", "order": 1 },
-				{ "id": "prob-venn", "name": "Venn Diagrams", "order": 2 },
-				{ "id": "prob-conditional", "name": "Conditional Probability", "order": 3 },
-				{ "id": "prob-distributions", "name": "Probability Distributions", "order": 4 }
-			]
-		},
-		{
-			"id": "calculus",
-			"name": "Calculus",
-			"order": 9,
-			"prerequisites": ["functions", "algebra"],
-			"bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "calculus-differentiation", "name": "Differentiation", "order": 1 },
-				{ "id": "calculus-integration", "name": "Integration", "order": 2 },
-				{ "id": "calculus-optimization", "name": "Optimization", "order": 3 },
-				{ "id": "calculus-rate-of-change", "name": "Rate of Change", "order": 4 }
-			]
-		}
-	]
+  "subjectId": "mathematics",
+  "subjectName": "Mathematics",
+  "topics": [
+    {
+      "id": "algebra",
+      "name": "Algebra",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "algebra-expressions", "name": "Expressions and Equations", "order": 1 },
+        { "id": "algebra-inequalities", "name": "Inequalities", "order": 2 },
+        { "id": "algebra-patterns", "name": "Number Patterns", "order": 3 },
+        { "id": "algebra-sequences", "name": "Sequences and Series", "order": 4 }
+      ]
+    },
+    {
+      "id": "functions",
+      "name": "Functions and Graphs",
+      "order": 2,
+      "prerequisites": ["algebra"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "functions-linear", "name": "Linear Functions", "order": 1 },
+        { "id": "functions-quadratic", "name": "Quadratic Functions", "order": 2 },
+        { "id": "functions-exponential", "name": "Exponential Functions", "order": 3 },
+        { "id": "functions-hyperbolic", "name": "Hyperbolic Functions", "order": 4 },
+        { "id": "functions-logarithmic", "name": "Logarithmic Functions", "order": 5 }
+      ]
+    },
+    {
+      "id": "finance",
+      "name": "Finance and Growth",
+      "order": 3,
+      "prerequisites": ["algebra"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "finance-simple", "name": "Simple Interest", "order": 1 },
+        { "id": "finance-compound", "name": "Compound Interest", "order": 2 },
+        { "id": "finance-annuities", "name": "Annuities", "order": 3 }
+      ]
+    },
+    {
+      "id": "trigonometry",
+      "name": "Trigonometry",
+      "order": 4,
+      "prerequisites": ["functions"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "trig-ratios", "name": "Trigonometric Ratios", "order": 1 },
+        { "id": "trig-identities", "name": "Trigonometric Identities", "order": 2 },
+        { "id": "trig-equations", "name": "Trigonometric Equations", "order": 3 },
+        { "id": "trig-graphs", "name": "Trigonometric Graphs", "order": 4 },
+        { "id": "trig-2d-3d", "name": "2D and 3D Trigonometry", "order": 5 }
+      ]
+    },
+    {
+      "id": "euclidean-geometry",
+      "name": "Euclidean Geometry",
+      "order": 5,
+      "prerequisites": ["algebra"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "geometry-triangles", "name": "Triangle Geometry", "order": 1 },
+        { "id": "geometry-circles", "name": "Circle Geometry", "order": 2 },
+        { "id": "geometry-proportionality", "name": "Proportionality", "order": 3 }
+      ]
+    },
+    {
+      "id": "analytical-geometry",
+      "name": "Analytical Geometry",
+      "order": 6,
+      "prerequisites": ["functions", "euclidean-geometry"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "analytical-lines", "name": "Lines and Angles", "order": 1 },
+        { "id": "analytical-circles", "name": "Circles", "order": 2 },
+        { "id": "analytical-conic", "name": "Conic Sections", "order": 3 }
+      ]
+    },
+    {
+      "id": "statistics",
+      "name": "Statistics",
+      "order": 7,
+      "prerequisites": ["algebra"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "stats-central", "name": "Measures of Central Tendency", "order": 1 },
+        { "id": "stats-spread", "name": "Measures of Spread", "order": 2 },
+        { "id": "stats-representation", "name": "Data Representation", "order": 3 },
+        { "id": "stats-regression", "name": "Regression and Correlation", "order": 4 }
+      ]
+    },
+    {
+      "id": "probability",
+      "name": "Probability",
+      "order": 8,
+      "prerequisites": ["statistics"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "prob-basic", "name": "Basic Probability", "order": 1 },
+        { "id": "prob-venn", "name": "Venn Diagrams", "order": 2 },
+        { "id": "prob-conditional", "name": "Conditional Probability", "order": 3 },
+        { "id": "prob-distributions", "name": "Probability Distributions", "order": 4 }
+      ]
+    },
+    {
+      "id": "calculus",
+      "name": "Calculus",
+      "order": 9,
+      "prerequisites": ["functions", "algebra"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "calculus-differentiation", "name": "Differentiation", "order": 1 },
+        { "id": "calculus-integration", "name": "Integration", "order": 2 },
+        { "id": "calculus-optimization", "name": "Optimization", "order": 3 },
+        { "id": "calculus-rate-of-change", "name": "Rate of Change", "order": 4 }
+      ]
+    }
+  ]
 }

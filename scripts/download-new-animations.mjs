@@ -61,7 +61,9 @@ async function main() {
       // Check if it's valid JSON/lottie
       const str = data.toString("utf-8");
       const parsed = JSON.parse(str);
-      console.log(`✓ ${id} (${(data.length / 1024).toFixed(1)} KB) - valid JSON: v${parsed.v || "?"}`);
+      console.log(
+        `✓ ${id} (${(data.length / 1024).toFixed(1)} KB) - valid JSON: v${parsed.v || "?"}`,
+      );
       success++;
     } catch (e) {
       console.log(`✗ ${id}: ${e.message}`);

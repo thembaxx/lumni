@@ -133,18 +133,58 @@
       }
     },
     "shadows": [
-      { "name": "level-1", "value": "0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02)", "purpose": "Default surface separation for list groups and small cards." },
-      { "name": "level-2", "value": "0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02)", "purpose": "Medium depth for popovers, dropdowns, elevated cards." },
-      { "name": "level-3", "value": "0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 16px oklch(0% 0 0 / 0.04), 0 16px 48px oklch(0% 0 0 / 0.03), 0 32px 64px oklch(0% 0 0 / 0.015)", "purpose": "Maximum depth for modals, sheets, and dialogs." },
-      { "name": "solver", "value": "0 2px 8px oklch(52% 0.18 146 / 0.15)", "purpose": "Emerald-tinted glow for the Solve/Call-to-Action button only." }
+      {
+        "name": "level-1",
+        "value": "0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02)",
+        "purpose": "Default surface separation for list groups and small cards."
+      },
+      {
+        "name": "level-2",
+        "value": "0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02)",
+        "purpose": "Medium depth for popovers, dropdowns, elevated cards."
+      },
+      {
+        "name": "level-3",
+        "value": "0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 16px oklch(0% 0 0 / 0.04), 0 16px 48px oklch(0% 0 0 / 0.03), 0 32px 64px oklch(0% 0 0 / 0.015)",
+        "purpose": "Maximum depth for modals, sheets, and dialogs."
+      },
+      {
+        "name": "solver",
+        "value": "0 2px 8px oklch(52% 0.18 146 / 0.15)",
+        "purpose": "Emerald-tinted glow for the Solve/Call-to-Action button only."
+      }
     ],
     "motion": [
-      { "name": "ease-ios", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default ease for all state transitions and UI animations." },
-      { "name": "ease-ios-decelerate", "value": "cubic-bezier(0, 0, 0.2, 1)", "purpose": "Objects arriving on screen (entrance animations)." },
-      { "name": "ease-ios-accelerate", "value": "cubic-bezier(0.4, 0, 1, 1)", "purpose": "Objects leaving screen (exit animations)." },
-      { "name": "ease-ios-spring", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Interactive gesture feedback, springy tab switches." },
-      { "name": "duration-default", "value": "200ms", "purpose": "Standard transition duration for state changes." },
-      { "name": "duration-slow", "value": "300ms", "purpose": "Slow transitions for sheet/dialog entrances." }
+      {
+        "name": "ease-ios",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default ease for all state transitions and UI animations."
+      },
+      {
+        "name": "ease-ios-decelerate",
+        "value": "cubic-bezier(0, 0, 0.2, 1)",
+        "purpose": "Objects arriving on screen (entrance animations)."
+      },
+      {
+        "name": "ease-ios-accelerate",
+        "value": "cubic-bezier(0.4, 0, 1, 1)",
+        "purpose": "Objects leaving screen (exit animations)."
+      },
+      {
+        "name": "ease-ios-spring",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Interactive gesture feedback, springy tab switches."
+      },
+      {
+        "name": "duration-default",
+        "value": "200ms",
+        "purpose": "Standard transition duration for state changes."
+      },
+      {
+        "name": "duration-slow",
+        "value": "300ms",
+        "purpose": "Slow transitions for sheet/dialog entrances."
+      }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px", "purpose": "Mobile landscape / small tablet." },
@@ -231,11 +271,31 @@
       "Every interaction answers with physical feedback (scale, color, smooth transition): the app feels alive under your finger"
     ],
     "rules": [
-      { "name": "The One Voice Rule", "body": "Study Green is used on 10% or less of any given screen. Its rarity is the point. When everything is highlighted, nothing is.", "section": "colors" },
-      { "name": "The Warm Base Rule", "body": "Every neutral surface is tinted toward a warm 60deg hue at chroma 0.003-0.005. Pure gray reads cold; warm reads supportive.", "section": "colors" },
-      { "name": "The OS Tracking Rule", "body": "Letter-spacing values match Apple HIG specifications at every size. Do not override with generic 0.05em or 0.1em values.", "section": "typography" },
-      { "name": "The Dynamic Type Rule", "body": "All text sizes are multiplied by --text-scale (default 1.0). The system respects user font size preferences without breaking layout.", "section": "typography" },
-      { "name": "The Ambient Float Rule", "body": "Shadows tint foreground surfaces upward; they do not carve depth into the page. Hierarchy is established by background lightness first, shadow second.", "section": "elevation" }
+      {
+        "name": "The One Voice Rule",
+        "body": "Study Green is used on 10% or less of any given screen. Its rarity is the point. When everything is highlighted, nothing is.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Base Rule",
+        "body": "Every neutral surface is tinted toward a warm 60deg hue at chroma 0.003-0.005. Pure gray reads cold; warm reads supportive.",
+        "section": "colors"
+      },
+      {
+        "name": "The OS Tracking Rule",
+        "body": "Letter-spacing values match Apple HIG specifications at every size. Do not override with generic 0.05em or 0.1em values.",
+        "section": "typography"
+      },
+      {
+        "name": "The Dynamic Type Rule",
+        "body": "All text sizes are multiplied by --text-scale (default 1.0). The system respects user font size preferences without breaking layout.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ambient Float Rule",
+        "body": "Shadows tint foreground surfaces upward; they do not carve depth into the page. Hierarchy is established by background lightness first, shadow second.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do use Study Green on 10% or less of any screen. Reserve it for primary actions, active states, and focus indicators.",

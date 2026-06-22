@@ -5,16 +5,16 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { QuizClient } from "./quiz-client";
 
 export const metadata: Metadata = {
-	title: "Quiz Practice - Lumni",
-	description: "Practice your subjects with adaptive quizzes",
+  title: "Quiz Practice - Lumni",
+  description: "Practice your subjects with adaptive quizzes",
 };
 
 export default function QuizPage() {
-	return (
-		<AppErrorBoundary>
-			<Suspense fallback={<QuestionCardSkeleton />}>
-				<QuizClient />
-			</Suspense>
-		</AppErrorBoundary>
-	);
+  return (
+    <AppErrorBoundary>
+      <Suspense fallback={<QuestionCardSkeleton />}>
+        <QuizClient />
+      </Suspense>
+    </AppErrorBoundary>
+  );
 }

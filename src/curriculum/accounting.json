@@ -1,55 +1,65 @@
 {
-	"subjectId": "accounting",
-	"subjectName": "Accounting",
-	"topics": [
-		{
-			"id": "accounting-concepts",
-			"name": "Accounting Concepts",
-			"order": 1, "prerequisites": [], "bloomTarget": "remember",
-			"subtopics": [
-				{ "id": "acc-gaap", "name": "GAAP Principles", "order": 1 },
-				{ "id": "acc-accounting-cycle", "name": "Accounting Cycle", "order": 2 }
-			]
-		},
-		{
-			"id": "financial-accounting",
-			"name": "Financial Accounting",
-			"order": 2, "prerequisites": ["accounting-concepts"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "acc-ledger", "name": "Ledger Accounts", "order": 1 },
-				{ "id": "acc-trial-balance", "name": "Trial Balance", "order": 2 },
-				{ "id": "acc-adjustments", "name": "Adjustments", "order": 3 },
-				{ "id": "acc-financial-statements", "name": "Financial Statements", "order": 4 }
-			]
-		},
-		{
-			"id": "managerial-accounting",
-			"name": "Managerial Accounting",
-			"order": 3, "prerequisites": ["financial-accounting"], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "acc-budgeting", "name": "Budgeting", "order": 1 },
-				{ "id": "acc-costing", "name": "Cost Accounting", "order": 2 },
-				{ "id": "acc-breakeven", "name": "Breakeven Analysis", "order": 3 }
-			]
-		},
-		{
-			"id": "reconciliations",
-			"name": "Reconciliations",
-			"order": 4, "prerequisites": ["financial-accounting"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "acc-bank-recon", "name": "Bank Reconciliation", "order": 1 },
-				{ "id": "acc-debtors-recon", "name": "Debtors Reconciliation", "order": 2 },
-				{ "id": "acc-creditors-recon", "name": "Creditors Reconciliation", "order": 3 }
-			]
-		},
-		{
-			"id": "inventory",
-			"name": "Inventory",
-			"order": 5, "prerequisites": ["financial-accounting"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "acc-inventory-systems", "name": "Inventory Systems", "order": 1 },
-				{ "id": "acc-inventory-valuation", "name": "Inventory Valuation", "order": 2 }
-			]
-		}
-	]
+  "subjectId": "accounting",
+  "subjectName": "Accounting",
+  "topics": [
+    {
+      "id": "accounting-concepts",
+      "name": "Accounting Concepts",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "acc-gaap", "name": "GAAP Principles", "order": 1 },
+        { "id": "acc-accounting-cycle", "name": "Accounting Cycle", "order": 2 }
+      ]
+    },
+    {
+      "id": "financial-accounting",
+      "name": "Financial Accounting",
+      "order": 2,
+      "prerequisites": ["accounting-concepts"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "acc-ledger", "name": "Ledger Accounts", "order": 1 },
+        { "id": "acc-trial-balance", "name": "Trial Balance", "order": 2 },
+        { "id": "acc-adjustments", "name": "Adjustments", "order": 3 },
+        { "id": "acc-financial-statements", "name": "Financial Statements", "order": 4 }
+      ]
+    },
+    {
+      "id": "managerial-accounting",
+      "name": "Managerial Accounting",
+      "order": 3,
+      "prerequisites": ["financial-accounting"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "acc-budgeting", "name": "Budgeting", "order": 1 },
+        { "id": "acc-costing", "name": "Cost Accounting", "order": 2 },
+        { "id": "acc-breakeven", "name": "Breakeven Analysis", "order": 3 }
+      ]
+    },
+    {
+      "id": "reconciliations",
+      "name": "Reconciliations",
+      "order": 4,
+      "prerequisites": ["financial-accounting"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "acc-bank-recon", "name": "Bank Reconciliation", "order": 1 },
+        { "id": "acc-debtors-recon", "name": "Debtors Reconciliation", "order": 2 },
+        { "id": "acc-creditors-recon", "name": "Creditors Reconciliation", "order": 3 }
+      ]
+    },
+    {
+      "id": "inventory",
+      "name": "Inventory",
+      "order": 5,
+      "prerequisites": ["financial-accounting"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "acc-inventory-systems", "name": "Inventory Systems", "order": 1 },
+        { "id": "acc-inventory-valuation", "name": "Inventory Valuation", "order": 2 }
+      ]
+    }
+  ]
 }

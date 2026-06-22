@@ -9,23 +9,20 @@ const themeSwitcher = <ThemeSwitcher />;
 const localeSwitcher = <LocaleSwitcher />;
 
 export function AppearanceTab() {
-	const t = useTranslations();
+  const t = useTranslations();
 
-	return (
-		<ListSection
-			header={t("settings.appearance")}
-			footer={t("settings.languageDescription")}
-		>
-			<ListCell
-				title={t("settings.theme")}
-				subtitle={t("settings.appearance")}
-				trailing={themeSwitcher}
-			/>
-			<ListCell
-				title={t("common.language")}
-				subtitle={t("settings.languageDescription")}
-				trailing={localeSwitcher}
-			/>
-		</ListSection>
-	);
+  return (
+    <ListSection header={t("settings.appearance")} footer={t("settings.languageDescription")}>
+      <ListCell
+        title={t("settings.theme")}
+        subtitle={t("settings.appearance")}
+        trailing={themeSwitcher}
+      />
+      <ListCell
+        title={t("common.language")}
+        subtitle={t("settings.languageDescription")}
+        trailing={localeSwitcher}
+      />
+    </ListSection>
+  );
 }

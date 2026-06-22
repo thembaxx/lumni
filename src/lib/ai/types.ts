@@ -1,52 +1,52 @@
 export interface ChatMessage {
-	role: "system" | "user" | "model" | "assistant";
-	content: string;
-	imageUrl?: string;
+  role: "system" | "user" | "model" | "assistant";
+  content: string;
+  imageUrl?: string;
 }
 
 export interface AIRequest {
-	messages: ChatMessage[];
-	systemPrompt?: string;
-	temperature?: number;
-	maxTokens?: number;
+  messages: ChatMessage[];
+  systemPrompt?: string;
+  temperature?: number;
+  maxTokens?: number;
 }
 
 export interface AIResponse {
-	content: string;
-	provider: string;
-	model: string;
-	inputTokens?: number;
-	outputTokens?: number;
+  content: string;
+  provider: string;
+  model: string;
+  inputTokens?: number;
+  outputTokens?: number;
 }
 
 export interface AIFailure {
-	error: string;
-	provider: string;
-	available: boolean;
+  error: string;
+  provider: string;
+  available: boolean;
 }
 
 export type AIResult = AIResponse | AIFailure;
 
 export interface AIProviderCapabilities {
-	systemPrompt?: boolean;
-	images?: boolean;
+  systemPrompt?: boolean;
+  images?: boolean;
 }
 
 export interface AIProvider {
-	name: string;
-	model: string;
-	generate(request: AIRequest): Promise<AIResponse>;
-	capabilities?: AIProviderCapabilities;
+  name: string;
+  model: string;
+  generate(request: AIRequest): Promise<AIResponse>;
+  capabilities?: AIProviderCapabilities;
 }
 
 export type TaskType =
-	| "lesson-summary"
-	| "question-generation"
-	| "concept-explanation"
-	| "content-creation"
-	| "quiz-generation";
+  | "lesson-summary"
+  | "question-generation"
+  | "concept-explanation"
+  | "content-creation"
+  | "quiz-generation";
 
 export interface TaskRequest {
-	type: TaskType;
-	input: Record<string, unknown>;
+  type: TaskType;
+  input: Record<string, unknown>;
 }

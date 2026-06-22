@@ -4,170 +4,170 @@ import type { ReactNode } from "react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
 let mockGamificationData: Record<string, unknown> = {
-	xp: 50,
-	totalXp: 500,
-	achievements: [],
-	dailyChallenges: [],
-	streakMilestones: [],
-	lastPracticeDate: null,
-	currentStreak: 3,
-	totalQuestionsAnswered: 25,
-	claimedChests: [],
-	streakFreezes: 3,
-	subjectQuestionCounts: {},
+  xp: 50,
+  totalXp: 500,
+  achievements: [],
+  dailyChallenges: [],
+  streakMilestones: [],
+  lastPracticeDate: null,
+  currentStreak: 3,
+  totalQuestionsAnswered: 25,
+  claimedChests: [],
+  streakFreezes: 3,
+  subjectQuestionCounts: {},
 };
 
 vi.mock("@/lib/shared/api-fetch", () => ({
-	apiFetch: vi.fn(async (_url: string) => mockGamificationData),
-	isBudgetExceeded: () => false,
-	showBudgetToast: () => {},
+  apiFetch: vi.fn(async (_url: string) => mockGamificationData),
+  isBudgetExceeded: () => false,
+  showBudgetToast: () => {},
 }));
 
 const { useGamification } = await import("@/hooks/use-gamification");
 
 function createWrapper() {
-	const qc = new QueryClient({
-		defaultOptions: {
-			queries: { retry: false, gcTime: Infinity },
-			mutations: { retry: false },
-		},
-	});
-	return function Wrapper({ children }: { children: ReactNode }) {
-		return <QueryClientProvider client={qc}>{children}</QueryClientProvider>;
-	};
+  const qc = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, gcTime: Infinity },
+      mutations: { retry: false },
+    },
+  });
+  return function Wrapper({ children }: { children: ReactNode }) {
+    return <QueryClientProvider client={qc}>{children}</QueryClientProvider>;
+  };
 }
 
 describe("useGamification", () => {
-	beforeEach(() => {
-		mockGamificationData = {
-			xp: 50,
-			totalXp: 500,
-			achievements: [],
-			dailyChallenges: [],
-			streakMilestones: [],
-			lastPracticeDate: null,
-			currentStreak: 3,
-			totalQuestionsAnswered: 25,
-			claimedChests: [],
-			streakFreezes: 3,
-			subjectQuestionCounts: {},
-		};
-	});
+  beforeEach(() => {
+    mockGamificationData = {
+      xp: 50,
+      totalXp: 500,
+      achievements: [],
+      dailyChallenges: [],
+      streakMilestones: [],
+      lastPracticeDate: null,
+      currentStreak: 3,
+      totalQuestionsAnswered: 25,
+      claimedChests: [],
+      streakFreezes: 3,
+      subjectQuestionCounts: {},
+    };
+  });
 
-	test("returns initial gamification state", () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("returns initial gamification state", () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		expect(result.current.isLoaded).toBe(true);
-		expect(result.current.levelInfo).toBeDefined();
-		expect(result.current.gamification).toBeDefined();
-		expect(result.current.currentStreak).toBeGreaterThanOrEqual(0);
-	});
+    expect(result.current.isLoaded).toBe(true);
+    expect(result.current.levelInfo).toBeDefined();
+    expect(result.current.gamification).toBeDefined();
+    expect(result.current.currentStreak).toBeGreaterThanOrEqual(0);
+  });
 
-	test("addXp updates XP and total questions", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("addXp updates XP and total questions", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.addXp(10, 85, 0);
-		});
+    await act(async () => {
+      result.current.addXp(10, 85, 0);
+    });
 
-		await waitFor(() => {
-			expect(result.current.totalQuestionsAnswered).toBeGreaterThan(0);
-		});
-	});
+    await waitFor(() => {
+      expect(result.current.totalQuestionsAnswered).toBeGreaterThan(0);
+    });
+  });
 
-	test("updateStreak preserves streak state", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("updateStreak preserves streak state", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.updateStreak();
-		});
+    await act(async () => {
+      result.current.updateStreak();
+    });
 
-		// Current streak should be a valid number
-		expect(result.current.currentStreak).toBeGreaterThanOrEqual(0);
-	});
+    // Current streak should be a valid number
+    expect(result.current.currentStreak).toBeGreaterThanOrEqual(0);
+  });
 
-	test("addAchievement does not throw", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("addAchievement does not throw", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.addAchievement("first-quiz");
-		});
+    await act(async () => {
+      result.current.addAchievement("first-quiz");
+    });
 
-		// Should not throw — achievement may or may not be added depending on ACHIEVEMENTS
-		expect(result.current.isLoaded).toBe(true);
-	});
+    // Should not throw — achievement may or may not be added depending on ACHIEVEMENTS
+    expect(result.current.isLoaded).toBe(true);
+  });
 
-	test("useStreakFreeze does not throw", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("useStreakFreeze does not throw", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.useStreakFreeze();
-		});
+    await act(async () => {
+      result.current.useStreakFreeze();
+    });
 
-		expect(result.current.isLoaded).toBe(true);
-	});
+    expect(result.current.isLoaded).toBe(true);
+  });
 
-	test("addStreakFreeze increments freeze count", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("addStreakFreeze increments freeze count", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		const prevFreezes = result.current.streakFreezes;
+    const prevFreezes = result.current.streakFreezes;
 
-		await act(async () => {
-			result.current.addStreakFreeze(2);
-		});
+    await act(async () => {
+      result.current.addStreakFreeze(2);
+    });
 
-		await waitFor(() => {
-			expect(result.current.streakFreezes).toBe(prevFreezes + 2);
-		});
-	});
+    await waitFor(() => {
+      expect(result.current.streakFreezes).toBe(prevFreezes + 2);
+    });
+  });
 
-	test("checkAndUnlockAchievements does not throw", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("checkAndUnlockAchievements does not throw", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.checkAndUnlockAchievements(10, 80, 3, 1, true);
-		});
+    await act(async () => {
+      result.current.checkAndUnlockAchievements(10, 80, 3, 1, true);
+    });
 
-		expect(result.current.isLoaded).toBe(true);
-	});
+    expect(result.current.isLoaded).toBe(true);
+  });
 
-	test("completeDailyChallenge does not throw", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("completeDailyChallenge does not throw", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		const challengeId = result.current.gamification.dailyChallenges[0]?.id;
+    const challengeId = result.current.gamification.dailyChallenges[0]?.id;
 
-		await act(async () => {
-			result.current.completeDailyChallenge(challengeId ?? "unknown");
-		});
+    await act(async () => {
+      result.current.completeDailyChallenge(challengeId ?? "unknown");
+    });
 
-		expect(result.current.isLoaded).toBe(true);
-	});
+    expect(result.current.isLoaded).toBe(true);
+  });
 
-	test("checkForRewardChests does not throw", async () => {
-		const { result } = renderHook(() => useGamification(), {
-			wrapper: createWrapper(),
-		});
+  test("checkForRewardChests does not throw", async () => {
+    const { result } = renderHook(() => useGamification(), {
+      wrapper: createWrapper(),
+    });
 
-		await act(async () => {
-			result.current.checkForRewardChests();
-		});
+    await act(async () => {
+      result.current.checkForRewardChests();
+    });
 
-		expect(result.current.isLoaded).toBe(true);
-	});
+    expect(result.current.isLoaded).toBe(true);
+  });
 });

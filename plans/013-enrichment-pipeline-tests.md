@@ -34,18 +34,20 @@ The enrichment pipeline orchestrates 3 data sources (curriculum, embeddings, pas
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/question-engine/__tests__/enrichment-pipeline.test.ts` | 0 errors |
-| Tests     | `bun run test -- enrichment-pipeline` | all new tests pass |
+| Purpose   | Command                                                                         | Expected on success |
+| --------- | ------------------------------------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                                              | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/question-engine/__tests__/enrichment-pipeline.test.ts` | 0 errors            |
+| Tests     | `bun run test -- enrichment-pipeline`                                           | all new tests pass  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/question-engine/__tests__/enrichment-pipeline.test.ts` (create)
 
 **Out of scope**:
+
 - `src/lib/question-engine/enrichment-pipeline.ts` — do not modify
 - `src/lib/embedding/` — do not modify
 
@@ -59,6 +61,7 @@ The enrichment pipeline orchestrates 3 data sources (curriculum, embeddings, pas
 ### Step 1: Read the full source
 
 Read `src/lib/question-engine/enrichment-pipeline.ts` fully. Identify:
+
 - `_deps` interface and `__setDepsForTesting()`
 - `createCurriculumSource()` — likely fetches from Appwrite or static data
 - `createEmbeddingSource(db)` — calls `embedText`, `findTopK`, reads `questionEmbeddings` table
@@ -122,6 +125,7 @@ describe("enrichment pipeline", () => {
 ### Step 3: Implement each test
 
 The mocking strategy depends on how each source fetches data:
+
 - `createCurriculumSource` may import Appwrite dynamically — mock the dynamic import
 - `createEmbeddingSource` calls `embedText` and `findTopK` — mock these
 - `createPastPaperSource` may call `fetch` for past paper examples — mock global fetch

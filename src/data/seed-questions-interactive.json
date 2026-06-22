@@ -20,7 +20,12 @@
       "correctOrder": ["d", "a", "b", "c"],
       "shuffle": true
     },
-    "steps": ["Start with the equation", "Isolate the variable term", "Solve for the variable", "Verify the solution"],
+    "steps": [
+      "Start with the equation",
+      "Isolate the variable term",
+      "Solve for the variable",
+      "Verify the solution"
+    ],
     "metadata": { "source": "generated", "version": 1 }
   },
   {
@@ -46,7 +51,14 @@
       "correctOrder": ["e", "b", "d", "f", "c", "a"],
       "shuffle": true
     },
-    "steps": ["Identify a problem", "Propose a hypothesis", "Test it experimentally", "Gather data", "Interpret results", "Conclude"],
+    "steps": [
+      "Identify a problem",
+      "Propose a hypothesis",
+      "Test it experimentally",
+      "Gather data",
+      "Interpret results",
+      "Conclude"
+    ],
     "metadata": { "source": "generated", "version": 1 }
   },
   {
@@ -70,7 +82,12 @@
       "correctOrder": ["b", "a", "c", "d"],
       "shuffle": true
     },
-    "steps": ["Start with producers", "Add primary consumers", "Add secondary consumers", "End with apex predators"],
+    "steps": [
+      "Start with producers",
+      "Add primary consumers",
+      "Add secondary consumers",
+      "End with apex predators"
+    ],
     "metadata": { "source": "generated", "version": 1 }
   },
   {
@@ -164,7 +181,11 @@
         { "text": "}}{2a}$" }
       ],
       "blanks": [
-        { "id": "b1", "correctAnswer": "b^2 - 4ac", "distractors": ["b^2 + 4ac", "b - 4ac", "b^2 - 2ac"] }
+        {
+          "id": "b1",
+          "correctAnswer": "b^2 - 4ac",
+          "distractors": ["b^2 + 4ac", "b - 4ac", "b^2 - 2ac"]
+        }
       ],
       "shuffleDistractors": true
     },

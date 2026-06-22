@@ -1,5 +1,5 @@
 import { ContentClient } from "./content-client";
 
 export default function AdminContentPage() {
-	return <ContentClient />;
+  return <ContentClient />;
 }

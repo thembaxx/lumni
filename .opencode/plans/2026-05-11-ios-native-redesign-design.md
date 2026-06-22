@@ -18,37 +18,37 @@ Redesign the Lumni web app to feel structurally and visually native to iOS, foll
 
 Preserve existing `#000000` / `#ffffff` base. Add iOS-style semantic tokens.
 
-| Token | Light | Dark | Usage |
-|---|---|---|---|
-| `--system-background` | `#ffffff` | `#000000` | Root page background |
-| `--system-grouped-background` | `#f2f2f7` | `#1c1c1e` | Grouped list/section backgrounds |
-| `--system-surface` | `#ffffff` | `#1c1c1e` | Cards, sheets, popovers |
-| `--system-surface-secondary` | `#f2f2f7` | `#2c2c2e` | Secondary surface (e.g. search bar bg) |
-| `--system-separator` | `#c6c6c8` at 60% | `#38383a` at 60% | Hairline separators (0.33px) |
-| `--system-accent` | `#007AFF` | `#0A84FF` | All interactive elements, primary actions |
-| `--system-text-primary` | `#000000` | `#ffffff` | Primary labels (existing foreground) |
-| `--system-text-secondary` | `#3c3c43` at 60% | `#ebebf5` at 60% | Secondary labels, subtitles |
-| `--system-text-tertiary` | `#3c3c43` at 30% | `#ebebf5` at 30% | Tertiary labels, placeholders |
-| `--system-destructive` | `#FF3B30` | `#FF453A` | Destructive actions |
-| `--system-green` | `#34C759` | `#30D158` | Switches (on state), positive actions |
-| `--system-blue` | `#007AFF` | `#0A84FF` | Accent (alias of `--system-accent`) |
+| Token                         | Light            | Dark             | Usage                                     |
+| ----------------------------- | ---------------- | ---------------- | ----------------------------------------- |
+| `--system-background`         | `#ffffff`        | `#000000`        | Root page background                      |
+| `--system-grouped-background` | `#f2f2f7`        | `#1c1c1e`        | Grouped list/section backgrounds          |
+| `--system-surface`            | `#ffffff`        | `#1c1c1e`        | Cards, sheets, popovers                   |
+| `--system-surface-secondary`  | `#f2f2f7`        | `#2c2c2e`        | Secondary surface (e.g. search bar bg)    |
+| `--system-separator`          | `#c6c6c8` at 60% | `#38383a` at 60% | Hairline separators (0.33px)              |
+| `--system-accent`             | `#007AFF`        | `#0A84FF`        | All interactive elements, primary actions |
+| `--system-text-primary`       | `#000000`        | `#ffffff`        | Primary labels (existing foreground)      |
+| `--system-text-secondary`     | `#3c3c43` at 60% | `#ebebf5` at 60% | Secondary labels, subtitles               |
+| `--system-text-tertiary`      | `#3c3c43` at 30% | `#ebebf5` at 30% | Tertiary labels, placeholders             |
+| `--system-destructive`        | `#FF3B30`        | `#FF453A`        | Destructive actions                       |
+| `--system-green`              | `#34C759`        | `#30D158`        | Switches (on state), positive actions     |
+| `--system-blue`               | `#007AFF`        | `#0A84FF`        | Accent (alias of `--system-accent`)       |
 
 ### 1.2 Spacing Scale (8pt Grid)
 
 Base unit 4px, primary rhythm 8px.
 
-| Token | Value | Usage |
-|---|---|---|
-| `--space-1` | 4px | Micro adjustments |
-| `--space-2` | 8px | Tight spacing |
-| `--space-3` | 12px | Between related items |
-| `--space-4` | 16px | Edge margins, card padding |
-| `--space-5` | 20px | Section spacing |
-| `--space-6` | 24px | Large gaps |
-| `--space-8` | 32px | Major sections |
-| `--space-10` | 40px | Page-level padding |
-| `--space-12` | 48px | Large page sections |
-| `--space-16` | 64px | Hero/featured padding |
+| Token        | Value | Usage                      |
+| ------------ | ----- | -------------------------- |
+| `--space-1`  | 4px   | Micro adjustments          |
+| `--space-2`  | 8px   | Tight spacing              |
+| `--space-3`  | 12px  | Between related items      |
+| `--space-4`  | 16px  | Edge margins, card padding |
+| `--space-5`  | 20px  | Section spacing            |
+| `--space-6`  | 24px  | Large gaps                 |
+| `--space-8`  | 32px  | Major sections             |
+| `--space-10` | 40px  | Page-level padding         |
+| `--space-12` | 48px  | Large page sections        |
+| `--space-16` | 64px  | Hero/featured padding      |
 
 iPhone edge margin: `16px`. iPad edge margin: `20px`.
 
@@ -56,21 +56,21 @@ iPhone edge margin: `16px`. iPad edge margin: `20px`.
 
 Standard `border-radius` approximates Apple's continuous corners.
 
-| Token | Value | Usage |
-|---|---|---|
-| `--radius-button` | 12px | All buttons |
-| `--radius-card` | 16px | Cards, containers |
-| `--radius-sheet` | 22px | Modal sheets, popovers, alerts |
-| `--radius-input` | 10px | Text inputs, search bars |
-| `--radius-badge` | 6px | Badges, tags |
-| `--radius-tab-bar` | 16px | Tab bar container |
-| `--radius-list-group` | 16px | Grouped list containers |
+| Token                 | Value | Usage                          |
+| --------------------- | ----- | ------------------------------ |
+| `--radius-button`     | 12px  | All buttons                    |
+| `--radius-card`       | 16px  | Cards, containers              |
+| `--radius-sheet`      | 22px  | Modal sheets, popovers, alerts |
+| `--radius-input`      | 10px  | Text inputs, search bars       |
+| `--radius-badge`      | 6px   | Badges, tags                   |
+| `--radius-tab-bar`    | 16px  | Tab bar container              |
+| `--radius-list-group` | 16px  | Grouped list containers        |
 
 ### 1.4 Shadows (Multi-layer, Subtle)
 
-| Token | Value |
-|---|---|
-| `--shadow-level-1` | `0 1px 2px rgba(0,0,0,0.04)` |
+| Token              | Value                                                     |
+| ------------------ | --------------------------------------------------------- |
+| `--shadow-level-1` | `0 1px 2px rgba(0,0,0,0.04)`                              |
 | `--shadow-level-2` | `0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)` |
 | `--shadow-level-3` | `0 8px 28px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04)` |
 
@@ -78,14 +78,14 @@ Dark mode shadows: invert luminance, keep opacity similar.
 
 ### 1.5 Motion Tokens
 
-| Token | Value |
-|---|---|
-| `--ease-ios` | `cubic-bezier(0.16, 1, 0.3, 1)` |
-| `--duration-instant` | 100ms |
-| `--duration-fast` | 150ms |
-| `--duration-normal` | 200ms |
-| `--duration-slow` | 300ms |
-| `--duration-page` | 350ms |
+| Token                | Value                           |
+| -------------------- | ------------------------------- |
+| `--ease-ios`         | `cubic-bezier(0.16, 1, 0.3, 1)` |
+| `--duration-instant` | 100ms                           |
+| `--duration-fast`    | 150ms                           |
+| `--duration-normal`  | 200ms                           |
+| `--duration-slow`    | 300ms                           |
+| `--duration-page`    | 350ms                           |
 
 ---
 
@@ -95,19 +95,19 @@ Font family: **Geist** (keep existing). No serif font for headings. Use weight/s
 
 ### 2.1 Semantic Type Scale
 
-| Style | Size | Weight | Leading | Tracking | CSS Variable |
-|---|---|---|---|---|---|
-| Large Title | 34px | 700 (Bold) | 41px | -0.02em | `--fs-large-title` |
-| Title 1 | 28px | 700 (Bold) | 34px | -0.02em | `--fs-title-1` |
-| Title 2 | 22px | 700 (Bold) | 28px | -0.02em | `--fs-title-2` |
-| Title 3 | 20px | 600 (Semibold) | 24px | -0.02em | `--fs-title-3` |
-| Headline | 17px | 600 (Semibold) | 22px | -0.01em | `--fs-headline` |
-| Body | 17px | 400 (Regular) | 22px | -0.01em | `--fs-body` |
-| Callout | 16px | 400 (Regular) | 21px | -0.01em | `--fs-callout` |
-| Subhead | 15px | 400 (Regular) | 20px | -0.01em | `--fs-subhead` |
-| Footnote | 13px | 400 (Regular) | 18px | 0 | `--fs-footnote` |
-| Caption 1 | 12px | 400 (Regular) | 16px | 0 | `--fs-caption-1` |
-| Caption 2 | 11px | 400 (Regular) | 13px | 0 | `--fs-caption-2` |
+| Style       | Size | Weight         | Leading | Tracking | CSS Variable       |
+| ----------- | ---- | -------------- | ------- | -------- | ------------------ |
+| Large Title | 34px | 700 (Bold)     | 41px    | -0.02em  | `--fs-large-title` |
+| Title 1     | 28px | 700 (Bold)     | 34px    | -0.02em  | `--fs-title-1`     |
+| Title 2     | 22px | 700 (Bold)     | 28px    | -0.02em  | `--fs-title-2`     |
+| Title 3     | 20px | 600 (Semibold) | 24px    | -0.02em  | `--fs-title-3`     |
+| Headline    | 17px | 600 (Semibold) | 22px    | -0.01em  | `--fs-headline`    |
+| Body        | 17px | 400 (Regular)  | 22px    | -0.01em  | `--fs-body`        |
+| Callout     | 16px | 400 (Regular)  | 21px    | -0.01em  | `--fs-callout`     |
+| Subhead     | 15px | 400 (Regular)  | 20px    | -0.01em  | `--fs-subhead`     |
+| Footnote    | 13px | 400 (Regular)  | 18px    | 0        | `--fs-footnote`    |
+| Caption 1   | 12px | 400 (Regular)  | 16px    | 0        | `--fs-caption-1`   |
+| Caption 2   | 11px | 400 (Regular)  | 13px    | 0        | `--fs-caption-2`   |
 
 ### 2.2 Changes
 
@@ -194,17 +194,18 @@ Settings gets a structural redesign:
 
 ### 4.1 Button (button.tsx)
 
-| Property | Current | iOS Target |
-|---|---|---|
-| Border radius | 999px (pill) | 12px |
-| Min height | varies | 44px |
-| Primary bg | `#000000` | `#007AFF` (blue) |
-| Primary text | `#ffffff` | `#ffffff` |
-| Outline border | `#000000` | `#007AFF` (blue) |
-| Ghost | all black | `--system-text-secondary` |
-| Press effect | `scale(0.97)` | opacity flash only |
+| Property       | Current       | iOS Target                |
+| -------------- | ------------- | ------------------------- |
+| Border radius  | 999px (pill)  | 12px                      |
+| Min height     | varies        | 44px                      |
+| Primary bg     | `#000000`     | `#007AFF` (blue)          |
+| Primary text   | `#ffffff`     | `#ffffff`                 |
+| Outline border | `#000000`     | `#007AFF` (blue)          |
+| Ghost          | all black     | `--system-text-secondary` |
+| Press effect   | `scale(0.97)` | opacity flash only        |
 
 Variants to update:
+
 - `default` → blue accent fill, white text, 12px radius
 - `outline` → blue border, blue text, 12px radius
 - `ghost` → no border, `--system-text-secondary` text
@@ -216,17 +217,18 @@ Variants to update:
 
 ### 4.2 Card (card.tsx)
 
-| Property | Current | iOS Target |
-|---|---|---|
-| Border radius | 8px | 16px |
-| Shadow | `0 4px 16px rgba(0,0,0,0.12)` | `--shadow-level-2` |
-| Padding | 24px (variable) | `--space-4` (16px) |
-| Hover effect | `scale(1.005)` | none |
-| Footer border | solid 1px | `0.33px hairline` |
+| Property      | Current                       | iOS Target         |
+| ------------- | ----------------------------- | ------------------ |
+| Border radius | 8px                           | 16px               |
+| Shadow        | `0 4px 16px rgba(0,0,0,0.12)` | `--shadow-level-2` |
+| Padding       | 24px (variable)               | `--space-4` (16px) |
+| Hover effect  | `scale(1.005)`                | none               |
+| Footer border | solid 1px                     | `0.33px hairline`  |
 
 ### 4.3 Switch (switch.tsx)
 
 Checked state background:
+
 - Light: `#34C759` (iOS green)
 - Dark: `#30D158`
 - Thumb: white, no border
@@ -304,6 +306,7 @@ Reusable component:
 ### 5.1 globals.css Changes
 
 Remove:
+
 - `--uber-color-*` tokens (replace with `--system-*` tokens)
 - `--uber-typography-scale` (replace with `--fs-*` iOS scale)
 - `.uber-pill`, `.uber-pill-*` utility classes
@@ -316,6 +319,7 @@ Remove:
 - Reduce keyframe definitions to essential set (remove `slideInFrom50`, `slideOutTo50`, `slideInFrom150`, etc.)
 
 Add:
+
 - `--system-*` color tokens in `:root` and `.dark`
 - `--fs-*` typography tokens
 - `--space-*` spacing tokens
@@ -325,6 +329,7 @@ Add:
 - `.ios-separator` hairline utility class
 
 Update `@theme inline {}` block:
+
 - `--color-background` → `var(--system-background)`
 - `--color-foreground` → `var(--system-text-primary)`
 - Add `--color-accent` → `var(--system-accent)`
@@ -401,18 +406,18 @@ Update `@theme inline {}` block:
 
 ## 8. Anti-Patterns to Remove
 
-| Current Pattern | iOS Anti-pattern? | Replacement |
-|---|---|---|
-| 999px pill radius on all buttons | Yes, iOS uses 8-12px | 12px radius |
-| Button press scale (0.97) | Yes | No scale, opacity flash |
-| Card hover scale-up | Yes | No hover effect on cards |
-| Spring page transitions | Yes | Ease-out, 350ms |
-| Stagger delays > 50ms per item | Yes | Max 50ms stagger |
-| Noise texture overlay | Yes | Remove entirely |
-| Serif headings | Yes | Geist weight/size only |
-| Solid black borders on inputs | Yes | Subtle separator borders |
-| Filled active pill on tab bar | Yes | Accent icon only |
-| Decorative floating glow effects | Mostly | Keep only in countdown header (brand) |
+| Current Pattern                  | iOS Anti-pattern?    | Replacement                           |
+| -------------------------------- | -------------------- | ------------------------------------- |
+| 999px pill radius on all buttons | Yes, iOS uses 8-12px | 12px radius                           |
+| Button press scale (0.97)        | Yes                  | No scale, opacity flash               |
+| Card hover scale-up              | Yes                  | No hover effect on cards              |
+| Spring page transitions          | Yes                  | Ease-out, 350ms                       |
+| Stagger delays > 50ms per item   | Yes                  | Max 50ms stagger                      |
+| Noise texture overlay            | Yes                  | Remove entirely                       |
+| Serif headings                   | Yes                  | Geist weight/size only                |
+| Solid black borders on inputs    | Yes                  | Subtle separator borders              |
+| Filled active pill on tab bar    | Yes                  | Accent icon only                      |
+| Decorative floating glow effects | Mostly               | Keep only in countdown header (brand) |
 
 ---
 

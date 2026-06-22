@@ -29,13 +29,14 @@ The rate limiter's catch block returns `{ allowed: true, remaining: Infinity }` 
 ## Current state
 
 **`src/lib/shared/with-rate-limit.ts:21-29`**:
+
 ```typescript
 let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
 try {
   rateLimit = await checkRateLimit(ip, apiConfig);
 } catch {
   rateLimit = {
-    allowed: true,        // ← fail-open
+    allowed: true, // ← fail-open
     remaining: Infinity,
     resetAt: Date.now() + apiConfig.windowMs,
   };
@@ -46,18 +47,20 @@ try {
 
 ## Commands you will need
 
-| Purpose   | Command                  | Expected on success |
-|-----------|--------------------------|---------------------|
-| Typecheck | `npx tsc --noEmit`       | exit 0, no errors   |
-| Lint      | `npx biome check src/lib/shared/with-rate-limit.ts` | 0 errors |
-| Tests     | `bun run test`           | 1326+ pass, 0 fail  |
+| Purpose   | Command                                             | Expected on success |
+| --------- | --------------------------------------------------- | ------------------- |
+| Typecheck | `npx tsc --noEmit`                                  | exit 0, no errors   |
+| Lint      | `npx biome check src/lib/shared/with-rate-limit.ts` | 0 errors            |
+| Tests     | `bun run test`                                      | 1326+ pass, 0 fail  |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/shared/with-rate-limit.ts`
 
 **Out of scope**:
+
 - `src/lib/rate-limiter/core.ts` — do not modify the store implementation
 - `src/lib/rate-limiter/redis-store.ts` — do not modify Redis
 
@@ -79,7 +82,7 @@ try {
 } catch (e) {
   logError("RateLimit", e);
   rateLimit = {
-    allowed: false,       // ← fail-closed
+    allowed: false, // ← fail-closed
     remaining: 0,
     resetAt: Date.now() + apiConfig.windowMs,
   };

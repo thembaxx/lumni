@@ -10,14 +10,15 @@ Lumni serves three access tiers: students (users), parents/guardians (read-only 
 
 ## Decision
 
-| Role | Read Access | Write Access | Collections |
-|---|---|---|---|
-| Student (user) | Own data only | Own data only | users, progress, exam_sessions, flashcards |
-| Parent (team) | Linked child data | Consent records only | parent_consents, child_progress (read) |
-| Teacher (team) | Class-aggregated (≥5 students) | Assignments only | class_analytics (read), assignments |
-| Admin (role) | All data | All data | questions, exam_papers, question_ratings |
+| Role           | Read Access                    | Write Access         | Collections                                |
+| -------------- | ------------------------------ | -------------------- | ------------------------------------------ |
+| Student (user) | Own data only                  | Own data only        | users, progress, exam_sessions, flashcards |
+| Parent (team)  | Linked child data              | Consent records only | parent_consents, child_progress (read)     |
+| Teacher (team) | Class-aggregated (≥5 students) | Assignments only     | class_analytics (read), assignments        |
+| Admin (role)   | All data                       | All data             | questions, exam_papers, question_ratings   |
 
 Rules:
+
 1. Individual student data is never exposed to teachers unless aggregated to ≥5 students.
 2. Parent access requires explicit child consent stored in `parent_consents` collection.
 3. Admin writes use server-side SDK (`node-appwrite`) with API key; no admin actions from browser client.

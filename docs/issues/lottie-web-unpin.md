@@ -1,7 +1,7 @@
 # Track: Remove lottie-web version override
 
 **Status**: Resolved  
-**Priority**: Low  
+**Priority**: Low
 
 ## Context
 

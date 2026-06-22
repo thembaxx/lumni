@@ -1,50 +1,50 @@
 {
-	"id": "indvuku-na-manja",
-	"title": "Indvuku na Manja",
-	"author": "Lumni",
-	"language": "siSwati",
-	"languageId": "siswati-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 830,
-	"subjects": ["siswati-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Indvuku na Manja\n\nKusenja, indvuku na manja betinambdisa emahhonolo. Indvuku ngumuntu omncane, onemandla akhulu kakhulu. Manja ngumuntu omkhulu, oneemandla akhulu kakhulu kunaleyo yenindvuku.\n\nManja umuntfu lowotya tintfo tamabhadla temuntfu. Ufika esikhatsini sonkhe setinkhamba temuntfu kute atotye. Kusenja, indvuku ifika enyameni eningi kwakitsi kutsi kutsi kutsi kutsi kutsi.\n\n\"Kusenja, ngicela ungingisekele emahhonolo,\" indvuku yacenga. Manja watiphendvula. \"Ngitawukunika kutsi kutsi kutsi kutsi kutsi, nami ngitawufika emahhonolo akho.\"\n\nIndvuku yafika emahhonolo akhe. Manja wehlela emahhonolo akhe. Indvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe.\n\nIndvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe. Indvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe.\n\nKusenja, indvuku na manja betinambdisa emahhonolo. Betsinambdisa emahhonolo. Betsinambdisa emahhonolo.\n\n## Tindlela TakaKuhle\n\n1. **Kutsi kutsi kutsi kutsi kutsi** — Indvuku na manja betinambdisa emahhonolo. Betsinambdisa emahhonolo. Betsinambdisa emahhonolo.\n2. **Kuhle kutsi kutsi kutsi kutsi kutsi** — Indvuku yineemandla akhulu kakhulu, manja uye ahamba ngendlela yakhe.\n\n## Tintfo TakaKuhle\n\n| siSwati | English | Part of Speech |\n|---------|---------|----------------|\n| indvuku | hare | noun |\n| manja | jackal | noun |\n| tintfo | things | noun |\n| totya | eat | verb |\n| kuhle | desire | noun |",
-	"vocabulary": [
-		{
-			"term": "indvuku",
-			"definition": "A small, fast animal related to rabbits, known for being clever",
-			"partOfSpeech": "noun",
-			"pronunciation": "/in.ˈd͡ʋu.ku/",
-			"language": "ss"
-		},
-		{
-			"term": "manja",
-			"definition": "A wild animal similar to a dog, known for being cunning",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈma.ɲa/",
-			"language": "ss"
-		},
-		{
-			"term": "tintfo",
-			"definition": "Objects or items that people use or eat",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈtin.tʼɔ/",
-			"language": "ss"
-		},
-		{
-			"term": "totya",
-			"definition": "To put food in your mouth and swallow it",
-			"partOfSpeech": "verb",
-			"pronunciation": "/ˈtɔ.t͡ʃa/",
-			"language": "ss"
-		},
-		{
-			"term": "kuhle",
-			"definition": "A strong feeling of wanting something",
-			"partOfSpeech": "noun",
-			"pronunciation": "/ˈku.ɬɛ/",
-			"language": "ss"
-		}
-	]
+  "id": "indvuku-na-manja",
+  "title": "Indvuku na Manja",
+  "author": "Lumni",
+  "language": "siSwati",
+  "languageId": "siswati-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 830,
+  "subjects": ["siswati-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Indvuku na Manja\n\nKusenja, indvuku na manja betinambdisa emahhonolo. Indvuku ngumuntu omncane, onemandla akhulu kakhulu. Manja ngumuntu omkhulu, oneemandla akhulu kakhulu kunaleyo yenindvuku.\n\nManja umuntfu lowotya tintfo tamabhadla temuntfu. Ufika esikhatsini sonkhe setinkhamba temuntfu kute atotye. Kusenja, indvuku ifika enyameni eningi kwakitsi kutsi kutsi kutsi kutsi kutsi.\n\n\"Kusenja, ngicela ungingisekele emahhonolo,\" indvuku yacenga. Manja watiphendvula. \"Ngitawukunika kutsi kutsi kutsi kutsi kutsi, nami ngitawufika emahhonolo akho.\"\n\nIndvuku yafika emahhonolo akhe. Manja wehlela emahhonolo akhe. Indvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe.\n\nIndvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe. Indvuku yatotya tintfo tamabhadla temuntfu. Manja wehlela emahhonolo akhe.\n\nKusenja, indvuku na manja betinambdisa emahhonolo. Betsinambdisa emahhonolo. Betsinambdisa emahhonolo.\n\n## Tindlela TakaKuhle\n\n1. **Kutsi kutsi kutsi kutsi kutsi** — Indvuku na manja betinambdisa emahhonolo. Betsinambdisa emahhonolo. Betsinambdisa emahhonolo.\n2. **Kuhle kutsi kutsi kutsi kutsi kutsi** — Indvuku yineemandla akhulu kakhulu, manja uye ahamba ngendlela yakhe.\n\n## Tintfo TakaKuhle\n\n| siSwati | English | Part of Speech |\n|---------|---------|----------------|\n| indvuku | hare | noun |\n| manja | jackal | noun |\n| tintfo | things | noun |\n| totya | eat | verb |\n| kuhle | desire | noun |",
+  "vocabulary": [
+    {
+      "term": "indvuku",
+      "definition": "A small, fast animal related to rabbits, known for being clever",
+      "partOfSpeech": "noun",
+      "pronunciation": "/in.ˈd͡ʋu.ku/",
+      "language": "ss"
+    },
+    {
+      "term": "manja",
+      "definition": "A wild animal similar to a dog, known for being cunning",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈma.ɲa/",
+      "language": "ss"
+    },
+    {
+      "term": "tintfo",
+      "definition": "Objects or items that people use or eat",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈtin.tʼɔ/",
+      "language": "ss"
+    },
+    {
+      "term": "totya",
+      "definition": "To put food in your mouth and swallow it",
+      "partOfSpeech": "verb",
+      "pronunciation": "/ˈtɔ.t͡ʃa/",
+      "language": "ss"
+    },
+    {
+      "term": "kuhle",
+      "definition": "A strong feeling of wanting something",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈku.ɬɛ/",
+      "language": "ss"
+    }
+  ]
 }

@@ -110,62 +110,58 @@ Data: { svg: "<svg viewBox='0 0 400 300' ...</svg>" }
 - Use concise labels (1-3 words).`;
 
 export function getDiagramPrompt(
-	questionText: string,
-	subject: string,
-	topic: string,
+  questionText: string,
+  subject: string,
+  topic: string,
 ): { system: string; user: string } {
-	return {
-		system: SYSTEM_PROMPT.replace("{subject}", subject),
-		user: JSON.stringify({
-			task: "Generate a diagram specification for this question",
-			question: questionText,
-			subject,
-			topic,
-			rules: [
-				"Output ONLY valid JSON matching one of the diagram type schemas",
-				"Use the subject-to-diagram-type guide above to pick the BEST type",
-				"Include all required fields in the data object",
-			],
-		}),
-	};
+  return {
+    system: SYSTEM_PROMPT.replace("{subject}", subject),
+    user: JSON.stringify({
+      task: "Generate a diagram specification for this question",
+      question: questionText,
+      subject,
+      topic,
+      rules: [
+        "Output ONLY valid JSON matching one of the diagram type schemas",
+        "Use the subject-to-diagram-type guide above to pick the BEST type",
+        "Include all required fields in the data object",
+      ],
+    }),
+  };
 }
 
 export function getMermaidPrompt(
-	questionText: string,
-	subject: string,
-	topic: string,
+  questionText: string,
+  subject: string,
+  topic: string,
 ): { system: string; user: string } {
-	return {
-		system: `You generate Mermaid.js diagram code for CAPS Grade 12 ${subject} questions.
+  return {
+    system: `You generate Mermaid.js diagram code for CAPS Grade 12 ${subject} questions.
 Output ONLY valid Mermaid syntax — no markdown fences, no explanations.
 Available diagram types:
 - graph TD (flowchart), graph LR (horizontal flowchart)
 - sequenceDiagram, classDiagram, stateDiagram-v2
 - pie, erDiagram, gantt, gitGraph
 Pick the most suitable type for the question context.`,
-		user: `Generate a Mermaid diagram code for this ${subject} question.
+    user: `Generate a Mermaid diagram code for this ${subject} question.
 Question: ${questionText}
 Topic: ${topic}`,
-	};
+  };
 }
 
-export function getImageSearchQuery(
-	questionText: string,
-	subject: string,
-	topic: string,
-): string {
-	const cleaned = questionText
-		.replace(/<[^>]*>/g, "")
-		.replace(/\$[^$]*\$/g, "")
-		.replace(/\$\$[^$]*\$\$/g, "")
-		.replace(/\\\([^)]*\\\)/g, "")
-		.replace(/\\\[[^\]]*\\\]/g, "")
-		.trim();
-	const words = cleaned.split(/\s+/).slice(0, 8).join(" ");
-	const excludeTerms = ["diagram", "draw", "label", "explain", "describe"];
-	const filtered = excludeTerms.reduce(
-		(acc, term) => acc.replace(new RegExp(term, "gi"), ""),
-		words,
-	);
-	return `${filtered} ${topic} ${subject} commons`.replace(/\s+/g, " ").trim();
+export function getImageSearchQuery(questionText: string, subject: string, topic: string): string {
+  const cleaned = questionText
+    .replace(/<[^>]*>/g, "")
+    .replace(/\$[^$]*\$/g, "")
+    .replace(/\$\$[^$]*\$\$/g, "")
+    .replace(/\\\([^)]*\\\)/g, "")
+    .replace(/\\\[[^\]]*\\\]/g, "")
+    .trim();
+  const words = cleaned.split(/\s+/).slice(0, 8).join(" ");
+  const excludeTerms = ["diagram", "draw", "label", "explain", "describe"];
+  const filtered = excludeTerms.reduce(
+    (acc, term) => acc.replace(new RegExp(term, "gi"), ""),
+    words,
+  );
+  return `${filtered} ${topic} ${subject} commons`.replace(/\s+/g, " ").trim();
 }

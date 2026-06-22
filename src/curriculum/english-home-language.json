@@ -1,57 +1,67 @@
 {
-	"subjectId": "english-home-language",
-	"subjectName": "English Home Language",
-	"topics": [
-		{
-			"id": "comprehension",
-			"name": "Reading and Comprehension",
-			"order": 1, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "eng-literal", "name": "Literal Comprehension", "order": 1 },
-				{ "id": "eng-inferential", "name": "Inferential Comprehension", "order": 2 },
-				{ "id": "eng-critical", "name": "Critical Reading", "order": 3 }
-			]
-		},
-		{
-			"id": "literature",
-			"name": "Literature",
-			"order": 2, "prerequisites": [], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "eng-poetry", "name": "Poetry", "order": 1 },
-				{ "id": "eng-novel", "name": "Novel", "order": 2 },
-				{ "id": "eng-drama", "name": "Drama", "order": 3 },
-				{ "id": "eng-short-stories", "name": "Short Stories", "order": 4 }
-			]
-		},
-		{
-			"id": "writing",
-			"name": "Writing",
-			"order": 3, "prerequisites": ["comprehension"], "bloomTarget": "create",
-			"subtopics": [
-				{ "id": "eng-essay", "name": "Essay Writing", "order": 1 },
-				{ "id": "eng-transactional", "name": "Transactional Writing", "order": 2 },
-				{ "id": "eng-creative", "name": "Creative Writing", "order": 3 }
-			]
-		},
-		{
-			"id": "language-structure",
-			"name": "Language Structure",
-			"order": 4, "prerequisites": [], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "eng-grammar", "name": "Grammar", "order": 1 },
-				{ "id": "eng-vocabulary", "name": "Vocabulary", "order": 2 },
-				{ "id": "eng-syntax", "name": "Syntax", "order": 3 }
-			]
-		},
-		{
-			"id": "visual-literacy",
-			"name": "Visual Literacy",
-			"order": 5, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "eng-adverts", "name": "Advertisements", "order": 1 },
-				{ "id": "eng-cartoons", "name": "Cartoons", "order": 2 },
-				{ "id": "eng-graphics", "name": "Graphics", "order": 3 }
-			]
-		}
-	]
+  "subjectId": "english-home-language",
+  "subjectName": "English Home Language",
+  "topics": [
+    {
+      "id": "comprehension",
+      "name": "Reading and Comprehension",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "eng-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "eng-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "eng-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "literature",
+      "name": "Literature",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "eng-poetry", "name": "Poetry", "order": 1 },
+        { "id": "eng-novel", "name": "Novel", "order": 2 },
+        { "id": "eng-drama", "name": "Drama", "order": 3 },
+        { "id": "eng-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "writing",
+      "name": "Writing",
+      "order": 3,
+      "prerequisites": ["comprehension"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "eng-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "eng-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "eng-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "language-structure",
+      "name": "Language Structure",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "eng-grammar", "name": "Grammar", "order": 1 },
+        { "id": "eng-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "eng-syntax", "name": "Syntax", "order": 3 }
+      ]
+    },
+    {
+      "id": "visual-literacy",
+      "name": "Visual Literacy",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "eng-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "eng-cartoons", "name": "Cartoons", "order": 2 },
+        { "id": "eng-graphics", "name": "Graphics", "order": 3 }
+      ]
+    }
+  ]
 }

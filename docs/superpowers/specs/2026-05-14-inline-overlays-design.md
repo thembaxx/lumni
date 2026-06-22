@@ -31,6 +31,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 ## Components to Create / Modify
 
 ### New: `FocusTimerCard`
+
 - Location: `src/components/dashboard/focus-timer-card.tsx`
 - Compact `<Card>` component (~120px tall)
 - Timer digits, start/stop button, +/-5 min controls, reset link
@@ -38,6 +39,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - Self-contained: no external state, no persistence needed
 
 ### New: `QuizStartCard`
+
 - Location: `src/components/dashboard/quiz-start-card.tsx`
 - 200-250px tall card
 - Row 1: "Start a Quiz" heading
@@ -47,6 +49,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - Uses CSS `view-transition-name: practice-trigger` for smooth morph to active quiz (progressive enhancement — Chromium-only, no-op in other browsers)
 
 ### New: `SubjectSelect`
+
 - Location: `src/components/ui/subject-select.tsx`
 - Replaces `SubjectsDrawer` everywhere
 - Uses shadcn `Select` or custom dropdown with iOS spring animations
@@ -55,6 +58,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - Used in: QuizStartCard, ExamsPage filter
 
 ### New: `ExamsPage`
+
 - Location: `src/app/dashboard/exams/page.tsx`
 - Extracted from `ExamTab` content
 - Search bar, SubjectSelect filter, session/year buttons
@@ -62,6 +66,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - View (PdfViewer) and Smart View (SmartViewDialog) remain as overlays on this page
 
 ### Modify: `QuickActions`
+
 - File: `src/components/dashboard/quick-actions/quick-actions.tsx`
 - Remove "Practice" button
 - Wire "Exams" to `router.push("/dashboard/exams")`
@@ -69,6 +74,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - Keep "Lessons" → opens `LessonsButton` (unchanged)
 
 ### New: `StatsRow` (positions 7 on dashboard)
+
 - Location: `src/components/dashboard/stats-row.tsx`
 - Composed from existing components, no new logic:
   - `StreakFire` + `Achievements` from `src/components/gamification/` (already used in StatsTab)
@@ -77,6 +83,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - Design: two-column row on desktop (stacked on mobile). Left: Achievements + Streak. Right: Progress Chart.
 
 ### Modify: `DashboardClient`
+
 - File: `src/components/dashboard/dashboard-client.tsx`
 - Remove `PracticeSheet` import and usage
 - Remove `practiceOpen` state
@@ -87,6 +94,7 @@ On quiz quit/finish, the dashboard content at positions 2-8 reappears. No data i
 - `handlePracticeClick` → becomes `setQuizActive(true)` + `setSelectedSubject(subject)`
 
 ### Remove: `PracticeSheet`
+
 - File: `src/components/dashboard/practice/practice-sheet.tsx` — delete
 - Remove from any imports
 

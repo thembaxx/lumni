@@ -6,94 +6,89 @@ import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 
 function getStripe(): Stripe {
-	const key = process.env.STRIPE_SECRET_KEY;
-	if (!key) throw new Error("STRIPE_SECRET_KEY not configured");
-	return new Stripe(key, {
-		apiVersion: "2026-05-27.dahlia" as const,
-	});
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY not configured");
+  return new Stripe(key, {
+    apiVersion: "2026-05-27.dahlia" as const,
+  });
 }
 
 export const POST = createRouteHandler({
-	auth: "none",
-	errorLabel: "StripeWebhook",
-	parseBody: async (req) => {
-		return { rawBody: await req.text() };
-	},
-	execute: async ({ body, req }) => {
-		const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-		const stripeKey = process.env.STRIPE_SECRET_KEY;
+  auth: "none",
+  errorLabel: "StripeWebhook",
+  parseBody: async (req) => {
+    return { rawBody: await req.text() };
+  },
+  execute: async ({ body, req }) => {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
 
-		if (!webhookSecret || !stripeKey) {
-			throw new HttpError(503, "Stripe not configured");
-		}
+    if (!webhookSecret || !stripeKey) {
+      throw new HttpError(503, "Stripe not configured");
+    }
 
-		const { rawBody } = body as { rawBody: string };
-		const sig = req.headers.get("stripe-signature");
+    const { rawBody } = body as { rawBody: string };
+    const sig = req.headers.get("stripe-signature");
 
-		if (!sig) {
-			throw new HttpError(400, "Missing signature");
-		}
+    if (!sig) {
+      throw new HttpError(400, "Missing signature");
+    }
 
-		const stripe = getStripe();
-		const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    const stripe = getStripe();
+    const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
 
-		const client = new Client()
-			.setEndpoint(APPWRITE_ENDPOINT)
-			.setProject(APPWRITE_PROJECT);
-		const db = new Databases(client);
-		const dbId = APPWRITE_DATABASE_ID;
+    const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
+    const db = new Databases(client);
+    const dbId = APPWRITE_DATABASE_ID;
 
-		switch (event.type) {
-			case "checkout.session.completed": {
-				const session = event.data.object as Stripe.Checkout.Session;
-				const userId = session.client_reference_id;
-				const subscriptionId =
-					typeof session.subscription === "string" ? session.subscription : "";
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const userId = session.client_reference_id;
+        const subscriptionId = typeof session.subscription === "string" ? session.subscription : "";
 
-				if (!userId || !subscriptionId) break;
+        if (!userId || !subscriptionId) break;
 
-				const expiresAt = new Date(
-					Date.now() + 365 * 24 * 60 * 60 * 1000,
-				).toISOString();
+        const expiresAt = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
 
-				try {
-					await db.createDocument(dbId, "premium_subscriptions", "unique()", {
-						userId,
-						provider: "stripe",
-						status: "active",
-						subscriptionId,
-						amount: "999.00",
-						itemName: "Lumni Premium Yearly",
-						createdAt: new Date().toISOString(),
-						expiresAt,
-					});
-				} catch (writeErr) {
-					logError("StripeWebhook", writeErr);
-				}
-				break;
-			}
+        try {
+          await db.createDocument(dbId, "premium_subscriptions", "unique()", {
+            userId,
+            provider: "stripe",
+            status: "active",
+            subscriptionId,
+            amount: "999.00",
+            itemName: "Lumni Premium Yearly",
+            createdAt: new Date().toISOString(),
+            expiresAt,
+          });
+        } catch (writeErr) {
+          logError("StripeWebhook", writeErr);
+        }
+        break;
+      }
 
-			case "customer.subscription.deleted": {
-				const sub = event.data.object as Stripe.Subscription;
-				try {
-					const docs = await db.listDocuments(dbId, "premium_subscriptions", [
-						`subscriptionId=${sub.id}`,
-						`status=active`,
-					] as unknown as string[]);
-					await Promise.all(
-						docs.documents.map((doc) =>
-							db.updateDocument(dbId, "premium_subscriptions", doc.$id, {
-								status: "cancelled",
-							}),
-						),
-					);
-				} catch (err) {
-					logError("StripeWebhook", err);
-				}
-				break;
-			}
-		}
+      case "customer.subscription.deleted": {
+        const sub = event.data.object as Stripe.Subscription;
+        try {
+          const docs = await db.listDocuments(dbId, "premium_subscriptions", [
+            `subscriptionId=${sub.id}`,
+            `status=active`,
+          ] as unknown as string[]);
+          await Promise.all(
+            docs.documents.map((doc) =>
+              db.updateDocument(dbId, "premium_subscriptions", doc.$id, {
+                status: "cancelled",
+              }),
+            ),
+          );
+        } catch (err) {
+          logError("StripeWebhook", err);
+        }
+        break;
+      }
+    }
 
-		return { received: true };
-	},
+    return { received: true };
+  },
 });

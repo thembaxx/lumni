@@ -51,7 +51,8 @@ Known limitation: eventual consistency — data may lag behind Dexie. Documented
 **New file: `src/lib/competency-engine/sync-handler.ts`**
 
 Single function `handleCompetencySync(action, payload)`:
-- Guards: only processes `action === "sync"` with `payload.type === "competency"` 
+
+- Guards: only processes `action === "sync"` with `payload.type === "competency"`
 - Queries Appwrite for existing document matching `(subjectId, topicId, bloomLevel)`
 - If exists: `updateDocument()` with new score/level/timestamp
 - If not: `createDocument()` with full record
@@ -76,14 +77,14 @@ competencies collection:
 
 ## Files Changed
 
-| File | Change |
-|------|--------|
-| `src/hooks/use-next-topics.ts` | Replace fetch with direct service calls |
-| `src/hooks/use-study-plan.ts` | Replace fetch with direct service calls |
-| `src/app/api/engine/next-topics/route.ts` | Read from Appwrite instead of Dexie |
-| `src/app/api/engine/study-plan/route.ts` | Read from Appwrite instead of Dexie |
-| `src/lib/competency-engine/sync-handler.ts` | NEW — Appwrite upsert handler |
-| `src/components/providers/providers.tsx` | Register handler via initSyncQueue |
+| File                                        | Change                                  |
+| ------------------------------------------- | --------------------------------------- |
+| `src/hooks/use-next-topics.ts`              | Replace fetch with direct service calls |
+| `src/hooks/use-study-plan.ts`               | Replace fetch with direct service calls |
+| `src/app/api/engine/next-topics/route.ts`   | Read from Appwrite instead of Dexie     |
+| `src/app/api/engine/study-plan/route.ts`    | Read from Appwrite instead of Dexie     |
+| `src/lib/competency-engine/sync-handler.ts` | NEW — Appwrite upsert handler           |
+| `src/components/providers/providers.tsx`    | Register handler via initSyncQueue      |
 
 ## No Changes Needed
 

@@ -10,60 +10,56 @@ const navHierarchy = getNavHierarchy();
 const localeRe = new RegExp(`^/(${locales.join("|")})(/|$)`);
 
 function stripLocale(path: string): string {
-	return path.replace(localeRe, "/");
+  return path.replace(localeRe, "/");
 }
 
-function navigateWithVt(
-	router: ReturnType<typeof useRouter>,
-	href: string,
-	isReplace: boolean,
-) {
-	const currentPath = stripLocale(window.location.pathname);
-	const targetPath = stripLocale(href);
+function navigateWithVt(router: ReturnType<typeof useRouter>, href: string, isReplace: boolean) {
+  const currentPath = stripLocale(window.location.pathname);
+  const targetPath = stripLocale(href);
 
-	const currentDepth = navHierarchy[currentPath] ?? 1;
-	const targetDepth = navHierarchy[targetPath] ?? 1;
+  const currentDepth = navHierarchy[currentPath] ?? 1;
+  const targetDepth = navHierarchy[targetPath] ?? 1;
 
-	if (currentDepth !== targetDepth) {
-		const direction = targetDepth > currentDepth ? "forward" : "back";
-		document.documentElement.dataset.vtDirection = direction;
-	} else {
-		delete document.documentElement.dataset.vtDirection;
-	}
+  if (currentDepth !== targetDepth) {
+    const direction = targetDepth > currentDepth ? "forward" : "back";
+    document.documentElement.dataset.vtDirection = direction;
+  } else {
+    delete document.documentElement.dataset.vtDirection;
+  }
 
-	const doNav = () => {
-		if (isReplace) {
-			router.replace(href);
-		} else {
-			router.push(href);
-		}
-	};
+  const doNav = () => {
+    if (isReplace) {
+      router.replace(href);
+    } else {
+      router.push(href);
+    }
+  };
 
-	const vt = startViewTransition(doNav);
-	if (!vt) {
-		doNav();
-		return;
-	}
+  const vt = startViewTransition(doNav);
+  if (!vt) {
+    doNav();
+    return;
+  }
 
-	vt.finished.catch(doNav);
+  vt.finished.catch(doNav);
 }
 
 export function useNavigationDirection() {
-	const router = useRouter();
+  const router = useRouter();
 
-	const push = useCallback(
-		(href: string) => {
-			navigateWithVt(router, href, false);
-		},
-		[router],
-	);
+  const push = useCallback(
+    (href: string) => {
+      navigateWithVt(router, href, false);
+    },
+    [router],
+  );
 
-	const replace = useCallback(
-		(href: string) => {
-			navigateWithVt(router, href, true);
-		},
-		[router],
-	);
+  const replace = useCallback(
+    (href: string) => {
+      navigateWithVt(router, href, true);
+    },
+    [router],
+  );
 
-	return { push, replace };
+  return { push, replace };
 }

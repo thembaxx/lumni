@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "indentStyle": "tab",
+  "indentWidth": 1,
+  "lineEnding": "lf",
+  "quoteStyle": "double",
+  "ignorePatterns": [".next/**", "**/*.html"]
+}

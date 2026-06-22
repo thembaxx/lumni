@@ -1,60 +1,70 @@
 {
-	"subjectId": "life-sciences",
-	"subjectName": "Life Sciences",
-	"topics": [
-		{
-			"id": "molecular-biology",
-			"name": "Molecular Biology",
-			"order": 1, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "mol-dna", "name": "DNA and RNA", "order": 1 },
-				{ "id": "mol-protein", "name": "Protein Synthesis", "order": 2 },
-				{ "id": "mol-meiosis", "name": "Meiosis", "order": 3 }
-			]
-		},
-		{
-			"id": "genetics",
-			"name": "Genetics and Inheritance",
-			"order": 2, "prerequisites": ["molecular-biology"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "gen-mendelian", "name": "Mendelian Genetics", "order": 1 },
-				{ "id": "gen-dihybrid", "name": "Dihybrid Crosses", "order": 2 },
-				{ "id": "gen-mutations", "name": "Mutations", "order": 3 },
-				{ "id": "gen-biotechnology", "name": "Biotechnology", "order": 4 }
-			]
-		},
-		{
-			"id": "evolution",
-			"name": "Evolution",
-			"order": 3, "prerequisites": ["genetics"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "evo-natural-selection", "name": "Natural Selection", "order": 1 },
-				{ "id": "evo-speciation", "name": "Speciation", "order": 2 },
-				{ "id": "evo-evidence", "name": "Evidence for Evolution", "order": 3 },
-				{ "id": "evo-human", "name": "Human Evolution", "order": 4 }
-			]
-		},
-		{
-			"id": "human-physiology",
-			"name": "Human Physiology",
-			"order": 4, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "physio-nervous", "name": "Nervous System", "order": 1 },
-				{ "id": "physio-endocrine", "name": "Endocrine System", "order": 2 },
-				{ "id": "physio-homeostasis", "name": "Homeostasis", "order": 3 },
-				{ "id": "physio-immune", "name": "Immune System", "order": 4 }
-			]
-		},
-		{
-			"id": "environmental-studies",
-			"name": "Environmental Studies",
-			"order": 5, "prerequisites": [], "bloomTarget": "analyze",
-			"subtopics": [
-				{ "id": "env-populations", "name": "Populations", "order": 1 },
-				{ "id": "env-ecosystems", "name": "Ecosystems", "order": 2 },
-				{ "id": "env-biodiversity", "name": "Biodiversity", "order": 3 },
-				{ "id": "env-human-impact", "name": "Human Impact", "order": 4 }
-			]
-		}
-	]
+  "subjectId": "life-sciences",
+  "subjectName": "Life Sciences",
+  "topics": [
+    {
+      "id": "molecular-biology",
+      "name": "Molecular Biology",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "mol-dna", "name": "DNA and RNA", "order": 1 },
+        { "id": "mol-protein", "name": "Protein Synthesis", "order": 2 },
+        { "id": "mol-meiosis", "name": "Meiosis", "order": 3 }
+      ]
+    },
+    {
+      "id": "genetics",
+      "name": "Genetics and Inheritance",
+      "order": 2,
+      "prerequisites": ["molecular-biology"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "gen-mendelian", "name": "Mendelian Genetics", "order": 1 },
+        { "id": "gen-dihybrid", "name": "Dihybrid Crosses", "order": 2 },
+        { "id": "gen-mutations", "name": "Mutations", "order": 3 },
+        { "id": "gen-biotechnology", "name": "Biotechnology", "order": 4 }
+      ]
+    },
+    {
+      "id": "evolution",
+      "name": "Evolution",
+      "order": 3,
+      "prerequisites": ["genetics"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "evo-natural-selection", "name": "Natural Selection", "order": 1 },
+        { "id": "evo-speciation", "name": "Speciation", "order": 2 },
+        { "id": "evo-evidence", "name": "Evidence for Evolution", "order": 3 },
+        { "id": "evo-human", "name": "Human Evolution", "order": 4 }
+      ]
+    },
+    {
+      "id": "human-physiology",
+      "name": "Human Physiology",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "physio-nervous", "name": "Nervous System", "order": 1 },
+        { "id": "physio-endocrine", "name": "Endocrine System", "order": 2 },
+        { "id": "physio-homeostasis", "name": "Homeostasis", "order": 3 },
+        { "id": "physio-immune", "name": "Immune System", "order": 4 }
+      ]
+    },
+    {
+      "id": "environmental-studies",
+      "name": "Environmental Studies",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "env-populations", "name": "Populations", "order": 1 },
+        { "id": "env-ecosystems", "name": "Ecosystems", "order": 2 },
+        { "id": "env-biodiversity", "name": "Biodiversity", "order": 3 },
+        { "id": "env-human-impact", "name": "Human Impact", "order": 4 }
+      ]
+    }
+  ]
 }

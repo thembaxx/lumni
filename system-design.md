@@ -115,7 +115,7 @@ erDiagram
     USER ||--o{ STUDY_GUIDE : generates
     USER ||--o{ KNOWLEDGE_GRAPH : views
     USER ||--o{ WRONG_ANSWER ||--o{ RETENTION_RECURRENCE : schedules
-    
+
     USER {
         string id PK
         string email
@@ -126,7 +126,7 @@ erDiagram
         string[] subjects
         bool isAnonymous
     }
-    
+
     QUESTION {
         string id PK
         string type "11 question types"
@@ -139,7 +139,7 @@ erDiagram
         json webSources "RAG source attribution"
         boolean pruned "item-bank pruning"
     }
-    
+
     EXAM_PAPER {
         string id PK
         string subject
@@ -148,7 +148,7 @@ erDiagram
         string session "may-june|oct-nov"
         blob pdf
     }
-    
+
     EXAM_SESSION {
         string id PK
         string userId FK
@@ -159,7 +159,7 @@ erDiagram
         datetime startedAt
         datetime completedAt
     }
-    
+
     FLASHCARD {
         string id PK
         string userId FK
@@ -172,7 +172,7 @@ erDiagram
         string learningStep
         boolean leeched
     }
-    
+
     WRONG_ANSWER {
         string id PK
         string userId FK
@@ -184,7 +184,7 @@ erDiagram
         string correctAnswer
         datetime createdAt
     }
-    
+
     COMPETENCY {
         string id PK
         string userId FK
@@ -194,7 +194,7 @@ erDiagram
         number score "0-100"
         string level "novice|developing|proficient|mastered"
     }
-    
+
     QUIZ_PACK {
         string id PK
         string subject
@@ -204,7 +204,7 @@ erDiagram
         datetime createdAt
         datetime expiresAt
     }
-    
+
     STUDY_GUIDE {
         string id PK
         string userId FK
@@ -215,7 +215,7 @@ erDiagram
         datetime createdAt
         datetime expiresAt "30d TTL"
     }
-    
+
     KNOWLEDGE_GRAPH {
         string id PK
         string subject
@@ -232,96 +232,96 @@ erDiagram
 
 ### Client Layer
 
-| Module | Responsibility | Tech | Key File(s) |
-|--------|---------------|------|-------------|
-| **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics, offline packs, learning map | React, recharts | `src/components/dashboard/` |
-| **Quiz** | Question display, answer capture, timer, feedback, diagrams, immersive mode, auto-flashcard creation | React, Konva, Framer Motion | `src/components/quiz/` |
-| **Exam** | Past paper viewer, session management, results & review, immersive mode | React, sql.js, react-pdf | `src/components/exam/` |
-| **Flashcards** | SM-2 spaced repetition, Tinder-style swipeable deck, auto-generation | React, Dexie, Framer Motion | `src/components/flashcard/` |
-| **Study Planner** | Algorithmic scheduling, weekly overview, calendar view, drag-to-reschedule | React, localStorage, Dexie | `src/components/study-planner/` |
-| **Onboarding** | 5-step wizard with Three.js particles, push notification opt-in | React, Three.js, Framer Motion | `src/components/onboarding/` |
-| **Auth** | Sign-in/sign-up, magic link, anonymous upgrade | React, Appwrite SDK | `src/components/auth/` |
-| **Settings** | Profile, privacy (GDPR consent toggles), data management, theme | React | `src/components/settings/` |
-| **Consent** | Cookie banner, TOS banner, consent gate, parental consent UI | React, Dexie + Appwrite | `src/components/consent/` |
-| **Visual** | Diagram/image rendering for questions | Konva, Mermaid, Wikimedia | `src/components/visual/` |
-| **Immersive** | Full-screen mode provider, exit button, nav auto-hiding | React Context | `src/components/shared/immersive-mode.tsx` |
-| **Tools** | Domain-organized: core, communication, math, science, scheduling | React | `src/components/tools/` |
-| **Learning Map** | SVG topic dependency graph with prerequisite/core/advanced rows | React, SVG | `src/components/dashboard/learning-map-card.tsx` |
-| **Topic Graph** | Per-question inline mini knowledge graph (3-hop max) | React, SVG | `src/components/quiz/topic-graph.tsx` |
-| **Content Lock** | [DEAD — removed June 2026] Premium gating removed; all features are free | — | `src/components/ui/content-lock.tsx` (unused) |
-| **Live Session Bar** | Real-time collaborative study session component | React, Appwrite | `src/components/study-groups/live-session-bar.tsx` |
-| **Teacher Tools** | Assignment builder, review panel, observation timeline, messaging | React | `src/components/teacher/` |
-| **Public Share** | Shared question page (`/q/[id]`) with star-gated answer | React | `src/app/q/[id]/page.tsx` |
+| Module               | Responsibility                                                                                       | Tech                           | Key File(s)                                        |
+| -------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------- |
+| **Dashboard**        | Landing page: stats, study plan, quick actions, search, analytics, offline packs, learning map       | React, recharts                | `src/components/dashboard/`                        |
+| **Quiz**             | Question display, answer capture, timer, feedback, diagrams, immersive mode, auto-flashcard creation | React, Konva, Framer Motion    | `src/components/quiz/`                             |
+| **Exam**             | Past paper viewer, session management, results & review, immersive mode                              | React, sql.js, react-pdf       | `src/components/exam/`                             |
+| **Flashcards**       | SM-2 spaced repetition, Tinder-style swipeable deck, auto-generation                                 | React, Dexie, Framer Motion    | `src/components/flashcard/`                        |
+| **Study Planner**    | Algorithmic scheduling, weekly overview, calendar view, drag-to-reschedule                           | React, localStorage, Dexie     | `src/components/study-planner/`                    |
+| **Onboarding**       | 5-step wizard with Three.js particles, push notification opt-in                                      | React, Three.js, Framer Motion | `src/components/onboarding/`                       |
+| **Auth**             | Sign-in/sign-up, magic link, anonymous upgrade                                                       | React, Appwrite SDK            | `src/components/auth/`                             |
+| **Settings**         | Profile, privacy (GDPR consent toggles), data management, theme                                      | React                          | `src/components/settings/`                         |
+| **Consent**          | Cookie banner, TOS banner, consent gate, parental consent UI                                         | React, Dexie + Appwrite        | `src/components/consent/`                          |
+| **Visual**           | Diagram/image rendering for questions                                                                | Konva, Mermaid, Wikimedia      | `src/components/visual/`                           |
+| **Immersive**        | Full-screen mode provider, exit button, nav auto-hiding                                              | React Context                  | `src/components/shared/immersive-mode.tsx`         |
+| **Tools**            | Domain-organized: core, communication, math, science, scheduling                                     | React                          | `src/components/tools/`                            |
+| **Learning Map**     | SVG topic dependency graph with prerequisite/core/advanced rows                                      | React, SVG                     | `src/components/dashboard/learning-map-card.tsx`   |
+| **Topic Graph**      | Per-question inline mini knowledge graph (3-hop max)                                                 | React, SVG                     | `src/components/quiz/topic-graph.tsx`              |
+| **Content Lock**     | [DEAD — removed June 2026] Premium gating removed; all features are free                             | —                              | `src/components/ui/content-lock.tsx` (unused)      |
+| **Live Session Bar** | Real-time collaborative study session component                                                      | React, Appwrite                | `src/components/study-groups/live-session-bar.tsx` |
+| **Teacher Tools**    | Assignment builder, review panel, observation timeline, messaging                                    | React                          | `src/components/teacher/`                          |
+| **Public Share**     | Shared question page (`/q/[id]`) with star-gated answer                                              | React                          | `src/app/q/[id]/page.tsx`                          |
 
 ### State Layer
 
-| Store | Responsibility | Tech | Location |
-|-------|---------------|------|----------|
-| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications, bookmarks, voice recorder, premium | Zustand | `src/store/` |
-| Dexie | Offline cache: 38+ tables across questions, visuals, exam dates, ratings, flashcard SM-2, quiz packs, jobs, sync queue, competencies, wrong answers, chat, userConsents, analytics events, knowledge graph, study guides, shared questions, teacher observations, assignment messages, study plans, etc. | Dexie + dexie-react-hooks | `src/lib/db/` |
-| React Query | Server state: API data caching, background refetch | TanStack React Query | `src/lib/query-client.ts` |
+| Store              | Responsibility                                                                                                                                                                                                                                                                                           | Tech                      | Location                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------- |
+| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications, bookmarks, voice recorder, premium                                                                                                                                                                                                        | Zustand                   | `src/store/`              |
+| Dexie              | Offline cache: 38+ tables across questions, visuals, exam dates, ratings, flashcard SM-2, quiz packs, jobs, sync queue, competencies, wrong answers, chat, userConsents, analytics events, knowledge graph, study guides, shared questions, teacher observations, assignment messages, study plans, etc. | Dexie + dexie-react-hooks | `src/lib/db/`             |
+| React Query        | Server state: API data caching, background refetch                                                                                                                                                                                                                                                       | TanStack React Query      | `src/lib/query-client.ts` |
 
 ### Server / API Layer
 
-| Module | Responsibility | Tech | Location |
-|--------|---------------|------|----------|
-| **API Route Handlers** | ~50 route groups: engine, auth, exams, admin, sync, quiz-packs, teacher, study-groups, share | Next.js App Router + createRouteHandler | `src/app/api/` |
-| **createRouteHandler** | Generic factory: auto auth guard, body parse, Zod validation, error wrap | TypeScript | `src/lib/api/create-route-handler.ts` |
-| **Server Actions** | Exam paper actions, quiz actions | Next.js Server Actions | `src/lib/server/` |
-| **RateLimiter** | Auth limits (3 sign-in/5min, 1 magic link/5min) + API route limits | In-memory Map + RedisStore | `src/lib/rate-limiter/` |
-| **TokenTracker** | AI budget: per-user + global caps | In-memory counter | `src/lib/ai/token-tracker.ts` |
-| **QueueCore** | Background job processing with retry | Dexie-backed | `src/lib/queue/core.ts` |
-| **Sentry** | Error tracking (client + server + edge) | @sentry/nextjs | `sentry.*.config.ts` |
+| Module                 | Responsibility                                                                               | Tech                                    | Location                              |
+| ---------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------- | ------------------------------------- |
+| **API Route Handlers** | ~50 route groups: engine, auth, exams, admin, sync, quiz-packs, teacher, study-groups, share | Next.js App Router + createRouteHandler | `src/app/api/`                        |
+| **createRouteHandler** | Generic factory: auto auth guard, body parse, Zod validation, error wrap                     | TypeScript                              | `src/lib/api/create-route-handler.ts` |
+| **Server Actions**     | Exam paper actions, quiz actions                                                             | Next.js Server Actions                  | `src/lib/server/`                     |
+| **RateLimiter**        | Auth limits (3 sign-in/5min, 1 magic link/5min) + API route limits                           | In-memory Map + RedisStore              | `src/lib/rate-limiter/`               |
+| **TokenTracker**       | AI budget: per-user + global caps                                                            | In-memory counter                       | `src/lib/ai/token-tracker.ts`         |
+| **QueueCore**          | Background job processing with retry                                                         | Dexie-backed                            | `src/lib/queue/core.ts`               |
+| **Sentry**             | Error tracking (client + server + edge)                                                      | @sentry/nextjs                          | `sentry.*.config.ts`                  |
 
 ### Business Logic Layer
 
-| Module | Responsibility | Tech | Location |
-|--------|---------------|------|----------|
-| **QuestionEngine** | AI question generation, grading, hinting, validation. Returns `GenerateResult { questions, ragContext }`. AIClient singleton collapsed (Session 37) | 11-type processor pipeline; RAG-augmented via PromptManager | `src/lib/question-engine/` |
-| **VisualEngine** | AI diagram generation (Konva) + Wikimedia search | STEM vs non-STEM routing | `src/lib/visual-engine/` |
-| **TinyFish RAG** | Web-grounded reference material for solve + quiz generation | searchWithRAG (3-source, 14d cache) + getSourceForQuestion (1-source, 24h cache); 24-subject allowlist; per-user daily limit; 3s timeout fail-open; XML wrap + prompt framing | `src/lib/tinyfish/` |
-| **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed via DataAccess | `src/lib/flashcard-engine/` |
-| **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
-| **CachedAIGenerator** | Generic fetch→cache→generate pattern (Session 37). Dexie lookup → stale? → AI generate → cache → return. Config with `buildCacheEntry`/`extractData` | TypeScript | `src/lib/ai/cached-ai-generator.ts` |
-| **KnowledgeGraph** | AI-generated topic dependency graphs (prerequisites, core, advanced). Uses CachedAIGenerator. GET+POST endpoints | AI generation + Dexie 7d cache | `src/lib/knowledge-graph/` |
-| **StudyGuide** | AI-generated structured study guides with sections + summary. Uses CachedAIGenerator | AI generation + Dexie 30d cache | `src/lib/study-guide/` |
-| **LearningOrchestrator** | Orchestrates generate+grade+queue side effects. Reads `ragContext` from `GenerateResult` | Composes QuestionEngine | `src/lib/orchestrator/` |
-| **QuizPackService** | Offline AI quiz pack lifecycle (generate, persist, expire) | DataAccess + QuestionEngine | `src/lib/quiz-packs/` |
-| **AnalyticsService** | Platform analytics with `SessionStore` interface (Session 37). Trends/comparative routes ~20 lines each | DataAccess + Appwrite | `src/lib/analytics/analytics-service.ts` |
-| **Services Barrel** | All 15+ services (analytics, competency, progress, flashcard, notification, consent, search, leaderboard, question-rating, chat, exam-dates, etc.) | ServiceResult\<T\> | `src/lib/services/` |
-| **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
-| **SyncService** | Offline-to-online data reconciliation | DataAccess→Appwrite flush | `src/lib/sync/` |
-| **AuthService** | Anonymous→authenticated upgrade, magic link | Appwrite SDK | `src/lib/auth/` |
-| **PremiumService** | [Legacy — no UI gating] Stripe/Payfast checkout, webhook verification (infra retained for potential future monetization) | localStorage + API | `src/lib/premium/` |
-| **UserConsentService** | GDPR/POPIA dual-write consent (Dexie + Appwrite) | Background job queue | `src/lib/services/user-consent-service.ts` |
-| **ShareService** | Public share links, assignment sharing, ghost links, share card generation | localStorage + API | `src/lib/share/share-service.ts` |
-| **LiveSessionService** | Real-time collaborative study sessions via Appwrite | Appwrite SDK | `src/lib/study-groups/live-session-service.ts` |
-| **RetentionService** | Wrong-answer re-encounter loop, next-best-action card | DataAccess | `src/lib/retention-loop/` |
-| **CachingStrategy** | Generic multi-tier caching (parallel tier check) | TypeScript | `src/lib/caching-strategy/` |
-| **UniformAIAdapter** | Factory for pluggable AI providers (OpenAI/Gemini request normalizers) | TypeScript | `src/lib/ai/uniform-adapter.ts` |
-| **SearchService** | Chunked parallel Dexie search with relevance scoring | Dexie | `src/lib/search/chunked-search.ts` |
-| **DigestService** | Weekly stats computation + push notification delivery (Session 37: extracted) | DataAccess + web-push | `src/lib/digest/digest-service.ts` |
-| **PlatformAnalyticsService** | Platform-wide analytics aggregation (active users, question counts, subject breakdown) (Session 37: extracted) | DataAccess + Appwrite | `src/lib/admin/analytics-service.ts` |
-| **ExamDownloadService** | Appwrite PDF assembly, per-student/per-paper queries, analytics (Session 37: extracted) | Appwrite SDK + DataAccess | `src/lib/admin/exam-download-service.ts` |
-| **ExamUploadService** | File parsing, Appwrite document creation, analytics (Session 37: extracted) | Appwrite SDK + DataAccess | `src/lib/admin/exam-upload-service.ts` |
-| **SubmissionService** | Assignment validation, auto-grading, comment creation, analytics (Session 37: extracted) | DataAccess + QuestionEngine | `src/lib/assignments/submission-service.ts` |
-| **AuthRateLimitService** | IP extraction, Redis rate limiting, analytics (Session 37: extracted) | Redis + DataAccess | `src/lib/auth/rate-limit-service.ts` |
-| **i18n** | Locale-based routing ([locale] prefix), en/af/zu translations | Next.js middleware | `src/i18n/` |
+| Module                       | Responsibility                                                                                                                                       | Tech                                                                                                                                                                          | Location                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **QuestionEngine**           | AI question generation, grading, hinting, validation. Returns `GenerateResult { questions, ragContext }`. AIClient singleton collapsed (Session 37)  | 11-type processor pipeline; RAG-augmented via PromptManager                                                                                                                   | `src/lib/question-engine/`                     |
+| **VisualEngine**             | AI diagram generation (Konva) + Wikimedia search                                                                                                     | STEM vs non-STEM routing                                                                                                                                                      | `src/lib/visual-engine/`                       |
+| **TinyFish RAG**             | Web-grounded reference material for solve + quiz generation                                                                                          | searchWithRAG (3-source, 14d cache) + getSourceForQuestion (1-source, 24h cache); 24-subject allowlist; per-user daily limit; 3s timeout fail-open; XML wrap + prompt framing | `src/lib/tinyfish/`                            |
+| **FlashcardEngine**          | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings                                                                 | Dexie-backed via DataAccess                                                                                                                                                   | `src/lib/flashcard-engine/`                    |
+| **CompetencyEngine**         | Bloom's taxonomy scoring, PathEngine routing                                                                                                         | Score→Level mapping                                                                                                                                                           | `src/lib/competency-engine/`                   |
+| **CachedAIGenerator**        | Generic fetch→cache→generate pattern (Session 37). Dexie lookup → stale? → AI generate → cache → return. Config with `buildCacheEntry`/`extractData` | TypeScript                                                                                                                                                                    | `src/lib/ai/cached-ai-generator.ts`            |
+| **KnowledgeGraph**           | AI-generated topic dependency graphs (prerequisites, core, advanced). Uses CachedAIGenerator. GET+POST endpoints                                     | AI generation + Dexie 7d cache                                                                                                                                                | `src/lib/knowledge-graph/`                     |
+| **StudyGuide**               | AI-generated structured study guides with sections + summary. Uses CachedAIGenerator                                                                 | AI generation + Dexie 30d cache                                                                                                                                               | `src/lib/study-guide/`                         |
+| **LearningOrchestrator**     | Orchestrates generate+grade+queue side effects. Reads `ragContext` from `GenerateResult`                                                             | Composes QuestionEngine                                                                                                                                                       | `src/lib/orchestrator/`                        |
+| **QuizPackService**          | Offline AI quiz pack lifecycle (generate, persist, expire)                                                                                           | DataAccess + QuestionEngine                                                                                                                                                   | `src/lib/quiz-packs/`                          |
+| **AnalyticsService**         | Platform analytics with `SessionStore` interface (Session 37). Trends/comparative routes ~20 lines each                                              | DataAccess + Appwrite                                                                                                                                                         | `src/lib/analytics/analytics-service.ts`       |
+| **Services Barrel**          | All 15+ services (analytics, competency, progress, flashcard, notification, consent, search, leaderboard, question-rating, chat, exam-dates, etc.)   | ServiceResult\<T\>                                                                                                                                                            | `src/lib/services/`                            |
+| **StudyPlannerService**      | Inverse-competency-weighted scheduling                                                                                                               | Round-robin algorithm                                                                                                                                                         | `src/lib/study-planner/`                       |
+| **SyncService**              | Offline-to-online data reconciliation                                                                                                                | DataAccess→Appwrite flush                                                                                                                                                     | `src/lib/sync/`                                |
+| **AuthService**              | Anonymous→authenticated upgrade, magic link                                                                                                          | Appwrite SDK                                                                                                                                                                  | `src/lib/auth/`                                |
+| **PremiumService**           | [Legacy — no UI gating] Stripe/Payfast checkout, webhook verification (infra retained for potential future monetization)                             | localStorage + API                                                                                                                                                            | `src/lib/premium/`                             |
+| **UserConsentService**       | GDPR/POPIA dual-write consent (Dexie + Appwrite)                                                                                                     | Background job queue                                                                                                                                                          | `src/lib/services/user-consent-service.ts`     |
+| **ShareService**             | Public share links, assignment sharing, ghost links, share card generation                                                                           | localStorage + API                                                                                                                                                            | `src/lib/share/share-service.ts`               |
+| **LiveSessionService**       | Real-time collaborative study sessions via Appwrite                                                                                                  | Appwrite SDK                                                                                                                                                                  | `src/lib/study-groups/live-session-service.ts` |
+| **RetentionService**         | Wrong-answer re-encounter loop, next-best-action card                                                                                                | DataAccess                                                                                                                                                                    | `src/lib/retention-loop/`                      |
+| **CachingStrategy**          | Generic multi-tier caching (parallel tier check)                                                                                                     | TypeScript                                                                                                                                                                    | `src/lib/caching-strategy/`                    |
+| **UniformAIAdapter**         | Factory for pluggable AI providers (OpenAI/Gemini request normalizers)                                                                               | TypeScript                                                                                                                                                                    | `src/lib/ai/uniform-adapter.ts`                |
+| **SearchService**            | Chunked parallel Dexie search with relevance scoring                                                                                                 | Dexie                                                                                                                                                                         | `src/lib/search/chunked-search.ts`             |
+| **DigestService**            | Weekly stats computation + push notification delivery (Session 37: extracted)                                                                        | DataAccess + web-push                                                                                                                                                         | `src/lib/digest/digest-service.ts`             |
+| **PlatformAnalyticsService** | Platform-wide analytics aggregation (active users, question counts, subject breakdown) (Session 37: extracted)                                       | DataAccess + Appwrite                                                                                                                                                         | `src/lib/admin/analytics-service.ts`           |
+| **ExamDownloadService**      | Appwrite PDF assembly, per-student/per-paper queries, analytics (Session 37: extracted)                                                              | Appwrite SDK + DataAccess                                                                                                                                                     | `src/lib/admin/exam-download-service.ts`       |
+| **ExamUploadService**        | File parsing, Appwrite document creation, analytics (Session 37: extracted)                                                                          | Appwrite SDK + DataAccess                                                                                                                                                     | `src/lib/admin/exam-upload-service.ts`         |
+| **SubmissionService**        | Assignment validation, auto-grading, comment creation, analytics (Session 37: extracted)                                                             | DataAccess + QuestionEngine                                                                                                                                                   | `src/lib/assignments/submission-service.ts`    |
+| **AuthRateLimitService**     | IP extraction, Redis rate limiting, analytics (Session 37: extracted)                                                                                | Redis + DataAccess                                                                                                                                                            | `src/lib/auth/rate-limit-service.ts`           |
+| **i18n**                     | Locale-based routing ([locale] prefix), en/af/zu translations                                                                                        | Next.js middleware                                                                                                                                                            | `src/i18n/`                                    |
 
 ### Backend (External)
 
-| Service | Responsibility | Free Tier Limit |
-|---------|---------------|-----------------|
-| **Appwrite** | Auth, DB (questions, users, sessions, exam_dates), storage (exam PDFs, avatars), live sessions | 50k docs, 10GB storage |
-| **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals, knowledge graphs, study guides | 60 req/min |
-| **Nvidia NIM** | Fallback AI: Llama 3.3 70B | Pay-as-you-go |
-| **Groq** | Last-resort AI: Llama 3.3 70B | 30 req/min |
-| **UploadThing** | File upload infrastructure | 2GB free |
-| **Sentry** | Error tracking (DSN configured) | 5k events/month |
-| **TinyFish** | Web search + fetch for RAG injection into solve + quiz | Free tier (no credit card) |
-| **Upstash Redis** | Production Redis-backed rate limiting (optional) | Pay-as-you-go |
-| **Stripe** | Premium subscription checkout + webhook verification | Pay-as-you-go |
-| **Payfast** | Alternative SA payment processor | Pay-as-you-go |
+| Service                   | Responsibility                                                                                 | Free Tier Limit            |
+| ------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------- |
+| **Appwrite**              | Auth, DB (questions, users, sessions, exam_dates), storage (exam PDFs, avatars), live sessions | 50k docs, 10GB storage     |
+| **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals, knowledge graphs, study guides                     | 60 req/min                 |
+| **Nvidia NIM**            | Fallback AI: Llama 3.3 70B                                                                     | Pay-as-you-go              |
+| **Groq**                  | Last-resort AI: Llama 3.3 70B                                                                  | 30 req/min                 |
+| **UploadThing**           | File upload infrastructure                                                                     | 2GB free                   |
+| **Sentry**                | Error tracking (DSN configured)                                                                | 5k events/month            |
+| **TinyFish**              | Web search + fetch for RAG injection into solve + quiz                                         | Free tier (no credit card) |
+| **Upstash Redis**         | Production Redis-backed rate limiting (optional)                                               | Pay-as-you-go              |
+| **Stripe**                | Premium subscription checkout + webhook verification                                           | Pay-as-you-go              |
+| **Payfast**               | Alternative SA payment processor                                                               | Pay-as-you-go              |
 
 ---
 
@@ -329,52 +329,53 @@ erDiagram
 
 ### Public API Routes
 
-| Route | Method | Purpose | Handler Style |
-|-------|--------|---------|---------------|
-| `/api/engine/generate` | POST | Generate questions (subject, topic, count, type, difficulty) | Engine handler |
-| `/api/engine/grade` | POST | Grade a question answer | Engine handler |
-| `/api/engine/hint` | POST | Get a hint for a question | Engine handler |
-| `/api/engine/visual` | POST | Generate diagram/visual for a question | Engine handler |
-| `/api/engine/test` | GET | Health check | Engine handler |
-| `/api/engine/budget` | GET | Get current token budget status | Engine handler |
-| `/api/engine/next-topics` | POST | Get next recommended topics based on competency | Engine handler |
-| `/api/engine/study-plan` | POST | Generate study plan | Engine handler |
-| `/api/engine/knowledge-graph` | GET+POST | Get/generate topic dependency graph | Engine handler (GET for read, POST for write) |
-| `/api/engine/study-guide` | POST | Generate study guide | Engine handler |
-| `/api/quiz-packs/generate` | POST | Generate offline AI quiz pack | Rate-limited |
-| `/api/auth/verify` | POST | Verify sign-in session | Engine handler |
-| `/api/auth/rate-limit` | GET | Check auth rate limit status | Engine handler |
-| `/api/exam-sessions` | GET/POST | List / create exam sessions | `createRouteHandler` |
-| `/api/exam-sessions/[id]` | GET/PUT | Get / update exam session | Traditional |
-| `/api/analytics/comparative` | GET | Cross-user comparative analytics | `createRouteHandler` |
-| `/api/analytics/trends` | GET | User analytics trends | `createRouteHandler` |
-| `/api/admin/exams` | GET | Admin exam list | `createRouteHandler` |
-| `/api/jobs/process` | POST | Process background job batch | `createRouteHandler` |
-| `/api/sync` | POST | Flush offline mutation queue | Traditional |
-| `/api/premium/checkout` | POST | Create premium checkout session | Traditional |
-| `/api/premium/verify` | POST | Verify premium subscription | Traditional |
-| `/api/premium/cancel` | POST | Cancel premium subscription | Traditional |
-| `/api/leaderboard` | GET | Get social leaderboard | Traditional |
-| `/api/push/subscribe` | POST | Subscribe to push notifications | Traditional |
-| `/api/teacher/assign` | POST | Assign student to teacher | Traditional |
-| `/api/teacher/assignments` | GET | List teacher assignments | Traditional |
-| `/api/teacher/assignments/[id]/messages` | GET/POST | Assignment messaging | Traditional |
-| `/api/teacher/ghost-link` | POST/DELETE | Create/revoke B2B2C ghost link (Appwrite) | `createRouteHandler` |
-| `/api/teacher/share-assignment` | POST | Create assignment share link | Traditional |
-| `/api/teacher/students/[studentId]/report` | GET | Student progress report from Appwrite | `createRouteHandler` |
-| `/api/student/assignments` | GET | List student assignments | Traditional |
-| `/api/assignments/[id]/submit` | POST | Submit assignment for grading | Traditional |
-| `/api/assignments/[id]/comment` | POST | Teacher comment on assignment | Traditional |
-| `/api/study-groups/[groupId]/live-session` | GET/POST | Get/start live study session | Traditional |
-| `/api/study-groups/[groupId]/live-session/[sessionId]` | GET/PATCH | Get/end live session | Traditional |
-| `/api/q/share` | POST | Share a question publicly | Traditional |
-| `/api/q/[id]` | GET | Get shared question | Traditional |
-| `/api/ghost/[token]` | GET | Get ghost dashboard stats (Appwrite) | Traditional |
-| `/api/cron/weekly-digest` | POST | Weekly digest push to all subscribers | Admin-only |
+| Route                                                  | Method      | Purpose                                                      | Handler Style                                 |
+| ------------------------------------------------------ | ----------- | ------------------------------------------------------------ | --------------------------------------------- |
+| `/api/engine/generate`                                 | POST        | Generate questions (subject, topic, count, type, difficulty) | Engine handler                                |
+| `/api/engine/grade`                                    | POST        | Grade a question answer                                      | Engine handler                                |
+| `/api/engine/hint`                                     | POST        | Get a hint for a question                                    | Engine handler                                |
+| `/api/engine/visual`                                   | POST        | Generate diagram/visual for a question                       | Engine handler                                |
+| `/api/engine/test`                                     | GET         | Health check                                                 | Engine handler                                |
+| `/api/engine/budget`                                   | GET         | Get current token budget status                              | Engine handler                                |
+| `/api/engine/next-topics`                              | POST        | Get next recommended topics based on competency              | Engine handler                                |
+| `/api/engine/study-plan`                               | POST        | Generate study plan                                          | Engine handler                                |
+| `/api/engine/knowledge-graph`                          | GET+POST    | Get/generate topic dependency graph                          | Engine handler (GET for read, POST for write) |
+| `/api/engine/study-guide`                              | POST        | Generate study guide                                         | Engine handler                                |
+| `/api/quiz-packs/generate`                             | POST        | Generate offline AI quiz pack                                | Rate-limited                                  |
+| `/api/auth/verify`                                     | POST        | Verify sign-in session                                       | Engine handler                                |
+| `/api/auth/rate-limit`                                 | GET         | Check auth rate limit status                                 | Engine handler                                |
+| `/api/exam-sessions`                                   | GET/POST    | List / create exam sessions                                  | `createRouteHandler`                          |
+| `/api/exam-sessions/[id]`                              | GET/PUT     | Get / update exam session                                    | Traditional                                   |
+| `/api/analytics/comparative`                           | GET         | Cross-user comparative analytics                             | `createRouteHandler`                          |
+| `/api/analytics/trends`                                | GET         | User analytics trends                                        | `createRouteHandler`                          |
+| `/api/admin/exams`                                     | GET         | Admin exam list                                              | `createRouteHandler`                          |
+| `/api/jobs/process`                                    | POST        | Process background job batch                                 | `createRouteHandler`                          |
+| `/api/sync`                                            | POST        | Flush offline mutation queue                                 | Traditional                                   |
+| `/api/premium/checkout`                                | POST        | Create premium checkout session                              | Traditional                                   |
+| `/api/premium/verify`                                  | POST        | Verify premium subscription                                  | Traditional                                   |
+| `/api/premium/cancel`                                  | POST        | Cancel premium subscription                                  | Traditional                                   |
+| `/api/leaderboard`                                     | GET         | Get social leaderboard                                       | Traditional                                   |
+| `/api/push/subscribe`                                  | POST        | Subscribe to push notifications                              | Traditional                                   |
+| `/api/teacher/assign`                                  | POST        | Assign student to teacher                                    | Traditional                                   |
+| `/api/teacher/assignments`                             | GET         | List teacher assignments                                     | Traditional                                   |
+| `/api/teacher/assignments/[id]/messages`               | GET/POST    | Assignment messaging                                         | Traditional                                   |
+| `/api/teacher/ghost-link`                              | POST/DELETE | Create/revoke B2B2C ghost link (Appwrite)                    | `createRouteHandler`                          |
+| `/api/teacher/share-assignment`                        | POST        | Create assignment share link                                 | Traditional                                   |
+| `/api/teacher/students/[studentId]/report`             | GET         | Student progress report from Appwrite                        | `createRouteHandler`                          |
+| `/api/student/assignments`                             | GET         | List student assignments                                     | Traditional                                   |
+| `/api/assignments/[id]/submit`                         | POST        | Submit assignment for grading                                | Traditional                                   |
+| `/api/assignments/[id]/comment`                        | POST        | Teacher comment on assignment                                | Traditional                                   |
+| `/api/study-groups/[groupId]/live-session`             | GET/POST    | Get/start live study session                                 | Traditional                                   |
+| `/api/study-groups/[groupId]/live-session/[sessionId]` | GET/PATCH   | Get/end live session                                         | Traditional                                   |
+| `/api/q/share`                                         | POST        | Share a question publicly                                    | Traditional                                   |
+| `/api/q/[id]`                                          | GET         | Get shared question                                          | Traditional                                   |
+| `/api/ghost/[token]`                                   | GET         | Get ghost dashboard stats (Appwrite)                         | Traditional                                   |
+| `/api/cron/weekly-digest`                              | POST        | Weekly digest push to all subscribers                        | Admin-only                                    |
 
 ### Key Event Flows
 
 **Question Generation (orchestrated, RAG-grounded):**
+
 ```
 Client -> POST /api/engine/generate
   -> LearningOrchestrator.generateQuestionSet()
@@ -397,6 +398,7 @@ Client -> POST /api/engine/generate
 ```
 
 **Quiz Answer + Grade:**
+
 ```
 Client -> POST /api/engine/grade
   -> LearningOrchestrator.gradeAndTrack()
@@ -411,6 +413,7 @@ Client -> POST /api/engine/grade
 ```
 
 **Knowledge Graph Generation:**
+
 ```
 Client -> GET /api/engine/knowledge-graph?subject=X&topic=Y
   -> CachedAIGenerator<T>
@@ -422,6 +425,7 @@ Client -> GET /api/engine/knowledge-graph?subject=X&topic=Y
 ```
 
 **Study Guide Generation:**
+
 ```
 Client -> POST /api/engine/study-guide { subject, topic }
   -> CachedAIGenerator<T>
@@ -432,6 +436,7 @@ Client -> POST /api/engine/study-guide { subject, topic }
 ```
 
 **Live Study Session Flow:**
+
 ```
 Client -> POST /api/study-groups/[groupId]/live-session
   -> LiveSessionService.startLiveSession()
@@ -443,74 +448,74 @@ Client -> POST /api/study-groups/[groupId]/live-session
 
 ### Database Collections (Appwrite)
 
-| Collection | Purpose | Documents |
-|------------|---------|-----------|
-| `users` | User profiles + auth | Auth-managed |
-| `questions` | Cached AI-generated questions | ~10k (cleaned >30d) |
-| `visuals` | Cached AI-generated diagrams | ~5k (cleaned >30d) |
-| `exam_sessions` | In-progress + completed exam sessions | Per-user |
-| `exam_papers` | Uploaded past exam PDFs | ~500 |
-| `exam_dates` | National exam timetable (synced server-side) | ~200 |
-| `user_consents` | GDPR/POPIA consent preferences (dual-write) | Per-user |
-| `teacher_assignments` | Teacher-assigned student work | Per-teacher |
-| `teacher_students` | Teacher-student linking | Per-teacher |
-| `premium_subscriptions` | Premium subscription records (Stripe webhook) | Per-user |
-| `study_groups` | Study group metadata + membership (v3) | Per-group |
-| `live_sessions` | Active live study sessions | Per-session |
-| `live_session_participants` | Participants in live sessions | Per-participant |
+| Collection                  | Purpose                                       | Documents           |
+| --------------------------- | --------------------------------------------- | ------------------- |
+| `users`                     | User profiles + auth                          | Auth-managed        |
+| `questions`                 | Cached AI-generated questions                 | ~10k (cleaned >30d) |
+| `visuals`                   | Cached AI-generated diagrams                  | ~5k (cleaned >30d)  |
+| `exam_sessions`             | In-progress + completed exam sessions         | Per-user            |
+| `exam_papers`               | Uploaded past exam PDFs                       | ~500                |
+| `exam_dates`                | National exam timetable (synced server-side)  | ~200                |
+| `user_consents`             | GDPR/POPIA consent preferences (dual-write)   | Per-user            |
+| `teacher_assignments`       | Teacher-assigned student work                 | Per-teacher         |
+| `teacher_students`          | Teacher-student linking                       | Per-teacher         |
+| `premium_subscriptions`     | Premium subscription records (Stripe webhook) | Per-user            |
+| `study_groups`              | Study group metadata + membership (v3)        | Per-group           |
+| `live_sessions`             | Active live study sessions                    | Per-session         |
+| `live_session_participants` | Participants in live sessions                 | Per-participant     |
 
 ### Database Tables (Dexie / IndexedDB) — v32 Schema
 
-| Table | Purpose | Expiry |
-|-------|---------|--------|
-| `questions` | Cached generated questions | 24h |
-| `visuals` | Cached generated diagrams | 7d |
-| `examDates` | Exam timetable slots | 7d |
-| `questionRatings` | User star ratings on questions | Permanent |
-| `wrongAnswers` | Wrong answer journal | Permanent |
-| `flashcards` | SM-2 spaced repetition state (includes learningStep, leeched fields) | Permanent |
-| `srsettings` | SR settings persisted via flashcard-engine | Permanent |
-| `quizPacks` | Offline AI quiz pack manifests | 30d |
-| `packQuestions` | Questions within offline packs | 30d |
-| `jobs` | Background job queue (QueueCore) | Processed → deleted |
-| `syncQueue` | Offline mutation queue | Flushed → deleted |
-| `competencies` | Per-topic competency scores (supports paperId P1/P2 split) | Permanent |
-| `chatMessages` | AI chat history | Permanent |
-| `notes` | User notes | Permanent |
-| `userConsents` | GDPR/POPIA consent preferences (dual-write to Appwrite) | Permanent |
-| `studySessions` | Study planner sessions | Permanent |
-| `tinyfishCache` | TinyFish RAG cache (key, value, expiresAt, fetchedAt) | 14d |
-| `tinyfishUsage` | Per-user TinyFish daily usage count | Permanent |
-| `analyticsEvents` | WAM/DAU/WAU analytics events (v27) | Permanent |
-| `sharedQuestions` | Publicly shared questions (v28) | Permanent |
-| `knowledgeGraph` | Cached topic dependency graphs (v29) | 7d |
-| `teacherObservations` | Teacher observation notes (v30) | Permanent |
-| `assignmentMessages` | Teacher-student assignment messaging (v30) | Permanent |
-| `studyPlans` | Study plan state (v31, migrated from localStorage) | Permanent |
-| `onboardingState` | Onboarding progress (v31, migrated from localStorage) | Permanent |
-| `srDailyBudget` | SR daily budget (v31, migrated from localStorage) | Permanent |
-| `flashcardSyncState` | Flashcard sync state (v31) | Permanent |
-| `studyGuides` | AI-generated study guides (v32) | 30d |
-| +10 others | Exam sessions, progress, conflicts, subjects, bookmarks, retention recurrence, etc. | Varies |
+| Table                 | Purpose                                                                             | Expiry              |
+| --------------------- | ----------------------------------------------------------------------------------- | ------------------- |
+| `questions`           | Cached generated questions                                                          | 24h                 |
+| `visuals`             | Cached generated diagrams                                                           | 7d                  |
+| `examDates`           | Exam timetable slots                                                                | 7d                  |
+| `questionRatings`     | User star ratings on questions                                                      | Permanent           |
+| `wrongAnswers`        | Wrong answer journal                                                                | Permanent           |
+| `flashcards`          | SM-2 spaced repetition state (includes learningStep, leeched fields)                | Permanent           |
+| `srsettings`          | SR settings persisted via flashcard-engine                                          | Permanent           |
+| `quizPacks`           | Offline AI quiz pack manifests                                                      | 30d                 |
+| `packQuestions`       | Questions within offline packs                                                      | 30d                 |
+| `jobs`                | Background job queue (QueueCore)                                                    | Processed → deleted |
+| `syncQueue`           | Offline mutation queue                                                              | Flushed → deleted   |
+| `competencies`        | Per-topic competency scores (supports paperId P1/P2 split)                          | Permanent           |
+| `chatMessages`        | AI chat history                                                                     | Permanent           |
+| `notes`               | User notes                                                                          | Permanent           |
+| `userConsents`        | GDPR/POPIA consent preferences (dual-write to Appwrite)                             | Permanent           |
+| `studySessions`       | Study planner sessions                                                              | Permanent           |
+| `tinyfishCache`       | TinyFish RAG cache (key, value, expiresAt, fetchedAt)                               | 14d                 |
+| `tinyfishUsage`       | Per-user TinyFish daily usage count                                                 | Permanent           |
+| `analyticsEvents`     | WAM/DAU/WAU analytics events (v27)                                                  | Permanent           |
+| `sharedQuestions`     | Publicly shared questions (v28)                                                     | Permanent           |
+| `knowledgeGraph`      | Cached topic dependency graphs (v29)                                                | 7d                  |
+| `teacherObservations` | Teacher observation notes (v30)                                                     | Permanent           |
+| `assignmentMessages`  | Teacher-student assignment messaging (v30)                                          | Permanent           |
+| `studyPlans`          | Study plan state (v31, migrated from localStorage)                                  | Permanent           |
+| `onboardingState`     | Onboarding progress (v31, migrated from localStorage)                               | Permanent           |
+| `srDailyBudget`       | SR daily budget (v31, migrated from localStorage)                                   | Permanent           |
+| `flashcardSyncState`  | Flashcard sync state (v31)                                                          | Permanent           |
+| `studyGuides`         | AI-generated study guides (v32)                                                     | 30d                 |
+| +10 others            | Exam sessions, progress, conflicts, subjects, bookmarks, retention recurrence, etc. | Varies              |
 
 ---
 
 ## Non-Functional Requirements
 
-| Area | Target | Implementation |
-|------|--------|----------------|
-| **Offline support** | Full read access, queued writes | Dexie + SyncQueue + offline quiz packs + study guides |
-| **AI budget** | 2000 calls/day global, per-user caps | TokenTracker + 429 responses |
-| **Auth security** | 3 attempts/5min sign-in, 1/5min magic link | In-memory rate limiter + RedisStore |
-| **Cache freshness** | Questions: 24h, Visuals: 7d, QuizPacks: 30d, StudyGuides: 30d, KnowledgeGraph: 7d | Dexie TTL + Appwrite cleanup cron |
-| **Appwrite limits** | <50k documents | Cleanup cron deletes >30d |
-| **Page load** | Mobile-first, Core Web Vitals tracked | Sentry + web-vitals |
-| **Error monitoring** | Client + server + edge | Sentry DSN configured + centralized logger |
-| **Build quality** | Zero tsc errors, zero Biome errors, React Doctor 100/100 | Pre-commit hook (Bun), react-doctor |
-| **E2E coverage** | Smoke + visual tests for core flows | Playwright 1.60.0 |
-| **UI documentation** | Storybook for component library | Storybook 10.4.1 (18 stories) |
-| **Dead code detection** | Knip static analysis | knip@6.15.0 |
-| **Test baseline** | 1271 pass, 0 fail | `bun run test` (vitest) |
+| Area                    | Target                                                                            | Implementation                                        |
+| ----------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| **Offline support**     | Full read access, queued writes                                                   | Dexie + SyncQueue + offline quiz packs + study guides |
+| **AI budget**           | 2000 calls/day global, per-user caps                                              | TokenTracker + 429 responses                          |
+| **Auth security**       | 3 attempts/5min sign-in, 1/5min magic link                                        | In-memory rate limiter + RedisStore                   |
+| **Cache freshness**     | Questions: 24h, Visuals: 7d, QuizPacks: 30d, StudyGuides: 30d, KnowledgeGraph: 7d | Dexie TTL + Appwrite cleanup cron                     |
+| **Appwrite limits**     | <50k documents                                                                    | Cleanup cron deletes >30d                             |
+| **Page load**           | Mobile-first, Core Web Vitals tracked                                             | Sentry + web-vitals                                   |
+| **Error monitoring**    | Client + server + edge                                                            | Sentry DSN configured + centralized logger            |
+| **Build quality**       | Zero tsc errors, zero Biome errors, React Doctor 100/100                          | Pre-commit hook (Bun), react-doctor                   |
+| **E2E coverage**        | Smoke + visual tests for core flows                                               | Playwright 1.60.0                                     |
+| **UI documentation**    | Storybook for component library                                                   | Storybook 10.4.1 (18 stories)                         |
+| **Dead code detection** | Knip static analysis                                                              | knip@6.15.0                                           |
+| **Test baseline**       | 1271 pass, 0 fail                                                                 | `bun run test` (vitest)                               |
 
 ### Scalability Bottlenecks
 
@@ -522,60 +527,60 @@ Client -> POST /api/study-groups/[groupId]/live-session
 
 ### Security Boundaries
 
-| Boundary | Enforcement |
-|----------|-------------|
-| API routes → Appwrite DB | Server-side API key (not exposed to client) |
-| Anonymous → authenticated | `updateEmail()` preserves same userId — no data leak |
-| Admin routes | Separate magic-link + OTP auth (localStorage session) |
-| File uploads | UploadThing server-side verification |
-| Push notifications | VAPID key, subscription-based (web-push) |
-| Premium gating | [Removed June 2026 — all features free] Stripe/Payfast infra retained |
+| Boundary                  | Enforcement                                                           |
+| ------------------------- | --------------------------------------------------------------------- |
+| API routes → Appwrite DB  | Server-side API key (not exposed to client)                           |
+| Anonymous → authenticated | `updateEmail()` preserves same userId — no data leak                  |
+| Admin routes              | Separate magic-link + OTP auth (localStorage session)                 |
+| File uploads              | UploadThing server-side verification                                  |
+| Push notifications        | VAPID key, subscription-based (web-push)                              |
+| Premium gating            | [Removed June 2026 — all features free] Stripe/Payfast infra retained |
 
 ---
 
 ## Evolution Roadmap
 
-| Priority | Change | Rationale | Status |
-|----------|--------|-----------|--------|
-| P1 | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (was seed-only + Dexie) | ✅ Done |
-| P1 | E2E tests (Playwright) | Coverage gap: only unit tests existed | ✅ Done |
-| P1 | Offline AI Quiz Packs | Downloadable packs for load-shedding resilience | ✅ Done |
-| P1 | Storybook setup | UI component documentation | ✅ Done |
-| P1 | Swipeable flashcard deck | Tinder-style drag-to-swipe + keyboard support | ✅ Done |
-| P1 | Full-screen immersive mode | Distraction-free quiz/exam (auto nav-hiding) | ✅ Done |
-| P1 | Mega-component decomposition | 4 components split (2016→1136 lines, −44%) | ✅ Done |
-| P1 | Bun migration | Runtime + CI + Husky migration to Bun | ✅ Done |
-| P1 | Observability dashboard | AI latency tracking + usage events + admin panel | ✅ Done |
-| P1 | Teacher + Parent dashboards | Role-gated B2B2C analytics (FEAT-01, FEAT-02) | ✅ Done |
-| P1 | Premium gating + Stripe webhook | Monetization end-to-end: checkout, verify, cancel | ✅ Done (removed June 2026 — all features free) |
-| P1 | GDPR/POPIA consent suite | Cookie banner, TOS versioning, account deletion, data export | ✅ Done |
-| P1 | i18n AF + ZU | Afrikaans 100%, isiZulu ~97% complete | ✅ Done |
-| P1 | WCAG 2.2 AA a11y audit + critical fixes | 30+ components audited, 11 critical + 8 high fixes | ✅ Done |
-| P1 | Web-grounded AI — TinyFish RAG (foundation + solve + quiz) | 3 PRs: `f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout | ✅ Done |
-| P1 | DataAccess seam (Phase 1-4) | Abstraction over Dexie for testability; all 38+ tables migrated | ✅ Done |
-| P1 | Codebase Hardening | Centralized logger, 148 catch-block sweep, aria-labels, loading.tsx | ✅ Done |
-| P1 | React Doctor 100/100 | 194+16 issues fixed across sessions 35 + 39; parallelized awaits, Set/Map lookups, useReducer, regex checks | ✅ Done |
-| P2 | Per-question source persistence on `Question` type | Solved in `f769f322` — `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate); hybrid AI-cite with fallback via `source-mapper.ts`; `<SourceAttributionPill>` | ✅ Done |
-| P2 | VerifiedByPill on quiz results page | Q7 follow-up — `getLastRagContext()` surfaces batch RAG sources | ✅ Done |
-| P2 | Knowledge graph (AI topic dependencies) | AI-generated prerequisite/core/advanced topic graphs | ✅ Done |
-| P2 | Study guide generator | AI-generated structured study guides with 30d cache | ✅ Done |
-| P2 | Learning loop tightening | Wrong-answer re-encounter, per-paper competency split, next-best-action | ✅ Done |
-| P2 | B2B2C depth | Teacher assignment loop, ghost links, assignment sharing, observations, messaging | ✅ Done |
-| P2 | Public share route | `/q/[id]` with star-gated answer reveal + source attribution | ✅ Done |
-| P2 | PWA offline polish | `/offline` page, manifest theming, install tracking | ✅ Done |
-| P2 | Calendar view | Month grid in study planner with session dots + drag-to-reschedule | ✅ Done |
-| P2 | Batch 6 hardening | i18n round 2, knip, visual tests, storybook coverage 18 stories | ✅ Done |
-| P2 | Theme chrome takeover | Dynamic `theme-color`, accent-tinted nav glass, SSR viewport | ✅ Done |
-| P2 | Navigation sidebar overhaul | 64px icon column → full categorized sidebar with search | ✅ Done |
-| P2 | Daily Bolt simplification | Remove two-step, streamlined celebration | ✅ Done |
-| P2 | Architectural deepening (S37-38) | AI provider singleton collapsed, GenerateResult, CachedAIGenerator, 6+ service extractions | ✅ Done |
-| P3 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | ✅ Done (RedisStore implemented) |
-| P3 | Keyboard-accessible flashcard deck | Full redesign for keyboard-only operation | Planned |
-| P3 | Live study sessions | Real-time collaborative sessions via Appwrite | ✅ Done |
-| P3 | Uniform AI adapter | Factory pattern for pluggable provider normalizers | ✅ Done |
-| P3 | Caching strategy module | Generic multi-tier caching framework | ✅ Done |
-| P3 | Flashcard deck types | `FlashcardDeck`/`FlashcardDeckCard` interfaces | ✅ Done |
-| P3 | Search-in-chunks | Parallel Dexie search with relevance scoring | ✅ Done |
+| Priority | Change                                                         | Rationale                                                                                                                                                                   | Status                                          |
+| -------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| P1       | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (was seed-only + Dexie)                                                                                                                            | ✅ Done                                         |
+| P1       | E2E tests (Playwright)                                         | Coverage gap: only unit tests existed                                                                                                                                       | ✅ Done                                         |
+| P1       | Offline AI Quiz Packs                                          | Downloadable packs for load-shedding resilience                                                                                                                             | ✅ Done                                         |
+| P1       | Storybook setup                                                | UI component documentation                                                                                                                                                  | ✅ Done                                         |
+| P1       | Swipeable flashcard deck                                       | Tinder-style drag-to-swipe + keyboard support                                                                                                                               | ✅ Done                                         |
+| P1       | Full-screen immersive mode                                     | Distraction-free quiz/exam (auto nav-hiding)                                                                                                                                | ✅ Done                                         |
+| P1       | Mega-component decomposition                                   | 4 components split (2016→1136 lines, −44%)                                                                                                                                  | ✅ Done                                         |
+| P1       | Bun migration                                                  | Runtime + CI + Husky migration to Bun                                                                                                                                       | ✅ Done                                         |
+| P1       | Observability dashboard                                        | AI latency tracking + usage events + admin panel                                                                                                                            | ✅ Done                                         |
+| P1       | Teacher + Parent dashboards                                    | Role-gated B2B2C analytics (FEAT-01, FEAT-02)                                                                                                                               | ✅ Done                                         |
+| P1       | Premium gating + Stripe webhook                                | Monetization end-to-end: checkout, verify, cancel                                                                                                                           | ✅ Done (removed June 2026 — all features free) |
+| P1       | GDPR/POPIA consent suite                                       | Cookie banner, TOS versioning, account deletion, data export                                                                                                                | ✅ Done                                         |
+| P1       | i18n AF + ZU                                                   | Afrikaans 100%, isiZulu ~97% complete                                                                                                                                       | ✅ Done                                         |
+| P1       | WCAG 2.2 AA a11y audit + critical fixes                        | 30+ components audited, 11 critical + 8 high fixes                                                                                                                          | ✅ Done                                         |
+| P1       | Web-grounded AI — TinyFish RAG (foundation + solve + quiz)     | 3 PRs: `f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout                                                    | ✅ Done                                         |
+| P1       | DataAccess seam (Phase 1-4)                                    | Abstraction over Dexie for testability; all 38+ tables migrated                                                                                                             | ✅ Done                                         |
+| P1       | Codebase Hardening                                             | Centralized logger, 148 catch-block sweep, aria-labels, loading.tsx                                                                                                         | ✅ Done                                         |
+| P1       | React Doctor 100/100                                           | 194+16 issues fixed across sessions 35 + 39; parallelized awaits, Set/Map lookups, useReducer, regex checks                                                                 | ✅ Done                                         |
+| P2       | Per-question source persistence on `Question` type             | Solved in `f769f322` — `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate); hybrid AI-cite with fallback via `source-mapper.ts`; `<SourceAttributionPill>` | ✅ Done                                         |
+| P2       | VerifiedByPill on quiz results page                            | Q7 follow-up — `getLastRagContext()` surfaces batch RAG sources                                                                                                             | ✅ Done                                         |
+| P2       | Knowledge graph (AI topic dependencies)                        | AI-generated prerequisite/core/advanced topic graphs                                                                                                                        | ✅ Done                                         |
+| P2       | Study guide generator                                          | AI-generated structured study guides with 30d cache                                                                                                                         | ✅ Done                                         |
+| P2       | Learning loop tightening                                       | Wrong-answer re-encounter, per-paper competency split, next-best-action                                                                                                     | ✅ Done                                         |
+| P2       | B2B2C depth                                                    | Teacher assignment loop, ghost links, assignment sharing, observations, messaging                                                                                           | ✅ Done                                         |
+| P2       | Public share route                                             | `/q/[id]` with star-gated answer reveal + source attribution                                                                                                                | ✅ Done                                         |
+| P2       | PWA offline polish                                             | `/offline` page, manifest theming, install tracking                                                                                                                         | ✅ Done                                         |
+| P2       | Calendar view                                                  | Month grid in study planner with session dots + drag-to-reschedule                                                                                                          | ✅ Done                                         |
+| P2       | Batch 6 hardening                                              | i18n round 2, knip, visual tests, storybook coverage 18 stories                                                                                                             | ✅ Done                                         |
+| P2       | Theme chrome takeover                                          | Dynamic `theme-color`, accent-tinted nav glass, SSR viewport                                                                                                                | ✅ Done                                         |
+| P2       | Navigation sidebar overhaul                                    | 64px icon column → full categorized sidebar with search                                                                                                                     | ✅ Done                                         |
+| P2       | Daily Bolt simplification                                      | Remove two-step, streamlined celebration                                                                                                                                    | ✅ Done                                         |
+| P2       | Architectural deepening (S37-38)                               | AI provider singleton collapsed, GenerateResult, CachedAIGenerator, 6+ service extractions                                                                                  | ✅ Done                                         |
+| P3       | Redis-backed RateLimiter + TokenTracker                        | Survives server restarts, shared across instances                                                                                                                           | ✅ Done (RedisStore implemented)                |
+| P3       | Keyboard-accessible flashcard deck                             | Full redesign for keyboard-only operation                                                                                                                                   | Planned                                         |
+| P3       | Live study sessions                                            | Real-time collaborative sessions via Appwrite                                                                                                                               | ✅ Done                                         |
+| P3       | Uniform AI adapter                                             | Factory pattern for pluggable provider normalizers                                                                                                                          | ✅ Done                                         |
+| P3       | Caching strategy module                                        | Generic multi-tier caching framework                                                                                                                                        | ✅ Done                                         |
+| P3       | Flashcard deck types                                           | `FlashcardDeck`/`FlashcardDeckCard` interfaces                                                                                                                              | ✅ Done                                         |
+| P3       | Search-in-chunks                                               | Parallel Dexie search with relevance scoring                                                                                                                                | ✅ Done                                         |
 
 ---
 
@@ -587,7 +592,7 @@ graph LR
     A --> C[Next.js SSR/RSC Pages]
     A --> D[Next.js Static Assets]
     A --> E[Sentry Monitoring]
-    
+
     B --> F[Appwrite Cloud]
     B --> G[Gemini API]
     B --> H[Nvidia NIM API]
@@ -596,10 +601,10 @@ graph LR
     B --> K[TinyFish RAG API]
     B --> L[Upstash Redis]
     B --> M[Stripe API]
-    
+
     C --> N[UploadThing]
     C --> O[Client Dexie/IDB]
-    
+
     P[GitHub] --> Q[Vercel Git Deploy]
     P --> R[GitHub Actions<br/>(Biome + tsc + knip)]
     P --> S[Playwright E2E + Visual Tests]

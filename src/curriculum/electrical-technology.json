@@ -70,7 +70,11 @@
       "bloomTarget": "evaluate",
       "subtopics": [
         { "id": "elect-power-generation", "name": "Power Generation", "order": 1 },
-        { "id": "elect-transmission-distribution", "name": "Transmission and Distribution", "order": 2 },
+        {
+          "id": "elect-transmission-distribution",
+          "name": "Transmission and Distribution",
+          "order": 2
+        },
         { "id": "elect-three-phase-systems", "name": "Three-Phase Systems", "order": 3 }
       ]
     }

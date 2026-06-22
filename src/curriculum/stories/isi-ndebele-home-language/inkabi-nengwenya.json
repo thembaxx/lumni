@@ -1,50 +1,50 @@
 {
-	"id": "inkabi-nengwenya",
-	"title": "Inkabi nengwenya",
-	"author": "Lumni",
-	"language": "isiNdebele",
-	"languageId": "isi-ndebele-home-language",
-	"gradeLevel": "4–6",
-	"wordCount": 820,
-	"subjects": ["isi-ndebele-home-language"],
-	"source": "ai-generated",
-	"topics": ["animals", "folktale"],
-	"content": "# Inkabi nengwenya\n\nSesiswini, inkabi nengwenya babesiphila ndawonye. Inkabi yayingumntwana omncane, oneamandla amakhulu kakhulu. Engwenya yayingumntwana omkhulu, oneamandla amakhulu kakhulu kunaleyo yenkabi.\n\nEngwenya yayidla izinto zabantu. Yayifika kuzo zonke izindawo zabantu ukuze idle. Sesiswini, inkabi ifika endaweni eningi kakhulu.\n\n\"Sesiswini, ngicela ungingisekele,\" inkabi yacenga. Engwenya yabiphendula. \"Ngiyakunika izinto, nami ngiyakufika endaweni yakho.\"\n\nInkabi ifika endaweni yayo. Engwenya yehla endaweni yayo. Inkabi yadla izinto zabantu. Engwenya yehla endaweni yayo.\n\nInkabi yadla izinto zabantu. Engwenya yehla endaweni yayo. Inkabi yadla izinto zabantu. Engwenya yehla endaweni yayo.\n\nSesiswini, inkabi nengwenya babesiphila ndawonye. Babesiphila ndawonye. Babesiphila ndawonye.\n\n## Izifundo\n\n1. **Izinto zinhle** — Inkabi nengwenya babesiphila ndawonye. Babesiphila ndawonye. Babesiphila ndawonye.\n2. **Amandla ayinhle** — Inkabi yineamandla amakhulu kakhulu, engwenya iyahamba ngendlela yakhe.\n\n## Amagama\n\n| isiNdebele | English | Part of Speech |\n|------------|---------|----------------|\n| inkabi | hare | noun |\n| engwenya | jackal | noun |\n| izinto | things | noun |\n| idle | eat | verb |\n| ukuthanda | desire | verb |",
-	"vocabulary": [
-		{
-			"term": "inkabi",
-			"definition": "A small, fast animal related to rabbits, known for being clever",
-			"partOfSpeech": "noun",
-			"pronunciation": "/iŋ.ka.ˈbi/",
-			"language": "nd"
-		},
-		{
-			"term": "engwenya",
-			"definition": "A wild animal similar to a dog, known for being cunning",
-			"partOfSpeech": "noun",
-			"pronunciation": "/eŋ.ˈɡwɛ.ɲa/",
-			"language": "nd"
-		},
-		{
-			"term": "izinto",
-			"definition": "Objects or items that people use or eat",
-			"partOfSpeech": "noun",
-			"pronunciation": "/i.ˈzin.to/",
-			"language": "nd"
-		},
-		{
-			"term": "idle",
-			"definition": "To put food in your mouth and swallow it",
-			"partOfSpeech": "verb",
-			"pronunciation": "/i.ˈdɛ.lɛ/",
-			"language": "nd"
-		},
-		{
-			"term": "ukuthanda",
-			"definition": "A strong feeling of wanting something",
-			"partOfSpeech": "verb",
-			"pronunciation": "/u.ku.ˈtʰan.da/",
-			"language": "nd"
-		}
-	]
+  "id": "inkabi-nengwenya",
+  "title": "Inkabi nengwenya",
+  "author": "Lumni",
+  "language": "isiNdebele",
+  "languageId": "isi-ndebele-home-language",
+  "gradeLevel": "4–6",
+  "wordCount": 820,
+  "subjects": ["isi-ndebele-home-language"],
+  "source": "ai-generated",
+  "topics": ["animals", "folktale"],
+  "content": "# Inkabi nengwenya\n\nSesiswini, inkabi nengwenya babesiphila ndawonye. Inkabi yayingumntwana omncane, oneamandla amakhulu kakhulu. Engwenya yayingumntwana omkhulu, oneamandla amakhulu kakhulu kunaleyo yenkabi.\n\nEngwenya yayidla izinto zabantu. Yayifika kuzo zonke izindawo zabantu ukuze idle. Sesiswini, inkabi ifika endaweni eningi kakhulu.\n\n\"Sesiswini, ngicela ungingisekele,\" inkabi yacenga. Engwenya yabiphendula. \"Ngiyakunika izinto, nami ngiyakufika endaweni yakho.\"\n\nInkabi ifika endaweni yayo. Engwenya yehla endaweni yayo. Inkabi yadla izinto zabantu. Engwenya yehla endaweni yayo.\n\nInkabi yadla izinto zabantu. Engwenya yehla endaweni yayo. Inkabi yadla izinto zabantu. Engwenya yehla endaweni yayo.\n\nSesiswini, inkabi nengwenya babesiphila ndawonye. Babesiphila ndawonye. Babesiphila ndawonye.\n\n## Izifundo\n\n1. **Izinto zinhle** — Inkabi nengwenya babesiphila ndawonye. Babesiphila ndawonye. Babesiphila ndawonye.\n2. **Amandla ayinhle** — Inkabi yineamandla amakhulu kakhulu, engwenya iyahamba ngendlela yakhe.\n\n## Amagama\n\n| isiNdebele | English | Part of Speech |\n|------------|---------|----------------|\n| inkabi | hare | noun |\n| engwenya | jackal | noun |\n| izinto | things | noun |\n| idle | eat | verb |\n| ukuthanda | desire | verb |",
+  "vocabulary": [
+    {
+      "term": "inkabi",
+      "definition": "A small, fast animal related to rabbits, known for being clever",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iŋ.ka.ˈbi/",
+      "language": "nd"
+    },
+    {
+      "term": "engwenya",
+      "definition": "A wild animal similar to a dog, known for being cunning",
+      "partOfSpeech": "noun",
+      "pronunciation": "/eŋ.ˈɡwɛ.ɲa/",
+      "language": "nd"
+    },
+    {
+      "term": "izinto",
+      "definition": "Objects or items that people use or eat",
+      "partOfSpeech": "noun",
+      "pronunciation": "/i.ˈzin.to/",
+      "language": "nd"
+    },
+    {
+      "term": "idle",
+      "definition": "To put food in your mouth and swallow it",
+      "partOfSpeech": "verb",
+      "pronunciation": "/i.ˈdɛ.lɛ/",
+      "language": "nd"
+    },
+    {
+      "term": "ukuthanda",
+      "definition": "A strong feeling of wanting something",
+      "partOfSpeech": "verb",
+      "pronunciation": "/u.ku.ˈtʰan.da/",
+      "language": "nd"
+    }
+  ]
 }

@@ -1,68 +1,80 @@
 {
-	"subjectId": "information-technology",
-	"subjectName": "Information Technology",
-	"topics": [
-		{
-			"id": "programming-basics",
-			"name": "Programming Basics",
-			"order": 1, "prerequisites": [], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "it-variables", "name": "Variables and Data Types", "order": 1 },
-				{ "id": "it-control", "name": "Control Structures", "order": 2 },
-				{ "id": "it-methods", "name": "Methods and Functions", "order": 3 },
-				{ "id": "it-oop", "name": "Object-Oriented Programming", "order": 4 }
-			]
-		},
-		{
-			"id": "data-structures",
-			"name": "Data Structures",
-			"order": 2, "prerequisites": ["programming-basics"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "it-arrays", "name": "Arrays", "order": 1 },
-				{ "id": "it-linked-lists", "name": "Linked Lists", "order": 2 },
-				{ "id": "it-stacks-queues", "name": "Stacks and Queues", "order": 3 },
-				{ "id": "it-trees", "name": "Trees", "order": 4 }
-			]
-		},
-		{
-			"id": "algorithms",
-			"name": "Algorithms",
-			"order": 3, "prerequisites": ["data-structures"], "bloomTarget": "evaluate",
-			"subtopics": [
-				{ "id": "it-sorting", "name": "Sorting Algorithms", "order": 1 },
-				{ "id": "it-searching", "name": "Searching Algorithms", "order": 2 },
-				{ "id": "it-complexity", "name": "Algorithm Complexity", "order": 3 }
-			]
-		},
-		{
-			"id": "database",
-			"name": "Database Management",
-			"order": 4, "prerequisites": ["data-structures"], "bloomTarget": "apply",
-			"subtopics": [
-				{ "id": "it-db-design", "name": "Database Design", "order": 1 },
-				{ "id": "it-sql", "name": "SQL", "order": 2 },
-				{ "id": "it-db-normalization", "name": "Normalization", "order": 3 }
-			]
-		},
-		{
-			"id": "networks",
-			"name": "Networks",
-			"order": 5, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "it-network-topologies", "name": "Network Topologies", "order": 1 },
-				{ "id": "it-protocols", "name": "Protocols", "order": 2 },
-				{ "id": "it-security", "name": "Network Security", "order": 3 }
-			]
-		},
-		{
-			"id": "system-technologies",
-			"name": "System Technologies",
-			"order": 6, "prerequisites": [], "bloomTarget": "understand",
-			"subtopics": [
-				{ "id": "it-hardware", "name": "Hardware", "order": 1 },
-				{ "id": "it-software", "name": "Software", "order": 2 },
-				{ "id": "it-operating-systems", "name": "Operating Systems", "order": 3 }
-			]
-		}
-	]
+  "subjectId": "information-technology",
+  "subjectName": "Information Technology",
+  "topics": [
+    {
+      "id": "programming-basics",
+      "name": "Programming Basics",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "it-variables", "name": "Variables and Data Types", "order": 1 },
+        { "id": "it-control", "name": "Control Structures", "order": 2 },
+        { "id": "it-methods", "name": "Methods and Functions", "order": 3 },
+        { "id": "it-oop", "name": "Object-Oriented Programming", "order": 4 }
+      ]
+    },
+    {
+      "id": "data-structures",
+      "name": "Data Structures",
+      "order": 2,
+      "prerequisites": ["programming-basics"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "it-arrays", "name": "Arrays", "order": 1 },
+        { "id": "it-linked-lists", "name": "Linked Lists", "order": 2 },
+        { "id": "it-stacks-queues", "name": "Stacks and Queues", "order": 3 },
+        { "id": "it-trees", "name": "Trees", "order": 4 }
+      ]
+    },
+    {
+      "id": "algorithms",
+      "name": "Algorithms",
+      "order": 3,
+      "prerequisites": ["data-structures"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "it-sorting", "name": "Sorting Algorithms", "order": 1 },
+        { "id": "it-searching", "name": "Searching Algorithms", "order": 2 },
+        { "id": "it-complexity", "name": "Algorithm Complexity", "order": 3 }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Database Management",
+      "order": 4,
+      "prerequisites": ["data-structures"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "it-db-design", "name": "Database Design", "order": 1 },
+        { "id": "it-sql", "name": "SQL", "order": 2 },
+        { "id": "it-db-normalization", "name": "Normalization", "order": 3 }
+      ]
+    },
+    {
+      "id": "networks",
+      "name": "Networks",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "it-network-topologies", "name": "Network Topologies", "order": 1 },
+        { "id": "it-protocols", "name": "Protocols", "order": 2 },
+        { "id": "it-security", "name": "Network Security", "order": 3 }
+      ]
+    },
+    {
+      "id": "system-technologies",
+      "name": "System Technologies",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "it-hardware", "name": "Hardware", "order": 1 },
+        { "id": "it-software", "name": "Software", "order": 2 },
+        { "id": "it-operating-systems", "name": "Operating Systems", "order": 3 }
+      ]
+    }
+  ]
 }

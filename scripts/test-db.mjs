@@ -13,7 +13,7 @@ if (!process.env.POSTGRES_URL) {
   process.exit(1);
 }
 
-const { neon } = await import('@neondatabase/serverless');
+const { neon } = await import("@neondatabase/serverless");
 const sql = neon(process.env.POSTGRES_URL);
 
 const rows = await sql`select id, code from subject limit 3`;

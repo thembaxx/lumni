@@ -10,7 +10,11 @@
       "bloomTarget": "remember",
       "subtopics": [
         { "id": "tech-math-exponents-logarithms", "name": "Exponents and Logarithms", "order": 1 },
-        { "id": "tech-math-equations-inequalities", "name": "Equations and Inequalities", "order": 2 },
+        {
+          "id": "tech-math-equations-inequalities",
+          "name": "Equations and Inequalities",
+          "order": 2
+        },
         { "id": "tech-math-sequences-series", "name": "Sequences and Series", "order": 3 }
       ]
     },
@@ -21,8 +25,16 @@
       "prerequisites": ["tech-math-algebra"],
       "bloomTarget": "understand",
       "subtopics": [
-        { "id": "tech-math-linear-quadratic", "name": "Linear and Quadratic Functions", "order": 1 },
-        { "id": "tech-math-exponential-logarithmic", "name": "Exponential and Logarithmic Functions", "order": 2 },
+        {
+          "id": "tech-math-linear-quadratic",
+          "name": "Linear and Quadratic Functions",
+          "order": 1
+        },
+        {
+          "id": "tech-math-exponential-logarithmic",
+          "name": "Exponential and Logarithmic Functions",
+          "order": 2
+        },
         { "id": "tech-math-hyperbolic-functions", "name": "Hyperbolic Functions", "order": 3 }
       ]
     },
@@ -69,7 +81,11 @@
       "prerequisites": ["tech-math-functions"],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "tech-math-data-representation", "name": "Data Collection and Representation", "order": 1 },
+        {
+          "id": "tech-math-data-representation",
+          "name": "Data Collection and Representation",
+          "order": 1
+        },
         { "id": "tech-math-central-tendency", "name": "Measures of Central Tendency", "order": 2 },
         { "id": "tech-math-probability", "name": "Probability", "order": 3 }
       ]

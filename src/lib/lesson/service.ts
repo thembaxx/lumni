@@ -52,81 +52,76 @@ Format your response as JSON with this schema:
 Generate 5-8 sections covering introduction, core concepts, worked examples, comprehension checks, summary, and practice. Keep content grade-appropriate for South African Matric students. Return ONLY valid JSON.`;
 
 const config = {
-	systemPrompt: SYSTEM_PROMPT,
-	ttlMs: LESSON_TTL,
-	buildCacheKey: (subjectId: string, subtopicId: string) =>
-		`${subjectId.toLowerCase()}:${subtopicId.toLowerCase()}`.replace(
-			/^-+|-+$/g,
-			"",
-		),
-	buildPrompt: (subjectId: string, subtopicId: string) =>
-		`Subject: ${subjectId}\nSubtopic: ${subtopicId}\n\nGenerate a comprehensive lesson for this subtopic. Include sections for introduction, concept explanation, worked examples, comprehension checks, summary, and practice exercises.`,
-	parseResponse: (content: string) => JSON.parse(content) as Lesson,
-	emptyResult: {
-		id: "",
-		subjectId: "",
-		topicId: "",
-		subtopicId: "",
-		title: "",
-		order: 0,
-		prerequisites: [],
-		sections: [],
-		vocabulary: [],
-		difficulty: "medium" as const,
-		estimatedMinutes: 0,
-	} satisfies Lesson,
-	isEmpty: (result: Lesson) => result.sections.length === 0,
-	getTable: (db: DataAccess) => ({
-		get: (key: string) => db.studyGuides.get(key),
-		put: (entry: unknown) =>
-			db.studyGuides.put(
-				entry as import("@/lib/study-guide/types").CachedStudyGuide,
-			),
-	}),
-	buildCacheEntry: (key: string, data: Lesson, ttlMs: number) =>
-		({
-			key,
-			guide: data,
-			subject: data.subjectId,
-			topic: data.subtopicId,
-			createdAt: Date.now(),
-			expiresAt: Date.now() + ttlMs,
-		}) as unknown as import("@/lib/study-guide/types").CachedStudyGuide,
-	extractData: (cached: unknown) => (cached as { guide: Lesson }).guide,
-	errorLabel: "LessonService",
+  systemPrompt: SYSTEM_PROMPT,
+  ttlMs: LESSON_TTL,
+  buildCacheKey: (subjectId: string, subtopicId: string) =>
+    `${subjectId.toLowerCase()}:${subtopicId.toLowerCase()}`.replace(/^-+|-+$/g, ""),
+  buildPrompt: (subjectId: string, subtopicId: string) =>
+    `Subject: ${subjectId}\nSubtopic: ${subtopicId}\n\nGenerate a comprehensive lesson for this subtopic. Include sections for introduction, concept explanation, worked examples, comprehension checks, summary, and practice exercises.`,
+  parseResponse: (content: string) => JSON.parse(content) as Lesson,
+  emptyResult: {
+    id: "",
+    subjectId: "",
+    topicId: "",
+    subtopicId: "",
+    title: "",
+    order: 0,
+    prerequisites: [],
+    sections: [],
+    vocabulary: [],
+    difficulty: "medium" as const,
+    estimatedMinutes: 0,
+  } satisfies Lesson,
+  isEmpty: (result: Lesson) => result.sections.length === 0,
+  getTable: (db: DataAccess) => ({
+    get: (key: string) => db.studyGuides.get(key),
+    put: (entry: unknown) =>
+      db.studyGuides.put(entry as import("@/lib/study-guide/types").CachedStudyGuide),
+  }),
+  buildCacheEntry: (key: string, data: Lesson, ttlMs: number) =>
+    ({
+      key,
+      guide: data,
+      subject: data.subjectId,
+      topic: data.subtopicId,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + ttlMs,
+    }) as unknown as import("@/lib/study-guide/types").CachedStudyGuide,
+  extractData: (cached: unknown) => (cached as { guide: Lesson }).guide,
+  errorLabel: "LessonService",
 };
 
 let _deps: { db: DataAccess } = { db: dexieDataAccess };
 
 function __setDepsForTesting(deps: { db: DataAccess }) {
-	_deps = deps;
+  _deps = deps;
 }
 
 function createGenerator() {
-	return new CachedAIGenerator(config, getAI(), _deps.db);
+  return new CachedAIGenerator(config, getAI(), _deps.db);
 }
 
 export async function generateLesson(
-	subjectId: string,
-	_topicId: string,
-	subtopicId: string,
+  subjectId: string,
+  _topicId: string,
+  subtopicId: string,
 ): Promise<Lesson> {
-	return createGenerator().generate(subjectId, subtopicId);
+  return createGenerator().generate(subjectId, subtopicId);
 }
 
 export async function getCachedLesson(
-	subjectId: string,
-	_topicId: string,
-	subtopicId: string,
+  subjectId: string,
+  _topicId: string,
+  subtopicId: string,
 ): Promise<Lesson | null> {
-	return createGenerator().getCached(subjectId, subtopicId);
+  return createGenerator().getCached(subjectId, subtopicId);
 }
 
 export async function storeLesson(
-	subjectId: string,
-	_topicId: string,
-	subtopicId: string,
-	lesson: Lesson,
+  subjectId: string,
+  _topicId: string,
+  subtopicId: string,
+  lesson: Lesson,
 ): Promise<void> {
-	return createGenerator().store(subjectId, subtopicId, lesson);
+  return createGenerator().store(subjectId, subtopicId, lesson);
 }

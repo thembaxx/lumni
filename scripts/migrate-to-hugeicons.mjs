@@ -22,33 +22,52 @@ const ROOT = join(__dirname, "..");
 // ---------------------------------------------------------------------------
 // Load mapping table
 // ---------------------------------------------------------------------------
-const raw = JSON.parse(
-  readFileSync(join(__dirname, "phosphor-to-hugeicons.json"), "utf-8"),
-);
+const raw = JSON.parse(readFileSync(join(__dirname, "phosphor-to-hugeicons.json"), "utf-8"));
 const iconMap = {};
 for (const [k, v] of Object.entries(raw)) {
   if (!k.startsWith("__")) iconMap[k] = v;
 }
 
 // Sort mapping keys by length descending to avoid partial-replacement issues
-const sortedMappings = Object.entries(iconMap).sort(
-  ([a], [b]) => b.length - a.length,
-);
+const sortedMappings = Object.entries(iconMap).sort(([a], [b]) => b.length - a.length);
 
 // Build set of new icon names for quick lookup
 const allNewNames = new Set(Object.values(iconMap));
 
 // Icons that are already used via the HugeiconsIcon wrapper — do NOT touch
 const ALREADY_HUGE = [
-  "Activity02Icon", "ArrowDown01FreeIcons", "ArrowDown01Icon",
-  "ArrowLeft01Icon", "ArrowRight01Icon", "Book02FreeIcons", "Book03FreeIcons",
-  "BookOpen01Icon", "BookOpenCheckFreeIcons", "Brain02FreeIcons",
-  "Calendar02FreeIcons", "Calendar03FreeIcons", "Camera01FreeIcons",
-  "Cancel01FreeIcons", "ChampionIcon", "Chat01Icon", "CheckmarkCircle01Icon",
-  "Delete02FreeIcons", "DocumentValidationFreeIcons", "Fire02FreeIcons",
-  "Home01Icon", "Image03FreeIcons", "MinusSignFreeIcons", "PauseFreeIcons",
-  "PlayFreeIcons", "PlayIcon", "PlusSignFreeIcons", "Quiz01Icon",
-  "RotateClockwiseFreeIcons", "Settings01Icon", "Target01Icon", "Task01Icon",
+  "Activity02Icon",
+  "ArrowDown01FreeIcons",
+  "ArrowDown01Icon",
+  "ArrowLeft01Icon",
+  "ArrowRight01Icon",
+  "Book02FreeIcons",
+  "Book03FreeIcons",
+  "BookOpen01Icon",
+  "BookOpenCheckFreeIcons",
+  "Brain02FreeIcons",
+  "Calendar02FreeIcons",
+  "Calendar03FreeIcons",
+  "Camera01FreeIcons",
+  "Cancel01FreeIcons",
+  "ChampionIcon",
+  "Chat01Icon",
+  "CheckmarkCircle01Icon",
+  "Delete02FreeIcons",
+  "DocumentValidationFreeIcons",
+  "Fire02FreeIcons",
+  "Home01Icon",
+  "Image03FreeIcons",
+  "MinusSignFreeIcons",
+  "PauseFreeIcons",
+  "PlayFreeIcons",
+  "PlayIcon",
+  "PlusSignFreeIcons",
+  "Quiz01Icon",
+  "RotateClockwiseFreeIcons",
+  "Settings01Icon",
+  "Target01Icon",
+  "Task01Icon",
 ];
 for (const n of ALREADY_HUGE) allNewNames.add(n);
 
@@ -141,9 +160,9 @@ for (const filePath of allFiles) {
       if (isImportFrom(line, HUGE_CORE) && /\bIcon\b/.test(line)) {
         // Remove `Icon` from import specifiers
         let newLine = line
-          .replace(/,\s*\bIcon\b/g, "")       // , Icon → ""
-          .replace(/\bIcon\b\s*,/g, "")       // Icon, → ""
-          .replace(/\bIcon\b/g, "");          // standalone Icon → ""
+          .replace(/,\s*\bIcon\b/g, "") // , Icon → ""
+          .replace(/\bIcon\b\s*,/g, "") // Icon, → ""
+          .replace(/\bIcon\b/g, ""); // standalone Icon → ""
         // Clean up empty braces
         newLine = newLine.replace(/\{\s*\}/g, "").trim();
         if (newLine.startsWith("import") && !newLine.includes("{")) {
@@ -183,10 +202,7 @@ for (const filePath of allFiles) {
         if (!isImportFrom(lines[i], HUGE_CORE)) continue;
         const orig = lines[i];
         // Use word boundary to avoid matching inside longer identifiers
-        lines[i] = lines[i].replace(
-          new RegExp(`\\b${eOld}\\b`, "g"),
-          newName,
-        );
+        lines[i] = lines[i].replace(new RegExp(`\\b${eOld}\\b`, "g"), newName);
         if (lines[i] !== orig) modified = true;
       }
 
@@ -195,19 +211,13 @@ for (const filePath of allFiles) {
 
       // 3b: Rename JSX opening tags: <OldName → <NewName
       const jsxBefore = content;
-      content = content.replace(
-        new RegExp(`<${eOld}(?=[\\s/>])`, "g"),
-        `<${newName}`,
-      );
+      content = content.replace(new RegExp(`<${eOld}(?=[\\s/>])`, "g"), `<${newName}`);
 
       // 3c: Rename JSX closing tags: </OldName> → </NewName>
       content = content.replace(new RegExp(`</${eOld}>`, "g"), `</${newName}>`);
 
       // 3d: Rename standalone identifier references: {OldName} → {NewName}
-      content = content.replace(
-        new RegExp(`(?<![\\w'"])${eOld}(?![\\w'"])`, "g"),
-        newName,
-      );
+      content = content.replace(new RegExp(`(?<![\\w'"])${eOld}(?![\\w'"])`, "g"), newName);
 
       if (content !== jsxBefore) modified = true;
 
@@ -222,9 +232,7 @@ for (const filePath of allFiles) {
     // ── Step 4: Add HugeiconsIcon import if needed ────────────────
     const usedNewNames = usedMappings.map(([, n]) => n);
     const willNeedWrapper = usedNewNames.some(
-      (n) =>
-        allNewNames.has(n) &&
-        (content.includes(`<${n}`) || content.includes(`<${n}>`)),
+      (n) => allNewNames.has(n) && (content.includes(`<${n}`) || content.includes(`<${n}>`)),
     );
 
     if (
@@ -270,10 +278,7 @@ for (const filePath of allFiles) {
           `<HugeiconsIcon icon={${newName}}`,
         );
         // Strip closing tags
-        content = content.replace(
-          new RegExp(`</${escapeRegex(newName)}>`, "g"),
-          "",
-        );
+        content = content.replace(new RegExp(`</${escapeRegex(newName)}>`, "g"), "");
         if (content !== was) modified = true;
       }
     }
@@ -282,9 +287,7 @@ for (const filePath of allFiles) {
     if (modified) {
       writeFileSync(filePath, content, "utf-8");
       changed++;
-      const rel = filePath.startsWith(ROOT)
-        ? filePath.slice(ROOT.length + 1)
-        : filePath;
+      const rel = filePath.startsWith(ROOT) ? filePath.slice(ROOT.length + 1) : filePath;
       process.stdout.write(`  UPDATED  ${rel}\n`);
     }
   } catch (err) {

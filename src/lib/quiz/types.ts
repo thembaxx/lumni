@@ -1,30 +1,26 @@
-import type {
-	BloomLevel,
-	Difficulty,
-	Question,
-} from "@/lib/question-engine/types";
+import type { BloomLevel, Difficulty, Question } from "@/lib/question-engine/types";
 
 export interface QuizCompleteResult {
-	reason: "completed" | "quit";
-	questions: Question[];
-	correctness: boolean[];
-	correctAnswers: number;
-	totalQuestions: number;
-	elapsedTime: number;
+  reason: "completed" | "quit";
+  questions: Question[];
+  correctness: boolean[];
+  correctAnswers: number;
+  totalQuestions: number;
+  elapsedTime: number;
 }
 
 export interface UseQuizParams {
-	subject: string;
-	topic?: string;
-	count?: number;
-	questionType?: string;
-	maxTime?: number;
-	enabled?: boolean;
-	pastPaperMode?: boolean;
-	preloadedQuestions?: Question[];
-	suggestedBloomLevel?: BloomLevel;
-	suggestedDifficulty?: Difficulty;
-	topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
-	topicCompetencyScore?: number;
-	onComplete?: (result: QuizCompleteResult) => void;
+  subject: string;
+  topic?: string;
+  count?: number;
+  questionType?: string;
+  maxTime?: number;
+  enabled?: boolean;
+  pastPaperMode?: boolean;
+  preloadedQuestions?: Question[];
+  suggestedBloomLevel?: BloomLevel;
+  suggestedDifficulty?: Difficulty;
+  topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
+  topicCompetencyScore?: number;
+  onComplete?: (result: QuizCompleteResult) => void;
 }

@@ -1,10 +1,2 @@
-export type {
-	ComparativeResult,
-	SessionStore,
-	TrendResult,
-} from "./analytics-service";
-export {
-	AnalyticsService,
-	AppwriteSessionStore,
-	getAnalyticsService,
-} from "./analytics-service";
+export type { ComparativeResult, SessionStore, TrendResult } from "./analytics-service";
+export { AnalyticsService, AppwriteSessionStore, getAnalyticsService } from "./analytics-service";

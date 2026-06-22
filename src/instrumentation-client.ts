@@ -6,20 +6,20 @@ import * as Sentry from "@sentry/nextjs";
 import { getAnalyticsConsent } from "@/lib/consent/sentry-gate";
 
 Sentry.init({
-	dsn: "https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104",
+  dsn: "https://9863412a95109b4e994c4d30aaac7266@o4510925914963968.ingest.us.sentry.io/4511435431215104",
 
-	integrations: [Sentry.replayIntegration()],
+  integrations: [Sentry.replayIntegration()],
 
-	tracesSampleRate: 1,
-	enableLogs: true,
+  tracesSampleRate: 1,
+  enableLogs: true,
 
-	replaysSessionSampleRate: 0.1,
-	replaysOnErrorSampleRate: 1.0,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
 
-	sendDefaultPii: true,
+  sendDefaultPii: true,
 
-	beforeSend: (event) => (getAnalyticsConsent() ? event : null),
-	beforeSendTransaction: (event) => (getAnalyticsConsent() ? event : null),
+  beforeSend: (event) => (getAnalyticsConsent() ? event : null),
+  beforeSendTransaction: (event) => (getAnalyticsConsent() ? event : null),
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

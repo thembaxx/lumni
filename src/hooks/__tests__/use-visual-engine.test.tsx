@@ -9,148 +9,145 @@ const mockApiFetch = vi.fn<(url: string, options: RequestInit) => unknown>();
 const mockShowBudgetToast = vi.fn<(error: unknown) => void>();
 
 vi.mock("@/lib/shared/api-fetch", () => ({
-	apiFetch: mockApiFetch,
-	budgetFetch: async (url: string, options: RequestInit) => {
-		try {
-			return await mockApiFetch(url, options);
-		} catch (error) {
-			if (
-				error instanceof Error &&
-				"limitReached" in error &&
-				(error as Record<string, unknown>).limitReached === true
-			) {
-				mockShowBudgetToast(error);
-			}
-			throw error;
-		}
-	},
-	isBudgetExceeded: (err: unknown) =>
-		err instanceof Error &&
-		"limitReached" in err &&
-		(err as Record<string, unknown>).limitReached === true,
-	showBudgetToast: mockShowBudgetToast,
+  apiFetch: mockApiFetch,
+  budgetFetch: async (url: string, options: RequestInit) => {
+    try {
+      return await mockApiFetch(url, options);
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        "limitReached" in error &&
+        (error as Record<string, unknown>).limitReached === true
+      ) {
+        mockShowBudgetToast(error);
+      }
+      throw error;
+    }
+  },
+  isBudgetExceeded: (err: unknown) =>
+    err instanceof Error &&
+    "limitReached" in err &&
+    (err as Record<string, unknown>).limitReached === true,
+  showBudgetToast: mockShowBudgetToast,
 }));
 
 vi.mock("@/lib/shared/logger", () => ({
-	logError: vi.fn(),
+  logError: vi.fn(),
 }));
 
 vi.mock("@/lib/premium/premium-context", () => ({
-	usePremium: () => ({ isPremium: true, hasFeature: () => true }),
-	PremiumProvider: ({ children }: { children: React.ReactNode }) => children,
+  usePremium: () => ({ isPremium: true, hasFeature: () => true }),
+  PremiumProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 const { useVisualEngine } = await import("@/hooks/use-visual-engine");
 
 const mockVisual: VisualContent = {
-	type: "konva-diagram",
-	label: "Force diagram",
-	diagramType: "force-vector",
-	diagramData: { objects: [] },
+  type: "konva-diagram",
+  label: "Force diagram",
+  diagramType: "force-vector",
+  diagramData: { objects: [] },
 };
 
 const testQuestion: Question = {
-	id: "q1",
-	type: "multiple-choice",
-	subject: "physical-sciences",
-	topic: "newtons-laws",
-	difficulty: "Medium",
-	bloomTaxonomy: "apply",
-	points: 10,
-	questionText: "Draw a force diagram?",
-	hint: "Consider forces",
-	explanation: "Newton's laws",
-	body: {
-		options: [
-			{ id: "A", text: "Option A", isCorrect: true },
-			{ id: "B", text: "Option B", isCorrect: false },
-		],
-		correctOptionId: "A",
-		allowMultiple: false,
-	},
+  id: "q1",
+  type: "multiple-choice",
+  subject: "physical-sciences",
+  topic: "newtons-laws",
+  difficulty: "Medium",
+  bloomTaxonomy: "apply",
+  points: 10,
+  questionText: "Draw a force diagram?",
+  hint: "Consider forces",
+  explanation: "Newton's laws",
+  body: {
+    options: [
+      { id: "A", text: "Option A", isCorrect: true },
+      { id: "B", text: "Option B", isCorrect: false },
+    ],
+    correctOptionId: "A",
+    allowMultiple: false,
+  },
 };
 
 function createWrapper() {
-	const qc = new QueryClient({
-		defaultOptions: {
-			queries: { retry: false, gcTime: Infinity },
-			mutations: { retry: false },
-		},
-	});
-	return function Wrapper({ children }: { children: ReactNode }) {
-		return <QueryClientProvider client={qc}>{children}</QueryClientProvider>;
-	};
+  const qc = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, gcTime: Infinity },
+      mutations: { retry: false },
+    },
+  });
+  return function Wrapper({ children }: { children: ReactNode }) {
+    return <QueryClientProvider client={qc}>{children}</QueryClientProvider>;
+  };
 }
 
 describe("useVisualEngine", () => {
-	beforeEach(() => {
-		mockApiFetch.mockReset();
-		mockShowBudgetToast.mockReset();
-	});
+  beforeEach(() => {
+    mockApiFetch.mockReset();
+    mockShowBudgetToast.mockReset();
+  });
 
-	test("null question disables the query", () => {
-		const { result } = renderHook(() => useVisualEngine(null), {
-			wrapper: createWrapper(),
-		});
+  test("null question disables the query", () => {
+    const { result } = renderHook(() => useVisualEngine(null), {
+      wrapper: createWrapper(),
+    });
 
-		expect(result.current.isLoading).toBe(false);
-		expect(result.current.data).toBeUndefined();
-		expect(mockApiFetch).not.toHaveBeenCalled();
-	});
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.data).toBeUndefined();
+    expect(mockApiFetch).not.toHaveBeenCalled();
+  });
 
-	test("valid question fetches visual data", async () => {
-		mockApiFetch.mockResolvedValue({ visual: mockVisual });
+  test("valid question fetches visual data", async () => {
+    mockApiFetch.mockResolvedValue({ visual: mockVisual });
 
-		const { result } = renderHook(() => useVisualEngine(testQuestion), {
-			wrapper: createWrapper(),
-		});
+    const { result } = renderHook(() => useVisualEngine(testQuestion), {
+      wrapper: createWrapper(),
+    });
 
-		await waitFor(() => expect(result.current.isLoading).toBe(false));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-		expect(mockApiFetch).toHaveBeenCalledWith(
-			"/api/engine/visual",
-			expect.objectContaining({
-				method: "POST",
-				body: expect.stringContaining(testQuestion.id),
-			}),
-		);
-		expect(result.current.data).toEqual(mockVisual);
-	});
+    expect(mockApiFetch).toHaveBeenCalledWith(
+      "/api/engine/visual",
+      expect.objectContaining({
+        method: "POST",
+        body: expect.stringContaining(testQuestion.id),
+      }),
+    );
+    expect(result.current.data).toEqual(mockVisual);
+  });
 
-	test("sends correct body fields", async () => {
-		mockApiFetch.mockResolvedValue({ visual: mockVisual });
+  test("sends correct body fields", async () => {
+    mockApiFetch.mockResolvedValue({ visual: mockVisual });
 
-		const { result } = renderHook(() => useVisualEngine(testQuestion), {
-			wrapper: createWrapper(),
-		});
+    const { result } = renderHook(() => useVisualEngine(testQuestion), {
+      wrapper: createWrapper(),
+    });
 
-		await waitFor(() => expect(result.current.isLoading).toBe(false));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-		const callBody = JSON.parse(
-			(mockApiFetch.mock.calls[0][1] as RequestInit).body as string,
-		);
-		expect(callBody.questionId).toBe(testQuestion.id);
-		expect(callBody.questionText).toBe(testQuestion.questionText);
-		expect(callBody.subject).toBe(testQuestion.subject);
-		expect(callBody.topic).toBe(testQuestion.topic);
-	});
+    const callBody = JSON.parse((mockApiFetch.mock.calls[0][1] as RequestInit).body as string);
+    expect(callBody.questionId).toBe(testQuestion.id);
+    expect(callBody.questionText).toBe(testQuestion.questionText);
+    expect(callBody.subject).toBe(testQuestion.subject);
+    expect(callBody.topic).toBe(testQuestion.topic);
+  });
 
-	test("budget exceeded shows toast", async () => {
-		const budgetError = new Error("Budget exceeded");
-		(budgetError as Record<string, unknown>).status = 429;
-		(budgetError as Record<string, unknown>).limitReached = true;
+  test("budget exceeded shows toast", async () => {
+    const budgetError = new Error("Budget exceeded");
+    (budgetError as Record<string, unknown>).status = 429;
+    (budgetError as Record<string, unknown>).limitReached = true;
 
-		mockApiFetch.mockRejectedValue(budgetError);
+    mockApiFetch.mockRejectedValue(budgetError);
 
-		const { result } = renderHook(() => useVisualEngine(testQuestion), {
-			wrapper: createWrapper(),
-		});
+    const { result } = renderHook(() => useVisualEngine(testQuestion), {
+      wrapper: createWrapper(),
+    });
 
-		await waitFor(
-			() => expect(result.current.failureCount).toBeGreaterThanOrEqual(1),
-			{ timeout: 3000 },
-		);
+    await waitFor(() => expect(result.current.failureCount).toBeGreaterThanOrEqual(1), {
+      timeout: 3000,
+    });
 
-		expect(mockShowBudgetToast).toHaveBeenCalled();
-	});
+    expect(mockShowBudgetToast).toHaveBeenCalled();
+  });
 });

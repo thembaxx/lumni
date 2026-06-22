@@ -7,121 +7,106 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
 interface ParentInvitationDialogProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	studentName: string;
-	onSend: (
-		parentEmail: string,
-		canViewProgress: boolean,
-		canViewScores: boolean,
-	) => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  studentName: string;
+  onSend: (parentEmail: string, canViewProgress: boolean, canViewScores: boolean) => Promise<void>;
 }
 
 export function ParentInvitationDialog({
-	open,
-	onOpenChange,
-	studentName,
-	onSend,
+  open,
+  onOpenChange,
+  studentName,
+  onSend,
 }: ParentInvitationDialogProps) {
-	const [email, setEmail] = useState("");
-	const [canViewProgress, setCanViewProgress] = useState(true);
-	const [canViewScores, setCanViewScores] = useState(true);
-	const [isSending, setIsSending] = useState(false);
+  const [email, setEmail] = useState("");
+  const [canViewProgress, setCanViewProgress] = useState(true);
+  const [canViewScores, setCanViewScores] = useState(true);
+  const [isSending, setIsSending] = useState(false);
 
-	const handleSend = async () => {
-		if (!email.trim()) return;
-		setIsSending(true);
-		try {
-			await onSend(email.trim(), canViewProgress, canViewScores);
-			setEmail("");
-			onOpenChange(false);
-		} finally {
-			setIsSending(false);
-		}
-	};
+  const handleSend = async () => {
+    if (!email.trim()) return;
+    setIsSending(true);
+    try {
+      await onSend(email.trim(), canViewProgress, canViewScores);
+      setEmail("");
+      onOpenChange(false);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
-	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-md">
-				<DialogHeader>
-					<DialogTitle className="flex items-center gap-2">
-						<HugeiconsIcon icon={Mail01Icon} size={20} />
-						Invite Parent/Guardian
-					</DialogTitle>
-					<DialogDescription>
-						Send an invitation to view {studentName}&apos;s study progress.
-					</DialogDescription>
-				</DialogHeader>
-				<div className="flex flex-col gap-4 py-4">
-					<Field>
-						<FieldLabel htmlFor="parent-email">
-							Parent/Guardian Email
-						</FieldLabel>
-						<Input
-							id="parent-email"
-							type="email"
-							placeholder="parent@example.com"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</Field>
-					<div className="flex flex-col gap-2">
-						<span className="font-medium text-foreground text-xs/relaxed">
-							Permissions
-						</span>
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id="view-progress"
-								checked={canViewProgress}
-								onCheckedChange={(checked) =>
-									setCanViewProgress(checked === true)
-								}
-							/>
-							<label
-								htmlFor="view-progress"
-								className="font-normal text-foreground text-xs/relaxed"
-							>
-								Can view study progress and streaks
-							</label>
-						</div>
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id="view-scores"
-								checked={canViewScores}
-								onCheckedChange={(checked) =>
-									setCanViewScores(checked === true)
-								}
-							/>
-							<label
-								htmlFor="view-scores"
-								className="font-normal text-foreground text-xs/relaxed"
-							>
-								Can view quiz scores and weak areas
-							</label>
-						</div>
-					</div>
-				</div>
-				<DialogFooter>
-					<Button variant="outline" onClick={() => onOpenChange(false)}>
-						Cancel
-					</Button>
-					<Button onClick={handleSend} disabled={!email.trim() || isSending}>
-						<HugeiconsIcon icon={SentIcon} size={16} />
-						{isSending ? "Sending…" : "Send Invitation"}
-					</Button>
-				</DialogFooter>
-			</DialogContent>
-		</Dialog>
-	);
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <HugeiconsIcon icon={Mail01Icon} size={20} />
+            Invite Parent/Guardian
+          </DialogTitle>
+          <DialogDescription>
+            Send an invitation to view {studentName}&apos;s study progress.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 py-4">
+          <Field>
+            <FieldLabel htmlFor="parent-email">Parent/Guardian Email</FieldLabel>
+            <Input
+              id="parent-email"
+              type="email"
+              placeholder="parent@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Field>
+          <div className="flex flex-col gap-2">
+            <span className="font-medium text-foreground text-xs/relaxed">Permissions</span>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="view-progress"
+                checked={canViewProgress}
+                onCheckedChange={(checked) => setCanViewProgress(checked === true)}
+              />
+              <label
+                htmlFor="view-progress"
+                className="font-normal text-foreground text-xs/relaxed"
+              >
+                Can view study progress and streaks
+              </label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="view-scores"
+                checked={canViewScores}
+                onCheckedChange={(checked) => setCanViewScores(checked === true)}
+              />
+              <label htmlFor="view-scores" className="font-normal text-foreground text-xs/relaxed">
+                Can view quiz scores and weak areas
+              </label>
+            </div>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleSend} disabled={!email.trim() || isSending}>
+            <HugeiconsIcon icon={SentIcon} size={16} />
+            {isSending ? "Sending…" : "Send Invitation"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 }

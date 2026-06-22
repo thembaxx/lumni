@@ -22,12 +22,14 @@ The live session system is currently a presence-only indicator. The three core p
 ## Scope
 
 **In scope**:
+
 - `src/lib/study-groups/live-session-service.ts` — export join/leave/updateActivity
 - `src/app/api/study-groups/[groupId]/live-session/[sessionId]/route.ts` — add join/leave PATCH endpoints
 - `src/hooks/use-live-session.ts` — add useJoinSession, useLeaveSession, useUpdateActivity hooks
 - `src/components/study-groups/live-session-bar.tsx` — add Join button + activity selector
 
 **Out of scope**:
+
 - WebSocket/realtime (stays polling)
 - Auto-cleanup/heartbeat
 - Quiz coordination
@@ -38,6 +40,7 @@ The live session system is currently a presence-only indicator. The three core p
 ### Step 1: Export participation functions
 
 In `live-session-service.ts`:
+
 - Rename `_joinSession` → `joinSession` (remove underscore, export)
 - Rename `_leaveSession` → `leaveSession` (remove underscore, export)
 - Rename `_updateActivity` → `updateActivity` (remove underscore, export)
@@ -47,6 +50,7 @@ In `live-session-service.ts`:
 In `src/app/api/study-groups/[groupId]/live-session/[sessionId]/route.ts`:
 
 Add to existing PATCH handler:
+
 ```typescript
 // PATCH body: { action: "end" | "join" | "leave" | "activity", activity?: string }
 ```
@@ -63,10 +67,11 @@ In `use-live-session.ts`:
 ```typescript
 export function useJoinSession(groupId: string, sessionId: string) {
   return useMutation({
-    mutationFn: () => apiFetch(`/api/study-groups/${groupId}/live-session/${sessionId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ action: "join" }),
-    }),
+    mutationFn: () =>
+      apiFetch(`/api/study-groups/${groupId}/live-session/${sessionId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ action: "join" }),
+      }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["live-session", groupId] }),
   });
 }
@@ -77,6 +82,7 @@ Same pattern for `useLeaveSession` and `useUpdateActivity`.
 ### Step 4: Update LiveSessionBar UI
 
 In `live-session-bar.tsx`:
+
 - Show "Join Session" button for users who are NOT participants
 - Show "Leave" button for users who ARE participants (not the starter)
 - Show activity selector (dropdown: "Studying", "Reviewing", "Taking Quiz", "Done")
@@ -86,12 +92,15 @@ In `live-session-bar.tsx`:
 ### Step 5: Update participant count
 
 In `live-session-service.ts` `startLiveSession()`:
+
 - Keep `participantCount: 1` on creation
 
 In `joinSession()`:
+
 - Increment `participantCount` on the session document
 
 In `leaveSession()`:
+
 - Decrement `participantCount` on the session document (min 0)
 
 ### Step 6: Verification

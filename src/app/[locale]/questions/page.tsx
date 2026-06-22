@@ -5,16 +5,16 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { QuestionBankClient } from "./question-bank-client";
 
 export const metadata: Metadata = {
-	title: "Past Exam Questions - Lumni",
-	description: "Browse and practice past exam questions by subject and topic",
+  title: "Past Exam Questions - Lumni",
+  description: "Browse and practice past exam questions by subject and topic",
 };
 
 export default function QuestionsPage() {
-	return (
-		<AppErrorBoundary>
-			<Suspense fallback={<QuestionCardSkeleton />}>
-				<QuestionBankClient />
-			</Suspense>
-		</AppErrorBoundary>
-	);
+  return (
+    <AppErrorBoundary>
+      <Suspense fallback={<QuestionCardSkeleton />}>
+        <QuestionBankClient />
+      </Suspense>
+    </AppErrorBoundary>
+  );
 }

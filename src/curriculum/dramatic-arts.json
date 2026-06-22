@@ -12,7 +12,11 @@
         { "id": "greek-and-roman-theatre", "name": "Greek and Roman Theatre", "order": 1 },
         { "id": "elizabethan-theatre", "name": "Elizabethan Theatre", "order": 2 },
         { "id": "modern-theatre", "name": "Modern Theatre", "order": 3 },
-        { "id": "south-african-theatre-history", "name": "South African Theatre History", "order": 4 }
+        {
+          "id": "south-african-theatre-history",
+          "name": "South African Theatre History",
+          "order": 4
+        }
       ]
     },
     {

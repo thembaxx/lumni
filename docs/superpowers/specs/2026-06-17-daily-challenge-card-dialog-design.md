@@ -16,23 +16,23 @@ Replace the auto-triggering full-screen overlay with a dashboard card the user o
 
 ## Design Decisions (15 resolved)
 
-| # | Decision | Choice | Rationale |
-|---|----------|--------|-----------|
-| 1 | Which daily challenge to redesign | Daily Bolt (not 3-goal tracker) | Bolt is the primary daily action; auto-takeover is the UX problem |
-| 2 | Animation approach | True shared-element morph (`layoutId`) | Matches motion.dev docs, feels like card "opens up" |
-| 3 | Dialog content | Single question, same as current bolt | Keeps low-commitment "just one tap" value prop |
-| 4 | Auto-trigger behavior | Remove entirely | Card always on dashboard, user opts in |
-| 5 | Dialog sizing | Centered medium (`max-w-md`) | Standard pattern, cleanest morph from small card |
-| 6 | Card when challenge is due | CTA state (bolt icon, subject label, "Take Challenge" button) | Clear call-to-action, single purpose |
-| 7 | Post-answer behavior | Celebration inline in dialog | Emotional moment stays in the same frame user acted in |
-| 8 | Card after completion same day | Card disappears entirely | Bolt-complete banner handles done state; no redundancy |
-| 9 | Card position in dashboard | Top of stack, after hero banner | Primary daily CTA should be first actionable thing |
-| 10 | Old overlay component | Refactor in-place | State machine, DI seams, and tests are well-tested |
-| 11 | `layoutId` structure | Single `layoutId` on card shell | Frame morphs, content crossfades inside |
-| 12 | Dialog state ownership | Inside the card component | Self-contained, no prop drilling or context |
-| 13 | 3-goal DailyChallenges card | Both stay | Different jobs: CTA vs progress tracking |
-| 14 | "Practice more" link | Remove | Single clear exit ("Done"), no competing CTAs |
-| 15 | Side effect ownership | Keep in parent (`dashboard-client.tsx`) | Cross-cutting concerns belong at orchestration layer |
+| #   | Decision                          | Choice                                                        | Rationale                                                         |
+| --- | --------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 1   | Which daily challenge to redesign | Daily Bolt (not 3-goal tracker)                               | Bolt is the primary daily action; auto-takeover is the UX problem |
+| 2   | Animation approach                | True shared-element morph (`layoutId`)                        | Matches motion.dev docs, feels like card "opens up"               |
+| 3   | Dialog content                    | Single question, same as current bolt                         | Keeps low-commitment "just one tap" value prop                    |
+| 4   | Auto-trigger behavior             | Remove entirely                                               | Card always on dashboard, user opts in                            |
+| 5   | Dialog sizing                     | Centered medium (`max-w-md`)                                  | Standard pattern, cleanest morph from small card                  |
+| 6   | Card when challenge is due        | CTA state (bolt icon, subject label, "Take Challenge" button) | Clear call-to-action, single purpose                              |
+| 7   | Post-answer behavior              | Celebration inline in dialog                                  | Emotional moment stays in the same frame user acted in            |
+| 8   | Card after completion same day    | Card disappears entirely                                      | Bolt-complete banner handles done state; no redundancy            |
+| 9   | Card position in dashboard        | Top of stack, after hero banner                               | Primary daily CTA should be first actionable thing                |
+| 10  | Old overlay component             | Refactor in-place                                             | State machine, DI seams, and tests are well-tested                |
+| 11  | `layoutId` structure              | Single `layoutId` on card shell                               | Frame morphs, content crossfades inside                           |
+| 12  | Dialog state ownership            | Inside the card component                                     | Self-contained, no prop drilling or context                       |
+| 13  | 3-goal DailyChallenges card       | Both stay                                                     | Different jobs: CTA vs progress tracking                          |
+| 14  | "Practice more" link              | Remove                                                        | Single clear exit ("Done"), no competing CTAs                     |
+| 15  | Side effect ownership             | Keep in parent (`dashboard-client.tsx`)                       | Cross-cutting concerns belong at orchestration layer              |
 
 ## Architecture
 
@@ -41,10 +41,12 @@ Replace the auto-triggering full-screen overlay with a dashboard card the user o
 **Location:** `src/components/dashboard/daily-challenge-card.tsx`
 
 **States:**
+
 - **Not-yet-taken:** Shows bolt icon, "Today's Challenge" title, subject label (e.g. "Mathematics — your weakest subject"), "Take Challenge" button
 - **Already-taken:** Card renders nothing (returns `null`). Parent's bolt-complete banner handles done state.
 
 **Props:**
+
 ```typescript
 interface DailyChallengeCardProps {
   onComplete: (result: BoltResult) => void;
@@ -52,10 +54,12 @@ interface DailyChallengeCardProps {
 ```
 
 **Internal state:**
+
 - `isOpen: boolean` — controls dialog open/close
 - `subject: string` — resolved weakest subject (set on dialog open)
 
 **Layout animation:**
+
 ```tsx
 <m.div layoutId="daily-challenge">
   {/* Card content (CTA state) */}
@@ -80,10 +84,12 @@ interface DailyChallengeCardProps {
 **Phases:** Same as current bolt — resolving, loading, answering, celebrating, error, empty
 
 **Outer shell:** Uses `Dialog` + `DialogContent` from `@/components/ui/dialog`
+
 - `layoutId="daily-challenge"` matches the card
 - `DialogContent` centered, `max-w-md`
 
 **Content phases:**
+
 1. **Resolving/Loading:** Skeleton with "Charging your bolt" message
 2. **Answering:** `<QuestionCard>` with the single question, sticky "Finish" button
 3. **Celebrating:** `<BoltCelebration>` with result, XP earned, streak badge. Single "Done" button (no "Practice more" link)
@@ -131,15 +137,15 @@ User taps "Done"
 
 ### Changes to Existing Files
 
-| File | Change |
-|------|--------|
-| `src/components/dashboard/daily-bolt-overlay.tsx` | Refactor: rename to `daily-challenge-dialog.tsx`, change outer shell from `fixed inset-0` to `Dialog` + `layoutId` |
-| `src/components/dashboard/daily-bolt-overlay-deps.ts` | Rename to `daily-challenge-dialog-deps.ts` (DI seam stays, filename changes) |
-| `src/components/dashboard/daily-challenge-card.tsx` | **New file** — card component with CTA state + dialog state management |
-| `src/components/dashboard/dashboard-client.tsx` | Remove `showDailyBolt` state and `DailyBoltOverlay` rendering. Add `DailyChallengeCard` at position #2-3. `handleBoltComplete` stays. |
-| `src/components/dashboard/dashboard-content.tsx` | No changes (bolt-complete banner stays as-is) |
-| `src/components/dashboard/daily-challenges.tsx` | No changes (3-goal card stays at #23) |
-| `src/components/dashboard/bolt-celebration.tsx` | Remove "Practice more" link prop |
+| File                                                  | Change                                                                                                                                |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/components/dashboard/daily-bolt-overlay.tsx`     | Refactor: rename to `daily-challenge-dialog.tsx`, change outer shell from `fixed inset-0` to `Dialog` + `layoutId`                    |
+| `src/components/dashboard/daily-bolt-overlay-deps.ts` | Rename to `daily-challenge-dialog-deps.ts` (DI seam stays, filename changes)                                                          |
+| `src/components/dashboard/daily-challenge-card.tsx`   | **New file** — card component with CTA state + dialog state management                                                                |
+| `src/components/dashboard/dashboard-client.tsx`       | Remove `showDailyBolt` state and `DailyBoltOverlay` rendering. Add `DailyChallengeCard` at position #2-3. `handleBoltComplete` stays. |
+| `src/components/dashboard/dashboard-content.tsx`      | No changes (bolt-complete banner stays as-is)                                                                                         |
+| `src/components/dashboard/daily-challenges.tsx`       | No changes (3-goal card stays at #23)                                                                                                 |
+| `src/components/dashboard/bolt-celebration.tsx`       | Remove "Practice more" link prop                                                                                                      |
 
 ### Layout Animation Choreography
 

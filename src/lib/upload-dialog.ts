@@ -1,14 +1,9 @@
-let openUploadHandler:
-	| ((files: File[], endpoint?: "generalUploader") => void)
-	| null = null;
+let openUploadHandler: ((files: File[], endpoint?: "generalUploader") => void) | null = null;
 
-export function openUploadDialog(
-	files: File[],
-	endpoint: "generalUploader" = "generalUploader",
-) {
-	openUploadHandler?.(files, endpoint);
+export function openUploadDialog(files: File[], endpoint: "generalUploader" = "generalUploader") {
+  openUploadHandler?.(files, endpoint);
 }
 
 export function setOpenUploadHandler(handler: typeof openUploadHandler) {
-	openUploadHandler = handler;
+  openUploadHandler = handler;
 }

@@ -3,9 +3,9 @@
 // prevent the TypeError from crashing tests across test files.
 const origReplaceSync = CSSStyleSheet.prototype.replaceSync;
 CSSStyleSheet.prototype.replaceSync = function (...args: unknown[]) {
-	try {
-		return origReplaceSync.apply(this, args);
-	} catch {
-		return;
-	}
+  try {
+    return origReplaceSync.apply(this, args);
+  } catch {
+    return;
+  }
 };
