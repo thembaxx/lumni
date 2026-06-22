@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { type ReactNode, useCallback, useRef, useState } from "react";
 import {
 	StaggeredSection,
 	StaggerProvider,
@@ -8,6 +9,39 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
+
+function LazySection({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) {
+	const [isVisible, setIsVisible] = useState(false);
+	const ref = useRef<HTMLDivElement>(null);
+
+	const setRef = useCallback((node: HTMLDivElement | null) => {
+		(ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+		if (!node) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setIsVisible(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "200px" },
+		);
+		observer.observe(node);
+	}, []);
+
+	return (
+		<div ref={setRef} className={className}>
+			{isVisible ? children : <Skeleton className="h-48 rounded-4xl" />}
+		</div>
+	);
+}
 
 const ComparativeAnalyticsPanel = dynamic(
 	() =>
@@ -76,7 +110,9 @@ export function AnalyticsTab() {
 				<StatsRow />
 			</StaggeredSection>
 			<StaggeredSection>
-				<LeaderboardCard />
+				<LazySection>
+					<LeaderboardCard />
+				</LazySection>
 			</StaggeredSection>
 			<StaggeredSection>
 				<AchievementShowcase />
@@ -85,16 +121,18 @@ export function AnalyticsTab() {
 				<RewardChestPanel />
 			</StaggeredSection>
 			<StaggeredSection>
-				<Card>
-					<CardHeader>
-						<CardTitle className="font-extrabold text-base tracking-tight">
-							Mastery Heatmap
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<MasteryHeatmap />
-					</CardContent>
-				</Card>
+				<LazySection>
+					<Card>
+						<CardHeader>
+							<CardTitle className="font-extrabold text-base tracking-tight">
+								Mastery Heatmap
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<MasteryHeatmap />
+						</CardContent>
+					</Card>
+				</LazySection>
 			</StaggeredSection>
 		</StaggerProvider>
 	);
