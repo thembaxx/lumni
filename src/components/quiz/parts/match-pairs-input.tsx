@@ -22,7 +22,7 @@ export function MatchPairsInput({
 	const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
 
 	const shuffledRight = useMemo(
-		() => [...rightItems].sort(() => Math.random() - 0.5),
+		() => rightItems.toSorted(() => Math.random() - 0.5),
 		[rightItems],
 	);
 

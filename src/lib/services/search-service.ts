@@ -300,26 +300,36 @@ async function searchDexieLessons(query: string): Promise<SearchResultItem[]> {
 				});
 				if (results.length >= 10) break;
 			}
-			const sectionMatch = lesson.sections.find(
-				(s) =>
+			let sectionMatch = false;
+			for (const s of lesson.sections) {
+				if (
 					textRelevant(s.content, query) ||
-					(s.keyPoints || []).some((kp) => textRelevant(kp, query)),
-			);
-			if (sectionMatch) {
-				results.push({
-					id: `lesson-${lesson.id}`,
-					type: "lesson",
-					title: lesson.title,
-					snippet: sectionMatch.content.slice(0, 150),
-					subject: lesson.subjectId,
-					topic: lesson.topicId,
-					createdAt: e.createdAt,
-				});
-				if (results.length >= 10) break;
+					(s.keyPoints || []).some((kp) => textRelevant(kp, query))
+				) {
+					results.push({
+						id: `lesson-${lesson.id}`,
+						type: "lesson",
+						title: lesson.title,
+						snippet: s.content.slice(0, 150),
+						subject: lesson.subjectId,
+						topic: lesson.topicId,
+						createdAt: e.createdAt,
+					});
+					sectionMatch = true;
+					break;
+				}
 			}
-			const vocabMatch = (lesson.vocabulary || []).find(
-				(v) => textRelevant(v.word, query) || textRelevant(v.definition, query),
-			);
+			if (sectionMatch) {
+				if (results.length >= 10) break;
+				continue;
+			}
+			let vocabMatch: { word: string; definition: string } | null = null;
+			for (const v of lesson.vocabulary || []) {
+				if (textRelevant(v.word, query) || textRelevant(v.definition, query)) {
+					vocabMatch = v;
+					break;
+				}
+			}
 			if (vocabMatch) {
 				results.push({
 					id: `lesson-${lesson.id}`,

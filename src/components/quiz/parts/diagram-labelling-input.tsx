@@ -44,7 +44,7 @@ export function DiagramLabellingInput({
 	const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
 
 	const shuffledLabels = useMemo(
-		() => [...labels].sort(() => Math.random() - 0.5),
+		() => labels.toSorted(() => Math.random() - 0.5),
 		[labels],
 	);
 

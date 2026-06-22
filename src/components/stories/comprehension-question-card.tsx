@@ -273,7 +273,12 @@ export function ComprehensionQuestionCard({
 									</div>
 								);
 
-							case "fill-in-blank":
+							case "fill-in-blank": {
+								const blank = (
+									<span className="mx-1 inline-block rounded-md bg-[--system-accent]/15 px-2 py-0.5 font-semibold text-[--system-accent]">
+										______
+									</span>
+								);
 								return (
 									<div className="flex flex-col gap-2">
 										{question.sentenceTemplate && (
@@ -281,14 +286,10 @@ export function ComprehensionQuestionCard({
 												{question.sentenceTemplate
 													.split("___")
 													.map((part, i, arr) => (
-														// biome-ignore lint/suspicious/noArrayIndexKey: static split array
+														// biome-ignore lint/suspicious/noArrayIndexKey: static split array, never reordered
 														<span key={i}>
 															{part}
-															{i < arr.length - 1 && (
-																<span className="mx-1 inline-block rounded-md bg-[--system-accent]/15 px-2 py-0.5 font-semibold text-[--system-accent]">
-																	______
-																</span>
-															)}
+															{i < arr.length - 1 && blank}
 														</span>
 													))}
 											</div>
@@ -303,6 +304,7 @@ export function ComprehensionQuestionCard({
 										/>
 									</div>
 								);
+							}
 
 							case "matching": {
 								const correctPairs = question.pairs ?? [];

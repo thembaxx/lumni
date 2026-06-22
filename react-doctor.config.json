@@ -115,6 +115,10 @@
 			{
 				"files": ["src/components/settings/tabs/progress-export.tsx"],
 				"rules": ["react-doctor/dangerous-html-sink"]
+			},
+			{
+				"files": ["src/components/stories/comprehension-question-card.tsx"],
+				"rules": ["react-doctor/no-array-index-as-key"]
 			}
 		]
 	}

@@ -175,11 +175,12 @@ export function FillInSequenceInput({
 			<div className="flex items-center gap-3">
 				<Button
 					onClick={() => {
+						const optionMap = new Map(allOptions.map((o) => [o.id, o]));
 						const answers: Record<string, string> = {};
 						for (const blank of blanks) {
 							const optId = assigned[blank.id];
 							if (optId) {
-								const opt = allOptions.find((o) => o.id === optId);
+								const opt = optionMap.get(optId);
 								answers[blank.id] = opt?.text ?? "";
 							}
 						}

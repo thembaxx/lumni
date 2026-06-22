@@ -23,12 +23,10 @@ export function StoryProgressBar({
 
 	return (
 		<div className="flex items-center gap-3">
-			<div
+			<progress
 				className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-muted"
-				role="progressbar"
-				aria-valuenow={pct}
-				aria-valuemin={0}
-				aria-valuemax={100}
+				value={pct}
+				max={100}
 				aria-label={`Reading progress: ${pct}%`}
 			>
 				<div
@@ -38,7 +36,7 @@ export function StoryProgressBar({
 					)}
 					style={{ width: `${pct}%` }}
 				/>
-			</div>
+			</progress>
 			{completed ? (
 				<span className="flex items-center gap-1 whitespace-nowrap font-medium text-emerald-500 text-xs">
 					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />

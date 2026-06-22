@@ -11,9 +11,8 @@ interface StepIndicatorProps {
 
 export function StepIndicator({ step, totalSteps }: StepIndicatorProps) {
 	return (
-		<div
+		<progress
 			className="flex flex-1 items-center gap-1.5"
-			role="progressbar"
 			aria-valuenow={step + 1}
 			aria-valuemin={1}
 			aria-valuemax={totalSteps}
@@ -46,6 +45,6 @@ export function StepIndicator({ step, totalSteps }: StepIndicatorProps) {
 					}}
 				/>
 			))}
-		</div>
+		</progress>
 	);
 }
