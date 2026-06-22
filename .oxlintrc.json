@@ -19,11 +19,17 @@
     "vitest/hoisted-apis-on-top": "off",
     "jsx-a11y/prefer-tag-over-role": "warn",
     "jsx-a11y/control-has-associated-label": "warn",
-    "react-hooks/exhaustive-deps": "warn",
     "import/namespace": "warn",
     "unicorn/no-array-reverse": "warn",
     "no-unused-vars": "error",
-    "typescript/no-unused-vars": "error"
+    "typescript/no-explicit-any": "warn",
+    "typescript/prefer-as-const": "error",
+    "react/no-unstable-nested-components": "warn",
+    "react/jsx-no-useless-fragment": "warn",
+    "react/no-direct-mutation-state": "error",
+    "no-var": "error",
+    "unicorn/prefer-optional-catch-binding": "warn",
+    "react-hooks/exhaustive-deps": "error"
   },
   "env": {
     "builtin": true

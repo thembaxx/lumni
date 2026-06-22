@@ -188,9 +188,7 @@ export function useQuizView({
     state.currentQuestion,
     currentIndex,
     state.totalQuestions,
-    shared.currentAnswered,
-    shared.handlePrevious,
-    shared.handleNext,
+    shared,
     handleStop,
     state.isComplete,
   ]);

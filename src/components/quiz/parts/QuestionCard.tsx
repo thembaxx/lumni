@@ -176,7 +176,7 @@ export function QuestionCard({
       ],
       subject: effectiveSubject,
     });
-  }, [followUpInput, solver.data, solver.followUp, effectiveSubject, question.questionText]);
+  }, [followUpInput, solver, effectiveSubject, question.questionText]);
 
   const isMultiPart =
     question.type === "source-based" ||

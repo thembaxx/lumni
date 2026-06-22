@@ -49,10 +49,11 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 
     render();
 
+    const container = containerRef.current;
     return () => {
       cancelled = true;
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
+      if (container) {
+        container.innerHTML = "";
       }
     };
   }, [code]);
