@@ -1,24 +1,27 @@
-import { Geist, Geist_Mono, Outfit } from "next/font/google";
+import localFont from "next/font/local";
 
-export const fontSans = Geist({
-	weight: ["400", "500", "600"],
-	subsets: ["latin"],
+export const fontSans = localFont({
+	src: "../fonts/geist-latin.woff2",
+	weight: "100 900",
+	style: "normal",
 	display: "swap",
 	variable: "--font-sans",
 	preload: true,
 });
 
-export const fontMono = Geist_Mono({
-	weight: ["400"],
-	subsets: ["latin"],
+export const fontMono = localFont({
+	src: "../fonts/geist-mono-latin.woff2",
+	weight: "400",
+	style: "normal",
 	display: "swap",
 	variable: "--font-geist-mono",
 	preload: true,
 });
 
-export const fontHeading = Outfit({
-	weight: ["600", "800"],
-	subsets: ["latin"],
+export const fontHeading = localFont({
+	src: "../fonts/outfit-latin.woff2",
+	weight: "100 900",
+	style: "normal",
 	display: "swap",
 	variable: "--font-heading",
 	preload: true,

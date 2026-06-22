@@ -56,6 +56,7 @@ function buildReportingEndpoints(): string {
 }
 
 const nextConfig: NextConfig = {
+	productionBrowserSourceMaps: true,
 	images: {
 		formats: ["image/avif", "image/webp"],
 		deviceSizes: [320, 480, 640, 768, 1024, 1280, 1536],
@@ -119,6 +120,10 @@ const nextConfig: NextConfig = {
 						key: "Permissions-Policy",
 						value:
 							"camera=(), microphone=(), geolocation=(), interest-cohort=()",
+					},
+					{
+						key: "Cross-Origin-Opener-Policy",
+						value: "same-origin",
 					},
 					{
 						key: "Content-Security-Policy",

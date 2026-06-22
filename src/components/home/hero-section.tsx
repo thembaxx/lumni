@@ -70,7 +70,7 @@ export const HeroSection = memo(function HeroSection({
 			className="relative flex min-h-dvh items-center pt-14"
 		>
 			<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
-			<div className="absolute top-1/4 -left-20 size-96 animate-blob-orbit rounded-full bg-primary/10 blur-3xl" />
+			<div className="absolute top-1/4 -left-20 size-96 animate-blob-orbit rounded-full bg-primary/10 opacity-60 will-change-transform" />
 			<div className="mx-auto w-full max-w-6xl px-4">
 				<div className="grid items-center gap-12 py-20 lg:grid-cols-2">
 					<div className="flex flex-col gap-8">

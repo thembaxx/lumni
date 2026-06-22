@@ -54,26 +54,7 @@ async function Utssr() {
 	return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
 }
 
-const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "WebApplication",
-	name: "Lumni",
-	url: "https://lumni.ai",
-	description:
-		"Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
-	applicationCategory: "EducationalApplication",
-	operatingSystem: "Web",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "ZAR",
-	},
-	author: {
-		"@type": "Organization",
-		name: "Lumni",
-		url: "https://lumni.ai",
-	},
-};
+// JSON-LD is defined in home page (richer version) — no duplicate here
 
 function localeToOgLocale(locale: string): string {
 	const map: Record<string, string> = {
@@ -181,13 +162,6 @@ export default async function LocaleLayout({
 			<Suspense fallback={<CardSkeleton />}>
 				<Utssr />
 			</Suspense>
-			<div
-				aria-hidden="true"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
-				dangerouslySetInnerHTML={{
-					__html: `<script id="json-ld" type="application/ld+json">${JSON.stringify(jsonLd).replace(/<\/script>/g, "<\\/script>")}</script>`,
-				}}
-			/>
 			<ChunkLoadHandler />
 			<Providers locale={locale} messages={messages} timeZone={timeZone}>
 				<LazyMotion features={domAnimation}>

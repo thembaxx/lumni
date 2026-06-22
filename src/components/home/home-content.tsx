@@ -16,7 +16,6 @@ import { FeaturesGrid } from "./features-grid";
 import { HeroSection } from "./hero-section";
 import { HowItWorksSection } from "./how-it-works-section";
 import { PricingComparisonSection } from "./pricing-comparison-section";
-import { SiteFooter } from "./site-footer";
 import { TestimonialsSection } from "./testimonials-section";
 
 export function HomeContent() {
@@ -109,8 +108,6 @@ export function HomeContent() {
 			<PricingComparisonSection />
 
 			<CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
-
-			<SiteFooter />
 		</div>
 	);
 }

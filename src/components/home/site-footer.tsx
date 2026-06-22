@@ -1,13 +1,10 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { appConfig } from "../../../app.config";
 
-const CURRENT_YEAR = new Date().getFullYear();
-
-export function SiteFooter() {
-	const t = useTranslations("home");
+export async function SiteFooter() {
+	const t = await getTranslations("home");
+	const CURRENT_YEAR = new Date().getFullYear();
 
 	return (
 		<footer className="border-border/50 border-t py-12">

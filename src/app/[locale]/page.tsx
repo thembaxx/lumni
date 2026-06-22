@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createElement } from "react";
 import { HomeContent } from "@/components/home/home-content";
+import { SiteFooter } from "@/components/home/site-footer";
 import { appConfig } from "../../../app.config";
 
 export const metadata: Metadata = {
@@ -53,6 +54,7 @@ export default function Home() {
 		<>
 			<JsonLdScript />
 			<HomeContent />
+			<SiteFooter />
 		</>
 	);
 }
