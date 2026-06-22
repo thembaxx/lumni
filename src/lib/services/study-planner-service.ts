@@ -324,7 +324,7 @@ function topologicalSort(
 
 	const topicOrder = new Map(sorted.map((id, i) => [id, i]));
 
-	return [...topics].sort((a, b) => {
+	return topics.toSorted((a, b) => {
 		const aIdx = topicOrder.get(a.topicId) ?? 999;
 		const bIdx = topicOrder.get(b.topicId) ?? 999;
 		return aIdx - bIdx;

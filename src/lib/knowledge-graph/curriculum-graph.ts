@@ -57,12 +57,15 @@ export function buildGraphFromCurriculum(
 		const chain = collectPrerequisiteChain(focusTopic, allTopics, new Set());
 		const advanced = collectDependents(focusTopic, allTopics, new Set());
 
+		const chainIndexMap = new Map(chain.map((c, i) => [c.id, i]));
+		const focusIdx = chainIndexMap.get(focusTopicId) ?? -1;
+
 		for (const t of chain) {
 			if (!nodeIds.has(t.id)) {
 				nodeIds.add(t.id);
 				const isFocus = t.id === focusTopicId;
 				const isAncestor =
-					!isFocus && chain.indexOf(t) < chain.indexOf(focusTopic);
+					!isFocus && (chainIndexMap.get(t.id) ?? 0) < focusIdx;
 				nodes.push({
 					id: t.id,
 					label: t.name,
@@ -83,6 +86,7 @@ export function buildGraphFromCurriculum(
 			}
 		}
 
+		const edgeKeys = new Set<string>();
 		for (const t of [...chain, focusTopic, ...advanced]) {
 			for (const prereqId of t.prerequisites) {
 				const prereqTopic = findTopicById(allTopics, prereqId);
@@ -93,7 +97,8 @@ export function buildGraphFromCurriculum(
 					prereqTopic.id !== t.id
 				) {
 					const edgeKey = `${prereqTopic.id}->${t.id}`;
-					if (!edges.some((e) => `${e.from}->${e.to}` === edgeKey)) {
+					if (!edgeKeys.has(edgeKey)) {
+						edgeKeys.add(edgeKey);
 						edges.push({
 							from: prereqTopic.id,
 							to: t.id,
@@ -115,6 +120,7 @@ export function buildGraphFromCurriculum(
 			}
 		}
 
+		const edgeKeys = new Set<string>();
 		for (const topic of curriculum.topics) {
 			for (const prereqId of topic.prerequisites) {
 				const prereqTopic = findTopicById(allTopics, prereqId);
@@ -125,7 +131,8 @@ export function buildGraphFromCurriculum(
 					prereqTopic.id !== topic.id
 				) {
 					const edgeKey = `${prereqTopic.id}->${topic.id}`;
-					if (!edges.some((e) => `${e.from}->${e.to}` === edgeKey)) {
+					if (!edgeKeys.has(edgeKey)) {
+						edgeKeys.add(edgeKey);
 						edges.push({
 							from: prereqTopic.id,
 							to: topic.id,
@@ -164,9 +171,10 @@ function collectDependents(
 	visited: Set<string>,
 ): CurriculumTopic[] {
 	const result: CurriculumTopic[] = [];
+	const prereqSet = new Set(topic.prerequisites);
 	for (const t of allTopics.values()) {
 		if (visited.has(t.id)) continue;
-		if (t.prerequisites.includes(topic.id)) {
+		if (prereqSet.has(t.id)) {
 			visited.add(t.id);
 			result.push(t);
 			result.push(...collectDependents(t, allTopics, visited));

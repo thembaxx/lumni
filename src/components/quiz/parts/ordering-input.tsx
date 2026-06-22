@@ -14,12 +14,11 @@ interface OrderingInputProps {
 
 export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
 	const t = useTranslations();
-	const [orderedIds, setOrderedIds] = useState<string[]>(
-		useMemo(
-			() => [...items].sort(() => Math.random() - 0.5).map((i) => i.id),
-			[items],
-		),
+	const shuffledIds = useMemo(
+		() => items.toSorted(() => Math.random() - 0.5).map((i) => i.id),
+		[items],
 	);
+	const [orderedIds, setOrderedIds] = useState<string[]>(shuffledIds);
 
 	const {
 		draggedId,

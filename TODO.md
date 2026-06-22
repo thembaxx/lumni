@@ -674,3 +674,8 @@ npx next build        → clean build
 ## 🔵 P3 — Firecrawl scaling
 
 - [x] **Move from keyless to API key** — `FIRECRAWL_API_KEY` env var already supported in `exam-markdown.ts`. Falls back to keyless when absent.
+
+## 🔵 GitHub Issues Cleanup
+
+- [ ] **Close issues #54-#60 on GitHub** — All 7 feature issues are implemented and checked off above, but remain open on GitHub. Requires `gh auth login` then `gh issue close <N>` for each.
+- [ ] **Close or merge 5 dependabot PRs (#61-#65)** — happy-dom, @hugeicons/react, knip, storybook, @biomejs/biome bumps. Requires `gh auth login` then review + merge.

@@ -41,11 +41,10 @@ const jsonLd = {
 };
 
 function JsonLdScript() {
-	const html = JSON.stringify(jsonLd);
-	const prop = "dangerouslySetInnerHTML";
 	return createElement("script", {
 		type: "application/ld+json",
-		[prop]: { __html: html },
+		// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, static constant
+		dangerouslySetInnerHTML: { __html: JSON.stringify(jsonLd) },
 	});
 }
 

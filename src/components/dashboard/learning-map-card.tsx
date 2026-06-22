@@ -107,17 +107,14 @@ export function LearningMapCard() {
 
 	const masteryMap = useMemo(() => {
 		const map = new Map<string, string>();
+		const bestScoreByTopic = new Map<string, number>();
 		if (!competencies) return map;
 		for (const c of competencies) {
 			const existing = map.get(c.topicId);
-			if (
-				!existing ||
-				c.score >
-					(competencies.find(
-						(x) => x.topicId === c.topicId && x.level === existing,
-					)?.score ?? 0)
-			) {
+			const prevBest = bestScoreByTopic.get(c.topicId) ?? 0;
+			if (!existing || c.score > prevBest) {
 				map.set(c.topicId, c.level);
+				bestScoreByTopic.set(c.topicId, c.score);
 			}
 		}
 		return map;
