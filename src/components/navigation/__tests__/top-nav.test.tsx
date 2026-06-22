@@ -322,9 +322,7 @@ describe("TopNav", () => {
 			} as ReturnType<typeof useGamification>);
 
 			const { container } = render(<TopNav />);
-			// The pending count div should not appear; 0 is falsy so it's not rendered
-			const pendingDivs = container.querySelectorAll("[class*='system-accent-alpha-10']");
-			// Only the level badge (not a pending badge) should have system-accent-alpha-10
+			// The pending count should not appear; 0 is falsy so it's not rendered
 			// We just check that "0" isn't floating as a standalone badge
 			expect(container.textContent).not.toMatch(/^0$/);
 		});

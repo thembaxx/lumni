@@ -125,9 +125,12 @@ function createMockIntersectionObserver(
 }
 
 describe("AnalyticsTab", () => {
+	const originalIntersectionObserver = globalThis.IntersectionObserver;
+
 	afterEach(() => {
 		cleanup();
 		vi.restoreAllMocks();
+		globalThis.IntersectionObserver = originalIntersectionObserver;
 	});
 
 	describe("when user is not logged in", () => {
@@ -183,9 +186,12 @@ describe("AnalyticsTab", () => {
 });
 
 describe("LazySection behavior via AnalyticsTab", () => {
+	const originalIntersectionObserver = globalThis.IntersectionObserver;
+
 	afterEach(() => {
 		cleanup();
 		vi.restoreAllMocks();
+		globalThis.IntersectionObserver = originalIntersectionObserver;
 	});
 
 	beforeEach(() => {

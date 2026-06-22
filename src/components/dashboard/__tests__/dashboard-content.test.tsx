@@ -125,7 +125,7 @@ const defaultProps = {
 describe("DashboardContent", () => {
 	afterEach(() => {
 		cleanup();
-		vi.clearAllMocks();
+		vi.resetAllMocks();
 	});
 
 	describe("today tab", () => {
