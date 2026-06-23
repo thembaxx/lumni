@@ -1035,3 +1035,46 @@ const systemPrompt = webContext.xml
 - Pronunciation client tries server-side Deepgram first, falls back to Whisper WASM (74MB model download only when needed)
 
 **Verification**: TypeScript 0 errors, 1498 tests pass (0 regressions), lint clean on changed files.
+
+### Session 43 — Build/lint/test fixes + Dependabot (June 2026)
+
+- **Build fixes**: Removed `cacheComponents` from next.config, added `unstable_noStore` to study-groups layout, fixed Sentry import + lint warnings, ran `oxfmt` across codebase
+- **Dependabot**: Bumped undici 6.27.0, dompurify 3.4.11, @opentelemetry/core 2.8.0, esbuild 0.28.1, protobufjs 7.6.3
+- **Test TS config**: Created `tsconfig.test.json` for test file type resolution, wired VS Code to use it
+
+### Session 44 — Konva dark mode + WCAG AA a11y audit (June 2026)
+
+**Periodic table WCAG AA colours** (`src/lib/data/element-categories.ts`):
+
+- Fixed 3 light-mode category colours to pass 4.5:1 against white: alkaline `#D48020`→`#A76519`, transition `#C49018`→`#956D12`, post-trans `#2E8A6A`→`#2C8566`
+- Removed `.dark` override block — same colours in both modes (border/background provide differentiation)
+- Removed `opacity-50`/`opacity-70` on element card text; now `text-white drop-shadow-sm` only — verified 4.5:1 on all 11 backgrounds
+
+**Automated contrast scanning** (`e2e/a11y-contrast.spec.ts`):
+
+- Installed `@axe-core/playwright` v4.12.1
+- Scans 37 routes in light and dark mode for WCAG AA `color-contrast` violations
+- Filters Next.js built-in 404 page (`next-error`)
+- Added `a11y-contrast` CI job in `.github/workflows/ci.yml` — runs after build, 10-min timeout, 2 workers
+- Existing `e2e-dast` job uses `--grep-invert "WCAG AA contrast"` to avoid double-running
+
+**Shared diagram theme** (`src/components/quiz/diagrams/diagram-theme.ts`):
+
+- `useDiagramTheme()` hook detects `.dark` on `<html>` via MutationObserver, returns light/dark `DiagramColors` palettes
+- `DiagramColors` interface — text, accent, chart1-6, lines, grid, atom colours
+- `getAtomColor(palette, element)` helper for element-semantic atom colours (constant across themes)
+- Light palette uses saturated oklch (e.g. `oklch(52% 0.18 146)` accent), dark palette uses brighter equivalents (`oklch(65% 0.18 146)`)
+- Atom colours (C, H, O, N, S, P, F, Cl, Br, I, Na, Fe, Cu, Zn, Mg, Ca, He, Ne, Ar) stay identical in both themes
+
+**8 Konva renderers updated** — all hardcoded oklch strings replaced with palette tokens:
+
+- `chemistry.tsx` — `getAtomColor` imported from theme, `renderMolecule` takes palette param, bond/atom/reaction colours use palette
+- `chart.tsx` — removed `COLORS` array, bar/line/pie chart colours use `palette.chart1-6`
+- `geometry.tsx` — shape stroke, angle-mark fill, grid lines, label text use palette
+- `graph.tsx` — grid, axes, ticks, tick labels, function colours, marked points, title all use palette
+- `circuit.tsx` — wires, components, battery use `palette.lineSubtle`/`accent`/`chart2`
+- `wave.tsx` — primary/secondary wave, labels, longitudinal text, photon lines use palette
+- `motion.tsx` — projectile fill/stroke, path, labels, ground line use palette
+- `force-vector.tsx` — object labels, angle line, angle label use palette
+
+**Verification**: oxlint 0 errors on changed files, 1499 tests pass (0 regressions), format check clean.

@@ -79,6 +79,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D064] **RAG-augmented hints**: `HintFn` signature extended with optional `ragXml` param. `aiHintFactory` consumes RAG XML; static hint implementations ignore it. `POST /api/engine/hint` fetches `searchWithRAG(subject, topic)`.
 - [D065] **Cross-engine TTS+visual integration**: `TTSButton` accepts `visualDescription` prop; `QuestionCard` derives description from `VisualContent.label` and threads it through `QuestionCardHeader`. Engines stay decoupled; context bridge in consumer.
 - [D066] **STT endpoint**: `POST /api/engine/transcribe` with Deepgram primary, fails open when key absent. Pronunciation client tries server Deepgram first, falls back to Whisper WASM (74MB model only downloaded when needed).
+- [D067] **Konva dark mode**: All 8 Konva renderers use `useDiagramTheme()` hook (MutationObserver on `<html>.classList`). CSS custom properties don't cascade into `<canvas>` — theme detection must use DOM API, not CSS vars. Atom colours are element-semantic and stay constant across themes.
 
 ## KNOWLEDGE_GRAPH
 
@@ -144,6 +145,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **`querySelector` / `querySelectorAll` in tests**: happy-dom `SelectorParser` throws `TypeError`. Use DOM API + textContent regex.
 - **`lottie-react`**: Already migrated to `@lottiefiles/dotlottie-react`.
 - **Sequential `for...of` over independent batches**: Use `Promise.all()` for parallel execution.
+- **CSS vars in Konva**: Use `useDiagramTheme()` hook, not CSS custom properties — Konva renders to `<canvas>`, which doesn't inherit CSS.
 
 ## PROMPT_LOOKUP_TABLE
 

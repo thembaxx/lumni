@@ -130,6 +130,7 @@ Appwrite Cloud
 - **GenerateResult** (Session 37): `QuestionEngine.generate()` returns `GenerateResult { questions, ragContext }` instead of `Question[]`. Orchestrator reads `ragContext` from return value. `lastRagContext` kept during execution as side effect.
 - **AnalyticsService** (Session 37): `src/lib/analytics/analytics-service.ts` with `SessionStore` interface. Trends and comparative routes reduced from ~50-90 lines to ~20 lines each.
 - **Diagrams**: STEM subjects (30) → Konva renderers (geometry, chart, chemistry, graph, force-vector, circuit, wave, motion, node-flow, custom-svg). Non-STEM → Wikimedia. Fallback: Mermaid.
+- **Dark mode diagrams**: All 8 Konva renderers use `useDiagramTheme()` hook (`src/components/quiz/diagrams/diagram-theme.ts`) which detects `.dark` on `<html>` via MutationObserver and returns light/dark `DiagramColors` palettes (oklch strings). Atom colours in chemistry renderer are element-semantic and stay identical across themes. CSS custom properties don't cascade into Konva `<canvas>` — theme detection must use DOM classList + MutationObserver.
 - **Knowledge graph**: `src/lib/knowledge-graph/` — AI generates `{ nodes, edges }` topic graphs. Cached 7d in Dexie v29. Two UIs: dashboard `LearningMapCard` + per-question `TopicGraph`.
 - **Study guides**: `src/lib/study-guide/` — AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
 - **Live sessions**: `useLiveSession()` hook with 15s polling via React Query. Appwrite-backed with `LiveSession` + `LiveSessionParticipant` collections.
@@ -195,6 +196,7 @@ Appwrite Cloud
 - ❌ Do NOT write magic z-index numbers — use `--z-*` semantic tokens
 - ❌ Do NOT declare `max-w-*` or `px-*` at the page level — wrap pages in `<PageContainer>`
 - ❌ Do NOT bypass DataAccess interface — never use `offlineDB` directly; always go through `DexieDataAccess` or `InMemoryDataAccess`
+- ❌ Do NOT use CSS custom properties for Konva/Konva shape colours — `useDiagramTheme()` hook is the single source of truth; Konva renders to `<canvas>` which doesn't inherit CSS variables
 - ❌ Do NOT use `Bun.mock.module` for tinyfish or cross-file mocks — use DI (`deps` arg) or shared mock modules
 - ❌ Do NOT use `querySelector`/`querySelectorAll` in tests — happy-dom throws SyntaxError; use `getElementsByTagName`/`getElementsByClassName` + `container.textContent` regex
 

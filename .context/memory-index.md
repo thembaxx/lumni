@@ -13,6 +13,8 @@
 - **DOM API in tests**: Prefer `getElementsByTagName` / `getElementsByClassName` + `container.textContent` regex matching over `querySelector`.
 - **DataAccess**: Never use `offlineDB` directly — inject `DexieDataAccess` (prod) or `InMemoryDataAccess` (test).
 - **Rate limiting**: Use `new RateLimiter(new MapStore(), config)` for dev, `new RateLimiter(new RedisStore(redis), config)` for production.
+- **Konva dark mode**: All diagram colours come from `useDiagramTheme()` hook (MutationObserver on `<html>.classList`). Never use CSS vars or hardcoded oklch in Konva renderers — Konva renders to `<canvas>`, no CSS inheritance.
+- **a11y contrast tests**: `e2e/a11y-contrast.spec.ts` scans 37 routes × 2 modes via `@axe-core/playwright`. Run on a warm dev server.
 
 ## Architectural Decisions
 
@@ -51,6 +53,8 @@
 - [2026-06-18] **AnalyticsService extraction**: `SessionStore` interface. Trends/comparative routes ~20 lines each. 4 files.
 - [2026-06-18] **Service extraction (ADR-0012)**: 6 services: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. 39 files, +766/−893.
 - [2026-06-21] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved across 10 files. Parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks. Commit `a1bd5de4`.
+- [2026-06-23] **Konva dark mode**: All 8 Konva renderers use `useDiagramTheme()` hook (MutationObserver, light/dark `DiagramColors` palettes). Atom colours stay constant across themes. CSS custom properties don't cascade into `<canvas>` — theme detection must use DOM API.
+- [2026-06-23] **a11y contrast scanning**: `@axe-core/playwright` scans 37 routes in light+dark mode for WCAG AA `color-contrast` violations. Wired as `a11y-contrast` CI job in `.github/workflows/ci.yml`.
 
 ## Past Bugs & Failures
 
