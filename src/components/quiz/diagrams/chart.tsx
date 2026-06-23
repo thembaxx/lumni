@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { Arc, Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
-import { useDiagramTheme } from "./diagram-theme";
+import { useDiagramTheme, type DiagramColors } from "./diagram-theme";
 
 interface ChartDataPoint {
   label: string;
