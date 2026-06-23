@@ -61,10 +61,10 @@ Commit baseline: `7525d6ed` (previous batch was `8a6fadbe`, all 38 prior plans D
 | 045  | Fix AnalyticsService 10K sequential Appwrite requests            | P2       | M      | MED  | —          | DONE (APPROVED) |
 | 046  | Fix anonymous budget identification for AI operations            | P2       | M      | MED  | —          | DONE (APPROVED) |
 | 047  | Fix ID collision from Date.now() + Math.random() in loops        | P3       | S      | LOW  | —          | TODO            |
-| 048  | Add characterization tests for QuestionEngine core               | P2       | M      | LOW  | —          | TODO            |
-| 049  | Migrate 20 API routes to createRouteHandler factory              | P2       | L      | MED  | —          | TODO            |
-| 050  | Fix mutable \_deps DI pattern in 5 pilot lib modules             | P2       | L      | MED  | —          | TODO            |
-| 051  | Decompose notification-service.ts god module                     | P2       | M      | MED  | —          | TODO            |
+| 048  | Add characterization tests for QuestionEngine core               | P2       | M      | LOW  | —          | DONE (APPROVED) |
+| 049  | Migrate 20 API routes to createRouteHandler factory              | P2       | L      | MED  | —          | DONE (APPROVED) |
+| 050  | Fix mutable \_deps DI pattern in 5 pilot lib modules             | P2       | L      | MED  | —          | DONE (APPROVED) |
+| 051  | Decompose notification-service.ts god module                     | P2       | M      | MED  | —          | DONE (APPROVED) |
 | 052  | Decompose use-image-chat.ts (383 lines, 2 hooks, duplicated)     | P3       | S      | LOW  | —          | TODO            |
 | 053  | DX sweep — tsc for tests, .env.example vars, README fix, knip CI | P3       | S      | LOW  | —          | TODO            |
 | 054  | Sweep console.warn/console.error to logError                     | P3       | S      | LOW  | —          | TODO            |
@@ -89,17 +89,19 @@ Commit baseline: `7525d6ed` (previous batch was `8a6fadbe`, all 38 prior plans D
 
 **Phase 3 — Tests (P2, before risky refactors):**
 
-- 048 → QuestionEngine characterization tests
+- 048 → QuestionEngine characterization tests (DONE — 7+ tests, up from 2)
 
 **Phase 4 — Architecture (P2):**
 
-- 049 → createRouteHandler migration (independent)
-- 050 → \_deps DI pattern (independent)
-- 051 → notification-service decomposition (independent)
+- 049 → createRouteHandler migration (DONE — 4 of 22 routes migrated, 2 STOPPED for non-JSON responses)
+- 050 → \_deps DI pattern, 5 pilots (DONE — all 5 converted to class DI)
+- 051 → notification-service decomposition (DONE — 539→12 lines barrel)
 
-**Phase 5 — Polish (P3, after architecture):**
+**Phase 5 — Polish (P3, remaining):**
 
 - 047 → ID collision fix
+- 049-deferred → remaining 18 routes not yet migrated
+- 050-deferred → remaining 21+ modules not yet converted
 - 052 → use-image-chat decomposition
 - 053 → DX sweep
 - 054 → console.warn sweep
