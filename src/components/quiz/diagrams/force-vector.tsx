@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { Arrow, Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
+import { useDiagramTheme } from "./diagram-theme";
 
 interface ForceVectorData {
   objects?: Array<{
@@ -50,6 +51,7 @@ function getDirectionVector(direction: string): {
 }
 
 export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
+  const palette = useDiagramTheme();
   const objects = useMemo(() => {
     if (!data.objects) return [];
     return data.objects.map((obj) => {
@@ -66,7 +68,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
               text={obj.label}
               x={(obj.width || 50) / 2}
               y={(obj.height || 30) / 2}
-              fill="oklch(100% 0 0)"
+              fill={palette.textOnFill}
               fontSize={12}
               offsetX={(obj.label?.length || 0) * 5}
               offsetY={4}
@@ -80,7 +82,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
             <Circle radius={obj.radius || 15} fill={obj.fill} />
             <Text
               text={obj.label}
-              fill="oklch(100% 0 0)"
+              fill={palette.textOnFill}
               fontSize={10}
               offsetX={(obj.label?.length || 0) * 4}
               offsetY={3}
@@ -90,7 +92,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
       }
       return null;
     });
-  }, [data.objects]);
+  }, [data.objects, palette]);
 
   const forceArrows = useMemo(() => {
     if (!data.showForces) return [];
@@ -130,7 +132,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
       <Group>
         <Line
           points={[150, 140, 250, 140]}
-          stroke="oklch(52.9% 0.012 264°)"
+          stroke={palette.textSecondary}
           strokeWidth={1}
           dash={[4, 4]}
         />
@@ -138,13 +140,13 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
           text={`${data.angle}°`}
           x={200}
           y={155}
-          fill="oklch(52.9% 0.012 264°)"
+          fill={palette.textPrimary}
           fontSize={12}
           fontStyle="italic"
         />
       </Group>
     );
-  }, [data.angle]);
+  }, [data.angle, palette]);
 
   return (
     <Stage

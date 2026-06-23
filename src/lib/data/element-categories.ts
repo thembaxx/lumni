@@ -65,9 +65,9 @@ export const elementCategoryConfig: Record<string, ElementCategoryConfig> = {
 export const elementCategoryVariables = `
   :root {
     --el-alkali: #D43030;
-    --el-alkaline: #D48020;
-    --el-transition: #C49018;
-    --el-post-trans: #2E8A6A;
+    --el-alkaline: #A76519;
+    --el-transition: #956D12;
+    --el-post-trans: #2C8566;
     --el-metalloid: #3A7A3A;
     --el-nonmetal: #2868A8;
     --el-halogen: #4050A8;
@@ -75,19 +75,6 @@ export const elementCategoryVariables = `
     --el-lanthanide: #A04070;
     --el-actinide: #985040;
     --el-unknown: #707070;
-  }
-  .dark {
-    --el-alkali: #E84848;
-    --el-alkaline: #E89030;
-    --el-transition: #E0A020;
-    --el-post-trans: #40B088;
-    --el-metalloid: #50A050;
-    --el-nonmetal: #4090D0;
-    --el-halogen: #6070C0;
-    --el-noble: #8050C0;
-    --el-lanthanide: #D06090;
-    --el-actinide: #C06858;
-    --el-unknown: #909090;
   }
 `;
 

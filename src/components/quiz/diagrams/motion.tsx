@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Circle, Group, Layer, Line, Stage, Text } from "react-konva";
 import type { MotionData } from "@/lib/visual-engine/types";
+import { useDiagramTheme } from "./diagram-theme";
 
 export function MotionDiagram({ data }: { data: MotionData }) {
   const [animationFrame, setAnimationFrame] = useState(0);
+  const palette = useDiagramTheme();
 
   useEffect(() => {
     let animationId: number;
@@ -37,23 +39,17 @@ export function MotionDiagram({ data }: { data: MotionData }) {
             x={cx}
             y={cy}
             radius={6}
-            fill={p.color || "oklch(55.6% 0.219 264)"}
-            stroke="oklch(100% 0 0)"
+            fill={p.color || palette.chart1}
+            stroke={palette.textOnFill}
             strokeWidth={1}
           />
           {p.label && (
-            <Text
-              x={cx + 8}
-              y={cy - 10}
-              text={p.label}
-              fontSize={10}
-              fill="oklch(32.5% 0.012 264°)"
-            />
+            <Text x={cx + 8} y={cy - 10} text={p.label} fontSize={10} fill={palette.textPrimary} />
           )}
         </Group>
       );
     });
-  }, [data.projectiles, animationFrame]);
+  }, [data.projectiles, animationFrame, palette]);
 
   const pathElements = useMemo(() => {
     if (!data.paths) return [];
@@ -63,14 +59,14 @@ export function MotionDiagram({ data }: { data: MotionData }) {
         <Line
           key={`path-${path.color}-${path.dashed}`}
           points={pts}
-          stroke={path.color || "oklch(52.5% 0.142 274°)"}
+          stroke={path.color || palette.accent}
           strokeWidth={2}
           dash={path.dashed ? [6, 4] : undefined}
           tension={0.3}
         />
       );
     });
-  }, [data.paths]);
+  }, [data.paths, palette]);
 
   const labels = useMemo(() => {
     if (!data.labels) return [];
@@ -81,11 +77,11 @@ export function MotionDiagram({ data }: { data: MotionData }) {
         y={l.y}
         text={l.text}
         fontSize={11}
-        fill="oklch(52.9% 0.012 264°)"
+        fill={palette.textSecondary}
         fontStyle="italic"
       />
     ));
-  }, [data.labels]);
+  }, [data.labels, palette]);
 
   return (
     <Stage
@@ -96,7 +92,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
     >
       <Layer>
         {data.ground && (
-          <Line points={[0, 180, 300, 180]} stroke="oklch(52.9% 0.012 264°)" strokeWidth={2} />
+          <Line points={[0, 180, 300, 180]} stroke={palette.textSecondary} strokeWidth={2} />
         )}
         {pathElements}
         {projectileElements}

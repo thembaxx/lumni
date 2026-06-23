@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Circle, Group, Layer, Line, Stage, Text } from "react-konva";
 import type { WaveData } from "@/lib/visual-engine/types";
+import { useDiagramTheme } from "./diagram-theme";
 
 export function WaveDiagram({ data }: { data: WaveData }) {
   const [phase, setPhase] = useState(0);
+  const palette = useDiagramTheme();
 
   useEffect(() => {
     let animationId: number;
@@ -42,13 +44,13 @@ export function WaveDiagram({ data }: { data: WaveData }) {
         <Line
           key={`wave-${w}`}
           points={points}
-          stroke={w === 0 ? "oklch(59.3% 0.194 28°)" : "oklch(57.7% 0.184 264° 0.3)"}
+          stroke={w === 0 ? palette.chart2 : palette.chart1}
           strokeWidth={w === 0 ? 2.5 : 1}
         />,
       );
     }
     return lines;
-  }, [data.type, data.amplitude, data.wavelength, phase]);
+  }, [data.type, data.amplitude, data.wavelength, phase, palette]);
 
   const longitudinalWaves = useMemo(() => {
     if (data.type !== "longitudinal" && data.type !== "sound") return [];
@@ -71,13 +73,13 @@ export function WaveDiagram({ data }: { data: WaveData }) {
             y={97}
             text={w % 2 === 0 ? "C" : "R"}
             fontSize={7}
-            fill="oklch(100% 0 0)"
+            fill={palette.textOnFill}
           />
         </Group>,
       );
     }
     return elements;
-  }, [data.type, data.wavelength, phase]);
+  }, [data.type, data.wavelength, phase, palette]);
 
   const labels = useMemo(() => {
     if (!data.labels) return [];
@@ -88,10 +90,10 @@ export function WaveDiagram({ data }: { data: WaveData }) {
         y={l.y}
         text={l.text}
         fontSize={10}
-        fill="oklch(52.9% 0.012 264°)"
+        fill={palette.textSecondary}
       />
     ));
-  }, [data.labels]);
+  }, [data.labels, palette]);
 
   const photonVisual = useMemo(() => {
     if (!data.showPhoton) return null;
@@ -102,14 +104,14 @@ export function WaveDiagram({ data }: { data: WaveData }) {
         <Line
           key={`photon-${yOffset}`}
           points={[0, 100 + yOffset, 300, 100 + yOffset]}
-          stroke="oklch(81.9% 0.145 80° 0.5)"
+          stroke={palette.textSecondary}
           strokeWidth={2}
           dash={[5, 5]}
         />,
       );
     }
     return lines;
-  }, [data.showPhoton]);
+  }, [data.showPhoton, palette]);
 
   const amplitudeLabel = useMemo(() => {
     if (!data.amplitude) return null;
@@ -117,7 +119,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
       <Group>
         <Line
           points={[20, 70, 20, 130]}
-          stroke="oklch(52.9% 0.012 264°)"
+          stroke={palette.textSecondary}
           strokeWidth={1}
           dash={[3, 3]}
         />
@@ -126,12 +128,12 @@ export function WaveDiagram({ data }: { data: WaveData }) {
           y={90}
           text={`A=${data.amplitude}`}
           fontSize={9}
-          fill="oklch(52.9% 0.012 264°)"
+          fill={palette.textSecondary}
           rotation={-90}
         />
       </Group>
     );
-  }, [data.amplitude]);
+  }, [data.amplitude, palette]);
 
   return (
     <Stage

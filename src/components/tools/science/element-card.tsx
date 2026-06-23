@@ -62,13 +62,18 @@ export const ElementCard = memo(
         whileTap={isActive ? { scale: 0.95 } : {}}
         className={`${config?.bg} relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-white/10 p-2 text-white dark:border-white/20`}
       >
-        <span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums opacity-50">
+        <span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums text-white drop-shadow-sm">
           {el.atomicNumber}
         </span>
-        <m.span style={{ scale: symbolScale }} className="font-extrabold text-xl drop-shadow-lg">
+        <m.span
+          style={{ scale: symbolScale }}
+          className="font-extrabold text-xl drop-shadow-lg text-white"
+        >
           {el.symbol}
         </m.span>
-        <span className="ios-caption-3 mt-0.5 text-center leading-tight opacity-70">{el.name}</span>
+        <span className="ios-caption-3 mt-0.5 text-center leading-tight text-white drop-shadow-sm">
+          {el.name}
+        </span>
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{

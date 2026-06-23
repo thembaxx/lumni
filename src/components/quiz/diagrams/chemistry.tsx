@@ -3,6 +3,7 @@
 import type React from "react";
 import { useMemo } from "react";
 import { Arrow, Circle, Group, Layer, Line, Stage, Text } from "react-konva";
+import { useDiagramTheme, getAtomColor, type DiagramColors } from "./diagram-theme";
 
 interface Atom {
   element: string;
@@ -35,33 +36,15 @@ interface ChemistryData {
   reactions?: ReactionArrow[];
 }
 
-function getAtomColor(element: string): string {
-  const colors: Record<string, string> = {
-    C: "oklch(55% 0 0)",
-    H: "oklch(100% 0 0)",
-    O: "oklch(65% 0.2 30)",
-    N: "oklch(55% 0.2 240)",
-    S: "oklch(60% 0.2 100)",
-    P: "oklch(60% 0.2 280)",
-    F: "oklch(50% 0.15 140)",
-    Cl: "oklch(50% 0.15 140)",
-    Br: "oklch(45% 0.15 30)",
-    I: "oklch(40% 0.15 280)",
-    Na: "oklch(60% 0.15 50)",
-    Fe: "oklch(50% 0.15 30)",
-    Cu: "oklch(55% 0.15 40)",
-    Zn: "oklch(55% 0.1 200)",
-    Mg: "oklch(55% 0.1 140)",
-    Ca: "oklch(60% 0.1 80)",
-    He: "oklch(60% 0.1 240)",
-    Ne: "oklch(60% 0.1 240)",
-    Ar: "oklch(60% 0.1 240)",
-  };
-  return colors[element] || "oklch(55% 0.1 0)";
-}
+function renderMolecule(mol: Molecule, molIndex: number, offsetX: number, palette: DiagramColors) {
+  const elements: React.ReactNode[] = [];
+  const bondOffsets = [
+    { dx1: 0, dy1: -3, dx2: 0, dy2: -3 },
+    { dx1: 0, dy1: 3, dx2: 0, dy2: 3 },
+    { dx1: 0, dy1: -3, dx2: 0, dy2: 3 },
+  ];
 
-function getAtomRadius(element: string): number {
-  const radii: Record<string, number> = {
+  const ATOM_RADII: Record<string, number> = {
     C: 12,
     H: 8,
     O: 11,
@@ -73,16 +56,6 @@ function getAtomRadius(element: string): number {
     Br: 15,
     I: 16,
   };
-  return radii[element] || 10;
-}
-
-function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
-  const elements: React.ReactNode[] = [];
-  const bondOffsets = [
-    { dx1: 0, dy1: -3, dx2: 0, dy2: -3 },
-    { dx1: 0, dy1: 3, dx2: 0, dy2: 3 },
-    { dx1: 0, dy1: -3, dx2: 0, dy2: 3 },
-  ];
 
   mol.bonds.forEach((bond, _bIdx) => {
     const from = mol.atoms[bond.fromIndex];
@@ -104,7 +77,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
             offsetX + to.x + offset.dx2,
             to.y + offset.dy2,
           ]}
-          stroke="oklch(32.5% 0.012 264°)"
+          stroke={palette.lineSubtle}
           strokeWidth={2}
           dash={isDashed ? [4, 3] : undefined}
         />,
@@ -113,15 +86,15 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
   });
 
   mol.atoms.forEach((atom, _aIdx) => {
-    const r = getAtomRadius(atom.element);
+    const r = ATOM_RADII[atom.element] || 10;
     elements.push(
       <Group key={`mol-${molIndex}-atom-${atom.element}-${atom.x}-${atom.y}`}>
         <Circle
           x={offsetX + atom.x}
           y={atom.y}
           radius={r}
-          fill={getAtomColor(atom.element)}
-          stroke="oklch(32.5% 0.012 264° / 0.3)"
+          fill={getAtomColor(palette, atom.element)}
+          stroke={palette.lineSubtle}
           strokeWidth={1}
         />
         <Text
@@ -129,7 +102,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
           y={atom.y - 5}
           text={atom.element}
           fontSize={r > 10 ? 10 : 8}
-          fill="oklch(100% 0 0)"
+          fill={palette.textOnFill}
           fontStyle="bold"
         />
         {atom.label && (
@@ -138,7 +111,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
             y={atom.y - 5}
             text={atom.label}
             fontSize={9}
-            fill="oklch(52.9% 0.012 264°)"
+            fill={palette.textSecondary}
           />
         )}
       </Group>,
@@ -149,6 +122,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
 }
 
 export function ChemistryDiagram({ data }: { data: ChemistryData }) {
+  const palette = useDiagramTheme();
   const molecules = useMemo(() => data.molecules || [], [data.molecules]);
   const reactions = useMemo(() => data.reactions || [], [data.reactions]);
 
@@ -160,7 +134,7 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
 
     molecules.forEach((mol, i) => {
       const offsetX = i * molWidth + 40;
-      result.push(...renderMolecule(mol, i, offsetX));
+      result.push(...renderMolecule(mol, i, offsetX, palette));
     });
 
     reactions.forEach((r, _i) => {
@@ -169,8 +143,8 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
         <Arrow
           key={`rxn-${r.fromX}-${r.fromY}-${r.toX}-${r.toY}`}
           points={[r.fromX, r.fromY, r.toX, r.toY]}
-          stroke="oklch(55.6% 0.219 264)"
-          fill="oklch(55.6% 0.219 264)"
+          stroke={palette.accent}
+          fill={palette.accent}
           strokeWidth={2}
           pointerLength={8}
           pointerWidth={8}
@@ -184,7 +158,7 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
             y={midY - 18}
             text={r.label}
             fontSize={10}
-            fill="oklch(52.9% 0.012 264°)"
+            fill={palette.textSecondary}
             fontStyle="italic"
           />,
         );
@@ -192,7 +166,7 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
     });
 
     return result;
-  }, [molecules, reactions]);
+  }, [molecules, reactions, palette]);
 
   return (
     <Stage

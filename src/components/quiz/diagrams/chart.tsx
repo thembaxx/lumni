@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { Arc, Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
+import { useDiagramTheme } from "./diagram-theme";
 
 interface ChartDataPoint {
   label: string;
@@ -23,19 +24,18 @@ const PADDING = { top: 30, right: 20, bottom: 50, left: 60 };
 const PLOT_WIDTH = CHART_WIDTH - PADDING.left - PADDING.right;
 const PLOT_HEIGHT = CHART_HEIGHT - PADDING.top - PADDING.bottom;
 
-const COLORS = [
-  "oklch(55.6% 0.219 264)",
-  "oklch(60.7% 0.196 28)",
-  "oklch(59.6% 0.171 164)",
-  "oklch(55.4% 0.172 333)",
-  "oklch(56.1% 0.155 50)",
-  "oklch(52.6% 0.142 302)",
-];
-
-function BarChart({ data }: { data: ChartDataPoint[] }) {
+function BarChart({ data, palette }: { data: ChartDataPoint[]; palette: DiagramColors }) {
   const maxVal = Math.max(...data.map((d) => d.value), 1);
   const barWidth = Math.max(10, PLOT_WIDTH / data.length - 8);
 
+  const chartColors = [
+    palette.chart1,
+    palette.chart2,
+    palette.chart3,
+    palette.chart4,
+    palette.chart5,
+    palette.chart6,
+  ];
   const bars = data.map((d, i) => {
     const barH = (d.value / maxVal) * PLOT_HEIGHT;
     const x = PADDING.left + i * (barWidth + 8) + 4;
@@ -47,7 +47,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
           y={y}
           width={barWidth}
           height={barH}
-          fill={d.color || COLORS[i % COLORS.length]}
+          fill={d.color || chartColors[i % chartColors.length]}
           cornerRadius={2}
         />
         <Text
@@ -55,7 +55,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
           y={PADDING.top + PLOT_HEIGHT + 4}
           text={d.label}
           fontSize={9}
-          fill="oklch(52.9% 0.012 264°)"
+          fill={palette.textSecondary}
           offsetX={barWidth / 2}
           rotation={d.label.length > 5 ? -30 : 0}
         />
@@ -64,7 +64,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
           y={y - 14}
           text={String(d.value)}
           fontSize={9}
-          fill="oklch(52.9% 0.012 264°)"
+          fill={palette.textSecondary}
           offsetX={barWidth / 2}
         />
       </Group>
@@ -75,7 +75,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
     <Layer>
       <Line
         points={[PADDING.left, PADDING.top, PADDING.left, PADDING.top + PLOT_HEIGHT]}
-        stroke="oklch(70% 0 0)"
+        stroke={palette.line}
         strokeWidth={1}
       />
       <Line
@@ -85,7 +85,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
           PADDING.left + PLOT_WIDTH,
           PADDING.top + PLOT_HEIGHT,
         ]}
-        stroke="oklch(70% 0 0)"
+        stroke={palette.line}
         strokeWidth={1}
       />
       {bars}
@@ -93,7 +93,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
   );
 }
 
-function LineChart({ data }: { data: ChartDataPoint[] }) {
+function LineChart({ data, palette }: { data: ChartDataPoint[]; palette: DiagramColors }) {
   const maxVal = Math.max(...data.map((d) => d.value), 1);
   const stepX = PLOT_WIDTH / (data.length - 1 || 1);
 
@@ -109,7 +109,7 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
       y={PADDING.top + PLOT_HEIGHT + 4}
       text={d.label}
       fontSize={9}
-      fill="oklch(52.9% 0.012 264°)"
+      fill={palette.textSecondary}
       width={30}
       align="center"
     />
@@ -120,13 +120,13 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
     const cy = PADDING.top + PLOT_HEIGHT - (d.value / maxVal) * PLOT_HEIGHT;
     return (
       <Group key={`dot-${d.label}`}>
-        <Circle x={cx} y={cy} radius={4} fill="oklch(52.5% 0.142 274°)" />
+        <Circle x={cx} y={cy} radius={4} fill={palette.accent} />
         <Text
           x={cx - 10}
           y={cy - 16}
           text={String(d.value)}
           fontSize={9}
-          fill="oklch(52.9% 0.012 264°)"
+          fill={palette.textSecondary}
           width={20}
           align="center"
         />
@@ -138,7 +138,7 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
     <Layer>
       <Line
         points={[PADDING.left, PADDING.top, PADDING.left, PADDING.top + PLOT_HEIGHT]}
-        stroke="oklch(70% 0 0)"
+        stroke={palette.line}
         strokeWidth={1}
       />
       <Line
@@ -148,17 +148,17 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
           PADDING.left + PLOT_WIDTH,
           PADDING.top + PLOT_HEIGHT,
         ]}
-        stroke="oklch(70% 0 0)"
+        stroke={palette.line}
         strokeWidth={1}
       />
-      <Line points={points} stroke="oklch(55.6% 0.219 264)" strokeWidth={2} tension={0.3} />
+      <Line points={points} stroke={palette.chart1} strokeWidth={2} tension={0.3} />
       {dots}
       {labels}
     </Layer>
   );
 }
 
-function PieChart({ data }: { data: ChartDataPoint[] }) {
+function PieChart({ data, palette }: { data: ChartDataPoint[]; palette: DiagramColors }) {
   const total = data.reduce((s, d) => s + d.value, 0);
   const cx = CHART_WIDTH / 2;
   const cy = CHART_HEIGHT / 2 - 10;
@@ -171,15 +171,23 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
           x={cx}
           y={cy}
           radius={radius}
-          fill="oklch(90% 0 0)"
-          stroke="oklch(70% 0 0)"
+          fill={palette.grid}
+          stroke={palette.line}
           strokeWidth={1}
         />
-        <Text x={cx - 30} y={cy - 5} text="No data" fontSize={12} fill="oklch(52.9% 0.012 264°)" />
+        <Text x={cx - 30} y={cy - 5} text="No data" fontSize={12} fill={palette.textSecondary} />
       </Layer>
     );
   }
 
+  const chartColors = [
+    palette.chart1,
+    palette.chart2,
+    palette.chart3,
+    palette.chart4,
+    palette.chart5,
+    palette.chart6,
+  ];
   let currentAngle = 0;
   const slices = data.map((d, i) => {
     const sliceAngle = (d.value / total) * 360;
@@ -199,8 +207,8 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
           outerRadius={radius}
           angle={sliceAngle}
           rotation={start}
-          fill={d.color || COLORS[i % COLORS.length]}
-          stroke="oklch(100% 0 0)"
+          fill={d.color || chartColors[i % chartColors.length]}
+          stroke={palette.textOnFill}
           strokeWidth={1}
         />
         <Text
@@ -208,7 +216,7 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
           y={labelY - 6}
           text={`${Math.round((d.value / total) * 100)}%`}
           fontSize={10}
-          fill="oklch(100% 0 0)"
+          fill={palette.textOnFill}
           fontStyle="bold"
           width={30}
           align="center"
@@ -224,7 +232,7 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
         y={CHART_HEIGHT - 30 + i * 12}
         width={8}
         height={8}
-        fill={d.color || COLORS[i % COLORS.length]}
+        fill={d.color || chartColors[i % chartColors.length]}
         cornerRadius={1}
       />
       <Text
@@ -232,7 +240,7 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
         y={CHART_HEIGHT - 30 + i * 12 - 2}
         text={`${d.label} (${d.value})`}
         fontSize={8}
-        fill="oklch(52.9% 0.012 264°)"
+        fill={palette.textSecondary}
       />
     </Group>
   ));
@@ -246,21 +254,22 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
 }
 
 export function ChartDiagram({ data }: { data: ChartData }) {
+  const palette = useDiagramTheme();
   const chartType = data.chartType || "bar";
   const chartData = useMemo(() => data.data || [], [data.data]);
 
   const chart = useMemo(() => {
     switch (chartType) {
       case "bar":
-        return <BarChart data={chartData} />;
+        return <BarChart data={chartData} palette={palette} />;
       case "line":
-        return <LineChart data={chartData} />;
+        return <LineChart data={chartData} palette={palette} />;
       case "pie":
-        return <PieChart data={chartData} />;
+        return <PieChart data={chartData} palette={palette} />;
       default:
-        return <BarChart data={chartData} />;
+        return <BarChart data={chartData} palette={palette} />;
     }
-  }, [chartType, chartData]);
+  }, [chartType, chartData, palette]);
 
   return (
     <Stage
@@ -277,7 +286,7 @@ export function ChartDiagram({ data }: { data: ChartData }) {
             text={data.title}
             fontSize={13}
             fontStyle="bold"
-            fill="oklch(32.5% 0.012 264°)"
+            fill={palette.textPrimary}
             offsetX={CHART_WIDTH / 2}
             align="center"
           />

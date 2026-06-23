@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { Group, Layer, Line, Rect, Stage, Text } from "react-konva";
+import { useDiagramTheme } from "./diagram-theme";
 
 interface CircuitData {
   components?: Array<{
@@ -18,23 +19,21 @@ interface CircuitData {
 }
 
 export function CircuitDiagram({ data }: { data: CircuitData }) {
-  const wireColor = "oklch(32.5% 0.012 264°)";
-  const componentColor = "oklch(52.5% 0.142 274°)";
-  const batteryColor = "oklch(59.3% 0.194 28°)";
+  const palette = useDiagramTheme();
   const x = 80;
 
   const wires = useMemo(
     () => (
       <Group>
-        <Line points={[x, 60, x, 180]} stroke={wireColor} strokeWidth={2} />
-        <Line points={[220, 60, 220, 180]} stroke={wireColor} strokeWidth={2} />
-        <Line points={[x, 60, 220, 60]} stroke={wireColor} strokeWidth={2} />
-        <Line points={[x, 180, 220, 180]} stroke={wireColor} strokeWidth={2} />
-        <Rect x={x} y={100} width={8} height={20} fill={batteryColor} />
-        <Rect x={x + 8} y={108} width={4} height={4} fill={wireColor} />
+        <Line points={[x, 60, x, 180]} stroke={palette.lineSubtle} strokeWidth={2} />
+        <Line points={[220, 60, 220, 180]} stroke={palette.lineSubtle} strokeWidth={2} />
+        <Line points={[x, 60, 220, 60]} stroke={palette.lineSubtle} strokeWidth={2} />
+        <Line points={[x, 180, 220, 180]} stroke={palette.lineSubtle} strokeWidth={2} />
+        <Rect x={x} y={100} width={8} height={20} fill={palette.chart2} />
+        <Rect x={x + 8} y={108} width={4} height={4} fill={palette.lineSubtle} />
       </Group>
     ),
-    [],
+    [palette],
   );
 
   const components = useMemo(() => {
@@ -52,13 +51,13 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
         points.push(rx + 20, ry);
         return (
           <Group key={`comp-${comp.type}-${comp.x}-${comp.y}`}>
-            <Line points={points} stroke={componentColor} strokeWidth={3} tension={0.5} />
+            <Line points={points} stroke={palette.accent} strokeWidth={3} tension={0.5} />
             {comp.label && (
               <Text
                 text={comp.label}
                 x={rx}
                 y={ry + 25}
-                fill={wireColor}
+                fill={palette.lineSubtle}
                 fontSize={10}
                 offsetX={(comp.label.length || 0) * 4}
               />
@@ -73,7 +72,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
             text={comp.label}
             x={x + 20}
             y={95}
-            fill={wireColor}
+            fill={palette.lineSubtle}
             fontSize={12}
             fontStyle="bold"
           />
@@ -81,7 +80,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
       }
       return null;
     });
-  }, [data.components]);
+  }, [data.components, palette]);
 
   return (
     <Stage

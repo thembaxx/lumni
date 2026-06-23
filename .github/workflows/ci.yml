@@ -64,6 +64,32 @@ jobs:
           name: next-build
           path: .next/
 
+  a11y-contrast:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium
+      - uses: actions/download-artifact@v4
+        with:
+          name: next-build
+          path: .next/
+      - name: Run WCAG AA contrast audit
+        run: pnpm exec playwright test e2e/a11y-contrast.spec.ts --reporter=list --workers=2
+        timeout-minutes: 10
+      - name: Upload a11y report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-contrast-report
+          path: test-results/
+
   e2e-dast:
     needs: build
     runs-on: ubuntu-latest
@@ -80,7 +106,7 @@ jobs:
           name: next-build
           path: .next/
       - name: Run E2E tests
-        run: pnpm exec playwright test
+        run: pnpm exec playwright test --grep-invert "WCAG AA contrast"
       - name: Run DAST scan
         uses: zaproxy/action-baseline@v0
         with:

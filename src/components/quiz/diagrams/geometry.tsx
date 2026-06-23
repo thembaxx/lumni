@@ -3,6 +3,8 @@
 import type React from "react";
 import { useMemo } from "react";
 import { Arc, Circle, Layer, Line, RegularPolygon, Stage, Text } from "react-konva";
+import { useDiagramTheme } from "./diagram-theme";
+import type { DiagramColors } from "./diagram-theme";
 
 interface GeometryShape {
   type:
@@ -32,8 +34,8 @@ interface GeometryData {
   viewBox?: { x: number; y: number; width: number; height: number };
 }
 
-function renderShape(shape: GeometryShape) {
-  const stroke = shape.stroke || "oklch(32.5% 0.012 264°)";
+function renderShape(shape: GeometryShape, palette: DiagramColors) {
+  const stroke = shape.stroke || palette.lineSubtle;
   const fill = shape.fill || "transparent";
   const sw = shape.strokeWidth ?? 2;
   const shapeKey = `${shape.type}-${shape.x}-${shape.y}`;
@@ -114,7 +116,7 @@ function renderShape(shape: GeometryShape) {
           rotation={(shape.props.rotation as number) || 0}
           stroke={stroke}
           strokeWidth={sw}
-          fill={fill || "oklch(70% 0.05 80 / 0.2)"}
+          fill={fill || palette.lineStrong}
         />
       );
 
@@ -151,7 +153,7 @@ function renderShape(shape: GeometryShape) {
   }
 }
 
-function renderLabel(shape: GeometryShape) {
+function renderLabel(shape: GeometryShape, palette: DiagramColors) {
   if (!shape.label) return null;
   return (
     <Text
@@ -160,13 +162,14 @@ function renderLabel(shape: GeometryShape) {
       y={shape.labelY ?? shape.y - 20}
       text={shape.label}
       fontSize={12}
-      fill={shape.stroke || "oklch(32.5% 0.012 264°)"}
+      fill={shape.stroke || palette.textPrimary}
       fontStyle="italic"
     />
   );
 }
 
 export function GeometryDiagram({ data }: { data: GeometryData }) {
+  const palette = useDiagramTheme();
   const shapes = useMemo(() => data.shapes || [], [data.shapes]);
 
   const gridLines = useMemo(() => {
@@ -175,16 +178,16 @@ export function GeometryDiagram({ data }: { data: GeometryData }) {
 
     for (let x = 0; x <= 350; x += 25) {
       lines.push(
-        <Line key={`gv-${x}`} points={[x, 0, x, 350]} stroke="oklch(90% 0 0)" strokeWidth={0.5} />,
+        <Line key={`gv-${x}`} points={[x, 0, x, 350]} stroke={palette.grid} strokeWidth={0.5} />,
       );
     }
     for (let y = 0; y <= 350; y += 25) {
       lines.push(
-        <Line key={`gh-${y}`} points={[0, y, 350, y]} stroke="oklch(90% 0 0)" strokeWidth={0.5} />,
+        <Line key={`gh-${y}`} points={[0, y, 350, y]} stroke={palette.grid} strokeWidth={0.5} />,
       );
     }
     return lines;
-  }, [shapes]);
+  }, [shapes, palette.grid]);
 
   return (
     <Stage
@@ -195,8 +198,8 @@ export function GeometryDiagram({ data }: { data: GeometryData }) {
     >
       <Layer>
         {gridLines}
-        {shapes.map((s) => renderShape(s))}
-        {shapes.map((s) => renderLabel(s))}
+        {shapes.map((s) => renderShape(s, palette))}
+        {shapes.map((s) => renderLabel(s, palette))}
       </Layer>
     </Stage>
   );
