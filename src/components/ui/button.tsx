@@ -5,7 +5,9 @@ import type { VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button-variants";
 
-interface ButtonProps extends ButtonPrimitive.Props, VariantProps<typeof buttonVariants> {
+type SlotProps = Omit<ButtonPrimitive.Props, "style">;
+
+interface ButtonProps extends SlotProps, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
