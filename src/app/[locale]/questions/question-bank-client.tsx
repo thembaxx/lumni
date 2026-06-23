@@ -83,7 +83,7 @@ function QuestionCard({
             <span className="text-muted-foreground text-xs">{question.marks} marks</span>
           )}
           {question.bloomLevel && (
-            <Badge variant="outline" className="rounded-full text-[10px] uppercase">
+            <Badge variant="outline" className="rounded-full text-(--fs-caption-3) uppercase">
               {question.bloomLevel}
             </Badge>
           )}

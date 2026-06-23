@@ -103,7 +103,7 @@ export function DailyChallengeCard({ onComplete, streak }: DailyChallengeCardPro
                         className="size-3 text-warning"
                         strokeWidth={2.5}
                       />
-                      <span className="font-semibold text-[10px] text-warning tabular-nums">
+                      <span className="font-semibold text-(--fs-caption-3) text-warning tabular-nums">
                         {streak}x
                       </span>
                     </div>

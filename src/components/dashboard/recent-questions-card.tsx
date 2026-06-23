@@ -73,11 +73,11 @@ export function RecentQuestionsCard() {
           {state.entries.map((entry) => (
             <div key={entry.id} className="rounded-2xl border bg-card p-4 text-sm">
               <div className="mb-1 flex items-center gap-2">
-                <span className="rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[10px] text-muted-foreground uppercase tracking-wide">
+                <span className="rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wide">
                   {entry.subject}
                 </span>
                 {entry.topic && (
-                  <span className="text-[10px] text-muted-foreground">{entry.topic}</span>
+                  <span className="text-(--fs-caption-3) text-muted-foreground">{entry.topic}</span>
                 )}
               </div>
               <div className="line-clamp-2 leading-relaxed">

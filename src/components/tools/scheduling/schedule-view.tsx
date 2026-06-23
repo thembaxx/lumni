@@ -80,7 +80,7 @@ export function ScheduleView({
                           <div className="flex items-center gap-2">
                             <span
                               className={cn(
-                                "rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
+                                "rounded-lg px-2.5 py-0.5 text-(--fs-caption-3) capitalize",
                                 getTypeColor(session.type),
                               )}
                             >

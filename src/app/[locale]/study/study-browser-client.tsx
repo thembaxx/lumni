@@ -215,7 +215,7 @@ export function StudyBrowserClient() {
                                     style={{ width: `${pct}%` }}
                                   />
                                 </div>
-                                <span className="text-[10px] text-muted-foreground tabular-nums">
+                                <span className="text-(--fs-caption-3) text-muted-foreground tabular-nums">
                                   {pct}%
                                 </span>
                               </div>

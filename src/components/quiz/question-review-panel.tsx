@@ -100,7 +100,7 @@ export function QuestionReviewPanel({
                 <div className="mt-3 grid grid-cols-2 gap-3">
                   {userAns && (
                     <div className="rounded-lg bg-muted p-3">
-                      <p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+                      <p className="mb-1 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider">
                         Your Answer
                       </p>
                       <p className="overflow-wrap-anywhere text-sm">{getUserAnswerText(userAns)}</p>
@@ -112,7 +112,7 @@ export function QuestionReviewPanel({
                       isCorrect ? "bg-success/10" : "bg-destructive/10",
                     )}
                   >
-                    <p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+                    <p className="mb-1 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider">
                       {isCorrect ? "Answer" : "Correct Answer"}
                     </p>
                     <p className="overflow-wrap-anywhere text-sm">{getCorrectAnswerText(q)}</p>
@@ -120,7 +120,7 @@ export function QuestionReviewPanel({
                 </div>
                 {q.explanation && (
                   <div className="mt-3 rounded-lg bg-muted/50 p-3">
-                    <p className="mb-1 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+                    <p className="mb-1 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider">
                       Explanation
                     </p>
                     <MarkdownRenderer content={q.explanation} subject={subject} />

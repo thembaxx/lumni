@@ -92,7 +92,7 @@ export default function OfflinePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
+            <ul className="flex flex-col gap-2">
               {storyTitles.map((s: { storyId: string; title: string }) => (
                 <li key={s.storyId}>
                   <Link
@@ -118,7 +118,7 @@ export default function OfflinePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
+            <ul className="flex flex-col gap-2">
               {readyPacks.slice(0, 5).map((pack: QuizPack) => (
                 <li key={pack.id}>
                   <Link
@@ -126,7 +126,7 @@ export default function OfflinePage() {
                     className="flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors hover:bg-muted"
                   >
                     <span className="truncate">{pack.title}</span>
-                    <Badge variant="outline" className="shrink-0 text-[10px]">
+                    <Badge variant="outline" className="shrink-0 text-(--fs-caption-3)">
                       {pack.questionCount} Q
                     </Badge>
                   </Link>

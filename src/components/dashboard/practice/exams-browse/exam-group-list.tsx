@@ -32,7 +32,7 @@ export function ExamGroupList({
         >
           <div className="flex items-center justify-between gap-4 px-0.5">
             <h3 className="text-pretty font-semibold text-foreground text-lg">{group.subject}</h3>
-            <Badge variant="secondary" className="px-2 py-0 font-medium text-[10px]">
+            <Badge variant="secondary" className="px-2 py-0 font-medium text-(--fs-caption-3)">
               {group.papers.length}
             </Badge>
           </div>

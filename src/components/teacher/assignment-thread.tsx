@@ -85,7 +85,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
               className={`rounded-lg border p-3 ${msg.senderRole === "teacher" ? "bg-muted/30" : ""}`}
             >
               <p className="text-sm">{msg.content}</p>
-              <p className="mt-1 text-[10px] text-muted-foreground">
+              <p className="mt-1 text-(--fs-caption-3) text-muted-foreground">
                 {msg.senderRole === "teacher" ? "Teacher" : "Student"} ·{" "}
                 {new Date(msg.createdAt).toLocaleDateString()}
               </p>

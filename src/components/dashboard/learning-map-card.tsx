@@ -221,7 +221,7 @@ export function LearningMapCard() {
             value={subjectForQuery ?? ""}
             onValueChange={(value) => setSelectedSubject(value)}
           >
-            <SelectTrigger className="h-6 w-auto min-w-[100px] text-[10px]" size="sm">
+            <SelectTrigger className="h-6 w-auto min-w-[100px] text-(--fs-caption-3)" size="sm">
               <SelectValue placeholder="Subject" />
             </SelectTrigger>
             <SelectContent>
@@ -306,7 +306,7 @@ export function LearningMapCard() {
                   <foreignObject x={_x} y={_y} width={nodeW} height={nodeH}>
                     <div className="flex h-full items-center justify-center px-1">
                       <span
-                        className="truncate text-center font-medium text-[10px] leading-tight"
+                        className="truncate text-center font-medium text-(--fs-caption-3) leading-tight"
                         style={{ color: style.textColor }}
                       >
                         {node.label}
@@ -318,7 +318,7 @@ export function LearningMapCard() {
             })}
           </svg>
           {competencies && competencies.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-3 text-[10px]">
+            <div className="mt-2 flex flex-wrap gap-3 text-(--fs-caption-3)">
               {Object.entries(MASTERY_COLORS).map(([level, colors]) => (
                 <span key={level} className="flex items-center gap-1">
                   <span

@@ -43,7 +43,7 @@ function GhostContent({ token }: { token: string }) {
   if (!stats) return null;
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-8">
+    <div className="mx-auto flex max-w-2xl flex-col gap-6 p-8">
       <h1 className="font-bold font-heading text-2xl">School Dashboard</h1>
       <div className="grid grid-cols-2 gap-4">
         <Card>

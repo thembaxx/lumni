@@ -83,21 +83,24 @@ export function UploadFileItem({ item, onRetry }: { item: FileUploadState; onRet
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <p className="truncate font-medium">{item.name}</p>
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary" className="text-[0.7rem]">
+            <Badge variant="secondary" className="text-(--fs-caption-2)">
               {formatFileSize(item.size)}
             </Badge>
             {!isError && !isComplete && (
-              <Badge variant="outline" className="text-[0.7rem]">
+              <Badge variant="outline" className="text-(--fs-caption-2)">
                 {item.file.type.split("/")[1]?.toUpperCase() ?? "FILE"}
               </Badge>
             )}
             {isError && (
-              <Badge variant="destructive" className="text-[0.7rem]">
+              <Badge variant="destructive" className="text-(--fs-caption-2)">
                 Failed
               </Badge>
             )}
             {isComplete && (
-              <Badge variant="default" className="bg-success text-[0.7rem] text-success-foreground">
+              <Badge
+                variant="default"
+                className="bg-success text-(--fs-caption-2) text-success-foreground"
+              >
                 Done
               </Badge>
             )}

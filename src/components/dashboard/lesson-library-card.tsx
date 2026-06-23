@@ -98,7 +98,9 @@ export function LessonLibraryCard() {
                         style={{ transform: `scaleX(${pct / 100})` }}
                       />
                     </div>
-                    <span className="text-[10px] text-muted-foreground tabular-nums">{pct}%</span>
+                    <span className="text-(--fs-caption-3) text-muted-foreground tabular-nums">
+                      {pct}%
+                    </span>
                   </div>
                 </div>
                 <Button

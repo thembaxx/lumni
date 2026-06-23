@@ -185,7 +185,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
         <div className="flex h-full w-full flex-col">
           <div className="flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3">
             <h2 className="balance truncate text-wrap font-semibold text-sm">{exam.title}</h2>
-            <Badge variant="secondary" className="shrink-0 px-1.5 text-[10px]">
+            <Badge variant="secondary" className="shrink-0 px-1.5 text-(--fs-caption-3)">
               {exam.year}
             </Badge>
           </div>

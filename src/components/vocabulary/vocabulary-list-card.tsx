@@ -66,12 +66,12 @@ export function VocabularyListCard() {
                       />
                       <div className="flex flex-col">
                         <span className="font-medium text-sm">{word.word}</span>
-                        <span className="line-clamp-1 text-[10px] text-muted-foreground">
+                        <span className="line-clamp-1 text-(--fs-caption-3) text-muted-foreground">
                           {word.definition}
                         </span>
                       </div>
                     </div>
-                    <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                    <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-(--fs-caption-3) text-muted-foreground">
                       {word.language}
                     </span>
                   </m.div>

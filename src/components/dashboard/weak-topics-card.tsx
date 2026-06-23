@@ -113,10 +113,15 @@ export function WeakTopicsCard() {
             >
               <div className="flex min-w-0 flex-col gap-1">
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="rounded-full px-1.5 py-0 text-[10px]">
+                  <Badge
+                    variant="outline"
+                    className="rounded-full px-1.5 py-0 text-(--fs-caption-3)"
+                  >
                     {topic.subjectId}
                   </Badge>
-                  <span className="text-[10px] text-muted-foreground">{topic.score}% mastered</span>
+                  <span className="text-(--fs-caption-3) text-muted-foreground">
+                    {topic.score}% mastered
+                  </span>
                 </div>
                 <span className="truncate text-sm">{topic.topicId}</span>
               </div>

@@ -127,7 +127,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
           {WEEKDAYS.map((d) => (
             <div
               key={d}
-              className="py-1 text-center font-medium text-[10px] text-muted-foreground uppercase tracking-wider"
+              className="py-1 text-center font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider"
             >
               {d}
             </div>
@@ -191,7 +191,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
             );
           })}
         </div>
-        <p className="mt-2 text-center text-[10px] text-muted-foreground">
+        <p className="mt-2 text-center text-(--fs-caption-3) text-muted-foreground">
           Drag sessions to reschedule
         </p>
       </CardContent>

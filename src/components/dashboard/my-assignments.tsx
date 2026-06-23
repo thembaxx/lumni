@@ -114,12 +114,12 @@ export function MyAssignments() {
                       <span className="font-medium text-xs">
                         Score: {a.submission.score}/{a.submission.maxScore}
                       </span>
-                      <Badge variant="secondary" className="text-[10px]">
+                      <Badge variant="secondary" className="text-(--fs-caption-3)">
                         {a.submission.correctCount}/{a.submission.totalQuestions} correct
                       </Badge>
                     </div>
                     {a.submission.teacherComment && (
-                      <p className="text-[10px] text-muted-foreground italic">
+                      <p className="text-(--fs-caption-3) text-muted-foreground italic">
                         Teacher: &ldquo;{a.submission.teacherComment}&rdquo;
                       </p>
                     )}
@@ -137,7 +137,7 @@ export function MyAssignments() {
                   {questionOpen === a.id ? "Close" : "Ask Question"}
                 </Button>
                 {a.submission ? (
-                  <Badge variant="outline" className="text-[10px]">
+                  <Badge variant="outline" className="text-(--fs-caption-3)">
                     Done
                   </Badge>
                 ) : (

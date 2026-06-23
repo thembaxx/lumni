@@ -92,7 +92,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
           {observations.map((obs, i) => (
             <div key={obs.id ?? i} className="rounded-lg border p-3">
               <p className="text-sm">{obs.content}</p>
-              <p className="mt-1 text-[10px] text-muted-foreground">
+              <p className="mt-1 text-(--fs-caption-3) text-muted-foreground">
                 {new Date(obs.createdAt).toLocaleDateString()}
               </p>
             </div>

@@ -83,7 +83,9 @@ export function WeeklyReportPanel({
                       <span className="text-muted-foreground text-xs">Topic {i + 1}</span>
                       <div className="flex items-center gap-2">
                         <Progress value={mastery} className="h-1.5 w-20" />
-                        <span className="text-[10px] text-muted-foreground">{mastery}%</span>
+                        <span className="text-(--fs-caption-3) text-muted-foreground">
+                          {mastery}%
+                        </span>
                       </div>
                     </div>
                   );

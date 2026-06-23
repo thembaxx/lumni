@@ -425,7 +425,9 @@ export function PronunciationClient() {
                                 opacity: 0.8,
                               }}
                             />
-                            <span className="text-[10px] text-muted-foreground">{s.date}</span>
+                            <span className="text-(--fs-caption-3) text-muted-foreground">
+                              {s.date}
+                            </span>
                           </div>
                         ))}
                       </div>

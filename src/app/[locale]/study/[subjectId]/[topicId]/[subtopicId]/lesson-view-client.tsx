@@ -217,7 +217,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
                 <div className="flex items-center gap-2">
                   <Badge
                     variant="outline"
-                    className="rounded-full text-[10px] uppercase tracking-wide"
+                    className="rounded-full text-(--fs-caption-3) uppercase tracking-wide"
                   >
                     {section.type}
                   </Badge>

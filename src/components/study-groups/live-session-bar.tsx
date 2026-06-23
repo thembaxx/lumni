@@ -41,12 +41,12 @@ function ParticipantAvatar({ participant }: { participant: LiveSessionParticipan
   return (
     <div className="flex items-center gap-1.5" title={participant.userName ?? "Anonymous"}>
       <Avatar className="size-7 border-2 border-green-400/50">
-        <AvatarFallback className="bg-green-500/10 text-[10px] text-green-600">
+        <AvatarFallback className="bg-green-500/10 text-(--fs-caption-3) text-green-600">
           {initial}
         </AvatarFallback>
       </Avatar>
       {participant.currentActivity && (
-        <span className="max-w-[100px] truncate text-[10px] text-foreground/50">
+        <span className="max-w-[100px] truncate text-(--fs-caption-3) text-foreground/50">
           {participant.currentActivity}
         </span>
       )}

@@ -222,11 +222,11 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
                 <p className="mt-0.5 truncate text-muted-foreground text-xs">{item.snippet}</p>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
-                <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
+                <Badge variant="secondary" className="px-1.5 py-0 text-(--fs-caption-3)">
                   {config.label}
                 </Badge>
                 {item.subject && (
-                  <span className="max-w-16 truncate font-mono text-[10px] text-muted-foreground">
+                  <span className="max-w-16 truncate font-mono text-(--fs-caption-3) text-muted-foreground">
                     {item.subject}
                   </span>
                 )}

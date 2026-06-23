@@ -302,7 +302,7 @@ export function StoryReaderClient() {
               {story.license && (
                 <Badge
                   variant="outline"
-                  className="rounded-full text-[10px] uppercase tracking-wide"
+                  className="rounded-full text-(--fs-caption-3) uppercase tracking-wide"
                 >
                   {story.license === "public-domain" ? "Public Domain" : story.license}
                 </Badge>
