@@ -55,11 +55,11 @@ Commit baseline: `7525d6ed` (previous batch was `8a6fadbe`, all 38 prior plans D
 | 039  | Fix FlashcardEngine.update() data corruption on partial writes   | P1       | S      | HIGH | —          | DONE (APPROVED) |
 | 040  | Fix rate-limit middleware fail-closed on store error             | P1       | S      | LOW  | —          | DONE (APPROVED) |
 | 041  | Add per-provider AI timeout + Gemini image AbortController       | P1       | S      | LOW  | —          | DONE (APPROVED) |
-| 042  | Consolidate search-service.ts 12x copy-paste into factory        | P2       | M      | LOW  | —          | TODO            |
+| 042  | Consolidate search-service.ts 12x copy-paste into factory        | P2       | M      | LOW  | —          | DONE (APPROVED) |
 | 043  | Fix VAPID initialization race in PushDeliveryService             | P1       | S      | LOW  | —          | DONE (APPROVED) |
 | 044  | Fix consent bypass on engine API routes                          | P1       | M      | MED  | —          | DONE (APPROVED) |
-| 045  | Fix AnalyticsService 10K sequential Appwrite requests            | P2       | M      | MED  | —          | TODO            |
-| 046  | Fix anonymous budget identification for AI operations            | P2       | M      | MED  | —          | TODO            |
+| 045  | Fix AnalyticsService 10K sequential Appwrite requests            | P2       | M      | MED  | —          | DONE (APPROVED) |
+| 046  | Fix anonymous budget identification for AI operations            | P2       | M      | MED  | —          | DONE (APPROVED) |
 | 047  | Fix ID collision from Date.now() + Math.random() in loops        | P3       | S      | LOW  | —          | TODO            |
 | 048  | Add characterization tests for QuestionEngine core               | P2       | M      | LOW  | —          | TODO            |
 | 049  | Migrate 20 API routes to createRouteHandler factory              | P2       | L      | MED  | —          | TODO            |
