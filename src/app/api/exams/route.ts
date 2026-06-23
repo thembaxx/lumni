@@ -4,8 +4,6 @@ import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export const runtime = "nodejs";
-
 export const GET = withRateLimit(
   createRouteHandler({
     auth: "required",

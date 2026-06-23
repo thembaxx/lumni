@@ -5,8 +5,6 @@ import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export const dynamic = "force-dynamic";
-
 export const GET = withRateLimit(
   createRouteHandler({
     auth: "required",

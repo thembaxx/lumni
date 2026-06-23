@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -8,6 +9,14 @@ import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { appConfig } from "../../../app.config";
 
 export default function NotFound() {
+  return (
+    <Suspense fallback={null}>
+      <NotFoundContent />
+    </Suspense>
+  );
+}
+
+function NotFoundContent() {
   return (
     <div className="grid min-h-dvh grid-cols-12 gap-0 bg-[--system-background]">
       <m.div

@@ -1,8 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   budget: "visual",

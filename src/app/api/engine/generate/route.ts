@@ -2,8 +2,6 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   budget: "generate",

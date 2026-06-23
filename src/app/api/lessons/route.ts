@@ -2,8 +2,6 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { generateLesson, getCachedLesson, storeLesson } from "@/lib/lesson/service";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export const revalidate = 3600;
-
 export const GET = withRateLimit(
   createRouteHandler({
     auth: "none",

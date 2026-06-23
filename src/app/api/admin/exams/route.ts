@@ -2,8 +2,6 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
-export const runtime = "nodejs";
-
 export const GET = createRouteHandler({
   auth: "admin",
   errorLabel: "List Exams",

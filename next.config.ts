@@ -52,7 +52,6 @@ function buildReportingEndpoints(): string {
 }
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
   reactCompiler: true,
   productionBrowserSourceMaps: true,
   experimental: {

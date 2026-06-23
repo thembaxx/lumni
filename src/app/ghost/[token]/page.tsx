@@ -1,6 +1,7 @@
 "use client";
+
+import { Suspense, use } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { use } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -12,9 +13,7 @@ interface GhostStats {
   completionRate: number;
 }
 
-export default function GhostDashboardPage({ params }: { params: Promise<{ token: string }> }) {
-  const { token } = use(params);
-
+function GhostContent({ token }: { token: string }) {
   const {
     data: stats,
     isLoading,
@@ -91,5 +90,24 @@ export default function GhostDashboardPage({ params }: { params: Promise<{ token
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+function GhostPageInner({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = use(params);
+  return <GhostContent token={token} />;
+}
+
+export default function GhostDashboardPage({ params }: { params: Promise<{ token: string }> }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8">
+          <Skeleton className="h-64 rounded-xl" />
+        </div>
+      }
+    >
+      <GhostPageInner params={params} />
+    </Suspense>
   );
 }

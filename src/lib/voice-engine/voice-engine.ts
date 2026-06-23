@@ -1,5 +1,11 @@
 import { logError } from "@/lib/shared/logger";
-import type { TTSOptions, TTSProviderConfig, TTSProviderName, TTSResult, VoiceEngineParams } from "./types";
+import type {
+  TTSOptions,
+  TTSProviderConfig,
+  TTSProviderName,
+  TTSResult,
+  VoiceEngineParams,
+} from "./types";
 
 const DEFAULT_OPTIONS: TTSOptions = {
   voice: "en_us_guy",
@@ -23,7 +29,10 @@ export class VoiceEngine {
     }
 
     if (process.env.GOOGLE_TTS_API_KEY) {
-      chain.push({ name: "google-cloud-tts", synthesize: (t, o) => this.googleTtsSynthesize(t, o) });
+      chain.push({
+        name: "google-cloud-tts",
+        synthesize: (t, o) => this.googleTtsSynthesize(t, o),
+      });
     }
 
     chain.push({ name: "freetts", synthesize: (t, o) => this.freeTtsSynthesize(t, o) });

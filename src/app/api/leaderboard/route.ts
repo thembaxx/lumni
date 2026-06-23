@@ -4,8 +4,6 @@ import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 
-export const dynamic = "force-dynamic";
-
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "Leaderboard",

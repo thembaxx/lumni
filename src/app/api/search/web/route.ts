@@ -1,8 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { searchWeb } from "@/lib/services/web-search-service";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   errorLabel: "WebSearch",

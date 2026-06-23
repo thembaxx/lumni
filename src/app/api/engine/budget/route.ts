@@ -1,8 +1,6 @@
 import { dailyCallTracker } from "@/lib/ai/daily-call-tracker";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 
-export const dynamic = "force-dynamic";
-
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "Budget",

@@ -18,9 +18,7 @@ interface TTSButtonProps {
 export function TTSButton({ text, lang, className, visualDescription }: TTSButtonProps) {
   const { isPlaying, isLoading, speak, stop } = useVoiceEngine();
 
-  const ttsText = visualDescription
-    ? `${visualDescription}. ${text}`
-    : text;
+  const ttsText = visualDescription ? `${visualDescription}. ${text}` : text;
 
   const handleToggle = useCallback(() => {
     if (isPlaying || isLoading) {

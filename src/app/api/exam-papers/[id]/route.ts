@@ -7,8 +7,6 @@ import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper as ExamPaperData } from "@/types/exam-paper";
 
-export const runtime = "nodejs";
-
 const utapi = new UTApi();
 
 function parseFileKeys(raw: string | undefined | null): Record<string, string> {

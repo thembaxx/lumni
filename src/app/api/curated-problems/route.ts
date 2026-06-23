@@ -1,8 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { curatedProblemsService } from "@/lib/services/curated-problems";
 
-export const dynamic = "force-dynamic";
-
 interface CuratedBody {
   subject: string;
   topic?: string;

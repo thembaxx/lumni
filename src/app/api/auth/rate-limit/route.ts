@@ -1,8 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { AuthRateLimitService } from "@/lib/auth/rate-limit-service";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   errorLabel: "AuthRateLimit",

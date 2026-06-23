@@ -1,8 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { voiceEngine } from "@/lib/voice-engine";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   errorLabel: "Voice",

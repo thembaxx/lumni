@@ -1,5 +1,3 @@
-"use cache";
-
 import type { Metadata } from "next";
 import { PageContainer } from "@/components/layout/page-container";
 

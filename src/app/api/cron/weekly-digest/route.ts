@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { dexieDataAccess } from "@/lib/db";
 import { DigestService } from "@/lib/digest";
 
-export const dynamic = "force-dynamic";
-
 export async function POST() {
   try {
     const { requireAdmin } = await import("@/lib/server/auth");

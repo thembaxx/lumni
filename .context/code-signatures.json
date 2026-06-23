@@ -1,117 +1,106 @@
 {
-	"LAST_SYNC": "2026-05-31",
-	"modules": [
-		{
-			"path": "src/lib/flashcard-engine/engine.ts",
-			"exports": [
-				{
-					"name": "FlashcardEngine",
-					"type": "class",
-					"description": "Unified engine for flashcard management and spaced repetition (SM-2/FSRS).",
-					"methods": [
-						"getDueCards(subject?: string): Promise<FlashcardSM2[]>",
-						"getNewCards(subject?: string, limit?: number): Promise<FlashcardSM2[]>",
-						"create(front: string, back: string, subject: string, topic?: string): Promise<FlashcardSM2>",
-						"review(id: string, quality: number): Promise<FlashcardSM2 | null>",
-						"getStats(): Promise<FlashcardStats>"
-					]
-				},
-				{
-					"name": "flashcardEngine",
-					"type": "singleton",
-					"description": "Exported singleton instance of FlashcardEngine."
-				}
-			],
-			"internalDependencies": [
-				"@/lib/db/schema",
-				"@/lib/orchestrator/fsrs",
-				"@/lib/orchestrator/job-queue"
-			]
-		},
-		{
-			"path": "src/lib/question-engine/question-engine.ts",
-			"exports": [
-				{
-					"name": "QuestionEngine",
-					"type": "class",
-					"description": "Core engine for question generation, grading, and validation across 11 question types.",
-					"methods": [
-						"static initialize(): Promise<QuestionEngine>",
-						"generate(params: GenerationParams): Promise<Question[]>",
-						"grade(question: Question, answer: UserAnswer): Promise<GradingResult>",
-						"generateHint(params: HintParams): Promise<string>",
-						"validate(question: Question): ValidationResult"
-					]
-				}
-			],
-			"internalDependencies": [
-				"@/lib/ai",
-				"@/lib/caching-strategy",
-				"./processor-registry"
-			]
-		},
-		{
-			"path": "src/lib/visual-engine/visual-engine.ts",
-			"exports": [
-				{
-					"name": "VisualEngine",
-					"type": "class",
-					"description": "Manages generation of STEM diagrams (Konva) or Wikimedia images.",
-					"methods": [
-						"static initialize(): void",
-						"resolve(params: VisualEngineParams): Promise<VisualContent | null>"
-					]
-				},
-				{
-					"name": "visualEngine",
-					"type": "singleton",
-					"description": "Exported singleton instance of VisualEngine."
-				}
-			],
-			"internalDependencies": [
-				"@/lib/ai",
-				"@/lib/caching-strategy",
-				"./stem-renderer"
-			]
-		},
-		{
-			"path": "src/lib/orchestrator/learning-orchestrator.ts",
-			"exports": [
-				{
-					"name": "LearningOrchestrator",
-					"type": "class",
-					"description": "Coordinates engines and background jobs for sync and progress tracking.",
-					"methods": [
-						"static initialize(): Promise<LearningOrchestrator>",
-						"generateQuestionSet(params: GenerationParams): Promise<GenerateResult>",
-						"gradeAndTrack(question: Question, answer: UserAnswer): Promise<GradeResult>"
-					]
-				}
-			],
-			"internalDependencies": [
-				"@/lib/question-engine/question-engine",
-				"./job-queue"
-			]
-		},
-		{
-			"path": "src/lib/api/create-route-handler.ts",
-			"exports": [
-				{
-					"name": "createRouteHandler",
-					"type": "function",
-					"description": "Declarative factory for API routes with auth, Zod validation, and error wrapping."
-				}
-			]
-		},
-		{
-			"path": "src/lib/db/schema.ts",
-			"exports": [
-				{
-					"name": "offlineDB",
-					"type": "instance",
-					"description": "Dexie database instance with 23 tables (v23 schema)."
-				}
-			]
-		}
-	]
+  "LAST_SYNC": "2026-05-31",
+  "modules": [
+    {
+      "path": "src/lib/flashcard-engine/engine.ts",
+      "exports": [
+        {
+          "name": "FlashcardEngine",
+          "type": "class",
+          "description": "Unified engine for flashcard management and spaced repetition (SM-2/FSRS).",
+          "methods": [
+            "getDueCards(subject?: string): Promise<FlashcardSM2[]>",
+            "getNewCards(subject?: string, limit?: number): Promise<FlashcardSM2[]>",
+            "create(front: string, back: string, subject: string, topic?: string): Promise<FlashcardSM2>",
+            "review(id: string, quality: number): Promise<FlashcardSM2 | null>",
+            "getStats(): Promise<FlashcardStats>"
+          ]
+        },
+        {
+          "name": "flashcardEngine",
+          "type": "singleton",
+          "description": "Exported singleton instance of FlashcardEngine."
+        }
+      ],
+      "internalDependencies": [
+        "@/lib/db/schema",
+        "@/lib/orchestrator/fsrs",
+        "@/lib/orchestrator/job-queue"
+      ]
+    },
+    {
+      "path": "src/lib/question-engine/question-engine.ts",
+      "exports": [
+        {
+          "name": "QuestionEngine",
+          "type": "class",
+          "description": "Core engine for question generation, grading, and validation across 11 question types.",
+          "methods": [
+            "static initialize(): Promise<QuestionEngine>",
+            "generate(params: GenerationParams): Promise<Question[]>",
+            "grade(question: Question, answer: UserAnswer): Promise<GradingResult>",
+            "generateHint(params: HintParams): Promise<string>",
+            "validate(question: Question): ValidationResult"
+          ]
+        }
+      ],
+      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./processor-registry"]
+    },
+    {
+      "path": "src/lib/visual-engine/visual-engine.ts",
+      "exports": [
+        {
+          "name": "VisualEngine",
+          "type": "class",
+          "description": "Manages generation of STEM diagrams (Konva) or Wikimedia images.",
+          "methods": [
+            "static initialize(): void",
+            "resolve(params: VisualEngineParams): Promise<VisualContent | null>"
+          ]
+        },
+        {
+          "name": "visualEngine",
+          "type": "singleton",
+          "description": "Exported singleton instance of VisualEngine."
+        }
+      ],
+      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./stem-renderer"]
+    },
+    {
+      "path": "src/lib/orchestrator/learning-orchestrator.ts",
+      "exports": [
+        {
+          "name": "LearningOrchestrator",
+          "type": "class",
+          "description": "Coordinates engines and background jobs for sync and progress tracking.",
+          "methods": [
+            "static initialize(): Promise<LearningOrchestrator>",
+            "generateQuestionSet(params: GenerationParams): Promise<GenerateResult>",
+            "gradeAndTrack(question: Question, answer: UserAnswer): Promise<GradeResult>"
+          ]
+        }
+      ],
+      "internalDependencies": ["@/lib/question-engine/question-engine", "./job-queue"]
+    },
+    {
+      "path": "src/lib/api/create-route-handler.ts",
+      "exports": [
+        {
+          "name": "createRouteHandler",
+          "type": "function",
+          "description": "Declarative factory for API routes with auth, Zod validation, and error wrapping."
+        }
+      ]
+    },
+    {
+      "path": "src/lib/db/schema.ts",
+      "exports": [
+        {
+          "name": "offlineDB",
+          "type": "instance",
+          "description": "Dexie database instance with 23 tables (v23 schema)."
+        }
+      ]
+    }
+  ]
 }

@@ -4,8 +4,6 @@ import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import type { SearchResultItem } from "@/lib/services/search-service";
 
-export const dynamic = "force-dynamic";
-
 function textRelevant(text: string, query: string): boolean {
   const q = query.toLowerCase();
   return text.toLowerCase().includes(q);

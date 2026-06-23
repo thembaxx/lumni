@@ -1,15 +1,15 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question } from "@/lib/question-engine/types";
-
-export const dynamic = "force-dynamic";
 
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "EngineTest",
   aiContext: { consentGranted: true },
   execute: async () => {
+    noStore();
     const results: Record<string, unknown> = {
       timestamp: new Date().toISOString(),
       steps: [] as string[],

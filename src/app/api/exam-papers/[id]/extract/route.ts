@@ -8,8 +8,6 @@ import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-e
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper } from "@/types/exam-paper";
 
-export const runtime = "nodejs";
-
 const utapi = new UTApi();
 
 const _deps: { db: DataAccess } = { db: dexieDataAccess };

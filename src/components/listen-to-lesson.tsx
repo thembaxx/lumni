@@ -90,7 +90,18 @@ export function ListenToLesson({
     }
 
     playBrowserVoice(text);
-  }, [text, voice, lang, isPlaying, isLoading, voiceSpeak, stopVoice, onPlayingChange, onWordIndexChange, playBrowserVoice]);
+  }, [
+    text,
+    voice,
+    lang,
+    isPlaying,
+    isLoading,
+    voiceSpeak,
+    stopVoice,
+    onPlayingChange,
+    onWordIndexChange,
+    playBrowserVoice,
+  ]);
 
   return (
     <Button

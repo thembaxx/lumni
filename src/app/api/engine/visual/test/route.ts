@@ -1,13 +1,13 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
-
-export const dynamic = "force-dynamic";
 
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "VisualTest",
   aiContext: { consentGranted: true },
   execute: async () => {
+    noStore();
     const results: Record<string, unknown> = {
       timestamp: new Date().toISOString(),
       steps: [] as string[],

@@ -1,8 +1,6 @@
 import { getAnalyticsService } from "@/lib/analytics/analytics-service";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 
-export const dynamic = "force-dynamic";
-
 export const GET = createRouteHandler({
   auth: "required",
   errorLabel: "Analytics Trends",

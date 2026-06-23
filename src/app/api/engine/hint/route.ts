@@ -3,8 +3,6 @@ import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question } from "@/lib/question-engine/types";
 import { searchWithRAG } from "@/lib/tinyfish";
 
-export const dynamic = "force-dynamic";
-
 export const POST = createRouteHandler({
   auth: "none",
   budget: "hint",

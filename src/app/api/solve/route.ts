@@ -1,8 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { aiSolver } from "@/lib/services/ai-solver";
 
-export const dynamic = "force-dynamic";
-
 interface SolveBody {
   question?: string;
   imageUrl?: string;

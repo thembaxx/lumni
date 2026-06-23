@@ -63,6 +63,31 @@ export function useVoiceEngine(): UseVoiceEngineReturn {
     setIsPlaying(false);
   }, [cleanupListeners]);
 
+  const fallbackToBrowser = useCallback(
+    async (text: string, options: TTSOptions) => {
+      cleanupListeners();
+
+      endUnsubscribeRef.current = ttsService.onEnd(() => {
+        setIsPlaying(false);
+        setIsLoading(false);
+      });
+      errorUnsubscribeRef.current = ttsService.onError(() => {
+        setIsPlaying(false);
+        setIsLoading(false);
+        setError("Speech synthesis failed");
+      });
+
+      ttsService.speak(text, {
+        lang: options.lang || "en",
+        rate: options.rate || 1,
+        pitch: options.pitch || 1,
+      });
+      setIsPlaying(true);
+      setIsLoading(false);
+    },
+    [cleanupListeners],
+  );
+
   const speak = useCallback(
     async (text: string, options: TTSOptions = {}) => {
       if (!text || text.trim().length === 0) return;
@@ -99,30 +124,8 @@ export function useVoiceEngine(): UseVoiceEngineReturn {
 
       await fallbackToBrowser(text, options);
     },
-    [stop],
+    [stop, fallbackToBrowser],
   );
-
-  async function fallbackToBrowser(text: string, options: TTSOptions) {
-    cleanupListeners();
-
-    endUnsubscribeRef.current = ttsService.onEnd(() => {
-      setIsPlaying(false);
-      setIsLoading(false);
-    });
-    errorUnsubscribeRef.current = ttsService.onError(() => {
-      setIsPlaying(false);
-      setIsLoading(false);
-      setError("Speech synthesis failed");
-    });
-
-    ttsService.speak(text, {
-      lang: options.lang || "en",
-      rate: options.rate || 1,
-      pitch: options.pitch || 1,
-    });
-    setIsPlaying(true);
-    setIsLoading(false);
-  }
 
   return { isPlaying, isLoading, error, speak, stop };
 }
