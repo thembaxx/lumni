@@ -41,22 +41,30 @@ export const useBookmarksStore = create<BookmarksState>()((set, get) => ({
   addBookmark: (bookmark) => {
     const { bookmarks } = get();
     if (bookmarks.some((b) => b.id === bookmark.id)) return;
+    const prev = bookmarks;
     const savedAt = Date.now();
     const entry = { ...bookmark, savedAt };
-    set({ bookmarks: [entry, ...bookmarks] });
-    bookmarkService.add({
-      questionId: bookmark.id,
-      questionText: bookmark.questionText,
-      subject: bookmark.subject,
-      topic: bookmark.topic,
-      note: bookmark.note,
-      savedAt,
-    });
+    set({ bookmarks: [entry, ...prev] });
+    bookmarkService
+      .add({
+        questionId: bookmark.id,
+        questionText: bookmark.questionText,
+        subject: bookmark.subject,
+        topic: bookmark.topic,
+        note: bookmark.note,
+        savedAt,
+      })
+      .catch(() => {
+        set({ bookmarks: prev });
+      });
   },
 
   removeBookmark: (id) => {
-    set({ bookmarks: get().bookmarks.filter((b) => b.id !== id) });
-    bookmarkService.remove(id);
+    const prev = get().bookmarks;
+    set({ bookmarks: prev.filter((b) => b.id !== id) });
+    bookmarkService.remove(id).catch(() => {
+      set({ bookmarks: prev });
+    });
   },
 
   updateNote: (id, note) => {

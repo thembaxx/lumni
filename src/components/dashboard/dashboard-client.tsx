@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
@@ -36,6 +36,7 @@ const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) =>
 });
 
 export function DashboardClient({ initialTab = "today" }: { initialTab?: string }) {
+  const reduced = useReducedMotion();
   const [quizActive, setQuizActive] = useState(false);
   const [quizSubject, setQuizSubject] = useState("");
   const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
@@ -195,45 +196,64 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-              <AnimatePresence initial={false} mode="wait">
-                {quizActive ? (
-                  <m.div
-                    key="quiz"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.25, ease: iOSEase }}
-                  >
-                    <QuizView
-                      initialSubject={quizSubject}
-                      variant="full"
-                      onQuit={handleQuitQuiz}
-                      onFinish={handleFinishQuiz}
-                    />
-                  </m.div>
+              {reduced ? (
+                quizActive ? (
+                  <QuizView
+                    initialSubject={quizSubject}
+                    variant="full"
+                    onQuit={handleQuitQuiz}
+                    onFinish={handleFinishQuiz}
+                  />
                 ) : (
-                  <m.div
-                    key={activeTab}
-                    className="flex min-h-0 flex-1 flex-col"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{
-                      opacity: 0,
-                      y: -4,
-                      transition: { duration: 0.15, ease: iOSEase },
-                    }}
-                    transition={{ duration: 0.25, ease: iOSEase }}
-                  >
-                    <DashboardContent
-                      id="dashboard-content"
-                      onStartQuiz={handleStartQuiz}
-                      activeTab={activeTab}
-                      onBoltComplete={handleBoltComplete}
-                      boltStreak={currentStreak}
-                    />
-                  </m.div>
-                )}
-              </AnimatePresence>
+                  <DashboardContent
+                    id="dashboard-content"
+                    onStartQuiz={handleStartQuiz}
+                    activeTab={activeTab}
+                    onBoltComplete={handleBoltComplete}
+                    boltStreak={currentStreak}
+                  />
+                )
+              ) : (
+                <AnimatePresence initial={false} mode="wait">
+                  {quizActive ? (
+                    <m.div
+                      key="quiz"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.25, ease: iOSEase }}
+                    >
+                      <QuizView
+                        initialSubject={quizSubject}
+                        variant="full"
+                        onQuit={handleQuitQuiz}
+                        onFinish={handleFinishQuiz}
+                      />
+                    </m.div>
+                  ) : (
+                    <m.div
+                      key={activeTab}
+                      className="flex min-h-0 flex-1 flex-col"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                        transition: { duration: 0.15, ease: iOSEase },
+                      }}
+                      transition={{ duration: 0.25, ease: iOSEase }}
+                    >
+                      <DashboardContent
+                        id="dashboard-content"
+                        onStartQuiz={handleStartQuiz}
+                        activeTab={activeTab}
+                        onBoltComplete={handleBoltComplete}
+                        boltStreak={currentStreak}
+                      />
+                    </m.div>
+                  )}
+                </AnimatePresence>
+              )}
             </div>
           </>
         )}

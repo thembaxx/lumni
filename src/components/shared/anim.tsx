@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "motion/react";
 import type { Transition, Variants } from "motion/react";
 import * as m from "motion/react-m";
 
@@ -12,6 +13,13 @@ interface AnimProps {
 }
 
 export function Anim({ children, layoutId, initial = true, variants, transition }: AnimProps) {
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    // biome-ignore lint/react(jsx-no-useless-fragment): children may be multiple elements
+    return <>{children}</>;
+  }
+
   return (
     <m.div
       layoutId={layoutId}
