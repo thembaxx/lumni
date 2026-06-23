@@ -50,6 +50,16 @@ export default async function RootLayout({
       )}
       style={{ colorScheme: isDark ? "dark" : "light" }}
     >
+      <head>
+        <link rel="preconnect" href="https://jnb.cloud.appwrite.io" />
+        <link rel="preconnect" href="https://utfs.io" />
+        <link rel="preconnect" href="https://api.iconify.design" />
+        <link rel="preconnect" href="https://upload.wikimedia.org" />
+        <link rel="dns-prefetch" href="https://jnb.cloud.appwrite.io" />
+        <link rel="dns-prefetch" href="https://utfs.io" />
+        <link rel="dns-prefetch" href="https://api.iconify.design" />
+        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
+      </head>
       <body className="flex h-full min-h-full flex-col bg-[--system-background] text-[--system-text-primary] antialiased">
         {children}
       </body>

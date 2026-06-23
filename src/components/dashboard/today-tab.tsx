@@ -122,7 +122,7 @@ export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
         </section>
       )}
 
-      <section className="flex flex-col gap-3" aria-label="Study tools">
+      <section className="content-visibility-auto flex flex-col gap-3" aria-label="Study tools">
         <StaggeredSection>
           <FocusTimerCard />
         </StaggeredSection>

@@ -116,7 +116,7 @@ export async function generateMetadata({
       url: `https://lumni.ai/${locale}`,
       images: [
         {
-          url: "/og-image.png",
+          url: "/og-image.webp",
           width: 1200,
           height: 630,
           alt: "Lumni - AI Study Companion",
@@ -128,7 +128,7 @@ export async function generateMetadata({
       title: "Lumni",
       description:
         "Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
-      images: ["/og-image.png"],
+      images: ["/og-image.webp"],
     },
   };
 }

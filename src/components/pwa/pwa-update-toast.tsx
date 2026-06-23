@@ -76,7 +76,7 @@ export function PWAInstallPrompt() {
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0">
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="Lumni"
               width={48}
               height={48}

@@ -968,6 +968,12 @@
   }
 }
 
+/* CSS Containment — defer off-screen layout */
+@utility content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -5,7 +5,7 @@ import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import Forward01Icon from "@hugeicons/core-free-icons/Forward01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
 interface QuizControlsProps {
@@ -34,10 +34,11 @@ export function QuizControls({
   const isLast = currentQuestionIndex === totalQuestions - 1;
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Auto-focus the action button after feedback appears (accessibility)
-  if (showFeedback && nextButtonRef.current) {
-    nextButtonRef.current.focus();
-  }
+  useEffect(() => {
+    if (showFeedback && nextButtonRef.current) {
+      nextButtonRef.current.focus();
+    }
+  }, [showFeedback]);
 
   if (showFeedback) {
     return (

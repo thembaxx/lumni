@@ -245,6 +245,27 @@ export function QuestionCard({
     setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
   };
 
+  const onBookmarkToggle = useCallback(() => {
+    if (bookmarked) {
+      removeBookmark(question.id);
+    } else {
+      addBookmark({
+        id: question.id,
+        questionText: question.questionText,
+        subject: question.subject,
+        topic: question.topic,
+      });
+    }
+  }, [
+    bookmarked,
+    question.id,
+    question.questionText,
+    question.subject,
+    question.topic,
+    addBookmark,
+    removeBookmark,
+  ]);
+
   return (
     <Anim layoutId="question-card">
       <Confetti trigger={showConfetti} count={30} duration={1500} />
@@ -253,18 +274,7 @@ export function QuestionCard({
         question={question}
         effectiveSubject={effectiveSubject}
         bookmarked={bookmarked}
-        onBookmarkToggle={() => {
-          if (bookmarked) {
-            removeBookmark(question.id);
-          } else {
-            addBookmark({
-              id: question.id,
-              questionText: question.questionText,
-              subject: question.subject,
-              topic: question.topic,
-            });
-          }
-        }}
+        onBookmarkToggle={onBookmarkToggle}
         isMathSubject={isMathSubject}
         onToolClick={() => openTools("solver", true)}
         visualDescription={visualDescription}

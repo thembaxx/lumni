@@ -2,6 +2,7 @@
 
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
+import { memo } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import type { Option } from "@/lib/question-engine/types";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
-export function MCQOptions({
+export const MCQOptions = memo(function MCQOptions({
   options,
   selectedOption,
   effectiveSubject,
@@ -78,4 +79,4 @@ export function MCQOptions({
       </Button>
     </div>
   );
-}
+});

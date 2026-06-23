@@ -2,7 +2,7 @@
 
 import { animate, useMotionValue, useTransform } from "motion/react";
 import * as m from "motion/react-m";
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { cn } from "@/lib/utils";
@@ -22,6 +22,12 @@ interface SwipeableCardProps {
   style?: React.CSSProperties;
 }
 
+const BACKFACE_HIDDEN = { backfaceVisibility: "hidden" as const };
+const ROTATED_BACKFACE = {
+  transform: "rotateY(180deg)",
+  backfaceVisibility: "hidden" as const,
+};
+
 export const SwipeableCard = memo(function SwipeableCard({
   id: _id,
   front,
@@ -36,6 +42,8 @@ export const SwipeableCard = memo(function SwipeableCard({
   style,
 }: SwipeableCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const flipAnim = useMemo(() => ({ rotateY: isFlipped ? 180 : 0 }), [isFlipped]);
+
   const x = useMotionValue(0);
 
   const rotate = useTransform(x, [-300, 0, 300], [-15, 0, 15]);
@@ -102,7 +110,7 @@ export const SwipeableCard = memo(function SwipeableCard({
         "absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none",
         isTop ? "z-10" : "pointer-events-none z-0",
       )}
-      style={{ ...style, x, rotate, opacity }}
+      style={style ? { ...style, x, rotate, opacity } : { x, rotate, opacity }}
       aria-disabled={!isTop}
       drag={isTop ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
@@ -131,13 +139,13 @@ export const SwipeableCard = memo(function SwipeableCard({
         <m.div
           className="relative h-full w-full"
           style={{ transformStyle: "preserve-3d" }}
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          animate={flipAnim}
           transition={{ duration: 0.5, ease: iOSEase }}
         >
           {/* Front */}
           <div
             className="backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
-            style={{ backfaceVisibility: "hidden" }}
+            style={BACKFACE_HIDDEN}
           >
             {isTop && (
               <m.div
@@ -178,10 +186,7 @@ export const SwipeableCard = memo(function SwipeableCard({
           {/* Back */}
           <div
             className="backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
-            style={{
-              transform: "rotateY(180deg)",
-              backfaceVisibility: "hidden",
-            }}
+            style={ROTATED_BACKFACE}
           >
             <div className="mb-2 flex items-center justify-end">
               <TTSButton text={back} />
