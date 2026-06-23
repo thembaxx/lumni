@@ -57,13 +57,13 @@ function createMockDb() {
             sortBy: async (_sortField: string) => {
               return reviews
                 .filter((r) => r.cardId === _val)
-                .sort((a, b) => a.reviewedAt - b.reviewedAt);
+                .toSorted((a, b) => a.reviewedAt - b.reviewedAt);
             },
           }),
           sortBy: async (_sortField: string) => {
             return reviews
               .filter((r) => r.cardId === _val)
-              .sort((a, b) => a.reviewedAt - b.reviewedAt);
+              .toSorted((a, b) => a.reviewedAt - b.reviewedAt);
           },
         }),
       }),

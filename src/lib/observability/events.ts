@@ -156,7 +156,7 @@ export async function getCohortStats(days = 30): Promise<CohortStats> {
     }
     const dailyCounts = Array.from(dailyMap.entries())
       .map(([date, users]) => ({ date, count: users.size }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+      .toSorted((a, b) => a.date.localeCompare(b.date));
 
     return { dau, wau, totalActiveUsers, dailyCounts };
   } catch (err) {
@@ -182,7 +182,7 @@ export function getEventSummary() {
     totalEvents: events.length,
     last24h: lastDay.length,
     byType,
-    recentEvents: events.slice(-20).reverse(),
+    recentEvents: events.slice(-20).toReversed(),
   };
 }
 

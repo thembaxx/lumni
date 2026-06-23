@@ -38,11 +38,11 @@ class MockQuestionRatingRepository implements QuestionRatingRepository {
   }
 
   async getAll(): Promise<QuestionRating[]> {
-    return [...ratingStore].reverse();
+    return [...ratingStore].toReversed();
   }
 
   async getBySubject(subject: string): Promise<QuestionRating[]> {
-    return ratingStore.filter((r) => r.subject === subject).reverse();
+    return ratingStore.filter((r) => r.subject === subject).toReversed();
   }
 }
 

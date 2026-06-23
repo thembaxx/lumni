@@ -40,7 +40,11 @@ export default function SupportPage() {
 
       <div className="flex flex-col gap-4">
         {SUPPORT_CHANNELS.map((channel) => (
-          <a key={channel.label} href={channel.action}>
+          <a
+            key={channel.label}
+            href={channel.action}
+            aria-label={`${channel.label} — ${channel.priority}`}
+          >
             <Card className="transition-colors hover:bg-accent/5">
               <CardHeader className="flex flex-row items-center gap-3">
                 <HugeiconsIcon icon={channel.icon} className="size-5 text-[--system-accent]" />

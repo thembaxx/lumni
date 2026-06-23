@@ -28,6 +28,7 @@ import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useRouter } from "@/i18n/navigation";
 import { getAnswerText, getCorrectAnswerText, parseDuration } from "@/lib/exam/helpers";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
@@ -181,6 +182,20 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
       checkAndUnlockAchievements,
       checkForRewardChests,
       addWrongAnswer,
+      addRetentionItem: (entry) => {
+        dexieDataAccess.retentionRecurrence
+          .add({
+            questionId: entry.questionId,
+            subject: entry.subject,
+            topic: entry.topic,
+            questionText: entry.questionText,
+            correctAnswer: entry.correctAnswer,
+            explanation: entry.explanation,
+            scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+            completed: false,
+          })
+          .catch(() => {});
+      },
       flashcardEngine,
       trackQuestionResult,
       enqueue,

@@ -27,8 +27,6 @@ function download(url) {
 }
 
 async function main() {
-  const http = await import("http");
-
   // List of known public Lottie JSON files from various sources
   const sources = [
     // LottieFiles samples that are typically public

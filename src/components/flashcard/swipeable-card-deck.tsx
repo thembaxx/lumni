@@ -125,7 +125,12 @@ export function SwipeableCardDeck({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" role="application" aria-label="Flashcard deck">
+      {/* Screen reader announcement for current card */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {`Card ${currentIndex + 1} of ${cards.length}`}
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <Button variant="ghost" size="sm" onClick={onComplete}>

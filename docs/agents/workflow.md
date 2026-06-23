@@ -27,7 +27,7 @@ A TSX script at `scripts/sync-todo-to-linear.ts` pushes TODO.md changes to Linea
 ### Running
 
 ```bash
-npm run todo:sync
+pnpm run todo:sync
 ```
 
 The script:
@@ -40,7 +40,7 @@ The script:
 ### Adding new tasks
 
 1. Write `- [ ] **Task name** — description` in TODO.md
-2. Run `npm run todo:sync`
+2. Run `pnpm run todo:sync`
 3. The script creates the Linear issue and embeds the ID
 
 ---
@@ -173,12 +173,12 @@ LUM-20  Component tests
 
 The repo has four CI jobs in `.github/workflows/ci.yml`:
 
-| Job              | Runs on           | Purpose                         |
-| ---------------- | ----------------- | ------------------------------- |
-| `quality`        | PR + push to main | tsc, biome, test, build         |
-| `bundle-size`    | PR + push to main | Build with analyzer             |
-| `todo-sync`      | Push to main only | `npm run todo:sync` after merge |
-| `sentry-release` | Push to main only | Create Sentry release           |
+| Job              | Runs on           | Purpose                          |
+| ---------------- | ----------------- | -------------------------------- |
+| `quality`        | PR + push to main | tsc, biome, test, build          |
+| `bundle-size`    | PR + push to main | Build with analyzer              |
+| `todo-sync`      | Push to main only | `pnpm run todo:sync` after merge |
+| `sentry-release` | Push to main only | Create Sentry release            |
 
 ### Required GitHub secrets
 
@@ -208,7 +208,7 @@ Add the two **variables** (not secrets — they're non-sensitive).
 
 After adding DSN to `.env.local`:
 
-1. Run `npm run dev` locally
+1. Run `pnpm run dev` locally
 2. Trigger an error (visit a broken route)
 3. Check sentry.io → lumni project → Issues
 
@@ -229,20 +229,20 @@ After first deploy with the GitHub secrets set:
 1. **Check Sentry issues** → any new errors auto-create Linear bugs (once Sentry ↔ Linear is connected)
 2. **Scan Linear Backlog** → drag unassigned items to Todo if they're actionable
 3. **Update TODO.md** → add/check off items as you work
-4. **Run `npm run todo:sync`** → pushes TODO.md state to Linear (optional daily, but do before a PR)
+4. **Run `pnpm run todo:sync`** → pushes TODO.md state to Linear (optional daily, but do before a PR)
 
 ### Weekly
 
 1. **Review Sentry → Linear bugs** → triage new issues, assign priority
 2. **Prioritise Backlog** → move P2 items to "Next Up" in TODO.md, push lower to P3
-3. **Sync TODO.md → Linear** → `npm run todo:sync` ensures Linear reflects your plan
+3. **Sync TODO.md → Linear** → `pnpm run todo:sync` ensures Linear reflects your plan
 4. **Check CI** → verify GitHub Actions secrets are set, `todo-sync` job ran on last merge
 
 ### Starting new work
 
 ```
 1. Add task to TODO.md under "Next Up" or "Bug Fixes"
-2. Run `npm run todo:sync` → creates Linear issue
+2. Run `pnpm run todo:sync` → creates Linear issue
 3. Linear automatically creates a LUM-xxx branch when moved to In Progress
 4. Commit with "LUM-xxx" in the message for auto-linking
 5. PR description includes "Closes LUM-xxx"
@@ -253,7 +253,7 @@ After first deploy with the GitHub secrets set:
 
 ```
 1. Bug → TODO.md under "Bug Fixes" section
-2. `npm run todo:sync` → Linear bug ticket
+2. `pnpm run todo:sync` → Linear bug ticket
 3. Fix → branch → PR → merge
 4. Sentry release automatically deploys
 5. Error reoccurs? Sentry reopens the Linear issue

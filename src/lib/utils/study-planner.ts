@@ -196,12 +196,12 @@ export function getUpcomingSessions(days: number = 7): StudySession[] {
   const cutoff = Date.now() + days * 24 * 60 * 60 * 1000;
   return plan.sessions
     .filter((s) => s.scheduledAt <= cutoff && !s.completed)
-    .sort((a, b) => a.scheduledAt - b.scheduledAt);
+    .toSorted((a, b) => a.scheduledAt - b.scheduledAt);
 }
 
 export function getUpcomingExams(): ExamDate[] {
   const plan = loadStudyPlan();
-  return plan.examDates.filter((e) => e.daysUntil >= 0).sort((a, b) => a.date - b.date);
+  return plan.examDates.filter((e) => e.daysUntil >= 0).toSorted((a, b) => a.date - b.date);
 }
 
 export function getTodaySessions(): StudySession[] {
@@ -276,7 +276,7 @@ export function getStudyStats(): {
   const now = Date.now();
   const upcomingExams = plan.examDates
     .filter((e) => e.daysUntil > 0)
-    .sort((a, b) => a.date - b.date);
+    .toSorted((a, b) => a.date - b.date);
 
   let completedSessions = 0;
   let upcomingSessions = 0;

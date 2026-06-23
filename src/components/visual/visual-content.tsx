@@ -31,6 +31,7 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
+    // oxlint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isLoading ? (
         <div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">

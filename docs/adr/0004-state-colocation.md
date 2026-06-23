@@ -1,6 +1,6 @@
 # ADR-03: State Colocation — Appwrite Server State vs. Zustand Client State vs. TanStack Query Cache
 
-**Status:** Proposed  
+**Status:** Accepted — TanStack Query primary, Dexie DataAccess for offline, Zustand for ephemeral, sync via background jobs  
 **Date:** 2026-05-23  
 **Author:** Senior Frontend Architect
 

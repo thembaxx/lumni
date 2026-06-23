@@ -175,11 +175,13 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
                       "mb-px cursor-grab truncate rounded px-1 text-[9px] leading-4 transition-shadow active:cursor-grabbing",
                       s.completed
                         ? "bg-success/20 text-success"
-                        : "bg-[--system-accent]/10 text-[--system-accent]",
+                        : s.type === "flashcard"
+                          ? "bg-[--system-accent]/10 text-[--system-accent] font-semibold"
+                          : "bg-[--system-accent]/10 text-[--system-accent]",
                     )}
-                    title={`${s.subject}${s.topic ? ` - ${s.topic}` : ""}`}
+                    title={`${s.subject}${s.topic ? ` - ${s.topic}` : ""}${s.type === "flashcard" ? " (Flashcard Review)" : ""}`}
                   >
-                    {s.subject}
+                    {s.type === "flashcard" ? `FC ${s.subject}` : s.subject}
                   </div>
                 ))}
                 {daySessions.length > 3 && (

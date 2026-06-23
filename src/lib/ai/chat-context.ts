@@ -1,3 +1,4 @@
+import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
@@ -50,11 +51,13 @@ export async function buildChatContext(): Promise<string> {
   if (strong.length > 0) parts.push(`Strong areas: ${strong.join(", ")}.`);
 
   try {
-    const recent = await _deps.db.wrongAnswers.orderBy("createdAt").reverse().limit(5).toArray();
+    const recent = await _deps.db.wrongAnswers.orderBy("createdAt").toReversed().limit(5).toArray();
 
     if (recent.length > 0) {
       const mistakes = recent
-        .map((w) => `  - ${w.subject}/${w.topic}: ${truncate(w.questionText, 100)}`)
+        .map(
+          (w: WrongAnswerEntry) => `  - ${w.subject}/${w.topic}: ${truncate(w.questionText, 100)}`,
+        )
         .join("\n");
       parts.push(`Recent mistakes to address:\n${mistakes}`);
     }

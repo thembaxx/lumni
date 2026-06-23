@@ -37,7 +37,7 @@ export function FillInSequenceInput({
         })) ?? [],
     );
     const combined = shuffleDistractors
-      ? [...correct, ...distractors].sort(() => Math.random() - 0.5)
+      ? [...correct, ...distractors].toSorted(() => Math.random() - 0.5)
       : [...correct, ...distractors];
     return combined;
   }, [blanks, shuffleDistractors]);

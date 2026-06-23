@@ -39,7 +39,7 @@ const SUBJECT_PROMPTS: Record<string, string> = {
     "Generate geography problems for South African Matric (Grade 12) level. Include mapwork, climatology, geomorphology, or population geography.",
 };
 
-const STEM_SUBJECTS = [
+const STEM_SUBJECTS = new Set([
   "mathematics",
   "technical-mathematics",
   "mathematical-literacy",
@@ -61,7 +61,7 @@ const STEM_SUBJECTS = [
   "geography",
   "design",
   "visual-arts",
-];
+]);
 
 interface CuratedBody {
   subject: string;
@@ -90,8 +90,8 @@ export const curatedProblemsService = {
 
     const subjectPrompt =
       SUBJECT_PROMPTS[subject] ||
-      SUBJECT_PROMPTS[STEM_SUBJECTS.includes(subject) ? "default" : "default"];
-    const isSTEM = STEM_SUBJECTS.includes(subject);
+      SUBJECT_PROMPTS[STEM_SUBJECTS.has(subject) ? "default" : "default"];
+    const isSTEM = STEM_SUBJECTS.has(subject);
 
     const systemPrompt = `You are an expert tutor creating practice problems for South African Matric (Grade 12) students.
 ${subjectPrompt}

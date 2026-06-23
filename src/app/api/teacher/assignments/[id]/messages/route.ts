@@ -5,7 +5,7 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 
-const VALID_ROLES = ["teacher", "student", "parent"];
+const VALID_ROLES = new Set(["teacher", "student", "parent"]);
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -62,7 +62,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "Message too long (max 5000 characters)" }, { status: 400 });
   }
 
-  const role = VALID_ROLES.includes(senderRole || "") ? senderRole : "teacher";
+  const role = VALID_ROLES.has(senderRole || "") ? senderRole : "teacher";
 
   const msg = {
     assignmentId: id,

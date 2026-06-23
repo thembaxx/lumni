@@ -61,7 +61,7 @@ export function ReviewClient() {
 
   const uniqueTopics = useMemo(() => {
     const topics = new Set(entries.map((e) => e.topic));
-    return Array.from(topics).filter(Boolean).sort();
+    return Array.from(topics).filter(Boolean).toSorted();
   }, [entries]);
 
   const handleReviewed = async (id: number) => {

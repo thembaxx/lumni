@@ -51,7 +51,7 @@ export function ProgressExport() {
     setExportState("csv-exporting");
     try {
       const [quizAttempts, examSessions] = await Promise.all([
-        _deps.db.quizAttempts.orderBy("completedAt").reverse().limit(100).toArray(),
+        _deps.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
         _deps.db.examSessions.toArray(),
       ]);
       const csv = exportService.toCSV(quizAttempts, examSessions);

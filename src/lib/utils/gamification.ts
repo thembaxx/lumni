@@ -47,7 +47,7 @@ const streakMessages: Record<number, string> = {
 
 const streakThresholds = Object.keys(streakMessages)
   .map(Number)
-  .sort((a, b) => b - a);
+  .toSorted((a, b) => b - a);
 
 export function getStreakMessage(streak: number): string {
   if (streak <= 0) return "Start your streak!";

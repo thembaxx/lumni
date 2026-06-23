@@ -152,7 +152,7 @@ export async function getChildSubjectProgress(
     });
   }
 
-  return results.sort((a, b) => b.score - a.score);
+  return results.toSorted((a, b) => b.score - a.score);
 }
 
 export async function getChildActivityTimeline(

@@ -54,7 +54,7 @@ export function WeakTopicsCard() {
           }
         }
       }
-      return topics.sort((a, b) => a.score - b.score).slice(0, 3);
+      return topics.toSorted((a, b) => a.score - b.score).slice(0, 3);
     },
     enabled: !!subjectsData && subjectsData.length > 0,
     staleTime: 1000 * 60 * 5,

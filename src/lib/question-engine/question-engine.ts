@@ -70,7 +70,7 @@ export class QuestionEngine {
                 p.count,
               );
               if (appwriteQuestions.length >= p.count) {
-                const shuffled = appwriteQuestions.sort(() => Math.random() - 0.5);
+                const shuffled = appwriteQuestions.toSorted(() => Math.random() - 0.5);
                 return shuffled.slice(0, p.count);
               }
               return null;

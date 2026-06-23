@@ -69,7 +69,7 @@ export class AnalyticsService {
       monthlyGroups[monthKey].correct += session.correctCount;
     }
 
-    const sortedMonths = Object.keys(monthlyGroups).sort();
+    const sortedMonths = Object.keys(monthlyGroups).toSorted();
     const dates = sortedMonths.map((m) => {
       const [year, month] = m.split("-");
       const date = new Date(Number.parseInt(year, 10), Number.parseInt(month, 10) - 1);

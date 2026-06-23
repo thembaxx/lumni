@@ -153,7 +153,7 @@ describe("getQualityStats", () => {
       warningCount: 0,
     });
     const stats = getQualityStats();
-    expect(Object.keys(stats.byType).sort()).toEqual(["calculation", "mcq"]);
+    expect(Object.keys(stats.byType).toSorted()).toEqual(["calculation", "mcq"]);
     expect(stats.byType.mcq).toEqual({ count: 1, avgScore: 90 });
     expect(stats.byType.calculation).toEqual({ count: 1, avgScore: 80 });
   });

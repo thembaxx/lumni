@@ -27,7 +27,7 @@ export default function LeaderboardPage() {
       const res = await fetch("/api/study-groups/leaderboard");
       if (!res.ok) throw new Error("Failed to fetch");
       const body = (await res.json()) as { leaderboard: LeaderboardEntry[] };
-      return body.leaderboard.sort((a, b) => b.totalScore - a.totalScore);
+      return body.leaderboard.toSorted((a, b) => b.totalScore - a.totalScore);
     },
     refetchInterval: 60_000,
   });

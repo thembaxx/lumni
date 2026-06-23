@@ -16,7 +16,9 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
   const onTimeoutEvent = useEffectEvent(onTimeout);
 
   const qualities =
-    polarity === "correct" ? SM2_QUALITIES.slice(3).reverse() : SM2_QUALITIES.slice(0, 3).reverse();
+    polarity === "correct"
+      ? SM2_QUALITIES.slice(3).toReversed()
+      : SM2_QUALITIES.slice(0, 3).toReversed();
 
   useEffect(() => {
     const id = setTimeout(() => {

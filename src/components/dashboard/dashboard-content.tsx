@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { Activity, useEffect } from "react";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
@@ -89,16 +89,20 @@ export function DashboardContent({
     >
       <PageContainer className="gap-6 pb-16">
         <LoginBanner />
-        {activeTab === "today" && <HeroBanner />}
         {isAnonymous && (
           <LocalDataNotice page="dashboard" description={t("dashboard.localDataDescription")} />
         )}
-        {activeTab === "today" && isLoggedIn && <CountdownHeader />}
-        {activeTab === "today" && (
+        <Activity mode={activeTab === "today" ? "visible" : "hidden"}>
+          <HeroBanner />
+          {isLoggedIn && <CountdownHeader />}
           <TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
-        )}
-        {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
-        {activeTab === "analytics" && <AnalyticsTab />}
+        </Activity>
+        <Activity mode={activeTab === "practice" ? "visible" : "hidden"}>
+          <PracticeTab onStartQuiz={onStartQuiz} />
+        </Activity>
+        <Activity mode={activeTab === "analytics" ? "visible" : "hidden"}>
+          <AnalyticsTab />
+        </Activity>
         {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
           <StaggeredSection>
             <AnonymousUpsell />

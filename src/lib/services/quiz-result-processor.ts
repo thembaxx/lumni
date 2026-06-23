@@ -29,6 +29,15 @@ export interface FlashcardEngine {
   review(id: string, quality: number): Promise<FlashcardSM2 | null>;
 }
 
+export interface RetentionInput {
+  questionId: string;
+  questionText: string;
+  subject: string;
+  topic: string;
+  correctAnswer: string;
+  explanation: string;
+}
+
 export interface QuizResultDeps {
   updateStreak: () => void;
   addXp: (amount: number, accuracy: number, streak: number) => void;
@@ -38,12 +47,19 @@ export interface QuizResultDeps {
     streak: number,
     level: number,
     perfectQuiz: boolean,
+    extra?: {
+      competentTopicsCount?: number;
+      topicScoreImproved?: boolean;
+      examScoreImproved?: boolean;
+    },
   ) => void;
   checkForRewardChests: () => void;
   addWrongAnswer: (entry: Omit<WrongAnswerInput, "id">) => void;
+  addRetentionItem?: (entry: RetentionInput) => void;
   flashcardEngine: FlashcardEngine;
   trackQuestionResult: (params: TrackResultInput) => void;
   // biome-ignore lint/suspicious/noExplicitAny: contravariant enqueue payload
+  // oxlint-disable-next-line typescript/no-explicit-any
   enqueue: (type: JobType, payload: any) => void;
   addStudySession: (session: Omit<StudySession, "id">) => void;
   markPlanStale: () => void;
@@ -159,6 +175,14 @@ async function processBolt(result: BoltResult, deps: QuizResultDeps): Promise<vo
       userAnswer: "(see quiz history)",
       explanation: question.explanation,
     });
+    deps.addRetentionItem?.({
+      questionId: question.id,
+      questionText: question.questionText,
+      subject: question.subject,
+      topic: question.topic,
+      correctAnswer,
+      explanation: question.explanation,
+    });
     await deps.flashcardEngine.create(
       question.questionText,
       correctAnswer,
@@ -218,6 +242,14 @@ async function processQuiz(results: QuizResults, deps: QuizResultDeps): Promise<
         topic: question.topic,
         correctAnswer,
         userAnswer: "(see quiz history)",
+        explanation: question.explanation,
+      });
+      deps.addRetentionItem?.({
+        questionId: question.id,
+        questionText: question.questionText,
+        subject: question.subject,
+        topic: question.topic,
+        correctAnswer,
         explanation: question.explanation,
       });
       flashcardPromises.push(
@@ -316,13 +348,22 @@ async function processExam(
 
     if (!result.correct) {
       const partText = result.part.text ?? `Question ${result.questionId}`;
+      const correctAnswer = result.correctAnswerText ?? getCorrectAnswerText(result.part);
       deps.addWrongAnswer({
         questionId: result.partId,
         questionText: partText,
         subject,
         topic,
-        correctAnswer: result.correctAnswerText ?? getCorrectAnswerText(result.part),
+        correctAnswer,
         userAnswer: result.userAnswer ?? "",
+        explanation: "",
+      });
+      deps.addRetentionItem?.({
+        questionId: result.partId,
+        questionText: partText,
+        subject,
+        topic,
+        correctAnswer,
         explanation: "",
       });
       flashcardPromises.push(
@@ -408,6 +449,14 @@ async function processFlashcard(
         topic: card.topic,
         correctAnswer: card.back,
         userAnswer: "",
+        explanation: card.back,
+      });
+      deps.addRetentionItem?.({
+        questionId: card.id,
+        questionText: card.front,
+        subject,
+        topic: card.topic,
+        correctAnswer: card.back,
         explanation: card.back,
       });
       if (!isSm2) {

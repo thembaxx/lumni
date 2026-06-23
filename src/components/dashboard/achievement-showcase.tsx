@@ -19,7 +19,7 @@ export function AchievementShowcase() {
   const earned = gamification.achievements.filter((a) => a.earnedAt);
   if (earned.length === 0) return null;
 
-  const latest = earned.slice(-3).reverse();
+  const latest = earned.slice(-3).toReversed();
 
   return (
     <m.div

@@ -35,7 +35,7 @@ export function FadeIn({
 }: FadeInProps) {
   const initialOffset = directionVariants[direction](distance);
   const initial = { opacity: 0, ...initialOffset };
-  const Tag = m[as];
+  const Tag = as === "span" ? m.span : m.div;
 
   return (
     <Tag

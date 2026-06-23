@@ -18,6 +18,7 @@ import type {
   LessonProgress,
   NoteRecord,
   OnboardingState,
+  PronunciationScoreRecord,
   QuestionRating,
   QuizAttempt,
   QuizSessionState,
@@ -55,6 +56,7 @@ export interface Collection<T> {
   delete(): Promise<void>;
   modify(changes: Partial<T> | ((record: T) => void)): Promise<number>;
   reverse(): Collection<T>;
+  toReversed(): Collection<T>;
   limit(n: number): Collection<T>;
   offset(n: number): Collection<T>;
   filter(pred: (item: T) => boolean): Collection<T>;
@@ -186,6 +188,10 @@ export interface CommunityDataAccess {
   competitionScores: DataAccessTable<CompetitionScoreRecord, number>;
 }
 
+export interface PronunciationDataAccess {
+  pronunciationHistory: DataAccessTable<PronunciationScoreRecord, number>;
+}
+
 export interface LegacyDataAccess {
   subjects: DataAccessTable<CachedSubject, number>;
   pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
@@ -213,4 +219,5 @@ export interface DataAccess
     CacheDataAccess,
     EmbeddingDataAccess,
     CommunityDataAccess,
+    PronunciationDataAccess,
     LegacyDataAccess {}

@@ -27,6 +27,8 @@ export interface SubjectCompetency {
   weight: number;
   /** The list of topics in this subject */
   topics: TopicId[];
+  /** Topics with competency score >= 80 (considered mastered) */
+  completedTopics?: TopicId[];
 }
 
 export interface TopicPlan {

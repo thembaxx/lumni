@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { PageSkeleton } from "@/components/ui/page-skeleton";
 import { SharedQuestionClient } from "./shared-question-client";
 
 export const metadata: Metadata = {
@@ -7,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function SharedQuestionPage() {
-  return <SharedQuestionClient />;
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <SharedQuestionClient />
+    </Suspense>
+  );
 }

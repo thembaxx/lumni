@@ -123,6 +123,9 @@ export default function AdminPastPapersPage() {
               <button
                 type="button"
                 onClick={() => setExpandedId(expandedId === q.id ? null : q.id)}
+                aria-label={
+                  expandedId === q.id ? "Collapse question details" : "Expand question details"
+                }
                 className={cn("flex w-full items-start gap-3 p-4 text-left hover:bg-muted/30")}
               >
                 <div className={cn("min-w-0 flex-1")}>

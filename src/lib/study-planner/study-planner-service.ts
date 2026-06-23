@@ -74,8 +74,13 @@ export class StudyPlannerService {
           this.competencyService.getCompetencies(subject.id),
         ]);
         const topicIds: string[] = [];
+        const completedTopics: string[] = [];
         for (const r of records) {
-          if (r.topicId) topicIds.push(r.topicId);
+          if (r.topicId) {
+            topicIds.push(r.topicId);
+            // topics with score >= 80 are considered mastered
+            if (r.score >= 80) completedTopics.push(r.topicId);
+          }
         }
         const uniqueTopics = [...new Set(topicIds)];
 
@@ -85,6 +90,7 @@ export class StudyPlannerService {
           targetLevel: 80,
           weight: 1 / KNOWN_SUBJECTS.length,
           topics: uniqueTopics,
+          completedTopics,
         };
       }),
     );

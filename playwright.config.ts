@@ -17,7 +17,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "bun run dev",
+    command: "pnpm run dev",
     port: 3000,
     reuseExistingServer: true,
   },

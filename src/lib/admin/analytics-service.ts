@@ -106,7 +106,7 @@ export class PlatformAnalyticsService {
       monthlySessions,
       completionRate,
       overallAccuracy,
-      subjectPopularity: subjectSessionCounts.sort((a, b) => b.sessions - a.sessions),
+      subjectPopularity: subjectSessionCounts.toSorted((a, b) => b.sessions - a.sessions),
     };
   }
 }

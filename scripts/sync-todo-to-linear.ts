@@ -21,8 +21,6 @@ const PROJECT_ID = "6eaef6d1-6e88-4ca9-8f61-b34ba2d099d7";
 const TODO_PATH = resolve(process.cwd(), "TODO.md");
 
 const LUM_BACKLOG = "d9866563-3a16-49be-90c8-fe948fed1854";
-const LUM_TODO = "dc072d92-50a6-4bd3-81da-796519a64f8f";
-const LUM_IN_PROGRESS = "81d6ee6a-83c7-402c-9737-041fd3348e76";
 const LUM_DONE = "54e790e9-4f42-4f32-a238-29a23479f0f8";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -165,7 +163,6 @@ async function main() {
   const lines = content.split("\n");
 
   // Collect all changes to make to the file
-  const replacements: Record<number, string> = {};
 
   for (const section of sections) {
     console.log(`\n--- ${section.heading} (P${section.priority}) ---`);

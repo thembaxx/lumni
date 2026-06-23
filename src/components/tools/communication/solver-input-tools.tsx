@@ -8,6 +8,19 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { UploadButton } from "@/lib/uploadthing";
 
+const uploadButtonContent: Record<string, ({ ready }: { ready: boolean }) => React.ReactNode> = {
+  button({ ready }: { ready: boolean }) {
+    if (ready)
+      return (
+        <div className="flex items-center gap-2 text-foreground text-sm">
+          <HugeiconsIcon icon={Image03Icon} className="size-4" data-icon />
+          <span>Upload</span>
+        </div>
+      );
+    return "Working on it…";
+  },
+};
+
 interface SolverInputToolsProps {
   phase: "input" | "confirm" | "extracting" | "solving" | "result";
   imageUrl: string | null;
@@ -52,18 +65,7 @@ export function SolverInputTools({
                   "bg-system-fill hover:bg-system-fill-secondary text-foreground h-10 px-4 py-2 text-sm border border-border w-full transition-colors rounded-xl",
                 allowedContent: "hidden",
               }}
-              content={{
-                button({ ready }) {
-                  if (ready)
-                    return (
-                      <div className="flex items-center gap-2 text-foreground text-sm">
-                        <HugeiconsIcon icon={Image03Icon} className="size-4" data-icon />
-                        <span>Upload</span>
-                      </div>
-                    );
-                  return "Working on it…";
-                },
-              }}
+              content={uploadButtonContent}
             />
           </>
         )}

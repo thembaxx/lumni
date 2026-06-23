@@ -66,6 +66,7 @@ export class AIClient {
     for (const provider of this.providers) {
       const start = performance.now();
       try {
+        // oxlint-disable-next-line no-await-in-loop — sequential fallback chain, not parallelizable
         const response = await provider.generate(request);
         const durationMs = Math.round(performance.now() - start);
         trackAILatency({

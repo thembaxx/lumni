@@ -31,11 +31,11 @@ class DexieQuestionRatingRepository implements QuestionRatingRepository {
   }
 
   async getAll(): Promise<QuestionRating[]> {
-    return this.db.questionRatings.orderBy("createdAt").reverse().toArray();
+    return this.db.questionRatings.orderBy("createdAt").toReversed().toArray();
   }
 
   async getBySubject(subject: string): Promise<QuestionRating[]> {
-    return this.db.questionRatings.where("subject").equals(subject).reverse().toArray();
+    return this.db.questionRatings.where("subject").equals(subject).toReversed().toArray();
   }
 }
 

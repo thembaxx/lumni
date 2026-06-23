@@ -39,6 +39,7 @@ export function SubjectTable({
   isDeleting,
 }: SubjectTableProps) {
   return (
+    // oxlint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isLoading ? (
         <div className={cn("flex", "items-center", "justify-center", "p-4")}>

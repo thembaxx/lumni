@@ -44,5 +44,5 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     return <CelebrationOverlay onComplete={handleCelebrationComplete} />;
   }
 
-  return <>{children}</>;
+  return children;
 }

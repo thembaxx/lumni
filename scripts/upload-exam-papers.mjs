@@ -11,10 +11,6 @@ const outputFile = path.join(__dirname, "../exam-papers-uploaded.json");
 
 dotenv.config({ path: path.join(__dirname, "../.env.local") });
 
-function normalizeSubjectCode(filename) {
-  return filename.toLowerCase().replace(/_/g, "-").replace(/\s+/g, "-");
-}
-
 function parseExamPaperFilename(filename) {
   // Matches: 2025_subject_paperNumber[_memo].pdf
   // Subject can have hyphens or underscores (convert to hyphen internally)

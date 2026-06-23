@@ -116,16 +116,17 @@ export async function generateStudyPlan(
     const minutesPerTopic =
       topicCount > 0 ? (dailyMinutes * subjectWeights[subjectIdx]) / topicCount : 0;
 
+    const completedSet = new Set(subject.completedTopics ?? []);
     for (const topicId of subject.topics) {
       candidates.push({
         topic: {
           topicId,
           subjectId: subject.subjectId,
-          estimatedMinutes: minutesPerTopic,
+          estimatedMinutes: completedSet.has(topicId) ? 0 : minutesPerTopic,
           priority: Math.round((100 - subject.level) / 10) + 1,
           scheduledDate: undefined,
           actualMinutesSpent: 0,
-          isCompleted: false,
+          isCompleted: completedSet.has(topicId),
         },
         subjectLevel: subject.level,
         subjectWeight: subject.weight,
@@ -153,7 +154,7 @@ export async function generateStudyPlan(
     const prereqTopicIds = new Set<string>();
     for (const n of graph.nodes) {
       if (n.type === "prerequisite") {
-        prereqTopicIds.add(n.label.toLowerCase().replace(/\s+/g, "-"));
+        prereqTopicIds.add(n.id);
       }
     }
 
@@ -190,6 +191,7 @@ export async function generateStudyPlan(
   const cursor = new Date(startDate);
   let daysSinceRest = 0;
 
+  // oxlint-disable-next-line no-unmodified-loop-condition — cursor is modified via setDate() inside
   while (cursor <= endDate) {
     if (studyDaySet.has(cursor.getDay())) {
       if (daysSinceRest >= 6) {
@@ -227,9 +229,14 @@ export async function generateStudyPlan(
     return isExamDay(subjectId, nextStr);
   }
 
+  // Filter out completed topics from scheduling (keep in candidates for prerequisite checking)
+  const uncompletedCandidates = candidates.filter(
+    (c) => c.topic.isCompleted !== true || c.topic.estimatedMinutes > 0,
+  );
+
   // 4. Constraint-based assignment
   const assigned: TopicPlan[] = [];
-  const unassigned = [...candidates];
+  const unassigned = [...uncompletedCandidates];
   const dayRemaining = new Map<string, number>();
   const daySubjects = new Map<string, Set<string>>();
 

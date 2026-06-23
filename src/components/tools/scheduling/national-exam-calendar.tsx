@@ -54,7 +54,7 @@ export function NationalExamCalendar() {
     now.setHours(0, 0, 0, 0);
     return allSlots
       .filter((s) => new Date(s.date) >= now)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      .toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .slice(0, 2);
   }, [allSlots]);
 
@@ -65,7 +65,7 @@ export function NationalExamCalendar() {
       groups[slot.date].push(slot);
     }
     return Object.entries(groups)
-      .sort(([a], [b]) => a.localeCompare(b))
+      .toSorted(([a], [b]) => a.localeCompare(b))
       .map(([date, slots]) => ({ date, slots }));
   }, [allSlots]);
 

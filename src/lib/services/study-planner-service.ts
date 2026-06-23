@@ -172,8 +172,10 @@ export class StudyPlannerService {
       try {
         const subjects = [...new Set(algorithmPlan.topics.map((t) => t.subjectId))];
         const combinedGraph: KnowledgeGraph = { nodes: [], edges: [] };
-        for (const subject of subjects) {
-          const graph = await getCachedGraph(subject, "general");
+        const graphs = await Promise.all(
+          subjects.map((subject) => getCachedGraph(subject, "general")),
+        );
+        for (const graph of graphs) {
           if (graph) {
             combinedGraph.nodes.push(...graph.nodes);
             combinedGraph.edges.push(...graph.edges);
@@ -187,8 +189,8 @@ export class StudyPlannerService {
             })),
             combinedGraph,
           );
-          const sortedIds = sortedRefs.map((s) => s.topicId);
-          sortedTopics = algorithmPlan.topics.filter((t) => sortedIds.includes(t.topicId));
+          const sortedIds = new Set(sortedRefs.map((s) => s.topicId));
+          sortedTopics = algorithmPlan.topics.filter((t) => sortedIds.has(t.topicId));
         }
       } catch {
         // Knowledge graph unavailable — use algorithm order as-is
@@ -221,6 +223,28 @@ export class StudyPlannerService {
           });
         }
       }
+
+      // inject a daily flashcard review session before topic study
+      const dailyMinutes = settings?.dailyStudyMinutes ?? 30;
+      const flashcardMinutes = Math.min(10, Math.round(dailyMinutes * 0.2));
+      const sessionsByDate = new Map<string, Omit<StudySession, "id">[]>();
+      for (const s of newSessions) {
+        const dateKey = new Date(s.scheduledAt).toISOString().split("T")[0];
+        if (!sessionsByDate.has(dateKey)) sessionsByDate.set(dateKey, []);
+        sessionsByDate.get(dateKey)?.push(s);
+      }
+      const flashcardSessions: Omit<StudySession, "id">[] = [];
+      for (const [dateKey, daySessions] of sessionsByDate) {
+        const subject = daySessions[0]?.subject ?? "general";
+        flashcardSessions.push({
+          subject,
+          type: "flashcard" as const,
+          scheduledAt: new Date(dateKey).getTime(),
+          duration: flashcardMinutes,
+          completed: false,
+        });
+      }
+      newSessions.push(...flashcardSessions);
 
       existingPlan.sessions = existingPlan.sessions.filter(
         (s) => s.type !== "quiz" || s.topic === undefined,

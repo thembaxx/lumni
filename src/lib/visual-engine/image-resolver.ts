@@ -71,7 +71,7 @@ export async function searchImage(
     const pages = data.query?.pages;
     if (!pages) return null;
 
-    const pageIds = Object.keys(pages).sort((a, b) => Number(a) - Number(b));
+    const pageIds = Object.keys(pages).toSorted((a, b) => Number(a) - Number(b));
 
     for (const id of pageIds) {
       const page = pages[id];

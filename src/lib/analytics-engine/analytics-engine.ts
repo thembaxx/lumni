@@ -38,11 +38,11 @@ function groupByTopic(
 }
 
 function getWeakTopics(topicStats: TopicPerformance[]): TopicPerformance[] {
-  return topicStats.filter((t) => t.accuracy < 0.6).sort((a, b) => a.accuracy - b.accuracy);
+  return topicStats.filter((t) => t.accuracy < 0.6).toSorted((a, b) => a.accuracy - b.accuracy);
 }
 
 function getStrongTopics(topicStats: TopicPerformance[]): TopicPerformance[] {
-  return topicStats.filter((t) => t.accuracy >= 0.8).sort((a, b) => b.accuracy - a.accuracy);
+  return topicStats.filter((t) => t.accuracy >= 0.8).toSorted((a, b) => b.accuracy - a.accuracy);
 }
 
 function generateInsights(
@@ -97,7 +97,7 @@ function generateRecommendations(subjects: SubjectAnalytics[]): AnalyticsRecomme
 
   const weakSubjects = subjects
     .filter((s) => s.weakTopics.length > 0)
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       const aAccuracy = a.weakTopics[0]?.accuracy || 0;
       const bAccuracy = b.weakTopics[0]?.accuracy || 0;
       return aAccuracy - bAccuracy;
@@ -116,7 +116,7 @@ function generateRecommendations(subjects: SubjectAnalytics[]): AnalyticsRecomme
 
   const strongSubjects = subjects
     .filter((s) => s.accuracy >= 0.8)
-    .sort((a, b) => b.accuracy - a.accuracy);
+    .toSorted((a, b) => b.accuracy - a.accuracy);
 
   if (strongSubjects.length > 0) {
     recommendations.push({
@@ -146,7 +146,7 @@ function generateRecommendations(subjects: SubjectAnalytics[]): AnalyticsRecomme
     priority: 10,
   });
 
-  return recommendations.sort((a, b) => a.priority - b.priority);
+  return recommendations.toSorted((a, b) => a.priority - b.priority);
 }
 
 class AnalyticsEngine {
@@ -251,7 +251,7 @@ class AnalyticsEngine {
         accuracy: data.questions > 0 ? data.correct / data.questions : 0,
         duration: data.duration,
       }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+      .toSorted((a, b) => a.date.localeCompare(b.date));
 
     const insights = generateInsights(subjects, totalQuestions, totalCorrect);
     const recommendations = generateRecommendations(subjects);

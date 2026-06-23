@@ -9,6 +9,15 @@ export interface QuizCompleteResult {
   elapsedTime: number;
 }
 
+export interface RetentionQuestion {
+  id: string;
+  questionText: string;
+  correctAnswer: string;
+  explanation: string;
+  subject: string;
+  topic: string;
+}
+
 export interface UseQuizParams {
   subject: string;
   topic?: string;
@@ -18,6 +27,7 @@ export interface UseQuizParams {
   enabled?: boolean;
   pastPaperMode?: boolean;
   preloadedQuestions?: Question[];
+  retentionQuestions?: RetentionQuestion[];
   suggestedBloomLevel?: BloomLevel;
   suggestedDifficulty?: Difficulty;
   topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";

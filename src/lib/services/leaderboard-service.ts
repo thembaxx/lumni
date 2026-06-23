@@ -53,7 +53,7 @@ export function getLocalLeaderboard(): LeaderboardEntry[] {
     },
     ...recent
       .filter((d) => d.label !== "This Week (You)")
-      .sort((a, b) => b.xp - a.xp)
+      .toSorted((a, b) => b.xp - a.xp)
       .slice(0, 9)
       .map((d, i) => ({
         rank: i + 2,

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { PageSkeleton } from "@/components/ui/page-skeleton";
 import { StudyGroupsList } from "./study-groups-list";
 
 export const metadata: Metadata = {
@@ -7,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function StudyGroupsPage() {
-  return <StudyGroupsList />;
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <StudyGroupsList />
+    </Suspense>
+  );
 }

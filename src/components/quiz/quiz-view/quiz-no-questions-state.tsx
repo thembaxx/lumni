@@ -8,9 +8,14 @@ import { DecorativeRightPanel } from "./decorative-right-panel";
 interface QuizNoQuestionsStateProps {
   selectedSubject: string;
   onBack: () => void;
+  warning?: string;
 }
 
-export function QuizNoQuestionsState({ selectedSubject, onBack }: QuizNoQuestionsStateProps) {
+export function QuizNoQuestionsState({
+  selectedSubject,
+  onBack,
+  warning,
+}: QuizNoQuestionsStateProps) {
   const t = useTranslations();
 
   return (
@@ -22,6 +27,11 @@ export function QuizNoQuestionsState({ selectedSubject, onBack }: QuizNoQuestion
               {t("quiz.noQuestions")}
             </CardTitle>
             <QuizEmptyState variant="no-questions" subject={selectedSubject} onBack={onBack} />
+            {warning && (
+              <p className="mt-4 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs">
+                {warning}
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

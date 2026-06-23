@@ -127,7 +127,7 @@ export class PathEngine {
       skip: 3,
     };
 
-    return recommendations.sort((a, b) => priorityOrder[a.action] - priorityOrder[b.action]);
+    return recommendations.toSorted((a, b) => priorityOrder[a.action] - priorityOrder[b.action]);
   }
 
   async getNextAction(
@@ -212,7 +212,7 @@ export class PathEngine {
       }),
     );
 
-    return dayResults.sort((a, b) => a.day - b.day);
+    return dayResults.toSorted((a, b) => a.day - b.day);
   }
 
   getAdvancedFromGraph(

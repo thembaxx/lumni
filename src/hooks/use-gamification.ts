@@ -134,6 +134,11 @@ export function useGamification() {
       streak: number,
       currentLevel: number,
       perfectQuiz: boolean,
+      extra?: {
+        competentTopicsCount?: number;
+        topicScoreImproved?: boolean;
+        examScoreImproved?: boolean;
+      },
     ) => {
       const achievements = service.checkAndUnlockAchievements(
         questionsAnswered,
@@ -141,6 +146,7 @@ export function useGamification() {
         streak,
         currentLevel,
         perfectQuiz,
+        extra,
       );
       for (const ach of achievements) {
         setPendingAchievement(ach);
@@ -212,6 +218,26 @@ export function useGamification() {
     }
   }, [service]);
 
+  const updateCounter = useCallback(
+    (
+      key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
+      value: number,
+    ) => {
+      service.updateCounter(key, value);
+    },
+    [service],
+  );
+
+  const setCounter = useCallback(
+    (
+      key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
+      value: number,
+    ) => {
+      service.setCounter(key, value);
+    },
+    [service],
+  );
+
   return {
     gamification,
     levelInfo,
@@ -236,5 +262,7 @@ export function useGamification() {
     clearLevelUp,
     clearAchievement,
     clearChest,
+    updateCounter,
+    setCounter,
   };
 }

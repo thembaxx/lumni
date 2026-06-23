@@ -51,7 +51,7 @@ export class DigestService {
           subject,
           avg: Math.round((scores.reduce((s, sc) => s + sc, 0) / scores.length) * 100),
         }))
-        .sort((a, b) => b.avg - a.avg)
+        .toSorted((a, b) => b.avg - a.avg)
         .slice(0, 3)
         .map((s) => `${s.subject} (${s.avg}%)`)
         .join(", ");

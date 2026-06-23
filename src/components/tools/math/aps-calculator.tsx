@@ -109,7 +109,7 @@ export function APSCalculator() {
         }
         return acc;
       }, [] as number[])
-      .sort((a, b) => b - a)
+      .toSorted((a, b) => b - a)
       .slice(0, 6)
       .reduce((sum, s) => sum + s, 0);
   };
@@ -236,7 +236,7 @@ export function APSCalculator() {
           <div className="flex flex-col gap-2">
             {subjects
               .filter((s) => s.percentage > 0)
-              .sort((a, b) => getAPSForSubject(b.percentage) - getAPSForSubject(a.percentage))
+              .toSorted((a, b) => getAPSForSubject(b.percentage) - getAPSForSubject(a.percentage))
               .map((subject, idx) => {
                 const aps = getAPSForSubject(subject.percentage);
                 return (

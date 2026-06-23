@@ -8,8 +8,9 @@
   },
   "rules": {
     "no-console": "off",
-    "no-await-in-loop": "warn",
-    "no-underscore-dangle": ["warn", { "allow": ["__filename", "__dirname"] }],
+    "no-await-in-loop": "off",
+    "no-shadow": "off",
+    "no-underscore-dangle": "off",
     "react/react-in-jsx-scope": "off",
     "import/no-unassigned-import": "off",
     "vitest/require-mock-type-parameters": "off",
@@ -17,19 +18,27 @@
     "vitest/expect-expect": "off",
     "vitest/no-standalone-expect": "off",
     "vitest/hoisted-apis-on-top": "off",
-    "jsx-a11y/prefer-tag-over-role": "warn",
+    "no-array-index-key": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/role-supports-aria-props": "off",
     "jsx-a11y/control-has-associated-label": "warn",
     "import/namespace": "warn",
-    "unicorn/no-array-reverse": "warn",
-    "no-unused-vars": "error",
+    "unicorn/no-array-reverse": "off",
+    "no-unused-vars": "warn",
     "typescript/no-explicit-any": "warn",
     "typescript/prefer-as-const": "error",
     "react/no-unstable-nested-components": "warn",
     "react/jsx-no-useless-fragment": "warn",
     "react/no-direct-mutation-state": "error",
     "no-var": "error",
-    "unicorn/prefer-optional-catch-binding": "warn",
-    "react-hooks/exhaustive-deps": "error"
+    "unicorn/prefer-optional-catch-binding": "off",
+    "unicorn/prefer-array-find": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "consistent-function-scoping": "off",
+    "no-map-spread": "off",
+    "unicorn/prefer-add-event-listener": "off",
+    "unicorn/require-post-message-target-origin": "off",
+    "react/no-object-type-as-default-prop": "off"
   },
   "env": {
     "builtin": true
@@ -50,7 +59,8 @@
         "jsx-a11y/interactive-supports-focus": "off",
         "jsx-a11y/no-noninteractive-element-interactions": "off",
         "nextjs/no-img-element": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "typescript/no-extraneous-class": "off"
       }
     },
     {
@@ -64,6 +74,12 @@
       "rules": {
         "no-console": "off",
         "no-unused-vars": "warn"
+      }
+    },
+    {
+      "files": ["scripts/**", "e2e/**", "public/sw.js", "**/*.mjs", "**/*.mts"],
+      "rules": {
+        "no-await-in-loop": "off"
       }
     }
   ]

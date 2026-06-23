@@ -1,4 +1,4 @@
-import Exa from "exa-js";
+import { Exa } from "exa-js";
 import type { SearchResultItem } from "./search-service";
 
 export interface WebSearchOptions {

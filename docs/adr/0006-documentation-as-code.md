@@ -1,6 +1,6 @@
 # ADR-05: Documentation-as-Code Workflow — Storybook, MDX Sync, Biome.js Enforcement
 
-**Status:** Proposed  
+**Status:** Rejected — tooling diverged (oxlint/oxfmt, pnpm); stories centralized not co-located; no Storybook deploy  
 **Date:** 2026-05-23  
 **Author:** Senior Frontend Architect
 

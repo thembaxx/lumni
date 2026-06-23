@@ -33,7 +33,7 @@ export class QuizSessionRepository {
     return this.db.quizAttempts
       .where("odSubject")
       .equals(odSubject)
-      .reverse()
+      .toReversed()
       .limit(limit)
       .toArray();
   }

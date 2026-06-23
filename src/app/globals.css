@@ -955,10 +955,16 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 0;
+    height: env(titlebar-area-height, 0px);
     -webkit-app-region: drag;
     z-index: var(--z-modal);
     background: var(--system-background);
+  }
+}
+
+@media (display-mode: window-controls-overlay) {
+  .titlebar-drag-region {
+    height: env(titlebar-area-height);
   }
 }
 

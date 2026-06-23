@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
 import { useQuiz } from "@/lib/quiz";
+import type { RetentionQuestion } from "@/lib/quiz/types";
+import { dexieDataAccess } from "@/lib/db";
 import type { QuizViewProps } from "../quiz-view";
 
 export function useQuizView({
@@ -25,6 +27,7 @@ export function useQuizView({
     suggestedDifficulty?: Difficulty;
   }>({});
   const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
+  const [retentionQuestions, setRetentionQuestions] = useState<RetentionQuestion[]>([]);
 
   const shared = useQuiz({
     subject: selectedSubject,
@@ -35,6 +38,7 @@ export function useQuizView({
     enabled: sessionActive && !!selectedSubject,
     pastPaperMode,
     preloadedQuestions: packQuestions,
+    retentionQuestions,
     suggestedBloomLevel: competencyData.suggestedBloomLevel,
     suggestedDifficulty: competencyData.suggestedDifficulty,
     topicCompetencyLevel: competencyData.topicCompetencyLevel,
@@ -78,6 +82,28 @@ export function useQuizView({
         const normalizedSubject = subject.toLowerCase();
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
+        // load overdue retention items for this subject
+        try {
+          const now = Date.now();
+          const items = await dexieDataAccess.retentionRecurrence
+            .where("scheduledAt")
+            .belowOrEqual(now)
+            .toArray();
+          const overdue = items.filter((i) => !i.completed && i.subject === normalizedSubject);
+          setRetentionQuestions(
+            overdue.slice(0, 3).map((i) => ({
+              id: i.questionId,
+              questionText: i.questionText,
+              correctAnswer: i.correctAnswer,
+              explanation: i.explanation,
+              subject: i.subject,
+              topic: i.topic,
+            })),
+          );
+        } catch {
+          setRetentionQuestions([]);
+        }
+
         if (competencies.length === 0) {
           setCompetencyData({});
           setResolvedTopic(topic);
@@ -112,6 +138,7 @@ export function useQuizView({
       }
 
       setCompetencyData(loadedCompData);
+
       setSessionActive(true);
       setLoadError(null);
     },
@@ -133,6 +160,17 @@ export function useQuizView({
       actions.start();
     }
   }, [sessionActive, shared.questions, state.isComplete, actions]);
+
+  useEffect(() => {
+    if (state.isComplete && retentionQuestions.length > 0) {
+      const ids = retentionQuestions.map((rq) => rq.id);
+      dexieDataAccess.retentionRecurrence
+        .where("questionId")
+        .anyOf(ids)
+        .modify({ completed: true })
+        .catch(() => {});
+    }
+  }, [state.isComplete, retentionQuestions]);
 
   const handleStop = useCallback(() => {
     setSessionActive(false);
@@ -202,6 +240,7 @@ export function useQuizView({
     resolvedTopic,
     questions: shared.questions,
     sources: shared.sources,
+    warning: shared.warning,
     isLoading: shared.isLoading,
     isError: shared.isError,
     state,

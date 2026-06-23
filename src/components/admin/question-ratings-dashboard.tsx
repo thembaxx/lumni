@@ -44,7 +44,7 @@ export function QuestionRatingsDashboard() {
     queryKey: ["question-ratings", "recent"],
     queryFn: async () => {
       const result = await questionRatingService.getAllRatings();
-      return result.success ? result.data.slice(-20).reverse() : [];
+      return result.success ? result.data.slice(-20).toReversed() : [];
     },
   });
 

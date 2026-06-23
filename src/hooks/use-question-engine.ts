@@ -15,6 +15,7 @@ interface GenerateResult {
   count: number;
   type: string;
   sources?: { url: string; title: string }[];
+  warning?: string;
 }
 
 interface HintResult {
@@ -126,11 +127,13 @@ export function useQuestionEngine(params?: GenerationParams, options?: UseQuesti
   );
 
   const questions = useMemo(() => queryData?.questions ?? [], [queryData?.questions]);
+  const warning = queryData?.warning;
 
   return {
     questions,
     count: queryData?.count ?? 0,
     sources: queryData?.sources ?? [],
+    warning,
     isLoading,
     isFetching,
     error,

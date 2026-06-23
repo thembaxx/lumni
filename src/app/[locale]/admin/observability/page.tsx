@@ -135,7 +135,7 @@ export default function ObservabilityPage() {
               {Object.keys(eventSummary.byType).length > 0 && (
                 <div className="flex flex-col gap-1.5">
                   {Object.entries(eventSummary.byType)
-                    .sort(([, a], [, b]) => b - a)
+                    .toSorted(([, a], [, b]) => b - a)
                     .map(([type, count]) => (
                       <div key={type} className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">{type.replace(/_/g, " ")}</span>

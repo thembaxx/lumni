@@ -136,6 +136,11 @@ export class GamificationService {
     streak: number,
     currentLevel: number,
     perfectQuiz: boolean,
+    extra?: {
+      competentTopicsCount?: number;
+      topicScoreImproved?: boolean;
+      examScoreImproved?: boolean;
+    },
   ): Achievement[] {
     const ids = gamificationEngine.checkAndUnlockAchievements(
       this.data,
@@ -144,6 +149,7 @@ export class GamificationService {
       streak,
       currentLevel,
       perfectQuiz,
+      extra,
     );
     return ids
       .map((id) => {
@@ -151,6 +157,25 @@ export class GamificationService {
         return result.achievement;
       })
       .filter((a): a is Achievement => a !== null);
+  }
+
+  updateCounter(
+    key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
+    value: number,
+  ): void {
+    const prev = this.data[key] ?? 0;
+    this.data = { ...this.data, [key]: prev + value };
+    this.persist(this.data);
+    this.notify();
+  }
+
+  setCounter(
+    key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
+    value: number,
+  ): void {
+    this.data = { ...this.data, [key]: value };
+    this.persist(this.data);
+    this.notify();
   }
 
   updateStreak(): StreakResult {

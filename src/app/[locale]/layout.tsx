@@ -161,6 +161,7 @@ export default async function LocaleLayout({
       >
         {t("skipToContent")}
       </a>
+      <div className="titlebar-drag-region" />
       <Suspense fallback={<CardSkeleton />}>
         <Utssr />
       </Suspense>

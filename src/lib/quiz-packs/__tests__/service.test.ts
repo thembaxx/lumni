@@ -30,7 +30,7 @@ class PatchedCollection<T> implements Collection<T> {
     return this.inner.modify(changes);
   }
   reverse(): Collection<T> {
-    return this.inner.reverse();
+    return this.inner.toReversed();
   }
   limit(n: number): Collection<T> {
     return this.inner.limit(n);

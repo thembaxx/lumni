@@ -108,7 +108,7 @@ async function networkFirstHtml(request) {
       cache.put(request, response.clone());
     }
     return response;
-  } catch (_error) {
+  } catch {
     const cached = await caches.match(request, { ignoreSearch: true });
     if (cached) return cached;
     const offline = await caches.match("/offline", { ignoreSearch: true });
@@ -141,7 +141,7 @@ async function networkFirst(request, cacheName) {
       cache.put(request, response.clone());
     }
     return response;
-  } catch (_error) {
+  } catch {
     const cached = await caches.match(request);
     if (cached) return cached;
     return new Response(JSON.stringify({ error: "Offline", cached: false }), {

@@ -13,7 +13,7 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
-import { join, extname, dirname } from "node:path";
+import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -44,11 +44,6 @@ const RENAME_MAP = {
 // Icons that are currently used as direct JSX but should use HugeiconsIcon
 // Map: file → list of icon variable names needing wrapping
 // Format: { relativePath: [ [iconVarName, replacementJSX], ... ] }
-const WRAP_FIXES = {
-  // Files where an icon is rendered as <VariableIcon className="..." />
-  // and VariableIcon holds hugeicons data (not a component)
-};
-
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

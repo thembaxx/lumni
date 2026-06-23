@@ -14,6 +14,7 @@ import type {
   ChatMessageRecord,
   CompetitionScoreRecord,
   ExamSessionSnapshot,
+  PronunciationScoreRecord,
   ExtractionCache,
   FlashcardSyncState,
   LessonProgress,
@@ -81,6 +82,10 @@ class InMemoryCollection<T> implements Collection<T> {
       () => this.getItems(),
       (a, b) => -1 * (this.compareFn?.(a, b) ?? 0),
     );
+  }
+
+  toReversed(): Collection<T> {
+    return this.reverse();
   }
 
   limit(n: number): Collection<T> {
@@ -296,4 +301,5 @@ export class InMemoryDataAccess implements DataAccess {
   lessonProgress = new InMemoryTable<LessonProgress, string>();
   onboardingState = new InMemoryTable<OnboardingState, string>();
   competitionScores = new InMemoryTable<CompetitionScoreRecord>();
+  pronunciationHistory = new InMemoryTable<PronunciationScoreRecord>();
 }

@@ -30,13 +30,13 @@ export default function AdminQualityPage() {
     refetchInterval: 5000,
   });
 
-  const { data: events = loadEvents().slice(-20).reverse(), isError: eventsErr } = useQuery({
+  const { data: events = loadEvents().slice(-20).toReversed(), isError: eventsErr } = useQuery({
     queryKey: ["engine-quality", "events"],
     queryFn: () => loadEvents().slice(-20).reverse(),
     refetchInterval: 5000,
   });
 
-  const { data: recentQuality = loadQualityRecords().slice(-10).reverse(), isError: recentErr } =
+  const { data: recentQuality = loadQualityRecords().slice(-10).toReversed(), isError: recentErr } =
     useQuery({
       queryKey: ["engine-quality", "recent"],
       queryFn: () => loadQualityRecords().slice(-10).reverse(),

@@ -91,7 +91,7 @@ export async function verifyAuth(userId: string): Promise<void> {
     }
   } catch (err) {
     logError("VerifyAuth", err);
-    throw new Error("Authentication required");
+    throw new Error("Authentication required", { cause: err });
   }
 }
 

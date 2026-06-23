@@ -13,11 +13,11 @@ Pass your Matric with confidence. Lumni is an offline-capable, mobile-first stud
 ## Quick Start
 
 ```bash
-npm install       # Install dependencies
-npm run dev       # Start dev server at http://localhost:3000
-npx tsc --noEmit  # Type-check
-npx biome check . # Lint & format
-npx next build    # Production build
+pnpm install       # Install dependencies
+pnpm run dev       # Start dev server at http://localhost:3000
+pnpm run typecheck # Type-check
+pnpm exec biome check . # Lint & format
+pnpm run build     # Production build
 ```
 
 ---
@@ -40,7 +40,7 @@ npx next build    # Production build
 | AI                 | Gemini 2.0 Flash Lite → Nvidia NIM → Groq (cascading)            |
 | Upload             | UploadThing                                                      |
 | Push Notifications | Web Push (`web-push`)                                            |
-| Quality            | Biome, bun test                                                  |
+| Quality            | Biome, vitest                                                    |
 | E2E Tests          | Playwright 1.60.0                                                |
 | UI Docs            | Storybook 10.4.1                                                 |
 | Deployment         | Vercel                                                           |
@@ -190,7 +190,7 @@ Offline-first: all data writes to Dexie immediately, syncs to Appwrite via a pri
 - **UI**: `@hugeicons/react`, `lucide-react`, `class-variance-authority`, `clsx`, `tailwind-merge`, `cmdk`, `vaul`, `input-otp`, `react-day-picker`, `@base-ui/react`
 - **Backend**: `appwrite`, `node-appwrite`, `uploadthing`, `web-push`
 - **Diagrams**: `react-konva`, `@xyflow/react`
-- **Dev**: `typescript`, `biome`, `bun`, `tailwindcss`, `postcss`, `@playwright/test`, `storybook`
+- **Dev**: `typescript`, `biome`, `pnpm`, `tailwindcss`, `postcss`, `@playwright/test`, `storybook`
 
 ---
 

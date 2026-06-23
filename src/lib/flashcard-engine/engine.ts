@@ -55,9 +55,9 @@ async function countConsecutivePasses(
   const history = await db.reviewHistory
     .where("cardId")
     .equals(cardId)
-    .reverse()
+    .toReversed()
     .sortBy("reviewedAt");
-  const recent = history.reverse().slice(-10);
+  const recent = history.toReversed().slice(-10);
   let count = 0;
   for (let i = recent.length - 1; i >= 0; i--) {
     if (recent[i].quality >= 3) {
@@ -115,7 +115,7 @@ export class FlashcardEngine {
     const cards = await this.db.flashcards.where("nextReview").belowOrEqual(now).toArray();
     const active = cards
       .filter((c) => c.status === "active" && subjectFilter(c, subject))
-      .sort((a, b) => a.nextReview - b.nextReview);
+      .toSorted((a, b) => a.nextReview - b.nextReview);
     const limit = this.dailyLimits.getReviewLimit(settings.dailyReviewLimit, active.length);
     if (limit >= active.length) return active;
     return active.slice(0, limit);

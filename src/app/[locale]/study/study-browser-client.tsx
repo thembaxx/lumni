@@ -169,7 +169,7 @@ export function StudyBrowserClient() {
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 p-5 pt-0">
                   {topic.subtopics
-                    .sort((a, b) => a.order - b.order)
+                    .toSorted((a, b) => a.order - b.order)
                     .map((subtopic) => {
                       const lessonKey = `${selectedSubject}:${topic.id}:${subtopic.id}`;
                       const progress = progressMap?.[lessonKey];

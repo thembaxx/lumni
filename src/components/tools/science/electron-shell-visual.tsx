@@ -49,7 +49,7 @@ function parseElectronConfig(config: string): ShellData[] {
   }
 
   return Array.from(shells.entries())
-    .sort(([a], [b]) => a - b)
+    .toSorted(([a], [b]) => a - b)
     .map(([level, { count, parts }]) => ({
       level,
       count,

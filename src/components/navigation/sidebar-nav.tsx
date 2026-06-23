@@ -2,7 +2,7 @@
 
 import Menu01Icon from "@hugeicons/core-free-icons/Menu01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { createContext, use, useCallback, useMemo, useState } from "react";
+import { createContext, use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -35,6 +35,18 @@ function SidebarContent() {
   const { user } = useAuth();
   const { setOpen } = use(SidebarStateContext);
   const [query, setQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const hasRole = useCallback(
     (role: string) => (user?.labels ?? []).includes(role),
@@ -91,9 +103,11 @@ function SidebarContent() {
             className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
           />
           <input
+            ref={searchRef}
             id="sidebar-nav-search"
             type="text"
             placeholder="Search pages..."
+            aria-description="Cmd+K to focus"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="h-9 w-full rounded-lg border border-border/50 bg-system-fill pr-3 pl-9 text-sm placeholder:text-muted-foreground/60 focus:border-system-accent focus:outline-none focus:ring-1 focus:ring-system-accent/30"

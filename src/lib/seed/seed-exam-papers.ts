@@ -57,7 +57,7 @@ async function seedExamPapers() {
     .filter((f) => f.endsWith(".pdf"))
     .map((f) => parseFilename(f))
     .filter((f): f is ParsedFile => f !== null)
-    .sort((a, b) => a.filename.localeCompare(b.filename));
+    .toSorted((a, b) => a.filename.localeCompare(b.filename));
 
   if (files.length === 0) {
     console.log("No exam PDFs found in public/docs/exams/. Run rename-exam-pdfs.ts first.");

@@ -51,7 +51,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 ### P1 — E2E Tests (Playwright)
 
 - [x] **Playwright installed**: `@playwright/test@1.60.0` with chromium browser
-- [x] **`playwright.config.ts`**: Desktop Chrome, port 3000, `webServer` pointing to `npm run dev`
+- [x] **`playwright.config.ts`**: Desktop Chrome, port 3000, `webServer` pointing to `pnpm run dev`
 - [x] **Smoke tests**: `e2e/home.spec.ts` (homepage loads, nav visible), `e2e/quiz.spec.ts` (quiz page, exam-dates page)
 - [x] **NPM scripts**: `test:e2e` and `test:e2e:ui`
 
@@ -80,7 +80,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] **Dependencies**: `storybook@10.4.1`, `@storybook/nextjs`, `@storybook/react`, `@storybook/test`
 - [x] **Config**: `.storybook/main.ts` (Next.js framework, stories glob), `.storybook/preview.ts`
 - [x] **Stories**: `ShareButton.stories.ts` (3 variants), `Badge.stories.ts` (4 variants)
-- [x] **Build**: `npx storybook build` completes successfully; `npm run storybook` starts dev server
+- [x] **Build**: `pnpm exec storybook build` completes successfully; `pnpm run storybook` starts dev server
 - [x] **Scripts**: `storybook` and `build-storybook` in package.json
 
 ## ✅ Session 11 — P2 Brainstorm Features (May 2026)
@@ -96,17 +96,18 @@ All 21 items across P2 and P3 are implemented. Total changes:
 ### TypeScript & Lint
 
 - [x] `tsc --noEmit` passes with zero errors
-- [x] `npx biome check` passes on all changed files
+- [x] `pnpm exec biome check` passes on all changed files
 
 ## ✅ Session 12 — Infrastructure + Feature Sweep (May 2026)
 
-### Bun Migration
+### Package Manager Consolidation (pnpm)
 
-- [x] **Lockfile**: Deleted `package-lock.json`, regenerated with `bun install` → `bun.lock`
-- [x] **Scripts**: Changed `npx` → `bunx` in `test:e2e` and `test:e2e:ui` scripts
-- [x] **Husky**: Changed `.husky/pre-commit` from `npx biome` to `bunx biome`
-- [x] **Playwright**: Changed `playwright.config.ts` from `npm run dev` to `bun run dev`
-- [x] **CI**: Migrated `sentry-release` job from `actions/setup-node@v4` to `oven-sh/setup-bun@v2`
+- [x] **Lockfile**: `pnpm-lock.yaml` is the only lockfile; removed `bun.lock`
+- [x] **Scripts**: All `npx` → direct bin names (pnpm resolves local deps); `bun run` → `pnpm run`
+- [x] **Husky**: Changed to `pnpm exec biome` / `pnpm run typecheck`
+- [x] **Playwright**: Changed `playwright.config.ts` to `pnpm run dev`
+- [x] **CI**: Migrated from `oven-sh/setup-bun@v2` to `pnpm/action-setup@v4` + `actions/setup-node@v4`
+- [x] **package.json**: Added `"packageManager": "pnpm@10.8.1"` field
 
 ### Mega-component Decomposition
 
@@ -275,7 +276,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 ### Architecture decisions
 
 - **Foundation → Solve → Quiz** split shipped as 3 separate PRs (each independently shippable)
-- **DI over `mock.module`** for RAG-touching functions (avoids process-wide test pollution in Bun)
+- **DI over `mock.module`** for RAG-touching functions (avoids process-wide test pollution)
 - **RAG injection format**: XML `<reference_material>` block prepended to user prompt with `\n\n---\n\n` separator; `buildPromptInstruction()` appended to system prompt
 - **Fetch once per batch** — `QuestionEngine.lastRagContext` shared across processors in a single generate call
 - **Fail-open pattern**: 3s `Promise.race` timeout + try/catch + `console.warn` — mirrors across both solve and quiz flows
@@ -286,10 +287,10 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### Verification
 
-- [x] `bun test` — 1197 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors
-- [x] `npx tsc --noEmit` — zero errors
-- [x] `npx biome check` — zero warnings
-- [x] `npx next build` — clean (Turbopack)
+- [x] `pnpm run test` — 1197 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors
+- [x] `pnpm run typecheck` — zero errors
+- [x] `pnpm exec biome check` — zero warnings
+- [x] `pnpm run build` — clean (Turbopack)
 - [x] Pre-commit hook (biome + tsc) passed at each commit
 
 ## ✅ Session 20 — TinyFish Q7 follow-up (June 2026)
@@ -311,9 +312,9 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### Verification
 
-- [x] `bun test` — 1203 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+6 from Session 19, no regressions)
-- [x] `npx tsc --noEmit` — zero errors
-- [x] `npx biome check` — zero warnings on 12 changed files
+- [x] `pnpm run test` — 1203 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+6 from Session 19, no regressions)
+- [x] `pnpm run typecheck` — zero errors
+- [x] `pnpm exec biome check` — zero warnings on 12 changed files
 - [x] Pre-commit hook (biome + tsc) passed at commit
 
 ### Open follow-ups
@@ -342,9 +343,9 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### Verification
 
-- [x] `bun test` — 1220 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+17 from Session 20, no regressions)
-- [x] `npx tsc --noEmit` — zero errors
-- [x] `npx biome check` — zero warnings on 9 changed files
+- [x] `pnpm run test` — 1220 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+17 from Session 20, no regressions)
+- [x] `pnpm run typecheck` — zero errors
+- [x] `pnpm exec biome check` — zero warnings on 9 changed files
 - [x] Pre-commit hook (biome + tsc) passed at commit
 
 ### Open follow-ups
@@ -355,7 +356,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### Test suite hardening
 
-- [x] **e2e exclusion**: Fixed e2e Playwright files loaded by `bun test` — added `exclude = ["**/e2e/**"]` to `bunfig.toml`
+- [x] **e2e exclusion**: Fixed e2e Playwright files loaded by `pnpm run test` — added `exclude = ["**/e2e/**"]` to `bunfig.toml`
 - [x] **localStorage**: Added `globalThis.localStorage` to test `setup.ts` (happy-dom Window) — fixes `ReferenceError` in 89 source files
 - [x] **Missing mock exports**: Added `markPlanStale`, `clearPlanStale`, `syncStudyPlanToAppwrite` to `use-study-planner.test.ts` mock
 - [x] **Missing mock exports (api-fetch)**: Added `isBudgetExceeded`, `showBudgetToast` to `use-gamification.test.tsx` api-fetch mock
@@ -390,7 +391,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 - [x] `tsc --noEmit` — zero errors
 - [x] `biome check` — zero errors on all 8 changed files
-- [x] `bun test` — 1109 pass, 5 fail (e2e only)
+- [x] `pnpm run test` — 1109 pass, 5 fail (e2e only)
 
 ## ✅ Session 17 — Premium Gating + Student Assignments (May 2026)
 
@@ -416,8 +417,8 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### Verification
 
-- [x] **TypeScript**: `npx tsc --noEmit` passes with zero errors
-- [x] **Biome**: `npx biome check` passes on all 6 changed files
+- [x] **TypeScript**: `pnpm run typecheck` passes with zero errors
+- [x] **Biome**: `pnpm exec biome check` passes on all 6 changed files
 
 ## ✅ Session 8 — Unimplemented Fixes (May 2026)
 
@@ -453,8 +454,8 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **top-nav.tsx dead import** — Fixed `getRandomName` import (function was actually used; renamed without underscore prefix)
 - [x] **dev/visual dead state** — Removed unused `testResult` state + rendering block (`dev/visual/page.tsx:40`)
 - [x] **Upload page sync feedback** — Replaced dead refs with state; added sync status indicator in upload UI (`upload/page.tsx:19,21`)
-- [x] **TypeScript check** — `npx tsc --noEmit` passes with zero errors
-- [x] **Biome lint** — `npx biome check` passes with zero warnings
+- [x] **TypeScript check** — `pnpm run typecheck` passes with zero errors
+- [x] **Biome lint** — `pnpm exec biome check` passes with zero warnings
 
 ### Session 9 — Pending implementation sweep (May 2026)
 
@@ -465,7 +466,7 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **Dexie `chatMessages` table write path**: Added `offlineDB.chatMessages.bulkPut()` in `use-chat.ts` on message change
 - [x] **Premium gating**: `PremiumGate` component created; `hasFeature()` wired into `exam-engine` (`exam-simulator`), `analytics-panel` + `comparative-analytics-panel` (`advanced-analytics`), `study-plan-overview` + `smart-scheduler` (`custom-study-plans`)
 - [x] **Priority support**: Support page at `/support` with priority-aware channel cards; added to premium upgrade page FEATURES array
-- [x] **TypeScript & biome**: `tsc --noEmit` passes with zero errors; `npx biome check` passes on all changed files
+- [x] **TypeScript & biome**: `tsc --noEmit` passes with zero errors; `pnpm exec biome check` passes on all changed files
 
 ## Strategy Roadmap (June 2026 — Product Strategy Assessment)
 
@@ -498,8 +499,8 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 
 ### Verification
 
-- [x] `npx tsc --noEmit` — zero errors
-- [x] `npx biome check` — zero errors
+- [x] `pnpm run typecheck` — zero errors
+- [x] `pnpm exec biome check` — zero errors
 - [x] `git commit` — `6d51dd0f` pushed to `origin/master`
 
 ## ✅ Hardening Batch 6 (June 2026)
@@ -509,7 +510,7 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **A11y round 2** — 8 Konva `<Stage>` elements get `ariaLabel`, admin form labels get `htmlFor`/`id`, 11 icon-only buttons get `aria-label`, 2 `<select>` elements get `aria-label`, admin text leak ("Download01Icon Papers") fixed, note-creator removes false `role="button"`
 - [x] **i18n round 2** — 45 missing keys (nav._ 5 + consent._ 40) added to both af.json and zu.json with Afrikaans and isiZulu translations
 - [x] **Visual regression testing** — `e2e/visual.spec.ts` with 6 home page section tests (hero, features, how-it-works, pricing, testimonials, footer)
-- [x] **Static analysis in CI** — `knip@6.15.0` installed, `knip.json` configured, `bun run deadcode` script added, CI quality job includes `bun run deadcode` step
+- [x] **Static analysis in CI** — `knip@6.15.0` installed, `knip.json` configured, `pnpm run deadcode` script added, CI quality job includes `pnpm run deadcode` step
 
 ### TypeScript & Lint (Session 8 — cleanup sweep)
 
@@ -706,10 +707,10 @@ All backend services, types, and API routes already built. See Session 23+ for d
 ### Verification Gates (Every Batch)
 
 ```
-npx tsc --noEmit     → zero errors
-npx biome check       → zero warnings on changed files
-npx vitest run        → all pass (current baseline: 1271 pass, 0 fail)
-npx next build        → clean build
+pnpm run typecheck     → zero errors
+pnpm exec biome check       → zero warnings on changed files
+pnpm exec vitest run        → all pass (current baseline: 1271 pass, 0 fail)
+pnpm run build        → clean build
 ```
 
 ---

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 // ── Helpers ──────────────────────────────────────────────────────────
 function createInMemoryStore<T extends { id?: number }>() {
@@ -66,7 +66,7 @@ const mockGetAI = mock(() => ({
 const mockInitAI = mock(() => {});
 const mockIsAIConfigured = mock(() => true);
 
-mock.module("@/lib/ai", () => ({
+vi.mock("@/lib/ai", () => ({
   getAI: mockGetAI,
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,
@@ -81,7 +81,7 @@ const mockDailyCheck = mock(() => ({
 }));
 const mockDailyIncrement = mock(() => {});
 
-mock.module("@/lib/ai/daily-call-tracker", () => ({
+vi.mock("@/lib/ai/daily-call-tracker", () => ({
   dailyCallTracker: {
     check: mockDailyCheck,
     increment: mockDailyIncrement,
@@ -96,7 +96,7 @@ const mockCompetenciesStore = createInMemoryStore();
 const mockWrongAnswersStore = createInMemoryStore();
 const mockQuestionRatingsStore = createInMemoryStore();
 
-mock.module("@/lib/db/schema", () => ({
+vi.mock("@/lib/db/schema", () => ({
   offlineDB: {
     jobs: mockJobsStore,
     questions: mockQuestionsStore,
@@ -113,7 +113,7 @@ mock.module("@/lib/db/schema", () => ({
 const mockGetCachedQuestions = mock(() => null);
 const mockCacheQuestions = mock(() => {});
 
-mock.module("@/lib/db/repositories/question-cache", () => ({
+vi.mock("@/lib/db/repositories/question-cache", () => ({
   questionCacheRepo: {
     get: mockGetCachedQuestions,
     cache: mockCacheQuestions,
@@ -126,12 +126,12 @@ mock.module("@/lib/db/repositories/question-cache", () => ({
 const mockLoadFromAppwrite = mock(() => []);
 const mockSyncToAppwrite = mock(() => {});
 
-mock.module("@/lib/question-engine/persistence", () => ({
+vi.mock("@/lib/question-engine/persistence", () => ({
   loadQuestionsFromAppwrite: mockLoadFromAppwrite,
   syncQuestionsToAppwrite: mockSyncToAppwrite,
 }));
 
-mock.module("@/lib/db/client", () => ({
+vi.mock("@/lib/db/client", () => ({
   APPWRITE_DATABASE_ID: "test-db-id",
   COLLECTIONS: {
     TOPICS: "topics",
@@ -147,7 +147,7 @@ mock.module("@/lib/db/client", () => ({
   deleteDocument: mock(() => {}),
 }));
 
-mock.module("appwrite", () => ({
+vi.mock("appwrite", () => ({
   Query: { equal: () => "equal", limit: () => "limit" },
   Storage: class {},
   Account: class {},
@@ -162,7 +162,7 @@ mock.module("appwrite", () => ({
   Users: class {},
 }));
 
-mock.module("@/lib/appwrite", () => ({
+vi.mock("@/lib/appwrite", () => ({
   databases: {
     createDocument: mock(() => "doc-id"),
     getDocument: mock(() => null),
@@ -186,18 +186,18 @@ const mockGenerateDiagram = mock(() => ({
 }));
 const mockSearchImage = mock(() => null);
 
-mock.module("@/lib/visual-engine/stem-renderer", () => ({
+vi.mock("@/lib/visual-engine/stem-renderer", () => ({
   generateDiagram: mockGenerateDiagram,
 }));
 
-mock.module("@/lib/visual-engine/image-resolver", () => ({
+vi.mock("@/lib/visual-engine/image-resolver", () => ({
   searchImage: mockSearchImage,
 }));
 
 const mockLoadVisualAppwrite = mock(() => null);
 const mockSaveVisualAppwrite = mock(() => {});
 
-mock.module("@/lib/visual-engine/visual-persistence", () => ({
+vi.mock("@/lib/visual-engine/visual-persistence", () => ({
   loadVisualFromAppwrite: mockLoadVisualAppwrite,
   saveVisualToAppwrite: mockSaveVisualAppwrite,
 }));
@@ -205,7 +205,7 @@ mock.module("@/lib/visual-engine/visual-persistence", () => ({
 const mockGetCachedVisual = mock(() => null);
 const mockCacheVisual = mock(() => {});
 
-mock.module("@/lib/db/repositories/visual-cache", () => ({
+vi.mock("@/lib/db/repositories/visual-cache", () => ({
   getCachedVisual: mockGetCachedVisual,
   cacheVisual: mockCacheVisual,
   makeCacheKey: (qid: string, subj: string) => `${subj}:${qid}`,
@@ -217,7 +217,7 @@ const mockVisualResolve = mock(() => ({
   imageUrl: "http://example.com/diagram.svg",
 }));
 
-mock.module("@/lib/visual-engine/visual-engine", () => ({
+vi.mock("@/lib/visual-engine/visual-engine", () => ({
   VisualEngine: class {
     resolve = mockVisualResolve;
   },
@@ -225,12 +225,12 @@ mock.module("@/lib/visual-engine/visual-engine", () => ({
 }));
 
 const mockCompUpdate = mock(() => {});
-mock.module("@/lib/competency-engine", () => ({
+vi.mock("@/lib/competency-engine", () => ({
   competencyService: { update: mockCompUpdate },
   computeBloomWeight: mock(() => 1.0),
 }));
 
-mock.module("@/lib/competency-engine/types", () => ({}));
+vi.mock("@/lib/competency-engine/types", () => ({}));
 
 const mockCurriculumGetSubject = mock(() => ({
   subjectId: "mathematics",
@@ -246,7 +246,7 @@ const mockCurriculumGetSubject = mock(() => ({
     },
   ],
 }));
-mock.module("@/curriculum", () => ({
+vi.mock("@/curriculum", () => ({
   curriculumRegistry: { getSubject: mockCurriculumGetSubject },
 }));
 

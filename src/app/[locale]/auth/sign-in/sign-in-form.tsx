@@ -117,6 +117,7 @@ export function SignInForm() {
           <p className="ios-subhead text-muted-foreground leading-relaxed">
             {t.rich("auth.magicLinkSent", {
               email,
+              // oxlint-disable-next-line react/no-unstable-nested-components — t.rich formatter callback, not a React component
               strong: (chunks) => <strong className="text-foreground">{chunks}</strong>,
             })}
           </p>

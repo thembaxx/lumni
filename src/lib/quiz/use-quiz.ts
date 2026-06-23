@@ -3,7 +3,8 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { flashcardEngine } from "@/lib/flashcard-engine";
-import type { Question, UserAnswer } from "@/lib/question-engine/types";
+import type { Difficulty, Question, UserAnswer } from "@/lib/question-engine/types";
+import type { BloomLevel } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
 import { logError } from "@/lib/shared/logger";
 import type { UseQuizParams } from "./types";
@@ -40,6 +41,7 @@ export function useQuiz(params: UseQuizParams) {
     enabled = true,
     pastPaperMode,
     preloadedQuestions,
+    retentionQuestions,
     suggestedBloomLevel,
     suggestedDifficulty,
     topicCompetencyLevel,
@@ -47,11 +49,15 @@ export function useQuiz(params: UseQuizParams) {
     onComplete,
   } = params;
 
+  const actualCount = retentionQuestions?.length
+    ? Math.max(1, count - retentionQuestions.length)
+    : count;
+
   const engineParams = useMemo(
     () => ({
       subject: subject.toLowerCase(),
       topic,
-      count,
+      count: actualCount,
       questionType: questionType as "any",
       ...(pastPaperMode ? { pastPaperMode: true } : {}),
       ...(suggestedBloomLevel ? { suggestedBloomLevel } : {}),
@@ -62,7 +68,7 @@ export function useQuiz(params: UseQuizParams) {
     [
       subject,
       topic,
-      count,
+      actualCount,
       questionType,
       pastPaperMode,
       suggestedBloomLevel,
@@ -78,8 +84,40 @@ export function useQuiz(params: UseQuizParams) {
     enabled: enabled && !!subject && !usePreloaded,
   });
 
-  const questions = usePreloaded ? (preloadedQuestions as Question[]) : engineResult.questions;
+  const generatedQuestions = usePreloaded
+    ? (preloadedQuestions as Question[])
+    : engineResult.questions;
+
+  const retentionAsQuestions: Question[] = useMemo(
+    () =>
+      (retentionQuestions ?? []).map((rq) => ({
+        id: `ret_${rq.id}`,
+        type: "short-answer" as const,
+        subject: rq.subject,
+        topic: rq.topic,
+        difficulty: "Medium" as Difficulty,
+        bloomTaxonomy: "remember" as BloomLevel,
+        points: 1,
+        questionText: rq.questionText,
+        hint: "",
+        explanation: rq.explanation,
+        steps: ["Review the correct answer below."],
+        body: {
+          modelAnswer: rq.correctAnswer,
+          acceptableAnswers: [rq.correctAnswer],
+          maxLength: 500,
+        },
+        metadata: { source: "imported" },
+      })),
+    [retentionQuestions],
+  );
+
+  const questions =
+    retentionAsQuestions.length > 0
+      ? [...retentionAsQuestions, ...generatedQuestions]
+      : generatedQuestions;
   const sources = usePreloaded ? [] : engineResult.sources;
+  const warning = usePreloaded ? undefined : engineResult.warning;
   const isLoading = usePreloaded ? false : engineResult.isLoading;
   const isError = usePreloaded ? false : engineResult.isError;
 
@@ -175,6 +213,7 @@ export function useQuiz(params: UseQuizParams) {
   return {
     questions,
     sources,
+    warning,
     isLoading,
     isError,
     state,

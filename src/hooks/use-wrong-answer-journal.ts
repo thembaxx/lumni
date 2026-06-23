@@ -70,7 +70,7 @@ export function useWrongAnswerJournal() {
         if (topic) {
           collection = collection.filter((e) => e.topic === topic);
         }
-        return collection.reverse().limit(limit).toArray();
+        return collection.toReversed().limit(limit).toArray();
       } catch (err) {
         logError("GetWrongAnswers", err);
         return [];

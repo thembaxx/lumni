@@ -231,8 +231,8 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
             onCameraClick={() => setShowCamera(true)}
             onRetake={handleRetake}
             onUploadComplete={handleUploadComplete}
-            onUploadError={(error: Error) => {
-              setError(`Upload failed: ${error?.message ?? "Unknown error"}`);
+            onUploadError={(err: Error) => {
+              setError(`Upload failed: ${err?.message ?? "Unknown error"}`);
             }}
           />
         </div>

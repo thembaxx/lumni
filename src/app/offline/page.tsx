@@ -10,6 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { offlineDB } from "@/lib/db/schema";
+import type { CachedStory } from "@/lib/stories/types";
+import type { QuizPack } from "@/lib/quiz-packs/types";
+import type { StoryProgressRecord } from "@/lib/db/schema";
 import { OfflineTracker } from "./offline-tracker";
 
 export default function OfflinePage() {
@@ -25,8 +28,8 @@ export default function OfflinePage() {
     if (!recentStories || recentStories.length === 0) return [];
     const keys = recentStories.map((r) => r.storyId);
     const cached = await offlineDB.storyCache.where("key").anyOf(keys).toArray();
-    const map = new Map(cached.map((c) => [c.story.id, c.story.title]));
-    return recentStories.map((r) => ({
+    const map = new Map(cached.map((c: CachedStory) => [c.story.id, c.story.title]));
+    return recentStories.map((r: StoryProgressRecord) => ({
       storyId: r.storyId,
       title: map.get(r.storyId) ?? r.storyId,
     }));
@@ -90,7 +93,7 @@ export default function OfflinePage() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {storyTitles.map((s) => (
+              {storyTitles.map((s: { storyId: string; title: string }) => (
                 <li key={s.storyId}>
                   <Link
                     href={`/stories/${s.storyId}`}
@@ -116,7 +119,7 @@ export default function OfflinePage() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {readyPacks.slice(0, 5).map((pack) => (
+              {readyPacks.slice(0, 5).map((pack: QuizPack) => (
                 <li key={pack.id}>
                   <Link
                     href={`/quiz?subject=${encodeURIComponent(pack.subject)}&packId=${encodeURIComponent(pack.id)}`}

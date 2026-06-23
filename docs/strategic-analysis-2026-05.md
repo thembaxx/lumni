@@ -3,8 +3,8 @@
 **Date:** 2026-05-23  
 **Analyst:** Senior Product Strategist & Staff+ Frontend Architect  
 **Scope:** Full-stack audit of Lumni (https://lumni-psi.vercel.app) — AI-powered CAPS-aligned Matric prep platform  
-**Runtime / Package Manager:** Bun (target state)  
-**Lint/Format:** Biome.js 2.4.15 (CI gate via `bunx @biomejs/biome check .`)
+**Runtime / Package Manager:** pnpm  
+**Lint/Format:** Biome.js 2.4.15 (CI gate via `pnpm exec biome check .`)
 
 ---
 
@@ -61,7 +61,7 @@ Lumni is a feature-rich, AI-native exam preparation platform for South African M
 
 **Explicit Information Gaps**
 
-1. No `bun.lockb` found — package manager may still be npm/yarn; Bun scripts reference `tsx` not `bun run` for DB scripts.
+1. Package manager is pnpm (`pnpm-lock.yaml` present). Scripts use `tsx` for TS execution.
 2. No Appwrite region confirmation in env vars; `fra.cloud.appwrite.io` in next.config.ts suggests Frankfurt, not Johannesburg.
 3. No current DAU/MAU metrics, retention data, or activation funnel analytics in codebase.
 4. No Stripe webhook or price ID references found — monetization is UI-only (`/premium` page exists but no checkout flow).
@@ -77,7 +77,7 @@ Lumni is a feature-rich, AI-native exam preparation platform for South African M
 | ----------- | ----------------------------------------------- | -------- | --------- | -------------------------------------------- | --------------------- | ---------- |
 | **FEAT-01** | **Parental Dashboard**                          | **P0**   | **8.4**   | High (+20% retention via guardian buy-in)    | Medium (3 weeks)      | Medium     |
 | **FEAT-02** | **Classroom / Teacher Analytics**               | **P0**   | **7.8**   | High (B2B2C unlock, R500–R2000/student/year) | Medium–High (4 weeks) | Medium     |
-| **FEAT-03** | **Bun Migration + Biome.js CI Hardening**       | **P0**   | **8.1**   | High (build speed, DX, zero eslint drift)    | Low–Medium (1 week)   | High       |
+| **FEAT-03** | **pnpm Migration + Biome.js CI Hardening**      | **P0**   | **8.1**   | High (build speed, DX, zero eslint drift)    | Low–Medium (1 week)   | High       |
 | **FEAT-04** | **Mega-Component Breakdown + Atomic Refactor**  | **P0**   | **7.5**   | Medium–High (maintainability, reuse)         | High (6 weeks)        | High       |
 | **FEAT-05** | **AI Practice × Past Papers (Adaptive Pool)**   | **P1**   | **7.2**   | High (CAPS accuracy, trust)                  | Medium (3 weeks)      | Medium     |
 | **FEAT-06** | **WhatsApp Business API Nudges**                | **P1**   | **6.8**   | Medium–High (retention + parent engagement)  | Medium (3 weeks)      | Low–Medium |
@@ -179,27 +179,18 @@ Page: TeacherDashboardPage
 
 **Product Rationale**
 
-- **Hypothesis:** Current `npm`/`yarn` mixed with `bun test` creates lockfile drift and CI inconsistency.
-- **Impact:** 30–40% faster install times; single source of truth for deps.
+- **Impact:** 30–40% faster installs; single source of truth for deps.
 - **Effort:** 1 week.
 - **Dependencies:** None — infrastructure.
-- **Risks:** Some deps (patch-package) may have native bindings incompatible with Bun; must test build.
 
 **Execution Plan**
 
-1. Remove `package-lock.json` / `yarn.lock`; run `bun install` to generate `bun.lockb`.
-2. Update all `scripts` in `package.json` to use `bun run` (replace `tsx` with `bun` for TS scripts where possible).
-3. CI workflow (`/.github/workflows` — **verify exists**):
-   ```yaml
-   - run: bun install --frozen-lockfile
-   - run: bunx @biomejs/biome check .
-   - run: bun run typecheck
-   - run: bun test
-   - run: bun run build
-   ```
-4. Add `engines` field: `"bun": ">=1.2"`.
+1. pnpm as sole package manager (`pnpm-lock.yaml`, `pnpm-workspace.yaml`).
+2. Update all `scripts` in `package.json` to use `pnpm run` / `pnpm exec`.
+3. CI workflow uses `pnpm/action-setup@v4` + `actions/setup-node@v4` with `pnpm install --frozen-lockfile`.
+4. `"packageManager": "pnpm@10.8.1"` declared in `package.json`.
 
-**Component Impact:** None directly — all components must continue to pass `bunx @biomejs/biome check .`.
+**Component Impact:** None directly — all components continue to pass `pnpm exec biome check .`.
 
 ---
 

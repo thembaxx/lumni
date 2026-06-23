@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { PageSkeleton } from "@/components/ui/page-skeleton";
 import { FlashcardsClient } from "./flashcards-client";
 
 export const metadata: Metadata = {
@@ -10,7 +12,9 @@ export const metadata: Metadata = {
 export default function FlashcardsPage() {
   return (
     <AppErrorBoundary>
-      <FlashcardsClient />
+      <Suspense fallback={<PageSkeleton />}>
+        <FlashcardsClient />
+      </Suspense>
     </AppErrorBoundary>
   );
 }

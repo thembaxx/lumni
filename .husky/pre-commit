@@ -1,2 +1,2 @@
-bunx biome check --write src/
-bun run typecheck
+pnpm run lint:fix && pnpm run format
+pnpm run typecheck

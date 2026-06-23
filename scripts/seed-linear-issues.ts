@@ -1,10 +1,7 @@
 #! /usr/bin/env tsx
-import { writeFileSync, readFileSync } from "fs";
-import { resolve } from "path";
 
 const API_KEY = process.env.LINEAR_API_KEY ?? "";
 const TEAM_ID = "86d9eadf-8428-4e38-8bdf-4028e66e0037";
-const PROJECT_ID = "9c3fb591-b40f-43be-b5f9-bad0b8a3effe";
 const BACKLOG_STATE = "d9866563-3a16-49be-90c8-fe948fed1854";
 
 type Priority = 0 | 1 | 2 | 3 | 4;

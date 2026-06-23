@@ -1,5 +1,4 @@
 import "dotenv/config";
-import { defineConfig } from "drizzle-kit";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 

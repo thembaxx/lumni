@@ -21,7 +21,9 @@ export async function cleanupOldQuestions(): Promise<{
     let hasMore = true;
 
     // Sequential pagination: each page depends on the previous batch being deleted (must run sequentially)
+    // eslint-disable-next-line no-await-in-loop - sequential pagination, not parallelizable
     while (hasMore) {
+      // eslint-disable-next-line no-await-in-loop - sequential pagination, not parallelizable
       const page = await cleanupPage(cutoffIso, deleted);
       deleted += page.deletedInPage;
       remaining = page.remaining;

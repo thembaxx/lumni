@@ -204,7 +204,7 @@ export async function getTeacherTopicMastery(teacherId: string): Promise<TopicMa
     });
   }
 
-  return results.sort((a, b) => b.avgScore - a.avgScore);
+  return results.toSorted((a, b) => b.avgScore - a.avgScore);
 }
 
 export async function getTeacherEngagementStats(teacherId: string): Promise<EngagementStats> {

@@ -19,6 +19,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
@@ -68,6 +69,20 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
       checkAndUnlockAchievements,
       checkForRewardChests,
       addWrongAnswer,
+      addRetentionItem: (entry) => {
+        dexieDataAccess.retentionRecurrence
+          .add({
+            questionId: entry.questionId,
+            subject: entry.subject,
+            topic: entry.topic,
+            questionText: entry.questionText,
+            correctAnswer: entry.correctAnswer,
+            explanation: entry.explanation,
+            scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+            completed: false,
+          })
+          .catch(() => {});
+      },
       flashcardEngine,
       trackQuestionResult,
       enqueue,
@@ -103,6 +118,33 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
       results.totalQuestions,
     );
     await processQuizResult({ source: "quiz", results }, quizResultDeps);
+
+    try {
+      const records = await dexieDataAccess.competencies.toArray();
+      const topicScores = new Map<string, number[]>();
+      for (const r of records) {
+        const key = `${r.subjectId}:${r.topicId}`;
+        const scores = topicScores.get(key) ?? [];
+        scores.push(r.score);
+        topicScores.set(key, scores);
+      }
+      const competentTopicsCount = Array.from(topicScores.values()).filter(
+        (scores) => scores.reduce((a, b) => a + b, 0) / scores.length >= 70,
+      ).length;
+      if (competentTopicsCount >= 5) {
+        checkAndUnlockAchievements(
+          totalQuestionsAnswered + results.totalQuestions,
+          Math.round((results.correctAnswers / results.totalQuestions) * 100),
+          currentStreak,
+          levelInfo.level,
+          results.correctAnswers === results.totalQuestions,
+          { competentTopicsCount },
+        );
+      }
+    } catch {
+      // Competency check is non-critical
+    }
+
     setQuizActive(false);
     setQuizSubject("");
   };

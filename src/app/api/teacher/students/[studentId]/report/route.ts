@@ -60,14 +60,15 @@ export const GET = createRouteHandler({
         date: number;
       }[] = [];
       for (const s of sessions) {
-        if (s.type === "quiz") {
-          attemptData.push({
-            subject: (s.subject as string) ?? "Unknown",
-            score: (s.score as number) ?? 0,
-            total: (s.totalQuestions as number) ?? 1,
-            date: new Date(s.endedAt as string).getTime(),
-          });
-        }
+        const correctCount = (s.correctCount as number) ?? 0;
+        const questionsAnswered = (s.questionsAnswered as number) ?? 0;
+        if (questionsAnswered === 0) continue;
+        attemptData.push({
+          subject: (s.subjectId as string) ?? "Unknown",
+          score: correctCount,
+          total: questionsAnswered,
+          date: new Date(s.endedAt as string).getTime(),
+        });
       }
 
       const subjects = (await listDocuments(COLLECTIONS.SUBJECTS)) as Record<string, unknown>[];

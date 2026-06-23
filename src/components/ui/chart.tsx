@@ -73,7 +73,10 @@ function ChartContainer({
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`;
 
   return (
-    <ChartContext.Provider value={React.useMemo(() => ({ config }), [config])}>
+    <ChartContext.Provider
+      // oxlint-disable-next-line react/jsx-no-constructed-context-values — value IS memoized via useMemo
+      value={React.useMemo(() => ({ config }), [config])}
+    >
       <div
         data-slot="chart"
         data-chart={chartId}

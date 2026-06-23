@@ -66,7 +66,7 @@ export async function getNextExams(session: string, year: number, count = 2): Pr
   now.setHours(0, 0, 0, 0);
   return all
     .filter((s) => new Date(s.date) >= now)
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, count);
 }
 
@@ -81,7 +81,7 @@ export async function getExamsGroupedByDate(
     grouped[slot.date].push(slot);
   }
   return Object.entries(grouped)
-    .sort(([a], [b]) => a.localeCompare(b))
+    .toSorted(([a], [b]) => a.localeCompare(b))
     .map(([date, slots]) => ({ date, slots }));
 }
 

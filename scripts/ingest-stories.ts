@@ -33,13 +33,6 @@ function countWords(text: string): number {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
 async function fetchProjectGutenbergText(ebookId: string): Promise<string | null> {
   const url = `https://www.gutenberg.org/cache/epub/${ebookId}/pg${ebookId}.txt`;
   try {

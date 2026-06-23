@@ -281,6 +281,7 @@ export function LearningMapCard() {
                   className="cursor-pointer"
                   tabIndex={0}
                   href={`/quiz?subject=${encodeURIComponent(subjectForQuery ?? "")}&topic=${encodeURIComponent(node.label)}`}
+                  aria-label={`Practice ${node.label}`}
                   onKeyDown={(e) => {
                     if (
                       (e as React.KeyboardEvent).key === "Enter" ||

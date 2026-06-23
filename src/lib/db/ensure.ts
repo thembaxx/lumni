@@ -294,7 +294,8 @@ export async function ensureAppwrite(
       try {
         docs =
           typeof collectionConfig.documents === "function"
-            ? await collectionConfig.documents(seeded)
+            ? // eslint-disable-next-line no-await-in-loop - sequential seeding, dependent collections
+              await collectionConfig.documents(seeded)
             : collectionConfig.documents;
       } catch (err) {
         localReport.errors.push(String(err));

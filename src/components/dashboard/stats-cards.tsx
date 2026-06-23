@@ -45,7 +45,7 @@ function AnimatedNumber({
   }, [value, motionValue]);
 
   if (finalShouldReduceMotion) {
-    return <>{value}</>;
+    return <span>{value}</span>;
   }
 
   return <m.span aria-live="polite">{rounded}</m.span>;

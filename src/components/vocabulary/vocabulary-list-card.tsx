@@ -51,7 +51,7 @@ export function VocabularyListCard() {
             <div className="flex flex-col gap-2">
               {words
                 .slice(-5)
-                .reverse()
+                .toReversed()
                 .map((word) => (
                   <m.div
                     key={word.id}

@@ -33,13 +33,13 @@ export function ComparativeAnalyticsPanel() {
   const weakSubjects = useMemo(() => {
     if (!comparativeData) return [];
     return Object.entries(comparativeData.subjectRankings)
-      .sort(([, rankA], [, rankB]) => rankA - rankB)
+      .toSorted(([, rankA], [, rankB]) => rankA - rankB)
       .slice(0, 3)
       .map(([subject]) => subject);
   }, [comparativeData]);
 
   const { data: subjectTrends = {} } = useQuery({
-    queryKey: ["subject-trends", user?.$id, ...weakSubjects.sort()],
+    queryKey: ["subject-trends", user?.$id, ...weakSubjects.toSorted()],
     queryFn: async () => {
       const trends: Record<string, SubjectTrendData> = {};
       await Promise.all(

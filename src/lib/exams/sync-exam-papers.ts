@@ -47,7 +47,7 @@ function findLocalPdfs(): string[] {
   try {
     return readdirSync(DOWNLOADS_DIR)
       .filter((f) => f.endsWith(".pdf"))
-      .sort();
+      .toSorted();
   } catch (err) {
     logError("SyncExamPapers", err);
     return [];

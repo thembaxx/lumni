@@ -33,6 +33,10 @@ class DexieCollectionAdapter<T> implements Collection<T> {
     return new DexieCollectionAdapter(this.source.reverse());
   }
 
+  toReversed(): Collection<T> {
+    return this.reverse();
+  }
+
   limit(n: number): Collection<T> {
     return new DexieCollectionAdapter(this.source.limit(n));
   }
@@ -168,6 +172,7 @@ class DexieDataAccess implements DataAccess {
   lessonProgress = tableAdapter(offlineDB.lessonProgress);
   onboardingState = tableAdapter(offlineDB.onboardingState);
   competitionScores = tableAdapter(offlineDB.competitionScores);
+  pronunciationHistory = tableAdapter(offlineDB.pronunciationHistory);
 }
 
 export const dexieDataAccess =

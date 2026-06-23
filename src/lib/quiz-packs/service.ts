@@ -48,10 +48,10 @@ export class QuizPackService {
   }
 
   async getPacks(): Promise<QuizPack[]> {
-    const packs = await this.db.quizPacks.orderBy("createdAt").reverse().toArray();
+    const packs = await this.db.quizPacks.orderBy("createdAt").toReversed().toArray();
     const now = Date.now();
     const updated = await Promise.all(
-      packs.map(async (pack) => this.expirePackIfNeeded(pack, now)),
+      packs.map(async (pack: QuizPack) => this.expirePackIfNeeded(pack, now)),
     );
     return updated;
   }

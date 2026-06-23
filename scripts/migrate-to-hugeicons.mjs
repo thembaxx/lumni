@@ -12,8 +12,8 @@
  * Usage: node scripts/migrate-to-hugeicons.mjs
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
-import { join, extname, dirname } from "node:path";
+import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -29,7 +29,7 @@ for (const [k, v] of Object.entries(raw)) {
 }
 
 // Sort mapping keys by length descending to avoid partial-replacement issues
-const sortedMappings = Object.entries(iconMap).sort(([a], [b]) => b.length - a.length);
+const sortedMappings = Object.entries(iconMap).toSorted(([a], [b]) => b.length - a.length);
 
 // Build set of new icon names for quick lookup
 const allNewNames = new Set(Object.values(iconMap));
@@ -114,7 +114,6 @@ const manualReviewFiles = new Set();
 for (const filePath of allFiles) {
   try {
     let content = readFileSync(filePath, "utf-8");
-    const original = content;
 
     // Skip files with no old-style icon imports
     const hasOldImport = OLD_SOURCES.some(

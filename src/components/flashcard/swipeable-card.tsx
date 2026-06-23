@@ -118,7 +118,10 @@ export const SwipeableCard = memo(function SwipeableCard({
       layout
       tabIndex={isTop ? 0 : -1}
       role="button"
+      aria-roledescription="flashcard"
       aria-label={`Flashcard: ${front}`}
+      aria-describedby={isFlipped && hint ? `${_id}-hint` : undefined}
+      aria-expanded={isFlipped}
       onKeyDown={isTop ? handleKeyDown : undefined}
     >
       <m.div
@@ -191,7 +194,10 @@ export const SwipeableCard = memo(function SwipeableCard({
             </div>
 
             {hint && (
-              <div className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20">
+              <div
+                id={`${_id}-hint`}
+                className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20"
+              >
                 <p className="text-warning text-xs">Hint: {hint}</p>
               </div>
             )}

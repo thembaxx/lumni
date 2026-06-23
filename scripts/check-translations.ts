@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 interface FlatEntry {
@@ -17,21 +17,6 @@ function flatten(obj: Record<string, unknown>, prefix = ""): FlatEntry[] {
     }
   }
   return entries;
-}
-
-function unflatten(entries: FlatEntry[]): Record<string, unknown> {
-  const root: Record<string, unknown> = {};
-  for (const { key, value } of entries) {
-    const parts = key.split(".");
-    let current = root;
-    for (let i = 0; i < parts.length - 1; i++) {
-      const part = parts[i];
-      if (!(part in current)) current[part] = {};
-      current = current[part] as Record<string, unknown>;
-    }
-    current[parts[parts.length - 1]] = value;
-  }
-  return root;
 }
 
 const messagesDir = join(import.meta.dirname, "..", "messages");

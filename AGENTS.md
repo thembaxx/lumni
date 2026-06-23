@@ -42,8 +42,6 @@ GET  /api/engine/test       End-to-end health check
 ### Client Hook
 
 ```tsx
-import { useQuestionEngine } from "@/hooks/use-question-engine";
-
 const { questions, isLoading, generate, grade, hint } = useQuestionEngine(
   { subject: "mathematics", count: 5, questionType: "any" },
   { enabled: true },
@@ -216,7 +214,10 @@ TODO.md ↔ Linear ↔ GitHub ↔ Sentry are integrated. See `docs/agents/workfl
 
 **Key commands for agents:**
 
-- `npm run todo:sync` — Push TODO.md → Linear (creates/updates issues)
+- `pnpm run todo:sync` — Push TODO.md → Linear (creates/updates issues)
+- `pnpm run test` — Run tests via vitest
+- `pnpm run typecheck` — TypeScript check
+- `pnpm exec biome check .` — Lint & format check
 - New task? Add to TODO.md under "Next Up" or "Bug Fixes", then run sync
 - For bugs from Sentry: check Linear Backlog first (Sentry auto-creates LUM-xxx once integrated)
 - Labels: `Bug`, `Feature`, `Improvement` — applied in Linear, synced to GitHub
@@ -456,7 +457,7 @@ const systemPrompt = webContext.xml
 - `line-chart.tsx`: changed generic from `T = any` and `T extends Record<string, unknown>` to `T extends object` — fixes `ProgressDataPoint` lacking index signature.
 - `notification-service.ts`: `as unknown as NotificationOptions` for `actions` field.
 
-**Build:** `npx tsc --noEmit`: 0 errors. `npx biome check`: 0 warnings on changed files.
+**Build:** `pnpm run typecheck`: 0 errors. `pnpm exec biome check`: 0 warnings on changed files.
 
 ### Known limitations (won't fix)
 
@@ -464,9 +465,9 @@ const systemPrompt = webContext.xml
 
 ### TypeScript & Lint
 
-- `npx tsc --noEmit` must pass with zero errors
-- `npx biome check` must pass on all changed files
-- Build: `npx next build` (catches runtime issues; `bunx --bun next build` may fail due to Next.js worker git-clone compat, use `npx` instead)
+- `pnpm run typecheck` must pass with zero errors
+- `pnpm exec biome check` must pass on all changed files
+- Build: `pnpm run build` (catches runtime issues)
 
 ### Session 23 — Codebase Hardening + DataAccess Seam (June 2026)
 
@@ -492,9 +493,9 @@ const systemPrompt = webContext.xml
 
 **Verification:**
 
-- `npx tsc --noEmit` — 0 errors
-- `npx biome check` — 0 errors on all changed files
-- `bun test` — 1225 pass, 0 fail
+- `pnpm run typecheck` — 0 errors
+- `pnpm exec biome check` — 0 errors on all changed files
+- `pnpm run test` — 1225 pass, 0 fail
 
 ### Session 24 — Data Consolidation Phase 2-4 (June 2026)
 
@@ -646,7 +647,7 @@ const systemPrompt = webContext.xml
 
 **Knip setup:**
 
-- `knip@6.15.0` installed, `knip.json` configured, `bun run deadcode` script added, CI quality job includes step
+- `knip@6.15.0` installed, `knip.json` configured, `pnpm run deadcode` script added, CI quality job includes step
 
 **A11y round 2:**
 
@@ -806,14 +807,14 @@ const systemPrompt = webContext.xml
 
 ### Session 35 — React Doctor score 100 + Biome lint zero (June 2026)
 
-- **Goal**: Run `npx react-doctor@latest` and fix all 194 issues (5 errors + 189 warnings) to reach score 100.
+- **Goal**: Run `pnpm exec react-doctor@latest` and fix all 194 issues (5 errors + 189 warnings) to reach score 100.
 - **5 errors fixed**: effect-needs-cleanup in `auth-context.tsx`, query-destructure-result (×3), no-adjust-state-on-prop-change in `topic-graph.tsx`.
 - **114 unused-export warnings fixed**: Removed `export` from unused declarations across ~38 files.
 - **Performance fixes**: Parallelised sequential `for` loops (`async-await-in-loop`), replaced chained `map().filter().reduce()` with single `for...of`, removed hydration-mismatch-time via lazy `useState`.
 - **Dead component removal (−250+ lines)**: Removed 20+ unused functions/variables across `joy-provider.tsx`, `dropdown-menu.tsx` (8 unused components), `field.tsx` (3), `quiz-results.tsx`, `use-group-reactions.ts` (2), `use-interval.ts`, `use-onboarding.ts`, `use-upload-subjects.ts` (2), `animation.ts`, `gamification.ts`, `user-consent.ts`.
 - **Knowledge-graph route**: Added `GET /api/engine/knowledge-graph` handler (was POST-only), updated consumer components (`learning-map-card.tsx`, `topic-graph.tsx`) from `useMutation+useEffect` to `useQuery` with `enabled`. Eliminated "event logic in effect" + "mutation without cache invalidation".
-- **Biome lint**: `npx biome check --write --unsafe` — 0 errors across 1260 files.
-- **TypeScript**: `npx tsc --noEmit` — 0 errors.
+- **Biome lint**: `pnpm exec biome check --write --unsafe` — 0 errors across 1260 files.
+- **TypeScript**: `pnpm run typecheck` — 0 errors.
 - **Tests**: 1258 pass, 0 fail.
 - **Commit**: `26635245` on `master` — 108 files changed, +823/−1138 lines.
 
@@ -828,9 +829,9 @@ const systemPrompt = webContext.xml
 - **View transitions**: Removed `experimental.viewTransition: true` from next.config — `useNavigationDirection` now owns the full lifecycle with `startViewTransition()` wrapper.
 - **Design polish**: Heading `font-extrabold` (Outfit 800), subtitle opacity `text-muted-foreground/60`, `shadow-level-1` token replacement, removed dead `standard` fields from SUPPORT_CHANNELS.
 - **Documentation**: All 6 files updated (CONTEXT.md, .context/CONTEXT.md, .context/memory-index.md, system-design.md, .context/system-design.md, AGENTS.md). D055 decision added.
-- **TypeScript**: `npx tsc --noEmit` — 0 errors.
-- **Biome**: `npx biome check` — 0 errors.
-- **Tests**: `bun test` — 1271 pass, 0 fail.
+- **TypeScript**: `pnpm run typecheck` — 0 errors.
+- **Biome**: `pnpm exec biome check` — 0 errors.
+- **Tests**: `pnpm run test` — 1271 pass, 0 fail.
 
 ### Session 37 — Architectural deepening + service extractions (June 2026)
 
@@ -843,10 +844,10 @@ const systemPrompt = webContext.xml
 - **Candidate 6: Retention DI leak fixed**: `_dexieDa.retentionRecurrence` → `_deps.db.retentionRecurrence`. 1 file changed.
 - **Service extractions** (6 services): `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines each.
 - **Dead code cleanup (~200 lines)**: `tts-service.ts` (SUPPORTED_LANGUAGES, getLanguageForText, PronunciationExercise, SAMPLE_EXERCISES, getExercisesForLanguage), `integration/service.ts` (flagLessonForReview, getPronunciationWords, trackComprehensionScore, getPastQuestionsForQuiz), `animation.ts` (normalTransition), `study-planner.ts` (mergeNationalExamDates + unused ExamSlot import), `snap-answer.ts` (onSnapAnswer), `orchestrator/handlers/index.ts` (getAllHandlers).
-- **Tests**: `bun run test` — 1264 pass, 0 fail. (`bun test` runs Bun's native runner which doesn't read vitest.config.ts — always use `bun run test`.)
+- **Tests**: `pnpm run test` — 1264 pass, 0 fail.
 - **ADR-0012**: Service extraction pattern documented.
-- **TypeScript**: `npx tsc --noEmit` — 0 errors.
-- **Biome**: `npx biome check` — 0 errors on all changed files.
+- **TypeScript**: `pnpm run typecheck` — 0 errors.
+- **Biome**: `pnpm exec biome check` — 0 errors on all changed files.
 - **Commit**: `f2c3edb8` — 39 files, +766/−893 lines.
 
 ### Session 38 — Architectural deepening batch 2 (June 2026)
@@ -867,9 +868,9 @@ const systemPrompt = webContext.xml
   - `extract/route.ts`: `_deps.db.pastPaperQuestions`
 - **Candidate 8 — Gamification state machine**: `src/lib/gamification-engine/service.ts` — `GamificationService` class owns state/persist/sync. Mutations return result objects (`XpResult`, `AchievementResult`, `ChestResult`, `StreakResult`, `FreezeResult`). `subscribe()` listener pattern. `use-gamification.ts` reduced to thin subscriber (~210 lines from 369). 19-field return surface preserved. Renamed `useStreakFreeze` → `consumeStreakFreeze` (biome hook lint).
 
-**Tests**: `bun run test` — 1321 pass, 1 pre-existing failure (next-intl module resolution in `quiz-result.test.tsx`). No regressions.
-**TypeScript**: `npx tsc --noEmit` — 0 errors.
-**Biome**: `npx biome check` — 0 errors on all changed files.
+**Tests**: `pnpm run test` — 1321 pass, 1 pre-existing failure (next-intl module resolution in `quiz-result.test.tsx`). No regressions.
+**TypeScript**: `pnpm run typecheck` — 0 errors.
+**Biome**: `pnpm exec biome check` — 0 errors on all changed files.
 
 ### Session 39 — Hook factories + large component extraction + test fix (June 2026)
 
@@ -904,6 +905,100 @@ const systemPrompt = webContext.xml
 - `src/components/quiz/parts/mcq-options.tsx` — MCQ options grid component
 - `src/components/quiz/parts/diagram-input.tsx` — diagram draw/upload component
 
-**Tests**: `bun run test` — **1326 pass, 0 failures**. Pre-existing failure resolved.
-**TypeScript**: `npx tsc --noEmit` — 0 errors.
-**Biome**: `npx biome check` — 0 errors on all changed files.
+**Tests**: `pnpm run test` — **1326 pass, 0 failures**. Pre-existing failure resolved.
+**TypeScript**: `pnpm run typecheck` — 0 errors.
+**Biome**: `pnpm exec biome check` — 0 errors on all changed files.
+
+### Session 40 — Gamification for Learning Quality (June 2026)
+
+**Goal**: Add 6 new achievements that reward learning quality (Gap #4): mistake review mastery, flashcard focus, competency climbing, weakness slaying, study plan consistency, and exam comeback.
+
+**7 new achievement definitions** in `src/types/gamification.ts`:
+
+- `mistake_review_master` — Review 20 past mistakes (common, 100 XP)
+- `flashcard_focused_50` — 50 consecutive correct flashcards (epic, 200 XP)
+- `competency_climber` — Reach Proficient in 5 topics (rare, 150 XP)
+- `weakness_slayer` — Improve a topic score by 20% (rare, 150 XP)
+- `study_plan_streak_7` — 7 consecutive study plan days (rare, 120 XP)
+- `exam_comeback` — Improve exam score by 15% (epic, 200 XP)
+
+**Tracking fields added** to `StoredGamification` (`src/lib/gamification-engine/types.ts`):
+
+- `consecutiveCorrectFlashcards: number` — flashcard streak
+- `wrongAnswersReviewed: number` — cumulative wrong answer reviews
+- `studyPlanDaysCompleted: number` — consecutive study plan days
+
+**Engine changes** (`src/lib/gamification-engine/gamification-engine.ts`):
+
+- `checkAndUnlockAchievements` now accepts optional `extra` param (`{ competentTopicsCount?, topicScoreImproved?, examScoreImproved? }`)
+- Reads new tracking fields from `data` for flashcard/mistake/plan streak achievements
+- Checks `extra` param for competency/weakness/exam achievements
+
+**Service layer** (`src/lib/gamification-engine/service.ts`):
+
+- `checkAndUnlockAchievements` forwards `extra` to engine
+- `updateCounter(key, value)` — additive counter update + persist + notify
+- `setCounter(key, value)` — absolute counter set + persist + notify
+
+**Hook** (`src/hooks/use-gamification.ts`):
+
+- `checkAndUnlockAchievements` extended with optional `extra` param
+- Exposed `updateCounter` and `setCounter` methods
+
+**Flashcard consecutive correct wiring** (`src/app/[locale]/flashcards/flashcards-client.tsx`):
+
+- `consecutiveCorrectRef` tracks streak across sessions
+- Calls `gamification.setCounter("consecutiveCorrectFlashcards", count)` before `processQuizResult`
+
+**Quiz competency wiring** (`src/components/dashboard/dashboard-client.tsx`):
+
+- After `processQuizResult`, queries Dexie competencies for topics with avg score >= 70
+- If >= 5 competent topics, calls `checkAndUnlockAchievements` with `extra.competentTopicsCount`
+
+**Interface**: `QuizResultDeps.checkAndUnlockAchievements` in `quiz-result-processor.ts` accepts optional `extra` param (backward compatible, all 4 processors unchanged).
+
+**TypeScript**: 23 pre-existing errors only (`toReversed` on Dexie types + implicit `any`). Zero new errors.
+**Biome**: No issues on changed files.
+
+### Session 41 — Cleanup sweep (June 2026)
+
+**Goal**: Resolve the remaining deferred/open items across the codebase (PWA titlebar, flashcard ARIA, consent-denied UX, sidebar shortcut, teacher report, ADRs).
+
+**PWA titlebar theming** (`src/app/[locale]/layout.tsx`, `src/app/globals.css`):
+
+- Added `<div className="titlebar-drag-region" />` to the global layout
+- Updated CSS to use `env(titlebar-area-height)` instead of hardcoded `0`
+
+**Keyboard-accessible flashcard deck** (`src/components/flashcard/swipeable-card.tsx`, `swipeable-card-deck.tsx`):
+
+- Added `aria-roledescription="flashcard"` on card elements
+- Added `aria-expanded` for flipped state
+- Added `aria-describedby` linking hint text
+- Added `role="application"` and `aria-live="polite"` card counter on deck container
+- Added `id` attribute to hint div for aria-describedby reference
+
+**QuestionEngine consent-denied UX** (`src/hooks/use-question-engine.ts`, `src/lib/quiz/use-quiz.ts`, `src/components/quiz/hooks/use-quiz-view.ts`, `quiz-view.tsx`, `quiz-no-questions-state.tsx`):
+
+- Added `warning` field to `GenerateResult` interface
+- Surfaced `warning` through `useQuestionEngine` → `useQuiz` → `useQuizView` → `quiz-view.tsx`
+- Displayed in `QuizNoQuestionsState` when present
+
+**Keyboard shortcut Cmd+K** (`src/components/navigation/sidebar-nav.tsx`):
+
+- Added global `keydown` listener for `Cmd+K` / `Ctrl+K` to focus sidebar search input
+- Added `ref` and `aria-description` to the search input
+
+**Teacher report data shape fix** (`src/app/api/teacher/students/[studentId]/report/route.ts`):
+
+- Fixed field mapping: `s.score` → `s.correctCount`, `s.totalQuestions` → `s.questionsAnswered`, `s.subject` → `s.subjectId`
+- Removed broken `s.type === "quiz"` filter (field doesn't exist in `study_sessions`)
+- Added `continue` guard for zero-question sessions
+
+**ADR disposition**:
+
+- ADR-0002 (Component Decomposition) → **Rejected** — domain-grouped structure adopted instead of atomic design
+- ADR-0004 (State Colocation) → **Accepted** — substantially implemented (TanStack Query + Dexie DataAccess + sync)
+- ADR-0006 (Documentation-as-Code) → **Rejected** — tooling diverged (oxlint/oxfmt, pnpm); no Storybook deploy
+
+**TypeScript**: 23 pre-existing errors only. Zero new errors from this session.
+**Biome**: No issues.

@@ -70,7 +70,7 @@ export function SubjectRankingsChart({ subjectRankings, userAverage }: SubjectRa
               </thead>
               <tbody>
                 {Object.entries(subjectRankings)
-                  .sort(([, a], [, b]) => b - a)
+                  .toSorted(([, a], [, b]) => b - a)
                   .map(([subject, rank]) => {
                     const accuracy = userAverage;
                     return (

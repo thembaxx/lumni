@@ -53,13 +53,17 @@ function StudyPlannerInner() {
 
   const handleStartSession = useCallback(
     (session: StudySession) => {
+      if (session.type === "flashcard") {
+        router.push(`/flashcards?subject=${encodeURIComponent(session.subject)}`);
+        return;
+      }
       const params = new URLSearchParams();
       params.set("subject", session.subject);
       if (session.topic) params.set("topic", session.topic);
       if (session.duration) params.set("maxTime", String(session.duration * 60));
       params.set("count", "10");
       params.set("autoStart", "true");
-      router.push(`/quiz?${params.toString()}`);
+      router.push(`/quiz?params.toString()`);
     },
     [router],
   );

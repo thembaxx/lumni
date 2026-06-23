@@ -46,6 +46,7 @@ export default function ForgotPasswordPage() {
           <p className="text-muted-foreground text-sm">
             {t.rich("auth.resetEmailSent", {
               email,
+              // oxlint-disable-next-line react/no-unstable-nested-components — t.rich formatter callback, not a React component
               strong: (chunks) => <strong>{chunks}</strong>,
             })}
           </p>

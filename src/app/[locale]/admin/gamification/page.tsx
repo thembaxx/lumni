@@ -168,7 +168,7 @@ export default function AdminGamificationPage() {
                 <p className={cn("text-muted-foreground text-sm")}>No data yet</p>
               )}
               {Object.entries(levelDistribution)
-                .sort(([a], [b]) => Number(a) - Number(b))
+                .toSorted(([a], [b]) => Number(a) - Number(b))
                 .map(([level, count]) => {
                   const levelDef = LEVELS.find((l) => l.level === Number(level));
                   return (

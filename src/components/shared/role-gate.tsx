@@ -30,5 +30,5 @@ export function RoleGate({ requiredRole, fallback, children }: RoleGateProps) {
     return fallback ?? null;
   }
 
-  return <>{children}</>;
+  return children;
 }

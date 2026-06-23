@@ -10,9 +10,11 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { audioEngine } from "@/lib/audio-engine";
 import { getWhisperService } from "@/lib/audio-engine/whisper-service";
+import { savePronunciationScore } from "@/lib/pronunciation-history/service";
 import { logError } from "@/lib/shared/logger";
 
 interface WordScore {
@@ -41,6 +43,14 @@ export function PronunciationClient() {
     }[];
   } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyStats, setHistoryStats] = useState<{
+    totalAttempts: number;
+    averageScore: number;
+    recentScores: { date: string; score: number }[];
+    topWords: { word: string; count: number; avgScore: number }[];
+  } | null>(null);
+  const [historyLoading, setHistoryLoading] = useState(false);
   const permissionRef = useRef(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [modelState, setModelState] = useState<"idle" | "downloading" | "loaded" | "error">("idle");
@@ -114,6 +124,18 @@ export function PronunciationClient() {
         if (expectedText.trim()) {
           const scored = service.assessPronunciation(transcription.text, expectedText);
           setAssessment(scored);
+          // Save to history
+          savePronunciationScore(
+            "anonymous",
+            expectedText.trim().split(/\s+/)[0] || "unknown",
+            scored.overallScore,
+            (scored.wordScores.filter((w) => w.isCorrect).length /
+              Math.max(scored.wordScores.length, 1)) *
+              100,
+            scored.phonemeAccuracy,
+            scored.fluencyScore,
+            "en",
+          ).catch(() => {});
         }
       }
     } catch (err) {
@@ -136,13 +158,33 @@ export function PronunciationClient() {
     setDownloadProgress(0);
   }, []);
 
+  const handleLoadHistory = useCallback(async () => {
+    setShowHistory((prev) => {
+      if (!prev) {
+        setHistoryLoading(true);
+        import("@/lib/pronunciation-history/service").then((mod) => {
+          mod.getPronunciationStats("anonymous").then((stats) => {
+            setHistoryStats(stats);
+            setHistoryLoading(false);
+          });
+        });
+      }
+      return !prev;
+    });
+  }, []);
+
   return (
     <PageContainer className="gap-6 pt-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-extrabold text-2xl tracking-tight">Pronunciation Practice</h1>
-        <p className="text-muted-foreground text-sm">
-          Type a phrase, record yourself, and get feedback on your pronunciation
-        </p>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-extrabold text-2xl tracking-tight">Pronunciation Practice</h1>
+          <p className="text-muted-foreground text-sm">
+            Type a phrase, record yourself, and get feedback on your pronunciation
+          </p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={handleLoadHistory} className="rounded-full">
+          {showHistory ? "Hide History" : "View History"}
+        </Button>
       </div>
 
       {modelState === "downloading" && (
@@ -292,6 +334,93 @@ export function PronunciationClient() {
                   ))}
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </m.div>
+      )}
+
+      {showHistory && (
+        <m.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+        >
+          <Card className="overflow-hidden rounded-3xl shadow-level-1">
+            <CardHeader>
+              <CardTitle className="font-extrabold text-lg">Pronunciation History</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-5 p-5 pt-0">
+              {historyLoading ? (
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="h-8 w-24 rounded-2xl" />
+                  <Skeleton className="h-4 w-48 rounded-2xl" />
+                  <Skeleton className="h-24 w-full rounded-3xl" />
+                </div>
+              ) : historyStats && historyStats.totalAttempts > 0 ? (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-2xl bg-card p-4 text-center">
+                      <div className="font-extrabold text-3xl tabular-nums">
+                        {historyStats.totalAttempts}
+                      </div>
+                      <div className="mt-1 text-muted-foreground text-xs">Total Attempts</div>
+                    </div>
+                    <div className="rounded-2xl bg-card p-4 text-center">
+                      <div className="font-extrabold text-3xl tabular-nums">
+                        {historyStats.averageScore}%
+                      </div>
+                      <div className="mt-1 text-muted-foreground text-xs">Average Score</div>
+                    </div>
+                  </div>
+
+                  {historyStats.recentScores.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <span className="font-semibold text-sm">Recent Scores</span>
+                      <div className="flex items-end gap-1.5">
+                        {historyStats.recentScores.map((s, i) => (
+                          <div key={i} className="flex flex-1 flex-col items-center gap-1">
+                            <div
+                              className="w-full rounded-t-md transition-all"
+                              style={{
+                                height: `${Math.max(s.score, 4)}px`,
+                                backgroundColor:
+                                  s.score >= 80
+                                    ? "var(--color-success, #22c55e)"
+                                    : s.score >= 50
+                                      ? "var(--color-warning, #f59e0b)"
+                                      : "var(--color-destructive, #ef4444)",
+                                opacity: 0.8,
+                              }}
+                            />
+                            <span className="text-[10px] text-muted-foreground">{s.date}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {historyStats.topWords.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <span className="font-semibold text-sm">Most Practiced Words</span>
+                      <div className="flex flex-wrap gap-2">
+                        {historyStats.topWords.map((w) => (
+                          <Badge
+                            key={w.word}
+                            variant="outline"
+                            className="rounded-full px-3 py-1 text-xs"
+                          >
+                            {w.word} — {w.count}x ({w.avgScore}%)
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-muted-foreground text-sm">
+                  No pronunciation history yet. Practice some words to see your progress!
+                </p>
+              )}
             </CardContent>
           </Card>
         </m.div>

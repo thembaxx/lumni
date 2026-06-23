@@ -11,10 +11,8 @@ import ShieldCheck from "@hugeicons/core-free-icons/SecurityCheckIcon";
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence } from "motion/react";
-import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Activity, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
   AppearanceTab,
@@ -31,7 +29,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
-import { iOSEase } from "@/lib/utils/animation";
 import {
   BETA_FEATURES_KEY,
   type BetaFeatures,
@@ -254,59 +251,89 @@ function SettingsContent() {
           </div>
         </nav>
 
-        {/* Content Area - Rhythmic Spacing */}
+        {/* Content Area */}
         <main className="flex-1 p-6 pb-24">
-          <AnimatePresence mode="wait" initial={false}>
-            <m.div
-              key={activeTab}
+          <Activity mode={activeTab === "profile" ? "visible" : "hidden"}>
+            <div
               role="tabpanel"
-              id={`tabpanel-${activeTab}`}
-              aria-labelledby={`tab-${activeTab}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{
-                type: "spring",
-                duration: 0.4,
-                bounce: 0,
-                ease: iOSEase,
-              }}
+              id="tabpanel-profile"
+              aria-labelledby="tab-profile"
               className="w-full"
             >
-              {activeTab === "profile" && <ProfileTab />}
+              <ProfileTab />
+            </div>
+          </Activity>
 
-              {activeTab === "appearance" && <AppearanceTab />}
+          <Activity mode={activeTab === "appearance" ? "visible" : "hidden"}>
+            <div
+              role="tabpanel"
+              id="tabpanel-appearance"
+              aria-labelledby="tab-appearance"
+              className="w-full"
+            >
+              <AppearanceTab />
+            </div>
+          </Activity>
 
-              {activeTab === "study" && (
-                <StudyTab studyPrefs={studyPrefs} onStudyPrefsChange={setStudyPrefs} />
-              )}
+          <Activity mode={activeTab === "study" ? "visible" : "hidden"}>
+            <div role="tabpanel" id="tabpanel-study" aria-labelledby="tab-study" className="w-full">
+              <StudyTab studyPrefs={studyPrefs} onStudyPrefsChange={setStudyPrefs} />
+            </div>
+          </Activity>
 
-              {activeTab === "notifications" && (
-                <NotificationsTab
-                  notifications={notifications}
-                  onNotificationsChange={setNotifications}
-                />
-              )}
+          <Activity mode={activeTab === "notifications" ? "visible" : "hidden"}>
+            <div
+              role="tabpanel"
+              id="tabpanel-notifications"
+              aria-labelledby="tab-notifications"
+              className="w-full"
+            >
+              <NotificationsTab
+                notifications={notifications}
+                onNotificationsChange={setNotifications}
+              />
+            </div>
+          </Activity>
 
-              {activeTab === "privacy" && <PrivacyTab />}
+          <Activity mode={activeTab === "privacy" ? "visible" : "hidden"}>
+            <div
+              role="tabpanel"
+              id="tabpanel-privacy"
+              aria-labelledby="tab-privacy"
+              className="w-full"
+            >
+              <PrivacyTab />
+            </div>
+          </Activity>
 
-              {activeTab === "data" && (
-                <DataTab
-                  studyPrefs={studyPrefs}
-                  notifications={notifications}
-                  betaFeatures={betaFeatures}
-                  onExport={handleExportData}
-                  onClear={handleClearCache}
-                />
-              )}
+          <Activity mode={activeTab === "data" ? "visible" : "hidden"}>
+            <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data" className="w-full">
+              <DataTab
+                studyPrefs={studyPrefs}
+                notifications={notifications}
+                betaFeatures={betaFeatures}
+                onExport={handleExportData}
+                onClear={handleClearCache}
+              />
+            </div>
+          </Activity>
 
-              {activeTab === "referrals" && isLoggedIn && <ReferralTab />}
+          <Activity mode={activeTab === "referrals" && isLoggedIn ? "visible" : "hidden"}>
+            <div
+              role="tabpanel"
+              id="tabpanel-referrals"
+              aria-labelledby="tab-referrals"
+              className="w-full"
+            >
+              {isLoggedIn && <ReferralTab />}
+            </div>
+          </Activity>
 
-              {activeTab === "beta" && (
-                <BetaTab betaFeatures={betaFeatures} onBetaFeaturesChange={setBetaFeatures} />
-              )}
-            </m.div>
-          </AnimatePresence>
+          <Activity mode={activeTab === "beta" ? "visible" : "hidden"}>
+            <div role="tabpanel" id="tabpanel-beta" aria-labelledby="tab-beta" className="w-full">
+              <BetaTab betaFeatures={betaFeatures} onBetaFeaturesChange={setBetaFeatures} />
+            </div>
+          </Activity>
         </main>
       </PageContainer>
     </div>

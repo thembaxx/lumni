@@ -38,7 +38,7 @@ async function tryUrls(urls) {
       if (parsed.v && parsed.layers) {
         return parsed;
       }
-    } catch (e) {
+    } catch {
       // Try next
     }
   }

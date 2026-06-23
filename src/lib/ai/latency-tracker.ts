@@ -133,7 +133,7 @@ export function getAILatencyStats() {
     avgCostPerCallCents: totalCalls > 0 ? Math.round((totalCostCents / totalCalls) * 100) / 100 : 0,
     successRate: totalCalls > 0 ? Math.round((totalSuccesses / totalCalls) * 100) : 100,
     averageLatencyMs: totalCalls > 0 ? Math.round(totalDuration / totalCalls) : 0,
-    recentCalls: records.slice(-50).reverse(),
+    recentCalls: records.slice(-50).toReversed(),
     byProvider: Object.fromEntries(
       Object.entries(byProvider).map(([name, stats]) => [
         name,

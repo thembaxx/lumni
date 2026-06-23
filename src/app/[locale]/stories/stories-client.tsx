@@ -38,7 +38,7 @@ export function StoriesClient() {
 
   useEffect(() => {
     if (!userId || stories.length === 0) return;
-    const storyIds = stories.map((s) => s.id);
+    const storyIds = new Set(stories.map((s) => s.id));
     offlineDB.storyProgress
       .where("userId")
       .equals(userId)
@@ -46,7 +46,7 @@ export function StoriesClient() {
       .then((records) => {
         const map = new Map<string, StoryProgressRecord>();
         for (const r of records) {
-          if (storyIds.includes(r.storyId)) {
+          if (storyIds.has(r.storyId)) {
             map.set(r.storyId, r);
           }
         }

@@ -140,7 +140,7 @@ export class QuestionRatingService {
         }
       }
 
-      return success(result.sort((a, b) => a.avgRating - b.avgRating));
+      return success(result.toSorted((a, b) => a.avgRating - b.avgRating));
     } catch (e) {
       logError("QuestionRatingServiceGetLowRated", e);
       return failure(e instanceof Error ? e.message : "Failed to get low-rated questions");

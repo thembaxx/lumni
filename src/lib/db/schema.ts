@@ -339,7 +339,20 @@ export interface CompetitionScoreRecord {
   updatedAt: number;
 }
 
+export interface PronunciationScoreRecord {
+  id?: number;
+  userId: string;
+  word: string;
+  overallScore: number;
+  wordAccuracy: number;
+  phonemeAccuracy: number;
+  fluencyScore: number;
+  language: string;
+  attemptedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
+  pronunciationHistory!: Table<PronunciationScoreRecord, number>;
   chatMessages!: Table<ChatMessageRecord, number>;
   questions!: Table<CachedQuestion, number>;
   progress!: Table<CachedProgress, number>;
@@ -1144,6 +1157,11 @@ export class LumniOfflineDB extends Dexie {
     // v39: competitionScores for weekly competition leaderboards
     this.version(39).stores({
       competitionScores: "++id, userId, weekStart, weekEnd, xpEarned",
+    });
+
+    // v40: pronunciationHistory for tracking pronunciation practice scores
+    this.version(40).stores({
+      pronunciationHistory: "++id, userId, word, language, attemptedAt",
     });
   }
 }

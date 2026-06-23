@@ -280,7 +280,7 @@ Add `topic` as a string attribute (size 255, optional). This enables server-side
 1. **Phase 1** (this session): Foundation + embedding module + Dexie schema + DataAccess wiring
 2. **Phase 2** (this session): Topic population + server-side filter + embedding generation on extract
 3. **Phase 3** (this session): findTopK + enrichParams enhancement + dedup + tests
-4. **Phase 4** (future): Backfill embeddings for existing PastPaperQuestions via `npm run embed:backfill`
+4. **Phase 4** (future): Backfill embeddings for existing PastPaperQuestions via `pnpm run embed:backfill`
 
 ## Future Work (out of scope)
 

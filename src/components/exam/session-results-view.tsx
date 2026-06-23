@@ -128,6 +128,7 @@ export function SessionResultsView({
               <button
                 type="button"
                 onClick={() => setExpandedId(isExpanded ? null : fullId)}
+                aria-label={isExpanded ? "Collapse answer details" : "Expand answer details"}
                 className="flex w-full items-center justify-between p-4 text-left"
               >
                 <div className="flex items-center gap-3">

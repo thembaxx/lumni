@@ -1,10 +1,11 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
+import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
-import type { StoredGamification } from "@/lib/gamification-engine/types";
+import type { StoredAchievement, StoredGamification } from "@/lib/gamification-engine/types";
 
 export interface FullReport {
   exportedAt: string;
@@ -35,8 +36,8 @@ export class ExportService {
   async buildFullReport(): Promise<FullReport> {
     const [gamificationData, quizAttempts, competencies, examSessions, wrongAnswers, flashcards] =
       await Promise.all([
-        this.db.gamification.orderBy("id").reverse().first(),
-        this.db.quizAttempts.orderBy("completedAt").reverse().limit(100).toArray(),
+        this.db.gamification.orderBy("id").toReversed().first(),
+        this.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
         this.db.competencies.toArray(),
         this.db.examSessions.toArray(),
         this.db.wrongAnswers.toArray(),
@@ -47,8 +48,8 @@ export class ExportService {
       exportedAt: new Date().toISOString(),
       gamification: gamificationData ?? null,
       achievements: gamificationData
-        ? gamificationData.achievements.reduce(
-            (acc, a) => {
+        ? gamificationData.achievements.reduce<FullReport["achievements"]>(
+            (acc, a: StoredAchievement) => {
               if (a.earnedAt)
                 acc.push({
                   id: a.id,
@@ -69,7 +70,7 @@ export class ExportService {
             [] as FullReport["achievements"],
           )
         : [],
-      quizHistory: quizAttempts.map((a) => ({
+      quizHistory: quizAttempts.map((a: QuizAttempt) => ({
         subject: a.odSubject,
         score: a.score,
         totalQuestions: a.totalQuestions,
@@ -78,7 +79,7 @@ export class ExportService {
         completedAt: new Date(a.completedAt).toISOString(),
       })),
       competency: competencies.reduce<Record<string, { topics: number; averageScore: number }>>(
-        (acc, c) => {
+        (acc: Record<string, { topics: number; averageScore: number }>, c: CompetencyRecord) => {
           if (!acc[c.subjectId]) {
             acc[c.subjectId] = { topics: 0, averageScore: 0 };
           }

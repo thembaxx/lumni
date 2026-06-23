@@ -162,6 +162,20 @@ export function FlashcardsClient() {
       checkAndUnlockAchievements: gamification.checkAndUnlockAchievements,
       checkForRewardChests: gamification.checkForRewardChests,
       addWrongAnswer,
+      addRetentionItem: (entry) => {
+        dexieDataAccess.retentionRecurrence
+          .add({
+            questionId: entry.questionId,
+            subject: entry.subject,
+            topic: entry.topic,
+            questionText: entry.questionText,
+            correctAnswer: entry.correctAnswer,
+            explanation: entry.explanation,
+            scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+            completed: false,
+          })
+          .catch(() => {});
+      },
       flashcardEngine,
       trackQuestionResult,
       enqueue,
@@ -186,9 +200,23 @@ export function FlashcardsClient() {
   const knownCount = Array.from(cards.qualityMap.values()).filter((q) => q >= 3).length;
   const reviewCount = cards.qualityMap.size - knownCount;
 
+  const consecutiveCorrectRef = useRef(0);
+
   const processSessionResults = useCallback(
     async (sessionCards: FlashcardItem[], qualities: Map<string, number>, subject: string) => {
       const isSm2Session = sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
+      const allCorrect = Array.from(qualities.values()).every((q) => q >= 3);
+      const anyCorrect = Array.from(qualities.values()).some((q) => q >= 3);
+
+      if (allCorrect) {
+        consecutiveCorrectRef.current += sessionCards.length;
+      } else {
+        consecutiveCorrectRef.current = anyCorrect
+          ? Array.from(qualities.values()).filter((q) => q >= 3).length
+          : 0;
+      }
+
+      gamification.setCounter("consecutiveCorrectFlashcards", consecutiveCorrectRef.current);
 
       await processQuizResult(
         {
@@ -201,7 +229,7 @@ export function FlashcardsClient() {
         quizResultDeps,
       );
     },
-    [quizResultDeps],
+    [quizResultDeps, gamification],
   );
 
   const engineParams = useMemo(

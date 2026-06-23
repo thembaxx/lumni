@@ -1,6 +1,6 @@
 # ADR-01: Component Decomposition Strategy — Atomic vs. Domain-Driven for Education UI
 
-**Status:** Proposed  
+**Status:** Rejected — codebase evolved domain-grouped structure (`quiz/`, `dashboard/`, `flashcard/`) instead of atomic design  
 **Date:** 2026-05-23  
 **Author:** Senior Frontend Architect
 

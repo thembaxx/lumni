@@ -11,7 +11,7 @@ const PF_VALIDATE_HOST = PF_SANDBOX
 
 async function generateSignature(data: Record<string, string>): Promise<string> {
   const passphrase = process.env.PAYFAST_PASSPHRASE || "";
-  const sortedKeys = Object.keys(data).sort();
+  const sortedKeys = Object.keys(data).toSorted();
   const paramString = sortedKeys
     .map((key) => `${key}=${encodeURIComponent(data[key]).replace(/%20/g, "+")}`)
     .join("&");

@@ -1,3 +1,5 @@
+"use cache";
+
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { PageContainer } from "@/components/layout/page-container";

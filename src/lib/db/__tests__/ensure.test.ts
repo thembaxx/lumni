@@ -154,23 +154,23 @@ vi.mock("node-appwrite", () => ({
     }
   },
   Databases: class {
-    async create() {}
-    async get() {}
-    async list() {}
-    async createCollection() {}
-    async getCollection() {}
-    async listAttributes() {}
-    async listIndexes() {}
-    async createStringAttribute() {}
-    async createIntegerAttribute() {}
-    async createBooleanAttribute() {}
-    async createDatetimeAttribute() {}
-    async createIndex() {}
-    async listDocuments() {}
-    async createDocument() {}
-    async getDocument() {}
-    async updateDocument() {}
-    async deleteDocument() {}
+    create = async () => ({ $id: "test-db" });
+    get = async () => ({ $id: "test-db" });
+    list = async () => ({ documents: [] });
+    createCollection = async () => ({ $id: "test-db" });
+    getCollection = async () => ({ $id: "test-db" });
+    listAttributes = async () => ({ attributes: [] });
+    listIndexes = async () => ({ indexes: [] });
+    createStringAttribute = async () => {};
+    createIntegerAttribute = async () => {};
+    createBooleanAttribute = async () => {};
+    createDatetimeAttribute = async () => {};
+    createIndex = async () => {};
+    listDocuments = async () => ({ documents: [], total: 0 });
+    createDocument = async () => ({ $id: "new-id" });
+    getDocument = async () => ({ $id: "test" });
+    updateDocument = async () => {};
+    deleteDocument = async () => {};
   },
   AppwriteException: MockAppwriteException,
   Query: {
@@ -178,13 +178,15 @@ vi.mock("node-appwrite", () => ({
     limit: (n: number) => [`limit(${n})`],
   },
 }));
+
 let ensureAppwrite: (config?: unknown, databases?: unknown) => Promise<Record<string, unknown>>;
-beforeAll(async () => {
-  const mod = await import("../ensure");
-  ensureAppwrite = mod.ensureAppwrite;
-});
 
 describe("ensureAppwrite", () => {
+  beforeAll(async () => {
+    const mod = await import("../ensure");
+    ensureAppwrite = mod.ensureAppwrite;
+  });
+
   beforeEach(() => {
     for (const k of Object.keys(collections)) {
       delete collections[k];

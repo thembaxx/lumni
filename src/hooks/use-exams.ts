@@ -99,12 +99,12 @@ export function useExams(filter: ExamFilter) {
     return Array.from(grouped.entries())
       .map(([subject, papers]) => ({
         subject,
-        papers: papers.sort((a, b) => {
+        papers: papers.toSorted((a, b) => {
           if (a.year !== b.year) return b.year - a.year;
           return 0;
         }),
       }))
-      .sort((a, b) => a.subject.localeCompare(b.subject));
+      .toSorted((a, b) => a.subject.localeCompare(b.subject));
   }, [filteredExams]);
 
   return {

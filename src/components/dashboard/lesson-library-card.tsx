@@ -43,7 +43,7 @@ export function LessonLibraryCard() {
           .equals(userId)
           .toArray();
         return records
-          .sort((a: LessonProgressRow, b: LessonProgressRow) => {
+          .toSorted((a: LessonProgressRow, b: LessonProgressRow) => {
             const aKey = parseLessonId(a.lessonId);
             const bKey = parseLessonId(b.lessonId);
             const aId = `${aKey.subjectId}:${aKey.topicId}:${aKey.subtopicId}`;
@@ -51,7 +51,7 @@ export function LessonLibraryCard() {
             return aId.localeCompare(bId);
           })
           .slice(-5)
-          .reverse();
+          .toReversed();
       } catch {
         return [];
       }
