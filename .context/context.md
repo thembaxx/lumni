@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-21 -->
+<!-- LAST_SYNC: 2026-06-23 -->
 
 # Master Context — Lumni
 
@@ -8,7 +8,7 @@ AI-powered South African Matric (Grade 12) exam preparation platform. Offline-fi
 
 ## CURRENT_FOCUS
 
-All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65.
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65. **Session 42**: batch generation parallelized (Promise.all over 7 groups), knowledge graph RAG-grounded (three-tier fallback), hint RAG-injection threaded through HintFn, cross-engine TTS+visual wiring, STT endpoint (Deepgram + Whisper WASM fallback).
 
 ## KEY_CONSTRAINTS
 
@@ -37,6 +37,8 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **CachedAIGenerator<T>**: Generic fetch→cache→generate pattern for AI-backed resources (knowledge-graph, study-guide).
 - **AnalyticsService**: Extracted domain logic for trends + comparative routes with `SessionStore` interface.
 - **Service Extraction**: Route handlers reduced to 10-25 lines via service classes with constructor injection (ADR-0012).
+- **VoiceEngine**: First-class engine at `src/lib/voice-engine/`. Provider chain: ElevenLabs → Google Cloud TTS → FreeTTS, with browser SpeechSynthesis as final client fallback. Used via `useVoiceEngine()` hook.
+- **STT**: `POST /api/engine/transcribe` endpoint with Deepgram primary and client-side Whisper WASM as offline fallback. Pronunciation client tries server Deepgram first.
 
 ## DECISION_LOG
 
@@ -72,6 +74,11 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D059] **AnalyticsService extraction**: `SessionStore` interface. Trends/comparative routes reduced from ~50-90 lines to ~20 lines.
 - [D060] **Service extraction (ADR-0012)**: 6 services extracted: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. Route handlers reduced to 10-25 lines.
 - [D061] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved. Parallelized independent awaits (Promise.all), combined chained iterations into single passes, replaced Array.includes with Set.has, replaced array.find in loops with Map.get, merged dual useState into useReducer, removed redundant useEffect state reset, moved static arrays to module scope, captured refs in cleanup effects, combined string includes() into regex test. 12 files, +96/−65. Commit `a1bd5de4`.
+- [D062] **Batch generation parallelized**: `generateMixed()` rewritten from sequential `for...of` over 7 batch groups to `Promise.all()`. Each batch runs independently, results flattened at the end. Total time = slowest batch instead of sum of all batches.
+- [D063] **Knowledge graph RAG grounding**: `fetchGraph()` three-tier fallback: local curriculum → RAG-grounded AI → plain AI. RAG context injected via `<reference_material>` XML + `buildPromptInstruction()` in system prompt.
+- [D064] **RAG-augmented hints**: `HintFn` signature extended with optional `ragXml` param. `aiHintFactory` consumes RAG XML; static hint implementations ignore it. `POST /api/engine/hint` fetches `searchWithRAG(subject, topic)`.
+- [D065] **Cross-engine TTS+visual integration**: `TTSButton` accepts `visualDescription` prop; `QuestionCard` derives description from `VisualContent.label` and threads it through `QuestionCardHeader`. Engines stay decoupled; context bridge in consumer.
+- [D066] **STT endpoint**: `POST /api/engine/transcribe` with Deepgram primary, fails open when key absent. Pronunciation client tries server Deepgram first, falls back to Whisper WASM (74MB model only downloaded when needed).
 
 ## KNOWLEDGE_GRAPH
 
@@ -96,6 +103,11 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - `SidebarNav` → `SidebarStateProvider` → categorized navigation with search
 - `RateLimiter` → `MapStore | RedisStore` → API routes
 - `aiClient` → `UniformAdapter` (openaiNormalizer/geminiNormalizer) → provider chain
+- `KnowledgeGraph.fetchGraph` → `TinyFish RAG` (three-tier fallback: curriculum → RAG-grounded AI → plain AI)
+- `POST /api/engine/hint` → `TinyFish RAG` (searchWithRAG for subject+topic) → `QuestionEngine.generateHint` → `aiHintFactory` (RAG-injected AI call)
+- `TTSButton` → `useVoiceEngine` (ElevenLabs → Google → FreeTTS → browser fallback)
+- `QuestionCard.VisualContent.label` → `visualDescription` → `TTSButton` (cross-engine context bridge)
+- `POST /api/engine/transcribe` → `Deepgram` → `{ text, confidence }` → pronunciation client (falls back to Whisper WASM)
 
 ## REUSABLE_SNIPPETS
 
@@ -116,6 +128,10 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Live session**: `const { session, participants, isLoading } = useLiveSession(groupId);`
 - **Knowledge graph**: `const { data: graph, isPending } = useQuery({ queryKey: ['knowledge-graph', subject, topic], queryFn: () => fetch(`/api/engine/knowledge-graph?subject=${subject}&topic=${topic}`).then(r => r.json()), enabled: !!subject && !!topic });`
 - **Study guide**: `const { data: guide } = useMutation({ mutationFn: ({ subject, topic }) => generateGuide(subject, topic) });`
+- **Parallel batch generation**: `const results = await Promise.all(batches.map(batch => generateBatch(batch))).then(r => r.flat().slice(0, count));`
+- **RAG-grounded knowledge graph**: fetch RAG → inject XML into user prompt + `buildPromptInstruction()` into system prompt → AI generate → store to cache
+- **Context-threaded TTS+visual**: `const visualDescription = visual?.label ? `The question includes a visual: ${visual.label}` : undefined;` → `<TTSButton text={text} visualDescription={visualDescription} />`
+- **Server-side transcribe**: base64 audio → `POST /api/engine/transcribe` → Deepgram → `{ text, confidence, provider }` (nulls when key absent)
 
 ## AVOID_LIST
 
@@ -127,6 +143,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **`Bun.mock.module` for tinyfish**: Use DI (`deps` arg) instead — `mock.module` is process-wide.
 - **`querySelector` / `querySelectorAll` in tests**: happy-dom `SelectorParser` throws `TypeError`. Use DOM API + textContent regex.
 - **`lottie-react`**: Already migrated to `@lottiefiles/dotlottie-react`.
+- **Sequential `for...of` over independent batches**: Use `Promise.all()` for parallel execution.
 
 ## PROMPT_LOOKUP_TABLE
 
@@ -137,3 +154,5 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - If working on **DataAccess**, check `docs/adr/0011-data-access-seam.md`.
 - If working on **Service Extraction**, check `docs/adr/0012-service-extraction-pattern.md`.
 - If working on **Theme/Nav**, check `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md` and `2026-06-03-nav-sidebar-design.md`.
+- If working on **Voice/STT**, check `CONTEXT.md` > `VoiceEngine` and `STT` definitions.
+- If working on **Batch Generation**, check `question-engine.ts:generateMixed()` for the `Promise.all()` parallel pattern.

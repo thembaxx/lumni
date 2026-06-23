@@ -1002,3 +1002,36 @@ const systemPrompt = webContext.xml
 
 **TypeScript**: 23 pre-existing errors only. Zero new errors from this session.
 **Biome**: No issues.
+
+### Session 42 — Architecture review implementation + STT endpoint (June 2026)
+
+**Batch generation parallelization** (`src/lib/question-engine/question-engine.ts:267`):
+
+- `generateMixed()` rewritten from sequential `for...of` over 7 batch groups to `Promise.all()` — batches now run in parallel, total time drops to slowest batch instead of sum of all batches
+
+**Knowledge graph RAG grounding** (`src/lib/knowledge-graph/service.ts:66`):
+
+- `fetchGraph()` injects TinyFish RAG context into AI prompt when curriculum data is unavailable — `<reference_material>` XML + `buildPromptInstruction()` in system prompt
+- Three-tier fallback: local curriculum → RAG-grounded AI → plain AI generation
+- RAG-grounded graphs cached to Dexie via existing `storeGraph()` path
+
+**Real-time enrichment — RAG-augmented hints** (5 files):
+
+- `HintParams.ragXml?: string` — optional RAG context threaded through engine
+- `HintFn` signature extended with optional `ragXml` param (backward compatible, only `aiHintFactory` consumes it)
+- `POST /api/engine/hint` now fetches `searchWithRAG(subject, topic)` and passes RAG XML to hint generation
+- Static hint implementations (non-AI) ignore the param — zero behavioural change
+
+**Cross-engine integration — visual context in TTS** (`tts-button.tsx`, `QuestionCard.tsx`, `QuestionCardHeader.tsx`):
+
+- `TTSButton` accepts optional `visualDescription` prop, prepended to TTS text when present
+- `QuestionCard` computes description from `VisualContent.label` and threads it through `QuestionCardHeader`
+- Visual and voice engines stay decoupled; context bridge lives in the consumer component
+
+**STT endpoint** (`POST /api/engine/transcribe`, `pronunciation-client.tsx`):
+
+- Accepts base64 audio, forwards to Deepgram `/v1/listen`, returns `{ text, confidence, provider }`
+- Fails open when `DEEPGRAM_API_KEY` is absent (returns `{ text: null, confidence: null, provider: null }`)
+- Pronunciation client tries server-side Deepgram first, falls back to Whisper WASM (74MB model download only when needed)
+
+**Verification**: TypeScript 0 errors, 1498 tests pass (0 regressions), lint clean on changed files.

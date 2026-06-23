@@ -1,9 +1,7 @@
-# minimumReleaseAge: 1440
-# trustPolicy: no-downgrade
 allowBuilds:
-  "@parcel/watcher": true
-  "@sentry/cli": true
-  "@swc/core": true
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  '@swc/core': true
   core-js-pure: true
   esbuild: true
   msgpackr-extract: true
@@ -11,29 +9,31 @@ allowBuilds:
   sharp: true
   tesseract.js: true
   unrs-resolver: true
+
 overrides:
   protobufjs: 7.6.3
-  effect: ">=3.20.0"
+  effect: '>=3.20.0'
   postcss: 8.5.15
-  tmp: "^0.2.6"
+  tmp: ^0.2.6
+
 minimumReleaseAgeExclude:
-  - "@next/bundle-analyzer@16.2.9"
-  - "@next/env@16.2.9"
-  - "@next/eslint-plugin-next@16.2.9"
-  - "@next/swc-darwin-arm64@16.2.9"
-  - "@next/swc-darwin-x64@16.2.9"
-  - "@next/swc-linux-arm64-gnu@16.2.9"
-  - "@next/swc-linux-arm64-musl@16.2.9"
-  - "@next/swc-linux-x64-gnu@16.2.9"
-  - "@next/swc-linux-x64-musl@16.2.9"
-  - "@next/swc-win32-arm64-msvc@16.2.9"
-  - "@next/swc-win32-x64-msvc@16.2.9"
-  - "@storybook/builder-webpack5@10.4.3"
-  - "@storybook/core-webpack@10.4.3"
-  - "@storybook/nextjs@10.4.3"
-  - "@storybook/preset-react-webpack@10.4.3"
-  - "@storybook/react-dom-shim@10.4.3"
-  - "@storybook/react@10.4.3"
+  - '@next/bundle-analyzer@16.2.9'
+  - '@next/env@16.2.9'
+  - '@next/eslint-plugin-next@16.2.9'
+  - '@next/swc-darwin-arm64@16.2.9'
+  - '@next/swc-darwin-x64@16.2.9'
+  - '@next/swc-linux-arm64-gnu@16.2.9'
+  - '@next/swc-linux-arm64-musl@16.2.9'
+  - '@next/swc-linux-x64-gnu@16.2.9'
+  - '@next/swc-linux-x64-musl@16.2.9'
+  - '@next/swc-win32-arm64-msvc@16.2.9'
+  - '@next/swc-win32-x64-msvc@16.2.9'
+  - '@storybook/builder-webpack5@10.4.3'
+  - '@storybook/core-webpack@10.4.3'
+  - '@storybook/nextjs@10.4.3'
+  - '@storybook/preset-react-webpack@10.4.3'
+  - '@storybook/react-dom-shim@10.4.3'
+  - '@storybook/react@10.4.3'
   - eslint-config-next@16.2.9
   - next@16.2.9
   - oxlint-plugin-react-doctor@0.5.1
@@ -44,43 +44,54 @@ minimumReleaseAgeExclude:
   - knip@6.17.2
   - smol-toml@1.7.0
   - protobufjs@7.6.3
-  - "@oxfmt/binding-android-arm-eabi@0.56.0"
-  - "@oxfmt/binding-android-arm64@0.56.0"
-  - "@oxfmt/binding-darwin-arm64@0.56.0"
-  - "@oxfmt/binding-darwin-x64@0.56.0"
-  - "@oxfmt/binding-freebsd-x64@0.56.0"
-  - "@oxfmt/binding-linux-arm-gnueabihf@0.56.0"
-  - "@oxfmt/binding-linux-arm-musleabihf@0.56.0"
-  - "@oxfmt/binding-linux-arm64-gnu@0.56.0"
-  - "@oxfmt/binding-linux-arm64-musl@0.56.0"
-  - "@oxfmt/binding-linux-ppc64-gnu@0.56.0"
-  - "@oxfmt/binding-linux-riscv64-gnu@0.56.0"
-  - "@oxfmt/binding-linux-riscv64-musl@0.56.0"
-  - "@oxfmt/binding-linux-s390x-gnu@0.56.0"
-  - "@oxfmt/binding-linux-x64-gnu@0.56.0"
-  - "@oxfmt/binding-linux-x64-musl@0.56.0"
-  - "@oxfmt/binding-openharmony-arm64@0.56.0"
-  - "@oxfmt/binding-win32-arm64-msvc@0.56.0"
-  - "@oxfmt/binding-win32-ia32-msvc@0.56.0"
-  - "@oxfmt/binding-win32-x64-msvc@0.56.0"
-  - "@oxlint/binding-android-arm-eabi@1.71.0"
-  - "@oxlint/binding-android-arm64@1.71.0"
-  - "@oxlint/binding-darwin-arm64@1.71.0"
-  - "@oxlint/binding-darwin-x64@1.71.0"
-  - "@oxlint/binding-freebsd-x64@1.71.0"
-  - "@oxlint/binding-linux-arm-gnueabihf@1.71.0"
-  - "@oxlint/binding-linux-arm-musleabihf@1.71.0"
-  - "@oxlint/binding-linux-arm64-gnu@1.71.0"
-  - "@oxlint/binding-linux-arm64-musl@1.71.0"
-  - "@oxlint/binding-linux-ppc64-gnu@1.71.0"
-  - "@oxlint/binding-linux-riscv64-gnu@1.71.0"
-  - "@oxlint/binding-linux-riscv64-musl@1.71.0"
-  - "@oxlint/binding-linux-s390x-gnu@1.71.0"
-  - "@oxlint/binding-linux-x64-gnu@1.71.0"
-  - "@oxlint/binding-linux-x64-musl@1.71.0"
-  - "@oxlint/binding-openharmony-arm64@1.71.0"
-  - "@oxlint/binding-win32-arm64-msvc@1.71.0"
-  - "@oxlint/binding-win32-ia32-msvc@1.71.0"
-  - "@oxlint/binding-win32-x64-msvc@1.71.0"
+  - '@oxfmt/binding-android-arm-eabi@0.56.0'
+  - '@oxfmt/binding-android-arm64@0.56.0'
+  - '@oxfmt/binding-darwin-arm64@0.56.0'
+  - '@oxfmt/binding-darwin-x64@0.56.0'
+  - '@oxfmt/binding-freebsd-x64@0.56.0'
+  - '@oxfmt/binding-linux-arm-gnueabihf@0.56.0'
+  - '@oxfmt/binding-linux-arm-musleabihf@0.56.0'
+  - '@oxfmt/binding-linux-arm64-gnu@0.56.0'
+  - '@oxfmt/binding-linux-arm64-musl@0.56.0'
+  - '@oxfmt/binding-linux-ppc64-gnu@0.56.0'
+  - '@oxfmt/binding-linux-riscv64-gnu@0.56.0'
+  - '@oxfmt/binding-linux-riscv64-musl@0.56.0'
+  - '@oxfmt/binding-linux-s390x-gnu@0.56.0'
+  - '@oxfmt/binding-linux-x64-gnu@0.56.0'
+  - '@oxfmt/binding-linux-x64-musl@0.56.0'
+  - '@oxfmt/binding-openharmony-arm64@0.56.0'
+  - '@oxfmt/binding-win32-arm64-msvc@0.56.0'
+  - '@oxfmt/binding-win32-ia32-msvc@0.56.0'
+  - '@oxfmt/binding-win32-x64-msvc@0.56.0'
+  - '@oxlint/binding-android-arm-eabi@1.71.0'
+  - '@oxlint/binding-android-arm64@1.71.0'
+  - '@oxlint/binding-darwin-arm64@1.71.0'
+  - '@oxlint/binding-darwin-x64@1.71.0'
+  - '@oxlint/binding-freebsd-x64@1.71.0'
+  - '@oxlint/binding-linux-arm-gnueabihf@1.71.0'
+  - '@oxlint/binding-linux-arm-musleabihf@1.71.0'
+  - '@oxlint/binding-linux-arm64-gnu@1.71.0'
+  - '@oxlint/binding-linux-arm64-musl@1.71.0'
+  - '@oxlint/binding-linux-ppc64-gnu@1.71.0'
+  - '@oxlint/binding-linux-riscv64-gnu@1.71.0'
+  - '@oxlint/binding-linux-riscv64-musl@1.71.0'
+  - '@oxlint/binding-linux-s390x-gnu@1.71.0'
+  - '@oxlint/binding-linux-x64-gnu@1.71.0'
+  - '@oxlint/binding-linux-x64-musl@1.71.0'
+  - '@oxlint/binding-openharmony-arm64@1.71.0'
+  - '@oxlint/binding-win32-arm64-msvc@1.71.0'
+  - '@oxlint/binding-win32-ia32-msvc@1.71.0'
+  - '@oxlint/binding-win32-x64-msvc@1.71.0'
   - oxfmt@0.56.0
   - oxlint@1.71.0
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@sentry/cli'
+  - '@swc/core'
+  - core-js-pure
+  - esbuild
+  - msgpackr-extract
+  - protobufjs
+  - sharp
+  - tesseract.js

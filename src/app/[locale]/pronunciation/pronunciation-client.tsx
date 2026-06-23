@@ -108,45 +108,78 @@ export function PronunciationClient() {
     }
   }, [requestPermission]);
 
+  const blobToBase64 = useCallback((blob: Blob): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        resolve(result.split(",")[1]);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }, []);
+
   const handleTranscribe = useCallback(async () => {
     const result = audioEngine.getRecordingResult();
     if (!result) return;
 
     setLoading(true);
-    setModelState("downloading");
-    pollProgress();
+    let transcriptionText: string | null = null;
 
     try {
-      const service = getWhisperService();
-      const transcription = await service.transcribe(result.blob);
-      if (transcription) {
-        setTranscribedText(transcription.text);
-        if (expectedText.trim()) {
-          const scored = service.assessPronunciation(transcription.text, expectedText);
-          setAssessment(scored);
-          // Save to history
-          savePronunciationScore(
-            "anonymous",
-            expectedText.trim().split(/\s+/)[0] || "unknown",
-            scored.overallScore,
-            (scored.wordScores.filter((w) => w.isCorrect).length /
-              Math.max(scored.wordScores.length, 1)) *
-              100,
-            scored.phonemeAccuracy,
-            scored.fluencyScore,
-            "en",
-          ).catch(() => {});
-        }
+      const base64 = await blobToBase64(result.blob);
+      const res = await fetch("/api/engine/transcribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ audio: base64, format: result.blob.type }),
+      });
+      const data = await res.json();
+
+      if (data.text) {
+        transcriptionText = data.text;
       }
-    } catch (err) {
-      logError("PronunciationClient.transcribe", err);
-    } finally {
-      setLoading(false);
-      if (progressInterval.current) {
-        clearInterval(progressInterval.current);
+    } catch {
+      // server unavailable, fall through to whisper
+    }
+
+    if (!transcriptionText) {
+      setModelState("downloading");
+      pollProgress();
+      try {
+        const service = getWhisperService();
+        const whisperResult = await service.transcribe(result.blob);
+        transcriptionText = whisperResult?.text ?? null;
+      } catch (err) {
+        logError("PronunciationClient.whisper", err);
       }
     }
-  }, [expectedText, pollProgress]);
+
+    if (transcriptionText) {
+      setTranscribedText(transcriptionText);
+      if (expectedText.trim()) {
+        const service = getWhisperService();
+        const scored = service.assessPronunciation(transcriptionText, expectedText);
+        setAssessment(scored);
+        savePronunciationScore(
+          "anonymous",
+          expectedText.trim().split(/\s+/)[0] || "unknown",
+          scored.overallScore,
+          (scored.wordScores.filter((w) => w.isCorrect).length /
+            Math.max(scored.wordScores.length, 1)) *
+            100,
+          scored.phonemeAccuracy,
+          scored.fluencyScore,
+          "en",
+        ).catch(() => {});
+      }
+    }
+
+    setLoading(false);
+    if (progressInterval.current) {
+      clearInterval(progressInterval.current);
+    }
+  }, [expectedText, pollProgress, blobToBase64]);
 
   const handleReset = useCallback(() => {
     setTranscribedText(null);

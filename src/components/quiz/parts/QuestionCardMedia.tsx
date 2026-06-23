@@ -3,6 +3,7 @@ import MinusSignIcon from "@hugeicons/core-free-icons/MinusSignIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { VisualContent } from "@/components/visual/visual-content";
 import type { MediaContent } from "@/lib/question-engine/types";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { QuestionDiagram } from "../question-diagram";
@@ -17,7 +18,7 @@ interface QuestionCardMediaProps {
 }
 
 export function QuestionCardMedia({
-  visual: _visual,
+  visual,
   isLoading,
   questionMedia,
   showDiagram,
@@ -25,17 +26,17 @@ export function QuestionCardMedia({
   hasDiagram,
 }: QuestionCardMediaProps) {
   const t = useTranslations();
-  // If we are loading the visual, show a skeleton
-  if (isLoading) {
+
+  if (!hasDiagram && !isLoading) {
+    return null;
+  }
+
+  if (isLoading && !visual && questionMedia.length === 0) {
     return (
-      <div className="relative">
+      <div className="relative mt-2">
         <div className="h-48 w-full rounded bg-muted/50" />
       </div>
     );
-  }
-
-  if (!hasDiagram) {
-    return null;
   }
 
   return (
@@ -62,12 +63,21 @@ export function QuestionCardMedia({
           )}
         </Button>
       </div>
-      {showDiagram &&
-        questionMedia.map((m) => (
-          <div key={`media-${m.label}`} className="mt-2">
-            {m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
-          </div>
-        ))}
+      {showDiagram && (
+        <>
+          {visual ? (
+            <div className="mt-2">
+              <VisualContent visual={visual} isLoading={isLoading} />
+            </div>
+          ) : (
+            questionMedia.map((m) => (
+              <div key={`media-${m.label}`} className="mt-2">
+                {m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
+              </div>
+            ))
+          )}
+        </>
+      )}
     </div>
   );
 }

@@ -49,8 +49,8 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
     return questions;
   }
 
-  async generateHint(question: Question<T>): Promise<string> {
-    return this.hintFn(question, this.prompts, this.ai);
+  async generateHint(question: Question<T>, ragXml?: string): Promise<string> {
+    return this.hintFn(question, this.prompts, this.ai, ragXml);
   }
 
   async grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult> {

@@ -10,6 +10,10 @@ All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + paginatio
 
 **Premium gating removed (June 2026)** — all features are free. ContentLock wrappers purged from analytics, study-plan, scheduler, visual-content, offline-packs. Visual engine always fetches (no premium check). Support page shows priority to all. Auth-required standalone pages (problems) show login banner for unauthenticated users. View transitions consolidated in `useNavigationDirection` — removed `experimental.viewTransition: true` from next.config to eliminate double-wrap conflict.
 
+**Visual dead wire fixed (June 2026)** — `QuestionCardMedia` was receiving `VisualContent` from `useVisualEngine` but destructuring it as `_visual` (unused). Fixed: `hasDiagram` now checks `!!visual || (question.media?.length ?? 0) > 0`, and `QuestionCardMedia` renders `<VisualContent>` when visual engine data exists, falling back to legacy `QuestionDiagram` from `question.media`. Loading skeleton shown during fetch.
+
+**VoiceEngine created (June 2026)** — `src/lib/voice-engine/` with `VoiceEngine.synthesize(text, options)` provider chain: ElevenLabs → Google Cloud TTS → FreeTTS. `POST /api/engine/voice` route. `useVoiceEngine()` hook with browser SpeechSynthesis fallback. `TTSButton` and `ListenToLesson` both updated to use unified engine. No STT endpoint yet (planned: Deepgram + Whisper fallback).
+
 **Architectural deepening (June 2026)** — 8 candidates implemented:
 
 - **Session 37**: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ADR-0012 documented.
@@ -153,6 +157,18 @@ Appwrite Cloud
 - **Accent-tinted glass**: A `--system-accent-alpha-10` overlay on frosted glass surfaces that gives the nav bars a subtle Emerald Green tint while maintaining the frosted backdrop-filter effect.
 - **`theme-color`**: The `<meta name="theme-color">` tag that controls the browser chrome's accent color. Must dynamically update when the user switches light/dark theme.
 - **`window-controls-overlay`**: A PWA `display_override` mode for rendering behind window control buttons on desktop installed PWAs.
+
+## Glossary — Voice Engine
+
+- **VoiceEngine**: A first-class engine at `src/lib/voice-engine/` (parallel to `QuestionEngine`/`VisualEngine`). Unifies TTS generation behind `VoiceEngine.synthesize(text, options)` with a provider chain: ElevenLabs → Google Cloud TTS → FreeTTS. Singleton `voiceEngine` exported for server-side use. Client hook `useVoiceEngine()` calls `POST /api/engine/voice` and falls back to browser `SpeechSynthesis` on server failure. Two consumers updated: `TTSButton` (quiz cards) and `ListenToLesson` (lessons/stories).
+- **TTS (Text-to-Speech)**: Converting text to spoken audio. Provider chain: ElevenLabs (`ELEVENLABS_API_KEY`) → Google Cloud TTS (`GOOGLE_TTS_API_KEY`) → FreeTTS (free, no key) → browser `SpeechSynthesis` (client fallback). The `POST /api/engine/voice` route returns `{ audio, format, provider }` or `{ audio: null }` when all server providers fail.
+- **STT (Speech-to-Text)**: Converting recorded audio into text. Client-only via Whisper WASM (`@xenova/transformers`) in Web Worker. Pronunciation flow: record → whisper transcribe → Levenshtein word match + phoneme assessment → persist score. No server-side endpoint yet (planned: Deepgram primary, Whisper offline fallback).
+- **Audio Engine** (`src/lib/audio-engine/`): Low-level recording/playback layer. Singleton `AudioEngine` wrapping `MediaRecorder` + `HTMLAudioElement`. Manages microphone permission, chunks, timer, playback position, state subscription. Does NOT handle TTS or STT.
+- **TTS Provider**: Backend for text-to-speech. Chain: ElevenLabs (high-quality) → Google Cloud TTS (multilingual, SA languages) → FreeTTS (free-tier) → browser `SpeechSynthesis` (offline fallback).
+- **STT Provider**: Backend for speech-to-text. Current: Whisper WASM (client-side, 74MB model). Planned: `POST /api/engine/transcribe` with Deepgram primary, Whisper offline fallback.
+- **Pronunciation Assessment**: Recording → Whisper transcription → `PhonemeService` alignment → `PronunciationHistoryService` persistence. Evaluated on: overall score, word accuracy, phoneme accuracy, fluency score.
+- **Phoneme Service** (`src/lib/audio-engine/phoneme-service.ts`): Pure-function module with a ~120-word `PHONEME_DICT` (common + STEM terms) and letter-to-phoneme fallback rules. Levenshtein alignment for phoneme-level comparison.
+- **Whisper Service** (`src/lib/audio-engine/whisper-service.ts`): Singleton wrapping WASM Web Worker. Downloads 74MB `ggml-tiny.bin` model, transcribes audio, assesses pronunciation. Model cached via Cache API. Lazy-loaded on first use.
 
 ## Glossary — Legal Compliance
 

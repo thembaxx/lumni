@@ -187,7 +187,11 @@ export function QuestionCard({
   const isMCQ = question.type === "multiple-choice";
   const mcqBody = isMCQ ? (question as Question<"multiple-choice">).body : null;
   const options = mcqBody?.options ?? [];
-  const hasDiagram = (question.media?.length ?? 0) > 0;
+  const hasDiagram = (question.media?.length ?? 0) > 0 || !!visual;
+
+  const visualDescription = visual?.label
+    ? `The question includes a visual: ${visual.label}`
+    : undefined;
 
   const handleGrade = useCallback(
     async (answer: UserAnswer) => {
@@ -263,6 +267,7 @@ export function QuestionCard({
         }}
         isMathSubject={isMathSubject}
         onToolClick={() => openTools("solver", true)}
+        visualDescription={visualDescription}
       />
       <QuestionCardMedia
         visual={visual}

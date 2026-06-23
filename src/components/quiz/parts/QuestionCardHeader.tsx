@@ -27,6 +27,7 @@ interface QuestionCardHeaderProps {
   onBookmarkToggle: () => void;
   isMathSubject: boolean;
   onToolClick: () => void;
+  visualDescription?: string;
 }
 
 export function QuestionCardHeader({
@@ -36,6 +37,7 @@ export function QuestionCardHeader({
   onBookmarkToggle,
   isMathSubject,
   onToolClick,
+  visualDescription,
 }: QuestionCardHeaderProps) {
   const t = useTranslations();
   return (
@@ -84,7 +86,7 @@ export function QuestionCardHeader({
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
           </button>
-          <TTSButton text={question.questionText} />
+          <TTSButton text={question.questionText} visualDescription={visualDescription} />
           <Badge variant="secondary" className="text-xs">
             {t("quiz.pointsCount", { points: question.points })}
           </Badge>

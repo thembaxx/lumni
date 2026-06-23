@@ -325,6 +325,7 @@ export interface HintParams {
   questionId: string;
   question: Question;
   studentAnswer?: UserAnswer;
+  ragXml?: string;
 }
 
 export interface GenerateResult {
@@ -338,7 +339,7 @@ export type QuestionProcessor<T extends QuestionType = QuestionType> = {
     params: GenerationParams,
     ragContext?: { sources: unknown[]; xml: string; domainsQueried: string[] },
   ): Promise<Question<T>[]>;
-  generateHint(question: Question<T>): Promise<string>;
+  generateHint(question: Question<T>, ragXml?: string): Promise<string>;
   grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
   validate(question: Question<T>): ValidationResult;
   generateFromSource?(source: string, params: GenerationParams): Promise<Question<T>[]>;

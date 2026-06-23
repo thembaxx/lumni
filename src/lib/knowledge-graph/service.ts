@@ -3,6 +3,8 @@ import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
+import { buildPromptInstruction, searchWithRAG } from "@/lib/tinyfish";
+import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
 import { buildGraphFromCurriculum } from "./curriculum-graph";
 import type { CachedGraph, KnowledgeGraph } from "./types";
@@ -66,6 +68,25 @@ async function buildFromCurriculum(subject: string, topic: string): Promise<Know
 export async function fetchGraph(subject: string, topic: string): Promise<KnowledgeGraph> {
   const curriculumGraph = await buildFromCurriculum(subject, topic);
   if (curriculumGraph) return curriculumGraph;
+
+  const ragContext = await searchWithRAG({ subject, topic });
+  if (ragContext.xml) {
+    const aiClient = getAI();
+    const userPrompt = `${ragContext.xml}\n\n---\n\n${config.buildPrompt(subject, topic)}`;
+    const systemPrompt = `${config.systemPrompt}\n\n${buildPromptInstruction()}`;
+    const result = await aiClient.generateWithSystem(systemPrompt, userPrompt);
+    if ("content" in result && result.content) {
+      try {
+        const graph = config.parseResponse(result.content);
+        if (!config.isEmpty(graph)) {
+          await storeGraph(subject, topic, graph);
+          return graph;
+        }
+      } catch (err) {
+        logError("KnowledgeGraph.fetchGraph.RAG", err);
+      }
+    }
+  }
 
   return createGenerator().generate(subject, topic);
 }

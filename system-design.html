@@ -106,7 +106,7 @@
     overflow-x: auto;
   }
   .diagram-wrap svg { max-width: 100%; height: auto; }
-  .diagram-wrap :deep(.label) { color: var(--text) !important; }
+  .diagram-wrap :deep(.label) { color: var(--text); }
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -1080,7 +1080,7 @@
       if (entry.isIntersecting) {
         const id = entry.target.id;
         document.querySelectorAll('.nav a').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
         });
       }
     });

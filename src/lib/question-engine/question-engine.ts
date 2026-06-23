@@ -243,7 +243,7 @@ export class QuestionEngine {
   async generateHint(params: HintParams): Promise<string> {
     const { question } = params;
     const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
-    return processor.generateHint(typed);
+    return processor.generateHint(typed, params.ragXml);
   }
 
   async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
@@ -278,44 +278,46 @@ export class QuestionEngine {
       ["mixed"],
     ];
 
-    const results: Question[] = [];
     const count = params.count;
     const itemCount = Math.max(1, Math.ceil(count / batches.length));
 
-    for (const batch of batches) {
-      if (results.length >= count) break;
-      const available = batch.filter((t) => this.registry.hasProcessor(t));
-      if (available.length === 0) continue;
+    const batchResults = await Promise.all(
+      batches.map(async (batch) => {
+        const available = batch.filter((t) => this.registry.hasProcessor(t));
+        if (available.length === 0) return [];
 
-      const perType = Math.floor(itemCount / available.length);
-      const remainder = itemCount - perType * available.length;
+        const perType = Math.floor(itemCount / available.length);
+        const remainder = itemCount - perType * available.length;
+        const batchQuestions: Question[] = [];
 
-      for (let i = 0; i < available.length && results.length < count; i++) {
-        let needed = perType + (i < remainder ? 1 : 0);
-        needed = Math.min(needed, count - results.length);
-        if (needed <= 0) continue;
+        for (let i = 0; i < available.length && batchQuestions.length < itemCount; i++) {
+          let needed = perType + (i < remainder ? 1 : 0);
+          if (needed <= 0) continue;
 
-        let generated = false;
-        for (let j = 0; j < available.length && !generated; j++) {
-          const tryType = available[(i + j) % available.length];
-          const processor = this.registry.getProcessor(tryType);
-          try {
-            const questions = await processor.generate(
-              { ...params, count: needed, questionType: tryType },
-              ragContext,
-            );
-            if (questions.length > 0) {
-              results.push(...questions);
-              generated = true;
+          let generated = false;
+          for (let j = 0; j < available.length && !generated; j++) {
+            const tryType = available[(i + j) % available.length];
+            const processor = this.registry.getProcessor(tryType);
+            try {
+              const questions = await processor.generate(
+                { ...params, count: needed, questionType: tryType },
+                ragContext,
+              );
+              if (questions.length > 0) {
+                batchQuestions.push(...questions);
+                generated = true;
+              }
+            } catch (e) {
+              console.error(`[QuestionEngine] Generation failed for ${tryType}:`, e);
             }
-          } catch (e) {
-            console.error(`[QuestionEngine] Generation failed for ${tryType}:`, e);
           }
         }
-      }
-    }
 
-    return results.slice(0, params.count);
+        return batchQuestions;
+      }),
+    );
+
+    return batchResults.flat().slice(0, count);
   }
 
   getPromptManager(): PromptManager {

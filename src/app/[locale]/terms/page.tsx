@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Terms and conditions for using Lumni study tools",
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
   return (
     <div className="min-h-dvh bg-system-grouped py-8">
       <PageContainer className="flex flex-col gap-6">

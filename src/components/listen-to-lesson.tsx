@@ -3,7 +3,8 @@ import StopCircleIcon from "@hugeicons/core-free-icons/StopCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { logError } from "@/lib/shared/logger";
+import { useVoiceEngine } from "@/hooks/use-voice-engine";
+import { ttsService } from "@/lib/utils/tts-service";
 import { cn } from "@/lib/utils";
 
 interface ListenToLessonProps {
@@ -18,17 +19,15 @@ interface ListenToLessonProps {
 export function ListenToLesson({
   text,
   lang = "en",
-  voice = "en_us_guy",
+  voice,
   className,
   onPlayingChange,
   onWordIndexChange,
 }: ListenToLessonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [useCustomVoice, setUseCustomVoice] = useState(false);
-
+  const { isLoading, speak: voiceSpeak, stop: stopVoice } = useVoiceEngine();
   const synthRef = useRef<SpeechSynthesis | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const playBrowserVoice = useCallback(
     (textToPlay: string) => {
@@ -36,7 +35,6 @@ export function ListenToLesson({
       utterance.lang = lang === "en" ? "en-ZA" : lang;
       utterance.rate = 0.9;
       utterance.pitch = 1;
-      utterance.volume = 1;
 
       utterance.onboundary = (event) => {
         if (event.name === "word") {
@@ -66,18 +64,17 @@ export function ListenToLesson({
   const handleListen = useCallback(async () => {
     if (!text) return;
 
-    if (isPlaying) {
-      synthRef.current?.cancel();
-      audioRef.current?.pause();
-      audioRef.current = null;
+    if (isPlaying || isLoading) {
+      stopVoice();
+      ttsService.cancel();
+      if (synthRef.current) {
+        synthRef.current.cancel();
+      }
       setIsPlaying(false);
-      setUseCustomVoice(false);
       onPlayingChange?.(false);
       onWordIndexChange?.(-1);
       return;
     }
-
-    synthRef.current?.cancel();
 
     if (typeof window !== "undefined") {
       synthRef.current = window.speechSynthesis;
@@ -86,49 +83,14 @@ export function ListenToLesson({
     setIsPlaying(true);
     onPlayingChange?.(true);
 
-    try {
-      const response = await fetch("/api/tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text,
-          voice,
-          lang,
-        }),
-      });
+    await voiceSpeak(text, { lang, voice });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.audio) {
-          setUseCustomVoice(true);
-          const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
-          audioRef.current = audio;
-
-          audio.onended = () => {
-            setIsPlaying(false);
-            setUseCustomVoice(false);
-            onPlayingChange?.(false);
-            onWordIndexChange?.(-1);
-          };
-          audio.onerror = () => {
-            setUseCustomVoice(false);
-            playBrowserVoice(text);
-          };
-          await audio.play();
-          return;
-        }
-      }
-
-      const errorData = await response.json().catch(() => ({}));
-      if (errorData.error) {
-        console.warn("TTS API error, falling back to browser:", errorData.error);
-      }
-    } catch (error) {
-      logError("TtsApi", error);
+    if (utteranceRef.current) {
+      return;
     }
 
     playBrowserVoice(text);
-  }, [text, voice, lang, isPlaying, playBrowserVoice, onPlayingChange, onWordIndexChange]);
+  }, [text, voice, lang, isPlaying, isLoading, voiceSpeak, stopVoice, onPlayingChange, onWordIndexChange, playBrowserVoice]);
 
   return (
     <Button
@@ -141,13 +103,14 @@ export function ListenToLesson({
         "transition-colors duration-150 ease-[var(--ease-ios)]",
         className,
       )}
+      disabled={isLoading}
     >
       {isPlaying ? (
         <HugeiconsIcon icon={StopCircleIcon} className="mr-1.5 size-4" />
       ) : (
         <HugeiconsIcon icon={HeadphonesIcon} className="mr-1.5 size-4" />
       )}
-      {isPlaying ? "Stop listening..." : useCustomVoice ? "Listen to lesson" : "Listen to lesson"}
+      {isPlaying ? "Stop listening..." : "Listen to lesson"}
     </Button>
   );
 }

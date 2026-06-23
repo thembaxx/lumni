@@ -13,6 +13,7 @@ export type HintFn = (
   q: Question,
   prompts: PromptManager,
   ai: AIClient,
+  ragXml?: string,
 ) => string | Promise<string>;
 
 export interface ProcessorConfig {

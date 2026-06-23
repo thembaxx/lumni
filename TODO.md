@@ -776,3 +776,11 @@ pnpm run build        → clean build
 
 - [x] **Close issues #54-#60 on GitHub** — Already closed.
 - [x] **Close or merge 5 dependabot PRs (#61-#65)** — Already handled (no open PRs).
+
+---
+
+## VoiceEngine API Keys
+
+- [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel environment variables.
+- [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports SA languages: af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel environment variables.
+- [ ] **Set both keys in `.env.local` for development** — Engine degrades gracefully to FreeTTS if either key is absent, but ElevenLabs is recommended for quality and Google TTS for multilingual coverage.

@@ -1,56 +1,56 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/hooks": ["./src/hooks"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/store": ["./src/store"],
-      "@/store/*": ["./src/store/*"],
-      "@/actions": ["./src/actions"],
-      "@/actions/*": ["./src/actions/*"],
-      "@/data": ["./src/data/index"],
-      "@/data/*": ["./src/data/*"],
-      "@/lib/hooks": ["./src/hooks"],
-      "@/lib/stores": ["./src/store"],
-      "@/lib/server": ["./src/lib/server"],
-      "@/lib/types": ["./src/types"],
-      "@/lib/data": ["./src/data"],
-      "@/lib/store": ["./src/store"]
-    }
-  },
-  "include": [
-    "src/**/*",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next/**",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.int-test.ts",
-    "**/__tests__"
-  ]
+	"compilerOptions": {
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/hooks": ["./src/hooks"],
+			"@/hooks/*": ["./src/hooks/*"],
+			"@/store": ["./src/store"],
+			"@/store/*": ["./src/store/*"],
+			"@/actions": ["./src/actions"],
+			"@/actions/*": ["./src/actions/*"],
+			"@/data": ["./src/data/index"],
+			"@/data/*": ["./src/data/*"],
+			"@/lib/hooks": ["./src/hooks"],
+			"@/lib/stores": ["./src/store"],
+			"@/lib/server": ["./src/lib/server"],
+			"@/lib/types": ["./src/types"],
+			"@/lib/data": ["./src/data"],
+			"@/lib/store": ["./src/store"]
+		}
+	},
+	"include": [
+		"src/**/*",
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		".next/dev/types/**/*.ts",
+		"**/*.mts"
+	],
+	"exclude": [
+		"node_modules",
+		".next/**",
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		"**/*.int-test.ts",
+		"**/__tests__"
+	]
 }
