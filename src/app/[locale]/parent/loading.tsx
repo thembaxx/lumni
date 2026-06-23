@@ -1,5 +1,5 @@
 import { PageSkeleton } from "@/components/ui/skeletons";
 
-export default function SearchLoading() {
+export default function ParentLoading() {
   return <PageSkeleton />;
 }

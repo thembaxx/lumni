@@ -53,7 +53,7 @@ function buildReportingEndpoints(): string {
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },

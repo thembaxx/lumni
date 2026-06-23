@@ -10,8 +10,8 @@ Sentry.init({
   // In Sentry v10+, browserTracingIntegration is included by default via @sentry/nextjs
   integrations: [],
 
-  tracesSampleRate: 1,
-  enableLogs: true,
+  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
+  enableLogs: process.env.NODE_ENV !== "production",
 
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
