@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v4";
+const CACHE_VERSION = "v5";
 const CACHE_NAME = `lumni-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `lumni-runtime-${CACHE_VERSION}`;
 const HTML_CACHE = `lumni-html-${CACHE_VERSION}`;
@@ -8,6 +8,11 @@ const STATIC_ASSETS = [
   "/web-app-manifest-192x192.png",
   "/web-app-manifest-512x512.png",
   "/offline",
+  "/dashboard",
+  "/quiz",
+  "/flashcards",
+  "/settings",
+  "/solve",
 ];
 
 self.addEventListener("install", (event) => {
@@ -26,7 +31,6 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  // Self-unregister in dev mode so the SW never interferes with HMR.
   if (self.location.hostname === "localhost" || self.location.hostname === "127.0.0.1") {
     event.waitUntil(
       self.registration
@@ -37,13 +41,19 @@ self.addEventListener("activate", (event) => {
   }
 
   const keep = new Set([CACHE_NAME, RUNTIME_CACHE, HTML_CACHE]);
-  event.waitUntil(
+  const tasks = [
     caches
       .keys()
       .then((cacheNames) =>
         Promise.all(cacheNames.flatMap((name) => (keep.has(name) ? [] : [caches.delete(name)]))),
       ),
-  );
+  ];
+
+  if (self.registration.navigationPreload) {
+    tasks.push(self.registration.navigationPreload.enable());
+  }
+
+  event.waitUntil(Promise.all(tasks));
   self.clients.claim();
 });
 
@@ -74,7 +84,6 @@ self.addEventListener("fetch", (event) => {
 
   if (url.origin !== location.origin) return;
 
-  // Skip internal Next.js dev server / Vite HMR traffic.
   if (
     url.pathname.startsWith("/__next") ||
     url.pathname.startsWith("/@vite") ||
@@ -82,9 +91,6 @@ self.addEventListener("fetch", (event) => {
   )
     return;
 
-  // Build artifacts (JS/CSS chunks, RSC payloads, optimized images): pass through.
-  // Browser HTTP cache + Vercel's immutable headers handle these correctly and
-  // we must NEVER serve stale hashed chunks across deployments.
   if (isBuildArtifact(url)) return;
 
   if (url.pathname.startsWith("/api/")) {
@@ -93,16 +99,25 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (isHtmlNavigation(request, url)) {
-    event.respondWith(networkFirstHtml(request));
+    event.respondWith(networkFirstHtml(event));
     return;
   }
 
   event.respondWith(staleWhileRevalidate(request, CACHE_NAME));
 });
 
-async function networkFirstHtml(request) {
+async function networkFirstHtml(event) {
+  const request = event.request;
+  const preloadResponse = event.preloadResponse;
+
   try {
-    const response = await fetch(request);
+    const response = await Promise.race([
+      fetch(request),
+      preloadResponse
+        ? new Promise((resolve) => preloadResponse.then(resolve))
+        : new Promise(() => {}),
+    ]);
+
     if (response && response.ok) {
       const cache = await caches.open(HTML_CACHE);
       cache.put(request, response.clone());
@@ -150,6 +165,56 @@ async function networkFirst(request, cacheName) {
     });
   }
 }
+
+self.addEventListener("sync", (event) => {
+  if (event.tag === "sync-mutations") {
+    event.waitUntil(replayMutations());
+  }
+});
+
+async function replayMutations() {
+  try {
+    const keys = await caches.open(RUNTIME_CACHE).then((cache) => cache.keys());
+    const mutationKeys = keys.filter((k) => k.url.includes("/offline-mutations/"));
+    for (const req of mutationKeys) {
+      const cached = await caches.match(req);
+      if (!cached) continue;
+      const mutation = await cached.json();
+      try {
+        await fetch(mutation.url, {
+          method: mutation.method || "POST",
+          headers: { "Content-Type": "application/json" },
+          body: mutation.body ? JSON.stringify(mutation.body) : undefined,
+        });
+        const cache = await caches.open(RUNTIME_CACHE);
+        cache.delete(req);
+      } catch (e) {
+        console.warn("[sw] mutation replay failed, will retry", mutation.url, e);
+      }
+    }
+  } catch (e) {
+    console.warn("[sw] replayMutations error", e);
+  }
+}
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+
+  if (event.data?.type === "QUEUE_MUTATION") {
+    const { id, url, method, body } = event.data;
+    const cacheReq = new Request(`/offline-mutations/${id}`);
+    const cacheRes = new Response(JSON.stringify({ url, method, body }), {
+      headers: { "Content-Type": "application/json" },
+    });
+    caches.open(RUNTIME_CACHE).then((cache) => cache.put(cacheReq, cacheRes));
+  }
+
+  if (event.data?.type === "CLEAR_ALL_CACHES") {
+    event.waitUntil(caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n)))));
+  }
+});
 
 self.addEventListener("push", (event) => {
   if (!event.data) return;
@@ -200,24 +265,4 @@ self.addEventListener("notificationclick", (event) => {
       return clients.openWindow(url);
     }),
   );
-});
-
-self.addEventListener("message", (event) => {
-  if (event.data?.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-
-  if (event.data?.type === "CACHE_QUESTIONS") {
-    const { subject, questions } = event.data;
-    caches.open(RUNTIME_CACHE).then((cache) => {
-      const response = new Response(JSON.stringify(questions), {
-        headers: { "Content-Type": "application/json" },
-      });
-      cache.put(`/api/questions?subject=${subject}`, response);
-    });
-  }
-
-  if (event.data?.type === "CLEAR_ALL_CACHES") {
-    event.waitUntil(caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n)))));
-  }
 });

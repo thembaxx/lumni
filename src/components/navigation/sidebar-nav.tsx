@@ -11,6 +11,7 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { type NavItem, navConfig } from "@/lib/navigation/config";
+import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface SidebarState {
@@ -32,6 +33,7 @@ export function SidebarStateProvider({ children }: { children: React.ReactNode }
 function SidebarContent() {
   const pathname = usePathname();
   const { push } = useNavigationDirection();
+  const router = useRouter();
   const { user } = useAuth();
   const { setOpen } = use(SidebarStateContext);
   const [query, setQuery] = useState("");
@@ -47,6 +49,13 @@ function SidebarContent() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  useEffect(() => {
+    const routes = ["/dashboard", "/quiz", "/flashcards", "/solve", "/search"];
+    for (const route of routes) {
+      router.prefetch(route);
+    }
+  }, [router]);
 
   const hasRole = useCallback(
     (role: string) => (user?.labels ?? []).includes(role),
