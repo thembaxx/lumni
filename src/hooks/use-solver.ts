@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logError } from "@/lib/shared/logger";
 
 interface SolverSource {
   url: string;
@@ -42,7 +43,10 @@ async function solveProblem({ question, subject }: SolveParams): Promise<SolverR
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
+    const error = await response.json().catch((e) => {
+      logError("useSolver.json", e);
+      return {};
+    });
     throw new Error(error.error || "Failed to solve the problem");
   }
 
@@ -67,7 +71,10 @@ async function sendFollowUp({
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
+    const error = await response.json().catch((e) => {
+      logError("useSolver.followUp.json", e);
+      return {};
+    });
     throw new Error(error.error || "Failed to get answer");
   }
 

@@ -107,13 +107,13 @@ async function runPipeline(opts: {
 
       if (fetched.sources.length > 0) {
         yield* Effect.tryPromise(() => setCached(key, fetched, cacheTtl)).pipe(
-          Effect.catchAll(() => Effect.void),
+          Effect.catchAll(() => Effect.succeed(undefined)),
         );
       }
 
       if (userId) {
         yield* Effect.tryPromise(() => incrementTodayUsage(userId)).pipe(
-          Effect.catchAll(() => Effect.void),
+          Effect.catchAll(() => Effect.succeed(undefined)),
         );
       }
 

@@ -79,7 +79,9 @@ export class CachedAIGenerator<T> {
       const key = self.config.buildCacheKey(subject, topic);
       const table = self.config.getTable(self.db);
       const entry = self.config.buildCacheEntry(key, data, self.config.ttlMs, subject, topic);
-      yield* Effect.tryPromise(() => table.put(entry)).pipe(Effect.catchAll(() => Effect.void));
+      yield* Effect.tryPromise(() => table.put(entry)).pipe(
+        Effect.catchAll(() => Effect.succeed(undefined)),
+      );
     });
   }
 

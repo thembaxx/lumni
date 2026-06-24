@@ -43,7 +43,10 @@ export async function apiFetch<T>(url: string, options: RequestInit, retries = 1
   const response = await fetchWithRetry(url, options, retries, 1000);
 
   if (!response.ok) {
-    const body = await response.json().catch(() => ({}));
+    const body = await response.json().catch((e) => {
+      logError("apiFetch.json", e);
+      return {};
+    });
     const error = new Error(
       body.error || `Request failed with status ${response.status}`,
     ) as ApiError;

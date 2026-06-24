@@ -35,11 +35,6 @@ vi.mock("@/lib/shared/logger", () => ({
   logError: vi.fn(),
 }));
 
-vi.mock("@/lib/premium/premium-context", () => ({
-  usePremium: () => ({ isPremium: true, hasFeature: () => true }),
-  PremiumProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
-
 const { useVisualEngine } = await import("@/hooks/use-visual-engine");
 
 const mockVisual: VisualContent = {

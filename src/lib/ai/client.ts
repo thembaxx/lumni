@@ -89,9 +89,9 @@ function callProviderEffect(
       logError("AiClientCallProvider", err);
       const isRateLimit = /429|RESOURCE_EXHAUSTED/.test(lastError);
       if (isRateLimit) {
-        console.warn(`[AI] Provider ${provider.name} rate-limited, trying next...`);
+        logError(`AI.rateLimited.${provider.name}`, lastError ?? new Error("Rate limited"));
       } else {
-        console.error(`[AI] Provider failed: ${provider.name}`, lastError);
+        logError(`AI.providerFailed.${provider.name}`, lastError ?? new Error("Provider failed"));
       }
       return new ProviderCallError(lastError, provider.name);
     },

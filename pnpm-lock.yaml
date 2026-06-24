@@ -20,9 +20,6 @@ importers:
       '@base-ui/react':
         specifier: 1.5.0
         version: 1.5.0(@date-fns/tz@1.5.0)(@types/react@19.2.17)(date-fns@4.4.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      '@effect/platform':
-        specifier: ^0.96.2
-        version: 0.96.2(effect@3.21.4)
       '@hugeicons/core-free-icons':
         specifier: ^4.2.0
         version: 4.2.1
@@ -161,9 +158,6 @@ importers:
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      stripe:
-        specifier: ^22.2.0
-        version: 22.2.3(@types/node@25.9.4)
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
@@ -970,11 +964,6 @@ packages:
 
   '@effect/platform@0.90.3':
     resolution: {integrity: sha512-XvQ37yzWQKih4Du2CYladd1i/MzqtgkTPNCaN6Ku6No4CK83hDtXIV/rP03nEoBg2R3Pqgz6gGWmE2id2G81HA==}
-    peerDependencies:
-      effect: '>=3.20.0'
-
-  '@effect/platform@0.96.2':
-    resolution: {integrity: sha512-oJm3UztdzZvK7BXkFSV3IdyGuqQrhLmViG/hMDZh99ski7aADesNuv19z4R0heH3bAXnSt/Nb8O9KJQ886C0Tg==}
     peerDependencies:
       effect: '>=3.20.0'
 
@@ -7844,15 +7833,6 @@ packages:
     resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
     engines: {node: '>=14.16'}
 
-  stripe@22.2.3:
-    resolution: {integrity: sha512-9lrggvLtjO4Ef5WXH4t50ckHJcJgTD72xFB+KJgZCSszAH9zMV1BqU6PwmWbRLdcdX7LK6PbErBapiGK7pIb+g==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@types/node': '>=18'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-
   stubborn-fs@2.0.0:
     resolution: {integrity: sha512-Y0AvSwDw8y+nlSNFXMm2g6L51rBGdAQT20J3YSOqxC53Lo3bjWRtr2BKcfYoAf352WYpsZSTURrA0tqhfgudPA==}
 
@@ -9531,13 +9511,6 @@ snapshots:
   '@effect/platform@0.90.3(effect@3.21.4)':
     dependencies:
       '@opentelemetry/semantic-conventions': 1.41.1
-      effect: 3.21.4
-      find-my-way-ts: 0.1.6
-      msgpackr: 1.12.1
-      multipasta: 0.2.7
-
-  '@effect/platform@0.96.2(effect@3.21.4)':
-    dependencies:
       effect: 3.21.4
       find-my-way-ts: 0.1.6
       msgpackr: 1.12.1
@@ -16653,10 +16626,6 @@ snapshots:
   strip-json-comments@2.0.1: {}
 
   strip-json-comments@5.0.3: {}
-
-  stripe@22.2.3(@types/node@25.9.4):
-    optionalDependencies:
-      '@types/node': 25.9.4
 
   stubborn-fs@2.0.0:
     dependencies:

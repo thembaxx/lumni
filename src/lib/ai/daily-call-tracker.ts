@@ -111,7 +111,7 @@ export class DailyCallTracker {
           resetAt,
         };
       } catch (error) {
-        console.warn("[DailyCallTracker] Appwrite query failed, falling back to in-memory:", error);
+        logError("DailyCallTracker.query", error);
       }
     }
 
@@ -157,10 +157,7 @@ export class DailyCallTracker {
         );
         return;
       } catch (error) {
-        console.warn(
-          "[DailyCallTracker] Appwrite increment failed, falling back to in-memory:",
-          error,
-        );
+        logError("DailyCallTracker.increment", error);
       }
     }
 
@@ -231,10 +228,7 @@ export class DailyCallTracker {
         }
         return result;
       } catch (error) {
-        console.warn(
-          "[DailyCallTracker] Appwrite getUsage failed, falling back to in-memory:",
-          error,
-        );
+        logError("DailyCallTracker.getUsage", error);
       }
     }
 
@@ -285,10 +279,7 @@ export class DailyCallTracker {
           limit: GLOBAL_LIMIT_TOTAL,
         };
       } catch (error) {
-        console.warn(
-          "[DailyCallTracker] Appwrite getGlobalUsage failed, falling back to in-memory:",
-          error,
-        );
+        logError("DailyCallTracker.getGlobalUsage", error);
       }
     }
 

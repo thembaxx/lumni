@@ -130,7 +130,7 @@ function flashcardCreateEffect(
   topic?: string,
 ): Effect.Effect<void> {
   return Effect.tryPromise(() => deps.flashcardEngine.create(front, back, subject, topic)).pipe(
-    Effect.catchAll(() => Effect.void),
+    Effect.catchAll(() => Effect.succeed(undefined)),
   );
 }
 
@@ -140,7 +140,7 @@ function flashcardReviewEffect(
   quality: number,
 ): Effect.Effect<void> {
   return Effect.tryPromise(() => deps.flashcardEngine.review(id, quality)).pipe(
-    Effect.catchAll(() => Effect.void),
+    Effect.catchAll(() => Effect.succeed(undefined)),
   );
 }
 

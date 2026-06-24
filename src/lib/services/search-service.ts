@@ -1,6 +1,8 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { logError } from "@/lib/shared/logger";
+import { loadFromStorage } from "@/lib/utils/storage";
 
 type SearchDb = Pick<
   DataAccess,
@@ -17,9 +19,6 @@ type SearchDb = Pick<
 >;
 const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
-
-import { logError } from "@/lib/shared/logger";
-import { loadFromStorage } from "@/lib/utils/storage";
 
 export function __setDepsForTesting(deps: { db: SearchDb }) {
   _deps = deps;
@@ -56,58 +55,237 @@ function textRelevant(text: string, query: string): boolean {
   return text.toLowerCase().includes(q);
 }
 
-function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
-  return _deps.db.questions.toArray().then((rows) => {
+// Factory: creates a search function for a Dexie table
+function createTableSearch<T extends Record<string, unknown>>(
+  tableName: keyof SearchDb,
+  toItems: (row: T, query: string) => SearchResultItem | null,
+): (query: string) => Promise<SearchResultItem[]> {
+  return async (query: string) => {
+    const table = _deps.db[tableName] as unknown as { toArray(): Promise<T[]> };
+    const rows = await table.toArray();
     const results: SearchResultItem[] = [];
     for (const row of rows) {
-      const questions: Array<{
-        id: string;
-        questionText: string;
-        topic: string;
-      }> = JSON.parse(row.questions || "[]");
-      for (const q of questions) {
-        if (textRelevant(q.questionText, query)) {
-          results.push({
-            id: `q-${q.id}`,
-            type: "question",
-            title: q.questionText.slice(0, 120),
-            snippet: q.questionText,
-            subject: row.subject,
-            topic: q.topic || row.topic,
-            createdAt: row.cachedAt,
-          });
-        }
-      }
-    }
-    return results.slice(0, 10);
-  });
-}
-
-function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
-  return _deps.db.wrongAnswers.toArray().then((rows) => {
-    const results: SearchResultItem[] = [];
-    for (const r of rows) {
-      if (
-        textRelevant(r.questionText, query) ||
-        textRelevant(r.correctAnswer, query) ||
-        textRelevant(r.explanation || "", query)
-      ) {
-        results.push({
-          id: `wa-${r.id}`,
-          type: "wrong-answer",
-          title: r.questionText.slice(0, 120),
-          snippet: `${r.correctAnswer.slice(0, 100)}...`,
-          subject: r.subject,
-          topic: r.topic,
-          createdAt: r.createdAt,
-        });
+      const item = toItems(row, query);
+      if (item) {
+        results.push(item);
         if (results.length >= 10) break;
       }
     }
     return results;
-  });
+  };
 }
 
+// Individual table search functions via factory
+const searchDexieQuestions = createTableSearch("questions", (row, query) => {
+  const questions: Array<{ id: string; questionText: string; topic: string }> = JSON.parse(
+    (row.questions as string) || "[]",
+  );
+  for (const q of questions) {
+    if (textRelevant(q.questionText, query)) {
+      return {
+        id: `q-${q.id}`,
+        type: "question" as const,
+        title: q.questionText.slice(0, 120),
+        snippet: q.questionText,
+        subject: row.subject as string,
+        topic: q.topic || (row.topic as string),
+        createdAt: row.cachedAt as number,
+      };
+    }
+  }
+  return null;
+});
+
+const searchDexieWrongAnswers = createTableSearch("wrongAnswers", (row, query) => {
+  if (
+    textRelevant(row.questionText as string, query) ||
+    textRelevant(row.correctAnswer as string, query) ||
+    textRelevant((row.explanation as string) || "", query)
+  ) {
+    return {
+      id: `wa-${row.id}`,
+      type: "wrong-answer" as const,
+      title: (row.questionText as string).slice(0, 120),
+      snippet: `${(row.correctAnswer as string).slice(0, 100)}...`,
+      subject: row.subject as string,
+      topic: row.topic as string,
+      createdAt: row.createdAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieQuizAttempts = createTableSearch("quizAttempts", (row, query) => {
+  if (textRelevant(row.odSubject as string, query)) {
+    return {
+      id: `qa-${row.id}`,
+      type: "quiz-attempt" as const,
+      title: `${row.odSubject} — ${row.score}/${row.totalQuestions}`,
+      snippet: `Score: ${row.score}/${row.totalQuestions} (${Math.round(((row.score as number) / (row.totalQuestions as number)) * 100)}%)`,
+      subject: row.odSubject as string,
+      createdAt: row.completedAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieExamSessions = createTableSearch("examSessions", (row, query) => {
+  if (textRelevant(row.paperId as string, query)) {
+    return {
+      id: `es-${row.id}`,
+      type: "exam-session" as const,
+      title: row.paperId as string,
+      snippet: row.completed ? "Completed" : "In progress",
+      subject: "",
+      createdAt: row.startedAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieProgress = createTableSearch("progress", (row, query) => {
+  if (textRelevant(row.odSubjectId as string, query)) {
+    return {
+      id: `pr-${row.id}`,
+      type: "progress" as const,
+      title: row.odSubjectId as string,
+      snippet: `${row.questionsAttempted} questions, ${Math.round(((row.correctCount as number) / Math.max(row.questionsAttempted as number, 1)) * 100)}% correct`,
+      subject: row.odSubjectId as string,
+      createdAt: row.updatedAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieStudyGuides = createTableSearch("studyGuides", (row, query) => {
+  if (textRelevant(row.key as string, query)) {
+    return {
+      id: `sg-${row.key}`,
+      type: "study-set" as const,
+      title: row.key as string,
+      snippet: `Study guide — expires ${new Date(row.expiresAt as number).toLocaleDateString()}`,
+      subject: (row.key as string).split(":")[0] ?? "",
+      createdAt: row.createdAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieDictionary = createTableSearch("dictionaryCache", (row, query) => {
+  const defs = ((row.result as { definitions?: { definition: string }[] })?.definitions ?? [])
+    .map((d: { definition: string }) => d.definition)
+    .join(" ");
+  if (textRelevant(row.word as string, query) || textRelevant(defs, query)) {
+    return {
+      id: `dict-${row.key}`,
+      type: "dictionary" as const,
+      title: row.word as string,
+      snippet: defs.slice(0, 150),
+      subject: "Dictionary",
+      createdAt: Date.now(),
+    };
+  }
+  return null;
+});
+
+const searchDexieStories = createTableSearch("storyCache", (row, query) => {
+  const story = row.story as {
+    id: string;
+    title: string;
+    content: string;
+    author: string;
+    subjects?: string[];
+    topics?: string[];
+  };
+  if (
+    textRelevant(story.title, query) ||
+    textRelevant(story.content, query) ||
+    textRelevant(story.author, query) ||
+    (story.topics || []).some((t) => textRelevant(t, query))
+  ) {
+    return {
+      id: `story-${story.id}`,
+      type: "story" as const,
+      title: story.title,
+      snippet: story.content.slice(0, 150),
+      subject: (story.subjects || []).join(", "),
+      createdAt: row.createdAt as number,
+    };
+  }
+  return null;
+});
+
+const searchDexieLessons = createTableSearch("lessonCache", (row, query) => {
+  const lesson = row.lesson as {
+    id: string;
+    title: string;
+    sections: Array<{ content: string; keyPoints?: string[] }>;
+    subjectId: string;
+    topicId: string;
+    vocabulary?: Array<{ word: string; definition: string }>;
+  };
+  if (textRelevant(lesson.title, query)) {
+    return {
+      id: `lesson-${lesson.id}`,
+      type: "lesson" as const,
+      title: lesson.title,
+      snippet: `Lesson — ${lesson.sections.length} sections`,
+      subject: lesson.subjectId,
+      topic: lesson.topicId,
+      createdAt: row.createdAt as number,
+    };
+  }
+  for (const s of lesson.sections) {
+    if (
+      textRelevant(s.content, query) ||
+      (s.keyPoints || []).some((kp) => textRelevant(kp, query))
+    ) {
+      return {
+        id: `lesson-${lesson.id}`,
+        type: "lesson" as const,
+        title: lesson.title,
+        snippet: s.content.slice(0, 150),
+        subject: lesson.subjectId,
+        topic: lesson.topicId,
+        createdAt: row.createdAt as number,
+      };
+    }
+  }
+  for (const v of lesson.vocabulary || []) {
+    if (textRelevant(v.word, query) || textRelevant(v.definition, query)) {
+      return {
+        id: `lesson-${lesson.id}`,
+        type: "lesson" as const,
+        title: lesson.title,
+        snippet: `${v.word}: ${v.definition.slice(0, 100)}`,
+        subject: lesson.subjectId,
+        topic: lesson.topicId,
+        createdAt: row.createdAt as number,
+      };
+    }
+  }
+  return null;
+});
+
+const searchDexieVocabulary = createTableSearch("vocabularyList", (row, query) => {
+  if (
+    textRelevant(row.word as string, query) ||
+    textRelevant(row.definition as string, query) ||
+    textRelevant((row.sourceLesson as string) || "", query)
+  ) {
+    return {
+      id: `vocab-${row.id}`,
+      type: "vocabulary" as const,
+      title: row.word as string,
+      snippet: (row.definition as string).slice(0, 150),
+      subject: row.language as string,
+      createdAt: row.addedAt as number,
+    };
+  }
+  return null;
+});
+
+// Flashcard search (uses flashcardEngine, not Dexie directly)
 async function searchDexieFlashcards(query: string): Promise<SearchResultItem[]> {
   const flashcards = await flashcardEngine.getAll();
   const results: SearchResultItem[] = [];
@@ -132,6 +310,7 @@ async function searchDexieFlashcards(query: string): Promise<SearchResultItem[]>
   return results;
 }
 
+// Note search (localStorage, not Dexie)
 interface LocalNote {
   id: string;
   title: string;
@@ -166,235 +345,21 @@ function searchLocalStorageNotes(query: string): SearchResultItem[] {
   return results;
 }
 
-function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
-  return _deps.db.quizAttempts.toArray().then((rows) => {
-    const results: SearchResultItem[] = [];
-    for (const r of rows) {
-      if (textRelevant(r.odSubject, query)) {
-        results.push({
-          id: `qa-${r.id}`,
-          type: "quiz-attempt",
-          title: `${r.odSubject} — ${r.score}/${r.totalQuestions}`,
-          snippet: `Score: ${r.score}/${r.totalQuestions} (${Math.round((r.score / r.totalQuestions) * 100)}%)`,
-          subject: r.odSubject,
-          createdAt: r.completedAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  });
-}
-
-function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
-  return _deps.db.examSessions.toArray().then((rows) => {
-    const results: SearchResultItem[] = [];
-    for (const r of rows) {
-      if (textRelevant(r.paperId, query)) {
-        results.push({
-          id: `es-${r.id}`,
-          type: "exam-session",
-          title: r.paperId,
-          snippet: r.completed ? "Completed" : "In progress",
-          subject: "",
-          createdAt: r.startedAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  });
-}
-
-function searchDexieProgress(query: string): Promise<SearchResultItem[]> {
-  return _deps.db.progress.toArray().then((rows) => {
-    const results: SearchResultItem[] = [];
-    for (const r of rows) {
-      if (textRelevant(r.odSubjectId, query)) {
-        results.push({
-          id: `pr-${r.id}`,
-          type: "progress",
-          title: r.odSubjectId,
-          snippet: `${r.questionsAttempted} questions, ${Math.round((r.correctCount / Math.max(r.questionsAttempted, 1)) * 100)}% correct`,
-          subject: r.odSubjectId,
-          createdAt: r.updatedAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  });
-}
-
-async function searchDexieStudyGuides(query: string): Promise<SearchResultItem[]> {
-  try {
-    const guides = await _deps.db.studyGuides.toArray();
-    const results: SearchResultItem[] = [];
-    for (const g of guides) {
-      if (textRelevant(g.key, query)) {
-        results.push({
-          id: `sg-${g.key}`,
-          type: "study-set",
-          title: g.key,
-          snippet: `Study guide — expires ${new Date(g.expiresAt).toLocaleDateString()}`,
-          subject: g.key.split(":")[0] ?? "",
-          createdAt: g.createdAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  } catch {
-    return [];
-  }
-}
-
-async function searchDexieStories(query: string): Promise<SearchResultItem[]> {
-  try {
-    const entries = await _deps.db.storyCache.toArray();
-    const results: SearchResultItem[] = [];
-    for (const e of entries) {
-      const story = e.story;
-      if (
-        textRelevant(story.title, query) ||
-        textRelevant(story.content, query) ||
-        textRelevant(story.author, query) ||
-        (story.topics || []).some((t) => textRelevant(t, query))
-      ) {
-        results.push({
-          id: `story-${story.id}`,
-          type: "story",
-          title: story.title,
-          snippet: story.content.slice(0, 150),
-          subject: (story.subjects || []).join(", "),
-          createdAt: e.createdAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  } catch {
-    return [];
-  }
-}
-
-async function searchDexieLessons(query: string): Promise<SearchResultItem[]> {
-  try {
-    const entries = await _deps.db.lessonCache.toArray();
-    const results: SearchResultItem[] = [];
-    for (const e of entries) {
-      const lesson = e.lesson;
-      if (textRelevant(lesson.title, query)) {
-        results.push({
-          id: `lesson-${lesson.id}`,
-          type: "lesson",
-          title: lesson.title,
-          snippet: `Lesson — ${lesson.sections.length} sections`,
-          subject: lesson.subjectId,
-          topic: lesson.topicId,
-          createdAt: e.createdAt,
-        });
-        if (results.length >= 10) break;
-      }
-      let sectionMatch = false;
-      for (const s of lesson.sections) {
-        if (
-          textRelevant(s.content, query) ||
-          (s.keyPoints || []).some((kp) => textRelevant(kp, query))
-        ) {
-          results.push({
-            id: `lesson-${lesson.id}`,
-            type: "lesson",
-            title: lesson.title,
-            snippet: s.content.slice(0, 150),
-            subject: lesson.subjectId,
-            topic: lesson.topicId,
-            createdAt: e.createdAt,
-          });
-          sectionMatch = true;
-          break;
-        }
-      }
-      if (sectionMatch) {
-        if (results.length >= 10) break;
-        continue;
-      }
-      let vocabMatch: { word: string; definition: string } | null = null;
-      for (const v of lesson.vocabulary || []) {
-        if (textRelevant(v.word, query) || textRelevant(v.definition, query)) {
-          vocabMatch = v;
-          break;
-        }
-      }
-      if (vocabMatch) {
-        results.push({
-          id: `lesson-${lesson.id}`,
-          type: "lesson",
-          title: lesson.title,
-          snippet: `${vocabMatch.word}: ${vocabMatch.definition.slice(0, 100)}`,
-          subject: lesson.subjectId,
-          topic: lesson.topicId,
-          createdAt: e.createdAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  } catch {
-    return [];
-  }
-}
-
-async function searchDexieVocabulary(query: string): Promise<SearchResultItem[]> {
-  try {
-    const entries = await _deps.db.vocabularyList.toArray();
-    const results: SearchResultItem[] = [];
-    for (const e of entries) {
-      if (
-        textRelevant(e.word, query) ||
-        textRelevant(e.definition, query) ||
-        textRelevant(e.sourceLesson || "", query)
-      ) {
-        results.push({
-          id: `vocab-${e.id}`,
-          type: "vocabulary",
-          title: e.word,
-          snippet: e.definition.slice(0, 150),
-          subject: e.language,
-          createdAt: e.addedAt,
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  } catch {
-    return [];
-  }
-}
-
-async function searchDexieDictionary(query: string): Promise<SearchResultItem[]> {
-  try {
-    const entries = await _deps.db.dictionaryCache.toArray();
-    const results: SearchResultItem[] = [];
-    for (const e of entries) {
-      const defs = e.result?.definitions?.map((d) => d.definition).join(" ") ?? "";
-      if (textRelevant(e.word, query) || textRelevant(defs, query)) {
-        results.push({
-          id: `dict-${e.key}`,
-          type: "dictionary",
-          title: e.word,
-          snippet: defs.slice(0, 150),
-          subject: "Dictionary",
-          createdAt: Date.now(),
-        });
-        if (results.length >= 10) break;
-      }
-    }
-    return results;
-  } catch {
-    return [];
-  }
-}
+// Record lookup for searchByType
+const SEARCH_HANDLERS: Record<string, (query: string) => Promise<SearchResultItem[]>> = {
+  question: searchDexieQuestions,
+  "wrong-answer": searchDexieWrongAnswers,
+  flashcard: searchDexieFlashcards,
+  note: (q) => Promise.resolve(searchLocalStorageNotes(q)),
+  "quiz-attempt": searchDexieQuizAttempts,
+  "exam-session": searchDexieExamSessions,
+  progress: searchDexieProgress,
+  "study-guide": searchDexieStudyGuides,
+  dictionary: searchDexieDictionary,
+  story: searchDexieStories,
+  lesson: searchDexieLessons,
+  vocabulary: searchDexieVocabulary,
+};
 
 async function searchAppwrite(query: string): Promise<SearchResultItem[]> {
   try {
@@ -456,33 +421,7 @@ export async function searchByType(
   type: SearchResultItem["type"],
 ): Promise<SearchResultItem[]> {
   if (!query.trim() || query.length < 2) return [];
-
-  switch (type) {
-    case "question":
-      return searchDexieQuestions(query);
-    case "wrong-answer":
-      return searchDexieWrongAnswers(query);
-    case "flashcard":
-      return searchDexieFlashcards(query);
-    case "note":
-      return Promise.resolve(searchLocalStorageNotes(query));
-    case "quiz-attempt":
-      return searchDexieQuizAttempts(query);
-    case "exam-session":
-      return searchDexieExamSessions(query);
-    case "progress":
-      return searchDexieProgress(query);
-    case "study-guide":
-      return searchDexieStudyGuides(query);
-    case "dictionary":
-      return searchDexieDictionary(query);
-    case "story":
-      return searchDexieStories(query);
-    case "lesson":
-      return searchDexieLessons(query);
-    case "vocabulary":
-      return searchDexieVocabulary(query);
-    default:
-      return [];
-  }
+  const handler = SEARCH_HANDLERS[type];
+  if (!handler) return [];
+  return handler(query);
 }

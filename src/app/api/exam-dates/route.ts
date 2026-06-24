@@ -1,6 +1,7 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { getSeedData, syncExamDatesToAppwrite } from "@/lib/exam-dates/service";
 import type { ExamSlot } from "@/lib/exam-dates/types";
+import { logError } from "@/lib/shared/logger";
 
 export const GET = createRouteHandler({
   auth: "none",
@@ -32,10 +33,14 @@ export const POST = createRouteHandler({
     const session = url.searchParams.get("session") || "may-june";
     const yearStr = url.searchParams.get("year") || "2026";
     const year = Number.parseInt(yearStr, 10);
-    const body = (await req.json().catch(() => ({}))) as {
-      slots?: ExamSlot[];
-      syncAppwrite?: boolean;
-    };
+
+    let body: { slots?: ExamSlot[]; syncAppwrite?: boolean };
+    try {
+      body = await req.json();
+    } catch (e) {
+      logError("examDates.parseBody", e);
+      return Response.json({ error: "Invalid JSON in request body" }, { status: 400 });
+    }
 
     if (body.slots && body.slots.length > 0) {
       if (body.syncAppwrite) {

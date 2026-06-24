@@ -5,6 +5,7 @@ import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
 import { useQuiz } from "@/lib/quiz";
 import type { RetentionQuestion } from "@/lib/quiz/types";
 import { dexieDataAccess } from "@/lib/db";
+import { logError } from "@/lib/shared/logger";
 import type { QuizViewProps } from "../quiz-view";
 
 export function useQuizView({
@@ -100,7 +101,8 @@ export function useQuizView({
               topic: i.topic,
             })),
           );
-        } catch {
+        } catch (e) {
+          logError("useQuizView.retention", e);
           setRetentionQuestions([]);
         }
 
@@ -168,7 +170,7 @@ export function useQuizView({
         .where("questionId")
         .anyOf(ids)
         .modify({ completed: true })
-        .catch(() => {});
+        .catch((e) => logError("useQuizView.markRetentionComplete", e));
     }
   }, [state.isComplete, retentionQuestions]);
 

@@ -42,6 +42,9 @@ export interface FreezeResult {
 
 export type StateListener = (data: StoredGamification) => void;
 
+function succeedUndefined(): Effect.Effect<void> {
+  return Effect.succeed(undefined);
+}
 export class GamificationService {
   private data: StoredGamification;
   private listeners: Set<StateListener> = new Set();
@@ -88,13 +91,13 @@ export class GamificationService {
         return Effect.succeed(undefined);
       }),
       Effect.flatMap((dexieData) => {
-        if (!dexieData) return Effect.void;
+        if (!dexieData) return succeedUndefined();
         const merged = gamificationEngine.mergeWithDefaults(dexieData);
         if (merged !== self.data) {
           self.data = merged;
           self.notify();
         }
-        return Effect.void;
+        return succeedUndefined();
       }),
     );
   }
@@ -131,7 +134,7 @@ export class GamificationService {
         return Effect.succeed(undefined);
       }),
       Effect.flatMap((res) => {
-        if (!res || !res.gamification) return Effect.void;
+        if (!res || !res.gamification) return succeedUndefined();
         const merged = gamificationEngine.mergeWithDefaults({
           ...self.data,
           ...res.gamification,
@@ -140,7 +143,7 @@ export class GamificationService {
           self.data = merged;
           self.notify();
         }
-        return Effect.void;
+        return succeedUndefined();
       }),
     );
   }

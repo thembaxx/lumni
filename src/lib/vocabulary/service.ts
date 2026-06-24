@@ -46,7 +46,7 @@ export async function saveWord(
     };
     const id = await _deps.db.vocabularyList.add(entry);
     const savedEntry = { ...entry, id };
-    await createVocabularyCard(savedEntry).catch(() => {});
+    await createVocabularyCard(savedEntry).catch((e) => logError("vocab.createCard", e));
     return savedEntry;
   } catch (err) {
     logError("VocabularyService.saveWord", err);

@@ -205,7 +205,7 @@ describe("TypedQuestionProcessor effect integration", () => {
       "short-answer",
       { generateTemperature: 0.7 },
       // oxlint-disable-next-line typescript/no-this-alias
-      (q, a, _pm, _ai) =>
+      (_q, _a, _pm, _ai) =>
         Promise.resolve({
           correct: true,
           score: 5,
