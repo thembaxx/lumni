@@ -27,6 +27,7 @@ export class LearningOrchestrator {
   }
 
   generateQuestionSetEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
+    // oxlint-disable-next-line typescript(no-this-alias)
     const self = this;
     const startTime = Date.now();
     const { questionType, subject, topic, count } = params;

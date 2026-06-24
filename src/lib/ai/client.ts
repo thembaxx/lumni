@@ -106,6 +106,7 @@ export class AIClient {
     request: AIRequest,
     callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
   ): Effect.Effect<AIResponse, AIFailure> {
+    // oxlint-disable-next-line typescript(no-this-alias)
     const self = this;
     return Effect.gen(function* () {
       yield* checkConsentEffect();

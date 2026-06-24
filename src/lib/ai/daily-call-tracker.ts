@@ -167,11 +167,11 @@ export class DailyCallTracker {
     // Fallback to in-memory
     this.ensureDate();
     const limiter = this.getLimiter(userId, type);
-    limiter.check(`${userId}:${type}`, {
+    await limiter.check(`${userId}:${type}`, {
       max: USER_LIMITS[type].maxPerDay,
       windowMs: DAILY_WINDOW_MS,
     });
-    this.globalLimiter.check("global", {
+    await this.globalLimiter.check("global", {
       max: GLOBAL_LIMIT_TOTAL,
       windowMs: DAILY_WINDOW_MS,
     });
