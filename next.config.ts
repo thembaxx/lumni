@@ -159,6 +159,7 @@ const sentryOptions = {
   widenClientFileUpload: true,
   telemetry: false,
   tunnelRoute: SENTRY_TUNNEL_ROUTE,
+  suppressOnRouterTransitionStartWarning: true,
   webpack: {
     automaticVercelMonitors: true,
     treeshake: {

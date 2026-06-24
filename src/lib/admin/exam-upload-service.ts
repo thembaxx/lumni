@@ -6,7 +6,10 @@ import { uploadToUploadThing } from "@/lib/admin/upload-shared";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
-const DEFAULT_FOLDER_PATH = `${(process as { cwd(): string }).cwd()}/downloads/exam-papers-2025`;
+const EXAM_PAPERS_SUBFOLDER = "downloads/exam-papers-2025";
+const DEFAULT_FOLDER_PATH =
+  process.env.EXAM_PAPERS_FOLDER ||
+  path.join(/* turbopackIgnore: true */ process.cwd(), EXAM_PAPERS_SUBFOLDER);
 
 interface ParsedFile {
   year: number;

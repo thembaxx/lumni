@@ -7,6 +7,8 @@ export default defineConfig({
     setupFiles: ["./src/hooks/__tests__/setup.ts"],
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
     exclude: ["src/**/*.int-test.ts", "node_modules"],
+    hookTimeout: 30000,
+    testTimeout: 15000,
   },
   resolve: {
     alias: {

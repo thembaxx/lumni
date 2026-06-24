@@ -30,6 +30,11 @@ vi.mock("@/lib/db", () => ({
     quizAttempts: { toArray: () => Promise.resolve([]) },
     examSessions: { toArray: () => Promise.resolve([]) },
     progress: { toArray: () => Promise.resolve([]) },
+    studyGuides: { toArray: () => Promise.resolve([]) },
+    dictionaryCache: { toArray: () => Promise.resolve([]) },
+    storyCache: { toArray: () => Promise.resolve([]) },
+    lessonCache: { toArray: () => Promise.resolve([]) },
+    vocabularyList: { toArray: () => Promise.resolve([]) },
   },
 }));
 vi.mock("@/lib/flashcard-engine", () => ({
