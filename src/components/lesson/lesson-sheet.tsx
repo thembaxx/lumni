@@ -60,7 +60,7 @@ function LessonSheet() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger className="inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-border/80 bg-secondary/80 px-5 font-medium text-sm transition-colors hover:border-accent hover:bg-accent">
-        <HugeiconsIcon icon={Search01Icon} className="size-4 text-[--system-accent]" />
+        <HugeiconsIcon icon={Search01Icon} className="size-4 text-(--system-accent)" />
         <span>Lessons</span>
       </SheetTrigger>
       <Anim>

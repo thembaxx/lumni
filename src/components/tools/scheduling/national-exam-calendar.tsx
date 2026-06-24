@@ -116,11 +116,11 @@ export function NationalExamCalendar() {
   return (
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="px-5 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-          <HugeiconsIcon icon={Calendar01Icon} className="size-5 text-[--system-accent]" />
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={Calendar01Icon} className="size-5 text-(--system-accent)" />
           National Exams
         </h2>
-        <p className="ios-subhead mt-1 text-[--system-text-secondary]/50">{sessionLabel}</p>
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)/50">{sessionLabel}</p>
         {allSlots.length > 0 && (
           <Button
             variant="outline"
@@ -156,7 +156,7 @@ export function NationalExamCalendar() {
                   className={cn(
                     "ios-caption-3 rounded-full px-2 py-0.5 font-medium tabular-nums",
                     countdownText.includes("Starts")
-                      ? "bg-[--system-accent]/10 text-[--system-accent]"
+                      ? "bg-(--system-accent)/10 text-(--system-accent)"
                       : countdownText === "Ongoing"
                         ? "bg-success/10 text-success"
                         : "bg-muted text-muted-foreground",
@@ -238,12 +238,12 @@ export function NationalExamCalendar() {
                   >
                     <div className="mb-2 flex items-center gap-2 px-1">
                       <span
-                        className={cn("font-bold text-xs", isToday && "text-[--system-accent]")}
+                        className={cn("font-bold text-xs", isToday && "text-(--system-accent)")}
                       >
                         {dayName} {dayNum} {monthName}
                       </span>
                       {isToday && (
-                        <span className="ios-caption-3 rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent]">
+                        <span className="ios-caption-3 rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--system-accent)">
                           Today
                         </span>
                       )}

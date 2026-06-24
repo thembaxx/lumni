@@ -49,7 +49,7 @@ export function StatusDisplay({
             : isRecording
               ? "animate-pulse text-destructive"
               : isPlaying
-                ? "animate-pulse text-[--system-accent]"
+                ? "animate-pulse text-(--system-accent)"
                 : showPermissionError
                   ? "text-destructive"
                   : "text-muted-foreground",

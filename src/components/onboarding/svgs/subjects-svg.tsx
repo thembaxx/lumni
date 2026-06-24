@@ -16,8 +16,8 @@ export function SubjectsSVG() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <circle cx="120" cy="110" r="90" className="fill-[--chart-2]/5" />
-        <ellipse cx="120" cy="130" rx="60" ry="20" className="fill-[--chart-2]/8" />
+        <circle cx="120" cy="110" r="90" className="fill-(--chart-2)/5" />
+        <ellipse cx="120" cy="130" rx="60" ry="20" className="fill-(--chart-2)/8" />
       </m.g>
 
       <m.g
@@ -90,7 +90,7 @@ export function SubjectsSVG() {
             width={12 * (s as number)}
             height={8 * (s as number)}
             rx={2}
-            className="fill-[--chart-2]"
+            className="fill-(--chart-2)"
             opacity={0.2}
             transform={`rotate(${i * 30 + 10} ${x + 6} ${y + 4})`}
           />

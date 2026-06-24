@@ -95,7 +95,7 @@ export function PWAInstallPrompt() {
           {FEATURES.map((f) => (
             <li key={f} className="flex items-start gap-2 text-foreground/80 text-xs">
               <svg
-                className="mt-0.5 size-3.5 shrink-0 text-[--system-accent]"
+                className="mt-0.5 size-3.5 shrink-0 text-(--system-accent)"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

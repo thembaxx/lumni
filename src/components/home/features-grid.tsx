@@ -22,7 +22,7 @@ export function FeaturesGrid() {
       icon: BrainIcon,
       title: t("featureAIPractice"),
       description: t("featureAIPracticeDesc"),
-      accent: "before:bg-[var(--system-accent-alpha-10)]",
+      accent: "before:bg-(--system-accent-alpha-10)",
     },
     {
       icon: BookOpen01Icon,

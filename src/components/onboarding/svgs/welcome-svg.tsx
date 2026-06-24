@@ -16,8 +16,8 @@ export function WelcomeSVG() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <circle cx="120" cy="120" r="100" className="fill-[--system-accent]/5" />
-        <circle cx="120" cy="120" r="70" className="fill-[--system-accent]/8" />
+        <circle cx="120" cy="120" r="100" className="fill-(--system-accent)/5" />
+        <circle cx="120" cy="120" r="70" className="fill-(--system-accent)/8" />
       </m.g>
 
       <m.g
@@ -38,7 +38,7 @@ export function WelcomeSVG() {
             cx={cx}
             cy={cy}
             r={3 + (i % 2) * 2}
-            className="fill-[--system-accent]"
+            className="fill-(--system-accent)"
             opacity={0.3 + i * 0.08}
           >
             <animate
@@ -58,12 +58,12 @@ export function WelcomeSVG() {
       >
         <path
           d="M120 60 L140 95 L120 88 L100 95 Z"
-          className="fill-[--system-accent]"
+          className="fill-(--system-accent)"
           opacity={0.8}
         />
         <path
           d="M95 100 L120 90 L145 100 L140 130 L120 140 L100 130 Z"
-          className="fill-[--system-accent]"
+          className="fill-(--system-accent)"
           opacity={0.6}
         />
         <rect
@@ -72,7 +72,7 @@ export function WelcomeSVG() {
           width="24"
           height="30"
           rx="3"
-          className="fill-[--system-accent]"
+          className="fill-(--system-accent)"
           opacity={0.4}
         />
         <rect x="112" y="135" width="16" height="6" rx="1" className="fill-white" />

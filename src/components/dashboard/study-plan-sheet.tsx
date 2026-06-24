@@ -17,7 +17,7 @@ export function StudyPlanSheet() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="inline-flex h-11 items-center justify-center gap-2.5 rounded-lg border border-border/80 bg-secondary/60 px-5 text-foreground transition-colors hover:border-accent hover:bg-accent">
-        <span className="text-[--system-accent]">
+        <span className="text-(--system-accent)">
           <svg
             className="size-4"
             viewBox="0 0 24 24"

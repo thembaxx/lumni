@@ -26,7 +26,7 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
   })();
 
   return (
-    <div className="rounded-xl border border-[--system-accent]/20 bg-[--system-accent]/5 p-4">
+    <div className="rounded-xl border border-(--system-accent)/20 bg-(--system-accent)/5 p-4">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-lg">🏆</span>
@@ -47,7 +47,7 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-[--system-accent] transition-[width]"
+              className="h-full rounded-full bg-(--system-accent) transition-[width]"
               style={{ width: `${Math.min(totalScore, 100)}%` }}
             />
           </div>

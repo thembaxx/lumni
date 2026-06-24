@@ -114,8 +114,8 @@ export function PostCard({
           className={cn(
             "flex items-center gap-1 rounded-full px-2 py-0.5 text-xs transition-colors",
             showComments
-              ? "bg-[--system-accent]/10 text-[--system-accent]"
-              : "text-[--system-text-secondary] hover:bg-[--system-surface-hover]",
+              ? "bg-(--system-accent)/10 text-(--system-accent)"
+              : "text-(--system-text-secondary) hover:bg-(--system-surface-hover)",
           )}
         >
           <HugeiconsIcon icon={Message01Icon} className="size-3" />

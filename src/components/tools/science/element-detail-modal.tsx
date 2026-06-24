@@ -44,7 +44,7 @@ export function ElementDetailModal({
               duration: 0.4,
               ease: elementEaseOutExpo,
             }}
-            className="relative w-full overflow-hidden rounded-3xl border-0 bg-[--system-background-secondary]"
+            className="relative w-full overflow-hidden rounded-3xl border-0 bg-(--system-background-secondary)"
             style={{
               borderColor: `oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
               boxShadow: `0 0 80px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.2), 0 0 160px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.08)`,

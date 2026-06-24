@@ -16,13 +16,13 @@ interface ProgressDotsProps {
 
 const variantStyles = {
   quiz: {
-    current: "bg-[--system-accent]",
+    current: "bg-(--system-accent)",
     completed: "bg-success",
     pending: "bg-muted",
   },
   engine: {
-    current: "bg-[--system-accent]",
-    completed: "bg-[--system-accent]/50",
+    current: "bg-(--system-accent)",
+    completed: "bg-(--system-accent)/50",
     pending: "bg-muted",
   },
   results: {
@@ -66,7 +66,7 @@ export function ProgressDots({
             aria-label={`Go to question ${idx + 1}`}
             aria-current={isCurrent ? "step" : undefined}
             className={cn(
-              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
+              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
               dotClass,
               onDotClick && "hover:scale-125",
             )}

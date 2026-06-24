@@ -95,8 +95,8 @@ export function MyAssignments() {
         {assignments.map((a) => (
           <div key={a.id}>
             <div className="flex items-start gap-3 rounded-xl bg-muted/30 p-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[--system-accent]/10">
-                <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-[--system-accent]" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
+                <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-(--system-accent)" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="font-medium text-sm">{a.topics.join(", ") || "General"}</p>

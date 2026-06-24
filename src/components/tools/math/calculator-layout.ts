@@ -70,7 +70,7 @@ export const ROWS: CalcButton[][] = [
 
 export const VARIANT_CLASSES: Record<string, string> = {
   default: "bg-system-fill hover:bg-system-fill-secondary text-foreground",
-  secondary: "bg-[--system-accent]/10 text-[--system-accent] hover:bg-[--system-accent]/20",
-  ghost: "text-[--system-text-secondary] hover:bg-system-fill",
+  secondary: "bg-(--system-accent)/10 text-(--system-accent) hover:bg-(--system-accent)/20",
+  ghost: "text-(--system-text-secondary) hover:bg-system-fill",
   destructive: "bg-destructive/10 text-destructive hover:bg-destructive/20",
 };

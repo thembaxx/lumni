@@ -126,7 +126,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
             <HugeiconsIcon
               icon={Calendar01Icon}
-              className="size-4 shrink-0 text-[--system-accent]"
+              className="size-4 shrink-0 text-(--system-accent)"
             />
             <div className="min-w-0">
               <p className="ios-caption-3 text-muted-foreground">Date</p>
@@ -134,7 +134,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
-            <HugeiconsIcon icon={Clock01Icon} className="size-4 shrink-0 text-[--system-accent]" />
+            <HugeiconsIcon icon={Clock01Icon} className="size-4 shrink-0 text-(--system-accent)" />
             <div className="min-w-0">
               <p className="ios-caption-3 text-muted-foreground">Time</p>
               <p className="truncate font-medium text-xs">
@@ -145,7 +145,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
             <HugeiconsIcon
               icon={TimeScheduleIcon}
-              className="size-4 shrink-0 text-[--system-accent]"
+              className="size-4 shrink-0 text-(--system-accent)"
             />
             <div className="min-w-0">
               <p className="ios-caption-3 text-muted-foreground">Duration</p>
@@ -153,7 +153,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
-            <HugeiconsIcon icon={NoteEditIcon} className="size-4 shrink-0 text-[--system-accent]" />
+            <HugeiconsIcon icon={NoteEditIcon} className="size-4 shrink-0 text-(--system-accent)" />
             <div className="min-w-0">
               <p className="ios-caption-3 text-muted-foreground">Paper</p>
               <p className="truncate font-medium text-xs">Paper {exam.paperNumber}</p>
@@ -167,7 +167,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
             delay={0.15}
             className="flex items-center justify-center gap-1.5 rounded-lg bg-muted/30 py-2"
           >
-            <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5 text-[--system-accent]" />
+            <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5 text-(--system-accent)" />
             <Countdown targetDate={exam.date} />
           </FadeIn>
         )}
@@ -176,7 +176,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <button
             type="button"
             onClick={handlePractice}
-            className="flex cursor-pointer items-center justify-between rounded-xl bg-[--system-accent] px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 active:scale-[0.96]"
+            className="flex cursor-pointer items-center justify-between rounded-xl bg-(--system-accent) px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 active:scale-[0.96]"
           >
             <div className="flex items-center gap-2.5">
               <HugeiconsIcon icon={Quiz02Icon} className="size-4" />

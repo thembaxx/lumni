@@ -57,7 +57,7 @@ export function SnapDialog({
 }) {
   return (
     <DialogContent className="max-h-[80dvh] overflow-y-auto sm:max-w-lg">
-      <DialogTitle className="ios-title-3 text-[--system-text-primary]">
+      <DialogTitle className="ios-title-3 text-(--system-text-primary)">
         {phase === "extracting" && "Reading problem…"}
         {phase === "confirm" && "Verify extracted problem"}
         {phase === "solving" && "Solving…"}
@@ -82,8 +82,8 @@ export function SnapDialog({
 
         {(phase === "capturing" || phase === "extracting" || phase === "solving") && (
           <div className="flex items-center justify-center gap-3 py-8">
-            <div className="size-6 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
-            <span className="text-[--system-text-secondary] text-sm">
+            <div className="size-6 animate-spin rounded-full border-2 border-(--system-accent) border-t-transparent" />
+            <span className="text-(--system-text-secondary) text-sm">
               {phase === "capturing" && "Processing image…"}
               {phase === "extracting" && "Reading problem from image…"}
               {phase === "solving" && "Solving…"}

@@ -60,7 +60,7 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://api.iconify.design" />
         <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
       </head>
-      <body className="flex h-full min-h-full flex-col bg-[--system-background] text-[--system-text-primary] antialiased">
+      <body className="flex h-full min-h-full flex-col bg-(--system-background) text-(--system-text-primary) antialiased">
         {children}
       </body>
     </html>

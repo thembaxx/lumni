@@ -27,8 +27,8 @@ export function StudyCard() {
           <CardTitle className="font-extrabold text-lg">Continue Studying</CardTitle>
         </CardHeader>
         <CardContent className="flex items-center gap-4 p-5 pt-0">
-          <div className="flex size-12 items-center justify-center rounded-2xl bg-[--system-accent]/10">
-            <HugeiconsIcon icon={BookOpen01Icon} className="size-6 text-[--system-accent]" />
+          <div className="flex size-12 items-center justify-center rounded-2xl bg-(--system-accent)/10">
+            <HugeiconsIcon icon={BookOpen01Icon} className="size-6 text-(--system-accent)" />
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">{first.name}</span>

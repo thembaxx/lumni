@@ -128,10 +128,10 @@ export function OfflinePackManager() {
           <div className="flex flex-col gap-2">
             {packs.map((pack) => (
               <div key={pack.id} className="flex items-center gap-3 rounded-xl bg-muted/30 p-2.5">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[--system-accent]/10">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                   <HugeiconsIcon
                     icon={FileDownloadIcon}
-                    className="size-4 text-[--system-accent]"
+                    className="size-4 text-(--system-accent)"
                   />
                 </div>
                 <div className="min-w-0 flex-1">

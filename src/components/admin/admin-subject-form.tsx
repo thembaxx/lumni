@@ -62,7 +62,7 @@ export function SubjectForm({
             <FieldLabel htmlFor="subject-name">Name</FieldLabel>
             <m.div
               whileFocus={{ scale: 1.01 }}
-              className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
+              className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-(--system-accent)/30"
             >
               <Input
                 id="subject-name"
@@ -77,7 +77,7 @@ export function SubjectForm({
             <FieldLabel htmlFor="subject-code">Code</FieldLabel>
             <m.div
               whileFocus={{ scale: 1.01 }}
-              className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
+              className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-(--system-accent)/30"
             >
               <Input
                 id="subject-code"
@@ -93,7 +93,7 @@ export function SubjectForm({
           <FieldLabel htmlFor="subject-description">Description</FieldLabel>
           <m.div
             whileFocus={{ scale: 1.01 }}
-            className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
+            className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-(--system-accent)/30"
           >
             <Input
               id="subject-description"

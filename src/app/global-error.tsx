@@ -21,7 +21,7 @@ export default function GlobalError({
 
   return (
     <html lang="en">
-      <body className="min-h-dvh bg-[--system-background] p-6" suppressHydrationWarning>
+      <body className="min-h-dvh bg-(--system-background) p-6" suppressHydrationWarning>
         <div className="grid min-h-dvh grid-cols-12 gap-0">
           <div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
             <main className="flex max-w-md flex-col gap-8 text-left">
@@ -33,12 +33,12 @@ export default function GlobalError({
               </div>
 
               <div className="flex flex-col gap-2">
-                <h2 className="ios-title-2 text-[--system-text-primary]">Something went wrong</h2>
-                <p className="ios-callout text-[--system-text-secondary]">
+                <h2 className="ios-title-2 text-(--system-text-primary)">Something went wrong</h2>
+                <p className="ios-callout text-(--system-text-secondary)">
                   {error?.message || "An unexpected error occurred. Please try again."}
                 </p>
                 {error?.digest && (
-                  <p className="ios-footnote font-mono text-[--system-text-tertiary]">
+                  <p className="ios-footnote font-mono text-(--system-text-tertiary)">
                     Error ID: {error.digest}
                   </p>
                 )}
@@ -59,7 +59,7 @@ export default function GlobalError({
                 </Button>
               </div>
 
-              <p className="ios-footnote text-[--system-text-tertiary]">
+              <p className="ios-footnote text-(--system-text-tertiary)">
                 If this persists, please contact support.
               </p>
             </main>

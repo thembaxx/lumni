@@ -39,7 +39,7 @@ export function VerifiedByPill({ sources }: VerifiedByPillProps) {
         aria-expanded={expanded}
         className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left transition-colors hover:bg-muted/50"
       >
-        <span className="flex items-center gap-2 font-medium text-[--system-accent] text-xs">
+        <span className="flex items-center gap-2 font-medium text-(--system-accent) text-xs">
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />
           {label}
         </span>
@@ -66,7 +66,7 @@ export function VerifiedByPill({ sources }: VerifiedByPillProps) {
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="break-all text-[--system-accent] underline-offset-2 hover:underline"
+                  className="break-all text-(--system-accent) underline-offset-2 hover:underline"
                 >
                   {source.title}
                 </a>

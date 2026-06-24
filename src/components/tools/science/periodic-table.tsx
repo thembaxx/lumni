@@ -106,9 +106,9 @@ export function PeriodicTable() {
       <style dangerouslySetInnerHTML={{ __html: elementCategoryVariables }} />
       <div className="mx-auto w-full max-w-5xl">
         <div className="pt-5 pb-3">
-          <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+          <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
             <svg
-              className="size-5 text-[--system-accent]"
+              className="size-5 text-(--system-accent)"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -121,7 +121,7 @@ export function PeriodicTable() {
             </svg>
             Periodic Table
           </h2>
-          <p className="ios-subhead mt-1 text-[--system-text-secondary]">
+          <p className="ios-subhead mt-1 text-(--system-text-secondary)">
             Explore the elements: search, filter, and learn.
           </p>
         </div>
@@ -139,7 +139,7 @@ export function PeriodicTable() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className={`w-full rounded-2xl border border-[--system-separator] bg-[--system-fill] py-3 pr-10 pl-12 text-foreground text-base placeholder-muted-foreground focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20 ${isSearchFocused ? "border-[--system-accent]/30 bg-[--system-background-secondary]" : ""}
+            className={`w-full rounded-2xl border border-(--system-separator) bg-(--system-fill) py-3 pr-10 pl-12 text-foreground text-base placeholder-muted-foreground focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/20 ${isSearchFocused ? "border-(--system-accent)/30 bg-(--system-background-secondary)" : ""}
             `}
           />
           {searchQuery && (
@@ -166,8 +166,8 @@ export function PeriodicTable() {
             onClick={() => setActiveCategory(activeCategory === null ? null : null)}
             className={`shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 ${
               activeCategory === null
-                ? "border-[--system-separator] bg-[--system-fill] text-foreground"
-                : "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
+                ? "border-(--system-separator) bg-(--system-fill) text-foreground"
+                : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
             }`}
             whileTap={{ scale: 0.95 }}
           >
@@ -187,8 +187,8 @@ export function PeriodicTable() {
               }}
               className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 ${
                 activeCategory === key
-                  ? "border-[--system-separator] bg-[--system-fill] text-foreground"
-                  : "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
+                  ? "border-(--system-separator) bg-(--system-fill) text-foreground"
+                  : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
               }`}
               whileTap={{ scale: 0.95 }}
             >

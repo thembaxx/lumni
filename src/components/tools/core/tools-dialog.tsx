@@ -95,7 +95,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
           transition={{ delay: 0.1, duration: 0.3 }}
           className="flex items-center justify-between border-border border-b px-5 py-3"
         >
-          <h1 className="ios-title-3 font-semibold text-[--system-text-primary]">Tools</h1>
+          <h1 className="ios-title-3 font-semibold text-(--system-text-primary)">Tools</h1>
           <Button
             variant="ghost"
             size="icon-sm"

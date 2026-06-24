@@ -72,7 +72,7 @@ const TopNavStatus = memo(function TopNavStatus() {
               initial={{ width: 0 }}
               animate={{ width: `${levelInfo.progress}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="h-full rounded-full bg-[--system-accent]"
+              className="h-full rounded-full bg-(--system-accent)"
             />
           </div>
         </m.div>
@@ -85,7 +85,7 @@ const TopNavStatus = memo(function TopNavStatus() {
       )}
       {pendingCount > 0 && (
         <div className="flex items-center gap-1 rounded-full bg-(--system-accent-alpha-10) px-2 py-0.5 text-(--system-accent)">
-          <div className="size-1.5 rounded-full bg-[--system-accent]" />
+          <div className="size-1.5 rounded-full bg-(--system-accent)" />
           <span className="ios-caption-3 font-medium">{pendingCount}</span>
         </div>
       )}
@@ -146,7 +146,7 @@ function TopNavMenu() {
 
   return (
     <DropdownList open={menuOpen} onOpenChange={setMenuOpen}>
-      <DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2">
+      <DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2">
         <Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
           <AvatarImage src={imgSrc} alt={user?.name || "User"} />
           <AvatarFallback className="bg-system-accent font-bold text-white text-xs">

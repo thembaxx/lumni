@@ -54,7 +54,7 @@ export function SolverResultView({ subject, result, onReset }: SolverResultViewP
         <div className="p-6">
           {subject !== "general" && (
             <div className="mb-4">
-              <span className="rounded-full bg-[--system-accent]/10 px-2.5 py-1 font-medium text-[--system-accent] text-xs">
+              <span className="rounded-full bg-(--system-accent)/10 px-2.5 py-1 font-medium text-(--system-accent) text-xs">
                 {SUBJECT_LABELS[subject] || subject}
               </span>
             </div>

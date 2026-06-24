@@ -122,11 +122,11 @@ export function APSCalculator() {
   return (
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="px-5 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-          <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-[--system-accent]" />
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-(--system-accent)" />
           APS Calculator
         </h2>
-        <p className="ios-subhead mt-1 text-[--system-text-secondary]">
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           Calculate your Admission Point Score for university applications.
         </p>
       </div>
@@ -198,8 +198,8 @@ export function APSCalculator() {
       <div className="px-5 pb-5">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-level-2">
           <div className="mb-3 flex items-center justify-between">
-            <span className="ios-subhead text-[--system-text-secondary]">Your APS Score</span>
-            <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-[--system-accent]" />
+            <span className="ios-subhead text-(--system-text-secondary)">Your APS Score</span>
+            <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-(--system-accent)" />
           </div>
           <div
             className={cn(

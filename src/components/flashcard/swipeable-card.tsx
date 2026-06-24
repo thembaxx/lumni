@@ -160,7 +160,7 @@ export const SwipeableCard = memo(function SwipeableCard({
               {topic && (
                 <span
                   data-testid="card-topic"
-                  className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-[--system-accent]"
+                  className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-(--system-accent)"
                 >
                   {topic}
                 </span>

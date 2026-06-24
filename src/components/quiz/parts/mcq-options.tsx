@@ -60,7 +60,7 @@ export const MCQOptions = memo(function MCQOptions({
                 className={cn(
                   "flex h-6 w-6 items-center justify-center rounded-full border font-medium text-sm",
                   isSelected
-                    ? "border-[--system-accent] bg-[--system-accent] text-background"
+                    ? "border-(--system-accent) bg-(--system-accent) text-background"
                     : "border-muted-foreground/30",
                 )}
               >

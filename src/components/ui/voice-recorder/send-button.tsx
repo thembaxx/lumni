@@ -37,7 +37,7 @@ export function SendButton({
         sendSuccess
           ? "bg-success text-primary-foreground hover:bg-success/90"
           : !isRecording && audioBlob && !isTooShort && !isTooLong
-            ? "bg-[--system-accent] text-background hover:opacity-90"
+            ? "bg-(--system-accent) text-background hover:opacity-90"
             : "bg-muted/50 text-muted-foreground/50",
       )}
       aria-label="Send voice message"

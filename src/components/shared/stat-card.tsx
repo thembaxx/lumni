@@ -33,7 +33,7 @@ export function StatCard({
   value,
   trend,
   colorClass = "text-foreground",
-  bgClass = "bg-[--system-accent]/10",
+  bgClass = "bg-(--system-accent)/10",
   variant = "default",
   className,
   delay = 0,

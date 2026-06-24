@@ -44,7 +44,7 @@ export function QuestionCardHeader({
     <div className="gap-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="bg-[--system-accent]/10 font-medium">
+          <Badge variant="outline" className="bg-(--system-accent)/10 font-medium">
             <span className="opacity-80">{question.topic}</span>
           </Badge>
           <DifficultyBadge
@@ -52,7 +52,7 @@ export function QuestionCardHeader({
             variant="quiz"
             className="border font-mono text-xs"
           />
-          <Badge variant="outline" className="bg-[--system-accent]/5 font-mono text-xs">
+          <Badge variant="outline" className="bg-(--system-accent)/5 font-mono text-xs">
             {question.type}
           </Badge>
         </div>

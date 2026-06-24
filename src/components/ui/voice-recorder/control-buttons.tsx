@@ -102,7 +102,7 @@ export function ControlButtons({
         className={cn(
           "rounded-lg",
           audioBlob && !isRecording
-            ? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-level-2"
+            ? "bg-(--system-accent) text-background hover:scale-105 hover:shadow-level-2"
             : "bg-muted/30 text-muted-foreground/30",
           isPaperPlaneing && "pointer-events-none opacity-50",
         )}

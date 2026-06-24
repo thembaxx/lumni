@@ -17,7 +17,7 @@ export function SearchWidget() {
     <div
       className={cn(
         "rounded-2xl border border-border/30 bg-secondary/60 p-4 transition-[border-color,box-shadow] duration-300",
-        isFocused && "border-[--system-accent]/30 ring-2 ring-[--system-accent]/20",
+        isFocused && "border-(--system-accent)/30 ring-2 ring-(--system-accent)/20",
       )}
     >
       <div className="flex items-center gap-2">

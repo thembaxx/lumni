@@ -53,11 +53,11 @@ export function ResultsSearch() {
   return (
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="px-5 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-          <HugeiconsIcon icon={Search01Icon} className="size-5 text-[--system-accent]" />
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={Search01Icon} className="size-5 text-(--system-accent)" />
           Results Search
         </h2>
-        <p className="ios-subhead mt-1 text-[--system-text-secondary]">
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           Search past matric results by name and year.
         </p>
       </div>
@@ -116,7 +116,7 @@ export function ResultsSearch() {
         </div>
       ) : isSearching ? (
         <div className="flex flex-1 items-center justify-center">
-          <div className="size-8 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
+          <div className="size-8 animate-spin rounded-full border-2 border-(--system-accent) border-t-transparent" />
         </div>
       ) : results.length > 0 ? (
         <div className="flex flex-1 flex-col gap-4 px-5 pb-10">
@@ -130,7 +130,7 @@ export function ResultsSearch() {
             >
               <Card className="rounded-xl border-border p-4 shadow-sm">
                 <div className="mb-3 flex items-start gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-[--system-accent]/10">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent)/10">
                     <HugeiconsIcon icon={UserIcon} className="size-5 text-foreground" />
                   </div>
                   <div>

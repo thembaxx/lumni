@@ -29,8 +29,8 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
             className={cn(
               "w-full rounded-xl border-2 p-3 text-left transition-[border-color,background-color]",
               selected === opt.id
-                ? "border-[--system-accent] bg-[--system-accent]/5"
-                : "border-border hover:border-[--system-accent]/30",
+                ? "border-(--system-accent) bg-(--system-accent)/5"
+                : "border-border hover:border-(--system-accent)/30",
             )}
           >
             <span className="font-medium">{opt.id}.</span> <MarkdownRenderer content={opt.text} />
@@ -67,7 +67,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         value={(Array.isArray(value) ? value[0] : value) ?? ""}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+        className="rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
         placeholder={t("exam.placeholderShortAnswer")}
         aria-label="Short answer input"
       />
@@ -81,7 +81,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         rows={6}
-        className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+        className="resize-y rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
         placeholder={t("exam.placeholderLongAnswer")}
         aria-label="Long answer input"
       />
@@ -96,7 +96,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         value={(Array.isArray(value) ? value[0] : value) ?? ""}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="rounded-xl border-2 border-border p-3 font-mono focus:border-[--system-accent]"
+        className="rounded-xl border-2 border-border p-3 font-mono focus:border-(--system-accent)"
         placeholder={t("exam.placeholderCalculation")}
         aria-label="Calculation answer input"
       />
@@ -110,7 +110,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         value={(Array.isArray(value) ? value[0] : value) ?? ""}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+        className="rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
         placeholder={t("exam.placeholderMatching")}
         aria-label="Matching pairs input"
       />
@@ -129,7 +129,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           rows={4}
-          className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+          className="resize-y rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
           placeholder={t("exam.placeholderShortAnswer")}
           aria-label="Diagram answer input"
         />
@@ -144,7 +144,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         rows={8}
-        className="resize-y rounded-xl border-2 border-border p-3 font-mono text-base focus:border-[--system-accent]"
+        className="resize-y rounded-xl border-2 border-border p-3 font-mono text-base focus:border-(--system-accent)"
         placeholder={t("exam.placeholderCode")}
         aria-label="Programming answer input"
       />
@@ -158,7 +158,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         rows={4}
-        className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+        className="resize-y rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
         placeholder={t("exam.placeholderShortAnswer")}
         aria-label="Response input"
       />
@@ -175,7 +175,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         rows={4}
-        className="resize-y rounded-xl border-2 border-border p-3 focus:border-[--system-accent]"
+        className="resize-y rounded-xl border-2 border-border p-3 focus:border-(--system-accent)"
         placeholder={t("exam.placeholderShortAnswer")}
         aria-label="Freeform answer input"
       />

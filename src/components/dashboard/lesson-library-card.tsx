@@ -86,15 +86,15 @@ export function LessonLibraryCard() {
                 distance={8}
                 className="flex items-center gap-3 rounded-2xl border bg-card p-3"
               >
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10">
-                  <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-[--system-accent]" />
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-(--system-accent)/10">
+                  <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-(--system-accent)" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-semibold text-sm">{label}</p>
                   <div className="mt-1 flex items-center gap-2">
                     <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                       <div
-                        className="h-full origin-left rounded-full bg-[--system-accent] transition-[transform]"
+                        className="h-full origin-left rounded-full bg-(--system-accent) transition-[transform]"
                         style={{ transform: `scaleX(${pct / 100})` }}
                       />
                     </div>

@@ -29,7 +29,7 @@ export function CalculatorDisplay({ expression, result, error, onCopy }: Calcula
         <span
           className={cn(
             "select-all font-mono font-semibold text-2xl tracking-tight",
-            error ? "text-destructive" : "text-[--system-text-primary]",
+            error ? "text-destructive" : "text-(--system-text-primary)",
           )}
         >
           {result}

@@ -52,7 +52,7 @@ const SUBJECT_ABBREVIATIONS: Record<string, string> = {
 };
 
 const TAILWIND_COLORS: Record<string, string> = {
-  mathematics: "bg-[--system-accent]",
+  mathematics: "bg-(--system-accent)",
   "physical-sciences": "bg-success",
   "life-sciences": "bg-accent",
   "english-home-language": "bg-warning",
@@ -62,9 +62,9 @@ const TAILWIND_COLORS: Record<string, string> = {
   accounting: "bg-warning-foreground",
   "business-studies": "bg-accent",
   economics: "bg-info",
-  "mathematical-literacy": "bg-[--chart-3]",
-  "computer-applications-technology": "bg-[--chart-4]",
-  "information-technology": "bg-[--chart-5]",
+  "mathematical-literacy": "bg-(--chart-3)",
+  "computer-applications-technology": "bg-(--chart-4)",
+  "information-technology": "bg-(--chart-5)",
 };
 
 const OKLCH_COLORS: Record<string, string> = {

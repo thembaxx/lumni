@@ -31,7 +31,7 @@ const COMPETENCY_COLORS: Record<CompetencyLevel, string> = {
   novice: "bg-destructive/20 text-destructive",
   developing: "bg-warning/20 text-warning",
   proficient: "bg-success/20 text-success",
-  mastered: "bg-[--system-accent]/20 text-[--system-accent]",
+  mastered: "bg-(--system-accent)/20 text-(--system-accent)",
 };
 
 const LEVEL_RECOMMENDATIONS: Record<CompetencyLevel, { format: string; description: string }> = {
@@ -179,9 +179,9 @@ export function BloomTaxonomyWidget() {
                   const score = topic.levels[bl];
                   const fill =
                     score >= 80
-                      ? "bg-[--system-accent]"
+                      ? "bg-(--system-accent)"
                       : score >= 50
-                        ? "bg-[--system-accent]/50"
+                        ? "bg-(--system-accent)/50"
                         : "bg-muted-foreground/20";
                   return (
                     <div key={bl} className="flex flex-1 flex-col items-center gap-1">

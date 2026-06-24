@@ -54,7 +54,7 @@ const NavItemComponent = memo(function NavItemComponent({
       onClick={() => onNavigate(item.href)}
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
-      className="relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-inset"
+      className="relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset"
       whileTap={{ scale: 0.92 }}
       transition={{ type: "spring", duration: 0.25, bounce: 0 }}
     >

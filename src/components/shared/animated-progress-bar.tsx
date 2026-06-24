@@ -5,7 +5,7 @@ import { iOSEase } from "@/lib/utils/animation";
 type ProgressBarColor = "accent" | "success" | "warning" | "destructive";
 
 const colorRecord: Record<ProgressBarColor, string> = {
-  accent: "bg-[--system-accent]",
+  accent: "bg-(--system-accent)",
   success: "bg-success",
   warning: "bg-warning",
   destructive: "bg-destructive",

@@ -57,13 +57,13 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-[--system-grouped-background]">
+    <div className="min-h-dvh bg-(--system-grouped-background)">
       <PageContainer>
-        <div className="pt-safe pb-[--space-2]">
-          <h1 className="ios-large-title text-[--system-text-primary]">Upload QA Files</h1>
+        <div className="pt-safe pb-(--space-2)">
+          <h1 className="ios-large-title text-(--system-text-primary)">Upload QA Files</h1>
         </div>
 
-        <div className="flex flex-col gap-[--space-4] pb-[--space-8]">
+        <div className="flex flex-col gap-(--space-4) pb-(--space-8)">
           <div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
             <header>
               <h2 className="flex flex-col items-center gap-3 text-center font-medium font-sans text-sm">
@@ -76,7 +76,7 @@ export default function UploadPage() {
                 Upload JSON question files for subjects
               </p>
             </header>
-            <div className="flex flex-col gap-[--space-3] px-4 group-data-[size=sm]/card:px-3">
+            <div className="flex flex-col gap-(--space-3) px-4 group-data-[size=sm]/card:px-3">
               <UploadButton
                 endpoint="qaUploader"
                 onClientUploadComplete={handleUploadComplete}
@@ -86,7 +86,7 @@ export default function UploadPage() {
               />
 
               {lastUploadUrl && (
-                <div className="rounded-(--radius-button) bg-[var(--success)]/10 p-[--space-4] text-center">
+                <div className="rounded-(--radius-button) bg-(--success)/10 p-(--space-4) text-center">
                   <m.div
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -97,9 +97,7 @@ export default function UploadPage() {
                       className="mx-auto mb-2 size-16 text-success"
                     />
                   </m.div>
-                  <p className="ios-footnote font-medium text-[var(--success)]">
-                    Upload successful
-                  </p>
+                  <p className="ios-footnote font-medium text-(--success)">Upload successful</p>
                   <p className="ios-caption-1 mt-1 break-all text-muted-foreground">
                     {lastUploadUrl}
                   </p>
@@ -107,7 +105,7 @@ export default function UploadPage() {
               )}
               {syncStatus !== "idle" && (
                 <div
-                  className={`rounded-(--radius-button) p-[--space-3] text-center text-xs ${
+                  className={`rounded-(--radius-button) p-(--space-3) text-center text-xs ${
                     syncStatus === "syncing"
                       ? "bg-accent/10 text-accent"
                       : syncStatus === "done"

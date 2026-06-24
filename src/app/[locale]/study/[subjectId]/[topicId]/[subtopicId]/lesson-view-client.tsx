@@ -180,7 +180,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
           <div className="mt-4 flex items-center gap-3">
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-[--system-accent] transition-[width] duration-500"
+                className="h-full rounded-full bg-(--system-accent) transition-[width] duration-500"
                 style={{ width: `${progress}%` }}
               />
             </div>

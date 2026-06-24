@@ -8,7 +8,7 @@ export function AnalyticsEmptyState() {
     <div className="p-8 text-center">
       <div className="mb-6">
         <svg
-          className="size-4 text-[--system-accent]"
+          className="size-4 text-(--system-accent)"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

@@ -25,7 +25,7 @@ export function ExamSearchBar({ searchQuery, onSearchChange }: ExamSearchBarProp
         placeholder="Search exams…"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
-        className="h-10 rounded-full border-0 bg-secondary/50 pr-10 pl-10 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
+        className="h-10 rounded-full border-0 bg-secondary/50 pr-10 pl-10 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-(--system-accent)/30"
       />
       <AnimatePresence initial={false}>
         {searchQuery && (

@@ -82,7 +82,7 @@ export function SolverInputTools({
         )}
       </div>
       {imageUrl && (
-        <div className="group relative size-20 shrink-0 overflow-hidden rounded-xl border-2 border-[--system-accent]/20 shadow-level-2">
+        <div className="group relative size-20 shrink-0 overflow-hidden rounded-xl border-2 border-(--system-accent)/20 shadow-level-2">
           <Image
             src={imageUrl}
             alt="Uploaded problem"

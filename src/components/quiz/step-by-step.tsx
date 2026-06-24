@@ -38,7 +38,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
     <div className={cn("flex flex-col gap-4", className)}>
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2 font-semibold text-foreground text-sm">
-          <div className="rounded-full bg-[--system-accent]/10 p-1.5">
+          <div className="rounded-full bg-(--system-accent)/10 p-1.5">
             <HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
           </div>
           <span>
@@ -52,7 +52,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             onClick={prevStep}
             disabled={currentStep === 0}
             aria-label="Previous step"
-            className="size-8 hover:bg-[--system-accent]/10"
+            className="size-8 hover:bg-(--system-accent)/10"
           >
             <HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" aria-hidden="true" />
           </Button>
@@ -62,7 +62,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             onClick={nextStep}
             disabled={currentStep === steps.length - 1}
             aria-label="Next step"
-            className="size-8 bg-[--system-accent]/5 hover:bg-[--system-accent]/10"
+            className="size-8 bg-(--system-accent)/5 hover:bg-(--system-accent)/10"
           >
             <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-start" aria-hidden="true" />
           </Button>
@@ -77,9 +77,9 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="group relative rounded-2xl border border-[--system-accent]/10 bg-card p-6 shadow-sm"
+            className="group relative rounded-2xl border border-(--system-accent)/10 bg-card p-6 shadow-sm"
           >
-            <div className="absolute top-0 left-0 h-full w-1.5 rounded-l-2xl bg-[--system-accent]/20 transition-colors group-hover:bg-[--system-accent]/40" />
+            <div className="absolute top-0 left-0 h-full w-1.5 rounded-l-2xl bg-(--system-accent)/20 transition-colors group-hover:bg-(--system-accent)/40" />
             <div className="font-medium text-foreground/90 text-sm leading-relaxed">
               <MarkdownRenderer content={steps[currentStep]} subject={subject} />
             </div>
@@ -95,9 +95,9 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             variant="ghost"
             onClick={() => setCurrentStep(idx)}
             className={cn(
-              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2",
+              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
               idx === currentStep
-                ? "bg-[--system-accent] shadow-level-1 shadow-sm"
+                ? "bg-(--system-accent) shadow-level-1 shadow-sm"
                 : "bg-muted-foreground/20 hover:bg-muted-foreground/40",
             )}
             aria-label={`Go to step ${idx + 1}`}

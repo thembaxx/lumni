@@ -40,9 +40,9 @@ function ListCell({
       disabled={disabled}
       className={cn(
         "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
-        "bg-[--system-surface] transition-[background-color,scale] duration-200",
+        "bg-(--system-surface) transition-[background-color,scale] duration-200",
         onClick &&
-          "hover:bg-[--system-surface-secondary] active:scale-[0.96] active:bg-[--system-surface-secondary]",
+          "hover:bg-(--system-surface-secondary) active:scale-[0.96] active:bg-(--system-surface-secondary)",
         disabled && "opacity-50",
         showSeparator && "ios-separator",
         className,
@@ -52,13 +52,13 @@ function ListCell({
         <div
           className={cn(
             "text-(length:--fs-body) truncate font-medium text-foreground text-sm",
-            destructive && "text-[--system-destructive]",
+            destructive && "text-(--system-destructive)",
           )}
         >
           {title}
         </div>
         {subtitle && (
-          <div className="text-(length:--fs-footnote) mt-0.5 font-medium text-[--system-text-secondary] text-sm leading-snug">
+          <div className="text-(length:--fs-footnote) mt-0.5 font-medium text-(--system-text-secondary) text-sm leading-snug">
             {subtitle}
           </div>
         )}

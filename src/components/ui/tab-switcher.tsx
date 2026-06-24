@@ -81,7 +81,7 @@ export function TabSwitcher({
           className={cn(
             variant === "tabs"
               ? "relative inline-flex gap-1 rounded-lg bg-muted p-1"
-              : "relative inline-flex items-center rounded-md bg-[--system-surface-secondary] p-[3px]",
+              : "relative inline-flex items-center rounded-md bg-(--system-surface-secondary) p-[3px]",
             listClassName,
           )}
         >
@@ -104,8 +104,8 @@ export function TabSwitcher({
                     ? "text-background"
                     : "text-muted-foreground hover:text-foreground"
                   : value === tab.value
-                    ? "text-[--system-accent]"
-                    : "text-[--system-text-secondary] hover:text-[--system-text-primary]",
+                    ? "text-(--system-accent)"
+                    : "text-(--system-text-secondary) hover:text-(--system-text-primary)",
               )}
             >
               {tab.icon}
@@ -115,8 +115,8 @@ export function TabSwitcher({
           <m.div
             className={
               variant === "tabs"
-                ? "absolute inset-y-1 z-0 rounded-md bg-[--system-accent]"
-                : "absolute inset-y-[3px] z-0 rounded-sm bg-[--system-surface] shadow-level-1"
+                ? "absolute inset-y-1 z-0 rounded-md bg-(--system-accent)"
+                : "absolute inset-y-[3px] z-0 rounded-sm bg-(--system-surface) shadow-level-1"
             }
             initial={false}
             animate={{

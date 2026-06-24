@@ -111,7 +111,7 @@ export function ListenToLesson({
       className={cn(
         "rounded-lg px-3 text-xs",
         "transition-transform active:scale-[0.96]",
-        "transition-colors duration-150 ease-[var(--ease-ios)]",
+        "transition-colors duration-150 ease-(--ease-ios)",
         className,
       )}
       disabled={isLoading}

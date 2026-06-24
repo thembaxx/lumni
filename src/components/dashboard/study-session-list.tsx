@@ -30,8 +30,8 @@ export function StudySessionList({
             onClick={() => onStartSession(session)}
             className="flex w-full items-center gap-3 rounded-xl bg-muted/30 p-2.5 text-left transition-colors hover:bg-muted/50"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[--system-accent]/10">
-              <HugeiconsIcon icon={Clock01Icon} className="size-4 text-[--system-accent]" />
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
+              <HugeiconsIcon icon={Clock01Icon} className="size-4 text-(--system-accent)" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate font-semibold text-sm">{session.subject}</p>
@@ -53,7 +53,7 @@ export function StudySessionList({
           <div className="mt-2 flex items-center gap-2">
             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-[--system-accent] transition-[width]"
+                className="h-full rounded-full bg-(--system-accent) transition-[width]"
                 style={{ width: `${Math.min(progress, 100)}%` }}
               />
             </div>

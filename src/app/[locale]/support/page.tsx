@@ -47,7 +47,7 @@ export default function SupportPage() {
           >
             <Card className="transition-colors hover:bg-accent/5">
               <CardHeader className="flex flex-row items-center gap-3">
-                <HugeiconsIcon icon={channel.icon} className="size-5 text-[--system-accent]" />
+                <HugeiconsIcon icon={channel.icon} className="size-5 text-(--system-accent)" />
                 <CardTitle className="font-medium text-base">{channel.label}</CardTitle>
               </CardHeader>
               <CardContent>

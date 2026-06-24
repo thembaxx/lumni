@@ -13,7 +13,7 @@ const DAYS_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sat
 function getTypeColor(type: string) {
   switch (type) {
     case "new":
-      return "bg-[--system-accent]/10 text-muted-foreground";
+      return "bg-(--system-accent)/10 text-muted-foreground";
     case "review":
       return "bg-accent/20 text-accent";
     case "practice":
@@ -57,7 +57,7 @@ export function ScheduleView({
                   <h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
                     <HugeiconsIcon
                       icon={Calendar01Icon}
-                      className="size-4 text-[--system-accent]"
+                      className="size-4 text-(--system-accent)"
                     />
                     {day.day}
                   </h4>

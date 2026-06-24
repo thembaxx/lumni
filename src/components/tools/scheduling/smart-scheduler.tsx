@@ -67,11 +67,11 @@ export function SmartScheduler() {
   return (
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="px-5 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-          <HugeiconsIcon icon={Calendar01Icon} className="size-5 text-[--system-accent]" />
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={Calendar01Icon} className="size-5 text-(--system-accent)" />
           Smart Scheduler
         </h2>
-        <p className="ios-subhead mt-1 text-[--system-text-secondary]">
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           Generate a personalised study plan for your exams.
         </p>
       </div>

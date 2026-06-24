@@ -17,7 +17,7 @@ const features = [
     title: "AI-Generated Quizzes",
     description:
       "Practice with unlimited AI-generated quizzes tailored to your subject and grade level.",
-    accent: "before:bg-[var(--system-accent-alpha-10)]",
+    accent: "before:bg-(--system-accent-alpha-10)",
   },
   {
     icon: BookOpen01Icon,

@@ -56,13 +56,13 @@ export const LessonCard = memo(function LessonCard({
                 <div className="flex items-start justify-between">
                   <Badge
                     variant="outline"
-                    className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
+                    className="rounded-full bg-(--system-accent)/10 px-3 py-0.5 font-medium text-xs"
                   >
                     {subject}
                   </Badge>
                   <Badge
                     className={cn(
-                      "ios-caption-3 rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium uppercase",
+                      "ios-caption-3 rounded-full bg-(--system-accent)/10 px-3 py-0.5 font-medium uppercase",
                       getDifficultyColor(difficulty),
                     )}
                   >
@@ -147,13 +147,13 @@ export const LessonCard = memo(function LessonCard({
                   <div className="flex items-start justify-between">
                     <Badge
                       variant="outline"
-                      className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
+                      className="rounded-full bg-(--system-accent)/10 px-3 py-0.5 font-medium text-xs"
                     >
                       {subject}
                     </Badge>
                     <Badge
                       className={cn(
-                        "ios-caption-3 rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium uppercase",
+                        "ios-caption-3 rounded-full bg-(--system-accent)/10 px-3 py-0.5 font-medium uppercase",
                         getDifficultyColor(difficulty),
                       )}
                     >

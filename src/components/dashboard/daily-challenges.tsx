@@ -91,7 +91,7 @@ export function DailyChallenges() {
                     "flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors",
                     challenge.completed
                       ? "bg-success/20 text-success"
-                      : "bg-[--system-accent]/10 text-[--system-accent]",
+                      : "bg-(--system-accent)/10 text-(--system-accent)",
                   )}
                 >
                   {challenge.completed ? (
@@ -133,7 +133,7 @@ export function DailyChallenges() {
                             ease: iOSDecelerate,
                             delay: index * 0.08 + 0.2,
                           }}
-                          className="h-full origin-left rounded-full bg-[--system-accent]"
+                          className="h-full origin-left rounded-full bg-(--system-accent)"
                         />
                       </div>
                       <span className="font-medium text-muted-foreground text-xs tabular-nums">

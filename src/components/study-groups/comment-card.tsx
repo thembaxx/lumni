@@ -61,23 +61,23 @@ export function CommentCard({
         "group",
         depth === 0
           ? "bg-transparent"
-          : "rounded-lg border border-[--system-border] bg-[--system-surface-secondary] p-3",
+          : "rounded-lg border border-(--system-border) bg-(--system-surface-secondary) p-3",
       )}
     >
       <div className="flex items-start gap-2 py-2">
-        <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10 font-semibold text-[--system-accent] text-xs">
+        <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-(--system-accent)/10 font-semibold text-(--system-accent) text-xs">
           {(comment.userName || "?")[0].toUpperCase()}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="font-medium text-[--system-text-primary] text-xs">
+            <span className="font-medium text-(--system-text-primary) text-xs">
               {comment.userName || "Anonymous"}
             </span>
-            <span className="text-[--system-text-tertiary] text-xs">
+            <span className="text-(--system-text-tertiary) text-xs">
               {timeAgo(comment.createdAt)}
             </span>
           </div>
-          <p className="mt-0.5 text-[--system-text-secondary] text-sm">{comment.content}</p>
+          <p className="mt-0.5 text-(--system-text-secondary) text-sm">{comment.content}</p>
           <div className="mt-1 flex items-center gap-3">
             <ReactionBar
               reactions={aggregatedReactions}
@@ -87,7 +87,7 @@ export function CommentCard({
             <button
               type="button"
               onClick={() => setShowReply(!showReply)}
-              className="text-[--system-text-tertiary] text-xs transition-colors hover:text-[--system-accent]"
+              className="text-(--system-text-tertiary) text-xs transition-colors hover:text-(--system-accent)"
             >
               Reply
             </button>
@@ -95,7 +95,7 @@ export function CommentCard({
               <button
                 type="button"
                 onClick={() => onDelete(comment.$id)}
-                className="text-[--system-text-tertiary] text-xs opacity-0 transition-opacity hover:text-red-500 group-hover:opacity-100"
+                className="text-(--system-text-tertiary) text-xs opacity-0 transition-opacity hover:text-red-500 group-hover:opacity-100"
               >
                 Delete
               </button>

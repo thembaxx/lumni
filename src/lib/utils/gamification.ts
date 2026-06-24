@@ -2,7 +2,7 @@ export type Rarity = "common" | "rare" | "epic" | "legendary";
 
 export const rarityColors: Record<Rarity, string> = {
   common: "bg-muted border-border",
-  rare: "bg-[--system-accent]/10 border-[--system-accent]/20",
+  rare: "bg-(--system-accent)/10 border-(--system-accent)/20",
   epic: "bg-accent/10 border-accent/30",
   legendary: "bg-warning/10 border-warning/30",
 };
@@ -16,14 +16,14 @@ export const rarityGlow: Record<Rarity, string> = {
 
 export const raritySolid: Record<Rarity, string> = {
   common: "bg-muted",
-  rare: "bg-[--system-accent]",
+  rare: "bg-(--system-accent)",
   epic: "bg-accent dark:bg-accent/70",
   legendary: "bg-warning dark:bg-warning/70",
 };
 
 export const rarityBorder: Record<Rarity, string> = {
   common: "border-border",
-  rare: "border-[--system-accent]",
+  rare: "border-(--system-accent)",
   epic: "border-accent dark:border-accent/70",
   legendary: "border-warning dark:border-warning/70",
 };

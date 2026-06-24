@@ -236,7 +236,7 @@ function SettingsContent() {
                   className={`relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 transition-colors duration-300 active:scale-[0.96]${
                     isActive
                       ? "border border-border/30 bg-system-surface text-system-accent shadow-level-1"
-                      : "text-[--system-text-secondary] hover:bg-system-surface/50 hover:text-foreground"
+                      : "text-(--system-text-secondary) hover:bg-system-surface/50 hover:text-foreground"
                   }
 									`}
                 >
@@ -346,7 +346,7 @@ function SettingsLoading() {
     <div className="flex min-h-dvh items-center justify-center bg-system-grouped">
       <div className="flex flex-col items-center gap-4">
         <HugeiconsIcon icon={RadialIcon} className="size-8 animate-spin text-muted-foreground" />
-        <p className="ios-body text-[--system-text-secondary]">{t("common.loading")}</p>
+        <p className="ios-body text-(--system-text-secondary)">{t("common.loading")}</p>
       </div>
     </div>
   );

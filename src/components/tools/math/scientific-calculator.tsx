@@ -207,10 +207,10 @@ export function ScientificCalculator() {
       aria-label="Scientific calculator"
     >
       <div className="px-6 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
           Scientific CalculatorIcon
         </h2>
-        <p className="ios-subhead mt-1.5 text-[--system-text-secondary]/60">
+        <p className="ios-subhead mt-1.5 text-(--system-text-secondary)/60">
           {state.angleMode === "deg" ? "Degrees" : "Radians"}
           {state.memorySet && " · Memory stored"}
         </p>

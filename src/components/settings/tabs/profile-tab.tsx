@@ -155,10 +155,10 @@ export function ProfileTab() {
           }}
         />
         <div className="flex flex-col items-center gap-1 px-2">
-          <p className="text-(length:--fs-footnote) font-extrabold text-[--system-text-tertiary] uppercase tracking-widest">
+          <p className="text-(length:--fs-footnote) font-extrabold text-(--system-text-tertiary) uppercase tracking-widest">
             Lumni Mobile
           </p>
-          <p className="text-(length:--fs-caption-2) font-medium text-[--system-text-tertiary] tabular-nums">
+          <p className="text-(length:--fs-caption-2) font-medium text-(--system-text-tertiary) tabular-nums">
             Version 1.0.4 (Stable-RC)
           </p>
         </div>

@@ -34,7 +34,7 @@ export function EmailInputForm({
           onEmailChange(e.target.value);
         }}
         autoComplete="email"
-        className="-webkit-font-smoothing h-11 rounded-md antialiased ring-1 ring-transparent transition-[ring-color,box-shadow] duration-150 focus-within:ring-[--system-accent]/30"
+        className="-webkit-font-smoothing h-11 rounded-md antialiased ring-1 ring-transparent transition-[ring-color,box-shadow] duration-150 focus-within:ring-(--system-accent)/30"
       />
       {error && (
         <p className="flex items-center gap-1 text-destructive text-xs">

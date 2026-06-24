@@ -218,7 +218,7 @@ export function CompetencyOverview() {
                                   "h-full origin-left rounded-full transition-[transform]",
                                   level === "novice" && "bg-destructive",
                                   level === "developing" && "bg-warning",
-                                  level === "proficient" && "bg-[--system-accent]",
+                                  level === "proficient" && "bg-(--system-accent)",
                                   level === "mastered" && "bg-success",
                                 )}
                                 style={{
@@ -262,7 +262,7 @@ export function CompetencyOverview() {
                               "ml-2 shrink-0 font-medium tabular-nums",
                               t.level === "novice" && "text-destructive",
                               t.level === "developing" && "text-warning",
-                              t.level === "proficient" && "text-[--system-accent]",
+                              t.level === "proficient" && "text-(--system-accent)",
                               t.level === "mastered" && "text-success",
                             )}
                           >

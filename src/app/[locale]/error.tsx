@@ -16,15 +16,15 @@ export default function AppError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-dvh bg-[--system-background]">
+    <div className="min-h-dvh bg-(--system-background)">
       <div className="grid min-h-dvh grid-cols-12 gap-0">
         {/* Main content — left-aligned */}
-        <main className="col-span-12 col-start-1 flex flex-col justify-center px-[--space-6] py-[--space-10] md:col-span-7 md:px-[--space-12] md:py-[--space-14]">
+        <main className="col-span-12 col-start-1 flex flex-col justify-center px-(--space-6) py-(--space-10) md:col-span-7 md:px-(--space-12) md:py-(--space-14)">
           <m.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, ease: iOSEase }}
-            className="flex max-w-md flex-col gap-[--space-8]"
+            className="flex max-w-md flex-col gap-(--space-8)"
           >
             <m.div
               initial={{ scale: 0.8 }}
@@ -44,19 +44,19 @@ export default function AppError({
               </div>
             </m.div>
 
-            <div className="flex flex-col gap-[--space-2]">
-              <h2 className="ios-title-2 text-[--system-text-primary]">Something went wrong</h2>
-              <p className="ios-callout text-[--system-text-secondary]">
+            <div className="flex flex-col gap-(--space-2)">
+              <h2 className="ios-title-2 text-(--system-text-primary)">Something went wrong</h2>
+              <p className="ios-callout text-(--system-text-secondary)">
                 {error?.message || "An unexpected error occurred. Please try again."}
               </p>
               {error?.digest && (
-                <p className="ios-footnote font-mono text-[--system-text-tertiary]">
+                <p className="ios-footnote font-mono text-(--system-text-tertiary)">
                   Error ID: {error.digest}
                 </p>
               )}
             </div>
 
-            <div className="flex flex-col gap-[--space-3] sm:flex-row">
+            <div className="flex flex-col gap-(--space-3) sm:flex-row">
               <Button onClick={() => reset()} className="gap-2">
                 <HugeiconsIcon icon={RefreshIcon} className="size-4" />
                 Try again
@@ -71,7 +71,7 @@ export default function AppError({
               </Button>
             </div>
 
-            <p className="ios-footnote text-[--system-text-tertiary]">
+            <p className="ios-footnote text-(--system-text-tertiary)">
               If this persists, please contact support.
             </p>
           </m.div>

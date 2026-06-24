@@ -176,8 +176,8 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
                       s.completed
                         ? "bg-success/20 text-success"
                         : s.type === "flashcard"
-                          ? "bg-[--system-accent]/10 text-[--system-accent] font-semibold"
-                          : "bg-[--system-accent]/10 text-[--system-accent]",
+                          ? "bg-(--system-accent)/10 text-(--system-accent) font-semibold"
+                          : "bg-(--system-accent)/10 text-(--system-accent)",
                     )}
                     title={`${s.subject}${s.topic ? ` - ${s.topic}` : ""}${s.type === "flashcard" ? " (Flashcard Review)" : ""}`}
                   >

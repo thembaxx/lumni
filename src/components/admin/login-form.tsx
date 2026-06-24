@@ -76,7 +76,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                     </div>
                     <Button
                       size="default"
-                      className="w-full rounded-lg bg-[--system-accent] font-medium text-sm text-white shadow-level-2 transition-[transform,opacity] hover:bg-[--system-accent]/90 active:scale-[0.96]"
+                      className="w-full rounded-lg bg-(--system-accent) font-medium text-sm text-white shadow-level-2 transition-[transform,opacity] hover:bg-(--system-accent)/90 active:scale-[0.96]"
                     >
                       Sign In
                     </Button>

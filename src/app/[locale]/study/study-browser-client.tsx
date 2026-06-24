@@ -185,7 +185,7 @@ export function StudyBrowserClient() {
                         >
                           <div
                             className={`flex size-9 shrink-0 items-center justify-center rounded-full ${
-                              isComplete ? "bg-success/10" : "bg-[--system-accent]/10"
+                              isComplete ? "bg-success/10" : "bg-(--system-accent)/10"
                             }`}
                           >
                             {isComplete ? (
@@ -196,7 +196,7 @@ export function StudyBrowserClient() {
                             ) : (
                               <HugeiconsIcon
                                 icon={PlayIcon}
-                                className="size-4 text-[--system-accent]"
+                                className="size-4 text-(--system-accent)"
                               />
                             )}
                           </div>
@@ -206,7 +206,7 @@ export function StudyBrowserClient() {
                               <div className="mt-1 flex items-center gap-2">
                                 <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                                   <div
-                                    className="h-full rounded-full bg-[--system-accent] transition-[width]"
+                                    className="h-full rounded-full bg-(--system-accent) transition-[width]"
                                     style={{ width: `${pct}%` }}
                                   />
                                 </div>

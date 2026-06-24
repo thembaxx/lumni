@@ -177,10 +177,10 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
       )}
 
       <div className="px-6 pt-5 pb-3">
-        <h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
           AI Solver
         </h2>
-        <p className="ios-subhead mt-1.5 text-[--system-text-secondary]/60">
+        <p className="ios-subhead mt-1.5 text-(--system-text-secondary)/60">
           {phase === "confirm"
             ? "Verify the extracted problem then solve it."
             : "Snap a photo of your homework or type a question."}
@@ -209,7 +209,7 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               disabled={textareaDisabled}
-              className="min-h-25 rounded-xl bg-system-surface px-4 py-3 focus-visible:ring-[--system-accent]/30 focus-visible:ring-[3px]"
+              className="min-h-25 rounded-xl bg-system-surface px-4 py-3 focus-visible:ring-(--system-accent)/30 focus-visible:ring-3"
             />
           )}
 
@@ -217,9 +217,9 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
             <div className="fade-in flex animate-in items-center justify-center gap-3 py-8">
               <HugeiconsIcon
                 icon={RadialIcon}
-                className="size-6 animate-spin text-[--system-accent]"
+                className="size-6 animate-spin text-(--system-accent)"
               />
-              <span className="text-[--system-text-secondary] text-sm">
+              <span className="text-(--system-text-secondary) text-sm">
                 {phase === "extracting" ? "Reading problem from image…" : "Solving step-by-step…"}
               </span>
             </div>

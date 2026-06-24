@@ -15,7 +15,7 @@ interface DataTabProps {
 }
 
 const restartTrailing = (
-  <span className="ios-footnote font-semibold text-[--system-destructive]">Restart</span>
+  <span className="ios-footnote font-semibold text-(--system-destructive)">Restart</span>
 );
 
 function RestartOnboarding() {
@@ -39,11 +39,11 @@ function RestartOnboarding() {
 }
 
 const exportTrailing = (
-  <span className="ios-footnote font-semibold text-[--system-accent]">Export</span>
+  <span className="ios-footnote font-semibold text-(--system-accent)">Export</span>
 );
 
 const clearTrailing = (
-  <span className="ios-footnote font-semibold text-[--system-destructive]">Clear</span>
+  <span className="ios-footnote font-semibold text-(--system-destructive)">Clear</span>
 );
 
 function InstallAppSection() {
@@ -55,7 +55,7 @@ function InstallAppSection() {
   const installTrailing = useMemo(
     () =>
       isInstallable ? (
-        <span className="ios-footnote font-semibold text-[--system-accent]">Install</span>
+        <span className="ios-footnote font-semibold text-(--system-accent)">Install</span>
       ) : (
         <span className="ios-footnote text-muted-foreground text-xs">Installed</span>
       ),
@@ -65,7 +65,7 @@ function InstallAppSection() {
   const resetTrailing = useMemo(
     () =>
       wasDismissed ? (
-        <span className="ios-footnote font-semibold text-[--system-accent]">Reset</span>
+        <span className="ios-footnote font-semibold text-(--system-accent)">Reset</span>
       ) : (
         <span className="ios-footnote text-muted-foreground text-xs">Active</span>
       ),

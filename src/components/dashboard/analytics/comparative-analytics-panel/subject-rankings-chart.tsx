@@ -19,7 +19,7 @@ export function SubjectRankingsChart({ subjectRankings, userAverage }: SubjectRa
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-2">
             <svg
-              className="size-4 text-[--system-accent]"
+              className="size-4 text-(--system-accent)"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

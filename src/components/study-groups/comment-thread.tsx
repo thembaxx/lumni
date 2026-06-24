@@ -34,7 +34,7 @@ export function CommentThread({
     <div
       className={
         depth > 0
-          ? "ml-4 rounded-lg border border-[--system-border] bg-[--system-surface-secondary] p-3"
+          ? "ml-4 rounded-lg border border-(--system-border) bg-(--system-surface-secondary) p-3"
           : ""
       }
     >

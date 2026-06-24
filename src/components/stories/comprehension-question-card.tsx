@@ -200,7 +200,7 @@ export function ComprehensionQuestionCard({
                             "flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                             !showResult &&
                               isSelected &&
-                              "border-[--system-accent] bg-[--system-accent]/5",
+                              "border-(--system-accent) bg-(--system-accent)/5",
                             !showResult && !isSelected && "hover:bg-muted/50",
                             showResult && isOptionCorrect && "border-success/30 bg-success/10",
                             showResult &&
@@ -233,7 +233,7 @@ export function ComprehensionQuestionCard({
                               className={cn(
                                 "flex size-5 shrink-0 items-center justify-center rounded-full border text-xs",
                                 isSelected
-                                  ? "border-[--system-accent] bg-[--system-accent] text-white"
+                                  ? "border-(--system-accent) bg-(--system-accent) text-white"
                                   : "border-muted-foreground/30",
                               )}
                             >
@@ -263,7 +263,7 @@ export function ComprehensionQuestionCard({
 
               case "fill-in-blank": {
                 const blank = (
-                  <span className="mx-1 inline-block rounded-md bg-[--system-accent]/15 px-2 py-0.5 font-semibold text-[--system-accent]">
+                  <span className="mx-1 inline-block rounded-md bg-(--system-accent)/15 px-2 py-0.5 font-semibold text-(--system-accent)">
                     ______
                   </span>
                 );
@@ -332,7 +332,7 @@ export function ComprehensionQuestionCard({
                                   "border-destructive/30 bg-destructive/10",
                                 !showResult &&
                                   isSelected &&
-                                  "border-[--system-accent] bg-[--system-accent]/5",
+                                  "border-(--system-accent) bg-(--system-accent)/5",
                                 !showResult && isPaired && "border-muted-foreground/30 bg-muted/30",
                                 !showResult &&
                                   !isPaired &&

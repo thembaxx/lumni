@@ -189,7 +189,7 @@ export function DictionaryClient() {
                   <div className="flex flex-col gap-4">
                     {result.definitions.map((def) => (
                       <div key={def.definition} className="flex flex-col gap-1">
-                        <span className="w-fit rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent] text-(--fs-caption-3)">
+                        <span className="w-fit rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--system-accent) text-(--fs-caption-3)">
                           {def.partOfSpeech}
                         </span>
                         <p className="text-sm leading-relaxed">{def.definition}</p>
@@ -211,7 +211,7 @@ export function DictionaryClient() {
                             <button
                               key={s}
                               type="button"
-                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-[--system-accent]/10 hover:text-[--system-accent]"
+                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
                               onClick={() => setQuery(s)}
                             >
                               {s}
@@ -226,7 +226,7 @@ export function DictionaryClient() {
                             <button
                               key={a}
                               type="button"
-                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-[--system-accent]/10 hover:text-[--system-accent]"
+                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
                               onClick={() => setQuery(a)}
                             >
                               {a}

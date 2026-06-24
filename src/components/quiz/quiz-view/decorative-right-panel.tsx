@@ -5,7 +5,7 @@ interface DecorativeRightPanelProps {
 }
 
 export function DecorativeRightPanel({ variant = "accent" }: DecorativeRightPanelProps) {
-  const fromColor = variant === "destructive" ? "from-destructive/5" : "from-[--system-accent]/10";
+  const fromColor = variant === "destructive" ? "from-destructive/5" : "from-(--system-accent)/10";
   const bgColor = variant === "destructive" ? "bg-destructive/10" : "bg-system-accent/10";
 
   return (

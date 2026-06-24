@@ -9,7 +9,7 @@ import {
 export { getSubjectHexColor, getSubjectName, getSubjectOklchColor, getSubjectTailwindColor };
 
 export const subjectColors: Record<string, string> = {
-  mathematics: "bg-[--system-accent]",
+  mathematics: "bg-(--system-accent)",
   "physical-sciences": "bg-success",
   "life-sciences": "bg-accent",
   "english-home-language": "bg-warning",
@@ -19,9 +19,9 @@ export const subjectColors: Record<string, string> = {
   accounting: "bg-warning-foreground",
   "business-studies": "bg-accent",
   economics: "bg-info",
-  "mathematical-literacy": "bg-[--chart-3]",
-  "computer-applications-technology": "bg-[--chart-4]",
-  "information-technology": "bg-[--chart-5]",
+  "mathematical-literacy": "bg-(--chart-3)",
+  "computer-applications-technology": "bg-(--chart-4)",
+  "information-technology": "bg-(--chart-5)",
 };
 
 export const subjectAbbrs: Record<string, string> = {

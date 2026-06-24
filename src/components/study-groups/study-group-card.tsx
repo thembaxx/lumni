@@ -88,7 +88,7 @@ export function StudyGroupCard({ group }: Props) {
         <div className="flex items-center gap-2">
           <div className="flex h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
             <div
-              className="rounded-full bg-[--system-accent] transition-[width]"
+              className="rounded-full bg-(--system-accent) transition-[width]"
               style={{ width: `${Math.min(totalScore, 100)}%` }}
             />
           </div>

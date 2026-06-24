@@ -6,57 +6,57 @@ export interface ElementCategoryConfig {
 
 export const elementCategoryConfig: Record<string, ElementCategoryConfig> = {
   "alkali-metal": {
-    bg: "bg-[--el-alkali]",
+    bg: "bg-(--el-alkali)",
     label: "Alkali",
     rgb: "59.3% 0.194 28°",
   },
   "alkaline-earth": {
-    bg: "bg-[--el-alkaline]",
+    bg: "bg-(--el-alkaline)",
     label: "Alkaline",
     rgb: "69.6% 0.196 49°",
   },
   "transition-metal": {
-    bg: "bg-[--el-transition]",
+    bg: "bg-(--el-transition)",
     label: "Transition",
     rgb: "78.6% 0.156 80°",
   },
   "post-transition": {
-    bg: "bg-[--el-post-trans]",
+    bg: "bg-(--el-post-trans)",
     label: "Post-Trans",
     rgb: "64.8% 0.173 142°",
   },
   metalloid: {
-    bg: "bg-[--el-metalloid]",
+    bg: "bg-(--el-metalloid)",
     label: "Metalloid",
     rgb: "66.4% 0.125 186°",
   },
   nonmetal: {
-    bg: "bg-[--el-nonmetal]",
+    bg: "bg-(--el-nonmetal)",
     label: "Nonmetal",
     rgb: "66.1% 0.142 210°",
   },
   halogen: {
-    bg: "bg-[--el-halogen]",
+    bg: "bg-(--el-halogen)",
     label: "Halogen",
     rgb: "52% 0.18 146°",
   },
   "noble-gas": {
-    bg: "bg-[--el-noble]",
+    bg: "bg-(--el-noble)",
     label: "Noble Gas",
     rgb: "88% 0.06 146°",
   },
   lanthanide: {
-    bg: "bg-[--el-lanthanide]",
+    bg: "bg-(--el-lanthanide)",
     label: "Lanthanide",
     rgb: "72% 0.08 146°",
   },
   actinide: {
-    bg: "bg-[--el-actinide]",
+    bg: "bg-(--el-actinide)",
     label: "Actinide",
     rgb: "52% 0.18 146°",
   },
   unknown: {
-    bg: "bg-[--el-unknown]",
+    bg: "bg-(--el-unknown)",
     label: "Unknown",
     rgb: "70.3% 0.012 146°",
   },

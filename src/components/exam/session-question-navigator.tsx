@@ -44,7 +44,7 @@ export function SessionQuestionNavigator({
                   onClick={() => onNavigate(fullId)}
                   className={cn(
                     "size-8 rounded-lg font-medium text-xs transition-colors",
-                    isCurrent && "ring-2 ring-[--system-accent]",
+                    isCurrent && "ring-2 ring-(--system-accent)",
                     isAnswered && !isCurrent && "bg-success/20 text-success",
                     !isAnswered && !isCurrent && "bg-muted text-muted-foreground",
                     isFlagged && "ring-1 ring-warning",

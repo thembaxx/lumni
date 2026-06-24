@@ -23,7 +23,7 @@ export function StepIndicator({ step, totalSteps }: StepIndicatorProps) {
           key={i}
           className={cn(
             "h-1.5 flex-1 rounded-full transition-shadow duration-300",
-            i <= step ? "bg-[--system-accent]" : "bg-[--system-separator]",
+            i <= step ? "bg-(--system-accent)" : "bg-(--system-separator)",
           )}
           initial={false}
           animate={{

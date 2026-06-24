@@ -90,7 +90,7 @@ export function StudyPlanOverview() {
         </CardTitle>
         <Link
           href="/study-plan"
-          className="font-medium text-[--system-accent] text-xs hover:underline"
+          className="font-medium text-(--system-accent) text-xs hover:underline"
         >
           View all
         </Link>

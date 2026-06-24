@@ -72,7 +72,7 @@ export function AdminExamUploadZone({ onUploadComplete }: AdminExamUploadZonePro
             setState("error");
             setMessage(err?.message ?? "Upload failed");
           }}
-          className="rounded-lg border-2 border-dashed ut-button:bg-[--system-accent] py-8 ut-allowed-content:text-muted-foreground ut-button:text-background ut-button:text-sm ut-label:text-foreground"
+          className="rounded-lg border-2 border-dashed ut-button:bg-(--system-accent) py-8 ut-allowed-content:text-muted-foreground ut-button:text-background ut-button:text-sm ut-label:text-foreground"
         />
       )}
 

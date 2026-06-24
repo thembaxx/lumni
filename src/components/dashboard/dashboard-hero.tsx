@@ -19,7 +19,7 @@ export function HeroBanner() {
       direction="down"
       distance={12}
       duration={0.5}
-      className="relative mt-4 mb-6 h-40 overflow-hidden rounded-card-lg bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-level-2"
+      className="relative mt-4 mb-6 h-40 overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-accent)/10 via-(--system-accent)/5 to-transparent shadow-level-2"
       aria-label="Dashboard header showing welcome message"
       role="banner"
     >
@@ -30,7 +30,7 @@ export function HeroBanner() {
           offsetY={-16}
           aria-hidden="true"
         >
-          <div className="size-20 rounded-2xl bg-[--system-accent]/10 blur-xl" />
+          <div className="size-20 rounded-2xl bg-(--system-accent)/10 blur-xl" />
         </PerpetualFloat>
       )}
 

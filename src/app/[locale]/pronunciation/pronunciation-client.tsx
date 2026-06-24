@@ -231,7 +231,7 @@ export function PronunciationClient() {
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-[--system-accent] transition-[width] duration-300"
+                className="h-full rounded-full bg-(--system-accent) transition-[width] duration-300"
                 style={{ width: `${downloadProgress}%` }}
               />
             </div>
