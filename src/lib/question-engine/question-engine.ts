@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import type { AIClient } from "@/lib/ai";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
@@ -142,10 +143,19 @@ export class QuestionEngine {
    * @returns A Promise that resolves to an object containing the generated questions
    *          and optional RAG context for web source attribution.
    */
+  generateEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
+    const self = this;
+    return Effect.gen(function* () {
+      self.lastRagContext = null;
+      const generated = yield* Effect.tryPromise(() => self.cachingStrategy.resolve(params)).pipe(
+        Effect.catchAll(() => Effect.succeed(null)),
+      );
+      return { questions: generated ?? [], ragContext: self.lastRagContext } as GenerateResult;
+    });
+  }
+
   async generate(params: GenerationParams): Promise<GenerateResult> {
-    this.lastRagContext = null;
-    const generated = await this.cachingStrategy.resolve(params);
-    return { questions: generated ?? [], ragContext: this.lastRagContext };
+    return Effect.runPromise(this.generateEffect(params));
   }
 
   private async generateInternal(params: GenerationParams): Promise<Question[] | null> {
@@ -299,10 +309,20 @@ export class QuestionEngine {
    *                optional RAG XML for web-grounded content.
    * @returns A Promise that resolves to a string containing the generated hint.
    */
+  generateHintEffect(params: HintParams): Effect.Effect<string> {
+    const self = this;
+    return Effect.gen(function* () {
+      const { question } = params;
+      const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
+      const hint = yield* Effect.tryPromise(() => processor.generateHint(typed, params.ragXml)).pipe(
+        Effect.catchAll(() => Effect.succeed("")),
+      );
+      return hint;
+    });
+  }
+
   async generateHint(params: HintParams): Promise<string> {
-    const { question } = params;
-    const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
-    return processor.generateHint(typed, params.ragXml);
+    return Effect.runPromise(this.generateHintEffect(params));
   }
 
   /**
@@ -315,9 +335,21 @@ export class QuestionEngine {
    * @returns A Promise that resolves to a GradingResult containing the score,
    *         feedback, and grading details.
    */
+  gradeEffect(question: Question, answer: UserAnswer): Effect.Effect<GradingResult> {
+    const self = this;
+    return Effect.gen(function* () {
+      const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
+      const result = yield* Effect.tryPromise(() => processor.grade(typed, answer)).pipe(
+        Effect.catchAll(() =>
+          Effect.succeed({ score: 0, maxScore: 0, correct: false, feedback: "" } as GradingResult),
+        ),
+      );
+      return result;
+    });
+  }
+
   async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
-    const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
-    return processor.grade(typed, answer);
+    return Effect.runPromise(this.gradeEffect(question, answer));
   }
 
   /**

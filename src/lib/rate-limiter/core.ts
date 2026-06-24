@@ -1,3 +1,5 @@
+import { Effect } from "effect";
+
 export interface RateLimitConfig {
   max: number;
   windowMs: number;
@@ -44,10 +46,42 @@ class MapStore implements RateLimitStore {
   }
 }
 
-async function resolveRecord(
-  record: RateLimitStoreEntry | undefined | Promise<RateLimitStoreEntry | undefined>,
-): Promise<RateLimitStoreEntry | undefined> {
-  return record;
+class RateLimitExceeded {
+  readonly _tag = "RateLimitExceeded";
+  constructor(readonly result: RateLimitResult) {}
+}
+
+function storeGetEffect(
+  store: RateLimitStore,
+  key: string,
+): Effect.Effect<RateLimitStoreEntry | undefined> {
+  return Effect.tryPromise(() => Promise.resolve(store.get(key))).pipe(
+    Effect.catchAll(() => Effect.succeed(undefined)),
+  );
+}
+
+function storeSetEffect(
+  store: RateLimitStore,
+  key: string,
+  value: RateLimitStoreEntry,
+): Effect.Effect<void> {
+  return Effect.tryPromise(() => Promise.resolve(store.set(key, value))).pipe(
+    Effect.catchAll(() => Effect.void),
+  );
+}
+
+function storeEntriesEffect(
+  store: RateLimitStore,
+): Effect.Effect<IterableIterator<[string, RateLimitStoreEntry]>> {
+  return Effect.tryPromise(() => Promise.resolve(store.entries())).pipe(
+    Effect.catchAll(() => Effect.succeed(new Map().entries())),
+  );
+}
+
+function storeDeleteEffect(store: RateLimitStore, key: string): Effect.Effect<void> {
+  return Effect.tryPromise(() => Promise.resolve(store.delete(key))).pipe(
+    Effect.catchAll(() => Effect.void),
+  );
 }
 
 export class RateLimiter {
@@ -57,46 +91,71 @@ export class RateLimiter {
     this.store = store ?? new MapStore();
   }
 
+  checkEffect(
+    key: string,
+    config: RateLimitConfig,
+  ): Effect.Effect<RateLimitResult, RateLimitExceeded> {
+    const store = this.store;
+    return Effect.gen(function* () {
+      const now = Date.now();
+      const record = yield* storeGetEffect(store, key);
+
+      if (!record || record.resetAt < now) {
+        const resetAt = now + config.windowMs;
+        yield* storeSetEffect(store, key, { count: 1, resetAt });
+        return { allowed: true, remaining: config.max - 1, resetAt } as RateLimitResult;
+      }
+
+      if (record.count >= config.max) {
+        return yield* Effect.fail(
+          new RateLimitExceeded({
+            allowed: false,
+            remaining: 0,
+            resetAt: record.resetAt,
+          }),
+        );
+      }
+
+      record.count++;
+      yield* storeSetEffect(store, key, record);
+      return {
+        allowed: true,
+        remaining: config.max - record.count,
+        resetAt: record.resetAt,
+      } as RateLimitResult;
+    });
+  }
+
   async check(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
-    const now = Date.now();
-    const record = await resolveRecord(this.store.get(key));
-
-    if (!record || record.resetAt < now) {
-      const resetAt = now + config.windowMs;
-      await this.store.set(key, { count: 1, resetAt });
-      return { allowed: true, remaining: config.max - 1, resetAt };
-    }
-
-    if (record.count >= config.max) {
-      return { allowed: false, remaining: 0, resetAt: record.resetAt };
-    }
-
-    record.count++;
-    await this.store.set(key, record);
-    return {
-      allowed: true,
-      remaining: config.max - record.count,
-      resetAt: record.resetAt,
-    };
+    return Effect.runPromise(
+      this.checkEffect(key, config).pipe(
+        Effect.catchAll((e) => Effect.succeed(e.result)),
+      ),
+    );
   }
 
   async peek(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
-    const now = Date.now();
-    const record = await resolveRecord(this.store.get(key));
+    const store = this.store;
+    return Effect.runPromise(
+      Effect.gen(function* () {
+        const now = Date.now();
+        const record = yield* storeGetEffect(store, key);
 
-    if (!record || record.resetAt < now) {
-      return {
-        allowed: true,
-        remaining: config.max,
-        resetAt: now + config.windowMs,
-      };
-    }
+        if (!record || record.resetAt < now) {
+          return {
+            allowed: true,
+            remaining: config.max,
+            resetAt: now + config.windowMs,
+          } as RateLimitResult;
+        }
 
-    return {
-      allowed: record.count < config.max,
-      remaining: Math.max(0, config.max - record.count),
-      resetAt: record.resetAt,
-    };
+        return {
+          allowed: record.count < config.max,
+          remaining: Math.max(0, config.max - record.count),
+          resetAt: record.resetAt,
+        } as RateLimitResult;
+      }),
+    );
   }
 
   async reset(key: string): Promise<void> {
@@ -105,12 +164,17 @@ export class RateLimiter {
 
   async cleanup(): Promise<void> {
     const now = Date.now();
-    const entries = await this.store.entries();
-    const expired: string[] = [];
-    for (const [key, value] of entries) {
-      if (value.resetAt < now) expired.push(key);
-    }
-    await Promise.all(expired.map((key) => this.store.delete(key)));
+    const store = this.store;
+    await Effect.runPromise(
+      Effect.gen(function* () {
+        const entries = yield* storeEntriesEffect(store);
+        const expired: string[] = [];
+        for (const [key, value] of entries) {
+          if (value.resetAt < now) expired.push(key);
+        }
+        yield* Effect.all(expired.map((k) => storeDeleteEffect(store, k)));
+      }),
+    );
   }
 
   async getStoreSize(): Promise<number> {

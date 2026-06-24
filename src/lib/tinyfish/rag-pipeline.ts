@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { logError } from "@/lib/shared/logger";
 import {
@@ -34,48 +35,8 @@ export interface SourceOptions {
   userId?: string;
 }
 
-type Guard = () => boolean | Promise<boolean>;
-
-interface GuardPipelineOpts {
-  name: string;
-  guards: Guard[];
-  buildKey: () => string;
-  cacheTtl: number;
-  fetchFn: () => Promise<RagContext>;
-  userId?: string;
-}
-
-async function withRagGuards({
-  guards,
-  buildKey,
-  cacheTtl,
-  fetchFn,
-  userId,
-}: GuardPipelineOpts): Promise<RagContext> {
-  for (const guard of guards) {
-    const ok = await guard();
-    if (!ok) return emptyRagContext();
-  }
-
-  const key = buildKey();
-  const cached = await getCached(key);
-  if (cached) return cached;
-
-  return deduped(key, async () => {
-    const fetched = await fetchFn();
-    if (fetched.sources.length > 0) {
-      await setCached(key, fetched, cacheTtl);
-    }
-    if (userId) {
-      await incrementTodayUsage(userId);
-    }
-    return fetched;
-  });
-}
-
 export async function searchWithRAG({ subject, topic, userId }: RagOptions): Promise<RagContext> {
-  return withRagGuards({
-    name: "searchWithRAG",
+  return runPipeline({
     guards: [
       () => isSubjectAllowed(subject),
       () => getDataSharingConsent(),
@@ -98,8 +59,7 @@ export async function getSourceForQuestion({
   question,
   userId,
 }: SourceOptions): Promise<RagContext> {
-  return withRagGuards({
-    name: "getSourceForQuestion",
+  return runPipeline({
     guards: [
       () => getDataSharingConsent(),
       () => isTinyFishConfigured(),
@@ -115,6 +75,51 @@ export async function getSourceForQuestion({
     userId,
     fetchFn: () => fetchSourceForQuestion(question),
   });
+}
+
+async function runPipeline(opts: {
+  guards: (() => boolean | Promise<boolean>)[];
+  buildKey: () => string;
+  cacheTtl: number;
+  userId?: string;
+  fetchFn: () => Promise<RagContext>;
+}): Promise<RagContext> {
+  const { guards, buildKey, cacheTtl, userId, fetchFn } = opts;
+  return Effect.runPromise(
+    Effect.gen(function* () {
+      for (const guard of guards) {
+        const passed = yield* Effect.tryPromise({
+          try: async () => await guard(),
+          catch: () => false as boolean,
+        });
+        if (!passed) return emptyRagContext();
+      }
+
+      const key = buildKey();
+      const cached = yield* Effect.tryPromise(() => getCached(key)).pipe(
+        Effect.catchAll(() => Effect.succeed(null)),
+      );
+      if (cached) return cached;
+
+      const fetched = yield* Effect.tryPromise(() => deduped(key, fetchFn)).pipe(
+        Effect.catchAll(() => Effect.succeed(emptyRagContext())),
+      );
+
+      if (fetched.sources.length > 0) {
+        yield* Effect.tryPromise(() => setCached(key, fetched, cacheTtl)).pipe(
+          Effect.catchAll(() => Effect.void),
+        );
+      }
+
+      if (userId) {
+        yield* Effect.tryPromise(() => incrementTodayUsage(userId)).pipe(
+          Effect.catchAll(() => Effect.void),
+        );
+      }
+
+      return fetched;
+    }).pipe(Effect.catchAll(() => Effect.succeed(emptyRagContext()))),
+  );
 }
 
 async function fetchRagForTopic(subject: string, topic: string): Promise<RagContext> {

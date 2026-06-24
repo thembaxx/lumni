@@ -1098,3 +1098,42 @@ const systemPrompt = webContext.xml
 - Removed orphaned `live_session_participants` collection from schema + constants
 
 **Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings, `vitest run` 1562 pass (0 failures).
+
+## Effect TS — Functional Effect System
+
+Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-effect-adoption.md`.
+
+### Installation & Tooling
+
+- **Runtime**: `effect` v3.21.4, `@effect/platform` v0.96.2
+- **Language service**: `@effect/language-service` (tsconfig plugin + prepare script patch)
+- **Reference source**: Effect v4 repo cloned to `~/.local/share/effect-solutions/effect` for AI agent grep
+- **Package scripts**: `prepare` runs both `husky` and `effect-language-service patch`
+
+### Best Practices
+
+**Always consult effect-solutions before writing Effect code:**
+1. Patterns are documented at https://www.effect.solutions
+2. CLI: `bunx effect-solutions list` / `effect-solutions show <topic>`
+3. Search `~/.local/share/effect-solutions/effect` for real implementations
+
+**Conventions:**
+
+- Use `Effect<TSuccess, TError, TRequirements>` for all new effectful functions
+- Use `Effect.gen(function* () { ... })` with `yield*` for imperative-style composition
+- Use `Context.Tag` + `Layer` for dependency injection (not global singletons)
+- Use `Effect.catchAll`/`Effect.catchTag` for error handling (not try/catch)
+- Keep React/Next.js boundary clean: `Effect.runPromise()` at the adapter layer
+- Schema lives in `effect/Schema` — do NOT install `@effect/schema` (deprecated since Effect 3.10)
+- HTTP: use `@effect/platform` `HttpClient` for typed HTTP effects
+- Testing: use `@effect/vitest` for Effect-specific test helpers
+
+### Migration Conventions
+
+- **Bounded subsystems only**: New Effect code should be isolated to a single module until proven
+- **Backward-compatible exports**: Refactored modules must retain their existing async function signatures
+- **No mixed patterns**: A single file should be either all-Effect or all-imperative, not both
+- **Provider chain pattern**: The AI client (`src/lib/ai/client.ts`) demonstrates the canonical pattern:
+  - Define a `ProviderError` type with `Effect.catchAll` fallback chain
+  - Use `Effect.gen` for sequential fallback, `Effect.all` for parallel calls
+  - Track side effects (latency, metrics) with `Effect.tap`

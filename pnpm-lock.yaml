@@ -20,6 +20,9 @@ importers:
       '@base-ui/react':
         specifier: 1.5.0
         version: 1.5.0(@date-fns/tz@1.5.0)(@types/react@19.2.17)(date-fns@4.4.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@effect/platform':
+        specifier: ^0.96.2
+        version: 0.96.2(effect@3.21.4)
       '@hugeicons/core-free-icons':
         specifier: ^4.2.0
         version: 4.2.1
@@ -83,6 +86,9 @@ importers:
       dompurify:
         specifier: ^3.4.11
         version: 3.4.11
+      effect:
+        specifier: '>=3.20.0'
+        version: 3.21.4
       exa-js:
         specifier: ^2.13.0
         version: 2.14.0(ws@8.21.0)
@@ -195,6 +201,9 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.12.1
         version: 4.12.1(playwright-core@1.61.0)
+      '@effect/language-service':
+        specifier: ^0.86.2
+        version: 0.86.2
       '@next/bundle-analyzer':
         specifier: ^16.2.9
         version: 16.2.9
@@ -955,8 +964,17 @@ packages:
   '@dotenvx/primitives@0.8.0':
     resolution: {integrity: sha512-VYJy0uhFm9zTJ1TxBaW/pA8bjbOM/OttaNMwZ1RHG4JKyRG7DhSdiqD1ipQoAyoD22olUtxbP78W9xY3Wd11bg==}
 
+  '@effect/language-service@0.86.2':
+    resolution: {integrity: sha512-SaPln+8srOqDJDUwNTDmP5e+IYpEDr9+1epGznnsLqu8xvo6VnxyWARdeLpqvZJlb0Pgy9ca7ppqvvdWbHPXAg==}
+    hasBin: true
+
   '@effect/platform@0.90.3':
     resolution: {integrity: sha512-XvQ37yzWQKih4Du2CYladd1i/MzqtgkTPNCaN6Ku6No4CK83hDtXIV/rP03nEoBg2R3Pqgz6gGWmE2id2G81HA==}
+    peerDependencies:
+      effect: '>=3.20.0'
+
+  '@effect/platform@0.96.2':
+    resolution: {integrity: sha512-oJm3UztdzZvK7BXkFSV3IdyGuqQrhLmViG/hMDZh99ski7aADesNuv19z4R0heH3bAXnSt/Nb8O9KJQ886C0Tg==}
     peerDependencies:
       effect: '>=3.20.0'
 
@@ -9508,9 +9526,18 @@ snapshots:
 
   '@dotenvx/primitives@0.8.0': {}
 
+  '@effect/language-service@0.86.2': {}
+
   '@effect/platform@0.90.3(effect@3.21.4)':
     dependencies:
       '@opentelemetry/semantic-conventions': 1.41.1
+      effect: 3.21.4
+      find-my-way-ts: 0.1.6
+      msgpackr: 1.12.1
+      multipasta: 0.2.7
+
+  '@effect/platform@0.96.2(effect@3.21.4)':
+    dependencies:
       effect: 3.21.4
       find-my-way-ts: 0.1.6
       msgpackr: 1.12.1

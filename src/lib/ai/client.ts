@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { getAICallContext } from "@/lib/ai/call-context";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { logError } from "@/lib/shared/logger";
@@ -5,7 +6,7 @@ import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
-import type { AIFailure, AIProvider, AIRequest, AIResult } from "./types";
+import type { AIFailure, AIProvider, AIRequest, AIResponse, AIResult } from "./types";
 
 export interface AIConfig {
   geminiApiKey?: string;
@@ -24,6 +25,11 @@ const FAILURE_RESPONSE: AIFailure = {
   available: false,
 };
 
+class ProviderCallError {
+  readonly _tag = "ProviderCallError";
+  constructor(readonly message: string, readonly provider: string) {}
+}
+
 function createProviderChain(config: AIConfig): AIProvider[] {
   const providers: AIProvider[] = [];
 
@@ -39,6 +45,56 @@ function createProviderChain(config: AIConfig): AIProvider[] {
   return providers;
 }
 
+function checkConsentEffect(): Effect.Effect<void> {
+  return Effect.sync(() => {
+    const consent = getAICallContext()?.consentGranted ?? getDataSharingConsent();
+    if (!consent) {
+      throw new Error("Data sharing consent not granted");
+    }
+  });
+}
+
+function callProviderEffect(
+  provider: AIProvider,
+  request: AIRequest,
+  callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
+): Effect.Effect<AIResponse, ProviderCallError> {
+  return Effect.tryPromise({
+    try: async () => {
+      const start = performance.now();
+      const response = await provider.generate(request);
+      const durationMs = Math.round(performance.now() - start);
+      trackAILatency({
+        provider: provider.name,
+        durationMs,
+        success: true,
+        callType,
+        timestamp: new Date().toISOString(),
+      });
+      return response;
+    },
+    catch: (err): ProviderCallError => {
+      const durationMs = 0;
+      const lastError = err instanceof Error ? err.message : String(err);
+      trackAILatency({
+        provider: provider.name,
+        durationMs,
+        success: false,
+        callType,
+        timestamp: new Date().toISOString(),
+      });
+      logError("AiClientCallProvider", err);
+      const isRateLimit = /429|RESOURCE_EXHAUSTED/.test(lastError);
+      if (isRateLimit) {
+        console.warn(`[AI] Provider ${provider.name} rate-limited, trying next...`);
+      } else {
+        console.error(`[AI] Provider failed: ${provider.name}`, lastError);
+      }
+      return new ProviderCallError(lastError, provider.name);
+    },
+  });
+}
+
 export class AIClient {
   private providers: AIProvider[];
 
@@ -46,71 +102,50 @@ export class AIClient {
     this.providers = createProviderChain(config);
   }
 
-  private async _callProviders(
+  private callProvidersEffect(
     request: AIRequest,
     callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
-  ): Promise<AIResult> {
-    const consent = getAICallContext()?.consentGranted ?? getDataSharingConsent();
-    if (!consent) {
-      return {
-        ...FAILURE_RESPONSE,
-        error: "Data sharing consent not granted",
-      };
-    }
-    if (this.providers.length === 0) {
-      return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
-    }
+  ): Effect.Effect<AIResponse, AIFailure> {
+    const self = this;
+    return Effect.gen(function* () {
+      yield* checkConsentEffect();
 
-    let lastError = "";
+      if (self.providers.length === 0) {
+        return yield* Effect.fail({ ...FAILURE_RESPONSE, error: "No AI providers configured" });
+      }
 
-    for (const provider of this.providers) {
-      const start = performance.now();
-      try {
-        // oxlint-disable-next-line no-await-in-loop — sequential fallback chain, not parallelizable
-        const response = await provider.generate(request);
-        const durationMs = Math.round(performance.now() - start);
-        trackAILatency({
-          provider: provider.name,
-          durationMs,
-          success: true,
-          callType,
-          timestamp: new Date().toISOString(),
-        });
-        return { ...response, provider: provider.name };
-      } catch (err) {
-        logError("AiClientCallProvider", err);
-        const durationMs = Math.round(performance.now() - start);
-        trackAILatency({
-          provider: provider.name,
-          durationMs,
-          success: false,
-          callType,
-          timestamp: new Date().toISOString(),
-        });
-        lastError = err instanceof Error ? err.message : String(err);
-        const isRateLimit = /429|RESOURCE_EXHAUSTED/.test(lastError);
-        if (isRateLimit) {
-          console.warn(`[AI] Provider ${provider.name} rate-limited, trying next...`);
-        } else {
-          console.error(`[AI] Provider failed: ${provider.name}`, lastError);
+      let lastError = "";
+
+      for (const provider of self.providers) {
+        const result = yield* callProviderEffect(provider, request, callType).pipe(
+          Effect.catchAll((err: ProviderCallError) => {
+            lastError = err.message;
+            return Effect.succeed(null);
+          }),
+        );
+
+        if (result !== null) {
+          return result;
         }
       }
-    }
 
-    return {
-      ...FAILURE_RESPONSE,
-      error: `All providers failed. Last error: ${lastError}`,
-    };
+      return yield* Effect.fail({
+        ...FAILURE_RESPONSE,
+        error: `All providers failed. Last error: ${lastError}`,
+      } as AIFailure);
+    });
   }
 
   async generate(prompt: string, options?: GenerateOptions): Promise<AIResult> {
-    return this._callProviders(
-      {
-        messages: [{ role: "user", content: prompt }],
-        temperature: options?.temperature ?? 0.7,
-        maxTokens: options?.maxTokens ?? 2048,
-      },
-      "generate",
+    return Effect.runPromise(
+      this.callProvidersEffect(
+        {
+          messages: [{ role: "user", content: prompt }],
+          temperature: options?.temperature ?? 0.7,
+          maxTokens: options?.maxTokens ?? 2048,
+        },
+        "generate",
+      ).pipe(Effect.catchAll((failure) => Effect.succeed(failure as AIResult))),
     );
   }
 
@@ -119,30 +154,34 @@ export class AIClient {
     userPrompt: string,
     options?: GenerateOptions & { imageUrl?: string },
   ): Promise<AIResult> {
-    return this._callProviders(
-      {
-        messages: [{ role: "user", content: userPrompt, imageUrl: options?.imageUrl }],
-        systemPrompt,
-        temperature: options?.temperature ?? 0.7,
-        maxTokens: options?.maxTokens ?? 2048,
-      },
-      "generate",
+    return Effect.runPromise(
+      this.callProvidersEffect(
+        {
+          messages: [{ role: "user", content: userPrompt, imageUrl: options?.imageUrl }],
+          systemPrompt,
+          temperature: options?.temperature ?? 0.7,
+          maxTokens: options?.maxTokens ?? 2048,
+        },
+        "generate",
+      ).pipe(Effect.catchAll((failure) => Effect.succeed(failure as AIResult))),
     );
   }
 
   async generateBatch(prompts: string[], options?: GenerateOptions): Promise<AIResult[]> {
-    const results = await Promise.allSettled(
-      prompts.map((prompt) => this.generate(prompt, options)),
+    const effects = prompts.map((prompt) =>
+      this.callProvidersEffect(
+        {
+          messages: [{ role: "user", content: prompt }],
+          temperature: options?.temperature ?? 0.7,
+          maxTokens: options?.maxTokens ?? 2048,
+        },
+        "generate",
+      ).pipe(
+        Effect.catchAll((failure) => Effect.succeed(failure as AIResult)),
+        Effect.runPromise,
+      ),
     );
-    return results.map((r) =>
-      r.status === "fulfilled"
-        ? r.value
-        : {
-            error: r.reason instanceof Error ? r.reason.message : "Batch generation failed",
-            provider: "none",
-            available: false,
-          },
-    );
+    return Promise.all(effects);
   }
 
   isConfigured(): boolean {
