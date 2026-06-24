@@ -1100,6 +1100,39 @@ const systemPrompt = webContext.xml
 
 **Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings, `vitest run` 1562 pass (0 failures).
 
+### Session 47 — Polyfill/compat cleanup for latest-browsers-only (June 2026)
+
+**Polyfill/compat audit + removal across 9 files** removing 154 lines of dead backward-compat code:
+
+- **TypeScript `target`**: ES2017 → ES2022 (all latest browsers: Chrome 100+, Firefox 100+, Safari 16+, Edge 100+)
+- **CSS vendor prefixes**: 6 redundant `-webkit-backdrop-filter` lines removed from `globals.css` (unprefixed `backdrop-filter` supported in all latest browsers)
+- **Service Worker**: `navigationPreload` runtime guard removed (`sw.js:52-54`) — unconditionally supported in all latest browsers
+- **Legacy auth cookie**: `_legacy` cookie fallback removed from `auth.ts` (both `verifyAuth` and `getAuthenticatedUserId`) and `proxy.ts`
+- **Flashcard localStorage migration**: Deleted `flashcard-repository/migrate.ts` (v0) + removed `migrateLegacyFlashcards()` from `flashcard-creator.tsx` (v1) and `flashcards-client.tsx`
+- **Exam session localStorage fallback**: Removed dual-write localStorage read/write/delete from `exam-session.ts` Dexie persistence adapter (Dexie-only now)
+- **Sync handler legacy key**: Removed `localStorage.getItem/setItem` fallback for flashcard sync timestamp in `sync-handlers.ts`
+
+**Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings, `oxfmt --check` clean, `vitest run` 174 files / 1586 tests all pass.
+
+**Polyfill/compat audit checklist (reusable pattern):**
+
+When asked to remove backward-compat code for latest-browsers-only targeting, check in this order:
+
+1. **TypeScript config** — `tsconfig.json` `target`: ES2017 is conservative; ES2022 is safe for all latest browsers
+2. **CSS vendor prefixes** — `-webkit-backdrop-filter`, `-moz-*` etc. Check `globals.css` for hand-written prefixes (autoprefixer is not used in this codebase)
+3. **Service Worker** — Runtime feature guards like `navigationPreload` that are now universally supported
+4. **Auth** — Legacy cookie names (`_legacy` suffixes) for old session formats
+5. **Data migration code** — `localStorage`→Dexie migration bridges that have been superseded (flashcard v0/v1 formats, sync timestamps)
+6. **Dual-write patterns** — Components that write to both localStorage and Dexie for "backward compat" when Dexie has been stable long enough
+7. **Browserlist/config** — Check for non-existent `.browserslistrc`, `browserslist` in package.json, Babel config, `transpilePackages` in next.config
+
+**Key distinction**: "backward compatibility" in a codebase usually means one of two things:
+
+- **Browser capability gaps** (polyfills, vendor prefixes, downlevel compilation) — almost nonexistent in this modern Next.js codebase
+- **App-internal data format migration** (localStorage→Dexie bridges, legacy cookie names, old sync timestamp keys) — this was the real work
+
+Always ask which category the user cares about before starting.
+
 ## Effect TS — Functional Effect System
 
 Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-effect-adoption.md`.
