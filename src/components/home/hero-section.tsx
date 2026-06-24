@@ -73,30 +73,26 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               className="flex flex-col gap-3 sm:flex-row"
             >
               {isAuthenticated ? (
-                <Link href="/dashboard">
-                  <Button
-                    size="lg"
-                    className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[transform,box-shadow] duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
-                  >
-                    {t("home.heroDashboard")}
-                  </Button>
-                </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[transform,box-shadow] duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
+                >
+                  <Link href="/dashboard">{t("home.heroDashboard")}</Link>
+                </Button>
               ) : (
-                <Link href="/dashboard">
-                  <Button
-                    size="lg"
-                    className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[transform,box-shadow] duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
-                  >
-                    {t("home.heroStartFree")}
-                  </Button>
-                </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[transform,box-shadow] duration-300 hover:shadow-level-3 active:scale-[0.97] sm:w-auto"
+                >
+                  <Link href="/dashboard">{t("home.heroStartFree")}</Link>
+                </Button>
               )}
               {!isAuthenticated && (
-                <Link href="/auth/sign-in">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                    {t("home.navSignIn")}
-                  </Button>
-                </Link>
+                <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
+                  <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
+                </Button>
               )}
             </FadeIn>
 

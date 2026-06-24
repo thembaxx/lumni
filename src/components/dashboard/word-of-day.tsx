@@ -61,18 +61,24 @@ export function WordOfDayCard({ language = "en" }: WordOfDayCardProps) {
               <span className="text-muted-foreground text-sm">{result.phonetic}</span>
             )}
             {result.audio && (
-              <button
-                type="button"
+              <span
+                role="button"
+                tabIndex={0}
                 onClick={(e) => {
-                  e.preventDefault();
                   e.stopPropagation();
                   playAudio();
                 }}
-                className="ml-auto flex size-7 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.stopPropagation();
+                    playAudio();
+                  }
+                }}
+                className="ml-auto flex size-7 cursor-pointer items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
                 aria-label="Play pronunciation"
               >
                 <HugeiconsIcon icon={SpeakerIcon} className="size-3.5" />
-              </button>
+              </span>
             )}
           </div>
           {result.definitions[0] && (

@@ -73,37 +73,35 @@ export function HomeContent() {
             key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}
           >
             {isAuthenticated ? (
-              <Link href="/dashboard">
-                <Button size="sm" className="flex items-center">
+              <Button asChild size="sm" className="flex items-center">
+                <Link href="/dashboard">
                   <HugeiconsIcon icon={Activity02Icon} className="size-5" />
                   {t("home.navDashboard")}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             ) : isAnonymous ? (
               <>
-                <Link href="/quiz">
-                  <Button size="sm" variant="ghost" className="flex items-center">
+                <Button asChild size="sm" variant="ghost" className="flex items-center">
+                  <Link href="/quiz">
                     <HugeiconsIcon icon={Quiz01Icon} className="size-5" />
                     {t("home.navTryQuiz")}
-                  </Button>
-                </Link>
-                <Link href="/dashboard">
-                  <Button size="sm">{t("home.navGetStarted")}</Button>
-                </Link>
+                  </Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href="/dashboard">{t("home.navGetStarted")}</Link>
+                </Button>
               </>
             ) : (
               <>
-                <Link href="/auth/sign-in">
-                  <Button variant="ghost" size="sm">
-                    {t("home.navSignIn")}
-                  </Button>
-                </Link>
-                <Link href="/dashboard">
-                  <Button size="sm">
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href="/dashboard">
                     {t("home.navGetStarted")}
                     <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </>
             )}
           </div>

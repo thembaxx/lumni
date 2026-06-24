@@ -68,18 +68,18 @@ export default function OfflinePage() {
 
       {/* Quick actions */}
       <div className="flex flex-col gap-3">
-        <Link href="/quiz">
-          <Button className="w-full gap-2">
+        <Button asChild className="w-full gap-2">
+          <Link href="/quiz">
             <HugeiconsIcon icon={Quiz03Icon} className="size-4" />
             Practice Offline
-          </Button>
-        </Link>
-        <Link href="/flashcards">
-          <Button variant="secondary" className="w-full gap-2">
+          </Link>
+        </Button>
+        <Button asChild variant="secondary" className="w-full gap-2">
+          <Link href="/flashcards">
             <HugeiconsIcon icon={NoteIcon} className="size-4" />
             Review Flashcards
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
 
       {/* Recently Read Stories */}

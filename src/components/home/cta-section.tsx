@@ -31,18 +31,16 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
             {t("ctaDescription")}
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>
-              <Button size="lg">
+            <Button asChild size="lg">
+              <Link href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>
                 {isAuthenticated ? t("heroDashboard") : t("heroStartFree")}
                 <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
-              </Button>
-            </Link>
-            {!isAuthenticated && (
-              <Link href="/auth/sign-in">
-                <Button variant="ghost" size="lg">
-                  {t("navSignIn")}
-                </Button>
               </Link>
+            </Button>
+            {!isAuthenticated && (
+              <Button asChild variant="ghost" size="lg">
+                <Link href="/auth/sign-in">{t("navSignIn")}</Link>
+              </Button>
             )}
           </div>
         </m.div>

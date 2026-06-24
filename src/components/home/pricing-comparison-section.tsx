@@ -105,11 +105,9 @@ export function PricingComparisonSection() {
                       </li>
                     ))}
                   </ul>
-                  <Link href={tier.href}>
-                    <Button variant={tier.popular ? "default" : "outline"} className="w-full">
-                      {tier.cta}
-                    </Button>
-                  </Link>
+                  <Button asChild variant={tier.popular ? "default" : "outline"} className="w-full">
+                    <Link href={tier.href}>{tier.cta}</Link>
+                  </Button>
                 </CardContent>
               </Card>
             </m.div>
