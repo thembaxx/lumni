@@ -36,7 +36,7 @@
 
 - `package.json`: Project dependencies (Next.js 16, React 19) and scripts.
 - `bunfig.toml`: Bun runtime configuration (test setup, happy-dom).
-- `biome.json`: Biome linting and formatting rules.
+- `package.json` scripts: `lint` (oxlint), `format` (oxfmt), `format:fix` (oxfmt --write).
 - `tsconfig.json`: TypeScript configuration (strict mode, path aliases).
 - `next.config.ts`: Next.js configuration and build-time flags.
 - `playwright.config.ts`: E2E test suite configuration.

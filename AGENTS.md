@@ -217,7 +217,8 @@ TODO.md ↔ Linear ↔ GitHub ↔ Sentry are integrated. See `docs/agents/workfl
 - `pnpm run todo:sync` — Push TODO.md → Linear (creates/updates issues)
 - `pnpm run test` — Run tests via vitest
 - `pnpm run typecheck` — TypeScript check
-- `pnpm exec biome check .` — Lint & format check
+- `pnpm exec oxlint` — Lint check
+- `pnpm exec oxfmt --check` — Format check
 - New task? Add to TODO.md under "Next Up" or "Bug Fixes", then run sync
 - For bugs from Sentry: check Linear Backlog first (Sentry auto-creates LUM-xxx once integrated)
 - Labels: `Bug`, `Feature`, `Improvement` — applied in Linear, synced to GitHub
@@ -457,7 +458,7 @@ const systemPrompt = webContext.xml
 - `line-chart.tsx`: changed generic from `T = any` and `T extends Record<string, unknown>` to `T extends object` — fixes `ProgressDataPoint` lacking index signature.
 - `notification-service.ts`: `as unknown as NotificationOptions` for `actions` field.
 
-**Build:** `pnpm run typecheck`: 0 errors. `pnpm exec biome check`: 0 warnings on changed files.
+**Build:** `pnpm run typecheck`: 0 errors. `pnpm exec oxlint`: 0 warnings. `pnpm exec oxfmt --check`: all formatted.
 
 ### Known limitations (won't fix)
 
@@ -466,7 +467,7 @@ const systemPrompt = webContext.xml
 ### TypeScript & Lint
 
 - `pnpm run typecheck` must pass with zero errors
-- `pnpm exec biome check` must pass on all changed files
+- `pnpm exec oxlint` and `pnpm exec oxfmt --check` must pass on all changed files
 - Build: `pnpm run build` (catches runtime issues)
 
 ### Session 23 — Codebase Hardening + DataAccess Seam (June 2026)

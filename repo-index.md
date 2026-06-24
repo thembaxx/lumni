@@ -145,7 +145,7 @@ lumni/
 | **sql.js**                             | SQLite in browser (exam paper DB)                   |
 | **recharts**                           | Dashboard charts (analytics, trends)                |
 | **KaTeX / rehype-katex / remark-math** | Math rendering (STEM subjects)                      |
-| **Biome**                              | Linting + formatting (replaces ESLint + Prettier)   |
+| **oxlint + oxfmt**                     | Linting (oxlint) + formatting (oxfmt)               |
 | **shadcn/ui**                          | Component primitives (built on Radix)               |
 | **uploadthing**                        | File upload infrastructure                          |
 | **Mermaid / @xyflow/react**            | Diagram rendering (flowcharts, node graphs)         |

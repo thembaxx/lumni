@@ -175,7 +175,7 @@ The repo has four CI jobs in `.github/workflows/ci.yml`:
 
 | Job              | Runs on           | Purpose                          |
 | ---------------- | ----------------- | -------------------------------- |
-| `quality`        | PR + push to main | tsc, biome, test, build          |
+| `quality`        | PR + push to main | tsc, oxlint, oxfmt, test, build  |
 | `bundle-size`    | PR + push to main | Build with analyzer              |
 | `todo-sync`      | Push to main only | `pnpm run todo:sync` after merge |
 | `sentry-release` | Push to main only | Create Sentry release            |
