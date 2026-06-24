@@ -235,7 +235,7 @@ export interface QuestionSource {
   title: string;
 }
 
-export type Question<T extends QuestionType = QuestionType> = {
+export interface Question<T extends QuestionType = QuestionType> {
   id: string;
   type: T;
   subject: string;
@@ -254,7 +254,7 @@ export type Question<T extends QuestionType = QuestionType> = {
   pruned?: boolean;
   sourcePaperId?: string;
   sourcePastPaperQuestionId?: string;
-};
+}
 
 export interface UserAnswer {
   type:
@@ -300,15 +300,15 @@ export interface GenerationParams {
   count: number;
   sourceExamPaper?: string;
   pastPaperMode?: boolean;
-  pastPaperExamples?: Array<{
+  pastPaperExamples?: {
     questionText: string;
     answerText: string;
     marks: number;
     year: number;
-  }>;
+  }[];
   remediationFocus?: string;
   userId?: string | null;
-  poolQuestions?: Array<{
+  poolQuestions?: {
     id: string;
     questionText: string;
     answerText: string;
@@ -320,7 +320,7 @@ export interface GenerationParams {
     type?: string;
     bloomLevel?: string;
     subtopicId?: string;
-  }>;
+  }[];
 }
 
 export interface HintParams {
@@ -335,7 +335,7 @@ export interface GenerateResult {
   ragContext: import("./prompt-manager").RagContext | null;
 }
 
-export type QuestionProcessor<T extends QuestionType = QuestionType> = {
+export interface QuestionProcessor<T extends QuestionType = QuestionType> {
   type: T;
   generate(
     params: GenerationParams,
@@ -345,9 +345,13 @@ export type QuestionProcessor<T extends QuestionType = QuestionType> = {
   grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
   validate(question: Question<T>): ValidationResult;
   generateFromSource?(source: string, params: GenerationParams): Promise<Question<T>[]>;
+  generateEffect(
+    params: GenerationParams,
+    ragContext?: { sources: unknown[]; xml: string; domainsQueried: string[] },
+  ): Effect.Effect<Question<T>[]>;
   gradeEffect(question: Question<T>, answer: UserAnswer): Effect.Effect<GradingResult>;
   generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string>;
-};
+}
 
 export interface ValidationError {
   type: "schema" | "quality" | "consistency" | "content";

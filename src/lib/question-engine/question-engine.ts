@@ -3,10 +3,13 @@ import type { AIClient } from "@/lib/ai";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
-import { createEnrichmentPipeline, type EnrichmentPipeline } from "./enrichment-pipeline";
+import { createEnrichmentPipeline } from "./enrichment-pipeline";
+import type { EnrichmentPipeline } from "./enrichment-pipeline";
 import { ProcessorRegistry } from "./processor-registry";
-import { PromptManager, type RagContext } from "./prompt-manager";
-import { fetchRagContext, type RagDeps } from "./rag-enricher";
+import { PromptManager } from "./prompt-manager";
+import type { RagContext } from "./prompt-manager";
+import { fetchRagContext } from "./rag-enricher";
+import type { RagDeps } from "./rag-enricher";
 import type {
   BloomLevel,
   GenerateResult,
@@ -176,52 +179,52 @@ export class QuestionEngine {
       let body: QuestionBody[typeof qType];
       if (qType === "multiple-choice") {
         body = {
+          allowMultiple: false,
+          correctOptionId: "a",
           options: [
             { id: "a", text: pq.answerText, isCorrect: true },
             { id: "b", text: "None of the above", isCorrect: false },
           ],
-          correctOptionId: "a",
-          allowMultiple: false,
         } as QuestionBody["multiple-choice"];
       } else if (qType === "calculation") {
         body = {
-          formula: "",
           correctValue: Number.NaN,
-          unit: "",
+          formula: "",
           tolerance: 0,
+          unit: "",
         } as QuestionBody["calculation"];
       } else {
         body = {
-          modelAnswer: pq.answerText,
           acceptableAnswers: [pq.answerText],
           maxLength: 500,
+          modelAnswer: pq.answerText,
         } as QuestionBody["short-answer"];
       }
 
       return {
-        id: pq.id,
-        type: qType,
-        subject: enriched.subject,
-        topic: pq.topic ?? enriched.topic ?? "",
-        difficulty: "Medium" as const,
         bloomTaxonomy: bloom,
-        points: pq.marks,
-        questionText: pq.questionText,
-        hint: "",
-        explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
         body,
+        difficulty: "Medium" as const,
+        explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
+        hint: "",
+        id: pq.id,
         metadata: {
           createdAt: Date.now(),
           source: "imported",
         },
+        points: pq.marks,
+        questionText: pq.questionText,
+        sourcePaperId: pq.id,
+        sourcePastPaperQuestionId: pq.id,
+        subject: enriched.subject,
+        topic: pq.topic ?? enriched.topic ?? "",
+        type: qType,
         webSources: [
           {
             title: `${enriched.subject} ${pq.year} Paper ${pq.paperNumber}`,
             url: "#",
           },
         ],
-        sourcePaperId: pq.id,
-        sourcePastPaperQuestionId: pq.id,
       };
     };
 
@@ -244,7 +247,9 @@ export class QuestionEngine {
       const result = await this.generateBatch(enriched, ragContext, remainingCount);
       if (result.length > questions.length) {
         questions = result;
-        if (questions.length >= remainingCount) break;
+        if (questions.length >= remainingCount) {
+          break;
+        }
       }
     }
 
@@ -391,21 +396,25 @@ export class QuestionEngine {
       ["mixed"],
     ];
 
-    const count = params.count;
+    const { count } = params;
     const itemCount = Math.max(1, Math.ceil(count / batches.length));
 
     const batchResults = await Promise.all(
       batches.map(async (batch) => {
         const available = batch.filter((t) => this.registry.hasProcessor(t));
-        if (available.length === 0) return [];
+        if (available.length === 0) {
+          return [];
+        }
 
         const perType = Math.floor(itemCount / available.length);
         const remainder = itemCount - perType * available.length;
         const batchQuestions: Question[] = [];
 
         for (let i = 0; i < available.length && batchQuestions.length < itemCount; i++) {
-          let needed = perType + (i < remainder ? 1 : 0);
-          if (needed <= 0) continue;
+          const needed = perType + (i < remainder ? 1 : 0);
+          if (needed <= 0) {
+            continue;
+          }
 
           let generated = false;
           for (let j = 0; j < available.length && !generated; j++) {
@@ -420,8 +429,8 @@ export class QuestionEngine {
                 batchQuestions.push(...questions);
                 generated = true;
               }
-            } catch (e) {
-              console.error(`[QuestionEngine] Generation failed for ${tryType}:`, e);
+            } catch (error) {
+              console.error(`[QuestionEngine] Generation failed for ${tryType}:`, error);
             }
           }
         }

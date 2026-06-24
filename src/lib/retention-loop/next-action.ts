@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { dexieDataAccess as _dexieDa } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
@@ -35,8 +36,7 @@ function getDismissed(): Map<string, number> {
   try {
     const raw = localStorage.getItem(DISMISS_KEY);
     return raw ? new Map(JSON.parse(raw)) : new Map();
-  } catch (err) {
-    logError("GetDismissed", err);
+  } catch {
     return new Map();
   }
 }
@@ -46,8 +46,8 @@ function setDismissed(kind: ActionKind, durationMs: number): void {
     const map = getDismissed();
     map.set(kind, Date.now() + durationMs);
     localStorage.setItem(DISMISS_KEY, JSON.stringify([...map]));
-  } catch (err) {
-    logError("SetDismissed", err);
+  } catch {
+    // Silent
   }
 }
 
@@ -61,163 +61,153 @@ export function dismissAction(kind: ActionKind): void {
   setDismissed(kind, 24 * 60 * 60 * 1000);
 }
 
+export function dismissActionEffect(kind: ActionKind): Effect.Effect<void> {
+  return Effect.sync(() => setDismissed(kind, 24 * 60 * 60 * 1000));
+}
+
 function getTimeOfDay(): "morning" | "afternoon" | "evening" {
   const h = new Date().getHours();
-  if (h < 12) return "morning";
-  if (h < 17) return "afternoon";
+  if (h < 12) {
+    return "morning";
+  }
+  if (h < 17) {
+    return "afternoon";
+  }
   return "evening";
 }
 
-export async function resolveNextAction(userId?: string): Promise<NextAction | null> {
-  const tod = getTimeOfDay();
-
-  const dueCount = await getDueCardCount();
-  if (dueCount > 5 && !isDismissed("due-cards")) {
-    return {
-      kind: "due-cards",
-      title: `${dueCount} flashcards due!`,
-      reason: `You have ${dueCount} cards waiting — a quick review keeps your streak alive`,
-      ctaHref: "/flashcards",
-      ctaLabel: `Review ${dueCount} cards`,
-      expiresAt: Date.now() + 3600000,
-    };
-  }
-
-  const overdueItems = await getOverdueRetentionItems();
-  if (overdueItems.length > 0 && !isDismissed("review-mistakes")) {
-    const subject = overdueItems[0].subject;
-    return {
-      kind: "review-mistakes",
-      title: "Review mistakes",
-      reason: "You have overdue review items",
-      ctaHref: "/review",
-      ctaLabel: "Review mistakes",
-      subject,
-      expiresAt: Date.now() + 3600000,
-    };
-  }
-
-  const weakest = await getWeakestTopic(userId);
-  if (weakest && !isDismissed("weakest-topic")) {
-    const session = getCurrentSession();
-    const daysUntil = session ? getDaysUntilExam(session, weakest.subject) : null;
-    const daysSuffix = daysUntil != null ? ` · ${daysUntil} days to exam` : "";
-    return {
-      kind: "weakest-topic",
-      title: `Strengthen ${weakest.topic}`,
-      reason: `${weakest.topic} in ${weakest.subject} is your weakest area at ${weakest.score}%${daysSuffix}`,
-      ctaHref: `/quiz?subject=${encodeURIComponent(weakest.subject)}&topic=${encodeURIComponent(weakest.topic)}&count=10`,
-      ctaLabel: tod === "morning" ? "Drill 10 questions" : "Practice now",
-      subject: weakest.subject,
-      topic: weakest.topic,
-      expiresAt: Date.now() + 3600000,
-    };
-  }
-
-  if (dueCount > 0 && !isDismissed("flashcards")) {
-    return {
-      kind: "flashcards",
-      title: `${dueCount} flashcards due`,
-      reason: "Quick card review — pick up where you left off",
-      ctaHref: "/flashcards",
-      ctaLabel: "Review cards",
-      expiresAt: Date.now() + 3600000,
-    };
-  }
-
-  if (tod === "evening" && !isDismissed("study-plan")) {
-    return {
-      kind: "study-plan",
-      title: "Plan your next session",
-      reason: "Evenings are great for planning tomorrow's study session",
-      ctaHref: "/study-plan",
-      ctaLabel: "Open study planner",
-      expiresAt: Date.now() + 7200000,
-    };
-  }
-
-  return null;
-}
-
-async function getDueCardCount(): Promise<number> {
-  try {
+function getDueCardCountEffect(): Effect.Effect<number> {
+  return Effect.tryPromise(async () => {
     const now = Date.now();
     const allCards = await _deps.db.flashcards.toArray();
-    const cards = allCards.filter((c) => c.nextReview <= now);
-    return cards.length;
-  } catch (err) {
-    logError("GetDueCardCount", err);
-    return 0;
-  }
+    return allCards.filter((c) => c.nextReview <= now).length;
+  }).pipe(Effect.catchAll(() => Effect.succeed(0)));
 }
 
-async function getOverdueRetentionItems(): Promise<Array<{ subject: string; topic: string }>> {
-  try {
+function getOverdueRetentionItemsEffect(): Effect.Effect<{ subject: string; topic: string }[]> {
+  return Effect.tryPromise(async () => {
     const now = Date.now();
     const items = await _deps.db.retentionRecurrence
       .where("scheduledAt")
       .belowOrEqual(now)
       .toArray();
-    const result: Array<{ subject: string; topic: string }> = [];
+    const result: { subject: string; topic: string }[] = [];
     for (const i of items) {
       if (!i.completed) {
         result.push({ subject: i.subject, topic: i.topic });
       }
     }
     return result;
-  } catch (err) {
-    logError("GetOverdueRetentionItems", err);
-    return [];
-  }
+  }).pipe(Effect.catchAll(() => Effect.succeed([])));
 }
 
-async function getWeakestTopic(_userId?: string): Promise<{
+function getWeakestTopicEffect(_userId?: string): Effect.Effect<{
   subject: string;
   topic: string;
   score: number;
 } | null> {
-  try {
+  return Effect.tryPromise(async () => {
     const competencies = await _deps.db.competencies.toArray();
-
-    if (competencies.length === 0) return null;
+    if (competencies.length === 0) {
+      return null;
+    }
 
     let weakest: { subjectId: string; topicId: string; score: number } | null = null;
-
     for (const c of competencies) {
       const score = typeof c.score === "number" ? c.score : 0;
       if (!weakest || score < weakest.score) {
-        weakest = { subjectId: c.subjectId, topicId: c.topicId, score };
+        weakest = { score, subjectId: c.subjectId, topicId: c.topicId };
       }
     }
+    if (!weakest) {
+      return null;
+    }
 
-    if (!weakest) return null;
+    const subject = await _deps.db.subjects.where("code").equals(weakest.subjectId).first();
+    const subjectName = subject?.name ?? weakest.subjectId;
+    const topicName = weakest.topicId
+      .replaceAll(/-/g, " ")
+      .replaceAll(/\b\w/g, (l: string) => l.toUpperCase());
 
-    const subjectName = await getSubjectName(weakest.subjectId);
-    const topicName = await getTopicName(weakest.topicId);
+    return { score: weakest.score, subject: subjectName, topic: topicName };
+  }).pipe(Effect.catchAll(() => Effect.succeed(null)));
+}
 
-    return {
-      subject: subjectName,
-      topic: topicName,
-      score: weakest.score,
-    };
-  } catch (err) {
-    logError("GetWeakestTopic", err);
+export function resolveNextActionEffect(userId?: string): Effect.Effect<NextAction | null> {
+  return Effect.gen(function* () {
+    const tod = getTimeOfDay();
+
+    const dueCount = yield* getDueCardCountEffect();
+    if (dueCount > 5 && !isDismissed("due-cards")) {
+      return {
+        ctaHref: "/flashcards",
+        ctaLabel: `Review ${dueCount} cards`,
+        expiresAt: Date.now() + 3600000,
+        kind: "due-cards" as ActionKind,
+        reason: `You have ${dueCount} cards waiting — a quick review keeps your streak alive`,
+        title: `${dueCount} flashcards due!`,
+      };
+    }
+
+    const overdueItems = yield* getOverdueRetentionItemsEffect();
+    if (overdueItems.length > 0 && !isDismissed("review-mistakes")) {
+      const { subject } = overdueItems[0];
+      return {
+        ctaHref: "/review",
+        ctaLabel: "Review mistakes",
+        expiresAt: Date.now() + 3600000,
+        kind: "review-mistakes" as ActionKind,
+        reason: "You have overdue review items",
+        subject,
+        title: "Review mistakes",
+      };
+    }
+
+    const weakest = yield* getWeakestTopicEffect(userId);
+    if (weakest && !isDismissed("weakest-topic")) {
+      const session = getCurrentSession();
+      const daysUntil = session ? getDaysUntilExam(session, weakest.subject) : null;
+      const daysSuffix = daysUntil != null ? ` · ${daysUntil} days to exam` : "";
+      return {
+        ctaHref: `/quiz?subject=${encodeURIComponent(weakest.subject)}&topic=${encodeURIComponent(weakest.topic)}&count=10`,
+        ctaLabel: tod === "morning" ? "Drill 10 questions" : "Practice now",
+        expiresAt: Date.now() + 3600000,
+        kind: "weakest-topic" as ActionKind,
+        reason: `${weakest.topic} in ${weakest.subject} is your weakest area at ${weakest.score}%${daysSuffix}`,
+        subject: weakest.subject,
+        title: `Strengthen ${weakest.topic}`,
+        topic: weakest.topic,
+      };
+    }
+
+    if (dueCount > 0 && !isDismissed("flashcards")) {
+      return {
+        ctaHref: "/flashcards",
+        ctaLabel: "Review cards",
+        expiresAt: Date.now() + 3600000,
+        kind: "flashcards" as ActionKind,
+        reason: "Quick card review — pick up where you left off",
+        title: `${dueCount} flashcards due`,
+      };
+    }
+
+    if (tod === "evening" && !isDismissed("study-plan")) {
+      return {
+        ctaHref: "/study-plan",
+        ctaLabel: "Open study planner",
+        expiresAt: Date.now() + 7200000,
+        kind: "study-plan" as ActionKind,
+        reason: "Evenings are great for planning tomorrow's study session",
+        title: "Plan your next session",
+      };
+    }
+
     return null;
-  }
+  });
 }
 
-async function getSubjectName(subjectId: string): Promise<string> {
-  try {
-    const subject = await _deps.db.subjects.where("code").equals(subjectId).first();
-    return subject?.name ?? subjectId;
-  } catch (err) {
-    logError("GetSubjectName", err);
-    return subjectId;
-  }
-}
-
-async function getTopicName(topicId: string): Promise<string> {
-  return topicId.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+export function resolveNextAction(userId?: string): Promise<NextAction | null> {
+  return Effect.runPromise(resolveNextActionEffect(userId));
 }
 
 function getDaysUntilExam(
@@ -226,20 +216,26 @@ function getDaysUntilExam(
 ): number | null {
   try {
     const slots = localStorage.getItem("lumni_exam_dates");
-    if (!slots) return null;
+    if (!slots) {
+      return null;
+    }
     const parsed = JSON.parse(slots);
     const yearSlots = parsed?.[String(session.year)];
-    if (!yearSlots) return null;
-    const allSlots = Object.values(yearSlots).flat() as Array<Record<string, unknown>>;
+    if (!yearSlots) {
+      return null;
+    }
+    const allSlots = Object.values(yearSlots).flat() as Record<string, unknown>[];
     const subjectSlots = allSlots.find(
       (s) => String(s.subject).toLowerCase() === subject.toLowerCase(),
     ) as { date: string } | undefined;
-    if (!subjectSlots?.date) return null;
+    if (!subjectSlots?.date) {
+      return null;
+    }
     const examDate = new Date(subjectSlots.date);
     const now = new Date();
-    return Math.max(0, Math.ceil((examDate.getTime() - now.getTime()) / 86400000));
-  } catch (err) {
-    logError("GetDaysUntilExam", err);
+    return Math.max(0, Math.ceil((examDate.getTime() - now.getTime()) / 86_400_000));
+  } catch (error) {
+    logError("GetDaysUntilExam", error);
     return null;
   }
 }

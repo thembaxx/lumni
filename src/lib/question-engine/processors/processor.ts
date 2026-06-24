@@ -20,7 +20,9 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
   private _ai?: AIClient;
 
   private get ai(): AIClient {
-    if (!this._ai) this._ai = getAI();
+    if (!this._ai) {
+      this._ai = getAI();
+    }
     return this._ai;
   }
 
@@ -38,12 +40,14 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
   async generate(params: GenerationParams, ragContext?: RagContext): Promise<Question<T>[]> {
     const prompt = this.prompts.getPrompt(this.type, params, ragContext);
     const result = await this.ai.generateWithSystem(prompt.system, prompt.user, {
-      temperature: this.config.generateTemperature,
       maxTokens: 4096,
+      temperature: this.config.generateTemperature,
     });
     const parsed = parseAIResponse<Question<T>[]>(result, []);
-    if (!parsed) throw new Error(`AI generation failed for ${this.type}`);
-    const questions = ensureArray(parsed.data) as Array<Question<T> & { sourceRefs?: unknown }>;
+    if (!parsed) {
+      throw new Error(`AI generation failed for ${this.type}`);
+    }
+    const questions = ensureArray(parsed.data) as (Question<T> & { sourceRefs?: unknown })[];
     for (const q of questions) {
       attachWebSources(q, ragContext);
     }
@@ -64,13 +68,39 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
     ).pipe(
       Effect.catchAll(() =>
         Effect.succeed({
-          score: 0,
-          maxScore: question.points,
           correct: false,
           feedback: "Grading failed.",
+          maxScore: question.points,
+          score: 0,
         } as GradingResult),
       ),
     );
+  }
+
+  generateEffect(params: GenerationParams, ragContext?: RagContext): Effect.Effect<Question<T>[]> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const prompt = self.prompts.getPrompt(self.type, params, ragContext);
+      const result = yield* Effect.tryPromise(() =>
+        self.ai.generateWithSystem(prompt.system, prompt.user, {
+          maxTokens: 4096,
+          temperature: self.config.generateTemperature,
+        }),
+      ).pipe(Effect.catchAll(() => Effect.succeed(null as never)));
+      if (!result) {
+        return [];
+      }
+      const parsed = parseAIResponse<Question<T>[]>(result, []);
+      if (!parsed) {
+        return [];
+      }
+      const questions = ensureArray(parsed.data) as (Question<T> & { sourceRefs?: unknown })[];
+      for (const q of questions) {
+        attachWebSources(q, ragContext);
+      }
+      return questions;
+    });
   }
 
   generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string> {
