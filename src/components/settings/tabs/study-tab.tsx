@@ -139,7 +139,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
                   .filter((n) => !Number.isNaN(n) && n > 0);
                 if (steps.length > 0) updateSr({ learningSteps: steps });
               }}
-              className="h-9 w-36 border-none bg-secondary/50 text-right text-xs focus:ring-0"
+              className="h-9 w-36 border-none bg-secondary/50 text-right text-base focus:ring-0"
             />
           }
         />

@@ -144,7 +144,7 @@ export function PeriodicTable() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className={`w-full rounded-2xl border border-[--system-separator] bg-[--system-fill] py-3 pr-10 pl-12 text-foreground text-sm placeholder-muted-foreground focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20 ${isSearchFocused ? "border-[--system-accent]/30 bg-[--system-background-secondary]" : ""}
+            className={`w-full rounded-2xl border border-[--system-separator] bg-[--system-fill] py-3 pr-10 pl-12 text-foreground text-base placeholder-muted-foreground focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20 ${isSearchFocused ? "border-[--system-accent]/30 bg-[--system-background-secondary]" : ""}
             `}
           />
           {searchQuery && (

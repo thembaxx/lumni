@@ -119,7 +119,7 @@ function SidebarContent() {
             aria-description="Cmd+K to focus"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="h-9 w-full rounded-lg border border-border/50 bg-system-fill pr-3 pl-9 text-sm placeholder:text-muted-foreground/60 focus:border-system-accent focus:outline-none focus:ring-1 focus:ring-system-accent/30"
+            className="h-9 w-full rounded-lg border border-border/50 bg-system-fill pr-3 pl-9 text-base placeholder:text-muted-foreground/60 focus:border-system-accent focus:outline-none focus:ring-1 focus:ring-system-accent/30"
           />
           {query && (
             <button

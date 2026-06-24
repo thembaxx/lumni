@@ -258,7 +258,7 @@ export function ComprehensionQuestionCard({
                       onChange={(e) => setTextInput(e.target.value)}
                       disabled={isGraded}
                       placeholder="Type your answer..."
-                      className="min-h-20 resize-none rounded-xl text-sm"
+                      className="min-h-20 resize-none rounded-xl text-base"
                       aria-label={`Answer for question ${questionNumber}`}
                     />
                   </div>
@@ -288,7 +288,7 @@ export function ComprehensionQuestionCard({
                       onChange={(e) => setTextInput(e.target.value)}
                       disabled={isGraded}
                       placeholder="Type the missing word..."
-                      className="rounded-xl text-sm"
+                      className="rounded-xl text-base"
                       aria-label={`Fill in the blank for question ${questionNumber}`}
                     />
                   </div>

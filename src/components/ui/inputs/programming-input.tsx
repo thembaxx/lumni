@@ -105,7 +105,7 @@ export function ProgrammingInput({
         }}
         disabled={disabled}
         placeholder={`Write your ${language} code here...`}
-        className={cn("min-h-[150px] font-mono text-sm", starterCode && "mt-2")}
+        className={cn("min-h-[150px] font-mono text-base", starterCode && "mt-2")}
       />
       {onSubmit && (
         <Button

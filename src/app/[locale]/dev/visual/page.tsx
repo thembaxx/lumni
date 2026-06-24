@@ -187,7 +187,7 @@ export default function DevVisualPage() {
               <h3 className="font-semibold text-sm tracking-tight">Raw Response</h3>
             </div>
             <div className="p-4 pt-0">
-              <Textarea value={state.rawJson} readOnly className="min-h-36 font-mono text-xs" />
+              <Textarea value={state.rawJson} readOnly className="min-h-36 font-mono text-base" />
             </div>
           </div>
         </>

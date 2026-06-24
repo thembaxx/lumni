@@ -29,7 +29,7 @@ export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
             </p>
             <input
               type="text"
-              className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
+              className="w-full rounded-md border bg-transparent px-3 py-1.5 text-base outline-none focus:ring-2 focus:ring-[--system-accent]"
               placeholder={t("quiz.answerPlaceholder")}
               value={partAnswers[qId] ?? ""}
               onChange={(e) =>

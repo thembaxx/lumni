@@ -110,7 +110,7 @@ export function AssignmentBuilder({
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="h-9 rounded-lg border bg-background px-3 text-xs"
+                className="h-9 rounded-lg border bg-background px-3 text-base"
                 min={today}
               />
             </div>

@@ -162,7 +162,7 @@ function TeacherDashboardInner() {
             value={linkId}
             onChange={(e) => setLinkId(e.target.value)}
             placeholder="Student user ID..."
-            className="h-9 w-64 text-sm"
+            className="h-9 w-64 text-base"
           />
           <Button
             size="sm"

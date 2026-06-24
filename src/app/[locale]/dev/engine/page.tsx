@@ -277,7 +277,7 @@ export default function DevEnginePage() {
               <h2 className="font-medium font-sans text-sm">Raw Response</h2>
             </header>
             <div className="p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
-              <Textarea value={state.rawJson} readOnly className="min-h-48 font-mono text-xs" />
+              <Textarea value={state.rawJson} readOnly className="min-h-48 font-mono text-base" />
             </div>
           </div>
         </>

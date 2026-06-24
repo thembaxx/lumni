@@ -169,7 +169,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
                               }))
                             }
                             placeholder="Add feedback..."
-                            className="h-8 text-xs"
+                            className="h-8 text-base"
                           />
                           <Button
                             size="sm"

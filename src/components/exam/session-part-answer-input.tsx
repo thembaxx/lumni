@@ -144,7 +144,7 @@ export function SessionPartAnswerInput({ part, value, onChange, disabled }: Part
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         rows={8}
-        className="resize-y rounded-xl border-2 border-border p-3 font-mono text-sm focus:border-[--system-accent]"
+        className="resize-y rounded-xl border-2 border-border p-3 font-mono text-base focus:border-[--system-accent]"
         placeholder={t("exam.placeholderCode")}
         aria-label="Programming answer input"
       />
