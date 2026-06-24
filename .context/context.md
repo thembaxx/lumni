@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-23 -->
+<!-- LAST_SYNC: 2026-06-24 -->
 
 # Master Context — Lumni
 
@@ -8,7 +8,7 @@ AI-powered South African Matric (Grade 12) exam preparation platform. Offline-fi
 
 ## CURRENT_FOCUS
 
-All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65. **Session 42**: batch generation parallelized (Promise.all over 7 groups), knowledge graph RAG-grounded (three-tier fallback), hint RAG-injection threaded through HintFn, cross-engine TTS+visual wiring, STT endpoint (Deepgram + Whisper WASM fallback).
+All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4) complete — all 38+ tables via typed interface. Knowledge graph, study guides, live sessions, share/public routes shipped. Theme chrome + navigation sidebar redesigned. Hardening sweep done. **React Doctor score 100/100** (194+16 issues fixed). Biome lint zero. **1271 tests pass, 0 fail.** **Premium gating removed (June 2026)** — all features free. ContentLock purged. Visual engine always fetches. Support page shows priority to all. Login banners on standalone auth-required pages. **Architectural deepening (Session 37-38)** — AI provider singleton collapsed, `GenerateResult` structured return, `CachedAIGenerator<T>` generic, 6+ services extracted, ~200 lines dead code removed. **Session 39**: 16 react-doctor issues resolved (parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks). 12 files, +96/−65. **Session 42**: batch generation parallelized (Promise.all over 7 groups), knowledge graph RAG-grounded (three-tier fallback), hint RAG-injection threaded through HintFn, cross-engine TTS+visual wiring, STT endpoint (Deepgram + Whisper WASM fallback). **Live sessions migrated to Ably real-time presence (June 2026)** — replaced Appwrite 15s-polling with Ably presence hooks. Token route, route-level ChatClientProvider, auto-end on last departure. Stale participantCount + orphaned `live_session_participants` collection cleaned up. **1562 tests pass, 0 failures.**
 
 ## KEY_CONSTRAINTS
 
@@ -28,7 +28,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Quiz Pack**: AI-generated question sets for offline study.
 - **Knowledge Graph**: AI-generated topic dependency graphs (prerequisites, core, advanced). Cached 7d in Dexie v29.
 - **Study Guide**: AI-generated structured study guides with sections + summary. Cached 30d in Dexie v32.
-- **Live Session**: Real-time collaborative study session via Appwrite, 15s polling.
+- **Live Session**: Real-time collaborative study session via Ably presence (enter/leave/update). Appwrite stores only metadata (startedBy, subject, startedAt, status). Route-level `ChatClientProvider` in study-groups layout. `ChatRoomProvider` wraps active session UI with `usePresence`/`usePresenceListener` hooks. Auto-ends on last departure (client-side occupancy check).
 - **SourceAttributionPill**: Inline non-collapsible pill on `QuestionCardFeedback` that surfaces per-question web sources.
 - **DataAccess**: Typed interface over all 38+ Dexie tables; `DexieDataAccess` (production) and `InMemoryDataAccess` (tests).
 - **Uniform AI Adapter**: Factory pattern for pluggable AI provider request normalizers and response parsers.
@@ -80,6 +80,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D065] **Cross-engine TTS+visual integration**: `TTSButton` accepts `visualDescription` prop; `QuestionCard` derives description from `VisualContent.label` and threads it through `QuestionCardHeader`. Engines stay decoupled; context bridge in consumer.
 - [D066] **STT endpoint**: `POST /api/engine/transcribe` with Deepgram primary, fails open when key absent. Pronunciation client tries server Deepgram first, falls back to Whisper WASM (74MB model only downloaded when needed).
 - [D067] **Konva dark mode**: All 8 Konva renderers use `useDiagramTheme()` hook (MutationObserver on `<html>.classList`). CSS custom properties don't cascade into `<canvas>` — theme detection must use DOM API, not CSS vars. Atom colours are element-semantic and stay constant across themes.
+- [D068] **Ably real-time presence for live sessions**: Replaced Appwrite 15s-polling with Ably real-time presence. Ably-primary for participant list; Appwrite persists only session metadata. Token route at `/api/ably/token` with namespace-scoped capabilities. Route-level `ChatClientProvider` (study-groups only) to limit connection quota. Auto-end on last departure via client-side occupancy check. `ChatRoomProvider` wraps active session UI; hooks `usePresence`/`usePresenceListener` live inside it. Cleanup calls `leave()` + server-side end if last member.
 
 ## KNOWLEDGE_GRAPH
 
@@ -96,7 +97,8 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - `CachedAIGenerator<T>` → `DataAccess` → `AI generate` → `DataAccess` (cache)
 - `KnowledgeGraph` → `CachedAIGenerator` → `DataAccess` (v29, 7d TTL) → `LearningMapCard` + `TopicGraph`
 - `StudyGuide` → `CachedAIGenerator` → `DataAccess` (v32, 30d TTL) → `/study-guide` page
-- `LiveSessionService` → `Appwrite` → `useLiveSession()` (15s polling) → `LiveSessionBar`
+- `Ably token route` → `ChatClientProvider` → `ChatRoomProvider` + `usePresence`/`usePresenceListener` → `LiveSessionBar`
+- `LiveSessionService` → `Appwrite` (metadata only: startedBy, subject, status) → `useLiveSession()` (one-time GET + start)
 - `ShareService` → `DataAccess` (sharedQuestions) → `/q/[id]` public page
 - `RetentionService` → `DataAccess` (retentionRecurrence) → next-best-action card
 - `AnalyticsService` → `SessionStore` → trends/comparative routes (~20 lines each)
@@ -126,7 +128,9 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **DataAccess DI**: `class Service { constructor(private data: DataAccess) {} }` — inject `dexieDataAccess` (prod) or `InMemoryDataAccess` (test)
 - **Rate limiter**: `new RateLimiter(new MapStore(), config)` or `new RateLimiter(new RedisStore(redis), config)`
 - **Uniform provider**: `createUniformProvider({ name: 'gemini', model: 'gemini-2.0-flash-lite', normalizeRequest: geminiNormalizer, parseResponse: geminiResponseParser })`
-- **Live session**: `const { session, participants, isLoading } = useLiveSession(groupId);`
+- **Live session**: `const { session, isLoading, startSession } = useLiveSession(groupId);` — Ably presence managed by `LiveSessionBar` via `usePresence({ autoEnterLeave: false })` + `usePresenceListener()`
+- **Ably token**: `GET /api/ably/token` (auth required, returns `TokenRequest`)
+- **Ably provider**: Wrap route in `<ChatClientProvider client={chatClient}>` + per-session `<ChatRoomProvider name="chat-sessions:{sessionId}">`
 - **Knowledge graph**: `const { data: graph, isPending } = useQuery({ queryKey: ['knowledge-graph', subject, topic], queryFn: () => fetch(`/api/engine/knowledge-graph?subject=${subject}&topic=${topic}`).then(r => r.json()), enabled: !!subject && !!topic });`
 - **Study guide**: `const { data: guide } = useMutation({ mutationFn: ({ subject, topic }) => generateGuide(subject, topic) });`
 - **Parallel batch generation**: `const results = await Promise.all(batches.map(batch => generateBatch(batch))).then(r => r.flat().slice(0, count));`
@@ -146,6 +150,9 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **`lottie-react`**: Already migrated to `@lottiefiles/dotlottie-react`.
 - **Sequential `for...of` over independent batches**: Use `Promise.all()` for parallel execution.
 - **CSS vars in Konva**: Use `useDiagramTheme()` hook, not CSS custom properties — Konva renders to `<canvas>`, which doesn't inherit CSS.
+- **Appwrite polling for presence**: Use Ably real-time presence instead of 15s polling for live session participant lists.
+- **Manual `rooms.get()` for Ably chat**: Use `ChatRoomProvider` wrapping the active session UI + hooks inside — the imperative `rooms.get()` pattern is unnecessary.
+- **App-level `ChatClientProvider`**: Scope to route-level (study-groups layout) to limit connection quota. Do not put it in the root layout.
 
 ## PROMPT_LOOKUP_TABLE
 
@@ -158,3 +165,4 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - If working on **Theme/Nav**, check `docs/superpowers/specs/2026-06-07-theme-chrome-takeover-design.md` and `2026-06-03-nav-sidebar-design.md`.
 - If working on **Voice/STT**, check `CONTEXT.md` > `VoiceEngine` and `STT` definitions.
 - If working on **Batch Generation**, check `question-engine.ts:generateMixed()` for the `Promise.all()` parallel pattern.
+- If working on **Live Sessions / Ably**, check `CONTEXT.md` > `Live Session` definition, `src/hooks/use-ably-chat.ts` for singleton pattern, `src/components/study-groups/live-session-bar.tsx` for presence hook usage.

@@ -1078,3 +1078,23 @@ const systemPrompt = webContext.xml
 - `force-vector.tsx` — object labels, angle line, angle label use palette
 
 **Verification**: oxlint 0 errors on changed files, 1499 tests pass (0 regressions), format check clean.
+
+### Session 45 — Ably real-time presence for live sessions (June 2026)
+
+**Live study sessions migrated** from Appwrite 15s-polling to Ably real-time presence:
+
+- Installed `ably` + `@ably/chat` packages
+- `GET /api/ably/token` — standalone token endpoint with namespace-scoped capabilities (`chat-sessions:*` subscribe/presence)
+- `src/lib/ably/client.ts` — server-side Ably Rest client for `createTokenRequest`
+- `src/hooks/use-ably-chat.ts` — singleton `ChatClient` via `useMemo`, tied to `user.$id` + `authReady`
+- `src/components/study-groups/ably-provider.tsx` — `ChatClientProvider` wrapper
+- Route-level provider in `study-groups/layout.tsx` (not app-level, saves connection quota)
+- `LiveSession` type stripped of `participantCount` (real-time count from `room.presence.get().length`)
+- `LiveSessionService` cleaned — removed `getParticipants`, `joinSession`, `leaveSession`, `updateActivity`
+- API routes stripped — GET returns `{ session }` only; PATCH only `action: "end"`
+- `useLiveSession` hook simplified — one-time GET query + start mutation (no presence logic)
+- `LiveSessionBar` rewired — conditional `ChatRoomProvider` wrapping active session; `usePresence({ autoEnterLeave: false })` + `usePresenceListener` for enter/leave/update; auto-end on last departure
+- Cleaned up stale `participantCount` from `live-session-monitor.tsx` and `ensure-schema.ts`
+- Removed orphaned `live_session_participants` collection from schema + constants
+
+**Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings, `vitest run` 1562 pass (0 failures).

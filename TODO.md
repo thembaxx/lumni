@@ -777,9 +777,35 @@ pnpm run build        → clean build
 - [x] **Close issues #54-#60 on GitHub** — Already closed.
 - [x] **Close or merge 5 dependabot PRs (#61-#65)** — Already handled (no open PRs).
 
+## ✅ Ably Real-Time Presence for Live Study Sessions (June 2026)
+
+- [x] **Install ably + @ably/chat packages** — `ably` and `@ably/chat` npm packages
+- [x] **Token endpoint** — `GET /api/ably/token` with namespace-scoped capabilities (`chat-sessions:*` subscribe/presence)
+- [x] **Server-side Rest client** — `src/lib/ably/client.ts` with `createAblyTokenRequest()` factory
+- [x] **ChatClient singleton** — `src/hooks/use-ably-chat.ts` tied to `user.$id` + `authReady`
+- [x] **Route-level provider** — `ChatClientProvider` in `study-groups/layout.tsx` (connection scoped to study-group pages)
+- [x] **LiveSession types reduced** — Removed `participantCount` from `LiveSession` (real-time count from Ably `room.presence.get().length`)
+- [x] **LiveSessionService cleaned** — Removed `getParticipants`, `joinSession`, `leaveSession`, `updateActivity`; kept `startLiveSession`, `endLiveSession`, `getLiveSession`, `getActiveSession`, `getSessionsByTeacher`
+- [x] **API routes stripped** — GET returns `{ session }` only; PATCH only handles `action: "end"`
+- [x] **useLiveSession hook simplified** — One-time GET query + start mutation (no Ably logic in hook)
+- [x] **LiveSessionBar rewired** — Conditional `ChatRoomProvider` wrapping active session; inner `LiveSessionContent` uses `usePresence({ autoEnterLeave: false })` + `usePresenceListener` for enter/leave/update; cleanup calls `leave()` + auto-end if last participant
+- [x] **Stale participantCount cleaned** — Removed from `live-session-monitor.tsx` and `ensure-schema.ts`
+- [x] **Orphaned collection removed** — `live_session_participants` removed from schema + constants
+
+### Verification
+
+- [x] `tsc --noEmit` — zero errors
+- [x] `oxlint --fix` — zero warnings/errors
+- [x] `vitest run` — 1562 pass, 0 failures
+
+### Remaining (GitHub issues)
+
+- [#70](https://github.com/thembaxx/lumni/issues/70) — Configure `ABLY_API_KEY` in production + development
+- [#71](https://github.com/thembaxx/lumni/issues/71) — Smoke-test presence flow (start → join → leave → auto-end)
+
 ---
 
-## VoiceEngine API Keys
+## VoiceEngine API Keys (GitHub issue [#72](https://github.com/thembaxx/lumni/issues/72))
 
 - [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel environment variables.
 - [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports SA languages: af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel environment variables.

@@ -7,15 +7,4 @@ export interface LiveSession {
   status: "active" | "ended";
   startedAt: string;
   endedAt?: string;
-  participantCount: number;
-}
-
-export interface LiveSessionParticipant {
-  $id: string;
-  sessionId: string;
-  userId: string;
-  userName?: string;
-  joinedAt: string;
-  status: "active" | "left";
-  currentActivity?: string;
 }

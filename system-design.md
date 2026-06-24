@@ -249,7 +249,7 @@ erDiagram
 | **Learning Map**     | SVG topic dependency graph with prerequisite/core/advanced rows                                      | React, SVG                     | `src/components/dashboard/learning-map-card.tsx`   |
 | **Topic Graph**      | Per-question inline mini knowledge graph (3-hop max)                                                 | React, SVG                     | `src/components/quiz/topic-graph.tsx`              |
 | **Content Lock**     | [DEAD — removed June 2026] Premium gating removed; all features are free                             | —                              | `src/components/ui/content-lock.tsx` (unused)      |
-| **Live Session Bar** | Real-time collaborative study session component                                                      | React, Appwrite                | `src/components/study-groups/live-session-bar.tsx` |
+| **Live Session Bar** | Real-time collaborative study session component (Ably presence, Appwrite metadata only)              | React, Ably, Appwrite          | `src/components/study-groups/live-session-bar.tsx` |
 | **Teacher Tools**    | Assignment builder, review panel, observation timeline, messaging                                    | React                          | `src/components/teacher/`                          |
 | **Public Share**     | Shared question page (`/q/[id]`) with star-gated answer                                              | React                          | `src/app/q/[id]/page.tsx`                          |
 
@@ -295,7 +295,7 @@ erDiagram
 | **PremiumService**           | [Legacy — no UI gating] Stripe/Payfast checkout, webhook verification (infra retained for potential future monetization)                             | localStorage + API                                                                                                                                                            | `src/lib/premium/`                             |
 | **UserConsentService**       | GDPR/POPIA dual-write consent (Dexie + Appwrite)                                                                                                     | Background job queue                                                                                                                                                          | `src/lib/services/user-consent-service.ts`     |
 | **ShareService**             | Public share links, assignment sharing, ghost links, share card generation                                                                           | localStorage + API                                                                                                                                                            | `src/lib/share/share-service.ts`               |
-| **LiveSessionService**       | Real-time collaborative study sessions via Appwrite                                                                                                  | Appwrite SDK                                                                                                                                                                  | `src/lib/study-groups/live-session-service.ts` |
+| **LiveSessionService**       | Live session metadata (start/end/get) via Appwrite; presence via Ably                                                                                | Appwrite SDK + Ably Rest                                                                                                                                                      | `src/lib/study-groups/live-session-service.ts` |
 | **RetentionService**         | Wrong-answer re-encounter loop, next-best-action card                                                                                                | DataAccess                                                                                                                                                                    | `src/lib/retention-loop/`                      |
 | **CachingStrategy**          | Generic multi-tier caching (parallel tier check)                                                                                                     | TypeScript                                                                                                                                                                    | `src/lib/caching-strategy/`                    |
 | **UniformAIAdapter**         | Factory for pluggable AI providers (OpenAI/Gemini request normalizers)                                                                               | TypeScript                                                                                                                                                                    | `src/lib/ai/uniform-adapter.ts`                |
@@ -310,18 +310,19 @@ erDiagram
 
 ### Backend (External)
 
-| Service                   | Responsibility                                                                                 | Free Tier Limit            |
-| ------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------- |
-| **Appwrite**              | Auth, DB (questions, users, sessions, exam_dates), storage (exam PDFs, avatars), live sessions | 50k docs, 10GB storage     |
-| **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals, knowledge graphs, study guides                     | 60 req/min                 |
-| **Nvidia NIM**            | Fallback AI: Llama 3.3 70B                                                                     | Pay-as-you-go              |
-| **Groq**                  | Last-resort AI: Llama 3.3 70B                                                                  | 30 req/min                 |
-| **UploadThing**           | File upload infrastructure                                                                     | 2GB free                   |
-| **Sentry**                | Error tracking (DSN configured)                                                                | 5k events/month            |
-| **TinyFish**              | Web search + fetch for RAG injection into solve + quiz                                         | Free tier (no credit card) |
-| **Upstash Redis**         | Production Redis-backed rate limiting (optional)                                               | Pay-as-you-go              |
-| **Stripe**                | Premium subscription checkout + webhook verification                                           | Pay-as-you-go              |
-| **Payfast**               | Alternative SA payment processor                                                               | Pay-as-you-go              |
+| Service                   | Responsibility                                                                                         | Free Tier Limit            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------- |
+| **Appwrite**              | Auth, DB (questions, users, sessions, exam_dates), storage (exam PDFs, avatars), live session metadata | 50k docs, 10GB storage     |
+| **Ably**                  | Real-time presence for live study sessions (replaces 15s polling)                                      | Pay-as-you-go              |
+| **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals, knowledge graphs, study guides                             | 60 req/min                 |
+| **Nvidia NIM**            | Fallback AI: Llama 3.3 70B                                                                             | Pay-as-you-go              |
+| **Groq**                  | Last-resort AI: Llama 3.3 70B                                                                          | 30 req/min                 |
+| **UploadThing**           | File upload infrastructure                                                                             | 2GB free                   |
+| **Sentry**                | Error tracking (DSN configured)                                                                        | 5k events/month            |
+| **TinyFish**              | Web search + fetch for RAG injection into solve + quiz                                                 | Free tier (no credit card) |
+| **Upstash Redis**         | Production Redis-backed rate limiting (optional)                                                       | Pay-as-you-go              |
+| **Stripe**                | Premium subscription checkout + webhook verification                                                   | Pay-as-you-go              |
+| **Payfast**               | Alternative SA payment processor                                                                       | Pay-as-you-go              |
 
 ---
 
@@ -365,8 +366,9 @@ erDiagram
 | `/api/student/assignments`                             | GET         | List student assignments                                     | Traditional                                   |
 | `/api/assignments/[id]/submit`                         | POST        | Submit assignment for grading                                | Traditional                                   |
 | `/api/assignments/[id]/comment`                        | POST        | Teacher comment on assignment                                | Traditional                                   |
+| `/api/ably/token`                                      | GET         | Mint Ably token request (namespace-scoped)                   | `createRouteHandler`                          |
 | `/api/study-groups/[groupId]/live-session`             | GET/POST    | Get/start live study session                                 | Traditional                                   |
-| `/api/study-groups/[groupId]/live-session/[sessionId]` | GET/PATCH   | Get/end live session                                         | Traditional                                   |
+| `/api/study-groups/[groupId]/live-session/[sessionId]` | GET/PATCH   | Get metadata / end session (auto-end on last departure)      | Traditional                                   |
 | `/api/q/share`                                         | POST        | Share a question publicly                                    | Traditional                                   |
 | `/api/q/[id]`                                          | GET         | Get shared question                                          | Traditional                                   |
 | `/api/ghost/[token]`                                   | GET         | Get ghost dashboard stats (Appwrite)                         | Traditional                                   |
@@ -440,29 +442,30 @@ Client -> POST /api/engine/study-guide { subject, topic }
 ```
 Client -> POST /api/study-groups/[groupId]/live-session
   -> LiveSessionService.startLiveSession()
-  -> Appwrite: create LiveSession document
-  -> Polling: useLiveSession() hook (15s interval)
-  -> Join/Leave: LiveSessionService.joinSession() / leaveSession()
-  -> End: LiveSessionService.endLiveSession()
+  -> Appwrite: create LiveSession document (metadata only)
+  -> Ably: ChatRoomProvider wraps active session UI
+  -> Ably Presence: usePresence() enter/leave/update
+  -> Last departure: LiveSessionService.endLiveSession() auto-call
+  -> End: LiveSessionService.endLiveSession() (PATCH action: "end")
 ```
 
 ### Database Collections (Appwrite)
 
-| Collection                  | Purpose                                       | Documents           |
-| --------------------------- | --------------------------------------------- | ------------------- |
-| `users`                     | User profiles + auth                          | Auth-managed        |
-| `questions`                 | Cached AI-generated questions                 | ~10k (cleaned >30d) |
-| `visuals`                   | Cached AI-generated diagrams                  | ~5k (cleaned >30d)  |
-| `exam_sessions`             | In-progress + completed exam sessions         | Per-user            |
-| `exam_papers`               | Uploaded past exam PDFs                       | ~500                |
-| `exam_dates`                | National exam timetable (synced server-side)  | ~200                |
-| `user_consents`             | GDPR/POPIA consent preferences (dual-write)   | Per-user            |
-| `teacher_assignments`       | Teacher-assigned student work                 | Per-teacher         |
-| `teacher_students`          | Teacher-student linking                       | Per-teacher         |
-| `premium_subscriptions`     | Premium subscription records (Stripe webhook) | Per-user            |
-| `study_groups`              | Study group metadata + membership (v3)        | Per-group           |
-| `live_sessions`             | Active live study sessions                    | Per-session         |
-| `live_session_participants` | Participants in live sessions                 | Per-participant     |
+| Collection                                     | Purpose                                       | Documents           |
+| ---------------------------------------------- | --------------------------------------------- | ------------------- |
+| `users`                                        | User profiles + auth                          | Auth-managed        |
+| `questions`                                    | Cached AI-generated questions                 | ~10k (cleaned >30d) |
+| `visuals`                                      | Cached AI-generated diagrams                  | ~5k (cleaned >30d)  |
+| `exam_sessions`                                | In-progress + completed exam sessions         | Per-user            |
+| `exam_papers`                                  | Uploaded past exam PDFs                       | ~500                |
+| `exam_dates`                                   | National exam timetable (synced server-side)  | ~200                |
+| `user_consents`                                | GDPR/POPIA consent preferences (dual-write)   | Per-user            |
+| `teacher_assignments`                          | Teacher-assigned student work                 | Per-teacher         |
+| `teacher_students`                             | Teacher-student linking                       | Per-teacher         |
+| `premium_subscriptions`                        | Premium subscription records (Stripe webhook) | Per-user            |
+| `study_groups`                                 | Study group metadata + membership (v3)        | Per-group           |
+| `live_sessions`                                | Active live study sessions                    | Per-session         |
+| (removed — Ably presence handles participants) | —                                             | —                   |
 
 ### Database Tables (Dexie / IndexedDB) — v32 Schema
 

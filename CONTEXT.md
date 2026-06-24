@@ -14,6 +14,8 @@ All Batch 1-6 superpowers implemented. DataAccess Phase 1-4 complete + paginatio
 
 **VoiceEngine created (June 2026)** — `src/lib/voice-engine/` with `VoiceEngine.synthesize(text, options)` provider chain: ElevenLabs → Google Cloud TTS → FreeTTS. `POST /api/engine/voice` route. `useVoiceEngine()` hook with browser SpeechSynthesis fallback. `TTSButton` and `ListenToLesson` both updated to use unified engine. No STT endpoint yet (planned: Deepgram + Whisper fallback).
 
+**Live session Ably migration (June 2026)** — Replaced Appwrite 15s-polling presence with Ably real-time presence. Token route at `/api/ably/token`, route-level `ChatClientProvider` in study-groups layout, `usePresence` + `usePresenceListener` hooks in `LiveSessionBar`. Auto-end on last departure. Stripped `participantCount` from `LiveSession` type, removed participant CRUD from service and API routes. Cleaned up orphaned `live_session_participants` collection. **1562 tests pass, 0 failures.**
+
 **Architectural deepening (June 2026)** — 8 candidates implemented:
 
 - **Session 37**: AI provider singleton collapsed (AIClient threaded through processors), lastRagContext sidecar replaced with structured `GenerateResult`, `CachedAIGenerator<T>` generic, analytics domain logic extracted into `AnalyticsService`, dead code removed (~200 lines), retention DI leak fixed. 6 service extractions: `DigestService`, `PlatformAnalyticsService`, `ExamDownloadService`, `ExamUploadService`, `SubmissionService`, `AuthRateLimitService`. ADR-0012 documented.
@@ -90,31 +92,29 @@ Appwrite Cloud
 
 ## Active Surface
 
-| File/Dir                                             | What I'm touching                                             |
-| ---------------------------------------------------- | ------------------------------------------------------------- |
-| `src/lib/services/quiz-result-processor.ts`          | New — quiz completion orchestration (4 sources)               |
-| `src/lib/question-engine/enrichment-pipeline.ts`     | New — 3-port enrichment (Curriculum/Embedding/PastPaper)      |
-| `src/lib/tinyfish/rag-pipeline.ts`                   | New — withRagGuards HOF, barrel separation                    |
-| `src/lib/services/push-delivery.ts`                  | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
-| `src/lib/services/study-planner-service.ts`          | New — StudyPlannerService (state/sync/mutations)              |
-| `src/lib/gamification-engine/service.ts`             | New — GamificationService (state/persist/sync)                |
-| `src/lib/ai/cached-ai-generator.ts`                  | Generic CachedAIGenerator<T>                                  |
-| `src/lib/question-engine/`                           | GenerateResult structured return, AIClient threading          |
-| `src/lib/analytics/analytics-service.ts`             | SessionStore interface, extracted from routes                 |
-| `src/lib/assignments/submission-service.ts`          | Uses PushDeliveryService                                      |
-| `src/lib/digest/digest-service.ts`                   | Uses PushDeliveryService                                      |
-| `src/lib/integration/service.ts`                     | DataAccess seam sealed (\_deps pattern)                       |
-| `src/lib/orchestrator/learning-orchestrator.ts`      | DI db for dedup, constructor injection                        |
-| `src/lib/orchestrator/handlers/domain.ts`            | DomainDb type expanded, generateEmbedding sealed              |
-| `src/app/api/exam-papers/classify/route.ts`          | Factory DI (createClassifyHandler)                            |
-| `src/app/api/exam-papers/[id]/extract/route.ts`      | \_deps pattern for Dexie access                               |
-| `src/components/dashboard/dashboard-client.tsx`      | Uses QuizResultProcessor                                      |
-| `src/app/[locale]/exam/[id]/exam-session-client.tsx` | Uses QuizResultProcessor                                      |
-| `src/app/[locale]/flashcards/flashcards-client.tsx`  | Uses QuizResultProcessor                                      |
-| `src/hooks/use-gamification.ts`                      | Thin subscriber to GamificationService                        |
-| `src/hooks/use-study-planner.ts`                     | Thin subscriber to StudyPlannerService                        |
-| `system-design.md`                                   | Updated for Session 38                                        |
-| `CONTEXT.md`                                         | Updated for Session 38                                        |
+| File/Dir                                           | What I'm touching                                             |
+| -------------------------------------------------- | ------------------------------------------------------------- |
+| `src/lib/services/quiz-result-processor.ts`        | New — quiz completion orchestration (4 sources)               |
+| `src/lib/question-engine/enrichment-pipeline.ts`   | New — 3-port enrichment (Curriculum/Embedding/PastPaper)      |
+| `src/lib/tinyfish/rag-pipeline.ts`                 | New — withRagGuards HOF, barrel separation                    |
+| `src/lib/services/push-delivery.ts`                | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
+| `src/lib/services/study-planner-service.ts`        | New — StudyPlannerService (state/sync/mutations)              |
+| `src/lib/gamification-engine/service.ts`           | New — GamificationService (state/persist/sync)                |
+| `src/lib/ai/cached-ai-generator.ts`                | Generic CachedAIGenerator<T>                                  |
+| `src/lib/question-engine/`                         | GenerateResult structured return, AIClient threading          |
+| `src/lib/analytics/analytics-service.ts`           | SessionStore interface, extracted from routes                 |
+| `src/lib/assignments/submission-service.ts`        | Uses PushDeliveryService                                      |
+| `src/lib/digest/digest-service.ts`                 | Uses PushDeliveryService                                      |
+| `src/lib/ably/client.ts`                           | Server-side Rest client for Ably token minting                |
+| `src/app/api/ably/token/route.ts`                  | Token endpoint with namespace-scoped capabilities             |
+| `src/hooks/use-ably-chat.ts`                       | ChatClient singleton tied to user auth state                  |
+| `src/components/study-groups/ably-provider.tsx`    | `ChatClientProvider` wrapper                                  |
+| `src/app/[locale]/study-groups/layout.tsx`         | Route-level Ably provider                                     |
+| `src/components/study-groups/live-session-bar.tsx` | Ably presence hooks (usePresence + usePresenceListener)       |
+| `src/hooks/use-live-session.ts`                    | Simplified — one-time GET + start mutation (no polling)       |
+| `src/lib/study-groups/live-session-service.ts`     | Appwrite metadata only (no participant CRUD)                  |
+| `src/lib/study-groups/live-session-types.ts`       | Reduced — no participantCount                                 |
+| `src/app/api/study-groups/[groupId]/live-session/` | GET returns `{ session }` only; PATCH only `action: "end"`    |
 
 ## Background Knowledge
 
@@ -133,7 +133,7 @@ Appwrite Cloud
 - **Dark mode diagrams**: All 8 Konva renderers use `useDiagramTheme()` hook (`src/components/quiz/diagrams/diagram-theme.ts`) which detects `.dark` on `<html>` via MutationObserver and returns light/dark `DiagramColors` palettes (oklch strings). Atom colours in chemistry renderer are element-semantic and stay identical across themes. CSS custom properties don't cascade into Konva `<canvas>` — theme detection must use DOM classList + MutationObserver.
 - **Knowledge graph**: `src/lib/knowledge-graph/` — AI generates `{ nodes, edges }` topic graphs. Cached 7d in Dexie v29. Two UIs: dashboard `LearningMapCard` + per-question `TopicGraph`.
 - **Study guides**: `src/lib/study-guide/` — AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
-- **Live sessions**: `useLiveSession()` hook with 15s polling via React Query. Appwrite-backed with `LiveSession` + `LiveSessionParticipant` collections.
+- **Live sessions**: `useLiveSession()` hook for start + metadata query. Ably real-time presence via `usePresence`/`usePresenceListener` in `LiveSessionBar` (no polling). Appwrite stores only session metadata (startedBy, subject, startedAt, status). Auto-ends on last departure (client-side occupancy check).
 - **Dexie schema**: v32 — 38+ tables. v27 added `analyticsEvents`. v28 added `sharedQuestions`. v29 added `knowledgeGraph`. v30 added `teacherObservations` + `assignmentMessages`. v31 added `studyPlans` + `onboardingState` + `srDailyBudget` + `flashcardSyncState`. v32 added `studyGuides`.
 - **DataAccess seam**: All 33 accessors via typed `DataAccess` interface (10 domain sub-interfaces: FlashcardDataAccess, CompetencyDataAccess, QuizDataAccess, ContentDataAccess, StudyDataAccess, SyncDataAccess, ObservabilityDataAccess, SocialDataAccess, CacheDataAccess, LegacyDataAccess). 11 dead accessors removed. Two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests). `seed()` for test setup. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain consumers kept on composite `DataAccess`. `Collection<T>` now supports `.offset(n)` for pagination. See ADR-0011.
 - **E2E testing**: Playwright 1.60.0 — smoke tests + visual regression tests (homepage sections).

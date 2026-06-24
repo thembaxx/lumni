@@ -1,10 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { getAuthenticatedUserName } from "@/lib/server/auth";
-import {
-  getActiveSession,
-  getParticipants,
-  startLiveSession,
-} from "@/lib/study-groups/live-session-service";
+import { getActiveSession, startLiveSession } from "@/lib/study-groups/live-session-service";
 
 export const GET = createRouteHandler({
   auth: "required",
@@ -12,9 +8,7 @@ export const GET = createRouteHandler({
   execute: async ({ params }) => {
     const groupId = params?.groupId as string;
     const session = await getActiveSession(groupId);
-    if (!session) return { session: null, participants: [] };
-    const participants = await getParticipants(session.$id);
-    return { session, participants };
+    return { session };
   },
 });
 

@@ -362,7 +362,6 @@ export const schemaConfig: Record<string, CollectionSchema> = {
       status: { type: "string", size: 20 },
       startedAt: { type: "datetime" },
       endedAt: { type: "datetime" },
-      participantCount: { type: "integer" },
     },
     indexes: [
       {
@@ -374,28 +373,6 @@ export const schemaConfig: Record<string, CollectionSchema> = {
         key: "idx_live_sessions_status",
         type: "key",
         attributes: ["status"],
-      },
-    ],
-  },
-  live_session_participants: {
-    attributes: {
-      sessionId: { type: "string", size: 100, required: true },
-      userId: { type: "string", size: 100, required: true },
-      userName: { type: "string", size: 100 },
-      joinedAt: { type: "datetime" },
-      status: { type: "string", size: 20 },
-      currentActivity: { type: "string", size: 500 },
-    },
-    indexes: [
-      {
-        key: "idx_lsp_session",
-        type: "key",
-        attributes: ["sessionId"],
-      },
-      {
-        key: "idx_lsp_user",
-        type: "key",
-        attributes: ["userId"],
       },
     ],
   },

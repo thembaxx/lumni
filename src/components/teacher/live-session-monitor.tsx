@@ -16,7 +16,6 @@ interface SessionData {
   subject?: string;
   status: "active" | "ended";
   startedAt: string;
-  participantCount: number;
 }
 
 function getDuration(startedAt: string): number {
@@ -110,13 +109,9 @@ export function LiveSessionMonitor() {
                     {formatTime(session.startedAt)}
                   </p>
                 </div>
-                <div className="flex shrink-0 items-center gap-3 text-xs">
-                  <span className="text-muted-foreground">{getDurationLabel(mins)}</span>
-                  <span className="font-medium tabular-nums">
-                    {session.participantCount} participant
-                    {session.participantCount !== 1 ? "s" : ""}
-                  </span>
-                </div>
+                <span className="shrink-0 text-muted-foreground text-xs">
+                  {getDurationLabel(mins)}
+                </span>
               </div>
             );
           })}
