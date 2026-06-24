@@ -169,7 +169,7 @@ export function BottomNav() {
               type="button"
               onClick={handleOpenTools}
               aria-label="Open tools"
-              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#007AFF] text-white shadow-level-3 transition-shadow hover:bg-[#007AFF]/90 dark:bg-[#0A84FF] dark:hover:bg-[#0A84FF]/90"
+              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 transition-shadow hover:bg-system-accent/90"
               whileTap={{ scale: 0.92 }}
               transition={{ type: "spring", duration: 0.25, bounce: 0 }}
             >

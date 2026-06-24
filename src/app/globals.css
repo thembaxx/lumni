@@ -250,6 +250,7 @@
   --radius-2xl: 28px;
   --radius-3xl: 32px;
   --radius-4xl: var(--radius-card-lg);
+  --radius-card-lg: var(--radius-card-lg);
 
   /* Z-Index Scale */
   --z-content: var(--z-content);

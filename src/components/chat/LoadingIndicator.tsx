@@ -1,5 +1,5 @@
-import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
@@ -24,17 +24,15 @@ export function LoadingIndicator() {
       aria-live="polite"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-3 rounded-lg border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-sm"
+      className="flex items-center gap-3 rounded-xl border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-level-1"
     >
-      <div className="size-7 shrink-0">
-        <m.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-          className="size-full"
-        >
-          <HugeiconsIcon icon={RadialIcon} className="size-7 text-muted-foreground" />
-        </m.div>
-      </div>
+      <m.div
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+        className="flex size-7 shrink-0 items-center justify-center"
+      >
+        <HugeiconsIcon icon={SparklesIcon} className="size-6 text-system-accent" />
+      </m.div>
       <AnimatePresence mode="wait" initial={false}>
         <m.span
           key={messageIndex}
