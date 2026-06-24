@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import type { JobType } from "@/lib/orchestrator/types";
 import { formatCorrectAnswer } from "@/lib/question-engine/answer-formatter";
@@ -58,7 +59,6 @@ export interface QuizResultDeps {
   addRetentionItem?: (entry: RetentionInput) => void;
   flashcardEngine: FlashcardEngine;
   trackQuestionResult: (params: TrackResultInput) => void;
-  // biome-ignore lint/suspicious/noExplicitAny: contravariant enqueue payload
   // oxlint-disable-next-line typescript/no-explicit-any
   enqueue: (type: JobType, payload: any) => void;
   addStudySession: (session: Omit<StudySession, "id">) => void;
@@ -122,109 +122,42 @@ export type QuizResultInput =
       isSm2: boolean;
     };
 
-export async function processQuizResult(
-  input: QuizResultInput,
+function flashcardCreateEffect(
   deps: QuizResultDeps,
-): Promise<void> {
-  switch (input.source) {
-    case "bolt":
-      await processBolt(input.question, deps);
-      break;
-    case "quiz":
-      await processQuiz(input.results, deps);
-      break;
-    case "exam":
-      await processExam(input.parts, input.subject, input.paperId, deps);
-      break;
-    case "flashcard":
-      await processFlashcard(input.cards, input.qualities, input.subject, input.isSm2, deps);
-      break;
-  }
+  front: string,
+  back: string,
+  subject: string,
+  topic?: string,
+): Effect.Effect<void> {
+  return Effect.tryPromise(() => deps.flashcardEngine.create(front, back, subject, topic)).pipe(
+    Effect.catchAll(() => Effect.void),
+  );
 }
 
-async function processBolt(result: BoltResult, deps: QuizResultDeps): Promise<void> {
-  const { question, correct } = result;
-  const accuracy = correct ? 100 : 0;
-  deps.updateStreak();
-  deps.addXp(1, accuracy, deps.currentStreak);
-  deps.checkAndUnlockAchievements(
-    deps.totalQuestionsAnswered + 1,
-    accuracy,
-    deps.currentStreak,
-    deps.levelInfo.level,
-    correct,
+function flashcardReviewEffect(
+  deps: QuizResultDeps,
+  id: string,
+  quality: number,
+): Effect.Effect<void> {
+  return Effect.tryPromise(() => deps.flashcardEngine.review(id, quality)).pipe(
+    Effect.catchAll(() => Effect.void),
   );
-  deps.checkForRewardChests();
+}
 
-  deps.trackQuestionResult({
-    subjectId: question.subject,
-    topicId: question.topic,
-    bloomLevel: question.bloomTaxonomy,
-    score: correct ? 1 : 0,
-    maxScore: 1,
-  });
-
-  if (!correct) {
-    const correctAnswer = formatCorrectAnswer(question);
-    deps.addWrongAnswer({
-      questionId: question.id,
-      questionText: question.questionText,
-      subject: question.subject,
-      topic: question.topic,
-      correctAnswer,
-      userAnswer: "(see quiz history)",
-      explanation: question.explanation,
-    });
-    deps.addRetentionItem?.({
-      questionId: question.id,
-      questionText: question.questionText,
-      subject: question.subject,
-      topic: question.topic,
-      correctAnswer,
-      explanation: question.explanation,
-    });
-    await deps.flashcardEngine.create(
-      question.questionText,
-      correctAnswer,
-      question.subject,
-      question.topic,
+function processBoltEffect(result: BoltResult, deps: QuizResultDeps): Effect.Effect<void> {
+  return Effect.gen(function* () {
+    const { question, correct } = result;
+    const accuracy = correct ? 100 : 0;
+    deps.updateStreak();
+    deps.addXp(1, accuracy, deps.currentStreak);
+    deps.checkAndUnlockAchievements(
+      deps.totalQuestionsAnswered + 1,
+      accuracy,
+      deps.currentStreak,
+      deps.levelInfo.level,
+      correct,
     );
-  }
-
-  deps.enqueue("analytics-sync", {
-    events: [
-      {
-        event: "grade",
-        timestamp: Date.now(),
-        subject: question.subject,
-        questionType: question.type,
-        success: correct,
-        duration: 0,
-      },
-    ],
-  });
-}
-
-async function processQuiz(results: QuizResults, deps: QuizResultDeps): Promise<void> {
-  const accuracy =
-    results.totalQuestions > 0
-      ? Math.round((results.correctAnswers / results.totalQuestions) * 100)
-      : 0;
-
-  deps.updateStreak();
-  deps.addXp(results.totalQuestions, accuracy, deps.currentStreak);
-  deps.checkAndUnlockAchievements(
-    deps.totalQuestionsAnswered + results.totalQuestions,
-    accuracy,
-    deps.currentStreak,
-    deps.levelInfo.level,
-    accuracy === 100,
-  );
-  deps.checkForRewardChests();
-
-  const flashcardPromises: Promise<unknown>[] = [];
-  for (const [i, question] of results.questions.entries()) {
-    const correct = results.correctness[i] ?? false;
+    deps.checkForRewardChests();
     deps.trackQuestionResult({
       subjectId: question.subject,
       topicId: question.topic,
@@ -232,7 +165,6 @@ async function processQuiz(results: QuizResults, deps: QuizResultDeps): Promise<
       score: correct ? 1 : 0,
       maxScore: 1,
     });
-
     if (!correct) {
       const correctAnswer = formatCorrectAnswer(question);
       deps.addWrongAnswer({
@@ -252,41 +184,124 @@ async function processQuiz(results: QuizResults, deps: QuizResultDeps): Promise<
         correctAnswer,
         explanation: question.explanation,
       });
-      flashcardPromises.push(
-        deps.flashcardEngine.create(
-          question.questionText,
-          correctAnswer,
-          question.subject,
-          question.topic,
-        ),
+      yield* flashcardCreateEffect(
+        deps,
+        question.questionText,
+        correctAnswer,
+        question.subject,
+        question.topic,
       );
     }
-  }
-  await Promise.all(flashcardPromises);
-
-  deps.markPlanStale();
-
-  const weakCount = results.questions.filter((_, i) => !results.correctness[i]).length;
-  if (weakCount > 0) {
-    const subject = results.questions[0]?.subject ?? "unknown";
-    deps.addStudySession({
-      subject,
-      type: "quiz",
-      scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
-      duration: Math.min(weakCount * 5, 45),
-      completed: false,
+    deps.enqueue("analytics-sync", {
+      events: [
+        {
+          event: "grade",
+          timestamp: Date.now(),
+          subject: question.subject,
+          questionType: question.type,
+          success: correct,
+          duration: 0,
+        },
+      ],
     });
-  }
+  });
+}
 
-  deps.enqueue("analytics-sync", {
-    events: results.questions.map((q, i) => ({
-      event: "grade",
-      timestamp: Date.now(),
-      subject: q.subject,
-      questionType: q.type,
-      success: results.correctness[i] ?? false,
-      duration: 0,
-    })),
+export function processQuizResultEffect(
+  input: QuizResultInput,
+  deps: QuizResultDeps,
+): Effect.Effect<void> {
+  switch (input.source) {
+    case "bolt":
+      return processBoltEffect(input.question, deps);
+    case "quiz":
+      return processQuizEffect(input.results, deps);
+    case "exam":
+      return processExamEffect(input.parts, input.subject, input.paperId, deps);
+    case "flashcard":
+      return processFlashcardEffect(input.cards, input.qualities, input.subject, input.isSm2, deps);
+  }
+}
+
+function processQuizEffect(results: QuizResults, deps: QuizResultDeps): Effect.Effect<void> {
+  return Effect.gen(function* () {
+    const accuracy =
+      results.totalQuestions > 0
+        ? Math.round((results.correctAnswers / results.totalQuestions) * 100)
+        : 0;
+    deps.updateStreak();
+    deps.addXp(results.totalQuestions, accuracy, deps.currentStreak);
+    deps.checkAndUnlockAchievements(
+      deps.totalQuestionsAnswered + results.totalQuestions,
+      accuracy,
+      deps.currentStreak,
+      deps.levelInfo.level,
+      accuracy === 100,
+    );
+    deps.checkForRewardChests();
+    const flashcardEffects: Effect.Effect<void>[] = [];
+    for (const [i, question] of results.questions.entries()) {
+      const correct = results.correctness[i] ?? false;
+      deps.trackQuestionResult({
+        subjectId: question.subject,
+        topicId: question.topic,
+        bloomLevel: question.bloomTaxonomy,
+        score: correct ? 1 : 0,
+        maxScore: 1,
+      });
+      if (!correct) {
+        const correctAnswer = formatCorrectAnswer(question);
+        deps.addWrongAnswer({
+          questionId: question.id,
+          questionText: question.questionText,
+          subject: question.subject,
+          topic: question.topic,
+          correctAnswer,
+          userAnswer: "(see quiz history)",
+          explanation: question.explanation,
+        });
+        deps.addRetentionItem?.({
+          questionId: question.id,
+          questionText: question.questionText,
+          subject: question.subject,
+          topic: question.topic,
+          correctAnswer,
+          explanation: question.explanation,
+        });
+        flashcardEffects.push(
+          flashcardCreateEffect(
+            deps,
+            question.questionText,
+            correctAnswer,
+            question.subject,
+            question.topic,
+          ),
+        );
+      }
+    }
+    yield* Effect.all(flashcardEffects, { concurrency: "unbounded" });
+    deps.markPlanStale();
+    const weakCount = results.questions.filter((_, i) => !results.correctness[i]).length;
+    if (weakCount > 0) {
+      const subject = results.questions[0]?.subject ?? "unknown";
+      deps.addStudySession({
+        subject,
+        type: "quiz",
+        scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+        duration: Math.min(weakCount * 5, 45),
+        completed: false,
+      });
+    }
+    deps.enqueue("analytics-sync", {
+      events: results.questions.map((q, i) => ({
+        event: "grade",
+        timestamp: Date.now(),
+        subject: q.subject,
+        questionType: q.type,
+        success: results.correctness[i] ?? false,
+        duration: 0,
+      })),
+    });
   });
 }
 
@@ -298,182 +313,169 @@ function getCorrectAnswerText(part: ExamPartResult["part"]): string {
   return "";
 }
 
-function _getAnswerText(
-  part: ExamPartResult["part"],
-  answer: string | string[] | undefined,
-): string {
-  if (!answer) return "";
-  const value = Array.isArray(answer) ? answer.join(", ") : answer;
-  if (part.options) {
-    const opt = part.options.find((o) => o.id === value);
-    return opt ? `${opt.id}. ${opt.text}` : value;
-  }
-  return value;
-}
-
-async function processExam(
+function processExamEffect(
   parts: ExamPartResult[],
   subject: string,
   paperId: string | undefined,
   deps: QuizResultDeps,
-): Promise<void> {
-  const correctCount = parts.filter((r) => r.correct).length;
-  const totalCount = parts.length;
-  const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
-
-  deps.updateStreak();
-  deps.addXp(totalCount, accuracy, deps.currentStreak);
-  deps.checkAndUnlockAchievements(
-    deps.totalQuestionsAnswered + totalCount,
-    accuracy,
-    deps.currentStreak,
-    deps.levelInfo.level,
-    accuracy === 100,
-  );
-  deps.checkForRewardChests();
-
-  const flashcardPromises: Promise<unknown>[] = [];
-  for (const result of parts) {
-    const topic = result.sectionId;
-    const maxScore = typeof result.part.marks === "number" ? result.part.marks : result.score;
-
-    deps.trackQuestionResult({
-      subjectId: subject,
-      topicId: topic,
-      bloomLevel: "apply",
-      score: result.score,
-      maxScore,
-      paperId,
-    });
-
-    if (!result.correct) {
-      const partText = result.part.text ?? `Question ${result.questionId}`;
-      const correctAnswer = result.correctAnswerText ?? getCorrectAnswerText(result.part);
-      deps.addWrongAnswer({
-        questionId: result.partId,
-        questionText: partText,
-        subject,
-        topic,
-        correctAnswer,
-        userAnswer: result.userAnswer ?? "",
-        explanation: "",
+): Effect.Effect<void> {
+  return Effect.gen(function* () {
+    const correctCount = parts.filter((r) => r.correct).length;
+    const totalCount = parts.length;
+    const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+    deps.updateStreak();
+    deps.addXp(totalCount, accuracy, deps.currentStreak);
+    deps.checkAndUnlockAchievements(
+      deps.totalQuestionsAnswered + totalCount,
+      accuracy,
+      deps.currentStreak,
+      deps.levelInfo.level,
+      accuracy === 100,
+    );
+    deps.checkForRewardChests();
+    const flashcardEffects: Effect.Effect<void>[] = [];
+    for (const result of parts) {
+      const topic = result.sectionId;
+      const maxScore = typeof result.part.marks === "number" ? result.part.marks : result.score;
+      deps.trackQuestionResult({
+        subjectId: subject,
+        topicId: topic,
+        bloomLevel: "apply",
+        score: result.score,
+        maxScore,
+        paperId,
       });
-      deps.addRetentionItem?.({
-        questionId: result.partId,
-        questionText: partText,
-        subject,
-        topic,
-        correctAnswer,
-        explanation: "",
-      });
-      flashcardPromises.push(
-        deps.flashcardEngine.create(
-          partText,
-          getCorrectAnswerText(result.part) || "Review this topic",
+      if (!result.correct) {
+        const partText = result.part.text ?? `Question ${result.questionId}`;
+        const correctAnswer = result.correctAnswerText ?? getCorrectAnswerText(result.part);
+        deps.addWrongAnswer({
+          questionId: result.partId,
+          questionText: partText,
           subject,
-        ),
-      );
+          topic,
+          correctAnswer,
+          userAnswer: result.userAnswer ?? "",
+          explanation: "",
+        });
+        deps.addRetentionItem?.({
+          questionId: result.partId,
+          questionText: partText,
+          subject,
+          topic,
+          correctAnswer,
+          explanation: "",
+        });
+        flashcardEffects.push(
+          flashcardCreateEffect(
+            deps,
+            partText,
+            getCorrectAnswerText(result.part) || "Review this topic",
+            subject,
+          ),
+        );
+      }
     }
-  }
-  await Promise.all(flashcardPromises);
-
-  deps.markPlanStale();
-
-  const weakCount = parts.filter((r) => !r.correct).length;
-  if (weakCount > 0) {
-    deps.addStudySession({
-      subject,
-      type: "exam",
-      scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
-      duration: Math.min(weakCount * 5, 45),
-      completed: false,
+    yield* Effect.all(flashcardEffects, { concurrency: "unbounded" });
+    deps.markPlanStale();
+    const weakCount = parts.filter((r) => !r.correct).length;
+    if (weakCount > 0) {
+      deps.addStudySession({
+        subject,
+        type: "exam",
+        scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+        duration: Math.min(weakCount * 5, 45),
+        completed: false,
+      });
+    }
+    deps.enqueue("analytics-sync", {
+      events: parts.map((r) => ({
+        event: "grade",
+        timestamp: Date.now(),
+        subject,
+        questionType: "multiple-choice" as QuestionType,
+        success: r.correct,
+        duration: 0,
+      })),
     });
-  }
-
-  deps.enqueue("analytics-sync", {
-    events: parts.map((r) => ({
-      event: "grade",
-      timestamp: Date.now(),
-      subject,
-      questionType: "multiple-choice" as QuestionType,
-      success: r.correct,
-      duration: 0,
-    })),
   });
 }
 
-async function processFlashcard(
+function processFlashcardEffect(
   cards: FlashcardItem[],
   qualities: Map<string, number>,
   subject: string,
   isSm2: boolean,
   deps: QuizResultDeps,
-): Promise<void> {
-  const totalCards = cards.length;
-  const passedCount = Array.from(qualities.values()).filter((q) => q >= 3).length;
-  const accuracy = totalCards > 0 ? Math.round((passedCount / totalCards) * 100) : 0;
-
-  deps.updateStreak();
-  deps.addXp(totalCards, accuracy, deps.currentStreak);
-  deps.checkAndUnlockAchievements(
-    deps.totalQuestionsAnswered + totalCards,
-    accuracy,
-    deps.currentStreak,
-    deps.levelInfo.level,
-    accuracy === 100,
-  );
-  deps.checkForRewardChests();
-
-  const cardPromises: Promise<unknown>[] = [];
-  for (const card of cards) {
-    const quality = qualities.get(card.id) ?? 0;
-    const isKnown = quality >= 3;
-
-    if (isSm2) {
-      cardPromises.push(deps.flashcardEngine.review(card.id, quality));
-    } else {
-      deps.trackQuestionResult({
-        subjectId: subject,
-        topicId: card.topic,
-        bloomLevel: card.rawQuestion.bloomTaxonomy,
-        score: isKnown ? 1 : 0,
-        maxScore: 1,
-      });
-    }
-
-    if (!isKnown) {
-      deps.addWrongAnswer({
-        questionId: card.id,
-        questionText: card.front,
-        subject,
-        topic: card.topic,
-        correctAnswer: card.back,
-        userAnswer: "",
-        explanation: card.back,
-      });
-      deps.addRetentionItem?.({
-        questionId: card.id,
-        questionText: card.front,
-        subject,
-        topic: card.topic,
-        correctAnswer: card.back,
-        explanation: card.back,
-      });
-      if (!isSm2) {
-        cardPromises.push(deps.flashcardEngine.create(card.front, card.back, subject, card.topic));
+): Effect.Effect<void> {
+  return Effect.gen(function* () {
+    const totalCards = cards.length;
+    const passedCount = Array.from(qualities.values()).filter((q) => q >= 3).length;
+    const accuracy = totalCards > 0 ? Math.round((passedCount / totalCards) * 100) : 0;
+    deps.updateStreak();
+    deps.addXp(totalCards, accuracy, deps.currentStreak);
+    deps.checkAndUnlockAchievements(
+      deps.totalQuestionsAnswered + totalCards,
+      accuracy,
+      deps.currentStreak,
+      deps.levelInfo.level,
+      accuracy === 100,
+    );
+    deps.checkForRewardChests();
+    const cardEffects: Effect.Effect<void>[] = [];
+    for (const card of cards) {
+      const quality = qualities.get(card.id) ?? 0;
+      const isKnown = quality >= 3;
+      if (isSm2) {
+        cardEffects.push(flashcardReviewEffect(deps, card.id, quality));
+      } else {
+        deps.trackQuestionResult({
+          subjectId: subject,
+          topicId: card.topic,
+          bloomLevel: card.rawQuestion.bloomTaxonomy,
+          score: isKnown ? 1 : 0,
+          maxScore: 1,
+        });
+      }
+      if (!isKnown) {
+        deps.addWrongAnswer({
+          questionId: card.id,
+          questionText: card.front,
+          subject,
+          topic: card.topic,
+          correctAnswer: card.back,
+          userAnswer: "",
+          explanation: card.back,
+        });
+        deps.addRetentionItem?.({
+          questionId: card.id,
+          questionText: card.front,
+          subject,
+          topic: card.topic,
+          correctAnswer: card.back,
+          explanation: card.back,
+        });
+        if (!isSm2) {
+          cardEffects.push(flashcardCreateEffect(deps, card.front, card.back, subject, card.topic));
+        }
       }
     }
-  }
-  await Promise.all(cardPromises);
-
-  deps.enqueue("analytics-sync", {
-    events: cards.map((card) => ({
-      event: "grade",
-      timestamp: Date.now(),
-      subject,
-      questionType: "multiple-choice" as QuestionType,
-      success: (qualities.get(card.id) ?? 0) >= 3,
-      duration: 0,
-    })),
+    yield* Effect.all(cardEffects, { concurrency: "unbounded" });
+    deps.enqueue("analytics-sync", {
+      events: cards.map((card) => ({
+        event: "grade",
+        timestamp: Date.now(),
+        subject,
+        questionType: "multiple-choice" as QuestionType,
+        success: (qualities.get(card.id) ?? 0) >= 3,
+        duration: 0,
+      })),
+    });
   });
+}
+
+export async function processQuizResult(
+  input: QuizResultInput,
+  deps: QuizResultDeps,
+): Promise<void> {
+  return Effect.runPromise(processQuizResultEffect(input, deps));
 }

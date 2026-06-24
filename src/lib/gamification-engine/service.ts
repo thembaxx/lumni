@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import type { ObservabilityDataAccess } from "@/lib/db";
 import { dexieDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
@@ -78,6 +79,26 @@ export class GamificationService {
     }
   }
 
+  loadFromDexieEffect(): Effect.Effect<void> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.tryPromise(() => self.db.gamification.get(1)).pipe(
+      Effect.catchAll((err) => {
+        logError("GamificationService.loadFromDexie", err);
+        return Effect.succeed(undefined);
+      }),
+      Effect.flatMap((dexieData) => {
+        if (!dexieData) return Effect.void;
+        const merged = gamificationEngine.mergeWithDefaults(dexieData);
+        if (merged !== self.data) {
+          self.data = merged;
+          self.notify();
+        }
+        return Effect.void;
+      }),
+    );
+  }
+
   async syncFromServer(): Promise<void> {
     try {
       const res = await apiFetch<{ gamification: StoredGamification | null }>(
@@ -97,6 +118,163 @@ export class GamificationService {
     } catch (err) {
       logError("GamificationService.syncFromServer", err);
     }
+  }
+
+  syncFromServerEffect(): Effect.Effect<void> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.tryPromise(() =>
+      apiFetch<{ gamification: StoredGamification | null }>("/api/gamification", {}),
+    ).pipe(
+      Effect.catchAll((err) => {
+        logError("GamificationService.syncFromServer", err);
+        return Effect.succeed(undefined);
+      }),
+      Effect.flatMap((res) => {
+        if (!res || !res.gamification) return Effect.void;
+        const merged = gamificationEngine.mergeWithDefaults({
+          ...self.data,
+          ...res.gamification,
+        });
+        if (merged !== self.data) {
+          self.data = merged;
+          self.notify();
+        }
+        return Effect.void;
+      }),
+    );
+  }
+
+  private persistEffect(data: StoredGamification): Effect.Effect<void> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    const record = { ...data, id: 1 as const };
+    return Effect.tryPromise(() => self.db.gamification.put(record)).pipe(
+      Effect.catchAll((err) => Effect.sync(() => logError("GamificationService.persist", err))),
+    );
+  }
+
+  private saveSnapshotEffect(data: StoredGamification): Effect.Effect<void> {
+    return Effect.sync(() => {
+      const label =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("lumni_display_name") || undefined
+          : undefined;
+      setTimeout(() => {
+        saveWeeklySnapshot(label || "You", data.totalXp, data.currentStreak);
+      }, 0);
+    });
+  }
+
+  addXpEffect(
+    amount: number,
+    accuracy: number,
+    streak: number,
+    subject?: string,
+  ): Effect.Effect<XpResult> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const working = subject
+        ? gamificationEngine.trackSubjectQuestion(self.data, subject, amount)
+        : self.data;
+      const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
+        working,
+        amount,
+        accuracy,
+        streak,
+        subject,
+      );
+      self.data = newData;
+      yield* self.persistEffect(newData);
+      self.scheduleSync(newData);
+      self.saveSnapshot(newData);
+      self.notify();
+      return { data: newData, leveledUp: newLevel !== null };
+    });
+  }
+
+  addAchievementEffect(achievementId: string): Effect.Effect<AchievementResult> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const { data: newData, achievement } = gamificationEngine.addAchievement(
+        self.data,
+        achievementId,
+      );
+      self.data = newData;
+      yield* self.persistEffect(newData);
+      self.scheduleSync(newData);
+      self.notify();
+      return { data: newData, achievement };
+    });
+  }
+
+  updateStreakEffect(): Effect.Effect<StreakResult> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
+      self.data = newData;
+      yield* self.persistEffect(newData);
+      self.scheduleSync(newData);
+      self.notify();
+      return { data: newData, freezeConsumed };
+    });
+  }
+
+  consumeStreakFreezeEffect(): Effect.Effect<FreezeResult> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const { data: newData, success } = gamificationEngine.consumeStreakFreeze(self.data);
+      if (success) {
+        self.data = newData;
+        yield* self.persistEffect(newData);
+        self.scheduleSync(newData);
+        self.notify();
+      }
+      return { data: newData, success };
+    });
+  }
+
+  addStreakFreezeEffect(count?: number): Effect.Effect<void> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const newData = gamificationEngine.addStreakFreeze(self.data, count);
+      self.data = newData;
+      yield* self.persistEffect(newData);
+      self.scheduleSync(newData);
+      self.notify();
+    });
+  }
+
+  completeDailyChallengeEffect(challengeId: string): Effect.Effect<void> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const { data: newData } = gamificationEngine.completeDailyChallenge(self.data, challengeId);
+      self.data = newData;
+      yield* self.persistEffect(newData);
+      self.scheduleSync(newData);
+      self.notify();
+    });
+  }
+
+  checkForRewardChestsEffect(): Effect.Effect<ChestResult> {
+    // oxlint-disable-next-line typescript/no-this-alias
+    const self = this;
+    return Effect.gen(function* () {
+      const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(self.data);
+      if (newData !== self.data) {
+        yield* self.persistEffect(newData);
+        self.scheduleSync(newData);
+      }
+      self.data = newData;
+      self.notify();
+      return { data: newData, chest };
+    });
   }
 
   addXp(amount: number, accuracy: number, streak: number, subject?: string): XpResult {
