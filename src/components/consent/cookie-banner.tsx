@@ -17,10 +17,10 @@ import { useConsent } from "@/lib/consent/consent-context";
 
 export function CookieBanner() {
   const t = useTranslations();
-  const { consent, updateConsent } = useConsent();
+  const { consent, isLoading, updateConsent } = useConsent();
   const [showSettings, setShowSettings] = useState(false);
 
-  if (consent) return null;
+  if (consent || isLoading) return null;
 
   const handleAccept = (analytics: boolean, marketing: boolean, dataSharing: boolean) => {
     updateConsent({ analytics, marketing, dataSharing });

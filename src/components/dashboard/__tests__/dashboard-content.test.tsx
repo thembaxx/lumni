@@ -151,9 +151,9 @@ describe("DashboardContent", () => {
   });
 
   describe("practice tab", () => {
-    it("hides HeroBanner on practice tab (kept in DOM by Activity)", () => {
+    it("does not render HeroBanner on practice tab (only active tab mounts)", () => {
       const { queryByTestId } = render(<DashboardContent {...defaultProps} activeTab="practice" />);
-      expect(queryByTestId("hero-banner")).not.toBeNull();
+      expect(queryByTestId("hero-banner")).toBeNull();
     });
 
     it("renders practice tab loading skeleton (dynamic import placeholder)", () => {
@@ -164,9 +164,9 @@ describe("DashboardContent", () => {
       expect(skeletons.length).toBeGreaterThan(0);
     });
 
-    it("hides TodayTab on practice tab (kept in DOM by Activity)", () => {
+    it("does not render TodayTab on practice tab (only active tab mounts)", () => {
       const { queryByTestId } = render(<DashboardContent {...defaultProps} activeTab="practice" />);
-      expect(queryByTestId("today-tab")).not.toBeNull();
+      expect(queryByTestId("today-tab")).toBeNull();
     });
 
     it("renders practice tab loading skeleton (dynamic import placeholder)", () => {
@@ -204,11 +204,11 @@ describe("DashboardContent", () => {
       expect(skeletons.length).toBeGreaterThan(0);
     });
 
-    it("hides TodayTab on analytics tab (kept in DOM by Activity)", () => {
+    it("does not render TodayTab on analytics tab (only active tab mounts)", () => {
       const { queryByTestId } = render(
         <DashboardContent {...defaultProps} activeTab="analytics" />,
       );
-      expect(queryByTestId("today-tab")).not.toBeNull();
+      expect(queryByTestId("today-tab")).toBeNull();
     });
 
     it("shows AnonymousUpsell for anonymous user on analytics tab", () => {
@@ -280,24 +280,22 @@ describe("DashboardContent", () => {
 
   describe("practice tab loading skeleton structure", () => {
     it("renders the correct number of skeletons for practice tab loading state", () => {
-      // With Activity, all tabs render simultaneously (hidden with display:none)
+      // With conditional rendering, only the active tab renders
       // Practice tab: 1 large + 2 grid + 1 bottom = 4
-      // Analytics tab: 3 grid + 1 medium + 1 large = 5
-      // Total: 4 + 5 = 9 skeletons
       const { getAllByTestId } = render(
         <DashboardContent {...defaultProps} activeTab="practice" />,
       );
       const skeletons = getAllByTestId("skeleton");
-      expect(skeletons.length).toBe(9);
+      expect(skeletons.length).toBe(4);
     });
 
     it("renders the correct number of skeletons for analytics tab loading state", () => {
-      // Same as above — all tabs render, skeletons from all are in DOM
+      // Analytics tab: 3 grid + 1 medium + 1 large = 5
       const { getAllByTestId } = render(
         <DashboardContent {...defaultProps} activeTab="analytics" />,
       );
       const skeletons = getAllByTestId("skeleton");
-      expect(skeletons.length).toBe(9);
+      expect(skeletons.length).toBe(5);
     });
   });
 

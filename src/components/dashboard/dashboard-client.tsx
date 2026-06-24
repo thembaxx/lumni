@@ -231,26 +231,13 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
                       />
                     </m.div>
                   ) : (
-                    <m.div
-                      key={activeTab}
-                      className="flex min-h-0 flex-1 flex-col"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{
-                        opacity: 0,
-                        y: -4,
-                        transition: { duration: 0.15, ease: iOSEase },
-                      }}
-                      transition={{ duration: 0.25, ease: iOSEase }}
-                    >
-                      <DashboardContent
-                        id="dashboard-content"
-                        onStartQuiz={handleStartQuiz}
-                        activeTab={activeTab}
-                        onBoltComplete={handleBoltComplete}
-                        boltStreak={currentStreak}
-                      />
-                    </m.div>
+                    <DashboardContent
+                      id="dashboard-content"
+                      onStartQuiz={handleStartQuiz}
+                      activeTab={activeTab}
+                      onBoltComplete={handleBoltComplete}
+                      boltStreak={currentStreak}
+                    />
                   )}
                 </AnimatePresence>
               )}
