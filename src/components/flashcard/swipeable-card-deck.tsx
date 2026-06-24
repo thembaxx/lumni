@@ -101,7 +101,7 @@ export function SwipeableCardDeck({
 
   if (cards.length === 0) {
     return (
-      <Card className="mx-auto w-full max-w-md">
+      <Card className="mx-auto w-full max-w-md" data-testid="empty-deck-message">
         <CardContent className="flex flex-col items-center justify-center gap-4 p-8">
           <p className="text-muted-foreground">No flashcards available.</p>
         </CardContent>
@@ -125,7 +125,12 @@ export function SwipeableCardDeck({
   }
 
   return (
-    <div className="flex flex-col gap-4" role="application" aria-label="Flashcard deck">
+    <div
+      className="flex flex-col gap-4"
+      role="application"
+      aria-label="Flashcard deck"
+      data-testid="swipeable-card-deck"
+    >
       {/* Screen reader announcement for current card */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {`Card ${currentIndex + 1} of ${cards.length}`}
@@ -133,11 +138,11 @@ export function SwipeableCardDeck({
 
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="sm" onClick={onComplete}>
+        <Button variant="ghost" size="sm" onClick={onComplete} data-testid="exit-button">
           Quit
         </Button>
         <div className="flex items-center gap-2">
-          <Badge variant="outline">
+          <Badge variant="outline" data-testid="card-counter">
             {currentIndex + 1} / {cards.length}
           </Badge>
           {knownCount !== undefined && (

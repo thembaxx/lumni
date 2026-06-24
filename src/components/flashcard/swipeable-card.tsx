@@ -112,6 +112,7 @@ export const SwipeableCard = memo(function SwipeableCard({
       )}
       style={style ? { ...style, x, rotate, opacity } : { x, rotate, opacity }}
       aria-disabled={!isTop}
+      data-testid="swipeable-card"
       drag={isTop ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.7}
@@ -144,6 +145,7 @@ export const SwipeableCard = memo(function SwipeableCard({
         >
           {/* Front */}
           <div
+            data-testid="card-front"
             className="backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
             style={BACKFACE_HIDDEN}
           >
@@ -156,7 +158,10 @@ export const SwipeableCard = memo(function SwipeableCard({
 
             <div className="mb-4 flex items-center gap-2">
               {topic && (
-                <span className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-[--system-accent]">
+                <span
+                  data-testid="card-topic"
+                  className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-[--system-accent]"
+                >
                   {topic}
                 </span>
               )}
@@ -185,6 +190,7 @@ export const SwipeableCard = memo(function SwipeableCard({
 
           {/* Back */}
           <div
+            data-testid="card-back"
             className="backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
             style={ROTATED_BACKFACE}
           >

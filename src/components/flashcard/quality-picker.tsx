@@ -39,7 +39,7 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
   }
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3" data-testid="quality-picker">
       <p className="text-muted-foreground text-xs">
         {polarity === "correct" ? "How well did you know it?" : "How much did you struggle?"}
       </p>
@@ -51,6 +51,7 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
           {qualities.map((q) => (
             <button
               key={q.quality}
+              data-testid={`quality-button-${q.quality}`}
               type="button"
               onClick={() => handleSelect(q.quality)}
               className={cn(
