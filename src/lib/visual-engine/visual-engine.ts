@@ -9,9 +9,20 @@ import type { VisualContent, VisualEngineParams } from "./types";
 import { STEM_SUBJECTS } from "./types";
 import { loadVisualFromAppwrite, saveVisualToAppwrite } from "./visual-persistence";
 
+/**
+ * Generates visual content (diagrams or images) for questions based on the subject classification.
+ * The engine determines whether to use AI-generated diagrams for STEM subjects or search
+ * Wikimedia Commons images for non-STEM subjects, with intelligent caching and fallbacks.
+ * Visual content includes proper attribution and source information for educational use.
+ */
 export class VisualEngine {
   private cachingStrategy: CachingStrategy<VisualContent, VisualEngineParams>;
 
+  /**
+   * Creates a new VisualEngine instance with multi-tier caching strategy.
+   * The constructor sets up caching backends including local Dexie storage,
+   * cloud Appwrite storage, and AI generation as fallback.
+   */
   constructor() {
     this.cachingStrategy = createCachingStrategy<VisualContent, VisualEngineParams>(
       [
@@ -45,6 +56,12 @@ export class VisualEngine {
     );
   }
 
+  /**
+   * Initializes the VisualEngine with AI configuration for diagram generation.
+   * This static factory method handles AI client initialization and should be called
+   * once at application startup. If AI is not configured, it initializes the
+   * default provider chain with keys from environment variables.
+   */
   static initialize(): void {
     if (!isAIConfigured()) {
       initAI({
@@ -54,10 +71,32 @@ export class VisualEngine {
     }
   }
 
+  /**
+   * Resolves visual content for a question using intelligent caching and fallbacks.
+   * This method checks the cache first (Dexie, then Appwrite), and falls back to
+   * AI generation if no cached visual content is found. For STEM subjects,
+   * it generates diagrams when consent is given; for non-STEM subjects, it searches
+   * for appropriate images.
+   *
+   * @param params - Visual engine parameters including question ID, text, subject,
+   *                and topic for visual content generation.
+   * @returns A Promise that resolves to VisualContent (diagram or image) or null
+   *         if no visual content is available.
+   */
   async resolve(params: VisualEngineParams): Promise<VisualContent | null> {
     return this.cachingStrategy.resolve(params);
   }
 
+  /**
+   * Generates visual content for a question using AI with caching support.
+   * This private method handles the actual visual generation logic, determining
+   * whether to use AI-generated diagrams (for STEM subjects) or image search
+   * (for non-STEM subjects), with proper consent handling and error recovery.
+   *
+   * @param params - Parameters for visual generation including question details.
+   * @returns A Promise that resolves to VisualContent (diagram or image) or null
+   *         if visual generation fails or is not permitted.
+   */
   private async generate(params: VisualEngineParams): Promise<VisualContent | null> {
     const isSTEM = STEM_SUBJECTS.has(params.subject);
 

@@ -113,7 +113,7 @@ describe("POST /api/chat/image", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body.error).toContain("JSON");
+    expect(body.error).toBe("Internal server error");
   });
 
   test("internal error returns 500", async () => {
@@ -127,6 +127,6 @@ describe("POST /api/chat/image", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body.error).toBe("Something broke");
+    expect(body.error).toBe("Internal server error");
   });
 });

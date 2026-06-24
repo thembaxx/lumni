@@ -13,9 +13,22 @@ export interface PromptTemplate {
 
 export type RagContext = ReturnType<typeof emptyRagContext>;
 
+/**
+ * Manages prompt generation and templating for question generation, grading, and hinting.
+ * This class handles the building of prompts for different question types, supports
+ * RAG (Retrieval-Augmented Generation) context injection, and manages prompt templates
+ * for various AI model interactions.
+ */
 export class PromptManager {
   private deps?: RagDeps;
 
+  /**
+   * Creates a new PromptManager instance with optional RAG dependencies.
+   * The RAG dependencies provide search functionality and prompt building utilities
+   * for web-grounded content generation.
+   *
+   * @param deps - Optional RAG dependencies for web content search and prompt building.
+   */
   constructor(deps?: RagDeps) {
     this.deps = deps;
   }
@@ -83,6 +96,19 @@ ${sourceList}`;
     };
   }
 
+  /**
+   * Generates a prompt template for question generation based on the specified type and parameters.
+   * This method builds a complete prompt template including system instructions, competency context,
+   * remediation focus, and optionally RAG context for web-grounded content.
+   *
+   * @param type - The question type for which to generate the prompt (e.g., "multiple-choice",
+   *              "short-answer") or "any" for a generic prompt.
+   * @param params - Generation parameters including subject, topic, count, difficulty,
+   *                and optional AI parameters like suggestedDifficulty and competency levels.
+   * @param ragContext - Optional RAG context containing web sources for grounding the prompt
+   *                    and enabling web-grounded question generation.
+   * @returns A PromptTemplate object containing system and user prompt strings.
+   */
   getPrompt(
     type: QuestionType | "any",
     params: GenerationParams,
@@ -94,6 +120,16 @@ ${sourceList}`;
     return this.applyRagContext(withRemediation, ragContext);
   }
 
+  /**
+   * Generates a prompt template for creating hints for a specific question type.
+   * This method creates a prompt that guides the AI in generating appropriate
+   * hints based on the question type and content.
+   *
+   * @param questionType - The type of question for which to generate a hint prompt.
+   *                      Examples include "multiple-choice", "short-answer", etc.
+   * @returns A PromptTemplate object containing system and user prompt strings
+   *         specifically designed for hint generation.
+   */
   getHintPrompt(questionType: QuestionType): PromptTemplate {
     return buildHintPrompt(questionType);
   }

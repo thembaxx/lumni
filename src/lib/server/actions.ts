@@ -15,19 +15,54 @@ import { auth, requireAdmin, verifyAuth } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 
 function mapSubject(s: Subject) {
-  return { ...s, id: s.code || s.$id };
+  return { ...s, id: sanitizeSubjectId(s.code || s.$id) };
+}
+
+function sanitizeUserId(userId: string): string {
+  if (!userId || typeof userId !== "string") {
+    throw new Error("Invalid user ID");
+  }
+  const trimmed = userId.trim();
+  if (trimmed.length === 0) {
+    throw new Error("Invalid user ID");
+  }
+  if (trimmed.length > 128) {
+    throw new Error("Invalid user ID");
+  }
+  if (/[/\\<>:"|?*]/.test(trimmed) || /[^\x20-\x7E]/.test(trimmed)) {
+    throw new Error("Invalid user ID format");
+  }
+  return trimmed;
+}
+
+function sanitizeSubjectId(subjectId: string): string {
+  if (!subjectId || typeof subjectId !== "string") {
+    throw new Error("Invalid subject ID");
+  }
+  const trimmed = subjectId.trim();
+  if (trimmed.length === 0) {
+    throw new Error("Invalid subject ID");
+  }
+  if (trimmed.length > 128) {
+    throw new Error("Invalid subject ID");
+  }
+  if (/[/\\<>:"|?*]/.test(trimmed) || /[^\x20-\x7E]/.test(trimmed)) {
+    throw new Error("Invalid subject ID format");
+  }
+  return trimmed;
 }
 
 export async function fetchSubjects(userId: string) {
   await verifyAuth(userId);
-  const targetUserId = userId;
+
+  const sanitizedUserId = sanitizeUserId(userId);
 
   const [subjectDocs, userSubjectDocs] = await Promise.all([
     listDocuments<Subject>(COLLECTIONS.SUBJECTS),
-    listDocuments<UserSubject>(COLLECTIONS.USER_SUBJECTS, [Query.equal("userId", targetUserId)]),
+    listDocuments<UserSubject>(COLLECTIONS.USER_SUBJECTS, [Query.equal("userId", sanitizedUserId)]),
   ]);
 
-  const selectedIds = userSubjectDocs.map((us) => us.subjectId);
+  const selectedIds = userSubjectDocs.map((us) => sanitizeSubjectId(us.subjectId));
 
   return {
     subjects: subjectDocs.map(mapSubject),
@@ -42,10 +77,14 @@ export async function fetchUserProgress(userId: string) {
     return { questionsAnswered: 0, accuracy: 0, streak: 0 };
   }
   const targetUserId = userId;
+  const sanitizedUserId = sanitizeUserId(targetUserId);
 
   const [progressArr, sessions] = await Promise.all([
-    listDocuments(COLLECTIONS.USER_PROGRESS, [Query.equal("userId", targetUserId), Query.limit(1)]),
-    listDocuments(COLLECTIONS.STUDY_SESSIONS, [Query.equal("userId", targetUserId)]),
+    listDocuments(COLLECTIONS.USER_PROGRESS, [
+      Query.equal("userId", sanitizedUserId),
+      Query.limit(1),
+    ]),
+    listDocuments(COLLECTIONS.STUDY_SESSIONS, [Query.equal("userId", sanitizedUserId)]),
   ]);
 
   const progress = progressArr[0] || null;
@@ -69,9 +108,11 @@ export async function fetchUserProgress(userId: string) {
 
 export async function toggleUserSubject(userId: string, subjectId: string) {
   await verifyAuth(userId);
+  const sanitizedUserId = sanitizeUserId(userId);
+  const sanitizedSubjectId = sanitizeSubjectId(subjectId);
   const existing = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
-    Query.equal("userId", userId),
-    Query.equal("subjectId", subjectId),
+    Query.equal("userId", sanitizedUserId),
+    Query.equal("subjectId", sanitizedSubjectId),
     Query.limit(1),
   ]);
 
@@ -83,8 +124,8 @@ export async function toggleUserSubject(userId: string, subjectId: string) {
     return false;
   } else {
     await createDocument(COLLECTIONS.USER_SUBJECTS, {
-      userId,
-      subjectId,
+      userId: sanitizedUserId,
+      subjectId: sanitizedSubjectId,
     });
     return true;
   }

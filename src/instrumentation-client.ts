@@ -21,5 +21,3 @@ Sentry.init({
   beforeSend: (event) => (getAnalyticsConsent() ? event : null),
   beforeSendTransaction: (event) => (getAnalyticsConsent() ? event : null),
 });
-
-export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

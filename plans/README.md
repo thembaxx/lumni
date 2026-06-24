@@ -60,16 +60,16 @@ Commit baseline: `7525d6ed` (previous batch was `8a6fadbe`, all 38 prior plans D
 | 044  | Fix consent bypass on engine API routes                          | P1       | M      | MED  | —          | DONE (APPROVED) |
 | 045  | Fix AnalyticsService 10K sequential Appwrite requests            | P2       | M      | MED  | —          | DONE (APPROVED) |
 | 046  | Fix anonymous budget identification for AI operations            | P2       | M      | MED  | —          | DONE (APPROVED) |
-| 047  | Fix ID collision from Date.now() + Math.random() in loops        | P3       | S      | LOW  | —          | TODO            |
+| 047  | Fix ID collision from Date.now() + Math.random() in loops        | P3       | S      | LOW  | —          | DONE (APPROVED) |
 | 048  | Add characterization tests for QuestionEngine core               | P2       | M      | LOW  | —          | DONE (APPROVED) |
 | 049  | Migrate 20 API routes to createRouteHandler factory              | P2       | L      | MED  | —          | DONE (APPROVED) |
 | 050  | Fix mutable \_deps DI pattern in 5 pilot lib modules             | P2       | L      | MED  | —          | DONE (APPROVED) |
 | 051  | Decompose notification-service.ts god module                     | P2       | M      | MED  | —          | DONE (APPROVED) |
-| 052  | Decompose use-image-chat.ts (383 lines, 2 hooks, duplicated)     | P3       | S      | LOW  | —          | TODO            |
-| 053  | DX sweep — tsc for tests, .env.example vars, README fix, knip CI | P3       | S      | LOW  | —          | TODO            |
-| 054  | Sweep console.warn/console.error to logError                     | P3       | S      | LOW  | —          | TODO            |
-| 055  | Wire CachedAIGenerator to visual-generation site                 | P3       | S      | LOW  | —          | TODO            |
-| 056  | Extract inline mapPoolToQuestion into standalone adapter         | P3       | S      | LOW  | —          | TODO            |
+| 052  | Decompose use-image-chat.ts (383 lines, 2 hooks, duplicated)     | P3       | S      | LOW  | —          | DONE (APPROVED) |
+| 053  | DX sweep — tsc for tests, .env.example vars, README fix, knip CI | P3       | S      | LOW  | —          | DONE (APPROVED) |
+| 054  | Sweep console.warn/console.error to logError                     | P3       | S      | LOW  | —          | DONE (APPROVED) |
+| 055  | Wire CachedAIGenerator to visual-generation site                 | P3       | S      | LOW  | —          | DONE (APPROVED) |
+| 056  | Extract inline mapPoolToQuestion into standalone adapter         | P3       | S      | LOW  | —          | DONE (APPROVED) |
 
 ## Execution phases (Batch 2)
 

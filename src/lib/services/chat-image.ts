@@ -1,4 +1,5 @@
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
+import { HttpError } from "@/lib/api/create-route-handler";
 
 interface ChatImageBody {
   imageUrl: string;
@@ -21,7 +22,8 @@ export const chatImageService = {
 
     if (!("available" in result) || !result.available) {
       const errorResult = result as { error?: string };
-      throw new Error(
+      throw new HttpError(
+        500,
         errorResult.error || "AI service is currently unavailable. Please try again.",
       );
     }

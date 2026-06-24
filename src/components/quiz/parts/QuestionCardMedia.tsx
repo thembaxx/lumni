@@ -51,20 +51,20 @@ export function QuestionCardMedia({
           aria-label={showDiagram ? t("quiz.hideDiagram") : t("quiz.showDiagram")}
         >
           {showDiagram ? (
-            <>
+            <div className="flex items-center gap-1">
               <HugeiconsIcon icon={MinusSignIcon} data-icon="inline-start" />
               <span className="text-xs">{t("quiz.hide")}</span>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="flex items-center gap-1">
               <HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
               <span className="text-xs">{t("quiz.show")}</span>
-            </>
+            </div>
           )}
         </Button>
       </div>
       {showDiagram && (
-        <>
+        <div>
           {visual ? (
             <div className="mt-2">
               <VisualContent visual={visual} isLoading={isLoading} />
@@ -76,7 +76,7 @@ export function QuestionCardMedia({
               </div>
             ))
           )}
-        </>
+        </div>
       )}
     </div>
   );

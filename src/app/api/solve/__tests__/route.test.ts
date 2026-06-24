@@ -246,6 +246,6 @@ describe("POST /api/solve", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body.error).toBe("AI provider failure");
+    expect(body.error).toBe("Internal server error");
   });
 });

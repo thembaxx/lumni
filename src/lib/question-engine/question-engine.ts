@@ -20,6 +20,12 @@ import type {
   ValidationResult,
 } from "./types";
 
+/**
+ * Generates and validates questions for a given subject and topic using AI models with caching support.
+ * The engine provides a unified interface for question generation across different subjects,
+ * supports RAG (Retrieval-Augmented Generation) for web-grounded content, and implements
+ * intelligent caching with fallbacks to Appwrite and AI generation when needed.
+ */
 export class QuestionEngine {
   private registry: ProcessorRegistry;
   private prompts: PromptManager;
@@ -28,6 +34,19 @@ export class QuestionEngine {
   private lastRagContext: RagContext | null = null;
   private enrichmentPipeline: EnrichmentPipeline;
 
+  /**
+   * Creates a new QuestionEngine instance with optional RAG dependencies, caching strategy,
+   * AI client, and enrichment pipeline.
+   *
+   * @param ragDeps - Optional RAG dependencies for web-grounded content generation.
+   *                  Contains search functions and prompt building utilities.
+   * @param caching - Optional caching strategy. If not provided, defaults to a multi-tier
+   *                 strategy with Dexie (fast, local) and Appwrite (cloud) backends.
+   * @param ai - Optional AI client for question generation. If not provided, will use
+   *            the default AI provider chain (Gemini → Nvidia → Groq).
+   * @param enrichment - Optional enrichment pipeline for curriculum/adaptation logic.
+   *                     If not provided, uses the default enrichment pipeline.
+   */
   constructor(
     ragDeps?: RagDeps,
     caching?: CacheResolver<Question[], GenerationParams>,
@@ -49,7 +68,7 @@ export class QuestionEngine {
                 await import("@/lib/db/repositories/question-cache");
               const cached = await qRepo.get(p.subject, p.topic);
               if (cached && cached.length >= p.count) {
-                const shuffled = (cached as Question[]).toSorted(() => Math.random() - 0.5);
+                const shuffled = this.shuffleArray(cached as Question[]);
                 return shuffled.slice(0, p.count);
               }
               return null;
@@ -70,7 +89,7 @@ export class QuestionEngine {
                 p.count,
               );
               if (appwriteQuestions.length >= p.count) {
-                const shuffled = appwriteQuestions.toSorted(() => Math.random() - 0.5);
+                const shuffled = this.shuffleArray(appwriteQuestions);
                 return shuffled.slice(0, p.count);
               }
               return null;
@@ -82,6 +101,25 @@ export class QuestionEngine {
       );
   }
 
+  private shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  /**
+   * Initializes the QuestionEngine with AI configuration and creates a new instance.
+   * This static factory method handles AI client initialization and is typically called
+   * once at application startup to ensure AI providers are ready for question generation.
+   *
+   * @param ragDeps - Optional RAG dependencies for web-grounded content generation.
+   * @param ai - Optional AI client. If not provided, will initialize the default
+   *            provider chain with keys from environment variables.
+   * @returns A Promise that resolves to a new QuestionEngine instance.
+   */
   static async initialize(ragDeps?: RagDeps, ai?: AIClient): Promise<QuestionEngine> {
     if (!isAIConfigured()) {
       initAI({
@@ -92,6 +130,18 @@ export class QuestionEngine {
     return new QuestionEngine(ragDeps, undefined, ai);
   }
 
+  /**
+   * Generates a set of questions based on the provided parameters.
+   * This method leverages intelligent caching to avoid unnecessary AI calls for
+   * previously generated questions, and supports RAG for web-grounded content.
+   * The generation process respects token budgets and respects cached data from
+   * multiple sources (Dexie, Appwrite, or AI generation).
+   *
+   * @param params - Generation parameters including subject, topic, count,
+   *                difficulty, and optional AI parameters like suggestedDifficulty.
+   * @returns A Promise that resolves to an object containing the generated questions
+   *          and optional RAG context for web source attribution.
+   */
   async generate(params: GenerationParams): Promise<GenerateResult> {
     this.lastRagContext = null;
     const generated = await this.cachingStrategy.resolve(params);
@@ -240,22 +290,58 @@ export class QuestionEngine {
     return { processor, typed: question as Question<T> };
   }
 
+  /**
+   * Generates a hint for a specific question using the appropriate processor.
+   * This method uses the question's processor to generate a contextual hint
+   * based on the question type and optionally web sources (RAG) if provided.
+   *
+   * @param params - Hint generation parameters including the question and
+   *                optional RAG XML for web-grounded content.
+   * @returns A Promise that resolves to a string containing the generated hint.
+   */
   async generateHint(params: HintParams): Promise<string> {
     const { question } = params;
     const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
     return processor.generateHint(typed, params.ragXml);
   }
 
+  /**
+   * Grades a user's answer for a specific question using the appropriate processor.
+   * This method applies the question's validation logic to evaluate the answer
+   * and returns a grading result with score and feedback.
+   *
+   * @param question - The question to grade.
+   * @param answer - The user's answer to be graded.
+   * @returns A Promise that resolves to a GradingResult containing the score,
+   *         feedback, and grading details.
+   */
   async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
     const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
     return processor.grade(typed, answer);
   }
 
+  /**
+   * Validates a question for completeness and correctness using the appropriate processor.
+   * This method checks that the question meets all validation criteria for its type,
+   * including required fields and format requirements.
+   *
+   * @param question - The question to validate.
+   * @returns A ValidationResult containing the validation status, any errors found,
+   *         and details about the validation checks performed.
+   */
   validate(question: Question): ValidationResult {
     const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
     return processor.validate(typed);
   }
 
+  /**
+   * Lists all available question types that this engine can generate.
+   * This method returns the complete set of question types supported by the
+   * processor registry, which may vary based on the configured AI client
+   * and installed processors.
+   *
+   * @returns An array of QuestionType strings representing all available types.
+   */
   listTypes(): QuestionType[] {
     return this.registry.listTypes();
   }

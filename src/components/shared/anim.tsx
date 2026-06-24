@@ -16,8 +16,7 @@ export function Anim({ children, layoutId, initial = true, variants, transition 
   const reduced = useReducedMotion();
 
   if (reduced) {
-    // biome-ignore lint/react(jsx-no-useless-fragment): children may be multiple elements
-    return <>{children}</>;
+    return children;
   }
 
   return (

@@ -137,7 +137,7 @@ describe("createRouteHandler with budget config", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body).toEqual({ error: "Something went wrong" });
+    expect(body).toEqual({ error: "Internal server error" });
   });
 
   test("execute throws non-Error returns 500 with generic message", async () => {
@@ -160,7 +160,7 @@ describe("createRouteHandler with budget config", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body).toEqual({ error: "Failed to generate" });
+    expect(body).toEqual({ error: "Internal server error" });
   });
 
   test("useRateLimit false skips rate limit wrapping", async () => {

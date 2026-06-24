@@ -6,6 +6,13 @@ import { logError } from "@/lib/shared/logger";
 const MAX_AUTH_RETRIES = 2;
 const RETRY_BASE_DELAY_MS = 500;
 
+function isValidUserId(userId: string): boolean {
+  if (!userId || typeof userId !== "string") return false;
+  if (userId.length < 1 || userId.length > 128) return false;
+  if (/[/\\<>:"|?*]/.test(userId) || /[^\x20-\x7E]/.test(userId)) return false;
+  return /^[a-zA-Z0-9_-]+$/.test(userId);
+}
+
 // Single-step helper extracted so the retry loop body has no direct `await`.
 // The `try/catch` lives inside the helper and surfaces the error up.
 async function tryFetchAccount(account: Account): Promise<Models.User<Models.Preferences>> {
@@ -39,6 +46,12 @@ async function fetchAccountWithRetry(account: Account): Promise<Models.User<Mode
 export async function auth(): Promise<string> {
   const userId = await getAuthenticatedUserId();
   if (!userId) throw new Error("Authentication required");
+
+  if (!isValidUserId(userId)) {
+    logError("InvalidUserId", new Error(`Invalid user ID format: ${userId}`));
+    throw new Error("Authentication required");
+  }
+
   return userId;
 }
 
@@ -159,6 +172,7 @@ export async function requireAdmin(): Promise<string> {
   }
 
   if (!ids.includes(userId)) {
+    logError("RequireAdminUnauthorized", new Error(`User ${userId} attempted admin access`));
     throw new Error("Admin access required");
   }
 
@@ -182,5 +196,17 @@ export async function getAuthenticatedUserName(): Promise<string | null> {
   } catch (err) {
     logError("GetAuthenticatedUserName", err);
     return null;
+  }
+}
+
+export async function isCurrentUserAdmin(): Promise<boolean> {
+  try {
+    const userId = await getAuthenticatedUserId();
+    if (!userId) return false;
+
+    await requireAdmin();
+    return true;
+  } catch {
+    return false;
   }
 }

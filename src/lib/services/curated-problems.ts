@@ -1,6 +1,7 @@
 import { curriculumRegistry } from "@/curriculum";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
+import { HttpError } from "@/lib/api/create-route-handler";
 import type { AIResponse } from "@/lib/ai/types";
 import { logError } from "@/lib/shared/logger";
 
@@ -122,7 +123,7 @@ Generate exactly ${Math.min(count, 10)} problems at varying difficulty levels.`;
 
     if ("available" in result && !result.available) {
       const errorMsg = "error" in result ? result.error : "Unknown error";
-      throw new Error(`AI generation failed: ${errorMsg}`);
+      throw new HttpError(500, `AI generation failed: ${errorMsg}`);
     }
 
     const response = result as AIResponse;

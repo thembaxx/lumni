@@ -1,4 +1,3 @@
-import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 interface RouteTest {
@@ -48,7 +47,8 @@ const routes: RouteTest[] = [
   { path: "/settings", label: "Settings" },
 ];
 
-async function getContrastViolations(page: any) {
+async function getContrastViolations(page: import("@playwright/test").Page) {
+  const { AxeBuilder } = await import("@axe-core/playwright");
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2aa", "wcag21aa"])
     .options({ runOnly: { type: "rule", values: ["color-contrast"] } })
@@ -62,8 +62,7 @@ async function getContrastViolations(page: any) {
 test.describe("WCAG AA contrast audit", () => {
   // First test often hits cold start; use longer timeout
   test.use({ navigationTimeout: 60000 });
-
-  for (const [index, route] of routes.entries()) {
+  for (const [, route] of routes.entries()) {
     test(`${route.label} (light mode)`, async ({ page }) => {
       await page.goto(`/en${route.path}`, { waitUntil: "commit" });
       await page.waitForLoadState("networkidle");
@@ -87,6 +86,7 @@ test.describe("WCAG AA contrast audit", () => {
       const violations = await getContrastViolations(page);
       if (violations.length > 0) {
         console.log(`Contrast violations on ${route.path} (dark):`);
+
         for (const v of violations) {
           for (const node of v.nodes.slice(0, 3)) {
             console.log(`  ${v.id}: ${node.html} (${node.failureSummary})`);

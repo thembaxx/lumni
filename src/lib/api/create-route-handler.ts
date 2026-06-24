@@ -38,11 +38,70 @@ export class HttpError extends Error {
   }
 }
 
+export class SecurityError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "SecurityError";
+  }
+}
+
+function sanitizeErrorMessage(message: string): string {
+  if (!message) return "Internal server error";
+
+  const sensitivePatterns = [
+    /password/i,
+    /token/i,
+    /secret/i,
+    /key/i,
+    /private/i,
+    /sql/i,
+    /query/i,
+    /database/i,
+    /stack/i,
+    /trace/i,
+    /line:/,
+    /file:/,
+    /c:\\/,
+    /\/home\/\w+/,
+    /\/tmp\//,
+  ];
+
+  let sanitized = message;
+  for (const pattern of sensitivePatterns) {
+    sanitized = sanitized.replace(pattern, "[REDACTED]");
+  }
+
+  if (sanitized !== message) {
+    return "Internal server error";
+  }
+
+  return sanitized;
+}
+
 function serializeResponse(result: unknown): Record<string, unknown> {
   if (result === null || result === undefined) return {};
   if (typeof result === "object" && !Array.isArray(result))
     return result as Record<string, unknown>;
   return { data: result };
+}
+
+export function isSafeString(str: unknown): boolean {
+  if (typeof str !== "string") return false;
+  if (str.length === 0 || str.length > 1000) return false;
+  return !/[\\"'`&<>]/.test(str);
+}
+
+export function isValidEmail(email: unknown): boolean {
+  if (typeof email !== "string") return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 254;
+}
+
+export function sanitizeEmail(email: string): string {
+  return email.toLowerCase().trim();
 }
 
 export function createRouteHandler<
@@ -128,6 +187,18 @@ export function createRouteHandler<
         }
       }
 
+      if (auth !== "none" && !userId) {
+        throw new HttpError(401, "Authentication required for this endpoint");
+      }
+
+      if (auth === "admin") {
+        try {
+          await requireAdmin();
+        } catch {
+          throw new SecurityError(403, "Admin privileges required");
+        }
+      }
+
       const resolvedParams =
         context?.params instanceof Promise ? await context.params : context?.params;
 
@@ -152,15 +223,29 @@ export function createRouteHandler<
       }
 
       const response = NextResponse.json(serializeResponse(result));
+      response.headers.set("X-Content-Type-Options", "nosniff");
+      response.headers.set("X-Frame-Options", "DENY");
+      response.headers.set("X-XSS-Protection", "1; mode=block");
+      response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      response.headers.set(
+        "Permissions-Policy",
+        "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+      );
       return response;
     } catch (error) {
       if (error instanceof HttpError) {
-        return NextResponse.json({ error: error.message }, { status: error.status });
+        return NextResponse.json(
+          { error: sanitizeErrorMessage(error.message) },
+          { status: error.status },
+        );
+      }
+      if (error instanceof SecurityError) {
+        return NextResponse.json({ error: "Access denied" }, { status: error.status });
       }
       logError(errorLabel, error);
       return NextResponse.json(
         {
-          error: error instanceof Error ? error.message : `Failed to ${errorLabel.toLowerCase()}`,
+          error: "Internal server error",
         },
         { status: 500 },
       );

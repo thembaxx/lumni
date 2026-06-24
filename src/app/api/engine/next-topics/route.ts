@@ -2,6 +2,7 @@ import { Query } from "appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { pathEngine } from "@/lib/competency-engine";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { TopicRecommendation } from "@/lib/competency-engine/path-engine";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
@@ -34,7 +35,15 @@ export const GET = withRateLimit(
         competencies.map((c) => [`${c.subjectId}:${c.topicId}:${c.bloomLevel}`, c]),
       );
 
-      const recommendations = await pathEngine.getNextTopics(subject, competencyMap);
+      let recommendations: TopicRecommendation[];
+      try {
+        recommendations = await pathEngine.getNextTopics(subject, competencyMap);
+      } catch (err) {
+        if (err instanceof Error) {
+          throw new HttpError(500, err.message);
+        }
+        throw new HttpError(500, "Failed to get next topics");
+      }
 
       const total = competencies.length;
       const novice = competencies.filter((c) => c.level === "novice").length;

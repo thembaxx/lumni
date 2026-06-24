@@ -1,4 +1,5 @@
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import { HttpError } from "@/lib/api/create-route-handler";
 import type { AIResponse } from "@/lib/ai/types";
 
 interface ElementFactBody {
@@ -42,7 +43,7 @@ export const elementFactService = {
 
     if ("available" in result && !result.available) {
       const errorMsg = "error" in result ? result.error : "Unknown error";
-      throw new Error(`AI generation failed: ${errorMsg}`);
+      throw new HttpError(500, `AI generation failed: ${errorMsg}`);
     }
 
     const response = result as AIResponse;
@@ -53,7 +54,7 @@ export const elementFactService = {
       .trim();
 
     if (!cleanedContent || cleanedContent.length < 10) {
-      throw new Error("Generated fact is too short or empty");
+      throw new HttpError(500, "Generated fact is too short or empty");
     }
 
     return { fact: cleanedContent };

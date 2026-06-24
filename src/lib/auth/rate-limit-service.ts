@@ -26,13 +26,26 @@ export class AuthRateLimitService {
   }
 
   private async logAttempt(email: string, action: string, ip: string): Promise<void> {
+    const sanitizedEmail = this.sanitizeEmail(email);
+    const sanitizedIp = this.sanitizeIp(ip);
+
     await databases.createDocument(APPWRITE_DATABASE_ID, COLLECTIONS.ANALYTICS, "unique()", {
       eventType: "auth_attempt",
-      userId: email,
+      userId: sanitizedEmail,
       subjectId: action,
-      metadata: JSON.stringify({ ip }),
+      metadata: JSON.stringify({ ip: sanitizedIp }),
       timestamp: new Date().toISOString(),
     });
+  }
+
+  private sanitizeEmail(email: string): string {
+    if (typeof email !== "string") return "";
+    return email.toLowerCase().trim();
+  }
+
+  private sanitizeIp(ip: string): string {
+    if (typeof ip !== "string") return "unknown";
+    return ip.split(",")[0]?.trim() || "unknown";
   }
 
   private async getOldestResetAt(

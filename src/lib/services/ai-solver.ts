@@ -1,6 +1,7 @@
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { HttpError } from "@/lib/api/create-route-handler";
 import { logError } from "@/lib/shared/logger";
 import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
 
@@ -140,11 +141,12 @@ export const aiSolver = {
     if ("available" in result && !result.available) {
       const errorMsg = "error" in result ? result.error : "Unknown error";
       if (isImageMode) {
-        throw new Error(
+        throw new HttpError(
+          400,
           `Could not read the image. Only Gemini supports image processing, and it was unavailable: ${errorMsg}. Please type the problem text instead.`,
         );
       }
-      throw new Error(`AI solver failed: ${errorMsg}`);
+      throw new HttpError(500, `AI solver failed: ${errorMsg}`);
     }
 
     const response = result as AIResponse;

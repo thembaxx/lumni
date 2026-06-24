@@ -1,4 +1,9 @@
-import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import {
+  createRouteHandler,
+  HttpError,
+  isValidEmail,
+  sanitizeEmail,
+} from "@/lib/api/create-route-handler";
 import { serverAccount } from "@/lib/appwrite.server";
 import { logError } from "@/lib/shared/logger";
 
@@ -7,15 +12,17 @@ export const POST = createRouteHandler({
   errorLabel: "Resend",
   validate: (body) => {
     if (!body.email) return "Email is required";
+    if (!isValidEmail(body.email)) return "Invalid email format";
     return null;
   },
   execute: async ({ body }) => {
     const { email } = body as { email: string };
+    const sanitizedEmail = sanitizeEmail(email);
 
     try {
       await serverAccount.createMagicURLToken(
         "unique()",
-        email,
+        sanitizedEmail,
         `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
       );
     } catch (error) {
@@ -26,7 +33,7 @@ export const POST = createRouteHandler({
     return {
       success: true,
       message: "Magic link resent",
-      email,
+      email: sanitizedEmail,
     };
   },
 });
