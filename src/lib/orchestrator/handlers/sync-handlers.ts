@@ -94,8 +94,6 @@ const appwriteFlashcardPull: JobHandler = async (payload) => {
         lastSync = state?.lastSyncTimestamp ?? 0;
       } catch (e) {
         logError("SyncHandler.flashcardSyncState", e);
-        const legacy = localStorage.getItem("lumni_flashcard_last_sync");
-        lastSync = Number.parseInt(legacy ?? "0", 10) || 0;
       }
     }
 
@@ -145,7 +143,6 @@ const appwriteFlashcardPull: JobHandler = async (payload) => {
         });
       } catch (e) {
         logError("SyncHandler.flashcardSyncSave", e);
-        localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
       }
     }
   } catch (e) {

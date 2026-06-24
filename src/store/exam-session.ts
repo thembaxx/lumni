@@ -77,17 +77,6 @@ const dexiePersistStorage = {
     } catch (e) {
       logError("ExamSessionPersist.load", e);
     }
-    // Fallback to localStorage for backward compat
-    if (typeof window !== "undefined") {
-      const raw = localStorage.getItem(name);
-      if (raw) {
-        try {
-          return JSON.parse(raw) as { state: PersistedState };
-        } catch (e) {
-          logError("ExamSessionPersist.localFallback", e);
-        }
-      }
-    }
     return null;
   },
   setItem: async (name: string, value: { state: PersistedState }): Promise<void> => {
@@ -108,16 +97,10 @@ const dexiePersistStorage = {
         logError("ExamSessionPersist.save", e);
       }
     }
-    if (typeof window !== "undefined") {
-      localStorage.setItem(name, JSON.stringify(value));
-    }
   },
   removeItem: async (name: string): Promise<void> => {
     try {
       await _deps.db.examSessions.where("paperId").equals(name).delete();
-      if (typeof window !== "undefined") {
-        localStorage.removeItem(name);
-      }
     } catch (e) {
       logError("ExamSessionPersist.remove", e);
     }

@@ -15,7 +15,6 @@ import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardDeckCard } from "@/lib/flashcard-engine/deck-types";
-import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import type { Question } from "@/lib/question-engine/types";
@@ -129,13 +128,6 @@ export function FlashcardsClient() {
   const searchParams = useSearchParams();
   const autoMode = searchParams.get("mode") as FlashcardSource | null;
   useEffect(() => {
-    migrateLegacyFlashcards().catch((e) => {
-      console.warn("Legacy flashcard migration:", e);
-      toast({
-        type: "warning",
-        message: "Could not migrate legacy flashcards",
-      });
-    });
     void enqueue("appwrite-flashcard-pull", {}).catch((e) => {
       console.warn("Flashcard pull failed:", e);
       toast({

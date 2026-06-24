@@ -64,22 +64,7 @@ export async function verifyAuth(userId: string): Promise<void> {
       throw new Error("Configuration error: APPWRITE_PROJECT is missing");
     }
 
-    let sessionCookie = cookieStore.get(`a_session_${projectId}`);
-    if (!sessionCookie?.value) {
-      sessionCookie = cookieStore.get(`a_session_${projectId}_legacy`);
-    }
-
-    // Fallback: search for any a_session_ cookie if the specific one is missing
-    if (!sessionCookie?.value) {
-      const fallbackCookie = cookieStore.getAll().find((c) => c.name.startsWith("a_session_"));
-      if (fallbackCookie) {
-        console.warn(
-          `[auth] Found fallback session cookie: ${fallbackCookie.name} instead of a_session_${projectId}`,
-        );
-        sessionCookie = fallbackCookie;
-      }
-    }
-
+    const sessionCookie = cookieStore.get(`a_session_${projectId}`);
     if (!sessionCookie?.value) {
       const allCookies = (await cookies()).getAll().map((c) => c.name);
       console.warn(
@@ -117,22 +102,7 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
       return null;
     }
 
-    let sessionCookie = cookieStore.get(`a_session_${projectId}`);
-    if (!sessionCookie?.value) {
-      sessionCookie = cookieStore.get(`a_session_${projectId}_legacy`);
-    }
-
-    // Fallback: search for any a_session_ cookie if the specific one is missing
-    if (!sessionCookie?.value) {
-      const fallbackCookie = cookieStore.getAll().find((c) => c.name.startsWith("a_session_"));
-      if (fallbackCookie) {
-        console.warn(
-          `[auth] Found fallback session cookie: ${fallbackCookie.name} instead of a_session_${projectId}`,
-        );
-        sessionCookie = fallbackCookie;
-      }
-    }
-
+    const sessionCookie = cookieStore.get(`a_session_${projectId}`);
     if (!sessionCookie?.value) {
       // Silently fail for getAuthenticatedUserId as it's often used for optional auth
       return null;

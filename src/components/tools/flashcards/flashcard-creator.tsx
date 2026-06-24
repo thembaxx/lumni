@@ -1,7 +1,7 @@
 "use client";
 
 import * as m from "motion/react-m";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
-import { flashcardEngine } from "@/lib/flashcard-engine";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { FlashcardCard } from "./flashcard-card";
@@ -23,39 +22,6 @@ import { FlashcardForm } from "./flashcard-form";
 
 interface FlashcardCreatorProps {
   className?: string;
-}
-
-let migrated = false;
-
-async function migrateLegacyFlashcards(
-  addCard: (front: string, back: string, subject: string, topic?: string) => Promise<void>,
-) {
-  if (migrated) return;
-  migrated = true;
-  try {
-    const raw = localStorage.getItem("lumni-flashcards:v1");
-    if (!raw) return;
-    const legacy = JSON.parse(raw) as Array<{
-      id: string;
-      front: string;
-      back: string;
-      hint?: string;
-      subject?: string;
-      topic?: string;
-    }>;
-    if (legacy.length === 0) return;
-
-    const existing = await flashcardEngine.getAll();
-    if (existing.length > 0) return;
-
-    for (const card of legacy) {
-      const backText = card.hint ? `${card.back}\n\n**Hint:** ${card.hint}` : card.back;
-      await addCard(card.front, backText, card.subject || "", card.topic || "");
-    }
-    localStorage.removeItem("lumni-flashcards:v1");
-  } catch (e) {
-    console.warn("[FlashcardCreator] Failed to migrate legacy flashcards", e);
-  }
 }
 
 export function FlashcardCreator({ className }: FlashcardCreatorProps) {
@@ -72,16 +38,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
     setMounted(true);
   }, []);
 
-  const { cards, addCard, editCard, removeCard, refresh } = useSpacedRepetition();
-
-  const migrateAndRefresh = useCallback(async () => {
-    await migrateLegacyFlashcards(addCard);
-    await refresh();
-  }, [addCard, refresh]);
-
-  useEffect(() => {
-    migrateAndRefresh();
-  }, [migrateAndRefresh]);
+  const { cards, addCard, editCard, removeCard } = useSpacedRepetition();
 
   const [isCreating, setIsCreating] = useState(false);
   const [editingCardId, setEditingCardId] = useState<string | null>(null);

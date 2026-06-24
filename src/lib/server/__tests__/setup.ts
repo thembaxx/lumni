@@ -23,7 +23,6 @@ vi.mock("next/headers", () => ({
       if (name === `a_session_test-project` && authState.sessionCookieValue != null) {
         return { name, value: authState.sessionCookieValue };
       }
-      if (name === `a_session_test-project_legacy`) return undefined;
       return undefined;
     },
     getAll: () =>

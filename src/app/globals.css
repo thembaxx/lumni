@@ -853,33 +853,27 @@
 .glass-ultra-thin {
   background: var(--material-ultra-thin);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 .glass-thin {
   background: var(--material-thin);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 .glass-regular {
   background: var(--material-regular);
   backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
 }
 .glass-thick {
   background: var(--material-thick);
   backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
 }
 .glass-card {
   background: var(--material-glass);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--system-separator);
 }
 .glass-card-strong {
   background: var(--material-glass-strong);
   backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--system-separator);
 }
 

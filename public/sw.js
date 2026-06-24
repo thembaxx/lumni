@@ -49,9 +49,7 @@ self.addEventListener("activate", (event) => {
       ),
   ];
 
-  if (self.registration.navigationPreload) {
-    tasks.push(self.registration.navigationPreload.enable());
-  }
+  tasks.push(self.registration.navigationPreload.enable());
 
   event.waitUntil(Promise.all(tasks));
   self.clients.claim();

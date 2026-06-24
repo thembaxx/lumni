@@ -22,7 +22,7 @@ function getProjectCookieName(): string {
 
 function isAuthenticated(request: NextRequest): boolean {
   const cookieName = getProjectCookieName();
-  return request.cookies.has(cookieName) || request.cookies.has(`${cookieName}_legacy`);
+  return request.cookies.has(cookieName);
 }
 
 function stripLocale(pathname: string): string {
