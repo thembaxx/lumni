@@ -190,9 +190,17 @@
       }
     ],
     "breakpoints": [
-      { "name": "sm", "value": "640px", "purpose": "Mobile landscape / small tablet." },
+      {
+        "name": "sm",
+        "value": "640px",
+        "purpose": "Mobile landscape / small tablet."
+      },
       { "name": "md", "value": "768px", "purpose": "Tablet portrait." },
-      { "name": "lg", "value": "1024px", "purpose": "Tablet landscape / small desktop." },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "purpose": "Tablet landscape / small desktop."
+      },
       { "name": "xl", "value": "1280px", "purpose": "Desktop." },
       { "name": "2xl", "value": "1536px", "purpose": "Large desktop." }
     ]

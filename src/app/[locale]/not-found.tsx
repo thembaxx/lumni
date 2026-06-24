@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
@@ -19,11 +20,10 @@ export default function NotFound() {
 function NotFoundContent() {
   return (
     <div className="grid min-h-dvh grid-cols-12 gap-0 bg-[--system-background]">
-      <m.div
+      <FadeIn
+        direction="up"
+        distance={12}
         className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: iOSEase }}
       >
         <main className="flex max-w-md flex-col gap-6 text-left">
           <m.div
@@ -37,30 +37,21 @@ function NotFoundContent() {
               <AnimatedIcon name="page-404" className="size-16" />
             </div>
           </m.div>
-          <m.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: iOSEase, delay: 0.2 }}
-            className="flex flex-col gap-2"
-          >
+          <FadeIn direction="up" distance={8} delay={0.2} className="flex flex-col gap-2">
             <h2 className="ios-title-2 text-[--system-text-primary]">Page not found</h2>
             <p className="ios-callout text-[--system-text-secondary]">
               The page you&apos;re looking for doesn&apos;t exist or has been moved.
             </p>
-          </m.div>
-          <m.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: iOSEase, delay: 0.3 }}
-          >
+          </FadeIn>
+          <FadeIn direction="up" distance={8} delay={0.3}>
             <Link href="/">
               <Button className="bg-[--system-accent] text-background hover:bg-[--system-accent]/80">
                 Back to {appConfig.name}
               </Button>
             </Link>
-          </m.div>
+          </FadeIn>
         </main>
-      </m.div>
+      </FadeIn>
 
       <div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
         <div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/5 via-transparent to-transparent" />

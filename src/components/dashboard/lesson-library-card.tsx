@@ -4,7 +4,7 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -80,10 +80,10 @@ export function LessonLibraryCard() {
             const label = subtopicId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
             return (
-              <m.div
+              <FadeIn
                 key={lesson.lessonId}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
+                direction="up"
+                distance={8}
                 className="flex items-center gap-3 rounded-2xl border bg-card p-3"
               >
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10">
@@ -111,7 +111,7 @@ export function LessonLibraryCard() {
                 >
                   Resume
                 </Button>
-              </m.div>
+              </FadeIn>
             );
           })
         ) : (

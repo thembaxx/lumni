@@ -7,7 +7,7 @@ import Lightning from "@hugeicons/core-free-icons/FlashIcon";
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useEffect, useMemo } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -162,11 +162,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
         Back
       </Button>
 
-      <m.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-      >
+      <FadeIn direction="up" distance={16} duration={0.4}>
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="rounded-full text-xs">
@@ -193,21 +189,12 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
             </span>
           </div>
         )}
-      </m.div>
+      </FadeIn>
 
       {lesson.sections.map((section, i) => {
         const isComplete = completedSections.has(section.id);
         return (
-          <m.div
-            key={section.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              ease: [0.32, 0.72, 0, 1],
-              delay: i * 0.05,
-            }}
-          >
+          <FadeIn key={section.id} direction="up" distance={16} duration={0.4} delay={i * 0.05}>
             <Card
               className={`overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 ${
                 isComplete ? "border-success/20 bg-success/5" : ""
@@ -254,19 +241,12 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
                 )}
               </CardContent>
             </Card>
-          </m.div>
+          </FadeIn>
         );
       })}
 
       {lesson.vocabulary && lesson.vocabulary.length > 0 && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.4,
-            ease: [0.32, 0.72, 0, 1],
-          }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Vocabulary</CardTitle>
@@ -306,18 +286,11 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
               ))}
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       {lesson.summary && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.4,
-            ease: [0.32, 0.72, 0, 1],
-          }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Summary</CardTitle>
@@ -326,18 +299,11 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
               <p className="text-sm leading-relaxed">{lesson.summary}</p>
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       {relatedQuestions && relatedQuestions.length > 0 && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.4,
-            ease: [0.32, 0.72, 0, 1],
-          }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Related Past Questions</CardTitle>
@@ -368,7 +334,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
               </Button>
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       <div className="flex items-center justify-between gap-3 pb-8">

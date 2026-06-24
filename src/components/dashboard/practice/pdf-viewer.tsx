@@ -101,7 +101,8 @@ const MAX_SCALE = 3.0;
 const SCALE_STEP = 0.25;
 
 const controlTap = "active:not-disabled:scale-[0.96] transition-transform duration-150 ease-out";
-const iconTransition = "transition-[opacity,filter,scale] duration-300 ease-[var(--ease-ios-decelerate)]";
+const iconTransition =
+  "transition-[opacity,filter,scale] duration-300 ease-[var(--ease-ios-decelerate)]";
 
 export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
   const [pdfState, dispatchPdf] = useReducer(pdfReducer, initialPdfState);

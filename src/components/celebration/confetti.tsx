@@ -50,6 +50,7 @@ export function Confetti({
       borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as "round" | "square",
       xOffset: (Math.random() - 0.5) * 30,
     }));
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [count, trigger]);
 
   if (!trigger) return null;

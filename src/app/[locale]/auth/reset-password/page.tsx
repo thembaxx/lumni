@@ -3,7 +3,7 @@
 import ViewIcon from "@hugeicons/core-free-icons/ViewIcon";
 import ViewOffIcon from "@hugeicons/core-free-icons/ViewOffIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Suspense, useReducer } from "react";
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { Link, useRouter } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
 
 type ResetPasswordState = {
   password: string;
@@ -127,79 +126,75 @@ function ResetPasswordForm() {
   }
 
   return (
-    <m.form
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: iOSEase }}
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-8"
-    >
-      <div className="flex flex-col gap-2">
-        <h1 className="font-heading font-semibold text-2xl">{t("auth.setNewPassword")}</h1>
-        <p className="text-muted-foreground text-sm">
-          {success ? t("auth.resetSuccess") : t("auth.passwordHint")}
-        </p>
-      </div>
+    <FadeIn direction="up" distance={12}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-heading font-semibold text-2xl">{t("auth.setNewPassword")}</h1>
+          <p className="text-muted-foreground text-sm">
+            {success ? t("auth.resetSuccess") : t("auth.passwordHint")}
+          </p>
+        </div>
 
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="password" className="font-semibold text-sm">
-            {t("auth.newPasswordLabel")}
-          </label>
-          <div className="relative">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="password" className="font-semibold text-sm">
+              {t("auth.newPasswordLabel")}
+            </label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
+                required
+                minLength={8}
+                disabled={success}
+                className="h-11 rounded-xl bg-system-surface pr-10"
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
+                onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
+              >
+                <HugeiconsIcon icon={showPassword ? ViewOffIcon : ViewIcon} className="size-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="confirm" className="font-semibold text-sm">
+              {t("auth.confirmPassword")}
+            </label>
             <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
+              id="confirm"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) =>
+                dispatch({
+                  type: "SET_CONFIRM_PASSWORD",
+                  payload: e.target.value,
+                })
+              }
               required
               minLength={8}
               disabled={success}
-              className="h-11 rounded-xl bg-system-surface pr-10"
+              className="h-11 rounded-xl bg-system-surface"
             />
-            <button
-              type="button"
-              aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
-              onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
-              className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
-            >
-              <HugeiconsIcon icon={showPassword ? ViewOffIcon : ViewIcon} className="size-4" />
-            </button>
           </div>
+
+          {error && <p className="font-medium text-destructive text-sm">{error}</p>}
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="confirm" className="font-semibold text-sm">
-            {t("auth.confirmPassword")}
-          </label>
-          <Input
-            id="confirm"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) =>
-              dispatch({
-                type: "SET_CONFIRM_PASSWORD",
-                payload: e.target.value,
-              })
-            }
-            required
-            minLength={8}
-            disabled={success}
-            className="h-11 rounded-xl bg-system-surface"
-          />
-        </div>
-
-        {error && <p className="font-medium text-destructive text-sm">{error}</p>}
-      </div>
-
-      <Button
-        type="submit"
-        disabled={!password || !confirmPassword || loading || success}
-        className="h-11 w-full rounded-xl"
-      >
-        {loading ? t("auth.resetting") : success ? t("auth.done") : t("auth.resetPassword")}
-      </Button>
-    </m.form>
+        <Button
+          type="submit"
+          disabled={!password || !confirmPassword || loading || success}
+          className="h-11 w-full rounded-xl"
+        >
+          {loading ? t("auth.resetting") : success ? t("auth.done") : t("auth.resetPassword")}
+        </Button>
+      </form>
+    </FadeIn>
   );
 }
 

@@ -5,12 +5,12 @@ import { startTransition, useCallback, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";
 import { Anim } from "@/components/shared/anim";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 
 const buttonStyles =
   "active:scale-[0.96] transition-transform duration-150 ease-out justify-center";
@@ -41,35 +41,14 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
       <div className="-webkit-font-smoothing flex min-h-dvh items-center justify-center bg-background p-4 antialiased">
         <Anim>
           <div className="flex w-full max-w-sm flex-col gap-6">
-            <m.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.35,
-                  ease: iOSEase,
-                },
-              }}
-            >
+            <FadeIn direction="down" distance={12}>
               <div className="mb-8 text-center">
                 <h1 className="font-semibold text-2xl tracking-tight">Admin</h1>
                 <p className="mt-1 text-muted-foreground text-sm">Sign in to continue</p>
               </div>
-            </m.div>
+            </FadeIn>
 
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.35,
-                  delay: 0.08,
-                  ease: iOSEase,
-                },
-              }}
-            >
+            <FadeIn direction="up" distance={20} delay={0.08}>
               <form onSubmit={handleSubmit}>
                 <Card className="shadow-level-2">
                   <CardContent className="flex flex-col gap-4 p-6">
@@ -104,21 +83,10 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                   </CardContent>
                 </Card>
               </form>
-            </m.div>
+            </FadeIn>
 
             {/* Alternative auth options */}
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.35,
-                  delay: 0.16,
-                  ease: iOSEase,
-                },
-              }}
-            >
+            <FadeIn direction="up" distance={20} delay={0.16}>
               <div className="flex items-center gap-2 pt-2">
                 <div className="h-px flex-1 bg-border" />
                 <span className="text-muted-foreground text-xs uppercase tracking-wider">Or</span>
@@ -140,7 +108,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                   <span className="text-xs">OTP</span>
                 </Button>
               </div>
-            </m.div>
+            </FadeIn>
 
             <m.div
               initial={{ opacity: 0 }}

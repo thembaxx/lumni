@@ -53,7 +53,10 @@ export const PerpetualFloat = memo(function PerpetualFloat({
   }, [y, resolvedRange, resolvedSpeed, isAnimated, cycles]);
 
   return (
-    <m.div className={cn("will-change-transform", className)} style={{ transform: yTransform, opacity }}>
+    <m.div
+      className={cn("will-change-transform", className)}
+      style={{ transform: yTransform, opacity }}
+    >
       {children}
     </m.div>
   );

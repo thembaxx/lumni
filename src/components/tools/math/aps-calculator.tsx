@@ -5,7 +5,7 @@ import CalculatorIcon from "@hugeicons/core-free-icons/CalculatorIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -134,11 +134,11 @@ export function APSCalculator() {
       <div className="px-5 pb-5">
         <div className="flex flex-col gap-3 rounded-2xl bg-system-background-secondary p-5">
           {subjects.map((subject, index) => (
-            <m.div
+            <FadeIn
               key={subject.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
+              direction="up"
+              distance={10}
+              delay={index * 0.05}
               className="flex items-center gap-2"
             >
               <Input
@@ -173,7 +173,7 @@ export function APSCalculator() {
               >
                 <HugeiconsIcon icon={Delete01Icon} data-icon />
               </Button>
-            </m.div>
+            </FadeIn>
           ))}
 
           <div className="flex gap-2 pt-1">
@@ -240,11 +240,11 @@ export function APSCalculator() {
               .map((subject, idx) => {
                 const aps = getAPSForSubject(subject.percentage);
                 return (
-                  <m.div
+                  <FadeIn
                     key={subject.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05 }}
+                    direction="up"
+                    distance={10}
+                    delay={idx * 0.05}
                     className="relative flex items-center justify-between overflow-hidden rounded-xl bg-system-background-secondary p-4"
                   >
                     <div
@@ -278,7 +278,7 @@ export function APSCalculator() {
                         {getGrade(subject.percentage)}
                       </span>
                     </div>
-                  </m.div>
+                  </FadeIn>
                 );
               })}
           </div>
@@ -293,11 +293,11 @@ export function APSCalculator() {
           {universityRequirements.map((uni, idx) => {
             const meetsMin = totalAPS >= uni.minAPS;
             return (
-              <m.div
+              <FadeIn
                 key={uni.university}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
+                direction="up"
+                distance={10}
+                delay={idx * 0.05}
                 className="relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm"
               >
                 {meetsMin && (
@@ -328,7 +328,7 @@ export function APSCalculator() {
                     </span>
                   ))}
                 </div>
-              </m.div>
+              </FadeIn>
             );
           })}
         </div>

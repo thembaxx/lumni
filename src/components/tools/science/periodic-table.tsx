@@ -6,11 +6,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Input } from "@/components/ui/input";
 import {
   elementCategoryConfig,
   elementCategoryVariables,
-  elementEaseOutQuart,
   elementEaseOutQuint,
 } from "@/lib/data/element-categories";
 import { type Element, elements } from "@/lib/data/elements";
@@ -126,12 +126,7 @@ export function PeriodicTable() {
           </p>
         </div>
 
-        <m.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.4, ease: elementEaseOutQuart }}
-          className="relative mb-4"
-        >
+        <FadeIn direction="up" distance={10} delay={0.15} className="relative mb-4">
           <HugeiconsIcon
             icon={Search01Icon}
             className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted-foreground/70"
@@ -159,16 +154,12 @@ export function PeriodicTable() {
               <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground/70" />
             </m.button>
           )}
-        </m.div>
+        </FadeIn>
 
-        <m.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.25,
-            duration: 0.35,
-            ease: elementEaseOutQuart,
-          }}
+        <FadeIn
+          direction="up"
+          distance={10}
+          delay={0.25}
           className="scrollbar-hide mb-4 flex gap-2 overflow-x-auto pb-3"
         >
           <m.button
@@ -209,7 +200,7 @@ export function PeriodicTable() {
               {config.label}
             </m.button>
           ))}
-        </m.div>
+        </FadeIn>
 
         <m.div
           className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9"

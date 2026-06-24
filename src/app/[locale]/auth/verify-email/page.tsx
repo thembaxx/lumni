@@ -3,14 +3,13 @@
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Suspense, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { Link, useRouter } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
 
 function VerifyEmailContent() {
   const { push } = useRouter();
@@ -59,12 +58,7 @@ function VerifyEmailContent() {
   }
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: iOSEase }}
-      className="flex flex-col items-center gap-6 text-center"
-    >
+    <FadeIn direction="up" distance={12} className="flex flex-col items-center gap-6 text-center">
       <div className="flex size-16 items-center justify-center rounded-full bg-green-500/10 dark:bg-green-400/10">
         <HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500 dark:text-green-300" />
       </div>
@@ -75,7 +69,7 @@ function VerifyEmailContent() {
       <Button onClick={() => push("/dashboard")} className="rounded-xl">
         {t("auth.goToDashboard")}
       </Button>
-    </m.div>
+    </FadeIn>
   );
 }
 

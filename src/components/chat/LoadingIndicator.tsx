@@ -3,6 +3,7 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
+import { FadeIn } from "@/components/shared/fade-in";
 
 const LOADING_MESSAGES = ["Thinking…", "Finding the right words…", "Just a sec…"] as const;
 
@@ -19,11 +20,11 @@ export function LoadingIndicator() {
   }, []);
 
   return (
-    <m.div
+    <FadeIn
+      direction="up"
+      distance={10}
       role="status"
       aria-live="polite"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
       className="flex items-center gap-3 rounded-xl border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-level-1"
     >
       <m.div
@@ -45,6 +46,6 @@ export function LoadingIndicator() {
           {LOADING_MESSAGES[messageIndex]}
         </m.span>
       </AnimatePresence>
-    </m.div>
+    </FadeIn>
   );
 }

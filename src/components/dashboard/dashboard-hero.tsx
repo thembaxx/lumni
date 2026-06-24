@@ -3,6 +3,7 @@
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
+import { FadeIn } from "@/components/shared/fade-in";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
@@ -14,11 +15,11 @@ export function HeroBanner() {
   const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
   return (
-    <m.div
+    <FadeIn
+      direction="down"
+      distance={12}
+      duration={0.5}
       className="relative mt-4 mb-6 h-40 overflow-hidden rounded-card-lg bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-level-2"
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: iOSEase }}
       aria-label="Dashboard header showing welcome message"
       role="banner"
     >
@@ -51,6 +52,6 @@ export function HeroBanner() {
           {t("dashboard.subtitle")}
         </m.p>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }

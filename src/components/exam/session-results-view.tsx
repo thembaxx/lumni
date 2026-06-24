@@ -3,9 +3,9 @@
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Confetti } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { ShareResultButton } from "@/components/shared/share-button";
@@ -52,9 +52,9 @@ export function SessionResultsView({
   const failedCount = totalCount - correctCount;
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+    <FadeIn
+      direction="up"
+      distance={20}
       className="flex min-h-screen flex-col gap-6 bg-background p-4 pb-24"
     >
       <Confetti trigger={accuracy >= 70} count={60} duration={2500} />
@@ -220,6 +220,6 @@ export function SessionResultsView({
           {t("exam.dashboard")}
         </Button>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
@@ -127,11 +127,11 @@ export function DiagramLabellingInput({
                   removePlacement(region.id);
                 }
               }}
-className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 ${
+              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 ${
                 label
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20)"
                   : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)"
-                }`}
+              }`}
               style={{
                 left: `${scaleX(region.x)}%`,
                 top: `${scaleY(region.y)}%`,
@@ -156,11 +156,10 @@ className={`absolute flex cursor-pointer items-center justify-center rounded-lg 
           {unplacedLabels.map((label) => {
             const isDragging = draggedId === label.id;
             return (
-              <m.div
+              <FadeIn
+                direction="scale"
+                scaleDistance={0.9}
                 key={label.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.15 }}
                 className={`rounded-lg border px-3 py-1.5 text-sm ${
                   isDragging ? "opacity-40" : "border-border bg-card"
                 }`}
@@ -180,7 +179,7 @@ className={`absolute flex cursor-pointer items-center justify-center rounded-lg 
                 >
                   {label.text}
                 </button>
-              </m.div>
+              </FadeIn>
             );
           })}
         </div>

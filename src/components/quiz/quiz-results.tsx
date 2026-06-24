@@ -19,7 +19,7 @@ import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
+import { FadeIn } from "@/components/shared/fade-in";
 
 const CONTAINER_VARIANTS = {
   hidden: { opacity: 0 },
@@ -82,12 +82,7 @@ export function QuizResultsCard({
   const itemVariants = ITEM_VARIANTS;
 
   return (
-    <m.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, ease: iOSEase }}
-      className="relative"
-    >
+    <FadeIn direction="scale" scaleDistance={0.95} duration={0.3} className="relative">
       <Confetti trigger={isGreatScore} count={60} duration={2500} />
       {isPerfect && (
         <m.div
@@ -114,11 +109,7 @@ export function QuizResultsCard({
         </m.div>
 
         <CardHeader className="flex flex-col gap-2 p-6 pb-0 md:text-left">
-          <m.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
+          <FadeIn direction="down" distance={10} delay={0.1}>
             <CardTitle className="font-extrabold text-xl tracking-tight">
               {isPerfect
                 ? t("quiz.flawless")
@@ -126,7 +117,7 @@ export function QuizResultsCard({
                   ? t("quiz.greatJob")
                   : t("quiz.quizComplete")}
             </CardTitle>
-          </m.div>
+          </FadeIn>
           <p className="text-muted-foreground text-sm">{t("quiz.hereAreResults")}</p>
         </CardHeader>
 
@@ -139,28 +130,18 @@ export function QuizResultsCard({
           >
             <section className="flex flex-col gap-4">
               <m.div className="grid grid-cols-12 gap-4 md:text-left" variants={itemVariants}>
-                <m.div
-                  className="col-span-4 rounded-lg bg-muted p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <m.p
+                <FadeIn distance={0} delay={0.3} className="col-span-4 rounded-lg bg-muted p-4">
+                  <FadeIn
+                    distance={0}
+                    delay={0.3}
                     className="font-extrabold text-2xl tabular-nums"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
+                    as="span"
                   >
                     {totalQuestions}
-                  </m.p>
+                  </FadeIn>
                   <p className="text-muted-foreground text-xs">{t("quiz.questions")}</p>
-                </m.div>
-                <m.div
-                  className="col-span-2 rounded-lg bg-muted p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
+                </FadeIn>
+                <FadeIn distance={0} delay={0.4} className="col-span-2 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
                       "font-extrabold text-2xl tabular-nums",
@@ -170,13 +151,8 @@ export function QuizResultsCard({
                     {correctAnswers}
                   </p>
                   <p className="text-muted-foreground text-xs">{t("quiz.correct")}</p>
-                </m.div>
-                <m.div
-                  className="col-span-3 rounded-lg bg-muted p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
+                </FadeIn>
+                <FadeIn distance={0} delay={0.5} className="col-span-3 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
                       "font-extrabold text-2xl tabular-nums",
@@ -186,16 +162,11 @@ export function QuizResultsCard({
                     {accuracy}%
                   </p>
                   <p className="text-muted-foreground text-xs">{t("quiz.accuracy")}</p>
-                </m.div>
+                </FadeIn>
                 {(() => {
                   const aps = getAPSForSubject(accuracy);
                   return (
-                    <m.div
-                      className="col-span-3 rounded-lg bg-muted p-4"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6 }}
-                    >
+                    <FadeIn distance={0} delay={0.6} className="col-span-3 rounded-lg bg-muted p-4">
                       <p
                         className={cn(
                           "font-extrabold text-2xl tabular-nums",
@@ -207,21 +178,16 @@ export function QuizResultsCard({
                         {aps}/7
                       </p>
                       <p className="text-muted-foreground text-xs">{getGrade(accuracy)}</p>
-                    </m.div>
+                    </FadeIn>
                   );
                 })()}
               </m.div>
 
               <m.div className="grid grid-cols-12 gap-4" variants={itemVariants}>
-                <m.div
-                  className="col-span-12 rounded-lg bg-muted p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7 }}
-                >
+                <FadeIn distance={0} delay={0.7} className="col-span-12 rounded-lg bg-muted p-4">
                   <p className="font-extrabold text-2xl tabular-nums">{formatTime(elapsedTime)}</p>
                   <p className="text-muted-foreground text-xs">{t("quiz.time")}</p>
-                </m.div>
+                </FadeIn>
               </m.div>
             </section>
 
@@ -297,6 +263,6 @@ export function QuizResultsCard({
           </m.div>
         </CardContent>
       </Card>
-    </m.div>
+    </FadeIn>
   );
 }

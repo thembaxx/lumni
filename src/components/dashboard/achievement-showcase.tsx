@@ -1,10 +1,9 @@
 "use client";
 
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 
 const rarityColors: Record<string, string> = {
   common: "bg-muted text-muted-foreground",
@@ -22,11 +21,7 @@ export function AchievementShowcase() {
   const latest = earned.slice(-3).toReversed();
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: iOSEase }}
-    >
+    <FadeIn direction="up" distance={16}>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
@@ -60,6 +55,6 @@ export function AchievementShowcase() {
           </div>
         </CardContent>
       </Card>
-    </m.div>
+    </FadeIn>
   );
 }

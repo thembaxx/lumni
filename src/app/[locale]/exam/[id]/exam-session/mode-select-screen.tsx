@@ -4,7 +4,7 @@ import Alert01Icon from "@hugeicons/core-free-icons/Alert01Icon";
 import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
 import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,9 +35,8 @@ export function ModeSelectScreen({
   const t = useTranslations();
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+    <FadeIn
+      distance={0}
       className="flex min-h-screen items-center justify-center bg-background p-4"
     >
       <Card className="w-full max-w-md">
@@ -72,6 +71,6 @@ export function ModeSelectScreen({
           </Button>
         </CardContent>
       </Card>
-    </m.div>
+    </FadeIn>
   );
 }

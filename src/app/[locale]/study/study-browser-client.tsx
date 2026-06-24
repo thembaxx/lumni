@@ -5,7 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
@@ -147,12 +147,7 @@ export function StudyBrowserClient() {
       {!curriculumLoading && filteredTopics.length > 0 && (
         <div className="flex flex-col gap-6">
           {filteredTopics.map((topic) => (
-            <m.div
-              key={topic.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
+            <FadeIn key={topic.id} direction="up" distance={12} duration={0.3}>
               <Card className="overflow-hidden rounded-card shadow-level-1">
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
@@ -230,7 +225,7 @@ export function StudyBrowserClient() {
                     })}
                 </CardContent>
               </Card>
-            </m.div>
+            </FadeIn>
           ))}
         </div>
       )}

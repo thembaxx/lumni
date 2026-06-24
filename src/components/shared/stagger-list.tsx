@@ -13,7 +13,13 @@ interface StaggerListProps {
   performanceAware?: boolean;
 }
 
-export function StaggerList({ children, className, delay = 0.06, variants, performanceAware = false }: StaggerListProps) {
+export function StaggerList({
+  children,
+  className,
+  delay = 0.06,
+  variants,
+  performanceAware = false,
+}: StaggerListProps) {
   const animOpts = performanceAware ? useOptimizedAnimation() : null;
   const shouldReduce = animOpts?.shouldReduceMotion ?? false;
 

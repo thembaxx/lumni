@@ -4,7 +4,7 @@ import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -53,10 +53,10 @@ export function VocabularyListCard() {
                 .slice(-5)
                 .toReversed()
                 .map((word) => (
-                  <m.div
+                  <FadeIn
                     key={word.id}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    direction="up"
+                    distance={4}
                     className="flex items-center justify-between rounded-2xl border bg-card px-3 py-2"
                   >
                     <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export function VocabularyListCard() {
                     <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-(--fs-caption-3) text-muted-foreground">
                       {word.language}
                     </span>
-                  </m.div>
+                  </FadeIn>
                 ))}
             </div>
           </>

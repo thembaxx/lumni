@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { memo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
+import { FadeIn } from "@/components/shared/fade-in";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
@@ -51,11 +51,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
       <div className="mx-auto w-full max-w-6xl px-4">
         <div className="grid items-center gap-12 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: iOSEase }}
-            >
+            <FadeIn direction="up" distance={20} duration={0.4}>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 font-medium text-primary text-xs">
                 <HugeiconsIcon icon={SparklesIcon} className="size-3" />
                 {t("home.heroTagline")}
@@ -67,12 +63,13 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               <p className="mt-4 max-w-lg text-lg text-muted-foreground leading-relaxed">
                 {t("home.heroDesc")}
               </p>
-            </m.div>
+            </FadeIn>
 
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1, ease: iOSEase }}
+            <FadeIn
+              direction="up"
+              distance={20}
+              duration={0.4}
+              delay={0.1}
               className="flex flex-col gap-3 sm:flex-row"
             >
               {isAuthenticated ? (
@@ -101,12 +98,12 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                   </Button>
                 </Link>
               )}
-            </m.div>
+            </FadeIn>
 
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+            <FadeIn
+              distance={0}
+              delay={0.2}
+              duration={0.4}
               className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm"
             >
               <div className="flex items-center gap-2">
@@ -121,12 +118,13 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <HugeiconsIcon icon={ChartUpIcon} className="size-4" />
                 <span>{t("home.heroBadgeAi")}</span>
               </div>
-            </m.div>
+            </FadeIn>
 
-            <m.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3, ease: iOSEase }}
+            <FadeIn
+              direction="up"
+              distance={16}
+              duration={0.4}
+              delay={0.3}
               className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-2"
             >
               <div className="flex flex-col">
@@ -147,13 +145,14 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 </span>
                 <span className="text-muted-foreground text-xs">Past papers</span>
               </div>
-            </m.div>
+            </FadeIn>
           </div>
 
-          <m.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: iOSEase }}
+          <FadeIn
+            direction="scale"
+            scaleDistance={0.9}
+            duration={0.5}
+            delay={0.15}
             className="relative hidden items-center justify-center lg:flex"
           >
             <div className="relative aspect-[4/5] w-full max-w-sm">
@@ -220,7 +219,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 </div>
               </div>
             </div>
-          </m.div>
+          </FadeIn>
         </div>
       </div>
     </m.section>

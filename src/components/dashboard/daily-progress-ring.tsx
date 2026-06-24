@@ -8,6 +8,7 @@ import * as m from "motion/react-m";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useGamification } from "@/hooks/use-gamification";
+import { FadeIn } from "@/components/shared/fade-in";
 import { iOSEase } from "@/lib/utils/animation";
 
 export function DailyProgressRing() {
@@ -19,13 +20,10 @@ export function DailyProgressRing() {
   const isComplete = daily?.completed ?? false;
 
   return (
-    <m.div
-      initial={{ opacity: 0, scale: 0.92 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.5,
-        ease: iOSEase,
-      }}
+    <FadeIn
+      direction="scale"
+      scaleDistance={0.92}
+      duration={0.5}
       className="flex flex-col items-center py-4 motion-reduce:animate-none motion-reduce:transition-none"
     >
       <RadialChart
@@ -128,6 +126,6 @@ export function DailyProgressRing() {
           )}
         </AnimatePresence>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }

@@ -3,7 +3,7 @@
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import StopCircleIcon from "@hugeicons/core-free-icons/StopCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -301,11 +301,7 @@ export function PronunciationClient() {
       </div>
 
       {transcribedText && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Transcription</CardTitle>
@@ -314,15 +310,11 @@ export function PronunciationClient() {
               <p className="leading-relaxed">{transcribedText}</p>
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       {assessment && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1], delay: 0.1 }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4} delay={0.1}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Pronunciation Assessment</CardTitle>
@@ -369,15 +361,11 @@ export function PronunciationClient() {
               </div>
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       {showHistory && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Pronunciation History</CardTitle>
@@ -458,7 +446,7 @@ export function PronunciationClient() {
               )}
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
     </PageContainer>
   );

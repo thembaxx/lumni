@@ -1,7 +1,7 @@
 "use client";
 
 import * as m from "motion/react-m";
-import { iOSEase } from "@/lib/utils/animation";
+import { FadeIn } from "@/components/shared/fade-in";
 import { WelcomeSVG } from "./svgs/welcome-svg";
 
 interface Subject {
@@ -21,20 +21,10 @@ interface CompleteStepProps {
 export function CompleteStep({ selectedSubjects, subjectsData, title, body }: CompleteStepProps) {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
-      <m.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: iOSEase }}
-        className="mb-8 size-48"
-      >
+      <FadeIn direction="scale" scaleDistance={0.9} duration={0.5} className="mb-8 size-48">
         <WelcomeSVG />
-      </m.div>
-      <m.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.15, ease: iOSEase }}
-        className="max-w-md"
-      >
+      </FadeIn>
+      <FadeIn direction="up" distance={12} delay={0.15} className="max-w-md">
         <h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">{title}</h1>
         <p className="ios-body mb-6 text-pretty text-muted-foreground leading-relaxed">{body}</p>
 
@@ -70,7 +60,7 @@ export function CompleteStep({ selectedSubjects, subjectsData, title, body }: Co
         <p className="text-pretty text-muted-foreground text-xs">
           You can change everything later in Settings.
         </p>
-      </m.div>
+      </FadeIn>
     </div>
   );
 }

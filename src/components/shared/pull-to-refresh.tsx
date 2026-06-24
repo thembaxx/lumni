@@ -23,8 +23,7 @@ export function PullToRefresh({
   const animateY = useCallback((y: number, smooth = false) => {
     const el = ref.current;
     if (!el) return;
-    el.style.transition =
-      smooth || y > 0 ? "transform 0.3s var(--ease-drawer)" : "none";
+    el.style.transition = smooth || y > 0 ? "transform 0.3s var(--ease-drawer)" : "none";
     el.style.transform = y > 0 ? `translateY(${y}px)` : "";
   }, []);
 

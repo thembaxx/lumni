@@ -3,13 +3,12 @@
 import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations();
@@ -32,12 +31,7 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
-      <m.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease: iOSEase }}
-        className="flex flex-col items-center gap-6 text-center"
-      >
+      <FadeIn direction="up" distance={12} className="flex flex-col items-center gap-6 text-center">
         <div className="flex size-16 items-center justify-center rounded-full bg-system-accent/10">
           <HugeiconsIcon icon={SparklesIcon} className="size-8 text-system-accent" />
         </div>
@@ -57,54 +51,50 @@ export default function ForgotPasswordPage() {
         >
           {t("auth.backToSignIn")}
         </Link>
-      </m.div>
+      </FadeIn>
     );
   }
 
   return (
-    <m.form
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: iOSEase }}
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-8"
-    >
-      <div className="flex flex-col gap-2">
-        <h1 className="font-heading font-semibold text-2xl">{t("auth.resetPassword")}</h1>
-        <p className="text-muted-foreground text-sm">{t("auth.resetPasswordSubtitle")}</p>
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="font-semibold text-sm">
-          {t("auth.emailLabel")}
-        </label>
-        <div className="relative">
-          <HugeiconsIcon
-            icon={Mail01Icon}
-            className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-          />
-          <Input
-            id="email"
-            type="email"
-            placeholder={t("auth.emailPlaceholder")}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="h-11 rounded-xl bg-system-surface pl-10"
-          />
+    <FadeIn direction="up" distance={12}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-heading font-semibold text-2xl">{t("auth.resetPassword")}</h1>
+          <p className="text-muted-foreground text-sm">{t("auth.resetPasswordSubtitle")}</p>
         </div>
-      </div>
 
-      <Button type="submit" disabled={!email} className="h-11 w-full rounded-xl">
-        {t("auth.sendResetLink")}
-      </Button>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="email" className="font-semibold text-sm">
+            {t("auth.emailLabel")}
+          </label>
+          <div className="relative">
+            <HugeiconsIcon
+              icon={Mail01Icon}
+              className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+            />
+            <Input
+              id="email"
+              type="email"
+              placeholder={t("auth.emailPlaceholder")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="h-11 rounded-xl bg-system-surface pl-10"
+            />
+          </div>
+        </div>
 
-      <p className="text-center text-muted-foreground text-sm">
-        {t("auth.rememberPassword")}{" "}
-        <Link href="/auth/sign-in" className="font-semibold text-system-accent hover:underline">
-          {t("auth.signIn")}
-        </Link>
-      </p>
-    </m.form>
+        <Button type="submit" disabled={!email} className="h-11 w-full rounded-xl">
+          {t("auth.sendResetLink")}
+        </Button>
+
+        <p className="text-center text-muted-foreground text-sm">
+          {t("auth.rememberPassword")}{" "}
+          <Link href="/auth/sign-in" className="font-semibold text-system-accent hover:underline">
+            {t("auth.signIn")}
+          </Link>
+        </p>
+      </form>
+    </FadeIn>
   );
 }

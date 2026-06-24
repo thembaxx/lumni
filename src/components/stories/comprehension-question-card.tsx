@@ -3,6 +3,7 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { FadeIn } from "@/components/shared/fade-in";
 import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -154,11 +155,7 @@ export function ComprehensionQuestionCard({
   );
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-    >
+    <FadeIn direction="up" distance={12} duration={0.3}>
       <Card
         className={cn(
           "overflow-hidden rounded-2xl border shadow-sm transition-[border-color] duration-300",
@@ -471,6 +468,6 @@ export function ComprehensionQuestionCard({
           )}
         </CardContent>
       </Card>
-    </m.div>
+    </FadeIn>
   );
 }

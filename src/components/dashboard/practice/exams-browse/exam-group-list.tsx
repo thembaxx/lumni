@@ -1,6 +1,6 @@
 "use client";
 
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,11 +23,11 @@ export function ExamGroupList({
   return (
     <>
       {groupedExams.map((group, groupIndex) => (
-        <m.div
+        <FadeIn
           key={group.subject}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: groupIndex * 0.08 }}
+          direction="up"
+          distance={8}
+          delay={groupIndex * 0.08}
           className="flex flex-col gap-2.5"
         >
           <div className="flex items-center justify-between gap-4 px-0.5">
@@ -50,7 +50,7 @@ export function ExamGroupList({
               </Button>
             )}
           </div>
-        </m.div>
+        </FadeIn>
       ))}
     </>
   );

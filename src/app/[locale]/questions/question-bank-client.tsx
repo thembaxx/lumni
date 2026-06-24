@@ -2,6 +2,7 @@
 
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -63,10 +64,11 @@ function QuestionCard({
   const { push } = useRouter();
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04, duration: 0.3 }}
+    <FadeIn
+      direction="up"
+      distance={12}
+      duration={0.3}
+      delay={index * 0.04}
       className="rounded-2xl border bg-card p-5 shadow-sm"
     >
       <div className="flex flex-col gap-3">
@@ -146,7 +148,7 @@ function QuestionCard({
           )}
         </AnimatePresence>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }
 

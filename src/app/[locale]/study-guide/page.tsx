@@ -7,6 +7,7 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -23,11 +24,12 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
   return (
     <div className="flex flex-col gap-6">
       {guide.sections.map((section, i) => (
-        <m.div
+        <FadeIn
           key={section.title}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.08, duration: 0.3 }}
+          direction="up"
+          distance={12}
+          duration={0.3}
+          delay={i * 0.08}
           className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
         >
           <div className="p-6">
@@ -56,14 +58,13 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
               </div>
             )}
           </div>
-        </m.div>
+        </FadeIn>
       ))}
 
       {guide.summary && (
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: guide.sections.length * 0.08 + 0.1 }}
+        <FadeIn
+          distance={0}
+          delay={guide.sections.length * 0.08 + 0.1}
           className="rounded-2xl border border-border/50 bg-primary/5 p-6"
         >
           <p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
@@ -72,7 +73,7 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
           <p className="overflow-wrap-anywhere text-foreground/70 text-sm leading-relaxed">
             {guide.summary}
           </p>
-        </m.div>
+        </FadeIn>
       )}
     </div>
   );

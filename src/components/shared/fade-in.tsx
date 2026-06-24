@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -13,9 +14,13 @@ interface FadeInProps {
   delay?: number;
   duration?: number;
   distance?: number;
+  scaleDistance?: number;
   className?: string;
   as?: "div" | "span";
   performanceAware?: boolean;
+  role?: string;
+  "aria-label"?: string;
+  "aria-live"?: "off" | "assertive" | "polite";
 }
 
 const directionVariants: Record<FadeInDirection, (d: number) => Record<string, number>> = {
@@ -23,7 +28,7 @@ const directionVariants: Record<FadeInDirection, (d: number) => Record<string, n
   down: (d) => ({ y: -d }),
   left: (d) => ({ x: d }),
   right: (d) => ({ x: -d }),
-  scale: () => ({ scale: 0.96 }),
+  scale: (d) => ({ scale: d }),
 };
 
 export function FadeIn({
@@ -32,18 +37,26 @@ export function FadeIn({
   delay = 0,
   duration = 0.35,
   distance = 8,
+  scaleDistance = 0.96,
   className,
   as = "div",
   performanceAware = false,
-}: FadeInProps) {
+  ...rest
+}: FadeInProps & Record<string, unknown>) {
+  const prefersReduced = useReducedMotion();
   const animOpts = performanceAware ? useOptimizedAnimation() : null;
-  const shouldReduce = animOpts?.shouldReduceMotion ?? false;
-  const initialOffset = directionVariants[direction](distance);
+  const shouldReduce = prefersReduced || (animOpts?.shouldReduceMotion ?? false);
+  const scaleVal = direction === "scale" ? scaleDistance : distance;
+  const initialOffset = directionVariants[direction](scaleVal);
   const initial = { opacity: 0, ...initialOffset };
   const Tag = as === "span" ? m.span : m.div;
 
   if (shouldReduce) {
-    return <Tag className={cn(className)}>{children}</Tag>;
+    return (
+      <Tag className={cn(className)} {...rest}>
+        {children}
+      </Tag>
+    );
   }
 
   return (
@@ -52,6 +65,7 @@ export function FadeIn({
       animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
       transition={{ duration, ease: iOSEase, delay }}
       className={cn(className)}
+      {...rest}
     >
       {children}
     </Tag>

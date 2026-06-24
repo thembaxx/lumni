@@ -1,6 +1,6 @@
 "use client";
 
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -133,11 +133,10 @@ export function FillInSequenceInput({
           {unassignedOptions.map((opt) => {
             const isDragging = draggedId === opt.id;
             return (
-              <m.div
+              <FadeIn
                 key={opt.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.15 }}
+                direction="scale"
+                scaleDistance={0.9}
                 className={`rounded-lg border px-3 py-1.5 text-sm ${
                   isDragging ? "opacity-40" : "border-border bg-card"
                 }`}
@@ -157,7 +156,7 @@ export function FillInSequenceInput({
                 >
                   {opt.text}
                 </button>
-              </m.div>
+              </FadeIn>
             );
           })}
         </div>

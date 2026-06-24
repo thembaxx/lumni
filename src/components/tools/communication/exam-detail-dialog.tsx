@@ -8,6 +8,7 @@ import Quiz02Icon from "@hugeicons/core-free-icons/Quiz02Icon";
 import TimeScheduleIcon from "@hugeicons/core-free-icons/TimeScheduleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useEffect, useState } from "react";
 import {
   Dialog,
@@ -161,15 +162,14 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
         </m.div>
 
         {!isPast && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15 }}
+          <FadeIn
+            distance={0}
+            delay={0.15}
             className="flex items-center justify-center gap-1.5 rounded-lg bg-muted/30 py-2"
           >
             <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5 text-[--system-accent]" />
             <Countdown targetDate={exam.date} />
-          </m.div>
+          </FadeIn>
         )}
 
         <div className="flex flex-col gap-2">

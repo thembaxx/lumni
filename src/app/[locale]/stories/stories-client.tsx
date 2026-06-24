@@ -2,7 +2,7 @@
 
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useEffect, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
@@ -105,16 +105,7 @@ export function StoriesClient() {
           const isPartial = !isCompleted && scrollPct > 0;
 
           return (
-            <m.div
-              key={story.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                ease: [0.32, 0.72, 0, 1],
-                delay: i * 0.05,
-              }}
-            >
+            <FadeIn key={story.id} direction="up" distance={16} duration={0.4} delay={i * 0.05}>
               <Card
                 className="cursor-pointer overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
                 onClick={() => push(`/stories/${story.id}`)}
@@ -163,7 +154,7 @@ export function StoriesClient() {
                   )}
                 </CardContent>
               </Card>
-            </m.div>
+            </FadeIn>
           );
         })}
       </div>

@@ -2,6 +2,7 @@
 
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
 import { DecorativeRightPanel } from "./decorative-right-panel";
 
@@ -38,12 +39,7 @@ export function QuizLoadingState({
                 />
               ))}
             </div>
-            <m.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="flex flex-col gap-2"
-            >
+            <FadeIn direction="up" distance={8} delay={0.2} className="flex flex-col gap-2">
               <p className="font-medium text-foreground text-sm">{t("quiz.preparingQuestions")}</p>
               {resolvedTopic && topicCompetencyLevel && (
                 <div className="flex flex-col gap-0.5">
@@ -61,7 +57,7 @@ export function QuizLoadingState({
                   </p>
                 </div>
               )}
-            </m.div>
+            </FadeIn>
           </CardContent>
         </Card>
       </div>

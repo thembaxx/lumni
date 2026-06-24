@@ -6,9 +6,9 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { memo, useEffect } from "react";
+import { FadeIn } from "@/components/shared/fade-in";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface StatsCardsProps {
@@ -62,15 +62,7 @@ function StatCard({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.35,
-        ease: iOSEase,
-        delay: shouldReduceMotion ? 0 : index * 0.05,
-      }}
-    >
+    <FadeIn direction="up" distance={8} duration={0.35} delay={index * 0.05}>
       <Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
         <CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
           <div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
@@ -88,14 +80,11 @@ function StatCard({
           </p>
         </CardContent>
       </Card>
-    </m.div>
+    </FadeIn>
   );
 }
 
 export const StatsCards = memo(function StatsCards({ questionsAnswered, streak }: StatsCardsProps) {
-  const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-  const finalShouldReduceMotion = shouldReduceMotionOpt;
-
   return (
     <div className="grid grid-cols-2 gap-2 sm:gap-3">
       {[
@@ -116,19 +105,7 @@ export const StatsCards = memo(function StatsCards({ questionsAnswered, streak }
           index: 1,
         },
       ].map(({ label, value, icon, colorClass, accentClass, index }) => (
-        <m.div
-          key={label}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: {
-              duration: finalShouldReduceMotion ? 0 : 0.35,
-              ease: iOSEase,
-              delay: finalShouldReduceMotion ? 0 : index * 0.05,
-            },
-          }}
-        >
+        <FadeIn key={label} direction="up" distance={8} duration={0.35} delay={index * 0.05}>
           <StatCard
             label={label}
             value={value}
@@ -137,7 +114,7 @@ export const StatsCards = memo(function StatsCards({ questionsAnswered, streak }
             accentClass={accentClass}
             index={index}
           />
-        </m.div>
+        </FadeIn>
       ))}
     </div>
   );

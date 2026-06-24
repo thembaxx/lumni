@@ -3,12 +3,11 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { useCallback, useState } from "react";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
-import { iOSEase } from "@/lib/utils/animation";
 
 const DISMISS_PREFIX = "lumni_local_notice_dismissed";
 
@@ -43,10 +42,9 @@ export function LocalDataNotice({
   if (dismissed) return null;
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: iOSEase }}
+    <FadeIn
+      direction="down"
+      distance={6}
       className="flex items-center gap-3 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3"
     >
       <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
@@ -78,6 +76,6 @@ export function LocalDataNotice({
           <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
         </Button>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }

@@ -3,6 +3,7 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import dynamic from "next/dynamic";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
@@ -106,12 +107,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
         </m.header>
 
         <Tabs defaultValue={initialTab} className="flex flex-1 flex-col overflow-hidden">
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-            className="px-5 py-3"
-          >
+          <FadeIn distance={0} delay={0.2} duration={0.3} className="px-5 py-3">
             <TabsList className="scrollbar-hide flex h-11 w-full shrink-0 justify-start gap-2 overflow-x-auto rounded-lg bg-system-background-tertiary p-2 transition-colors duration-300">
               {tabs.map((tab) => (
                 <TabsTrigger
@@ -123,7 +119,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
                 </TabsTrigger>
               ))}
             </TabsList>
-          </m.div>
+          </FadeIn>
 
           <div className="grow overflow-y-auto">
             <TabsContent value="solver" className="m-0 min-h-full">

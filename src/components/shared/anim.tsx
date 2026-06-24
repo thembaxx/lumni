@@ -14,7 +14,14 @@ interface AnimProps {
   performanceAware?: boolean;
 }
 
-export function Anim({ children, layoutId, initial = true, variants, transition, performanceAware = false }: AnimProps) {
+export function Anim({
+  children,
+  layoutId,
+  initial = true,
+  variants,
+  transition,
+  performanceAware = false,
+}: AnimProps) {
   const reduced = useReducedMotion();
   const animOpts = performanceAware ? useOptimizedAnimation() : null;
   const shouldReduce = reduced || (animOpts?.shouldReduceMotion ?? false);

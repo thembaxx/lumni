@@ -4,7 +4,7 @@ import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Lightning from "@hugeicons/core-free-icons/FlashIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -274,11 +274,7 @@ export function StoryReaderClient() {
         </Button>
       </div>
 
-      <m.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-      >
+      <FadeIn direction="up" distance={16} duration={0.4}>
         <Card className="overflow-hidden rounded-3xl shadow-level-1">
           <CardHeader>
             <div className="flex flex-wrap items-center gap-2">
@@ -322,14 +318,10 @@ export function StoryReaderClient() {
             </div>
           </CardContent>
         </Card>
-      </m.div>
+      </FadeIn>
 
       {story.vocabulary && story.vocabulary.length > 0 && (
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-        >
+        <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
               <CardTitle className="font-extrabold text-lg">Vocabulary</CardTitle>
@@ -358,7 +350,7 @@ export function StoryReaderClient() {
               ))}
             </CardContent>
           </Card>
-        </m.div>
+        </FadeIn>
       )}
 
       <div className="flex flex-col gap-3">
@@ -374,15 +366,7 @@ export function StoryReaderClient() {
             {questionsLoading ? "Generating questions..." : "Practice Comprehension"}
           </Button>
         ) : (
-          <m.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              ease: [0.32, 0.72, 0, 1],
-            }}
-            className="flex flex-col gap-4"
-          >
+          <FadeIn direction="up" distance={16} duration={0.4} className="flex flex-col gap-4">
             <h2 className="font-extrabold text-lg tracking-tight">Comprehension Questions</h2>
 
             {questions && questions.length > 0 ? (
@@ -401,11 +385,7 @@ export function StoryReaderClient() {
             )}
 
             {allGraded && (
-              <m.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-              >
+              <FadeIn direction="up" distance={16} duration={0.4}>
                 <Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
                   <CardHeader>
                     <CardTitle className="font-extrabold text-lg">Results</CardTitle>
@@ -472,9 +452,9 @@ export function StoryReaderClient() {
                     </div>
                   </CardContent>
                 </Card>
-              </m.div>
+              </FadeIn>
             )}
-          </m.div>
+          </FadeIn>
         )}
       </div>
     </PageContainer>

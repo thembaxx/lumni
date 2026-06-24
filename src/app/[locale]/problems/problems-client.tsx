@@ -8,6 +8,7 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -34,10 +35,11 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
         : "text-warning bg-warning/10";
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.3 }}
+    <FadeIn
+      direction="up"
+      distance={12}
+      duration={0.3}
+      delay={index * 0.06}
       className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
     >
       <div className="p-5">
@@ -97,7 +99,7 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
           )}
         </AnimatePresence>
       </div>
-    </m.div>
+    </FadeIn>
   );
 }
 
