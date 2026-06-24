@@ -66,7 +66,7 @@ function storeSetEffect(
   value: RateLimitStoreEntry,
 ): Effect.Effect<void> {
   return Effect.tryPromise(() => Promise.resolve(store.set(key, value))).pipe(
-    Effect.catchAll(() => Effect.succeed(undefined)),
+    Effect.catchAll(() => Effect.void),
   );
 }
 
@@ -80,7 +80,7 @@ function storeEntriesEffect(
 
 function storeDeleteEffect(store: RateLimitStore, key: string): Effect.Effect<void> {
   return Effect.tryPromise(() => Promise.resolve(store.delete(key))).pipe(
-    Effect.catchAll(() => Effect.succeed(undefined)),
+    Effect.catchAll(() => Effect.void),
   );
 }
 

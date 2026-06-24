@@ -43,7 +43,7 @@ export interface FreezeResult {
 export type StateListener = (data: StoredGamification) => void;
 
 function succeedUndefined(): Effect.Effect<void> {
-  return Effect.succeed(undefined);
+  return Effect.void;
 }
 export class GamificationService {
   private data: StoredGamification;
@@ -88,7 +88,7 @@ export class GamificationService {
     return Effect.tryPromise(() => self.db.gamification.get(1)).pipe(
       Effect.catchAll((err) => {
         logError("GamificationService.loadFromDexie", err);
-        return Effect.succeed(undefined);
+        return Effect.void;
       }),
       Effect.flatMap((dexieData) => {
         if (!dexieData) return succeedUndefined();
@@ -131,7 +131,7 @@ export class GamificationService {
     ).pipe(
       Effect.catchAll((err) => {
         logError("GamificationService.syncFromServer", err);
-        return Effect.succeed(undefined);
+        return Effect.void;
       }),
       Effect.flatMap((res) => {
         if (!res || !res.gamification) return succeedUndefined();

@@ -59,7 +59,7 @@ export class CachedAIGenerator<T> {
       const key = self.config.buildCacheKey(subject, topic);
       const table = self.config.getTable(self.db);
       const cached = yield* Effect.tryPromise(() => table.get(key)).pipe(
-        Effect.catchAll(() => Effect.succeed(undefined)),
+        Effect.catchAll(() => Effect.void),
       );
       if (cached && cached.expiresAt > Date.now()) {
         return self.config.extractData(cached);
@@ -80,7 +80,7 @@ export class CachedAIGenerator<T> {
       const table = self.config.getTable(self.db);
       const entry = self.config.buildCacheEntry(key, data, self.config.ttlMs, subject, topic);
       yield* Effect.tryPromise(() => table.put(entry)).pipe(
-        Effect.catchAll(() => Effect.succeed(undefined)),
+        Effect.catchAll(() => Effect.void),
       );
     });
   }
