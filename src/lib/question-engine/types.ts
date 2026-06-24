@@ -1,3 +1,5 @@
+import type { Effect } from "effect";
+
 export type QuestionType =
   | "multiple-choice"
   | "matching"
@@ -343,6 +345,8 @@ export type QuestionProcessor<T extends QuestionType = QuestionType> = {
   grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
   validate(question: Question<T>): ValidationResult;
   generateFromSource?(source: string, params: GenerationParams): Promise<Question<T>[]>;
+  gradeEffect(question: Question<T>, answer: UserAnswer): Effect.Effect<GradingResult>;
+  generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string>;
 };
 
 export interface ValidationError {

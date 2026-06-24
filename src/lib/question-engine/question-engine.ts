@@ -316,10 +316,7 @@ export class QuestionEngine {
     return Effect.gen(function* () {
       const { question } = params;
       const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
-      const hint = yield* Effect.tryPromise(() =>
-        processor.generateHint(typed, params.ragXml),
-      ).pipe(Effect.catchAll(() => Effect.succeed("")));
-      return hint;
+      return yield* processor.generateHintEffect(typed, params.ragXml);
     });
   }
 
@@ -342,12 +339,7 @@ export class QuestionEngine {
     const self = this;
     return Effect.gen(function* () {
       const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
-      const result = yield* Effect.tryPromise(() => processor.grade(typed, answer)).pipe(
-        Effect.catchAll(() =>
-          Effect.succeed({ score: 0, maxScore: 0, correct: false, feedback: "" } as GradingResult),
-        ),
-      );
-      return result;
+      return yield* processor.gradeEffect(typed, answer);
     });
   }
 

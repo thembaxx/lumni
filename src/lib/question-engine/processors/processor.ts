@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { getAI } from "@/lib/ai";
 import type { AIClient } from "@/lib/ai/client";
 import { ensureArray, parseAIResponse } from "@/lib/ai/parse-response";
@@ -55,6 +56,27 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
 
   async grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult> {
     return this.gradeFn(question, answer, this.prompts, this.ai);
+  }
+
+  gradeEffect(question: Question<T>, answer: UserAnswer): Effect.Effect<GradingResult> {
+    return Effect.tryPromise(async () =>
+      this.gradeFn(question, answer, this.prompts, this.ai),
+    ).pipe(
+      Effect.catchAll(() =>
+        Effect.succeed({
+          score: 0,
+          maxScore: question.points,
+          correct: false,
+          feedback: "Grading failed.",
+        } as GradingResult),
+      ),
+    );
+  }
+
+  generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string> {
+    return Effect.tryPromise(async () => this.hintFn(question, this.prompts, this.ai, ragXml)).pipe(
+      Effect.catchAll(() => Effect.succeed("")),
+    );
   }
 
   validate(question: Question<T>): ValidationResult {
