@@ -181,7 +181,7 @@ export default function ObservabilityPage() {
                         </span>
                         <div className="flex h-4 flex-1 overflow-hidden rounded-sm bg-muted">
                           <div
-                            className="h-full rounded-sm bg-[oklch(52%_0.18_146)] transition-all"
+                            className="h-full rounded-sm bg-[oklch(52%_0.18_146)] transition-[width,background-color] duration-300"
                             style={{
                               width: `${Math.min(
                                 (d.count /

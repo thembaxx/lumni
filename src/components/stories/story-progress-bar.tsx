@@ -24,7 +24,7 @@ export function StoryProgressBar({ scrollPercent, completed }: StoryProgressBarP
       >
         <div
           className={cn(
-            "absolute inset-y-0 left-0 rounded-full transition-all duration-300",
+            "absolute inset-y-0 left-0 rounded-full transition-[width] duration-300",
             barColor,
           )}
           style={{ width: `${pct}%` }}

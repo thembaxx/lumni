@@ -127,11 +127,11 @@ export function DiagramLabellingInput({
                   removePlacement(region.id);
                 }
               }}
-              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-all ${
+className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 ${
                 label
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20)"
                   : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)"
-              }`}
+                }`}
               style={{
                 left: `${scaleX(region.x)}%`,
                 top: `${scaleY(region.y)}%`,

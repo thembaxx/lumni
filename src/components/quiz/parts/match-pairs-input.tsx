@@ -130,7 +130,7 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                 onDragOver={(e: React.DragEvent) => handleRightDragOver(e, item.id)}
                 onDragLeave={handleDragEnd}
                 onDrop={(e: React.DragEvent) => handleDropOnRight(e, item.id)}
-                className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-all focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+                className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-[border-color,background-color,color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
                   used
                     ? "border-muted bg-muted/50 text-muted-foreground line-through"
                     : "border-muted-foreground/30 border-dashed bg-transparent"

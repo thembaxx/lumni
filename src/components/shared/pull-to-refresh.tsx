@@ -24,7 +24,7 @@ export function PullToRefresh({
     const el = ref.current;
     if (!el) return;
     el.style.transition =
-      smooth || y > 0 ? "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)" : "none";
+      smooth || y > 0 ? "transform 0.3s var(--ease-drawer)" : "none";
     el.style.transform = y > 0 ? `translateY(${y}px)` : "";
   }, []);
 
@@ -64,7 +64,7 @@ export function PullToRefresh({
       const currentPx = parseInt(el.style.transform.match(/(\d+\.?\d*)/)?.[0] ?? "0", 10);
       if (currentPx >= 24) {
         setRefreshing(true);
-        el.style.transition = "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)";
+        el.style.transition = "transform 0.3s var(--ease-drawer)";
         el.style.transform = "translateY(56px)";
         try {
           await onRefreshEvent();

@@ -2,7 +2,7 @@
 
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { animate, useMotionValue } from "motion/react";
+import { animate, useMotionValue, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
@@ -91,6 +91,7 @@ export function QuizView({
   }, [isQuizActive, setImmersive]);
 
   const dragX = useMotionValue(0);
+  const dragTransform = useTransform(dragX, (v) => `translateX(${v}px)`);
 
   const handleDragEnd = useCallback(
     (_: unknown, info: { offset: { x: number } }) => {
@@ -182,7 +183,7 @@ export function QuizView({
         drag={isQuizActive ? "x" : false}
         dragElastic={0.3}
         whileDrag={{ scale: 0.97, transition: { duration: 0.1 } }}
-        style={{ x: dragX }}
+        style={{ transform: dragTransform }}
         onDragEnd={handleDragEnd}
       >
         {pastPaperMode && (

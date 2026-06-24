@@ -1,7 +1,7 @@
 "use client";
 
 import * as m from "motion/react-m";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 interface ConfettiPiece {
   id: number;
@@ -34,6 +34,11 @@ export function Confetti({
   count?: number;
   duration?: number;
 }) {
+  const burstCount = useRef(0);
+  useEffect(() => {
+    if (trigger) burstCount.current++;
+  }, [trigger]);
+
   const pieces = useMemo<ConfettiPiece[]>(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
@@ -45,14 +50,14 @@ export function Confetti({
       borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as "round" | "square",
       xOffset: (Math.random() - 0.5) * 30,
     }));
-  }, [count]);
+  }, [count, trigger]);
 
   if (!trigger) return null;
 
   return (
     <div
       suppressHydrationWarning
-      key={`burst-${trigger}-${count}`}
+      key={`burst-${burstCount.current}-${count}`}
       className="pointer-events-none fixed inset-0 z-modal overflow-hidden"
     >
       {pieces.map((piece) => (

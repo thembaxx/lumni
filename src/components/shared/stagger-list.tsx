@@ -3,15 +3,24 @@
 import { AnimatePresence, type Variants } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface StaggerListProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   variants?: Variants;
+  performanceAware?: boolean;
 }
 
-export function StaggerList({ children, className, delay = 0.06, variants }: StaggerListProps) {
+export function StaggerList({ children, className, delay = 0.06, variants, performanceAware = false }: StaggerListProps) {
+  const animOpts = performanceAware ? useOptimizedAnimation() : null;
+  const shouldReduce = animOpts?.shouldReduceMotion ?? false;
+
+  if (shouldReduce) {
+    return <div className={cn("flex flex-col gap-0", className)}>{children}</div>;
+  }
+
   return (
     <AnimatePresence mode="wait" initial={false}>
       <m.div

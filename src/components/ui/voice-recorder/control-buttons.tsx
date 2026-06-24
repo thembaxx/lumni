@@ -79,7 +79,7 @@ export function ControlButtons({
             style={{
               opacity: isRecording ? 1 : 0,
               transform: `scale(${isRecording ? 1 : 0.25})`,
-              transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+              transitionTimingFunction: "var(--ease-ios-decelerate)",
             }}
           />
           <HugeiconsIcon
@@ -88,7 +88,7 @@ export function ControlButtons({
             style={{
               opacity: isRecording ? 0 : 1,
               transform: `scale(${isRecording ? 0.25 : 1})`,
-              transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+              transitionTimingFunction: "var(--ease-ios-decelerate)",
             }}
           />
         </span>
@@ -115,7 +115,7 @@ export function ControlButtons({
             style={{
               opacity: isPlaying ? 1 : 0,
               transform: `scale(${isPlaying ? 1 : 0.25})`,
-              transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+              transitionTimingFunction: "var(--ease-ios-decelerate)",
             }}
           />
           <HugeiconsIcon
@@ -124,7 +124,7 @@ export function ControlButtons({
             style={{
               opacity: isPlaying ? 0 : 1,
               transform: `scale(${isPlaying ? 0.25 : 1})`,
-              transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+              transitionTimingFunction: "var(--ease-ios-decelerate)",
             }}
           />
         </span>

@@ -3,6 +3,7 @@
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 type FadeInDirection = "up" | "down" | "left" | "right" | "scale";
 
@@ -14,6 +15,7 @@ interface FadeInProps {
   distance?: number;
   className?: string;
   as?: "div" | "span";
+  performanceAware?: boolean;
 }
 
 const directionVariants: Record<FadeInDirection, (d: number) => Record<string, number>> = {
@@ -32,10 +34,17 @@ export function FadeIn({
   distance = 8,
   className,
   as = "div",
+  performanceAware = false,
 }: FadeInProps) {
+  const animOpts = performanceAware ? useOptimizedAnimation() : null;
+  const shouldReduce = animOpts?.shouldReduceMotion ?? false;
   const initialOffset = directionVariants[direction](distance);
   const initial = { opacity: 0, ...initialOffset };
   const Tag = as === "span" ? m.span : m.div;
+
+  if (shouldReduce) {
+    return <Tag className={cn(className)}>{children}</Tag>;
+  }
 
   return (
     <Tag

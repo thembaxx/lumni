@@ -33,6 +33,7 @@ export const PerpetualFloat = memo(function PerpetualFloat({
   const resolvedSpeed = speed ?? duration ?? 3;
   const resolvedRange = offsetY !== undefined ? Math.abs(offsetY) : floatRange;
   const y = useMotionValue(0);
+  const yTransform = useTransform(y, (v) => `translateY(${v}px)`);
   const opacity = useTransform(y, [-resolvedRange, 0, resolvedRange], [0.7, 1, 0.7]);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export const PerpetualFloat = memo(function PerpetualFloat({
   }, [y, resolvedRange, resolvedSpeed, isAnimated, cycles]);
 
   return (
-    <m.div className={cn("will-change-transform", className)} style={{ y, opacity }}>
+    <m.div className={cn("will-change-transform", className)} style={{ transform: yTransform, opacity }}>
       {children}
     </m.div>
   );

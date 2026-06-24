@@ -57,7 +57,7 @@ export function HotSpotInput({ imageUrl, width, height, regions, onSubmit }: Hot
               type="button"
               key={region.id}
               onClick={() => setSelectedId(region.id)}
-              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-all focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
                 isSelected
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20) ring-(--system-accent) ring-2"
                   : "border-(--system-accent)/30 hover:bg-(--system-accent-alpha-10)"

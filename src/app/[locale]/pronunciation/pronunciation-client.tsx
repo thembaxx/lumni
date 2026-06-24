@@ -413,7 +413,7 @@ export function PronunciationClient() {
                         {historyStats.recentScores.map((s, i) => (
                           <div key={i} className="flex flex-1 flex-col items-center gap-1">
                             <div
-                              className="w-full rounded-t-md transition-all"
+                              className="w-full rounded-t-md transition-[height,background-color] duration-300"
                               style={{
                                 height: `${Math.max(s.score, 4)}px`,
                                 backgroundColor:

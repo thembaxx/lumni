@@ -170,7 +170,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
         >
           <span
             className={cn(
-              "absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
+              "absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[var(--ease-ios-decelerate)]",
               isPlaying ? "scale-100 opacity-100 blur-0" : "scale-[0.25] opacity-0 blur-sm",
             )}
           >
@@ -178,7 +178,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
           </span>
           <span
             className={cn(
-              "absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
+              "absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[var(--ease-ios-decelerate)]",
               isPlaying ? "scale-[0.25] opacity-0 blur-sm" : "scale-100 opacity-100 blur-0",
             )}
           >

@@ -132,7 +132,7 @@ export default function EmbedBackfillPage() {
           <CardContent className="flex flex-col gap-3">
             <div className="h-2 w-full rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                className="h-full rounded-full bg-emerald-500 transition-[width] duration-500"
                 style={{
                   width: `${progress.total > 0 ? (progress.done / progress.total) * 100 : 0}%`,
                 }}

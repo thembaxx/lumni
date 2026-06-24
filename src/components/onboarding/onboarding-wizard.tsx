@@ -299,7 +299,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                 <button
                   type="button"
                   onClick={complete}
-                  className="font-medium text-primary text-xs underline decoration-primary/30 underline-offset-2 transition-all hover:decoration-primary"
+                  className="font-medium text-primary text-xs underline decoration-primary/30 underline-offset-2 transition-[text-decoration-color] duration-200 hover:decoration-primary"
                 >
                   Skip to dashboard
                 </button>
