@@ -1129,11 +1129,20 @@ Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-
 - HTTP: use `@effect/platform` `HttpClient` for typed HTTP effects
 - Testing: use `@effect/vitest` for Effect-specific test helpers
 
+### Gotchas (from real incidents)
+
+- **`this` in `Effect.gen` inside class methods**: `Effect.gen(function* () { ... })` uses a plain function — `this` is NOT the class instance. Capture with `const self = this` + `// oxlint-disable-next-line typescript/no-this-alias` before the generator.
+- **`Effect.tryPromise` needs `async` when callback returns `T | Promise<T>`**: `Effect.tryPromise(() => fn(...))` type-errors when `fn` can return sync. Use `Effect.tryPromise(async () => fn(...))`.
+- **Null check BEFORE parse functions**: `parseAIResponse(null)` and `getTextResponse(null)` crash with `"available" in null`. Always guard `if (!result) return fallback` before calling them.
+- **`Effect.catchAll` + `Effect.flatMap` type trap**: `catchAll(() => Effect.sync(() => logError(...)))` produces `void` success type, creating `T | void` union that breaks `flatMap`. Fix: call `logError` synchronously in the callback body and return `Effect.succeed(undefined)`.
+- **`Effect.all` with promises**: Replace `Promise.all(array)` with `Effect.all(array, { concurrency: "unbounded" })` — the concurrency option is required for parallel execution.
+
 ### Migration Conventions
 
 - **Bounded subsystems only**: New Effect code should be isolated to a single module until proven
-- **Backward-compatible exports**: Refactored modules must retain their existing async function signatures
+- **Backward-compatible exports**: Refactored modules must retain their existing async function signatures. New Effect methods get `*Effect` suffix.
 - **No mixed patterns**: A single file should be either all-Effect or all-imperative, not both
+- **Discriminated union dispatch**: For unions with a `source` field (not `_tag`), use a plain `switch` where each case returns `Effect.Effect<void>` directly
 - **Provider chain pattern**: The AI client (`src/lib/ai/client.ts`) demonstrates the canonical pattern:
   - Define a `ProviderError` type with `Effect.catchAll` fallback chain
   - Use `Effect.gen` for sequential fallback, `Effect.all` for parallel calls
