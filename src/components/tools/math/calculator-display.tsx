@@ -13,7 +13,7 @@ interface CalculatorDisplayProps {
 
 export function CalculatorDisplay({ expression, result, error, onCopy }: CalculatorDisplayProps) {
   return (
-    <div className="mb-4 flex min-h-[88px] flex-col justify-end rounded-xl border border-border/50 bg-system-surface p-4">
+    <div className="mb-4 flex min-h-24 flex-col justify-end rounded-xl border border-border/50 bg-system-surface p-4">
       <div className="mb-1 select-all truncate text-right font-mono text-muted-foreground/60 text-xs">
         {expression || "0"}
       </div>

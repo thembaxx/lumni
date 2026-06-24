@@ -61,7 +61,7 @@ export default function OfflinePage() {
         <div>
           <h1 className="font-bold text-2xl tracking-tight">You&apos;re Offline</h1>
           <p className="mt-2 text-muted-foreground text-sm">
-            Don&apos;t worry — your saved content is still available.
+            Don&apos;t worry, your saved content is still available.
           </p>
         </div>
       </div>

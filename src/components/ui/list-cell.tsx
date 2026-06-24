@@ -39,7 +39,7 @@ function ListCell({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex min-h-[56px] w-full items-center gap-4 px-5 py-4 text-left",
+        "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
         "bg-[--system-surface] transition-[background-color,scale] duration-200",
         onClick &&
           "hover:bg-[--system-surface-secondary] active:scale-[0.96] active:bg-[--system-surface-secondary]",

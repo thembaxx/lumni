@@ -39,7 +39,7 @@ export function SmartViewDialog({ open, onOpenChange, exam, onViewPdf }: SmartVi
   const headerChildren = useMemo(
     () =>
       result && result.source !== "error" ? (
-        <Badge variant="outline" className="shrink-0 px-1.5 text-[9px] capitalize">
+        <Badge variant="outline" className="shrink-0 px-1.5 text-(--fs-caption-3) capitalize">
           {result.source}
         </Badge>
       ) : undefined,

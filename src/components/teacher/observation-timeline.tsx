@@ -74,7 +74,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
           value={newNote}
           onChange={(e) => setNewNote(e.target.value)}
           placeholder="Add observation note..."
-          className="min-h-[60px] text-sm"
+          className="min-h-14 text-sm"
         />
         <Button
           onClick={addObservation}

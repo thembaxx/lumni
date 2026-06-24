@@ -263,7 +263,7 @@ export function PronunciationClient() {
             value={expectedText}
             onChange={(e) => setExpectedText(e.target.value)}
             placeholder="Type a word or phrase to practice..."
-            className="min-h-[80px] resize-none rounded-2xl text-base"
+            className="min-h-20 resize-none rounded-2xl text-base"
             aria-label="Text to practice"
           />
         </CardContent>

@@ -26,7 +26,7 @@ export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerP
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="relative min-h-48 overflow-hidden rounded-lg border bg-background/20">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg border bg-background/20">
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-muted/10">
             <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />

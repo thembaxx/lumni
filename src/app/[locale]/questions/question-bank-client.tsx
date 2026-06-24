@@ -304,7 +304,7 @@ export function QuestionBankClient() {
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end gap-3">
-            <div className="min-w-[200px] flex-1">
+            <div className="min-w-48 flex-1">
               <SubjectSelect
                 value={selectedSubject}
                 onChange={(s: string) => dispatch({ type: "setSubject", subject: s })}
@@ -312,7 +312,7 @@ export function QuestionBankClient() {
             </div>
 
             {curriculum && (
-              <div className="min-w-[160px] flex-1">
+              <div className="min-w-40 flex-1">
                 <Select
                   value={selectedTopic || "__all"}
                   onValueChange={(v) =>
@@ -338,7 +338,7 @@ export function QuestionBankClient() {
             )}
 
             {currentTopic && currentTopic.subtopics.length > 0 && (
-              <div className="min-w-[160px] flex-1">
+              <div className="min-w-40 flex-1">
                 <Select
                   value={selectedSubtopic || "__all"}
                   onValueChange={(v) =>
@@ -363,7 +363,7 @@ export function QuestionBankClient() {
               </div>
             )}
 
-            <div className="min-w-[120px] flex-1">
+            <div className="min-w-32 flex-1">
               <Select
                 value={selectedType || "__all"}
                 onValueChange={(v) =>
@@ -386,7 +386,7 @@ export function QuestionBankClient() {
               </Select>
             </div>
 
-            <div className="min-w-[100px] flex-1">
+            <div className="min-w-28 flex-1">
               <Select
                 value={selectedYear ? String(selectedYear) : "__all"}
                 onValueChange={(v) =>

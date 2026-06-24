@@ -17,7 +17,7 @@ export function DiagramInput({ onGrade }: { onGrade: (answer: UserAnswer) => Pro
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    ctx.strokeStyle = "var(--system-foreground, #000)";
+    ctx.strokeStyle = "var(--system-foreground, oklch(20% 0.02 264))";
     ctx.lineWidth = 2;
     ctx.lineCap = "round";
     const rect = canvas.getBoundingClientRect();

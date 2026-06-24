@@ -112,7 +112,7 @@ export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
       </section>
 
       {isLoggedIn && (
-        <section className="flex flex-col gap-3" aria-label="Your progress">
+        <section className="content-visibility-auto flex flex-col gap-3" aria-label="Your progress">
           <StaggeredSection>
             <BentoStatRow questionsAnswered={stats.questionsAnswered} streak={currentStreak} />
           </StaggeredSection>

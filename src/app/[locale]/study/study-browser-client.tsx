@@ -87,7 +87,7 @@ export function StudyBrowserClient() {
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
-        <div className="min-w-[200px] flex-1">
+        <div className="min-w-48 flex-1">
           <SubjectSelect
             value={selectedSubject}
             onChange={(s: string) => {
@@ -98,7 +98,7 @@ export function StudyBrowserClient() {
         </div>
 
         {topics.length > 0 && (
-          <div className="min-w-[180px] flex-1">
+          <div className="min-w-44 flex-1">
             <Select
               value={selectedTopic || "__all"}
               onValueChange={(v) => setSelectedTopic(v === "__all" ? "" : (v ?? ""))}

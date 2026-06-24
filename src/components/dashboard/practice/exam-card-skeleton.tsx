@@ -14,7 +14,7 @@ function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
         <div className="flex items-center gap-1.5">
           <Skeleton className="h-3 w-8 rounded" />
           <Skeleton className="h-3 w-6 rounded" />
-          <Skeleton className="h-[14px] w-6 rounded" />
+          <Skeleton className="h-3.5 w-6 rounded" />
           <Skeleton className="h-3 w-10 rounded" />
         </div>
       </div>

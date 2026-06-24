@@ -101,7 +101,8 @@ export function StudyPlanOverview() {
             <div className="flex items-center gap-2 text-xs">
               <HugeiconsIcon icon={RefreshIcon} className="size-3.5 shrink-0 text-warning" />
               <span>
-                Your scores changed — your plan adapts to your performance. Regenerate to optimise.
+                Your scores changed, so your plan adapts to your performance. Regenerate to
+                optimise.
               </span>
             </div>
             <div className="flex shrink-0 items-center gap-1">

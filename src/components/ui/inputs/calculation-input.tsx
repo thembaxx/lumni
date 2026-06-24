@@ -88,7 +88,7 @@ export function CalculationInput({
           disabled={disabled}
           placeholder="Show your working steps..."
           aria-label="Show your working"
-          className="min-h-[100px]"
+          className="min-h-24"
         />
       )}
       {onSubmit && (

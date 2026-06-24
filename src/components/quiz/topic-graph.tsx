@@ -67,7 +67,7 @@ export function TopicGraph({ subject, topic }: TopicGraphProps) {
       {chainNodes.map((node, i) => (
         <li key={node.id} className="flex shrink-0 items-center gap-1">
           <span
-            className={`inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 font-medium text-[11px] leading-tight ${
+            className={`inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 font-medium ios-caption-2 leading-tight ${
               node.id === currentTopicNode?.id
                 ? "border-foreground/20 bg-foreground/10 text-foreground"
                 : node.type === "prerequisite"

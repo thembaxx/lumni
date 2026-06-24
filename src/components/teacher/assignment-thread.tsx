@@ -64,7 +64,7 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
-          className="min-h-[40px] text-sm"
+          className="min-h-10 text-sm"
         />
         <Button
           onClick={sendMessage}

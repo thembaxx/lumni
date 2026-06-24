@@ -30,9 +30,9 @@ function getDurationLabel(minutes: number): string {
 }
 
 function getColorClass(minutes: number): string {
-  if (minutes >= 10) return "border-l-emerald-500 bg-emerald-500/5";
-  if (minutes >= 5) return "border-l-amber-500 bg-amber-500/5";
-  return "border-l-muted-foreground/30 bg-muted/30";
+  if (minutes >= 10) return "border-emerald-500/30 bg-emerald-500/5";
+  if (minutes >= 5) return "border-amber-500/30 bg-amber-500/5";
+  return "border-muted-foreground/30 bg-muted/30";
 }
 
 export function LiveSessionMonitor() {
@@ -96,7 +96,7 @@ export function LiveSessionMonitor() {
               <div
                 key={session.$id}
                 className={cn(
-                  "flex items-center justify-between rounded-xl border-l-4 p-3",
+                  "flex items-center justify-between rounded-xl border p-3",
                   getColorClass(mins),
                 )}
               >

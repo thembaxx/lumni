@@ -96,7 +96,7 @@ export async function generateMetadata({
       template: "%s | Lumni",
     },
     description:
-      "Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
+      "Pass your Matric with confidence: AI-powered quizzes, past papers, and a personalized study planner for South African students.",
     metadataBase: new URL("https://lumni.ai"),
     robots: {
       index: true,
@@ -109,7 +109,7 @@ export async function generateMetadata({
     openGraph: {
       title: "Lumni",
       description:
-        "Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
+        "Pass your Matric with confidence: AI-powered quizzes, past papers, and a personalized study planner for South African students.",
       type: "website",
       locale: localeToOgLocale(locale),
       siteName: "Lumni",
@@ -127,7 +127,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: "Lumni",
       description:
-        "Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
+        "Pass your Matric with confidence: AI-powered quizzes, past papers, and a personalized study planner for South African students.",
       images: ["/og-image.webp"],
     },
   };

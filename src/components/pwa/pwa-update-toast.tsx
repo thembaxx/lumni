@@ -60,7 +60,7 @@ export function PWAUpdateToast() {
 const FEATURES = [
   "AI-powered quizzes & flashcards",
   "Matric exam papers with marking memos",
-  "Offline access — no data needed",
+  "Offline access, no data needed",
   "Personalised study plan & progress tracking",
 ];
 
@@ -86,7 +86,7 @@ export function PWAInstallPrompt() {
           <div className="flex-1">
             <p className="font-bold text-base">Install Lumni</p>
             <p className="mt-0.5 text-muted-foreground text-xs leading-relaxed">
-              Add to your home screen for the best experience — study anytime, even offline.
+              Add to your home screen for the best experience: study anytime, even offline.
             </p>
           </div>
         </div>

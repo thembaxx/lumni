@@ -16,7 +16,6 @@ import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
 import type { Locale } from "@/i18n/locales";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { ConsentProvider } from "@/lib/consent/consent-context";
-import { PremiumProvider } from "@/lib/premium/premium-context";
 import { queryClient } from "@/lib/query-client";
 import { seedInteractiveQuestions } from "@/lib/seed-questions";
 import { setAppInitialized } from "@/store";
@@ -76,13 +75,11 @@ export function Providers({ locale, messages, timeZone, children }: ProvidersPro
         <AuthProvider>
           <ConsentProvider>
             <JoyProvider>
-              <PremiumProvider>
-                <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
-                  <OnboardingProvider>
-                    <ImmersiveModeProvider>{children}</ImmersiveModeProvider>
-                  </OnboardingProvider>
-                </I18nProvider>
-              </PremiumProvider>
+              <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
+                <OnboardingProvider>
+                  <ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+                </OnboardingProvider>
+              </I18nProvider>
               <OnlineStatusIndicator />
               <JobProcessorWrapper />
               <ServiceWorkerWrapper />

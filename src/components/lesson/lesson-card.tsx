@@ -165,7 +165,7 @@ export const LessonCard = memo(function LessonCard({
                     <h3 className="balance text-wrap font-semibold text-foreground text-md leading-tight">
                       {title}
                     </h3>
-                    <div className="line-clamp-2 text-pretty text-[13px] text-muted-foreground leading-relaxed">
+                    <div className="line-clamp-2 text-pretty ios-footnote text-muted-foreground leading-relaxed">
                       <MarkdownRenderer content={summary} />
                     </div>
                   </div>

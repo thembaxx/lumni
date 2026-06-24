@@ -59,7 +59,7 @@ export function NavigationBar({
       {/* Content */}
       <div className="relative px-4 pt-safe">
         {/* Main row */}
-        <div className="flex h-[52px] items-center gap-3">
+        <div className="flex h-14 items-center gap-3">
           {/* Back button */}
           {showBack && (
             <button
@@ -79,7 +79,7 @@ export function NavigationBar({
                 "truncate font-extrabold font-heading text-system-text-primary transition-[font-size,line-height] duration-200",
                 isCollapsed
                   ? "text-base leading-6"
-                  : "text-[34px] leading-[1.2] tracking-[var(--tracking-large-title)]",
+                  : "text-(--fs-large-title) leading-[1.2] tracking-(--tracking-large-title)",
               )}
             >
               {title}

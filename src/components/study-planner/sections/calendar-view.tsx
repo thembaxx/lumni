@@ -172,7 +172,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
                       dragTargetRef.current = null;
                     }}
                     className={cn(
-                      "mb-px cursor-grab truncate rounded px-1 text-[9px] leading-4 transition-shadow active:cursor-grabbing",
+                      "mb-px cursor-grab truncate rounded px-1 text-(--fs-caption-3) leading-4 transition-shadow active:cursor-grabbing",
                       s.completed
                         ? "bg-success/20 text-success"
                         : s.type === "flashcard"
@@ -185,7 +185,9 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
                   </div>
                 ))}
                 {daySessions.length > 3 && (
-                  <div className="text-[9px] text-muted-foreground">+{daySessions.length - 3}</div>
+                  <div className="text-(--fs-caption-3) text-muted-foreground">
+                    +{daySessions.length - 3}
+                  </div>
                 )}
               </div>
             );
