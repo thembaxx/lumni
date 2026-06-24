@@ -1113,6 +1113,7 @@ Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-
 ### Best Practices
 
 **Always consult effect-solutions before writing Effect code:**
+
 1. Patterns are documented at https://www.effect.solutions
 2. CLI: `bunx effect-solutions list` / `effect-solutions show <topic>`
 3. Search `~/.local/share/effect-solutions/effect` for real implementations

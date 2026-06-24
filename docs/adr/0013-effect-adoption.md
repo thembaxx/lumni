@@ -18,14 +18,14 @@ Adopt Effect TS as a strategic foundation, starting with a single bounded subsys
 
 ### Why Effect over alternatives
 
-| Criterion | Effect | fp-ts | Manual patterns |
-|-----------|--------|-------|-----------------|
-| Error handling | `Effect<A, E, R>` with typed errors | Similar, but no runtime | try/catch, untyped |
-| DI | `Context.Tag + Layer` | ReaderTaskEither | Global singletons |
-| Async | Effect (suspend, retry, timeout, race) | TaskEither | Promise chains |
-| Standard library | Schema, Config, CLI, Stream, HTTP | io-ts (separate) | One-off deps |
-| Learning curve | Moderate | High (HKT encoding) | None |
-| Bundle size | ~15k core (tree-shaken) | N/A | N/A |
+| Criterion        | Effect                                 | fp-ts                   | Manual patterns    |
+| ---------------- | -------------------------------------- | ----------------------- | ------------------ |
+| Error handling   | `Effect<A, E, R>` with typed errors    | Similar, but no runtime | try/catch, untyped |
+| DI               | `Context.Tag + Layer`                  | ReaderTaskEither        | Global singletons  |
+| Async            | Effect (suspend, retry, timeout, race) | TaskEither              | Promise chains     |
+| Standard library | Schema, Config, CLI, Stream, HTTP      | io-ts (separate)        | One-off deps       |
+| Learning curve   | Moderate                               | High (HKT encoding)     | None               |
+| Bundle size      | ~15k core (tree-shaken)                | N/A                     | N/A                |
 
 ### Chosen approach
 

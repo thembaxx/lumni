@@ -27,18 +27,16 @@ export class LearningOrchestrator {
   }
 
   generateQuestionSetEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
-    // oxlint-disable-next-line typescript(no-this-alias)
+    // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     const startTime = Date.now();
     const { questionType, subject, topic, count } = params;
 
     return Effect.gen(function* () {
-      const { questions: rawQuestions, ragContext } = yield* Effect.tryPromise(
-        () => self.engine.generate(params),
+      const { questions: rawQuestions, ragContext } = yield* Effect.tryPromise(() =>
+        self.engine.generate(params),
       ).pipe(
-        Effect.catchAll(() =>
-          Effect.succeed({ questions: [] as Question[], ragContext: null }),
-        ),
+        Effect.catchAll(() => Effect.succeed({ questions: [] as Question[], ragContext: null })),
       );
       let questions: Question[] = rawQuestions;
 
@@ -92,7 +90,13 @@ export class LearningOrchestrator {
           title: s.title,
         })) ?? [];
 
-      return { questions, count: questions.length, type: serializeQuestionType(questionType), jobIds, sources };
+      return {
+        questions,
+        count: questions.length,
+        type: serializeQuestionType(questionType),
+        jobIds,
+        sources,
+      };
     });
   }
 

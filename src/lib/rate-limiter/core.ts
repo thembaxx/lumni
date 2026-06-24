@@ -128,9 +128,7 @@ export class RateLimiter {
 
   async check(key: string, config: RateLimitConfig): Promise<RateLimitResult> {
     return Effect.runPromise(
-      this.checkEffect(key, config).pipe(
-        Effect.catchAll((e) => Effect.succeed(e.result)),
-      ),
+      this.checkEffect(key, config).pipe(Effect.catchAll((e) => Effect.succeed(e.result))),
     );
   }
 

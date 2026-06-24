@@ -144,7 +144,7 @@ export class QuestionEngine {
    *          and optional RAG context for web source attribution.
    */
   generateEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
-    // oxlint-disable-next-line typescript(no-this-alias)
+    // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     return Effect.gen(function* () {
       self.lastRagContext = null;
@@ -311,14 +311,14 @@ export class QuestionEngine {
    * @returns A Promise that resolves to a string containing the generated hint.
    */
   generateHintEffect(params: HintParams): Effect.Effect<string> {
-    // oxlint-disable-next-line typescript(no-this-alias)
+    // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     return Effect.gen(function* () {
       const { question } = params;
       const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
-      const hint = yield* Effect.tryPromise(() => processor.generateHint(typed, params.ragXml)).pipe(
-        Effect.catchAll(() => Effect.succeed("")),
-      );
+      const hint = yield* Effect.tryPromise(() =>
+        processor.generateHint(typed, params.ragXml),
+      ).pipe(Effect.catchAll(() => Effect.succeed("")));
       return hint;
     });
   }
@@ -338,7 +338,7 @@ export class QuestionEngine {
    *         feedback, and grading details.
    */
   gradeEffect(question: Question, answer: UserAnswer): Effect.Effect<GradingResult> {
-    // oxlint-disable-next-line typescript(no-this-alias)
+    // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     return Effect.gen(function* () {
       const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
