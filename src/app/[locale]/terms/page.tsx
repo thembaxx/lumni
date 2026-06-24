@@ -28,14 +28,7 @@ export default async function TermsPage() {
               under your account. Users under 18 require parental consent.
             </p>
 
-            <h2 className="font-semibold text-lg">3. Subscription & Billing</h2>
-            <p className="text-muted-foreground">
-              Premium subscriptions are billed monthly. You may cancel at any time. Cancelled
-              subscriptions remain active until the end of the billing period. Refunds are handled
-              on a case-by-case basis.
-            </p>
-
-            <h2 className="font-semibold text-lg">4. Limitation of Liability</h2>
+            <h2 className="font-semibold text-lg">3. Limitation of Liability</h2>
             <p className="text-muted-foreground">
               Lumni provides study tools and practice materials. We do not guarantee exam results.
               The service is provided &ldquo;as is&rdquo; without warranty of any kind.

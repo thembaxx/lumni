@@ -78,7 +78,7 @@ const LOCKED_FEATURES: LockedFeature[] = [
   {
     icon: BatteryFullIcon,
     title: "Reward Chest",
-    description: "Unlock premium perks by staying active",
+    description: "Unlock rewards by staying active",
   },
   {
     icon: Presentation01Icon,

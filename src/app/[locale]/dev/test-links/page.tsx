@@ -28,7 +28,6 @@ const PAGES = [
   { name: "Test Exam", path: "/exam/test-id" },
   { name: "Flashcards", path: "/flashcards" },
   { name: "Review", path: "/review" },
-  { name: "Premium", path: "/premium" },
 ];
 
 export default function TestLinksPage() {

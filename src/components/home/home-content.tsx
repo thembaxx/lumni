@@ -30,10 +30,10 @@ const TestimonialsSection = dynamic(
     })),
   { ssr: false },
 );
-const PricingComparisonSection = dynamic(
+const FeatureShowcaseSection = dynamic(
   () =>
-    import("./pricing-comparison-section").then((m) => ({
-      default: m.PricingComparisonSection,
+    import("./feature-showcase-section").then((m) => ({
+      default: m.FeatureShowcaseSection,
     })),
   { ssr: false },
 );
@@ -112,7 +112,7 @@ export function HomeContent() {
       <FeaturesGrid />
       <HowItWorksSection />
       <TestimonialsSection />
-      <PricingComparisonSection />
+      <FeatureShowcaseSection />
 
       <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
     </div>
