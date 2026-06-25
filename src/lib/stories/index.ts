@@ -1,10 +1,4 @@
-export {
-  cacheStory,
-  generateComprehensionQuestions,
-  getCachedQuestions,
-  getStory,
-  storeQuestions,
-} from "./service";
+export { cacheStory, generateComprehensionQuestions } from "./service";
 export type {
   Story,
   StoryLicense,

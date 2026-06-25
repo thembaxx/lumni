@@ -10,8 +10,7 @@ export function normalizeDifficulty(d: string): Difficulty {
 }
 
 export const DIFFICULTY_VALUES: Difficulty[] = ["Easy", "Medium", "Hard"];
-export const DIFFICULTY_INPUT_VALUES: Difficulty[] = DIFFICULTY_VALUES;
 
 export function isValidDifficulty(d: string): d is DifficultyInput {
-  return DIFFICULTY_INPUT_VALUES.includes(d as DifficultyInput);
+  return DIFFICULTY_VALUES.includes(d as DifficultyInput);
 }

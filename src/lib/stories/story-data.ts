@@ -149,19 +149,6 @@ export async function getAllStoryMetas(): Promise<StoryMeta[]> {
   return all;
 }
 
-export async function getStoryMetasByLanguage(languageId: string): Promise<StoryMeta[]> {
-  if (metasByLang[languageId]) return metasByLang[languageId];
-  try {
-    const loader = STORY_IMPORTS[languageId];
-    if (!loader) return [];
-    const metas = await loader();
-    metasByLang[languageId] = metas;
-    return metas;
-  } catch {
-    return [];
-  }
-}
-
 export async function loadStoryContent(id: string): Promise<Story | null> {
   try {
     const loader = STORY_CONTENT_IMPORTS[id];

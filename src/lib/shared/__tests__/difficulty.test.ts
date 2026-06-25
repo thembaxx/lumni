@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-const { normalizeDifficulty, isValidDifficulty, DIFFICULTY_VALUES, DIFFICULTY_INPUT_VALUES } =
-  await import("../difficulty");
+const { normalizeDifficulty, isValidDifficulty, DIFFICULTY_VALUES } = await import("../difficulty");
 
 describe("difficulty shared utilities", () => {
   test("normalizeDifficulty capitalises all variants", () => {
@@ -31,9 +30,5 @@ describe("difficulty shared utilities", () => {
 
   test("DIFFICULTY_VALUES contains capitalised values", () => {
     expect(DIFFICULTY_VALUES).toEqual(["Easy", "Medium", "Hard"]);
-  });
-
-  test("DIFFICULTY_INPUT_VALUES matches DIFFICULTY_VALUES", () => {
-    expect(DIFFICULTY_INPUT_VALUES).toEqual(["Easy", "Medium", "Hard"]);
   });
 });

@@ -779,14 +779,6 @@ export function getMatricResultsForYear(year: number): MatricResult[] {
   return records;
 }
 
-export function getAllMatricResults(): Record<number, MatricResult[]> {
-  const results: Record<number, MatricResult[]> = {};
-  for (const year of YEARS) {
-    results[year] = getMatricResultsForYear(year);
-  }
-  return results;
-}
-
 export function searchMatricResults(query: string, year: number): MatricResult[] {
   const results = getMatricResultsForYear(year);
   const normalized = query.toLowerCase().trim();
