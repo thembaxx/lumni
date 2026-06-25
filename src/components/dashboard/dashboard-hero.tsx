@@ -19,7 +19,7 @@ export function HeroBanner() {
       direction="down"
       distance={12}
       duration={0.5}
-      className="relative mt-4 mb-6 h-40 overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-accent)/10 via-(--system-accent)/5 to-transparent shadow-level-2"
+      className="relative mt-4 mb-2 overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-accent)/10 via-(--system-accent)/5 to-transparent shadow-level-2"
       aria-label="Dashboard header showing welcome message"
       role="banner"
     >
@@ -34,7 +34,7 @@ export function HeroBanner() {
         </PerpetualFloat>
       )}
 
-      <div className="relative flex h-full max-w-3xl flex-col justify-center p-8">
+      <div className="relative flex max-w-3xl flex-col justify-center px-8 py-6">
         <m.h1
           className="ios-title-1 max-w-lg font-extrabold text-foreground leading-tight tracking-tight"
           initial={{ opacity: 0, x: -20 }}

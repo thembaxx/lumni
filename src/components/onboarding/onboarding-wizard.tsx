@@ -334,12 +334,13 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
               className="flex-1"
             >
               {step < 3 ? (
-                <div className="grid grid-cols-12 items-center gap-6">
-                  <div className="col-span-12 md:col-span-6">
+                <div className="flex flex-col items-center gap-6 md:grid md:grid-cols-12 md:items-center">
+                  <div className="flex w-full flex-col items-center text-center md:col-span-6 md:items-start md:text-left">
                     <m.div
                       initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, ease: iOSEase }}
+                      className="w-full"
                     >
                       <h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">
                         {current.title}
@@ -374,14 +375,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                     </m.div>
                   </div>
 
-                  <div className="col-span-12 flex items-center justify-center py-8 md:col-span-6">
+                  <div className="hidden items-center justify-center py-8 md:flex md:col-span-6">
                     <m.div
                       initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-                      className="h-56 w-56 md:h-64 md:w-64"
+                      className="flex size-80 items-center justify-center rounded-3xl bg-(--system-accent)/5"
                     >
-                      <current.SVG />
+                      <div className="h-60 w-60">
+                        <current.SVG />
+                      </div>
                     </m.div>
                   </div>
                 </div>

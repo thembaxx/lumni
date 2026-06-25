@@ -1,5 +1,6 @@
 "use client";
 
+import Lock01Icon from "@hugeicons/core-free-icons/Lock01Icon";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -7,6 +8,7 @@ import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
+import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,27 +33,6 @@ const QUESTION_TYPES = [
   { value: "calculation", label: "Calculation" },
   { value: "essay", label: "Essay" },
 ];
-
-function LockIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <title>Lock</title>
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    </svg>
-  );
-}
 
 function QuestionCard({
   question,
@@ -274,23 +255,19 @@ export function QuestionBankClient() {
 
   if (!user) {
     return (
-      <PageContainer>
-        <div className="flex flex-col items-center justify-center gap-4 py-24">
-          <div className="text-muted-foreground" aria-hidden="true">
-            <LockIcon />
-          </div>
-          <h1 className="text-center font-semibold text-2xl">Past Exam Questions</h1>
-          <p className="max-w-xs text-center text-muted-foreground text-sm">
-            Sign in to browse and practice past exam questions.
-          </p>
-          <div className="flex gap-3">
-            <Button onClick={() => push("/auth/sign-in")}>Sign In</Button>
-            <Button variant="outline" onClick={() => push("/auth/sign-up")}>
-              Create Account
-            </Button>
-          </div>
-        </div>
-      </PageContainer>
+      <EmptyStateWithIllustration
+        icon={Lock01Icon}
+        title="Past Exam Questions"
+        description="Sign in to browse and practice past exam questions."
+        action={{
+          label: "Sign In",
+          onClick: () => push("/auth/sign-in"),
+        }}
+        secondaryAction={{
+          label: "Create Account",
+          onClick: () => push("/auth/sign-up"),
+        }}
+      />
     );
   }
 

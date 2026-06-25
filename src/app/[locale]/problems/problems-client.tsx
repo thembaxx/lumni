@@ -14,6 +14,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Anim } from "@/components/shared/anim";
+import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -132,38 +133,19 @@ export function ProblemsClient() {
 
   if (!isLoggedIn) {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center px-4 py-16 text-center">
-        <div className="relative mb-6">
-          <div className="absolute inset-0 rounded-full bg-muted/50 blur-xl" />
-          <div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/30 border-dashed bg-muted/30">
-            <HugeiconsIcon icon={LockIcon} className="size-8 text-muted-foreground/60" />
-          </div>
-        </div>
-        <h3 className="balance mb-2 w-full text-wrap text-center font-extrabold text-xl">
-          Sign in to access the Problem Library
-        </h3>
-        <p className="mb-6 max-w-md text-muted-foreground text-sm">
-          Create an account or sign in to browse curated practice problems with step-by-step
-          solutions.
-        </p>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => {
-              push("/auth/sign-up?redirect=/problems");
-            }}
-          >
-            Create Account
-          </Button>
-          <Button
-            onClick={() => {
-              push("/auth/sign-in?redirect=/problems");
-            }}
-          >
-            Sign In
-          </Button>
-        </div>
-      </div>
+      <EmptyStateWithIllustration
+        icon={LockIcon}
+        title="Sign in to access the Problem Library"
+        description="Create an account or sign in to browse curated practice problems with step-by-step solutions."
+        action={{
+          label: "Sign In",
+          onClick: () => push("/auth/sign-in?redirect=/problems"),
+        }}
+        secondaryAction={{
+          label: "Create Account",
+          onClick: () => push("/auth/sign-up?redirect=/problems"),
+        }}
+      />
     );
   }
 

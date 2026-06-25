@@ -74,7 +74,7 @@ export const navConfig: NavCategory[] = [
         id: "exams",
         label: "Exams",
         icon: File01Icon,
-        route: "/exam",
+        route: "/exams",
       },
       {
         id: "past-papers",

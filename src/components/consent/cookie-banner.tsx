@@ -28,33 +28,49 @@ export function CookieBanner() {
 
   return (
     <>
-      <div className="fixed right-0 bottom-0 left-0 z-cookie-banner p-4">
-        <Card className="mx-auto max-w-lg bg-system-surface p-6 shadow-level-3">
-          <p className="ios-body mb-3 font-semibold text-foreground">
-            {t("consent.cookieBanner.title")}
-          </p>
-          <p className="ios-callout mb-4 text-muted-foreground">
-            {t("consent.cookieBanner.description")}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={() => handleAccept(false, false, false)}>
+      <div className="fixed right-0 bottom-0 left-0 z-cookie-banner p-3 md:p-4">
+        <Card className="mx-auto flex max-w-2xl flex-col gap-3 rounded-2xl bg-system-surface/95 p-4 shadow-level-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+          <div className="min-w-0 flex-1">
+            <p className="text-foreground text-sm font-semibold">
+              {t("consent.cookieBanner.title")}
+            </p>
+            <p className="mt-0.5 text-muted-foreground text-xs">
+              {t("consent.cookieBanner.description")}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleAccept(false, false, false)}
+              className="text-muted-foreground h-8 text-xs"
+            >
               {t("consent.cookieBanner.essentialOnly")}
             </Button>
-            <Button variant="secondary" size="sm" onClick={() => handleAccept(true, false, false)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleAccept(true, false, false)}
+              className="h-8 text-xs"
+            >
               {t("consent.cookieBanner.acceptAnalytics")}
             </Button>
-            <Button size="sm" onClick={() => handleAccept(true, true, true)}>
+            <Button
+              size="sm"
+              onClick={() => handleAccept(true, true, true)}
+              className="h-8 text-xs"
+            >
               {t("consent.cookieBanner.acceptAll")}
             </Button>
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => setShowSettings(true)}
+              className="hidden h-8 p-0 text-xs text-system-accent sm:inline-flex"
+            >
+              {t("consent.cookieBanner.cookieSettings")}
+            </Button>
           </div>
-          <Button
-            variant="link"
-            size="sm"
-            onClick={() => setShowSettings(true)}
-            className="mt-3 h-auto p-0 text-sm text-system-accent"
-          >
-            {t("consent.cookieBanner.cookieSettings")}
-          </Button>
         </Card>
       </div>
 

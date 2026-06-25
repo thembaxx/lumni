@@ -143,7 +143,7 @@ export function BottomNav() {
   return (
     <>
       <div
-        className="pointer-events-none fixed right-0 bottom-0 left-0 z-header"
+        className="pointer-events-none fixed right-0 bottom-0 left-0 z-header md:hidden"
         style={{
           height: "calc(64px + env(safe-area-inset-bottom, 0px))",
         }}

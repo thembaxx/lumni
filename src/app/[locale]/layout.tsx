@@ -177,7 +177,7 @@ export default async function LocaleLayout({
               <SidebarNav />
               <main
                 id="main-content"
-                className="flex min-w-0 flex-1 flex-col pb-[calc(64px+env(safe-area-inset-bottom,0px))]"
+                className="flex min-w-0 flex-1 flex-col pb-[calc(64px+env(safe-area-inset-bottom,0px))] md:pb-0"
               >
                 <TopNav />
                 <AppErrorBoundary>{children}</AppErrorBoundary>
