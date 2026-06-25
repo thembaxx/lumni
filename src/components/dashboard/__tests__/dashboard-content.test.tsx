@@ -59,10 +59,6 @@ vi.mock("@/components/layout/page-container", () => ({
   ),
 }));
 
-vi.mock("@/components/shared/local-data-notice", () => ({
-  LocalDataNotice: () => <div data-testid="local-data-notice" />,
-}));
-
 vi.mock("@/components/shared/pull-to-refresh", () => ({
   PullToRefresh: ({
     children,
@@ -232,20 +228,9 @@ describe("DashboardContent", () => {
       } as ReturnType<typeof useAuth>);
     });
 
-    it("renders LocalDataNotice for anonymous user", () => {
+    it("renders LoginBanner for anonymous user", () => {
       const { getByTestId } = render(<DashboardContent {...defaultProps} />);
-      expect(getByTestId("local-data-notice")).toBeTruthy();
-    });
-
-    it("does not render LocalDataNotice for authenticated user", () => {
-      vi.mocked(useAuth).mockReturnValue({
-        user: { $id: "user-1", name: "Test User", labels: [] },
-        status: "authenticated",
-        isAnonymous: false,
-      } as ReturnType<typeof useAuth>);
-
-      const { queryByTestId } = render(<DashboardContent {...defaultProps} />);
-      expect(queryByTestId("local-data-notice")).toBeNull();
+      expect(getByTestId("login-banner")).toBeTruthy();
     });
   });
 
