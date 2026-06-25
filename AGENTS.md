@@ -1114,6 +1114,21 @@ const systemPrompt = webContext.xml
 
 **Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings, `oxfmt --check` clean, `vitest run` 174 files / 1586 tests all pass.
 
+### Session 49 — Production hardening (June 2026)
+
+**6 gaps found and fixed:**
+
+1. **CI branch target wrong**: `ci.yml` targeted `main` but repo default is `master` — CI was silently never running on push/PR.
+2. **Missing `instrumentation.ts`**: Sentry Next.js SDK needs this for proper lifecycle hook. Created `src/instrumentation.ts` with `register()` that lazy-imports `sentry.server.config` / `sentry.edge.config` based on `NEXT_RUNTIME`.
+3. **Missing Sentry tunnel route**: `SENTRY_TUNNEL_ROUTE = "/api/telemetry"` was configured in `next.config.ts` but the route file didn't exist. Created `src/app/api/telemetry/route.ts` that proxies envelopes to Sentry ingest.
+4. **Missing `.env.example`**: Created with 30+ documented env vars grouped by domain (Appwrite, Sentry, AI providers, TinyFish, Ably, Voice Engine, Stripe, Payfast, UploadThing, Deepgram, Linear).
+5. **CSP violation reports silent**: Only `console.warn` — now also `Sentry.captureException()` with full report in `extra` and `csp-violation` tag.
+6. **Missing security header**: Added `Cross-Origin-Resource-Policy: same-origin`.
+
+**Minor fixes**: Reduced `tracesSampleRate` in dev from 1.0→0.1 to conserve trace budget. Replaced no-op `context-sync.yml` placeholder with a notice step.
+
+**Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings on all changed files, `vitest run` 173 files / 1577 tests all pass.
+
 **Polyfill/compat audit checklist (reusable pattern):**
 
 When asked to remove backward-compat code for latest-browsers-only targeting, check in this order:

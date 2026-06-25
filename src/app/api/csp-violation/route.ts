@@ -1,16 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 export async function POST(request: NextRequest) {
   try {
-    const contentType = request.headers.get("content-type") || "";
+    const report = await request.json();
+    console.warn("[CSP Violation]", JSON.stringify(report, null, 2));
 
-    if (contentType.includes("csp-report")) {
-      const report = await request.json();
-      console.warn("[CSP Violation]", JSON.stringify(report, null, 2));
-    } else {
-      const report = await request.json();
-      console.warn("[CSP Violation]", JSON.stringify(report, null, 2));
-    }
+    Sentry.captureException(new Error("CSP Violation"), {
+      extra: report,
+      tags: { type: "csp-violation" },
+    });
 
     return new NextResponse(null, { status: 204 });
   } catch {
