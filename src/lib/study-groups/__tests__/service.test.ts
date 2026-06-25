@@ -24,15 +24,16 @@ vi.mock("@/lib/db/client", () => ({
   }),
   listDocuments: vi.fn(async (collection: string, filters?: string[]) => {
     const docs = mockDocs[collection] ?? [];
-    const filtered = (!filters || filters.length === 0)
-      ? docs
-      : docs.filter((doc) =>
-          filters.every((f) => {
-            const [key, val] = f.split("=");
-            if (key === "orderDesc" || key === "orderAsc") return true;
-            return String(doc[key]) === val;
-          }),
-        );
+    const filtered =
+      !filters || filters.length === 0
+        ? docs
+        : docs.filter((doc) =>
+            filters.every((f) => {
+              const [key, val] = f.split("=");
+              if (key === "orderDesc" || key === "orderAsc") return true;
+              return String(doc[key]) === val;
+            }),
+          );
     return filtered.map((d) => ({ ...d }));
   }),
   updateDocument: vi.fn(async (collection: string, id: string, data: Record<string, unknown>) => {

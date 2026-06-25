@@ -29,7 +29,13 @@ vi.mock("uuid", () => ({
   v4: () => "test-uuid-1234",
 }));
 
-import { createRouteHandler, HttpError, isSafeString, isValidEmail, sanitizeEmail } from "../create-route-handler";
+import {
+  createRouteHandler,
+  HttpError,
+  isSafeString,
+  isValidEmail,
+  sanitizeEmail,
+} from "../create-route-handler";
 
 function makeGetRequest(path = "/api/test"): NextRequest {
   return new NextRequest(new Request(`http://localhost${path}`, { method: "GET" }));

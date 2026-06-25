@@ -179,4 +179,6 @@ const config =
     ? withSentryConfig(nextConfig, sentryOptions)
     : nextConfig;
 
-export default withBundleAnalyzerEnabled(withNextIntl(config));
+export default process.env.ANALYZE === "true"
+  ? withBundleAnalyzerEnabled(withNextIntl(config))
+  : withNextIntl(config);
