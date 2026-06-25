@@ -83,6 +83,12 @@ export const navConfig: NavCategory[] = [
         route: "/past-papers",
       },
       {
+        id: "exam-dates",
+        label: "Exam Dates",
+        icon: Calendar01Icon,
+        route: "/exam-dates",
+      },
+      {
         id: "review",
         label: "Review Mistakes",
         icon: Target01Icon,

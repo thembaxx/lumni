@@ -56,6 +56,7 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   experimental: {
     turbopackFileSystemCacheForDev: true,
+    optimizePackageImports: ["@hugeicons/core-free-icons", "@hugeicons/react"],
   },
   cacheLife: {
     realtime: { stale: 30, revalidate: 1, expire: 60 },
