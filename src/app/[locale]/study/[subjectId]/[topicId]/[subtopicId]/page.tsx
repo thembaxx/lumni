@@ -4,8 +4,6 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LessonViewClient } from "./lesson-view-client";
 
-export const revalidate = 3600;
-
 export const metadata: Metadata = {
   title: "Lesson - Lumni",
   description: "Study lesson content",

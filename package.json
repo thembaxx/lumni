@@ -71,7 +71,7 @@
     "mermaid": "^11.16.0",
     "motion": "^12.42.0",
     "nanoid": "^5.1.16",
-    "next": "^16.2.9",
+    "next": "16.3.0-preview.5",
     "next-intl": "^4.13.0",
     "node-appwrite": "^26.2.0",
     "postcss": "8.5.15",
@@ -103,7 +103,8 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@effect/language-service": "^0.86.2",
-    "@next/bundle-analyzer": "^16.2.9",
+    "@next/bundle-analyzer": "16.3.0-preview.5",
+    "@next/playwright": "16.3.0-preview.5",
     "@playwright/test": "^1.61.1",
     "@storybook/nextjs": "^10.4.6",
     "@storybook/react": "^10.4.6",

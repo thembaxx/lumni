@@ -1,8 +1,29 @@
+import { cacheLife } from "next/cache";
 import { Query } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
+
+async function fetchExams(subjectCode: string | null, year: string | null) {
+  "use cache";
+  cacheLife("moderate");
+  const queries: string[] = [];
+  if (subjectCode) {
+    queries.push(Query.equal("subject", subjectCode));
+  }
+  if (year) {
+    queries.push(Query.equal("year", Number.parseInt(year, 10)));
+  }
+
+  return databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, queries);
+}
+
+async function fetchExamById(id: string) {
+  "use cache";
+  cacheLife("stable");
+  return databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id);
+}
 
 export const GET = withRateLimit(
   createRouteHandler({
@@ -14,7 +35,7 @@ export const GET = withRateLimit(
       const id = searchParams.get("id");
 
       if (id) {
-        const doc = await databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id);
+        const doc = await fetchExamById(id);
         if (!doc) {
           throw new HttpError(404, "Exam paper not found");
         }
@@ -38,19 +59,7 @@ export const GET = withRateLimit(
         };
       }
 
-      const queries: string[] = [];
-      if (subjectCode) {
-        queries.push(Query.equal("subject", subjectCode));
-      }
-      if (year) {
-        queries.push(Query.equal("year", Number.parseInt(year, 10)));
-      }
-
-      const response = await databases.listDocuments(
-        APPWRITE_DATABASE_ID,
-        COLLECTIONS.EXAM_PAPERS,
-        queries,
-      );
+      const response = await fetchExams(subjectCode, year);
 
       const exams = response.documents.map((doc) => ({
         id: doc.$id,

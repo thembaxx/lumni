@@ -53,10 +53,15 @@ function buildReportingEndpoints(): string {
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  cacheComponents: true,
+  partialPrefetching: true,
   productionBrowserSourceMaps: false,
   experimental: {
     turbopackFileSystemCacheForDev: true,
     optimizePackageImports: ["@hugeicons/core-free-icons", "@hugeicons/react"],
+    instantInsights: {
+      validationLevel: "warning",
+    },
   },
   cacheLife: {
     realtime: { stale: 30, revalidate: 1, expire: 60 },
