@@ -1129,7 +1129,21 @@ const systemPrompt = webContext.xml
 
 **Verification**: `tsc --noEmit` 0 errors, `oxlint --fix` 0 warnings on all changed files, `vitest run` 173 files / 1577 tests all pass.
 
-**Polyfill/compat audit checklist (reusable pattern):**
+**Production hardening checklist (reusable pattern):**
+
+When asked to harden a Next.js production deployment, audit in this order:
+
+1. **CI workflow targets** — `.github/workflows/*.yml` — verify `on.push.branches` matches the repo default branch (`git branch --show-current` on the default branch). A mismatch means CI silently never runs.
+2. **Sentry setup completeness** — Three things needed: (a) `src/instrumentation.ts` with `register()` that imports per-runtime config, (b) `next.config.ts` `withSentryConfig()` with `tunnelRoute`, (c) the route file at `src/app/api/telemetry/route.ts` that proxies envelopes. Missing any one = silent failure.
+3. **Environment variable documentation** — Check for `.env.example`. When `.env*` is in `.gitignore`, `.env.example` is also ignored — add `!.env.example` to `.gitignore`. Group vars by domain with section headers.
+4. **CSP violation wiring** — The CSP report route should `Sentry.captureException()` with `tags: { type: "csp-violation" }` and the full report in `extra`, not just `console.warn`.
+5. **Security header completeness** — Check for: `Cross-Origin-Resource-Policy: same-origin`, `Cross-Origin-Opener-Policy: same-origin`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (new `*` syntax), `Strict-Transport-Security` (production only, preload), and `Content-Security-Policy` with reporting endpoints.
+6. **Sentry tracesSampleRate** — Dev should be `0.1` not `1.0` to conserve trace budget. Production can stay at `0.25` or lower.
+7. **No-op workflow placeholders** — Check for workflows that run on schedule but do nothing (e.g. `context-sync.yml`). Either make them work or reduce to a notice step.
+
+**Batch scope for fixes**: `next.config.ts`, `src/instrumentation.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `.env.example`, `.gitignore`, `src/app/api/telemetry/route.ts`, `src/app/api/csp-violation/route.ts`, `.github/workflows/*.yml`.
+
+## Polyfill/compat audit checklist (reusable pattern)
 
 When asked to remove backward-compat code for latest-browsers-only targeting, check in this order:
 

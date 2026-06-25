@@ -81,6 +81,7 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - [D066] **STT endpoint**: `POST /api/engine/transcribe` with Deepgram primary, fails open when key absent. Pronunciation client tries server Deepgram first, falls back to Whisper WASM (74MB model only downloaded when needed).
 - [D067] **Konva dark mode**: All 8 Konva renderers use `useDiagramTheme()` hook (MutationObserver on `<html>.classList`). CSS custom properties don't cascade into `<canvas>` — theme detection must use DOM API, not CSS vars. Atom colours are element-semantic and stay constant across themes.
 - [D068] **Ably real-time presence for live sessions**: Replaced Appwrite 15s-polling with Ably real-time presence. Ably-primary for participant list; Appwrite persists only session metadata. Token route at `/api/ably/token` with namespace-scoped capabilities. Route-level `ChatClientProvider` (study-groups only) to limit connection quota. Auto-end on last departure via client-side occupancy check. `ChatRoomProvider` wraps active session UI; hooks `usePresence`/`usePresenceListener` live inside it. Cleanup calls `leave()` + server-side end if last member.
+- [D069] **Production hardening checklist (Session 49)**: 6 gaps documented. CI branch target must match repo default. Sentry requires all 3: `instrumentation.ts` (register()), `next.config.ts` (tunnelRoute), and the route file. `.env.example` must be explicitly un-ignored in `.gitignore` when `.env*` is ignored. CSP violations should wire to `Sentry.captureException()` not just `console.warn`. Security headers should be audited as a group (CORP, COOP, XFO, XCTO, HSTS, CSP, Permissions-Policy). Pattern: audit then batch-fix in a single session.
 
 ## KNOWLEDGE_GRAPH
 
@@ -137,6 +138,10 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **RAG-grounded knowledge graph**: fetch RAG → inject XML into user prompt + `buildPromptInstruction()` into system prompt → AI generate → store to cache
 - **Context-threaded TTS+visual**: `const visualDescription = visual?.label ? `The question includes a visual: ${visual.label}` : undefined;` → `<TTSButton text={text} visualDescription={visualDescription} />`
 - **Server-side transcribe**: base64 audio → `POST /api/engine/transcribe` → Deepgram → `{ text, confidence, provider }` (nulls when key absent)
+- **Sentry instrumentation boilerplate**: `src/instrumentation.ts` exports `register()` that lazy-imports per-runtime config files based on `NEXT_RUNTIME`. Creates `Sentry.captureException()` — not just `console.warn` — in CSP violation handler with `tags: { type: "csp-violation" }` and full report in `extra`. Tunnel route at `/api/telemetry` proxies `application/x-sentry-envelope` POSTs to Sentry ingest URL derived from DSN.
+- **.env.example checklist**: Must be explicitly un-ignored in `.gitignore` when `.env*` is ignored (`!.env.example`). Group vars by domain with `# ─── Domain ───────────────────────────` section headers. Always include placeholder values that represent the known correct defaults.
+- **CI branch check**: Always verify CI `on.push.branches` matches the repo's default branch (check `git branch --show-current` locally or `gh repo view`). A mismatch means CI silently never runs — no error, no notification.
+- **Security header gap checklist**: Check for `Cross-Origin-Resource-Policy: same-origin`, `Cross-Origin-Opener-Policy: same-origin`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security` (production only), and `Content-Security-Policy` with reporting endpoints.
 
 ## AVOID_LIST
 
@@ -153,6 +158,9 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - **Appwrite polling for presence**: Use Ably real-time presence instead of 15s polling for live session participant lists.
 - **Manual `rooms.get()` for Ably chat**: Use `ChatRoomProvider` wrapping the active session UI + hooks inside — the imperative `rooms.get()` pattern is unnecessary.
 - **App-level `ChatClientProvider`**: Scope to route-level (study-groups layout) to limit connection quota. Do not put it in the root layout.
+- **CI assumptions**: Never assume CI targets the current default branch. Always verify `on.push.branches` in workflow YAML against `git branch --show-current` of the repo default.
+- **Sentry config without instrumentation.ts**: A Sentry tunnel configured in `next.config.ts` without a corresponding `src/app/api/telemetry/route.ts` and a `src/instrumentation.ts` with `register()` — Sentry won't initialise on server start properly without the hook.
+- **No `.env.example` file**: When `.env*` is in `.gitignore`, `.env.example` is also ignored unless explicitly un-ignored with `!.env.example`. Always create one for onboarding new developers.
 
 ## PROMPT_LOOKUP_TABLE
 
@@ -166,3 +174,4 @@ All Batch 1-6 superpowers implemented. Data consolidation (DataAccess Phase 1-4)
 - If working on **Voice/STT**, check `CONTEXT.md` > `VoiceEngine` and `STT` definitions.
 - If working on **Batch Generation**, check `question-engine.ts:generateMixed()` for the `Promise.all()` parallel pattern.
 - If working on **Live Sessions / Ably**, check `CONTEXT.md` > `Live Session` definition, `src/hooks/use-ably-chat.ts` for singleton pattern, `src/components/study-groups/live-session-bar.tsx` for presence hook usage.
+- If performing a **Production Hardening audit**, check `CONTEXT.md` > `REUSABLE_SNIPPETS` (Sentry boilerplate, .env.example checklist, CI branch check, security header checklist) and `CONTEXT.md` > `AVOID_LIST` (CI assumptions, Sentry config without instrumentation.ts, missing .env.example). Fixes should batch into a single commit: `next.config.ts`, `src/instrumentation.ts`, `sentry.server.config.ts`/`sentry.edge.config.ts`, `.env.example`, `.gitignore`, `src/app/api/telemetry/route.ts`, `src/app/api/csp-violation/route.ts`, `.github/workflows/ci.yml`, security headers in next.config.ts.
