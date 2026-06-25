@@ -90,9 +90,9 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
         <bufferAttribute args={[positions, 3]} attach="attributes-position" />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
-        transparent
-        opacity={0.5}
+      size={0.035}
+      transparent
+      opacity={0.4}
         sizeAttenuation
         depthWrite={false}
         blending={AdditiveBlending}
@@ -107,11 +107,11 @@ interface ParticleFieldProps {
 
 export function ParticleField({ step }: ParticleFieldProps) {
   return (
-    <div className="pointer-events-none fixed inset-0 z-content">
+    <div className="pointer-events-none fixed inset-0 z-content opacity-40 md:opacity-25">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 60 }}
         dpr={[1, 1.5]}
-        gl={{ antialias: false, alpha: true }}
+        gl={{ antialias: false, alpha: true, clearAlpha: 0 }}
         style={{ background: "transparent" }}
       >
         <Particles step={step} />

@@ -161,42 +161,33 @@ export function LoginBanner() {
   if (isLoggedIn || localDismissed) return null;
 
   return (
-    <div className="card-entrance-down flex w-full flex-col gap-6 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex gap-3">
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
-          <HugeiconsIcon icon={Login01Icon} className="size-4 text-system-accent" />
-        </div>
-        <div className="min-w-0 flex-1 grow">
-          <p className="text-balance font-semibold text-sm">
-            Log in to unlock your full study toolkit
-          </p>
-          <p className="text-muted-foreground text-xs">
-            Streaks, leaderboards, study plans, and more
-          </p>
-        </div>
+    <div className="card-entrance-down flex w-full items-center gap-3 rounded-xl border border-system-accent/15 bg-system-accent/8 px-3 py-2 sm:px-4 sm:py-2.5">
+      <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
+        <HugeiconsIcon icon={Login01Icon} className="size-3.5 text-system-accent" />
       </div>
+      <p className="min-w-0 flex-1 truncate text-balance font-semibold text-sm">
+        Log in to unlock your full study toolkit
+      </p>
       <div className="flex shrink-0 items-center gap-1">
-        <div className="flex grow items-center gap-1">
-          <Button
-            size="sm"
-            variant="default"
-            className="h-8 px-3 text-xs"
-            onClick={() => {
-              push("/auth/sign-in?redirect=/dashboard");
-            }}
-          >
-            Log In
-          </Button>
-          <FeatureDialog />
-        </div>
+        <Button
+          size="sm"
+          variant="default"
+          className="h-7 px-2.5 text-xs"
+          onClick={() => {
+            push("/auth/sign-in?redirect=/dashboard");
+          }}
+        >
+          Log In
+        </Button>
+        <FeatureDialog />
         <Button
           variant="ghost"
           size="icon-sm"
           onClick={handleDismiss}
-          className="-mr-1.5"
+          className="-mr-1 size-7"
           aria-label="Dismiss"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
+          <HugeiconsIcon icon={Cancel01Icon} className="size-3.5 text-muted-foreground" />
         </Button>
       </div>
     </div>

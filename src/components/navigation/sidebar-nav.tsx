@@ -136,7 +136,7 @@ function SidebarContent() {
       <ScrollArea className="flex-1 px-3 py-2">
         {filteredCategories.map((cat) => (
           <div key={cat.label} className="mb-3">
-            <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground/70 uppercase tracking-wider">
+            <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider">
               {cat.label}
             </div>
             {cat.items.map((item) => {
