@@ -45,7 +45,9 @@ const TopNavTitle = memo(function TopNavTitle({ title }: { title?: string }) {
     return "Lumni";
   }, [pathname, title]);
 
-  return <h1 className="ios-headline font-semibold text-foreground tracking-tight">{pageTitle}</h1>;
+  return (
+    <span className="ios-headline font-semibold text-foreground tracking-tight">{pageTitle}</span>
+  );
 });
 
 const TopNavStatus = memo(function TopNavStatus() {

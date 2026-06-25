@@ -3,7 +3,6 @@
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
@@ -13,7 +12,6 @@ import { LoginBanner } from "@/components/dashboard/login-banner";
 import { TodayTab } from "@/components/dashboard/today-tab";
 import type { TabValue } from "@/components/dashboard/types";
 import { PageContainer } from "@/components/layout/page-container";
-import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggeredSection } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -73,7 +71,6 @@ export function DashboardContent({
   boltStreak: number;
   id?: string;
 }) {
-  const t = useTranslations();
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
   const shouldReduceMotion = useReducedMotion();
@@ -93,9 +90,6 @@ export function DashboardContent({
     >
       <PageContainer className="gap-6 pb-16">
         <LoginBanner />
-        {isAnonymous && (
-          <LocalDataNotice page="dashboard" description={t("dashboard.localDataDescription")} />
-        )}
         <AnimatePresence mode="wait" initial={false}>
           <m.div
             key={activeTab}

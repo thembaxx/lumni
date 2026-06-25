@@ -1,6 +1,6 @@
 "use client";
 
-import Lock01Icon from "@hugeicons/core-free-icons/Lock01Icon";
+import LockIcon from "@hugeicons/core-free-icons/LockIcon";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -199,7 +199,8 @@ const INITIAL_FILTERS: FiltersState = {
 };
 
 export function QuestionBankClient() {
-  const { user } = useAuth();
+  const { user, isAnonymous } = useAuth();
+  const isLoggedIn = !!user && !isAnonymous;
   const { push } = useRouter();
   const [filters, dispatch] = useReducer(filtersReducer, INITIAL_FILTERS);
 
@@ -253,19 +254,19 @@ export function QuestionBankClient() {
 
   const hasFilters = selectedTopic || selectedSubtopic || selectedType || selectedYear;
 
-  if (!user) {
+  if (!isLoggedIn) {
     return (
       <EmptyStateWithIllustration
-        icon={Lock01Icon}
-        title="Past Exam Questions"
-        description="Sign in to browse and practice past exam questions."
+        icon={LockIcon}
+        title="Sign in to access Past Exam Questions"
+        description="Create an account or sign in to browse and practice past exam questions."
         action={{
           label: "Sign In",
-          onClick: () => push("/auth/sign-in"),
+          onClick: () => push("/auth/sign-in?redirect=/questions"),
         }}
         secondaryAction={{
           label: "Create Account",
-          onClick: () => push("/auth/sign-up"),
+          onClick: () => push("/auth/sign-up?redirect=/questions"),
         }}
       />
     );
