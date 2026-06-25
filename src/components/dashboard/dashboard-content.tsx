@@ -1,5 +1,7 @@
 "use client";
 
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
@@ -17,6 +19,7 @@ import { StaggeredSection } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import { iOSEase } from "@/lib/utils/animation";
 
 const PracticeTab = dynamic(
   () => import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),
@@ -73,6 +76,7 @@ export function DashboardContent({
   const t = useTranslations();
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -92,20 +96,39 @@ export function DashboardContent({
         {isAnonymous && (
           <LocalDataNotice page="dashboard" description={t("dashboard.localDataDescription")} />
         )}
-        {activeTab === "today" && (
-          <>
-            <HeroBanner />
-            {isLoggedIn && <CountdownHeader />}
-            <TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
-          </>
-        )}
-        {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
-        {activeTab === "analytics" && <AnalyticsTab />}
-        {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
-          <StaggeredSection>
-            <AnonymousUpsell />
-          </StaggeredSection>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          <m.div
+            key={activeTab}
+            initial={shouldReduceMotion ? {} : { opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 0.2, ease: iOSEase },
+            }}
+            exit={
+              shouldReduceMotion
+                ? {}
+                : {
+                    opacity: 0,
+                    transition: { duration: 0.1, ease: iOSEase },
+                  }
+            }
+          >
+            {activeTab === "today" && (
+              <>
+                <HeroBanner />
+                {isLoggedIn && <CountdownHeader />}
+                <TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
+              </>
+            )}
+            {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
+            {activeTab === "analytics" && <AnalyticsTab />}
+            {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
+              <StaggeredSection>
+                <AnonymousUpsell />
+              </StaggeredSection>
+            )}
+          </m.div>
+        </AnimatePresence>
       </PageContainer>
     </PullToRefresh>
   );

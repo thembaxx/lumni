@@ -219,9 +219,17 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
                     <m.div
                       key="quiz"
                       initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25, ease: iOSEase }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.25, ease: iOSEase },
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -8,
+                        filter: "blur(2px)",
+                        transition: { duration: 0.15, ease: iOSEase },
+                      }}
                     >
                       <QuizView
                         initialSubject={quizSubject}

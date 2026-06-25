@@ -56,7 +56,7 @@ export function TabNav({
         >
           <span
             className={cn(
-              "absolute top-0.5 bottom-0.5 rounded-xl border border-border/30 bg-background shadow-sm transition-[left,width] duration-300 ease-ios",
+              "absolute top-0.5 bottom-0.5 rounded-xl border border-border/30 bg-background shadow-sm transition-[left,width] duration-200 ease-ios",
               activeTab === "today"
                 ? "left-0.5 w-[calc(33.33%-4px)]"
                 : activeTab === "practice"

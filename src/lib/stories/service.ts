@@ -2,6 +2,7 @@ import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
+import { logError } from "@/lib/shared/logger";
 import { getAllStoryMetas, loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
@@ -126,4 +127,82 @@ export async function getCachedQuestions(storyId: string): Promise<StoryQuestion
 
 export async function storeQuestions(storyId: string, questions: StoryQuestion[]): Promise<void> {
   return createQuestionsGenerator().store(storyId, "", questions);
+}
+
+const STORY_GEN_SYSTEM_PROMPT = `You are a children's story writer for South African education. Generate an original short story appropriate for the specified grade level, language, and topic. The story should be engaging, culturally relevant to South Africa, and include educational value.
+
+Return your response as a JSON object with this schema:
+{
+  "content": "The full story text in markdown format, 300-800 words depending on grade level",
+  "vocabulary": [
+    {
+      "term": "word",
+      "definition": "simple definition",
+      "partOfSpeech": "noun|verb|adjective|adverb",
+      "pronunciation": "phonetic pronunciation",
+      "language": "language code"
+    }
+  ],
+  "readTimeMinutes": 5
+}
+
+Include 3-8 vocabulary words from the story with simple definitions. For non-English stories, provide vocabulary in the target language with definitions in that language.
+
+Keep the story language-appropriate: when generating in Afrikaans, write in Afrikaans; when generating in isiZulu, write in isiZulu; etc.
+
+Return ONLY valid JSON. Do not include markdown code fences in your response.`;
+
+export async function generateStoryContent(params: {
+  language: string;
+  languageId: string;
+  gradeLevel: string;
+  topic: string;
+  subject: string;
+}): Promise<Pick<Story, "content" | "vocabulary" | "readTimeMinutes"> | null> {
+  const prompt = `Generate a short story for a Grade ${params.gradeLevel} student in ${params.language} about "${params.topic}". The subject is ${params.subject}. Write the story entirely in ${params.language}. Include vocabulary words with definitions.`;
+
+  try {
+    const ai = getAI();
+    const result = await ai.generateWithSystem(STORY_GEN_SYSTEM_PROMPT, prompt);
+
+    if (!result || !("content" in result) || !result.content) {
+      return null;
+    }
+    const content = result.content
+      .replace(/```json\s*/gi, "")
+      .replace(/```\s*$/g, "")
+      .trim();
+    return JSON.parse(content) as Pick<Story, "content" | "vocabulary" | "readTimeMinutes">;
+  } catch (err) {
+    logError("StoryService.generateStoryContent", err);
+    return null;
+  }
+}
+
+export async function storeGeneratedStory(story: Story): Promise<void> {
+  try {
+    const key = `story:${story.id}`;
+    const entry = {
+      key,
+      story,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+    };
+    await _deps.db.storyCache.put(entry);
+  } catch {
+    // IndexedDB unavailable (server-side)
+  }
+}
+
+export async function getCachedStoryById(storyId: string): Promise<Story | null> {
+  try {
+    const key = `story:${storyId}`;
+    const cached = await _deps.db.storyCache.get(key);
+    if (cached && cached.expiresAt > Date.now()) {
+      return cached.story;
+    }
+  } catch {
+    // IndexedDB unavailable (server-side)
+  }
+  return null;
 }

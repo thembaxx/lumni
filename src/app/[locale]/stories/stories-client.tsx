@@ -1,13 +1,29 @@
 "use client";
 
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import MagicWand01Icon from "@hugeicons/core-free-icons/MagicWand01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FadeIn } from "@/components/shared/fade-in";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import type { StoryProgressRecord } from "@/lib/db/schema";
@@ -17,6 +33,33 @@ import { cacheAllStories } from "@/lib/stories/service";
 import type { StoryMeta } from "@/lib/stories/story-data";
 import { getAllStoryMetas, getLanguageLabel } from "@/lib/stories/story-data";
 
+const LANG_OPTIONS = [
+  { id: "english-home-language", label: "English", code: "en" },
+  { id: "afrikaans-home-language", label: "Afrikaans", code: "af" },
+  { id: "isi-zulu-home-language", label: "isiZulu", code: "zu" },
+  { id: "isi-xhosa-home-language", label: "isiXhosa", code: "xh" },
+  { id: "sesotho-home-language", label: "Sesotho", code: "st" },
+  { id: "setswana-home-language", label: "Setswana", code: "tn" },
+  { id: "sepedi-home-language", label: "Sepedi", code: "nso" },
+  { id: "xitsonga-home-language", label: "Xitsonga", code: "ts" },
+  { id: "siswati-home-language", label: "siSwati", code: "ss" },
+  { id: "tshivenda-home-language", label: "Tshivenda", code: "ve" },
+  { id: "isi-ndebele-home-language", label: "isiNdebele", code: "nd" },
+];
+
+const GRADE_OPTIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+
+const SUBJECTS = [
+  "Mathematics",
+  "English",
+  "Afrikaans",
+  "isiZulu",
+  "Life Sciences",
+  "Physical Sciences",
+  "History",
+  "Geography",
+];
+
 export function StoriesClient() {
   const { push } = useRouter();
   const { user } = useAuth();
@@ -24,8 +67,59 @@ export function StoriesClient() {
   const [stories, setStories] = useState<StoryMeta[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [progressMap, setProgressMap] = useState<Map<string, StoryProgressRecord>>(new Map());
+  const [genOpen, setGenOpen] = useState(false);
+  const [genLanguage, setGenLanguage] = useState("english-home-language");
+  const [genGrade, setGenGrade] = useState("4");
+  const [genTopic, setGenTopic] = useState("");
+  const [genSubject, setGenSubject] = useState("English");
+  const [genLoading, setGenLoading] = useState(false);
 
   const userId = user?.$id;
+
+  const handleGenerate = useCallback(async () => {
+    if (!genTopic.trim()) return;
+    setGenLoading(true);
+    try {
+      const langOpt = LANG_OPTIONS.find((l) => l.id === genLanguage);
+      const res = await fetch("/api/engine/generate-story", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          language: langOpt?.label ?? "English",
+          languageId: genLanguage,
+          gradeLevel: genGrade,
+          topic: genTopic.trim(),
+          subject: genSubject,
+        }),
+      });
+      const data = await res.json();
+      if (data.story) {
+        const meta: StoryMeta = {
+          id: data.story.id,
+          title: data.story.title,
+          author: data.story.author,
+          language: data.story.language,
+          languageId: data.story.languageId,
+          gradeLevel: data.story.gradeLevel,
+          wordCount: data.story.wordCount,
+          subjects: data.story.subjects,
+          source: "ai-generated",
+          sourceUrl: "",
+          topics: data.story.topics,
+          readTimeMinutes: data.story.readTimeMinutes,
+          license: "ai-generated",
+        };
+        setStories((prev) => [meta, ...prev]);
+        push(`/stories/${data.story.id}`);
+        setGenOpen(false);
+        setGenTopic("");
+      }
+    } catch (err) {
+      logError("stories-client.generateStory", err);
+    } finally {
+      setGenLoading(false);
+    }
+  }, [genLanguage, genGrade, genTopic, genSubject, push]);
 
   useEffect(() => {
     getAllStoryMetas().then((all) => {
@@ -86,6 +180,15 @@ export function StoriesClient() {
               {getLanguageLabel(lang)}
             </Badge>
           ))}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setGenOpen(true)}
+            className="ml-auto rounded-full text-xs"
+          >
+            <HugeiconsIcon icon={MagicWand01Icon} className="size-3.5" />
+            Generate Story
+          </Button>
         </div>
       )}
 
@@ -158,6 +261,101 @@ export function StoriesClient() {
           );
         })}
       </div>
+      <Dialog open={genOpen} onOpenChange={setGenOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Generate a Story</DialogTitle>
+            <DialogDescription>
+              Create an original story using AI for any subject, grade, and language.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <span className="text-(--fs-caption-3) font-medium text-muted-foreground">
+                Language
+              </span>
+              <Select
+                value={genLanguage}
+                onValueChange={(v) => {
+                  if (v) setGenLanguage(v);
+                }}
+              >
+                <SelectTrigger className="rounded-full text-xs" aria-label="Language">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {LANG_OPTIONS.map((l) => (
+                    <SelectItem key={l.id} value={l.id} className="text-xs">
+                      {l.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-(--fs-caption-3) font-medium text-muted-foreground">Grade</span>
+              <Select
+                value={genGrade}
+                onValueChange={(v) => {
+                  if (v) setGenGrade(v);
+                }}
+              >
+                <SelectTrigger className="rounded-full text-xs" aria-label="Grade">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {GRADE_OPTIONS.map((g) => (
+                    <SelectItem key={g} value={g} className="text-xs">
+                      Grade {g}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-(--fs-caption-3) font-medium text-muted-foreground">
+                Subject
+              </span>
+              <Select
+                value={genSubject}
+                onValueChange={(v) => {
+                  if (v) setGenSubject(v);
+                }}
+              >
+                <SelectTrigger className="rounded-full text-xs" aria-label="Subject">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {SUBJECTS.map((s) => (
+                    <SelectItem key={s} value={s} className="text-xs">
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-(--fs-caption-3) font-medium text-muted-foreground">
+                Topic / Theme
+              </span>
+              <Input
+                value={genTopic}
+                onChange={(e) => setGenTopic(e.target.value)}
+                placeholder="e.g. The Water Cycle, Nelson Mandela, Fractions"
+                className="rounded-2xl text-xs"
+                aria-label="Story topic"
+              />
+            </div>
+            <Button
+              onClick={handleGenerate}
+              disabled={!genTopic.trim() || genLoading}
+              className="self-end rounded-full"
+            >
+              {genLoading ? "Generating..." : "Generate Story"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </PageContainer>
   );
 }

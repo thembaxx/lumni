@@ -7,11 +7,18 @@ import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
@@ -20,21 +27,46 @@ import type { DictionaryResult } from "@/lib/dictionary/types";
 import { logError } from "@/lib/shared/logger";
 import { isWordSaved, removeWord, saveWord } from "@/lib/vocabulary/service";
 
+const LANGUAGES = [
+  { value: "en", label: "English" },
+  { value: "af", label: "Afrikaans" },
+  { value: "zu", label: "isiZulu" },
+  { value: "xh", label: "isiXhosa" },
+  { value: "st", label: "Sesotho" },
+  { value: "tn", label: "Setswana" },
+  { value: "nso", label: "Sepedi" },
+  { value: "ts", label: "Xitsonga" },
+  { value: "ss", label: "siSwati" },
+  { value: "ve", label: "Tshivenda" },
+  { value: "nd", label: "isiNdebele" },
+];
+
+const LANG_LABELS: Record<string, string> = {};
+for (const l of LANGUAGES) {
+  LANG_LABELS[l.value] = l.label;
+}
+
 export function DictionaryClient() {
   const { user } = useAuth();
   const userId = user?.$id ?? "anonymous";
   const [query, setQuery] = useState("");
+  const [language, setLanguage] = useState("en");
   const [result, setResult] = useState<DictionaryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const langRef = useRef(language);
 
   useEffect(() => {
     preCacheCommonWords(dexieDataAccess).catch(() => {
       // background pre-cache failure is non-critical
     });
   }, []);
+
+  useEffect(() => {
+    langRef.current = language;
+  }, [language]);
 
   const handleSearch = useCallback(
     async (e: React.FormEvent) => {
@@ -44,7 +76,8 @@ export function DictionaryClient() {
       setLoading(true);
       setSearched(true);
       try {
-        const data = await lookupWord(word, "en");
+        const lang = langRef.current;
+        const data = await lookupWord(word, lang);
         setResult(data);
         if (data && userId !== "anonymous") {
           const alreadySaved = await isWordSaved(userId, word);
@@ -76,7 +109,7 @@ export function DictionaryClient() {
       } else {
         const def = result.definitions[0]?.definition ?? "";
         const pos = result.definitions[0]?.partOfSpeech;
-        await saveWord(userId, result.word, def, "en", "manual", "dictionary", pos);
+        await saveWord(userId, result.word, def, langRef.current, "manual", "dictionary", pos);
         setSaved(true);
       }
     } catch (err) {
@@ -96,8 +129,8 @@ export function DictionaryClient() {
           </p>
         </div>
 
-        <form onSubmit={handleSearch} className="flex gap-2">
-          <div className="relative flex-1">
+        <form onSubmit={handleSearch} className="flex flex-wrap gap-2">
+          <div className="relative min-w-0 flex-1">
             <HugeiconsIcon
               icon={Search01Icon}
               className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
@@ -110,6 +143,23 @@ export function DictionaryClient() {
               aria-label="Search dictionary"
             />
           </div>
+          <Select
+            value={language}
+            onValueChange={(v) => {
+              if (v) setLanguage(v);
+            }}
+          >
+            <SelectTrigger className="w-36 rounded-full text-xs" aria-label="Select language">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGES.map((l) => (
+                <SelectItem key={l.value} value={l.value} className="text-xs">
+                  {l.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button type="submit" disabled={!query.trim() || loading}>
             Search
           </Button>

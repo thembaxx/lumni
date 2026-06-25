@@ -311,9 +311,26 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
             <m.div
               key={`step-${step}`}
               initial={shouldReduceMotion ? {} : { opacity: 0, y: 20, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={shouldReduceMotion ? {} : { opacity: 0, y: -12, scale: 0.98 }}
-              transition={{ duration: 0.35, ease: iOSEase }}
+              animate={
+                shouldReduceMotion
+                  ? {}
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.35, ease: iOSEase },
+                    }
+              }
+              exit={
+                shouldReduceMotion
+                  ? {}
+                  : {
+                      opacity: 0,
+                      y: -12,
+                      scale: 0.98,
+                      transition: { duration: 0.18, ease: iOSEase },
+                    }
+              }
               className="flex-1"
             >
               {step < 3 ? (
