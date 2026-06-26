@@ -252,9 +252,6 @@ importers:
       knip:
         specifier: ^6.20.0
         version: 6.20.0
-      no-mistakes:
-        specifier: ^0.26.0
-        version: 0.26.0
       oxfmt:
         specifier: ^0.56.0
         version: 0.56.0
@@ -6027,10 +6024,6 @@ packages:
 
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
-
-  no-mistakes@0.26.0:
-    resolution: {integrity: sha512-y2WMr2agmfzsgngw6eVp2Nrb2QS1vaOG6xT23UYHf7L7Z+gQU0PUdmWi8RvzwYDWqBtIWls6sDrxs4sDlx93Fg==}
-    hasBin: true
 
   node-abi@3.92.0:
     resolution: {integrity: sha512-KdHvFWZjEKDf0cakgFjebl371GPsISX2oZHcuyKqM7DtogIsHrqKeLTo8wBHxaXRAQlY2PsPlZmfo+9ZCxEREQ==}
@@ -13578,8 +13571,6 @@ snapshots:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.8.1
-
-  no-mistakes@0.26.0: {}
 
   node-abi@3.92.0:
     dependencies:

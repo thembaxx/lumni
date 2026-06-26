@@ -92,7 +92,6 @@ onlyBuiltDependencies:
   - core-js-pure
   - esbuild
   - msgpackr-extract
-  - no-mistakes
   - protobufjs
   - sharp
   - tesseract.js
