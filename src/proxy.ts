@@ -58,7 +58,13 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(signInUrl);
   }
 
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+
+  if (pathname.includes("/admin") || pathname.includes("/upload")) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+
+  return response;
 }
 
 export const config = {
