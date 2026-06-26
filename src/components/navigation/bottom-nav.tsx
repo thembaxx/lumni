@@ -62,7 +62,7 @@ const NavItemComponent = memo(function NavItemComponent({
         <HugeiconsIcon
           icon={item.icon}
           className={cn(
-            "size-[18px] transition-[transform,color] duration-200",
+            "size-[18px] transition-[transform,color] duration-200 ease-ios",
             isActive && "scale-110",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
