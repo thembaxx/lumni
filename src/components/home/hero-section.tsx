@@ -1,36 +1,22 @@
 "use client";
 
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
-import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useReducedMotion, useScroll, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { memo, useRef } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/shared/fade-in";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
-}
-
-function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const displayValue = isInView ? value : 0;
-
-  return (
-    <span ref={ref} className="tabular-nums">
-      {displayValue.toLocaleString()}
-      {suffix}
-    </span>
-  );
 }
 
 export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSectionProps) {
@@ -123,23 +109,17 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               delay={0.3}
               className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-2"
             >
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
-                  <AnimatedCounter value={50000} suffix="+" />
-                </span>
-                <span className="text-muted-foreground text-xs">Questions answered</span>
+              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
+                <span className="font-medium text-xs">CAPS Aligned</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
-                  <AnimatedCounter value={14} suffix="" />
-                </span>
-                <span className="text-muted-foreground text-xs">NSC Subjects</span>
+              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
+                <span className="font-medium text-xs">Covers 2020–2025 Papers</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl text-foreground tabular-nums tracking-tight">
-                  <AnimatedCounter value={1000} suffix="+" />
-                </span>
-                <span className="text-muted-foreground text-xs">Past papers</span>
+              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
+                <span className="font-medium text-xs">14 NSC Subjects</span>
               </div>
             </FadeIn>
           </div>
@@ -164,54 +144,31 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                       <p className="ios-caption-3 text-muted-foreground">{t("home.demoSubject")}</p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-muted/50 px-2.5 py-0.5 font-medium text-muted-foreground text-xs tabular-nums">
-                    {t("home.demoProgress", { current: 4, total: 10 })}
-                  </span>
                 </div>
-                <div className="flex flex-1 flex-col gap-4 rounded-lg bg-system-background-secondary/80 p-5">
-                  <p className="font-medium text-sm leading-relaxed">
-                    What is the derivative of{" "}
-                    <span className="font-semibold text-foreground">sin(x²)</span>?
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-lg bg-system-background-secondary/80 p-5">
+                  <svg
+                    className="size-12 text-primary/40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v.5c0 .5-.2 1-.6 1.4C13 7.4 12.5 7.6 12 7.6" />
+                    <path d="M12 3c-.5 0-1 .2-1.4.6-.4.4-.6.9-.6 1.4v.5c0 .5.2 1 .6 1.4C11 7.4 11.5 7.6 12 7.6" />
+                    <path d="M12 7.6v5.7" />
+                    <path d="M9 14.3c.7.7 1.7 1.1 2.7 1.1h.6c1 0 2-.4 2.7-1.1" />
+                    <circle cx="12" cy="18" r="1.5" />
+                    <circle cx="12" cy="18" r="3" strokeDasharray="1 1" />
+                  </svg>
+                  <p className="text-center text-muted-foreground text-sm">
+                    AI-powered quizzes that adapt to your level
                   </p>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2.5 rounded-md border border-success/30 bg-success/10 px-3 py-2.5">
-                      <HugeiconsIcon
-                        icon={CheckmarkCircle01Icon}
-                        className="size-4 shrink-0 text-success"
-                      />
-                      <span className="font-medium text-success text-xs">2x cos(x²)</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 rounded-md border border-border/50 px-3 py-2.5">
-                      <div className="size-4 shrink-0 rounded-full border-2 border-border/50" />
-                      <span className="text-muted-foreground text-xs">cos(x²)</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 rounded-md border border-border/50 px-3 py-2.5">
-                      <div className="size-4 shrink-0 rounded-full border-2 border-border/50" />
-                      <span className="text-muted-foreground text-xs">2x sin(x²)</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 rounded-md border border-destructive/20 px-3 py-2.5">
-                      <HugeiconsIcon
-                        icon={CancelCircleIcon}
-                        className="size-4 shrink-0 text-destructive"
-                      />
-                      <span className="text-muted-foreground text-xs line-through">sin(2x)</span>
-                    </div>
-                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <div className="flex size-6 items-center justify-center rounded-full bg-success/20">
-                      <div className="size-2 rounded-full bg-success" />
-                    </div>
-                    <span className="font-medium text-success text-xs">{t("home.demoScore")}</span>
-                  </div>
-                  <div className="flex gap-1">
-                    <div className="size-2 rounded-full bg-success" />
-                    <div className="size-2 rounded-full bg-success" />
-                    <div className="size-2 rounded-full bg-success" />
-                    <div className="size-2 rounded-full bg-muted-foreground/20" />
-                    <div className="size-2 rounded-full bg-muted-foreground/20" />
-                  </div>
+                <div className="flex items-center justify-center">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 font-medium text-primary text-xs">
+                    Start learning in 30 seconds
+                  </span>
                 </div>
               </div>
             </div>

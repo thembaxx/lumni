@@ -8,6 +8,7 @@ import { connection } from "next/server";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
+import { appConfig } from "../../../app.config";
 import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
@@ -82,9 +83,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
+  const siteUrl = appConfig.siteUrl;
+
   const alternateLanguages = locales.reduce<Record<string, string>>(
     (acc, l) => {
-      acc[l] = `https://lumni.ai/${l}`;
+      acc[l] = `${siteUrl}/${l}`;
       return acc;
     },
     {} as Record<string, string>,
@@ -97,14 +100,14 @@ export async function generateMetadata({
     },
     description:
       "Pass your Matric with confidence: AI-powered quizzes, past papers, and a personalized study planner for South African students.",
-    metadataBase: new URL("https://lumni.ai"),
+    metadataBase: new URL(siteUrl),
     robots: {
       index: true,
       follow: true,
     },
     alternates: {
       languages: alternateLanguages,
-      canonical: `https://lumni.ai/${locale}`,
+      canonical: `${siteUrl}/${locale}`,
     },
     openGraph: {
       title: "Lumni",
@@ -113,7 +116,7 @@ export async function generateMetadata({
       type: "website",
       locale: localeToOgLocale(locale),
       siteName: "Lumni",
-      url: `https://lumni.ai/${locale}`,
+      url: `${siteUrl}/${locale}`,
       images: [
         {
           url: "/og-image.webp",
@@ -148,10 +151,19 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const [messages, t] = await Promise.all([
-    getMessages(),
-    getTranslations({ locale, namespace: "common" }),
-  ]);
+  let messages: Record<string, unknown> | undefined;
+  let t: (key: string) => string;
+  try {
+    const result = await Promise.all([
+      getMessages().catch(() => ({})),
+      getTranslations({ locale, namespace: "common" }).catch(() => (key: string) => key),
+    ]);
+    messages = result[0] as Record<string, unknown>;
+    t = result[1] as (key: string) => string;
+  } catch {
+    messages = {};
+    t = (key: string) => key;
+  }
 
   return (
     <>
@@ -166,7 +178,7 @@ export default async function LocaleLayout({
         <Utssr />
       </Suspense>
       <ChunkLoadHandler />
-      <Providers locale={locale} messages={messages} timeZone={timeZone}>
+      <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
         <LazyMotion features={domAnimation}>
           <UploadDialogRenderer />
           <Toaster />

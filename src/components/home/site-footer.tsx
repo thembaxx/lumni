@@ -3,7 +3,12 @@ import { Link } from "@/i18n/navigation";
 import { appConfig } from "../../../app.config";
 
 export async function SiteFooter() {
-  const t = await getTranslations("home");
+  let t: (key: string) => string;
+  try {
+    t = await getTranslations("home");
+  } catch {
+    t = (key: string) => key;
+  }
   const CURRENT_YEAR = new Date().getFullYear();
 
   return (
@@ -80,6 +85,12 @@ export async function SiteFooter() {
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerTerms")}
+              </Link>
+              <Link
+                href={appConfig.links.cookiePolicy}
+                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
+              >
+                {t("footerCookies")}
               </Link>
             </div>
           </div>

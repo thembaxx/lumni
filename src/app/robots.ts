@@ -1,12 +1,15 @@
 import type { MetadataRoute } from "next";
+import { appConfig } from "../../app.config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/auth/", "/admin/", "/_offline/"],
-    },
-    sitemap: "https://lumni.ai/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/auth/", "/admin/", "/_offline/", "/upload", "/dev/"],
+      },
+    ],
+    sitemap: `${appConfig.siteUrl}/sitemap.xml`,
   };
 }
