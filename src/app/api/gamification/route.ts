@@ -1,5 +1,6 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import { z } from "zod";
+import { cacheLife } from "next/cache";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
@@ -21,38 +22,43 @@ const GamificationUpdateSchema = z
     message: "At least one field must be provided",
   });
 
+async function fetchGamification(userId: string) {
+  "use cache";
+  cacheLife("frequent");
+  const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
+  const db = new Databases(client);
+
+  try {
+    const docs = await db.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.USER_GAMIFICATION, [
+      Query.equal("userId", userId),
+      Query.limit(1),
+    ]);
+    const record = docs.documents[0] ?? null;
+    if (record) {
+      const {
+        userId: _u,
+        $id: _$id,
+        $collectionId: _$collectionId,
+        $createdAt: _$createdAt,
+        $updatedAt: _$updatedAt,
+        $permissions: _$permissions,
+        $databaseId: _$databaseId,
+        ...rest
+      } = record;
+      return { gamification: rest };
+    }
+    return { gamification: null };
+  } catch {
+    return { gamification: null };
+  }
+}
+
 export const GET = createRouteHandler({
   auth: "optional",
   errorLabel: "Gamification",
   execute: async ({ userId }) => {
     if (!userId) return { gamification: null };
-
-    const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
-    const db = new Databases(client);
-
-    try {
-      const docs = await db.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.USER_GAMIFICATION, [
-        Query.equal("userId", userId),
-        Query.limit(1),
-      ]);
-      const record = docs.documents[0] ?? null;
-      if (record) {
-        const {
-          userId: _u,
-          $id: _$id,
-          $collectionId: _$collectionId,
-          $createdAt: _$createdAt,
-          $updatedAt: _$updatedAt,
-          $permissions: _$permissions,
-          $databaseId: _$databaseId,
-          ...rest
-        } = record;
-        return { gamification: rest };
-      }
-      return { gamification: null };
-    } catch {
-      return { gamification: null };
-    }
+    return fetchGamification(userId);
   },
 });
 

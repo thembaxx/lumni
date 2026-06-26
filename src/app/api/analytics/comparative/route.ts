@@ -1,5 +1,13 @@
+import { cacheLife } from "next/cache";
 import { getAnalyticsService } from "@/lib/analytics/analytics-service";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+
+async function fetchComparativeData(userId: string) {
+  "use cache";
+  cacheLife("frequent");
+  const service = getAnalyticsService();
+  return service.computeComparative(userId);
+}
 
 export const GET = createRouteHandler({
   auth: "required",
@@ -16,7 +24,6 @@ export const GET = createRouteHandler({
       throw new HttpError(403, "Unauthorized");
     }
 
-    const service = getAnalyticsService();
-    return service.computeComparative(requestedUserId);
+    return fetchComparativeData(requestedUserId);
   },
 });
