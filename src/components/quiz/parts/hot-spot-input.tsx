@@ -41,7 +41,7 @@ export function HotSpotInput({ imageUrl, width, height, regions, onSubmit }: Hot
             alt="Diagram with selectable regions"
             width={width}
             height={height}
-            className="h-full w-full rounded-xl border border-border object-contain"
+            className="h-full w-full rounded-xl border border-border object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
             unoptimized
           />
         ) : (

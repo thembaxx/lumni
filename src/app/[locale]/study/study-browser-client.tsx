@@ -181,7 +181,7 @@ export function StudyBrowserClient() {
                           onClick={() =>
                             push(`/study/${selectedSubject}/${topic.id}/${subtopic.id}`)
                           }
-                          className="flex items-center gap-3 rounded-xl border bg-card p-3 text-left transition-[background-color] hover:bg-muted/50 active:scale-[0.98]"
+                          className="flex items-center gap-3 rounded-xl border bg-card p-3 text-left transition-[background-color] hover:bg-muted/50 active:scale-[0.96]"
                         >
                           <div
                             className={`flex size-9 shrink-0 items-center justify-center rounded-full ${

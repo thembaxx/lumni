@@ -80,7 +80,7 @@ export function PWAInstallPrompt() {
               alt="Lumni"
               width={48}
               height={48}
-              className="size-12 rounded-xl"
+              className="size-12 rounded-xl outline outline-black/10 -outline-offset-1 dark:outline-white/10"
             />
           </div>
           <div className="flex-1">

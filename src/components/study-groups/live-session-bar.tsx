@@ -165,7 +165,7 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
               Started by {session.startedByName ?? "someone"}
             </span>
           )}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {isParticipant ? (
               <m.div
                 key="participant"

@@ -210,7 +210,7 @@ export function StoriesClient() {
           return (
             <FadeIn key={story.id} direction="up" distance={16} duration={0.4} delay={i * 0.05}>
               <Card
-                className="cursor-pointer overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.98]"
+                className="cursor-pointer overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 active:scale-[0.96]"
                 onClick={() => push(`/stories/${story.id}`)}
                 role="button"
                 tabIndex={0}

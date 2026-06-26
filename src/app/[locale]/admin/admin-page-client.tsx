@@ -102,7 +102,7 @@ export function AdminPageClient() {
           >
             <m.div
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
               className="fixed right-6 bottom-6 z-modal"
             >
               <Button

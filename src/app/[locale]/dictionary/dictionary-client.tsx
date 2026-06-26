@@ -172,7 +172,7 @@ export function DictionaryClient() {
           </div>
         )}
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           {!loading && searched && !result && (
             <m.div
               key="not-found"

@@ -68,7 +68,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
               <m.button
                 onClick={() => setImageViewerOpen(true)}
                 className="group relative block w-full max-w-70 cursor-pointer"
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.15 }}
               >
                 <SmartImage

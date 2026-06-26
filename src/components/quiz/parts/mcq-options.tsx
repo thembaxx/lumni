@@ -45,7 +45,7 @@ export const MCQOptions = memo(function MCQOptions({
               ease: iOSEase,
             }}
             whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.96 }}
           >
             <Button
               variant="ghost"

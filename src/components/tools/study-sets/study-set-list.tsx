@@ -72,7 +72,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
                   onClick={() => onToggleFavorite(set.id)}
                   aria-label="Remove from favorites"
                 >
-                  <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+                  <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -102,7 +102,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
               onClick={() => onEdit(set.id)}
               aria-label="Edit study set"
             >
-              <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+              <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -126,7 +126,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
               onClick={() => onDelete(set.id)}
               aria-label="Delete study set"
             >
-              <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+              <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"

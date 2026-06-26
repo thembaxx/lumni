@@ -176,7 +176,7 @@ export function SignInForm() {
                   type="button"
                   aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
                   onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
-                  className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground transition-transform duration-150 hover:text-foreground active:scale-[0.92]"
+                  className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground transition-transform duration-150 hover:text-foreground active:scale-[0.96]"
                 >
                   {showPassword ? (
                     <HugeiconsIcon icon={ViewOffIcon} className="size-4" />

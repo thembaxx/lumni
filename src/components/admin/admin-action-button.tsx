@@ -27,7 +27,7 @@ export function AdminActionButton({
       onClick={onClick}
       disabled={loading || disabled}
       whileHover={!disabled && !loading ? { scale: 1.02 } : {}}
-      whileTap={!disabled && !loading ? { scale: 0.98 } : {}}
+      whileTap={!disabled && !loading ? { scale: 0.96 } : {}}
       className={cn(
         "flex-1 rounded-md px-3 py-2 font-medium text-sm transition-colors disabled:opacity-50",
         variant === "default" ? "bg-foreground text-background" : "border bg-transparent",

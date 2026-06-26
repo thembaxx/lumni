@@ -94,7 +94,7 @@ export function SubjectTable({
                 </div>
               </label>
               <div className={cn("flex", "gap-1")}>
-                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.96 }}>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -105,7 +105,7 @@ export function SubjectTable({
                     <HugeiconsIcon icon={PencilIcon} className={cn("size-3")} />
                   </Button>
                 </m.div>
-                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.96 }}>
                   <Button
                     variant="ghost"
                     size="icon"

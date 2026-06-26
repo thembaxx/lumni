@@ -38,7 +38,7 @@ export default function TestLinksPage() {
           <Link
             key={page.path}
             href={page.path}
-            className="block transition-transform active:scale-95"
+            className="block transition-transform active:scale-[0.96]"
           >
             <Card size="sm">
               <CardHeader>

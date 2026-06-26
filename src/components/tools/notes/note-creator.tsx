@@ -182,7 +182,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
                         aria-label="Remove from favorites"
                       >
                         <m.div
-                          whileTap={{ scale: 0.95 }}
+                          whileTap={{ scale: 0.96 }}
                           transition={{ duration: 0.2, ease: iOSEase }}
                         >
                           <svg
@@ -213,7 +213,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
                     onClick={() => exportNoteAsMarkdown(note.title, note.content)}
                     aria-label="Export note"
                   >
-                    <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+                    <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                       <svg
                         width="18"
                         height="18"
@@ -240,7 +240,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
                     }}
                     aria-label="Edit note"
                   >
-                    <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+                    <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                       <svg
                         width="18"
                         height="18"
@@ -263,7 +263,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
                     onClick={() => handleDeleteNote(note.id)}
                     aria-label="Delete note"
                   >
-                    <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+                    <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
                       <svg
                         width="18"
                         height="18"

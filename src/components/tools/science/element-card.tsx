@@ -59,7 +59,7 @@ export const ElementCard = memo(
           delay: (el.atomicNumber % 20) * 0.015,
           ease: elementEaseOutQuint,
         }}
-        whileTap={isActive ? { scale: 0.95 } : {}}
+        whileTap={isActive ? { scale: 0.96 } : {}}
         className={`${config?.bg} relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-white/10 p-2 text-white dark:border-white/20`}
       >
         <span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums text-white drop-shadow-sm">

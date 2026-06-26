@@ -129,7 +129,7 @@ export function DiagramInput({ onGrade }: { onGrade: (answer: UserAnswer) => Pro
               width={448}
               height={320}
               unoptimized
-              className="max-w-md rounded-lg border"
+              className="max-w-md rounded-lg border outline outline-black/10 -outline-offset-1 dark:outline-white/10"
             />
           )}
         </div>

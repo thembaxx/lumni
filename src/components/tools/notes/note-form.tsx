@@ -159,7 +159,7 @@ export function NoteForm({
 
       <div className="mt-4 flex justify-end gap-x-3">
         <Button variant="outline" size="icon" asChild onClick={onCancel} aria-label="Cancel">
-          <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+          <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

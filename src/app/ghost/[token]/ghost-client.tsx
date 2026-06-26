@@ -71,7 +71,7 @@ function GhostContent({ token }: { token: string }) {
           {Object.entries(stats.subjectEnrollments).map(([sub, count]) => (
             <div key={sub} className="flex items-center justify-between py-1">
               <span className="text-sm">{sub}</span>
-              <span className="font-medium text-sm">{count} students</span>
+              <span className="tabular-nums font-medium text-sm">{count} students</span>
             </div>
           ))}
         </CardContent>
@@ -84,7 +84,7 @@ function GhostContent({ token }: { token: string }) {
           {Object.entries(stats.avgScores).map(([sub, score]) => (
             <div key={sub} className="flex items-center justify-between py-1">
               <span className="text-sm">{sub}</span>
-              <span className="font-medium text-sm">{score}%</span>
+              <span className="tabular-nums font-medium text-sm">{score}%</span>
             </div>
           ))}
         </CardContent>

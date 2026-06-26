@@ -18,7 +18,7 @@ interface SubjectCardProps {
 export function SubjectCard({ subject, selected, onToggle }: SubjectCardProps) {
   return (
     <Card
-      className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-(--system-accent) active:scale-[0.97] ${
+      className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-(--system-accent) active:scale-[0.96] ${
         selected ? "bg-(--system-accent)/5 ring-2 ring-(--system-accent)" : ""
       }`}
       onClick={onToggle}

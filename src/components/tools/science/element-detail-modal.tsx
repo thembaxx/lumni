@@ -64,7 +64,7 @@ export function ElementDetailModal({
                 scale: 1.1,
                 backgroundColor: "oklch(100% 0 0 / 0.15)",
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.15 }}
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon />

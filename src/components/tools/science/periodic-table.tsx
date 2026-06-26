@@ -149,7 +149,7 @@ export function PeriodicTable() {
               exit={{ opacity: 0, scale: 0.5 }}
               onClick={() => setSearchQuery("")}
               className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/20"
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground/70" />
             </m.button>
@@ -169,7 +169,7 @@ export function PeriodicTable() {
                 ? "border-(--system-separator) bg-(--system-fill) text-foreground"
                 : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
             }`}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.96 }}
           >
             All
           </m.button>
@@ -190,7 +190,7 @@ export function PeriodicTable() {
                   ? "border-(--system-separator) bg-(--system-fill) text-foreground"
                   : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
               }`}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
             >
               <m.span
                 className={`${config.bg} size-2.5 rounded-full`}

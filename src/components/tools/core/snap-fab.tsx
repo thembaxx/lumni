@@ -233,7 +233,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
           type="button"
           onClick={handleSnap}
           aria-label="Snap photo to solve"
-          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-(--system-accent) text-white shadow-level-2 transition-transform hover:bg-(--system-accent)/90 active:scale-90"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-(--system-accent) text-white shadow-level-2 transition-transform hover:bg-(--system-accent)/90 active:scale-[0.96]"
         >
           <HugeiconsIcon icon={Camera01Icon} className="size-5" />
         </button>
@@ -246,7 +246,7 @@ export function SnapFab({ inline }: { inline?: boolean }) {
             "fixed right-5 bottom-31 z-toast",
             "flex size-12 items-center justify-center",
             "rounded-full bg-(--system-accent) text-white",
-            "shadow-level-3 transition-transform active:scale-90",
+            "shadow-level-3 transition-transform active:scale-[0.96]",
             "hover:bg-(--system-accent)/90",
           )}
         >

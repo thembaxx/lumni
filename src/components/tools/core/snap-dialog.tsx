@@ -74,7 +74,7 @@ export function SnapDialog({
               alt="Captured problem"
               width={500}
               height={300}
-              className="max-h-48 w-full object-contain"
+              className="max-h-48 w-full object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
               unoptimized
             />
           </div>

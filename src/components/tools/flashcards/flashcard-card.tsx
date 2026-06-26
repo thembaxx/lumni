@@ -43,7 +43,7 @@ export function FlashcardCard({ card, onEdit, onDelete }: FlashcardCardProps) {
           onClick={() => onEdit(card)}
           aria-label="Edit flashcard"
         >
-          <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+          <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -67,7 +67,7 @@ export function FlashcardCard({ card, onEdit, onDelete }: FlashcardCardProps) {
           onClick={() => onDelete(card.id)}
           aria-label="Delete flashcard"
         >
-          <m.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.2, ease: iOSEase }}>
+          <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"

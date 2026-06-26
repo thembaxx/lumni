@@ -55,7 +55,7 @@ const NavItemComponent = memo(function NavItemComponent({
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
       className="relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset"
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ scale: 0.96 }}
       transition={{ type: "spring", duration: 0.25, bounce: 0 }}
     >
       <div className="relative mb-0.5 flex size-5 items-center justify-center">
@@ -170,7 +170,7 @@ export function BottomNav() {
               onClick={handleOpenTools}
               aria-label="Open tools"
               className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 transition-shadow hover:bg-system-accent/90"
-              whileTap={{ scale: 0.92 }}
+              whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", duration: 0.25, bounce: 0 }}
             >
               <HugeiconsIcon icon={GridIcon} className="size-5" />

@@ -51,7 +51,7 @@ export function CompetitionCard() {
 
   return (
     <Link href="/study-groups">
-      <Card className="group flex flex-col gap-3 p-4 transition-[background-color] duration-300 active:scale-[0.98]">
+      <Card className="group flex flex-col gap-3 p-4 transition-[background-color] duration-300 active:scale-[0.96]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />

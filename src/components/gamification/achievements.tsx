@@ -49,7 +49,7 @@ export function Achievements({ achievements }: AchievementsProps) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.96 }}
             className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-level-1 transition-transform`}
             title={t("gamification.achievementUnlocked", {
               name: achievement.name,

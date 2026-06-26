@@ -111,7 +111,7 @@ function QuestionCard({
           </Button>
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {showAnswer && (
             <m.div
               initial={{ opacity: 0, height: 0 }}
