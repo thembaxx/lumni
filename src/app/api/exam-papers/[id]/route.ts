@@ -1,5 +1,4 @@
 import { UTApi, UTFile } from "uploadthing/server";
-import { cacheLife } from "next/cache";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
@@ -27,8 +26,6 @@ function parseFileKeys(raw: string | undefined | null): Record<string, string> {
 }
 
 async function fetchExamPaperDoc(id: string) {
-  "use cache";
-  cacheLife("frequent");
   return databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id);
 }
 

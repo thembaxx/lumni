@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PageContainer } from "@/components/layout/page-container";
@@ -10,8 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default async function PrivacyPage() {
-  "use cache";
-  cacheLife("stable");
   const t = await getTranslations();
   return (
     <div className="min-h-dvh bg-system-grouped py-8">

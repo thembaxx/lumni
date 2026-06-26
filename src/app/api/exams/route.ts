@@ -1,4 +1,3 @@
-import { cacheLife } from "next/cache";
 import { Query } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
@@ -6,8 +5,6 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function fetchExams(subjectCode: string | null, year: string | null) {
-  "use cache";
-  cacheLife("moderate");
   const queries: string[] = [];
   if (subjectCode) {
     queries.push(Query.equal("subject", subjectCode));
@@ -20,8 +17,6 @@ async function fetchExams(subjectCode: string | null, year: string | null) {
 }
 
 async function fetchExamById(id: string) {
-  "use cache";
-  cacheLife("stable");
   return databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, id);
 }
 

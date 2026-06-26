@@ -1,6 +1,5 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import { z } from "zod";
-import { cacheLife } from "next/cache";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
@@ -23,8 +22,6 @@ const GamificationUpdateSchema = z
   });
 
 async function fetchGamification(userId: string) {
-  "use cache";
-  cacheLife("frequent");
   const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
   const db = new Databases(client);
 

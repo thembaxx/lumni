@@ -1,10 +1,7 @@
-import { cacheLife } from "next/cache";
 import { getAnalyticsService } from "@/lib/analytics/analytics-service";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 
 async function fetchComparativeData(userId: string) {
-  "use cache";
-  cacheLife("frequent");
   const service = getAnalyticsService();
   return service.computeComparative(userId);
 }

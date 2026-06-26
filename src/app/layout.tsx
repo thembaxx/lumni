@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
-import { getLocale } from "next-intl/server";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { fontHeading, fontMono, fontSans } from "./fonts";
@@ -13,31 +11,24 @@ export const metadata: Metadata = {
   },
 };
 
-export async function generateViewport(): Promise<Viewport> {
-  const cookieStore = await cookies();
-  const themeCookie = cookieStore.get("theme")?.value;
-  const isDark = themeCookie === "dark" || (!themeCookie && false);
-  return {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    themeColor: isDark ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)",
-  };
-}
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfaf5" },
+    { media: "(prefers-color-scheme: dark)", color: "#14141f" },
+  ],
+};
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [locale, cookieStore] = await Promise.all([getLocale(), cookies()]);
-  const themeCookie = cookieStore.get("theme")?.value;
-  const prefersDark = themeCookie === "dark" || (!themeCookie && false);
-  const isDark = prefersDark;
-
   return (
     <html
-      lang={locale}
+      lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
       className={cn(
@@ -46,11 +37,15 @@ export default async function RootLayout({
         fontSans.variable,
         fontMono.variable,
         fontHeading.variable,
-        isDark && "dark",
       )}
-      style={{ colorScheme: isDark ? "dark" : "light" }}
+      style={{ colorScheme: "light dark" }}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var d=t?t[1]==="dark":false;if(d)document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
+          }}
+        />
         <link rel="preconnect" href="https://jnb.cloud.appwrite.io" />
         <link rel="preconnect" href="https://utfs.io" />
         <link rel="preconnect" href="https://api.iconify.design" />
