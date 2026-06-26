@@ -115,7 +115,7 @@ export default function AdminQuestionsPage() {
               className="flex-1"
             />
             <Button onClick={fetchQuestions} disabled={loading.fetch}>
-              {loading.fetch ? "Loading…" : "Generate Mixed"}
+              {loading.fetch ? "Loading questions…" : "Generate Mixed"}
             </Button>
           </div>
           <div className="flex flex-wrap gap-2">

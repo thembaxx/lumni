@@ -82,7 +82,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
           size="sm"
           className="shrink-0"
         >
-          {saving ? "Saving…" : "Add"}
+          {saving ? "Saving…" : "Add Note"}
         </Button>
       </div>
       {observations.length === 0 ? (

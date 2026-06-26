@@ -56,7 +56,7 @@ export default function AdminBudgetPage() {
           variant="outline"
           className="shrink-0"
         >
-          {loading ? "Loading\u2026" : "Refresh"}
+          {loading ? "Loading budget data\u2026" : "Refresh"}
         </Button>
       </div>
 

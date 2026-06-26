@@ -230,7 +230,7 @@ export function DictionaryClient() {
                             icon={saved ? Bookmark03Icon : Bookmark02Icon}
                             className="size-3.5"
                           />
-                          {saved ? "Saved" : "Save"}
+                          {saved ? "Saved" : "Save Word"}
                         </Button>
                       )}
                     </div>

@@ -67,9 +67,11 @@ export function AnalyticsClient() {
             <CardTitle>Subject Popularity</CardTitle>
           </CardHeader>
           <CardContent>
-            {isLoading && <p className="text-muted-foreground text-xs">Loading…</p>}
+            {isLoading && <p className="text-muted-foreground text-xs">Loading analytics…</p>}
             {!isLoading && (!data?.subjectPopularity || data.subjectPopularity.length === 0) && (
-              <p className="text-muted-foreground text-xs">No data yet</p>
+              <p className="text-muted-foreground text-xs">
+                No data yet. Data appears once students start using the platform.
+              </p>
             )}
             {data?.subjectPopularity && data.subjectPopularity.length > 0 && (
               <div className="flex flex-col gap-2">

@@ -132,7 +132,7 @@ function StudyGuideClient() {
                   ) : (
                     <HugeiconsIcon icon={SparklesIcon} className="size-4" data-icon />
                   )}
-                  Generate
+                  Generate Guide
                 </Button>
               </div>
             </div>

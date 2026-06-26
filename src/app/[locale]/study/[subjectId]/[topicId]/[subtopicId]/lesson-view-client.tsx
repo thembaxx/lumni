@@ -147,7 +147,9 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
       <PageContainer className="flex flex-col items-center gap-3 py-16 text-center">
         <HugeiconsIcon icon={BookOpen01Icon} className="size-12 text-muted-foreground/30" />
         <p className="font-semibold text-lg">Lesson not found</p>
-        <p className="text-muted-foreground text-sm">This lesson could not be loaded.</p>
+        <p className="text-muted-foreground text-sm">
+          This lesson could not be loaded. It may have been removed or the link might be incorrect.
+        </p>
         <Button variant="outline" onClick={() => back()} className="mt-2 rounded-full">
           Go back
         </Button>

@@ -165,7 +165,9 @@ export default function AdminGamificationPage() {
             </header>
             <div className={cn("flex flex-col gap-2 p-4 pt-0")}>
               {Object.entries(levelDistribution).length === 0 && (
-                <p className={cn("text-muted-foreground text-sm")}>No data yet</p>
+                <p className={cn("text-muted-foreground text-sm")}>
+                  No data yet. Data appears once users start earning XP.
+                </p>
               )}
               {Object.entries(levelDistribution)
                 .toSorted(([a], [b]) => Number(a) - Number(b))
@@ -195,7 +197,9 @@ export default function AdminGamificationPage() {
             </header>
             <div className={cn("flex flex-col gap-2 p-4 pt-0")}>
               {topUsers.length === 0 && (
-                <p className={cn("text-muted-foreground text-sm")}>No data yet</p>
+                <p className={cn("text-muted-foreground text-sm")}>
+                  No data yet. Data appears once users start earning XP.
+                </p>
               )}
               {topUsers.map((user) => (
                 <div key={user.userId} className={cn("flex items-center justify-between text-sm")}>

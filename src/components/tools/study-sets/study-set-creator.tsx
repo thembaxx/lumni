@@ -144,7 +144,9 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
       {/* Empty State */}
       {filteredStudySets.length === 0 && studySets.length > 0 && (
         <Card className="py-8 text-center">
-          <p className="text-muted-foreground">No study sets match your search</p>
+          <p className="text-muted-foreground">
+            No study sets match your search. Try a different search term.
+          </p>
         </Card>
       )}
 

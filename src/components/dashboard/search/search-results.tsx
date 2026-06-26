@@ -199,7 +199,9 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
     >
       {loading && <p className="px-1 text-muted-foreground text-xs">Searching…</p>}
       {!loading && results.length === 0 && (
-        <p className="px-1 text-muted-foreground text-xs">No results for "{query}"</p>
+        <p className="px-1 text-muted-foreground text-xs">
+          No results for "{query}". Try searching for a topic or subject name.
+        </p>
       )}
       <div ref={listRef} className="flex max-h-80 flex-col gap-0.5 overflow-y-auto">
         {results.map((item, i) => {

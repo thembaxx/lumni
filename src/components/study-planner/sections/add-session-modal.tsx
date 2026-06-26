@@ -167,7 +167,7 @@ export function AddSessionModal({
               disabled={!subject}
               className="flex-1"
             >
-              {t("studyPlanner.add")}
+              Add Session
             </Button>
           </div>
         </FieldGroup>

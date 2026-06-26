@@ -6,7 +6,7 @@ interface EmptyFlashcardStateProps {
 
 const messages: Record<EmptyFlashcardStateProps["type"], string> = {
   "no-cards": 'You haven\'t created any flashcards yet. Click "New Flashcard" to get started!',
-  "no-results": "No flashcards match your search",
+  "no-results": "No flashcards match your search. Try clearing your filters or browsing all cards.",
 };
 
 export function EmptyFlashcardState({ type }: EmptyFlashcardStateProps) {

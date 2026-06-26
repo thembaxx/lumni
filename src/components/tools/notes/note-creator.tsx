@@ -291,7 +291,9 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 
       {filteredNotes.length === 0 && notes.length > 0 && (
         <Card className="py-8 text-center">
-          <p className="text-muted-foreground">No notes match your search</p>
+          <p className="text-muted-foreground">
+            No notes match your search. Try a different search term.
+          </p>
         </Card>
       )}
 

@@ -116,7 +116,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
                   {t("exam.resumeSession")}
                 </Button>
                 <Button variant="outline" size="lg" onClick={handleStartNew}>
-                  {t("exam.startNew")}
+                  Start New Exam
                 </Button>
               </div>
             </div>

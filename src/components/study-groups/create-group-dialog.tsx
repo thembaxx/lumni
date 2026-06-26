@@ -105,7 +105,7 @@ export function CreateGroupDialog() {
             </Field>
           </FieldGroup>
           <Button type="submit" disabled={!name.trim() || isPending}>
-            {isPending ? t("common.creating") : t("common.create")}
+            {isPending ? t("common.creating") : "Create Group"}
           </Button>
         </form>
       </DialogContent>

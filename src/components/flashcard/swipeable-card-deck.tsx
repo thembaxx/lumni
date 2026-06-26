@@ -104,6 +104,13 @@ export function SwipeableCardDeck({
       <Card className="mx-auto w-full max-w-md" data-testid="empty-deck-message">
         <CardContent className="flex flex-col items-center justify-center gap-4 p-8">
           <p className="text-muted-foreground">No flashcards available.</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => (window.location.href = "/flashcards")}
+          >
+            Generate AI flashcards
+          </Button>
         </CardContent>
       </Card>
     );

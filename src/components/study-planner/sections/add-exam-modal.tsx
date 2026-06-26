@@ -63,7 +63,7 @@ export function AddExamModal({
               disabled={!subject || !paper || !date}
               className="flex-1"
             >
-              {t("studyPlanner.add")}
+              Add Exam
             </Button>
           </div>
         </FieldGroup>

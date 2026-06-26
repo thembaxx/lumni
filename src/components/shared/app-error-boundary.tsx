@@ -54,7 +54,8 @@ export class AppErrorBoundary extends Component<Props, State> {
         <div className="flex min-h-48 flex-col items-center justify-center p-6 text-center">
           <h2 className="mb-2 font-semibold text-lg">Something went wrong</h2>
           <p className="mb-4 text-muted-foreground text-sm">
-            {this.state.error?.message || "An unexpected error occurred"}
+            {this.state.error?.message ||
+              "Something went wrong. Try again or contact support if this persists."}
           </p>
           <Button variant="outline" onClick={this.resetError}>
             Try again

@@ -24,6 +24,7 @@ import {
   ReferralTab,
   StudyTab,
 } from "@/components/settings/tabs";
+import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -141,6 +142,8 @@ function SettingsContent() {
     [],
   );
 
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
+
   const handleSave = async () => {
     setIsSaving(true);
     setSaved(false);
@@ -173,16 +176,7 @@ function SettingsContent() {
   };
 
   const handleClearCache = () => {
-    if (confirm("This will clear all your local preferences. Continue?")) {
-      localStorage.removeItem(STUDY_PREFS_KEY);
-      localStorage.removeItem(NOTIFICATION_SETTINGS_KEY);
-      localStorage.removeItem(BETA_FEATURES_KEY);
-      setAppSettings({
-        studyPrefs: DEFAULT_PREFERENCES,
-        notifications: DEFAULT_NOTIFICATIONS,
-        betaFeatures: DEFAULT_BETA,
-      });
-    }
+    setShowClearConfirm(true);
   };
 
   return (
@@ -210,11 +204,7 @@ function SettingsContent() {
               disabled={isSaving}
               className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-system-background-elevated shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
             >
-              {saved
-                ? `✓ ${t("common.success")}`
-                : isSaving
-                  ? t("common.saving")
-                  : t("common.save")}
+              {saved ? `✓ ${t("common.success")}` : isSaving ? t("common.saving") : "Save Settings"}
             </Button>
           </div>
         </header>
@@ -336,6 +326,28 @@ function SettingsContent() {
           </Activity>
         </main>
       </PageContainer>
+
+      {showClearConfirm && (
+        <ConfirmDialog
+          open={showClearConfirm}
+          title="Clear preferences?"
+          description="This will reset your study preferences, notification settings, and beta feature preferences. Your account data and progress are not affected."
+          confirmLabel="Clear preferences"
+          cancelLabel="Keep them"
+          onConfirm={() => {
+            localStorage.removeItem(STUDY_PREFS_KEY);
+            localStorage.removeItem(NOTIFICATION_SETTINGS_KEY);
+            localStorage.removeItem(BETA_FEATURES_KEY);
+            setAppSettings({
+              studyPrefs: DEFAULT_PREFERENCES,
+              notifications: DEFAULT_NOTIFICATIONS,
+              betaFeatures: DEFAULT_BETA,
+            });
+            setShowClearConfirm(false);
+          }}
+          onCancel={() => setShowClearConfirm(false)}
+        />
+      )}
     </div>
   );
 }

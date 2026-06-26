@@ -13,7 +13,8 @@ export default function RouteError({
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 p-8 text-center">
       <h2 className="font-heading font-semibold text-2xl">Study guide unavailable</h2>
       <p className="max-w-md text-muted-foreground text-sm">
-        {error?.message || "An unexpected error occurred."}
+        {error?.message ||
+          "Something went wrong. Please try again or contact support if this persists."}
       </p>
       <Button onClick={() => reset()}>Try again</Button>
     </div>

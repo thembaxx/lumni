@@ -178,7 +178,7 @@ export function ProblemsClient() {
                   ) : (
                     <HugeiconsIcon icon={SparklesIcon} className="size-4" data-icon />
                   )}
-                  Generate
+                  Generate Problems
                 </Button>
               </div>
 

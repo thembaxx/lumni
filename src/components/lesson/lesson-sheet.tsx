@@ -118,7 +118,10 @@ function LessonSheet() {
             {!isLoading && !error && data?.lessons?.length === 0 && (
               <Empty className="border-none py-8">
                 <EmptyTitle>No lessons found</EmptyTitle>
-                <EmptyDescription>Try selecting a different subject</EmptyDescription>
+                <EmptyDescription>
+                  Try selecting a different subject or adjusting your search filters to find more
+                  lessons.
+                </EmptyDescription>
               </Empty>
             )}
 

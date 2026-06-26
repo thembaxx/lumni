@@ -60,7 +60,7 @@ export function JoinGroupDialog() {
           </Field>
           {error && <p className="text-destructive text-sm">{error.message}</p>}
           <Button type="submit" disabled={code.length < 8 || isPending}>
-            {isPending ? t("common.joining") : t("common.join")}
+            {isPending ? t("common.joining") : "Join Group"}
           </Button>
         </form>
       </DialogContent>

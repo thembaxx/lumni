@@ -133,7 +133,7 @@ export function GeneratePlanForm({ isGenerating, onGenerate, onCancel }: Generat
             Cancel
           </Button>
           <Button size="sm" disabled={isGenerating} onClick={handleGenerate}>
-            {isGenerating ? "Generating…" : "Generate"}
+            {isGenerating ? "Generating…" : "Generate Plan"}
           </Button>
         </div>
       </CardContent>

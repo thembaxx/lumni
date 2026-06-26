@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { usePWAInstall } from "@/hooks/use-service-worker";
 import { useRouter } from "@/i18n/navigation";
+import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
 import { ProgressExport } from "./progress-export";
 
 interface DataTabProps {
@@ -20,21 +21,35 @@ const restartTrailing = (
 
 function RestartOnboarding() {
   const { push } = useRouter();
+  const [showRestartConfirm, setShowRestartConfirm] = useState(false);
+
   return (
-    <ListCell
-      title="Restart Onboarding"
-      subtitle="Go through the setup wizard again"
-      destructive
-      onClick={() => {
-        if (confirm("Restart the onboarding wizard? Your settings will be preserved.")) {
-          localStorage.removeItem("lumni_has_visited");
-          localStorage.removeItem("lumni_onboarding");
-          push("/dashboard");
-        }
-      }}
-      showSeparator={false}
-      trailing={restartTrailing}
-    />
+    <>
+      <ListCell
+        title="Restart Onboarding"
+        subtitle="Go through the setup wizard again"
+        destructive
+        onClick={() => setShowRestartConfirm(true)}
+        showSeparator={false}
+        trailing={restartTrailing}
+      />
+      {showRestartConfirm && (
+        <ConfirmDialog
+          open={showRestartConfirm}
+          title="Restart Onboarding?"
+          description="Go through the setup wizard again. Your settings will be preserved."
+          confirmLabel="Restart"
+          cancelLabel="Cancel"
+          onConfirm={() => {
+            localStorage.removeItem("lumni_has_visited");
+            localStorage.removeItem("lumni_onboarding");
+            setShowRestartConfirm(false);
+            push("/dashboard");
+          }}
+          onCancel={() => setShowRestartConfirm(false)}
+        />
+      )}
+    </>
   );
 }
 

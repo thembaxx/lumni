@@ -250,7 +250,8 @@ export function StoryReaderClient() {
         <HugeiconsIcon icon={BookOpen01Icon} className="size-12 text-muted-foreground/30" />
         <p className="font-semibold text-lg">Story not found</p>
         <p className="text-muted-foreground text-sm">
-          This story might have been removed or is not available yet.
+          This story might have been removed or is not available yet. Check the story link or browse
+          available stories.
         </p>
         <Button variant="outline" onClick={() => back()} className="mt-2 rounded-full">
           Go back

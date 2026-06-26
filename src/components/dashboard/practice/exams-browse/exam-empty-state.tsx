@@ -29,8 +29,8 @@ export function ExamEmptyState({ hasActiveFilters, onClearFilters }: ExamEmptySt
           <EmptyTitle className="text-base">No exams here… yet!</EmptyTitle>
           <EmptyDescription>
             {hasActiveFilters
-              ? "Try tweaking your filters to find what you&apos;re looking for."
-              : "We&apos;re still gathering exams for you. Check back soon!"}
+              ? "No exams match your current filters. Try adjusting subject, year, or paper type to find what you need."
+              : "Exams will appear here once they&apos;re uploaded. You can also search by subject name to find past papers faster."}
           </EmptyDescription>
         </EmptyHeader>
         {hasActiveFilters && (
