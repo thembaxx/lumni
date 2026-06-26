@@ -113,7 +113,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
             <Button variant="ghost" size="sm" onClick={prevMonth} aria-label="Previous month">
               ←
             </Button>
-            <span className="min-w-[140px] text-center font-medium text-sm">
+            <span className="min-w-36 text-center font-medium text-sm">
               {MONTHS[viewMonth]} {viewYear}
             </span>
             <Button variant="ghost" size="sm" onClick={nextMonth} aria-label="Next month">

@@ -108,7 +108,7 @@ export function ResultsSearch() {
         <div className="px-5 pb-10">
           <Empty className="border-none">
             <EmptyMedia>
-              <HugeiconsIcon icon={Search01Icon} className="size-12 text-red-500" />
+              <HugeiconsIcon icon={Search01Icon} className="size-12 text-destructive" />
             </EmptyMedia>
             <EmptyTitle>Search failed</EmptyTitle>
             <EmptyDescription>{error}</EmptyDescription>

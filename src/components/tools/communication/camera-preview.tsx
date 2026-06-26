@@ -103,7 +103,7 @@ export function CameraPreview({ onCapture, onClose }: CameraPreviewProps) {
             >
               <HugeiconsIcon
                 icon={FlashlightIcon}
-                className={`size-4 ${torchOn ? "text-yellow-400" : ""}`}
+                className={`size-4 ${torchOn ? "text-warning" : ""}`}
               />
             </button>
           )}

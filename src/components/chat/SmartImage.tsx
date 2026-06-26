@@ -24,10 +24,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
     );
   }
   return (
-    <div
-      className={cn("relative overflow-hidden", className)}
-      style={{ minHeight: 200, minWidth: 200 }}
-    >
+    <div className={cn("relative min-h-48 min-w-48 overflow-hidden", className)}>
       <Image
         src={src}
         alt={alt}
