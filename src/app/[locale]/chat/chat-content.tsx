@@ -36,7 +36,7 @@ export function ChatContent() {
             {chat.messages.length === 0 && chat.hasContext && (
               <span className="flex items-center gap-1 text-muted-foreground text-xs">
                 <HugeiconsIcon icon={StarsIcon} className="size-3" />
-                Personalised to your progress
+                Personalized to your progress
               </span>
             )}
           </div>

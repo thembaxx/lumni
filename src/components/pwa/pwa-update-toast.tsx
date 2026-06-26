@@ -61,7 +61,7 @@ const FEATURES = [
   "AI-powered quizzes & flashcards",
   "Matric exam papers with marking memos",
   "Offline access, no data needed",
-  "Personalised study plan & progress tracking",
+  "Personalized study plan & progress tracking",
 ];
 
 export function PWAInstallPrompt() {

@@ -6,6 +6,7 @@ import Quiz01Icon from "@hugeicons/core-free-icons/Quiz01Icon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -111,12 +112,22 @@ export function HomeContent() {
       </nav>
 
       <HeroSection isAuthenticated={isAuthenticated || isAnonymous} />
-      <FeaturesGrid />
-      <HowItWorksSection />
-      <TestimonialsSection />
-      <FeatureShowcaseSection />
+      <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30" />}>
+        <FeaturesGrid />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30" />}>
+        <HowItWorksSection />
+      </Suspense>
+      <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30" />}>
+        <TestimonialsSection />
+      </Suspense>
+      <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30" />}>
+        <FeatureShowcaseSection />
+      </Suspense>
 
-      <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
+      <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
+        <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
+      </Suspense>
     </div>
   );
 }
