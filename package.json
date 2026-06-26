@@ -150,7 +150,6 @@
     "@sentry/cli",
     "msgpackr-extract",
     "msw",
-    "no-mistakes",
     "sharp",
     "unrs-resolver"
   ]
