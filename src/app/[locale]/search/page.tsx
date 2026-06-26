@@ -7,15 +7,12 @@ export const metadata = {
   description: "Search across all your study materials",
 };
 
-export default async function SearchPage() {
-  "use cache";
+export const instant = false;
+
+export default function SearchPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <SearchContent />
+      <SearchPageClient />
     </Suspense>
   );
-}
-
-async function SearchContent() {
-  return <SearchPageClient />;
 }

@@ -5,7 +5,8 @@ export const metadata: Metadata = {
   title: "Study Group",
 };
 
-export default async function GroupDetailPage() {
-  "use cache";
+export const instant = false;
+
+export default function GroupDetailPage() {
   return <GroupDetail />;
 }

@@ -15,7 +15,7 @@ interface DeckWrapper {
   deckData: FlashcardDeck;
 }
 
-export default function SharedDeckPage() {
+export function SharedDeckClient() {
   const { shareId } = useParams<{ shareId: string }>();
   const { push } = useRouter();
   const [deck, setDeck] = useState<FlashcardDeck | null>(null);

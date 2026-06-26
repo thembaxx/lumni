@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Exam Session - Lumni",
 };
 
+export const instant = false;
+
 export default async function ExamPage({
   params,
   searchParams,
@@ -13,7 +15,6 @@ export default async function ExamPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ mode?: string }>;
 }) {
-  "use cache";
   const [{ id }, { mode }] = await Promise.all([params, searchParams]);
 
   return (

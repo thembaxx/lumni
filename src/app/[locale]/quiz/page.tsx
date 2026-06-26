@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Practice your subjects with adaptive quizzes",
 };
 
+export const instant = false;
+
 export default function QuizPage() {
   return (
     <AppErrorBoundary>

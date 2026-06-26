@@ -112,6 +112,8 @@ Email: enquiries@inforegulator.org.za`,
   },
 ];
 
+export const instant = false;
+
 export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">

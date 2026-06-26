@@ -97,6 +97,8 @@ Support: ${appConfig.contact.supportEmail}`,
   },
 ];
 
+export const instant = false;
+
 export default function TermsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">

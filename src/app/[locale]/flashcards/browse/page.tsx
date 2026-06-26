@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Browse, search, and manage your flashcard collection",
 };
 
+export const instant = false;
+
 export default function FlashcardBrowsePage() {
   return <FlashcardBrowseClient />;
 }

@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Read and practice comprehension",
 };
 
+export const instant = false;
+
 export default function StoryPage() {
   return (
     <AppErrorBoundary>

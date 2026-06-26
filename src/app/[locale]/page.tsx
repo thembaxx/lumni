@@ -4,6 +4,8 @@ import { HomeContent } from "@/components/home/home-content";
 import { SiteFooter } from "@/components/home/site-footer";
 import { appConfig } from "../../../app.config";
 
+export const instant = false;
+
 export const metadata: Metadata = {
   title: "Pass your Matric with confidence",
   description: appConfig.description,

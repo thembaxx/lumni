@@ -14,7 +14,7 @@ interface AssignmentData {
   dueDate: string | null;
 }
 
-export default function SharedAssignmentPage() {
+export function SharedAssignmentClient() {
   const { shareId } = useParams<{ shareId: string }>();
   const [data, setData] = useState<AssignmentData | null>(null);
   const [loading, setLoading] = useState(true);

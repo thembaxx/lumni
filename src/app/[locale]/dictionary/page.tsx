@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Look up word definitions, pronunciation, and save vocabulary",
 };
 
+export const instant = false;
+
 export default function DictionaryPage() {
   return (
     <AppErrorBoundary>

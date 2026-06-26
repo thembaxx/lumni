@@ -8,15 +8,12 @@ export const metadata: Metadata = {
   description: "Review and learn from your past mistakes",
 };
 
-export default async function ReviewPage() {
-  "use cache";
+export const instant = false;
+
+export default function ReviewPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <ReviewContent />
+      <ReviewClient />
     </Suspense>
   );
-}
-
-async function ReviewContent() {
-  return <ReviewClient />;
 }

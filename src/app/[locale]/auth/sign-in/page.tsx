@@ -1,13 +1,8 @@
-"use client";
+export const instant = false;
 
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { FormSkeleton } from "@/components/ui/skeletons";
-
-const SignInForm = dynamic(
-  () => import("./sign-in-form").then((m) => ({ default: m.SignInForm })),
-  { ssr: false },
-);
+import { SignInForm } from "./sign-in-form";
 
 export default function SignInPage() {
   return (

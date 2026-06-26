@@ -2,15 +2,12 @@ import { Suspense } from "react";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
 import { PageSkeleton } from "@/components/ui/skeletons";
 
+export const instant = false;
+
 export default function DashboardPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <DashboardContent />
+      <DashboardClient initialTab="today" />
     </Suspense>
   );
-}
-
-async function DashboardContent() {
-  "use cache";
-  return <DashboardClient initialTab="today" />;
 }

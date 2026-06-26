@@ -62,7 +62,7 @@ export class ExamUploadService {
       throw new Error(`Folder not found: ${targetFolder}`);
     }
 
-    const dirEntries = await readdir(targetFolder);
+    const dirEntries = await readdir(/* turbopackIgnore: true */ targetFolder);
     const files = dirEntries.filter((f) => f.endsWith(".pdf"));
 
     if (files.length === 0) {
@@ -87,7 +87,7 @@ export class ExamUploadService {
           fileName,
           normalizedCode,
           subjectName,
-          filePath: path.join(targetFolder, fileName),
+          filePath: path.join(/* turbopackIgnore: true */ targetFolder, fileName),
         },
       ];
     });

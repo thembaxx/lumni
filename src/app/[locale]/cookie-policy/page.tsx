@@ -60,6 +60,8 @@ Email: ${appConfig.contact.email}`,
   },
 ];
 
+export const instant = false;
+
 export default function CookiePolicyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
