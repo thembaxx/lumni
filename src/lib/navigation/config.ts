@@ -11,6 +11,7 @@ import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import Quiz01Icon from "@hugeicons/core-free-icons/Quiz01Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
+import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
@@ -64,6 +65,12 @@ export const navConfig: NavCategory[] = [
         label: "Pronunciation",
         icon: Mic01Icon,
         route: "/pronunciation",
+      },
+      {
+        id: "lessons",
+        label: "Lessons",
+        icon: BookOpen01Icon,
+        route: "/lessons",
       },
     ],
   },
@@ -135,6 +142,12 @@ export const navConfig: NavCategory[] = [
         label: "Upload",
         icon: Upload01Icon,
         route: "/upload",
+      },
+      {
+        id: "referral",
+        label: "Referral",
+        icon: Share07Icon,
+        route: "/settings/referral",
       },
     ],
   },
@@ -227,5 +240,33 @@ export function getNavHierarchy(): Record<string, number> {
   return {
     "/": 0,
     "/dashboard": 0,
+    "/learn": 1,
+    "/practice": 1,
+    "/tools": 1,
+    "/progress": 1,
+    "/quiz": 2,
+    "/flashcards": 2,
+    "/problems": 2,
+    "/stories": 2,
+    "/pronunciation": 2,
+    "/lessons": 2,
+    "/exams": 2,
+    "/past-papers": 2,
+    "/exam-dates": 2,
+    "/review": 2,
+    "/chat": 2,
+    "/solve": 2,
+    "/study-guide": 2,
+    "/dictionary": 2,
+    "/search": 2,
+    "/upload": 2,
+    "/settings": 2,
+    "/study-plan": 2,
+    "/bookmarks": 2,
+    "/settings/referral": 2,
+    "/onboarding": 10,
+    "/teacher": 1,
+    "/parent": 1,
+    "/admin": 1,
   };
 }

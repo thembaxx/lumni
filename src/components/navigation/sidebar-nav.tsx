@@ -53,6 +53,10 @@ function SidebarContent() {
   useEffect(() => {
     const routes = [
       "/dashboard",
+      "/learn",
+      "/practice",
+      "/tools",
+      "/progress",
       "/quiz",
       "/flashcards",
       "/solve",
@@ -67,6 +71,8 @@ function SidebarContent() {
       "/study-guide",
       "/problems",
       "/stories",
+      "/lessons",
+      "/settings/referral",
     ];
     for (const route of routes) {
       router.prefetch(route);
@@ -150,40 +156,66 @@ function SidebarContent() {
         </div>
       </div>
       <ScrollArea className="flex-1 px-3 py-2">
-        {filteredCategories.map((cat) => (
-          <div key={cat.label} className="mb-3">
-            <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider">
-              {cat.label}
-            </div>
-            {cat.items.map((item) => {
-              const isActive = item.id === activeRoute;
-              const Icon = item.icon;
-              return (
+        {filteredCategories.map((cat) => {
+          const catRoute =
+            cat.label === "Learn"
+              ? "/learn"
+              : cat.label === "Practice"
+                ? "/practice"
+                : cat.label === "Tools"
+                  ? "/tools"
+                  : cat.label === "Progress"
+                    ? "/progress"
+                    : undefined;
+          return (
+            <div key={cat.label} className="mb-3">
+              {catRoute ? (
                 <button
-                  key={item.id}
                   type="button"
-                  onClick={() => handleNav(item)}
-                  aria-current={isActive ? "page" : undefined}
-                  className={cn(
-                    "flex h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2 text-left text-sm transition-colors duration-150",
-                    isActive
-                      ? "bg-system-accent/10 font-semibold text-system-accent"
-                      : "text-muted-foreground hover:bg-system-fill hover:text-foreground",
-                  )}
+                  onClick={() => {
+                    setOpen(false);
+                    push(catRoute);
+                  }}
+                  className="ios-caption-3 flex w-full items-center justify-between px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider transition-colors hover:text-foreground"
                 >
-                  <HugeiconsIcon
-                    icon={Icon}
-                    className={cn(
-                      "size-5 shrink-0",
-                      isActive ? "text-system-accent" : "text-muted-foreground/60",
-                    )}
-                  />
-                  <span>{item.label}</span>
+                  {cat.label}
+                  <span className="text-[10px] opacity-40">→</span>
                 </button>
-              );
-            })}
-          </div>
-        ))}
+              ) : (
+                <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider">
+                  {cat.label}
+                </div>
+              )}
+              {cat.items.map((item) => {
+                const isActive = item.id === activeRoute;
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleNav(item)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2 text-left text-sm transition-colors duration-150",
+                      isActive
+                        ? "bg-system-accent/10 font-semibold text-system-accent"
+                        : "text-muted-foreground hover:bg-system-fill hover:text-foreground",
+                    )}
+                  >
+                    <HugeiconsIcon
+                      icon={Icon}
+                      className={cn(
+                        "size-5 shrink-0",
+                        isActive ? "text-system-accent" : "text-muted-foreground/60",
+                      )}
+                    />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
         {noResults && (
           <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
             <p className="text-muted-foreground text-sm">No pages found</p>

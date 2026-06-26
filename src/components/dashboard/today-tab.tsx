@@ -9,7 +9,6 @@ import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { BentoStatRow } from "@/components/dashboard/bento-stat-row";
 import { CompetitionCard } from "@/components/dashboard/competition-card";
 import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
-import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
 import { NextBestActionCard } from "@/components/dashboard/next-best-action";
 import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
@@ -45,10 +44,9 @@ const VocabularyListCard = dynamic(
 
 interface TodayTabProps {
   boltStreak: number;
-  onBoltComplete: (result: BoltResult) => void;
 }
 
-export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
+export function TodayTab({ boltStreak }: TodayTabProps) {
   const t = useTranslations();
   const { user, isAnonymous } = useAuth();
   const { gamification, currentStreak } = useGamification();
@@ -66,7 +64,7 @@ export function TodayTab({ boltStreak, onBoltComplete }: TodayTabProps) {
       <section className="flex flex-col gap-3" aria-label="Get started">
         {isLoggedIn && (
           <StaggeredSection>
-            <DailyChallengeCard onComplete={onBoltComplete} streak={boltStreak} />
+            <DailyChallengeCard streak={boltStreak} />
           </StaggeredSection>
         )}
         {isLoggedIn && boltDone && (

@@ -5,7 +5,7 @@ import Login01Icon from "@hugeicons/core-free-icons/Login01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useState } from "react";
-import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { ParentConsentSection } from "@/components/settings/tabs/parent-consent-section";
 import { AccountRoleSection } from "@/components/settings/tabs/sections/account-role-section";
 import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
@@ -18,7 +18,6 @@ import { SignOutSection } from "@/components/settings/tabs/sections/sign-out-sec
 import { SubjectPicker } from "@/components/settings/tabs/sections/subject-picker";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
@@ -250,7 +249,7 @@ export function ProfileTab() {
         onCancel={() => setShowConfirmDialog(false)}
       />
 
-      {showGuidedSetup && <OnboardingWizard onComplete={() => setShowGuidedSetup(false)} />}
+      {showGuidedSetup && <RedirectOnboarding />}
 
       {isAnonymous && (
         <div className="rounded-xl border border-system-accent/10 bg-system-accent/5 px-2 py-4">
@@ -273,4 +272,12 @@ export function ProfileTab() {
       <SignOutSection isAnonymous={isAnonymous} onSignOut={signOut} />
     </div>
   );
+}
+
+function RedirectOnboarding() {
+  const { push } = useNavigationDirection();
+  useEffect(() => {
+    push("/onboarding");
+  }, [push]);
+  return null;
 }

@@ -13,6 +13,7 @@ import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { NavGuard } from "@/components/navigation/nav-guard";
 import { CardSkeleton } from "@/components/ui/skeletons";
 import { isValidLocale, locales } from "@/i18n/locales";
 import { timeZone } from "@/i18n/request";
@@ -182,20 +183,30 @@ export default async function LocaleLayout({
         <LazyMotion features={domAnimation}>
           <UploadDialogRenderer />
           <Toaster />
-          <CookieBanner />
-          <TosBanner />
+          <NavGuard>
+            <CookieBanner />
+          </NavGuard>
+          <NavGuard>
+            <TosBanner />
+          </NavGuard>
           <SidebarStateProvider>
             <div className="flex flex-1">
-              <SidebarNav />
+              <NavGuard>
+                <SidebarNav />
+              </NavGuard>
               <main
                 id="main-content"
                 className="flex min-w-0 flex-1 flex-col pb-[calc(64px+env(safe-area-inset-bottom,0px))] md:pb-0"
               >
-                <TopNav />
+                <NavGuard>
+                  <TopNav />
+                </NavGuard>
                 <AppErrorBoundary>{children}</AppErrorBoundary>
               </main>
             </div>
-            <BottomNav />
+            <NavGuard>
+              <BottomNav />
+            </NavGuard>
           </SidebarStateProvider>
         </LazyMotion>
       </Providers>

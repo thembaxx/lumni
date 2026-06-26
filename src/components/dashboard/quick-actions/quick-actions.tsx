@@ -11,10 +11,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
-import { LessonsButton } from "@/components/lesson";
-import { ReferralSheet } from "@/components/referral/referral-sheet";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "@/i18n/navigation";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
@@ -28,8 +26,8 @@ const quickActions = [
   { icon: Calendar02FreeIcons, label: "Study Plan" },
   { icon: Book02FreeIcons, label: "Bookmarks", route: "/bookmarks" },
   { icon: BookOpenCheckFreeIcons, label: "Review", route: "/review" },
-  { icon: Book03FreeIcons, label: "Lessons" },
-  { icon: Share07Icon, label: "Invite Friend" },
+  { icon: Book03FreeIcons, label: "Lessons", route: "/lessons" },
+  { icon: Share07Icon, label: "Invite Friend", route: "/settings/referral" },
 ];
 
 function ActionButton({
@@ -92,7 +90,7 @@ function ActionButton({
 }
 
 export function QuickActions() {
-  const { push } = useRouter();
+  const { push } = useNavigationDirection();
 
   return (
     <div className="w-full">
@@ -101,10 +99,6 @@ export function QuickActions() {
           <li key={action.label} className="shrink-0">
             {action.label === "Study Plan" ? (
               <StudyPlanSheet />
-            ) : action.label === "Lessons" ? (
-              <LessonsButton />
-            ) : action.label === "Invite Friend" ? (
-              <ReferralSheet />
             ) : (
               <ActionButton
                 icon={action.icon}

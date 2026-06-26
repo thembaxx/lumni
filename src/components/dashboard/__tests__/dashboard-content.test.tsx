@@ -124,11 +124,6 @@ describe("DashboardContent", () => {
       expect(getByTestId("today-tab")).toBeTruthy();
     });
 
-    it("passes boltStreak to TodayTab", () => {
-      const { getByTestId } = render(<DashboardContent {...defaultProps} boltStreak={7} />);
-      expect(getByTestId("today-tab").getAttribute("data-streak")).toBe("7");
-    });
-
     it("renders CountdownHeader for logged-in user on today tab", () => {
       const { getByTestId } = render(<DashboardContent {...defaultProps} />);
       expect(getByTestId("countdown-header")).toBeTruthy();

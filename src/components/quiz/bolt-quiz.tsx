@@ -7,78 +7,45 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
-import { QuestionCard } from "@/components/quiz";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGamification } from "@/hooks/use-gamification";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { Question } from "@/lib/question-engine/types";
-import { cn } from "@/lib/utils";
+import { resolveWeakestSubject, formatSubjectLabel } from "@/lib/bolt/resolve-weakest";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
-import { _deps } from "./daily-challenge-dialog-deps";
+import { cn } from "@/lib/utils";
+import { QuestionCard } from "./question-card";
 
-type BoltPhase = "resolving" | "loading" | "answering" | "celebrating" | "error" | "empty";
-
-export interface BoltResult {
-  question: Question;
-  correct: boolean;
-}
-
-interface DailyChallengeDialogProps {
-  subject: string;
-  onComplete: (result: BoltResult) => void;
-  onClose: () => void;
-  streak: number;
-}
-
-export async function resolveWeakestSubject(): Promise<string> {
-  try {
-    const all = await _deps.db.competencies.toArray();
-    if (all.length === 0) return "mathematics";
-
-    const bySubject = new Map<string, number[]>();
-    for (const record of all) {
-      const scores = bySubject.get(record.subjectId) ?? [];
-      scores.push(record.score);
-      bySubject.set(record.subjectId, scores);
-    }
-
-    let weakest = "mathematics";
-    let lowestAvg = Infinity;
-    for (const [subject, scores] of bySubject) {
-      const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-      if (avg < lowestAvg) {
-        lowestAvg = avg;
-        weakest = subject;
-      }
-    }
-    return weakest;
-  } catch {
-    return "mathematics";
-  }
-}
-
-function formatSubjectLabel(subject: string): string {
-  return subject
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-export function DailyChallengeDialog({
-  subject,
-  onComplete,
-  onClose,
-  streak,
-}: DailyChallengeDialogProps) {
-  const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
+export function BoltQuiz() {
+  const { push } = useNavigationDirection();
+  const { setImmersive } = useImmersiveMode();
+  const { addXp, updateStreak, currentStreak, checkAndUnlockAchievements, levelInfo } =
+    useGamification();
+  const [subject, setSubject] = useState<string | null>(null);
+  const [boltResult, setBoltResult] = useState<{ correct: boolean } | null>(null);
   const [isCelebrating, setIsCelebrating] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [resolving, setResolving] = useState(true);
+
+  useEffect(() => {
+    setImmersive(true);
+    return () => setImmersive(false);
+  }, [setImmersive]);
+
+  useEffect(() => {
+    resolveWeakestSubject().then((s) => {
+      setSubject(s);
+      setResolving(false);
+    });
+  }, []);
 
   const engineParams = useMemo(
     () => ({
-      subject: subject.toLowerCase(),
+      subject: (subject ?? "mathematics").toLowerCase(),
       count: 1,
       questionType: "any" as const,
       difficulty: "Medium" as const,
@@ -87,48 +54,57 @@ export function DailyChallengeDialog({
   );
 
   const { questions, isLoading, isError, refetch, isFetching } = useQuestionEngine(engineParams, {
-    enabled: true,
+    enabled: !!subject,
   });
 
   const question = questions[0];
-  const subjectLabel = useMemo(() => formatSubjectLabel(subject), [subject]);
+  const subjectLabel = useMemo(() => formatSubjectLabel(subject ?? "mathematics"), [subject]);
 
-  const phase: BoltPhase = isCelebrating
-    ? "celebrating"
-    : isLoading
-      ? "loading"
-      : isError
-        ? "error"
-        : question
-          ? "answering"
-          : !isFetching
-            ? "empty"
-            : "loading";
-
-  const handleAnswered = useCallback(
-    (correct: boolean) => {
-      if (!question) return;
-      setBoltResult({ question, correct });
+  const processBoltResult = useCallback(
+    async (correct: boolean) => {
+      if (processing) return;
+      setProcessing(true);
+      try {
+        await updateStreak();
+        await addXp(correct ? 25 : 10, correct ? 100 : 0, currentStreak);
+        await checkAndUnlockAchievements(
+          0,
+          correct ? 100 : 0,
+          currentStreak,
+          levelInfo.level,
+          correct,
+        );
+      } catch {
+        // Non-critical; user still navigates
+      }
     },
-    [question],
+    [processing, updateStreak, addXp, checkAndUnlockAchievements, currentStreak, levelInfo.level],
   );
 
-  const handleFinish = useCallback(() => {
-    setIsCelebrating(true);
+  const handleAnswered = useCallback((correct: boolean) => {
+    setBoltResult({ correct });
   }, []);
+
+  const handleFinish = useCallback(() => {
+    if (!boltResult) return;
+    void processBoltResult(boltResult.correct).then(() => {
+      setIsCelebrating(true);
+    });
+  }, [boltResult, processBoltResult]);
+
+  const handleContinue = useCallback(() => {
+    push("/dashboard");
+  }, [push]);
 
   const handleRetry = useCallback(() => {
     void refetch();
   }, [refetch]);
 
-  const showLoading = phase === "loading";
-  const showError = phase === "error";
-  const showEmpty = phase === "empty";
-  const showCelebrating = phase === "celebrating";
+  const showLoading = resolving || isLoading;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl">
-      <header className="flex items-center gap-2.5 px-5 pt-5 pb-3">
+    <div className="flex min-h-dvh flex-col bg-background">
+      <header className="flex items-center gap-2.5 px-5 pt-14 pb-3">
         <BoltMark />
         <div className="flex min-w-0 flex-col">
           <span className="font-extrabold text-base text-system-text-primary tracking-tight">
@@ -153,7 +129,7 @@ export function DailyChallengeDialog({
             </m.section>
           )}
 
-          {phase === "answering" && question && (
+          {!showLoading && !isError && question && !isCelebrating && (
             <m.section
               key="question"
               initial={{ opacity: 0, y: 12 }}
@@ -165,7 +141,7 @@ export function DailyChallengeDialog({
               <div className="w-full max-w-2xl">
                 <QuestionCard
                   question={question}
-                  subject={subject}
+                  subject={subject ?? "mathematics"}
                   questionNumber={1}
                   totalQuestions={1}
                   onAnswered={handleAnswered}
@@ -174,8 +150,13 @@ export function DailyChallengeDialog({
               {boltResult && (
                 <div className="sticky bottom-0 z-content -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
                   <div className="mx-auto w-full max-w-2xl">
-                    <Button onClick={handleFinish} size="lg" className="w-full gap-2 text-base">
-                      Finish
+                    <Button
+                      onClick={handleFinish}
+                      size="lg"
+                      className="w-full gap-2 text-base"
+                      disabled={processing}
+                    >
+                      {processing ? "Saving\u2026" : "Finish"}
                     </Button>
                   </div>
                 </div>
@@ -183,7 +164,7 @@ export function DailyChallengeDialog({
             </m.section>
           )}
 
-          {showCelebrating && (
+          {isCelebrating && (
             <m.section
               key="celebrating"
               initial={{ opacity: 0, y: 12 }}
@@ -195,16 +176,13 @@ export function DailyChallengeDialog({
               <BoltCelebration
                 correct={boltResult?.correct ?? false}
                 subjectLabel={subjectLabel}
-                streak={streak}
-                onContinue={() => {
-                  if (boltResult) onComplete(boltResult);
-                  onClose();
-                }}
+                streak={currentStreak}
+                onContinue={handleContinue}
               />
             </m.section>
           )}
 
-          {showError && (
+          {!showLoading && isError && (
             <m.section
               key="error"
               initial={{ opacity: 0, y: 12 }}
@@ -213,11 +191,15 @@ export function DailyChallengeDialog({
               transition={{ duration: 0.4, ease: iOSDecelerate }}
               className="flex flex-1 items-center justify-center"
             >
-              <BoltErrorState onRetry={handleRetry} onClose={onClose} isRetrying={isFetching} />
+              <BoltErrorState
+                onRetry={handleRetry}
+                onClose={handleContinue}
+                isRetrying={isFetching}
+              />
             </m.section>
           )}
 
-          {showEmpty && (
+          {!showLoading && !isError && !question && !isFetching && !isCelebrating && (
             <m.section
               key="empty"
               initial={{ opacity: 0, y: 12 }}
@@ -229,7 +211,7 @@ export function DailyChallengeDialog({
               <BoltEmptyState
                 subjectLabel={subjectLabel}
                 onRetry={handleRetry}
-                onClose={onClose}
+                onClose={handleContinue}
                 isRetrying={isFetching}
               />
             </m.section>
@@ -251,11 +233,7 @@ function BoltMark() {
     >
       <m.div
         animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }}
-        transition={{
-          duration: 2.4,
-          repeat: 2,
-          ease: "easeInOut",
-        }}
+        transition={{ duration: 2.4, repeat: 2, ease: "easeInOut" }}
         className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
       />
       <HugeiconsIcon
@@ -341,7 +319,7 @@ function BoltErrorState({
             icon={RefreshIcon}
             className={cn("size-4", isRetrying && "animate-spin")}
           />
-          {isRetrying ? "Retrying…" : "Try again"}
+          {isRetrying ? "Retrying\u2026" : "Try again"}
         </Button>
       </div>
     </div>
@@ -391,7 +369,7 @@ function BoltEmptyState({
             icon={RefreshIcon}
             className={cn("size-4", isRetrying && "animate-spin")}
           />
-          {isRetrying ? "Refreshing…" : "Refresh Question"}
+          {isRetrying ? "Refreshing\u2026" : "Refresh Question"}
         </Button>
       </div>
     </div>

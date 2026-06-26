@@ -3,9 +3,8 @@
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
-import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
@@ -105,13 +104,6 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
     ],
   );
 
-  const handleBoltComplete = useCallback(
-    async (result: BoltResult) => {
-      await processQuizResult({ source: "bolt", question: result }, quizResultDeps);
-    },
-    [quizResultDeps],
-  );
-
   const handleFinishQuiz = async (results: QuizResults) => {
     trackQuizComplete(
       results.questions[0]?.subject ?? quizSubject,
@@ -209,8 +201,6 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
                     id="dashboard-content"
                     onStartQuiz={handleStartQuiz}
                     activeTab={activeTab}
-                    onBoltComplete={handleBoltComplete}
-                    boltStreak={currentStreak}
                   />
                 )
               ) : (
@@ -243,8 +233,6 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
                       id="dashboard-content"
                       onStartQuiz={handleStartQuiz}
                       activeTab={activeTab}
-                      onBoltComplete={handleBoltComplete}
-                      boltStreak={currentStreak}
                     />
                   )}
                 </AnimatePresence>

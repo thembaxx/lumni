@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { BoltQuiz } from "@/components/quiz/bolt-quiz";
 import { QuizView } from "@/components/quiz";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -46,9 +47,14 @@ function QuizClientContent() {
   const questionCount = countParam ? parseInt(countParam, 10) : 20;
   const timeParam = searchParams.get("time");
   const maxTime = timeParam ? parseInt(timeParam, 10) : undefined;
+  const mode = searchParams.get("mode");
   const pastPaperMode = searchParams.get("pastPaperMode") === "true";
   const assignmentId = searchParams.get("assignmentId") || null;
   const packId = searchParams.get("packId") || null;
+
+  if (mode === "bolt") {
+    return <BoltQuiz />;
+  }
 
   const [packQuestions, setPackQuestions] = useState<Question[] | null>(null);
 

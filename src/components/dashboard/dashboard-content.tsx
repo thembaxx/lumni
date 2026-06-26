@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
-import type { BoltResult } from "@/components/dashboard/daily-challenge-dialog";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LoginBanner } from "@/components/dashboard/login-banner";
 import { TodayTab } from "@/components/dashboard/today-tab";
@@ -61,14 +60,10 @@ async function refreshPage(): Promise<void> {
 export function DashboardContent({
   onStartQuiz,
   activeTab,
-  onBoltComplete,
-  boltStreak,
   id,
 }: {
   onStartQuiz: (subject: string) => void;
   activeTab: TabValue;
-  onBoltComplete: (result: BoltResult) => void;
-  boltStreak: number;
   id?: string;
 }) {
   const { user, isAnonymous } = useAuth();
@@ -111,7 +106,7 @@ export function DashboardContent({
               <>
                 <HeroBanner />
                 {isLoggedIn && <CountdownHeader />}
-                <TodayTab boltStreak={boltStreak} onBoltComplete={onBoltComplete} />
+                <TodayTab boltStreak={0} />
               </>
             )}
             {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
