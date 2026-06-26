@@ -95,3 +95,4 @@ onlyBuiltDependencies:
   - protobufjs
   - sharp
   - tesseract.js
+  - no-mistakes

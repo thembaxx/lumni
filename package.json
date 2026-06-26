@@ -37,7 +37,10 @@
     "i18n:check": "tsx scripts/check-translations.ts",
     "i18n:translate": "tsx scripts/translate-locales.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "nm:check": "no-mistakes check",
+    "nm:impacted": "no-mistakes impacted-checks",
+    "gate": "pnpm run lint:fix && pnpm run format && pnpm run typecheck && pnpm run test && pnpm run nm:check"
   },
   "dependencies": {
     "@ably/chat": "^1.4.0",
@@ -121,6 +124,7 @@
     "happy-dom": "^20.10.6",
     "husky": "^9.1.7",
     "knip": "^6.20.0",
+    "no-mistakes": "^0.26.0",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
     "patch-package": "^8.0.1",
@@ -146,6 +150,7 @@
     "@sentry/cli",
     "msgpackr-extract",
     "msw",
+    "no-mistakes",
     "sharp",
     "unrs-resolver"
   ]
