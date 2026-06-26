@@ -9,6 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 
+export const instant = false;
+
 const QUESTION_TYPES = [
   "multiple-choice",
   "matching",

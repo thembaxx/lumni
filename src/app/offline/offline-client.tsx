@@ -67,13 +67,13 @@ export default function OfflinePage() {
 
       <div className="flex flex-col gap-3">
         <Button asChild className="w-full gap-2">
-          <Link href="/quiz">
+          <Link href="/quiz" prefetch={true}>
             <HugeiconsIcon icon={Quiz03Icon} className="size-4" />
             Practice Offline
           </Link>
         </Button>
         <Button asChild variant="secondary" className="w-full gap-2">
-          <Link href="/flashcards">
+          <Link href="/flashcards" prefetch={true}>
             <HugeiconsIcon icon={NoteIcon} className="size-4" />
             Review Flashcards
           </Link>

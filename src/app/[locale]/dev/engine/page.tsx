@@ -1,5 +1,7 @@
 "use client";
 
+export const instant = false;
+
 import { useCallback, useReducer } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";

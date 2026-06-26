@@ -8,6 +8,8 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { AiSolver } from "@/components/tools/communication/ai-solver";
 import { Skeleton } from "@/components/ui/skeleton";
 
+export const instant = false;
+
 function SolveContent() {
   const searchParams = useSearchParams();
   const initialQuestion = searchParams.get("question") ?? undefined;

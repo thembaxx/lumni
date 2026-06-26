@@ -51,7 +51,23 @@ function SidebarContent() {
   }, []);
 
   useEffect(() => {
-    const routes = ["/dashboard", "/quiz", "/flashcards", "/solve", "/search"];
+    const routes = [
+      "/dashboard",
+      "/quiz",
+      "/flashcards",
+      "/solve",
+      "/search",
+      "/study",
+      "/exam-dates",
+      "/review",
+      "/study-plan",
+      "/exam",
+      "/past-papers",
+      "/chat",
+      "/study-guide",
+      "/problems",
+      "/stories",
+    ];
     for (const route of routes) {
       router.prefetch(route);
     }

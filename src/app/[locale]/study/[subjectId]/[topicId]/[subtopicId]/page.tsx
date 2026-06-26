@@ -14,6 +14,7 @@ export default async function LessonPage({
 }: {
   params: Promise<{ subjectId: string; topicId: string; subtopicId: string }>;
 }) {
+  "use cache";
   const { subjectId, topicId, subtopicId } = await params;
   return (
     <AppErrorBoundary>

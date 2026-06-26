@@ -10,6 +10,8 @@ import { dexieDataAccess } from "@/lib/db";
 import { storeEmbedding } from "@/lib/embedding/cache";
 import { embedText } from "@/lib/embedding/client";
 
+export const instant = false;
+
 const RATE_LIMIT_MS = 12_000;
 
 export default function EmbedBackfillPage() {

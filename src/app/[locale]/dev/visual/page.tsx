@@ -1,5 +1,7 @@
 "use client";
 
+export const instant = false;
+
 import { useCallback, useReducer } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

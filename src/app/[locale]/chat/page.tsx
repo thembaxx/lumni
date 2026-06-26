@@ -16,6 +16,8 @@ import { useChat } from "@/hooks/use-chat";
 import { useImageChatWithSend } from "@/hooks/use-image-chat";
 import { Link } from "@/i18n/navigation";
 
+export const instant = false;
+
 function ChatContent() {
   const chat = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);

@@ -20,6 +20,8 @@ import { useStudyGuide } from "@/hooks/use-study-guide";
 import { useRouter } from "@/i18n/navigation";
 import type { StudyGuide } from "@/lib/study-guide/types";
 
+export const instant = false;
+
 function StudyGuideContent({ guide }: { guide: StudyGuide }) {
   return (
     <div className="flex flex-col gap-6">

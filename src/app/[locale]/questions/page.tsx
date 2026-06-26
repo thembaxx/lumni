@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Browse and practice past exam questions by subject and topic",
 };
 
-export default function QuestionsPage() {
+export default async function QuestionsPage() {
+  "use cache";
   return (
     <AppErrorBoundary>
       <Suspense fallback={<QuestionCardSkeleton />}>

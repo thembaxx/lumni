@@ -77,6 +77,7 @@ export function NextBestActionCard() {
         <p className="text-muted-foreground text-xs leading-relaxed">{action.reason}</p>
         <Link
           href={action.ctaHref}
+          prefetch={true}
           className="mt-0.5 inline-flex h-9 w-fit items-center rounded-lg bg-system-accent px-4 font-medium text-white text-xs transition-[background-color,transform] hover:bg-system-accent/85 active:scale-[0.96]"
         >
           {action.ctaLabel}

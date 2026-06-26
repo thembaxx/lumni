@@ -108,6 +108,7 @@ export function ReviewClient() {
             {filterSubject && (
               <Link
                 href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
+                prefetch={true}
               >
                 <Button size="sm">Practice these topics</Button>
               </Link>

@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Read stories and practice comprehension",
 };
 
-export default function StoriesPage() {
+export default async function StoriesPage() {
+  "use cache";
   return (
     <AppErrorBoundary>
       <Suspense

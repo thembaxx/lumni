@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Study with spaced repetition flashcards",
 };
 
-export default function FlashcardsPage() {
+export default async function FlashcardsPage() {
+  "use cache";
   return (
     <AppErrorBoundary>
       <Suspense fallback={<PageSkeleton />}>

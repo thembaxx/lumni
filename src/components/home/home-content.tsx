@@ -74,7 +74,7 @@ export function HomeContent() {
           >
             {isAuthenticated ? (
               <Button asChild size="sm" className="flex items-center">
-                <Link href="/dashboard">
+                <Link href="/dashboard" prefetch={true}>
                   <HugeiconsIcon icon={Activity02Icon} className="size-5" />
                   {t("home.navDashboard")}
                 </Link>
@@ -82,13 +82,15 @@ export function HomeContent() {
             ) : isAnonymous ? (
               <>
                 <Button asChild size="sm" variant="ghost" className="flex items-center">
-                  <Link href="/quiz">
+                  <Link href="/quiz" prefetch={true}>
                     <HugeiconsIcon icon={Quiz01Icon} className="size-5" />
                     {t("home.navTryQuiz")}
                   </Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/dashboard">{t("home.navGetStarted")}</Link>
+                  <Link href="/dashboard" prefetch={true}>
+                    {t("home.navGetStarted")}
+                  </Link>
                 </Button>
               </>
             ) : (
@@ -97,7 +99,7 @@ export function HomeContent() {
                   <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/dashboard">
+                  <Link href="/dashboard" prefetch={true}>
                     {t("home.navGetStarted")}
                     <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
                   </Link>

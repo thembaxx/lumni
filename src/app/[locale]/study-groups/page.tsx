@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   description: "Collaborate and study together with your peers",
 };
 
-export default function StudyGroupsPage() {
+export default async function StudyGroupsPage() {
+  "use cache";
   return (
     <Suspense fallback={<PageSkeleton />}>
       <StudyGroupsList />

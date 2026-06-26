@@ -26,30 +26,35 @@ export async function SiteFooter() {
             <div className="flex flex-col text-muted-foreground text-sm">
               <Link
                 href="/quiz"
+                prefetch={true}
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerQuiz")}
               </Link>
               <Link
                 href="/past-papers"
+                prefetch={true}
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerPapers")}
               </Link>
               <Link
                 href="/flashcards"
+                prefetch={true}
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerFlashcards")}
               </Link>
               <Link
                 href="/study-plan"
+                prefetch={true}
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerPlan")}
               </Link>
               <Link
                 href="/solve"
+                prefetch={true}
                 className="min-h-11 py-1.5 transition-colors hover:text-foreground"
               >
                 {t("footerHomework")}

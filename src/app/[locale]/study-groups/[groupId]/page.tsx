@@ -6,5 +6,6 @@ export const metadata: Metadata = {
 };
 
 export default async function GroupDetailPage() {
+  "use cache";
   return <GroupDetail />;
 }

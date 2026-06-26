@@ -11,5 +11,6 @@ export default function DashboardPage() {
 }
 
 async function DashboardContent() {
+  "use cache";
   return <DashboardClient initialTab="today" />;
 }

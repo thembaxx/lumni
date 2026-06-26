@@ -90,6 +90,7 @@ export function StudyPlanOverview() {
         </CardTitle>
         <Link
           href="/study-plan"
+          prefetch={true}
           className="font-medium text-(--system-accent) text-xs hover:underline"
         >
           View all

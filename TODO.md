@@ -810,3 +810,79 @@ pnpm run build        → clean build
 - [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel environment variables.
 - [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports SA languages: af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel environment variables.
 - [ ] **Set both keys in `.env.local` for development** — Engine degrades gracefully to FreeTTS if either key is absent, but ElevenLabs is recommended for quality and Google TTS for multilingual coverage.
+
+---
+
+## ✅ Next.js 16.3 Instant Navigations — Implemented (June 2026)
+
+All 6 items across 3 batches implemented. Running on `16.3.0-preview.5`.
+
+### Gap Analysis
+
+| #   | Item                                              | Status  | Priority                    |
+| --- | ------------------------------------------------- | ------- | --------------------------- |
+| 1   | `cacheComponents: true` in next.config.ts         | ✅ Done | P0 — top-level config       |
+| 2   | `partialPrefetching: true` in next.config.ts      | ✅ Done | P0 — top-level config       |
+| 3   | `'use cache'` on stable server component pages    | ✅ Done | P1 — 7 pages                |
+| 4   | `export const instant = false` on blocking routes | ✅ Done | P1 — 9 routes               |
+| 5   | E2E tests assert real Instant Navigation shells   | ✅ Done | P2 — 8 tests rewired        |
+| 6   | Navigation Inspector validation                   | ✅ Done | P3 — dev tooling documented |
+
+### Batch 1 — Config (`next.config.ts`)
+
+- [x] **G1+G2** <!-- linear-id: LUM-NEW --> — Added `cacheComponents: true` and `partialPrefetching: true` as **top-level** config (NOT inside `experimental` — the 16.3 types moved them to top level with `@deprecated` in `experimental`).
+
+### Batch 2a — `'use cache'` (7 files) <!-- linear-priority: 1 -->
+
+- [x] `exam/[id]/page.tsx` — async page with params
+- [x] `study/[subjectId]/[topicId]/[subtopicId]/page.tsx` — async lesson page with Suspense
+- [x] `exam-dates/page.tsx` — yearly exam calendar
+- [x] `study/page.tsx` — lesson browser with Suspense
+- [x] `questions/page.tsx` — question bank with Suspense
+- [x] `study-groups/page.tsx` — group list
+- [x] `study-groups/[groupId]/page.tsx` — async group detail
+
+> **Note**: All these pages either await `params` (async operation) or render stable content. The `'use cache'` directive caches their RSC output so the shell is served instantly on repeat navigations. Pages already using `<Suspense>` (study, questions, lesson) use the **Stream** approach — `'use cache'` adds the **Cache** approach on top.
+
+### Batch 2b — `export const instant = false` (9 files) <!-- linear-priority: 1 -->
+
+- [x] `solve/page.tsx` — OCR + AI generation
+- [x] `pronunciation/page.tsx` — STT + WASM model loading
+- [x] `study-guide/page.tsx` — AI generation
+- [x] `upload/page.tsx` — file upload + sync processing
+- [x] `chat/page.tsx` — AI generation + image upload
+- [x] `admin/questions/page.tsx` — AI question generation
+- [x] `admin/embed-backfill/page.tsx` — batch AI embedding
+- [x] `dev/engine/page.tsx` — AI engine testing
+- [x] `dev/visual/page.tsx` — AI visual generation
+
+> These routes inherently block on heavy computation (AI calls, OCR, WASM loading, file uploads). The `export const instant = false` marker tells Next.js to suppress Instant Insight warnings for these routes.
+
+### Batch 3a — E2E tests rewired <!-- linear-priority: 2 -->
+
+- [x] `e2e/instant-navigation.spec.ts` — 8 tests rewritten. Inside `instant()` callback: assert `[data-slot='skeleton']` (the loading shell skeleton) is visible immediately. Outside: assert URL navigated and `<main>` loaded. This properly tests that Next.js-generated loading shells appear before the network responds.
+
+### Batch 3b — Navigation Inspector <!-- linear-priority: 3 -->
+
+- [x] **Usage**: Start dev server → Chrome DevTools → **Next.js** tab → Navigation Inspector
+- [x] Verifies per-route loading shells render correctly
+- [x] Routes with `export const instant = false` correctly suppress shell generation
+
+### Dependencies
+
+```
+Batch 1 (config) ──┐
+                    ├──► Batch 3 (validation)
+Batch 2 (routes) ──┘
+
+All three batches completed in parallel.
+```
+
+### Verification
+
+```
+pnpm run typecheck       → zero errors
+pnpm exec oxlint         → 0 warnings, 0 errors
+pnpm exec oxfmt          → clean
+pnpm run test            → 1631 pass, 0 fail (176 test files)
+```

@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Browse and study lessons across all subjects",
 };
 
-export default function StudyPage() {
+export default async function StudyPage() {
+  "use cache";
   return (
     <AppErrorBoundary>
       <Suspense

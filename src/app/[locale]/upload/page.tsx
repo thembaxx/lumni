@@ -14,6 +14,8 @@ import { logError } from "@/lib/shared/logger";
 import { extractSubjectFromFileName } from "@/lib/upload";
 import { UploadButton } from "@/lib/uploadthing";
 
+export const instant = false;
+
 export default function UploadPage() {
   const [lastUploadUrl, setLastUploadUrl] = useState<string | null>(null);
   const [syncStatus, setSyncStatus] = useState<"idle" | "syncing" | "done" | "error">("idle");
