@@ -128,7 +128,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
                   boxShadow: `0 0 0 1px ${subject.color}20`,
                 }}
               >
-                <HugeiconsIcon icon={Icon} className={cn("size-5", `text-[${subject.color}]`)} />
+                <HugeiconsIcon icon={Icon} className="size-5" style={{ color: subject.color }} />
               </div>
               <h3 className="font-semibold text-foreground text-sm group-hover:text-foreground/90">
                 {subject.name}

@@ -30,9 +30,7 @@ export const StreakCard = memo(function StreakCard() {
             <div
               className={cn(
                 "flex size-14 items-center justify-center rounded-2xl transition-colors",
-                currentStreak > 0
-                  ? "bg-orange-500/15 text-orange-500 dark:bg-orange-400/15 dark:text-orange-300"
-                  : "bg-muted text-muted-foreground",
+                currentStreak > 0 ? "bg-warning/15 text-warning" : "bg-muted text-muted-foreground",
               )}
             >
               <HugeiconsIcon icon={FireIcon} className="size-7" />

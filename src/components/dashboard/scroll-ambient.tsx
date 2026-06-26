@@ -68,11 +68,11 @@ export function ScrollAmbient() {
   return (
     <div className="pointer-events-none fixed inset-0 transition-none" aria-hidden="true">
       <div
-        className="absolute -top-24 right-0 h-3/5 w-1/2 rounded-full blur-[120px] transition-none"
+        className="absolute -top-24 right-0 h-3/5 w-1/2 rounded-full blur-3xl transition-none"
         style={{ background: color1, opacity: 0.12 }}
       />
       <div
-        className="absolute -bottom-24 -left-12 h-1/2 w-2/5 rounded-full blur-[100px] transition-none"
+        className="absolute -bottom-24 -left-12 h-1/2 w-2/5 rounded-full blur-3xl transition-none"
         style={{ background: color2, opacity: 0.08 }}
       />
     </div>

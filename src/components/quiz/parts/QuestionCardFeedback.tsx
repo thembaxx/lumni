@@ -234,7 +234,7 @@ export function QuestionCardFeedback({
             <div
               key={`followup-${msg.content}`}
               className={cn(
-                "overflow-wrap-anywhere max-w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-sm",
+                "overflow-wrap-anywhere max-w-[calc(100%-var(--space-8))] rounded-xl px-4 py-3 text-sm",
                 msg.role === "user"
                   ? "ml-auto bg-(--system-accent-alpha-10)"
                   : "mr-auto border border-border/50 bg-card",

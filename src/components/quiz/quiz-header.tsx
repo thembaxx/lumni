@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 
 interface QuizHeaderProps {
@@ -17,9 +18,10 @@ export function QuizHeader({
   correctAnswers,
   onQuit,
 }: QuizHeaderProps) {
+  const t = useTranslations();
   return (
     <AssessmentHeader
-      title="Quiz Practice"
+      title={t("quiz.title")}
       elapsedTime={elapsedTime}
       currentQuestionIndex={currentIndex}
       totalQuestions={totalQuestions}

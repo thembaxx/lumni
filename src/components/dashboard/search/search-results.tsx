@@ -25,12 +25,12 @@ const typeConfig: Record<
   question: {
     label: "Question",
     icon: File01Icon,
-    color: "text-blue-500 dark:text-blue-400",
+    color: "text-(--system-accent)",
   },
   flashcard: {
     label: "Flashcard",
     icon: StarSquareIcon,
-    color: "text-amber-500 dark:text-amber-400",
+    color: "text-warning",
   },
   "wrong-answer": {
     label: "Mistake",
@@ -40,58 +40,58 @@ const typeConfig: Record<
   note: {
     label: "Note",
     icon: NoteIcon,
-    color: "text-green-500 dark:text-green-400",
+    color: "text-success",
   },
   "study-set": {
     label: "Study Set",
     icon: BookOpen01Icon,
-    color: "text-purple-500 dark:text-purple-400",
+    color: "text-info",
   },
   exam: {
     label: "Exam",
     icon: BookOpen01Icon,
-    color: "text-orange-500 dark:text-orange-400",
+    color: "text-warning",
   },
   "quiz-attempt": {
     label: "Quiz Attempt",
     icon: Clock01Icon,
-    color: "text-sky-500 dark:text-sky-400",
+    color: "text-info",
   },
   "exam-session": {
     label: "Exam Session",
     icon: File02Icon,
-    color: "text-red-500 dark:text-red-400",
+    color: "text-destructive",
   },
   progress: {
     label: "Progress",
     icon: ChartBarIncreasingIcon,
-    color: "text-teal-500 dark:text-teal-400",
+    color: "text-success",
   },
-  web: { label: "Web", icon: World, color: "text-sky-500 dark:text-sky-400" },
+  web: { label: "Web", icon: World, color: "text-muted-foreground" },
   "study-guide": {
     label: "Study Guide",
     icon: BookOpen01Icon,
-    color: "text-indigo-500 dark:text-indigo-400",
+    color: "text-info",
   },
   dictionary: {
     label: "Dictionary",
     icon: BookOpen01Icon,
-    color: "text-violet-500 dark:text-violet-400",
+    color: "text-info",
   },
   story: {
     label: "Story",
     icon: BookOpen01Icon,
-    color: "text-pink-500 dark:text-pink-400",
+    color: "text-(--system-accent)",
   },
   lesson: {
     label: "Lesson",
     icon: BookOpen01Icon,
-    color: "text-cyan-500 dark:text-cyan-400",
+    color: "text-info",
   },
   vocabulary: {
     label: "Vocabulary",
     icon: BookBookmark01Icon,
-    color: "text-emerald-500 dark:text-emerald-400",
+    color: "text-success",
   },
 };
 

@@ -212,7 +212,7 @@ export function QuizResultsCard({
                   aria-expanded={showReview}
                   aria-controls="question-review-panel"
                 >
-                  <span>Review Answers</span>
+                  <span>{t("quiz.reviewAnswers")}</span>
                   <span className="text-muted-foreground text-xs">
                     {showReview ? "Hide" : `Show ${questions.length} questions`}
                   </span>

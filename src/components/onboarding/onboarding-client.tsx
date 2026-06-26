@@ -144,7 +144,7 @@ export default function OnboardingClient() {
 
   if (isComplete) {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center">
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-8">
         <Confetti trigger />
         <m.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -157,6 +157,15 @@ export default function OnboardingClient() {
             title="You're all set!"
             body="Your learning journey begins now."
           />
+        </m.div>
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.3 }}
+          className="flex items-center gap-2 text-muted-foreground text-xs"
+        >
+          <span className="size-1.5 animate-pulse rounded-full bg-(--system-accent)" />
+          Taking you to your dashboard
         </m.div>
       </div>
     );
@@ -268,7 +277,7 @@ export default function OnboardingClient() {
                   selectedSubjects={selectedSubjects}
                   subjectsData={subjects}
                   title="Ready to start?"
-                  body={"Subjects selected: " + selectedSubjects.length}
+                  body={`${selectedSubjects.length} subject${selectedSubjects.length === 1 ? "" : "s"} selected`}
                 />
               )}
             </m.div>

@@ -105,7 +105,7 @@ export function FillInSequenceInput({
                     handleRemoveFromBlank(blankId);
                   }
                 }}
-                className={`inline-flex min-h-9 min-w-[80px] items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+                className={`inline-flex min-h-9 min-w-20 items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
                   assignedText
                     ? "cursor-pointer border-(--system-accent) bg-(--system-accent-alpha-10)"
                     : "border-muted-foreground/30"

@@ -14,17 +14,17 @@ import { cn } from "@/lib/utils";
 const BLOOM_ORDER = ["remember", "understand", "apply", "analyze", "evaluate", "create"] as const;
 
 const LEVEL_COLORS: Record<string, string> = {
-  novice: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
-  developing: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
-  proficient: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
-  mastered: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+  novice: "bg-destructive/15 text-destructive",
+  developing: "bg-warning/15 text-warning",
+  proficient: "bg-success/15 text-success",
+  mastered: "bg-info/15 text-info",
 };
 
 const LEVEL_BG: Record<string, string> = {
-  novice: "bg-red-50 dark:bg-red-950/20",
-  developing: "bg-amber-50 dark:bg-amber-950/20",
-  proficient: "bg-emerald-50 dark:bg-emerald-950/20",
-  mastered: "bg-blue-50 dark:bg-blue-950/20",
+  novice: "bg-destructive/8",
+  developing: "bg-warning/8",
+  proficient: "bg-success/8",
+  mastered: "bg-info/8",
 };
 
 interface CompetencyRecord {
@@ -217,16 +217,16 @@ export function MasteryHeatmap() {
 
           <div className="flex items-center gap-4 pt-2 text-muted-foreground text-xs">
             <span className="flex items-center gap-1">
-              <span className="size-3 rounded bg-red-100 dark:bg-red-900/30" /> Novice
+              <span className="size-3 rounded bg-destructive/15" /> Novice
             </span>
             <span className="flex items-center gap-1">
-              <span className="size-3 rounded bg-amber-100 dark:bg-amber-900/30" /> Developing
+              <span className="size-3 rounded bg-warning/15" /> Developing
             </span>
             <span className="flex items-center gap-1">
-              <span className="size-3 rounded bg-emerald-100 dark:bg-emerald-900/30" /> Proficient
+              <span className="size-3 rounded bg-success/15" /> Proficient
             </span>
             <span className="flex items-center gap-1">
-              <span className="size-3 rounded bg-blue-100 dark:bg-blue-900/30" /> Mastered
+              <span className="size-3 rounded bg-info/15" /> Mastered
             </span>
           </div>
         </>

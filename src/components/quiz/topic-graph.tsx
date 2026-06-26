@@ -71,8 +71,8 @@ export function TopicGraph({ subject, topic }: TopicGraphProps) {
               node.id === currentTopicNode?.id
                 ? "border-foreground/20 bg-foreground/10 text-foreground"
                 : node.type === "prerequisite"
-                  ? "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400"
-                  : "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                  ? "border-warning/30 bg-warning/10 text-warning"
+                  : "border-success/30 bg-success/10 text-success"
             }`}
           >
             {node.label}
