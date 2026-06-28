@@ -1,12 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
-import { useQuiz } from "@/lib/quiz";
-import type { RetentionQuestion } from "@/lib/quiz/types";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useQuestionEngine } from "@/hooks/use-question-engine";
+import type { BloomLevel, Difficulty, Question, UserAnswer } from "@/lib/question-engine/types";
+import { useQuizSession } from "@/lib/quiz-session";
 import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import type { QuizViewProps } from "../quiz-view";
+
+export interface QuizCompleteResult {
+  reason: "completed" | "quit";
+  questions: Question[];
+  correctness: boolean[];
+  correctAnswers: number;
+  totalQuestions: number;
+  elapsedTime: number;
+}
+
+interface RetentionQuestion {
+  id: string;
+  questionText: string;
+  correctAnswer: string;
+  explanation: string;
+  subject: string;
+  topic: string;
+}
 
 export function useQuizView({
   initialSubject,
@@ -30,32 +48,144 @@ export function useQuizView({
   const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
   const [retentionQuestions, setRetentionQuestions] = useState<RetentionQuestion[]>([]);
 
-  const shared = useQuiz({
-    subject: selectedSubject,
-    topic: resolvedTopic,
-    count: questionCount,
-    questionType: "any",
-    maxTime,
-    enabled: sessionActive && !!selectedSubject,
-    pastPaperMode,
-    preloadedQuestions: packQuestions,
-    retentionQuestions,
-    suggestedBloomLevel: competencyData.suggestedBloomLevel,
-    suggestedDifficulty: competencyData.suggestedDifficulty,
-    topicCompetencyLevel: competencyData.topicCompetencyLevel,
-    topicCompetencyScore: competencyData.topicCompetencyScore,
-    onComplete: useCallback(
-      (result) => {
-        if (result.reason === "completed") {
-          onFinish?.(result);
-        }
-      },
-      [onFinish],
-    ),
+  const actualCount = retentionQuestions.length
+    ? Math.max(1, questionCount - retentionQuestions.length)
+    : questionCount;
+
+  const engineParams = useMemo(
+    () => ({
+      subject: selectedSubject.toLowerCase(),
+      topic: resolvedTopic,
+      count: actualCount,
+      questionType: "any" as const,
+      ...(pastPaperMode ? { pastPaperMode: true } : {}),
+      ...(competencyData.suggestedBloomLevel ? { suggestedBloomLevel: competencyData.suggestedBloomLevel } : {}),
+      ...(competencyData.suggestedDifficulty ? { suggestedDifficulty: competencyData.suggestedDifficulty } : {}),
+      ...(competencyData.topicCompetencyLevel ? { topicCompetencyLevel: competencyData.topicCompetencyLevel } : {}),
+      ...(competencyData.topicCompetencyScore !== undefined ? { topicCompetencyScore: competencyData.topicCompetencyScore } : {}),
+    }),
+    [
+      selectedSubject,
+      resolvedTopic,
+      actualCount,
+      pastPaperMode,
+      competencyData.suggestedBloomLevel,
+      competencyData.suggestedDifficulty,
+      competencyData.topicCompetencyLevel,
+      competencyData.topicCompetencyScore,
+    ],
+  );
+
+  const usePreloaded = Boolean(packQuestions && packQuestions.length > 0);
+
+  const engineResult = useQuestionEngine(engineParams, {
+    enabled: sessionActive && !!selectedSubject && !usePreloaded,
   });
 
-  const { state, actions } = shared;
+  const generatedQuestions = usePreloaded
+    ? (packQuestions as Question[])
+    : engineResult.questions;
+
+  const retentionAsQuestions: Question[] = useMemo(
+    () =>
+      (retentionQuestions ?? []).map((rq) => ({
+        id: `ret_${rq.id}`,
+        type: "short-answer" as const,
+        subject: rq.subject,
+        topic: rq.topic,
+        difficulty: "Medium" as const,
+        bloomTaxonomy: "remember" as BloomLevel,
+        points: 1,
+        questionText: rq.questionText,
+        hint: "",
+        explanation: rq.explanation,
+        steps: ["Review the correct answer below."],
+        body: {
+          modelAnswer: rq.correctAnswer,
+          acceptableAnswers: [rq.correctAnswer],
+          maxLength: 500,
+        },
+        metadata: { source: "imported" },
+      })),
+    [retentionQuestions],
+  );
+
+  const questions =
+    retentionAsQuestions.length > 0
+      ? [...retentionAsQuestions, ...generatedQuestions]
+      : generatedQuestions;
+  const sources = usePreloaded ? [] : engineResult.sources;
+  const warning = usePreloaded ? undefined : engineResult.warning;
+  const isLoading = usePreloaded ? false : engineResult.isLoading;
+  const isError = usePreloaded ? false : engineResult.isError;
+
+  const { state, actions } = useQuizSession(questions ?? [], { maxTime });
+
   const currentIndex = state.questionNumber - 1;
+
+  const [currentAnswered, setCurrentAnswered] = useState(false);
+
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
+  const onCompleteRef = useRef(onFinish);
+  onCompleteRef.current = onFinish;
+
+  const handleNext = useCallback(() => {
+    const s = stateRef.current;
+    const wasLast = s.questionNumber - 1 >= s.totalQuestions - 1;
+    actions.next();
+    setCurrentAnswered(false);
+    if (wasLast) {
+      onCompleteRef.current?.({
+        reason: "completed",
+        questions: s.questions,
+        correctness: s.correctness,
+        correctAnswers: s.correctAnswers,
+        totalQuestions: s.totalQuestions,
+        elapsedTime: s.elapsedTime,
+      });
+    }
+  }, [actions]);
+
+  const handlePrevious = useCallback(() => {
+    actions.previous();
+    setCurrentAnswered(false);
+  }, [actions]);
+
+  const handleSkip = useCallback(() => {
+    handleNext();
+  }, [handleNext]);
+
+  const handleAnswered = useCallback(
+    (correct: boolean, _score?: number, answer?: UserAnswer) => {
+      setCurrentAnswered(true);
+      actions.recordAnswer(
+        correct,
+        answer ? { selectedAnswer: "", correctAnswer: "", answer } : undefined,
+      );
+    },
+    [actions],
+  );
+
+  const handleStop = useCallback(() => {
+    const s = stateRef.current;
+    actions.stop();
+    onCompleteRef.current?.({
+      reason: "quit",
+      questions: s.questions,
+      correctness: s.correctness,
+      correctAnswers: s.correctAnswers,
+      totalQuestions: s.totalQuestions,
+      elapsedTime: s.elapsedTime,
+    });
+    onQuit?.();
+  }, [actions, onQuit]);
+
+  const handleRestart = useCallback(() => {
+    actions.restart();
+    setCurrentAnswered(false);
+  }, [actions]);
 
   const handleStartWithSubject = useCallback(
     async (subject: string) => {
@@ -83,7 +213,6 @@ export function useQuizView({
         const normalizedSubject = subject.toLowerCase();
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
-        // load overdue retention items for this subject
         try {
           const now = Date.now();
           const items = await dexieDataAccess.retentionRecurrence
@@ -158,10 +287,10 @@ export function useQuizView({
   }, [initialSubject]);
 
   useEffect(() => {
-    if (sessionActive && shared.questions.length > 0 && !state.isComplete) {
+    if (sessionActive && questions.length > 0 && !state.isComplete) {
       actions.start();
     }
-  }, [sessionActive, shared.questions, state.isComplete, actions]);
+  }, [sessionActive, questions, state.isComplete, actions]);
 
   useEffect(() => {
     if (state.isComplete && retentionQuestions.length > 0) {
@@ -174,17 +303,11 @@ export function useQuizView({
     }
   }, [state.isComplete, retentionQuestions]);
 
-  const handleStop = useCallback(() => {
-    setSessionActive(false);
-    shared.handleStop();
-    onQuit?.();
-  }, [shared, onQuit]);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!sessionActive || !state.currentQuestion) return;
 
-      if (state.currentQuestion.type === "multiple-choice" && shared.currentAnswered === false) {
+      if (state.currentQuestion.type === "multiple-choice" && currentAnswered === false) {
         switch (e.key) {
           case "ArrowLeft":
           case "ArrowUp":
@@ -201,13 +324,13 @@ export function useQuizView({
         case "ArrowLeft":
           if (currentIndex > 0) {
             e.preventDefault();
-            shared.handlePrevious();
+            handlePrevious();
           }
           break;
         case "ArrowRight":
           if (currentIndex < state.totalQuestions - 1) {
             e.preventDefault();
-            shared.handleNext();
+            handleNext();
           }
           break;
         case "Escape":
@@ -228,32 +351,34 @@ export function useQuizView({
     state.currentQuestion,
     currentIndex,
     state.totalQuestions,
-    shared,
+    handleNext,
+    handlePrevious,
     handleStop,
     state.isComplete,
+    currentAnswered,
   ]);
 
   return {
     selectedSubject,
     sessionActive,
     loadError,
-    currentAnswered: shared.currentAnswered,
+    currentAnswered,
     competencyData,
     resolvedTopic,
-    questions: shared.questions,
-    sources: shared.sources,
-    warning: shared.warning,
-    isLoading: shared.isLoading,
-    isError: shared.isError,
+    questions,
+    sources,
+    warning,
+    isLoading,
+    isError,
     state,
     currentIndex,
     handleStartWithSubject,
     handleStop,
-    handleRestart: shared.handleRestart,
-    handleNext: shared.handleNext,
-    handlePrevious: shared.handlePrevious,
-    handleSkip: shared.handleSkip,
-    handleAnswered: shared.handleAnswered,
+    handleRestart,
+    handleNext,
+    handlePrevious,
+    handleSkip,
+    handleAnswered,
     setLoadError,
   };
 }

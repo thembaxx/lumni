@@ -15,7 +15,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { resolveWeakestSubject, formatSubjectLabel } from "@/lib/bolt/resolve-weakest";
+import { flashcardEngine } from "@/lib/flashcard-engine";
+import { enqueue } from "@/lib/orchestrator/job-queue";
+import { trackQuestionResult } from "@/lib/orchestrator/track-result";
+import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
 import { QuestionCard } from "./question-card";
@@ -23,8 +28,16 @@ import { QuestionCard } from "./question-card";
 export function BoltQuiz() {
   const { push } = useNavigationDirection();
   const { setImmersive } = useImmersiveMode();
-  const { addXp, updateStreak, currentStreak, checkAndUnlockAchievements, levelInfo } =
-    useGamification();
+  const {
+    addXp,
+    updateStreak,
+    checkAndUnlockAchievements,
+    checkForRewardChests,
+    currentStreak,
+    totalQuestionsAnswered,
+    levelInfo,
+  } = useGamification();
+  const { addWrongAnswer } = useWrongAnswerJournal();
   const [subject, setSubject] = useState<string | null>(null);
   const [boltResult, setBoltResult] = useState<{ correct: boolean } | null>(null);
   const [isCelebrating, setIsCelebrating] = useState(false);
@@ -60,25 +73,48 @@ export function BoltQuiz() {
   const question = questions[0];
   const subjectLabel = useMemo(() => formatSubjectLabel(subject ?? "mathematics"), [subject]);
 
+  const quizResultDeps: QuizResultDeps = useMemo(
+    () => ({
+      updateStreak,
+      addXp,
+      checkAndUnlockAchievements,
+      checkForRewardChests,
+      addWrongAnswer,
+      flashcardEngine,
+      trackQuestionResult,
+      enqueue,
+      addStudySession: () => {},
+      markPlanStale: () => {},
+      currentStreak,
+      totalQuestionsAnswered,
+      levelInfo,
+    }),
+    [
+      updateStreak,
+      addXp,
+      checkAndUnlockAchievements,
+      checkForRewardChests,
+      addWrongAnswer,
+      currentStreak,
+      totalQuestionsAnswered,
+      levelInfo,
+    ],
+  );
+
   const processBoltResult = useCallback(
     async (correct: boolean) => {
-      if (processing) return;
+      if (processing || !question) return;
       setProcessing(true);
       try {
-        await updateStreak();
-        await addXp(correct ? 25 : 10, correct ? 100 : 0, currentStreak);
-        await checkAndUnlockAchievements(
-          0,
-          correct ? 100 : 0,
-          currentStreak,
-          levelInfo.level,
-          correct,
+        await processQuizResult(
+          { source: "bolt", question: { question, correct } },
+          quizResultDeps,
         );
       } catch {
         // Non-critical; user still navigates
       }
     },
-    [processing, updateStreak, addXp, checkAndUnlockAchievements, currentStreak, levelInfo.level],
+    [processing, question, quizResultDeps],
   );
 
   const handleAnswered = useCallback((correct: boolean) => {

@@ -3,74 +3,22 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
 import { quizSessionRepo } from "@/lib/db/repositories/quiz-session";
-import type { Question, UserAnswer } from "@/lib/question-engine/types";
+import type { Question } from "@/lib/question-engine/types";
 import type {
   AnswerDetail,
   QuizSessionActions,
   QuizSessionConfig,
   QuizSessionState,
 } from "./types";
+import { quizReducer, INITIAL_QUIZ_STATE, type QuizAction, type QuizState } from "./reducer";
 
-interface QuizState {
-  currentIndex: number;
-  correctAnswers: number;
-  correctness: boolean[];
-  userAnswers: UserAnswer[];
-  elapsedTime: number;
-  isComplete: boolean;
-  isActive: boolean;
-}
-
-type QuizAction =
-  | { type: "RESET" }
-  | { type: "SET_INDEX"; index: number }
-  | { type: "RECORD_ANSWER"; correct: boolean; answer?: UserAnswer }
-  | { type: "TICK" }
-  | { type: "FINISH" }
-  | { type: "START" }
-  | { type: "SET_ACTIVE"; active: boolean };
-
-function quizReducer(state: QuizState, action: QuizAction): QuizState {
-  switch (action.type) {
-    case "RESET":
-      return {
-        currentIndex: 0,
-        correctAnswers: 0,
-        correctness: [],
-        userAnswers: [],
-        elapsedTime: 0,
-        isComplete: false,
-        isActive: false,
-      };
-    case "SET_INDEX":
-      return { ...state, currentIndex: action.index };
-    case "RECORD_ANSWER":
-      return {
-        ...state,
-        correctness: [...state.correctness, action.correct],
-        correctAnswers: state.correctAnswers + (action.correct ? 1 : 0),
-        userAnswers: action.answer ? [...state.userAnswers, action.answer] : state.userAnswers,
-      };
-    case "TICK":
-      return { ...state, elapsedTime: state.elapsedTime + 1 };
-    case "FINISH":
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("lumni_active_quiz_session");
-      }
-      return { ...state, isComplete: true, isActive: false };
-    case "START":
-      return {
-        currentIndex: 0,
-        correctAnswers: 0,
-        correctness: [],
-        userAnswers: [],
-        elapsedTime: 0,
-        isComplete: false,
-        isActive: true,
-      };
-    case "SET_ACTIVE":
-      return { ...state, isActive: action.active };
+function withLocalStorageGuard(action: QuizAction): QuizAction {
+  if (action.type === "FINISH" || action.type === "RESET") {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("lumni_active_quiz_session");
+    }
   }
+  return action;
 }
 
 export function useQuizSession(
@@ -81,15 +29,7 @@ export function useQuizSession(
   const maxTime = Math.max(1, config?.maxTime ?? 90 * 60);
   const sessionId = options?.sessionId ?? crypto.randomUUID();
 
-  const [quizState, dispatch] = useReducer(quizReducer, {
-    currentIndex: 0,
-    correctAnswers: 0,
-    correctness: [],
-    userAnswers: [],
-    elapsedTime: 0,
-    isComplete: false,
-    isActive: false,
-  });
+  const [quizState, dispatch] = useReducer(quizReducer, INITIAL_QUIZ_STATE);
 
   const {
     currentIndex,
@@ -150,7 +90,7 @@ export function useQuizSession(
     () => {
       dispatch({ type: "TICK" });
       if (quizState.elapsedTime + 1 >= maxTime) {
-        dispatch({ type: "FINISH" });
+        dispatch(withLocalStorageGuard({ type: "FINISH" }));
       }
     },
     isActive && questions.length > 0 && !isComplete ? 1000 : null,
@@ -170,7 +110,7 @@ export function useQuizSession(
     if (typeof window !== "undefined") {
       localStorage.setItem("lumni_active_quiz_session", sessionId);
     }
-    dispatch({ type: "START" });
+    dispatch(withLocalStorageGuard({ type: "START" }));
   }, [sessionId]);
 
   const recordAnswer = useCallback((correct: boolean, detail?: AnswerDetail) => {
@@ -181,7 +121,7 @@ export function useQuizSession(
     if (currentIndex < totalQuestions - 1) {
       dispatch({ type: "SET_INDEX", index: currentIndex + 1 });
     } else {
-      dispatch({ type: "FINISH" });
+      dispatch(withLocalStorageGuard({ type: "FINISH" }));
     }
   }, [currentIndex, totalQuestions]);
 
@@ -190,10 +130,7 @@ export function useQuizSession(
   }, [currentIndex]);
 
   const stop = useCallback(() => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("lumni_active_quiz_session");
-    }
-    dispatch({ type: "FINISH" });
+    dispatch(withLocalStorageGuard({ type: "FINISH" }));
   }, []);
 
   const restart = useCallback(() => start(), [start]);
