@@ -85,7 +85,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
     if (!exam) return;
     onOpenChange(false);
     const examDuration = exam.durationHours * 3600;
-    push(`/quiz?subject=${exam.subjectId}&count=30&time=${examDuration}`);
+    push(`/quiz?subject=${exam.subjectId}&count=30&time=${examDuration}&mode=mock`);
   }, [exam, onOpenChange, push]);
 
   const handleCommonQuestions = useCallback(() => {

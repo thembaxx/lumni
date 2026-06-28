@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { BoltQuiz } from "@/components/quiz/bolt-quiz";
 import { QuizView } from "@/components/quiz";
+import { ExamMockSession } from "@/components/exam/exam-mock-session";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 
@@ -54,6 +55,18 @@ function QuizClientContent() {
 
   if (mode === "bolt") {
     return <BoltQuiz />;
+  }
+
+  if (mode === "mock" && initialSubject) {
+    return (
+      <ExamMockSession
+        subject={initialSubject}
+        topic={topic || undefined}
+        duration={maxTime ?? 7200}
+        questionCount={questionCount}
+        onFinish={(results) => handleFinish(results, assignmentId)}
+      />
+    );
   }
 
   const [packQuestions, setPackQuestions] = useState<Question[] | null>(null);
