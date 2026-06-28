@@ -236,7 +236,7 @@ erDiagram
 | -------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------- |
 | **Dashboard**        | Landing page: stats, study plan, quick actions, search, analytics, offline packs, learning map       | React, recharts                | `src/components/dashboard/`                        |
 | **Quiz**             | Question display, answer capture, timer, feedback, diagrams, immersive mode, auto-flashcard creation | React, Konva, Framer Motion    | `src/components/quiz/`                             |
-| **Exam**             | Past paper viewer, session management, results & review, immersive mode                              | React, sql.js, react-pdf       | `src/components/exam/`                             |
+| **Exam**             | Past paper viewer, session management, results & review, immersive mode                              | React, sql.js, @pdfslick/react | `src/components/exam/`                             |
 | **Flashcards**       | SM-2 spaced repetition, Tinder-style swipeable deck, auto-generation                                 | React, Dexie, Framer Motion    | `src/components/flashcard/`                        |
 | **Study Planner**    | Algorithmic scheduling, weekly overview, calendar view, drag-to-reschedule                           | React, localStorage, Dexie     | `src/components/study-planner/`                    |
 | **Onboarding**       | 5-step wizard with Three.js particles, push notification opt-in                                      | React, Three.js, Framer Motion | `src/components/onboarding/`                       |

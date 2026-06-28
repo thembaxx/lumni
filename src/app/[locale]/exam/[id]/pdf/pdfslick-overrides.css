@@ -1,0 +1,85 @@
+/* PDFSlick theme overrides — maps PDFSlick CSS vars to design-system tokens */
+
+/* Fix color-scheme to respect our .dark class so light-dark() chooses correctly */
+.dark .pdfSlick {
+  color-scheme: dark;
+}
+
+/* Scrollbar styling */
+.dark .pdfSlick *::-webkit-scrollbar-thumb {
+  background-color: var(--system-separator);
+}
+.dark .pdfSlick *::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* ── #viewsManager — main viewer chrome ── */
+.pdfSlick #viewsManager {
+  --sidebar-bg-color: var(--system-background-secondary);
+  --sidebar-backdrop-filter: blur(7px);
+  --text-color: var(--system-text-primary);
+  --button-fg: var(--system-text-primary);
+  --button-bg: var(--system-fill);
+  --button-no-bg: transparent;
+  --button-border-color: transparent;
+  --button-hover-bg: var(--system-accent-alpha-10);
+  --button-hover-fg: var(--system-text-primary);
+  --button-hover-border-color: transparent;
+  --button-active-bg: var(--system-accent-alpha-20);
+  --button-active-fg: var(--system-text-primary);
+  --button-active-border-color: transparent;
+  --button-focus-no-bg: var(--system-accent-alpha-10);
+  --button-focus-outline-color: var(--system-accent);
+  --button-focus-border-color: transparent;
+  --header-bg: var(--material-thin);
+  --header-shadow: var(--shadow-level-1);
+  --indicator-color: var(--system-accent);
+  --image-outline: none;
+  --image-border-width: 4px;
+  --image-border-color: var(--system-separator);
+  --image-hover-border-color: var(--system-accent);
+  --image-current-border-color: var(--system-accent);
+  --image-current-focused-outline-color: var(--system-separator);
+  --image-page-number-bg: var(--system-fill);
+  --image-page-number-fg: var(--system-text-primary);
+  --image-page-number-border-color: transparent;
+  --image-hover-page-number-bg: var(--system-fill);
+  --image-hover-page-number-fg: var(--system-text-primary);
+  --image-current-page-number-bg: var(--system-accent);
+  --image-current-page-number-fg: white;
+  --image-current-hover-page-number-bg: var(--system-accent);
+  --image-current-hover-page-number-fg: white;
+  --image-shadow: 0 0 0 1px var(--system-separator), 0 2px 8px oklch(0% 0 0 / 0.06);
+  --image-hover-shadow: 0 0 0 1px var(--system-accent-alpha-30), 0 2px 12px oklch(0% 0 0 / 0.08);
+  --status-border-color: transparent;
+  --status-actions-bg: var(--system-fill-secondary);
+  --status-undo-bg: var(--system-accent-alpha-10);
+  --status-waiting-bg: var(--system-accent-alpha-10);
+  --status-warning-bg: var(--system-destructive-alpha-20);
+  --indicator-warning-color: var(--system-destructive);
+}
+
+/* ── Legacy PDF.js vars (used by dialogs and editor overlays) ── */
+.pdfSlick-dialog {
+  --main-color: var(--system-text-primary);
+  --doorhanger-bg-color: var(--system-background-elevated);
+  --dialog-button-bg-color: var(--system-fill);
+  --dialog-button-hover-bg-color: var(--system-accent-alpha-20);
+  --dialog-button-hover-color: var(--system-text-primary);
+  --dialog-button-border: none;
+}
+
+/* ── Override the dialog border/shadow from design system ── */
+.pdfSlick-dialog {
+  border: 1px solid var(--system-separator);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--shadow-level-3);
+  font-family: var(--font-sans);
+}
+
+.pdfSlick-dialog .dialogButton {
+  border-radius: var(--radius-button);
+  font-size: var(--fs-subhead);
+  padding: var(--space-2) var(--space-4);
+  line-height: 1.2;
+}
