@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-21 -->
+<!-- LAST_SYNC: 2026-06-28 -->
 
 # Memory Index — Lumni
 
@@ -55,6 +55,7 @@
 - [2026-06-21] **React Doctor 100/100 (Session 39)**: 16 remaining issues resolved across 10 files. Parallelized awaits, Set/Map lookups, useReducer consolidation, regex string checks. Commit `a1bd5de4`.
 - [2026-06-23] **Konva dark mode**: All 8 Konva renderers use `useDiagramTheme()` hook (MutationObserver, light/dark `DiagramColors` palettes). Atom colours stay constant across themes. CSS custom properties don't cascade into `<canvas>` — theme detection must use DOM API.
 - [2026-06-23] **a11y contrast scanning**: `@axe-core/playwright` scans 37 routes in light+dark mode for WCAG AA `color-contrast` violations. Wired as `a11y-contrast` CI job in `.github/workflows/ci.yml`.
+- [2026-06-28] **PDF viewer react-pdf → PDFSlick**: Single cut-over at `/exam/[id]/pdf`. `@pdfslick/react@4.0.0` with Zustand store, built-in toolbar, collapsible thumbnails sidebar, text selection, touch gestures. CSS var overrides to `--system-*` tokens with dark mode (`light-dark()` needs `.dark .pdfSlick { color-scheme: dark; }`). Blob URL offline caching preserved. Worker auto-resolved by PDFSlick (`pdfjs-dist ^6.x`). `pdfslick-overrides.css` maps 25+ vendor CSS variables. Dynamic import of viewer section. Commit `e240b35b`.
 
 ## Past Bugs & Failures
 

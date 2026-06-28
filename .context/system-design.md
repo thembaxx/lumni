@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-21 -->
+<!-- LAST_SYNC: 2026-06-28 -->
 
 # System Design — Lumni
 
@@ -111,6 +111,7 @@ graph TD
 - **CachingStrategy**: Generic multi-tier caching framework.
 - **WeeklyDigest**: `POST /api/cron/weekly-digest` admin push to all subscribers via web-push.
 - **Service Extraction (ADR-0012)**: 6 services with constructor injection; route handlers reduced to 10-25 lines.
+- **PDFSlickViewer**: Zustand-based PDF viewer wrapper (`@pdfslick/react` v4). Replaces `react-pdf` at `/exam/[id]/pdf`. Provides built-in toolbar, collapsible thumbnails sidebar (`PDFSlickThumbnails` with render-prop), text selection, scroll modes, touch gestures. CSS vars overridden via `pdfslick-overrides.css` mapping to `--system-*` tokens. Dark mode requires `.dark .pdfSlick { color-scheme: dark; }` for `light-dark()` resolution.
 
 ## External Integrations
 
@@ -133,6 +134,7 @@ graph TD
 
 ## Recent Changes Log (Last 7 Days)
 
+- **Session PDFSlick — PDF viewer react-pdf → @pdfslick/react (2026-06-28)**: Single cut-over at `/exam/[id]/pdf`. PDFSlick v4 with Zustand store, built-in toolbar, collapsible thumbnails sidebar, text selection, touch gestures. 25+ CSS vars mapped to `--system-*` tokens via `pdfslick-overrides.css`. Dark mode: `.dark .pdfSlick { color-scheme: dark; }` for `light-dark()` resolution. Blob URL offline caching preserved (`useCachedPdfUrl` → `usePDFSlick(filePath)`). Worker auto-resolved by PDFSlick core. Dynamic import of viewer section. Removed `react-pdf` dependency, stale `pdfjs.d.ts` type decls, 82-line useReducer. TypeScript 0 errors, Biome 0 errors, 1626 tests pass. Commit `e240b35b`.
 - **Session 39 — React Doctor 100/100 (June 2026)**: 16 remaining issues resolved across 10 files. Parallelized independent awaits with `Promise.all` (quiz-actions, domain, push-delivery). Combined chained `.filter().map()` iterations into single `for` loops (classify/route, quiz-actions). Replaced `Array.includes()` in loops with `Set.has()` (quiz-actions). Replaced `array.find()` in loop with `Map.get()` (classify/route). Merged dual `useState` into `useReducer` (recent-questions-card). Removed redundant `useEffect` state reset (immersive-mode). Moved static `validRoles` array to module scope (messages/route). Captured refs in cleanup effects to fix missing deps warnings (admin-dashboard, getting-started-card). Combined two `string.includes()` checks into single regex test (ai/client). Added false-positive override for sequential await in exam-paper-actions.ts. 12 files changed, +96/−65 lines. TypeScript 0 errors, Biome 0 errors. Commit `a1bd5de4`.
 - **Session 37-38 — Architectural deepening (June 2026)**: AI provider singleton collapsed. `GenerateResult` structured return. `CachedAIGenerator<T>` generic. QuizResultProcessor (discriminated union). Enrichment pipeline (3 ports). TinyFish barrel separation. PushDeliveryService, StudyPlannerService, GamificationService. DataAccess bypass sealing. 6+ service extractions. ~200 lines dead code removed. ADR-0012 documented.
 - **Premium gating removed (June 2026)**: All ContentLock wrappers purged from 5 dashboard components (analytics, study-plan, scheduler, visual-content, offline-packs). `usePremium`/`isPremium`/`isPriority` checks stripped from visual engine hook and support page. Visual engine always fetches. Support page shows priority to all. Problems page shows login banner via `useAuth()` when unauthenticated. View transitions consolidated — `useNavigationDirection` owns full lifecycle; `experimental.viewTransition: true` removed from next.config. `NavigationPointerOff01Icon` → `Cancel01Icon`. `tsc --noEmit` zero, `oxlint` zero, 1271 tests pass 0 fail.

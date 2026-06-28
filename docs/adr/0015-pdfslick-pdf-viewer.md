@@ -1,6 +1,6 @@
 # ADR-15: PDF Viewer Replacement — react-pdf → PDFSlick
 
-**Status:** Accepted → Pending Implementation  
+**Status:** Implemented — 2026-06-28 (commit `e240b35b`)  
 **Date:** 2026-06-28
 
 ## Context

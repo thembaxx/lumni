@@ -1210,3 +1210,53 @@ Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-
   - Define a `ProviderError` type with `Effect.catchAll` fallback chain
   - Use `Effect.gen` for sequential fallback, `Effect.all` for parallel calls
   - Track side effects (latency, metrics) with `Effect.tap`
+
+## PDFSlick — PDF Viewer Component
+
+Used for the exam PDF viewer at `/exam/[id]/pdf`. Replaced `react-pdf` in Session 2026-06-28 (commit `e240b35b`).
+
+### Usage
+
+```tsx
+import { usePDFSlick } from "@pdfslick/react";
+
+const { viewerRef, thumbsRef, usePDFSlickStore, PDFSlickViewer, PDFSlickThumbnails, error } =
+  usePDFSlick(blobUrl || fileUrl, { scaleValue: "page-fit" });
+
+const pageNumber = usePDFSlickStore((s) => s.pageNumber);
+const numPages = usePDFSlickStore((s) => s.numPages);
+```
+
+### CSS Overrides Pattern
+
+Import vendor CSS once, then override in a separate file:
+
+```tsx
+import "@pdfslick/react/dist/pdf_viewer.css";
+import "./pdfslick-overrides.css";
+```
+
+In overrides, map 25+ CSS vars to `--system-*` tokens:
+
+```css
+.pdfSlick {
+  --sidebar-bg-color: var(--system-surface-secondary);
+  --text-color: var(--system-text-primary);
+  --toolbar-bg-color: var(--system-surface-primary);
+  /* ... */
+}
+.dark .pdfSlick {
+  color-scheme: dark; /* required for light-dark() resolution */
+}
+```
+
+### Gotchas
+
+- **Worker auto-resolved**: PDFSlick sets `GlobalWorkerOptions.workerSrc` via `new URL(...)` — no manual worker config needed.
+- **pdfjs-dist v6**: PDFSlick v4 uses `pdfjs-dist ^6.0.227` (react-pdf used `5.4.296`). Worker file must be from v6.
+- **`isDocumentLoaded` ≠ pdfSlick ready**: The PDFSlick instance (`pdfSlick`) from the store is available AFTER `isDocumentLoaded`. Use `useEffect` with dependency on `pdfSlick` (not `isDocumentLoaded`) for post-load operations like `gotoPage()`.
+- **Thumbnails render-prop**: `PDFSlickThumbnails` uses `{({ pageNumber, src, width, height, scale, rotation, pageLabel, loaded }) => <img .../>}`. Lint: suppress `no-img-element` for blob URLs.
+- **Blob URL sharing**: `useCachedPdfUrl` returns a blob URL string. Pass to `usePDFSlick(filePath || pdfUrl)` — the URL must be a string, not a Blob object.
+- **Page counter position**: Place at `bottom-3` (not `top-2`) to avoid overlap with the built-in toolbar header area.
+- **Dynamic import**: Lazy-load the PDFSlick viewer section using Next.js dynamic import to avoid loading PDFSlick bundle until needed.
+- **No custom toolbar**: Use PDFSlick's built-in toolbar. Only add app-level overlays (download, fullscreen) outside it.
