@@ -4,11 +4,11 @@ import type { CompetitionScoreRecord } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
 import { getWeekRange } from "@/lib/study-groups/challenge-types";
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess });
 let _deps: { db: CommunityDataAccess } = DEFAULT_DEPS;
 
 export function __setDepsForTesting(deps: { db: CommunityDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 function getCompetitionWeek(): { start: string; end: string } {

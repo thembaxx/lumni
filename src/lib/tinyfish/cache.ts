@@ -5,7 +5,7 @@ export type TinyFishDB = typeof dexieDataAccess;
 
 let _deps: TinyFishDB | null = null;
 export function __setDepsForTesting(deps: TinyFishDB) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 function db(): TinyFishDB {
   return _deps ?? dexieDataAccess;

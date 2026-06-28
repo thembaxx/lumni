@@ -3,9 +3,9 @@ import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+let _deps: { db: SyncDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: SyncDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 let cachedContext: string | null = null;

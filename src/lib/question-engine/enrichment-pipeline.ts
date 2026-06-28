@@ -11,11 +11,11 @@ export interface EnrichmentDeps {
   db: DataAccess;
 }
 
-const DEFAULT_DEPS: EnrichmentDeps = { db: dexieDataAccess };
+const DEFAULT_DEPS: EnrichmentDeps = Object.freeze({ db: dexieDataAccess });
 
 let _deps: EnrichmentDeps = DEFAULT_DEPS;
 export function __setDepsForTesting(deps: EnrichmentDeps) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 const SIMILARITY_THRESHOLDS: Record<string, { pool: number; example: number }> = {

@@ -8,11 +8,11 @@ import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { syncManager } from "@/lib/sync/sync-manager";
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess });
 let _deps: { db: ContentDataAccess } = DEFAULT_DEPS;
 
 function __setDepsForTesting(deps: { db: ContentDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 interface SharedRecord {

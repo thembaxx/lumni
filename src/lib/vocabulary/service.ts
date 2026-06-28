@@ -5,9 +5,9 @@ import type { VocabularyEntry } from "@/lib/db/schema";
 import { createVocabularyCard } from "@/lib/flashcard-engine/vocabulary-bridge";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: VocabularyDataAccess } = { db: dexieDataAccess };
+let _deps: { db: VocabularyDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: VocabularyDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export type { VocabularyEntry };

@@ -4,9 +4,9 @@ import { enqueue } from "@/lib/orchestrator/job-queue";
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "./storage";
 
-let _deps: { db: StudyDataAccess } = { db: dexieDataAccess };
+let _deps: { db: StudyDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: StudyDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export interface StudySession {

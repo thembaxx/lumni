@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { Question } from "@/lib/question-engine/types";
 import { budgetFetch } from "@/lib/shared/api-fetch";
+import type { Question } from "@/lib/question-engine/types";
 import type { VisualContent } from "@/lib/visual-engine/types";
 
 interface VisualResult {
@@ -36,6 +36,6 @@ export function useVisualEngine(question: Question | null) {
     enabled: !!question,
     staleTime: 1000 * 60 * 60,
     retry: 1,
-    select: (data) => data.visual,
+    select: (data: VisualResult) => data.visual,
   });
 }

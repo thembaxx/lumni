@@ -11,9 +11,9 @@ import { logError } from "@/lib/shared/logger";
 import type { JobHandler } from "./index";
 import { createAppendHandler, createDeleteHandler, createUpsertHandler } from "./sync-factory";
 
-let _deps: { db: SyncHandlerDb } = { db: dexieDataAccess };
+let _deps: { db: SyncHandlerDb } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 const appwriteSync: JobHandler = async (payload) => {

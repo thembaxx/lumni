@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { createApiQuery } from "@/hooks/use-hook-factories";
 
 interface SessionUser {
   userId: string | null;
@@ -19,14 +19,15 @@ async function fetchSession(): Promise<SessionUser> {
   return res.json();
 }
 
-export function useAppwriteSession(): UseAppwriteSessionReturn {
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["appwrite-session"],
-    queryFn: fetchSession,
-    staleTime: 5 * 60 * 1000,
-    retry: false,
-  });
+const useSession = createApiQuery<SessionUser, void>({
+  queryKey: ["appwrite-session"],
+  fetchFn: fetchSession,
+  staleTime: 5 * 60 * 1000,
+  retry: 0,
+});
 
+export function useAppwriteSession(): UseAppwriteSessionReturn {
+  const { data: user, isLoading } = useSession(undefined);
   return {
     user: user ?? { userId: null, name: null, email: null },
     isLoading,

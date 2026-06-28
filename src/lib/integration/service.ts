@@ -2,9 +2,9 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
+let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 // ── Integration 1: Lesson→Past Questions loop ──

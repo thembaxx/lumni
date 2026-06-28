@@ -5,9 +5,9 @@ import { dexieDataAccess, type VocabularyDataAccess } from "@/lib/db";
 import type { LessonProgress } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: VocabularyDataAccess } = { db: dexieDataAccess };
+let _deps: { db: VocabularyDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: VocabularyDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 function buildLessonKey(userId: string, lessonId: string): string {

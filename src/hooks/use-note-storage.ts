@@ -4,9 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Note } from "@/components/tools/notes/types";
 import { type ContentDataAccess, dexieDataAccess } from "@/lib/db";
 
-let _deps: { db: ContentDataAccess } = { db: dexieDataAccess };
+let _deps: { db: ContentDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: ContentDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export function useNoteStorage() {

@@ -5,9 +5,9 @@ import { logError } from "@/lib/shared/logger";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
-let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+let _deps: { db: SyncDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 interface ExamSessionState {

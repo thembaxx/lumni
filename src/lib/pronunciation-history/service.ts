@@ -14,11 +14,11 @@ export interface PronunciationScoreRecord {
   attemptedAt: number;
 }
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess });
 let _deps: { db: Pick<DataAccess, "pronunciationHistory"> } = DEFAULT_DEPS;
 
 export function __setDepsForTesting(deps: { db: Pick<DataAccess, "pronunciationHistory"> }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export async function savePronunciationScore(

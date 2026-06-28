@@ -13,9 +13,9 @@ import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 
 type DomainDb = QuizDataAccess & Pick<DataAccess, "questionEmbeddings">;
-let _deps: { db: DomainDb } = { db: dexieDataAccess as DomainDb };
+let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess as DomainDb });
 export function __setDepsForTesting(deps: { db: DomainDb }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export const analyticsSync: JobHandler = async (payload) => {

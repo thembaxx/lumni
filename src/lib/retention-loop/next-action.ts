@@ -4,11 +4,11 @@ import type { DataAccess } from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
 
-const DEFAULT_DEPS = { db: _dexieDa };
+const DEFAULT_DEPS = Object.freeze({ db: _dexieDa });
 let _deps = DEFAULT_DEPS;
 
 export function __setDepsForTesting(deps: { db: DataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export type ActionKind =

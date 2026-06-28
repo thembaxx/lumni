@@ -4,9 +4,9 @@ import { useCallback, useState } from "react";
 import { dexieDataAccess } from "@/lib/db";
 import type { SyncDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+let _deps: { db: SyncDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: SyncDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export interface OnboardingData {

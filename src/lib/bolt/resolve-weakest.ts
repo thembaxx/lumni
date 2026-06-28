@@ -1,9 +1,9 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { CompetencyDataAccess } from "@/lib/db/data-access";
 
-let _deps: { db: CompetencyDataAccess } = { db: dexieDataAccess };
+let _deps: { db: CompetencyDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export async function resolveWeakestSubject(): Promise<string> {

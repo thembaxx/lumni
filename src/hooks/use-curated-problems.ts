@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createInvalidatingMutation } from "@/hooks/use-hook-factories";
 import { logError } from "@/lib/shared/logger";
 
 export interface CuratedProblem {
@@ -25,27 +25,25 @@ interface UseCuratedProblemsParams {
   count?: number;
 }
 
-export function useCuratedProblems() {
-  const queryClient = useQueryClient();
-
-  return useMutation<CuratedProblemsResponse, Error, UseCuratedProblemsParams>({
-    mutationFn: async ({ subject, topic, count = 5 }) => {
-      const res = await fetch("/api/curated-problems", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, topic, count }),
+export const useCuratedProblems = createInvalidatingMutation<
+  UseCuratedProblemsParams,
+  CuratedProblemsResponse,
+  CuratedProblemsResponse
+>({
+  invalidateKey: ["curated-problems"],
+  mutationFn: async ({ subject, topic, count = 5 }) => {
+    const res = await fetch("/api/curated-problems", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subject, topic, count }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch((e) => {
+        logError("useCuratedProblems.json", e);
+        return {};
       });
-      if (!res.ok) {
-        const err = await res.json().catch((e) => {
-          logError("useCuratedProblems.json", e);
-          return {};
-        });
-        throw new Error(err.error || "Failed to generate problems");
-      }
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["curated-problems"] });
-    },
-  });
-}
+      throw new Error(err.error || "Failed to generate problems");
+    }
+    return res.json();
+  },
+});

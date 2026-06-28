@@ -91,10 +91,10 @@ const config = {
   errorLabel: "LessonService",
 };
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
+let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
 
 function __setDepsForTesting(deps: { db: DataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 function createGenerator() {

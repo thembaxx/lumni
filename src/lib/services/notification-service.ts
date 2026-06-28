@@ -5,14 +5,14 @@ type NotifDb = StudyDataAccess & Pick<CompetencyDataAccess, "quizAttempts">;
 
 import { flashcardEngine } from "@/lib/flashcard-engine";
 
-const DEFAULT_DEPS = { db: dexieDataAccess as NotifDb };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess as NotifDb });
 let _deps: { db: NotifDb } = DEFAULT_DEPS;
 
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 function __setDepsForTesting(deps: { db: NotifDb }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 const NOTIF_KEY = "lumni_notification_subscription";

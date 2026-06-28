@@ -6,11 +6,11 @@ import { EXAM_SLOTS_2027_MAY } from "./data-2027-may";
 import { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 import type { ExamSlot } from "./types";
 
-const DEFAULT_DEPS = { db: dexieDataAccess };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess });
 let _deps: { db: StudyDataAccess } = DEFAULT_DEPS;
 
 export function __setDepsForTesting(deps: { db: StudyDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export { getSubjectAbbr, getSubjectColor };

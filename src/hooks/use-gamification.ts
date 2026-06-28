@@ -8,9 +8,9 @@ import { GamificationService } from "@/lib/gamification-engine/service";
 import { getSettings, sendLocalNotification } from "@/lib/services/notification-service";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: ObservabilityDataAccess } = { db: dexieDataAccess };
+let _deps: { db: ObservabilityDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: ObservabilityDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 let _serviceInstance: GamificationService | null = null;

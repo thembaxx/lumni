@@ -75,9 +75,9 @@ function parseApiResponse(data: ApiEntry[]): DictionaryResult | null {
   };
 }
 
-let _deps: { db: DataAccess } = { db: dexieDataAccess };
+let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 async function tryFreeDictionary(word: string, language: string): Promise<DictionaryResult | null> {

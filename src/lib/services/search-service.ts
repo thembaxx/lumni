@@ -17,11 +17,11 @@ type SearchDb = Pick<
   | "lessonCache"
   | "vocabularyList"
 >;
-const DEFAULT_DEPS = { db: dexieDataAccess as SearchDb };
+const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess as SearchDb });
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
 
 export function __setDepsForTesting(deps: { db: SearchDb }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export interface SearchResultItem {

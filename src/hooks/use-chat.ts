@@ -8,9 +8,9 @@ import { logError } from "@/lib/shared/logger";
 
 import { loadFromStorage } from "@/lib/utils/storage";
 
-let _deps: { db: SyncDataAccess } = { db: dexieDataAccess };
+let _deps: { db: SyncDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: SyncDataAccess }) {
-  _deps = deps;
+  _deps = Object.freeze({ ...deps });
 }
 
 export interface ChatMessage {
