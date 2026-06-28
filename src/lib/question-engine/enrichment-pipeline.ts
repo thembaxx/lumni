@@ -18,6 +18,20 @@ export function __setDepsForTesting(deps: EnrichmentDeps) {
   _deps = deps;
 }
 
+const SIMILARITY_THRESHOLDS: Record<string, { pool: number; example: number }> = {
+  default: { pool: 0.8, example: 0.5 },
+  mathematics: { pool: 0.85, example: 0.6 },
+  "physical-sciences": { pool: 0.85, example: 0.6 },
+  history: { pool: 0.7, example: 0.4 },
+  geography: { pool: 0.75, example: 0.45 },
+  "life-sciences": { pool: 0.8, example: 0.5 },
+  accounting: { pool: 0.85, example: 0.6 },
+};
+
+function getThresholds(subject: string): { pool: number; example: number } {
+  return SIMILARITY_THRESHOLDS[subject.toLowerCase()] ?? SIMILARITY_THRESHOLDS.default;
+}
+
 interface CurriculumSource {
   fetchCurriculumContext(subject: string, topic?: string): Promise<string | null>;
 }
@@ -84,6 +98,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
       let pastPaperExamples: GenerationParams["pastPaperExamples"] = [];
 
       try {
+        const { pool: poolThreshold, example: exampleThreshold } = getThresholds(subject);
         const queryText = topic ? `${subject}: ${topic}` : subject;
         const embedding = await embedText(queryText);
         if (!embedding) return { poolQuestions, pastPaperExamples };
@@ -128,7 +143,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
           }
         } else {
           for (const sq of scored) {
-            if (sq.similarity > 0.8) {
+            if (sq.similarity > poolThreshold) {
               poolQuestions.push({
                 id: sq.questionId,
                 questionText: sq.questionText,
@@ -147,7 +162,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
         }
 
         pastPaperExamples = scored
-          .filter((q) => q.similarity >= 0.5 && q.similarity <= 0.8)
+          .filter((q) => q.similarity >= exampleThreshold && q.similarity <= poolThreshold)
           .slice(0, exampleCount)
           .map((q) => ({
             questionText: q.questionText,
