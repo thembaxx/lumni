@@ -5,9 +5,9 @@ import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
-import { useEffect, useState } from "react";
+import { useRouter } from "@/i18n/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
-import { LoginForm } from "@/components/admin/login-form";
 import { Button } from "@/components/ui/button";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
@@ -43,7 +43,8 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 }
 
 export function AdminPageClient() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  const router = useRouter();
+  const [isAuthenticated] = useState(() => {
     if (typeof window === "undefined") return false;
     return !!localStorage.getItem("admin_session");
   });
@@ -51,86 +52,70 @@ export function AdminPageClient() {
   const [isSeeding, setIsSeeding] = useState(false);
   const [seedStatus, setSeedStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSeed = async () => {
+  const handleSeed = useCallback(async () => {
     setIsSeeding(true);
     setSeedStatus("idle");
     try {
       const res = await fetch("/api/seed", { method: "POST" });
       const data = await res.json();
-      if (data.success) {
-        setSeedStatus("success");
-      } else {
-        setSeedStatus("error");
-      }
+      setSeedStatus(data.success ? "success" : "error");
     } catch {
       setSeedStatus("error");
     } finally {
       setIsSeeding(false);
       setTimeout(() => setSeedStatus("idle"), 3000);
     }
-  };
+  }, []);
 
-  const handlePreloaderComplete = () => {
+  const handlePreloaderComplete = useCallback(() => {
+    if (!isAuthenticated) {
+      router.push("/auth/verify");
+      return;
+    }
     setShowPreloader(false);
-  };
-
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-  };
+  }, [isAuthenticated, router]);
 
   if (showPreloader) {
     return <Preloader onComplete={handlePreloaderComplete} />;
   }
 
   return (
-    <>
-      <AnimatePresence initial={false}>
-        {!isAuthenticated && (
-          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-            <LoginForm onSuccess={handleLoginSuccess} />
-          </m.div>
-        )}
-      </AnimatePresence>
-
-      {isAuthenticated && (
-        <AnimatePresence initial={false}>
-          <m.div
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            initial={false}
-            className="relative min-h-dvh"
+    <AnimatePresence initial={false}>
+      <m.div
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        initial={false}
+        className="relative min-h-dvh"
+      >
+        <m.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
+          className="fixed right-6 bottom-6 z-modal"
+        >
+          <Button
+            size="icon-lg"
+            variant={
+              seedStatus === "success"
+                ? "secondary"
+                : seedStatus === "error"
+                  ? "destructive"
+                  : "default"
+            }
+            onClick={handleSeed}
+            disabled={isSeeding}
+            className="size-14 rounded-full shadow-level-2 shadow-shadow/20"
+            title="Seed Database"
+            aria-label="Seed Database"
           >
-            <m.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              className="fixed right-6 bottom-6 z-modal"
-            >
-              <Button
-                size="icon-lg"
-                variant={
-                  seedStatus === "success"
-                    ? "secondary"
-                    : seedStatus === "error"
-                      ? "destructive"
-                      : "default"
-                }
-                onClick={handleSeed}
-                disabled={isSeeding}
-                className="size-14 rounded-full shadow-level-2 shadow-shadow/20"
-                title="Seed Database"
-                aria-label="Seed Database"
-              >
-                {isSeeding ? (
-                  <HugeiconsIcon icon={RadialIcon} className="size-5 animate-spin" />
-                ) : (
-                  <HugeiconsIcon icon={DatabaseIcon} className="size-5" />
-                )}
-              </Button>
-            </m.div>
-            <AdminDashboard />
-          </m.div>
-        </AnimatePresence>
-      )}
-    </>
+            {isSeeding ? (
+              <HugeiconsIcon icon={RadialIcon} className="size-5 animate-spin" />
+            ) : (
+              <HugeiconsIcon icon={DatabaseIcon} className="size-5" />
+            )}
+          </Button>
+        </m.div>
+        <AdminDashboard />
+      </m.div>
+    </AnimatePresence>
   );
 }
