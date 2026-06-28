@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { RedisStore } from "./redis-store";
 
 export interface RateLimitConfig {
   max: number;
@@ -88,7 +89,7 @@ export class RateLimiter {
   private store: RateLimitStore;
 
   constructor(store?: RateLimitStore) {
-    this.store = store ?? new MapStore();
+    this.store = store ?? createRateLimitStore();
   }
 
   checkEffect(
@@ -186,4 +187,11 @@ export function getRateLimitHeaders(result: RateLimitResult) {
     "X-RateLimit-Reset": String(result.resetAt),
     "Retry-After": result.allowed ? "" : String(Math.ceil((result.resetAt - Date.now()) / 1000)),
   };
+}
+
+export function createRateLimitStore(): RateLimitStore {
+  if (process.env.REDIS_URL && process.env.REDIS_TOKEN) {
+    return new RedisStore();
+  }
+  return new MapStore();
 }

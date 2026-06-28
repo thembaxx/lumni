@@ -10,6 +10,7 @@ vi.mock("@/lib/bookmark-service", () => ({
   },
 }));
 
+import { bookmarkService } from "@/lib/bookmark-service";
 import { useBookmarksStore } from "../bookmarks";
 
 beforeEach(() => {
@@ -114,6 +115,42 @@ describe("useBookmarksStore", () => {
       subject: "math",
       topic: "alg",
     });
+    expect(useBookmarksStore.getState().isBookmarked("q1")).toBe(true);
+  });
+});
+
+describe("toggleBookmark", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  test("adds bookmark optimistically and calls service.add", async () => {
+    vi.mocked(bookmarkService.add).mockResolvedValueOnce(undefined);
+    await useBookmarksStore.getState().toggleBookmark("q1");
+    expect(useBookmarksStore.getState().isBookmarked("q1")).toBe(true);
+    expect(bookmarkService.add).toHaveBeenCalledTimes(1);
+  });
+
+  test("removes bookmark optimistically and calls service.remove", async () => {
+    vi.mocked(bookmarkService.add).mockResolvedValueOnce(undefined);
+    vi.mocked(bookmarkService.remove).mockResolvedValueOnce(undefined);
+    await useBookmarksStore.getState().toggleBookmark("q1"); // adds
+    await useBookmarksStore.getState().toggleBookmark("q1"); // removes
+    expect(useBookmarksStore.getState().isBookmarked("q1")).toBe(false);
+    expect(bookmarkService.remove).toHaveBeenCalledTimes(1);
+  });
+
+  test("rolls back on add failure", async () => {
+    vi.mocked(bookmarkService.add).mockRejectedValueOnce(new Error("network"));
+    await useBookmarksStore.getState().toggleBookmark("q1");
+    expect(useBookmarksStore.getState().isBookmarked("q1")).toBe(false);
+  });
+
+  test("rolls back on remove failure", async () => {
+    vi.mocked(bookmarkService.add).mockResolvedValueOnce(undefined);
+    vi.mocked(bookmarkService.remove).mockRejectedValueOnce(new Error("network"));
+    await useBookmarksStore.getState().toggleBookmark("q1"); // adds
+    await useBookmarksStore.getState().toggleBookmark("q1"); // remove fails
     expect(useBookmarksStore.getState().isBookmarked("q1")).toBe(true);
   });
 });

@@ -16,6 +16,7 @@ interface BookmarksState {
   hydrated: boolean;
   addBookmark: (bookmark: Omit<Bookmark, "savedAt">) => void;
   removeBookmark: (id: string) => void;
+  toggleBookmark: (questionId: string) => Promise<void>;
   updateNote: (id: string, note: string) => void;
   isBookmarked: (id: string) => boolean;
   initialize: () => Promise<void>;
@@ -65,6 +66,40 @@ export const useBookmarksStore = create<BookmarksState>()((set, get) => ({
     bookmarkService.remove(id).catch(() => {
       set({ bookmarks: prev });
     });
+  },
+
+  toggleBookmark: async (questionId: string) => {
+    const wasBookmarked = get().isBookmarked(questionId);
+    const prev = get().bookmarks;
+
+    if (wasBookmarked) {
+      set({ bookmarks: prev.filter((b) => b.id !== questionId) });
+    } else {
+      const entry = {
+        id: questionId,
+        questionText: "",
+        subject: "",
+        topic: "",
+        savedAt: Date.now(),
+      };
+      set({ bookmarks: [entry, ...prev] });
+    }
+
+    try {
+      if (wasBookmarked) {
+        await bookmarkService.remove(questionId);
+      } else {
+        await bookmarkService.add({
+          questionId,
+          questionText: "",
+          subject: "",
+          topic: "",
+          savedAt: Date.now(),
+        });
+      }
+    } catch {
+      set({ bookmarks: prev });
+    }
   },
 
   updateNote: (id, note) => {
