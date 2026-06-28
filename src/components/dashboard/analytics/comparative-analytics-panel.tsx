@@ -26,7 +26,7 @@ export function ComparativeAnalyticsPanel() {
       const result = await analyticsService.getComparativeAnalytics(user?.$id ?? "");
       return result.success ? result.data : null;
     },
-    enabled: !!user?.$id && !!analytics && !isLoading,
+    enabled: !!user?.$id,
     staleTime: 5 * 60 * 1000,
   });
 

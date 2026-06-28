@@ -3,53 +3,30 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import {
-  dismissAction,
-  type NextAction,
-  resolveNextAction,
-} from "@/lib/retention-loop/next-action";
+import { dismissAction, resolveNextAction } from "@/lib/retention-loop/next-action";
 
 export function NextBestActionCard() {
   const { user } = useAuth();
-  const [action, setAction] = useState<NextAction | null>(null);
   const [dismissed, setDismissed] = useState(false);
 
-  const refresh = useCallback(async () => {
-    if (!user?.$id) {
-      setAction(null);
-      return;
-    }
-    const a = await resolveNextAction(user.$id);
-    setAction(a);
-    setDismissed(false);
-  }, [user?.$id]);
-
-  const refreshIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  useEffect(() => {
-    refresh();
-    if (!refreshIntervalRef.current) {
-      refreshIntervalRef.current = setInterval(refresh, 60000);
-    }
-    const onVisibility = () => {
-      if (document.visibilityState === "visible") refresh();
-    };
-    const onFocus = () => refresh();
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("focus", onFocus);
-    return () => {
-      if (refreshIntervalRef.current) {
-        clearInterval(refreshIntervalRef.current);
-        refreshIntervalRef.current = null;
-      }
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("focus", onFocus);
-    };
-  }, [refresh]);
+  const { data: action } = useQuery({
+    queryKey: ["next-best-action", user?.$id],
+    queryFn: async ({ queryKey }) => {
+      const [, userId] = queryKey;
+      if (!userId) return null;
+      return resolveNextAction(userId as string);
+    },
+    enabled: !!user?.$id,
+    staleTime: 60000,
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true,
+  });
 
   if (!action || dismissed) return null;
 
