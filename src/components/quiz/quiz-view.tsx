@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { animate, useMotionValue, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import type { Question } from "@/lib/question-engine/types";
@@ -43,13 +43,14 @@ export function QuizView({
   topic,
   questionCount = 10,
   maxTime = 90 * 60,
-  pastPaperMode,
+  pastPaperMode: initialPastPaperMode,
   packQuestions,
   onQuit,
   onFinish,
 }: QuizViewProps) {
   const t = useTranslations();
   const { setImmersive } = useImmersiveMode();
+  const [localPastPaperMode, setLocalPastPaperMode] = useState(initialPastPaperMode ?? false);
   const {
     selectedSubject,
     sessionActive,
@@ -77,7 +78,7 @@ export function QuizView({
     topic,
     questionCount,
     maxTime,
-    pastPaperMode,
+    pastPaperMode: localPastPaperMode,
     packQuestions,
     onQuit,
     onFinish,
@@ -120,7 +121,13 @@ export function QuizView({
     if (variant === "compact") {
       return <QuizSubjectPrompt onSelect={() => handleStartWithSubject("")} hasSubject={false} />;
     }
-    return <QuizSubjectSelection onSelect={(s) => handleStartWithSubject(s)} />;
+    return (
+      <QuizSubjectSelection
+        onSelect={(s) => handleStartWithSubject(s)}
+        pastPaperMode={localPastPaperMode}
+        onPastPaperModeChange={setLocalPastPaperMode}
+      />
+    );
   }
 
   if (isLoading) {
@@ -186,7 +193,7 @@ export function QuizView({
         style={{ transform: dragTransform }}
         onDragEnd={handleDragEnd}
       >
-        {pastPaperMode && (
+        {localPastPaperMode && (
           <div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs">
             <HugeiconsIcon icon={File01Icon} className="size-4" />
             <span>{t("quiz.pastPaperMode")}</span>

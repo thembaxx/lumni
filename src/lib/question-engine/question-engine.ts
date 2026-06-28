@@ -232,6 +232,11 @@ export class QuestionEngine {
       return poolQuestions.map(mapPoolToQuestion);
     }
 
+    // When pastPaperMode is active, only return pool questions — no AI fallback
+    if (enriched.pastPaperMode) {
+      return poolCount > 0 ? poolQuestions.map(mapPoolToQuestion) : null;
+    }
+
     const ragContext = await fetchRagContext(
       enriched.subject,
       enriched.topic,
