@@ -22,7 +22,7 @@ vi.mock("@ably/chat/react", () => ({
 }));
 
 vi.mock("motion/react", () => ({
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 vi.mock("motion/react-m", () => ({
