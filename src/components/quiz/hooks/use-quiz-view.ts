@@ -59,10 +59,18 @@ export function useQuizView({
       count: actualCount,
       questionType: "any" as const,
       ...(pastPaperMode ? { pastPaperMode: true } : {}),
-      ...(competencyData.suggestedBloomLevel ? { suggestedBloomLevel: competencyData.suggestedBloomLevel } : {}),
-      ...(competencyData.suggestedDifficulty ? { suggestedDifficulty: competencyData.suggestedDifficulty } : {}),
-      ...(competencyData.topicCompetencyLevel ? { topicCompetencyLevel: competencyData.topicCompetencyLevel } : {}),
-      ...(competencyData.topicCompetencyScore !== undefined ? { topicCompetencyScore: competencyData.topicCompetencyScore } : {}),
+      ...(competencyData.suggestedBloomLevel
+        ? { suggestedBloomLevel: competencyData.suggestedBloomLevel }
+        : {}),
+      ...(competencyData.suggestedDifficulty
+        ? { suggestedDifficulty: competencyData.suggestedDifficulty }
+        : {}),
+      ...(competencyData.topicCompetencyLevel
+        ? { topicCompetencyLevel: competencyData.topicCompetencyLevel }
+        : {}),
+      ...(competencyData.topicCompetencyScore !== undefined
+        ? { topicCompetencyScore: competencyData.topicCompetencyScore }
+        : {}),
     }),
     [
       selectedSubject,
@@ -82,9 +90,7 @@ export function useQuizView({
     enabled: sessionActive && !!selectedSubject && !usePreloaded,
   });
 
-  const generatedQuestions = usePreloaded
-    ? (packQuestions as Question[])
-    : engineResult.questions;
+  const generatedQuestions = usePreloaded ? (packQuestions as Question[]) : engineResult.questions;
 
   const retentionAsQuestions: Question[] = useMemo(
     () =>
@@ -110,10 +116,13 @@ export function useQuizView({
     [retentionQuestions],
   );
 
-  const questions =
-    retentionAsQuestions.length > 0
-      ? [...retentionAsQuestions, ...generatedQuestions]
-      : generatedQuestions;
+  const questions = useMemo(
+    () =>
+      retentionAsQuestions.length > 0
+        ? [...retentionAsQuestions, ...generatedQuestions]
+        : generatedQuestions,
+    [retentionAsQuestions, generatedQuestions],
+  );
   const sources = usePreloaded ? [] : engineResult.sources;
   const warning = usePreloaded ? undefined : engineResult.warning;
   const isLoading = usePreloaded ? false : engineResult.isLoading;

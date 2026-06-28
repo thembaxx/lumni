@@ -10,7 +10,7 @@ import type {
   QuizSessionConfig,
   QuizSessionState,
 } from "./types";
-import { quizReducer, INITIAL_QUIZ_STATE, type QuizAction, type QuizState } from "./reducer";
+import { quizReducer, INITIAL_QUIZ_STATE, type QuizAction } from "./reducer";
 
 function withLocalStorageGuard(action: QuizAction): QuizAction {
   if (action.type === "FINISH" || action.type === "RESET") {
