@@ -5,6 +5,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/i18n/navigation", () => ({
   usePathname: vi.fn(() => "/dashboard"),
+  useRouter: vi.fn(),
+  Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
+    <a href={href}>{children}</a>
+  ),
 }));
 
 vi.mock("@/lib/auth/auth-context", () => ({
@@ -183,9 +187,8 @@ vi.mock("@hugeicons/core-free-icons", () => ({
 import { TopNav } from "@/components/navigation/top-nav";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { useGamification } from "@/hooks/use-gamification";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useSyncStatus } from "@/hooks/use-sync-status";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 
 describe("TopNav", () => {
@@ -416,17 +419,12 @@ describe("TopNav", () => {
       expect(container.textContent).toContain("Sign In");
     });
 
-    it("navigates to sign-in with redirect on Sign In click", () => {
-      const mockPush = vi.fn();
-      vi.mocked(useNavigationDirection).mockReturnValue({
-        push: mockPush,
-      } as ReturnType<typeof useNavigationDirection>);
+    it("renders sign-in link with correct redirect", () => {
       vi.mocked(usePathname).mockReturnValue("/dashboard");
 
-      const { getByTestId } = render(<TopNav />);
-      getByTestId("button").click();
-
-      expect(mockPush).toHaveBeenCalledWith(
+      const { container } = render(<TopNav />);
+      const link = container.querySelector("a");
+      expect(link?.getAttribute("href")).toBe(
         `/auth/sign-in?redirect=${encodeURIComponent("/dashboard")}`,
       );
     });
@@ -618,9 +616,7 @@ describe("TopNav", () => {
 
     it("navigates to settings on Settings click", () => {
       const mockPush = vi.fn();
-      vi.mocked(useNavigationDirection).mockReturnValue({
-        push: mockPush,
-      } as ReturnType<typeof useNavigationDirection>);
+      vi.mocked(useRouter).mockReturnValue({ push: mockPush });
 
       const { getAllByTestId } = render(<TopNav />);
       const items = getAllByTestId("dropdown-item");
@@ -633,9 +629,7 @@ describe("TopNav", () => {
 
     it("navigates to profile on View Profile click", () => {
       const mockPush = vi.fn();
-      vi.mocked(useNavigationDirection).mockReturnValue({
-        push: mockPush,
-      } as ReturnType<typeof useNavigationDirection>);
+      vi.mocked(useRouter).mockReturnValue({ push: mockPush });
 
       const { getAllByTestId } = render(<TopNav />);
       const items = getAllByTestId("dropdown-item");

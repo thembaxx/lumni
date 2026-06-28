@@ -7,11 +7,9 @@ import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { type NavItem, navConfig } from "@/lib/navigation/config";
-import { useRouter } from "@/i18n/navigation";
+import { navConfig } from "@/lib/navigation/config";
 import { cn } from "@/lib/utils";
 
 interface SidebarState {
@@ -32,8 +30,6 @@ export function SidebarStateProvider({ children }: { children: React.ReactNode }
 
 function SidebarContent() {
   const pathname = usePathname();
-  const { push } = useNavigationDirection();
-  const router = useRouter();
   const { user } = useAuth();
   const { setOpen } = use(SidebarStateContext);
   const [query, setQuery] = useState("");
@@ -49,35 +45,6 @@ function SidebarContent() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
-
-  useEffect(() => {
-    const routes = [
-      "/dashboard",
-      "/learn",
-      "/practice",
-      "/tools",
-      "/progress",
-      "/quiz",
-      "/flashcards",
-      "/solve",
-      "/search",
-      "/study",
-      "/exam-dates",
-      "/review",
-      "/study-plan",
-      "/exam",
-      "/past-papers",
-      "/chat",
-      "/study-guide",
-      "/problems",
-      "/stories",
-      "/lessons",
-      "/settings/referral",
-    ];
-    for (const route of routes) {
-      router.prefetch(route);
-    }
-  }, [router]);
 
   const hasRole = useCallback(
     (role: string) => (user?.labels ?? []).includes(role),
@@ -112,13 +79,7 @@ function SidebarContent() {
     return undefined;
   }, [pathname]);
 
-  const handleNav = useCallback(
-    (item: NavItem) => {
-      setOpen(false);
-      push(item.route);
-    },
-    [push, setOpen],
-  );
+  const closeSheet = useCallback(() => setOpen(false), [setOpen]);
 
   const noResults = query.trim() && filteredCategories.every((c) => c.items.length === 0);
 
@@ -170,17 +131,14 @@ function SidebarContent() {
           return (
             <div key={cat.label} className="mb-3">
               {catRoute ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    push(catRoute);
-                  }}
-                  className="ios-caption-3 flex w-full items-center justify-between px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider transition-colors hover:text-foreground"
+                <Link
+                  href={catRoute}
+                  onClick={closeSheet}
+                  className="ios-caption-3 flex w-full items-center justify-between px-2 py-1.5 font-semibold text-muted-foreground uppercase no-underline tracking-wider transition-colors hover:text-foreground"
                 >
                   {cat.label}
                   <span className="text-[10px] opacity-40">→</span>
-                </button>
+                </Link>
               ) : (
                 <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider">
                   {cat.label}
@@ -190,13 +148,13 @@ function SidebarContent() {
                 const isActive = item.id === activeRoute;
                 const Icon = item.icon;
                 return (
-                  <button
+                  <Link
                     key={item.id}
-                    type="button"
-                    onClick={() => handleNav(item)}
+                    href={item.route}
+                    onClick={closeSheet}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "flex h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2 text-left text-sm transition-colors duration-150",
+                      "flex h-9 w-full items-center gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150",
                       isActive
                         ? "bg-system-accent/10 font-semibold text-system-accent"
                         : "text-muted-foreground hover:bg-system-fill hover:text-foreground",
@@ -210,7 +168,7 @@ function SidebarContent() {
                       )}
                     />
                     <span>{item.label}</span>
-                  </button>
+                  </Link>
                 );
               })}
             </div>

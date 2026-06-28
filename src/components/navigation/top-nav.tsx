@@ -23,9 +23,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useSyncStatus } from "@/hooks/use-sync-status";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { getRouteLabel } from "@/lib/navigation/config";
 import { cn } from "@/lib/utils";
@@ -98,7 +97,7 @@ const TopNavStatus = memo(function TopNavStatus() {
 function TopNavMenu() {
   const pathname = usePathname();
   const { user, status, isAnonymous, signOut } = useAuth();
-  const { push } = useNavigationDirection();
+  const router = useRouter();
 
   const handleSignOut = useCallback(async () => {
     await signOut();
@@ -127,18 +126,19 @@ function TopNavMenu() {
 
   if (status === "unauthenticated" || isAnonymous) {
     return (
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => {
-          const redirect = encodeURIComponent(pathname);
-          push(`/auth/sign-in?redirect=${redirect}`);
-        }}
-        className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
+      <Link
+        href={`/auth/sign-in?redirect=${encodeURIComponent(pathname)}`}
+        className="no-underline"
       >
-        <HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
-        Sign In
-      </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
+        >
+          <HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
+          Sign In
+        </Button>
+      </Link>
     );
   }
 
@@ -166,41 +166,24 @@ function TopNavMenu() {
         <div className="p-1">
           <DropdownListItem
             className="rounded-md"
-            onClick={() => {
-              push("/settings?tab=profile");
-            }}
+            onClick={() => router.push("/settings?tab=profile")}
           >
             <HugeiconsIcon icon={UserIcon} className="size-4" />
             View Profile
           </DropdownListItem>
           {isTeacher && (
-            <DropdownListItem
-              className="rounded-md"
-              onClick={() => {
-                push("/teacher");
-              }}
-            >
+            <DropdownListItem className="rounded-md" onClick={() => router.push("/teacher")}>
               <HugeiconsIcon icon={UserGroupIcon} className="size-4" />
               Teacher Dashboard
             </DropdownListItem>
           )}
           {isParent && (
-            <DropdownListItem
-              className="rounded-md"
-              onClick={() => {
-                push("/parent");
-              }}
-            >
+            <DropdownListItem className="rounded-md" onClick={() => router.push("/parent")}>
               <HugeiconsIcon icon={UserIcon} className="size-4" />
               Parent Dashboard
             </DropdownListItem>
           )}
-          <DropdownListItem
-            className="rounded-md"
-            onClick={() => {
-              push("/settings");
-            }}
-          >
+          <DropdownListItem className="rounded-md" onClick={() => router.push("/settings")}>
             <HugeiconsIcon icon={Settings01Icon} className="size-4" />
             Settings
           </DropdownListItem>
