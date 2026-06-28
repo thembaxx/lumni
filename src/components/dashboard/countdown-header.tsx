@@ -1,12 +1,9 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { useEffect, useReducer, useRef, useSyncExternalStore } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 import {
   getDaysUntil,
   getMessage,
@@ -60,7 +57,6 @@ export function CountdownHeader() {
   const isCompactRef = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
-  const shouldReduceMotion = useReducedMotion();
 
   const greeting = mounted ? greetingMap[getTimeOfDay()] : "Good";
   const firstName = isLoggedIn && name ? name.split(" ")[0] : null;
@@ -109,77 +105,26 @@ export function CountdownHeader() {
     };
   }, []);
 
-  const headerVariants = {
-    hidden: { opacity: 0, y: -8 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.25,
-        ease: iOSEase,
-      },
-    },
-  };
-
-  const numberVariants = {
-    hidden: { scale: 0.88, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.35,
-        ease: iOSEase,
-        delay: shouldReduceMotion ? 0 : 0.1,
-      },
-    },
-  };
-
-  const barGlowVariants = {
-    hidden: { opacity: 0, scaleX: 0 },
-    visible: {
-      opacity: 1,
-      scaleX: 1,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.4,
-        ease: iOSEase,
-        delay: shouldReduceMotion ? 0 : 0.15,
-      },
-    },
-  };
-
   return (
     <>
       <div ref={sentinelRef} className="pointer-events-none h-px" aria-hidden />
 
-      <m.div variants={headerVariants} initial="hidden" animate="visible" className="w-full">
+      <div className="card-entrance w-full">
         <div className="relative overflow-hidden rounded-lg bg-secondary/60 px-5 py-5 sm:px-6 sm:py-6">
           {milestone && (
-            <m.div
-              initial={{ opacity: 0, y: -8, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: shouldReduceMotion ? 0 : 0.4,
-                ease: iOSEase,
-              }}
-              className="absolute -top-px right-4 left-4 flex items-center justify-center"
-            >
+            <div className="card-entrance-down absolute -top-px right-4 left-4 flex items-center justify-center">
               <div className="inline-flex items-center gap-1.5 rounded-b-xl border border-warning/30 bg-warning/20 px-3 py-1">
-                <m.span
-                  animate={shouldReduceMotion ? {} : { scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }}
-                  transition={{
-                    duration: 1,
-                    repeat: 2,
-                    ease: iOSEase,
-                  }}
-                  className="text-sm"
+                <span
+                  className="animate-[bounce_1s_ease-in-out_2] text-sm"
+                  style={{ animationDelay: "0.15s" }}
                 >
                   {milestone.emoji}
-                </m.span>
+                </span>
                 <span className="font-extrabold text-warning text-xs uppercase tracking-tight">
                   {milestone.label}
                 </span>
               </div>
-            </m.div>
+            </div>
           )}
 
           <div className="relative z-elevated">
@@ -194,17 +139,14 @@ export function CountdownHeader() {
               {_sessionLoading || !mounted ? (
                 <Skeleton className="h-8 w-24 rounded-md" />
               ) : (
-                <m.span
-                  variants={numberVariants}
-                  initial="hidden"
-                  animate="visible"
+                <span
                   className={cn(
-                    "inline-block font-extrabold font-mono text-4xl text-system-accent tabular-nums tracking-tighter md:text-5xl",
+                    "card-entrance inline-block font-extrabold font-mono text-4xl text-system-accent tabular-nums tracking-tighter md:text-5xl",
                   )}
                   aria-live="polite"
                 >
                   {daysLeft}
-                </m.span>
+                </span>
               )}
               {!_sessionLoading && mounted && (
                 <div>
@@ -223,41 +165,19 @@ export function CountdownHeader() {
               value={mounted ? Math.round(yearProgress * 100) : 0}
               max={100}
               aria-label="Year progress: days studied vs total"
-            >
-              <m.div
-                variants={barGlowVariants}
-                initial="hidden"
-                animate="visible"
-                className={cn("h-full rounded-full shadow-sm", cfg.barLight)}
-              />
-            </progress>
+            />
 
             {mounted && (
-              <m.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  duration: shouldReduceMotion ? 0 : 0.3,
-                  delay: shouldReduceMotion ? 0 : 0.5,
-                }}
-                className="mt-1 text-pretty font-medium text-muted-foreground text-xs leading-snug"
-              >
+              <p className="card-entrance mt-1 text-pretty font-medium text-muted-foreground text-xs leading-snug">
                 <span className="font-extrabold text-foreground/80">{msg.primary}</span>.{" "}
                 {msg.subtitle}
-              </m.p>
+              </p>
             )}
           </div>
 
-          <m.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.8,
-              ease: iOSEase,
-              delay: shouldReduceMotion ? 0 : 0.2,
-            }}
+          <div
             className={cn(
-              "pointer-events-none absolute -top-6 -right-6 size-32 rounded-full blur-2xl",
+              "card-entrance pointer-events-none absolute -top-6 -right-6 size-32 rounded-full blur-2xl",
               cfg.glowClass,
             )}
             aria-hidden="true"
@@ -270,20 +190,15 @@ export function CountdownHeader() {
             aria-hidden="true"
           />
         </div>
-      </m.div>
+      </div>
 
-      <m.div
-        initial={false}
-        animate={{
-          opacity: isCompact ? 1 : 0,
-          y: isCompact ? 0 : -4,
-          pointerEvents: isCompact ? "auto" : ("none" as unknown as undefined),
-        }}
-        transition={{
-          duration: shouldReduceMotion ? 0 : 0.2,
-          ease: iOSEase,
-        }}
-        className="sticky top-0 z-sticky -mx-4 border-border/10 border-b bg-system-background/90 px-4 pt-2 pb-2"
+      <div
+        className={cn(
+          "sticky top-0 z-sticky -mx-4 border-border/10 border-b bg-system-background/90 px-4 pt-2 pb-2 transition-[opacity,transform] duration-200 ease-(--ease-ios)",
+          isCompact
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-1 pointer-events-none",
+        )}
         style={{ viewTransitionName: "countdown-compact" }}
       >
         <div className="mx-auto flex max-w-md items-center gap-3">
@@ -306,7 +221,7 @@ export function CountdownHeader() {
             />
           </div>
         </div>
-      </m.div>
+      </div>
     </>
   );
 }

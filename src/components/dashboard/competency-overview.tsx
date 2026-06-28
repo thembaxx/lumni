@@ -4,11 +4,11 @@ import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import * as m from "motion/react-m";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSubjects } from "@/hooks/use-subjects";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { cn } from "@/lib/utils";
@@ -47,16 +47,8 @@ function CompetencyRing({ score }: { score: number }) {
 export function CompetencyOverview() {
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
 
-  const { data: subjectsData } = useQuery({
-    queryKey: ["subjects"],
-    queryFn: async () => {
-      const res = await fetch("/api/subjects");
-      if (!res.ok) return [];
-      const data = await res.json();
-      return data.subjects ?? [];
-    },
-    staleTime: 1000 * 60 * 60,
-  });
+  const { data: subjectsResponse } = useSubjects();
+  const subjectsData = subjectsResponse?.subjects;
 
   const {
     data: competencies,
@@ -169,7 +161,7 @@ export function CompetencyOverview() {
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
-          {subjectCompetencies.map((sc, i) => (
+          {subjectCompetencies.map((sc) => (
             <div key={sc.subjectId}>
               <button
                 type="button"
@@ -178,12 +170,7 @@ export function CompetencyOverview() {
                 }
                 className="w-full text-left"
               >
-                <m.div
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05, duration: 0.3 }}
-                  className="flex items-center gap-4 rounded-xl bg-muted/30 p-3 transition-colors hover:bg-muted/50"
-                >
+                <div className="flex items-center gap-4 rounded-xl bg-muted/30 p-3 transition-colors hover:bg-muted/50">
                   <CompetencyRing score={sc.averageScore} />
 
                   <div className="min-w-0 flex-1">
@@ -236,12 +223,12 @@ export function CompetencyOverview() {
                     <p className="font-bold text-xs tabular-nums">{sc.total} topics</p>
                     <p className="ios-caption-3 text-muted-foreground">assessed</p>
                   </div>
-                </m.div>
+                </div>
               </button>
 
               {sc.topics.length > 0 && (
                 <div
-                  className="mt-1 mb-2 ml-4 grid transition-[grid-template-rows,opacity] duration-300 ease-iOSEase"
+                  className="mt-1 mb-2 ml-4 grid transition-[grid-template-rows,opacity] duration-300 ease-(--ease-ios)"
                   style={{
                     gridTemplateRows: expandedSubject === sc.subjectId ? "1fr" : "0fr",
                     opacity: expandedSubject === sc.subjectId ? 1 : 0,

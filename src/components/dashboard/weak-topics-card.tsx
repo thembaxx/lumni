@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/navigation";
+import { useSubjects } from "@/hooks/use-subjects";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 
 interface WeakTopic {
@@ -19,16 +20,8 @@ interface WeakTopic {
 export function WeakTopicsCard() {
   const { push } = useRouter();
 
-  const { data: subjectsData } = useQuery({
-    queryKey: ["subjects"],
-    queryFn: async () => {
-      const res = await fetch("/api/subjects");
-      if (!res.ok) return [];
-      const data = await res.json();
-      return data.subjects ?? [];
-    },
-    staleTime: 1000 * 60 * 60,
-  });
+  const { data: subjectsResponse } = useSubjects();
+  const subjectsData = subjectsResponse?.subjects;
 
   const {
     data: weakTopics,

@@ -3,13 +3,10 @@
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
-import * as m from "motion/react-m";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
-import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
+import { useAnimatedNumber } from "@/hooks/use-animated-number";
 
 interface StatsCardsProps {
   questionsAnswered: number;
@@ -24,56 +21,24 @@ interface StatItemProps {
   accentClass: string;
   index: number;
 }
-function AnimatedNumber({
-  value,
-  shouldReduceMotion,
-}: {
-  value: number;
-  shouldReduceMotion: boolean | null;
-}) {
-  const { shouldReduceMotion: animShouldReduce } = useOptimizedAnimation();
-  const finalShouldReduceMotion = shouldReduceMotion || animShouldReduce;
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, {
-    stiffness: 80,
-    damping: 26,
-  });
-  const rounded = useTransform(springValue, (v) => Math.round(v));
 
-  useEffect(() => {
-    motionValue.set(value);
-  }, [value, motionValue]);
-
-  if (finalShouldReduceMotion) {
-    return <span>{value}</span>;
-  }
-
-  return <m.span aria-live="polite">{rounded}</m.span>;
+function AnimatedNumber({ value }: { value: number }) {
+  const displayValue = useAnimatedNumber(value, 400, true);
+  return <span aria-live="polite">{displayValue}</span>;
 }
 
-function StatCard({
-  label,
-  value,
-  icon: Icon,
-  colorClass,
-  accentClass: _accentClass,
-  index,
-}: StatItemProps) {
-  const shouldReduceMotion = useReducedMotion();
-
+function StatCard({ label, value, icon: Icon, colorClass, index }: StatItemProps) {
   return (
     <FadeIn direction="up" distance={8} duration={0.35} delay={index * 0.05}>
       <Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
         <CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
           <div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
-            <PerpetualFloat floatRange={2} speed={4} cycles={3}>
-              <HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
-            </PerpetualFloat>
+            <HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-1 px-5 pb-0 text-center">
           <p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
-            <AnimatedNumber value={value} shouldReduceMotion={shouldReduceMotion} />
+            <AnimatedNumber value={value} />
           </p>
           <p className="font-extrabold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
             {label}

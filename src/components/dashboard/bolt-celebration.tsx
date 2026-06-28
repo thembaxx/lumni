@@ -5,9 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
-import { iOSDecelerate } from "@/lib/utils/animation";
 import { XP_PER_CORRECT, XP_PER_QUESTION, XP_STREAK_BONUS } from "@/types/gamification";
 
 interface BoltCelebrationProps {
@@ -16,16 +14,6 @@ interface BoltCelebrationProps {
   streak: number;
   onContinue: () => void;
 }
-
-const variants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.45, ease: iOSDecelerate, delay: i * 0.12 },
-  }),
-};
 
 export function BoltCelebration({
   correct,
@@ -40,13 +28,7 @@ export function BoltCelebration({
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-8 py-8">
       <div className="flex flex-col items-center gap-5 text-center">
-        <m.div
-          custom={0}
-          variants={variants}
-          initial="hidden"
-          animate="visible"
-          className="relative motion-reduce:animate-none motion-reduce:transition-none"
-        >
+        <div className="card-entrance motion-reduce:animate-none motion-reduce:transition-none">
           <div
             className={
               correct
@@ -61,16 +43,7 @@ export function BoltCelebration({
                   : "absolute inset-0 rounded-3xl bg-destructive/20 blur-xl"
               }
             />
-            <m.div
-              initial={{ scale: 0.6, rotate: correct ? -20 : 20 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 250,
-                damping: 26,
-                delay: 0.15,
-              }}
-            >
+            <div className="card-entrance" style={{ animationDelay: "0.15s" }}>
               <HugeiconsIcon
                 icon={correct ? CheckmarkCircle01Icon : Cancel01Icon}
                 className={
@@ -78,30 +51,18 @@ export function BoltCelebration({
                 }
                 strokeWidth={2.25}
               />
-            </m.div>
+            </div>
           </div>
-        </m.div>
+        </div>
 
-        <m.div
-          custom={1}
-          variants={variants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-1.5"
-        >
+        <div className="card-entrance flex flex-col gap-1.5" style={{ animationDelay: "0.12s" }}>
           <h2 className="ios-title-2 text-balance font-extrabold text-foreground tracking-tight">
             {correct ? "Correct!" : "Not quite"}
           </h2>
           <p className="text-balance text-muted-foreground text-sm">{subjectLabel}</p>
-        </m.div>
+        </div>
 
-        <m.div
-          custom={2}
-          variants={variants}
-          initial="hidden"
-          animate="visible"
-          className="flex items-center gap-3"
-        >
+        <div className="card-entrance flex items-center gap-3" style={{ animationDelay: "0.24s" }}>
           <div className="flex items-center gap-1.5 rounded-full bg-system-fill px-3.5 py-1.5">
             <HugeiconsIcon icon={SparklesIcon} className="size-4 text-warning" strokeWidth={2} />
             <span className="font-semibold text-sm tabular-nums">+{totalXp} XP</span>
@@ -112,20 +73,17 @@ export function BoltCelebration({
               <span className="font-semibold text-sm tabular-nums">{streak}-day streak</span>
             </div>
           )}
-        </m.div>
+        </div>
       </div>
 
-      <m.div
-        custom={3}
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        className="flex flex-col items-center gap-2.5"
+      <div
+        className="card-entrance flex flex-col items-center gap-2.5"
+        style={{ animationDelay: "0.36s" }}
       >
         <Button onClick={onContinue} size="lg" className="min-h-12 gap-2 px-8 text-base">
           Continue
         </Button>
-      </m.div>
+      </div>
     </div>
   );
 }

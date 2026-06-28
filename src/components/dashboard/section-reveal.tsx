@@ -1,9 +1,7 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import { iOSEase } from "@/lib/utils/animation";
+import { cn } from "@/lib/utils";
 
 export function SectionReveal({
   children,
@@ -13,23 +11,17 @@ export function SectionReveal({
   delay?: number;
 }) {
   const { ref, hasRevealed } = useScrollReveal<HTMLDivElement>({ once: true });
-  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <m.div
+    <div
       ref={ref}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-      animate={{
-        opacity: shouldReduceMotion || hasRevealed ? 1 : 0,
-        y: shouldReduceMotion || hasRevealed ? 0 : 16,
-      }}
-      transition={{
-        duration: 0.4,
-        ease: iOSEase,
-        delay: shouldReduceMotion ? 0 : delay,
-      }}
+      className={cn(
+        "transition-[opacity,transform] duration-400 ease-(--ease-ios)",
+        hasRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+      )}
+      style={{ transitionDelay: `${delay}s` }}
     >
       {children}
-    </m.div>
+    </div>
   );
 }

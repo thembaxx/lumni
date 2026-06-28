@@ -1,7 +1,5 @@
 "use client";
 
-import { AnimatePresence, useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
@@ -22,7 +20,6 @@ import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
-import { iOSEase } from "@/lib/utils/animation";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 
 const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) => m.QuizView), {
@@ -35,7 +32,6 @@ const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) =>
 });
 
 export function DashboardClient({ initialTab = "today" }: { initialTab?: string }) {
-  const reduced = useReducedMotion();
   const [quizActive, setQuizActive] = useState(false);
   const [quizSubject, setQuizSubject] = useState("");
   const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
@@ -162,14 +158,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
       <ScrollAmbient />
       <div className="flex h-full flex-col">
         {!isLoaded ? (
-          <m.div
-            key="loading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            transition={{ duration: 0.2, ease: iOSEase }}
-            className="flex min-h-dvh items-center justify-center px-4"
-          >
+          <div className="flex min-h-dvh items-center justify-center px-4">
             <div className="flex w-full max-w-md flex-col gap-3">
               <Skeleton className="h-24 rounded-3xl" />
               <div className="grid grid-cols-12 gap-3">
@@ -179,7 +168,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
               <Skeleton className="h-32 rounded-3xl" />
               <Skeleton className="h-20 rounded-3xl" />
             </div>
-          </m.div>
+          </div>
         ) : (
           <>
             <div className="px-4 pt-2 pb-4">
@@ -188,54 +177,21 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-              {reduced ? (
-                quizActive ? (
+              {quizActive ? (
+                <div className="card-entrance">
                   <QuizView
                     initialSubject={quizSubject}
                     variant="full"
                     onQuit={handleQuitQuiz}
                     onFinish={handleFinishQuiz}
                   />
-                ) : (
-                  <DashboardContent
-                    id="dashboard-content"
-                    onStartQuiz={handleStartQuiz}
-                    activeTab={activeTab}
-                  />
-                )
+                </div>
               ) : (
-                <AnimatePresence initial={false} mode="wait">
-                  {quizActive ? (
-                    <m.div
-                      key="quiz"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.25, ease: iOSEase },
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: -8,
-                        filter: "blur(2px)",
-                        transition: { duration: 0.15, ease: iOSEase },
-                      }}
-                    >
-                      <QuizView
-                        initialSubject={quizSubject}
-                        variant="full"
-                        onQuit={handleQuitQuiz}
-                        onFinish={handleFinishQuiz}
-                      />
-                    </m.div>
-                  ) : (
-                    <DashboardContent
-                      id="dashboard-content"
-                      onStartQuiz={handleStartQuiz}
-                      activeTab={activeTab}
-                    />
-                  )}
-                </AnimatePresence>
+                <DashboardContent
+                  id="dashboard-content"
+                  onStartQuiz={handleStartQuiz}
+                  activeTab={activeTab}
+                />
               )}
             </div>
           </>

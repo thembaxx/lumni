@@ -1,6 +1,5 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 interface PhaseStop {
@@ -38,7 +37,14 @@ function interpolatePhase(stops: PhaseStop[], t: number): string {
 
 export function ScrollAmbient() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
+
+  useEffect(() => {
+    setShouldReduceMotion(
+      typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    );
+  }, []);
 
   useEffect(() => {
     if (shouldReduceMotion) return;

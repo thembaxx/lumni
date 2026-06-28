@@ -1,7 +1,5 @@
 "use client";
 
-import { AnimatePresence, useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
@@ -16,7 +14,6 @@ import { StaggeredSection } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
-import { iOSEase } from "@/lib/utils/animation";
 
 const PracticeTab = dynamic(
   () => import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),
@@ -68,7 +65,6 @@ export function DashboardContent({
 }) {
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -85,39 +81,20 @@ export function DashboardContent({
     >
       <PageContainer className="gap-6 pb-16">
         <LoginBanner />
-        <AnimatePresence mode="wait" initial={false}>
-          <m.div
-            key={activeTab}
-            initial={shouldReduceMotion ? {} : { opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { duration: 0.2, ease: iOSEase },
-            }}
-            exit={
-              shouldReduceMotion
-                ? {}
-                : {
-                    opacity: 0,
-                    transition: { duration: 0.1, ease: iOSEase },
-                  }
-            }
-          >
-            {activeTab === "today" && (
-              <>
-                <HeroBanner />
-                {isLoggedIn && <CountdownHeader />}
-                <TodayTab boltStreak={0} />
-              </>
-            )}
-            {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
-            {activeTab === "analytics" && <AnalyticsTab />}
-            {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
-              <StaggeredSection>
-                <AnonymousUpsell />
-              </StaggeredSection>
-            )}
-          </m.div>
-        </AnimatePresence>
+        {activeTab === "today" && (
+          <div className="card-entrance">
+            <HeroBanner />
+            {isLoggedIn && <CountdownHeader />}
+            <TodayTab boltStreak={0} />
+          </div>
+        )}
+        {activeTab === "practice" && <PracticeTab onStartQuiz={onStartQuiz} />}
+        {activeTab === "analytics" && <AnalyticsTab />}
+        {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
+          <StaggeredSection>
+            <AnonymousUpsell />
+          </StaggeredSection>
+        )}
       </PageContainer>
     </PullToRefresh>
   );

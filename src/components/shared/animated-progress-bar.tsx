@@ -1,6 +1,4 @@
-import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 
 type ProgressBarColor = "accent" | "success" | "warning" | "destructive";
 
@@ -44,21 +42,14 @@ export function AnimatedProgressBar({
     trackClassName ?? "bg-secondary/50",
   );
 
-  const fill = (
-    <div
-      className={cn("h-full rounded-full", colorClass)}
-      style={!animated ? { width: `${clampedValue}%` } : undefined}
-    />
-  );
+  const transition = animated ? "transition-[width] duration-800 ease-(--ease-ios)" : "";
 
-  const animatedFill = (
-    <m.div
-      className={cn("h-full rounded-full", colorClass)}
-      initial={{ width: 0 }}
-      animate={{ width: `${clampedValue}%` }}
-      transition={{ duration: 0.8, ease: iOSEase }}
-    />
+  return (
+    <div className={cn(track, className)}>
+      <div
+        className={cn("h-full rounded-full", colorClass, transition)}
+        style={{ width: `${clampedValue}%` }}
+      />
+    </div>
   );
-
-  return <div className={cn(track, className)}>{animated ? animatedFill : fill}</div>;
 }

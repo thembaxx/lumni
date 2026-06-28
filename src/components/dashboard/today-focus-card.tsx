@@ -4,14 +4,11 @@ import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { AnimatePresence, useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
 import { SubjectsDrawer } from "./drawers/subjects-drawer";
 
 const FALLBACK = {
@@ -62,7 +59,6 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
   const { push } = useRouter();
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   const { data: subjects } = useFilteredSubjects("");
   const subjectNameById = useMemo(() => {
@@ -170,37 +166,14 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
             onClick={handleStart}
             disabled={showSuccess}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {showSuccess ? (
-                <m.span
-                  key="success"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ y: 4, opacity: 0, scale: 0.96 }}
-                  transition={{
-                    duration: shouldReduceMotion ? 0 : 0.15,
-                    ease: iOSEase,
-                  }}
-                  className="flex items-center gap-1.5"
-                >
-                  <HugeiconsIcon icon={CheckmarkCircle01Icon} />
-                  Starting quiz…
-                </m.span>
-              ) : (
-                <m.span
-                  key="action"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ y: 4, opacity: 0, scale: 0.96 }}
-                  transition={{
-                    duration: shouldReduceMotion ? 0 : 0.15,
-                    ease: iOSEase,
-                  }}
-                >
-                  {cfg.action}
-                </m.span>
-              )}
-            </AnimatePresence>
+            {showSuccess ? (
+              <span className="card-entrance flex items-center gap-1.5">
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} />
+                Starting quiz&hellip;
+              </span>
+            ) : (
+              <span className="card-entrance">{cfg.action}</span>
+            )}
           </Button>
         </CardContent>
       </Card>

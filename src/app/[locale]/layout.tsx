@@ -11,6 +11,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { appConfig } from "../../../app.config";
 import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
+import { WebVitals } from "@/components/performance/web-vitals";
 import { Providers } from "@/components/providers";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { NavGuard } from "@/components/navigation/nav-guard";
@@ -179,6 +180,7 @@ export default async function LocaleLayout({
         <Utssr />
       </Suspense>
       <ChunkLoadHandler />
+      <WebVitals />
       <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
         <LazyMotion features={domAnimation}>
           <UploadDialogRenderer />

@@ -8,13 +8,9 @@ import Calendar02FreeIcons from "@hugeicons/core-free-icons/Calendar02Icon";
 import DocumentValidationFreeIcons from "@hugeicons/core-free-icons/DocumentValidationIcon";
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { iOSEase } from "@/lib/utils/animation";
-import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 const quickActions = [
   { icon: Brain02FreeIcons, label: "Practice", route: "/quiz", primary: true },
@@ -41,15 +37,8 @@ function ActionButton({
   onClick?: () => void;
   primary?: boolean;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-  const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-  const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
-
   return (
-    <m.div
-      whileHover={finalShouldReduceMotion ? {} : { scale: 1.03 }}
-      whileTap={finalShouldReduceMotion ? {} : { scale: 0.96 }}
-      transition={{ duration: 0.2, ease: iOSEase }}
+    <div
       className="motion-reduce:animate-none motion-reduce:transition-none"
       role="button"
       tabIndex={onClick ? 0 : -1}
@@ -72,7 +61,7 @@ function ActionButton({
       ) : (
         <Button
           variant="secondary"
-          className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
+          className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent active:scale-[0.96] transition-transform"
         >
           <span className="text-accent">
             <HugeiconsIcon
@@ -85,7 +74,7 @@ function ActionButton({
           <span className="font-medium text-sm">{label}</span>
         </Button>
       )}
-    </m.div>
+    </div>
   );
 }
 
