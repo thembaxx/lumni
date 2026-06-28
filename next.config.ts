@@ -54,11 +54,11 @@ function buildReportingEndpoints(): string {
 const nextConfig: NextConfig = {
   reactCompiler: true,
   productionBrowserSourceMaps: false,
+  cacheComponents: true,
   partialPrefetching: true,
   experimental: {
     turbopackFileSystemCacheForDev: true,
     optimizePackageImports: ["@hugeicons/core-free-icons", "@hugeicons/react", "motion"],
-    cacheComponents: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],
