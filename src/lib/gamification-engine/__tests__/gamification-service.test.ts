@@ -119,6 +119,10 @@ vi.mock("@/lib/shared/api-fetch", () => ({
   apiFetch: apiFetchMock,
 }));
 
+vi.mock("@/lib/consent/ai-gate", () => ({
+  getDataSharingConsent: () => true,
+}));
+
 vi.mock("@/lib/services/leaderboard-service", () => ({
   saveWeeklySnapshot: saveWeeklySnapshotMock,
 }));

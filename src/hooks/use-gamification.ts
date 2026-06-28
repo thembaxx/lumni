@@ -218,6 +218,13 @@ export function useGamification() {
     }
   }, [service]);
 
+  const syncToLeaderboard = useCallback(
+    (userId: string) => {
+      service.syncToLeaderboard(userId);
+    },
+    [service],
+  );
+
   const updateCounter = useCallback(
     (
       key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
@@ -264,5 +271,6 @@ export function useGamification() {
     clearChest,
     updateCounter,
     setCounter,
+    syncToLeaderboard,
   };
 }

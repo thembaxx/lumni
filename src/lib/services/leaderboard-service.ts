@@ -8,6 +8,7 @@ export interface LeaderboardEntry {
   streak: number;
   isCurrentUser: boolean;
   userId?: string;
+  level?: number;
 }
 
 const LEADERBOARD_KEY = "lumni_leaderboard_history";

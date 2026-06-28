@@ -3,6 +3,7 @@ import type { ObservabilityDataAccess } from "@/lib/db";
 import { dexieDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
+import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
@@ -453,6 +454,7 @@ export class GamificationService {
   }
 
   private async syncToServer(data: StoredGamification) {
+    if (!getDataSharingConsent()) return;
     try {
       const label =
         (typeof window !== "undefined"
@@ -465,6 +467,23 @@ export class GamificationService {
       });
     } catch (err) {
       logError("GamificationService.syncToServer", err);
+    }
+  }
+
+  async syncToLeaderboard(userId: string): Promise<void> {
+    if (!getDataSharingConsent()) return;
+    try {
+      const label =
+        (typeof window !== "undefined"
+          ? window.localStorage.getItem("lumni_display_name")
+          : null) || undefined;
+      await apiFetch("/api/gamification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...this.data, userId, label }),
+      });
+    } catch (err) {
+      logError("GamificationService.syncToLeaderboard", err);
     }
   }
 }
