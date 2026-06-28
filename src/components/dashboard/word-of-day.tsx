@@ -74,7 +74,7 @@ export function WordOfDayCard({ language = "en" }: WordOfDayCardProps) {
                     playAudio();
                   }
                 }}
-                className="ml-auto flex size-7 cursor-pointer items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
+                className="relative ml-auto flex size-7 cursor-pointer items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20 after:absolute after:-inset-2 after:rounded-full"
                 aria-label="Play pronunciation"
               >
                 <HugeiconsIcon icon={SpeakerIcon} className="size-3.5" />

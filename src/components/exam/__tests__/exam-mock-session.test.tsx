@@ -83,11 +83,7 @@ describe("ExamMockSession", () => {
     mockQuestions = [];
 
     const { container } = render(
-      <ExamMockSession
-        subject="mathematics"
-        duration={3600}
-        questionCount={10}
-      />,
+      <ExamMockSession subject="mathematics" duration={3600} questionCount={10} />,
     );
 
     expect(hasText(container, /Generating mock exam/)).toBe(true);
@@ -98,11 +94,7 @@ describe("ExamMockSession", () => {
     mockQuestions = [makeQuestion()];
 
     const { container } = render(
-      <ExamMockSession
-        subject="mathematics"
-        duration={3600}
-        questionCount={1}
-      />,
+      <ExamMockSession subject="mathematics" duration={3600} questionCount={1} />,
     );
 
     await waitFor(() => {
@@ -126,11 +118,7 @@ describe("ExamMockSession", () => {
     mockQuestions = [makeQuestion()];
 
     const { container } = render(
-      <ExamMockSession
-        subject="mathematics"
-        duration={3600}
-        questionCount={1}
-      />,
+      <ExamMockSession subject="mathematics" duration={3600} questionCount={1} />,
     );
 
     await waitFor(() => {

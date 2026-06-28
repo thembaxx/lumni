@@ -120,7 +120,7 @@ export function StudyPlanOverview() {
                 size="icon"
                 onClick={() => setDismissedStale(true)}
                 aria-label="Dismiss"
-                className="size-6"
+                className="relative size-6 after:absolute after:-inset-2"
               >
                 <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
               </Button>

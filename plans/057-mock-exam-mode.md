@@ -35,17 +35,18 @@ The exam-dates page already has a "Mock Exam" button (`src/app/[locale]/exam-dat
 
 ## Commands you will need
 
-| Purpose   | Command                          | Expected on success |
-|-----------|----------------------------------|---------------------|
-| Install   | `pnpm install`                   | exit 0              |
-| Typecheck | `pnpm run typecheck`             | exit 0, no errors   |
-| Tests     | `pnpm run test -- mock-exam`     | all pass            |
-| Lint      | `pnpm exec oxlint`               | exit 0              |
-| Build     | `pnpm run build`                 | exit 0              |
+| Purpose   | Command                      | Expected on success |
+| --------- | ---------------------------- | ------------------- |
+| Install   | `pnpm install`               | exit 0              |
+| Typecheck | `pnpm run typecheck`         | exit 0, no errors   |
+| Tests     | `pnpm run test -- mock-exam` | all pass            |
+| Lint      | `pnpm exec oxlint`           | exit 0              |
+| Build     | `pnpm run build`             | exit 0              |
 
 ## Scope
 
 **In scope** (design/spike — investigate + prototype):
+
 - `src/app/[locale]/exam-dates/` — update the Mock Exam button to navigate to a dedicated mock exam route
 - `src/app/[locale]/quiz/mock/` or `src/app/[locale]/mock-exam/` — new route for mock exam surface (or reuse exam session with mode=mock)
 - `src/components/exam/exam-mock-session.tsx` (create) — mock-exam-specific wrapper over `exam-session-client` with exam-hall restrictions
@@ -54,6 +55,7 @@ The exam-dates page already has a "Mock Exam" button (`src/app/[locale]/exam-dat
 - Tests under `src/lib/exam/__tests__/` or `src/components/exam/__tests__/`
 
 **Out of scope**:
+
 - OCR-based PDF scraping for DBE timetables (separate plan)
 - AI-generated mock exam papers from past papers (separate plan)
 - Changing the `exam-session-client.tsx` core rendering logic
@@ -66,7 +68,7 @@ Create `src/lib/exam/mock-exam-config.ts`:
 
 ```typescript
 export const MOCK_EXAM_DEFAULTS = {
-  durationMinutes: 180,     // 3 hours (standard NSC paper)
+  durationMinutes: 180, // 3 hours (standard NSC paper)
   questionCount: 30,
   allowBackNavigation: false,
   allowHints: false,
@@ -99,10 +101,13 @@ Follow the existing pattern in `exam-session-client.tsx` for the session lifecyc
 ### Step 3: Update the exam-dates page to use the mock exam route
 
 In `NationalExamCalendar`, change the Mock Exam button navigation from:
+
 ```
 /quiz?subject=X&count=30&time=<duration>
 ```
+
 to:
+
 ```
 /mock-exam?subject=X&topic=<paperTopic>&count=30&duration=<duration>
 ```
@@ -116,6 +121,7 @@ The button already exists in `src/app/[locale]/exam-dates/` — only the href ch
 The simplest integration point: update `quiz-client.tsx` to detect `mode=mock` and render `<ExamMockSession>` instead of `<QuizView>`. This reuses the existing search-param-based routing without creating a new route directory.
 
 In `quiz-client.tsx`, add a branch after the `mode=bolt` check:
+
 ```tsx
 if (mode === "mock") {
   return (

@@ -76,7 +76,11 @@ function TimelineItem({ item, isLast }: { item: ActivityItem; isLast: boolean })
           <span>{item.timestamp}</span>
           {item.subject && <span>· {item.subject}</span>}
           {item.score !== undefined && (
-            <span className={item.score >= 70 ? "text-success" : "text-destructive"}>
+            <span
+              className={
+                item.score >= 70 ? "text-success tabular-nums" : "text-destructive tabular-nums"
+              }
+            >
               · {item.score}%
             </span>
           )}

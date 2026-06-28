@@ -120,7 +120,7 @@ export function WeakTopicsCard() {
                     {topic.subjectId}
                   </Badge>
                   <span className="text-(--fs-caption-3) text-muted-foreground">
-                    {topic.score}% mastered
+                    <span className="tabular-nums">{topic.score}%</span> mastered
                   </span>
                 </div>
                 <span className="truncate text-sm">{topic.topicId}</span>

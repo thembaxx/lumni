@@ -116,7 +116,7 @@ function StatCard({
         </div>
         <div>
           <p className="text-muted-foreground text-xs uppercase tracking-wide">{label}</p>
-          <p className="font-semibold text-lg">{value}</p>
+          <p className="font-semibold text-lg tabular-nums">{value}</p>
         </div>
       </CardContent>
     </Card>
@@ -134,13 +134,16 @@ function SubjectRow({ subject, score, topicsStudied, totalTopics }: SubjectProgr
           <div>
             <p className="font-medium text-sm">{subject}</p>
             <p className="text-muted-foreground text-xs">
-              {topicsStudied} / {totalTopics} topics
+              <span className="tabular-nums">
+                {topicsStudied} / {totalTopics}
+              </span>{" "}
+              topics
             </p>
           </div>
         </div>
         <div className="w-32">
           <Progress value={score} className="h-2" />
-          <p className="mt-1 text-right text-muted-foreground text-xs">{score}%</p>
+          <p className="mt-1 text-right text-muted-foreground text-xs tabular-nums">{score}%</p>
         </div>
       </div>
     </Card>

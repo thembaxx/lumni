@@ -65,9 +65,11 @@ export function CompetitionCard() {
 
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">
-            {timeLeft.days > 0
-              ? `${timeLeft.days}d ${timeLeft.hours}h remaining`
-              : `${timeLeft.hours}h remaining`}
+            <span className="tabular-nums">
+              {timeLeft.days > 0
+                ? `${timeLeft.days}d ${timeLeft.hours}h remaining`
+                : `${timeLeft.hours}h remaining`}
+            </span>
           </span>
           <span className="font-medium tabular-nums">{rankText}</span>
         </div>
@@ -80,7 +82,9 @@ export function CompetitionCard() {
                 className="flex flex-col items-center gap-0.5 rounded-lg bg-muted/40 px-2 py-1.5"
               >
                 <span className="text-base">{MEDALS[i]}</span>
-                <span className="max-w-full truncate font-mono text-xs">{entry.xpEarned} XP</span>
+                <span className="max-w-full truncate font-mono text-xs tabular-nums">
+                  {entry.xpEarned} XP
+                </span>
               </div>
             ))}
           </div>

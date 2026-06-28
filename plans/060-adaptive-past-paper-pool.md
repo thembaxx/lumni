@@ -33,16 +33,17 @@ Currently the pool path (`poolQuestions`) is only activated when `enrich()` runs
 
 ## Commands you will need
 
-| Purpose   | Command                          | Expected on success |
-|-----------|----------------------------------|---------------------|
-| Install   | `pnpm install`                   | exit 0              |
-| Typecheck | `pnpm run typecheck`             | exit 0, no errors   |
-| Tests     | `pnpm run test -- enrichment\|question-engine` | all pass |
-| Lint      | `pnpm exec oxlint`               | exit 0              |
+| Purpose   | Command                                        | Expected on success |
+| --------- | ---------------------------------------------- | ------------------- |
+| Install   | `pnpm install`                                 | exit 0              |
+| Typecheck | `pnpm run typecheck`                           | exit 0, no errors   |
+| Tests     | `pnpm run test -- enrichment\|question-engine` | all pass            |
+| Lint      | `pnpm exec oxlint`                             | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/question-engine/question-engine.ts` — make pool the primary generation path (use `poolQuestions` directly when similarity > 0.8, fall back to AI generation only when pool is empty)
 - `src/lib/question-engine/enrichment-pipeline.ts` — tune similarity thresholds per subject domain (Math may need higher threshold than History)
 - `src/lib/exam-paper-ingestion/` — add a backfill script to process all existing past papers through the embedding pipeline
@@ -51,6 +52,7 @@ Currently the pool path (`poolQuestions`) is only activated when `enrich()` runs
 - Tests for the pool-as-primary flow
 
 **Out of scope**:
+
 - OCR for scanned PDF past papers (only works with already-parsed digital papers)
 - Real-time past paper question generation (AI-generated questions based on past paper structure, separate feature)
 - The `mapPoolToQuestion` adapter itself (Plan 056 already extracted it)
@@ -103,9 +105,9 @@ In `enrichment-pipeline.ts`, replace the hardcoded 0.8/0.5 thresholds with a con
 ```typescript
 const SIMILARITY_THRESHOLDS: Record<string, { pool: number; example: number }> = {
   default: { pool: 0.8, example: 0.5 },
-  mathematics: { pool: 0.85, example: 0.6 },   // Math questions are formulaic — higher bar
+  mathematics: { pool: 0.85, example: 0.6 }, // Math questions are formulaic — higher bar
   "physical-sciences": { pool: 0.85, example: 0.6 },
-  history: { pool: 0.7, example: 0.4 },          // History answers are prose — more tolerance
+  history: { pool: 0.7, example: 0.4 }, // History answers are prose — more tolerance
   geography: { pool: 0.75, example: 0.45 },
   "life-sciences": { pool: 0.8, example: 0.5 },
   accounting: { pool: 0.85, example: 0.6 },
@@ -128,7 +130,13 @@ Create or update `scripts/embed-backfill.ts` to process all past papers that hav
 // Pseudocode
 const papers = await getPapersWithoutEmbeddings();
 for (const paper of papers) {
-  const questions = extractQuestionsFromPaper(paper, null, paper.subject, paper.year, paper.paperNumber);
+  const questions = extractQuestionsFromPaper(
+    paper,
+    null,
+    paper.subject,
+    paper.year,
+    paper.paperNumber,
+  );
   for (const q of questions) {
     const embedding = await embedText(q.questionText);
     await storeEmbedding(q.id, embedding, q);
@@ -153,6 +161,7 @@ const generationParams: GenerationParams = {
 ```
 
 In `question-engine.ts`, when `poolOnly` is set:
+
 ```typescript
 if (params.poolOnly) {
   return { questions: poolQuestions.slice(0, params.count).map(mapPoolToQuestion), ragContext };

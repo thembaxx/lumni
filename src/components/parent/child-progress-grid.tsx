@@ -91,7 +91,7 @@ function SubjectMiniRow({ subject }: { subject: SubjectProgress }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-center justify-between gap-2">
           <span className="truncate text-xs">{subject.subject}</span>
-          <span className="shrink-0 font-medium text-xs">{subject.score}%</span>
+          <span className="shrink-0 font-medium text-xs tabular-nums">{subject.score}%</span>
         </div>
         <Progress value={subject.score} className="mt-0.5 h-1.5" />
       </div>

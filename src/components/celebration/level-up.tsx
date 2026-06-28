@@ -66,7 +66,11 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
               </m.div>
               <h2 className="balance mb-2 text-wrap font-semibold text-2xl">{title}</h2>
               <p className="mb-4 text-muted-foreground">
-                {xpToNext > 0 ? `${xpToNext} XP to next level` : "Maximum level reached!"}
+                {xpToNext > 0 ? (
+                  <span className="tabular-nums">{xpToNext} XP to next level</span>
+                ) : (
+                  "Maximum level reached!"
+                )}
               </p>
             </m.div>
           </div>

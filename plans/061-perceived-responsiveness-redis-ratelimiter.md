@@ -46,17 +46,18 @@ Two independent polish items that cap existing programs:
 
 ## Commands you will need
 
-| Purpose   | Command                          | Expected on success |
-|-----------|----------------------------------|---------------------|
-| Install   | `pnpm install`                   | exit 0              |
-| Typecheck | `pnpm run typecheck`             | exit 0, no errors   |
-| Tests     | `pnpm run test`                  | all pass            |
-| Lint      | `pnpm exec oxlint`               | exit 0              |
-| Build     | `pnpm run build`                 | exit 0              |
+| Purpose   | Command              | Expected on success |
+| --------- | -------------------- | ------------------- |
+| Install   | `pnpm install`       | exit 0              |
+| Typecheck | `pnpm run typecheck` | exit 0, no errors   |
+| Tests     | `pnpm run test`      | all pass            |
+| Lint      | `pnpm exec oxlint`   | exit 0              |
+| Build     | `pnpm run build`     | exit 0              |
 
 ## Scope
 
 **Part A in scope**:
+
 - `src/store/bookmarks.ts` — optimistic write with rollback
 - `src/components/shared/animation.ts` or individual component files — remove decorative `motion.div` wrappers, audit `AnimatePresence`
 - Components missing `active:scale-[0.96]` — add standardized tap feedback
@@ -64,11 +65,13 @@ Two independent polish items that cap existing programs:
 - Add `prefers-reduced-motion` media query to animated components missing it
 
 **Part B in scope**:
+
 - `src/lib/rate-limiter/` — add `createRateLimitStore()` factory that reads env to decide `MapStore` vs `RedisStore`
 - `.env.example` — document `REDIS_URL` and `REDIS_TOKEN`
 - Rate limiter call sites — use the factory instead of `new MapStore()` directly
 
 **Out of scope**:
+
 - Animation overuse audit (Phase 3 spec mentions it but it's subjective — skip unless egregious)
 - New animations or decorative motion
 - Rate limiter performance benchmarking
@@ -93,7 +96,7 @@ const toggleBookmark = async (questionId: string) => {
   // Optimistic update
   set((state) => ({
     bookmarkedIds: wasBookmarked
-      ? new Set([...state.bookmarkedIds].filter(id => id !== questionId))
+      ? new Set([...state.bookmarkedIds].filter((id) => id !== questionId))
       : new Set([...state.bookmarkedIds, questionId]),
   }));
 
@@ -104,7 +107,7 @@ const toggleBookmark = async (questionId: string) => {
     set((state) => ({
       bookmarkedIds: wasBookmarked
         ? new Set([...state.bookmarkedIds, questionId])
-        : new Set([...state.bookmarkedIds].filter(id => id !== questionId)),
+        : new Set([...state.bookmarkedIds].filter((id) => id !== questionId)),
     }));
   }
 };
@@ -135,7 +138,7 @@ rg "onClick" src/components/ --include "*.tsx" -l | xargs grep -L "active:scale"
 For each missing element, add `active:scale-[0.96] transition-transform` to the className. Follow the pattern in `src/components/ui/button.tsx`:
 
 ```tsx
-className="... active:scale-[0.96] transition-transform ..."
+className = "... active:scale-[0.96] transition-transform ...";
 ```
 
 **Verify**: `rg "active:scale" src/components/ | wc -l` shows increased count over baseline.
@@ -214,9 +217,11 @@ REDIS_TOKEN=""
 ### Step 6: Write tests
 
 **Part A tests**:
+
 - `src/store/__tests__/bookmarks.test.ts` — optimistic toggle succeeds, optimistic toggle fails and rolls back
 
 **Part B tests**:
+
 - `src/lib/rate-limiter/__tests__/factory.test.ts` — `createRateLimitStore()` returns `RedisStore` when env vars set, returns `MapStore` when not set
 
 **Verify**: `pnpm run test -- bookmarks\|rate-limiter` → all pass

@@ -130,7 +130,9 @@ export function ExamMockSession({
   useEffect(() => {
     if (isLoading) return;
     if (questions.length === 0) {
-      generate(generationParams).then(() => setPhase("countdown")).catch(() => {});
+      generate(generationParams)
+        .then(() => setPhase("countdown"))
+        .catch(() => {});
     } else if (phase === "generating") {
       setPhase("countdown");
     }
@@ -207,7 +209,7 @@ export function ExamMockSession({
             <span className="font-extrabold text-5xl tabular-nums text-(--system-accent)">
               {pct}%
             </span>
-            <span className="text-muted-foreground text-sm">
+            <span className="text-muted-foreground text-sm tabular-nums">
               ({correctCount}/{total})
             </span>
           </div>
@@ -229,9 +231,10 @@ export function ExamMockSession({
   }
 
   const isMCQ = currentQuestion?.type === "multiple-choice";
-  const body = isMCQ && currentQuestion?.body && "options" in currentQuestion.body
-    ? (currentQuestion.body as { options: { id: string; text: string; isCorrect: boolean }[] })
-    : null;
+  const body =
+    isMCQ && currentQuestion?.body && "options" in currentQuestion.body
+      ? (currentQuestion.body as { options: { id: string; text: string; isCorrect: boolean }[] })
+      : null;
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
@@ -269,9 +272,10 @@ export function ExamMockSession({
               <div className="flex flex-col gap-2">
                 {body.options.map((option) => {
                   const selectedAnswer = answers[currentQuestion.id]?.answer;
-                  const selectedId = selectedAnswer && Array.isArray(selectedAnswer.value)
-                    ? selectedAnswer.value[0]
-                    : selectedAnswer?.value;
+                  const selectedId =
+                    selectedAnswer && Array.isArray(selectedAnswer.value)
+                      ? selectedAnswer.value[0]
+                      : selectedAnswer?.value;
                   const isSelected = selectedId === option.id;
                   return (
                     <button
@@ -284,7 +288,7 @@ export function ExamMockSession({
                         })
                       }
                       className={cn(
-                        "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all active:scale-[0.98]",
+                        "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-[scale,background-color,border-color] active:scale-[0.96]",
                         isSelected
                           ? "border-(--system-accent) bg-(--system-accent)/10 font-medium"
                           : "border-border bg-card hover:bg-muted/50",
@@ -315,9 +319,7 @@ export function ExamMockSession({
       </main>
 
       <footer className="sticky bottom-0 flex items-center justify-between border-t border-border bg-card px-4 py-3">
-        <div className="text-muted-foreground text-xs">
-          {Object.keys(answers).length} answered
-        </div>
+        <div className="text-muted-foreground text-xs">{Object.keys(answers).length} answered</div>
         {currentIndex < questions.length - 1 ? (
           <Button onClick={goToNext} size="lg">
             Next

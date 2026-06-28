@@ -75,13 +75,13 @@ Commit baseline: `169d3704` (previous batch was `7525d6ed`, all 56 prior plans D
 
 ## Execution order & status — Batch 3 (direction features)
 
-| Plan | Title                                                            | Priority | Effort | Risk | Depends on | Status          |
-| ---- | ---------------------------------------------------------------- | -------- | ------ | ---- | ---------- | --------------- |
-| 057  | Mock Exam Mode — dedicated exam-hall surface                     | P2       | M      | LOW  | —          | TODO            |
-| 058  | Cross-device Progress Sync — competencies, flashcards, retention | P2       | L      | MED  | —          | TODO            |
-| 059  | Live Leaderboard via Appwrite Realtime                           | P2       | M      | LOW  | 058        | TODO            |
-| 060  | AI × Past Papers Adaptive Pool — full integration                | P2       | M      | LOW  | —          | TODO            |
-| 061  | Perceived Responsiveness Phase 3 + Redis RateLimiter             | P3       | S      | LOW  | —          | TODO            |
+| Plan | Title                                                            | Priority | Effort | Risk | Depends on | Status |
+| ---- | ---------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 057  | Mock Exam Mode — dedicated exam-hall surface                     | P2       | M      | LOW  | —          | TODO   |
+| 058  | Cross-device Progress Sync — competencies, flashcards, retention | P2       | L      | MED  | —          | TODO   |
+| 059  | Live Leaderboard via Appwrite Realtime                           | P2       | M      | LOW  | 058        | TODO   |
+| 060  | AI × Past Papers Adaptive Pool — full integration                | P2       | M      | LOW  | —          | TODO   |
+| 061  | Perceived Responsiveness Phase 3 + Redis RateLimiter             | P3       | S      | LOW  | —          | TODO   |
 
 ## Execution phases (Batch 2)
 

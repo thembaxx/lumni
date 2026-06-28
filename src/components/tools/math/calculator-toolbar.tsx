@@ -26,7 +26,7 @@ export function CalculatorToolbar({
           variant={angleMode === "deg" ? "default" : "ghost"}
           size="xs"
           onClick={onToggleAngle}
-          className="h-7 rounded-lg px-2.5 font-mono text-xs"
+          className="relative h-7 rounded-lg px-2.5 font-mono text-xs after:absolute after:-inset-2"
         >
           DEG
         </Button>
@@ -34,7 +34,7 @@ export function CalculatorToolbar({
           variant={angleMode === "rad" ? "default" : "ghost"}
           size="xs"
           onClick={onToggleAngle}
-          className="h-7 rounded-lg px-2.5 font-mono text-xs"
+          className="relative h-7 rounded-lg px-2.5 font-mono text-xs after:absolute after:-inset-2"
         >
           RAD
         </Button>
@@ -44,7 +44,7 @@ export function CalculatorToolbar({
           variant="ghost"
           size="xs"
           onClick={onToggleHistory}
-          className="h-7 rounded-lg px-2.5 text-xs"
+          className="relative h-7 rounded-lg px-2.5 text-xs after:absolute after:-inset-2"
           aria-label="Toggle history"
         >
           <HugeiconsIcon icon={UndoIcon} className="size-3.5" data-icon />
@@ -53,7 +53,7 @@ export function CalculatorToolbar({
           variant="ghost"
           size="xs"
           onClick={onClearHistory}
-          className="h-7 rounded-lg px-2.5 text-xs"
+          className="relative h-7 rounded-lg px-2.5 text-xs after:absolute after:-inset-2"
           aria-label="Clear history"
         >
           <HugeiconsIcon icon={Clock01Icon} className="size-3.5" data-icon />

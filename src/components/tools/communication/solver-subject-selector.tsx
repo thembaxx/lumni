@@ -29,7 +29,7 @@ export function SolverSubjectSelector({ subject, onChange }: SolverSubjectSelect
           type="button"
           onClick={() => onChange(s.id)}
           className={cn(
-            "h-7 rounded-lg border px-2.5 font-medium text-xs transition-colors",
+            "relative h-7 rounded-lg border px-2.5 font-medium text-xs transition-colors after:absolute after:-inset-2",
             subject === s.id
               ? "border-(--system-accent) bg-(--system-accent) text-white"
               : "border-border bg-system-fill text-(--system-text-secondary) hover:border-(--system-accent)/40",

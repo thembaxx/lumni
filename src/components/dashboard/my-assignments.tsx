@@ -112,10 +112,16 @@ export function MyAssignments() {
                   <div className="mt-2 flex flex-col gap-1">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-xs">
-                        Score: {a.submission.score}/{a.submission.maxScore}
+                        Score:{" "}
+                        <span className="tabular-nums">
+                          {a.submission.score}/{a.submission.maxScore}
+                        </span>
                       </span>
                       <Badge variant="secondary" className="text-(--fs-caption-3)">
-                        {a.submission.correctCount}/{a.submission.totalQuestions} correct
+                        <span className="tabular-nums">
+                          {a.submission.correctCount}/{a.submission.totalQuestions}
+                        </span>{" "}
+                        correct
                       </Badge>
                     </div>
                     {a.submission.teacherComment && (

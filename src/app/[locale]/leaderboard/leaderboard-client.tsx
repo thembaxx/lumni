@@ -63,13 +63,17 @@ export function LeaderboardClient() {
                       {i < 3 ? (
                         <HugeiconsIcon icon={Award01Icon} size={20} className={rankColors[i]} />
                       ) : (
-                        <span className="font-mono text-muted-foreground text-xs">{entry.rank}</span>
+                        <span className="font-mono text-muted-foreground text-xs">
+                          {entry.rank}
+                        </span>
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-medium text-sm">{entry.label}</p>
                       {entry.level != null && (
-                        <p className="text-muted-foreground text-xs">Level {entry.level}</p>
+                        <p className="text-muted-foreground text-xs tabular-nums">
+                          Level {entry.level}
+                        </p>
                       )}
                     </div>
                     <div className="flex shrink-0 items-center gap-3">

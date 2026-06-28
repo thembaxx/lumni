@@ -75,7 +75,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
           onClick={handleSave}
           disabled={saving || !draft.trim()}
           aria-label="Save profile changes"
-          className="size-8 shrink-0 rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
+          className="relative size-8 shrink-0 rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50 after:absolute after:-inset-2"
         >
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
         </Button>
@@ -84,7 +84,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
           variant="ghost"
           onClick={handleCancel}
           aria-label="Cancel editing"
-          className="size-8 shrink-0 rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80"
+          className="relative size-8 shrink-0 rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80 after:absolute after:-inset-2"
         >
           <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
         </Button>

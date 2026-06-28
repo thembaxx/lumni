@@ -130,7 +130,7 @@ export function LeaderboardCard() {
                   {entry.streak > 0 && (
                     <div className="flex items-center gap-0.5 text-muted-foreground text-xs">
                       <HugeiconsIcon icon={FireIcon} size={12} />
-                      <span>{entry.streak}</span>
+                      <span className="tabular-nums">{entry.streak}</span>
                     </div>
                   )}
                 </div>

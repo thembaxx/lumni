@@ -206,13 +206,17 @@ export function AdminGamificationClient() {
                   <div className={cn("flex items-center gap-2")}>
                     <span className={cn("w-4 font-mono text-muted-foreground")}>#{user.rank}</span>
                     <span className={cn("font-medium")}>{user.label || "Student"}</span>
-                    <Badge variant="outline" className={cn("ios-caption-3 font-mono")}>
+                    <Badge variant="outline" className={cn("ios-caption-3 font-mono tabular-nums")}>
                       Lvl {user.level}
                     </Badge>
                   </div>
                   <div className={cn("flex items-center gap-3")}>
-                    <span className={cn("text-muted-foreground text-xs")}>🔥 {user.streak}</span>
-                    <span className={cn("font-mono")}>{user.xp.toLocaleString()} XP</span>
+                    <span className={cn("text-muted-foreground text-xs tabular-nums")}>
+                      🔥 {user.streak}
+                    </span>
+                    <span className={cn("font-mono tabular-nums")}>
+                      {user.xp.toLocaleString()} XP
+                    </span>
                   </div>
                 </div>
               ))}

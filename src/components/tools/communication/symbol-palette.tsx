@@ -30,7 +30,7 @@ export function SymbolPalette({ onInsert }: SymbolPaletteProps) {
           variant="ghost"
           size="sm"
           onClick={() => onInsert(s.value)}
-          className="ios-footnote h-6 w-7 p-0 text-(--system-text-secondary) hover:text-(--system-accent)"
+          className="relative ios-footnote h-6 w-7 p-0 text-(--system-text-secondary) hover:text-(--system-accent) after:absolute after:-inset-2"
         >
           {s.label}
         </Button>

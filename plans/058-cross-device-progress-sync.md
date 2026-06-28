@@ -35,16 +35,17 @@ The sync infrastructure already exists: `sync-handlers.ts` iterates 8 Dexie tabl
 
 ## Commands you will need
 
-| Purpose   | Command                          | Expected on success |
-|-----------|----------------------------------|---------------------|
-| Install   | `pnpm install`                   | exit 0              |
-| Typecheck | `pnpm run typecheck`             | exit 0, no errors   |
-| Tests     | `pnpm run test -- sync-handler\|competency\|flashcard` | all pass |
-| Lint      | `pnpm exec oxlint`               | exit 0              |
+| Purpose   | Command                                                | Expected on success |
+| --------- | ------------------------------------------------------ | ------------------- |
+| Install   | `pnpm install`                                         | exit 0              |
+| Typecheck | `pnpm run typecheck`                                   | exit 0, no errors   |
+| Tests     | `pnpm run test -- sync-handler\|competency\|flashcard` | all pass            |
+| Lint      | `pnpm exec oxlint`                                     | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/sync/sync-handlers.ts` — add working job handlers for `competencies`, `flashcards`, `retentionRecurrence`
 - `src/lib/competency/service.ts` — add `syncToAppwrite()` method or wire into existing sync flow
 - `src/lib/flashcard-engine/` — add sync-compatible serialization (SM-2 state → flat JSON for Appwrite)
@@ -53,6 +54,7 @@ The sync infrastructure already exists: `sync-handlers.ts` iterates 8 Dexie tabl
 - Dexie schema: no changes needed (existing `$updatedAt` field or add one for conflict detection)
 
 **Out of scope**:
+
 - Real-time sync (push from Appwrite → other devices) — reading from Appwrite on app start is sufficient for Phase 1
 - Conflict resolution beyond last-write-wins
 - Sync UI (progress indicator, conflict badge, last-sync timestamp) — future
@@ -160,10 +162,9 @@ In `src/lib/sync/sync-handlers.ts` or a new `src/lib/sync/pull-handlers.ts`, add
 ```typescript
 export async function pullRemoteData(userId: string): Promise<void> {
   // 1. Fetch remote competencies from Appwrite
-  const remoteCompetencies = await databases.listDocuments(
-    DATABASE_ID, COLLECTIONS.COMPETENCIES,
-    [Query.equal("userId", userId)]
-  );
+  const remoteCompetencies = await databases.listDocuments(DATABASE_ID, COLLECTIONS.COMPETENCIES, [
+    Query.equal("userId", userId),
+  ]);
   // 2. For each remote doc, if it's newer than local, update Dexie
   for (const doc of remoteCompetencies.documents) {
     const local = await deps.db.competencies.get(doc.$id);

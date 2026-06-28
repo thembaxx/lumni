@@ -99,7 +99,7 @@ export function SubjectTable({
                     variant="ghost"
                     size="icon"
                     onClick={() => onEditSubject(subject)}
-                    className={cn("size-8")}
+                    className={cn("size-8 relative after:absolute after:-inset-2")}
                     aria-label={`Edit ${subject.name}`}
                   >
                     <HugeiconsIcon icon={PencilIcon} className={cn("size-3")} />
@@ -111,7 +111,7 @@ export function SubjectTable({
                     size="icon"
                     onClick={() => onDeleteSubject(subject.id)}
                     disabled={isDeleting}
-                    className={cn("size-8")}
+                    className={cn("size-8 relative after:absolute after:-inset-2")}
                     aria-label={`Delete ${subject.name}`}
                   >
                     {isDeleting ? (

@@ -49,9 +49,11 @@ export function RewardChestPanel() {
                   {chest.name}
                 </p>
                 <p className="text-muted-foreground">
-                  {claimed
-                    ? `${chest.xpReward} XP earned`
-                    : `${chest.xpRequired.toLocaleString()} XP`}
+                  {claimed ? (
+                    <span className="tabular-nums">{chest.xpReward} XP earned</span>
+                  ) : (
+                    <span className="tabular-nums">{chest.xpRequired.toLocaleString()} XP</span>
+                  )}
                 </p>
               </div>
             </m.div>

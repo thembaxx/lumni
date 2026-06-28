@@ -32,17 +32,18 @@ The leaderboard at `/leaderboard` shows the current user at rank #1 with 10 loca
 
 ## Commands you will need
 
-| Purpose   | Command                          | Expected on success |
-|-----------|----------------------------------|---------------------|
-| Install   | `pnpm install`                   | exit 0              |
-| Typecheck | `pnpm run typecheck`             | exit 0, no errors   |
-| Tests     | `pnpm run test -- leaderboard`   | all pass            |
-| Lint      | `pnpm exec oxlint`               | exit 0              |
-| Build     | `pnpm run build`                 | exit 0              |
+| Purpose   | Command                        | Expected on success |
+| --------- | ------------------------------ | ------------------- |
+| Install   | `pnpm install`                 | exit 0              |
+| Typecheck | `pnpm run typecheck`           | exit 0, no errors   |
+| Tests     | `pnpm run test -- leaderboard` | all pass            |
+| Lint      | `pnpm exec oxlint`             | exit 0              |
+| Build     | `pnpm run build`               | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/app/api/leaderboard/route.ts` — create real API endpoint that queries Appwrite for all users' gamification data
 - `src/lib/services/leaderboard-service.ts` — refactor: replace localStorage with Appwrite-backed reads, wire Realtime subscription
 - `src/hooks/use-leaderboard.ts` (create or update) — hook that subscribes to Appwrite Realtime channel `databases.{db}.collections.{gamification}.documents`
@@ -50,6 +51,7 @@ The leaderboard at `/leaderboard` shows the current user at rank #1 with 10 loca
 - `src/lib/gamification-engine/` — add a `syncToLeaderboard()` method that pushes XP snapshot to Appwrite (or rely on Plan 058's general sync)
 
 **Out of scope**:
+
 - Study-group-scoped leaderboards (only global for Phase 1)
 - Historical leaderboard (weekly/monthly archives)
 - Leaderboard rewards or achievement unlocks based on rank
@@ -70,11 +72,10 @@ import { Query } from "appwrite";
 export const GET = createRouteHandler({
   auth: "optional", // anonymous users can see leaderboard
   handler: async () => {
-    const docs = await databases.listDocuments(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.GAMIFICATION,
-      [Query.orderDesc("xp"), Query.limit(50)],
-    );
+    const docs = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.GAMIFICATION, [
+      Query.orderDesc("xp"),
+      Query.limit(50),
+    ]);
     const entries = docs.documents.map((doc, i) => ({
       rank: i + 1,
       userId: doc.userId,
@@ -133,8 +134,8 @@ export function useLeaderboard(userId?: string) {
   useEffect(() => {
     // 1. Fetch initial data from API
     fetch("/api/leaderboard")
-      .then(r => r.json())
-      .then(data => {
+      .then((r) => r.json())
+      .then((data) => {
         const marked = data.entries.map((e: LeaderboardEntry) => ({
           ...e,
           isCurrentUser: e.userId === userId,
@@ -148,8 +149,8 @@ export function useLeaderboard(userId?: string) {
     const unsubscribe = client.subscribe(channel, (response) => {
       // On any gamification document change, refresh the leaderboard
       fetch("/api/leaderboard")
-        .then(r => r.json())
-        .then(data => {
+        .then((r) => r.json())
+        .then((data) => {
           const marked = data.entries.map((e: LeaderboardEntry) => ({
             ...e,
             isCurrentUser: e.userId === userId,
@@ -158,7 +159,9 @@ export function useLeaderboard(userId?: string) {
         });
     });
 
-    return () => { unsubscribe?.(); };
+    return () => {
+      unsubscribe?.();
+    };
   }, [userId]);
 
   return { entries, isLoading };
@@ -189,6 +192,7 @@ Create `src/lib/services/__tests__/leaderboard-service.test.ts`:
 Add a privacy gating step: only sync gamification data to the leaderboard if the user has consented to `dataSharing` (checked via `getDataSharingConsent()` from `src/lib/consent/ai-gate.ts`). This matches the existing consent-gating pattern used by TinyFish RAG.
 
 In `syncToLeaderboard()`:
+
 ```typescript
 const consent = await getDataSharingConsent();
 if (!consent) return; // silently skip

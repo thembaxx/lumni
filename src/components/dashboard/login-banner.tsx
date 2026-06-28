@@ -172,7 +172,7 @@ export function LoginBanner() {
         <Button
           size="sm"
           variant="default"
-          className="h-7 px-2.5 text-xs"
+          className="relative h-7 px-2.5 text-xs after:absolute after:-inset-2"
           onClick={() => {
             push("/auth/sign-in?redirect=/dashboard");
           }}
@@ -184,7 +184,7 @@ export function LoginBanner() {
           variant="ghost"
           size="icon-sm"
           onClick={handleDismiss}
-          className="-mr-1 size-7"
+          className="relative -mr-1 size-7 after:absolute after:-inset-2"
           aria-label="Dismiss"
         >
           <HugeiconsIcon icon={Cancel01Icon} className="size-3.5 text-muted-foreground" />

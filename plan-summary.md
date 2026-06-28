@@ -1,7 +1,7 @@
 # Plan 057 — Mock Exam Mode
 
 **Status**: ✅ Complete  
-**Date**: 2026-06-28  
+**Date**: 2026-06-28
 
 ## Summary
 
@@ -9,13 +9,13 @@ Implemented dedicated mock-exam mode for the quiz surface: locked navigation, co
 
 ## Files Changed
 
-| File | Action |
-|------|--------|
-| `src/lib/exam/mock-exam-config.ts` | Created — mock exam constants (duration, count, messages, badges) |
-| `src/components/exam/exam-mock-session.tsx` | Created — full-screen wrapper, countdown overlay, forward-only nav, MCQ grading, auto-submit, results overlay with APS projection |
-| `src/app/[locale]/quiz/quiz-client.tsx` | Modified — added `mode=mock` branch that renders `ExamMockSession` |
-| `src/components/tools/communication/exam-detail-dialog.tsx` | Modified — Mock Exam button now includes `&mode=mock` |
-| `src/components/exam/__tests__/exam-mock-session.test.tsx` | Created — 4 tests (generating message, countdown overlay, default params, mock badge) |
+| File                                                        | Action                                                                                                                            |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `src/lib/exam/mock-exam-config.ts`                          | Created — mock exam constants (duration, count, messages, badges)                                                                 |
+| `src/components/exam/exam-mock-session.tsx`                 | Created — full-screen wrapper, countdown overlay, forward-only nav, MCQ grading, auto-submit, results overlay with APS projection |
+| `src/app/[locale]/quiz/quiz-client.tsx`                     | Modified — added `mode=mock` branch that renders `ExamMockSession`                                                                |
+| `src/components/tools/communication/exam-detail-dialog.tsx` | Modified — Mock Exam button now includes `&mode=mock`                                                                             |
+| `src/components/exam/__tests__/exam-mock-session.test.tsx`  | Created — 4 tests (generating message, countdown overlay, default params, mock badge)                                             |
 
 ## Key Decisions
 
@@ -26,9 +26,9 @@ Implemented dedicated mock-exam mode for the quiz surface: locked navigation, co
 
 ## Verification
 
-| Check | Result |
-|-------|--------|
-| `pnpm run typecheck` | ✅ exit 0 (pre-existing TS47 diagnostic only) |
-| `pnpm exec oxlint` | ✅ 0 warnings, 0 errors |
-| `pnpm run test -- mock-exam` | ✅ 1 file, 4 tests pass |
-| `pnpm run build` | ✅ Compiled successfully, 171/171 pages generated |
+| Check                        | Result                                            |
+| ---------------------------- | ------------------------------------------------- |
+| `pnpm run typecheck`         | ✅ exit 0 (pre-existing TS47 diagnostic only)     |
+| `pnpm exec oxlint`           | ✅ 0 warnings, 0 errors                           |
+| `pnpm run test -- mock-exam` | ✅ 1 file, 4 tests pass                           |
+| `pnpm run build`             | ✅ Compiled successfully, 171/171 pages generated |

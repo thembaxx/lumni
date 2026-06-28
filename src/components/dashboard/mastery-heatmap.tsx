@@ -186,7 +186,7 @@ export function MasteryHeatmap() {
                                 )}
                                 title={`${rec.score}% — ${rec.attempts} attempts`}
                               >
-                                {rec.score}%
+                                <span className="tabular-nums">{rec.score}%</span>
                               </div>
                             ) : (
                               <div className="rounded px-2 py-1.5 text-center text-muted-foreground/30">

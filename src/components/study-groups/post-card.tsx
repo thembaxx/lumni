@@ -72,7 +72,7 @@ export function PostCard({
           <Button
             variant="ghost"
             size="icon-sm"
-            className="size-7 text-muted-foreground hover:text-destructive"
+            className="relative size-7 text-muted-foreground hover:text-destructive after:absolute after:-inset-2"
             onClick={() => deletePost(post.$id)}
             aria-label="Delete post"
           >
