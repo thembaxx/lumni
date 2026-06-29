@@ -1,9 +1,5 @@
 "use client";
 
-import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { memo } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
@@ -28,24 +24,12 @@ export const VisualContent = memo(function VisualContent({
 });
 
 function VisualContentInner({ visual, isLoading }: VisualContentProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     // oxlint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isLoading ? (
         <div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">
-          {shouldReduceMotion ? (
-            <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
-          ) : (
-            <m.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="size-6"
-            >
-              <HugeiconsIcon icon={RadialIcon} className="size-6 text-muted-foreground" />
-            </m.div>
-          )}
+          <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
         </div>
       ) : !visual ? null : visual.type === "konva-diagram" &&
         visual.diagramType &&

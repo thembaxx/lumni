@@ -127,6 +127,7 @@ export function TabSwitcher({
               type: "spring",
               stiffness: 400,
               damping: 30,
+              bounce: 0,
             }}
           />
         </div>

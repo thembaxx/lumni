@@ -72,7 +72,7 @@ const TopNavStatus = memo(function TopNavStatus() {
             <m.div
               initial={{ width: 0 }}
               animate={{ width: `${levelInfo.progress}%` }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
               className="h-full rounded-full bg-(--system-accent)"
             />
           </div>

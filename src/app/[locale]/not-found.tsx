@@ -29,7 +29,7 @@ function NotFoundContent() {
           <m.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.5, ease: iOSEase, delay: 0.1 }}
+            transition={{ duration: 0.3, ease: iOSEase, delay: 0.1 }}
             className="relative"
           >
             <div className="absolute inset-0 rounded-full bg-secondary blur-xl" />

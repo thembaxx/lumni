@@ -426,7 +426,53 @@ Small, fast, expressive. 20px tall with 8px radius.
 - **Wide:** `max-w-6xl xl:max-w-7xl` (home feed, admin dashboards).
 - No page-level `max-w-*` or `px-*` outside PageContainer.
 
-## 6. Do's and Don'ts
+## 6. Motion
+
+Motion exists only to clarify a change — never for decoration.
+
+Most interactions should feel instant. A duration of `0ms` with no transition at all is often the snappiest and best choice; the call is context-dependent.
+
+When motion genuinely helps — revealing an element, moving something to a new position, indicating arrival or departure — keep it short and physical:
+
+| Context                | Duration | Easing |
+|------------------------|----------|--------|
+| State changes          | 150ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Popovers / tooltips    | 200ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Overlays / modals      | 300ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+
+The easing is a fast-arrival overshoot curve — it accelerates quickly, overshoots by a tiny fraction, then settles. It reads as physical without being bouncy.
+
+### Prohibited
+
+- **No long animations**: Nothing above 500ms except deliberate, user-triggered celebrations (confetti, level-up). An animation longer than 500ms is a waiting room.
+- **No looping**: `repeat: Infinity` on motion elements is decorative motion. Remove it. Loading indicators use CSS `animation`, not motion primitives.
+- **No spring overshoots**: `type: "spring"` with non-zero `bounce` is prohibited. If you use a spring, `bounce: 0`.
+- **No staggered entrances** on page load. Elements arrive when they arrive. Staggering says "watch me appear" instead of "here is the content."
+
+### `prefers-reduced-motion`
+
+Every motion-enabled component must wrap non-essential animations with `useReducedMotion()` from `motion/react`. Essential animations (progress feedback, loading skeletons) may remain. Drop the rest.
+
+```tsx
+import { useReducedMotion } from "motion/react";
+
+const shouldReduce = useReducedMotion();
+const transition = shouldReduce ? { duration: 0 } : { duration: 0.15, ease: motionEase };
+```
+
+### CSS transitions vs. motion primitives
+
+Prefer CSS `transition` for simple property changes: `transition-[background-color,transform] duration-150`. Reserve motion primitives (`m.div`, `AnimatePresence`) for layout animations, enter/exit sequences, and drag gestures.
+
+### Named Rules
+
+**The Waiting Room Rule.** Any animation over 500ms makes the user wait. Content that arrives in stages does not feel premium — it feels slow.
+
+**The No-Looping Rule.** `repeat: Infinity` on a motion element is decoration. Remove every instance. Use CSS `@keyframes` for loading indicators.
+
+**The Clarify-Not-Decorate Rule.** If removing the animation makes the interface harder to understand, keep it. If removing it makes no difference, remove it.
+
+## 7. Do's and Don'ts
 
 ### Do:
 
@@ -435,7 +481,7 @@ Small, fast, expressive. 20px tall with 8px radius.
 - **Do** use Outfit 800 for headings and Geist 400 for body. This pairing is the voice of a friend who knows the material.
 - **Do** make every interactive element at least 44x44pt. Thumbs on a minibus, fingers after a long day: the interface does not penalize imprecision.
 - **Do** layer depth through lightness first. A surface one step lighter or darker than its background is hierarchy. A shadow is atmosphere.
-- **Do** use `--ease-ios` (`cubic-bezier(0.16, 1, 0.3, 1)`) for every transition. Fast deceleration, no bounce. No sluggishness.
+- **Do** use the motion easing (`cubic-bezier(0.175, 0.885, 0.32, 1.1)`) for every transition. Fast arrival with a tiny overshoot reads as physical. See the [Motion](#6-motion) section for durations.
 - **Do** animate only `transform` and `opacity`. Layout properties cause reflow. The page should not stutter.
 - **Do** show skeleton shapes while content loads. A spinner says "wait." A skeleton says "something is coming."
 - **Do** set `aspect-ratio` on every image and embedded media.
@@ -454,7 +500,7 @@ Small, fast, expressive. 20px tall with 8px radius.
 - **Don't** put Outfit in labels, buttons, or data text. Outfit is for headings above 20px. Below that, Geist takes over.
 - **Don't** invent new affordances. A button that does not look like a button, a scrollbar that disappears, a form control with no visible boundary: these do not feel premium. They feel broken.
 - **Don't** paint inactive states with full color. Disabled is 50% opacity, period. Not a desaturated version of the active color.
-- **Don't** bounce. Elastic easings, spring overshoots, bouncy buttons: prohibited. `cubic-bezier(0.16, 1, 0.3, 1)` for everything.
+- **Don't** bounce. Elastic easings, spring overshoots (except the motion curve), bouncy buttons: prohibited. Use the motion easing `cubic-bezier(0.175, 0.885, 0.32, 1.1)` for everything.
 - **Don't** use dark mode as an excuse for purple gradients, neon accents, or glassmorphism. Dark mode shifts cooler (264deg hue) and lifts the accent. The voice stays the same.
 - **Don't** spray `will-change` across elements. Apply it to one or two specific properties that genuinely benefit from GPU compositing.
 - **Don't** lazy load the hero. Above-fold content loads eagerly. Lazy loading is for content below the fold.

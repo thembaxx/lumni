@@ -79,12 +79,12 @@ export function StatCard({
             className={cn("rounded-full p-2", bgClass)}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            whileHover={{ scale: 1.1 }}
             transition={{
               delay: delay + 0.2,
               type: "spring",
               stiffness: 300,
               damping: 26,
+              bounce: 0,
             }}
           >
             {Icon && <Icon className={cn("size-5", colorClass)} />}

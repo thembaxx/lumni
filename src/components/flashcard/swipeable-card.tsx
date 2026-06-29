@@ -80,7 +80,7 @@ export const SwipeableCard = memo(function SwipeableCard({
         },
       });
     } else {
-      animate(x, 0, { type: "spring", stiffness: 300, damping: 26 });
+      animate(x, 0, { type: "spring", stiffness: 300, damping: 26, bounce: 0 });
     }
   }
 
@@ -141,7 +141,7 @@ export const SwipeableCard = memo(function SwipeableCard({
           className="relative h-full w-full"
           style={{ transformStyle: "preserve-3d" }}
           animate={flipAnim}
-          transition={{ duration: 0.5, ease: iOSEase }}
+          transition={{ duration: 0.15, ease: iOSEase }}
         >
           {/* Front */}
           <div

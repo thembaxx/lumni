@@ -25,7 +25,7 @@ const CONTAINER_VARIANTS = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    transition: {},
   },
 };
 
@@ -89,7 +89,7 @@ export function QuizResultsCard({
           className="absolute -top-4 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 300, bounce: 0 }}
         >
           <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2 shadow-level-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5" />
@@ -99,14 +99,11 @@ export function QuizResultsCard({
       )}
 
       <Card className={cn("relative", className)}>
-        <m.div
+        <div
           className="pointer-events-none absolute inset-0 overflow-hidden rounded-card-lg"
-          initial={{ opacity: 0 }}
-          animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
-          transition={{ duration: 2, repeat: Infinity }}
         >
           <div className="absolute inset-0 bg-success/10" />
-        </m.div>
+        </div>
 
         <CardHeader className="flex flex-col gap-2 p-6 pb-0 md:text-left">
           <FadeIn direction="down" distance={10} delay={0.1}>

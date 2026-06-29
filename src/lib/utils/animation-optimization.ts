@@ -125,6 +125,7 @@ const createOptimizedPresets = () => {
         type: "spring",
         stiffness: 100,
         damping: 26,
+        bounce: 0,
       },
     },
 
@@ -134,6 +135,7 @@ const createOptimizedPresets = () => {
         type: "spring",
         stiffness: 260,
         damping: 26,
+        bounce: 0,
       },
     },
 
@@ -143,6 +145,7 @@ const createOptimizedPresets = () => {
         type: "spring",
         stiffness: 400,
         damping: 26,
+        bounce: 0,
       },
     },
 
@@ -152,6 +155,7 @@ const createOptimizedPresets = () => {
         type: "spring",
         stiffness: 120,
         damping: 26,
+        bounce: 0,
       },
     },
   };

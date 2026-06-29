@@ -206,7 +206,7 @@ export function ChatInput({
               <HugeiconsIcon
                 icon={MailSend01Icon}
                 data-icon
-                className={cn(voicePressed && "scale-110")}
+                className={cn()}
               />
             </Button>
           </div>

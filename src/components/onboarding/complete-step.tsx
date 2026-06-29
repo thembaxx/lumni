@@ -34,7 +34,7 @@ export function CompleteStep({ selectedSubjects, subjectsData, title, body }: Co
             animate="visible"
             variants={{
               visible: {
-                transition: { staggerChildren: 0.04 },
+                transition: {},
               },
             }}
             className="mb-8 flex flex-wrap justify-center gap-2"

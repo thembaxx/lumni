@@ -63,7 +63,7 @@ export function SubjectSelect({
         </span>
         <m.svg
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30, bounce: 0 }}
           width="16"
           height="16"
           viewBox="0 0 16 16"
@@ -86,7 +86,7 @@ export function SubjectSelect({
             initial={{ opacity: 0, scale: 0.95, y: -4 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -4 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30, bounce: 0 }}
             className="absolute z-drawer mt-2 w-full min-w-64 overflow-hidden rounded-xl border border-border/60 bg-popover shadow-level-2"
           >
             <div className="p-2 pb-0">

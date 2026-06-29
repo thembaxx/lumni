@@ -54,13 +54,12 @@ export function SubjectTable({
         </div>
       ) : (
         <AnimatePresence mode="popLayout" initial={false}>
-          {subjects.map((subject, index) => (
+          {subjects.map((subject) => (
             <m.div
               key={subject.id}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
-              transition={{ delay: index * 0.03 }}
               className={cn(
                 "flex",
                 "items-center",

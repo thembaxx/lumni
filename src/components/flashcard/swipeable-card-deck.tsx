@@ -204,6 +204,7 @@ export function SwipeableCardDeck({
                   stiffness: 350,
                   damping: 28,
                   mass: 0.8,
+                  bounce: 0,
                 }}
                 layout
               >

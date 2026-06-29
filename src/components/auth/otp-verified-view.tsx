@@ -18,6 +18,7 @@ export function OtpVerifiedView() {
           type: "spring",
           stiffness: 300,
           damping: 26,
+          bounce: 0,
           delay: 0.05,
         },
       }}
@@ -32,6 +33,7 @@ export function OtpVerifiedView() {
               type: "spring",
               stiffness: 350,
               damping: 26,
+              bounce: 0,
             },
           }}
         >

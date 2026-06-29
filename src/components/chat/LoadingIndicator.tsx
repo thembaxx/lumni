@@ -27,13 +27,9 @@ export function LoadingIndicator() {
       aria-live="polite"
       className="flex items-center gap-3 rounded-xl border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-level-1"
     >
-      <m.div
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-        className="flex size-7 shrink-0 items-center justify-center"
-      >
+      <div className="flex size-7 shrink-0 animate-pulse items-center justify-center">
         <HugeiconsIcon icon={SparklesIcon} className="size-6 text-system-accent" />
-      </m.div>
+      </div>
       <AnimatePresence mode="wait" initial={false}>
         <m.span
           key={messageIndex}

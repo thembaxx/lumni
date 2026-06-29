@@ -239,7 +239,7 @@ export function AdminDashboard() {
             <m.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 500, damping: 26 }}
+              transition={{ type: "spring", stiffness: 500, damping: 26, bounce: 0 }}
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
             </m.div>

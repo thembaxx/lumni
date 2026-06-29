@@ -29,7 +29,7 @@ export default function AppError({
             <m.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 0.5, ease: iOSEase, delay: 0.1 }}
+              transition={{ duration: 0.3, ease: iOSEase, delay: 0.1 }}
               className="relative"
             >
               <div className="absolute inset-0 rounded-full bg-destructive/10 blur-xl" />
@@ -83,7 +83,7 @@ export default function AppError({
           <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent"
           />
           <div className="absolute inset-0 flex items-center justify-center p-8">

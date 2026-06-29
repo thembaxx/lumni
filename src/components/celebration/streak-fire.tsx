@@ -17,30 +17,20 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
   return (
     <div className="flex items-center gap-2">
       <div className="relative">
-        <m.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 5, -5, 0],
-          }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            repeatDelay: 2,
-          }}
-        >
+        <div>
           <HugeiconsIcon
             icon={FireIcon}
             className={`size-6 ${streak >= 7 ? "fill-warning" : "fill-warning/80"}`}
             fill={streak >= 7 ? "currentColor" : "none"}
           />
-        </m.div>
+        </div>
 
         {streak >= 3 && (
           <m.div
             className="absolute -top-1 -right-1"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, type: "spring" }}
+            transition={{ delay: 0.3, type: "spring", bounce: 0 }}
           >
             <span className="text-lg">{streak >= 30 ? "🔥" : streak >= 7 ? "🌟" : "✨"}</span>
           </m.div>
@@ -64,7 +54,7 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
         key={streak}
         initial={{ scale: 1.5 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 500 }}
+        transition={{ type: "spring", stiffness: 500, bounce: 0 }}
       >
         {streak}
       </m.span>

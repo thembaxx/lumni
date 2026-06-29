@@ -207,7 +207,7 @@ export function PeriodicTable() {
           initial="hidden"
           animate="visible"
           variants={{
-            visible: { transition: { staggerChildren: 0.02 } },
+            visible: { transition: {} },
             hidden: {},
           }}
         >

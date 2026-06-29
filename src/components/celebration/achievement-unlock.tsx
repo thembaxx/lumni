@@ -32,7 +32,7 @@ export function AchievementUnlock({
         <m.div
           initial={{ opacity: 0, scale: 0.95, y: 50 }}
           animate={{ scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
           className="relative motion-reduce:animate-none motion-reduce:transition-none"
         >
           <div className={`absolute inset-0 rounded-3xl blur-xl ${raritySolid[rarity]}/50`} />
@@ -43,7 +43,7 @@ export function AchievementUnlock({
             <m.div
               initial={{ opacity: 0, scale: 0.95, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", delay: 0.2 }}
+              transition={{ type: "spring", delay: 0.2, bounce: 0 }}
               className="mb-4"
             >
               <m.div animate={{ scale: [0.95, 1.2, 1] }} transition={{ duration: 0.3 }}>

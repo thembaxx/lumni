@@ -88,7 +88,7 @@ export function SolverInputTools({
             alt="Uploaded problem"
             fill
             sizes="80px"
-            className="object-cover outline outline-black/10 -outline-offset-1 transition-transform group-hover:scale-110 dark:outline-white/10"
+            className="object-cover outline outline-black/10 -outline-offset-1 transition-transform dark:outline-white/10"
           />
           <Button
             variant="destructive"

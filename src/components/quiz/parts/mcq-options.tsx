@@ -32,7 +32,7 @@ export const MCQOptions = memo(function MCQOptions({
         options.every((o) => o.text.length <= 30) ? "grid-cols-2" : "grid-cols-1",
       )}
     >
-      {options.map((option, i) => {
+      {options.map((option) => {
         const isSelected = selectedOption === option.id;
         return (
           <m.div
@@ -40,7 +40,6 @@ export const MCQOptions = memo(function MCQOptions({
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
-              delay: i * 0.05,
               duration: 0.25,
               ease: iOSEase,
             }}

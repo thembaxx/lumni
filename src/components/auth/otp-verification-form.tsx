@@ -71,6 +71,7 @@ export function OtpVerificationForm({
                 type: "spring",
                 stiffness: 350,
                 damping: 26,
+                bounce: 0,
               },
             }}
           >

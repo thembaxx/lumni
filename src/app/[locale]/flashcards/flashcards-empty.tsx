@@ -2,7 +2,6 @@
 
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import {
   Empty,
@@ -38,15 +37,12 @@ export function FlashcardsEmpty({ subject, onGoBack, mode }: FlashcardsEmptyProp
           <Empty>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <m.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
+                <div>
                   <HugeiconsIcon
                     icon={Search01Icon}
                     className="mx-auto size-10 text-muted-foreground"
                   />
-                </m.div>
+                </div>
               </EmptyMedia>
               <EmptyTitle>{t("flashcards.noFlashcards")}</EmptyTitle>
               <EmptyDescription>{message}</EmptyDescription>

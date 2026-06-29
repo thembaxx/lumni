@@ -27,16 +27,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
         <span className="font-extrabold text-2xl text-background">L</span>
       </div>
       <div className="mt-6 h-1 w-32 overflow-hidden rounded-full bg-secondary">
-        <m.div
-          className="h-full w-1/2 rounded-full bg-foreground"
-          initial={{ opacity: 0.4 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 0.6,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
+        <div className="h-full w-1/2 animate-pulse rounded-full bg-foreground" />
       </div>
     </m.div>
   );
@@ -88,7 +79,6 @@ export function AdminPageClient() {
         className="relative min-h-dvh"
       >
         <m.div
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
           className="fixed right-6 bottom-6 z-modal"
         >

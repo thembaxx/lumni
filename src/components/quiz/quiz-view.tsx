@@ -98,7 +98,7 @@ export function QuizView({
       const threshold = 80;
       if (info.offset.x > threshold) handlePrevious();
       else if (info.offset.x < -threshold) handleNext();
-      animate(dragX, 0, { type: "spring", stiffness: 300, damping: 30 });
+      animate(dragX, 0, { type: "spring", stiffness: 300, damping: 30, bounce: 0 });
     },
     [handleNext, handlePrevious, dragX],
   );

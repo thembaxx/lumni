@@ -16,7 +16,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import type { ComponentProps } from "react";
 
-export type AnimationPreset = "spin" | "pulse" | "bounce" | "shake" | "scale" | "rotate" | "sway";
+export type AnimationPreset = "shake" | "scale";
 
 interface IconMappingEntry {
   icon: typeof CheckmarkCircle01Icon;
@@ -25,45 +25,35 @@ interface IconMappingEntry {
 }
 
 const animationPresets: Record<AnimationPreset, ComponentProps<typeof m.div>["animate"]> = {
-  spin: { rotate: 360 },
-  pulse: { scale: [1, 1.1, 1] },
-  bounce: { y: [0, -10, 0] },
   shake: { x: [-5, 5, -5, 5, 0] },
   scale: { scale: [0, 1.2, 1] },
-  rotate: { rotate: [0, 10, -10, 0] },
-  sway: { rotate: [0, 5, -5, 0] },
 };
 
 const animationTransitions: Record<AnimationPreset, ComponentProps<typeof m.div>["transition"]> = {
-  spin: { duration: 1, repeat: Infinity, ease: "linear" },
-  pulse: { duration: 1.5, repeat: Infinity },
-  bounce: { duration: 0.6, repeat: Infinity },
   shake: { duration: 0.4 },
   scale: { duration: 0.3 },
-  rotate: { duration: 0.5, repeat: 3 },
-  sway: { duration: 0.5, repeat: Infinity, repeatDelay: 2 },
 };
 
 const animationMapping: Record<string, IconMappingEntry> = {
   "achievement-unlock": { icon: Award01Icon, size: 12, animation: "scale" },
   confetti: { icon: PartyIcon, size: 16 },
-  "empty-search": { icon: Search01Icon, size: 12, animation: "pulse" },
-  "empty-upload": { icon: Upload01Icon, size: 12, animation: "bounce" },
+  "empty-search": { icon: Search01Icon, size: 12 },
+  "empty-upload": { icon: Upload01Icon, size: 12 },
   "error-state": { icon: AlertCircleIcon, size: 16, animation: "shake" },
-  "level-up": { icon: CrownIcon, size: 16, animation: "rotate" },
-  "loading-dots": { icon: RadialIcon, size: 4, animation: "spin" },
-  "loading-lumni": { icon: RadialIcon, size: 14, animation: "spin" },
+  "level-up": { icon: CrownIcon, size: 16 },
+  "loading-dots": { icon: RadialIcon, size: 4 },
+  "loading-lumni": { icon: RadialIcon, size: 14 },
   "page-404": { icon: ArrowLeft01Icon, size: 6 },
   "quiz-correct": { icon: CheckmarkCircle01Icon, size: 5, animation: "scale" },
   "quiz-incorrect": { icon: CancelCircleIcon, size: 5, animation: "shake" },
-  "streak-fire": { icon: FireIcon, size: 6, animation: "sway" },
+  "streak-fire": { icon: FireIcon, size: 6 },
   "success-check": {
     icon: CheckmarkCircle01Icon,
     size: 10,
     animation: "scale",
   },
-  "typing-indicator": { icon: RadialIcon, size: 7, animation: "spin" },
-  "xp-burst": { icon: SparklesIcon, size: 8, animation: "spin" },
+  "typing-indicator": { icon: RadialIcon, size: 7 },
+  "xp-burst": { icon: SparklesIcon, size: 8 },
 };
 
 export type LottieAnimationName = keyof typeof animationMapping;
@@ -71,24 +61,17 @@ export type LottieAnimationName = keyof typeof animationMapping;
 export function AnimatedIcon({
   name,
   className,
-  loop = false,
   ...props
 }: {
   name: LottieAnimationName;
   className?: string;
-  loop?: boolean;
 } & Omit<ComponentProps<typeof m.div>, "animate" | "transition">) {
   const mapping = animationMapping[name];
   if (!mapping) return null;
 
   const { icon: Icon, size, animation } = mapping;
-  const hasAnimation = !!animation;
-  const shouldLoop = loop && hasAnimation;
-
   const animateProps = animation ? animationPresets[animation] : undefined;
-  const transitionProps = animation
-    ? { ...animationTransitions[animation], repeat: shouldLoop ? Infinity : 0 }
-    : undefined;
+  const transitionProps = animation ? animationTransitions[animation] : undefined;
 
   return (
     <m.div className={className} animate={animateProps} transition={transitionProps} {...props}>

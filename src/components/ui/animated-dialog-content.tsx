@@ -41,6 +41,7 @@ export function AnimatedDialogContent({
               type: "spring",
               damping: 26,
               stiffness: 300,
+              bounce: 0,
             }}
           >
             <DialogHeader>

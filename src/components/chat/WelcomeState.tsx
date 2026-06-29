@@ -7,13 +7,9 @@ export function WelcomeState() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center p-8">
       <div className="mb-6 size-48">
-        <m.div
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="flex size-full items-center justify-center"
-        >
+        <div className="flex size-full items-center justify-center">
           <HugeiconsIcon icon={SparklesIcon} className="size-20 text-primary/60" />
-        </m.div>
+        </div>
       </div>
       <div className="text-center">
         <m.h2

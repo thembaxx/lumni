@@ -145,7 +145,7 @@ export function NationalExamCalendar() {
             <m.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", stiffness: 120, damping: 26 }}
+              transition={{ type: "spring", stiffness: 120, damping: 26, bounce: 0 }}
               className="overflow-hidden rounded-card border border-border/60 bg-card shadow-level-1"
             >
               <div className="flex items-center justify-between border-border/40 border-b px-4 py-2.5">
@@ -166,13 +166,12 @@ export function NationalExamCalendar() {
                 </span>
               </div>
               <div className="divide-y divide-border/40">
-                {nextExams.map((exam, i) => (
+                {nextExams.map((exam) => (
                   <m.button
                     type="button"
                     key={exam.id}
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.08 }}
                     onClick={() => handleSlotClick(exam)}
                     className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/30 active:bg-muted/50"
                   >

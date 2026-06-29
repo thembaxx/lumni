@@ -22,7 +22,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
         <m.div
           initial={{ scale: 0.5, y: 100 }}
           animate={{ scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
           className="relative w-full max-w-sm motion-reduce:animate-none motion-reduce:transition-none"
         >
           <m.div
@@ -31,7 +31,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
               scale: [1, 1.1, 1],
               opacity: [0.6, 0.8, 0.6],
             }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 2 }}
           />
 
           <div className="relative rounded-3xl border-2 border-warning bg-card p-8 text-center shadow-level-3 shadow-warning/30">
@@ -43,7 +43,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
             >
               <m.div
                 animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.5, repeat: 3 }}
+                transition={{ duration: 0.5 }}
               >
                 <HugeiconsIcon icon={CrownIcon} className="mx-auto size-16 text-warning" />
               </m.div>
@@ -59,7 +59,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
                 className="mb-4 inline-flex items-center gap-2 rounded-full bg-warning px-8 py-3 text-primary-foreground"
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.4, type: "spring" }}
+                transition={{ delay: 0.4, type: "spring", bounce: 0 }}
               >
                 <HugeiconsIcon icon={StarIcon} className="size-6 fill-white" />
                 <span className="font-extrabold text-4xl tabular-nums">{level}</span>

@@ -3,7 +3,6 @@
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import {
   Empty,
@@ -41,15 +40,10 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
         <div className="col-span-12 md:col-span-6">
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <m.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              >
-                <HugeiconsIcon
-                  icon={RadialIcon}
-                  className="mx-auto size-12 text-muted-foreground md:mx-0"
-                />
-              </m.div>
+              <HugeiconsIcon
+                icon={RadialIcon}
+                className="mx-auto size-12 text-muted-foreground md:mx-0"
+              />
             </EmptyMedia>
             <EmptyTitle>{t("quiz.notStarted")}</EmptyTitle>
             <EmptyDescription>{t("quiz.notStartedDesc")}</EmptyDescription>
@@ -76,15 +70,10 @@ function QuizEmptyStateNoQuestions({ subject, onBack }: QuizEmptyStateNoQuestion
         <div className="col-span-12 md:col-span-6">
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <m.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              >
-                <HugeiconsIcon
-                  icon={RadialIcon}
-                  className="mx-auto size-12 text-muted-foreground md:mx-0"
-                />
-              </m.div>
+              <HugeiconsIcon
+                icon={RadialIcon}
+                className="mx-auto size-12 text-muted-foreground md:mx-0"
+              />
             </EmptyMedia>
             <EmptyTitle>{t("quiz.noQuestionsFound")}</EmptyTitle>
             <EmptyDescription>
@@ -129,12 +118,7 @@ export function QuizSubjectPrompt({ onSelect, hasSubject }: QuizSubjectPromptPro
           <div className="relative">
             <Skeleton shape="circle" className="absolute size-20" />
             <div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
-              <m.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              >
-                <HugeiconsIcon icon={RadialIcon} className="size-12 text-muted-foreground" />
-              </m.div>
+              <HugeiconsIcon icon={RadialIcon} className="size-12 text-muted-foreground" />
             </div>
           </div>
         </div>

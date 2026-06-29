@@ -42,13 +42,11 @@ export function Achievements({ achievements }: AchievementsProps) {
       </div>
 
       <div className="scrollbar-hide flex gap-2 overflow-x-auto pb-2">
-        {earnedAchievements.slice(0, 6).map((achievement, index) => (
+        {earnedAchievements.slice(0, 6).map((achievement) => (
           <m.button
             key={achievement.id}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.05 }}
-            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.96 }}
             className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-level-1 transition-transform`}
             title={t("gamification.achievementUnlocked", {
@@ -58,10 +56,8 @@ export function Achievements({ achievements }: AchievementsProps) {
           >
             <span className="text-2xl">{achievement.icon}</span>
             {achievement.rarity === "legendary" && (
-              <m.span
+              <span
                 className="absolute inset-0 rounded-xl"
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
                 style={{
                   boxShadow: "0 0 12px 2px oklch(81.9% 0.145 80° / 0.4)",
                 }}

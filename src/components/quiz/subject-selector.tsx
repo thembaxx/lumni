@@ -69,7 +69,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
               )}
             >
               <div
-                className="mb-3 flex size-11 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-110"
+                className="mb-3 flex size-11 items-center justify-center rounded-xl transition-transform duration-200"
                 style={{
                   backgroundColor: `${subject.color}15`,
                   boxShadow: `0 0 0 1px ${subject.color}20`,

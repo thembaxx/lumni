@@ -26,6 +26,7 @@ export function SuccessState({ email, error }: SuccessStateProps) {
               type: "spring",
               stiffness: 350,
               damping: 26,
+              bounce: 0,
             },
           }}
         >

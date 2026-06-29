@@ -53,7 +53,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
         <m.div
           initial={{ opacity: 0, y: 10, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
           className={cn("ml-auto max-w-[calc(100%-3rem)]", isUser ? "mr-0" : "mr-auto")}
         >
           <div
@@ -148,7 +148,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
       <m.div
         initial={{ opacity: 0, y: 10, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 26 }}
+        transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
         className={cn(
           "flex max-w-[calc(100%-3rem)] items-center gap-4 rounded-lg p-4 text-sm",
           isUser
@@ -191,7 +191,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
           </span>
           <div className="flex items-center gap-2">
             <div className="flex h-5 items-center gap-1">
-              {bars.map((height, i) => (
+              {bars.map((height) => (
                 <m.div
                   key={`bar-${height}`}
                   className={cn(
@@ -215,8 +215,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
                     isPlaying
                       ? {
                           repeat: Infinity,
-                          duration: 0.8,
-                          delay: i * 0.1,
+                          duration: 0.15,
                           ease: iOSEase,
                         }
                       : {
@@ -238,7 +237,7 @@ export const MessageBubble = memo(function MessageBubble({ message, onRetry }: M
     <m.div
       initial={{ opacity: 0, y: 10, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
       className={cn(
         "overflow-wrap-anywhere max-w-[calc(100%-3rem)] rounded-lg p-4 font-medium text-sm leading-relaxed motion-reduce:animate-none motion-reduce:transition-none",
         isUser

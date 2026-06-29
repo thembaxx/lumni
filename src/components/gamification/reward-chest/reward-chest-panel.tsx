@@ -36,7 +36,6 @@ export function RewardChestPanel() {
                   ? "border-border/30 opacity-50"
                   : rarityBorder[chest.rarity as keyof typeof rarityBorder],
               )}
-              whileHover={claimed ? {} : { scale: 1.05 }}
             >
               <span className="text-base">{chest.icon}</span>
               <div>

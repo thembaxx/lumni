@@ -28,7 +28,7 @@ export function ProfileAvatarSection({
     <div className="flex flex-col items-center justify-center gap-4 py-8">
       <div className="group relative">
         <label htmlFor="avatar-upload" className="block cursor-pointer">
-          <Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-300 group-hover:scale-105">
+          <Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-300">
             <AvatarImage
               src={
                 avatarUrl ??
@@ -41,7 +41,7 @@ export function ProfileAvatarSection({
             </AvatarFallback>
           </Avatar>
           <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-black/10" />
-          <div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-white shadow-level-2 transition-transform group-hover:scale-110">
+          <div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-white shadow-level-2 transition-transform">
             {uploading ? (
               <div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
             ) : (
