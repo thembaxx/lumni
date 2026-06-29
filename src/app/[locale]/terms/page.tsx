@@ -97,7 +97,6 @@ Support: ${appConfig.contact.supportEmail}`,
   },
 ];
 
-export const instant = false;
 
 export default function TermsPage() {
   return (

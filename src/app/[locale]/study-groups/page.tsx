@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "Collaborate and study together with your peers",
 };
 
-export const instant = false;
 
 export default function StudyGroupsPage() {
   return (

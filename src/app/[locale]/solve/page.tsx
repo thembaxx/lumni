@@ -5,7 +5,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PageContainer } from "@/components/layout/page-container";
 import { SolveContent } from "./solve-content";
 
-export const instant = false;
 
 export default function SolvePage() {
   return (

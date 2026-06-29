@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Practice with exams and past papers",
 };
 
-export const instant = false;
 
 export default function PracticePage() {
   return (

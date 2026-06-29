@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Study with spaced repetition flashcards",
 };
 
-export const instant = false;
 
 export default function FlashcardsPage() {
   return (

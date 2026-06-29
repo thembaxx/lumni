@@ -1,4 +1,3 @@
-export const instant = false;
 
 import { Suspense } from "react";
 import { FormSkeleton } from "@/components/ui/skeletons";

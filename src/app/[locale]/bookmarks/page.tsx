@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "View your bookmarked questions saved during quizzes",
 };
 
-export const instant = false;
 
 export default function BookmarksPage() {
   return <BookmarksClient />;

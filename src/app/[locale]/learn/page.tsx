@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Explore learning resources",
 };
 
-export const instant = false;
 
 export default function LearnPage() {
   return (

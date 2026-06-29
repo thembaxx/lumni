@@ -159,6 +159,149 @@ test.describe("Instant Navigation", () => {
     await expect(page).toHaveURL(/\/en\/stories/, { timeout: 15000 });
   });
 
+  test("learn category page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const learnLink = page.locator("nav a[href*='/learn']").first();
+    await expect(learnLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await learnLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/learn/, { timeout: 15000 });
+  });
+
+  test("practice category page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const practiceLink = page.locator("nav a[href*='/practice']").first();
+    await expect(practiceLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await practiceLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/practice/, { timeout: 15000 });
+  });
+
+  test("tools category page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const toolsLink = page.locator("nav a[href*='/tools']").first();
+    await expect(toolsLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await toolsLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/tools/, { timeout: 15000 });
+  });
+
+  test("progress category page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const progressLink = page.locator("nav a[href*='/progress']").first();
+    await expect(progressLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await progressLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/progress/, { timeout: 15000 });
+  });
+
+  test("lessons page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const lessonsLink = page.locator("nav a[href*='/lessons']").first();
+    await expect(lessonsLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await lessonsLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/lessons/, { timeout: 15000 });
+  });
+
+  test("pronunciation page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const pronunciationLink = page.locator("nav a[href*='/pronunciation']").first();
+    await expect(pronunciationLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await pronunciationLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/pronunciation/, { timeout: 15000 });
+  });
+
+  test("exams page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const examsLink = page.locator("nav a[href*='/exams']").first();
+    await expect(examsLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await examsLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/exams/, { timeout: 15000 });
+  });
+
+  test("past-papers page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const pastPapersLink = page.locator("nav a[href*='/past-papers']").first();
+    await expect(pastPapersLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await pastPapersLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/past-papers/, { timeout: 15000 });
+  });
+
+  test("chat page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const chatLink = page.locator("nav a[href*='/chat']").first();
+    await expect(chatLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await chatLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/chat/, { timeout: 15000 });
+  });
+
+  test("solve page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const solveLink = page.locator("nav a[href*='/solve']").first();
+    await expect(solveLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await solveLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/solve/, { timeout: 15000 });
+  });
+
+  test("study-guide page shell appears instantly", async ({ page }) => {
+    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
+    const studyGuideLink = page.locator("nav a[href*='/study-guide']").first();
+    await expect(studyGuideLink).toBeVisible({ timeout: 10000 });
+
+    await instant(page, async () => {
+      await studyGuideLink.click();
+      await expect(page.locator("[data-slot='skeleton']").first()).toBeVisible();
+    });
+
+    await expect(page).toHaveURL(/\/en\/study-guide/, { timeout: 15000 });
+  });
+
   test("multi-hop navigation remains instant (dashboard → quiz → settings)", async ({ page }) => {
     await page.goto("/en/dashboard", { waitUntil: "networkidle" });
     const quizLink = page.locator("nav a[href*='/quiz']").first();

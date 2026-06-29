@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { PageSkeleton } from "@/components/ui/skeletons";
 import { AdminPageClient } from "./admin-page-client";
 
-export const instant = false;
 
 export default function AdminPage() {
   return (

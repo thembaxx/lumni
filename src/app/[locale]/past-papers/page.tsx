@@ -1,4 +1,3 @@
-export const instant = false;
 
 import { PastPapersClient } from "@/components/past-papers/past-papers-client";
 

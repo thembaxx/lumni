@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Track your learning progress",
 };
 
-export const instant = false;
 
 export default function ProgressPage() {
   return (

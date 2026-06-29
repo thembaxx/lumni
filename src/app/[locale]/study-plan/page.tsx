@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "Study Plan - Lumni",
 };
 
-export const instant = false;
 
 export default function StudyPlanPage() {
   return (

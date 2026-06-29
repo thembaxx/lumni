@@ -112,7 +112,6 @@ Email: enquiries@inforegulator.org.za`,
   },
 ];
 
-export const instant = false;
 
 export default function PrivacyPage() {
   return (

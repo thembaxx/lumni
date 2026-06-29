@@ -1,4 +1,3 @@
-export const instant = false;
 
 import { SupportClient } from "@/components/support/support-client";
 

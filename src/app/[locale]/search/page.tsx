@@ -7,7 +7,6 @@ export const metadata = {
   description: "Search across all your study materials",
 };
 
-export const instant = false;
 
 export default function SearchPage() {
   return (

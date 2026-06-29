@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   title: "Exam Dates - Lumni",
 };
 
-export const instant = false;
 
 export default function ExamDatesPage() {
   return (

@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "Manage your class, track student progress, and create assignments",
 };
 
-export const instant = false;
 
 export default function TeacherDashboardPage() {
   return <TeacherDashboardClient />;

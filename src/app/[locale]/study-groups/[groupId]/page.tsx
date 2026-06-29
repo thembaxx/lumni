@@ -5,7 +5,6 @@ export const metadata: Metadata = {
   title: "Study Group",
 };
 
-export const instant = false;
 
 export default function GroupDetailPage() {
   return <GroupDetail />;

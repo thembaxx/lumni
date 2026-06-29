@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "Browse curated practice problems with step-by-step solutions",
 };
 
-export const instant = false;
 
 export default function ProblemsPage() {
   return <ProblemsClient />;

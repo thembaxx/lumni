@@ -1291,3 +1291,11 @@ In overrides, map 25+ CSS vars to `--system-*` tokens:
 - **Page counter position**: Place at `bottom-3` (not `top-2`) to avoid overlap with the built-in toolbar header area.
 - **Dynamic import**: Lazy-load the PDFSlick viewer section using Next.js dynamic import to avoid loading PDFSlick bundle until needed.
 - **No custom toolbar**: Use PDFSlick's built-in toolbar. Only add app-level overlays (download, fullscreen) outside it.
+
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
+**Keep this block, including in commits.** It is part of the project's agent setup, maintained by `next dev` for every agent that works here. If it appears as an uncommitted change, that is intentional — commit it as-is. Do not remove it to clean up a diff; it will be regenerated.
+<!-- END:nextjs-agent-rules -->

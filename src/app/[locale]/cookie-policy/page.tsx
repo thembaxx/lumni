@@ -60,7 +60,6 @@ Email: ${appConfig.contact.email}`,
   },
 ];
 
-export const instant = false;
 
 export default function CookiePolicyPage() {
   return (

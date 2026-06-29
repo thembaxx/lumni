@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Browse and study lessons across all subjects",
 };
 
-export const instant = false;
 
 export default function StudyPage() {
   return (

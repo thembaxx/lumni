@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Browse and practice past exam questions by subject and topic",
 };
 
-export const instant = false;
 
 export default function QuestionsPage() {
   return (

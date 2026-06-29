@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "Review and learn from your past mistakes",
 };
 
-export const instant = false;
 
 export default function ReviewPage() {
   return (

@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Read stories and practice comprehension",
 };
 
-export const instant = false;
 
 export default function StoriesPage() {
   return (

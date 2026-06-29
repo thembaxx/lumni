@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "New Flashcard",
 };
 
-export const instant = false;
 
 export default function NewFlashcardPage() {
   return (
