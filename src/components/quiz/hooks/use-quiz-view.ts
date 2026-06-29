@@ -273,8 +273,8 @@ export function useQuizView({
         }
 
         setResolvedTopic(targetTopic);
-      } catch {
-        // silent fallback — non-personalized
+      } catch (e) {
+        logError("useQuizView.handleStartWithSubject", e);
       }
 
       setCompetencyData(loadedCompData);

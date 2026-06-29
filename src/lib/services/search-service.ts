@@ -2,7 +2,6 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { logError } from "@/lib/shared/logger";
-import { loadFromStorage } from "@/lib/utils/storage";
 
 type SearchDb = Pick<
   DataAccess,
@@ -16,6 +15,7 @@ type SearchDb = Pick<
   | "storyCache"
   | "lessonCache"
   | "vocabularyList"
+  | "notes"
 >;
 const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess as SearchDb });
 let _deps: { db: SearchDb } = DEFAULT_DEPS;
@@ -310,37 +310,31 @@ async function searchDexieFlashcards(query: string): Promise<SearchResultItem[]>
   return results;
 }
 
-// Note search (localStorage, not Dexie)
-interface LocalNote {
-  id: string;
-  title: string;
-  content: string;
-  subject?: string;
-  topic?: string;
-  createdAt: string;
-  tags?: string[];
-}
-
-function searchLocalStorageNotes(query: string): SearchResultItem[] {
-  const notes = loadFromStorage<LocalNote[]>("lumni-notes", []);
+// Note search (Dexie notes table)
+async function searchNotes(query: string): Promise<SearchResultItem[]> {
   const results: SearchResultItem[] = [];
-  for (const n of notes) {
-    if (
-      textRelevant(n.title, query) ||
-      textRelevant(n.content, query) ||
-      (n.tags || []).some((t) => textRelevant(t, query))
-    ) {
-      results.push({
-        id: `note-${n.id}`,
-        type: "note",
-        title: n.title,
-        snippet: n.content.slice(0, 150),
-        subject: n.subject || "",
-        topic: n.topic,
-        createdAt: new Date(n.createdAt).getTime(),
-      });
-      if (results.length >= 10) break;
+  try {
+    const all = await _deps.db.notes.toArray();
+    for (const n of all) {
+      if (
+        textRelevant(n.title, query) ||
+        textRelevant(n.content, query) ||
+        (n.tags || []).some((t) => textRelevant(t, query))
+      ) {
+        results.push({
+          id: `note-${n.uuid}`,
+          type: "note",
+          title: n.title,
+          snippet: n.content.slice(0, 150),
+          subject: n.subject || "",
+          topic: n.topic,
+          createdAt: new Date(n.createdAt).getTime(),
+        });
+        if (results.length >= 10) break;
+      }
     }
+  } catch {
+    logError("SearchNotes", new Error("Failed to search notes"));
   }
   return results;
 }
@@ -350,7 +344,7 @@ const SEARCH_HANDLERS: Record<string, (query: string) => Promise<SearchResultIte
   question: searchDexieQuestions,
   "wrong-answer": searchDexieWrongAnswers,
   flashcard: searchDexieFlashcards,
-  note: (q) => Promise.resolve(searchLocalStorageNotes(q)),
+  note: (q) => searchNotes(q),
   "quiz-attempt": searchDexieQuizAttempts,
   "exam-session": searchDexieExamSessions,
   progress: searchDexieProgress,
@@ -382,7 +376,7 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
     searchDexieQuestions(query),
     searchDexieWrongAnswers(query),
     searchDexieFlashcards(query),
-    Promise.resolve(searchLocalStorageNotes(query)),
+    searchNotes(query),
     searchDexieQuizAttempts(query),
     searchDexieExamSessions(query),
     searchDexieProgress(query),

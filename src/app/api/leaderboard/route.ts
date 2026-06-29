@@ -14,7 +14,7 @@ async function fetchLeaderboard() {
 }
 
 export const GET = createRouteHandler({
-  auth: "none",
+  auth: "optional",
   errorLabel: "Leaderboard",
   execute: async () => {
     try {

@@ -92,6 +92,7 @@ afterEach(() => {
 describe("searchWithRAG", () => {
   test("returns empty context when subject is not in allowlist", async () => {
     consentGranted = true;
+    globalThis.fetch = vi.fn(async () => jsonResponse({})) as typeof fetch;
     const { searchWithRAG } = await import("../index");
     const result = await searchWithRAG({
       subject: "life-orientation",

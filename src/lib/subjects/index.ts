@@ -98,3 +98,13 @@ export function getSubjectOklchColor(id: string): string | undefined {
 export function getSubjectAbbr(id: string): string {
   return SUBJECT_ABBREVIATIONS[id] || id.slice(0, 4).toUpperCase();
 }
+
+export function formatSubjectLabel(subject: string): string {
+  const name = subjectMap.get(subject)?.name;
+  if (name) return name;
+  return subject
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

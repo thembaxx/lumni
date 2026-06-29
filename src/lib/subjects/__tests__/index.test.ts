@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
+  formatSubjectLabel,
   getSubjectAbbr,
   getSubjectHexColor,
   getSubjectName,
@@ -112,6 +113,28 @@ describe("getSubjectAbbr", () => {
 
   test("returns first 4 characters for empty string", () => {
     expect(getSubjectAbbr("")).toBe("");
+  });
+});
+
+describe("formatSubjectLabel", () => {
+  test("returns full name from JSON for a known subject", () => {
+    expect(formatSubjectLabel("mathematics")).toBe("Mathematics");
+  });
+
+  test("converts kebab-case to title case for unknown subjects", () => {
+    expect(formatSubjectLabel("physical-sciences")).toBe("Physical Sciences");
+  });
+
+  test("handles single word", () => {
+    expect(formatSubjectLabel("design")).toBe("Design");
+  });
+
+  test("handles empty string", () => {
+    expect(formatSubjectLabel("")).toBe("");
+  });
+
+  test("handles underscores", () => {
+    expect(formatSubjectLabel("life_sciences")).toBe("Life Sciences");
   });
 });
 

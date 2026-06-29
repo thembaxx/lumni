@@ -13,6 +13,7 @@ export type {
   LessonDataAccess,
   ObservabilityDataAccess,
   QuizDataAccess,
+  SettingsDataAccess,
   SocialDataAccess,
   StoryDataAccess,
   StudyDataAccess,

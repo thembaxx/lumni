@@ -1143,6 +1143,37 @@ When asked to harden a Next.js production deployment, audit in this order:
 
 **Batch scope for fixes**: `next.config.ts`, `src/instrumentation.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `.env.example`, `.gitignore`, `src/app/api/telemetry/route.ts`, `src/app/api/csp-violation/route.ts`, `.github/workflows/*.yml`.
 
+### Session 50 — P2 Implementation: Sync + STT + Subject Maps (June 2026)
+
+**Three P2 items implemented:**
+
+**1. Cross-device sync layer (Phase A)**
+
+- `src/lib/sync/` — types, outbox queue, service, barrel
+- API routes: `POST /api/sync/push`, `GET /api/sync/pull` (stubs)
+- `useSync` hook with status callbacks
+- Dexie v41: `syncOutbox` + `syncCheckpoints` tables
+- Builds on existing `sync-handler.ts` / `sync-manager.ts` — Appwrite integration not yet wired
+
+**2. Unified STT engine**
+
+- `src/lib/stt-engine/` — types, providers, engine, cache, cost-tracker
+- Provider chain: Deepgram → Browser-native → Whisper WASM (placeholder)
+- Dexie v41: `sttCache` + `sttUsage` tables
+- `POST /api/engine/transcribe` updated to use `STTEngine` with fallback
+- `src/types/speech-recognition.d.ts` — SpeechRecognition type declarations
+
+**3. Shared subject color/abbreviation maps**
+
+- `src/lib/subjects/{categories,icons}.ts` — `CATEGORY_ORDER`, `CATEGORY_LABELS`, `iconMap`, `getSubjectIcon()`
+- `formatSubjectLabel()` added to `src/lib/subjects/index.ts`
+- `src/lib/exam-dates/subject-maps.ts` deduplicated — `getSubjectColor()` delegates to `getSubjectTailwindColor()`
+- Consumers updated: `subject-selector.tsx`, `onboarding-client.tsx`, `markdown-renderer-inner.tsx`
+
+**Design docs**: `docs/decisions/2026-06-29-{cross-device-sync,unified-stt-engine,subject-maps}-design.md`
+
+**Verification**: `tsc --noEmit` 0 errors, tests 1712 pass (1 pre-existing flaky timeout in tinyfish).
+
 ## Polyfill/compat audit checklist (reusable pattern)
 
 When asked to remove backward-compat code for latest-browsers-only targeting, check in this order:

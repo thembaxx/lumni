@@ -15,7 +15,13 @@ export function useNoteStorage() {
     typeof window !== "undefined" ? localStorage.getItem("lumni-notes:migrated") : null;
 
   const [notes, setNotes] = useState<Note[]>(() => {
-    if (v1Item) return JSON.parse(v1Item);
+    if (v1Item) {
+      try {
+        return JSON.parse(v1Item);
+      } catch {
+        return [];
+      }
+    }
     return [];
   });
   const migratedRef = useRef(!!migratedItem);
@@ -25,7 +31,12 @@ export function useNoteStorage() {
     async function load() {
       if (!migratedItem) {
         if (v1Item) {
-          const localNotes: Note[] = JSON.parse(v1Item);
+          let localNotes: Note[] = [];
+          try {
+            localNotes = JSON.parse(v1Item);
+          } catch {
+            localNotes = [];
+          }
           await Promise.all(
             localNotes.map(async (n) => {
               const existing = await _deps.db.notes.where("uuid").equals(n.id).first();

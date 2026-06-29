@@ -1,5 +1,7 @@
 "use client";
 
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -77,22 +79,71 @@ export function SessionResultsView({
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="grid grid-cols-4 gap-3">
-            <div className="rounded-lg bg-muted p-3 text-center">
+            <div
+              className="rounded-lg bg-muted p-3 text-center"
+              aria-label={`${correctCount} correct`}
+            >
+              <HugeiconsIcon
+                icon={CheckmarkCircle01Icon}
+                className="mx-auto mb-1 size-5 text-success"
+                aria-hidden="true"
+              />
               <p className="font-extrabold text-2xl text-success tabular-nums">{correctCount}</p>
               <p className="text-muted-foreground text-xs">{t("exam.correct")}</p>
             </div>
-            <div className="rounded-lg bg-muted p-3 text-center">
+            <div
+              className="rounded-lg bg-muted p-3 text-center"
+              aria-label={`${failedCount} incorrect`}
+            >
+              <HugeiconsIcon
+                icon={Cancel01Icon}
+                className="mx-auto mb-1 size-5 text-destructive"
+                aria-hidden="true"
+              />
               <p className="font-extrabold text-2xl text-destructive tabular-nums">{failedCount}</p>
               <p className="text-muted-foreground text-xs">{t("exam.incorrect")}</p>
             </div>
-            <div className="rounded-lg bg-muted p-3 text-center">
+            <div
+              className="rounded-lg bg-muted p-3 text-center"
+              aria-label={`${accuracy} percent accuracy`}
+            >
+              <div className="mx-auto mb-1 flex size-5 items-center justify-center">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-5 text-foreground"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4l2.5 2.5" />
+                </svg>
+              </div>
               <p className="font-extrabold text-2xl tabular-nums">{accuracy}%</p>
               <p className="text-muted-foreground text-xs">{t("exam.accuracy")}</p>
             </div>
             {(() => {
               const aps = getAPSForSubject(accuracy);
               return (
-                <div className="rounded-lg bg-muted p-3 text-center">
+                <div
+                  className="rounded-lg bg-muted p-3 text-center"
+                  aria-label={`APS ${aps} out of 7`}
+                >
+                  <div className="mx-auto mb-1 flex size-5 items-center justify-center">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-5 text-foreground"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M2 20h20" />
+                      <path d="M4 20V8l4-4 4 4v12" />
+                      <path d="M12 20V4l4-4 4 4v16" />
+                    </svg>
+                  </div>
                   <p
                     className={cn(
                       "font-extrabold text-2xl tabular-nums",

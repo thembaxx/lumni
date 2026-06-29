@@ -41,27 +41,30 @@ export function QuestionCardHeader({
 }: QuestionCardHeaderProps) {
   const t = useTranslations();
   return (
-    <div className="gap-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Badge variant="outline" className="bg-(--system-accent)/10 font-medium">
-            <span className="opacity-80">{question.topic}</span>
+    <div className="flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <Badge variant="secondary" className="text-xs font-medium">
+            {question.topic}
           </Badge>
           <DifficultyBadge
             difficulty={question.difficulty}
             variant="quiz"
-            className="border font-mono text-xs"
+            className="border text-xs"
           />
-          <Badge variant="outline" className="bg-(--system-accent)/5 font-mono text-xs">
+          <Badge variant="outline" className="text-xs">
             {question.type}
           </Badge>
+          <Badge variant="secondary" className="text-xs">
+            {t("quiz.pointsCount", { points: question.points })}
+          </Badge>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1">
           {isMathSubject && onToolClick && (
             <button
               type="button"
               onClick={onToolClick}
-              className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
+              className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted"
               aria-label={t("quiz.snapPhoto")}
             >
               <HugeiconsIcon icon={Camera01Icon} className="size-4 text-muted-foreground" />
@@ -70,7 +73,7 @@ export function QuestionCardHeader({
           <button
             type="button"
             onClick={onBookmarkToggle}
-            className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
+            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted"
             aria-label={bookmarked ? t("quiz.removeBookmark") : t("quiz.bookmarkQuestion")}
           >
             <svg
@@ -87,9 +90,6 @@ export function QuestionCardHeader({
             </svg>
           </button>
           <TTSButton text={question.questionText} visualDescription={visualDescription} />
-          <Badge variant="secondary" className="text-xs">
-            {t("quiz.pointsCount", { points: question.points })}
-          </Badge>
         </div>
       </div>
       <MarkdownRenderer

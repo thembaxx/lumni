@@ -1,14 +1,13 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createSTTEngine } from "@/lib/stt-engine";
 import { logError } from "@/lib/shared/logger";
-
-const DEEPGRAM_URL = "https://api.deepgram.com/v1/listen";
 
 export const POST = createRouteHandler({
   auth: "none",
   errorLabel: "Transcribe",
   useRateLimit: true,
   parseBody: async (req) => {
-    const body: { audio: string; format?: string } = await req.json();
+    const body: { audio: string; format?: string; language?: string } = await req.json();
     return body;
   },
   validate: (body) => {
@@ -20,14 +19,25 @@ export const POST = createRouteHandler({
     const apiKey = process.env.DEEPGRAM_API_KEY;
 
     if (!apiKey) {
-      return { text: null, confidence: null, provider: null };
+      try {
+        const engine = createSTTEngine();
+        const buffer = Buffer.from(body.audio, "base64");
+        const blob = new Blob([buffer], { type: body.format || "audio/webm" });
+        return await engine.transcribeWithFallback(
+          { blob, sampleRate: 16000, channels: 1 },
+          { language: body.language ?? "en-ZA" },
+        );
+      } catch (err) {
+        logError("Transcribe.fallback", err);
+        return { text: null, confidence: null, provider: null };
+      }
     }
 
     try {
       const audioBuffer = Buffer.from(body.audio, "base64");
       const format = body.format || "audio/webm";
 
-      const response = await fetch(DEEPGRAM_URL, {
+      const response = await fetch("https://api.deepgram.com/v1/listen", {
         method: "POST",
         headers: {
           Authorization: `Token ${apiKey}`,

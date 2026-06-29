@@ -1,6 +1,6 @@
 # Lumni — Full Product Roadmap
 
-**Last updated:** 2026-05-29
+**Last updated:** 2026-06-29
 
 ---
 
@@ -65,18 +65,34 @@
 | 6.5 | Swipeable flashcard deck — Tinder-style interaction, SM-2 quality picker     | ✅ Done |
 | 6.6 | Full-screen immersive mode — Distraction-free quiz/exam with auto-nav-hiding | ✅ Done |
 
+## ✅ Phase 7: Hardening & Polish (Completed)
+
+| #    | Feature                                                                                          | Status  |
+| ---- | ------------------------------------------------------------------------------------------------ | ------- |
+| 7.1  | Mock Exam Mode — Timed past-paper simulation with exam hall conditions                           | ✅ Done |
+| 7.2  | Redis-backed RateLimiter — Lua-atomic rate limiting with Upstash Redis                           | ✅ Done |
+| 7.3  | Effect TS adoption — Bounded at AI client + rate-limiter; provider chain via Context.Tag + Layer | ✅ Done |
+| 7.4  | Knowledge graph + study guides — AI-generated topic dependency maps and structured guides        | ✅ Done |
+| 7.5  | Ably real-time live sessions — Replaced Appwrite 15s-polling with real-time presence             | ✅ Done |
+| 7.6  | Design system enforcement — No arbitrary values, PageContainer, gap-_, --z-_ tokens              | ✅ Done |
+| 7.7  | TinyFish RAG engine — Web-grounded AI for solve + quiz generation                                | ✅ Done |
+| 7.8  | WCAG a11y sweep — Focus rings, ARIA labels/tabs, aria-disabled, fieldset+legend, aria-live       | ✅ Done |
+| 7.9  | Premium gating removal — All features free; login banners on auth-required pages                 | ✅ Done |
+| 7.10 | Gamification for quality — 6 new achievements (mistake review, flashcard focus, etc.)            | ✅ Done |
+| 7.11 | Codebase hardening — logError sweep, RedisStore atomicity, CI branch fix, quiz tests             | ✅ Done |
+
 ---
 
 ## 🔜 Next Up
 
 | #   | Feature                                   | Priority | Description                                                |
 | --- | ----------------------------------------- | -------- | ---------------------------------------------------------- |
-| 7.1 | Mock Exam Mode                            | P2       | Timed past-paper simulation with exam hall conditions      |
-| 7.2 | Redis-backed RateLimiter + TokenTracker   | P2       | Survives server restarts, multi-instance support           |
-| 7.3 | Shared subject color/abbreviation maps    | P2       | Extract from exam-calendar + exam-dates to shared location |
-| 7.4 | Custom domain + production deployment     | P3       | Current: Vercel preview; needs custom domain               |
-| 7.5 | OCR-based PDF scraping for DBE timetables | P3       | Automated exam date extraction                             |
-| 7.6 | Live leaderboard (Appwrite Realtime)      | P3       | Social proof during study sessions                         |
+| 8.1 | Shared subject color/abbreviation maps    | P2       | Extract from exam-calendar + exam-dates to shared location |
+| 8.2 | Custom domain + production deployment     | P3       | Current: Vercel preview; needs custom domain               |
+| 8.3 | OCR-based PDF scraping for DBE timetables | P3       | Automated exam date extraction                             |
+| 8.4 | Live leaderboard (Appwrite Realtime)      | P3       | Social proof during study sessions                         |
+| 8.5 | Cross-device sync layer                   | P2       | Design exploration underway (see decisions/)               |
+| 8.6 | Unified STT engine                        | P2       | Provider abstraction over Deepgram + Whisper + Browser     |
 
 ---
 

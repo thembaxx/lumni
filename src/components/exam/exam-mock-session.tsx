@@ -75,7 +75,8 @@ export function ExamMockSession({
     setPhase("submitting");
 
     const current = answersRef.current;
-    const results = questions.map((q) => {
+    const mcqQuestions = questions.filter((q) => q.type === "multiple-choice");
+    const results = mcqQuestions.map((q) => {
       const record = current[q.id];
       return record?.gradingResult?.correct ?? false;
     });
@@ -88,10 +89,10 @@ export function ExamMockSession({
     }, 300);
 
     onFinish?.({
-      questions: questions.map((q) => ({ id: q.id })),
+      questions: mcqQuestions.map((q) => ({ id: q.id })),
       correctness: results,
       correctAnswers,
-      totalQuestions: questions.length,
+      totalQuestions: mcqQuestions.length,
       elapsedTime,
     });
   }, [questions, onFinish]);
@@ -198,9 +199,10 @@ export function ExamMockSession({
   }
 
   if (phase === "results") {
-    const correctCount = Object.values(answers).filter((a) => a.gradingResult?.correct).length;
-    const total = questions.length;
-    const pct = Math.round((correctCount / total) * 100);
+    const mcqQuestions = questions.filter((q) => q.type === "multiple-choice");
+    const correctCount = mcqQuestions.filter((q) => answers[q.id]?.gradingResult?.correct).length;
+    const total = mcqQuestions.length;
+    const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-background p-6 gap-6">
         <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-border bg-card p-6 text-center">

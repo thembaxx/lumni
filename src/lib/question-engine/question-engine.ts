@@ -23,6 +23,7 @@ import type {
   UserAnswer,
   ValidationResult,
 } from "./types";
+import { logError } from "@/lib/shared/logger";
 
 /**
  * Generates and validates questions for a given subject and topic using AI models with caching support.
@@ -205,7 +206,7 @@ export class QuestionEngine {
         bloomTaxonomy: bloom,
         body,
         difficulty: "Medium" as const,
-        explanation: `From ${pq.year} Paper ${pq.paperNumber}`,
+        explanation: `From ${pq.year} Paper ${pq.paperNumber}${pq.subtopicId ? `, Q${pq.subtopicId}` : ""}`,
         hint: "",
         id: pq.id,
         metadata: {
@@ -225,6 +226,12 @@ export class QuestionEngine {
             url: "#",
           },
         ],
+        pastPaperMetadata: {
+          year: pq.year,
+          paperNumber: pq.paperNumber,
+          questionNumber: pq.subtopicId ?? undefined,
+          totalMarks: pq.marks,
+        },
       };
     };
 
@@ -292,7 +299,7 @@ export class QuestionEngine {
           };
           return await processor.generate(typeParams, ragContext);
         } catch (error) {
-          console.error(`[QuestionEngine] Failed to generate ${type}:`, error);
+          logError("QuestionEngine.generateBatch", error);
           return [];
         }
       }),
@@ -435,7 +442,7 @@ export class QuestionEngine {
                 generated = true;
               }
             } catch (error) {
-              console.error(`[QuestionEngine] Generation failed for ${tryType}:`, error);
+              logError("QuestionEngine.generateMixed", error);
             }
           }
         }

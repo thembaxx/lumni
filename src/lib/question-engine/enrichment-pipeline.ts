@@ -76,7 +76,7 @@ function createCurriculumSource(): CurriculumSource {
         }
         return null;
       } catch (e) {
-        console.warn("Retrieve curriculum context failed:", e);
+        logError("EnrichmentPipeline.curriculum", e);
         return null;
       }
     },

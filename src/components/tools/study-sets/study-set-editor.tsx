@@ -79,19 +79,17 @@ export function StudySetForm({ onSubmit, onCancel, initialValues }: StudySetForm
   useEffect(() => {
     if (showNotesPicker) {
       (async () => {
-        const raw = localStorage.getItem("lumni_notes");
-        if (raw) {
-          try {
-            const notes = JSON.parse(raw);
-            setAvailableNotes(
-              (Array.isArray(notes) ? notes : []).map((n: { id: string; title: string }) => ({
-                id: n.id,
-                title: n.title,
-              })),
-            );
-          } catch {
-            setAvailableNotes([]);
-          }
+        try {
+          const { dexieDataAccess } = await import("@/lib/db");
+          const notes = await dexieDataAccess.notes.toArray();
+          setAvailableNotes(
+            notes.map((n) => ({
+              id: n.uuid,
+              title: n.title,
+            })),
+          );
+        } catch {
+          setAvailableNotes([]);
         }
       })();
     }

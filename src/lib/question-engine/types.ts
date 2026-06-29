@@ -254,6 +254,14 @@ export interface Question<T extends QuestionType = QuestionType> {
   pruned?: boolean;
   sourcePaperId?: string;
   sourcePastPaperQuestionId?: string;
+  pastPaperMetadata?: {
+    year: number;
+    paperNumber: number;
+    sectionName?: string;
+    questionNumber?: string;
+    markScheme?: string;
+    totalMarks?: number;
+  };
 }
 
 export interface UserAnswer {

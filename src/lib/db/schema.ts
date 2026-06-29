@@ -351,6 +351,45 @@ export interface PronunciationScoreRecord {
   attemptedAt: number;
 }
 
+export interface STTCacheEntry {
+  key: string;
+  result: string;
+  expiresAt: number;
+}
+
+export interface STTUsageEntry {
+  id?: number;
+  date: string;
+  provider: string;
+  minutes: number;
+  cost: number;
+}
+
+export interface SyncOutboxEntry {
+  id?: number;
+  table: string;
+  recordId: string;
+  operation: "create" | "update" | "delete";
+  data: string;
+  createdAt: number;
+  retries: number;
+}
+
+export interface SyncCheckpoint {
+  table: string;
+  lastPulledAt: number;
+  lastPulledVersion: string;
+}
+
+export interface UserSettings {
+  id?: string;
+  userId: string;
+  studyPrefs: string; // JSON stringified StudyPreferences
+  notifications: string; // JSON stringified NotificationSettings
+  betaFeatures: string; // JSON stringified BetaFeatures
+  updatedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
   pronunciationHistory!: Table<PronunciationScoreRecord, number>;
   chatMessages!: Table<ChatMessageRecord, number>;
@@ -407,6 +446,11 @@ export class LumniOfflineDB extends Dexie {
   seenPastPaperQuestions!: Table<SeenPastPaperQuestion, number>;
   storyProgress!: Table<StoryProgressRecord, number>;
   competitionScores!: Table<CompetitionScoreRecord, number>;
+  sttCache!: Table<STTCacheEntry, string>;
+  sttUsage!: Table<STTUsageEntry, number>;
+  syncOutbox!: Table<SyncOutboxEntry, number>;
+  syncCheckpoints!: Table<SyncCheckpoint, string>;
+  userSettings!: Table<UserSettings, string>;
 
   constructor() {
     super("lumni-offline");
@@ -1162,6 +1206,20 @@ export class LumniOfflineDB extends Dexie {
     // v40: pronunciationHistory for tracking pronunciation practice scores
     this.version(40).stores({
       pronunciationHistory: "++id, userId, word, language, attemptedAt",
+    });
+
+    // v41: sttCache (speech-to-text result cache), sttUsage (cost tracking),
+    // syncOutbox (pending outbound changes), syncCheckpoints (pull positions)
+    this.version(41).stores({
+      sttCache: "&key, expiresAt",
+      sttUsage: "++id, date, provider",
+      syncOutbox: "++id, table, operation, createdAt",
+      syncCheckpoints: "&table, lastPulledAt",
+    });
+
+    // v42: userSettings for cross-device preference persistence
+    this.version(42).stores({
+      userSettings: "&userId, updatedAt",
     });
   }
 }

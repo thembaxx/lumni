@@ -1,4 +1,11 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
+import type {
+  STTCacheEntry,
+  STTUsageEntry,
+  SyncCheckpoint,
+  SyncOutboxEntry,
+  UserSettings,
+} from "@/lib/db/schema";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
   AnalyticsEvent,
@@ -174,10 +181,20 @@ export interface SocialDataAccess {
   userConsents: DataAccessTable<UserConsent, string>;
 }
 
+export interface STTDataAccess {
+  sttCache: DataAccessTable<STTCacheEntry, string>;
+  sttUsage: DataAccessTable<STTUsageEntry, number>;
+}
+
 export interface CacheDataAccess {
   tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
   tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
   knowledgeGraph: DataAccessTable<CachedGraph, string>;
+}
+
+export interface SyncDataAccessV2 {
+  syncOutbox: DataAccessTable<SyncOutboxEntry, number>;
+  syncCheckpoints: DataAccessTable<SyncCheckpoint, string>;
 }
 
 export interface EmbeddingDataAccess {
@@ -190,6 +207,10 @@ export interface CommunityDataAccess {
 
 export interface PronunciationDataAccess {
   pronunciationHistory: DataAccessTable<PronunciationScoreRecord, number>;
+}
+
+export interface SettingsDataAccess {
+  userSettings: DataAccessTable<UserSettings, string>;
 }
 
 export interface LegacyDataAccess {
@@ -209,11 +230,14 @@ export interface DataAccess
     QuizDataAccess,
     ContentDataAccess,
     StudyDataAccess,
+    SettingsDataAccess,
     LessonDataAccess,
     DictionaryDataAccess,
     StoryDataAccess,
     VocabularyDataAccess,
     SyncDataAccess,
+    STTDataAccess,
+    SyncDataAccessV2,
     ObservabilityDataAccess,
     SocialDataAccess,
     CacheDataAccess,

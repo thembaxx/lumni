@@ -1,6 +1,7 @@
 "use client";
 
 import Menu01Icon from "@hugeicons/core-free-icons/Menu01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createContext, use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
@@ -91,7 +92,7 @@ function SidebarContent() {
             Search pages
           </label>
           <HugeiconsIcon
-            icon={Menu01Icon}
+            icon={Search01Icon}
             className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
           />
           <input

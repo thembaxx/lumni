@@ -25,6 +25,14 @@ export interface RateLimitStore {
     | IterableIterator<[string, RateLimitStoreEntry]>
     | Promise<IterableIterator<[string, RateLimitStoreEntry]>>;
   size(): number | Promise<number>;
+  /** Atomically increment a counter, or set to 1 if absent. Returns { count, resetAt }.
+   *  RedisStore implements this atomically via Lua script to prevent race conditions.
+   *  MapStore delegates to get+set (safe under single-threaded Node.js event loop). */
+  atomicIncrement?(
+    key: string,
+    max: number,
+    windowMs: number,
+  ): Promise<{ count: number; resetAt: number }>;
 }
 
 class MapStore implements RateLimitStore {
@@ -99,6 +107,27 @@ export class RateLimiter {
     const store = this.store;
     return Effect.gen(function* () {
       const now = Date.now();
+
+      if (typeof store.atomicIncrement === "function") {
+        const result = yield* Effect.promise(() =>
+          store.atomicIncrement!(key, config.max, config.windowMs),
+        );
+        if (result.count > config.max) {
+          return yield* Effect.fail(
+            new RateLimitExceeded({
+              allowed: false,
+              remaining: 0,
+              resetAt: result.resetAt,
+            }),
+          );
+        }
+        return {
+          allowed: true,
+          remaining: config.max - result.count,
+          resetAt: result.resetAt,
+        } as RateLimitResult;
+      }
+
       const record = yield* storeGetEffect(store, key);
 
       if (!record || record.resetAt < now) {

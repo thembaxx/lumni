@@ -36,6 +36,7 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case "SET_INDEX":
       return { ...state, currentIndex: action.index };
     case "RECORD_ANSWER":
+      if (state.isComplete) return state;
       return {
         ...state,
         correctness: [...state.correctness, action.correct],

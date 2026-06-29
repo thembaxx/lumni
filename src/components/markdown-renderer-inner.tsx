@@ -88,15 +88,6 @@ const TABULAR_SUBJECTS = ["physical-sciences", "mathematical-literacy"];
 
 const MATH_DETECT_RE = /\$\$[\s\S]*?\$\$|\$[a-zA-Z\\{].*?\$|\\\(|\\\[/;
 
-const SUBJECT_COLORS: Record<string, string> = {
-  mathematics: getSubjectOklchColor("mathematics") ?? "oklch(70.6% 0.132 264°)",
-  "technical-mathematics":
-    getSubjectOklchColor("technical-mathematics") ?? "oklch(71.8% 0.143 286°)",
-  "physical-sciences": getSubjectOklchColor("physical-sciences") ?? "oklch(73.6% 0.145 155°)",
-  "mathematical-literacy":
-    getSubjectOklchColor("mathematical-literacy") ?? "oklch(76.2% 0.155 49°)",
-};
-
 interface MarkdownRendererProps {
   content: string;
   className?: string;
@@ -225,9 +216,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
   const isTabularSubject = TABULAR_SUBJECTS.some((s) =>
     subject?.toLowerCase().includes(s.toLowerCase()),
   );
-  const subjectColor = Object.entries(SUBJECT_COLORS).find(([key]) =>
-    subject?.toLowerCase().includes(key.toLowerCase()),
-  )?.[1];
+  const subjectColor = getSubjectOklchColor(subject ?? "");
 
   const normalizedContent = useMemo(() => normalizeMathDelimiters(content), [content]);
   const hasMath = useMemo(() => MATH_DETECT_RE.test(normalizedContent), [normalizedContent]);

@@ -21,6 +21,10 @@ import { RewardChestPanel } from "@/components/gamification/reward-chest/reward-
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import {
+  CollapsibleSection,
+  CollapsibleSectionAlwaysOpen,
+} from "@/components/shared/collapsible-section";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -61,113 +65,128 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
 
   return (
     <StaggerProvider baseDelay={0.02}>
-      <section className="flex flex-col gap-3" aria-label="Get started">
-        {isLoggedIn && (
-          <StaggeredSection>
-            <DailyChallengeCard streak={boltStreak} />
-          </StaggeredSection>
-        )}
-        {isLoggedIn && boltDone && (
-          <StaggeredSection>
-            <div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/5 px-4 py-3 transition-[background-color] duration-300">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
-                <HugeiconsIcon icon={SparklesIcon} className="size-5 text-success" />
+      {/* Priority — always visible */}
+      <CollapsibleSectionAlwaysOpen>
+        <section className="flex flex-col gap-3" aria-label="Get started">
+          {isLoggedIn && (
+            <StaggeredSection>
+              <DailyChallengeCard streak={boltStreak} />
+            </StaggeredSection>
+          )}
+          {isLoggedIn && boltDone && (
+            <StaggeredSection>
+              <div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/5 px-4 py-3 transition-[background-color] duration-300">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
+                  <HugeiconsIcon icon={SparklesIcon} className="size-5 text-success" />
+                </div>
+                <div className="flex min-w-0 flex-col gap-1">
+                  <span className="font-semibold text-sm text-success-foreground">
+                    {t("dashboard.boltCompleteTitle")}
+                  </span>
+                  <span className="text-success-foreground/70 text-xs">
+                    {t("dashboard.boltCompleteDescription")}
+                  </span>
+                </div>
+                <div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">
+                  <HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
+                </div>
               </div>
-              <div className="flex min-w-0 flex-col gap-1">
-                <span className="font-semibold text-sm text-success-foreground">
-                  {t("dashboard.boltCompleteTitle")}
-                </span>
-                <span className="text-success-foreground/70 text-xs">
-                  {t("dashboard.boltCompleteDescription")}
-                </span>
-              </div>
-              <div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">
-                <HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
-              </div>
-            </div>
-          </StaggeredSection>
-        )}
-        {isLoggedIn && (
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <AppErrorBoundary>
+                <NextBestActionCard />
+              </AppErrorBoundary>
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <TodayFocusCard />
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <GettingStartedCard />
+            </StaggeredSection>
+          )}
           <StaggeredSection>
-            <AppErrorBoundary>
-              <NextBestActionCard />
-            </AppErrorBoundary>
-          </StaggeredSection>
-        )}
-        {isLoggedIn && (
-          <StaggeredSection>
-            <TodayFocusCard />
-          </StaggeredSection>
-        )}
-        {isLoggedIn && (
-          <StaggeredSection>
-            <GettingStartedCard />
-          </StaggeredSection>
-        )}
-        <StaggeredSection>
-          <NotificationNudge />
-        </StaggeredSection>
-      </section>
-
-      {isLoggedIn && (
-        <section className="content-visibility-auto flex flex-col gap-3" aria-label="Your progress">
-          <StaggeredSection>
-            <BentoStatRow questionsAnswered={stats.questionsAnswered} streak={currentStreak} />
-          </StaggeredSection>
-          <StaggeredSection>
-            <StreakCard />
+            <NotificationNudge />
           </StaggeredSection>
         </section>
+      </CollapsibleSectionAlwaysOpen>
+
+      {/* Stats */}
+      {isLoggedIn && (
+        <CollapsibleSection title="Your Progress" count={stats.questionsAnswered ? undefined : 0}>
+          <section className="flex flex-col gap-3" aria-label="Your progress">
+            <StaggeredSection>
+              <BentoStatRow questionsAnswered={stats.questionsAnswered} streak={currentStreak} />
+            </StaggeredSection>
+            <StaggeredSection>
+              <StreakCard />
+            </StaggeredSection>
+          </section>
+        </CollapsibleSection>
       )}
 
-      <section className="content-visibility-auto flex flex-col gap-3" aria-label="Study tools">
-        <StaggeredSection>
-          <FocusTimerCard />
-        </StaggeredSection>
-        <StaggeredSection>
-          <QuestionOfTheDayCard />
-        </StaggeredSection>
-        <StaggeredSection>
-          <WordOfDayCard />
-        </StaggeredSection>
-        {isLoggedIn && (
+      {/* Study Tools */}
+      <CollapsibleSection title="Study Tools" defaultOpen={true}>
+        <section className="flex flex-col gap-3" aria-label="Study tools">
           <StaggeredSection>
-            <WeakTopicsCard />
+            <FocusTimerCard />
           </StaggeredSection>
-        )}
-        {isLoggedIn && (
           <StaggeredSection>
-            <LessonLibraryCard />
+            <QuestionOfTheDayCard />
           </StaggeredSection>
-        )}
-        {isLoggedIn && (
           <StaggeredSection>
-            <VocabularyListCard />
+            <WordOfDayCard />
           </StaggeredSection>
-        )}
-        {isLoggedIn && (
+          {isLoggedIn && (
+            <StaggeredSection>
+              <WeakTopicsCard />
+            </StaggeredSection>
+          )}
+        </section>
+      </CollapsibleSection>
+
+      {/* Learning & More */}
+      <CollapsibleSection title="More">
+        <section className="flex flex-col gap-3" aria-label="More resources">
+          {isLoggedIn && (
+            <StaggeredSection>
+              <LessonLibraryCard />
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <VocabularyListCard />
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <AppErrorBoundary>
+                <LearningMapCard />
+              </AppErrorBoundary>
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <RewardChestPanel />
+            </StaggeredSection>
+          )}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <CompetitionCard />
+            </StaggeredSection>
+          )}
           <StaggeredSection>
-            <AppErrorBoundary>
-              <LearningMapCard />
-            </AppErrorBoundary>
+            <StaggerList>
+              <QuickActions />
+            </StaggerList>
           </StaggeredSection>
-        )}
-        {isLoggedIn && (
-          <StaggeredSection>
-            <RewardChestPanel />
-          </StaggeredSection>
-        )}
-        {isLoggedIn && (
-          <StaggeredSection>
-            <CompetitionCard />
-          </StaggeredSection>
-        )}
-        <StaggeredSection>
-          <StaggerList>
-            <QuickActions />
-          </StaggerList>
-        </StaggeredSection>
-      </section>
+        </section>
+      </CollapsibleSection>
 
       {isAnonymous && (
         <StaggeredSection>

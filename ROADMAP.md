@@ -1,12 +1,13 @@
 # Roadmap
 
-## Wave 2 — Feature UI & Content
+This file is auto-generated from the master roadmap at [`docs/roadmap.md`](./docs/roadmap.md).
+Shipped items are tracked there with ✅; update that file, not this one.
+
+## Short-term (next 1–2 sprints)
 
 ### Pronunciation (C1)
 
-- [ ] **Install whisper model on first use**: Show download progress bar for ~80MB model (Cache API)
-- [ ] **Whisper accuracy tuning**: Fine-tune on NCHLT Speech Corpus for SA language accuracy
-- [ ] **Phoneme-level assessment**: Replace Levenshtein distance with IPA phoneme alignment
+- [ ] **Phoneme-level assessment**: Replace Levenshtein distance with IPA phoneme alignment (STT engine tracked in `docs/decisions/`)
 - [ ] **Pronunciation history**: Track scores over time in Dexie, show improvement charts
 - [ ] **Lesson integration**: Surface pronunciation practice in lesson cards for vocab words
 
@@ -26,18 +27,9 @@
 - [ ] **Story exercises**: Fill-in-the-blank, vocabulary matching, summary writing
 - [ ] **Progress tracking**: Track stories read, comprehension scores, reading speed
 
-### Search
+## Medium-term
 
-- [ ] **Cross-domain search**: Search stories + dictionary + lessons + past questions from unified search bar
-
-### Teacher Tools
-
-- [ ] **Assignment sharing**: Teacher shares stories + comprehension questions to class
-- [ ] **Student progress**: Teacher dashboard shows reading progress per student
-
-## Wave 3 — i18n & Offline
-
-- [ ] **Full i18n**: Translate all UI text to Afrikaans and isiZulu (beyond nav/consent)
-- [ ] **Offline dictionary cache**: Pre-populate common words on app install
-- [ ] **Offline stories bundle**: Cache 5 stories per language on first sync
-- [ ] **PWA install prompt**: Improved install experience + offline page content
+- [ ] **Cross-device sync layer**: See design exploration in `docs/decisions/`
+- [ ] **Unified STT engine**: Provider abstraction over Deepgram + Whisper + Browser
+- [ ] **Custom domain + production deployment**
+- [ ] **OCR-based PDF scraping for DBE timetables**

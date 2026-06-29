@@ -173,6 +173,11 @@ class DexieDataAccess implements DataAccess {
   onboardingState = tableAdapter(offlineDB.onboardingState);
   competitionScores = tableAdapter(offlineDB.competitionScores);
   pronunciationHistory = tableAdapter(offlineDB.pronunciationHistory);
+  sttCache = tableAdapter(offlineDB.sttCache);
+  sttUsage = tableAdapter(offlineDB.sttUsage);
+  syncOutbox = tableAdapter(offlineDB.syncOutbox);
+  syncCheckpoints = tableAdapter(offlineDB.syncCheckpoints);
+  userSettings = tableAdapter(offlineDB.userSettings);
 }
 
 export const dexieDataAccess =

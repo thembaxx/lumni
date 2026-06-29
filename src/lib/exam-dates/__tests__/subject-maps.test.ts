@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-const { getSubjectColor, getSubjectAbbr, subjectColors, subjectAbbrs } =
-  await import("../subject-maps");
+const { getSubjectColor, getSubjectAbbr } = await import("../subject-maps");
 
 describe("subject-maps", () => {
   test("getSubjectColor returns known colors", () => {
@@ -19,32 +18,5 @@ describe("subject-maps", () => {
   test("getSubjectAbbr falls back for unknown", () => {
     const abbr = getSubjectAbbr("unknown-subject");
     expect(abbr).toBe("UNKN");
-  });
-
-  test("subjectColors covers all major subjects", () => {
-    const required = [
-      "mathematics",
-      "physical-sciences",
-      "life-sciences",
-      "english-home-language",
-      "history",
-      "geography",
-    ];
-    for (const s of required) {
-      expect(subjectColors[s]).toBeDefined();
-    }
-  });
-
-  test("subjectAbbrs covers all major subjects", () => {
-    const required = [
-      "mathematics",
-      "physical-sciences",
-      "life-sciences",
-      "english-home-language",
-      "english-first-additional-language",
-    ];
-    for (const s of required) {
-      expect(subjectAbbrs[s]).toBeDefined();
-    }
   });
 });

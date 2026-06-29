@@ -26,10 +26,15 @@ import type {
   RetentionRecurrence,
   SeenPastPaperQuestion,
   SharedQuestionRecord,
+  STTCacheEntry,
+  STTUsageEntry,
   StoryProgressRecord,
   StudyPlanRecord,
+  SyncCheckpoint,
   SyncConflict,
+  SyncOutboxEntry,
   TeacherObservation,
+  UserSettings,
   VocabularyEntry,
 } from "@/lib/db/schema";
 import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
@@ -302,4 +307,9 @@ export class InMemoryDataAccess implements DataAccess {
   onboardingState = new InMemoryTable<OnboardingState, string>();
   competitionScores = new InMemoryTable<CompetitionScoreRecord>();
   pronunciationHistory = new InMemoryTable<PronunciationScoreRecord>();
+  sttCache = new InMemoryTable<STTCacheEntry, string>();
+  sttUsage = new InMemoryTable<STTUsageEntry>();
+  syncOutbox = new InMemoryTable<SyncOutboxEntry>();
+  syncCheckpoints = new InMemoryTable<SyncCheckpoint, string>();
+  userSettings = new InMemoryTable<UserSettings, string>();
 }

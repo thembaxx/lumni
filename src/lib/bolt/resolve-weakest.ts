@@ -1,5 +1,8 @@
+import { formatSubjectLabel } from "@/lib/subjects";
 import { dexieDataAccess } from "@/lib/db";
 import type { CompetencyDataAccess } from "@/lib/db/data-access";
+
+export { formatSubjectLabel };
 
 let _deps: { db: CompetencyDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: CompetencyDataAccess }) {
@@ -31,12 +34,4 @@ export async function resolveWeakestSubject(): Promise<string> {
   } catch {
     return "mathematics";
   }
-}
-
-export function formatSubjectLabel(subject: string): string {
-  return subject
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 }

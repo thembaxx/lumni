@@ -75,6 +75,10 @@ describe("enrichment pipeline", () => {
     ]);
 
     vi.mocked(mockEmbedText).mockResolvedValue(null);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({ questions: [] }) }),
+    );
 
     const pipeline = createEnrichmentPipeline({ db });
     const result = await pipeline.enrich(makeParams());
@@ -225,6 +229,10 @@ describe("enrichment pipeline", () => {
 
   test("returns params unchanged when all sources empty", async () => {
     vi.mocked(mockEmbedText).mockResolvedValue(null);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({ questions: [] }) }),
+    );
 
     const pipeline = createEnrichmentPipeline({ db });
     const input = makeParams();

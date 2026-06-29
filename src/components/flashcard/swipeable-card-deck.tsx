@@ -1,5 +1,7 @@
 "use client";
 
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useRef, useState } from "react";
@@ -9,6 +11,7 @@ import type { FlashcardCardData } from "@/components/flashcard/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "@/i18n/navigation";
 import { useSwipeDeck } from "@/hooks/use-swipe-deck";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -34,6 +37,7 @@ export function SwipeableCardDeck({
   knownCount,
   reviewCount,
 }: SwipeableCardDeckProps) {
+  const router = useRouter();
   const {
     currentIndex,
     swipeDirection,
@@ -104,11 +108,7 @@ export function SwipeableCardDeck({
       <Card className="mx-auto w-full max-w-md" data-testid="empty-deck-message">
         <CardContent className="flex flex-col items-center justify-center gap-4 p-8">
           <p className="text-muted-foreground">No flashcards available.</p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => (window.location.href = "/flashcards")}
-          >
+          <Button variant="outline" size="sm" onClick={() => router.push("/flashcards")}>
             Generate AI flashcards
           </Button>
         </CardContent>
@@ -122,8 +122,11 @@ export function SwipeableCardDeck({
   if (isComplete && cards.length > 0) {
     return (
       <div role="alert" className="flex flex-col items-center justify-center gap-4 py-12">
-        <div className="text-5xl" aria-hidden="true">
-          🎉
+        <div
+          className="flex size-14 items-center justify-center rounded-full bg-system-accent/10 text-2xl"
+          aria-hidden="true"
+        >
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-7 text-system-accent" />
         </div>
         <h3 className="font-semibold text-xl">Deck Complete!</h3>
         <p className="text-muted-foreground text-sm">You reviewed all {cards.length} cards.</p>

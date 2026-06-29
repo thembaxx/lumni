@@ -14,6 +14,7 @@ import { CompleteStep } from "@/components/onboarding/complete-step";
 import { GoalsStep } from "@/components/onboarding/goals-step";
 import { StepIndicator } from "@/components/onboarding/step-indicator";
 import { SubjectSelectionStep } from "@/components/onboarding/subject-selection-step";
+import { CATEGORY_LABELS, CATEGORY_ORDER } from "@/lib/subjects/categories";
 import { GoalsSVG } from "@/components/onboarding/svgs/goals-svg";
 import { SubjectsSVG } from "@/components/onboarding/svgs/subjects-svg";
 
@@ -23,32 +24,6 @@ interface Subject {
   color: string;
   category?: string;
 }
-
-const CATEGORY_ORDER = [
-  "languages",
-  "sciences",
-  "mathematics",
-  "humanities",
-  "commerce",
-  "agriculture",
-  "technology",
-  "services",
-  "arts",
-  "compulsory",
-];
-
-const CATEGORY_LABELS: Record<string, string> = {
-  languages: "Languages",
-  sciences: "Sciences",
-  mathematics: "Mathematics",
-  humanities: "Humanities",
-  commerce: "Commerce",
-  agriculture: "Agriculture",
-  technology: "Technology",
-  services: "Services",
-  arts: "Arts & Culture",
-  compulsory: "Compulsory Subjects",
-};
 
 function mapSubject(s: {
   id: string;
@@ -179,7 +154,11 @@ export default function OnboardingClient() {
           initial={false}
           animate={{ opacity: 1 }}
         >
-          <StepIndicator step={step} totalSteps={MAX_STEPS} />
+          <StepIndicator
+            step={step}
+            totalSteps={MAX_STEPS}
+            labels={["Subjects", "Goals", "Favourites", "Review"]}
+          />
 
           <AnimatePresence mode="wait" initial={false}>
             <m.div
@@ -244,11 +223,10 @@ export default function OnboardingClient() {
                 <div className="flex flex-col items-center gap-6">
                   <SubjectsSVG />
                   <div className="flex flex-col gap-2 text-center">
-                    <h1 className="font-heading font-semibold text-2xl">
-                      Pick your favourite subjects
-                    </h1>
+                    <h1 className="font-heading font-semibold text-2xl">Pick your favourites</h1>
                     <p className="text-muted-foreground text-sm">
-                      Select up to 3 favourite subjects for quick access.
+                      From your enrolled subjects, choose up to 3 favourites for quick access on
+                      your dashboard.
                     </p>
                   </div>
                   <SubjectSelectionStep

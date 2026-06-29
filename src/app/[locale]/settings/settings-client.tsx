@@ -29,20 +29,15 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import {
-  BETA_FEATURES_KEY,
-  type BetaFeatures,
-  DEFAULT_BETA,
-  DEFAULT_NOTIFICATIONS,
-  DEFAULT_PREFERENCES,
-  loadFromStorage,
-  NOTIFICATION_SETTINGS_KEY,
-  type NotificationSettings,
-  STUDY_PREFS_KEY,
-  type StudyPreferences,
-  saveToStorage,
-} from "@/lib/utils/storage";
+  loadSettings,
+  saveSettings,
+  clearSettings,
+  type HydratedSettings,
+} from "@/lib/db/settings-migrator";
+import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import type { BetaFeatures, NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
 
 const tabDefs = [
   { value: "profile", key: "settings.account", icon: UserIcon },
@@ -77,42 +72,24 @@ function SettingsContent() {
   );
   const [saved, setSaved] = useState(false);
 
-  type AppSettings = {
-    studyPrefs: StudyPreferences;
-    notifications: NotificationSettings;
-    betaFeatures: BetaFeatures;
-  };
-
-  const [appSettings, setAppSettings] = useState<AppSettings>(() => {
-    const onboarding = loadFromStorage<{
-      selectedSubjects?: string[];
-      targetAps?: number;
-      dailyStudyMinutes?: number;
-      notificationsEnabled?: boolean;
-    }>("lumni_onboarding", {});
-
-    const stored = loadFromStorage(STUDY_PREFS_KEY, DEFAULT_PREFERENCES);
-    if (onboarding.dailyStudyMinutes && !localStorage.getItem(STUDY_PREFS_KEY)) {
-      stored.timerDuration = onboarding.dailyStudyMinutes * 60;
-    }
-
-    const notifPrefs = loadFromStorage(NOTIFICATION_SETTINGS_KEY, DEFAULT_NOTIFICATIONS);
-    if (
-      onboarding.notificationsEnabled !== undefined &&
-      !localStorage.getItem(NOTIFICATION_SETTINGS_KEY)
-    ) {
-      notifPrefs.studyReminders = onboarding.notificationsEnabled;
-      notifPrefs.streakAlerts = onboarding.notificationsEnabled;
-    }
-
-    const betaPrefs = loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA);
-
-    return {
-      studyPrefs: stored,
-      notifications: notifPrefs,
-      betaFeatures: betaPrefs,
-    };
+  const [appSettings, setAppSettings] = useState<HydratedSettings>({
+    studyPrefs: null as unknown as StudyPreferences,
+    notifications: null as unknown as NotificationSettings,
+    betaFeatures: null as unknown as BetaFeatures,
   });
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!user?.$id) return;
+    loadSettings(dexieDataAccess, user.$id).then((settings) => {
+      setAppSettings(settings);
+      setSettingsLoaded(true);
+    });
+  }, [user?.$id]);
+
+  if (!settingsLoaded || !appSettings.studyPrefs) {
+    return <SettingsLoading />;
+  }
 
   const { studyPrefs, notifications, betaFeatures } = appSettings;
 
@@ -145,12 +122,10 @@ function SettingsContent() {
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const handleSave = async () => {
+    if (!user?.$id) return;
     setIsSaving(true);
     setSaved(false);
-    saveToStorage(STUDY_PREFS_KEY, studyPrefs);
-    saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
-    saveToStorage(BETA_FEATURES_KEY, betaFeatures);
-
+    await saveSettings(dexieDataAccess, user.$id, { studyPrefs, notifications, betaFeatures });
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsSaving(false);
     setSaved(true);
@@ -335,13 +310,9 @@ function SettingsContent() {
           confirmLabel="Clear preferences"
           cancelLabel="Keep them"
           onConfirm={() => {
-            localStorage.removeItem(STUDY_PREFS_KEY);
-            localStorage.removeItem(NOTIFICATION_SETTINGS_KEY);
-            localStorage.removeItem(BETA_FEATURES_KEY);
-            setAppSettings({
-              studyPrefs: DEFAULT_PREFERENCES,
-              notifications: DEFAULT_NOTIFICATIONS,
-              betaFeatures: DEFAULT_BETA,
+            if (!user?.$id) return;
+            clearSettings(dexieDataAccess, user.$id).then(() => {
+              loadSettings(dexieDataAccess, user.$id).then(setAppSettings);
             });
             setShowClearConfirm(false);
           }}
