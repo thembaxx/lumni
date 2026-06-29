@@ -3,9 +3,18 @@ import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence } from "motion/react";
 import { useRef, useState } from "react";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+  AttachmentTrigger,
+} from "@/components/ui/attachment";
 import { Button } from "@/components/ui/button";
 import {
   DropdownList,
@@ -15,32 +24,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ImageProcessingIndicator } from "./ImageProcessingIndicator";
 
 interface ChatInputProps {
-  onPaperPlane: (message: string) => void;
-  isLoading: boolean;
-  onPaperPlaneImage: (file: File) => void;
-  imageProcessing: {
-    status: string;
-    progress: number;
-    progressMessage: string;
-    error: string | null;
-  };
-  onDismissImageProcessing: () => void;
+  onSend: (content: string) => void;
+  onSendImage: (file: File) => void;
+  isLoading?: boolean;
+  uploadState: { status: string; progress: number; error: string | null };
 }
 
-export function ChatInput({
-  onPaperPlane,
-  isLoading,
-  onPaperPlaneImage,
-  imageProcessing,
-  onDismissImageProcessing,
-}: ChatInputProps) {
+export function ChatInput({ onSend, onSendImage, isLoading, uploadState }: ChatInputProps) {
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [voicePressed, setVoicePressed] = useState(false);
   const [voiceDialogOpen, setVoiceDialogOpen] = useState(false);
+  const [attachOpen, setAttachOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const uploadInputRef = useRef<HTMLInputElement>(null);
@@ -48,7 +44,7 @@ export function ChatInput({
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (input.trim() && !isLoading) {
-      onPaperPlane(input);
+      onSend(input);
       setInput("");
     }
   };
@@ -57,24 +53,19 @@ export function ChatInput({
     if (!audioBlob) return;
     const reader = new FileReader();
     reader.onloadend = () => {
-      onPaperPlane(reader.result as string);
+      onSend(reader.result as string);
     };
     reader.readAsDataURL(audioBlob);
     setVoiceDialogOpen(false);
   };
 
-  const handleFileSelect =
-    (_type: "camera" | "upload") => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
+  const handleFileSelect = (file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    onSendImage(file);
+    (document.activeElement as HTMLElement)?.blur();
+  };
 
-      if (!file.type.startsWith("image/")) {
-        return;
-      }
-
-      onPaperPlaneImage(file);
-      event.target.value = "";
-    };
+  const isUploading = uploadState.status !== "idle";
 
   return (
     <div className="border-border/50 border-t bg-system-background/95 p-4">
@@ -86,132 +77,149 @@ export function ChatInput({
         description="Record your question and I'll help you find the answer."
       />
 
-      <AnimatePresence initial={false}>
-        {imageProcessing.status !== "idle" && (
-          <ImageProcessingIndicator state={imageProcessing} onDismiss={onDismissImageProcessing} />
-        )}
-      </AnimatePresence>
+      {uploadState.status !== "idle" && (
+        <Attachment
+          state={uploadState.status as "idle" | "uploading" | "processing" | "error" | "done"}
+          size="sm"
+          className="mx-auto mb-2"
+        >
+          <AttachmentMedia variant="icon">
+            <HugeiconsIcon icon={Upload01Icon} />
+          </AttachmentMedia>
+          <AttachmentContent>
+            <AttachmentTitle>
+              {uploadState.status === "reading"
+                ? "Reading file..."
+                : uploadState.status === "uploading" || uploadState.status === "processing"
+                  ? "Sending to AI..."
+                  : uploadState.status === "error"
+                    ? "Upload failed"
+                    : "Upload complete"}
+            </AttachmentTitle>
+            <AttachmentDescription>
+              {uploadState.status === "error" ? uploadState.error : `${uploadState.progress}%`}
+            </AttachmentDescription>
+          </AttachmentContent>
+        </Attachment>
+      )}
 
-      <div
-        className={cn(
-          "mt-2 rounded-lg border bg-secondary/60 p-4 transition-[border-color,box-shadow,transform,background-color] duration-300",
-          isFocused
-            ? "scale-[1.005] border-system-accent/40 bg-background ring-2 ring-system-accent/20"
-            : "border-border/30",
-        )}
-      >
-        <div className="mb-3">
-          <Input
-            ref={inputRef}
-            type="text"
-            placeholder="Ask me a question about your studies…"
-            aria-label="Ask me a question"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            disabled={isLoading}
-            className="border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-system-accent/30"
+      <form onSubmit={handleSubmit}>
+        <div
+          className={cn(
+            "rounded-lg border bg-secondary/60 p-4 transition-[border-color,box-shadow,transform,background-color] duration-300",
+            isFocused
+              ? "border-system-accent/40 bg-background ring-2 ring-system-accent/20"
+              : "border-border/30",
+            isLoading && "opacity-60",
+          )}
+        >
+          <div className="mb-3">
+            <Input
+              ref={inputRef}
+              type="text"
+              placeholder="Ask me a question about your studies…"
+              aria-label="Ask me a question"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              disabled={isLoading || isUploading}
+              className="border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-system-accent/30"
+            />
+          </div>
+
+          <input
+            ref={cameraInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileSelect(file);
+              e.target.value = "";
+            }}
+            disabled={isLoading || isUploading}
+            aria-label="Take a photo"
           />
-        </div>
+          <input
+            ref={uploadInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileSelect(file);
+              e.target.value = "";
+            }}
+            disabled={isLoading || isUploading}
+            aria-label="Upload an image"
+          />
 
-        <input
-          ref={cameraInputRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          className="hidden"
-          onChange={handleFileSelect("camera")}
-          disabled={isLoading}
-          aria-label="Take a photo"
-        />
-        <input
-          ref={uploadInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileSelect("upload")}
-          disabled={isLoading}
-          aria-label="Upload an image"
-        />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DropdownList open={attachOpen} onOpenChange={setAttachOpen}>
+                <DropdownListTrigger
+                  className={cn(
+                    "inline-flex size-10 shrink-0 items-center justify-center rounded-md",
+                    "cursor-pointer border border-border/30 text-muted-foreground shadow-sm hover:bg-secondary",
+                    "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
+                    (isLoading || isUploading) && "pointer-events-none opacity-50",
+                  )}
+                  aria-label="Add image"
+                >
+                  <HugeiconsIcon icon={Camera01Icon} data-icon />
+                </DropdownListTrigger>
+                <DropdownListContent side="top" align="start" className="w-48">
+                  <DropdownListItem
+                    onClick={() => {
+                      setAttachOpen(false);
+                      cameraInputRef.current?.click();
+                    }}
+                    disabled={isLoading || isUploading}
+                    className="gap-2 font-extrabold text-xs uppercase tracking-tight"
+                  >
+                    <HugeiconsIcon icon={Camera01Icon} data-icon="inline-start" />
+                    Take a photo
+                  </DropdownListItem>
+                  <DropdownListItem
+                    onClick={() => {
+                      setAttachOpen(false);
+                      uploadInputRef.current?.click();
+                    }}
+                    disabled={isLoading || isUploading}
+                    className="gap-2 font-extrabold text-xs uppercase tracking-tight"
+                  >
+                    <HugeiconsIcon icon={Upload01Icon} data-icon="inline-start" />
+                    Upload a photo
+                  </DropdownListItem>
+                </DropdownListContent>
+              </DropdownList>
+            </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <DropdownList>
-              <DropdownListTrigger
-                className={cn(
-                  "inline-flex size-10 shrink-0 items-center justify-center rounded-md",
-                  "cursor-pointer border border-border/30 text-muted-foreground shadow-sm hover:bg-secondary",
-                  "transition-colors active:scale-[0.96]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
-                  isLoading && "pointer-events-none cursor-not-allowed opacity-50",
-                )}
-                aria-label="Add image"
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setVoiceDialogOpen(true)}
+                className="size-10 rounded-md border border-border/40 hover:bg-secondary"
+                disabled={isLoading || isUploading}
+                aria-label="Voice input"
               >
-                <HugeiconsIcon icon={Camera01Icon} data-icon />
-              </DropdownListTrigger>
-              <DropdownListContent side="top" align="start" className="w-48">
-                <DropdownListItem
-                  onClick={() => cameraInputRef.current?.click()}
-                  disabled={isLoading}
-                  className="gap-2 font-extrabold text-xs uppercase tracking-tight"
-                >
-                  <HugeiconsIcon icon={Camera01Icon} data-icon="inline-start" />
-                  Take a photo
-                </DropdownListItem>
-                <DropdownListItem
-                  onClick={() => uploadInputRef.current?.click()}
-                  disabled={isLoading}
-                  className="gap-2 font-extrabold text-xs uppercase tracking-tight"
-                >
-                  <HugeiconsIcon icon={Upload01Icon} data-icon="inline-start" />
-                  Upload a photo
-                </DropdownListItem>
-              </DropdownListContent>
-            </DropdownList>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setVoiceDialogOpen(true)}
-              className="size-10 rounded-md border border-border/40 hover:bg-secondary"
-              disabled={isLoading}
-              aria-label="Voice input"
-            >
-              <HugeiconsIcon
-                icon={Mic01Icon}
-                data-icon
-                className="toolbutton-icon text-muted-foreground"
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                if (input.trim() && !isLoading) {
-                  setVoicePressed(true);
-                  handleSubmit();
-                  setTimeout(() => setVoicePressed(false), 300);
-                }
-              }}
-              disabled={!input.trim() || isLoading}
-              className={cn(
-                "size-10 rounded-md bg-system-accent text-white shadow-level-2 hover:bg-system-accent/90",
-                voicePressed && "scale-[0.95] brightness-90",
-              )}
-              aria-label="Send message"
-            >
-              <HugeiconsIcon
-                icon={MailSend01Icon}
-                data-icon
-                className={cn()}
-              />
-            </Button>
+                <HugeiconsIcon icon={Mic01Icon} data-icon className="text-muted-foreground" />
+              </Button>
+              <Button
+                type="submit"
+                disabled={!input.trim() || isLoading || isUploading}
+                className="size-10 rounded-md bg-system-accent text-white shadow-level-2 hover:bg-system-accent/90"
+                aria-label="Send message"
+              >
+                <HugeiconsIcon icon={MailSend01Icon} data-icon />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
