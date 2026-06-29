@@ -59,13 +59,13 @@ jobs:
         env:
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN || '' }}
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: next-build
           path: .next/
 
   a11y-contrast:
     needs: build
+    if: needs.build.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -92,6 +92,7 @@ jobs:
 
   e2e-dast:
     needs: build
+    if: needs.build.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
