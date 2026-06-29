@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
-import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
+import { COLLECTIONS } from "@/lib/db/constants";
 import type { ContentDataAccess } from "@/lib/db/data-access";
 import type { SharedQuestionRecord } from "@/lib/db/schema";
 import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
@@ -88,6 +88,7 @@ export async function getSharedQuestion(id: string): Promise<SharedRecord | null
   }
 
   try {
+    const { listDocuments } = await import("@/lib/db/client");
     const docs = await listDocuments(COLLECTIONS.SHARED_QUESTIONS, [Query.equal("id", id)]);
     if (docs.length > 0) {
       const doc = docs[0] as Record<string, unknown>;
@@ -130,6 +131,7 @@ export async function incrementViewCount(id: string): Promise<void> {
   }
 
   try {
+    const { listDocuments, updateDocument } = await import("@/lib/db/client");
     const docs = await listDocuments(COLLECTIONS.SHARED_QUESTIONS, [Query.equal("id", id)]);
     if (docs.length > 0) {
       const doc = docs[0] as Record<string, unknown>;
