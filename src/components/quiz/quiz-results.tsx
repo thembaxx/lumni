@@ -99,9 +99,7 @@ export function QuizResultsCard({
       )}
 
       <Card className={cn("relative", className)}>
-        <div
-          className="pointer-events-none absolute inset-0 overflow-hidden rounded-card-lg"
-        >
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-card-lg">
           <div className="absolute inset-0 bg-success/10" />
         </div>
 

@@ -41,10 +41,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
               transition={{ delay: 0.2 }}
               className="mb-4"
             >
-              <m.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
-              >
+              <m.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 0.5 }}>
                 <HugeiconsIcon icon={CrownIcon} className="mx-auto size-16 text-warning" />
               </m.div>
             </m.div>

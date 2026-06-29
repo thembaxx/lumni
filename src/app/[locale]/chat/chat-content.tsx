@@ -134,6 +134,7 @@ export function ChatContent() {
                                       className="block size-full cursor-pointer"
                                       aria-label="View full image"
                                     >
+                                      {/* oxlint-disable-next-line next/no-img-element -- blob URL, not optimizable */}
                                       <img
                                         src={msg.imageUrl}
                                         alt={msg.imageFileName || "Uploaded image"}

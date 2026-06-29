@@ -130,7 +130,7 @@ export function useChatStream() {
               ),
             );
           },
-          onError: (error) => {
+          onError: (_error) => {
             setStreaming((prev) => ({ ...prev, isActive: false }));
             setMessages((prev) =>
               prev.map((m) =>

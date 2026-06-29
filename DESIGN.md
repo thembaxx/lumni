@@ -434,11 +434,11 @@ Most interactions should feel instant. A duration of `0ms` with no transition at
 
 When motion genuinely helps — revealing an element, moving something to a new position, indicating arrival or departure — keep it short and physical:
 
-| Context                | Duration | Easing |
-|------------------------|----------|--------|
-| State changes          | 150ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
-| Popovers / tooltips    | 200ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
-| Overlays / modals      | 300ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Context             | Duration | Easing                                  |
+| ------------------- | -------- | --------------------------------------- |
+| State changes       | 150ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Popovers / tooltips | 200ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Overlays / modals   | 300ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
 
 The easing is a fast-arrival overshoot curve — it accelerates quickly, overshoots by a tiny fraction, then settles. It reads as physical without being bouncy.
 

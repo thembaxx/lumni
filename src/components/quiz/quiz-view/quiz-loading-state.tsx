@@ -25,10 +25,7 @@ export function QuizLoadingState({
           <CardContent className="flex flex-col items-center gap-6 p-8 text-center">
             <div className="flex items-center gap-1.5" role="status" aria-label="Loading questions">
               {[0, 1, 2].map((i) => (
-                <div
-                  key={i}
-                  className="size-2.5 animate-pulse rounded-full bg-system-accent"
-                />
+                <div key={i} className="size-2.5 animate-pulse rounded-full bg-system-accent" />
               ))}
             </div>
             <FadeIn direction="up" distance={8} delay={0.2} className="flex flex-col gap-2">

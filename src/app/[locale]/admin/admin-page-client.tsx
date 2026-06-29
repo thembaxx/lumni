@@ -78,10 +78,7 @@ export function AdminPageClient() {
         initial={false}
         className="relative min-h-dvh"
       >
-        <m.div
-          whileTap={{ scale: 0.96 }}
-          className="fixed right-6 bottom-6 z-modal"
-        >
+        <m.div whileTap={{ scale: 0.96 }} className="fixed right-6 bottom-6 z-modal">
           <Button
             size="icon-lg"
             variant={

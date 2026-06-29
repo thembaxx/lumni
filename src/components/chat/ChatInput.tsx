@@ -7,13 +7,10 @@ import { useRef, useState } from "react";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import {
   Attachment,
-  AttachmentAction,
-  AttachmentActions,
   AttachmentContent,
   AttachmentDescription,
   AttachmentMedia,
   AttachmentTitle,
-  AttachmentTrigger,
 } from "@/components/ui/attachment";
 import { Button } from "@/components/ui/button";
 import {
