@@ -27,18 +27,6 @@ export interface AIFailure {
 
 export type AIResult = AIResponse | AIFailure;
 
-export interface AIProviderCapabilities {
-  systemPrompt?: boolean;
-  images?: boolean;
-}
-
-export interface AIProvider {
-  name: string;
-  model: string;
-  generate(request: AIRequest): Promise<AIResponse>;
-  capabilities?: AIProviderCapabilities;
-}
-
 export type TaskType =
   | "lesson-summary"
   | "question-generation"

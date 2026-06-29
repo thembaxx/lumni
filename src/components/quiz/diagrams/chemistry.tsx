@@ -3,7 +3,12 @@
 import type React from "react";
 import { useMemo } from "react";
 import { Arrow, Circle, Group, Layer, Line, Stage, Text } from "react-konva";
-import { useDiagramTheme, getAtomColor, type DiagramColors } from "./diagram-theme";
+import {
+  useDiagramTheme,
+  getAtomColor,
+  getAtomTextColor,
+  type DiagramColors,
+} from "./diagram-theme";
 
 interface Atom {
   element: string;
@@ -102,7 +107,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number, palett
           y={atom.y - 5}
           text={atom.element}
           fontSize={r > 10 ? 10 : 8}
-          fill={palette.textOnFill}
+          fill={getAtomTextColor(palette, atom.element)}
           fontStyle="bold"
         />
         {atom.label && (

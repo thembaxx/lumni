@@ -1,9 +1,15 @@
 import { Effect } from "effect";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi, beforeEach, afterEach } from "vitest";
+
+const mockGenerateObject = vi.hoisted(() => vi.fn());
+vi.mock("ai", async () => {
+  const actual = await vi.importActual<typeof import("ai")>("ai");
+  return { ...actual, generateObject: mockGenerateObject };
+});
 
 vi.mock("@/lib/ai", () => ({
   getAI: () => ({
-    generateWithSystem: vi.fn(),
+    getModelRef: () => null,
   }),
   isAIConfigured: () => true,
   initAI: () => {},
@@ -12,6 +18,8 @@ vi.mock("@/lib/ai", () => ({
 import { PromptManager } from "../../prompt-manager";
 import type { Question, UserAnswer } from "../../types";
 import { aiGradeResultEffect, aiHintFactoryEffect } from "../graders/shared";
+
+const mockModelRef = { id: "mock-model", provider: "mock-provider" } as never;
 
 const prompts = new PromptManager();
 
@@ -39,6 +47,14 @@ function makeAnswer(value: unknown): UserAnswer {
 function runEffect<A>(effect: Effect.Effect<A>): Promise<A> {
   return Effect.runPromise(effect);
 }
+
+beforeEach(() => {
+  mockGenerateObject.mockReset();
+});
+
+afterEach(() => {
+  mockGenerateObject.mockReset();
+});
 
 describe("aiGradeResultEffect", () => {
   test("empty answer returns failure without AI call", async () => {
@@ -69,11 +85,9 @@ describe("aiGradeResultEffect", () => {
     expect(result.feedback).toContain("No answer");
   });
 
-  test("falls back when AI throws and fallback returns result", async () => {
+  test("falls back when model not configured and fallback returns result", async () => {
     const q = makeQuestion();
-    const ai = {
-      generateWithSystem: vi.fn().mockRejectedValue(new Error("AI unavailable")),
-    };
+    const ai = { getModelRef: () => null };
     const result = await runEffect(
       aiGradeResultEffect(
         q,
@@ -86,14 +100,11 @@ describe("aiGradeResultEffect", () => {
     );
     expect(result.correct).toBe(true);
     expect(result.feedback).toContain("Fallback");
-    expect(ai.generateWithSystem).toHaveBeenCalledOnce();
   });
 
-  test("returns default failure when AI throws and no fallback", async () => {
+  test("returns default failure when model not configured and no fallback", async () => {
     const q = makeQuestion();
-    const ai = {
-      generateWithSystem: vi.fn().mockRejectedValue(new Error("AI unavailable")),
-    };
+    const ai = { getModelRef: () => null };
     const result = await runEffect(
       aiGradeResultEffect(q, makeAnswer("4"), prompts, ai as never, () => "context string"),
     );
@@ -101,32 +112,29 @@ describe("aiGradeResultEffect", () => {
     expect(result.feedback).toContain("Unable to grade");
   });
 
-  test("returns AI result when AI returns valid JSON", async () => {
+  test("returns AI result when generateObject succeeds", async () => {
     const q = makeQuestion();
-    const ai = {
-      generateWithSystem: vi.fn().mockResolvedValue({
-        content: JSON.stringify({ correct: true, score: 5, feedback: "Great!" }),
-        provider: "mock",
-        model: "mock",
-      }),
-    };
+    mockGenerateObject.mockResolvedValue({
+      object: { correct: true, score: 5, feedback: "Great!" },
+      usage: { inputTokens: 10, outputTokens: 20 },
+    });
+    const ai = { getModelRef: () => ({ model: mockModelRef }) };
     const result = await runEffect(
       aiGradeResultEffect(q, makeAnswer("4"), prompts, ai as never, () => "context string"),
     );
     expect(result.correct).toBe(true);
     expect(result.score).toBe(5);
     expect(result.feedback).toBe("Great!");
+    expect(mockGenerateObject).toHaveBeenCalledOnce();
   });
 
-  test("uses fallback when AI returns unparseable content", async () => {
+  test("falls back when generateObject returns invalid result", async () => {
     const q = makeQuestion();
-    const ai = {
-      generateWithSystem: vi.fn().mockResolvedValue({
-        content: "not valid json at all",
-        provider: "mock",
-        model: "mock",
-      }),
-    };
+    mockGenerateObject.mockResolvedValue({
+      object: { score: 3 },
+      usage: { inputTokens: 10, outputTokens: 20 },
+    });
+    const ai = { getModelRef: () => ({ model: mockModelRef }) };
     const result = await runEffect(
       aiGradeResultEffect(
         q,
@@ -139,6 +147,7 @@ describe("aiGradeResultEffect", () => {
     );
     expect(result.correct).toBe(true);
     expect(result.score).toBe(3);
+    expect(mockGenerateObject).toHaveBeenCalledOnce();
   });
 });
 

@@ -45,6 +45,12 @@ const routes: RouteTest[] = [
   { path: "/quiz", label: "Quiz" },
   { path: "/review", label: "Review" },
   { path: "/settings", label: "Settings" },
+  { path: "/onboarding", label: "Onboarding" },
+  { path: "/exam-dates", label: "Exam dates" },
+  { path: "/progress", label: "Progress" },
+  { path: "/practice", label: "Practice" },
+  { path: "/learn", label: "Learn" },
+  { path: "/lessons", label: "Lessons" },
 ];
 
 async function getContrastViolations(page: import("@playwright/test").Page) {

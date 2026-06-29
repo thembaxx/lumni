@@ -78,7 +78,17 @@ describe("AIClient", () => {
       Promise.resolve(
         new Response(
           JSON.stringify({
-            choices: [{ message: { content: "Hello from provider" } }],
+            id: "chatcmpl-test",
+            object: "chat.completion",
+            created: 1717000000,
+            model: "meta/llama-3.3-70b-instruct",
+            choices: [
+              {
+                index: 0,
+                message: { role: "assistant", content: "Hello from provider" },
+                finish_reason: "stop",
+              },
+            ],
             usage: { prompt_tokens: 5, completion_tokens: 3 },
           }),
           { status: 200, headers: { "Content-Type": "application/json" } },

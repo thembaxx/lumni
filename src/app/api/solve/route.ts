@@ -26,5 +26,6 @@ export const POST = createRouteHandler<SolveBody>({
     }
     return null;
   },
-  execute: async ({ body, userId }) => aiSolver.execute(body, userId),
+  execute: async ({ body, userId }) =>
+    aiSolver.execute(body, userId) as Promise<Record<string, unknown>>,
 });

@@ -1,9 +1,10 @@
-import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import { generateWithSystem, getAI, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
 import { HttpError } from "@/lib/api/create-route-handler";
 import { logError } from "@/lib/shared/logger";
 import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
+import { isMathSubject, solveWithToolAgent } from "@/lib/solver/math-solver";
 
 const SUBJECT_PROMPTS: Record<string, string> = {
   algebra:
@@ -131,6 +132,16 @@ export const aiSolver = {
     const finalUserPrompt = webContext.xml
       ? `${webContext.xml}\n\n---\n\n${userPrompt}`
       : userPrompt;
+
+    const isMath =
+      !isImageMode && !followUp && mode === "solve" && isMathSubject(subjectKey || subject);
+
+    if (isMath) {
+      return await solveWithToolAgent(finalUserPrompt, getAI(), subjectKey || subject, {
+        temperature: 0.5,
+        maxSteps: 10,
+      });
+    }
 
     const result = await generateWithSystem(systemPrompt, finalUserPrompt, {
       temperature: isImageMode && mode === "solve" ? 0.3 : 0.7,

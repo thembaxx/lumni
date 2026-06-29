@@ -102,3 +102,15 @@ export function useDiagramTheme(): DiagramColors {
 export function getAtomColor(palette: DiagramColors, element: string): string {
   return palette.atomColors[element] || "oklch(55% 0.1 0)";
 }
+
+/** Extracts the L% value from an oklch(L% C H / alpha) string. Returns 0-100. */
+function parseOklchLightness(color: string): number {
+  const match = color.match(/oklch\((\d+(?:\.\d+)?)%/);
+  return match ? Number.parseFloat(match[1]) : 50;
+}
+
+export function getAtomTextColor(palette: DiagramColors, element: string): string {
+  const atomColor = getAtomColor(palette, element);
+  const lightness = parseOklchLightness(atomColor);
+  return lightness > 65 ? palette.textPrimary : palette.textOnFill;
+}

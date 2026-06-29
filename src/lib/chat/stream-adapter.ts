@@ -1,9 +1,46 @@
-const CHAT_STREAM_PATH = "/api/chat";
-
 export interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullContent: string) => void;
   onError: (error: string) => void;
+}
+
+export interface ChatStreamRequest {
+  message: string;
+  history?: { role: string; content: string }[];
+}
+
+export async function sendChatStream(
+  body: ChatStreamRequest,
+  callbacks: StreamCallbacks,
+  abortSignal?: AbortSignal,
+): Promise<string> {
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+    body: JSON.stringify(body),
+    signal: abortSignal,
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    const msg =
+      response.status === 429
+        ? "Too many requests. Please wait a moment and try again."
+        : response.status >= 500
+          ? "AI service is temporarily unavailable. Please try again."
+          : text || `Request failed (${response.status})`;
+    callbacks.onError(msg);
+    throw new Error(msg);
+  }
+
+  const reader = response.body?.getReader();
+  if (!reader) {
+    const msg = "Stream not available";
+    callbacks.onError(msg);
+    throw new Error(msg);
+  }
+
+  return parseSSEStream(reader, callbacks);
 }
 
 export function parseSSEStream(
@@ -69,43 +106,4 @@ export function parseSSEStream(
 
     pump();
   });
-}
-
-export interface ChatStreamRequest {
-  message: string;
-  history?: { role: string; content: string }[];
-}
-
-export async function sendChatStream(
-  body: ChatStreamRequest,
-  callbacks: StreamCallbacks,
-  abortSignal?: AbortSignal,
-): Promise<string> {
-  const response = await fetch(CHAT_STREAM_PATH, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
-    body: JSON.stringify(body),
-    signal: abortSignal,
-  });
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => "");
-    const msg =
-      response.status === 429
-        ? "Too many requests. Please wait a moment and try again."
-        : response.status >= 500
-          ? "AI service is temporarily unavailable. Please try again."
-          : text || `Request failed (${response.status})`;
-    callbacks.onError(msg);
-    throw new Error(msg);
-  }
-
-  const reader = response.body?.getReader();
-  if (!reader) {
-    const msg = "Stream not available";
-    callbacks.onError(msg);
-    throw new Error(msg);
-  }
-
-  return parseSSEStream(reader, callbacks);
 }

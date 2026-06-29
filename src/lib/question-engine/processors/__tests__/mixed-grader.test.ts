@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 
 const mockAI = {
+  getModelRef: () => ({ model: { id: "mock" } as never }),
   generateWithSystem: async () => ({
     content: "not valid json",
     provider: "mock",

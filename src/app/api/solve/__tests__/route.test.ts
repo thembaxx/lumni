@@ -8,6 +8,9 @@ const mockTrackUsage = vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock("@/lib/ai", () => ({
   generateWithSystem: mockGenerateWithSystem,
+  getAI: () => ({
+    getModelRef: () => ({ model: { id: "test-model" } as never }),
+  }),
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,
 }));
@@ -19,6 +22,11 @@ vi.mock("@/lib/ai/with-budget", () => ({
 
 vi.mock("@/lib/shared/with-rate-limit", () => ({
   withRateLimit: (handler: unknown) => handler,
+}));
+
+vi.mock("@/lib/solver/math-solver", () => ({
+  isMathSubject: () => false,
+  solveWithToolAgent: vi.fn(),
 }));
 
 const { NextRequest, NextResponse } = await import("next/server");

@@ -1,9 +1,19 @@
 import { Effect } from "effect";
+import { generateObject } from "ai";
+import { z } from "zod";
 import type { AIClient } from "@/lib/ai/client";
-import { getTextResponse, parseAIResponse } from "@/lib/ai/parse-response";
+import { getTextResponse } from "@/lib/ai/parse-response";
 import type { PromptManager } from "../../prompt-manager";
 import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
 import type { GradeFn, HintFn } from "../types";
+
+const gradeSchema = z.object({
+  correct: z.boolean(),
+  score: z.number().optional(),
+  maxScore: z.number().optional(),
+  feedback: z.string().optional(),
+  breakdown: z.record(z.string(), z.unknown()).optional(),
+});
 
 function emptyGrade(q: Question): GradingResult {
   return { correct: false, score: 0, maxScore: q.points, feedback: "No answer provided." };
@@ -27,12 +37,27 @@ export function aiGradeResultEffect(
     }
     const ctx = ctxBuilder(q, a);
     const prompt = prompts.getGradePrompt(q.type);
-    const result = yield* Effect.tryPromise(() =>
-      ai.generateWithSystem(prompt.system, `${prompt.user}\n\n${ctx}`, {
+    const modelRef = ai.getModelRef()?.model;
+    if (!modelRef) {
+      if (fallback) {
+        const fb = fallback(q, a);
+        if (fb) return fb;
+      }
+      return unableGrade(q);
+    }
+    const result = yield* Effect.tryPromise(async () => {
+      const res = await generateObject({
+        model: modelRef,
+        system: prompt.system,
+        prompt: `${prompt.user}\n\n${ctx}`,
+        schema: gradeSchema,
         temperature: 0.2,
-        maxTokens: 1024,
-      }),
-    ).pipe(Effect.catchAll(() => Effect.succeed(null as never)));
+        maxOutputTokens: 1024,
+      });
+      const data = res.object;
+      if (!data || typeof data.correct !== "boolean") return null;
+      return data;
+    }).pipe(Effect.catchAll(() => Effect.succeed(null as never)));
     if (!result) {
       if (fallback) {
         const fb = fallback(q, a);
@@ -40,27 +65,13 @@ export function aiGradeResultEffect(
       }
       return unableGrade(q);
     }
-    const parsed = parseAIResponse<{
-      correct: boolean;
-      score?: number;
-      maxScore?: number;
-      feedback?: string;
-      breakdown?: GradingResult["breakdown"];
-    }>(result, { correct: false });
-    if (parsed) {
-      return {
-        correct: parsed.data.correct,
-        score: parsed.data.score ?? (parsed.data.correct ? q.points : 0),
-        maxScore: parsed.data.maxScore ?? q.points,
-        feedback: parsed.data.feedback ?? "",
-        breakdown: parsed.data.breakdown,
-      };
-    }
-    if (fallback) {
-      const fb = fallback(q, a);
-      if (fb) return fb;
-    }
-    return unableGrade(q);
+    return {
+      correct: result.correct,
+      score: result.score ?? (result.correct ? q.points : 0),
+      maxScore: result.maxScore ?? q.points,
+      feedback: result.feedback ?? "",
+      breakdown: result.breakdown as GradingResult["breakdown"],
+    };
   });
 }
 
