@@ -115,7 +115,7 @@ export function HowItWorksSection() {
                 >
                   <span className="text-primary">{step.icon}</span>
                 </div>
-                <div className="absolute -top-1 -right-1 flex size-6 items-center justify-center rounded-full bg-primary text-[11px] text-primary-foreground shadow-level-1">
+                <div className="absolute -top-1 -right-1 flex size-6 items-center justify-center rounded-full bg-primary ios-caption-2 text-primary-foreground shadow-level-1">
                   {step.number}
                 </div>
               </div>

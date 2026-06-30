@@ -1,5 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { serverAccount } from "@/lib/appwrite.server";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(
@@ -18,7 +19,7 @@ export const POST = withRateLimit(
           url: `${new URL(req.url).origin}/auth/reset-password`,
         });
       } catch (error) {
-        console.warn("Password recovery request failed:", error);
+        logError("ForgotPassword.Recovery", error);
       }
 
       return { ok: true };

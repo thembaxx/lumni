@@ -1,3 +1,5 @@
+import { logError } from "@/lib/shared/logger";
+
 export class SafePersistError extends Error {
   constructor(
     public label: string,
@@ -12,7 +14,7 @@ export async function safePersist<R = void>(label: string, write: () => Promise<
   try {
     return await write();
   } catch (err) {
-    console.warn(`[safePersist] ${label} failed:`, err);
+    logError(`SafePersist.${label}`, err);
     throw new SafePersistError(label, err);
   }
 }

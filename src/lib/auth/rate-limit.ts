@@ -3,6 +3,8 @@ import { type RateLimitConfig, RateLimiter } from "@/lib/rate-limiter/core";
 const SIGNIN_CONFIG: RateLimitConfig = { max: 3, windowMs: 5 * 60 * 1000 };
 const MAGIC_LINK_CONFIG: RateLimitConfig = { max: 1, windowMs: 5 * 60 * 1000 };
 
+import { logError } from "@/lib/shared/logger";
+
 const rateLimiter = new RateLimiter();
 
 function normalizeEmail(email: string): string {
@@ -27,7 +29,7 @@ export async function attemptSignIn(email: string): Promise<RateLimitResult> {
       return await res.json();
     }
   } catch (error) {
-    console.warn("[RateLimit] Server check failed, falling back to in-memory:", error);
+    logError("RateLimit.SignInCheck", error);
   }
 
   // Fallback to in-memory RateLimiter
@@ -58,7 +60,7 @@ export async function recordSuccessfulSignIn(email: string): Promise<void> {
       return;
     }
   } catch (error) {
-    console.warn("[RateLimit] Server success log failed, falling back to in-memory:", error);
+    logError("RateLimit.SignInSuccess", error);
   }
 
   // Fallback to in-memory RateLimiter
@@ -79,7 +81,7 @@ export async function attemptMagicLink(email: string): Promise<RateLimitResult> 
       return await res.json();
     }
   } catch (error) {
-    console.warn("[RateLimit] Server magic-link check failed, falling back to in-memory:", error);
+    logError("RateLimit.MagicLinkCheck", error);
   }
 
   // Fallback to in-memory RateLimiter

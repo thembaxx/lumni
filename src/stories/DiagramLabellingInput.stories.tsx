@@ -38,7 +38,7 @@ export const BlankDiagram: Story = {
       { id: "l2", text: "Cell membrane" },
       { id: "l3", text: "Mitochondria" },
     ],
-    onSubmit: (placements) => console.log("Submitted placements:", placements),
+    onSubmit: (_placements) => {},
   },
 };
 
@@ -61,6 +61,6 @@ export const TwoRegions: Story = {
       { id: "a", text: "Top" },
       { id: "b", text: "Bottom" },
     ],
-    onSubmit: (placements) => console.log("Submitted placements:", placements),
+    onSubmit: (_placements) => {},
   },
 };

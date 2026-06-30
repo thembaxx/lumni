@@ -213,7 +213,7 @@ function SettingsContent() {
               <Link
                 href="/dashboard"
                 aria-label={t("settings.backToDashboard")}
-                className="flex min-h-11 min-w-11 size-10 items-center justify-center rounded-full border border-border/30 bg-system-surface text-foreground shadow-level-1 transition-all duration-200 hover:bg-secondary hover:shadow-level-1 active:scale-[0.96]"
+                className="flex min-h-11 min-w-11 size-10 items-center justify-center rounded-full border border-border/30 bg-system-surface text-foreground shadow-level-1 transition-[background-color,box-shadow,transform] duration-200 hover:bg-secondary hover:shadow-level-1 active:scale-[0.96]"
               >
                 <HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
               </Link>
@@ -234,7 +234,7 @@ function SettingsContent() {
               size="sm"
               onClick={handleSave}
               disabled={isSaving}
-              className="h-10 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-all duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
+              className="h-10 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-[background-color,box-shadow,transform] duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
             >
               {saved ? "Saved!" : isSaving ? t("common.saving") : "Save"}
             </Button>
@@ -255,7 +255,7 @@ function SettingsContent() {
                   aria-controls={`tabpanel-${tab.value}`}
                   onClick={() => handleSetActiveTab(tab.value)}
                   className={cn(
-                    "relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-all duration-300 active:scale-[0.96]",
+                    "relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-[background-color,box-shadow,transform] duration-300 active:scale-[0.96]",
                     isActive
                       ? "bg-system-surface text-system-accent shadow-level-1"
                       : "text-muted-foreground hover:bg-system-surface/50 hover:text-foreground",

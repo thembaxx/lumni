@@ -69,7 +69,7 @@ export function LearnPageClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
         >
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-[10px] text-primary">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-primary" />
@@ -96,7 +96,7 @@ export function LearnPageClient() {
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 16 }}
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: motionEase }}
-              className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-all duration-300 hover:shadow-level-2 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary"
+              className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-[box-shadow,transform] duration-300 hover:shadow-level-2 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary"
             >
               <div
                 className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${item.gradient}`}

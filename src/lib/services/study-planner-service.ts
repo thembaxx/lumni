@@ -264,7 +264,6 @@ export class StudyPlannerService {
       this.notify();
     } catch (error) {
       logError("GenerateStudyPlan", error);
-      console.error("Failed to generate study plan:", error);
     }
   }
 

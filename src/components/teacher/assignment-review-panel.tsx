@@ -155,7 +155,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
                           </div>
                         </div>
                         {s.teacherComment && (
-                          <p className="mt-2 text-[11px] text-muted-foreground italic">
+                          <p className="mt-2 ios-caption-2 text-muted-foreground italic">
                             Your comment: &ldquo;{s.teacherComment}&rdquo;
                           </p>
                         )}

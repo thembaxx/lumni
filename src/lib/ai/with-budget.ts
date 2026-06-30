@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { logError } from "@/lib/shared/logger";
 import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 
 export async function checkBudget(
@@ -12,7 +13,7 @@ export async function checkBudget(
 }> {
   const forwardedFor = req.headers.get("x-forwarded-for");
   if (forwardedFor?.includes(",")) {
-    console.warn("[Budget] Multiple X-Forwarded-For values detected:", forwardedFor);
+    logError("Budget.MultipleForwardedFor", new Error(`Multiple X-Forwarded-For: ${forwardedFor}`));
   }
 
   const userId =

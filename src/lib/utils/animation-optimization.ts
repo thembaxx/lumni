@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { logError } from "@/lib/shared/logger";
 
 /**
  * Animation budget configuration
@@ -52,8 +53,9 @@ function useAnimationBudget(budget: AnimationBudget = DEFAULT_ANIMATION_BUDGET) 
         budgetExceededRef.current = true;
         if (budget.disableOnExceed) {
           // In a real implementation, we would communicate this to animation components
-          console.warn(
-            `Animation budget exceeded: ${frameTime.toFixed(2)}ms > ${budget.maxFrameTime}ms`,
+          logError(
+            "AnimationBudget.Exceeded",
+            new Error(`Budget exceeded: ${frameTime.toFixed(2)}ms > ${budget.maxFrameTime}ms`),
           );
         }
       } else if (frameTime > budget.warningThreshold) {

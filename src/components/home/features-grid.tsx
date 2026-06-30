@@ -115,7 +115,7 @@ export function FeaturesGrid() {
             >
               <div
                 className={cn(
-                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-6 shadow-level-1 transition-all duration-500 hover:shadow-level-2",
+                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-6 shadow-level-1 transition-[box-shadow,border-color] duration-500 hover:shadow-level-2",
                   "hover:border-primary/20",
                 )}
               >
@@ -136,7 +136,7 @@ export function FeaturesGrid() {
                   </p>
                 </div>
 
-                <div className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full border border-border/30 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
+                <div className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full border border-border/30 opacity-0 transition-[opacity,transform] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
                   <svg
                     width="14"
                     height="14"

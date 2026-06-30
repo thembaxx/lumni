@@ -78,7 +78,7 @@ function InteractiveQuizDemo() {
               <p className="ios-caption-3 text-muted-foreground">Physics · Grade 12</p>
             </div>
           </div>
-          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 font-medium text-[10px] text-primary">
+          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
             Demo
           </span>
         </div>
@@ -109,7 +109,7 @@ function InteractiveQuizDemo() {
                   } ${answer !== null ? "cursor-default" : "cursor-pointer hover:scale-[1.01] active:scale-[0.98]"}`}
                 >
                   <span
-                    className={`flex size-5 shrink-0 items-center justify-center rounded-md border text-[10px] ${
+                    className={`flex size-5 shrink-0 items-center justify-center rounded-md border ios-caption-3 ${
                       isCorrect
                         ? "border-success/40 bg-success text-white"
                         : isWrong
@@ -174,7 +174,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
           <div className="flex flex-col gap-8">
             <FadeIn direction="up" distance={20} duration={0.4} className="flex flex-col gap-4">
               <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-xs text-primary shadow-level-2">
-                <span className="text-primary/60 text-[8px]" aria-hidden="true">
+                <span className="text-primary/60 ios-caption-3" aria-hidden="true">
                   ✦
                 </span>
                 {t("home.heroTagline")}
@@ -199,7 +199,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 active:scale-[0.96] sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow,transform] duration-300 hover:shadow-level-3 active:scale-[0.96] sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroDashboard")}
@@ -214,7 +214,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 active:scale-[0.96] sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow,transform] duration-300 hover:shadow-level-3 active:scale-[0.96] sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroStartFree")}

@@ -112,11 +112,6 @@ export const aiSolver = {
         return await fetchSources({ question: q, userId: uid ?? undefined });
       } catch (err) {
         logError("AiSolverFetchSources", err);
-        console.warn(
-          `[ai-solver] web source fetch failed, continuing without grounding: ${
-            err instanceof Error ? err.message : String(err)
-          }`,
-        );
         return emptyRagContext();
       }
     };

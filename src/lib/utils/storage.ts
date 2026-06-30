@@ -10,7 +10,6 @@ export function loadFromStorage<T>(key: string, defaultValue: T): T {
     return stored ? JSON.parse(stored) : defaultValue;
   } catch (e) {
     logError("LoadFromStorage", e);
-    console.warn("localStorage read failed:", e);
     return defaultValue;
   }
 }

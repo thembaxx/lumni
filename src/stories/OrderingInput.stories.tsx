@@ -20,7 +20,7 @@ const sampleItems = [
 export const Default: Story = {
   args: {
     items: sampleItems,
-    onSubmit: (ids) => console.log("Submitted order:", ids),
+    onSubmit: (_ids) => {},
   },
 };
 
@@ -30,7 +30,7 @@ export const TwoItems: Story = {
       { id: "1", text: "Input" },
       { id: "2", text: "Output" },
     ],
-    onSubmit: (ids) => console.log("Submitted order:", ids),
+    onSubmit: (_ids) => {},
   },
 };
 
@@ -41,6 +41,6 @@ export const MathSteps: Story = {
       { id: "s2", text: "$2x = 4$" },
       { id: "s3", text: "$x = 2$" },
     ],
-    onSubmit: (ids) => console.log("Submitted order:", ids),
+    onSubmit: (_ids) => {},
   },
 };

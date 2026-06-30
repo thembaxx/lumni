@@ -1,6 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 
 interface PageHeaderProps {
   title: string;
@@ -19,11 +21,15 @@ function PageHeader({
   bottomSection,
   className,
 }: PageHeaderProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <header
+    <m.header
+      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.5 }}
       className={cn(
         "sticky top-0 z-elevated flex flex-col gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
-        "animate-fade-in-up",
         className,
       )}
     >
@@ -38,7 +44,7 @@ function PageHeader({
         )}
       </div>
       {bottomSection && <div className="px-4 pb-2">{bottomSection}</div>}
-    </header>
+    </m.header>
   );
 }
 

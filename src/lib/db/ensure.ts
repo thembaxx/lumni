@@ -155,7 +155,7 @@ async function ensureCollectionSchema(
     const listIndexes = await db.listIndexes(APPWRITE_DATABASE_ID, collectionId);
     existingIndexes = new Set(listIndexes.indexes.map((i) => i.key));
   } catch (e) {
-    console.warn("Failed to list indexes (collection may not exist):", e);
+    logError("DbEnsure.ListIndexes", e);
   }
 
   // Create missing indexes

@@ -80,14 +80,14 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase",
+                  "rounded-full border px-2.5 py-0.5 font-mono ios-caption-3 font-semibold uppercase",
                   diffStyle,
                 )}
               >
                 {problem.difficulty}
               </span>
               {problem.topic && (
-                <span className="rounded-full bg-muted/60 px-2.5 py-0.5 text-muted-foreground text-[10px]">
+                <span className="rounded-full bg-muted/60 px-2.5 py-0.5 ios-caption-3 text-muted-foreground">
                   {problem.topic}
                 </span>
               )}
@@ -130,7 +130,7 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
               >
                 <div className="flex flex-col gap-4 border-border/40 border-t pt-4">
                   <div className="rounded-xl border border-border/30 bg-gradient-to-br from-system-background to-system-background-secondary p-4">
-                    <div className="mb-2 flex items-center gap-2 text-muted-foreground text-[10px] font-semibold uppercase">
+                    <div className="mb-2 flex items-center gap-2 ios-caption-3 text-muted-foreground font-semibold uppercase">
                       <svg
                         width="12"
                         height="12"
@@ -152,7 +152,7 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
 
                   {problem.steps && problem.steps.length > 0 && (
                     <div>
-                      <div className="mb-3 flex items-center gap-2 text-muted-foreground text-[10px] font-semibold uppercase">
+                      <div className="mb-3 flex items-center gap-2 ios-caption-3 text-muted-foreground font-semibold uppercase">
                         <svg
                           width="12"
                           height="12"
@@ -247,8 +247,10 @@ export function ProblemsClient() {
         <Anim>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-[10px] text-primary">
-                <span className="text-primary/60 text-[8px]">✦</span>
+              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
+                <span className="text-primary/60" aria-hidden="true">
+                  ✦
+                </span>
                 AI-curated practice
               </div>
               <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
@@ -267,7 +269,7 @@ export function ProblemsClient() {
                 <Button
                   onClick={handleGenerate}
                   disabled={!selectedSubject || isPending}
-                  className="group h-11 shrink-0 gap-2 rounded-xl transition-all duration-300"
+                  className="group h-11 shrink-0 gap-2 rounded-xl transition-[background-color,box-shadow,transform] duration-300"
                 >
                   {isPending && <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />}
                   <span>{isPending ? "Generating..." : "Generate"}</span>
@@ -293,7 +295,7 @@ export function ProblemsClient() {
                     </Button>
                   ))}
                   <div className="ml-auto flex items-center gap-2">
-                    <span className="text-muted-foreground/40 text-[10px]">Count:</span>
+                    <span className="ios-caption-3 text-muted-foreground/40">Count:</span>
                     {[3, 5, 10].map((n) => (
                       <Button
                         key={n}
@@ -379,7 +381,7 @@ export function ProblemsClient() {
                 className="flex flex-col gap-4"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-muted-foreground/60 text-[10px]">
+                  <p className="ios-caption-3 text-muted-foreground/60">
                     Showing {filteredProblems.length} of {data.problems.length} problems
                     {selectedDifficulty !== "all" && " (filtered)"}
                   </p>

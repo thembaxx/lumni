@@ -3,6 +3,7 @@
 import ChartDownIcon from "@hugeicons/core-free-icons/ChartDownIcon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -61,11 +62,16 @@ export function StatCard({
     );
   }
 
+  const prefersReducedMotion = useReducedMotion();
+
   if (variant === "dashboard") {
     return (
-      <div
+      <m.div
+        whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
+        whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 400, damping: 26 }}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2 transition-[scale] duration-150 hover:scale-[1.02] active:scale-[0.97]",
+          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2",
           className,
         )}
       >
@@ -99,7 +105,7 @@ export function StatCard({
         >
           {value}
         </m.span>
-      </div>
+      </m.div>
     );
   }
 

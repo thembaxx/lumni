@@ -29,6 +29,8 @@ function getSessionKey(session: string, year: number) {
   return `${session}_${year}`;
 }
 
+import { logError } from "@/lib/shared/logger";
+
 export async function getExamDates(session: string, year: number): Promise<ExamSlot[]> {
   const key = getSessionKey(session, year);
 
@@ -39,7 +41,7 @@ export async function getExamDates(session: string, year: number): Promise<ExamS
       return slots;
     }
   } catch (e) {
-    console.warn("[ExamDates] Failed to read cache", e);
+    logError("ExamDates.ReadCache", e);
   }
 
   const slots = getSeedData(session, year);
@@ -53,7 +55,7 @@ export async function getExamDates(session: string, year: number): Promise<ExamS
         updatedAt: Date.now(),
       });
     } catch (e) {
-      console.warn("[ExamDates] Failed to write cache", e);
+      logError("ExamDates.WriteCache", e);
     }
   }
 
@@ -133,7 +135,7 @@ export async function syncExamDatesToAppwrite(
       source: "seed",
     });
   } catch (err) {
-    console.warn("[exam-dates] Failed to enqueue sync:", err);
+    logError("ExamDates.EnqueueSync", err);
   }
 }
 
@@ -154,6 +156,6 @@ export async function syncExamDatesDirect(
       source: "seed",
     });
   } catch (err) {
-    console.warn("[exam-dates] Direct sync failed:", err);
+    logError("ExamDates.DirectSync", err);
   }
 }

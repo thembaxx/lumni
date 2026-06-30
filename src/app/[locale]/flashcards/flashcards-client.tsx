@@ -16,6 +16,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { logError } from "@/lib/shared/logger";
 import type { FlashcardDeckCard } from "@/lib/flashcard-engine/deck-types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
@@ -131,7 +132,7 @@ export function FlashcardsClient() {
   const autoMode = searchParams.get("mode") as FlashcardSource | null;
   useEffect(() => {
     void enqueue("appwrite-flashcard-pull", {}).catch((e) => {
-      console.warn("Flashcard pull failed:", e);
+      logError("flashcard-pull", e);
       toast({
         type: "warning",
         message: "Could not sync flashcards from cloud",
@@ -454,7 +455,7 @@ export function FlashcardsClient() {
       cards.qualityMap,
       session.selectedSubject.toLowerCase(),
     ).catch((e) => {
-      console.warn("Session processing:", e);
+      logError("flashcard-session-processing", e);
       toast({
         type: "error",
         message: "Session results may not be fully saved.",

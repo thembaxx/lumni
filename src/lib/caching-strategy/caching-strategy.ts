@@ -23,6 +23,8 @@ export interface CacheResolver<T, P> {
   resolve(params: P): Promise<T | null>;
 }
 
+import { logError } from "@/lib/shared/logger";
+
 export class CachingStrategy<T, P> implements CacheResolver<T, P> {
   constructor(
     private tiers: CacheTier<T, P>[],
@@ -37,7 +39,7 @@ export class CachingStrategy<T, P> implements CacheResolver<T, P> {
           return value;
         }
       } catch (e) {
-        console.warn(`Cache read from tier ${tier.name} failed:`, e);
+        logError(`CacheRead.${tier.name}`, e);
       }
     }
 
@@ -45,9 +47,7 @@ export class CachingStrategy<T, P> implements CacheResolver<T, P> {
     if (generated !== null && generated !== undefined) {
       await Promise.allSettled(
         this.tiers.map((t) =>
-          t
-            .write(params, generated)
-            .catch((e) => console.warn(`Cache write to ${t.name} failed:`, e)),
+          t.write(params, generated).catch((e) => logError(`CacheWrite.${t.name}`, e)),
         ),
       );
     }

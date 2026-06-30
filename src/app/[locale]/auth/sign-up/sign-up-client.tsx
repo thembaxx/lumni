@@ -15,6 +15,7 @@ import { FormSkeleton } from "@/components/ui/skeletons";
 import { toast } from "@/hooks/use-toast";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { logError } from "@/lib/shared/logger";
 
 function safeRedirect(url: string | null): string {
   if (!url) return "/dashboard";
@@ -87,7 +88,7 @@ function SignUpForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: referralCode, refereeId: userId }),
           }).catch((e) => {
-            console.warn("Referral claim:", e);
+            logError("referral-claim", e);
             toast({
               type: "warning",
               message: "Couldn't apply referral. You can add it later in Settings.",

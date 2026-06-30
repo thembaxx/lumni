@@ -60,6 +60,8 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
   "generate-embedding": 50,
 };
 
+import { logError } from "@/lib/shared/logger";
+
 export function createQueueCore(jobs: DataAccessTable<JobRecord, number> = dexieDataAccess.jobs) {
   return new QueueCore<JobRecord>(jobs);
 }
@@ -89,7 +91,7 @@ export async function enqueue<T extends JobType>(
       })) ?? -1
     );
   } catch (err) {
-    console.warn(`[enqueue] Failed to enqueue ${type}:`, err);
+    logError(`JobQueue.Enqueue.${type}`, err);
     return -1;
   }
 }

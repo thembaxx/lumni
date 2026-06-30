@@ -114,7 +114,7 @@ export function ChatContent() {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-sm tracking-[-0.011em]">Study Assistant</span>
-            <span className="flex items-center gap-1.5 text-muted-foreground text-[10px]">
+            <span className="flex items-center gap-1.5 ios-caption-3 text-muted-foreground">
               <span className="relative flex size-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
                 <span className="relative inline-flex size-1.5 rounded-full bg-success" />

@@ -20,6 +20,7 @@ import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useAuth } from "@/lib/auth/auth-context";
+import { logError } from "@/lib/shared/logger";
 import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
 
@@ -63,7 +64,7 @@ async function toggleProfileSubject(
       queryKey: ["user-subjects", userId],
     });
   } catch (e) {
-    console.warn("[Profile] Failed to save subjects", e);
+    logError("profile-save-subjects", e);
   }
 }
 
