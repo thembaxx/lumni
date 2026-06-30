@@ -24,3 +24,5 @@ export default async function ExamPage({
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

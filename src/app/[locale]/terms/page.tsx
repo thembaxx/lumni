@@ -117,3 +117,5 @@ export default function TermsPage() {
     </div>
   );
 }
+
+export const instant = false;

@@ -9,3 +9,5 @@ export default function EmbedBackfillPageWrapper() {
     </Suspense>
   );
 }
+
+export const instant = false;

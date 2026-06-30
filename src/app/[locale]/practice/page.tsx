@@ -14,3 +14,5 @@ export default function PracticePage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

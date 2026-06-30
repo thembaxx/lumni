@@ -9,3 +9,5 @@ export default function AdminQuestionsPageWrapper() {
     </Suspense>
   );
 }
+
+export const instant = false;

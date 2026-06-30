@@ -26,3 +26,5 @@ export default function StoryPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

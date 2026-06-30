@@ -9,3 +9,5 @@ export const metadata: Metadata = {
 export default function ProblemsPage() {
   return <ProblemsClient />;
 }
+
+export const instant = false;

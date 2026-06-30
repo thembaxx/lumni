@@ -26,3 +26,5 @@ export default function DictionaryPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

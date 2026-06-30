@@ -9,3 +9,5 @@ export const metadata: Metadata = {
 export default function StudentReportPage({ params }: { params: Promise<{ studentId: string }> }) {
   return <StudentReportClient params={params} />;
 }
+
+export const instant = false;

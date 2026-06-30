@@ -26,3 +26,5 @@ export default function PronunciationPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

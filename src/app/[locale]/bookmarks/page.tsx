@@ -9,3 +9,5 @@ export const metadata: Metadata = {
 export default function BookmarksPage() {
   return <BookmarksClient />;
 }
+
+export const instant = false;

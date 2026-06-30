@@ -15,3 +15,5 @@ export default function StudyPlanPage() {
     </div>
   );
 }
+
+export const instant = false;

@@ -14,3 +14,5 @@ export default function ToolsPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

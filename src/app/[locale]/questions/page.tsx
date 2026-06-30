@@ -18,3 +18,5 @@ export default function QuestionsPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

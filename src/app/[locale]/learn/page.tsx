@@ -14,3 +14,5 @@ export default function LearnPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

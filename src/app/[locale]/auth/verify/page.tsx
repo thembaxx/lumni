@@ -9,3 +9,5 @@ export default function VerifyPage() {
     </Suspense>
   );
 }
+
+export const instant = false;

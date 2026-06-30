@@ -14,3 +14,5 @@ export default function SearchPage() {
     </Suspense>
   );
 }
+
+export const instant = false;

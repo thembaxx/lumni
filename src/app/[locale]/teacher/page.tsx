@@ -9,3 +9,5 @@ export const metadata: Metadata = {
 export default function TeacherDashboardPage() {
   return <TeacherDashboardClient />;
 }
+
+export const instant = false;

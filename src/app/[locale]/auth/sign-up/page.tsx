@@ -9,3 +9,5 @@ export default function SignUpPageWrapper() {
     </Suspense>
   );
 }
+
+export const instant = false;

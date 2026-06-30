@@ -18,3 +18,5 @@ export default function QuizPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

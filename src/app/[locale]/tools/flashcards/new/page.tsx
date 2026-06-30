@@ -13,3 +13,5 @@ export default function NewFlashcardPage() {
     </PageContainer>
   );
 }
+
+export const instant = false;

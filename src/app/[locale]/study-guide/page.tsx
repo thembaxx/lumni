@@ -9,3 +9,5 @@ export default function StudyGuidePageWrapper() {
     </Suspense>
   );
 }
+
+export const instant = false;

@@ -15,3 +15,5 @@ export default function LeaderboardPage() {
     </Suspense>
   );
 }
+
+export const instant = false;

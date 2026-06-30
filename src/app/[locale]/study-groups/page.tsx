@@ -15,3 +15,5 @@ export default function StudyGroupsPage() {
     </Suspense>
   );
 }
+
+export const instant = false;

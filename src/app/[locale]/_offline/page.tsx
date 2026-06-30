@@ -51,3 +51,5 @@ export default function OfflinePage() {
     </div>
   );
 }
+
+export const instant = false;

@@ -14,3 +14,5 @@ export default function ProgressPage() {
     </AppErrorBoundary>
   );
 }
+
+export const instant = false;

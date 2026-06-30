@@ -3,3 +3,5 @@ import { ParentDashboardClient } from "@/components/parent/parent-dashboard-clie
 export default function ParentPage() {
   return <ParentDashboardClient />;
 }
+
+export const instant = false;

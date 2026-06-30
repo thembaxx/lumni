@@ -9,3 +9,5 @@ export default function VerifyEmailPageWrapper() {
     </Suspense>
   );
 }
+
+export const instant = false;

@@ -130,3 +130,5 @@ export default function PrivacyPage() {
     </div>
   );
 }
+
+export const instant = false;

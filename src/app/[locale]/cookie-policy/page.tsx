@@ -78,3 +78,5 @@ export default function CookiePolicyPage() {
     </div>
   );
 }
+
+export const instant = false;

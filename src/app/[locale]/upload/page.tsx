@@ -12,3 +12,5 @@ export default function UploadPage() {
     </PageContainer>
   );
 }
+
+export const instant = false;

@@ -19,3 +19,5 @@ export default function ExamDatesPage() {
     </div>
   );
 }
+
+export const instant = false;
