@@ -1292,6 +1292,34 @@ In overrides, map 25+ CSS vars to `--system-*` tokens:
 - **Dynamic import**: Lazy-load the PDFSlick viewer section using Next.js dynamic import to avoid loading PDFSlick bundle until needed.
 - **No custom toolbar**: Use PDFSlick's built-in toolbar. Only add app-level overlays (download, fullscreen) outside it.
 
+## Debugging & Verification Patterns
+
+### Headless browser testing (Playwright on Windows)
+
+- **PowerShell escaping**: `-e` inline scripts fail on backslash sequences. Always write `.mjs` files for complex Playwright scripts and run with `node scripts/foo.mjs`.
+- **App navigation**: Root `/` redirects to `/onboarding` until onboarded. Use `localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }))` to bypass. Landing page lives at `/en` (localized), not `/`.
+- **Auth-gated content**: Settings page content, theme switcher, and user-specific UI only render when authenticated. Unauthenticated pages show "Loading..." or "Sign In" — do not assume missing elements are bugs.
+- **Next.js error overlay**: The dev overlay intercepts keyboard events. Dismiss with `button:has-text("Dismiss")` before testing Konami code or other keyboard interactions.
+- **React synthetic events**: `element.click()` inside `page.evaluate()` triggers native click but may NOT trigger React synthetic handlers. Use `el.dispatchEvent(new MouseEvent("click", {bubbles: true}))` instead, or use Playwright locator `.click({ force: true })` to bypass overlay interception.
+- **`force: true`**: Use `.click({ force: true })` when overlapped elements (e.g., collapsed accordion sections) block the actionability check but the element is still in the DOM and has event listeners.
+
+### Easter egg locations
+
+All easter eggs are in `src/lib/shared/easter-egg-context.tsx`. The provider handles global Konami listener; overlay components auto-dismiss after 4s.
+
+| Egg              | Wired In                   | File                        | Trigger                              |
+| ---------------- | -------------------------- | --------------------------- | ------------------------------------ |
+| **Konami**       | Provider global listener   | `easter-egg-context.tsx:50` | ↑↑↓↓←→←→BA anytime                   |
+| **Search "42"**  | `SearchWidget`             | `search-widget.tsx:21`      | Type "42" in dashboard search        |
+| **Logo 7-click** | `HomeContent` brand button | `home-content.tsx:67`       | Click landing page logo 7×           |
+| **Moon 5-click** | `ThemeSwitcher`            | `theme-switcher.tsx:48`     | Click theme toggle from dark mode 5× |
+
+Note: `useLogoEasterEgg` and `useMoonEasterEgg` hooks are wired but NOT on the dashboard sidebar or top nav — logo is on the landing page only, moon is in Settings → Appearance only (auth-gated).
+
+### Hook location lookup
+
+When searching for hook usage, `grep` patterns with quotes can miss matches due to shell escaping. Always verify with exact file reads or `rg` (ripgrep) over the whole `src/` tree. The `useGrep` tool and `grep` tool are both available — use the `grep` tool for quick checks but read the file for definitive confirmation.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
