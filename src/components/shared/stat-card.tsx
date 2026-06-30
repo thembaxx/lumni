@@ -40,29 +40,30 @@ export function StatCard({
   delay = 0,
 }: StatCardProps) {
   const trendColor = trend ? trendColors[trend] : undefined;
+  const prefersReducedMotion = useReducedMotion();
 
   if (variant === "admin") {
     return (
       <m.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay, duration: 0.3, ease: iOSEase }}
+        transition={
+          prefersReducedMotion ? { duration: 0 } : { delay, duration: 0.3, ease: iOSEase }
+        }
         className={cn("rounded-lg bg-muted/50 p-3", className)}
       >
         <p className="text-muted-foreground text-xs">{label}</p>
         <m.p
           className="font-semibold text-xl tabular-nums"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: delay + 0.15 }}
+          transition={prefersReducedMotion ? { duration: 0 } : { delay: delay + 0.15 }}
         >
           {value}
         </m.p>
       </m.div>
     );
   }
-
-  const prefersReducedMotion = useReducedMotion();
 
   if (variant === "dashboard") {
     return (

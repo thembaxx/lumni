@@ -12,6 +12,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Anim } from "@/components/shared/anim";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { SubjectSelect } from "@/components/ui/subject-select";
@@ -51,7 +52,7 @@ function MagneticCard({ children, className }: { children: React.ReactNode; clas
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={cn("transition-transform duration-200 ease-out will-change-transform", className)}
+      className={cn("transition-transform duration-200 ease-ios will-change-transform", className)}
     >
       {children}
     </div>
@@ -243,6 +244,7 @@ export function ProblemsClient() {
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient variant="subtle" />
       <PageContainer className="flex flex-col gap-8">
         <Anim>
           <div className="flex flex-col gap-6">

@@ -162,8 +162,8 @@ export function BottomNav() {
     [push],
   );
 
-  const shouldReducedMotion = useReducedMotion();
-  const shouldAnimate = !shouldReducedMotion;
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimate = !prefersReducedMotion;
 
   const activeIndex = useMemo(() => {
     const index = navItems.findIndex((item) => {

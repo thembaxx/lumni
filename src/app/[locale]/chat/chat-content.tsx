@@ -46,20 +46,10 @@ function TypingDots() {
   return (
     <div className="flex items-center gap-1 px-1">
       {[0, 1, 2].map((i) => (
-        <m.div
+        <div
           key={i}
-          initial={{ scale: 0.5, opacity: 0.3 }}
-          animate={{
-            scale: [0.5, 1, 0.5],
-            opacity: [0.3, 1, 0.3],
-          }}
-          transition={{
-            duration: 1.2,
-            repeat: Infinity,
-            delay: i * 0.2,
-            ease: "easeInOut",
-          }}
-          className="size-1.5 rounded-full bg-system-accent/60"
+          className="animate-typing-bounce size-1.5 rounded-full bg-system-accent/60"
+          style={{ animationDelay: `${i * 0.2}s` }}
         />
       ))}
     </div>
