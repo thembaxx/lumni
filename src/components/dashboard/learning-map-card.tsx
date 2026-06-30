@@ -16,48 +16,15 @@ import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type { KnowledgeGraph, KnowledgeNode } from "@/lib/knowledge-graph/types";
-
-const NODE_COLORS: Record<string, string> = {
-  prerequisite: "fill-amber-500 stroke-amber-600",
-  core: "fill-blue-500 stroke-blue-600",
-  advanced: "fill-emerald-500 stroke-emerald-600",
-};
-
-const MASTERY_COLORS: Record<string, { fill: string; stroke: string; text: string }> = {
-  novice: {
-    fill: "fill-red-400 stroke-red-500",
-    stroke: "stroke-red-500",
-    text: "oklch(55% 0.18 25)",
-  },
-  developing: {
-    fill: "fill-amber-400 stroke-amber-500",
-    stroke: "stroke-amber-500",
-    text: "oklch(75% 0.15 70)",
-  },
-  proficient: {
-    fill: "fill-blue-400 stroke-blue-500",
-    stroke: "stroke-blue-500",
-    text: "oklch(60% 0.15 240)",
-  },
-  mastered: {
-    fill: "fill-emerald-400 stroke-emerald-500",
-    stroke: "stroke-emerald-500",
-    text: "oklch(65% 0.2 145)",
-  },
-  untested: {
-    fill: "fill-slate-300 stroke-slate-400",
-    stroke: "stroke-slate-400",
-    text: "oklch(70% 0 0)",
-  },
-};
-
-const LAYER_KEYS = ["prerequisite", "core", "advanced"] as const;
-
-const NODE_TEXT_COLORS: Record<string, string> = {
-  prerequisite: "oklch(70% 0.15 70)",
-  core: "oklch(55% 0.15 240)",
-  advanced: "oklch(60% 0.15 145)",
-};
+import { MASTERY_COLORS, LAYER_KEYS } from "@/lib/knowledge-graph/visual-constants";
+import {
+  LAYOUT,
+  getSvgDimensions,
+  getNodeX,
+  getNodeY,
+  getNodeCenter,
+  getNodeStyle,
+} from "@/lib/knowledge-graph/svg-layout";
 
 export function LearningMapCard() {
   const { push } = useRouter();
@@ -167,50 +134,7 @@ export function LearningMapCard() {
     1,
   );
 
-  const nodeW = 100;
-  const nodeH = 32;
-  const gapX = 20;
-  const gapY = 60;
-  const padX = 30;
-  const padY = 20;
-  const svgW = maxNodes * (nodeW + gapX) + padX * 2;
-  const svgH = 3 * (nodeH + gapY) + padY * 2;
-
-  function getNodeX(index: number, total: number) {
-    const rowWidth = total * (nodeW + gapX) - gapX;
-    const startX = (svgW - rowWidth) / 2;
-    return startX + index * (nodeW + gapX);
-  }
-
-  function getNodeY(rowIndex: number) {
-    return padY + rowIndex * (nodeH + gapY);
-  }
-
-  function getNodeCenter(rowIndex: number, index: number, total: number) {
-    return {
-      x: getNodeX(index, total) + nodeW / 2,
-      y: getNodeY(rowIndex) + nodeH / 2,
-    };
-  }
-
-  function getNodeMastery(nodeId: string): string {
-    return masteryMap.get(nodeId) ?? "untested";
-  }
-
-  function getNodeStyle(nodeId: string, nodeType: string) {
-    const mastery = getNodeMastery(nodeId);
-    const masteryStyle = MASTERY_COLORS[mastery];
-    if (mastery !== "untested") {
-      return {
-        fillClass: masteryStyle.fill,
-        textColor: masteryStyle.text,
-      };
-    }
-    return {
-      fillClass: NODE_COLORS[nodeType] ?? NODE_COLORS.core,
-      textColor: NODE_TEXT_COLORS[nodeType] ?? "oklch(55% 0.15 240)",
-    };
-  }
+  const { svgW, svgH } = getSvgDimensions(maxNodes);
 
   return (
     <Card>
@@ -253,8 +177,8 @@ export function LearningMapCard() {
               const toLayer = LAYER_KEYS.indexOf(toNode.type as (typeof LAYER_KEYS)[number]);
               const fromIdx = layers[fromType].indexOf(fromNode);
               const toIdx = layers[toType].indexOf(toNode);
-              const from = getNodeCenter(fromLayer, fromIdx, layers[fromType].length);
-              const to = getNodeCenter(toLayer, toIdx, layers[toType].length);
+              const from = getNodeCenter(fromLayer, fromIdx, layers[fromType].length, svgW);
+              const to = getNodeCenter(toLayer, toIdx, layers[toType].length, svgW);
               const midY = (from.y + to.y) / 2;
               const d = `M ${from.x} ${from.y} Q ${from.x} ${midY} ${from.x + (to.x - from.x) / 2} ${midY} T ${to.x} ${to.y}`;
               return (
@@ -272,9 +196,9 @@ export function LearningMapCard() {
               const rowIndex = LAYER_KEYS.indexOf(node.type as (typeof LAYER_KEYS)[number]);
               const row = layers[node.type];
               const nodeIndex = row.indexOf(node);
-              const _x = getNodeX(nodeIndex, row.length);
+              const _x = getNodeX(nodeIndex, row.length, svgW);
               const _y = getNodeY(rowIndex);
-              const style = getNodeStyle(node.id, node.type);
+              const style = getNodeStyle(node.id, node.type, masteryMap);
               return (
                 <a
                   key={node.id}
@@ -296,14 +220,14 @@ export function LearningMapCard() {
                   <rect
                     x={_x}
                     y={_y}
-                    width={nodeW}
-                    height={nodeH}
+                    width={LAYOUT.nodeW}
+                    height={LAYOUT.nodeH}
                     rx={6}
                     className={style.fillClass}
                     fillOpacity={0.15}
                     strokeWidth={1.5}
                   />
-                  <foreignObject x={_x} y={_y} width={nodeW} height={nodeH}>
+                  <foreignObject x={_x} y={_y} width={LAYOUT.nodeW} height={LAYOUT.nodeH}>
                     <div className="flex h-full items-center justify-center px-1">
                       <span
                         className="truncate text-center font-medium text-(--fs-caption-3) leading-tight"

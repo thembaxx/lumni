@@ -1,17 +1,11 @@
 "use client";
 
-import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
-import BookOpenIcon from "@hugeicons/core-free-icons/BookOpen01Icon";
-import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
-import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -21,9 +15,12 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
-import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
-import { cn } from "@/lib/utils";
+import { iOSDecelerate } from "@/lib/utils/animation";
 import { QuestionCard } from "./question-card";
+import { BoltMark } from "./bolt-mark";
+import { BoltLoading } from "./bolt-loading";
+import { BoltErrorState } from "./bolt-error-state";
+import { BoltEmptyState } from "./bolt-empty-state";
 
 export function BoltQuiz() {
   const { push } = useNavigationDirection();
@@ -254,160 +251,6 @@ export function BoltQuiz() {
           )}
         </AnimatePresence>
       </main>
-    </div>
-  );
-}
-
-function BoltMark() {
-  return (
-    <m.div
-      initial={{ scale: 0.6, rotate: -10, opacity: 0 }}
-      animate={{ scale: 1, rotate: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: iOSEase }}
-      className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-warning/15 shadow-level-1 ring-1 ring-warning/25"
-      aria-hidden="true"
-    >
-      <m.div
-        animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
-      />
-      <HugeiconsIcon
-        icon={SparklesIcon}
-        className="relative size-5 text-warning"
-        strokeWidth={2.25}
-      />
-    </m.div>
-  );
-}
-
-function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
-  return (
-    <div className="flex w-full max-w-2xl flex-col gap-5">
-      <div className="flex flex-col items-center gap-3 py-2 text-center">
-        <div className="flex items-center gap-2 rounded-full bg-system-fill px-3 py-1.5">
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-warning/60" />
-            <span className="relative inline-flex size-2 rounded-full bg-warning" />
-          </span>
-          <span className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
-            Loading your challenge
-          </span>
-        </div>
-        <h2 className="ios-title-3 max-w-md text-balance text-foreground">
-          Preparing a {subjectLabel} question
-        </h2>
-        <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          Sharpening today&rsquo;s target at your weakest spot.
-        </p>
-      </div>
-      <Skeleton className="h-6 w-48 rounded-full" />
-      <Skeleton className="h-44 w-full rounded-3xl" />
-      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-        <Skeleton className="h-14 rounded-2xl" />
-        <Skeleton className="h-14 rounded-2xl" />
-        <Skeleton className="h-14 rounded-2xl" />
-        <Skeleton className="h-14 rounded-2xl" />
-      </div>
-    </div>
-  );
-}
-
-function BoltErrorState({
-  onRetry,
-  onClose,
-  isRetrying,
-}: {
-  onRetry: () => void;
-  onClose: () => void;
-  isRetrying: boolean;
-}) {
-  return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
-      <div className="relative flex size-16 items-center justify-center rounded-3xl bg-destructive/10 ring-1 ring-destructive/20">
-        <div className="absolute inset-0 rounded-3xl bg-destructive/20 blur-xl" />
-        <HugeiconsIcon
-          icon={AlertCircleIcon}
-          className="relative size-7 text-destructive"
-          strokeWidth={2}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <h2 className="ios-title-3 text-balance text-foreground">
-          We couldn&rsquo;t load your challenge
-        </h2>
-        <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          Something tripped while loading today&rsquo;s question. Give it another try, or close and
-          pick a different start.
-        </p>
-      </div>
-      <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
-        <Button
-          variant="outline"
-          onClick={onClose}
-          className="w-full sm:w-auto"
-          disabled={isRetrying}
-        >
-          Close
-        </Button>
-        <Button onClick={onRetry} className="w-full gap-2 sm:w-auto" disabled={isRetrying}>
-          <HugeiconsIcon
-            icon={RefreshIcon}
-            className={cn("size-4", isRetrying && "animate-spin")}
-          />
-          {isRetrying ? "Retrying\u2026" : "Try again"}
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-function BoltEmptyState({
-  subjectLabel,
-  onRetry,
-  onClose,
-  isRetrying,
-}: {
-  subjectLabel: string;
-  onRetry: () => void;
-  onClose: () => void;
-  isRetrying: boolean;
-}) {
-  return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
-      <div className="relative flex size-16 items-center justify-center rounded-3xl bg-system-fill ring-1 ring-system-separator">
-        <HugeiconsIcon
-          icon={BookOpenIcon}
-          className="relative size-7 text-muted-foreground"
-          strokeWidth={2}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <h2 className="ios-title-3 text-balance text-foreground">
-          No {subjectLabel} question ready yet
-        </h2>
-        <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          We couldn&rsquo;t pull a fresh question for you right now. Try again in a moment, or close
-          and browse your topics.
-        </p>
-      </div>
-      <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
-        <Button
-          variant="outline"
-          onClick={onClose}
-          className="w-full sm:w-auto"
-          disabled={isRetrying}
-        >
-          Close
-        </Button>
-        <Button onClick={onRetry} className="w-full gap-2 sm:w-auto" disabled={isRetrying}>
-          <HugeiconsIcon
-            icon={RefreshIcon}
-            className={cn("size-4", isRetrying && "animate-spin")}
-          />
-          {isRetrying ? "Refreshing\u2026" : "Refresh Question"}
-        </Button>
-      </div>
     </div>
   );
 }

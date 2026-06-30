@@ -11,11 +11,7 @@ import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { useLeaderboard } from "@/hooks/use-leaderboard";
 
-const rankColors = [
-  "text-amber-400 dark:text-amber-300",
-  "text-zinc-400 dark:text-zinc-300",
-  "text-orange-700 dark:text-orange-400",
-];
+const rankColors = ["text-warning", "text-muted-foreground", "text-warning"];
 
 export function LeaderboardClient() {
   const { user } = useAuth();
@@ -78,7 +74,7 @@ export function LeaderboardClient() {
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
                       <div className="flex items-center gap-1">
-                        <HugeiconsIcon icon={StarIcon} size={14} className="text-amber-400" />
+                        <HugeiconsIcon icon={StarIcon} size={14} className="text-warning" />
                         <span className="font-bold text-sm tabular-nums">
                           {entry.xp.toLocaleString()}
                         </span>

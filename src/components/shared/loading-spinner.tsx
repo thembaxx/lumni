@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface LoadingSpinnerProps {
@@ -11,7 +12,10 @@ const spinnerSizes = {
   lg: "size-6 border-[2.5px]",
 };
 
-export function LoadingSpinner({ size = "md", className }: LoadingSpinnerProps) {
+export const LoadingSpinner = memo(function LoadingSpinner({
+  size = "md",
+  className,
+}: LoadingSpinnerProps) {
   return (
     <div
       className={cn(
@@ -21,7 +25,7 @@ export function LoadingSpinner({ size = "md", className }: LoadingSpinnerProps) 
       )}
     />
   );
-}
+});
 
 interface LoadingOverlayProps {
   message?: string;

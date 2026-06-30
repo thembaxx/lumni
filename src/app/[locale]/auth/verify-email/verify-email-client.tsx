@@ -58,8 +58,8 @@ function VerifyEmailContent() {
 
   return (
     <FadeIn direction="up" distance={12} className="flex flex-col items-center gap-6 text-center">
-      <div className="flex size-16 items-center justify-center rounded-full bg-green-500/10 dark:bg-green-400/10">
-        <HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500 dark:text-green-300" />
+      <div className="flex size-16 items-center justify-center rounded-full bg-success/10">
+        <HugeiconsIcon icon={SparklesIcon} className="size-8 text-success" />
       </div>
       <div className="flex flex-col gap-2">
         <h1 className="font-heading font-semibold text-2xl">{t("auth.emailVerified")}</h1>

@@ -116,7 +116,7 @@ export function PdfPageClient() {
         </div>
       )}
 
-      <div className="absolute bottom-4 right-4 z-50 flex items-center gap-2">
+      <div className="absolute bottom-4 right-4 z-(--z-overlay) flex items-center gap-2">
         <Button
           variant="secondary"
           size="icon"

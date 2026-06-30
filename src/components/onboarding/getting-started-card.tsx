@@ -154,13 +154,20 @@ export function GettingStartedCard() {
                 {actions.map((item) => {
                   const done = steps[item.key];
                   return (
-                    <m.div
+                    <div
                       key={item.key}
-                      whileTap={done ? {} : { scale: 0.96 }}
-                      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (done) return;
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          markDone(item.key, item.href);
+                        }
+                      }}
                       className={`flex items-center gap-3 rounded-xl p-3 transition-colors ${
-                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20"
-                      }`}
+                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20 active:scale-[0.96]"
+                      } transition-[scale] duration-150`}
                       onClick={done ? undefined : () => markDone(item.key, item.href)}
                     >
                       <div
@@ -248,7 +255,7 @@ export function GettingStartedCard() {
                           {item.action}
                         </Button>
                       )}
-                    </m.div>
+                    </div>
                   );
                 })}
               </div>

@@ -13,113 +13,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
 import { TabSwitcher } from "@/components/ui/tab-switcher";
+import { AnimatedCard } from "@/components/ui/animated-card";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "@/i18n/navigation";
-import { iOSEase } from "@/lib/utils/animation";
 import { AdminExamList } from "./admin-exam-list";
 import { AdminExamUploadZone } from "./admin-exam-upload-zone";
 import { AdminStatCards } from "./admin-stat-cards";
 import { SubjectForm } from "./admin-subject-form";
 import { SubjectTable } from "./admin-subject-table";
-
-interface Subject {
-  id: string;
-  name: string;
-  code: string;
-  description?: string;
-  category: string;
-  color?: string;
-}
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
-};
-
-function AnimatedCard({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <m.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.3, ease: iOSEase }}
-      className={className}
-    >
-      {children}
-    </m.div>
-  );
-}
-
-type AdminState = {
-  selectedSubjects: Set<string>;
-  editSubject: Subject | null;
-  newSubject: {
-    name: string;
-    code: string;
-    description: string;
-    category: string;
-  };
-  activeTab: "exam" | "subjects";
-  showSuccess: boolean;
-};
-
-type AdminAction =
-  | { type: "TOGGLE_SUBJECT"; payload: string }
-  | { type: "SET_EDIT_SUBJECT"; payload: Subject | null }
-  | { type: "SET_FORM_DATA"; payload: AdminState["newSubject"] }
-  | { type: "RESET_FORM_DATA" }
-  | { type: "SET_TAB"; payload: "exam" | "subjects" }
-  | { type: "SHOW_SUCCESS" }
-  | { type: "HIDE_SUCCESS" };
-
-function adminReducer(state: AdminState, action: AdminAction): AdminState {
-  switch (action.type) {
-    case "TOGGLE_SUBJECT": {
-      const next = new Set(state.selectedSubjects);
-      if (next.has(action.payload)) next.delete(action.payload);
-      else next.add(action.payload);
-      return { ...state, selectedSubjects: next };
-    }
-    case "SET_EDIT_SUBJECT":
-      return { ...state, editSubject: action.payload };
-    case "SET_FORM_DATA":
-      return { ...state, newSubject: action.payload };
-    case "RESET_FORM_DATA":
-      return {
-        ...state,
-        newSubject: {
-          name: "",
-          code: "",
-          description: "",
-          category: "general",
-        },
-      };
-    case "SET_TAB":
-      return { ...state, activeTab: action.payload };
-    case "SHOW_SUCCESS":
-      return { ...state, showSuccess: true };
-    case "HIDE_SUCCESS":
-      return { ...state, showSuccess: false };
-    default:
-      return state;
-  }
-}
-
-const adminInitialState: AdminState = {
-  selectedSubjects: new Set(),
-  editSubject: null,
-  newSubject: { name: "", code: "", description: "", category: "general" },
-  activeTab: "exam",
-  showSuccess: false,
-};
+import { adminReducer, adminInitialState, type Subject } from "./admin-reducer";
 
 export function AdminDashboard() {
   const { push } = useRouter();
@@ -297,7 +199,13 @@ export function AdminDashboard() {
             listClassName="w-full"
           >
             {activeTab === "exam" && (
-              <m.div {...fadeInUp} transition={{ duration: 0.25 }} className="flex flex-col gap-4">
+              <m.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col gap-4"
+              >
                 <AnimatedCard delay={0.15}>
                   <AdminExamUploadZone
                     onUploadComplete={() => {
@@ -315,7 +223,13 @@ export function AdminDashboard() {
             )}
 
             {activeTab === "subjects" && (
-              <m.div {...fadeInUp} transition={{ duration: 0.25 }} className="flex flex-col gap-4">
+              <m.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col gap-4"
+              >
                 <AnimatedCard delay={0.15}>
                   <SubjectForm
                     editSubject={editSubject}

@@ -1,9 +1,13 @@
 "use client";
 
+import { memo } from "react";
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { cn } from "@/lib/utils";
 
-export function PopoverContent({ className, ...props }: PopoverPrimitive.Popup.Props) {
+export const PopoverContent = memo(function PopoverContent({
+  className,
+  ...props
+}: PopoverPrimitive.Popup.Props) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Positioner>
@@ -17,4 +21,4 @@ export function PopoverContent({ className, ...props }: PopoverPrimitive.Popup.P
       </PopoverPrimitive.Positioner>
     </PopoverPrimitive.Portal>
   );
-}
+});

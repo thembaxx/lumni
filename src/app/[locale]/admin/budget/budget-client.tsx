@@ -112,11 +112,7 @@ export function BudgetClient() {
                     <div className="h-2 overflow-hidden rounded-full bg-secondary">
                       <div
                         className={`h-full rounded-full transition-[width,background-color] duration-500 ease-ios-decelerate ${
-                          exhausted
-                            ? "bg-destructive"
-                            : warning
-                              ? "bg-amber-500 dark:bg-amber-600"
-                              : "bg-foreground"
+                          exhausted ? "bg-destructive" : warning ? "bg-warning" : "bg-foreground"
                         }`}
                         style={{ width: `${Math.min(100, pct)}%` }}
                       />

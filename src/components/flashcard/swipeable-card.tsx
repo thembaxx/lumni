@@ -107,7 +107,7 @@ export const SwipeableCard = memo(function SwipeableCard({
   return (
     <m.div
       className={cn(
-        "absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none",
+        "absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none active:cursor-grabbing",
         isTop ? "z-10" : "pointer-events-none z-0",
       )}
       style={style ? { ...style, x, rotate, opacity } : { x, rotate, opacity }}
@@ -123,7 +123,6 @@ export const SwipeableCard = memo(function SwipeableCard({
         cursor: "grabbing",
         transition: { duration: 0.1 },
       }}
-      whileTap={{ cursor: "grabbing" }}
       layout
       tabIndex={isTop ? 0 : -1}
       role="button"

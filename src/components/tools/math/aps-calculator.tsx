@@ -9,72 +9,16 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
-import { cn } from "@/lib/utils";
+import { ApsScoreCard } from "./aps-score-card";
+import { SubjectBreakdown } from "./subject-breakdown";
+import { UniversityRequirements } from "./university-requirements";
+import { getAPSForSubject } from "@/lib/shared/aps";
 
 interface Subject {
   id: string;
   name: string;
   percentage: number;
 }
-
-const universityRequirements = [
-  {
-    university: "University of Cape Town (UCT)",
-    minAPS: 33,
-    courses: {
-      medicine: 40,
-      engineering: 36,
-      commerce: 33,
-      law: 35,
-      science: 33,
-    },
-  },
-  {
-    university: "University of the Witwatersrand (Wits)",
-    minAPS: 34,
-    courses: {
-      medicine: 38,
-      engineering: 33,
-      commerce: 32,
-      law: 34,
-      science: 30,
-    },
-  },
-  {
-    university: "University of Pretoria (UP)",
-    minAPS: 28,
-    courses: {
-      medicine: 38,
-      engineering: 35,
-      commerce: 32,
-      law: 32,
-      science: 30,
-    },
-  },
-  {
-    university: "Stellenbosch University",
-    minAPS: 28,
-    courses: {
-      medicine: 38,
-      engineering: 35,
-      commerce: 33,
-      law: 33,
-      science: 30,
-    },
-  },
-  {
-    university: "University of Johannesburg (UJ)",
-    minAPS: 26,
-    courses: {
-      medicine: 35,
-      engineering: 32,
-      commerce: 30,
-      law: 30,
-      science: 28,
-    },
-  },
-];
 
 export function APSCalculator() {
   const [subjects, setSubjects] = useState<Subject[]>([{ id: "1", name: "", percentage: 0 }]);
@@ -97,7 +41,6 @@ export function APSCalculator() {
 
   const calculateAPS = (): number => {
     const validSubjects = subjects.filter((s) => s.name && s.percentage > 0);
-
     return validSubjects
       .map((s) => ({
         score: getAPSForSubject(s.percentage),
@@ -116,8 +59,6 @@ export function APSCalculator() {
 
   const totalAPS = calculateAPS();
   const hasData = subjects.some((s) => s.percentage > 0);
-
-  const scoreLevel = totalAPS >= 32 ? "high" : totalAPS >= 24 ? "medium" : "low";
 
   return (
     <div className="flex h-full flex-col overflow-y-auto">
@@ -195,144 +136,11 @@ export function APSCalculator() {
         </div>
       </div>
 
-      <div className="px-5 pb-5">
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-level-2">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="ios-subhead text-(--system-text-secondary)">Your APS Score</span>
-            <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-(--system-accent)" />
-          </div>
-          <div
-            className={cn(
-              "text-center font-extrabold text-5xl tabular-nums",
-              scoreLevel === "high" && "text-success",
-              scoreLevel === "medium" && "text-warning",
-              scoreLevel === "low" && "text-destructive",
-            )}
-          >
-            {totalAPS}
-          </div>
-          <div className="mt-4 h-2 overflow-hidden rounded-full bg-system-background-tertiary">
-            <div
-              className={cn(
-                "h-full rounded-full transition-[width] duration-300",
-                scoreLevel === "high" && "bg-success",
-                scoreLevel === "medium" && "bg-warning",
-                scoreLevel === "low" && "bg-destructive",
-              )}
-              style={{ width: `${(totalAPS / 42) * 100}%` }}
-            />
-          </div>
-          <p className="ios-caption-1 mt-3 text-center text-muted-foreground text-sm">
-            Max possible: 42 points (6 subjects × 7)
-          </p>
-        </div>
-      </div>
+      <ApsScoreCard totalAPS={totalAPS} />
 
-      {hasData && (
-        <div className="px-5 pb-5">
-          <p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
-            Subject Breakdown
-          </p>
-          <div className="flex flex-col gap-2">
-            {subjects
-              .filter((s) => s.percentage > 0)
-              .toSorted((a, b) => getAPSForSubject(b.percentage) - getAPSForSubject(a.percentage))
-              .map((subject, idx) => {
-                const aps = getAPSForSubject(subject.percentage);
-                return (
-                  <FadeIn
-                    key={subject.id}
-                    direction="up"
-                    distance={10}
-                    delay={idx * 0.05}
-                    className="relative flex items-center justify-between overflow-hidden rounded-xl bg-system-background-secondary p-4"
-                  >
-                    <div
-                      className={cn(
-                        "absolute top-0 bottom-0 left-0 w-1.5",
-                        aps >= 6 && "bg-success",
-                        aps >= 4 && aps < 6 && "bg-warning",
-                        aps < 4 && "bg-destructive",
-                      )}
-                    />
-                    <div className="pl-3">
-                      <span className="font-medium text-sm">
-                        {subject.name || `Subject ${idx + 1}`}
-                      </span>
-                      <span className="ml-2 text-muted-foreground text-sm tabular-nums">
-                        ({subject.percentage}%)
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span
-                        className={cn(
-                          "font-extrabold tabular-nums",
-                          aps >= 6 && "text-success",
-                          aps >= 4 && aps < 6 && "text-warning",
-                          aps < 4 && "text-destructive",
-                        )}
-                      >
-                        {aps} pts
-                      </span>
-                      <span className="ml-2 block text-muted-foreground text-xs">
-                        {getGrade(subject.percentage)}
-                      </span>
-                    </div>
-                  </FadeIn>
-                );
-              })}
-          </div>
-        </div>
-      )}
+      {hasData && <SubjectBreakdown subjects={subjects} />}
 
-      <div className="px-5 pb-10">
-        <p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
-          University Requirements
-        </p>
-        <div className="flex flex-col gap-3">
-          {universityRequirements.map((uni, idx) => {
-            const meetsMin = totalAPS >= uni.minAPS;
-            return (
-              <FadeIn
-                key={uni.university}
-                direction="up"
-                distance={10}
-                delay={idx * 0.05}
-                className="relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm"
-              >
-                {meetsMin && (
-                  <div className="absolute top-0 bottom-0 left-0 w-1 rounded-r-full bg-success" />
-                )}
-                <div className="mb-3 flex items-start justify-between">
-                  <span className="font-medium text-sm">{uni.university}</span>
-                  <span
-                    className={cn(
-                      "font-extrabold text-sm tabular-nums",
-                      meetsMin ? "text-success" : "text-destructive",
-                    )}
-                  >
-                    Min: {uni.minAPS}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
-                  {Object.entries(uni.courses).map(([course, req]) => (
-                    <span
-                      key={course}
-                      className={
-                        totalAPS >= req
-                          ? "text-success capitalize"
-                          : "text-muted-foreground capitalize"
-                      }
-                    >
-                      {course}: {req}+
-                    </span>
-                  ))}
-                </div>
-              </FadeIn>
-            );
-          })}
-        </div>
-      </div>
+      <UniversityRequirements totalAPS={totalAPS} />
     </div>
   );
 }

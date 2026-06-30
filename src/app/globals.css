@@ -176,6 +176,13 @@
   --system-accent-alpha-20: oklch(52% 0.18 146 / 0.2);
   --system-accent-alpha-30: oklch(52% 0.18 146 / 0.3);
 
+  /* Bubble hover tokens — precomputed from color-mix() for performance */
+  --bubble-tinted: oklch(93% 0.072 146);
+  --bubble-tinted-hover: oklch(88% 0.09 146);
+  --bubble-tinted-hover-dark: oklch(35% 0.09 146);
+  --secondary-hover: oklch(94.3% 0.007 60);
+  --muted-hover: oklch(94.3% 0.007 60);
+
   --system-success-alpha-20: oklch(65% 0.2 145 / 0.2);
   --system-destructive-alpha-20: oklch(55% 0.18 25 / 0.2);
 
@@ -378,6 +385,12 @@
 
   --system-success-alpha-20: oklch(70% 0.2 145 / 0.2);
   --system-destructive-alpha-20: oklch(60% 0.2 25 / 0.2);
+
+  --bubble-tinted: oklch(30% 0.072 146);
+  --bubble-tinted-hover: oklch(35% 0.09 146);
+  --bubble-tinted-hover-dark: oklch(35% 0.09 146);
+  --secondary-hover: oklch(22% 0.02 264);
+  --muted-hover: oklch(22% 0.02 264);
 
   --chart-1: oklch(70% 0.2 145);
   --chart-2: oklch(65% 0.18 146);

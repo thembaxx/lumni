@@ -63,50 +63,43 @@ export function StatCard({
 
   if (variant === "dashboard") {
     return (
-      <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 0.4 }}
-        whileHover={{ scale: 1.03 }}
+      <div
+        className={cn(
+          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2 transition-[scale] duration-150 hover:scale-[1.02] active:scale-[0.97]",
+          className,
+        )}
       >
-        <div
-          className={cn(
-            "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2 transition-colors",
-            className,
-          )}
+        <m.div
+          className={cn("rounded-full p-2", bgClass)}
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            delay: delay + 0.2,
+            type: "spring",
+            stiffness: 300,
+            damping: 26,
+            bounce: 0,
+          }}
         >
-          <m.div
-            className={cn("rounded-full p-2", bgClass)}
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              delay: delay + 0.2,
-              type: "spring",
-              stiffness: 300,
-              damping: 26,
-              bounce: 0,
-            }}
-          >
-            {Icon && <Icon className={cn("size-5", colorClass)} />}
-          </m.div>
-          <m.div
-            className="text-center"
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: delay + 0.3 }}
-          >
-            <span className="text-muted-foreground text-xs">{label}</span>
-          </m.div>
-          <m.span
-            className={cn("font-extrabold text-xl tabular-nums", colorClass)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: delay + 0.35 }}
-          >
-            {value}
-          </m.span>
-        </div>
-      </m.div>
+          {Icon && <Icon className={cn("size-5", colorClass)} />}
+        </m.div>
+        <m.div
+          className="text-center"
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: delay + 0.3 }}
+        >
+          <span className="text-muted-foreground text-xs">{label}</span>
+        </m.div>
+        <m.span
+          className={cn("font-extrabold text-xl tabular-nums", colorClass)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: delay + 0.35 }}
+        >
+          {value}
+        </m.span>
+      </div>
     );
   }
 

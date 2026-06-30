@@ -248,7 +248,7 @@ export function FlashcardBrowseClient() {
                         {card.nextReview > now ? (
                           <Badge
                             variant="outline"
-                            className="ios-caption-3 bg-green-500/10 text-green-600 dark:bg-green-400/10 dark:text-green-300"
+                            className="ios-caption-3 bg-success/10 text-success"
                           >
                             {t("flashcards.dueLabel")}{" "}
                             {new Date(card.nextReview).toLocaleDateString()}
@@ -256,7 +256,7 @@ export function FlashcardBrowseClient() {
                         ) : (
                           <Badge
                             variant="outline"
-                            className="ios-caption-3 bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300"
+                            className="ios-caption-3 bg-warning/10 text-warning"
                           >
                             {t("flashcards.overdue")}
                           </Badge>

@@ -224,7 +224,7 @@ export function StoriesClient() {
                     {isCompleted && (
                       <Badge
                         variant="default"
-                        className="shrink-0 rounded-full bg-emerald-500/15 text-(--fs-caption-3) text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
+                        className="shrink-0 rounded-full bg-success/15 text-(--fs-caption-3) text-success"
                       >
                         ✓ Completed
                       </Badge>

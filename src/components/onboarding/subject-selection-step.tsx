@@ -2,7 +2,7 @@
 
 import ArrowDownIcon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
@@ -113,28 +113,24 @@ export function SubjectSelectionStep({
                               : `${subjects.length} subjects`}
                           </span>
                         </button>
-                        <AnimatePresence initial={false}>
-                          {isExpanded && (
-                            <m.div
-                              initial={shouldReduceMotion ? {} : { height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={shouldReduceMotion ? {} : { height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2, ease: iOSEase }}
-                              className="overflow-hidden"
-                            >
-                              <div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
-                                {subjects.map((subject) => (
-                                  <SubjectCard
-                                    key={subject.id}
-                                    subject={subject}
-                                    selected={selectedSubjects.includes(subject.id)}
-                                    onToggle={() => onToggleSubject(subject.id)}
-                                  />
-                                ))}
-                              </div>
-                            </m.div>
-                          )}
-                        </AnimatePresence>
+                        <div
+                          className={`grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${
+                            isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                          }`}
+                        >
+                          <div className="min-h-0 overflow-hidden">
+                            <div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
+                              {subjects.map((subject) => (
+                                <SubjectCard
+                                  key={subject.id}
+                                  subject={subject}
+                                  selected={selectedSubjects.includes(subject.id)}
+                                  onToggle={() => onToggleSubject(subject.id)}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     );
                   })(),

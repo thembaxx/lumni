@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -25,7 +26,7 @@ const badgeVariants = cva(
   },
 );
 
-function Badge({
+const Badge = memo(function Badge({
   className,
   variant = "default",
   render,
@@ -45,6 +46,6 @@ function Badge({
       variant,
     },
   });
-}
+});
 
 export { Badge };

@@ -1,6 +1,5 @@
 "use client";
 
-import * as m from "motion/react-m";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -13,7 +12,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { iOSEase } from "@/lib/utils/animation";
 import type { Note } from "./types";
 
 export function NoteForm({
@@ -159,7 +157,7 @@ export function NoteForm({
 
       <div className="mt-4 flex justify-end gap-x-3">
         <Button variant="outline" size="icon" asChild onClick={onCancel} aria-label="Cancel">
-          <m.div whileTap={{ scale: 0.96 }} transition={{ duration: 0.2, ease: iOSEase }}>
+          <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -175,7 +173,7 @@ export function NoteForm({
               <path d="M18 6L6 18" />
               <path d="M6 6l12 12" />
             </svg>
-          </m.div>
+          </div>
         </Button>
 
         <Button type="submit" className="btn-primary">

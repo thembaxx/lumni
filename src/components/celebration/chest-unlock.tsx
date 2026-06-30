@@ -50,7 +50,7 @@ export function ChestUnlock({
               <p className="text-xl">{name}</p>
               <p className="mt-1 text-muted-foreground text-sm">{description}</p>
             </div>
-            <div className="flex items-center gap-2 text-amber-400 dark:text-amber-300">
+            <div className="flex items-center gap-2 text-warning">
               <span className="font-bold text-2xl tabular-nums">+{xpReward}</span>
               <span className="text-sm">XP</span>
             </div>

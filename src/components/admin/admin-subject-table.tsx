@@ -10,14 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
-interface Subject {
-  id: string;
-  name: string;
-  code: string;
-  description?: string;
-  category: string;
-  color?: string;
-}
+import type { Subject } from "./admin-reducer";
 
 interface SubjectTableProps {
   subjects: Subject[];
@@ -93,7 +86,7 @@ export function SubjectTable({
                 </div>
               </label>
               <div className={cn("flex", "gap-1")}>
-                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.96 }}>
+                <div>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -103,8 +96,8 @@ export function SubjectTable({
                   >
                     <HugeiconsIcon icon={PencilIcon} className={cn("size-3")} />
                   </Button>
-                </m.div>
-                <m.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.96 }}>
+                </div>
+                <div>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -122,7 +115,7 @@ export function SubjectTable({
                       />
                     )}
                   </Button>
-                </m.div>
+                </div>
               </div>
             </m.div>
           ))}

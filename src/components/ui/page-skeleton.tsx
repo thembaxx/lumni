@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function PageSkeleton() {
+export const PageSkeleton = memo(function PageSkeleton() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <Skeleton className="h-8 w-48 rounded" />
@@ -12,7 +13,7 @@ export function PageSkeleton() {
       </div>
     </div>
   );
-}
+});
 
 function CardSkeleton() {
   return <Skeleton className="h-32 rounded-xl" />;

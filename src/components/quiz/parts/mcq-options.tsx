@@ -1,6 +1,5 @@
 "use client";
 
-import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { memo } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -8,7 +7,6 @@ import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import type { Option } from "@/lib/question-engine/types";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 
 export const MCQOptions = memo(function MCQOptions({
   options,
@@ -35,23 +33,13 @@ export const MCQOptions = memo(function MCQOptions({
       {options.map((option) => {
         const isSelected = selectedOption === option.id;
         return (
-          <m.div
-            key={option.id}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.25,
-              ease: iOSEase,
-            }}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.96 }}
-          >
+          <div key={option.id}>
             <Button
               variant="ghost"
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn flex min-h-12 w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
+                "quiz-option-btn flex min-h-12 w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-[scale,background-color] duration-150 active:scale-[0.96]",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >
@@ -70,7 +58,7 @@ export const MCQOptions = memo(function MCQOptions({
               </span>
               {option.text.length > 80 && <TTSButton text={option.text} />}
             </Button>
-          </m.div>
+          </div>
         );
       })}
       <Button onClick={onSubmit} disabled={!selectedOption} className="col-span-full mt-2">

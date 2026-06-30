@@ -78,7 +78,7 @@ export function AdminPageClient() {
         initial={false}
         className="relative min-h-dvh"
       >
-        <m.div whileTap={{ scale: 0.96 }} className="fixed right-6 bottom-6 z-modal">
+        <div className="fixed right-6 bottom-6 z-modal active:scale-[0.96] transition-transform">
           <Button
             size="icon-lg"
             variant={
@@ -100,7 +100,7 @@ export function AdminPageClient() {
               <HugeiconsIcon icon={DatabaseIcon} className="size-5" />
             )}
           </Button>
-        </m.div>
+        </div>
         <AdminDashboard />
       </m.div>
     </AnimatePresence>

@@ -26,10 +26,8 @@ export function AdminActionButton({
     <m.button
       onClick={onClick}
       disabled={loading || disabled}
-      whileHover={!disabled && !loading ? { scale: 1.02 } : {}}
-      whileTap={!disabled && !loading ? { scale: 0.96 } : {}}
       className={cn(
-        "flex-1 rounded-md px-3 py-2 font-medium text-sm transition-colors disabled:opacity-50",
+        "flex-1 rounded-md px-3 py-2 font-medium text-sm transition-[scale,opacity] disabled:opacity-50 hover:scale-[1.02] active:scale-[0.96]",
         variant === "default" ? "bg-foreground text-background" : "border bg-transparent",
       )}
     >

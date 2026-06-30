@@ -3,7 +3,6 @@
 import GridIcon from "@hugeicons/core-free-icons/GridIcon";
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as m from "motion/react-m";
 import { memo, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { SnapFab } from "@/components/tools/core/snap-fab";
@@ -187,16 +186,14 @@ export function BottomNav() {
               <SnapFab inline />
             </Suspense>
 
-            <m.button
+            <button
               type="button"
               onClick={handleOpenTools}
               aria-label="Open tools"
-              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 transition-shadow hover:bg-system-accent/90"
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", duration: 0.25, bounce: 0 }}
+              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 transition-[scale,box-shadow] duration-150 active:scale-[0.96] hover:bg-system-accent/90"
             >
               <HugeiconsIcon icon={GridIcon} className="size-5" />
-            </m.button>
+            </button>
           </div>
         </div>
       </div>
