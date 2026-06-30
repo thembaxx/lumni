@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Explore learning resources",
 };
 
-
 export default function LearnPage() {
   return (
     <AppErrorBoundary>

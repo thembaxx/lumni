@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "Study Plan - Lumni",
 };
 
-
 export default function StudyPlanPage() {
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">

@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Practice with exams and past papers",
 };
 
-
 export default function PracticePage() {
   return (
     <AppErrorBoundary>

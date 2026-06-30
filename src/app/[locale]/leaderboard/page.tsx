@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "See how your XP and streaks compare to other students",
 };
 
-
 export default function LeaderboardPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>

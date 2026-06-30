@@ -27,7 +27,7 @@
     "deadcode": "knip --no-exit-code",
     "postinstall": "patch-package",
     "prepare": "husky && effect-language-service patch",
-    "analyze": "ANALYZE=true next build --webpack",
+    "analyze": "ANALYZE=true next build",
     "todo:sync": "tsx scripts/sync-todo-to-linear.ts",
     "todo:seed": "tsx scripts/seed-linear-issues.ts",
     "seed:subjects": "tsx src/lib/seed/seed-subjects.ts",

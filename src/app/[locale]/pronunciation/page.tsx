@@ -4,7 +4,6 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PronunciationClient } from "./pronunciation-client";
 
-
 export const metadata: Metadata = {
   title: "Pronunciation Practice - Lumni",
   description: "Practice your pronunciation with speech recognition",

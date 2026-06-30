@@ -1,4 +1,3 @@
-
 import { Suspense } from "react";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import VerifyEmailPage from "./verify-email-client";

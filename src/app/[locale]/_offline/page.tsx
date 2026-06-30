@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "Offline - Lumni",
 };
 
-
 export default function OfflinePage() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-background py-6 text-center">

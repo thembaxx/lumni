@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "View detailed student progress and competency report",
 };
 
-
 export default function StudentReportPage({ params }: { params: Promise<{ studentId: string }> }) {
   return <StudentReportClient params={params} />;
 }

@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "Exam Session - Lumni",
 };
 
-
 export default async function ExamPage({
   params,
   searchParams,

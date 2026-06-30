@@ -7,7 +7,6 @@ export const metadata = {
   description: "Search across all your study materials",
 };
 
-
 export default function SearchPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>

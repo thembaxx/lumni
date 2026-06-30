@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Read stories and practice comprehension",
 };
 
-
 export default function StoriesPage() {
   return (
     <AppErrorBoundary>

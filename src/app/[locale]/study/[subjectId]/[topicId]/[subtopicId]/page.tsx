@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Study lesson content",
 };
 
-
 export default function LessonPage({
   params,
 }: {

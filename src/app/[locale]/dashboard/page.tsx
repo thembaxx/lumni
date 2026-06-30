@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
 import { PageSkeleton } from "@/components/ui/skeletons";
 
-
 export default async function DashboardPage() {
   const queryClient = new QueryClient();
 

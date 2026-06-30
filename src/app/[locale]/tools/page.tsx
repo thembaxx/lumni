@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Learning tools and utilities",
 };
 
-
 export default function ToolsPage() {
   return (
     <AppErrorBoundary>

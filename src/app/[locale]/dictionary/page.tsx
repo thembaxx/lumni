@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Look up word definitions, pronunciation, and save vocabulary",
 };
 
-
 export default function DictionaryPage() {
   return (
     <AppErrorBoundary>

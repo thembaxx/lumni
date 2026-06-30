@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "New Flashcard",
 };
 
-
 export default function NewFlashcardPage() {
   return (
     <PageContainer className="flex min-h-dvh items-center justify-center py-8">

@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "Review and learn from your past mistakes",
 };
 
-
 export default function ReviewPage() {
   return (
     <Suspense fallback={<PageSkeleton />}>
