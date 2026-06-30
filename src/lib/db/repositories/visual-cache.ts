@@ -13,11 +13,16 @@ export function makeCacheKey(questionId: string, subject: string): string {
 export class VisualCacheRepository {
   constructor(private db: DataAccess) {}
 
+  private get dbAvailable(): boolean {
+    return !!this.db && typeof this.db.visuals !== "undefined";
+  }
+
   async cacheVisual(
     cacheKey: string,
     subject: string,
     visual: VisualContent | null,
   ): Promise<void> {
+    if (!this.dbAvailable) return;
     const now = Date.now();
     const existing = await this.db.visuals.where("cacheKey").equals(cacheKey).first();
 
@@ -37,6 +42,7 @@ export class VisualCacheRepository {
   }
 
   async getVisual(cacheKey: string): Promise<VisualContent | null> {
+    if (!this.dbAvailable) return null;
     const entry = await this.db.visuals.where("cacheKey").equals(cacheKey).first();
 
     if (!entry) return null;

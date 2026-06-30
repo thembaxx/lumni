@@ -108,6 +108,11 @@ jobs:
           path: .next/
       - name: Run E2E tests
         run: pnpm exec playwright test --grep-invert "WCAG AA contrast"
+      - name: Start Next.js for DAST
+        run: |
+          pnpm next start --port 3000 &
+          sleep 5
+          curl -s -o /dev/null --retry 10 --retry-delay 2 http://localhost:3000
       - name: Run DAST scan
         uses: zaproxy/action-baseline@v0.15.0
         with:
