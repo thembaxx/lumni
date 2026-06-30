@@ -35,8 +35,7 @@ export class QuestionEngine {
   private registry: ProcessorRegistry;
   private prompts: PromptManager;
   private ragDeps?: RagDeps;
-  private cachingStrategy: CacheResolver<Question[], GenerationParams>;
-  private lastRagContext: RagContext | null = null;
+  private cachingStrategy: CacheResolver<GenerateResult, GenerationParams>;
   private enrichmentPipeline: EnrichmentPipeline;
 
   /**
@@ -54,7 +53,7 @@ export class QuestionEngine {
    */
   constructor(
     ragDeps?: RagDeps,
-    caching?: CacheResolver<Question[], GenerationParams>,
+    caching?: CacheResolver<GenerateResult, GenerationParams>,
     ai?: AIClient,
     enrichment?: EnrichmentPipeline,
   ) {
@@ -64,7 +63,7 @@ export class QuestionEngine {
     this.enrichmentPipeline = enrichment ?? createEnrichmentPipeline();
     this.cachingStrategy =
       caching ??
-      createCachingStrategy<Question[], GenerationParams>(
+      createCachingStrategy<GenerateResult, GenerationParams>(
         [
           {
             name: "dexie",
@@ -74,14 +73,14 @@ export class QuestionEngine {
               const cached = await qRepo.get(p.subject, p.topic);
               if (cached && cached.length >= p.count) {
                 const shuffled = this.shuffleArray(cached as Question[]);
-                return shuffled.slice(0, p.count);
+                return { questions: shuffled.slice(0, p.count), ragContext: null };
               }
               return null;
             },
-            write: async (params, questions) => {
+            write: async (params, result) => {
               const { questionCacheRepo: qRepo } =
                 await import("@/lib/db/repositories/question-cache");
-              await qRepo.cache(params.subject, questions as Question[], params.topic);
+              await qRepo.cache(params.subject, result.questions as Question[], params.topic);
             },
           },
           {
@@ -95,7 +94,7 @@ export class QuestionEngine {
               );
               if (appwriteQuestions.length >= p.count) {
                 const shuffled = this.shuffleArray(appwriteQuestions);
-                return shuffled.slice(0, p.count);
+                return { questions: shuffled.slice(0, p.count), ragContext: null };
               }
               return null;
             },
@@ -151,11 +150,10 @@ export class QuestionEngine {
     // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     return Effect.gen(function* () {
-      self.lastRagContext = null;
-      const generated = yield* Effect.tryPromise(() => self.cachingStrategy.resolve(params)).pipe(
+      const result = yield* Effect.tryPromise(() => self.cachingStrategy.resolve(params)).pipe(
         Effect.catchAll(() => Effect.succeed(null)),
       );
-      return { questions: generated ?? [], ragContext: self.lastRagContext } as GenerateResult;
+      return result ?? { questions: [], ragContext: null };
     });
   }
 
@@ -163,7 +161,7 @@ export class QuestionEngine {
     return Effect.runPromise(this.generateEffect(params));
   }
 
-  private async generateInternal(params: GenerationParams): Promise<Question[] | null> {
+  private async generateInternal(params: GenerationParams): Promise<GenerateResult | null> {
     const enriched = await this.enrichParams(params);
 
     // Serve pool questions directly (no AI generation needed)
@@ -236,12 +234,14 @@ export class QuestionEngine {
     };
 
     if (remainingCount === 0 && poolCount > 0) {
-      return poolQuestions.map(mapPoolToQuestion);
+      return { questions: poolQuestions.map(mapPoolToQuestion), ragContext: null };
     }
 
     // When pastPaperMode is active, only return pool questions — no AI fallback
     if (enriched.pastPaperMode) {
-      return poolCount > 0 ? poolQuestions.map(mapPoolToQuestion) : null;
+      return poolCount > 0
+        ? { questions: poolQuestions.map(mapPoolToQuestion), ragContext: null }
+        : null;
     }
 
     const ragContext = await fetchRagContext(
@@ -250,7 +250,6 @@ export class QuestionEngine {
       enriched.userId,
       this.ragDeps,
     );
-    this.lastRagContext = ragContext;
 
     const MAX_RETRIES = 2;
 
@@ -273,7 +272,7 @@ export class QuestionEngine {
       questions = [...directQuestions, ...questions];
     }
 
-    return questions.length > 0 ? questions : null;
+    return questions.length > 0 ? { questions, ragContext } : null;
   }
 
   private async generateBatch(
