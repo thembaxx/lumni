@@ -169,8 +169,8 @@ jobs:
         uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG || 'org1128' }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT || 'lumni' }}
         with:
           environment: production
-          version: ${{ github.sha }}
+          release: ${{ github.sha }}
