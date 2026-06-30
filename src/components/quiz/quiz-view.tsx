@@ -2,10 +2,11 @@
 
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { animate, useMotionValue, useTransform } from "motion/react";
+import { animate, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import type { Question } from "@/lib/question-engine/types";
@@ -20,7 +21,6 @@ import { QuizResultsState } from "./quiz-view/quiz-results-state";
 import { QuizSubjectSelection } from "./quiz-view/quiz-subject-selection";
 
 export type QuizResults = QuizCompleteResult;
-
 export type QuizViewVariant = "full" | "compact";
 
 export interface QuizViewProps {
@@ -36,6 +36,37 @@ export interface QuizViewProps {
   className?: string;
 }
 
+function QuizProgressBar({ current, total }: { current: number; total: number }) {
+  const prefersReducedMotion = useReducedMotion();
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex h-1.5 flex-1 gap-0.5 overflow-hidden rounded-full bg-border/30">
+        {Array.from({ length: total }, (_, i) => (
+          <m.div
+            key={i}
+            initial={false}
+            animate={{
+              backgroundColor: i < current ? "var(--system-accent)" : "transparent",
+              scale: i === current ? 1.2 : 1,
+            }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            className="h-full flex-1 rounded-full transition-colors"
+          />
+        ))}
+      </div>
+      <m.span
+        key={current}
+        initial={{ opacity: 0, y: -4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+        className="font-mono text-[10px] text-muted-foreground tabular-nums"
+      >
+        {current}/{total}
+      </m.span>
+    </div>
+  );
+}
+
 export function QuizView({
   variant = "full",
   initialSubject,
@@ -49,6 +80,7 @@ export function QuizView({
 }: QuizViewProps) {
   const t = useTranslations();
   const { setImmersive } = useImmersiveMode();
+  const prefersReducedMotion = useReducedMotion();
   const [localPastPaperMode, setLocalPastPaperMode] = useState(initialPastPaperMode ?? false);
   const {
     selectedSubject,
@@ -183,21 +215,30 @@ export function QuizView({
 
   return (
     <section className="min-h-dvh bg-background" aria-label="Quiz Practice">
+      <AmbientGradient variant="quiz" />
+
       <m.main
-        className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
+        className="mx-auto flex w-full max-w-2xl flex-col gap-5 p-4 md:p-6"
         tabIndex={-1}
         drag={isQuizActive ? "x" : false}
-        dragElastic={0.3}
+        dragElastic={0.2}
         whileDrag={{ scale: 0.97, transition: { duration: 0.1 } }}
         style={{ transform: dragTransform }}
         onDragEnd={handleDragEnd}
       >
         {localPastPaperMode && (
-          <div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs">
+          <m.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs"
+          >
             <HugeiconsIcon icon={File01Icon} className="size-4" />
             <span>{t("quiz.pastPaperMode")}</span>
-          </div>
+          </m.div>
         )}
+
+        <QuizProgressBar current={currentIndex + 1} total={state.totalQuestions} />
 
         <QuizHeader
           elapsedTime={state.elapsedTime}
@@ -207,16 +248,24 @@ export function QuizView({
           onQuit={handleStop}
         />
 
-        {state.currentQuestion && (
-          <QuestionCard
-            question={state.currentQuestion}
-            subject={selectedSubject}
-            questionNumber={state.questionNumber}
-            totalQuestions={state.totalQuestions}
-            onNext={handleNext}
-            onAnswered={handleAnswered}
-          />
-        )}
+        <m.div
+          key={currentIndex}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {state.currentQuestion && (
+            <QuestionCard
+              question={state.currentQuestion}
+              subject={selectedSubject}
+              questionNumber={state.questionNumber}
+              totalQuestions={state.totalQuestions}
+              onNext={handleNext}
+              onAnswered={handleAnswered}
+            />
+          )}
+        </m.div>
 
         <QuizFooter
           currentIndex={currentIndex}

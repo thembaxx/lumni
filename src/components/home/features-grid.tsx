@@ -1,6 +1,6 @@
 "use client";
 
-import ChartBar from "@hugeicons/core-free-icons/BarChartIcon";
+import BarChartIcon from "@hugeicons/core-free-icons/BarChartIcon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
 import BulbIcon from "@hugeicons/core-free-icons/BulbIcon";
@@ -11,116 +11,147 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
+import { motionEase } from "@/lib/utils/animation";
+
+const featureConfig: {
+  icon: typeof BrainIcon;
+  titleKey: string;
+  descKey: string;
+  color: string;
+  span: string;
+  highlight?: string;
+}[] = [
+  {
+    icon: BrainIcon,
+    titleKey: "featureAIPractice",
+    descKey: "featureAIPracticeDesc",
+    color: "from-primary/10 to-primary/5",
+    span: "sm:col-span-2 lg:col-span-3",
+    highlight: "AI-powered",
+  },
+  {
+    icon: BookOpen01Icon,
+    titleKey: "featurePastPapers",
+    descKey: "featurePastPapersDesc",
+    color: "from-chart-4/10 to-chart-4/5",
+    span: "lg:col-span-3",
+    highlight: "Past papers",
+  },
+  {
+    icon: BarChartIcon,
+    titleKey: "featureTracking",
+    descKey: "featureTrackingDesc",
+    color: "from-chart-2/10 to-chart-2/5",
+    span: "sm:col-span-2 lg:col-span-4",
+  },
+  {
+    icon: BulbIcon,
+    titleKey: "featureFlashcards",
+    descKey: "featureFlashcardsDesc",
+    color: "from-chart-3/10 to-chart-3/5",
+    span: "sm:col-span-2 lg:col-span-4",
+  },
+  {
+    icon: Target01Icon,
+    titleKey: "featurePlanner",
+    descKey: "featurePlannerDesc",
+    color: "from-chart-5/10 to-chart-5/5",
+    span: "lg:col-span-2",
+  },
+  {
+    icon: GlobeIcon,
+    titleKey: "featureOffline",
+    descKey: "featureOfflineDesc",
+    color: "from-primary/10 to-chart-4/5",
+    span: "lg:col-span-2",
+  },
+];
 
 export function FeaturesGrid() {
   const t = useTranslations("home");
   const prefersReducedMotion = useReducedMotion();
 
-  const features = [
-    {
-      icon: BrainIcon,
-      title: t("featureAIPractice"),
-      description: t("featureAIPracticeDesc"),
-      accent: "before:bg-(--system-accent-alpha-10)",
-    },
-    {
-      icon: BookOpen01Icon,
-      title: t("featurePastPapers"),
-      description: t("featurePastPapersDesc"),
-      accent: "before:bg-chart-4/10",
-    },
-    {
-      icon: ChartBar,
-      title: t("featureTracking"),
-      description: t("featureTrackingDesc"),
-      accent: "before:bg-chart-2/10",
-    },
-    {
-      icon: BulbIcon,
-      title: t("featureFlashcards"),
-      description: t("featureFlashcardsDesc"),
-      accent: "before:bg-chart-3/10",
-    },
-    {
-      icon: Target01Icon,
-      title: t("featurePlanner"),
-      description: t("featurePlannerDesc"),
-      accent: "before:bg-chart-5/10",
-    },
-    {
-      icon: GlobeIcon,
-      title: t("featureOffline"),
-      description: t("featureOfflineDesc"),
-      accent: "before:bg-chart-1/10",
-    },
-  ];
   return (
-    <section className="relative py-16 md:py-20">
+    <section className="relative overflow-hidden py-16 md:py-24">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-system-accent/[0.02] to-transparent" />
       <div className="mx-auto max-w-6xl px-4">
         <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
-          className="mb-16 text-center"
+          className="flex flex-col gap-4 mb-14 text-center"
         >
-          <h2 className="ios-title-1 mb-3">{t("featuresHeading")}</h2>
+          <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-xs text-primary">
+            <span className="relative flex size-2">
+              {!prefersReducedMotion && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              )}
+              <span className="relative inline-flex size-2 rounded-full bg-primary" />
+            </span>
+            Everything you need
+          </div>
+          <h2 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            {t("featuresHeading")}
+          </h2>
           <p className="ios-body mx-auto max-w-lg text-muted-foreground">
             {t("featuresSubheading")}
           </p>
         </m.div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
-          {features.map((feature, i) => (
+          {featureConfig.map((feature, i) => (
             <m.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
+              key={feature.titleKey}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={
-                prefersReducedMotion ? undefined : { delay: i * 0.05, duration: 0.4, ease: iOSEase }
+                prefersReducedMotion
+                  ? undefined
+                  : { delay: i * 0.08, duration: 0.5, ease: motionEase }
               }
-              className={cn(
-                "group relative before:pointer-events-none before:absolute before:inset-0 before:rounded-lg before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100",
-                feature.accent,
-                i === 0 && "sm:col-span-2 lg:col-span-4 lg:row-span-2",
-                i === 1 && "lg:col-span-2",
-                i === 2 && "lg:col-span-2",
-                i === 3 && "lg:col-span-2",
-                i === 4 && "sm:col-span-2 lg:col-span-3",
-                i === 5 && "sm:col-span-2 lg:col-span-3",
-              )}
+              className={feature.span}
             >
               <div
                 className={cn(
-                  "relative rounded-lg border border-border/50 bg-system-background-secondary shadow-level-1",
-                  i === 0 ? "flex flex-col gap-5 p-8 lg:flex-row lg:items-center" : "p-6",
+                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-6 shadow-level-1 transition-all duration-500 hover:shadow-level-2",
+                  "hover:border-primary/20",
                 )}
               >
                 <div
                   className={cn(
-                    "flex items-center justify-center rounded-md bg-(--system-accent-alpha-10)",
-                    i === 0 ? "mb-0 size-16 shrink-0 lg:size-20" : "mb-4 size-10",
+                    "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                    feature.color,
                   )}
-                >
-                  <HugeiconsIcon
-                    icon={feature.icon}
-                    className={cn("text-primary", i === 0 ? "size-8" : "size-5")}
-                  />
-                </div>
-                <div>
-                  <h3
-                    className={cn(
-                      "mb-2 font-semibold",
-                      i === 0 ? "text-xl" : "text-base sm:text-lg",
-                    )}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
-                    {feature.description}
+                />
+
+                <div className="relative z-10 flex flex-col gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
+                    <HugeiconsIcon icon={feature.icon} className="size-5" />
+                  </div>
+                  <h3 className="font-semibold text-base">{t(feature.titleKey)}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {t(feature.descKey)}
                   </p>
+                </div>
+
+                <div className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full border border-border/30 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    className="text-primary"
+                  >
+                    <path
+                      d="M1 13L13 1M13 1H4M13 1V10"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
               </div>
             </m.div>

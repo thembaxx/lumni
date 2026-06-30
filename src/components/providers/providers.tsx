@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
 import { I18nProvider } from "@/components/i18n/i18n-provider";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
+import { EasterEggProvider } from "@/lib/shared/easter-egg-context";
 import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
 import { ThemeProvider } from "@/components/theme";
 import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
@@ -77,7 +78,9 @@ export function Providers({ locale, messages, timeZone, children }: ProvidersPro
             <JoyProvider>
               <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
                 <OnboardingProvider>
-                  <ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+                  <ImmersiveModeProvider>
+                    <EasterEggProvider>{children}</EasterEggProvider>
+                  </ImmersiveModeProvider>
                 </OnboardingProvider>
               </I18nProvider>
               <OnlineStatusIndicator />

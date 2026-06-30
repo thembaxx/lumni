@@ -1,18 +1,21 @@
 "use client";
 
-import ArrowLeftIcon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
+import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
-import Bell from "@hugeicons/core-free-icons/Notification01Icon";
-import PaintBrushIcon from "@hugeicons/core-free-icons/PaintBrush01Icon";
+import Notification01Icon from "@hugeicons/core-free-icons/Notification01Icon";
+import PaintBrush01Icon from "@hugeicons/core-free-icons/PaintBrush01Icon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
-import ShieldCheck from "@hugeicons/core-free-icons/SecurityCheckIcon";
+import SecurityCheckIcon from "@hugeicons/core-free-icons/SecurityCheckIcon";
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
+import SettingsIcon from "@hugeicons/core-free-icons/Settings01Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import * as m from "motion/react-m";
+import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Activity, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
   AppearanceTab,
@@ -38,17 +41,71 @@ import {
 } from "@/lib/db/settings-migrator";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
 import type { BetaFeatures, NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
+import { cn } from "@/lib/utils";
 
 const tabDefs = [
-  { value: "profile", key: "settings.account", icon: UserIcon },
-  { value: "appearance", key: "settings.appearance", icon: PaintBrushIcon },
-  { value: "study", key: "nav.studyPlanner", icon: BookOpen01Icon },
-  { value: "notifications", key: "settings.notifications", icon: Bell },
-  { value: "privacy", key: "settings.privacy", icon: ShieldCheck },
-  { value: "referrals", key: "settings.referral", icon: Share07Icon },
-  { value: "data", key: "settings.data", icon: DatabaseIcon },
-  { value: "beta", key: "settings.beta", icon: Chat01Icon },
+  {
+    value: "profile",
+    key: "settings.account",
+    icon: UserIcon,
+    color: "from-primary/20 to-primary/5",
+  },
+  {
+    value: "appearance",
+    key: "settings.appearance",
+    icon: PaintBrush01Icon,
+    color: "from-chart-3/20 to-chart-3/5",
+  },
+  {
+    value: "study",
+    key: "nav.studyPlanner",
+    icon: BookOpen01Icon,
+    color: "from-chart-2/20 to-chart-2/5",
+  },
+  {
+    value: "notifications",
+    key: "settings.notifications",
+    icon: Notification01Icon,
+    color: "from-chart-4/20 to-chart-4/5",
+  },
+  {
+    value: "privacy",
+    key: "settings.privacy",
+    icon: SecurityCheckIcon,
+    color: "from-primary/20 to-transparent",
+  },
+  {
+    value: "referrals",
+    key: "settings.referral",
+    icon: Share07Icon,
+    color: "from-chart-3/20 to-chart-5/5",
+  },
+  {
+    value: "data",
+    key: "settings.data",
+    icon: DatabaseIcon,
+    color: "from-chart-4/20 to-chart-2/5",
+  },
+  { value: "beta", key: "settings.beta", icon: Chat01Icon, color: "from-chart-5/20 to-chart-3/5" },
 ];
+
+function TabPanel({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
+  return (
+    <AnimatePresence mode="wait">
+      {isActive && (
+        <m.div
+          key="panel"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {children}
+        </m.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 function SettingsContent() {
   const t = useTranslations();
@@ -61,7 +118,9 @@ function SettingsContent() {
       initializeNotificationSchedulers();
     }
   }, [isLoggedIn]);
+
   const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const visibleTabs = useMemo(
     () =>
@@ -70,7 +129,6 @@ function SettingsContent() {
       ),
     [isLoggedIn, t],
   );
-  const [saved, setSaved] = useState(false);
 
   const [appSettings, setAppSettings] = useState<HydratedSettings>({
     studyPrefs: null as unknown as StudyPreferences,
@@ -97,9 +155,12 @@ function SettingsContent() {
     (prefs: StudyPreferences) => setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
     [],
   );
-
   const setNotifications = useCallback(
     (notif: NotificationSettings) => setAppSettings((prev) => ({ ...prev, notifications: notif })),
+    [],
+  );
+  const setBetaFeatures = useCallback(
+    (beta: BetaFeatures) => setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
     [],
   );
 
@@ -112,11 +173,6 @@ function SettingsContent() {
       }
     },
     [isLoggedIn],
-  );
-
-  const setBetaFeatures = useCallback(
-    (beta: BetaFeatures) => setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
-    [],
   );
 
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -136,12 +192,10 @@ function SettingsContent() {
     const data = {
       studyPreferences: studyPrefs,
       notificationSettings: notifications,
-      betaFeatures: betaFeatures,
+      betaFeatures,
       exportedAt: new Date().toISOString(),
     };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -150,43 +204,45 @@ function SettingsContent() {
     URL.revokeObjectURL(url);
   };
 
-  const handleClearCache = () => {
-    setShowClearConfirm(true);
-  };
-
   return (
     <div className="flex min-h-dvh flex-col bg-system-grouped antialiased">
       <PageContainer className="flex-1">
-        {/* Refined Header */}
-        <header className="sticky top-0 z-header bg-system-grouped/90 px-6 pt-6 pb-4">
+        <header className="sticky top-0 z-header bg-system-grouped/80 px-6 pt-4 pb-2 backdrop-blur-xl">
           <div className="flex h-14 items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
                 aria-label={t("settings.backToDashboard")}
-                className="flex size-10 items-center justify-center rounded-full border border-border/40 bg-system-surface text-foreground shadow-sm transition-colors hover:bg-secondary active:scale-[0.96]"
+                className="flex min-h-11 min-w-11 size-10 items-center justify-center rounded-full border border-border/30 bg-system-surface text-foreground shadow-level-1 transition-all duration-200 hover:bg-secondary hover:shadow-level-1 active:scale-[0.96]"
               >
-                <HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
+                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
               </Link>
-              <h1 className="ios-title-3 font-semibold text-foreground tracking-tight">
-                {t("settings.title")}
-              </h1>
+              <div className="flex items-center gap-2.5">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10)">
+                  <HugeiconsIcon icon={SettingsIcon} className="size-5 text-primary" />
+                </div>
+                <div>
+                  <h1 className="ios-title-3 font-semibold text-foreground tracking-tight">
+                    {t("settings.title")}
+                  </h1>
+                  <p className="ios-caption-1 text-muted-foreground">Customise your experience</p>
+                </div>
+              </div>
             </div>
 
             <Button
               size="sm"
               onClick={handleSave}
               disabled={isSaving}
-              className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-system-background-elevated shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
+              className="h-10 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-all duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
             >
-              {saved ? `✓ ${t("common.success")}` : isSaving ? t("common.saving") : "Save Settings"}
+              {saved ? "Saved!" : isSaving ? t("common.saving") : "Save"}
             </Button>
           </div>
         </header>
 
-        {/* Tabs Navigation - Elevated Horizontal Scroll */}
-        <nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-sticky border-border/5 border-b bg-system-grouped/90 px-6 py-2">
-          <div className="scrollbar-hide -mx-2 flex gap-0 overflow-x-auto px-2 py-1" role="tablist">
+        <nav className="sticky top-[116px] z-sticky bg-system-grouped/80 px-6 py-3 backdrop-blur-xl">
+          <div className="scrollbar-hide -mx-2 flex gap-1.5 overflow-x-auto px-2" role="tablist">
             {visibleTabs.map((tab) => {
               const isActive = activeTab === tab.value;
               return (
@@ -198,107 +254,84 @@ function SettingsContent() {
                   aria-selected={isActive}
                   aria-controls={`tabpanel-${tab.value}`}
                   onClick={() => handleSetActiveTab(tab.value)}
-                  className={`relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 transition-colors duration-300 active:scale-[0.96]${
+                  className={cn(
+                    "relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-all duration-300 active:scale-[0.96]",
                     isActive
-                      ? "border border-border/30 bg-system-surface text-system-accent shadow-level-1"
-                      : "text-(--system-text-secondary) hover:bg-system-surface/50 hover:text-foreground"
-                  }
-									`}
+                      ? "bg-system-surface text-system-accent shadow-level-1"
+                      : "text-muted-foreground hover:bg-system-surface/50 hover:text-foreground",
+                  )}
                 >
-                  <span
-                    className={`text-(length:--fs-footnote) font-extrabold ${isActive ? "opacity-100" : "opacity-80"}`}
-                  >
-                    {tab.label}
-                  </span>
+                  <HugeiconsIcon
+                    icon={tab.icon}
+                    className={cn(
+                      "size-4 transition-colors duration-300",
+                      isActive && "text-primary",
+                    )}
+                  />
+                  <span>{tab.label}</span>
                 </button>
               );
             })}
           </div>
         </nav>
 
-        {/* Content Area */}
-        <main className="flex-1 p-6 pb-24">
-          <Activity mode={activeTab === "profile" ? "visible" : "hidden"}>
-            <div
-              role="tabpanel"
-              id="tabpanel-profile"
-              aria-labelledby="tab-profile"
-              className="w-full"
-            >
+        <main className="flex-1 px-6 pb-24 pt-4">
+          <TabPanel isActive={activeTab === "profile"}>
+            <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "appearance" ? "visible" : "hidden"}>
-            <div
-              role="tabpanel"
-              id="tabpanel-appearance"
-              aria-labelledby="tab-appearance"
-              className="w-full"
-            >
+          <TabPanel isActive={activeTab === "appearance"}>
+            <div role="tabpanel" id="tabpanel-appearance" aria-labelledby="tab-appearance">
               <AppearanceTab />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "study" ? "visible" : "hidden"}>
-            <div role="tabpanel" id="tabpanel-study" aria-labelledby="tab-study" className="w-full">
+          <TabPanel isActive={activeTab === "study"}>
+            <div role="tabpanel" id="tabpanel-study" aria-labelledby="tab-study">
               <StudyTab studyPrefs={studyPrefs} onStudyPrefsChange={setStudyPrefs} />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "notifications" ? "visible" : "hidden"}>
-            <div
-              role="tabpanel"
-              id="tabpanel-notifications"
-              aria-labelledby="tab-notifications"
-              className="w-full"
-            >
+          <TabPanel isActive={activeTab === "notifications"}>
+            <div role="tabpanel" id="tabpanel-notifications" aria-labelledby="tab-notifications">
               <NotificationsTab
                 notifications={notifications}
                 onNotificationsChange={setNotifications}
               />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "privacy" ? "visible" : "hidden"}>
-            <div
-              role="tabpanel"
-              id="tabpanel-privacy"
-              aria-labelledby="tab-privacy"
-              className="w-full"
-            >
+          <TabPanel isActive={activeTab === "privacy"}>
+            <div role="tabpanel" id="tabpanel-privacy" aria-labelledby="tab-privacy">
               <PrivacyTab />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "data" ? "visible" : "hidden"}>
-            <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data" className="w-full">
+          <TabPanel isActive={activeTab === "data"}>
+            <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data">
               <DataTab
                 studyPrefs={studyPrefs}
                 notifications={notifications}
                 betaFeatures={betaFeatures}
                 onExport={handleExportData}
-                onClear={handleClearCache}
+                onClear={() => setShowClearConfirm(true)}
               />
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "referrals" && isLoggedIn ? "visible" : "hidden"}>
-            <div
-              role="tabpanel"
-              id="tabpanel-referrals"
-              aria-labelledby="tab-referrals"
-              className="w-full"
-            >
+          <TabPanel isActive={activeTab === "referrals" && isLoggedIn}>
+            <div role="tabpanel" id="tabpanel-referrals" aria-labelledby="tab-referrals">
               {isLoggedIn && <ReferralTab />}
             </div>
-          </Activity>
+          </TabPanel>
 
-          <Activity mode={activeTab === "beta" ? "visible" : "hidden"}>
-            <div role="tabpanel" id="tabpanel-beta" aria-labelledby="tab-beta" className="w-full">
+          <TabPanel isActive={activeTab === "beta"}>
+            <div role="tabpanel" id="tabpanel-beta" aria-labelledby="tab-beta">
               <BetaTab betaFeatures={betaFeatures} onBetaFeaturesChange={setBetaFeatures} />
             </div>
-          </Activity>
+          </TabPanel>
         </main>
       </PageContainer>
 
@@ -329,7 +362,7 @@ function SettingsLoading() {
     <div className="flex min-h-dvh items-center justify-center bg-system-grouped">
       <div className="flex flex-col items-center gap-4">
         <HugeiconsIcon icon={RadialIcon} className="size-8 animate-spin text-muted-foreground" />
-        <p className="ios-body text-(--system-text-secondary)">{t("common.loading")}</p>
+        <p className="ios-body text-muted-foreground">{t("common.loading")}</p>
       </div>
     </div>
   );

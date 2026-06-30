@@ -734,6 +734,152 @@
   }
 }
 
+@keyframes float-down {
+  from {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rainbow-shift {
+  0% {
+    background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff);
+  }
+  25% {
+    background: linear-gradient(90deg, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff, #ff0000);
+  }
+  50% {
+    background: linear-gradient(90deg, #ffff00, #00ff00, #0077ff, #8b00ff, #ff0000, #ff7700);
+  }
+  75% {
+    background: linear-gradient(90deg, #00ff00, #0077ff, #8b00ff, #ff0000, #ff7700, #ffff00);
+  }
+  100% {
+    background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff);
+  }
+}
+
+@keyframes zen-ripple {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes retro-scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 8px var(--system-accent-alpha-20);
+  }
+  50% {
+    box-shadow:
+      0 0 24px var(--system-accent-alpha-30),
+      0 0 48px var(--system-accent-alpha-10);
+  }
+}
+
+@keyframes magnetic-hover {
+  from {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translateX(-25%) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(25%) translateY(-10%) scale(1.05);
+  }
+  100% {
+    transform: translateX(-25%) translateY(0) scale(1);
+  }
+}
+
+@keyframes float-drift {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(4px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes breathe-subtle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.008);
+  }
+}
+
+@keyframes morph-shape {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+@keyframes shimmer-strong {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes badge-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--system-accent-alpha-20);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 400ms var(--ease-ios) forwards;
 }
@@ -751,6 +897,52 @@
 }
 .animate-blob-orbit {
   animation: blobOrbit 6s ease-in-out infinite;
+}
+.animate-float-down {
+  animation: float-down 3s ease-in forwards;
+}
+.animate-rainbow-shift {
+  animation: rainbow-shift 4s linear infinite;
+  background-size: 600% 100%;
+}
+.animate-zen-ripple {
+  animation: zen-ripple 3s ease-out infinite;
+}
+.animate-retro-scan {
+  animation: retro-scan 0.1s linear infinite;
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+.animate-aurora {
+  animation: aurora-drift 8s ease-in-out infinite;
+}
+.animate-float-drift {
+  animation: float-drift 6s ease-in-out infinite;
+}
+.animate-breathe {
+  animation: breathe-subtle 4s ease-in-out infinite;
+}
+.animate-morph {
+  animation: morph-shape 8s ease-in-out infinite;
+}
+.animate-shimmer-strong {
+  background: linear-gradient(90deg, transparent, var(--system-surface-secondary), transparent);
+  background-size: 200% 100%;
+  animation: shimmer-strong 1.5s infinite linear;
+}
+.animate-skeleton-wave {
+  background: linear-gradient(
+    90deg,
+    var(--system-surface) 25%,
+    var(--system-surface-secondary) 50%,
+    var(--system-surface) 75%
+  );
+  background-size: 200px 100%;
+  animation: skeleton-wave 1.5s ease-in-out infinite;
+}
+.animate-badge-pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
 }
 
 .animate-shimmer {

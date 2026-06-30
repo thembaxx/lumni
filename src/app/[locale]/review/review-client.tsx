@@ -4,12 +4,15 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import * as m from "motion/react-m";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
+import { motionEase } from "@/lib/utils/animation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -95,32 +98,39 @@ export function ReviewClient() {
 
   return (
     <div className="min-h-screen bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <LocalDataNotice
           page="review"
           description="Your mistake journal is stored on this device. Sign in to access your review history from any device."
         />
-        <div className="flex items-center justify-between">
-          <h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
-            Wrong Answer Journal
-          </h1>
-          <div className="flex items-center gap-2">
-            {filterSubject && (
-              <Link
-                href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
-                prefetch={true}
-              >
-                <Button size="sm">Practice these topics</Button>
-              </Link>
-            )}
-            {entries.length > 0 && (
-              <Button variant="ghost" size="sm" onClick={handleClearReviewed}>
-                <HugeiconsIcon icon={Delete01Icon} data-icon="inline-start" />
-                Clear reviewed
-              </Button>
-            )}
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: motionEase }}
+        >
+          <div className="flex items-center justify-between">
+            <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+              Wrong Answer Journal
+            </h1>
+            <div className="flex items-center gap-2">
+              {filterSubject && (
+                <Link
+                  href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
+                  prefetch={true}
+                >
+                  <Button size="sm">Practice these topics</Button>
+                </Link>
+              )}
+              {entries.length > 0 && (
+                <Button variant="ghost" size="sm" onClick={handleClearReviewed}>
+                  <HugeiconsIcon icon={Delete01Icon} data-icon="inline-start" />
+                  Clear reviewed
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
+        </m.div>
 
         <div className="flex flex-wrap gap-3">
           <Select
@@ -169,13 +179,13 @@ export function ReviewClient() {
 
         {entries.length === 0 ? (
           <Card>
-            <CardContent className="p-8 text-center">
+            <CardContent className="flex flex-col gap-1 p-8 text-center">
               <HugeiconsIcon
                 icon={BookOpen01Icon}
                 className="mx-auto mb-3 size-8 text-muted-foreground/40"
               />
               <p className="font-semibold text-base">No mistakes to review</p>
-              <p className="mt-1 text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-sm">
                 {filterSubject
                   ? `No mistakes found for ${filterSubject}.`
                   : "Wrong answers will appear here automatically after quizzes and exams."}
@@ -214,7 +224,7 @@ export function ReviewClient() {
                       onChange={(v) => handleErrorTypeChange(entry.id ?? 0, v)}
                     />
                   </div>
-                  <h3 className="mt-2 font-semibold text-base">
+                  <h3 className="font-semibold text-base">
                     <MarkdownRenderer content={entry.questionText} />
                   </h3>
                 </div>

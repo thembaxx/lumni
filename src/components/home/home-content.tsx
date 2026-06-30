@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { useLogoEasterEgg } from "@/lib/shared/easter-egg-context";
 import { HeroSection } from "./hero-section";
 
 const FeaturesGrid = dynamic(
@@ -49,6 +50,7 @@ export function HomeContent() {
     authReady && status === "authenticated" && !user?.labels?.includes("anonymous");
   const isAnonymous =
     authReady && status === "authenticated" && user?.labels?.includes("anonymous") === true;
+  const handleLogoClick = useLogoEasterEgg();
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background pb-16">
@@ -60,15 +62,16 @@ export function HomeContent() {
       </a>
       <nav className="glass-thin fixed top-0 right-0 left-0 z-header border-border/50 border-b">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 py-2 font-extrabold text-lg tracking-tight transition-colors"
+          <button
+            type="button"
+            onClick={handleLogoClick}
+            className="flex cursor-pointer items-center gap-2 py-2 font-extrabold text-lg tracking-tight transition-colors"
           >
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary">
+            <div className="flex size-7 items-center justify-center rounded-md bg-primary transition-all duration-300 hover:rounded-lg">
               <HugeiconsIcon icon={StarIcon} className="size-4 text-primary-foreground" />
             </div>
             <span>{t("home.brand")}</span>
-          </Link>
+          </button>
           <div
             className="flex items-center gap-1.5"
             key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}

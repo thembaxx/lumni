@@ -4,11 +4,14 @@ import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import * as m from "motion/react-m";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { motionEase } from "@/lib/utils/animation";
 import { useLeaderboard } from "@/hooks/use-leaderboard";
 
 const rankColors = ["text-warning", "text-muted-foreground", "text-warning"];
@@ -18,14 +21,19 @@ export function LeaderboardClient() {
   const { entries, isLoading } = useLeaderboard(user?.$id);
 
   return (
-    <PageContainer>
-      <div className="flex flex-col gap-6 py-6">
-        <div>
-          <h1 className="font-bold text-2xl">Leaderboard</h1>
-          <p className="text-muted-foreground/60 text-sm">
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
+      <PageContainer className="flex flex-col gap-6">
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: motionEase }}
+        >
+          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Leaderboard</h1>
+          <p className="text-muted-foreground text-sm">
             See how your XP and streaks compare to other students
           </p>
-        </div>
+        </m.div>
 
         <Card>
           <CardHeader>
@@ -92,7 +100,7 @@ export function LeaderboardClient() {
             )}
           </CardContent>
         </Card>
-      </div>
-    </PageContainer>
+      </PageContainer>
+    </div>
   );
 }

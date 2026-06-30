@@ -5,7 +5,9 @@ import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
+import { motionEase } from "@/lib/utils/animation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
@@ -50,7 +52,7 @@ function QuestionCard({
       distance={12}
       duration={0.3}
       delay={index * 0.04}
-      className="rounded-2xl border bg-card p-5 shadow-sm"
+      className="rounded-2xl border bg-card p-5 shadow-level-1"
     >
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
@@ -273,14 +275,21 @@ export function QuestionBankClient() {
   }
 
   return (
-    <PageContainer>
-      <div className="flex flex-col gap-6 py-6">
-        <div className="flex flex-col gap-1">
-          <h1 className="font-semibold text-2xl">Past Exam Questions</h1>
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
+      <PageContainer className="flex flex-col gap-6">
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: motionEase }}
+        >
+          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            Past Exam Questions
+          </h1>
           <p className="text-muted-foreground text-sm">
             Browse past paper questions by subject, topic, and year.
           </p>
-        </div>
+        </m.div>
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end gap-3">
@@ -440,7 +449,7 @@ export function QuestionBankClient() {
             </div>
           )}
         </div>
-      </div>
-    </PageContainer>
+      </PageContainer>
+    </div>
   );
 }

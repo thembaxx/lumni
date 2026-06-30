@@ -472,7 +472,260 @@ Prefer CSS `transition` for simple property changes: `transition-[background-col
 
 **The Clarify-Not-Decorate Rule.** If removing the animation makes the interface harder to understand, keep it. If removing it makes no difference, remove it.
 
-## 7. Do's and Don'ts
+## 7. 2026 Design Language — Ambient, Motion, & Easter Eggs
+
+The app has been modernized with 2026 design trends while preserving the "Warm Frame" philosophy. Content still comes first, but the frame now breathes, responds, and occasionally delights.
+
+### 7.1 Page Layout Pattern
+
+Every app page follows a consistent shell:
+
+```tsx
+<div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+  <AmbientGradient />
+  <PageContainer className="flex flex-col gap-6">
+    <m.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: motionEase }}
+    >
+      <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Page Title</h1>
+      <p className="text-muted-foreground text-sm">Page description</p>
+    </m.div>
+    {/* page content */}
+  </PageContainer>
+</div>
+```
+
+**Components used:**
+
+- `<AmbientGradient />` — subtle floating radial blobs (3 variants: `default`, `subtle`, `quiz`)
+- `<PageContainer>` — max-width wrapper (owns `max-w-*` and `px-*`)
+- `<m.div>` — framer-motion fade-in entrance for headings
+- `bg-system-grouped` — iOS-style grouped background
+
+**Exceptions:** Homepage (marketing), admin pages, dev pages, immersive quiz/exam sessions intentionally differ.
+
+### 7.2 Ambient Gradients
+
+A shared `<AmbientGradient>` component at `src/components/shared/ambient-gradient.tsx` provides subtle floating radial gradients on every page. Three variants:
+
+- **`default`** — Two large blobs (primary at top-right, chart-4 at bottom-left) with `animate-float-drift` (20s cycle, staggered)
+- **`subtle`** — Lower opacity blobs offset differently, for pages with dense content
+- **`quiz`** — Medium-sized blobs sized for the narrower quiz layout
+
+The blobs are `pointer-events-none`, `blur-3xl`, and use CSS `@keyframes float-drift` for the slow organic drift. Always the first child inside the outer page wrapper.
+
+### 7.3 Fade-In Entrances
+
+Page headings fade in and translate up 12px on mount (`duration: 0.3s, ease: motionEase`). This is the primary entrance animation — it acknowledges the user has navigated without making them wait for a stagger sequence.
+
+**Rules:**
+
+- Headings only (h1 + subtitle), not content cards
+- 300ms max (respects the waiting room rule)
+- Skipped when `prefersReducedMotion()` is active
+- Never staggered — content reveals as one unit
+
+### 7.4 Card Interactions
+
+Cards now have micro-interactions on hover/tap:
+
+- **Gradient overlays:** Gradient that fades in on hover (`opacity-0 → opacity-100`, `duration-500`)
+- **Arrow indicators:** Chevron arrow on the right side, fades in on hover
+- **Scale on press:** `active:scale-[0.98]` for tactile feedback
+- **Icon animation:** Icons scale up and rotate slightly on hover (`scale-110 rotate-[3deg]`)
+- **Hover lift:** `hover:shadow-level-2` for perceived elevation
+
+Applied via `group` + `group-hover:` utilities on card containers.
+
+### 7.5 Staggered Card Grids
+
+Card grids use framer-motion variants for staggered children:
+
+```tsx
+<m.div
+  className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+  initial="hidden"
+  animate="visible"
+  variants={{
+    visible: { transition: { staggerChildren: 0.06 } },
+  }}
+>
+  {items.map((item) => (
+    <m.button
+      key={item.label}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: motionEase }}
+    >
+      ...
+    </m.button>
+  ))}
+</m.div>
+```
+
+Each card enters with a 60ms stagger delay. Total animation finishes well under 500ms for grids up to 8 items.
+
+### 7.6 Magnetic 3D Cards (Desktop)
+
+The problems page uses `MagneticCard` — a CSS 3D perspective transform that tracks mouse position:
+
+```tsx
+const handleMouseMove = (e: React.MouseEvent) => {
+  if (!ref.current || prefersReducedMotion) return;
+  const rect = ref.current.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  ref.current.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+};
+```
+
+- Desktop-only (no touch interference)
+- Respects `prefersReducedMotion`
+- Smooth spring reset on mouse leave
+- Subtle 8° max rotation
+
+### 7.7 High-Impact Hero
+
+The homepage hero uses a morphing blob background that responds to mouse movement:
+
+- **Morphing blob:** CSS `@keyframes morph-shape` (30% → 70% → 40% → 60% border-radius cycle) with a subtle drift
+- **Interactive quiz demo card:** Clickable answer buttons with visual correct/incorrect feedback (green/red tint + icon)
+- **Animated badge:** Pulsing glow badge via `animate-pulse-glow`
+- **Gradient headline:** `bg-gradient-to-r from-foreground via-primary to-chart-4 bg-clip-text text-transparent` for subtle color shift
+- **iOS large-title:** `ios-large-title` class for 34px Outfit 800 heading
+- **Live indicator:** "No credit card. No limits." with ping dot
+
+### 7.8 Aurora Background (Chat)
+
+The chat page uses an aurora-style animated background:
+
+- Multiple oversized radial gradient blobs positioned at different coordinates
+- Each blob has a different `animation-delay` for phase variance
+- Uses `animate-aurora-drift` for slow, layered movement
+- Combined with `backdrop-blur` on the header and message containers
+- Readability maintained via solid message bubbles with shadow
+
+### 7.9 Sticky Headers
+
+Settings page uses a two-part sticky header:
+
+- **Save button bar:** Fixed top-0 with `backdrop-blur-xl`, shows save button + loading state
+- **Tab bar:** Sticky below with scrollable pill-style tab buttons
+- Content panels slide in/out via `AnimatePresence` with exit/enter transitions
+
+The sticky save bar ensures the user never loses their changes when scrolling through long settings.
+
+### 7.10 Quiz-Specific Patterns
+
+- **Drag-to-navigate:** Active quiz questions support horizontal drag gestures to advance. Spring reset below threshold. Drag indicator with scale transform.
+- **Segmented progress bar:** Animated segments with numeric counter (e.g., "3/10"). Each segment pulses on completion.
+- **Ambient floating blobs:** Quiz-specific variant of AmbientGradient (smaller, more subdued).
+
+### 7.11 Tab Navigation
+
+Two tab patterns are used:
+
+1. **Dashboard TabNav** — Spring-animated pill indicator with `layoutId="tab-indicator"`. Backdrop blur background. 3 tabs: Today, Practice, Analytics.
+2. **Generic TabSwitcher** — Two variants: `tabs` (filled tray + pill) and `segmented` (light tray + elevated pill). Used for filter controls.
+
+Both use framer-motion spring animations for the indicator under `AnimatedTabIndicator`.
+
+### 7.12 Easter Egg System
+
+Centralized in `EasterEggProvider` (`src/lib/shared/easter-egg-context.tsx`). Provides 4 easter eggs:
+
+| Trigger                   | Effect       | Description                                             |
+| ------------------------- | ------------ | ------------------------------------------------------- |
+| Konami code (↑↑↓↓←→←→BA)  | Rainbow mode | Animated rainbow gradient overlay on entire viewport    |
+| Logo 7 clicks             | Rainbow mode | Same rainbow overlay, triggered by rapid logo clicks    |
+| Moon 5 clicks (dark mode) | Zen mode     | Calming blue gradient overlay with `animate-zen-ripple` |
+| Search "42"               | Retro mode   | CRT scanline overlay with `animate-retro-scan`          |
+
+**All easter eggs:**
+
+- Are non-blocking overlays (dismiss on click/Escape)
+- Non-essential (app works identically without them)
+- Respect `prefersReducedMotion()` (skip animations)
+- Use React Context for state, portal-style overlays for rendering
+- Auto-dismiss after 8 seconds or manual dismiss
+
+### 7.13 CSS Animation Keyframes
+
+All animation keyframes are defined in `globals.css`:
+
+```css
+@keyframes float-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -20px);
+  }
+  100% {
+    transform: translate(-10px, 10px);
+  }
+}
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+@keyframes rainbow-shift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+@keyframes retro-scan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
+}
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 8px oklch(52% 0.18 146 / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px oklch(52% 0.18 146 / 0.6);
+  }
+}
+@keyframes morph-shape {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+  }
+}
+```
+
+### 7.14 Named Rules
+
+**The Consistent Shell Rule.** Every app page uses `bg-system-grouped` + `AmbientGradient` + `PageContainer` + fade-in heading. No page invents its own layout. The shell is the frame; the page is the art.
+
+**The Head-Only Fade Rule.** Only page headings get fade-in entrance animation. Content arrives when it arrives. Stagger is for card grids, not for page sections.
+
+**The All-Eggs-Non-Blocking Rule.** Easter eggs are overlays, not redirects. They never interrupt a study session, never change app state, and never persist. If the user refreshes, the egg is gone.
+
+## 8. Do's and Don'ts
 
 ### Do:
 

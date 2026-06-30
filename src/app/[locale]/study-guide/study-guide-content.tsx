@@ -3,10 +3,10 @@
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
-import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { FadeIn } from "@/components/shared/fade-in";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -32,18 +32,16 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
           delay={i * 0.08}
           className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
         >
-          <div className="p-6">
-            <h2 className="mb-4 font-semibold text-foreground text-xl tracking-tight">
+          <div className="flex flex-col gap-4 p-6">
+            <h2 className="font-semibold text-foreground text-xl tracking-tight">
               {section.title}
             </h2>
-            <div className="mb-4 text-foreground/80 text-sm leading-relaxed">
+            <div className="text-foreground/80 text-sm leading-relaxed">
               <MarkdownRenderer content={section.content} />
             </div>
             {section.keyPoints.length > 0 && (
-              <div className="rounded-xl bg-system-background p-4">
-                <p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-                  Key Points
-                </p>
+              <div className="flex flex-col gap-2 rounded-xl bg-system-background p-4">
+                <p className="font-semibold text-muted-foreground text-xs uppercase">Key Points</p>
                 <ul className="flex flex-col gap-1.5">
                   {section.keyPoints.map((point) => (
                     <li
@@ -65,11 +63,9 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
         <FadeIn
           distance={0}
           delay={guide.sections.length * 0.08 + 0.1}
-          className="rounded-2xl border border-border/50 bg-primary/5 p-6"
+          className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-primary/5 p-6"
         >
-          <p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-            Summary
-          </p>
+          <p className="font-semibold text-muted-foreground text-xs uppercase">Summary</p>
           <p className="overflow-wrap-anywhere text-foreground/70 text-sm leading-relaxed">
             {guide.summary}
           </p>
@@ -94,14 +90,15 @@ function StudyGuideClient() {
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
       <PageContainer className="flex flex-col gap-8">
         <Anim>
           <div className="flex flex-col gap-6">
-            <div>
-              <h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
+            <div className="flex flex-col gap-1.5">
+              <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
                 Study Guide
               </h1>
-              <p className="ios-subhead mt-1.5 text-muted-foreground/60">
+              <p className="ios-subhead text-muted-foreground/60">
                 Generate AI-powered study guides for any subject and topic
               </p>
             </div>
@@ -127,10 +124,8 @@ function StudyGuideClient() {
                   disabled={!selectedSubject || !topicText.trim() || isPending}
                   className="h-11 shrink-0 gap-2 rounded-xl"
                 >
-                  {isPending ? (
+                  {isPending && (
                     <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" data-icon />
-                  ) : (
-                    <HugeiconsIcon icon={SparklesIcon} className="size-4" data-icon />
                   )}
                   Generate Guide
                 </Button>
@@ -214,7 +209,7 @@ function StudyGuideClient() {
                     }
                     className="h-10 gap-2 rounded-xl"
                   >
-                    <HugeiconsIcon icon={SparklesIcon} className="size-4" data-icon />
+                    <HugeiconsIcon icon={BookOpen01Icon} className="size-4" data-icon />
                     Generate flashcards
                   </Button>
                 </div>

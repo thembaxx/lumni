@@ -8,9 +8,12 @@ import FilterIcon from "@hugeicons/core-free-icons/FilterIcon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import Upload04Icon from "@hugeicons/core-free-icons/Upload04Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -56,8 +59,11 @@ function filtersReducer(
 
 type LoadingStatus = "idle" | "loading" | "importing";
 
+const motionEase = [0.25, 0.1, 0.25, 1] as const;
+
 export function FlashcardBrowseClient() {
   const t = useTranslations();
+  const prefersReducedMotion = useReducedMotion();
   const [filters, dispatch] = useReducer(filtersReducer, {
     search: "",
     subjectFilter: "all",
@@ -128,182 +134,195 @@ export function FlashcardBrowseClient() {
   const totalPages = Math.ceil(cards.length / PAGE_SIZE);
 
   return (
-    <PageContainer className="py-8">
-      <h1 className="mb-6 font-semibold text-2xl">{t("flashcards.browseTitle")}</h1>
-
-      <div className="mb-6 flex flex-wrap gap-3">
-        <div className="relative min-w-48 flex-1">
-          <HugeiconsIcon
-            icon={Search01Icon}
-            className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-          />
-          <Input
-            placeholder={t("flashcards.searchPlaceholder")}
-            value={search}
-            onChange={(e) => {
-              dispatch({ type: "SET_SEARCH", payload: e.target.value });
-            }}
-            className="pl-9"
-          />
-        </div>
-        <Select
-          value={subjectFilter}
-          onValueChange={(v) => dispatch({ type: "SET_SUBJECT_FILTER", payload: v ?? "all" })}
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
+      <PageContainer className="flex flex-col gap-6">
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
-          <SelectTrigger>
-            <SelectValue placeholder={t("flashcards.allSubjects")} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t("flashcards.allSubjects")}</SelectItem>
-            {subjects.map((s) => (
-              <SelectItem key={s} value={s}>
-                {s}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button variant="outline" size="sm" onClick={loadCards}>
-          <HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
-          {t("flashcards.refresh")}
-        </Button>
-        <Button variant="outline" size="sm" onClick={handleExport} disabled={cards.length === 0}>
-          <HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
-          {t("flashcards.exportCsv")}
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={status === "importing"}
-        >
-          <HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
-          {status === "importing" ? t("flashcards.importing") : t("flashcards.importCsv")}
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".csv"
-          onChange={handleImport}
-          className="hidden"
-          aria-label={t("flashcards.importCsvAria")}
-        />
-      </div>
+          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            {t("flashcards.browseTitle")}
+          </h1>
+        </m.div>
 
-      {status === "loading" ? (
-        <div className="flex flex-col gap-3">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Skeleton
-              // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
-              key={i}
-              className="h-24 rounded-xl"
+        <div className="mb-6 flex flex-wrap gap-3">
+          <div className="relative min-w-48 flex-1">
+            <HugeiconsIcon
+              icon={Search01Icon}
+              className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
             />
-          ))}
+            <Input
+              placeholder={t("flashcards.searchPlaceholder")}
+              value={search}
+              onChange={(e) => {
+                dispatch({ type: "SET_SEARCH", payload: e.target.value });
+              }}
+              className="pl-9"
+            />
+          </div>
+          <Select
+            value={subjectFilter}
+            onValueChange={(v) => dispatch({ type: "SET_SUBJECT_FILTER", payload: v ?? "all" })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={t("flashcards.allSubjects")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("flashcards.allSubjects")}</SelectItem>
+              {subjects.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {s}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button variant="outline" size="sm" onClick={loadCards}>
+            <HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
+            {t("flashcards.refresh")}
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleExport} disabled={cards.length === 0}>
+            <HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
+            {t("flashcards.exportCsv")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={status === "importing"}
+          >
+            <HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
+            {status === "importing" ? t("flashcards.importing") : t("flashcards.importCsv")}
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            onChange={handleImport}
+            className="hidden"
+            aria-label={t("flashcards.importCsvAria")}
+          />
         </div>
-      ) : paginated.length === 0 ? (
-        <div className="py-12 text-center text-muted-foreground">
-          {search || subjectFilter !== "all"
-            ? t("flashcards.noMatchFilters")
-            : t("flashcards.browseEmpty")}
-        </div>
-      ) : (
-        <>
-          <p className="mb-4 text-muted-foreground text-sm">
-            {t("flashcards.cardCount", { count: cards.length })}
-          </p>
+
+        {status === "loading" ? (
           <div className="flex flex-col gap-3">
-            {paginated.map((card) => (
-              <Card key={card.id} className="overflow-hidden">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0 flex-1">
-                      <div className="mb-1 line-clamp-2 font-medium">{card.front}</div>
-                      <div className="line-clamp-2 text-muted-foreground text-sm">{card.back}</div>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        <Badge
-                          variant="outline"
-                          className="ios-caption-3 bg-primary/10 text-primary"
-                        >
-                          {card.subject}
-                        </Badge>
-                        {card.topic && (
-                          <Badge
-                            variant="outline"
-                            className="ios-caption-3 bg-secondary/30 text-muted-foreground"
-                          >
-                            {card.topic}
-                          </Badge>
-                        )}
-                        <Badge
-                          variant="outline"
-                          className="ios-caption-3 bg-muted/30 text-muted-foreground"
-                        >
-                          {t("flashcards.ease")}: {card.easeFactor.toFixed(1)}
-                        </Badge>
-                        <Badge
-                          variant="outline"
-                          className="ios-caption-3 bg-muted/30 text-muted-foreground"
-                        >
-                          {t("flashcards.interval")}: {card.interval}d
-                        </Badge>
-                        {card.nextReview > now ? (
-                          <Badge
-                            variant="outline"
-                            className="ios-caption-3 bg-success/10 text-success"
-                          >
-                            {t("flashcards.dueLabel")}{" "}
-                            {new Date(card.nextReview).toLocaleDateString()}
-                          </Badge>
-                        ) : (
-                          <Badge
-                            variant="outline"
-                            className="ios-caption-3 bg-warning/10 text-warning"
-                          >
-                            {t("flashcards.overdue")}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(card.id)}
-                      aria-label={t("flashcards.deleteCard")}
-                    >
-                      <HugeiconsIcon icon={Delete02Icon} className="size-4 text-destructive" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton
+                // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
+                key={i}
+                className="h-24 rounded-xl"
+              />
             ))}
           </div>
-
-          {totalPages > 1 && (
-            <div className="mt-6 flex items-center justify-center gap-4">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page === 0}
-                onClick={() => dispatch({ type: "SET_PAGE", payload: page - 1 })}
-              >
-                <HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
-                {t("flashcards.previous")}
-              </Button>
-              <span className="text-muted-foreground text-sm">
-                {t("flashcards.pageInfo", { page: page + 1, totalPages })}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page >= totalPages - 1}
-                onClick={() => dispatch({ type: "SET_PAGE", payload: page + 1 })}
-              >
-                {t("flashcards.next")}{" "}
-                <HugeiconsIcon icon={ArrowRight01Icon} className="ml-1 size-4" />
-              </Button>
+        ) : paginated.length === 0 ? (
+          <div className="py-12 text-center text-muted-foreground">
+            {search || subjectFilter !== "all"
+              ? t("flashcards.noMatchFilters")
+              : t("flashcards.browseEmpty")}
+          </div>
+        ) : (
+          <>
+            <p className="mb-4 text-muted-foreground text-sm">
+              {t("flashcards.cardCount", { count: cards.length })}
+            </p>
+            <div className="flex flex-col gap-3">
+              {paginated.map((card) => (
+                <Card key={card.id} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="mb-1 line-clamp-2 font-medium">{card.front}</div>
+                        <div className="line-clamp-2 text-muted-foreground text-sm">
+                          {card.back}
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <Badge
+                            variant="outline"
+                            className="ios-caption-3 bg-primary/10 text-primary"
+                          >
+                            {card.subject}
+                          </Badge>
+                          {card.topic && (
+                            <Badge
+                              variant="outline"
+                              className="ios-caption-3 bg-secondary/30 text-muted-foreground"
+                            >
+                              {card.topic}
+                            </Badge>
+                          )}
+                          <Badge
+                            variant="outline"
+                            className="ios-caption-3 bg-muted/30 text-muted-foreground"
+                          >
+                            {t("flashcards.ease")}: {card.easeFactor.toFixed(1)}
+                          </Badge>
+                          <Badge
+                            variant="outline"
+                            className="ios-caption-3 bg-muted/30 text-muted-foreground"
+                          >
+                            {t("flashcards.interval")}: {card.interval}d
+                          </Badge>
+                          {card.nextReview > now ? (
+                            <Badge
+                              variant="outline"
+                              className="ios-caption-3 bg-success/10 text-success"
+                            >
+                              {t("flashcards.dueLabel")}{" "}
+                              {new Date(card.nextReview).toLocaleDateString()}
+                            </Badge>
+                          ) : (
+                            <Badge
+                              variant="outline"
+                              className="ios-caption-3 bg-warning/10 text-warning"
+                            >
+                              {t("flashcards.overdue")}
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(card.id)}
+                        aria-label={t("flashcards.deleteCard")}
+                      >
+                        <HugeiconsIcon icon={Delete02Icon} className="size-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-          )}
-        </>
-      )}
-    </PageContainer>
+
+            {totalPages > 1 && (
+              <div className="mt-6 flex items-center justify-center gap-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page === 0}
+                  onClick={() => dispatch({ type: "SET_PAGE", payload: page - 1 })}
+                >
+                  <HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
+                  {t("flashcards.previous")}
+                </Button>
+                <span className="text-muted-foreground text-sm">
+                  {t("flashcards.pageInfo", { page: page + 1, totalPages })}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page >= totalPages - 1}
+                  onClick={() => dispatch({ type: "SET_PAGE", payload: page + 1 })}
+                >
+                  {t("flashcards.next")}{" "}
+                  <HugeiconsIcon icon={ArrowRight01Icon} className="ml-1 size-4" />
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </PageContainer>
+    </div>
   );
 }

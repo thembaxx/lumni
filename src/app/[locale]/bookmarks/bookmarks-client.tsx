@@ -3,7 +3,9 @@
 import Bookmark01Icon from "@hugeicons/core-free-icons/Bookmark01Icon";
 import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import * as m from "motion/react-m";
 import { useEffect } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
@@ -11,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBookmarksStore } from "@/store/bookmarks";
+import { motionEase } from "@/lib/utils/animation";
 
 export function BookmarksClient() {
   const { bookmarks, removeBookmark } = useBookmarksStore();
@@ -21,24 +24,31 @@ export function BookmarksClient() {
 
   return (
     <div className="min-h-screen bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <LocalDataNotice
           page="bookmarks"
           description="Your bookmarked questions are saved on this device. Sign in to keep them across all your devices."
         />
-        <h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
-          Bookmarked Questions
-        </h1>
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: motionEase }}
+        >
+          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            Bookmarked Questions
+          </h1>
+        </m.div>
 
         {bookmarks.length === 0 ? (
           <Card>
-            <CardContent className="p-8 text-center">
+            <CardContent className="flex flex-col gap-1 p-8 text-center">
               <HugeiconsIcon
                 icon={Bookmark01Icon}
                 className="mx-auto mb-3 size-8 text-muted-foreground/40"
               />
               <p className="font-semibold text-base">No bookmarks yet</p>
-              <p className="mt-1 text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-sm">
                 Bookmark questions during quizzes to save them here.
               </p>
             </CardContent>
@@ -64,7 +74,7 @@ export function BookmarksClient() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="size-8"
+                      className="size-8 min-h-11 min-w-11"
                       onClick={() => removeBookmark(bm.id)}
                       aria-label="Remove bookmark"
                     >

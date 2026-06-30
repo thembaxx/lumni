@@ -5,10 +5,12 @@ import Bookmark03Icon from "@hugeicons/core-free-icons/Bookmark03Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
+import { motionEase } from "@/lib/utils/animation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -49,6 +51,7 @@ for (const l of LANGUAGES) {
 export function DictionaryClient() {
   const { user } = useAuth();
   const userId = user?.$id ?? "anonymous";
+  const prefersReducedMotion = useReducedMotion();
   const [query, setQuery] = useState("");
   const [language, setLanguage] = useState("en");
   const [result, setResult] = useState<DictionaryResult | null>(null);
@@ -120,14 +123,19 @@ export function DictionaryClient() {
   }, [saving, saved, userId, result]);
 
   return (
-    <PageContainer>
-      <div className="flex flex-col gap-6 py-6">
-        <div className="flex flex-col gap-1">
-          <h1 className="font-semibold text-2xl">Dictionary</h1>
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
+      <PageContainer className="flex flex-col gap-6">
+        <m.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+        >
+          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Dictionary</h1>
           <p className="text-muted-foreground text-sm">
             Look up word definitions and save vocabulary for review.
           </p>
-        </div>
+        </m.div>
 
         <form onSubmit={handleSearch} className="flex flex-wrap gap-2">
           <div className="relative min-w-0 flex-1">
@@ -179,6 +187,7 @@ export function DictionaryClient() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
             >
               <Card className="rounded-card">
                 <CardContent className="flex flex-col items-center gap-2 p-8 text-center">
@@ -196,12 +205,13 @@ export function DictionaryClient() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
             >
               <Card className="overflow-hidden rounded-card shadow-level-1">
                 <CardContent className="flex flex-col gap-4 p-5">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col gap-1">
-                      <h2 className="font-extrabold text-xl">{result.word}</h2>
+                      <h2 className="font-semibold text-xl">{result.word}</h2>
                       {result.phonetic && (
                         <span className="text-muted-foreground text-sm">{result.phonetic}</span>
                       )}
@@ -261,7 +271,7 @@ export function DictionaryClient() {
                             <button
                               key={s}
                               type="button"
-                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
+                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent) focus-visible:ring-2 focus-visible:ring-primary"
                               onClick={() => setQuery(s)}
                             >
                               {s}
@@ -276,7 +286,7 @@ export function DictionaryClient() {
                             <button
                               key={a}
                               type="button"
-                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
+                              className="rounded-full bg-muted px-2 py-0.5 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent) focus-visible:ring-2 focus-visible:ring-primary"
                               onClick={() => setQuery(a)}
                             >
                               {a}
@@ -291,7 +301,7 @@ export function DictionaryClient() {
             </m.div>
           )}
         </AnimatePresence>
-      </div>
-    </PageContainer>
+      </PageContainer>
+    </div>
   );
 }

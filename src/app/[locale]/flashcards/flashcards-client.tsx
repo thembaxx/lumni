@@ -4,6 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Confetti, GamificationCelebration, XPGainPopup } from "@/components/celebration";
+import { PageContainer } from "@/components/layout/page-container";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useTrackFlashcardEvents } from "@/hooks/use-analytics-tracking";
 import { useGamification } from "@/hooks/use-gamification";
@@ -467,58 +469,81 @@ export function FlashcardsClient() {
 
   if (!session.isActive) {
     return (
-      <div className="flex flex-col gap-4">
-        <LocalDataNotice page="flashcards" description={t("flashcards.localDataNotice")} />
-        <FlashcardsIdle
-          onSelect={(subject) => startSession(subject, "ai")}
-          onReviewMistakes={(subject) => startSession(subject, "mistakes")}
-          onReviewVocabulary={(subject) => startSession(subject, "vocabulary")}
-        />
+      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+        <AmbientGradient />
+        <PageContainer className="flex flex-col gap-6">
+          <LocalDataNotice page="flashcards" description={t("flashcards.localDataNotice")} />
+          <FlashcardsIdle
+            onSelect={(subject) => startSession(subject, "ai")}
+            onReviewMistakes={(subject) => startSession(subject, "mistakes")}
+            onReviewVocabulary={(subject) => startSession(subject, "vocabulary")}
+          />
+        </PageContainer>
       </div>
     );
   }
 
   if (isLoading && session.source === "ai") {
-    return <FlashcardsLoading />;
+    return (
+      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+        <AmbientGradient />
+        <PageContainer className="flex flex-col gap-6">
+          <FlashcardsLoading />
+        </PageContainer>
+      </div>
+    );
   }
 
   if (displayCards.length === 0) {
     return (
-      <FlashcardsEmpty
-        subject={session.selectedSubject}
-        onGoBack={stopSession}
-        mode={session.source}
-      />
+      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+        <AmbientGradient />
+        <PageContainer className="flex flex-col gap-6">
+          <FlashcardsEmpty
+            subject={session.selectedSubject}
+            onGoBack={stopSession}
+            mode={session.source}
+          />
+        </PageContainer>
+      </div>
     );
   }
 
   if (session.sessionComplete) {
     return (
-      <FlashcardsResults
-        totalCards={totalCards}
-        knownCount={knownCount}
-        reviewCount={reviewCount}
-        subject={session.selectedSubject || "Flashcards"}
-        onGoHouse={stopSession}
-        onRestart={handleRestart}
-        onShareDeck={handleShareDeck}
-      />
+      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+        <AmbientGradient />
+        <PageContainer className="flex flex-col gap-6">
+          <FlashcardsResults
+            totalCards={totalCards}
+            knownCount={knownCount}
+            reviewCount={reviewCount}
+            subject={session.selectedSubject || "Flashcards"}
+            onGoHouse={stopSession}
+            onRestart={handleRestart}
+            onShareDeck={handleShareDeck}
+          />
+        </PageContainer>
+      </div>
     );
   }
 
   return (
-    <>
-      <GamificationCelebration />
-      <Confetti trigger={showConfetti} count={20} duration={1200} />
-      <XPGainPopup amount={10} visible={showXPGain} />
-      <FlashcardsActive
-        cards={displayCards}
-        knownCount={knownCount}
-        reviewCount={reviewCount}
-        onReview={handleReview}
-        onComplete={handleSessionComplete}
-        onQuit={stopSession}
-      />
-    </>
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <AmbientGradient />
+      <PageContainer className="flex flex-col gap-6">
+        <GamificationCelebration />
+        <Confetti trigger={showConfetti} count={20} duration={1200} />
+        <XPGainPopup amount={10} visible={showXPGain} />
+        <FlashcardsActive
+          cards={displayCards}
+          knownCount={knownCount}
+          reviewCount={reviewCount}
+          onReview={handleReview}
+          onComplete={handleSessionComplete}
+          onQuit={stopSession}
+        />
+      </PageContainer>
+    </div>
   );
 }
