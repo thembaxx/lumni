@@ -57,7 +57,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {
-    turbopackFileSystemCacheForDev: true,
+    turbopackFileSystemCacheForBuild: true,
+    turbopackRustReactCompiler: true,
+    turbopackLocalPostcssConfig: true,
     optimizePackageImports: ["@hugeicons/core-free-icons", "@hugeicons/react", "motion"],
   },
   images: {
