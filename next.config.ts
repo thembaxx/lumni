@@ -59,6 +59,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {
+    viewTransition: true,
     turbopackFileSystemCacheForBuild: true,
     turbopackRustReactCompiler: true,
     turbopackLocalPostcssConfig: true,

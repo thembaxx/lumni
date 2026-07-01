@@ -10,6 +10,7 @@ import { ToolsDialog } from "@/components/tools/core/tools-dialog";
 import { Badge } from "@/components/ui/badge";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
+import { useDataPrefetch } from "@/hooks/use-data-prefetch";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
@@ -80,10 +81,12 @@ const NavItemComponent = memo(function NavItemComponent({
   item,
   isActive,
   onNavigate,
+  onPrefetch,
 }: {
   item: BottomNavItem;
   isActive: boolean;
   onNavigate?: (href: string) => void;
+  onPrefetch?: (href: string) => void;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
@@ -97,6 +100,7 @@ const NavItemComponent = memo(function NavItemComponent({
       <m.button
         type="button"
         onClick={() => onNavigate?.(item.href)}
+        onMouseEnter={() => onPrefetch?.(item.href)}
         aria-label={item.label}
         aria-current={isActive ? "page" : undefined}
         whileTap={tapScale}
@@ -111,6 +115,8 @@ const NavItemComponent = memo(function NavItemComponent({
   return (
     <Link
       href={item.href}
+      prefetch={true}
+      onMouseEnter={() => onPrefetch?.(item.href)}
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
       className={baseItemClass}
@@ -165,6 +171,8 @@ export function BottomNav() {
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
 
+  const prefetch = useDataPrefetch();
+
   const activeIndex = useMemo(() => {
     const index = navItems.findIndex((item) => {
       if (item.href === "/dashboard") {
@@ -194,6 +202,7 @@ export function BottomNav() {
                   item={item}
                   isActive={index === activeIndex}
                   onNavigate={item.href === "/chat" ? handleNavigate : undefined}
+                  onPrefetch={prefetch}
                 />
               ))}
             </div>

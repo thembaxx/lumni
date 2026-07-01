@@ -8,11 +8,6 @@ const STATIC_ASSETS = [
   "/web-app-manifest-192x192.png",
   "/web-app-manifest-512x512.png",
   "/offline",
-  "/dashboard",
-  "/quiz",
-  "/flashcards",
-  "/settings",
-  "/solve",
 ];
 
 self.addEventListener("install", (event) => {
@@ -97,38 +92,42 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (isHtmlNavigation(request, url)) {
-    event.respondWith(networkFirstHtml(event));
+    event.respondWith(staleWhileRevalidateHtml(event));
     return;
   }
 
   event.respondWith(staleWhileRevalidate(request, CACHE_NAME));
 });
 
-async function networkFirstHtml(event) {
+async function staleWhileRevalidateHtml(event) {
   const request = event.request;
-  const preloadResponse = event.preloadResponse;
+  const cache = await caches.open(HTML_CACHE);
+  const cached = await cache.match(request, { ignoreSearch: true });
 
-  try {
-    const response = await Promise.race([
-      fetch(request),
-      preloadResponse
-        ? new Promise((resolve) => preloadResponse.then(resolve))
-        : new Promise(() => {}),
-    ]);
-
-    if (response && response.ok) {
-      const cache = await caches.open(HTML_CACHE);
-      cache.put(request, response.clone());
+  const fetchPromise = (async () => {
+    try {
+      const response = await fetch(request);
+      if (response && response.ok) {
+        cache.put(request, response.clone()).catch(() => {});
+      }
+      return response;
+    } catch {
+      return null;
     }
-    return response;
-  } catch {
-    const cached = await caches.match(request, { ignoreSearch: true });
-    if (cached) return cached;
-    const offline = await caches.match("/offline", { ignoreSearch: true });
-    return (
-      offline || new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } })
-    );
+  })();
+
+  if (cached) {
+    fetchPromise.catch(() => {});
+    return cached;
   }
+
+  const response = await fetchPromise;
+  if (response) return response;
+
+  const offline = await caches.match("/offline", { ignoreSearch: true });
+  return (
+    offline || new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } })
+  );
 }
 
 async function staleWhileRevalidate(request, cacheName) {

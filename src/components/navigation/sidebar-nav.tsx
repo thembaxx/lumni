@@ -11,6 +11,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { usePathname, Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { navConfig } from "@/lib/navigation/config";
+import { useDataPrefetch } from "@/hooks/use-data-prefetch";
 import { cn } from "@/lib/utils";
 
 interface SidebarState {
@@ -35,6 +36,7 @@ function SidebarContent() {
   const { setOpen } = use(SidebarStateContext);
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const prefetch = useDataPrefetch();
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -134,7 +136,9 @@ function SidebarContent() {
               {catRoute ? (
                 <Link
                   href={catRoute}
+                  prefetch={true}
                   onClick={closeSheet}
+                  onMouseEnter={() => prefetch(catRoute)}
                   className="ios-caption-3 flex w-full items-center justify-between px-2 py-1.5 font-semibold text-muted-foreground uppercase no-underline tracking-wider transition-colors hover:text-foreground"
                 >
                   {cat.label}
@@ -152,7 +156,9 @@ function SidebarContent() {
                   <Link
                     key={item.id}
                     href={item.route}
+                    prefetch={item.primary ? true : undefined}
                     onClick={closeSheet}
+                    onMouseEnter={() => prefetch(item.route)}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "flex h-9 w-full items-center gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150",
@@ -195,7 +201,7 @@ export function SidebarNav() {
     <>
       <aside
         aria-label="Sidebar navigation"
-        className="relative hidden h-dvh w-60 shrink-0 flex-col border-system-separator/30 border-r bg-system-grouped/80 pt-safe glass-ultra-thin md:flex"
+        className="sidebar-panel relative hidden h-dvh w-60 shrink-0 flex-col border-system-separator/30 border-r bg-system-grouped/80 pt-safe glass-ultra-thin md:flex"
       >
         <div className="pointer-events-none absolute inset-0 bg-(--system-accent-alpha-10)" />
         <SidebarContent />

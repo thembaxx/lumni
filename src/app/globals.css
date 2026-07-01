@@ -978,6 +978,25 @@
   animation: 120ms ease-out both fadeIn;
 }
 
+.sidebar-panel {
+  view-transition-name: sidebar-panel;
+}
+
+.topnav-bar {
+  view-transition-name: topnav-bar;
+}
+
+::view-transition-old(sidebar-panel),
+::view-transition-new(sidebar-panel) {
+  height: 100%;
+  animation: none;
+}
+
+::view-transition-old(topnav-bar),
+::view-transition-new(topnav-bar) {
+  animation: none;
+}
+
 [data-vt-direction="forward"]::view-transition-old(root) {
   animation: 100ms ease-out both vt-slide-to-left;
 }

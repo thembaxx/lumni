@@ -4,7 +4,6 @@ import { useCallback } from "react";
 import { locales } from "@/i18n/locales";
 import { useRouter } from "@/i18n/navigation";
 import { getNavHierarchy } from "@/lib/navigation/config";
-import { startViewTransition } from "@/lib/utils/view-transition";
 
 const navHierarchy = getNavHierarchy();
 const localeRe = new RegExp(`^/(${locales.join("|")})(/|$)`);
@@ -13,7 +12,7 @@ function stripLocale(path: string): string {
   return path.replace(localeRe, "/");
 }
 
-function navigateWithVt(router: ReturnType<typeof useRouter>, href: string, isReplace: boolean) {
+function setVtDirection(href: string) {
   const currentPath = stripLocale(window.location.pathname);
   const targetPath = stripLocale(href);
 
@@ -26,22 +25,6 @@ function navigateWithVt(router: ReturnType<typeof useRouter>, href: string, isRe
   } else {
     delete document.documentElement.dataset.vtDirection;
   }
-
-  const doNav = () => {
-    if (isReplace) {
-      router.replace(href);
-    } else {
-      router.push(href);
-    }
-  };
-
-  const vt = startViewTransition(doNav);
-  if (!vt) {
-    doNav();
-    return;
-  }
-
-  vt.finished.catch(doNav);
 }
 
 export function useNavigationDirection() {
@@ -49,14 +32,16 @@ export function useNavigationDirection() {
 
   const push = useCallback(
     (href: string) => {
-      navigateWithVt(router, href, false);
+      setVtDirection(href);
+      router.push(href);
     },
     [router],
   );
 
   const replace = useCallback(
     (href: string) => {
-      navigateWithVt(router, href, true);
+      setVtDirection(href);
+      router.replace(href);
     },
     [router],
   );
