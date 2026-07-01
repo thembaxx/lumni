@@ -161,7 +161,14 @@ function KonamiOverlay() {
 function RainbowOverlay() {
   return (
     <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg)">
-      <div className="absolute inset-0 animate-rainbow-shift opacity-[0.08]" />
+      <div
+        className="absolute inset-0 animate-rainbow-shift opacity-[0.08]"
+        style={{
+          background:
+            "linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff)",
+          backgroundSize: "600% 100%",
+        }}
+      />
       <div className="absolute right-6 bottom-6 animate-fade-in-up rounded-2xl bg-black/70 px-5 py-3 text-white text-sm backdrop-blur-xl">
         🌈 Rainbow mode activated
       </div>
