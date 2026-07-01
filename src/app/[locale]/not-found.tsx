@@ -19,7 +19,7 @@ export default function NotFound() {
 
 function NotFoundContent() {
   return (
-    <div className="grid min-h-dvh grid-cols-12 gap-0 bg-(--system-background)">
+    <div className="grid min-h-dvh grid-cols-12 gap-0 bg-system-background">
       <FadeIn
         direction="up"
         distance={12}
@@ -44,10 +44,7 @@ function NotFoundContent() {
             </p>
           </FadeIn>
           <FadeIn direction="up" distance={8} delay={0.3}>
-            <Button
-              asChild
-              className="bg-(--system-accent) text-background hover:bg-(--system-accent)/80"
-            >
+            <Button asChild className="bg-system-accent text-background hover:bg-system-accent/80">
               <Link href="/">Back to {appConfig.name}</Link>
             </Button>
           </FadeIn>
@@ -55,7 +52,7 @@ function NotFoundContent() {
       </FadeIn>
 
       <div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-        <div className="absolute inset-0 bg-gradient-to-br from-(--system-accent)/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-br from-(--system-accent)/5 via-transparent to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center p-8">
           <div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-(--system-accent)/10 blur-2xl" />
         </div>

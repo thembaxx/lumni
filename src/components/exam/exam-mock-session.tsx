@@ -190,7 +190,7 @@ export function ExamMockSession({
   if (phase === "countdown") {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-background gap-4 p-4">
-        <p className="font-extrabold text-7xl tracking-tight tabular-nums text-(--system-accent)">
+        <p className="font-extrabold text-7xl tracking-tight tabular-nums text-system-accent">
           {countdownValue}
         </p>
         <p className="text-muted-foreground text-sm">Get ready for your mock exam</p>
@@ -208,9 +208,7 @@ export function ExamMockSession({
         <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-border bg-card p-6 text-center">
           <p className="font-extrabold text-2xl tracking-tight">Mock Exam Complete</p>
           <div className="flex items-baseline gap-1">
-            <span className="font-extrabold text-5xl tabular-nums text-(--system-accent)">
-              {pct}%
-            </span>
+            <span className="font-extrabold text-5xl tabular-nums text-system-accent">{pct}%</span>
             <span className="text-muted-foreground text-sm tabular-nums">
               ({correctCount}/{total})
             </span>
@@ -218,7 +216,7 @@ export function ExamMockSession({
           <p className="text-muted-foreground text-xs">{getGrade(pct)}</p>
           <div className="flex items-center gap-2 rounded-lg bg-muted px-4 py-2">
             <span className="text-muted-foreground text-xs">APS Projection:</span>
-            <span className="font-bold text-lg tabular-nums text-(--system-accent)">
+            <span className="font-bold text-lg tabular-nums text-system-accent">
               {getAPSForSubject(pct)}/7
             </span>
           </div>
@@ -242,7 +240,7 @@ export function ExamMockSession({
     <div className="flex min-h-dvh flex-col bg-background">
       <header className="flex items-center justify-between border-b border-border bg-card px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="ios-caption-3 rounded-md bg-(--system-accent) px-2 py-0.5 font-semibold text-white text-xs">
+          <span className="ios-caption-3 rounded-md bg-system-accent px-2 py-0.5 font-semibold text-white text-xs">
             Mock
           </span>
           <span className="text-muted-foreground text-xs">
@@ -292,7 +290,7 @@ export function ExamMockSession({
                       className={cn(
                         "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-[scale,background-color,border-color] active:scale-[0.96]",
                         isSelected
-                          ? "border-(--system-accent) bg-(--system-accent)/10 font-medium"
+                          ? "border-system-accent bg-system-accent/10 font-medium"
                           : "border-border bg-card hover:bg-muted/50",
                       )}
                     >
@@ -300,7 +298,7 @@ export function ExamMockSession({
                         className={cn(
                           "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium",
                           isSelected
-                            ? "border-(--system-accent) bg-(--system-accent) text-white"
+                            ? "border-system-accent bg-system-accent text-white"
                             : "border-muted-foreground/30 text-muted-foreground",
                         )}
                       >

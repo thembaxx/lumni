@@ -31,8 +31,8 @@ export function ProgressPageClient() {
               onClick={() => push(item.route)}
               className="flex items-start gap-4 rounded-xl border border-border/60 bg-card p-4 text-left transition-colors hover:bg-accent/5"
             >
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-(--system-accent)/10">
-                <HugeiconsIcon icon={item.icon} className="size-5 text-(--system-accent)" />
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-system-accent/10">
+                <HugeiconsIcon icon={item.icon} className="size-5 text-system-accent" />
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <span className="font-semibold text-sm text-foreground">{item.label}</span>

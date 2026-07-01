@@ -73,7 +73,7 @@ export function FeaturesGrid() {
 
   return (
     <section className="relative overflow-hidden py-16 md:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-system-accent/[0.02] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-system-accent/2 to-transparent" />
       <div className="mx-auto max-w-6xl px-4">
         <m.div
           initial={{ opacity: 0, y: 20 }}
@@ -121,7 +121,7 @@ export function FeaturesGrid() {
               >
                 <div
                   className={cn(
-                    "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                    "pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
                     feature.color,
                   )}
                 />

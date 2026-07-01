@@ -27,7 +27,7 @@ function Skeleton({ className, variant = "pulse", shape = "default", ...props }:
       {...props}
     >
       {variant === "shimmer" && (
-        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-foreground/5 to-transparent" />
+        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-linear-to-r from-transparent via-foreground/5 to-transparent" />
       )}
     </div>
   );

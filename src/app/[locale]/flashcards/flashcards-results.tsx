@@ -118,7 +118,7 @@ export function FlashcardsResults({
           </div>
         </div>
         <div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-success/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-br from-success/10 via-transparent to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center p-8">
             <div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-success/10 blur-2xl" />
           </div>

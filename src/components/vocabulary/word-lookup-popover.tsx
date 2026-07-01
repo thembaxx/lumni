@@ -86,7 +86,7 @@ export function WordLookupPopover({
     <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger
         render={
-          <span className="cursor-pointer underline decoration-dotted underline-offset-2 transition-colors hover:text-(--system-accent)">
+          <span className="cursor-pointer underline decoration-dotted underline-offset-2 transition-colors hover:text-system-accent">
             {children}
           </span>
         }
@@ -119,7 +119,7 @@ export function WordLookupPopover({
               </div>
               {result.definitions.slice(0, 2).map((def) => (
                 <div key={def.definition} className="flex flex-col gap-1">
-                  <span className="w-fit rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--system-accent) text-(--fs-caption-3)">
+                  <span className="w-fit rounded-full bg-system-accent/10 px-2 py-0.5 font-medium text-system-accent ios-caption-3">
                     {def.partOfSpeech}
                   </span>
                   <p className="text-sm leading-relaxed">{def.definition}</p>

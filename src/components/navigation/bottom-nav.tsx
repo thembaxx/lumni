@@ -41,7 +41,7 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset";
+  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
@@ -50,7 +50,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
         <HugeiconsIcon
           icon={item.icon}
           className={cn(
-            "size-[18px] transition-[transform,color] duration-200 ease-ios",
+            "size-4 transition-[transform,color] duration-200 ease-ios",
             isActive && "scale-110",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
@@ -187,7 +187,7 @@ export function BottomNav() {
       >
         <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
           <div className="flex items-center gap-2">
-            <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-[0_2px_8px_rgba(0,0,0,0.08)] ring-1 ring-system-separator/30 dark:bg-system-background dark:shadow-level-2 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
+            <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-[0_2px_8px_rgba(0,0,0,0.08)] ring-1 ring-system-separator/30 dark:bg-system-background dark:shadow-level-2 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-system-accent/10">
               {navItems.map((item, index) => (
                 <NavItemComponent
                   key={item.id}
