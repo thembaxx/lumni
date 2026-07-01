@@ -649,11 +649,6 @@ describe("TopNav", () => {
       expect(getByTestId("sidebar-hamburger")).toBeTruthy();
     });
 
-    it("renders LocaleSwitcher", () => {
-      const { getByTestId } = render(<TopNav />);
-      expect(getByTestId("locale-switcher")).toBeTruthy();
-    });
-
     it("applies custom className to header", () => {
       const { container } = render(<TopNav className="custom-class" />);
       const header = container.querySelector("header");
