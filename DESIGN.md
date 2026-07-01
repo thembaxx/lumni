@@ -480,20 +480,20 @@ The app has been modernized with 2026 design trends while preserving the "Warm F
 
 The following trends were added in the July 2026 redesign:
 
-| Trend | Implementation | Files |
-|-------|---------------|-------|
-| **Kinetic Typography** | Letter-by-letter reveal on scroll via IntersectionObserver | `kinetic-heading.tsx`, `globals.css` (`@keyframes letterReveal`) |
-| **Grain Texture** | SVG noise filter overlay with CSS animation | `noise-overlay.tsx`, `globals.css` (`@keyframes grain`) |
-| **Scroll-Driven Reveals** | IntersectionObserver-based entrance animations (6 directions) | `scroll-reveal.tsx` |
-| **3D Magnetic Tilt** | CSS perspective transforms tracking mouse position | `magnetic-card.tsx`, `globals.css` (`.tilt-card`) |
-| **Bento Grid Layouts** | Responsive grid with span support + 4 visual variants | `bento-grid.tsx` |
-| **Enhanced Ambient Blobs** | 6 variants (default, subtle, quiz, auth, dashboard, study) | `ambient-gradient.tsx` |
-| **Ripple Effects** | Expanding circle on click | `globals.css` (`@keyframes ripple`, `.ripple-container`) |
-| **Glow Borders** | Animated gradient border via CSS mask | `globals.css` (`.animate-glow-border`) |
-| **Particle Backgrounds** | Floating particle animation | `globals.css` (`@keyframes particleFloat`) |
-| **Confetti** | Falling particle celebration | `globals.css` (`@keyframes confettiFall`) |
-| **Text Shimmer** | Animated gradient text | `globals.css` (`.animate-text-shimmer`) |
-| **Scan Line** | Moving scan line overlay | `globals.css` (`.scan-line`) |
+| Trend                      | Implementation                                                | Files                                                            |
+| -------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Kinetic Typography**     | Letter-by-letter reveal on scroll via IntersectionObserver    | `kinetic-heading.tsx`, `globals.css` (`@keyframes letterReveal`) |
+| **Grain Texture**          | SVG noise filter overlay with CSS animation                   | `noise-overlay.tsx`, `globals.css` (`@keyframes grain`)          |
+| **Scroll-Driven Reveals**  | IntersectionObserver-based entrance animations (6 directions) | `scroll-reveal.tsx`                                              |
+| **3D Magnetic Tilt**       | CSS perspective transforms tracking mouse position            | `magnetic-card.tsx`, `globals.css` (`.tilt-card`)                |
+| **Bento Grid Layouts**     | Responsive grid with span support + 4 visual variants         | `bento-grid.tsx`                                                 |
+| **Enhanced Ambient Blobs** | 6 variants (default, subtle, quiz, auth, dashboard, study)    | `ambient-gradient.tsx`                                           |
+| **Ripple Effects**         | Expanding circle on click                                     | `globals.css` (`@keyframes ripple`, `.ripple-container`)         |
+| **Glow Borders**           | Animated gradient border via CSS mask                         | `globals.css` (`.animate-glow-border`)                           |
+| **Particle Backgrounds**   | Floating particle animation                                   | `globals.css` (`@keyframes particleFloat`)                       |
+| **Confetti**               | Falling particle celebration                                  | `globals.css` (`@keyframes confettiFall`)                        |
+| **Text Shimmer**           | Animated gradient text                                        | `globals.css` (`.animate-text-shimmer`)                          |
+| **Scan Line**              | Moving scan line overlay                                      | `globals.css` (`.scan-line`)                                     |
 
 ### 7.1 Page Layout Pattern
 
@@ -748,27 +748,28 @@ All animation keyframes are defined in `globals.css`:
 
 As of the July 2026 redesign batch, the page-shell update is complete: every major app route is wrapped with the new 2026 visual shell (AmbientGradient + NoiseOverlay + grouped background). No further page shell updates are required unless new routes are added later.
 
-| Page | Path | Variant |
-|------|------|---------|
-| Homepage | `src/components/home/home-content.tsx` | default + confetti easter egg |
-| Dashboard | `src/components/dashboard/dashboard-content.tsx` | dashboard |
-| Quiz | `src/app/[locale]/quiz/page.tsx` | quiz |
-| Flashcards | `src/app/[locale]/flashcards/page.tsx` | study |
-| Settings | `src/app/[locale]/settings/page.tsx` | subtle |
-| Study | `src/app/[locale]/study/page.tsx` | study |
-| Progress | `src/app/[locale]/progress/page.tsx` | dashboard |
-| Exam Dates | `src/app/[locale]/exam-dates/page.tsx` | dashboard |
-| Chat | `src/app/[locale]/chat/page.tsx` | default |
-| Search | `src/app/[locale]/search/page.tsx` | subtle |
-| Leaderboard | `src/app/[locale]/leaderboard/page.tsx` | dashboard |
-| Review | `src/app/[locale]/review/page.tsx` | study |
-| Study Guide | `src/app/[locale]/study-guide/page.tsx` | study |
-| Problems | `src/app/[locale]/problems/page.tsx` | study |
-| Dictionary | `src/app/[locale]/dictionary/page.tsx` | default |
-| Auth | `src/app/[locale]/auth/layout.tsx` | auth |
-| Sidebar | `src/components/navigation/sidebar-nav.tsx` | glass sidebar |
+| Page        | Path                                             | Variant                       |
+| ----------- | ------------------------------------------------ | ----------------------------- |
+| Homepage    | `src/components/home/home-content.tsx`           | default + confetti easter egg |
+| Dashboard   | `src/components/dashboard/dashboard-content.tsx` | dashboard                     |
+| Quiz        | `src/app/[locale]/quiz/page.tsx`                 | quiz                          |
+| Flashcards  | `src/app/[locale]/flashcards/page.tsx`           | study                         |
+| Settings    | `src/app/[locale]/settings/page.tsx`             | subtle                        |
+| Study       | `src/app/[locale]/study/page.tsx`                | study                         |
+| Progress    | `src/app/[locale]/progress/page.tsx`             | dashboard                     |
+| Exam Dates  | `src/app/[locale]/exam-dates/page.tsx`           | dashboard                     |
+| Chat        | `src/app/[locale]/chat/page.tsx`                 | default                       |
+| Search      | `src/app/[locale]/search/page.tsx`               | subtle                        |
+| Leaderboard | `src/app/[locale]/leaderboard/page.tsx`          | dashboard                     |
+| Review      | `src/app/[locale]/review/page.tsx`               | study                         |
+| Study Guide | `src/app/[locale]/study-guide/page.tsx`          | study                         |
+| Problems    | `src/app/[locale]/problems/page.tsx`             | study                         |
+| Dictionary  | `src/app/[locale]/dictionary/page.tsx`           | default                       |
+| Auth        | `src/app/[locale]/auth/layout.tsx`               | auth                          |
+| Sidebar     | `src/components/navigation/sidebar-nav.tsx`      | glass sidebar                 |
 
 Each page wrapper uses:
+
 - `<AmbientGradient variant="...">` — subtle floating blobs
 - `<NoiseOverlay opacity={0.015}>` — grain texture
 - `bg-system-grouped` — warm grouped background

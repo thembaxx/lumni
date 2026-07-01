@@ -65,8 +65,14 @@ function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean 
       />
       {/* Particle-like dots */}
       <div className="absolute top-[15%] right-[20%] size-2 rounded-full bg-primary/20 blur-sm animate-float-slow" />
-      <div className="absolute bottom-[25%] left-[15%] size-1.5 rounded-full bg-chart-4/20 blur-sm animate-float-slow" style={{ animationDelay: "-2s" }} />
-      <div className="absolute top-[40%] right-[10%] size-1 rounded-full bg-chart-3/20 blur-sm animate-float-slow" style={{ animationDelay: "-4s" }} />
+      <div
+        className="absolute bottom-[25%] left-[15%] size-1.5 rounded-full bg-chart-4/20 blur-sm animate-float-slow"
+        style={{ animationDelay: "-2s" }}
+      />
+      <div
+        className="absolute top-[40%] right-[10%] size-1 rounded-full bg-chart-3/20 blur-sm animate-float-slow"
+        style={{ animationDelay: "-4s" }}
+      />
     </div>
   );
 }

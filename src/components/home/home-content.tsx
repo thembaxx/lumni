@@ -50,7 +50,7 @@ const CtaSection = dynamic(() => import("./cta-section").then((m) => ({ default:
  */
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
-  const [buffer, setBuffer] = useState("");
+  const [_buffer, setBuffer] = useState("");
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

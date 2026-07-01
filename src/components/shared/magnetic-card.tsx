@@ -29,7 +29,7 @@ export function MagneticCard({
   onClick,
 }: MagneticCardProps) {
   const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -51,14 +51,11 @@ export function MagneticCard({
     }, 300);
   }, [perspective]);
 
+  const Component = Tag as React.ElementType;
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "tilt-card will-change-transform",
-        onClick && "cursor-pointer",
-        className,
-      )}
+    <Component
+      ref={ref as React.Ref<HTMLElement>}
+      className={cn("tilt-card will-change-transform", onClick && "cursor-pointer", className)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
@@ -77,6 +74,6 @@ export function MagneticCard({
       style={{ transformStyle: "preserve-3d" }}
     >
       {children}
-    </div>
+    </Component>
   );
 }

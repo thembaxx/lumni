@@ -29,11 +29,7 @@ const gapMap = {
  * 2026 trend: asymmetric, organic grid layouts that break the rigid card mold.
  */
 export function BentoGrid({ children, className, cols = 2, gap = "md" }: BentoGridProps) {
-  return (
-    <div className={cn("grid", colMap[cols], gapMap[gap], className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn("grid", colMap[cols], gapMap[gap], className)}>{children}</div>;
 }
 
 interface BentoCardProps {
@@ -51,12 +47,10 @@ const spanMap = {
 };
 
 const variantStyles = {
-  default:
-    "rounded-card-lg border border-border/80 bg-system-surface shadow-level-1",
+  default: "rounded-card-lg border border-border/80 bg-system-surface shadow-level-1",
   glass:
     "rounded-card-lg border border-border/40 bg-material-glass backdrop-blur-xl shadow-level-2",
-  elevated:
-    "rounded-card-lg border border-border/80 bg-system-surface shadow-level-2",
+  elevated: "rounded-card-lg border border-border/80 bg-system-surface shadow-level-2",
   gradient:
     "rounded-card-lg border border-border/40 bg-gradient-to-br from-system-surface via-system-surface to-primary/[0.02] shadow-level-1",
 };
