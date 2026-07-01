@@ -120,7 +120,7 @@ export function NationalExamCalendar() {
           <HugeiconsIcon icon={Calendar01Icon} className="size-5 text-(--system-accent)" />
           National Exams
         </h2>
-        <p className="ios-subhead mt-1 text-(--system-text-secondary)/50">{sessionLabel}</p>
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">{sessionLabel}</p>
         {allSlots.length > 0 && (
           <Button
             variant="outline"

@@ -1,9 +1,10 @@
 "use client";
 
-import * as m from "motion/react-m";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 import { type StudySet, useStudySetStorage } from "./hooks/use-study-set-storage";
 import { StudySetForm } from "./study-set-editor";
 import { StudySetList } from "./study-set-list";
@@ -61,21 +61,19 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
   });
 
   return (
-    <m.div
-      className={cn("mx-auto w-full max-w-2xl", className)}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.25, ease: iOSEase }}
-    >
-      <Card className="mb-6">
-        <CardHeader className="pb-4">
-          <CardTitle className="font-bold text-2xl">Study Set Creator</CardTitle>
-          <p className="text-muted-foreground">
-            Organize your flashcards and notes into study sets
-          </p>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+    <div className={cn("flex h-full flex-col overflow-y-auto", className)}>
+      <div className="px-5 pt-5 pb-3">
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={BookOpen01Icon} className="size-5 text-(--system-accent)" />
+          Study Set Creator
+        </h2>
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
+          Organize your flashcards and notes into study sets
+        </p>
+      </div>
+
+      <div className="px-5 pb-5">
+        <div className="flex flex-col gap-4 rounded-2xl bg-system-background-secondary p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 flex-1">
               <Input
@@ -118,47 +116,43 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
               New Study Set
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      {/* Study Set List */}
       {filteredStudySets.length > 0 && (
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="font-medium text-lg">Your Study Sets</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <StudySetList
-              studySets={filteredStudySets}
-              onEdit={(id) => {
-                setEditingStudySetId(id);
-                setIsCreating(true);
-              }}
-              onDelete={handleDeleteStudySet}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          </CardContent>
-        </Card>
+        <div className="px-5 pb-5">
+          <StudySetList
+            studySets={filteredStudySets}
+            onEdit={(id) => {
+              setEditingStudySetId(id);
+              setIsCreating(true);
+            }}
+            onDelete={handleDeleteStudySet}
+            onToggleFavorite={handleToggleFavorite}
+          />
+        </div>
       )}
 
-      {/* Empty State */}
       {filteredStudySets.length === 0 && studySets.length > 0 && (
-        <Card className="py-8 text-center">
-          <p className="text-muted-foreground">
-            No study sets match your search. Try a different search term.
-          </p>
-        </Card>
+        <div className="px-5 pb-5">
+          <Card className="py-8 text-center">
+            <p className="text-muted-foreground">
+              No study sets match your search. Try a different search term.
+            </p>
+          </Card>
+        </div>
       )}
 
       {filteredStudySets.length === 0 && studySets.length === 0 && (
-        <Card className="py-8 text-center">
-          <p className="text-muted-foreground">
-            You haven't created any study sets yet. Click "New Study Set" to get started!
-          </p>
-        </Card>
+        <div className="px-5 pb-5">
+          <Card className="py-8 text-center">
+            <p className="text-muted-foreground">
+              You haven't created any study sets yet. Click "New Study Set" to get started!
+            </p>
+          </Card>
+        </div>
       )}
 
-      {/* Create/Edit Study Set Modal */}
       <Dialog open={isCreating} onOpenChange={setIsCreating}>
         <DialogContent className="w-full max-w-md sm:max-w-lg">
           <DialogHeader>
@@ -191,6 +185,6 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
           />
         </DialogContent>
       </Dialog>
-    </m.div>
+    </div>
   );
 }

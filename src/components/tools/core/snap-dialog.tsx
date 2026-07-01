@@ -6,7 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
-import { DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
 export type SnapPhase =
@@ -57,14 +57,16 @@ export function SnapDialog({
 }) {
   return (
     <DialogContent className="max-h-[80dvh] overflow-y-auto sm:max-w-lg">
-      <DialogTitle className="ios-title-3 text-(--system-text-primary)">
-        {phase === "extracting" && "Reading problem…"}
-        {phase === "confirm" && "Verify extracted problem"}
-        {phase === "solving" && "Solving…"}
-        {phase === "solved" && "Solution"}
-        {phase === "error" && "Something went wrong"}
-        {phase === "capturing" && "Processing image…"}
-      </DialogTitle>
+      <DialogHeader>
+        <DialogTitle>
+          {phase === "extracting" && "Reading problem…"}
+          {phase === "confirm" && "Verify extracted problem"}
+          {phase === "solving" && "Solving…"}
+          {phase === "solved" && "Solution"}
+          {phase === "error" && "Something went wrong"}
+          {phase === "capturing" && "Processing image…"}
+        </DialogTitle>
+      </DialogHeader>
 
       <div className="flex flex-col gap-4 py-2">
         {imagePreview && phase !== "capturing" && phase !== "solving" && (
