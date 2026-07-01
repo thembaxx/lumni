@@ -38,6 +38,7 @@
     "i18n:translate": "tsx scripts/translate-locales.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "nm:check": "knip --no-exit-code",
     "gate": "pnpm run lint:fix && pnpm run format && pnpm run typecheck && pnpm run test && pnpm run nm:check"
   },
   "dependencies": {

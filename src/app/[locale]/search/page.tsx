@@ -1,4 +1,6 @@
 import { Suspense } from "react";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 import { SearchPageClient } from "./search-page-client";
 
@@ -9,9 +11,13 @@ export const metadata = {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<PageSkeleton />}>
-      <SearchPageClient />
-    </Suspense>
+    <div className="relative min-h-dvh bg-system-grouped">
+      <AmbientGradient variant="subtle" />
+      <NoiseOverlay opacity={0.015} />
+      <Suspense fallback={<PageSkeleton />}>
+        <SearchPageClient />
+      </Suspense>
+    </div>
   );
 }
 

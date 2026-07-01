@@ -195,8 +195,9 @@ export function SidebarNav() {
     <>
       <aside
         aria-label="Sidebar navigation"
-        className="relative hidden h-dvh w-60 shrink-0 flex-col border-system-separator/50 border-r bg-system-grouped pt-safe before:pointer-events-none before:absolute before:inset-0 before:bg-(--system-accent-alpha-10) md:flex"
+        className="relative hidden h-dvh w-60 shrink-0 flex-col border-system-separator/30 border-r bg-system-grouped/80 pt-safe glass-ultra-thin md:flex"
       >
+        <div className="pointer-events-none absolute inset-0 bg-(--system-accent-alpha-10)" />
         <SidebarContent />
       </aside>
       <div className="md:hidden">

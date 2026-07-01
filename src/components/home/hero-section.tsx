@@ -14,6 +14,8 @@ import { memo, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/shared/fade-in";
+import { KineticHeading } from "@/components/shared/kinetic-heading";
+import { MagneticCard } from "@/components/shared/magnetic-card";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
@@ -36,19 +38,40 @@ function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean 
   const mouse = useMousePosition(prefersReducedMotion);
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Primary large blob */}
       <div
-        className="absolute -top-[10%] -right-[10%] h-[60%] w-[50%] animate-morph bg-gradient-to-br from-system-accent/8 to-transparent opacity-70 blur-3xl will-change-transform"
+        className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] animate-morph bg-linear-to-br from-system-accent/10 via-system-accent/5 to-transparent opacity-70 blur-3xl will-change-transform"
         style={{
           transform: `translate(${(mouse.x - 0.5) * 30}px, ${(mouse.y - 0.5) * 20}px)`,
           transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       />
+      {/* Secondary blob */}
       <div
-        className="absolute -bottom-[5%] -left-[10%] h-[50%] w-[40%] animate-float-drift rounded-full bg-gradient-to-tr from-chart-4/8 to-transparent opacity-50 blur-3xl will-change-transform"
+        className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] animate-float-drift rounded-full bg-linear-to-tr from-chart-4/10 to-transparent opacity-50 blur-3xl will-change-transform"
         style={{
           transform: `translate(${(mouse.x - 0.5) * -20}px, ${(mouse.y - 0.5) * -15}px)`,
           transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
+      />
+      {/* Tertiary accent blob */}
+      <div
+        className="absolute top-[20%] left-[5%] h-[30%] w-[25%] animate-float-drift rounded-full bg-linear-to-br from-chart-3/8 to-transparent opacity-40 blur-3xl will-change-transform"
+        style={{
+          transform: `translate(${(mouse.x - 0.5) * 15}px, ${(mouse.y - 0.5) * -10}px)`,
+          transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
+          animationDelay: "-4s",
+        }}
+      />
+      {/* Particle-like dots */}
+      <div className="absolute top-[15%] right-[20%] size-2 rounded-full bg-primary/20 blur-sm animate-float-slow" />
+      <div
+        className="absolute bottom-[25%] left-[15%] size-1.5 rounded-full bg-chart-4/20 blur-sm animate-float-slow"
+        style={{ animationDelay: "-2s" }}
+      />
+      <div
+        className="absolute top-[40%] right-[10%] size-1 rounded-full bg-chart-3/20 blur-sm animate-float-slow"
+        style={{ animationDelay: "-4s" }}
       />
     </div>
   );
@@ -65,9 +88,9 @@ function InteractiveQuizDemo() {
   const correct = 0;
 
   return (
-    <div className="relative aspect-[4/5] w-full max-w-sm">
-      <div className="absolute inset-0 rounded-card-lg bg-gradient-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
-      <div className="relative flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-gradient-to-br from-primary/[0.03] to-background p-5 shadow-level-2 backdrop-blur-xl">
+    <MagneticCard className="relative aspect-4/5 w-full max-w-sm" maxTilt={6}>
+      <div className="absolute inset-0 rounded-card-lg bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
+      <div className="relative flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-linear-to-br from-primary/3 to-background p-5 shadow-level-2 backdrop-blur-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex size-9 items-center justify-center rounded-lg bg-(--system-accent-alpha-10)">
@@ -78,7 +101,7 @@ function InteractiveQuizDemo() {
               <p className="ios-caption-3 text-muted-foreground">Physics · Grade 12</p>
             </div>
           </div>
-          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
+          <span className="animate-badge-pulse rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
             Demo
           </span>
         </div>
@@ -98,15 +121,15 @@ function InteractiveQuizDemo() {
                   type="button"
                   onClick={() => setAnswer(opt.value)}
                   disabled={answer !== null}
-                  className={`flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`ripple-container flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
                     isCorrect
                       ? "border-success/40 bg-success/10 text-success"
                       : isWrong
                         ? "border-destructive/40 bg-destructive/10 text-destructive"
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30"
-                  } ${answer !== null ? "cursor-default" : "cursor-pointer hover:scale-[1.01] active:scale-[0.98]"}`}
+                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hover:scale-[1.01]"
+                  } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.98]"}`}
                 >
                   <span
                     className={`flex size-5 shrink-0 items-center justify-center rounded-md border ios-caption-3 ${
@@ -151,7 +174,7 @@ function InteractiveQuizDemo() {
           ))}
         </div>
       </div>
-    </div>
+    </MagneticCard>
   );
 }
 
@@ -179,10 +202,13 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 </span>
                 {t("home.heroTagline")}
               </div>
-              <h1 className="ios-large-title leading-[1.05] tracking-[0.012em] sm:text-5xl lg:text-6xl">
+              <KineticHeading
+                as="h1"
+                className="ios-large-title leading-[1.05] tracking-[0.012em] sm:text-5xl lg:text-6xl"
+                staggerMs={25}
+              >
                 {t("home.heroTitle")}
-                <span className="text-primary">{t("home.heroTitleHighlight")}</span>
-              </h1>
+              </KineticHeading>
               <p className="max-w-lg text-lg text-muted-foreground leading-relaxed">
                 {t("home.heroDesc")}
               </p>

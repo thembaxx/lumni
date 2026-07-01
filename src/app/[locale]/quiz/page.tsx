@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { QuestionCardSkeleton } from "@/components/quiz/parts/QuestionCardSkeleton";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { QuizClient } from "./quiz-client";
 
@@ -12,9 +14,13 @@ export const metadata: Metadata = {
 export default function QuizPage() {
   return (
     <AppErrorBoundary>
-      <Suspense fallback={<QuestionCardSkeleton />}>
-        <QuizClient />
-      </Suspense>
+      <div className="relative min-h-dvh bg-system-grouped">
+        <AmbientGradient variant="quiz" />
+        <NoiseOverlay opacity={0.015} />
+        <Suspense fallback={<QuestionCardSkeleton />}>
+          <QuizClient />
+        </Suspense>
+      </div>
     </AppErrorBoundary>
   );
 }

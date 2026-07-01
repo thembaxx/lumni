@@ -1,3 +1,4 @@
 {
-  "typescript.tsconfig": "tsconfig.test.json"
+  "typescript.tsconfig": "tsconfig.test.json",
+  "markdown.validate.enabled": true
 }
