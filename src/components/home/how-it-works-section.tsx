@@ -94,7 +94,7 @@ export function HowItWorksSection() {
         </m.div>
 
         <div className="relative mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
-          <div className="absolute top-12 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] hidden h-px bg-gradient-to-r from-transparent via-border/50 to-transparent md:block" />
+          <div className="absolute top-12 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] hidden h-px bg-linear-to-r from-transparent via-border/50 to-transparent md:block" />
 
           {stepsConfig.map((step, i) => (
             <m.div
@@ -111,7 +111,7 @@ export function HowItWorksSection() {
             >
               <div className="relative mb-5">
                 <div
-                  className={`flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br ${step.gradient} shadow-level-1`}
+                  className={`flex size-16 items-center justify-center rounded-2xl bg-linear-to-br ${step.gradient} shadow-level-1`}
                 >
                   <span className="text-primary">{step.icon}</span>
                 </div>

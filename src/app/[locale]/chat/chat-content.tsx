@@ -59,9 +59,9 @@ function TypingDots() {
 function AuroraBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute top-1/4 right-0 size-[400px] animate-aurora rounded-full bg-primary/[0.04] blur-3xl" />
+      <div className="absolute top-1/4 right-0 size-100 animate-aurora rounded-full bg-primary/4 blur-3xl" />
       <div
-        className="absolute bottom-1/4 left-0 size-[350px] animate-aurora rounded-full bg-chart-4/[0.03] blur-3xl"
+        className="absolute bottom-1/4 left-0 size-87.5 animate-aurora rounded-full bg-chart-4/3 blur-3xl"
         style={{ animationDelay: "-4s" }}
       />
     </div>
@@ -95,7 +95,7 @@ export function ChatContent() {
         className="relative z-header flex shrink-0 items-center justify-between border-border/20 border-b bg-background/80 px-4 py-3 backdrop-blur-xl"
       >
         <div className="flex items-center gap-3">
-          <div className="relative flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5">
+          <div className="relative flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-primary/20 to-primary/5">
             <div
               className="absolute inset-0 animate-ping rounded-xl bg-primary/10"
               style={{ animationDuration: "3s" }}
@@ -159,8 +159,8 @@ export function ChatContent() {
                                     className={cn(
                                       "flex size-8 items-center justify-center rounded-xl text-xs font-bold transition-transform duration-200",
                                       isUser
-                                        ? "bg-gradient-to-br from-primary to-primary/80 text-white shadow-level-1"
-                                        : "bg-gradient-to-br from-muted to-muted/80 text-muted-foreground",
+                                        ? "bg-linear-to-br from-primary to-primary/80 text-white shadow-level-1"
+                                        : "bg-linear-to-br from-muted to-muted/80 text-muted-foreground",
                                     )}
                                   >
                                     {isUser ? "U" : "AI"}
@@ -265,7 +265,7 @@ export function ChatContent() {
                 >
                   <Message align="start">
                     <MessageAvatar>
-                      <div className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-muted to-muted/80 text-xs font-bold text-muted-foreground">
+                      <div className="flex size-8 items-center justify-center rounded-xl bg-linear-to-br from-muted to-muted/80 text-xs font-bold text-muted-foreground">
                         AI
                       </div>
                     </MessageAvatar>

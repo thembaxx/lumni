@@ -78,7 +78,7 @@ export function LessonLibrary() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="flex items-center gap-2 text-balance font-semibold text-lg">
-            <HugeiconsIcon icon={Target01Icon} className="size-5 text-(--system-accent)" />
+            <HugeiconsIcon icon={Target01Icon} className="size-5 text-system-accent" />
             Your Learning Path
           </h2>
           <p className="mt-0.5 text-pretty text-muted-foreground text-sm">
@@ -247,7 +247,7 @@ function NextUpCard({
   const { push } = useRouter();
   const NextActionIcon = actionIcons[nextUp.action];
   return (
-    <Card className="rounded-3xl border-(--system-accent)/20 bg-(--system-accent)/5">
+    <Card className="rounded-3xl border-system-accent/20 bg-system-accent/5">
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-col gap-1">

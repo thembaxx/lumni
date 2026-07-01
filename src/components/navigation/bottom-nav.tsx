@@ -41,7 +41,7 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset";
+  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
@@ -50,7 +50,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
         <HugeiconsIcon
           icon={item.icon}
           className={cn(
-            "size-[18px] transition-[transform,color] duration-200 ease-ios",
+            "size-4 transition-[transform,color] duration-200 ease-ios",
             isActive && "scale-110",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
@@ -88,7 +88,7 @@ const NavItemComponent = memo(function NavItemComponent({
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
   const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
-  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26 };
+  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26, bounce: 0 };
 
   const content = <ItemContent item={item} isActive={isActive} />;
 
@@ -208,7 +208,7 @@ export function BottomNav() {
               aria-label="Open tools"
               whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
               whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
-              transition={{ type: "spring", stiffness: 400, damping: 26 }}
+              transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
               className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90"
             >
               <HugeiconsIcon icon={GridIcon} className="size-5" />

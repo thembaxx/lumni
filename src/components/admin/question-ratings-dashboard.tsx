@@ -91,7 +91,7 @@ export function QuestionRatingsDashboard() {
                 key={q.questionId}
                 className="flex items-center justify-between font-mono text-sm"
               >
-                <span className="max-w-[300px] truncate text-muted-foreground">{q.questionId}</span>
+                <span className="max-w-72 truncate text-muted-foreground">{q.questionId}</span>
                 <span className="text-muted-foreground">{q.subject}</span>
                 <span className="font-bold text-destructive">{q.avgRating}</span>
                 <span className="text-muted-foreground">({q.count} ratings)</span>

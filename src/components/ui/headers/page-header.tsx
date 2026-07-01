@@ -27,7 +27,7 @@ function PageHeader({
     <m.header
       initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.5 }}
+      transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.5, bounce: 0 }}
       className={cn(
         "sticky top-0 z-elevated flex flex-col gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
         className,

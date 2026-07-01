@@ -138,7 +138,7 @@ function ConfettiParticle({ index }: { index: number }) {
         borderRadius: Math.random() > 0.5 ? "50%" : "2px",
         animationDuration: `${2 + Math.random() * 3}s`,
         animationDelay: `${Math.random() * 0.5}s`,
-        zIndex: 9999,
+        zIndex: 1000,
       }}
     />
   );
@@ -147,7 +147,7 @@ function ConfettiParticle({ index }: { index: number }) {
 function KonamiOverlay() {
   const particles = Array.from({ length: 30 }, (_, i) => i);
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center">
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) flex items-center justify-center">
       {particles.map((i) => (
         <ConfettiParticle key={i} index={i} />
       ))}
@@ -160,8 +160,15 @@ function KonamiOverlay() {
 
 function RainbowOverlay() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999]">
-      <div className="absolute inset-0 animate-rainbow-shift opacity-[0.08]" />
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg)">
+      <div
+        className="absolute inset-0 animate-rainbow-shift opacity-[0.08]"
+        style={{
+          background:
+            "linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff)",
+          backgroundSize: "600% 100%",
+        }}
+      />
       <div className="absolute right-6 bottom-6 animate-fade-in-up rounded-2xl bg-black/70 px-5 py-3 text-white text-sm backdrop-blur-xl">
         🌈 Rainbow mode activated
       </div>
@@ -171,10 +178,10 @@ function RainbowOverlay() {
 
 function ZenOverlay() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center">
-      <div className="animate-zen-ripple size-[300px] rounded-full border border-white/20" />
-      <div className="animate-zen-ripple delay-300 absolute size-[200px] rounded-full border border-white/15" />
-      <div className="animate-zen-ripple delay-600 absolute size-[100px] rounded-full border border-white/10" />
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) flex items-center justify-center">
+      <div className="animate-zen-ripple size-75 rounded-full border border-white/20" />
+      <div className="animate-zen-ripple delay-300 absolute size-50 rounded-full border border-white/15" />
+      <div className="animate-zen-ripple delay-600 absolute size-25 rounded-full border border-white/10" />
       <div className="absolute animate-fade-in-scale text-white/60 text-sm tracking-widest uppercase">
         Breathe
       </div>
@@ -184,7 +191,7 @@ function ZenOverlay() {
 
 function RetroOverlay() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999]">
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg)">
       <div
         className="absolute inset-0 animate-retro-scan"
         style={{

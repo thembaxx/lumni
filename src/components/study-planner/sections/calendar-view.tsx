@@ -136,7 +136,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
             if (day === null) {
               return (
                 // biome-ignore lint/suspicious/noArrayIndexKey: static grid
-                <div key={`pad-${i}`} className="min-h-[60px]" />
+                <div key={`pad-${i}`} className="min-h-15" />
               );
             }
             const daySessions = getSessionsForDay(sessions, viewYear, viewMonth, day);
@@ -147,7 +147,7 @@ export function CalendarView({ sessions, onUpdateSession }: CalendarViewProps) {
               <div
                 key={`day-${day}`}
                 className={cn(
-                  "min-h-[60px] rounded-md border p-1 text-xs transition-colors",
+                  "min-h-15 rounded-md border p-1 text-xs transition-colors",
                   isToday && "border-primary bg-primary/5",
                 )}
                 onDragOver={handleDragOver}

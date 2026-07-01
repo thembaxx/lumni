@@ -99,10 +99,10 @@ export function LearnPageClient() {
               className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-[box-shadow,transform] duration-300 hover:shadow-level-2 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary"
             >
               <div
-                className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${item.gradient}`}
+                className={`pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${item.gradient}`}
               />
               <div className="relative z-10 flex items-start gap-4">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[3deg]">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                   <HugeiconsIcon icon={item.icon} className="size-5" />
                 </div>
                 <div className="flex min-w-0 flex-col gap-0.5">

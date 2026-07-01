@@ -56,7 +56,9 @@ export function TabNav({
           <m.span
             layoutId="tab-indicator"
             transition={
-              prefersReducedMotion ? undefined : { type: "spring", stiffness: 400, damping: 30 }
+              prefersReducedMotion
+                ? undefined
+                : { type: "spring", stiffness: 400, damping: 30, bounce: 0 }
             }
             className={cn(
               "absolute top-0.5 bottom-0.5 rounded-xl border border-border/20 bg-background shadow-level-1",

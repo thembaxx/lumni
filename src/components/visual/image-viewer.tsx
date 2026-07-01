@@ -26,7 +26,7 @@ export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerP
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg border bg-background/20">
+      <div className="relative aspect-4/3 overflow-hidden rounded-lg border bg-background/20">
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-muted/10">
             <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
@@ -37,7 +37,7 @@ export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerP
           alt={label}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="!relative max-h-96 object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
+          className="relative! max-h-96 object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
           onLoad={() => setLoading(false)}
           onError={() => {
             setError(true);

@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer reset, base, components, utilities;
+
 /* ========================================
    DESIGN SYSTEM — 2026 Evolution
    Liquid Glass + Organic Motion + Kinetic Typography
@@ -56,21 +58,39 @@
   --material-glass-strong: oklch(100% 0 0 / 0.2);
   --material-vibrancy: 1.2; /* brightness multiplier for text on glass */
 
-  /* Spacing Scale (8pt grid) */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-11: 44px;
-  --space-12: 48px;
-  --space-16: 64px;
+  /* Glass Material Aliases (maps to --material-*) */
+  --glass-ultra-thin: blur(10px) saturate(180%);
+  --glass-thin: blur(20px) saturate(180%);
+  --glass-regular: blur(24px) saturate(180%);
+  --glass-thick: blur(40px) saturate(180%);
+  --glass-card: blur(20px) saturate(120%);
+  --glass-card-strong: blur(30px) saturate(120%);
 
-  /* Apple HIG: minimum 44×44pt touch targets */
-  --touch-target-min: 44px;
+  /* Spacing Scale (8pt grid base, with half-step granularity) */
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 10px;
+  --space-6: 12px;
+  --space-7: 14px;
+  --space-8: 16px;
+  --space-10: 20px;
+  --space-11: 22px;
+  --space-12: 24px;
+  --space-16: 32px;
+  --space-20: 40px;
+  --space-24: 48px;
+  --space-32: 64px;
+  --space-40: 80px;
+  --space-44: 88px;
+
+  /* Touch Targets — HIG Minimum Sizes */
+  --touch-min: 28px; /* HIG: Absolute minimum — NEVER go below this */
+  --touch-default: 44px; /* HIG: Recommended minimum */
+  --touch-target-min: 44px; /* backward compat */
+  --touch-padding: 12px; /* HIG: Between bezeled elements */
+  --touch-padding-no-bezel: 24px; /* HIG: Between non-bezel elements */
 
   /* Corner Radii */
   --radius-button: 12px;
@@ -81,17 +101,19 @@
   --radius-badge: 8px;
   --radius-tab-bar: 20px;
   --radius-list-group: 20px;
+  --radius-full: 9999px;
 
   /* Shadows — multi-layer soft float */
   --shadow-level-1: 0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02);
   --shadow-level-2:
     0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02);
   --shadow-level-3:
-    0 2px 4px oklch(0% 0 0 / 0.04), 0 8px 16px oklch(0% 0 0 / 0.04),
+    0 4px 8px oklch(0% 0 0 / 0.05), 0 8px 24px oklch(0% 0 0 / 0.04),
     0 16px 48px oklch(0% 0 0 / 0.03), 0 32px 64px oklch(0% 0 0 / 0.015);
 
   /* Solver CTA — soft accent glow */
   --shadow-solver: 0 2px 8px oklch(52% 0.18 146 / 0.15);
+  --shadow-solver-glow: var(--shadow-solver);
 
   /* Typography Scale (rem-based) */
   --fs-large-title: 2.125rem; /* 34px */
@@ -127,17 +149,30 @@
   /* Default 1.0 = normal, matches system base font-size */
   --text-scale: 1;
 
+  /* Font Family Aliases */
+  --font-display:
+    var(--font-heading), Outfit, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "SF Pro", sans-serif;
+  --font-body:
+    var(--font-sans), Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro",
+    sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", "SF Mono", "SFMono-Regular", "Fira Code", monospace;
+
   /* Z-Index Scale — semantic hierarchy */
+  --z-background: -1;
   --z-content: 0;
   --z-elevated: 10;
-  --z-sticky: 20;
-  --z-header: 30;
-  --z-drawer: 40;
-  --z-cookie-banner: 45;
-  --z-modal: 50;
-  --z-overlay: 55;
-  --z-toast: 60;
-  --z-skip-link: 100;
+  --z-contextual: 50;
+  --z-pdf-controls: 150;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-drawer: 300;
+  --z-cookie-banner: 400;
+  --z-modal: 500;
+  --z-overlay: 600;
+  --z-toast: 700;
+  --z-skip-link: 999;
+  --z-easter-egg: 1000;
 
   /* Animation Timing */
   --ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
@@ -146,7 +181,18 @@
   --ease-ios-accelerate: cubic-bezier(0.4, 0, 1, 1); /* objects leaving screen */
   --ease-ios-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* interactive gestures */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* iOS-like drawer (from Ionic) */
-  --duration-slow: 300ms;
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-normal: 250ms;
+  --motion-duration-slow: 300ms;
+  --motion-duration-slower: 350ms;
+  --motion-duration-max: 500ms;
+  --duration-slow: 300ms; /* backward compat */
+
+  --motion-easing-default: var(--ease-ios);
+  --motion-easing-overshoot: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --motion-easing-decelerate: var(--ease-ios-decelerate);
+  --motion-easing-accelerate: var(--ease-ios-accelerate);
 
   /* Shadcn Compat */
   --background: var(--system-background);
@@ -191,6 +237,62 @@
   --chart-3: oklch(75% 0.15 70); /* Warm amber */
   --chart-4: oklch(60% 0.15 240); /* Cool blue */
   --chart-5: oklch(55% 0.18 25); /* Destructive red */
+
+  /* DESIGN.md Color Aliases (maps to --system-*) */
+  --color-study-green: var(--system-accent);
+  --color-study-green-bright: oklch(65% 0.18 146);
+
+  --color-warm-paper: var(--system-background);
+  --color-warm-paper-secondary: var(--system-background-secondary);
+  --color-warm-paper-tertiary: var(--system-background-tertiary);
+  --color-warm-paper-elevated: var(--system-background-elevated);
+  --color-warm-paper-grouped: var(--system-grouped-background);
+
+  --color-surface: var(--system-surface);
+  --color-surface-secondary: var(--system-surface-secondary);
+
+  --color-ink: var(--system-text-primary);
+  --color-ink-muted: var(--system-text-secondary);
+  --color-ink-faint: var(--system-text-tertiary);
+  --color-ink-quaternary: var(--label-quaternary);
+
+  --color-separator: var(--system-separator);
+  --color-opaque-separator: #c6c6c8;
+
+  --color-destructive: var(--system-destructive);
+  --color-success: var(--system-success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-chart-emerald: var(--chart-1);
+  --color-chart-green: var(--chart-2);
+  --color-chart-amber: var(--chart-3);
+  --color-chart-blue: var(--chart-4);
+  --color-chart-red: var(--chart-5);
+
+  /* HIG Semantic Aliases */
+  --color-label: var(--system-text-primary);
+  --color-label-secondary: var(--system-text-secondary);
+  --color-label-tertiary: var(--system-text-tertiary);
+  --color-label-quaternary: var(--label-quaternary);
+
+  /* HIG System Colors (Light) */
+  --color-system-red: #ff3b30;
+  --color-system-orange: #ff9500;
+  --color-system-yellow: #ffcc00;
+  --color-system-green: #34c759;
+  --color-system-teal: #5ac8fa;
+  --color-system-blue: #007aff;
+  --color-system-indigo: #5856d6;
+  --color-system-purple: #af52de;
+  --color-system-pink: #ff2d55;
+  --color-system-brown: #a2845e;
+  --color-system-gray: #8e8e93;
+  --color-system-gray2: #aeaeb2;
+  --color-system-gray3: #c7c7cc;
+  --color-system-gray4: #d1d1d6;
+  --color-system-gray5: #e5e5ea;
+  --color-system-gray6: #f2f2f7;
 
   --sidebar: oklch(98.8% 0.003 60);
   --sidebar-foreground: var(--system-text-primary);
@@ -271,6 +373,7 @@
   --z-overlay: var(--z-overlay);
   --z-toast: var(--z-toast);
   --z-skip-link: var(--z-skip-link);
+  --z-background: var(--z-background);
 
   /* Fonts - Using fallbacks to avoid circularity issues in some environments */
   --font-sans:
@@ -322,21 +425,21 @@
 
   /* Apple dark mode: base layer dimmer, elevated layers brighter */
   --system-background: oklch(10% 0.01 264); /* base page */
-  --system-background-secondary: oklch(12% 0.012 264);
+  --system-background-secondary: oklch(16% 0.015 264);
   --system-background-tertiary: oklch(14% 0.015 264);
   --system-background-elevated: oklch(20% 0.02 264); /* sheets, popovers */
   --system-grouped-background: oklch(8% 0.01 264);
   --system-surface: oklch(16% 0.015 264); /* cards */
-  --system-surface-secondary: oklch(22% 0.02 264); /* elevated cards */
+  --system-surface-secondary: oklch(20% 0.02 264); /* elevated cards */
   --system-separator: oklch(100% 0 0 / 0.12);
   --system-fill: oklch(100% 0 0 / 0.08);
   --system-fill-secondary: oklch(100% 0 0 / 0.04);
 
   --system-accent: oklch(65% 0.18 146);
-  --system-text-primary: oklch(98% 0.01 264);
-  --system-text-secondary: oklch(98% 0.01 264 / 0.65);
-  --system-text-tertiary: oklch(98% 0.01 264 / 0.35);
-  --label-quaternary: oklch(98% 0.01 264 / 0.18);
+  --system-text-primary: oklch(95% 0.01 264);
+  --system-text-secondary: oklch(95% 0.01 264 / 0.65);
+  --system-text-tertiary: oklch(95% 0.01 264 / 0.35);
+  --label-quaternary: oklch(95% 0.01 264 / 0.18);
 
   --system-material-light: oklch(16% 0.015 264 / 0.85);
 
@@ -344,10 +447,11 @@
   --shadow-level-2:
     0 2px 4px oklch(0% 0 0 / 0.18), 0 4px 12px oklch(0% 0 0 / 0.12), 0 8px 24px oklch(0% 0 0 / 0.08);
   --shadow-level-3:
-    0 2px 4px oklch(0% 0 0 / 0.2), 0 8px 16px oklch(0% 0 0 / 0.15), 0 16px 48px oklch(0% 0 0 / 0.1),
+    0 4px 8px oklch(0% 0 0 / 0.2), 0 8px 24px oklch(0% 0 0 / 0.15), 0 16px 48px oklch(0% 0 0 / 0.1),
     0 32px 64px oklch(0% 0 0 / 0.06);
 
   --shadow-solver: 0 2px 8px oklch(65% 0.18 146 / 0.2);
+  --shadow-solver-glow: var(--shadow-solver);
 
   /* Compat aliases */
   --background: var(--system-background);
@@ -364,19 +468,14 @@
   --muted-foreground: var(--system-text-secondary);
   --accent: var(--system-surface-secondary);
   --accent-foreground: var(--system-accent);
-  --destructive: oklch(60% 0.2 25);
+  --destructive: var(--system-destructive);
   --destructive-foreground: oklch(100% 0 0);
   --border: var(--system-separator);
   --input: var(--system-separator);
   --ring: var(--system-accent);
 
   /* Dark mode overrides for remaining tokens */
-
-  --success: oklch(65% 0.2 145);
-  --success-foreground: oklch(10% 0.01 264);
-  --warning: oklch(80% 0.15 70);
-  --warning-foreground: oklch(10% 0.01 264);
-  --info: oklch(65% 0.15 240);
+  /* (destructive, success, warning, info omitted — inherit :root light values per DESIGN.md) */
 
   --system-accent-alpha-0: oklch(65% 0.18 146 / 0);
   --system-accent-alpha-10: oklch(65% 0.18 146 / 0.1);
@@ -398,6 +497,24 @@
   --chart-4: oklch(65% 0.15 240);
   --chart-5: oklch(60% 0.2 25);
 
+  /* HIG System Colors (Dark) */
+  --color-system-red: #ff453a;
+  --color-system-orange: #ff9f0a;
+  --color-system-yellow: #ffd60a;
+  --color-system-green: #32d74b;
+  --color-system-teal: #64d2ff;
+  --color-system-blue: #0a84ff;
+  --color-system-indigo: #5e5ce6;
+  --color-system-purple: #bf5af2;
+  --color-system-pink: #ff375f;
+  --color-system-brown: #ac8e68;
+  --color-system-gray: #8e8e93;
+  --color-system-gray2: #636366;
+  --color-system-gray3: #48484a;
+  --color-system-gray4: #3a3a3c;
+  --color-system-gray5: #2c2c2e;
+  --color-system-gray6: #1c1c1e;
+
   --sidebar: oklch(20% 0.02 264);
   --sidebar-foreground: oklch(98% 0.01 264);
   --sidebar-primary: oklch(52% 0.18 146);
@@ -406,6 +523,36 @@
   --sidebar-accent-foreground: oklch(65% 0.18 146);
   --sidebar-border: oklch(100% 0 0 / 0.12);
   --sidebar-ring: oklch(52% 0.18 146);
+
+  /* DESIGN.md Color Aliases (Dark) */
+  --color-study-green: var(--system-accent);
+  --color-study-green-bright: oklch(65% 0.18 146);
+  --color-warm-paper: var(--system-background);
+  --color-warm-paper-secondary: var(--system-background-secondary);
+  --color-warm-paper-tertiary: var(--system-background-tertiary);
+  --color-warm-paper-elevated: var(--system-background-elevated);
+  --color-warm-paper-grouped: var(--system-grouped-background);
+  --color-surface: var(--system-surface);
+  --color-surface-secondary: var(--system-surface-secondary);
+  --color-ink: var(--system-text-primary);
+  --color-ink-muted: var(--system-text-secondary);
+  --color-ink-faint: var(--system-text-tertiary);
+  --color-ink-quaternary: var(--label-quaternary);
+  --color-separator: var(--system-separator);
+  --color-opaque-separator: #38383a;
+  --color-destructive: var(--system-destructive);
+  --color-success: var(--system-success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-chart-emerald: var(--chart-1);
+  --color-chart-green: var(--chart-2);
+  --color-chart-amber: var(--chart-3);
+  --color-chart-blue: var(--chart-4);
+  --color-chart-red: var(--chart-5);
+  --color-label: var(--system-text-primary);
+  --color-label-secondary: var(--system-text-secondary);
+  --color-label-tertiary: var(--system-text-tertiary);
+  --color-label-quaternary: var(--label-quaternary);
 }
 
 /* ========================================
@@ -899,19 +1046,10 @@
 
 @keyframes rainbow-shift {
   0% {
-    background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff);
-  }
-  25% {
-    background: linear-gradient(90deg, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff, #ff0000);
-  }
-  50% {
-    background: linear-gradient(90deg, #ffff00, #00ff00, #0077ff, #8b00ff, #ff0000, #ff7700);
-  }
-  75% {
-    background: linear-gradient(90deg, #00ff00, #0077ff, #8b00ff, #ff0000, #ff7700, #ffff00);
+    filter: hue-rotate(0deg);
   }
   100% {
-    background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff);
+    filter: hue-rotate(360deg);
   }
 }
 
@@ -927,23 +1065,21 @@
 }
 
 @keyframes retro-scan {
-  from {
-    transform: translateY(0);
+  0% {
+    background-position: 0 0;
   }
-  to {
-    transform: translateY(4px);
+  100% {
+    background-position: 0 4px;
   }
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 8px var(--system-accent-alpha-20);
+    box-shadow: 0 0 8px oklch(52% 0.18 146 / 0.3);
   }
   50% {
-    box-shadow:
-      0 0 24px var(--system-accent-alpha-30),
-      0 0 48px var(--system-accent-alpha-10);
+    box-shadow: 0 0 20px oklch(52% 0.18 146 / 0.6);
   }
 }
 
@@ -955,28 +1091,28 @@
 
 @keyframes aurora-drift {
   0% {
-    transform: translateX(-25%) translateY(0) scale(1);
+    transform: translate(0, 0) scale(1);
   }
-  50% {
-    transform: translateX(25%) translateY(-10%) scale(1.05);
+  33% {
+    transform: translate(40px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
   }
   100% {
-    transform: translateX(-25%) translateY(0) scale(1);
+    transform: translate(0, 0) scale(1);
   }
 }
 
 @keyframes float-drift {
   0% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate(0, 0);
   }
-  33% {
-    transform: translateY(-8px) rotate(1deg);
-  }
-  66% {
-    transform: translateY(4px) rotate(-1deg);
+  50% {
+    transform: translate(30px, -20px);
   }
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate(-10px, 10px);
   }
 }
 
@@ -1068,7 +1204,6 @@
 }
 .animate-rainbow-shift {
   animation: rainbow-shift 4s linear infinite;
-  background-size: 600% 100%;
 }
 .animate-zen-ripple {
   animation: zen-ripple 3s ease-out infinite;
@@ -1373,7 +1508,7 @@
 }
 .glass-regular {
   background: var(--material-regular);
-  backdrop-filter: blur(30px);
+  backdrop-filter: blur(24px);
 }
 .glass-thick {
   background: var(--material-thick);
@@ -1420,10 +1555,16 @@
 .shadow-solver {
   box-shadow: var(--shadow-solver);
 }
+.shadow-solver-glow {
+  box-shadow: var(--shadow-solver-glow);
+}
 
 /* ========================================
    Z-INDEX UTILITIES — semantic scale
    ======================================== */
+.z-background {
+  z-index: var(--z-background);
+}
 .z-content {
   z-index: var(--z-content);
 }
@@ -1454,6 +1595,15 @@
 .z-skip-link {
   z-index: var(--z-skip-link);
 }
+.z-easter-egg {
+  z-index: var(--z-easter-egg);
+}
+.z-pdf-controls {
+  z-index: var(--z-pdf-controls);
+}
+.z-contextual {
+  z-index: var(--z-contextual);
+}
 
 /* ========================================
    PWA TITLEBAR — window-controls-overlay
@@ -1482,6 +1632,20 @@
 @utility content-visibility-auto {
   content-visibility: auto;
   contain-intrinsic-size: 1px 600px;
+}
+
+/* Increased Contrast (HIG Accessibility) */
+@media (prefers-contrast: more) {
+  :root {
+    --color-ink-muted: oklch(20% 0.02 264 / 0.78);
+    --color-ink-faint: oklch(20% 0.02 264 / 0.55);
+    --color-separator: oklch(0% 0 0 / 0.12);
+  }
+  :root.dark {
+    --color-ink-muted: oklch(95% 0.01 264 / 0.78);
+    --color-ink-faint: oklch(95% 0.01 264 / 0.55);
+    --color-separator: oklch(100% 0 0 / 0.2);
+  }
 }
 
 /* Reduced Motion */

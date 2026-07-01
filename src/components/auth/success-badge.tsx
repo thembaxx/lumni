@@ -55,6 +55,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
             stiffness: 400,
             damping: 26,
             delay: 0.1,
+            bounce: 0,
           },
         }}
         exit={{ scale: 0.95, opacity: 0 }}

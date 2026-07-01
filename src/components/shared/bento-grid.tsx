@@ -52,7 +52,7 @@ const variantStyles = {
     "rounded-card-lg border border-border/40 bg-material-glass backdrop-blur-xl shadow-level-2",
   elevated: "rounded-card-lg border border-border/80 bg-system-surface shadow-level-2",
   gradient:
-    "rounded-card-lg border border-border/40 bg-gradient-to-br from-system-surface via-system-surface to-primary/[0.02] shadow-level-1",
+    "rounded-card-lg border border-border/40 bg-linear-to-br from-system-surface via-system-surface to-primary/2 shadow-level-1",
 };
 
 /**

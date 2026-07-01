@@ -1,200 +1,57 @@
----
-name: Lumni
-description: AI-powered South African Matric exam preparation — warm, supportive, mobile-first
-colors:
-  study-green: "oklch(52% 0.18 146)"
-  study-green-bright: "oklch(65% 0.18 146)"
-  warm-paper: "oklch(100% 0 0)"
-  warm-paper-secondary: "oklch(97% 0.003 60)"
-  warm-paper-tertiary: "oklch(95% 0.005 60)"
-  warm-paper-elevated: "oklch(100% 0 0)"
-  warm-paper-grouped: "oklch(98.8% 0.003 60)"
-  surface: "oklch(100% 0 0)"
-  surface-secondary: "oklch(97.8% 0.005 60)"
-  ink: "oklch(20% 0.02 264)"
-  ink-muted: "oklch(20% 0.02 264 / 0.65)"
-  ink-faint: "oklch(20% 0.02 264 / 0.35)"
-  ink-quaternary: "oklch(20% 0.02 264 / 0.18)"
-  separator: "oklch(0% 0 0 / 0.06)"
-  destructive: "oklch(55% 0.18 25)"
-  success: "oklch(65% 0.2 145)"
-  warning: "oklch(75% 0.15 70)"
-  info: "oklch(60% 0.15 240)"
-  chart-emerald: "oklch(52% 0.18 146)"
-  chart-green: "oklch(65% 0.2 145)"
-  chart-amber: "oklch(75% 0.15 70)"
-  chart-blue: "oklch(60% 0.15 240)"
-  chart-red: "oklch(55% 0.18 25)"
-  dark-background: "oklch(10% 0.01 264)"
-  dark-surface: "oklch(16% 0.015 264)"
-  dark-elevated: "oklch(20% 0.02 264)"
-  dark-separator: "oklch(100% 0 0 / 0.12)"
-typography:
-  display:
-    fontFamily: "var(--font-heading), Outfit, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "2.125rem"
-    fontWeight: 800
-    lineHeight: 1.2
-    letterSpacing: "0.012em"
-  headline:
-    fontFamily: "var(--font-heading), Outfit, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.75rem"
-    fontWeight: 800
-    lineHeight: 1.22
-    letterSpacing: "0.014em"
-  title:
-    fontFamily: "var(--font-heading), Outfit, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.375rem"
-    fontWeight: 800
-    lineHeight: 1.27
-    letterSpacing: "-0.012em"
-  body:
-    fontFamily: "var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: "-0.02em"
-  label:
-    fontFamily: "var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 400
-    lineHeight: 1.35
-    letterSpacing: "-0.011em"
-  caption:
-    fontFamily: "var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 400
-    lineHeight: 1.3
-    letterSpacing: "0em"
-  caption2:
-    fontFamily: "var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.6875rem"
-    fontWeight: 400
-    lineHeight: 1.2
-    letterSpacing: "0.006em"
-rounded:
-  button: "12px"
-  card: "20px"
-  sheet: "24px"
-  input: "12px"
-  badge: "8px"
-  tab-bar: "20px"
-  list-group: "20px"
-  sm: "8px"
-  md: "12px"
-  lg: "20px"
-  xl: "24px"
-  2xl: "28px"
-  3xl: "32px"
-  card-lg: "40px"
-spacing:
-  1: "4px"
-  2: "8px"
-  3: "12px"
-  4: "16px"
-  5: "20px"
-  6: "24px"
-  8: "32px"
-  10: "40px"
-  11: "44px"
-  12: "48px"
-  16: "64px"
-components:
-  button-default:
-    backgroundColor: "{colors.study-green}"
-    textColor: "oklch(100% 0 0)"
-    rounded: "{rounded.button}"
-    padding: "16px 16px"
-    typography: "{typography.label}"
-    height: "44px"
-  button-default-hover:
-    backgroundColor: "{colors.study-green}"
-    textColor: "oklch(100% 0 0)"
-  button-outline:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.button}"
-    padding: "16px 16px"
-    height: "44px"
-  button-outline-hover:
-    backgroundColor: "{colors.separator}"
-  button-ghost:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.button}"
-    padding: "16px 16px"
-    height: "44px"
-  button-ghost-hover:
-    backgroundColor: "{colors.warm-paper-secondary}"
-  button-destructive:
-    backgroundColor: "{colors.destructive}"
-    textColor: "oklch(100% 0 0)"
-    rounded: "{rounded.button}"
-    padding: "16px 16px"
-    height: "44px"
-  button-secondary:
-    backgroundColor: "{colors.surface-secondary}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.button}"
-    padding: "16px 16px"
-    height: "44px"
-  card-default:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.lg}"
-    padding: "16px"
-    textColor: "{colors.ink}"
-    border: "1px solid {colors.separator}"
-  input-default:
-    backgroundColor: "{colors.warm-paper-secondary}"
-    rounded: "{rounded.input}"
-    textColor: "{colors.ink}"
-    border: "1px solid {colors.separator}"
-    height: "28px"
-    padding: "8px 8px"
-  input-focus:
-    border: "1px solid {colors.study-green}"
-    ring: "2px solid {colors.study-green} / 0.3"
-  checkbox-default:
-    backgroundColor: "transparent"
-    rounded: "{rounded.sm}"
-    border: "1px solid {colors.separator}"
-    size: "16px"
-  checkbox-checked:
-    backgroundColor: "{colors.study-green}"
-    border: "1px solid {colors.study-green}"
-  badge-default:
-    backgroundColor: "{colors.study-green}"
-    textColor: "oklch(100% 0 0)"
-    rounded: "{rounded.badge}"
-    typography: "{typography.caption2}"
-  tab-switcher-default:
-    backgroundColor: "{colors.warm-paper-secondary}"
-    rounded: "{rounded.md}"
-    padding: "3px"
-  tab-switcher-indicator:
-    backgroundColor: "{colors.study-green}"
-    rounded: "{rounded.md}"
-  tab-switcher-active:
-    textColor: "oklch(100% 0 0)"
-  tab-switcher-inactive:
-    textColor: "{colors.ink-muted}"
+# DESIGN.md
+
+# Lumni — Apple HIG-Aligned Design System
+
+# AI-powered South African NSC Grade 12 Exam Preparation
+
+# Version: 2.0.0 | Merged Canonical Standard
+
+# Based on: Apple Human Interface Guidelines 2026 + Lumni Brand Identity
+
+> **Authority**: This document is the merged canonical standard. It combines Apple's official Human Interface Guidelines
+> (developer.apple.com/design/human-interface-guidelines) with Lumni's established brand identity, warm paper palette,
+> and 2026 motion patterns. When conflicts arise, HIG principles govern structure and accessibility; Lumni identity
+> governs color, typography voice, and emotional tone. This document overrides all previous DESIGN.md versions.
+> Last updated: 2026-07-01
+
 ---
 
-# Design System: Lumni
+## Table of Contents
 
-## 1. Overview
+1. [Design Philosophy & Creative North Star](#1-design-philosophy--creative-north-star)
+2. [Design Principles (HIG Foundation)](#2-design-principles-hig-foundation)
+3. [Design Tokens](#3-design-tokens)
+4. [Colors: The Warm Paper + Study Green Palette](#4-colors-the-warm-paper--study-green-palette)
+5. [Typography](#5-typography)
+6. [Layout & Spacing](#6-layout--spacing)
+7. [Materials, Depth & Elevation](#7-materials-depth--elevation)
+8. [Navigation Patterns](#8-navigation-patterns)
+9. [Components](#9-components)
+10. [Content Presentation](#10-content-presentation)
+11. [User Interaction & Gestures](#11-user-interaction--gestures)
+12. [Motion & Animation](#12-motion--animation)
+13. [Feedback & Status](#13-feedback--status)
+14. [Accessibility (Integrated Throughout)](#14-accessibility-integrated-throughout)
+15. [Platform Adaptations](#15-platform-adaptations)
+16. [2026 Design Language — Ambient, Motion & Easter Eggs](#16-2026-design-language--ambient-motion--easter-eggs)
+17. [Implementation Guidelines](#17-implementation-guidelines)
+18. [Quality Assurance](#18-quality-assurance)
+19. [Do's and Don'ts](#19-dos-and-donts)
+20. [Appendices](#20-appendices)
 
-**Creative North Star: "The Warm Frame"**
+---
 
-Imagine a photograph in a quality frame. The frame is warm-toned wood with a soft green mat inside. You notice the photograph first always but the frame is why the photograph looks so good. The warmth keeps your eyes on the image. The green mat draws you into the composition. The beveled corners make the whole thing feel careful, intentional, worth your attention.
+## 1. Design Philosophy & Creative North Star
 
-The interface works the same way. It is the frame, not the art. The art is the content: a question to answer, a flashcard to review, a topic to master. Every pixel of the frame exists to make that content clearer, warmer, more accessible. The warm paper neutrals (tinted toward 60deg hue at chroma 0.003) create the gallery wall. The single Study Green accent is the mat: purposeful, restrained, never decorative. The generous radii are the beveled edges that say "someone cared about this."
+### 1.1 "The Warm Frame"
 
-This system forbids anything that competes with the content. No gradient text that shouts for attention. No glass cards that layer confusion on distraction. No side-stripe borders that pretend to be design decisions. The frame disappears when the content is good. When the content is hard, the frame steadies the experience.
+Imagine a photograph in a quality frame. The frame is warm-toned wood with a soft green mat inside. You notice the photograph first always, but the frame is why the photograph looks so good. The warmth keeps your eyes on the image. The green mat draws you into the composition. The beveled corners make the whole thing feel careful, intentional, worth your attention.
+
+The interface works the same way. It is the frame, not the art. The art is the content: a question to answer, a flashcard to review, a topic to master. Every pixel of the frame exists to make that content clearer, warmer, more accessible. The warm paper neutrals create the gallery wall. The single Study Green accent is the mat: purposeful, restrained, never decorative. The generous radii are the beveled edges that say "someone cared about this."
 
 **Key Characteristics:**
 
-- Warm paper neutrals tinted toward 60deg hue at chroma 0.0030.005. Pure gray reads cold. Warm reads like a desk lamp.
+- Warm paper neutrals tinted toward 60° hue at chroma 0.003–0.005. Pure gray reads cold. Warm reads like a desk lamp.
 - Single Study Green accent on 10% or less of any surface. Its rarity gives it meaning: buttons, focus rings, selected states. Nothing decorative.
 - Generous rounded corners (20px cards, 40px shells, 12px buttons) that feel physically safe to touch. Not sharp. Not cold.
 - iOS-inspired typography scale with OS-quality tracking per size. Reading is effortless, not engineered.
@@ -202,231 +59,841 @@ This system forbids anything that competes with the content. No gradient text th
 - 44pt minimum touch targets. Thumbs on a minibus, fingers after a long day: the interface does not penalize imprecision.
 - Every transition uses `cubic-bezier(0.16, 1, 0.3, 1)`. Fast deceleration, no bounce. The app feels alive under your finger.
 
-## 2. Colors: The Warm Paper + Study Green Palette
+### 1.2 Deference to Content (HIG Principle)
 
-Restrained by design. Warm neutrals carry the room. Study Green arrives only to guide action. The palette is a pact: the surface stays quiet so the accent can speak.
+Content is primary; chrome is secondary. The interface should disappear when users focus on content.
 
-### Primary
+- **Example**: When viewing a full-screen flashcard or exam question, hide all navigation chrome. Tapping restores it.
+- **Implementation**: Use `opacity` transitions and `pointer-events` toggling to hide/show navigation bars on scroll or content interaction.
+- **HIG Alignment**: Photos app hides all navigation when viewing full-screen photos. Lumni hides chrome when viewing exam questions.
 
-- **Study Green** (`oklch(52% 0.18 146)`): The accent that says "press here." Used for primary buttons, active states, selection fills, and focus rings. Never decorative. Its chroma is high enough to feel alive, its lightness controlled enough to never shout.
-- **Study Green Bright** (`oklch(65% 0.18 146)`): Dark mode primary accent. Same hue, same chroma, lifted lightness so it reads legibly against the deep background.
+### 1.3 Depth Through Layering (HIG Principle)
 
-### Neutral
+Use layers, shadows, and motion to create hierarchy.
 
-- **Warm Paper** (`oklch(100% 0 0)`): The page surface. Bright but not clinical. Pure white pulled barely away from pure white.
-- **Warm Paper Secondary** (`oklch(97% 0.003 60)`): The surface beneath a card, the fill of a grouped table. A whisper of warmth at 60deg hue.
-- **Warm Paper Tertiary** (`oklch(95% 0.005 60)`): Pressed states, subtle fill areas, selected list row backgrounds. One step warmer, one step lower.
-- **Surface** (`oklch(100% 0 0)`): Card and container faces. Bright and clean, elevated by the secondary that surrounds it.
-- **Surface Secondary** (`oklch(97.8% 0.005 60)`): Elevated cards, hover fills, subtle container alternates.
-- **Warm Paper Grouped** (`oklch(98.8% 0.003 60)`): Sectioned backgrounds like grouped table views and list sections. The quietest layer.
-- **Ink** (`oklch(20% 0.02 264)`): Primary text. Very dark, cool-leaning gray (264deg hue). Reads as black but carries a trace of blue depth.
-- **Ink Muted** (`oklch(20% 0.02 264 / 0.65)`): Secondary text, descriptions, metadata. Present but not demanding.
-- **Ink Faint** (`oklch(20% 0.02 264 / 0.35)`): Placeholder text, disabled labels. Barely visible, on purpose.
-- **Separator** (`oklch(0% 0 0 / 0.06)`): Borders, dividers, hairline rules. Structure should be felt, not seen.
+- **Liquid Glass** (iOS 26+) floats above content, allowing it to peek through. Used for navigation bars, tab bars, sidebars, and toolbars.
+- **Standard materials** (ultra-thin, thin, regular, thick) create visual distinction within the content layer.
+- **Never** use Liquid Glass in the content layer — reserve it for controls and navigation.
+- **Lumni-specific**: Cards and containers are solid ("The Solid Furniture Rule"). Glass is for transient surfaces that slide in and out.
 
-### Semantic
+---
 
-- **Destructive** (`oklch(55% 0.18 25)`): Errors, wrong answers, destructive actions. Warm red (25deg hue) so it reads as urgent, not cold.
-- **Success** (`oklch(65% 0.2 145)`): Correct answers, completions, positive feedback. Higher chroma than Study Green so it reads as achievement.
-- **Warning** (`oklch(75% 0.15 70)`): Medium difficulty, cautionary feedback. Amber warmth that catches the eye without alarming.
-- **Info** (`oklch(60% 0.15 240)`): Informational badges, help indicators. Neutral blue, no emotional charge.
+## 2. Design Principles (HIG Foundation)
 
-### Chart
+All design decisions must align with these four principles:
 
-- Five colors mapped to `--chart-1` through `--chart-5`: emerald (52% 0.18 146), green (65% 0.2 145), amber (75% 0.15 70), blue (60% 0.15 240), red (55% 0.18 25). Used for data visualization only.
+| Principle       | Definition                                                                                                              | Application in Lumni                                                                                                                                        |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hierarchy**   | Establish clear visual hierarchy where controls and interface elements elevate and distinguish the content beneath them | Use z-index, shadows, and tonal layers to create depth. Navigation and primary actions sit above content. Study Green draws attention to key actions.       |
+| **Harmony**     | Align with the concentric design of hardware and software                                                               | Match border radii to device corners. Use continuous curves (not sharp corners) for all UI elements. Warm neutrals harmonize with the physical environment. |
+| **Consistency** | Adopt platform conventions that adapt across window sizes                                                               | Maintain consistent navigation patterns, gesture behaviors, and component styling across all breakpoints. Tab bars on mobile, sidebars on desktop.          |
+| **Clarity**     | Make content and functionality easy to understand                                                                       | Remove ambiguity. Every interactive element must clearly communicate its purpose and state. Exam questions must be immediately scannable.                   |
 
-### Dark Mode
+### 2.1 Platform-Specific Harmony
 
-Dark inverts the tonal stack: base layer deepens to `oklch(10% 0.01 264)`, elevated surfaces brighten to `oklch(20% 0.02 264)`, and Study Green Bright (`oklch(65% 0.18 146)`) maintains the accent's legibility. The ambient hue shifts cooler (264deg) to match the dark environment while keeping a subtle blue note. Separators become lighter (`oklch(100% 0 0 / 0.12)`) against the dark foundation.
+| Platform        | Navigation                                        | Layout                               | Touch/Gesture                                    |
+| --------------- | ------------------------------------------------- | ------------------------------------ | ------------------------------------------------ |
+| **iOS**         | Tab bar at bottom, navigation bar at top          | Single column, full-width content    | Full gesture support, edge swipe for back        |
+| **iPadOS**      | Tab bar at top (adaptable to sidebar), split view | Multi-column, master-detail          | Apple Pencil support, hover states               |
+| **macOS**       | Sidebar + toolbar, no tab bar                     | Multi-column, fixed width containers | Hover states, cursor changes, keyboard shortcuts |
+| **Desktop Web** | Sidebar or top navigation                         | Responsive, generous whitespace      | Hover states, keyboard navigation                |
 
-### Material / Glass
+---
 
-Six glass tiers for transient surfaces only, never for permanent architecture:
+## 3. Design Tokens
 
-- **Ultra Thin** (10px blur, 30% opacity): The faintest frosted layer.
-- **Thin** (20px blur, 60% opacity): Standard frosted effect.
-- **Regular** (30px blur, 80% opacity): Navigation bars, sheet backgrounds.
-- **Thick** (40px blur, 92% opacity): Modal overlays, dialogs.
-- **Glass Card** (20px blur, 12% opacity): Transient card-like elements.
-- **Glass Card Strong** (30px blur, 20% opacity): Elevated transient elements.
+### 3.1 Token Architecture
 
-A card is never glass. Glass is for things that do not stay.
+All visual properties are defined as semantic tokens. Never use hard-coded values.
 
-### Named Rules
+```typescript
+// tokens.ts — Lumni Design Token System
+export const tokens = {
+  // ============================================================
+  // COLORS — Warm Paper + Study Green Palette
+  // ============================================================
+  color: {
+    // Primary Accent
+    studyGreen: "var(--color-study-green)", // oklch(52% 0.18 146) — Primary CTA
+    studyGreenBright: "var(--color-study-green-bright)", // oklch(65% 0.18 146) — Dark mode accent
 
-**The One Voice Rule.** Study Green is used on 10% or less of any given screen. Its rarity is the point. When everything is highlighted, nothing is.
+    // Warm Paper Neutrals (Light Mode)
+    warmPaper: "var(--color-warm-paper)", // oklch(100% 0 0) — Page surface
+    warmPaperSecondary: "var(--color-warm-paper-secondary)", // oklch(97% 0.003 60)
+    warmPaperTertiary: "var(--color-warm-paper-tertiary)", // oklch(95% 0.005 60)
+    warmPaperElevated: "var(--color-warm-paper-elevated)", // oklch(100% 0 0)
+    warmPaperGrouped: "var(--color-warm-paper-grouped)", // oklch(98.8% 0.003 60)
 
-**The Warm Base Rule.** Every neutral surface is tinted toward a warm 60deg hue at chroma 0.0030.005. Pure gray reads cold; warm reads supportive.
+    // Surfaces
+    surface: "var(--color-surface)", // oklch(100% 0 0) — Card faces
+    surfaceSecondary: "var(--color-surface-secondary)", // oklch(97.8% 0.005 60)
 
-**The Solid Furniture Rule.** Cards and containers are solid. Glass materials are for transient surfaces that slide in and out. Never build furniture out of glass.
+    // Text (Ink) — HIG-mapped semantic labels
+    ink: "var(--color-ink)", // Primary label — oklch(20% 0.02 264)
+    inkMuted: "var(--color-ink-muted)", // Secondary label — oklch(20% 0.02 264 / 0.65)
+    inkFaint: "var(--color-ink-faint)", // Tertiary label — oklch(20% 0.02 264 / 0.35)
+    inkQuaternary: "var(--color-ink-quaternary)", // Quaternary label — oklch(20% 0.02 264 / 0.18)
 
-## 3. Typography
+    // HIG Semantic Mappings (for cross-reference)
+    label: "var(--color-ink)", // HIG: label
+    labelSecondary: "var(--color-ink-muted)", // HIG: secondaryLabel
+    labelTertiary: "var(--color-ink-faint)", // HIG: tertiaryLabel
+    labelQuaternary: "var(--color-ink-quaternary)", // HIG: quaternaryLabel
 
-**Display Font:** Outfit (800 weight) with system-ui sans fallback
-**Body Font:** Geist (400, 500, 600, 800 weights) with system-ui sans fallback
-**Mono Font:** Geist Mono (400, 500, 700 weights) with SF Mono / monospace fallback
+    // Structural
+    separator: "var(--color-separator)", // oklch(0% 0 0 / 0.06)
+    opaqueSeparator: "var(--color-opaque-separator)", // HIG equivalent
 
-**Character:** Outfit is the friendly classmate who explains the hard concept. Its geometric roundness makes headlines feel confident without aggression. Geist is the quiet one who writes the notes. Clean, fast, no wasted strokes. Together they read like a study session where someone actually knows the material.
+    // Semantic
+    destructive: "var(--color-destructive)", // oklch(55% 0.18 25) — Errors, wrong answers
+    success: "var(--color-success)", // oklch(65% 0.2 145) — Correct answers
+    warning: "var(--color-warning)", // oklch(75% 0.15 70) — Medium difficulty
+    info: "var(--color-info)", // oklch(60% 0.15 240) — Informational
 
-### Hierarchy
+    // Chart/Data Visualization
+    chart: {
+      emerald: "var(--color-chart-emerald)", // oklch(52% 0.18 146)
+      green: "var(--color-chart-green)", // oklch(65% 0.2 145)
+      amber: "var(--color-chart-amber)", // oklch(75% 0.15 70)
+      blue: "var(--color-chart-blue)", // oklch(60% 0.15 240)
+      red: "var(--color-chart-red)", // oklch(55% 0.18 25)
+    },
 
-- **Display** (800, 2.125rem / 34px, 1.2, `0.012em` tracking): Page titles and large hero headings. Reserved for top-level screens. Uses `--text-scale` for dynamic type.
-- **Headline** (800, 1.75rem / 28px, 1.22, `0.014em` tracking): Section headers and major content area titles.
-- **Title** (800, 1.375rem / 22px, 1.27, `-0.012em` tracking): Card titles, subsection headers, sheet titles.
-- **Title 3** (600, 1.25rem / 20px, 1.25, `-0.023em` tracking): Subsection titles, feature headings.
-- **Headline** (600, 1.0625rem / 17px, 1.3, `-0.026em` tracking): Bold emphasis, card headers, inline emphasis.
-- **Body** (400, 1rem / 16px, 1.5, `-0.02em` tracking): Primary reading text, question content, descriptions. Capped at 6575ch line length.
-- **Callout** (400, 0.9375rem / 15px, 1.4, `-0.016em` tracking): Compact body, secondary content.
-- **Subhead** (400, 0.875rem / 14px, 1.35, `-0.011em` tracking): Labels, button text, metadata.
-- **Footnote** (400, 0.8125rem / 13px, 1.4, `-0.006em` tracking): Fine print, helper text.
-- **Caption 1** (400, 0.75rem / 12px, 1.3, `0em` tracking): Timestamps, footnotes, smallest readable text.
-- **Caption 2** (400, 0.6875rem / 11px, 1.2, `0.006em` tracking): Legal text, tertiary metadata. Use sparingly.
-- **Caption 3** (400, 0.625rem / 10px, 1.2, `0em` tracking): Badge text. Use only when absolutely necessary.
+    // Dark Mode
+    dark: {
+      background: "var(--color-dark-background)", // oklch(10% 0.01 264)
+      surface: "var(--color-dark-surface)", // oklch(16% 0.015 264)
+      elevated: "var(--color-dark-elevated)", // oklch(20% 0.02 264)
+      separator: "var(--color-dark-separator)", // oklch(100% 0 0 / 0.12)
+    },
 
-### Named Rules
+    // HIG System Colors (for reference/compliance)
+    system: {
+      red: "var(--color-system-red)",
+      orange: "var(--color-system-orange)",
+      yellow: "var(--color-system-yellow)",
+      green: "var(--color-system-green)",
+      teal: "var(--color-system-teal)",
+      blue: "var(--color-system-blue)",
+      indigo: "var(--color-system-indigo)",
+      purple: "var(--color-system-purple)",
+      pink: "var(--color-system-pink)",
+      brown: "var(--color-system-brown)",
+      gray: "var(--color-system-gray)",
+      gray2: "var(--color-system-gray2)",
+      gray3: "var(--color-system-gray3)",
+      gray4: "var(--color-system-gray4)",
+      gray5: "var(--color-system-gray5)",
+      gray6: "var(--color-system-gray6)",
+    },
+  },
 
-**The OS Tracking Rule.** Letter-spacing values match Apple HIG specifications at every size. Do not override with generic 0.05em or 0.1em values. Use the project's `--tracking-*` custom properties.
+  // ============================================================
+  // TYPOGRAPHY
+  // ============================================================
+  typography: {
+    family: {
+      display:
+        'var(--font-heading), Outfit, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif',
+      body: 'var(--font-sans), Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif',
+      mono: 'var(--font-mono), "Geist Mono", "SF Mono", "SFMono-Regular", "Fira Code", monospace',
+    },
+    style: {
+      // HIG-mapped text styles with Lumni voice
+      largeTitle: "var(--font-large-title)", // HIG: Large Title (34pt)
+      title1: "var(--font-title-1)", // HIG: Title 1 (28pt)
+      title2: "var(--font-title-2)", // HIG: Title 2 (22pt)
+      title3: "var(--font-title-3)", // HIG: Title 3 (20pt)
+      headline: "var(--font-headline)", // HIG: Headline (17pt semibold)
+      body: "var(--font-body)", // HIG: Body (17pt)
+      callout: "var(--font-callout)", // HIG: Callout (16pt)
+      subhead: "var(--font-subhead)", // HIG: Subhead (15pt)
+      footnote: "var(--font-footnote)", // HIG: Footnote (13pt)
+      caption1: "var(--font-caption-1)", // HIG: Caption 1 (12pt)
+      caption2: "var(--font-caption-2)", // HIG: Caption 2 (11pt)
+    },
+  },
 
-**The Dynamic Type Rule.** All text sizes are multiplied by `--text-scale` (default 1.0, adjustable via JS). The system respects user font size preferences without breaking layout.
+  // ============================================================
+  // SPACING — 4px base unit, HIG-aligned
+  // ============================================================
+  spacing: {
+    "0": "0",
+    "1": "2px", // 0.5 unit
+    "2": "4px", // 1 unit (base)
+    "3": "6px",
+    "4": "8px", // 2 units
+    "5": "10px",
+    "6": "12px", // 3 units — HIG bezeled padding
+    "8": "16px", // 4 units — HIG standard padding
+    "10": "20px",
+    "11": "22px",
+    "12": "24px", // 6 units — HIG non-bezel padding
+    "16": "32px", // 8 units
+    "20": "40px",
+    "24": "48px",
+    "32": "64px",
+    "40": "80px",
+    "44": "88px", // HIG touch target
+  },
 
-**The Font Jurisdiction Rule.** Outfit is for headings at 20px and above. Below 20px, Geist takes over. Each font has its job. Never use Outfit for labels, buttons, or data text.
+  // ============================================================
+  // TOUCH TARGETS — HIG Minimum Sizes
+  // ============================================================
+  touch: {
+    min: "28px", // HIG: Absolute minimum (28×28pt) — NEVER go below this
+    default: "44px", // HIG: Recommended minimum (44×44pt) — ALWAYS target this
+    padding: "12px", // HIG: Between bezeled elements
+    paddingNoBezel: "24px", // HIG: Between non-bezel elements
+  },
 
-## 4. Elevation
+  // ============================================================
+  // BORDER RADIUS — Generous, continuous curves
+  // ============================================================
+  radius: {
+    none: "0",
+    sm: "8px", // Badges, small chips
+    md: "12px", // Buttons, inputs (HIG continuous curve)
+    lg: "20px", // Cards, list groups (Lumni standard)
+    xl: "24px", // Sheets, modals
+    "2xl": "28px",
+    "3xl": "32px",
+    "4xl": "40px", // Shell containers (Lumni generous)
+    full: "9999px", // Pills, avatars
+  },
 
-Depth comes from lightness, not from shadow. A card sits on a surface one step lighter or darker than its surroundings. Shadows are atmospheric, not structural. Hierarchy is established by background lightness first, shadow second.
+  // ============================================================
+  // SHADOWS — Atmospheric, not structural
+  // ============================================================
+  shadow: {
+    none: "none",
+    level1: "0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02)", // Resting float
+    level2:
+      "0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02)", // Elevated cards
+    level3:
+      "0 4px 8px oklch(0% 0 0 / 0.05), 0 8px 24px oklch(0% 0 0 / 0.04), 0 16px 48px oklch(0% 0 0 / 0.03), 0 32px 64px oklch(0% 0 0 / 0.015)", // Modals, sheets
+    solverGlow: "0 2px 8px oklch(52% 0.18 146 / 0.15)", // Lumni: Green halo on Solve button
+    // Dark mode shadows (auto-applied via CSS)
+    level1Dark: "0 1px 2px oklch(0% 0 0 / 0.15), 0 1px 4px oklch(0% 0 0 / 0.08)",
+    level2Dark:
+      "0 2px 4px oklch(0% 0 0 / 0.18), 0 4px 12px oklch(0% 0 0 / 0.12), 0 8px 24px oklch(0% 0 0 / 0.08)",
+    level3Dark:
+      "0 4px 8px oklch(0% 0 0 / 0.20), 0 8px 24px oklch(0% 0 0 / 0.15), 0 16px 48px oklch(0% 0 0 / 0.10), 0 32px 64px oklch(0% 0 0 / 0.06)",
+    solverGlowDark: "0 2px 8px oklch(65% 0.18 146 / 0.20)",
+  },
 
-### Shadow Vocabulary
+  // ============================================================
+  // MOTION — HIG-aligned with Lumni personality
+  // ============================================================
+  motion: {
+    duration: {
+      instant: "0ms", // HIG: Immediate feedback
+      fast: "150ms", // HIG: State changes
+      normal: "250ms", // HIG: Standard transitions
+      slow: "300ms", // Lumni: Overlays, modals
+      slower: "350ms", // HIG: Complex transitions
+      max: "500ms", // HIG: Absolute maximum (waiting room rule)
+    },
+    easing: {
+      // Lumni primary: Fast deceleration, physical feel
+      default: "cubic-bezier(0.16, 1, 0.3, 1)",
+      // Lumni secondary: Fast-arrival overshoot (card entrances)
+      overshoot: "cubic-bezier(0.175, 0.885, 0.32, 1.1)",
+      // HIG standards
+      decelerate: "cubic-bezier(0.0, 0.0, 0.2, 1)",
+      accelerate: "cubic-bezier(0.4, 0.0, 1, 1)",
+      // Prohibited: spring with bounce > 0
+    },
+  },
 
-- **Level 1** (`0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02)`): The resting float. List groups, small cards. Barely visible, by design.
-- **Level 2** (`0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02)`): Popovers, dropdowns, elevated cards. Present enough to separate, soft enough to not cast hard edges.
-- **Level 3** (4-layer float up to `0 32px 64px oklch(0% 0 0 / 0.015)`): Modals, sheets, dialogs. The most elevated thing in the room.
-- **Solver Glow** (`0 2px 8px oklch(52% 0.18 146 / 0.15)`): The only colored shadow. A green-tinted halo around the Solve button. It glows because it matters.
+  // ============================================================
+  // Z-INDEX HIERARCHY — HIG-aligned layering
+  // ============================================================
+  zIndex: {
+    background: -1, // Background layers
+    content: 0, // Main content
+    elevated: 10, // Cards, elevated surfaces
+    sticky: 100, // Sticky headers
+    header: 200, // Navigation bars
+    drawer: 300, // Side drawers
+    cookieBanner: 400, // Cookie consent
+    modal: 500, // Modal sheets
+    overlay: 600, // Backdrops, overlays
+    toast: 700, // Toast notifications
+    skipLink: 999, // Accessibility skip link
+    easterEgg: 1000, // Easter egg overlays (non-blocking)
+  },
 
-### Dark Mode Shadows
+  // ============================================================
+  // GLASS MATERIALS — Transient surfaces only (HIG Liquid Glass)
+  // ============================================================
+  glass: {
+    ultraThin: { blur: "10px", opacity: "0.30" },
+    thin: { blur: "20px", opacity: "0.60" },
+    regular: { blur: "24px", opacity: "0.80" }, // HIG: Navigation bars, sheets
+    thick: { blur: "40px", opacity: "0.92" }, // HIG: Modal overlays, dialogs
+    card: { blur: "20px", opacity: "0.12" }, // Lumni: Transient cards
+    cardStrong: { blur: "30px", opacity: "0.20" }, // Lumni: Elevated transient
+  },
+};
+```
 
-Shadows darken against the dark background: Level 1 uses 15% / 8% opacity, Level 2 uses 18% / 12% / 8%, Level 3 uses 20% / 15% / 10% / 6%. The Solver Glow uses `oklch(65% 0.18 146 / 0.2)`.
+### 3.2 CSS Custom Properties (Root Variables)
 
-### Named Rules
+```css
+:root {
+  /* ============================================================
+     PRIMARY COLORS — Study Green
+     ============================================================ */
+  --color-study-green: oklch(52% 0.18 146);
+  --color-study-green-bright: oklch(65% 0.18 146);
 
-**The Ambient Float Rule.** Shadows tint foreground surfaces upward; they do not carve depth into the page. Hierarchy is established by background lightness first, shadow second. A level-3 surface is still primarily distinguished by being lighter, not by its shadow being larger.
+  /* ============================================================
+     WARM PAPER NEUTRALS (Light Mode)
+     ============================================================ */
+  --color-warm-paper: oklch(100% 0 0);
+  --color-warm-paper-secondary: oklch(97% 0.003 60);
+  --color-warm-paper-tertiary: oklch(95% 0.005 60);
+  --color-warm-paper-elevated: oklch(100% 0 0);
+  --color-warm-paper-grouped: oklch(98.8% 0.003 60);
 
-## 5. Components
+  /* ============================================================
+     SURFACES
+     ============================================================ */
+  --color-surface: oklch(100% 0 0);
+  --color-surface-secondary: oklch(97.8% 0.005 60);
 
-### Buttons
+  /* ============================================================
+     TEXT (Ink) — HIG Semantic Mappings
+     ============================================================ */
+  --color-ink: oklch(20% 0.02 264); /* HIG: label */
+  --color-ink-muted: oklch(20% 0.02 264 / 0.65); /* HIG: secondaryLabel */
+  --color-ink-faint: oklch(20% 0.02 264 / 0.35); /* HIG: tertiaryLabel */
+  --color-ink-quaternary: oklch(20% 0.02 264 / 0.18); /* HIG: quaternaryLabel */
 
-Buttons answer when you touch them. Every variant scales down on press (`scale-[0.96]`) like a physical button giving under your finger. The 44px touch target means thumbs on a crowded bus stop do not miss.
+  /* ============================================================
+     STRUCTURAL
+     ============================================================ */
+  --color-separator: oklch(0% 0 0 / 0.06);
+  --color-opaque-separator: #c6c6c8;
 
-- **Shape:** 12px radius by default.
-- **Default:** Study Green background, white text, 16px horizontal padding, 44px height. Hover at 80% opacity. Focus-visible shows a 2px Study Green ring at 30% opacity.
-- **Secondary:** Surface Secondary background, Ink text. Hover at 80% intensity.
-- **Outline:** Transparent with Separator border. Hover fills with Separator color. Active state uses `aria-expanded:bg-muted`.
-- **Ghost:** Transparent. Hover shows Warm Paper Secondary background.
-- **Destructive:** Destructive red background, white text. Light mode uses a 10% tint variant with Destructive text; hover at 20% tint.
-- **Link:** Text-only, underlined on hover. Study Green text.
-- **Sizes:** default (44px h), sm (36px h), lg (48px h), xs (20px h), icon (44x44px with `after:-inset-2` touch target extension).
-- **Motion:** `transition-[scale,background-color,box-shadow,color]` for GPU-friendly state changes. Active press scales to 0.96 and translates down 1px.
+  /* ============================================================
+     SEMANTIC
+     ============================================================ */
+  --color-destructive: oklch(55% 0.18 25);
+  --color-success: oklch(65% 0.2 145);
+  --color-warning: oklch(75% 0.15 70);
+  --color-info: oklch(60% 0.15 240);
 
-### Cards
+  /* ============================================================
+     CHART COLORS
+     ============================================================ */
+  --color-chart-emerald: oklch(52% 0.18 146);
+  --color-chart-green: oklch(65% 0.2 145);
+  --color-chart-amber: oklch(75% 0.15 70);
+  --color-chart-blue: oklch(60% 0.15 240);
+  --color-chart-red: oklch(55% 0.18 25);
 
-Cards have corners so generous (20px standard, 40px at the shell) they feel safe to rest on. A near-invisible Separator border and level-1 shadow do the quiet work of containment.
+  /* ============================================================
+     HIG SYSTEM COLORS (Reference)
+     ============================================================ */
+  --color-system-red: #ff3b30;
+  --color-system-orange: #ff9500;
+  --color-system-yellow: #ffcc00;
+  --color-system-green: #34c759;
+  --color-system-teal: #5ac8fa;
+  --color-system-blue: #007aff;
+  --color-system-indigo: #5856d6;
+  --color-system-purple: #af52de;
+  --color-system-pink: #ff2d55;
+  --color-system-brown: #a2845e;
+  --color-system-gray: #8e8e93;
+  --color-system-gray2: #aeaeb2;
+  --color-system-gray3: #c7c7cc;
+  --color-system-gray4: #d1d1d6;
+  --color-system-gray5: #e5e5ea;
+  --color-system-gray6: #f2f2f7;
 
-- **Corner Style:** `rounded-card-lg` (40px) at the outermost wrapper. `rounded-lg` (20px) for standard cards.
-- **Background:** `--system-surface` (white in light mode).
-- **Border:** 1px `--system-separator` at 80% opacity.
-- **Shadow:** `shadow-level-2`. Never hardcode shadow values.
-- **Internal Padding:** 16px horizontal (`px-4`), 16px vertical (`py-4`). Reduced to 12px in `data-[size=sm]`.
-- **States:** None at rest. Cards are containers, not interactive targets.
-- **Sub-components:** CardHeader (title + action row), CardTitle (font-medium, Geist, 14px), CardDescription (Ink Muted, 12px), CardContent (px-4), CardFooter (border-t separator, flex).
+  /* ============================================================
+     TYPOGRAPHY — HIG Dynamic Type Scale with Lumni Voice
+     ============================================================ */
+  --font-display:
+    var(--font-heading), Outfit, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "SF Pro", sans-serif;
+  --font-body:
+    var(--font-sans), Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro",
+    sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", "SF Mono", "SFMono-Regular", "Fira Code", monospace;
 
-### List Groups
+  /* HIG Large Title (34pt) — Lumni Display */
+  --font-large-title: 800 34px/1.2 var(--font-display);
+  /* HIG Title 1 (28pt) — Lumni Headline */
+  --font-title-1: 800 28px/1.22 var(--font-display);
+  /* HIG Title 2 (22pt) — Lumni Title */
+  --font-title-2: 800 22px/1.27 var(--font-display);
+  /* HIG Title 3 (20pt) — Lumni Title 3 */
+  --font-title-3: 600 20px/1.25 var(--font-display);
+  /* HIG Headline (17pt semibold) — Lumni Headline */
+  --font-headline: 600 17px/1.3 var(--font-body);
+  /* HIG Body (17pt) — Lumni Body */
+  --font-body: 400 17px/1.5 var(--font-body);
+  /* HIG Callout (16pt) — Lumni Callout */
+  --font-callout: 400 16px/1.4 var(--font-body);
+  /* HIG Subhead (15pt) — Lumni Subhead */
+  --font-subhead: 400 15px/1.4 var(--font-body);
+  /* HIG Footnote (13pt) — Lumni Footnote */
+  --font-footnote: 400 13px/1.4 var(--font-body);
+  /* HIG Caption 1 (12pt) — Lumni Caption 1 */
+  --font-caption-1: 400 12px/1.3 var(--font-body);
+  /* HIG Caption 2 (11pt) — Lumni Caption 2 */
+  --font-caption-2: 400 11px/1.2 var(--font-body);
 
-Where cards contain, list groups navigate. Rounded containers (24px) with sections, each cell a full-width touch target.
+  /* Dynamic Type Scale Factor */
+  --text-scale: 1;
 
-- **ListGroup:** `rounded-xl` container with Separator border and level-1 shadow.
-- **ListCell:** 56px minimum height, 20px horizontal padding, full-width touch target. Interactive cells highlight on hover and scale down on press.
-- **Section Header:** Footnote-size (13px) in Ink Faint, uppercase with wide tracking.
-- **Section Footer:** Caption 1-size (12px) in Ink Faint.
+  /* ============================================================
+     SPACING
+     ============================================================ */
+  --spacing-1: 2px;
+  --spacing-2: 4px;
+  --spacing-3: 6px;
+  --spacing-4: 8px;
+  --spacing-5: 10px;
+  --spacing-6: 12px;
+  --spacing-8: 16px;
+  --spacing-10: 20px;
+  --spacing-11: 22px;
+  --spacing-12: 24px;
+  --spacing-16: 32px;
+  --spacing-20: 40px;
+  --spacing-24: 48px;
+  --spacing-32: 64px;
+  --spacing-40: 80px;
+  --spacing-44: 88px;
 
-### Inputs / Fields
+  /* ============================================================
+     TOUCH TARGETS
+     ============================================================ */
+  --touch-min: 28px;
+  --touch-default: 44px;
+  --touch-padding: 12px;
+  --touch-padding-no-bezel: 24px;
 
-Inputs borrow the same rounded language as buttons (12px). A subtle fill replaces the hard bordered rectangle.
+  /* ============================================================
+     BORDER RADIUS
+     ============================================================ */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+  --radius-4xl: 40px;
+  --radius-full: 9999px;
 
-- **Style:** Warm Paper Secondary background, Separator border, 12px radius, 28px height (line-height controlled).
-- **Focus:** Border shifts to Study Green, 2px Study Green ring at 30% opacity.
-- **States:** Disabled at 50% opacity. Error shows Destructive border and ring.
-- **Touch Target:** Minimum 44px height for all interactive controls via `--touch-target-min`.
-- **Textarea:** Same base style, `field-sizing-content` for auto-height, 16px minimum height, `resize-none`.
+  /* ============================================================
+     SHADOWS
+     ============================================================ */
+  --shadow-level-1: 0 1px 2px oklch(0% 0 0 / 0.04), 0 1px 4px oklch(0% 0 0 / 0.02);
+  --shadow-level-2:
+    0 2px 4px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.03), 0 8px 24px oklch(0% 0 0 / 0.02);
+  --shadow-level-3:
+    0 4px 8px oklch(0% 0 0 / 0.05), 0 8px 24px oklch(0% 0 0 / 0.04),
+    0 16px 48px oklch(0% 0 0 / 0.03), 0 32px 64px oklch(0% 0 0 / 0.015);
+  --shadow-solver-glow: 0 2px 8px oklch(52% 0.18 146 / 0.15);
 
-### TabSwitcher / Segmented Control
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-normal: 250ms;
+  --motion-duration-slow: 300ms;
+  --motion-duration-slower: 350ms;
+  --motion-duration-max: 500ms;
+
+  --motion-easing-default: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-easing-overshoot: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --motion-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ============================================================
+     Z-INDEX
+     ============================================================ */
+  --z-background: -1;
+  --z-content: 0;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-drawer: 300;
+  --z-cookie-banner: 400;
+  --z-modal: 500;
+  --z-overlay: 600;
+  --z-toast: 700;
+  --z-skip-link: 999;
+  --z-easter-egg: 1000;
+
+  /* ============================================================
+     GLASS MATERIALS
+     ============================================================ */
+  --glass-ultra-thin: blur(10px) saturate(180%);
+  --glass-thin: blur(20px) saturate(180%);
+  --glass-regular: blur(24px) saturate(180%);
+  --glass-thick: blur(40px) saturate(180%);
+  --glass-card: blur(20px) saturate(120%);
+  --glass-card-strong: blur(30px) saturate(120%);
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Surfaces */
+    --color-warm-paper: oklch(10% 0.01 264);
+    --color-warm-paper-secondary: oklch(16% 0.015 264);
+    --color-warm-paper-tertiary: oklch(20% 0.02 264);
+    --color-warm-paper-elevated: oklch(20% 0.02 264);
+    --color-warm-paper-grouped: oklch(10% 0.01 264);
+
+    --color-surface: oklch(16% 0.015 264);
+    --color-surface-secondary: oklch(20% 0.02 264);
+
+    /* Dark Mode Text — HIG Elevated */
+    --color-ink: oklch(95% 0.01 264); /* HIG: label (dark) */
+    --color-ink-muted: oklch(95% 0.01 264 / 0.65); /* HIG: secondaryLabel (dark) */
+    --color-ink-faint: oklch(95% 0.01 264 / 0.35); /* HIG: tertiaryLabel (dark) */
+    --color-ink-quaternary: oklch(95% 0.01 264 / 0.18); /* HIG: quaternaryLabel (dark) */
+
+    /* Dark Mode Structural */
+    --color-separator: oklch(100% 0 0 / 0.12);
+    --color-opaque-separator: #38383a;
+
+    /* Dark Mode System Colors */
+    --color-system-red: #ff453a;
+    --color-system-orange: #ff9f0a;
+    --color-system-yellow: #ffd60a;
+    --color-system-green: #32d74b;
+    --color-system-teal: #64d2ff;
+    --color-system-blue: #0a84ff;
+    --color-system-indigo: #5e5ce6;
+    --color-system-purple: #bf5af2;
+    --color-system-pink: #ff375f;
+    --color-system-brown: #ac8e68;
+    --color-system-gray: #8e8e93;
+    --color-system-gray2: #636366;
+    --color-system-gray3: #48484a;
+    --color-system-gray4: #3a3a3c;
+    --color-system-gray5: #2c2c2e;
+    --color-system-gray6: #1c1c1e;
+
+    /* Dark Mode Shadows */
+    --shadow-level-1: 0 1px 2px oklch(0% 0 0 / 0.15), 0 1px 4px oklch(0% 0 0 / 0.08);
+    --shadow-level-2:
+      0 2px 4px oklch(0% 0 0 / 0.18), 0 4px 12px oklch(0% 0 0 / 0.12),
+      0 8px 24px oklch(0% 0 0 / 0.08);
+    --shadow-level-3:
+      0 4px 8px oklch(0% 0 0 / 0.2), 0 8px 24px oklch(0% 0 0 / 0.15),
+      0 16px 48px oklch(0% 0 0 / 0.1), 0 32px 64px oklch(0% 0 0 / 0.06);
+    --shadow-solver-glow: 0 2px 8px oklch(65% 0.18 146 / 0.2);
+  }
+}
+
+/* ============================================================
+   INCREASED CONTRAST (HIG Accessibility)
+   ============================================================ */
+@media (prefers-contrast: more) {
+  :root {
+    --color-ink-muted: oklch(20% 0.02 264 / 0.78);
+    --color-ink-faint: oklch(20% 0.02 264 / 0.55);
+    --color-separator: oklch(0% 0 0 / 0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-ink-muted: oklch(95% 0.01 264 / 0.78);
+      --color-ink-faint: oklch(95% 0.01 264 / 0.55);
+      --color-separator: oklch(100% 0 0 / 0.2);
+    }
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION (HIG Accessibility)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+buttons (12px). A subtle fill replaces the hard bordered rectangle.
+
+#### Input Specifications
+
+- **Style**: Warm Paper Secondary background, Separator border, 12px radius, 28px height (line-height controlled).
+- **Focus**: Border shifts to Study Green, 2px Study Green ring at 30% opacity.
+- **States**: Disabled at 50% opacity. Error shows Destructive border and ring.
+- **Touch Target**: Minimum 44px height for all interactive controls via `--touch-target-min`.
+- **Textarea**: Same base style, `field-sizing-content` for auto-height, 16px minimum height, `resize-none`.
+
+### 9.5 TabSwitcher / Segmented Control
 
 Two variants, one behavior: spring-animated indicator follows your tap.
 
-- **Tabs variant:** Warm Paper Secondary background tray (12px radius, 4px padding). Study Green pill indicator, white text on active, Ink Muted on inactive.
-- **Segmented variant:** Surface Secondary tray (6px radius, 3px padding). Surface pill indicator with level-1 shadow, Study Green text on active, Ink Muted on inactive.
-- **Motion:** Spring animation via Base UI's built-in animated indicator.
+#### Tabs Variant
 
-### Navigation Bar
+- Warm Paper Secondary background tray (12px radius, 4px padding).
+- Study Green pill indicator, white text on active, Ink Muted on inactive.
 
-A bar that knows when you are at the top of the page and when you are deep in content.
+#### Segmented Variant
 
-- **Background:** `--system-background / 80%` with 24px backdrop blur. During scroll collapse, `--system-background / 90%` with subtle bottom separator.
-- **Height:** 48px (h-12).
-- **Title:** 34px Outfit 800 at top of page, shrinks to 16px on scroll.
-- **Back Button:** 36x36px ghost icon button, Study Green tint.
+- Surface Secondary tray (6px radius, 3px padding).
+- Surface pill indicator with level-1 shadow, Study Green text on active, Ink Muted on inactive.
 
-### Bottom Navigation
+#### Motion
 
-The primary mobile navigation, always present during app use.
+Spring animation via Base UI's built-in animated indicator. Never use `type: "spring"` with non-zero `bounce`.
 
-- **Bar:** Fixed to bottom, 64px + safe area height. Glass-regular background (80% opacity, 24px blur). Level-2 shadow with subtle Separator ring.
-- **Tabs:** Rounded-full tab bar with Study Green tint (`--system-accent-alpha-10` before pseudo-element). Active icon: Study Green with scale(1.1). Inactive: muted foreground.
-- **Tools FAB:** 44px circular button, blue (`#007AFF` light / `#0A84FF` dark), level-3 shadow.
+### 9.6 Sheets (HIG)
 
-### Sidebar (Desktop)
+**Purpose**: Present a modal task, options, or in-depth content.
 
-The full navigation surface for large screens.
+#### Sheet Types (HIG)
 
-- **Width:** 240px (w-60).
-- **Background:** Warm Paper Grouped / dark sidebar background.
-- **Separator:** Right border, Separator at 50% opacity.
-- **Search:** 36px height (h-9), 12px radius, System Fill background, Separator border. Focus: Study Green border and ring.
-- **Items:** 16px horizontal padding. Active: Study Green at 10% opacity background, Study Green text, font-semibold. Inactive: muted foreground, hover fills with System Fill.
+| Type            | Height | Use Case                             |
+| --------------- | ------ | ------------------------------------ |
+| **Fixed**       | 50%    | Simple tasks, confirmation           |
+| **Medium**      | ~60%   | Standard modal tasks                 |
+| **Large**       | ~85%   | Complex tasks, forms                 |
+| **Full-screen** | 100%   | Immersive experiences, exam sessions |
 
-### Chips / Badges
+#### Sheet Rules (HIG)
+
+1. **Always provide dismiss gesture** — swipe down or Done button.
+2. **Confirm data loss** before dismissing if user-generated content exists.
+3. **Avoid stacking sheets** — dismiss current before presenting new.
+4. **Title the sheet's task** — help users keep their place.
+5. **Keep modal tasks simple** — avoid "app within an app" hierarchy.
+
+#### Lumni Sheet
+
+```tsx
+<Sheet height="large" title="Exam Settings" dismissGesture onDismiss={handleDismiss}>
+  <SheetContent>{/* settings form */}</SheetContent>
+</Sheet>
+```
+
+### 9.7 Alerts (HIG)
+
+**Purpose**: Deliver critical information requiring user action.
+
+#### Alert Anatomy
+
+- Title (required, max 2 lines)
+- Message (optional, brief)
+- Text field (optional, for input)
+- Buttons (1-3, max)
+
+#### Alert Rules (HIG)
+
+1. **Use sparingly** — interrupts current study session.
+2. **Never use for informational-only** — find non-intrusive alternatives.
+3. **Never alert on startup** — make info discoverable instead.
+4. **Don't alert for common undoable actions** — e.g., skipping a practice question.
+5. **Button titles**: Specific verbs ("Erase", "Convert"), not "OK" (unless purely informational).
+6. **Button placement**:
+   - Primary action: trailing side (row) or top (stack)
+   - Cancel: leading side (row) or bottom (stack)
+   - Destructive: trailing, styled red
+7. **Never make Cancel the default button** — use Done for single-button alerts.
+
+### 9.8 Search Fields (HIG)
+
+- **Placement**: Navigation bar (trailing) or as dedicated tab.
+- **Style**: Rounded rectangle with magnifying glass icon.
+- **Behavior**:
+  - Show scope bar below for filtering categories (Mathematics, Physical Sciences, etc.).
+  - Provide search suggestions as user types.
+  - Include clear button when text exists.
+  - Cancel button when active.
+
+### 9.9 Progress Indicators (HIG)
+
+| Type                             | Use Case              | Duration |
+| -------------------------------- | --------------------- | -------- |
+| **Activity Indicator** (spinner) | Indeterminate loading | Unknown  |
+| **Progress Bar**                 | Determinate loading   | Known    |
+| **Progress View** (circular)     | Determinate, compact  | Known    |
+
+#### Rules (HIG)
+
+1. **Use activity indicator** when duration is unknown.
+2. **Use progress bar** when duration is known (0-100%).
+3. **Always show progress** for operations > 1 second.
+4. **Consider skeleton screens** instead of spinners for content loading — improves perceived performance.
+
+#### Lumni Progress Patterns
+
+- **Segmented progress bar**: Animated segments with numeric counter (e.g., "3/10"). Each segment pulses on completion.
+- **Skeleton shapes**: Show ghost layout while content loads. A spinner says "wait." A skeleton says "something is coming."
+
+### 9.10 Segmented Controls (HIG)
+
+- **Use**: Switch between related views or content categories (e.g., "All Topics", "Weak Areas", "Mastered").
+- **Placement**: Navigation bar (top level only) or content area.
+- **Maximum segments**: 5
+- **Style**: Equal width, single-line labels.
+
+### 9.11 Chips / Badges
 
 Small, fast, expressive. 20px tall with 8px radius.
 
-- **Default:** Study Green background, white text.
-- **Secondary:** Surface Secondary background, Ink text.
-- **Destructive:** Destructive at 10% tint, Destructive text.
-- **Outline:** Separator border, foreground text.
-- **Ghost:** Transparent, hover fills. Muted text.
-- **Difficulty Chips:** Success tint for Easy, Warning tint for Medium, Destructive tint for Hard.
+| Variant                | Background              | Text        | Usage                |
+| ---------------------- | ----------------------- | ----------- | -------------------- |
+| **Default**            | Study Green             | White       | Primary status       |
+| **Secondary**          | Surface Secondary       | Ink         | Neutral status       |
+| **Destructive**        | Destructive at 10% tint | Destructive | Error state          |
+| **Outline**            | Transparent             | Ink         | Neutral, border only |
+| **Ghost**              | Transparent             | Muted       | Subtle status        |
+| **Difficulty: Easy**   | Success tint            | Success     | Easy questions       |
+| **Difficulty: Medium** | Warning tint            | Warning     | Medium questions     |
+| **Difficulty: Hard**   | Destructive tint        | Destructive | Hard questions       |
 
-### Dropdown Menu
+### 9.12 Dropdown Menu
 
-- **Content:** 12px radius, 4px padding. Surface background. Level-2 shadow with 1px Separator ring (fixes dark mode visibility). Fade-in + zoom-in animation on open.
-- **Item:** 28px min height, 8px radius, 8px horizontal padding. Hover/focus: Accent background with Accent Foreground text.
-- **Separator:** 1px Separator at 50% opacity.
+- **Content**: 12px radius, 4px padding. Surface background. Level-2 shadow with 1px Separator ring (fixes dark mode visibility). Fade-in + zoom-in animation on open.
+- **Item**: 28px min height, 8px radius, 8px horizontal padding. Hover/focus: Accent background with Accent Foreground text.
+- **Separator**: 1px Separator at 50% opacity.
 
-### Switch
+### 9.13 Switch
 
-- **Track:** 28x17px (default) or 24x14px (sm). Rounded-full, muted background by default. Checked: Study Green background.
-- **Thumb:** Circular, white. Checked translates to fill the track.
-- **Touch Target:** `after:-inset-x-3 after:-inset-y-2` for 44pt compliance.
+- **Track**: 28×17px (default) or 24×14px (sm). Rounded-full, muted background by default. Checked: Study Green background.
+- **Thumb**: Circular, white. Checked translates to fill the track.
+- **Touch Target**: `after:-inset-x-3 after:-inset-y-2` for 44pt compliance.
 
-### Checkbox
+### 9.14 Checkbox
 
-- **Box:** 16x16px, 4px radius, Separator border. Checked: Study Green background with white checkmark icon.
-- **Touch Target:** `after:-inset-x-3 after:-inset-y-2`.
+- **Box**: 16×16px, 4px radius, Separator border. Checked: Study Green background with white checkmark icon.
+- **Touch Target**: `after:-inset-x-3 after:-inset-y-2`.
 
-### PageContainer
+### 9.15 Bottom Navigation (Lumni Mobile)
 
-- **Default:** `mx-auto w-full max-w-3xl px-4 sm:px-6 lg:max-w-4xl xl:max-w-6xl`.
-- **Wide:** `max-w-6xl xl:max-w-7xl` (home feed, admin dashboards).
-- No page-level `max-w-*` or `px-*` outside PageContainer.
+The primary mobile navigation, always present during app use.
 
-## 6. Motion
+- **Bar**: Fixed to bottom, 64px + safe area height. Liquid Glass background (80% opacity, 24px blur). Level-2 shadow with subtle Separator ring.
+- **Tabs**: Rounded-full tab bar with Study Green tint. Active icon: Study Green with scale(1.1). Inactive: muted foreground.
+- **Tools FAB**: 44px circular button, blue (`#007AFF` light / `#0A84FF` dark), level-3 shadow.
+
+---
+
+## 10. Content Presentation
+
+### 10.1 Empty States
+
+Every empty view must include:
+
+1. **Icon or illustration** — visually communicates the empty state.
+2. **Title** — explains what's empty (e.g., "No Practice Sessions Yet").
+3. **Description** — provides context (optional but recommended).
+4. **Action button** — clear next step (e.g., "Start Practicing").
+
+### 10.2 Error States
+
+1. **Explain what happened** — be specific, not generic. "Could not load Mathematics questions" not "Error occurred."
+2. **Explain what to do next** — provide recovery path. "Check your connection and try again."
+3. **Use non-intrusive indicators** when possible — inline labels, banners, not alerts.
+4. **Never show error codes alone** — always translate to human language.
+
+### 10.3 Loading States
+
+1. **Show immediately** — no delay before indicating activity.
+2. **Use skeleton screens** for content areas — show ghost layout of incoming content.
+3. **Prevent interaction** during loading only when necessary.
+4. **Provide cancel option** for long operations.
+
+### 10.4 Onboarding (HIG)
+
+1. **Delay until first use** — don't block launch.
+2. **Keep it brief** — 3-5 screens maximum.
+3. **Show value, not features** — "Master your exams" not "We have flashcards."
+4. **Allow skip** — always provide skip option.
+5. **Use progressive onboarding** — teach in context, not all at once.
+6. **Never require account creation** before showing value.
+
+### 10.5 Exam Question Presentation
+
+- **Full-screen mode**: Hide all navigation chrome. Tap to restore.
+- **Question text**: Body style (17pt), max 65ch line length.
+- **Answer options**: List cells, 56px minimum height, full-width touch targets.
+- **Feedback**: Immediate visual + haptic on answer selection.
+- **Progress indicator**: Segmented bar at top, numeric counter.
+
+---
+
+## 11. User Interaction & Gestures
+
+### 11.1 Gestures (HIG)
+
+| Gesture                | Action                                | Priority       | Lumni Application                 |
+| ---------------------- | ------------------------------------- | -------------- | --------------------------------- |
+| **Tap**                | Primary selection, activation         | Essential      | Select answer, navigate           |
+| **Swipe (horizontal)** | Navigate back, delete, reveal actions | Essential      | Next/prev question, dismiss sheet |
+| **Swipe (vertical)**   | Scroll                                | Essential      | Scroll content                    |
+| **Pinch**              | Zoom                                  | Contextual     | Zoom diagrams, graphs             |
+| **Long press**         | Context menu, preview                 | Secondary      | Preview question details          |
+| **Pull to refresh**    | Reload content                        | Standard       | Refresh practice sessions         |
+| **Edge swipe**         | Navigate back, open sidebar           | System         | Back from exam question           |
+| **Drag (horizontal)**  | Advance quiz questions                | Lumni-specific | Spring reset below threshold      |
+
+#### Gesture Rules (HIG)
+
+1. **Never override system gestures** — especially edge swipe for back navigation.
+2. **Provide alternatives** — every gesture must have a tap/button equivalent.
+3. **Keep gestures simple** — avoid multi-finger, multi-hand gestures.
+4. **Give immediate feedback** — every gesture must produce visible response.
+
+### 11.2 Data Entry (HIG)
+
+1. **Minimize input** — use pickers, toggles, segmented controls instead of text fields where possible.
+2. **Use appropriate keyboard** — email, number, URL, search types.
+3. **Validate inline** — show errors as user types, not on submit.
+4. **Auto-capitalize appropriately** — sentences for names, none for usernames.
+5. **Enable auto-correction** where appropriate, disable for usernames/passwords.
+6. **Use smart defaults** — pre-fill known information (grade, subjects).
+
+### 11.3 Haptics & Feedback (HIG)
+
+- **Light impact**: Small UI changes (toggle switch, selection).
+- **Medium impact**: Standard actions (button press, confirmation).
+- **Heavy impact**: Significant actions (delete, submit exam).
+- **Success**: Completion of task (correct answer, exam submitted).
+- **Error**: Failed operation (wrong answer, network error).
+- **Warning**: Caution needed (time running out, difficult question).
+
+#### Implementation
+
+```typescript
+// Haptic feedback utility — HIG-aligned
+const haptics = {
+  light: () => navigator.vibrate?.(10),
+  medium: () => navigator.vibrate?.(20),
+  heavy: () => navigator.vibrate?.(30),
+  success: () => navigator.vibrate?.([10, 50, 10]),
+  error: () => navigator.vibrate?.([50, 100, 50]),
+  warning: () => navigator.vibrate?.([20, 100, 20]),
+};
+```
+
+---
+
+## 12. Motion & Animation
 
 Motion exists only to clarify a change — never for decoration.
 
@@ -434,22 +901,24 @@ Most interactions should feel instant. A duration of `0ms` with no transition at
 
 When motion genuinely helps — revealing an element, moving something to a new position, indicating arrival or departure — keep it short and physical:
 
-| Context             | Duration | Easing                                  |
-| ------------------- | -------- | --------------------------------------- |
-| State changes       | 150ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
-| Popovers / tooltips | 200ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
-| Overlays / modals   | 300ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` |
+| Context             | Duration | Easing                                  | Notes                                           |
+| ------------------- | -------- | --------------------------------------- | ----------------------------------------------- |
+| State changes       | 150ms    | `cubic-bezier(0.16, 1, 0.3, 1)`         | HIG fast. Button presses, toggles.              |
+| Popovers / tooltips | 200ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` | Lumni overshoot. Slight physical feel.          |
+| Overlays / modals   | 300ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` | Lumni overshoot. Sheet presentations.           |
+| Card entrances      | 400ms    | `cubic-bezier(0.175, 0.885, 0.32, 1.1)` | Staggered at 60ms. Total under 500ms.           |
+| Page headings       | 300ms    | `cubic-bezier(0.16, 1, 0.3, 1)`         | Fade-in + translate up 12px.                    |
+| Ambient gradients   | 20s      | `linear`                                | CSS `@keyframes float-drift`. Slow, continuous. |
 
-The easing is a fast-arrival overshoot curve — it accelerates quickly, overshoots by a tiny fraction, then settles. It reads as physical without being bouncy.
-
-### Prohibited
+### 12.1 Prohibited Motion Patterns
 
 - **No long animations**: Nothing above 500ms except deliberate, user-triggered celebrations (confetti, level-up). An animation longer than 500ms is a waiting room.
 - **No looping**: `repeat: Infinity` on motion elements is decorative motion. Remove it. Loading indicators use CSS `animation`, not motion primitives.
 - **No spring overshoots**: `type: "spring"` with non-zero `bounce` is prohibited. If you use a spring, `bounce: 0`.
-- **No staggered entrances** on page load. Elements arrive when they arrive. Staggering says "watch me appear" instead of "here is the content."
+- **No staggered entrances on page load**. Elements arrive when they arrive. Staggering says "watch me appear" instead of "here is the content."
+- **No elastic easings**: Bouncy buttons, rubber-band effects — prohibited.
 
-### `prefers-reduced-motion`
+### 12.2 `prefers-reduced-motion` (HIG Accessibility)
 
 Every motion-enabled component must wrap non-essential animations with `useReducedMotion()` from `motion/react`. Essential animations (progress feedback, loading skeletons) may remain. Drop the rest.
 
@@ -460,11 +929,11 @@ const shouldReduce = useReducedMotion();
 const transition = shouldReduce ? { duration: 0 } : { duration: 0.15, ease: motionEase };
 ```
 
-### CSS transitions vs. motion primitives
+### 12.3 CSS transitions vs. motion primitives
 
 Prefer CSS `transition` for simple property changes: `transition-[background-color,transform] duration-150`. Reserve motion primitives (`m.div`, `AnimatePresence`) for layout animations, enter/exit sequences, and drag gestures.
 
-### Named Rules
+### 12.4 Named Motion Rules
 
 **The Waiting Room Rule.** Any animation over 500ms makes the user wait. Content that arrives in stages does not feel premium — it feels slow.
 
@@ -472,30 +941,156 @@ Prefer CSS `transition` for simple property changes: `transition-[background-col
 
 **The Clarify-Not-Decorate Rule.** If removing the animation makes the interface harder to understand, keep it. If removing it makes no difference, remove it.
 
-## 7. 2026 Design Language — Ambient, Motion, & Easter Eggs
+---
+
+## 13. Feedback & Status
+
+### 13.1 Immediate Feedback (HIG)
+
+Every user action must produce immediate, honest response:
+
+1. **Visual**: State change, animation, color shift.
+2. **Haptic**: Vibration matching action significance.
+3. **Audio**: Sound cues for important actions (optional, respect silent mode).
+
+### 13.2 State Changes
+
+| State           | Visual Indicator                      |
+| --------------- | ------------------------------------- |
+| Default         | Normal appearance                     |
+| Pressed         | Scale 0.96, opacity 0.8               |
+| Active/Selected | Study Green tint, filled icon         |
+| Disabled        | Opacity 0.4, no interaction           |
+| Loading         | Activity indicator replaces content   |
+| Error           | Destructive tint, error icon, message |
+| Success         | Success tint, checkmark icon          |
+
+### 13.3 Notifications (HIG)
+
+- **Badges**: Red oval on tab bar icons. Use for critical info only (e.g., "3" on Progress tab for new results).
+- **Banners**: Non-intrusive top-of-screen alerts. Auto-dismiss after 5 seconds.
+- **Alerts**: Modal interruption. Use only for critical, time-sensitive info (e.g., "Exam time is almost up.").
+
+### 13.4 Exam-Specific Feedback
+
+- **Correct answer**: Success tint + checkmark + light haptic + brief celebration.
+- **Wrong answer**: Destructive tint + X icon + medium haptic + explanation reveal.
+- **Time warning**: Warning tint + pulse animation + warning haptic at 5 min, 1 min.
+- **Exam complete**: Success haptic + confetti (if enabled) + progress summary.
+
+---
+
+## 14. Accessibility (Integrated Throughout)
+
+Accessibility is not a separate section — it is a first-class requirement in every design decision.
+
+### 14.1 Vision
+
+#### Dynamic Type (HIG)
+
+- Support text scaling up to **200%** minimum (310% for iOS AX5).
+- Use `rem` units and `clamp()` for fluid scaling.
+- Test at largest accessibility size.
+- All text sizes multiplied by `--text-scale`.
+
+#### Color Contrast (HIG)
+
+| Text Size | Weight | Minimum | Target |
+| --------- | ------ | ------- | ------ |
+| ≤ 17pt    | All    | 4.5:1   | 7:1    |
+| ≥ 18pt    | All    | 3:1     | 4.5:1  |
+| Any       | Bold   | 3:1     | 4.5:1  |
+
+#### Color Independence (HIG)
+
+- Never use color alone to convey meaning.
+- Always pair with: icons, text labels, patterns, shapes.
+- Example: Wrong answer shows red X + "Incorrect" text, not just red color.
+
+### 14.2 VoiceOver / Screen Reader (HIG)
+
+- **Every interactive element** must have a descriptive `aria-label`.
+- **Bad**: "Button" | **Good**: "Submit Mathematics exam, 10 questions remaining"
+- **Reading order**: Must match visual order (top-to-bottom, leading-to-trailing).
+- **Headings**: Mark all headings with appropriate `aria-level`.
+- **Landmarks**: Use `<nav>`, `<main>`, `<aside>`, `<footer>` for structure.
+- **Exam questions**: Each question must be announced as a group with its options.
+
+### 14.3 Motor (HIG)
+
+- **Touch targets**: Minimum 44×44pt (28×28pt absolute minimum).
+- **Spacing**: 12pt between bezeled elements, 24pt between non-bezel.
+- **Gesture alternatives**: Every swipe must have a button equivalent.
+- **Full keyboard access**: All functionality accessible via Tab/Enter/Space/Escape.
+- **Exam navigation**: Arrow keys must navigate between questions, Enter to select answer.
+
+### 14.4 Cognitive (HIG)
+
+- **Keep actions simple and intuitive** — use familiar system patterns.
+- **Minimize time-boxed elements** — avoid auto-dismiss without explicit action.
+- **Avoid autoplay** — provide controls for all audio/video.
+- **Reduce motion**: Respect `prefers-reduced-motion`.
+- **Exam timer**: Must be pausable, must not auto-submit without warning.
+
+### 14.5 Accessibility Checklist
+
+```markdown
+- [ ] Dynamic Type: Text scales to 200%+
+- [ ] Contrast: All text meets 4.5:1 minimum
+- [ ] Touch targets: All interactive elements ≥ 44×44pt
+- [ ] VoiceOver labels: All interactive elements labeled
+- [ ] Reading order: Logical top-to-bottom, left-to-right
+- [ ] Color independence: No color-only state communication
+- [ ] Keyboard: Full navigation and activation possible
+- [ ] Reduced motion: Animations respect user preference
+- [ ] Focus indicators: Visible focus rings on all interactive elements
+- [ ] Exam questions: Screen reader announces question + options as group
+- [ ] Timer: Pausable, audible warning before auto-submit
+```
+
+---
+
+## 15. Platform Adaptations
+
+### 15.1 iOS (Mobile-First)
+
+- **Navigation**: Tab bar at bottom, navigation bar at top.
+- **Touch**: Full gesture support, edge swipe for back.
+- **Layout**: Single column, full-width content.
+- **Safe areas**: Respect notch, dynamic island, home indicator.
+- **Liquid Glass**: Tab bar and navigation bar.
+- **Haptics**: Full haptic feedback on all interactions.
+
+### 15.2 iPadOS
+
+- **Navigation**: Tab bar at top (can adapt to sidebar), split view support.
+- **Touch**: Apple Pencil support, hover states.
+- **Layout**: Multi-column where appropriate, master-detail patterns.
+- **Popover**: Use for contextual actions instead of full-screen modals.
+- **Sidebar**: 240px width, Warm Paper Grouped background.
+
+### 15.3 macOS
+
+- **Navigation**: Sidebar + toolbar, no tab bar.
+- **Input**: Hover states, cursor changes, keyboard shortcuts.
+- **Layout**: Multi-column, fixed width containers, generous whitespace.
+- **Window management**: Support for multiple windows/tabs.
+- **Menu bar**: Include standard Edit, View, Window menus.
+
+### 15.4 Desktop Web (Responsive)
+
+- **Navigation**: Sidebar or top navigation, no tab bar.
+- **Input**: Hover states, keyboard navigation.
+- **Layout**: Responsive, generous whitespace.
+- **Breakpoints**: 640px, 768px, 1024px, 1366px.
+
+---
+
+## 16. 2026 Design Language — Ambient, Motion & Easter Eggs
 
 The app has been modernized with 2026 design trends while preserving the "Warm Frame" philosophy. Content still comes first, but the frame now breathes, responds, and occasionally delights.
 
-### 7.0 2026 Trend Additions
-
-The following trends were added in the July 2026 redesign:
-
-| Trend                      | Implementation                                                | Files                                                            |
-| -------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------- |
-| **Kinetic Typography**     | Letter-by-letter reveal on scroll via IntersectionObserver    | `kinetic-heading.tsx`, `globals.css` (`@keyframes letterReveal`) |
-| **Grain Texture**          | SVG noise filter overlay with CSS animation                   | `noise-overlay.tsx`, `globals.css` (`@keyframes grain`)          |
-| **Scroll-Driven Reveals**  | IntersectionObserver-based entrance animations (6 directions) | `scroll-reveal.tsx`                                              |
-| **3D Magnetic Tilt**       | CSS perspective transforms tracking mouse position            | `magnetic-card.tsx`, `globals.css` (`.tilt-card`)                |
-| **Bento Grid Layouts**     | Responsive grid with span support + 4 visual variants         | `bento-grid.tsx`                                                 |
-| **Enhanced Ambient Blobs** | 6 variants (default, subtle, quiz, auth, dashboard, study)    | `ambient-gradient.tsx`                                           |
-| **Ripple Effects**         | Expanding circle on click                                     | `globals.css` (`@keyframes ripple`, `.ripple-container`)         |
-| **Glow Borders**           | Animated gradient border via CSS mask                         | `globals.css` (`.animate-glow-border`)                           |
-| **Particle Backgrounds**   | Floating particle animation                                   | `globals.css` (`@keyframes particleFloat`)                       |
-| **Confetti**               | Falling particle celebration                                  | `globals.css` (`@keyframes confettiFall`)                        |
-| **Text Shimmer**           | Animated gradient text                                        | `globals.css` (`.animate-text-shimmer`)                          |
-| **Scan Line**              | Moving scan line overlay                                      | `globals.css` (`.scan-line`)                                     |
-
-### 7.1 Page Layout Pattern
+### 16.1 Page Layout Pattern
 
 Every app page follows a consistent shell:
 
@@ -523,11 +1118,11 @@ Every app page follows a consistent shell:
 - `<m.div>` — framer-motion fade-in entrance for headings
 - `bg-system-grouped` — iOS-style grouped background
 
-**Exceptions:** Homepage (marketing), admin pages, dev pages, immersive quiz/exam sessions intentionally differ.
+**Exceptions**: Homepage (marketing), admin pages, dev pages, immersive quiz/exam sessions intentionally differ.
 
-### 7.2 Ambient Gradients
+### 16.2 Ambient Gradients
 
-A shared `<AmbientGradient>` component at `src/components/shared/ambient-gradient.tsx` provides subtle floating radial gradients on every page. Three variants:
+A shared `<AmbientGradient>` component provides subtle floating radial gradients on every page. Three variants:
 
 - **`default`** — Two large blobs (primary at top-right, chart-4 at bottom-left) with `animate-float-drift` (20s cycle, staggered)
 - **`subtle`** — Lower opacity blobs offset differently, for pages with dense content
@@ -535,7 +1130,7 @@ A shared `<AmbientGradient>` component at `src/components/shared/ambient-gradien
 
 The blobs are `pointer-events-none`, `blur-3xl`, and use CSS `@keyframes float-drift` for the slow organic drift. Always the first child inside the outer page wrapper.
 
-### 7.3 Fade-In Entrances
+### 16.3 Fade-In Entrances
 
 Page headings fade in and translate up 12px on mount (`duration: 0.3s, ease: motionEase`). This is the primary entrance animation — it acknowledges the user has navigated without making them wait for a stagger sequence.
 
@@ -546,7 +1141,7 @@ Page headings fade in and translate up 12px on mount (`duration: 0.3s, ease: mot
 - Skipped when `prefersReducedMotion()` is active
 - Never staggered — content reveals as one unit
 
-### 7.4 Card Interactions
+### 16.4 Card Interactions
 
 Cards now have micro-interactions on hover/tap:
 
@@ -558,7 +1153,7 @@ Cards now have micro-interactions on hover/tap:
 
 Applied via `group` + `group-hover:` utilities on card containers.
 
-### 7.5 Staggered Card Grids
+### 16.5 Staggered Card Grids
 
 Card grids use framer-motion variants for staggered children:
 
@@ -586,7 +1181,7 @@ Card grids use framer-motion variants for staggered children:
 
 Each card enters with a 60ms stagger delay. Total animation finishes well under 500ms for grids up to 8 items.
 
-### 7.6 Magnetic 3D Cards (Desktop)
+### 16.6 Magnetic 3D Cards (Desktop)
 
 The problems page uses `MagneticCard` — a CSS 3D perspective transform that tracks mouse position:
 
@@ -605,7 +1200,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
 - Smooth spring reset on mouse leave
 - Subtle 8° max rotation
 
-### 7.7 High-Impact Hero
+### 16.7 High-Impact Hero
 
 The homepage hero uses a morphing blob background that responds to mouse movement:
 
@@ -616,7 +1211,7 @@ The homepage hero uses a morphing blob background that responds to mouse movemen
 - **iOS large-title:** `ios-large-title` class for 34px Outfit 800 heading
 - **Live indicator:** "No credit card. No limits." with ping dot
 
-### 7.8 Aurora Background (Chat)
+### 16.8 Aurora Background (Chat)
 
 The chat page uses an aurora-style animated background:
 
@@ -626,7 +1221,7 @@ The chat page uses an aurora-style animated background:
 - Combined with `backdrop-blur` on the header and message containers
 - Readability maintained via solid message bubbles with shadow
 
-### 7.9 Sticky Headers
+### 16.9 Sticky Headers
 
 Settings page uses a two-part sticky header:
 
@@ -636,13 +1231,13 @@ Settings page uses a two-part sticky header:
 
 The sticky save bar ensures the user never loses their changes when scrolling through long settings.
 
-### 7.10 Quiz-Specific Patterns
+### 16.10 Quiz-Specific Patterns
 
 - **Drag-to-navigate:** Active quiz questions support horizontal drag gestures to advance. Spring reset below threshold. Drag indicator with scale transform.
 - **Segmented progress bar:** Animated segments with numeric counter (e.g., "3/10"). Each segment pulses on completion.
 - **Ambient floating blobs:** Quiz-specific variant of AmbientGradient (smaller, more subdued).
 
-### 7.11 Tab Navigation
+### 16.11 Tab Navigation
 
 Two tab patterns are used:
 
@@ -651,7 +1246,7 @@ Two tab patterns are used:
 
 Both use framer-motion spring animations for the indicator under `AnimatedTabIndicator`.
 
-### 7.12 Easter Egg System
+### 16.12 Easter Egg System
 
 Centralized in `EasterEggProvider` (`src/lib/shared/easter-egg-context.tsx`). Provides 4 easter eggs:
 
@@ -670,7 +1265,7 @@ Centralized in `EasterEggProvider` (`src/lib/shared/easter-egg-context.tsx`). Pr
 - Use React Context for state, portal-style overlays for rendering
 - Auto-dismiss after 8 seconds or manual dismiss
 
-### 7.13 CSS Animation Keyframes
+### 16.13 CSS Animation Keyframes
 
 All animation keyframes are defined in `globals.css`:
 
@@ -686,6 +1281,7 @@ All animation keyframes are defined in `globals.css`:
     transform: translate(-10px, 10px);
   }
 }
+
 @keyframes aurora-drift {
   0% {
     transform: translate(0, 0) scale(1);
@@ -700,6 +1296,7 @@ All animation keyframes are defined in `globals.css`:
     transform: translate(0, 0) scale(1);
   }
 }
+
 @keyframes rainbow-shift {
   0% {
     filter: hue-rotate(0deg);
@@ -708,6 +1305,7 @@ All animation keyframes are defined in `globals.css`:
     filter: hue-rotate(360deg);
   }
 }
+
 @keyframes retro-scan {
   0% {
     background-position: 0 0;
@@ -716,6 +1314,7 @@ All animation keyframes are defined in `globals.css`:
     background-position: 0 4px;
   }
 }
+
 @keyframes pulse-glow {
   0%,
   100% {
@@ -725,18 +1324,19 @@ All animation keyframes are defined in `globals.css`:
     box-shadow: 0 0 20px oklch(52% 0.18 146 / 0.6);
   }
 }
+
 @keyframes morph-shape {
   0%,
   100% {
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
   50% {
-    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
   }
 }
 ```
 
-### 7.14 Named Rules
+### 16.14 Named 2026 Rules
 
 **The Consistent Shell Rule.** Every app page uses `bg-system-grouped` + `AmbientGradient` + `PageContainer` + fade-in heading. No page invents its own layout. The shell is the frame; the page is the art.
 
@@ -744,29 +1344,362 @@ All animation keyframes are defined in `globals.css`:
 
 **The All-Eggs-Non-Blocking Rule.** Easter eggs are overlays, not redirects. They never interrupt a study session, never change app state, and never persist. If the user refreshes, the egg is gone.
 
-## 7.15 Page Redesign Status
+---
 
-As of the July 2026 redesign batch, the page-shell update is complete: every major app route is wrapped with the new 2026 visual shell (AmbientGradient + NoiseOverlay + grouped background). No further page shell updates are required unless new routes are added later.
+## 17. Implementation Guidelines
 
-| Page        | Path                                             | Variant                       |
-| ----------- | ------------------------------------------------ | ----------------------------- |
-| Homepage    | `src/components/home/home-content.tsx`           | default + confetti easter egg |
-| Dashboard   | `src/components/dashboard/dashboard-content.tsx` | dashboard                     |
-| Quiz        | `src/app/[locale]/quiz/page.tsx`                 | quiz                          |
-| Flashcards  | `src/app/[locale]/flashcards/page.tsx`           | study                         |
-| Settings    | `src/app/[locale]/settings/page.tsx`             | subtle                        |
-| Study       | `src/app/[locale]/study/page.tsx`                | study                         |
-| Progress    | `src/app/[locale]/progress/page.tsx`             | dashboard                     |
-| Exam Dates  | `src/app/[locale]/exam-dates/page.tsx`           | dashboard                     |
-| Chat        | `src/app/[locale]/chat/page.tsx`                 | default                       |
-| Search      | `src/app/[locale]/search/page.tsx`               | subtle                        |
-| Leaderboard | `src/app/[locale]/leaderboard/page.tsx`          | dashboard                     |
-| Review      | `src/app/[locale]/review/page.tsx`               | study                         |
-| Study Guide | `src/app/[locale]/study-guide/page.tsx`          | study                         |
-| Problems    | `src/app/[locale]/problems/page.tsx`             | study                         |
-| Dictionary  | `src/app/[locale]/dictionary/page.tsx`           | default                       |
-| Auth        | `src/app/[locale]/auth/layout.tsx`               | auth                          |
-| Sidebar     | `src/components/navigation/sidebar-nav.tsx`      | glass sidebar                 |
+### 17.1 Next.js Specific
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className="antialiased">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+        {/* iOS Web App Meta */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Lumni" />
+      </head>
+      <body className="bg-warm-paper text-ink">{children}</body>
+    </html>
+  );
+}
+```
+
+### 17.2 CSS Architecture
+
+```css
+/* Use CSS layers for specificity management */
+@layer reset, base, components, utilities;
+
+@layer base {
+  :root {
+    /* All design tokens */
+  }
+
+  /* Respect user preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+```
+
+### 17.3 Component Patterns
+
+```tsx
+// Button component — HIG + Lumni aligned
+interface ButtonProps {
+  variant: "default" | "secondary" | "outline" | "ghost" | "destructive" | "link";
+  size: "xs" | "sm" | "default" | "lg" | "icon";
+  children: React.ReactNode;
+  onPress: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({ variant, size, children, onPress, disabled, loading }) => {
+  const baseClasses = `
+    inline-flex items-center justify-center
+    font-semibold transition-all duration-150
+    active:scale-[0.96] active:opacity-80
+    disabled:opacity-40 disabled:pointer-events-none
+    focus-visible:outline-2 focus-visible:outline-offset-2
+    focus-visible:outline-study-green/30
+    min-h-[44px] min-w-[44px]
+  `;
+
+  const variantClasses = {
+    default: "bg-study-green text-white rounded-xl px-4",
+    secondary: "bg-surface-secondary text-ink rounded-xl px-4",
+    outline: "bg-transparent text-ink border border-separator rounded-xl px-4",
+    ghost: "bg-transparent text-ink rounded-xl px-4 hover:bg-warm-paper-secondary",
+    destructive: "bg-destructive text-white rounded-xl px-4",
+    link: "bg-transparent text-study-green underline-offset-4 hover:underline",
+  };
+
+  const sizeClasses = {
+    xs: "h-5 text-xs",
+    sm: "h-9 text-sm",
+    default: "h-11 text-sm",
+    lg: "h-12 text-base",
+    icon: "h-11 w-11",
+  };
+
+  return (
+    <button
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`}
+      onClick={onPress}
+      disabled={disabled || loading}
+      aria-busy={loading}
+    >
+      {loading ? <ActivityIndicator /> : children}
+    </button>
+  );
+};
+```
+
+---
+
+## 18. Quality Assurance
+
+### 18.1 Design Review Checklist
+
+Before any UI ships, verify:
+
+```markdown
+### Navigation
+
+- [ ] Tab bar visible on all non-modal screens
+- [ ] Back button uses standard chevron
+- [ ] No custom navigation that conflicts with system gestures
+- [ ] Title describes current view (not app name)
+- [ ] Large titles used at top level
+
+### Typography
+
+- [ ] Body text ≥ 17pt at default size
+- [ ] Dynamic Type supported (scales to 200%+)
+- [ ] Maximum 2 typefaces used (Outfit + Geist)
+- [ ] No light weights for small text
+- [ ] OS tracking values used at every size
+- [ ] Outfit only above 20px, Geist below
+
+### Layout
+
+- [ ] Content extends to screen edges
+- [ ] Safe areas respected
+- [ ] Touch targets ≥ 44×44pt
+- [ ] 8pt grid alignment maintained
+- [ ] PageContainer used for all pages (except exceptions)
+
+### Color
+
+- [ ] Contrast ≥ 4.5:1 for all text
+- [ ] Dark Mode supported
+- [ ] Increase Contrast supported
+- [ ] No color-only state communication
+- [ ] Study Green ≤ 10% of any screen
+- [ ] Warm neutrals tinted toward 60° hue
+
+### Components
+
+- [ ] One primary action per screen
+- [ ] Button titles are specific verbs
+- [ ] Alerts used sparingly, never for info-only
+- [ ] Sheets have clear dismiss path
+- [ ] Cards are solid, not glass
+- [ ] Liquid Glass only for navigation
+
+### Accessibility
+
+- [ ] All interactive elements labeled
+- [ ] Keyboard navigation works
+- [ ] Reduced motion respected
+- [ ] Screen reader order matches visual order
+- [ ] Exam questions announced as groups
+- [ ] Timer pausable with audible warning
+
+### Motion
+
+- [ ] No animations > 500ms
+- [ ] No looping decorative animations
+- [ ] No spring bounce
+- [ ] prefers-reduced-motion handled
+- [ ] Only headings get fade-in entrances
+- [ ] Card stagger under 500ms total
+```
+
+### 18.2 Testing Matrix
+
+| Condition         | Light Mode | Dark Mode |
+| ----------------- | ---------- | --------- |
+| Default contrast  | Test       | Test      |
+| Increase contrast | Test       | Test      |
+| Large text (AX5)  | Test       | Test      |
+| Reduced motion    | Test       | Test      |
+| VoiceOver on      | Test       | Test      |
+| Keyboard only     | Test       | Test      |
+
+### 18.3 Performance
+
+- **Target 60fps** for all animations and transitions.
+- **Use `transform` and `opacity`** for animations — they don't trigger layout.
+- **Lazy load** images and heavy content below the fold.
+- **Minimize repaints** — use `will-change` sparingly, remove after animation.
+- **Above-fold content loads eagerly** — don't lazy load hero.
+
+---
+
+## 19. Do's and Don'ts
+
+### Do:
+
+- **Do** let Study Green be rare. 10% or less of any surface. When it appears, it should mean something: a button, a focus ring, a selected state.
+- **Do** tint every neutral toward 60° warmth at chroma 0.003–0.005. Pure gray reads like a hospital. Warm reads like a desk lamp.
+- **Do** use Outfit 800 for headings and Geist 400 for body. This pairing is the voice of a friend who knows the material.
+- **Do** make every interactive element at least 44×44pt. Thumbs on a minibus, fingers after a long day: the interface does not penalize imprecision.
+- **Do** layer depth through lightness first. A surface one step lighter or darker than its background is hierarchy. A shadow is atmosphere.
+- **Do** use the motion easing (`cubic-bezier(0.16, 1, 0.3, 1)`) for every transition. Fast deceleration, no bounce. The app feels alive under your finger.
+- **Do** animate only `transform` and `opacity`. Layout properties cause reflow. The page should not stutter.
+- **Do** show skeleton shapes while content loads. A spinner says "wait." A skeleton says "something is coming."
+- **Do** set `aspect-ratio` on every image and embedded media.
+- **Do** use `gap-*` for all vertical and horizontal spacing between siblings. One source of truth.
+- **Do** wrap every page in `<PageContainer>` (except home feed and admin dashboards).
+- **Do** use design tokens for shadows (`shadow-level-*`), radii (`rounded-*`), and z-index (`--z-*`). Tokens keep dark mode in sync automatically.
+- **Do** follow HIG navigation patterns: tab bar at bottom (iOS), sidebar on iPad, toolbar actions. Never invent custom navigation that conflicts with system gestures.
+- **Do** use Liquid Glass for navigation bars and tab bars only. Never for cards or content.
+- **Do** provide immediate feedback for every user action: visual, haptic, and (where appropriate) audio.
+- **Do** test at largest accessibility text size. Dynamic Type is not optional.
+- **Do** respect `prefers-reduced-motion`. Every motion-enabled component must handle it.
+
+### Don't:
+
+- **Don't** use gradient text. `background-clip: text` with a gradient is decoration pretending to be typography. Use solid Study Green or Ink. Emphasis comes from weight and size.
+- **Don't** use side-stripe borders. A 3px `border-left` in Study Green on a card is not a design decision. It is a reflex. Use full borders, background tints, a leading number or icon, or nothing.
+- **Don't** make cards out of glass. Glass materials (backdrop-filter blur) are for transient surfaces that slide in and out. Cards are furniture. Furniture is solid.
+- **Don't** build the hero-metric template. Big number. Small label. Supporting stat. Gradient accent. SaaS cliché. The student does not need to be impressed. They need to study.
+- **Don't** repeat the same card grid across the page. Icon. Heading. Text. Every card different or the grid is wrong.
+- **Don't** reach for a modal first. Inline disclosure, progressive expansion, a sheet from the bottom: exhaust these before a modal. Modals interrupt. Studying requires flow.
+- **Don't** put Outfit in labels, buttons, or data text. Outfit is for headings above 20px. Below that, Geist takes over.
+- **Don't** invent new affordances. A button that does not look like a button, a scrollbar that disappears, a form control with no visible boundary: these do not feel premium. They feel broken.
+- **Don't** paint inactive states with full color. Disabled is 50% opacity, period. Not a desaturated version of the active color.
+- **Don't** bounce. Elastic easings, spring overshoots (except the motion curve), bouncy buttons: prohibited. Use the motion easing `cubic-bezier(0.16, 1, 0.3, 1)` for everything.
+- **Don't** use dark mode as an excuse for purple gradients, neon accents, or glassmorphism. Dark mode shifts cooler (264° hue) and lifts the accent. The voice stays the same.
+- **Don't** spray `will-change` across elements. Apply it to one or two specific properties that genuinely benefit from GPU compositing.
+- **Don't** lazy load the hero. Above-fold content loads eagerly. Lazy loading is for content below the fold.
+- **Don't** write arbitrary pixel values (`w-[200px]`, `text-[13px]`, `min-h-[250px]`). They bypass the design system and break dark mode, responsive scaling, and dynamic type.
+- **Don't** hardcode shadow values. Use `shadow-level-1`, `shadow-level-2`, and `shadow-level-3`.
+- **Don't** use `space-y-*` or manual `mt-* mb-*` pairs for sibling spacing. Use `gap-*` on the parent container.
+- **Don't** write magic z-index numbers. Use `--z-content`, `--z-elevated`, `--z-sticky`, `--z-header`, `--z-drawer`, `--z-cookie-banner`, `--z-modal`, `--z-overlay`, `--z-toast`, `--z-skip-link`.
+- **Don't** create page-level layout rules outside of `<PageContainer>`. The container owns the canvas; pages own the content.
+- **Don't** override system gestures. Edge swipe for back navigation is sacred.
+- **Don't** use alerts for informational-only messages. Find non-intrusive alternatives.
+- **Don't** make Cancel the default button in alerts. Use Done for single-button alerts.
+- **Don't** stack sheets. Dismiss current before presenting new.
+- **Don't** use color alone to communicate state. Always pair with icons, text, or patterns.
+- **Don't** use looping decorative animations. `repeat: Infinity` is prohibited on motion elements.
+- **Don't** use spring animations with bounce. `bounce: 0` only.
+
+---
+
+## 20. Appendices
+
+### Appendix A: HIG Cross-Reference
+
+| This Document Section | Apple HIG Source                                    |
+| --------------------- | --------------------------------------------------- |
+| 2. Design Principles  | Foundations > Design Principles                     |
+| 3. Design Tokens      | Foundations > [Various]                             |
+| 4. Colors             | Foundations > Color                                 |
+| 5. Typography         | Foundations > Typography                            |
+| 6. Layout             | Foundations > Layout                                |
+| 7. Materials          | Foundations > Materials                             |
+| 8. Navigation         | Components > Navigation and Search                  |
+| 9. Components         | Components > [Buttons, Lists, Sheets, Alerts, etc.] |
+| 10. Content           | Patterns > [Onboarding, Loading, etc.]              |
+| 11. Interaction       | Inputs > Gestures                                   |
+| 12. Motion            | Patterns > [Motion, Feedback]                       |
+| 13. Feedback          | Patterns > Feedback                                 |
+| 14. Accessibility     | Accessibility                                       |
+| 15. Platforms         | Platform-specific sections                          |
+
+### Appendix B: Liquid Glass Quick Reference
+
+```css
+/* Tab Bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Navigation Bar */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+```
+
+### Appendix C: Token Migration Guide (From Old to New)
+
+| Old Token                   | New Token                                 | Notes                      |
+| --------------------------- | ----------------------------------------- | -------------------------- |
+| `colors.study-green`        | `color.studyGreen`                        | Semantic naming            |
+| `colors.warm-paper`         | `color.warmPaper`                         | Semantic naming            |
+| `colors.ink`                | `color.ink` / `color.label`               | HIG alias added            |
+| `colors.ink-muted`          | `color.inkMuted` / `color.labelSecondary` | HIG alias added            |
+| `rounded.button`            | `radius.md`                               | Unified radius scale       |
+| `rounded.card`              | `radius.lg`                               | Unified radius scale       |
+| `spacing.11`                | `spacing.44`                              | HIG touch target alignment |
+| `components.button-default` | `Button variant="default"`                | Component-based            |
+| `components.card-default`   | `Card`                                    | Component-based            |
+
+### Appendix D: Exam-Specific Design Patterns
+
+| Pattern               | Implementation                                              | Accessibility                                       |
+| --------------------- | ----------------------------------------------------------- | --------------------------------------------------- |
+| **Question display**  | Full-screen, hidden chrome, tap to restore                  | Screen reader announces question + options as group |
+| **Answer selection**  | List cells, 56px height, immediate visual + haptic feedback | Keyboard: arrow keys navigate, Enter selects        |
+| **Progress tracking** | Segmented bar + numeric counter                             | Screen reader announces progress on change          |
+| **Timer**             | Top-right, pulsing at 5min/1min, pausable                   | Audible warning, never auto-submits without warning |
+| **Results**           | Summary card with breakdown by subject                      | Screen reader reads all results                     |
+| **Explanation**       | Inline reveal below wrong answers                           | Keyboard accessible, focus moves to explanation     |
+
+### Appendix E: South African NSC Context
+
+- **Target users**: Grade 12 students (17-18 years old).
+- **Device context**: Predominantly mobile (Android/iOS), often on limited data.
+- **Environmental context**: Studying on minibus, at home, in library. Interface must work in all conditions.
+- **Language**: English primary, with Afrikaans and isiZulu support planned.
+- **Subjects**: Mathematics, Physical Sciences, Life Sciences, Accounting, Business Studies, Economics, Geography, History, etc.
+- **Exam format**: NSC matric exams follow specific patterns that the UI must accommodate (multiple choice, structured questions, essay questions).
+
+---
+
+> **Document Status**: This DESIGN.md is the merged canonical standard. It combines Apple's official Human Interface Guidelines (2026) with Lumni's established brand identity, warm paper palette, and 2026 motion patterns. This document overrides all previous DESIGN.md versions.
+>
+> **Authority Hierarchy**:
+>
+> 1. HIG principles govern structure, navigation, accessibility, and platform conventions.
+> 2. Lumni identity governs color, typography voice, emotional tone, and motion personality.
+> 3. When in conflict, HIG wins on accessibility and platform behavior; Lumni wins on brand expression.
+>
+> **Next Step**: This document is ready for implementation. All team members should reference this as the single source of truth for design decisions.
+> | Study Guide | `src/app/[locale]/study-guide/page.tsx` | study |
+> | Problems | `src/app/[locale]/problems/page.tsx` | study |
+> | Dictionary | `src/app/[locale]/dictionary/page.tsx` | default |
+> | Auth | `src/app/[locale]/auth/layout.tsx` | auth |
+> | Sidebar | `src/components/navigation/sidebar-nav.tsx` | glass sidebar |
 
 Each page wrapper uses:
 

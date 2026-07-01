@@ -130,7 +130,7 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
                 className="flex flex-col gap-4 overflow-hidden"
               >
                 <div className="flex flex-col gap-4 border-border/40 border-t pt-4">
-                  <div className="rounded-xl border border-border/30 bg-gradient-to-br from-system-background to-system-background-secondary p-4">
+                  <div className="rounded-xl border border-border/30 bg-linear-to-br from-system-background to-system-background-secondary p-4">
                     <div className="mb-2 flex items-center gap-2 ios-caption-3 text-muted-foreground font-semibold uppercase">
                       <svg
                         width="12"

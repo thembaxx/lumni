@@ -48,7 +48,7 @@ function ParticipantAvatar({ participant }: { participant: LiveParticipant }) {
         </AvatarFallback>
       </Avatar>
       {participant.currentActivity && (
-        <span className="max-w-[100px] truncate text-(--fs-caption-3) text-foreground/50">
+        <span className="max-w-24 truncate text-(--fs-caption-3) text-foreground/50">
           {participant.currentActivity}
         </span>
       )}
@@ -178,7 +178,7 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
                   value={currentParticipant?.currentActivity ?? "Studying"}
                   onValueChange={handleActivityChange}
                 >
-                  <SelectTrigger className="h-8 w-[130px] rounded-lg px-2 text-xs">
+                  <SelectTrigger className="h-8 w-32 rounded-lg px-2 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
