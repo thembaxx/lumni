@@ -431,7 +431,7 @@
     font-family: var(--font-sans);
     line-height: 1.5;
     letter-spacing: var(--tracking-body);
-    @apply min-h-[100dvh] flex flex-col;
+    @apply min-h-dvh flex flex-col;
   }
 
   h1,

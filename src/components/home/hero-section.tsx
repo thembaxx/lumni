@@ -40,7 +40,7 @@ function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean 
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       {/* Primary large blob */}
       <div
-        className="absolute -top-[10%] -right-[10%] h-[60%] w-[50%] animate-morph bg-gradient-to-br from-system-accent/10 via-system-accent/5 to-transparent opacity-70 blur-3xl will-change-transform"
+        className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] animate-morph bg-linear-to-br from-system-accent/10 via-system-accent/5 to-transparent opacity-70 blur-3xl will-change-transform"
         style={{
           transform: `translate(${(mouse.x - 0.5) * 30}px, ${(mouse.y - 0.5) * 20}px)`,
           transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -48,7 +48,7 @@ function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean 
       />
       {/* Secondary blob */}
       <div
-        className="absolute -bottom-[5%] -left-[10%] h-[50%] w-[40%] animate-float-drift rounded-full bg-gradient-to-tr from-chart-4/10 to-transparent opacity-50 blur-3xl will-change-transform"
+        className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] animate-float-drift rounded-full bg-linear-to-tr from-chart-4/10 to-transparent opacity-50 blur-3xl will-change-transform"
         style={{
           transform: `translate(${(mouse.x - 0.5) * -20}px, ${(mouse.y - 0.5) * -15}px)`,
           transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -56,7 +56,7 @@ function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean 
       />
       {/* Tertiary accent blob */}
       <div
-        className="absolute top-[20%] left-[5%] h-[30%] w-[25%] animate-float-drift rounded-full bg-gradient-to-br from-chart-3/8 to-transparent opacity-40 blur-3xl will-change-transform"
+        className="absolute top-[20%] left-[5%] h-[30%] w-[25%] animate-float-drift rounded-full bg-linear-to-br from-chart-3/8 to-transparent opacity-40 blur-3xl will-change-transform"
         style={{
           transform: `translate(${(mouse.x - 0.5) * 15}px, ${(mouse.y - 0.5) * -10}px)`,
           transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -88,9 +88,9 @@ function InteractiveQuizDemo() {
   const correct = 0;
 
   return (
-    <MagneticCard className="relative aspect-[4/5] w-full max-w-sm" maxTilt={6}>
-      <div className="absolute inset-0 rounded-card-lg bg-gradient-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
-      <div className="relative flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-gradient-to-br from-primary/[0.03] to-background p-5 shadow-level-2 backdrop-blur-xl">
+    <MagneticCard className="relative aspect-4/5 w-full max-w-sm" maxTilt={6}>
+      <div className="absolute inset-0 rounded-card-lg bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
+      <div className="relative flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-linear-to-br from-primary/3 to-background p-5 shadow-level-2 backdrop-blur-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex size-9 items-center justify-center rounded-lg bg-(--system-accent-alpha-10)">
