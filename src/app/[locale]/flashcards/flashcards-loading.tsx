@@ -18,19 +18,11 @@ export function FlashcardsLoading() {
           transition={{ duration: 0.3, ease: iOSEase }}
           className="relative"
         >
-          <m.div
-            className="absolute inset-0 rounded-full bg-(--system-accent)/20 blur-xl"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: iOSEase }}
-          />
+          <div className="absolute inset-0 animate-pulse-glow blur-xl" />
           <div className="relative flex size-20 items-center justify-center rounded-2xl border border-system-accent/20 bg-system-accent/10">
-            <m.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="size-14"
-            >
+            <div className="size-14 animate-spin [animation-duration:1.5s]">
               <HugeiconsIcon icon={RadialIcon} className="size-14 text-system-accent" />
-            </m.div>
+            </div>
           </div>
         </m.div>
 

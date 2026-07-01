@@ -241,7 +241,7 @@ function SettingsContent() {
           </div>
         </header>
 
-        <nav className="sticky top-[116px] z-sticky bg-system-grouped/80 px-6 py-3 backdrop-blur-xl">
+        <nav className="sticky top-28 z-sticky bg-system-grouped/80 px-6 py-3 backdrop-blur-xl">
           <div className="scrollbar-hide -mx-2 flex gap-1.5 overflow-x-auto px-2" role="tablist">
             {visibleTabs.map((tab) => {
               const isActive = activeTab === tab.value;

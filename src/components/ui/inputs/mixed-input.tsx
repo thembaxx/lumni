@@ -30,7 +30,7 @@ export function MixedInput({
         />
       ))}
       {subParts?.map((part) => (
-        <div key={part.id} className="border-muted border-l-2 pl-4">
+        <div key={part.id} className="rounded-md border border-muted/50 bg-muted/10 p-4">
           <p className="mb-2 font-medium text-sm">
             {part.id}. {part.text}
           </p>

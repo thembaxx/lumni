@@ -51,7 +51,7 @@ export function NavigationBar({
 
       {/* Separator — appears when collapsed */}
       <m.div
-        className="absolute right-0 bottom-0 left-0 h-[0.5px] bg-system-separator/50"
+        className="absolute right-0 bottom-0 left-0 h-px bg-system-separator/30"
         animate={{ opacity: isCollapsed ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       />

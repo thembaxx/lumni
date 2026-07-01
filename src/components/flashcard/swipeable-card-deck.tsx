@@ -169,7 +169,7 @@ export function SwipeableCardDeck({
       </div>
 
       {/* Card stack */}
-      <div className="relative mx-auto h-[min(400px,60vh)] w-full max-w-md">
+      <div className="relative mx-auto h-[min(25rem,60vh)] w-full max-w-md">
         <AnimatePresence mode="popLayout" initial={false}>
           {visibleCards.map((card, idx) => {
             const isTopCard = idx === 0 && !showPicker;

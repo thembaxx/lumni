@@ -88,7 +88,7 @@ const NavItemComponent = memo(function NavItemComponent({
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
   const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
-  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26 };
+  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26, bounce: 0 };
 
   const content = <ItemContent item={item} isActive={isActive} />;
 
@@ -187,7 +187,7 @@ export function BottomNav() {
       >
         <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
           <div className="flex items-center gap-2">
-            <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-[0_2px_8px_rgba(0,0,0,0.08)] ring-1 ring-system-separator/30 dark:bg-system-background dark:shadow-level-2 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-system-accent/10">
+            <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-level-1 ring-1 ring-system-separator/30 dark:bg-system-background dark:shadow-level-2 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-system-accent/10">
               {navItems.map((item, index) => (
                 <NavItemComponent
                   key={item.id}
@@ -208,7 +208,7 @@ export function BottomNav() {
               aria-label="Open tools"
               whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
               whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
-              transition={{ type: "spring", stiffness: 400, damping: 26 }}
+              transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
               className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90"
             >
               <HugeiconsIcon icon={GridIcon} className="size-5" />

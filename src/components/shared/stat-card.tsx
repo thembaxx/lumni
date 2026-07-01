@@ -70,7 +70,7 @@ export function StatCard({
       <m.div
         whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 400, damping: 26 }}
+        transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
         className={cn(
           "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2",
           className,

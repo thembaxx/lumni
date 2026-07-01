@@ -62,7 +62,7 @@ function ListCell({
         onClick={onClick}
         disabled={disabled}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
-        transition={{ type: "spring", stiffness: 400, damping: 26 }}
+        transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
         className={cn(
           "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
           "bg-(--system-surface) transition-[background-color] duration-200",

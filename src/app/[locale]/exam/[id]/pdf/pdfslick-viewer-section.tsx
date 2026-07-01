@@ -130,13 +130,13 @@ export default function PDFSlickViewerSection({ pdfUrl }: Props) {
             className="h-full w-full"
           />
         </div>
-        <div className="pointer-events-none absolute bottom-3 left-1/2 z-40 -translate-x-1/2 rounded-full bg-background/80 px-3 py-1 text-(--fs-caption-3) text-muted-foreground shadow-level-1 backdrop-blur-xs tabular-nums">
+        <div className="pointer-events-none absolute bottom-3 left-1/2 z-(--z-pdf-controls) -translate-x-1/2 rounded-full bg-background/80 px-3 py-1 text-(--fs-caption-3) text-muted-foreground shadow-level-1 backdrop-blur-xs tabular-nums">
           {pageNumber} / {numPages}
         </div>
         <button
           type="button"
           onClick={toggleSidebar}
-          className="absolute left-2 top-2 z-40 rounded-md bg-background/80 p-1.5 text-muted-foreground shadow-level-1 backdrop-blur-xs transition-colors hover:bg-accent"
+          className="absolute left-2 top-2 z-(--z-pdf-controls) rounded-md bg-background/80 p-1.5 text-muted-foreground shadow-level-1 backdrop-blur-xs transition-colors hover:bg-accent"
           aria-label={sidebarOpen ? "Hide thumbnails" : "Show thumbnails"}
         >
           <HugeiconsIcon icon={LayoutGridIcon} size={16} />
