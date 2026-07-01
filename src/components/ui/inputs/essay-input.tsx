@@ -48,7 +48,7 @@ export function EssayInput({
         placeholder={
           wordLimit ? `Write your essay (max ${wordLimit} words)...` : "Write your essay here..."
         }
-        className={cn("min-h-[250px]", onSubmit && "pr-4")}
+        className={cn("min-h-64", onSubmit && "pr-4")}
       />
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-muted-foreground text-xs">

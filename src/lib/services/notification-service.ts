@@ -68,7 +68,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
 
 async function _subscribeToPush(): Promise<PushSubscription | null> {
   if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
-    console.warn("Push not supported");
+    logError("Notif.PushNotSupported", new Error("Push not supported"));
     return null;
   }
 
@@ -106,8 +106,7 @@ async function syncSubscriptionToServer(subscription: PushSubscription): Promise
       }),
     });
   } catch (err) {
-    logError("SyncSubscriptionToServer", err);
-    console.warn("Failed to sync subscription to server:", err);
+    logError("Notif.SyncSubscription", err);
   }
 }
 
@@ -125,15 +124,13 @@ async function _unsubscribeFromPush(): Promise<boolean> {
           body: JSON.stringify({ endpoint: json.endpoint }),
         } as NotificationOptions);
       } catch (e) {
-        logError("UnsubscribeFromPushSync", e);
-        console.warn("Failed to sync unsubscribe to server:", e);
+        logError("Notif.UnsubscribeSync", e);
       }
     }
     localStorage.removeItem(NOTIF_KEY);
     return true;
   } catch (e) {
-    logError("UnsubscribeFromPush", e);
-    console.warn("Failed to unsubscribe from push:", e);
+    logError("Notif.Unsubscribe", e);
     return false;
   }
 }

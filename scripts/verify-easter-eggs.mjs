@@ -16,14 +16,6 @@ async function screenshot(page, name) {
   await page.screenshot({ path: path.join(ssDir, `${name}.png`) });
 }
 
-// Helper: simulate keyboard sequence
-async function typeKeys(page, keys) {
-  for (const key of keys) {
-    await page.keyboard.press(key);
-    await new Promise((r) => setTimeout(r, 80));
-  }
-}
-
 let pass = 0;
 let fail = 0;
 function ok(msg) {

@@ -3,6 +3,7 @@
 import ChartDownIcon from "@hugeicons/core-free-icons/ChartDownIcon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -39,21 +40,24 @@ export function StatCard({
   delay = 0,
 }: StatCardProps) {
   const trendColor = trend ? trendColors[trend] : undefined;
+  const prefersReducedMotion = useReducedMotion();
 
   if (variant === "admin") {
     return (
       <m.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay, duration: 0.3, ease: iOSEase }}
+        transition={
+          prefersReducedMotion ? { duration: 0 } : { delay, duration: 0.3, ease: iOSEase }
+        }
         className={cn("rounded-lg bg-muted/50 p-3", className)}
       >
         <p className="text-muted-foreground text-xs">{label}</p>
         <m.p
           className="font-semibold text-xl tabular-nums"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: delay + 0.15 }}
+          transition={prefersReducedMotion ? { duration: 0 } : { delay: delay + 0.15 }}
         >
           {value}
         </m.p>
@@ -63,9 +67,12 @@ export function StatCard({
 
   if (variant === "dashboard") {
     return (
-      <div
+      <m.div
+        whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
+        whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 400, damping: 26 }}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2 transition-[scale] duration-150 hover:scale-[1.02] active:scale-[0.97]",
+          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2",
           className,
         )}
       >
@@ -99,7 +106,7 @@ export function StatCard({
         >
           {value}
         </m.span>
-      </div>
+      </m.div>
     );
   }
 

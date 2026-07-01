@@ -1,4 +1,5 @@
 import type { ProcessResult } from "@/lib/queue/core";
+import { logError } from "@/lib/shared/logger";
 import { getHandler } from "./handlers";
 import { queueCore } from "./job-queue";
 import type { JobRecord } from "./types";
@@ -8,7 +9,7 @@ export class JobProcessor {
 
   async processBatch(limit = 5): Promise<ProcessResult> {
     if (!queueCore) {
-      console.warn("[JobProcessor] queueCore not available on server");
+      logError("JobProcessor.QueueCoreMissing", new Error("queueCore not available on server"));
       return { processed: 0, succeeded: 0, failed: 0 };
     }
     return queueCore.processBatch(

@@ -3,6 +3,8 @@
 import type * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { ListGroup } from "./list-group";
 import { ListSection } from "./list-section";
 
@@ -21,7 +23,6 @@ interface ListCellProps {
 }
 
 function ListCell({
-  leading: _leading,
   title,
   subtitle,
   trailing,
@@ -31,23 +32,8 @@ function ListCell({
   destructive = false,
   disabled = false,
 }: ListCellProps) {
-  const Component = onClick ? "button" : "div";
-
-  return (
-    <Component
-      type={onClick ? "button" : undefined}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
-        "bg-(--system-surface) transition-[background-color,scale] duration-200",
-        onClick &&
-          "hover:bg-(--system-surface-secondary) active:scale-[0.96] active:bg-(--system-surface-secondary)",
-        disabled && "opacity-50",
-        showSeparator && "ios-separator",
-        className,
-      )}
-    >
+  const inner = (
+    <>
       <div className="min-w-0 flex-1">
         <div
           className={cn(
@@ -64,7 +50,45 @@ function ListCell({
         )}
       </div>
       {trailing && <div className="flex shrink-0 items-center">{trailing}</div>}
-    </Component>
+    </>
+  );
+
+  const prefersReducedMotion = useReducedMotion();
+
+  if (onClick) {
+    return (
+      <m.button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
+        transition={{ type: "spring", stiffness: 400, damping: 26 }}
+        className={cn(
+          "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
+          "bg-(--system-surface) transition-[background-color] duration-200",
+          "hover:bg-(--system-surface-secondary) active:bg-(--system-surface-secondary)",
+          disabled && "opacity-50",
+          showSeparator && "ios-separator",
+          className,
+        )}
+      >
+        {inner}
+      </m.button>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
+        "bg-(--system-surface)",
+        disabled && "opacity-50",
+        showSeparator && "ios-separator",
+        className,
+      )}
+    >
+      {inner}
+    </div>
   );
 }
 

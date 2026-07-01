@@ -95,7 +95,7 @@ export type ExamPaperRecord = AppwriteExamPaperRecord;
 
 export async function listDocuments<T>(collection: string, queries: string[] = []): Promise<T[]> {
   if (!APPWRITE_DATABASE_ID) {
-    console.warn("[listDocuments] APPWRITE_DATABASE_ID is not set");
+    logError("ListDocuments", new Error("APPWRITE_DATABASE_ID is not set"));
     return [];
   }
   const db = await getDb();

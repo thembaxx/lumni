@@ -16,7 +16,6 @@ const count = await subjectCards.count();
 console.log("Subject cards found:", count);
 
 // Find the Mathematics card specifically (not Mathematical Literacy)
-const mathCards = page.locator('[data-slot="card"]').filter({ hasText: /^Mathematics$/m });
 // Let's find it by checking each card's innerText
 for (let i = 0; i < count; i++) {
   const card = subjectCards.nth(i);

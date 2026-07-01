@@ -40,7 +40,7 @@ export function LongAnswerInput({
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         placeholder="Type your answer..."
-        className={cn("min-h-[120px]", onSubmit && "pr-4")}
+        className={cn("min-h-30", onSubmit && "pr-4")}
       />
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-muted-foreground text-xs">

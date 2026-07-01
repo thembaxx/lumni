@@ -187,7 +187,7 @@ export function createRouteHandler<
         }
       }
 
-      if (auth !== "none" && !userId) {
+      if (auth === "required" && !userId) {
         throw new HttpError(401, "Authentication required for this endpoint");
       }
 

@@ -27,11 +27,6 @@ export async function fetchRagContext(
     return result;
   } catch (err) {
     logError("FetchRagContext", err);
-    console.warn(
-      `[question-engine] web source fetch failed, continuing without grounding: ${
-        err instanceof Error ? err.message : String(err)
-      }`,
-    );
     return emptyRagContext();
   }
 }

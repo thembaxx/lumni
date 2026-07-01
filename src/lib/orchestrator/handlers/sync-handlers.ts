@@ -146,7 +146,7 @@ const appwriteFlashcardPull: JobHandler = async (payload) => {
       }
     }
   } catch (e) {
-    console.warn("[FlashcardPull] sync failed:", e);
+    logError("SyncHandler.FlashcardPull", e);
   }
 };
 

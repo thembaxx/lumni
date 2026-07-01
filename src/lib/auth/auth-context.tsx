@@ -225,7 +225,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAnonymous: false,
       });
 
-      await flushOfflineData(user.$id).catch((e) => console.warn("Flush offline data:", e));
+      await flushOfflineData(user.$id).catch((e) => logError("flush-offline-data", e));
       return user.$id;
     } catch (err) {
       dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });

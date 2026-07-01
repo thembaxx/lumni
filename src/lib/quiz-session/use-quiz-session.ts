@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
+import { logError } from "@/lib/shared/logger";
 import { quizSessionRepo } from "@/lib/db/repositories/quiz-session";
 import type { Question } from "@/lib/question-engine/types";
 import type {
@@ -103,7 +104,7 @@ export function useQuizSession(
     if (typeof window !== "undefined") {
       const activeSession = localStorage.getItem("lumni_active_quiz_session");
       if (activeSession) {
-        console.warn("[QuizSession] Active session already in progress");
+        logError("QuizSession.ActiveSession", new Error("Session already in progress"));
         return;
       }
     }

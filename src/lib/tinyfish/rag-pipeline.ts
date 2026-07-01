@@ -147,7 +147,7 @@ async function fetchRagForTopic(subject: string, topic: string): Promise<RagCont
   } catch (err) {
     logError("TinyFishIndex", err);
     if (err instanceof TinyFishError) {
-      console.warn(`[tinyfish] RAG fetch failed: ${err.message}`);
+      logError("TinyFish.RagFetch", err);
     }
     return emptyRagContext();
   }
@@ -177,7 +177,7 @@ async function fetchSourceForQuestion(question: string): Promise<RagContext> {
   } catch (err) {
     logError("TinyFishIndex", err);
     if (err instanceof TinyFishError) {
-      console.warn(`[tinyfish] source fetch failed: ${err.message}`);
+      logError("TinyFish.SourceFetch", err);
     }
     return emptyRagContext();
   }

@@ -8,6 +8,8 @@ import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { SnapFab } from "@/components/tools/core/snap-fab";
 import { ToolsDialog } from "@/components/tools/core/tools-dialog";
 import { Badge } from "@/components/ui/badge";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
@@ -39,7 +41,7 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset active:scale-[0.96] transition-transform duration-200 ease-ios";
+  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
@@ -83,17 +85,26 @@ const NavItemComponent = memo(function NavItemComponent({
   isActive: boolean;
   onNavigate?: (href: string) => void;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimate = !prefersReducedMotion;
+  const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
+  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26 };
+
+  const content = <ItemContent item={item} isActive={isActive} />;
+
   if (item.href === "/chat") {
     return (
-      <button
+      <m.button
         type="button"
         onClick={() => onNavigate?.(item.href)}
         aria-label={item.label}
         aria-current={isActive ? "page" : undefined}
+        whileTap={tapScale}
+        transition={springTransition}
         className={baseItemClass}
       >
-        <ItemContent item={item} isActive={isActive} />
-      </button>
+        {content}
+      </m.button>
     );
   }
 
@@ -104,7 +115,9 @@ const NavItemComponent = memo(function NavItemComponent({
       aria-current={isActive ? "page" : undefined}
       className={baseItemClass}
     >
-      <ItemContent item={item} isActive={isActive} />
+      <m.span whileTap={tapScale} transition={springTransition}>
+        {content}
+      </m.span>
     </Link>
   );
 });
@@ -149,6 +162,9 @@ export function BottomNav() {
     [push],
   );
 
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimate = !prefersReducedMotion;
+
   const activeIndex = useMemo(() => {
     const index = navItems.findIndex((item) => {
       if (item.href === "/dashboard") {
@@ -171,7 +187,7 @@ export function BottomNav() {
       >
         <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
           <div className="flex items-center gap-2">
-            <div className="relative flex items-center rounded-full bg-system-background/80 px-1.5 py-1 shadow-level-2 ring-1 ring-system-separator/20 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
+            <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-[0_2px_8px_rgba(0,0,0,0.08)] ring-1 ring-system-separator/30 dark:bg-system-background dark:shadow-level-2 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
               {navItems.map((item, index) => (
                 <NavItemComponent
                   key={item.id}
@@ -186,14 +202,17 @@ export function BottomNav() {
               <SnapFab inline />
             </Suspense>
 
-            <button
+            <m.button
               type="button"
               onClick={handleOpenTools}
               aria-label="Open tools"
-              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 transition-[scale,box-shadow] duration-150 active:scale-[0.96] hover:bg-system-accent/90"
+              whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
+              whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
+              transition={{ type: "spring", stiffness: 400, damping: 26 }}
+              className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90"
             >
               <HugeiconsIcon icon={GridIcon} className="size-5" />
-            </button>
+            </m.button>
           </div>
         </div>
       </div>

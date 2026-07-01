@@ -61,12 +61,16 @@ async function fetchWiktionary(api: string, word: string): Promise<WiktionaryRes
   });
 
   const url = `${api}?${params}`;
-  const res = await fetch(url, {
-    headers: { "User-Agent": "Lumni/1.0" },
-  });
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Lumni/1.0" },
+    });
 
-  if (!res.ok) return null;
-  return (await res.json()) as WiktionaryResponse;
+    if (!res.ok) return null;
+    return (await res.json()) as WiktionaryResponse;
+  } catch {
+    return null;
+  }
 }
 
 function extractResult(response: WiktionaryResponse, word: string): DictionaryResult | null {

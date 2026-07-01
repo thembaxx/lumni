@@ -59,7 +59,7 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
         initial={{ opacity: 0, y: -4 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-        className="font-mono text-[10px] text-muted-foreground tabular-nums"
+        className="font-mono ios-caption-3 text-muted-foreground tabular-nums"
       >
         {current}/{total}
       </m.span>

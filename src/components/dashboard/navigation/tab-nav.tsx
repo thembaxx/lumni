@@ -82,7 +82,7 @@ export function TabNav({
               <HugeiconsIcon
                 icon={tab.icon}
                 className={cn(
-                  "size-4 transition-all duration-300",
+                  "size-4 transition-colors duration-300",
                   activeTab === tab.value && "text-primary",
                 )}
               />

@@ -1,4 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { logError } from "@/lib/shared/logger";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 
@@ -31,7 +32,7 @@ export const POST = createRouteHandler({
       const { enqueue } = await import("@/lib/orchestrator/job-queue");
       await enqueue("prune-stale-questions", {}, { priority: 10 });
     } catch (e) {
-      console.warn("[Prune] Failed to enqueue prune job:", e);
+      logError("Generate.PruneEnqueue", e);
     }
 
     return {

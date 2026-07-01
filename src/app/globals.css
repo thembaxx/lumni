@@ -828,6 +828,19 @@
   }
 }
 
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes breathe-subtle {
   0%,
   100% {
@@ -919,6 +932,9 @@
 }
 .animate-float-drift {
   animation: float-drift 6s ease-in-out infinite;
+}
+.animate-typing-bounce {
+  animation: typing-bounce 1.2s ease-in-out infinite;
 }
 .animate-breathe {
   animation: breathe-subtle 4s ease-in-out infinite;

@@ -30,7 +30,7 @@ export function DataResponseInput({
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         placeholder="Analyse the data above and respond..."
-        className="min-h-[120px]"
+        className="min-h-30"
       />
     </div>
   );

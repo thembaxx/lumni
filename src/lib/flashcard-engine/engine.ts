@@ -1,6 +1,7 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import {
   calculateNextReview,
@@ -172,7 +173,7 @@ export class FlashcardEngine {
     await this.db.flashcards.add(card);
 
     this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(card)).catch((e: unknown) =>
-      console.warn("[FlashcardEngine] create sync:", e),
+      logError("FlashcardEngine.CreateSync", e),
     );
 
     return card;
@@ -194,13 +195,13 @@ export class FlashcardEngine {
       lastReview: updates.lastReview ?? null,
       createdAt: updates.createdAt ?? 0,
       updatedAt: Date.now(),
-    }).catch((e: unknown) => console.warn("[FlashcardEngine] update sync:", e));
+    }).catch((e: unknown) => logError("FlashcardEngine.UpdateSync", e));
   }
 
   async delete(id: string): Promise<void> {
     await this.db.flashcards.delete(id);
     this.enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
-      console.warn("[FlashcardEngine] delete sync:", e),
+      logError("FlashcardEngine.DeleteSync", e),
     );
   }
 
@@ -311,7 +312,7 @@ export class FlashcardEngine {
     await this.saveReview(card.id, quality, updatedCard);
 
     this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(updatedCard)).catch((e: unknown) =>
-      console.warn("[FlashcardEngine] review sync:", e),
+      logError("FlashcardEngine.ReviewSync", e),
     );
 
     return updatedCard;

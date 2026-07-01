@@ -26,6 +26,8 @@ function buildCsp(isDev: boolean): string {
     "https://api.simplesvg.com",
     "https://api.unisvg.com",
     "https://api.dicebear.com",
+    "https://api.dictionaryapi.dev",
+    "https://*.wiktionary.org",
     ...SENTRY_HOSTS,
   ];
 

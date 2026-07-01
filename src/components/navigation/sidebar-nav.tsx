@@ -138,7 +138,7 @@ function SidebarContent() {
                   className="ios-caption-3 flex w-full items-center justify-between px-2 py-1.5 font-semibold text-muted-foreground uppercase no-underline tracking-wider transition-colors hover:text-foreground"
                 >
                   {cat.label}
-                  <span className="text-[10px] opacity-40">→</span>
+                  <span className="ios-caption-3 opacity-40">→</span>
                 </Link>
               ) : (
                 <div className="ios-caption-3 px-2 py-1.5 font-semibold text-muted-foreground uppercase tracking-wider">

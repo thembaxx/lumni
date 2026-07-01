@@ -97,7 +97,7 @@ export function ReviewClient() {
   }
 
   return (
-    <div className="min-h-screen bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <LocalDataNotice

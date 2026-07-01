@@ -67,8 +67,11 @@ export async function verifyAuth(userId: string): Promise<void> {
     const sessionCookie = cookieStore.get(`a_session_${projectId}`);
     if (!sessionCookie?.value) {
       const allCookies = (await cookies()).getAll().map((c) => c.name);
-      console.warn(
-        `[verifyAuth] No session cookie found for project: ${projectId}. Available cookies: ${allCookies.join(", ")}`,
+      logError(
+        "VerifyAuth.NoSessionCookie",
+        new Error(
+          `No session cookie found for project: ${projectId}. Available: ${allCookies.join(", ")}`,
+        ),
       );
       throw new Error(`No session cookie found for project: ${projectId}`);
     }
@@ -82,8 +85,9 @@ export async function verifyAuth(userId: string): Promise<void> {
     const user = await fetchAccountWithRetry(account);
 
     if (user.$id !== userId) {
-      console.warn(
-        `[verifyAuth] User ID mismatch. Session user: ${user.$id}, requested user: ${userId}`,
+      logError(
+        "VerifyAuth.UserIdMismatch",
+        new Error(`Session user: ${user.$id}, requested: ${userId}`),
       );
       throw new Error("Unauthorized: User ID mismatch");
     }
@@ -127,7 +131,7 @@ export async function requireAdmin(): Promise<string> {
 
   const adminIds = process.env.ADMIN_USER_IDS;
   if (!adminIds) {
-    console.error("[requireAdmin] ADMIN_USER_IDS is not set — no admin users configured");
+    logError("RequireAdmin.NotConfigured", new Error("ADMIN_USER_IDS is not set"));
     throw new Error("Admin access is not configured");
   }
 
@@ -137,7 +141,7 @@ export async function requireAdmin(): Promise<string> {
   });
 
   if (ids.length === 0) {
-    console.error("[requireAdmin] ADMIN_USER_IDS is empty — no admin users configured");
+    logError("RequireAdmin.EmptyIds", new Error("ADMIN_USER_IDS is empty"));
     throw new Error("Admin access is not configured");
   }
 

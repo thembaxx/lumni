@@ -4,7 +4,6 @@ import * as Sentry from "@sentry/nextjs";
 export async function POST(request: NextRequest) {
   try {
     const report = await request.json();
-    console.warn("[CSP Violation]", JSON.stringify(report, null, 2));
 
     Sentry.captureException(new Error("CSP Violation"), {
       extra: report,

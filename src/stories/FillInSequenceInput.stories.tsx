@@ -20,7 +20,7 @@ export const ChemicalEquation: Story = {
         distractors: ["O", "H₂", "OH"],
       },
     ],
-    onSubmit: (answers) => console.log("Submitted:", answers),
+    onSubmit: (_answers) => {},
   },
 };
 
@@ -36,7 +36,7 @@ export const MathFormula: Story = {
       { id: "b1", correctAnswer: "length", distractors: ["width", "height"] },
       { id: "b2", correctAnswer: "width", distractors: ["length", "height"] },
     ],
-    onSubmit: (answers) => console.log("Submitted:", answers),
+    onSubmit: (_answers) => {},
   },
 };
 
@@ -50,6 +50,6 @@ export const SingleBlank: Story = {
         distractors: ["London", "Berlin", "Madrid"],
       },
     ],
-    onSubmit: (answers) => console.log("Submitted:", answers),
+    onSubmit: (_answers) => {},
   },
 };

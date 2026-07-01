@@ -1,4 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const POST = withRateLimit(
@@ -25,7 +26,7 @@ export const POST = withRateLimit(
       const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
 
       if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
-        console.warn("VAPID keys not configured, skipping push");
+        logError("PushSend.VapidMissing", new Error("VAPID keys not configured"));
         return { success: false, reason: "vapid-not-configured" };
       }
 

@@ -34,7 +34,7 @@ export const analyticsSync: JobHandler = async (payload) => {
                 event: JSON.stringify(event),
                 createdAt: new Date().toISOString(),
               })
-              .catch((e: Error) => console.warn("Analytics write failed:", e)),
+              .catch((e: Error) => logError("AnalyticsWrite", e)),
           ),
         ),
       );
@@ -154,7 +154,7 @@ export const questionRegen: JobHandler = async (payload) => {
   }
 
   if (newText === currentText) {
-    console.warn("[JobProcessor] Regenerated question unchanged, skipping:", data.questionId);
+    logError("JobProcessor.RegenUnchanged", new Error(`Question ${data.questionId} unchanged`));
     return;
   }
 
@@ -216,7 +216,7 @@ export const generateEmbedding: JobHandler = async (payload) => {
     ]);
     const values = await embedText(questionText);
     if (!values) {
-      console.warn("[Embedding] Failed to generate for:", questionId);
+      logError("Embedding.GenerateFailed", new Error(`Failed embedding for ${questionId}`));
       return;
     }
     await storeEmbedding(

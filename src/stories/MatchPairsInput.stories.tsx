@@ -22,7 +22,7 @@ export const Shapes: Story = {
       { id: "r2", text: "No straight edges" },
       { id: "r3", text: "Three sides" },
     ],
-    onSubmit: (matches) => console.log("Submitted:", matches),
+    onSubmit: (_matches) => {},
   },
 };
 
@@ -38,7 +38,7 @@ export const TermDefinition: Story = {
       { id: "d2", text: "Converting light to chemical energy" },
       { id: "d3", text: "Breaking down glucose for energy" },
     ],
-    onSubmit: (matches) => console.log("Submitted:", matches),
+    onSubmit: (_matches) => {},
   },
 };
 
@@ -52,6 +52,6 @@ export const TwoPairs: Story = {
       { id: "x", text: "Amount of matter" },
       { id: "y", text: "Space occupied" },
     ],
-    onSubmit: (matches) => console.log("Submitted:", matches),
+    onSubmit: (_matches) => {},
   },
 };
