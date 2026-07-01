@@ -108,7 +108,7 @@ export const SwipeableCard = memo(function SwipeableCard({
     <m.div
       className={cn(
         "absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none active:cursor-grabbing",
-        isTop ? "z-10" : "pointer-events-none z-0",
+        isTop ? "z-elevated" : "pointer-events-none z-0",
       )}
       style={style ? { ...style, x, rotate, opacity } : { x, rotate, opacity }}
       aria-disabled={!isTop}

@@ -19,12 +19,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
     <Dialog open={visible} onOpenChange={(o) => !o && onClose?.()}>
       <DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
         <DialogTitle className="sr-only">Level Up</DialogTitle>
-        <m.div
-          initial={{ scale: 0.5, y: 100 }}
-          animate={{ scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
-          className="relative w-full max-w-sm motion-reduce:animate-none motion-reduce:transition-none"
-        >
+        <div className="relative w-full max-w-sm">
           <m.div
             className="absolute inset-0 rounded-3xl bg-warning opacity-40 blur-xl"
             animate={{
@@ -71,7 +66,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
               </p>
             </m.div>
           </div>
-        </m.div>
+        </div>
       </DialogContent>
     </Dialog>
   );

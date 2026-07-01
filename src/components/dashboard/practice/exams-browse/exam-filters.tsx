@@ -100,7 +100,7 @@ export function ExamFilters({
                 onClick={onClearFilters}
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground transition-[scale] hover:text-foreground active:scale-[0.96]"
+                className="text-muted-foreground transition-[scale] hover:text-foreground press-scale"
                 aria-label="Clear filters"
               >
                 <HugeiconsIcon icon={Cancel01Icon} data-icon />

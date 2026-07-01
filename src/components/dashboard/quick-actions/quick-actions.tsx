@@ -61,7 +61,7 @@ function ActionButton({
       ) : (
         <Button
           variant="secondary"
-          className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent active:scale-[0.96] transition-transform"
+          className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent press-scale transition-transform"
         >
           <span className="text-accent">
             <HugeiconsIcon

@@ -29,12 +29,7 @@ export function AchievementUnlock({
     <Dialog open={visible} onOpenChange={(o) => !o && onClose?.()}>
       <DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
         <DialogTitle className="sr-only">Achievement Unlocked</DialogTitle>
-        <m.div
-          initial={{ opacity: 0, scale: 0.95, y: 50 }}
-          animate={{ scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 26, bounce: 0 }}
-          className="relative motion-reduce:animate-none motion-reduce:transition-none"
-        >
+        <div className="relative">
           <div className={`absolute inset-0 rounded-3xl blur-xl ${raritySolid[rarity]}/50`} />
 
           <div
@@ -69,7 +64,7 @@ export function AchievementUnlock({
               </div>
             </m.div>
           </div>
-        </m.div>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -83,7 +83,7 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                     <button
                       type="button"
                       onClick={() => removeMatch(item.id)}
-                      className="ml-1 flex min-h-7 min-w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-[0.96]"
+                      className="ml-1 flex min-h-7 min-w-7 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 press-scale"
                       aria-label={`Remove match for ${item.text}`}
                     >
                       ✕

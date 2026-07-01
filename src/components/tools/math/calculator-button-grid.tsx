@@ -20,7 +20,7 @@ export function ButtonGrid({ onButtonClick }: ButtonGridProps) {
               size="sm"
               onClick={() => onButtonClick(btn.id)}
               className={cn(
-                "h-9 rounded-lg font-mono text-sm transition-transform active:scale-[0.96]",
+                "h-9 rounded-lg font-mono text-sm transition-transform press-scale",
                 VARIANT_CLASSES[btn.variant],
               )}
             >

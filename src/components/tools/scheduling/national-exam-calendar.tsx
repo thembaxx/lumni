@@ -254,7 +254,7 @@ export function NationalExamCalendar() {
                           type="button"
                           key={slot.id}
                           onClick={() => handleSlotClick(slot)}
-                          className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-border/50 bg-card px-3 py-2.5 text-left transition-[background-color,scale] hover:bg-muted/30 active:scale-[0.96] active:bg-muted/50"
+                          className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-border/50 bg-card px-3 py-2.5 text-left transition-[background-color,scale] hover:bg-muted/30 press-scale active:bg-muted/50"
                         >
                           <div className="flex flex-col items-center gap-0.5">
                             <span className="ios-caption-2 font-semibold tabular-nums">

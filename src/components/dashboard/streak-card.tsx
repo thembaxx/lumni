@@ -55,7 +55,7 @@ export const StreakCard = memo(function StreakCard() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="mt-3 h-10 gap-1.5 text-xs active:scale-[0.96]"
+                  className="mt-3 h-10 gap-1.5 text-xs press-scale"
                   onClick={() => push("/quiz")}
                 >
                   <HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />

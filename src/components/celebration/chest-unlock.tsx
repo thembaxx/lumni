@@ -1,6 +1,5 @@
 "use client";
 
-import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { rarityBorder, rarityGlowStrong, raritySolid } from "@/lib/utils/gamification";
@@ -28,12 +27,7 @@ export function ChestUnlock({
     <Dialog open={visible} onOpenChange={(o) => !o && onClose?.()}>
       <DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
         <DialogTitle className="sr-only">Reward Chest Unlocked</DialogTitle>
-        <m.div
-          initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
-          className="relative motion-reduce:animate-none motion-reduce:transition-none"
-        >
+        <div className="relative">
           <div
             className={`absolute inset-0 rounded-3xl blur-xl ${rarityGlowStrong[rarity as keyof typeof rarityGlowStrong]}`}
           />
@@ -58,7 +52,7 @@ export function ChestUnlock({
               Claim
             </Button>
           </div>
-        </m.div>
+        </div>
       </DialogContent>
     </Dialog>
   );

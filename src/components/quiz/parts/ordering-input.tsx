@@ -102,7 +102,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
                     type="button"
                     onClick={() => moveUp(id)}
                     disabled={idx === 0}
-                    className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-[0.96] disabled:opacity-20"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 press-scale disabled:opacity-20"
                     aria-label="Move up"
                   >
                     ↑
@@ -111,7 +111,7 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
                     type="button"
                     onClick={() => moveDown(id)}
                     disabled={idx === orderedIds.length - 1}
-                    className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 active:scale-[0.96] disabled:opacity-20"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-md text-muted-foreground text-xs hover:bg-muted focus-visible:ring-(--system-accent) focus-visible:ring-2 press-scale disabled:opacity-20"
                     aria-label="Move down"
                   >
                     ↓

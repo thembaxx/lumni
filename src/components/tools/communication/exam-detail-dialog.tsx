@@ -176,7 +176,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <button
             type="button"
             onClick={handlePractice}
-            className="flex cursor-pointer items-center justify-between rounded-xl bg-(--system-accent) px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 active:scale-[0.96]"
+            className="flex cursor-pointer items-center justify-between rounded-xl bg-(--system-accent) px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 press-scale"
           >
             <div className="flex items-center gap-2.5">
               <HugeiconsIcon icon={Quiz02Icon} className="size-4" />
@@ -192,7 +192,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <button
             type="button"
             onClick={handleMockExam}
-            className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 active:scale-[0.96]"
+            className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 press-scale"
           >
             <div className="flex items-center gap-2.5">
               <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-muted-foreground" />
@@ -208,7 +208,7 @@ export function ExamDetailDialog({ exam, open, onOpenChange }: ExamDetailDialogP
           <button
             type="button"
             onClick={handleCommonQuestions}
-            className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 active:scale-[0.96]"
+            className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 press-scale"
           >
             <div className="flex items-center gap-2.5">
               <HugeiconsIcon icon={NoteEditIcon} className="size-4 text-muted-foreground" />

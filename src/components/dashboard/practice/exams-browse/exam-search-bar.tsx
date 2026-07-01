@@ -39,7 +39,7 @@ export function ExamSearchBar({ searchQuery, onSearchChange }: ExamSearchBarProp
               onClick={() => onSearchChange("")}
               variant="ghost"
               size="icon"
-              className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground active:scale-[0.96]"
+              className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground press-scale"
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon />
             </Button>

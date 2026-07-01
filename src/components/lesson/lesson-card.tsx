@@ -136,7 +136,7 @@ export const LessonCard = memo(function LessonCard({
               <CardContent className="p-5">
                 <Button
                   variant="ghost"
-                  className="flex w-full flex-col items-start gap-3 text-left transition-[scale,colors] duration-200 active:scale-[0.96]"
+                  className="flex w-full flex-col items-start gap-3 text-left transition-[scale,colors] duration-200 press-scale"
                   onClick={() => setOpenId(id)}
                   aria-label={`${title} - ${difficulty} lesson`}
                 >

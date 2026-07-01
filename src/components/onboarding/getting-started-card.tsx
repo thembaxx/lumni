@@ -143,7 +143,7 @@ export function GettingStartedCard() {
                 <button
                   type="button"
                   onClick={handleDismiss}
-                  className="-mr-1 rounded-md p-3 transition-[scale,background-color] hover:bg-muted/50 active:scale-[0.96]"
+                  className="-mr-1 rounded-md p-3 transition-[scale,background-color] hover:bg-muted/50 press-scale"
                   aria-label="Dismiss"
                 >
                   <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
@@ -166,7 +166,7 @@ export function GettingStartedCard() {
                         }
                       }}
                       className={`flex items-center gap-3 rounded-xl p-3 transition-colors ${
-                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20 active:scale-[0.96]"
+                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20 press-scale"
                       } transition-[scale] duration-150`}
                       onClick={done ? undefined : () => markDone(item.key, item.href)}
                     >

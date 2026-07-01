@@ -148,7 +148,7 @@ export function PeriodicTable() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
               onClick={() => setSearchQuery("")}
-              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10 active:scale-[0.96] dark:hover:bg-white/20"
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10 press-scale dark:hover:bg-white/20"
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground/70" />
             </m.button>
@@ -163,7 +163,7 @@ export function PeriodicTable() {
         >
           <button
             onClick={() => setActiveCategory(activeCategory === null ? null : null)}
-            className={`shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 active:scale-[0.96] ${
+            className={`shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale ${
               activeCategory === null
                 ? "border-(--system-separator) bg-(--system-fill) text-foreground"
                 : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
@@ -183,7 +183,7 @@ export function PeriodicTable() {
                 duration: 0.3,
                 ease: elementEaseOutQuint,
               }}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 active:scale-[0.96] ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale ${
                 activeCategory === key
                   ? "border-(--system-separator) bg-(--system-fill) text-foreground"
                   : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
