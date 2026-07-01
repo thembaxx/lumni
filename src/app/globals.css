@@ -1260,3 +1260,8 @@ h2:not([class*="text-"]):not(.ios-title-2) {
 *:focus:not(:focus-visible) {
   outline: none;
 }
+
+/* Press scale — micro-interaction for tappable elements */
+.press-scale:active {
+  scale: 0.96;
+}

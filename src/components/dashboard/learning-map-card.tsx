@@ -145,7 +145,7 @@ export function LearningMapCard() {
             value={subjectForQuery ?? ""}
             onValueChange={(value) => setSelectedSubject(value)}
           >
-            <SelectTrigger className="h-6 w-auto min-w-[100px] text-(--fs-caption-3)" size="sm">
+            <SelectTrigger className="h-6 w-auto min-w-24 text-(--fs-caption-3)" size="sm">
               <SelectValue placeholder="Subject" />
             </SelectTrigger>
             <SelectContent>

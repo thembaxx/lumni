@@ -39,7 +39,7 @@ export const MCQOptions = memo(function MCQOptions({
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn flex min-h-12 w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-[scale,background-color] duration-150 active:scale-[0.96]",
+                "quiz-option-btn flex min-h-12 w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-[scale,background-color] duration-150 press-scale",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >

@@ -47,7 +47,7 @@ export function Achievements({ achievements }: AchievementsProps) {
             key={achievement.id}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-level-1 transition-transform active:scale-[0.96]`}
+            className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-level-1 transition-transform press-scale`}
             title={t("gamification.achievementUnlocked", {
               name: achievement.name,
               description: achievement.description,

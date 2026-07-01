@@ -27,7 +27,7 @@ export function AdminActionButton({
       onClick={onClick}
       disabled={loading || disabled}
       className={cn(
-        "flex-1 rounded-md px-3 py-2 font-medium text-sm transition-[scale,opacity] disabled:opacity-50 hover:scale-[1.02] active:scale-[0.96]",
+        "flex-1 rounded-md px-3 py-2 font-medium text-sm transition-[scale,opacity] disabled:opacity-50 hover:scale-[1.02] press-scale",
         variant === "default" ? "bg-foreground text-background" : "border bg-transparent",
       )}
     >

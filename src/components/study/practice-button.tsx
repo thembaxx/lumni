@@ -14,7 +14,7 @@ export function PracticeButton({ className, onClick }: PracticeButtonProps) {
       onClick={onClick}
       className={cn(
         "rounded-lg px-3 text-xs",
-        "transition-transform active:scale-[0.96]",
+        "transition-transform press-scale",
         "transition-colors duration-150 ease-ios",
         className,
       )}

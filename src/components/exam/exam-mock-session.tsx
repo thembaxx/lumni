@@ -290,7 +290,7 @@ export function ExamMockSession({
                         })
                       }
                       className={cn(
-                        "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-[scale,background-color,border-color] active:scale-[0.96]",
+                        "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-[scale,background-color,border-color] press-scale",
                         isSelected
                           ? "border-(--system-accent) bg-(--system-accent)/10 font-medium"
                           : "border-border bg-card hover:bg-muted/50",

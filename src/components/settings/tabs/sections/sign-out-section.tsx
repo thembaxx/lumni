@@ -17,7 +17,7 @@ export function SignOutSection({ isAnonymous, onSignOut }: SignOutSectionProps) 
           size="default"
           variant="destructive"
           onClick={onSignOut}
-          className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+          className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] press-scale"
         >
           <HugeiconsIcon icon={Logout01Icon} data-icon />
           Sign Out

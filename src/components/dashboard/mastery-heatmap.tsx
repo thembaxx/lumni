@@ -156,12 +156,12 @@ export function MasteryHeatmap() {
                   {BLOOM_ORDER.map((bloom) => (
                     <th
                       key={bloom}
-                      className="min-w-[80px] p-2 text-center font-medium text-muted-foreground capitalize"
+                      className="min-w-20 p-2 text-center font-medium text-muted-foreground capitalize"
                     >
                       {bloom}
                     </th>
                   ))}
-                  <th className="min-w-[80px] p-2 text-center font-medium text-muted-foreground">
+                  <th className="min-w-20 p-2 text-center font-medium text-muted-foreground">
                     Overall
                   </th>
                 </tr>
