@@ -133,13 +133,6 @@ await ss("02-search-42");
 // 3. Logo 7-click - check if hook is wired
 // ====================================================
 console.log("\n3) Logo 7-click easter egg");
-// Check if the hook is used anywhere
-await page.waitForTimeout(4500); // wait for overlay dismiss
-const hasLogoHook = await page.evaluate(() => {
-  // Check if any element has a click handler for 7-click
-  // The hook must be manually wired to a component - check source
-  return false; // We'll determine from code inspection
-});
 // From code inspection: useLogoEasterEgg is exported but never imported
 // The hook exists but no component wires it up
 nok("Logo 7-click: hook exported but NOT wired to any DOM element");

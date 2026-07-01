@@ -21,7 +21,7 @@ const subjectId = await page.evaluate(() => {
 console.log("Mathematics subject ID:", subjectId);
 
 // Directly click on the card element via evaluate (avoids pointer interception)
-await page.evaluate((id) => {
+await page.evaluate(() => {
   const cards = document.querySelectorAll('[data-slot="card"]');
   for (const card of cards) {
     const text = card.textContent || "";
@@ -30,7 +30,7 @@ await page.evaluate((id) => {
       return;
     }
   }
-}, subjectId);
+});
 
 await page.waitForTimeout(500);
 
@@ -48,12 +48,11 @@ if (!isDisabled) {
   console.log("Continue still disabled");
 
   // Try clicking the Sciences section to collapse it first, then recollapse
-  const sciBtn = page.locator("button").filter({ hasText: "Sciences" }).first();
   const isExpanded = await page.evaluate(() => {
     const btns = Array.from(document.querySelectorAll("button"));
     const sci = btns.find((b) => b.textContent?.includes("Sciences"));
     const svg = sci?.querySelector("svg");
-    return svg?.classList.contains("-rotate-90") ? false : true; // collapsed = has -rotate-90
+    return !svg?.classList.contains("-rotate-90"); // collapsed = has -rotate-90
   });
   console.log("Sciences expanded:", isExpanded);
 

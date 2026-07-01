@@ -45,7 +45,7 @@ function LazySyntaxHighlighter({ language, children }: LazySyntaxHighlighterProp
 
   if (!loaded || !ref.current) {
     return (
-      <pre className="m-0 max-h-[200px] overflow-auto bg-muted p-3 text-xs">
+      <pre className="m-0 max-h-50 overflow-auto bg-muted p-3 text-xs">
         <code>{children}</code>
       </pre>
     );
@@ -105,7 +105,7 @@ export function ProgrammingInput({
         }}
         disabled={disabled}
         placeholder={`Write your ${language} code here...`}
-        className={cn("min-h-[150px] font-mono text-base", starterCode && "mt-2")}
+        className={cn("min-h-38 font-mono text-base", starterCode && "mt-2")}
       />
       {onSubmit && (
         <Button

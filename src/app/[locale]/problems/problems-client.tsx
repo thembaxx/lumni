@@ -318,6 +318,7 @@ export function ProblemsClient() {
           <AnimatePresence mode="wait" initial={false}>
             {!fetched && !isPending && (
               <m.div
+                key="empty"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="py-20 text-center"

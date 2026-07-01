@@ -43,7 +43,7 @@ export function SourceBasedInput({
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         placeholder="Refer to the source(s) above and answer..."
-        className={cn("min-h-[120px]", Boolean(sourceRefs?.length) && "mt-2")}
+        className={cn("min-h-30", Boolean(sourceRefs?.length) && "mt-2")}
       />
     </div>
   );

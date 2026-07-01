@@ -59,6 +59,7 @@ interface PersistedState {
 const dexiePersistStorage = {
   getItem: async (name: string): Promise<{ state: PersistedState } | null> => {
     try {
+      if (!_deps.db.examSessions) return null;
       const record = await _deps.db.examSessions.where("paperId").equals(name).first();
       if (record) {
         return {
@@ -83,6 +84,7 @@ const dexiePersistStorage = {
     const state = value.state;
     if (state?.paperId) {
       try {
+        if (!_deps.db.examSessions) return;
         await _deps.db.examSessions.put({
           paperId: state.paperId,
           answers: JSON.stringify(state.answers || {}),
@@ -100,6 +102,7 @@ const dexiePersistStorage = {
   },
   removeItem: async (name: string): Promise<void> => {
     try {
+      if (!_deps.db.examSessions) return;
       await _deps.db.examSessions.where("paperId").equals(name).delete();
     } catch (e) {
       logError("ExamSessionPersist.remove", e);
