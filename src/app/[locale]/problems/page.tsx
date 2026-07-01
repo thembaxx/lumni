@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { ProblemsClient } from "./problems-client";
 
 export const metadata: Metadata = {
@@ -7,7 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function ProblemsPage() {
-  return <ProblemsClient />;
+  return (
+    <div className="relative min-h-dvh bg-system-grouped">
+      <AmbientGradient variant="study" />
+      <NoiseOverlay opacity={0.015} />
+      <ProblemsClient />
+    </div>
+  );
 }
 
 export const instant = false;

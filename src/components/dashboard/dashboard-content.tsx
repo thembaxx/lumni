@@ -11,6 +11,7 @@ import { LoginBanner } from "@/components/dashboard/login-banner";
 import { TodayTab } from "@/components/dashboard/today-tab";
 import type { TabValue } from "@/components/dashboard/types";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { PageContainer } from "@/components/layout/page-container";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggeredSection } from "@/components/shared/stagger-provider";
@@ -81,7 +82,8 @@ export function DashboardContent({
       }}
       className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
     >
-      <AmbientGradient />
+      <AmbientGradient variant="dashboard" />
+      <NoiseOverlay opacity={0.015} />
       <PageContainer className="gap-6 pb-16">
         <LoginBanner />
         {activeTab === "today" && (
