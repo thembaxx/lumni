@@ -1,5 +1,7 @@
 "use client";
 
+import CalculatorIcon from "@hugeicons/core-free-icons/CalculatorIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import type { AngleMode } from "@/lib/calculator/engine";
@@ -206,11 +208,12 @@ export function ScientificCalculator() {
       tabIndex={-1}
       aria-label="Scientific calculator"
     >
-      <div className="px-6 pt-5 pb-3">
+      <div className="px-5 pt-5 pb-3">
         <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
-          Scientific CalculatorIcon
+          <HugeiconsIcon icon={CalculatorIcon} className="size-5 text-(--system-accent)" />
+          Scientific Calculator
         </h2>
-        <p className="ios-subhead mt-1.5 text-(--system-text-secondary)/60">
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           {state.angleMode === "deg" ? "Degrees" : "Radians"}
           {state.memorySet && " · Memory stored"}
         </p>

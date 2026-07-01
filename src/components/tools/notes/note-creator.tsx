@@ -1,10 +1,10 @@
 "use client";
 
-import * as m from "motion/react-m";
+import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNoteStorage } from "@/hooks/use-note-storage";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 import { NoteForm } from "./note-form";
 import { NoteList } from "./note-list";
 import type { Note } from "./types";
@@ -66,19 +65,19 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
   });
 
   return (
-    <m.div
-      className={cn("mx-auto w-full max-w-2xl", className)}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.25, ease: iOSEase }}
-    >
-      <Card className="mb-6">
-        <CardHeader className="pb-4">
-          <CardTitle className="font-bold text-2xl">Note Creator</CardTitle>
-          <p className="text-muted-foreground">Create, organize, and review your study notes</p>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+    <div className={cn("flex h-full flex-col overflow-y-auto", className)}>
+      <div className="px-5 pt-5 pb-3">
+        <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
+          <HugeiconsIcon icon={NoteIcon} className="size-5 text-(--system-accent)" />
+          Note Creator
+        </h2>
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
+          Create, organize, and review your study notes
+        </p>
+      </div>
+
+      <div className="px-5 pb-5">
+        <div className="flex flex-col gap-4 rounded-2xl bg-system-background-secondary p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 flex-1">
               <Input
@@ -121,8 +120,8 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
               New Note
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <NoteList
         notes={notes}
@@ -159,6 +158,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
           />
         </DialogContent>
       </Dialog>
-    </m.div>
+    </div>
   );
 }

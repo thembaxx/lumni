@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -70,9 +70,9 @@ export function AddSessionModal({
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-w-md sm:max-w-md">
-        <DialogTitle className="font-medium font-sans text-sm">
-          {t("studyPlanner.addSessionModalTitle")}
-        </DialogTitle>
+        <DialogHeader>
+          <DialogTitle>{t("studyPlanner.addSessionModalTitle")}</DialogTitle>
+        </DialogHeader>
         <FieldGroup>
           <Field>
             <FieldLabel>{t("studyPlanner.sessionSubject")}</FieldLabel>

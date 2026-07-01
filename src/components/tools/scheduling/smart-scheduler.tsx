@@ -78,7 +78,7 @@ export function SmartScheduler() {
 
       {schedule.length === 0 ? (
         <div className="px-5 pb-10">
-          <div className="flex flex-col gap-5 rounded-2xl bg-system-background-secondary p-5">
+          <div className="flex flex-col gap-4 rounded-2xl bg-system-background-secondary p-5">
             <Field>
               <FieldLabel>Select Subjects</FieldLabel>
               <div className="grid grid-cols-2 gap-2">

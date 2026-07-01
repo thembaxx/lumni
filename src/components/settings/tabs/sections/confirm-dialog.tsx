@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -33,8 +34,8 @@ export function ConfirmDialog({
       <DialogContent className="max-w-sm sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <p className="ios-subhead text-muted-foreground">{description}</p>
         <DialogFooter>
           <Button variant="outline" onClick={onCancel}>
             {cancelLabel}

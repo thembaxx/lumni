@@ -176,11 +176,11 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
         </div>
       )}
 
-      <div className="px-6 pt-5 pb-3">
+      <div className="px-5 pt-5 pb-3">
         <h2 className="ios-title-3 flex items-center gap-2 text-(--system-text-primary)">
           AI Solver
         </h2>
-        <p className="ios-subhead mt-1.5 text-(--system-text-secondary)/60">
+        <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           {phase === "confirm"
             ? "Verify the extracted problem then solve it."
             : "Snap a photo of your homework or type a question."}
@@ -194,7 +194,7 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
       )}
 
       <div className="px-5 pb-5">
-        <div className="flex flex-col gap-4 rounded-xl bg-system-background-secondary p-5">
+        <div className="flex flex-col gap-4 rounded-2xl bg-system-background-secondary p-5">
           {showSymbols && <SolverSubjectSelector subject={subject} onChange={setSubject} />}
           {showSymbols && <SymbolPalette onInsert={insertSymbol} />}
 

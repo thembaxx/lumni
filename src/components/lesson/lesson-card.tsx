@@ -123,10 +123,6 @@ export const LessonCard = memo(function LessonCard({
                     }
                   />
                 </div>
-
-                <Button variant="outline" className="mt-6 w-full" onClick={() => setOpenId(null)}>
-                  Close
-                </Button>
               </div>
             </CardContent>
           </Card>
