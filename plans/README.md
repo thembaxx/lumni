@@ -12,21 +12,21 @@ Commit baseline: `245ba077` (current HEAD). Batch 5 plans at `53532ff1` (2026-07
 
 | Plan | Title                                                         | Priority | Effort | Risk | Depends on | Status |
 | ---- | ------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| 062  | Fix CI branch target for todo-sync + sentry-release           | P0       | S      | LOW  | —          | TODO   |
-| 063  | Make RateLimiter Redis operations atomic                      | P0       | M      | MED  | —          | TODO   |
-| 064  | Add characterization tests + invariant guards to quiz reducer | P0       | S      | LOW  | —          | TODO   |
-| 065  | Replace console.warn/error with logError in hot paths         | P0       | S      | LOW  | —          | TODO   |
+| 062  | Fix CI branch target for todo-sync + sentry-release           | P0       | S      | LOW  | —          | DONE   |
+| 063  | Make RateLimiter Redis operations atomic                      | P0       | M      | MED  | —          | DONE   |
+| 064  | Add characterization tests + invariant guards to quiz reducer | P0       | S      | LOW  | —          | DONE   |
+| 065  | Replace console.warn/error with logError in hot paths         | P0       | S      | LOW  | —          | DONE   |
 
 ### Phase 2 — P1 bug fixes + security (independent, parallelizable)
 
 | Plan | Title                                                              | Priority | Effort | Risk | Depends on | Status |
 | ---- | ------------------------------------------------------------------ | -------- | ------ | ---- | ---------- | ------ |
-| 066  | Fix mock exam non-MCQ grading + timer safety                       | P1       | S      | LOW  | —          | TODO   |
-| 067  | Replace synthetic pool question body with real past-paper data     | P1       | L      | MED  | —          | TODO   |
-| 068  | Harden leaderboard endpoint auth                                   | P1       | S      | LOW  | —          | TODO   |
-| 069  | Add membership checks to live session + student report endpoints   | P1       | S      | LOW  | —          | TODO   |
-| 070  | Fix note storage crash + unify three fragmented note-storage paths | P1       | M      | LOW  | —          | TODO   |
-| 071  | Surface quiz-start errors instead of silent catch                  | P1       | S      | LOW  | —          | TODO   |
+| 066  | Fix mock exam non-MCQ grading + timer safety                       | P1       | S      | LOW  | —          | DONE   |
+| 067  | Replace synthetic pool question body with real past-paper data     | P1       | L      | MED  | —          | DONE   |
+| 068  | Harden leaderboard endpoint auth                                   | P1       | S      | LOW  | —          | DONE   |
+| 069  | Add membership checks to live session + student report endpoints   | P1       | S      | LOW  | —          | DONE   |
+| 070  | Fix note storage crash + unify three fragmented note-storage paths | P1       | M      | LOW  | —          | DONE   |
+| 071  | Surface quiz-start errors instead of silent catch                  | P1       | S      | LOW  | —          | DONE   |
 
 ### Phase 3 — Direction / design spikes
 
