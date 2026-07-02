@@ -138,6 +138,8 @@ export function useGamification() {
         competentTopicsCount?: number;
         topicScoreImproved?: boolean;
         examScoreImproved?: boolean;
+        leaderboardRank?: number;
+        subjectLeaderboardRank?: number;
       },
     ) => {
       const achievements = service.checkAndUnlockAchievements(

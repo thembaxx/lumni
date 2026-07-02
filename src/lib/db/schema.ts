@@ -330,12 +330,25 @@ export interface StoryProgressRecord {
   timeSpentSeconds: number;
 }
 
+export interface EssayDraftRecord {
+  id?: number;
+  userId: string;
+  questionId: string;
+  draftNumber: number;
+  content: string;
+  aiFeedback: string;
+  score: number;
+  maxScore: number;
+  createdAt: number;
+}
+
 export interface CompetitionScoreRecord {
   id?: number;
   userId: string;
   weekStart: string;
   weekEnd: string;
   xpEarned: number;
+  subjectId?: string;
   updatedAt: number;
 }
 
@@ -451,6 +464,7 @@ export class LumniOfflineDB extends Dexie {
   syncOutbox!: Table<SyncOutboxEntry, number>;
   syncCheckpoints!: Table<SyncCheckpoint, string>;
   userSettings!: Table<UserSettings, string>;
+  essayDrafts!: Table<EssayDraftRecord, number>;
 
   constructor() {
     super("lumni-offline");
@@ -1220,6 +1234,11 @@ export class LumniOfflineDB extends Dexie {
     // v42: userSettings for cross-device preference persistence
     this.version(42).stores({
       userSettings: "&userId, updatedAt",
+    });
+
+    // v43: essayDrafts for essay coaching revision tracking
+    this.version(43).stores({
+      essayDrafts: "++id, userId, questionId, [userId+questionId]",
     });
   }
 }

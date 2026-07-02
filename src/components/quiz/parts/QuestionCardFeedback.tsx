@@ -20,6 +20,7 @@ import {
   SourceAttributionPill,
   type SourceAttributionPillSource,
 } from "../source-attribution-pill";
+import { CoachingPanel } from "../coaching-panel";
 import { StepByStep } from "../step-by-step";
 
 type Solver = ReturnType<typeof useSolver>;
@@ -162,6 +163,14 @@ export function QuestionCardFeedback({
         </div>
       )}
       <AskInChatButton questionText={question.questionText} />
+      {feedback && (
+        <CoachingPanel
+          questionId={question.id}
+          questionType={question.type}
+          initialDraft=""
+          initialResult={feedback}
+        />
+      )}
       {question.steps && question.steps.length > 0 && (
         <div className="border-current/20 border-t pt-2">
           <StepByStep

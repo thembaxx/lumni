@@ -222,6 +222,8 @@ export class GamificationEngine {
       competentTopicsCount?: number;
       topicScoreImproved?: boolean;
       examScoreImproved?: boolean;
+      leaderboardRank?: number;
+      subjectLeaderboardRank?: number;
     },
   ): string[] {
     const newAchievements: string[] = [];
@@ -299,6 +301,18 @@ export class GamificationEngine {
       ],
       ["weakness_slayer", (extra?.topicScoreImproved ?? false) && !earned.has("weakness_slayer")],
       ["exam_comeback", (extra?.examScoreImproved ?? false) && !earned.has("exam_comeback")],
+      [
+        "leaderboard_top_50",
+        (extra?.leaderboardRank ?? 999) <= 50 && !earned.has("leaderboard_top_50"),
+      ],
+      [
+        "leaderboard_top_10",
+        (extra?.leaderboardRank ?? 999) <= 10 && !earned.has("leaderboard_top_10"),
+      ],
+      [
+        "leaderboard_subject_top_10",
+        (extra?.subjectLeaderboardRank ?? 999) <= 10 && !earned.has("leaderboard_subject_top_10"),
+      ],
     ];
 
     for (const [id, shouldUnlock] of [...checks, ...subjectChecks, ...extraChecks]) {

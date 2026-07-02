@@ -322,6 +322,8 @@ export class GamificationService {
       competentTopicsCount?: number;
       topicScoreImproved?: boolean;
       examScoreImproved?: boolean;
+      leaderboardRank?: number;
+      subjectLeaderboardRank?: number;
     },
   ): Achievement[] {
     const ids = gamificationEngine.checkAndUnlockAchievements(

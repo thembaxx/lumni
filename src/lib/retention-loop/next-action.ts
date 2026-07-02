@@ -3,6 +3,11 @@ import { dexieDataAccess as _dexieDa } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
+import {
+  getRankedRecommendations,
+  type ScoredRecommendation,
+  type ScorerDeps,
+} from "@/lib/recommendation";
 
 const DEFAULT_DEPS = Object.freeze({ db: _dexieDa });
 let _deps = DEFAULT_DEPS;
@@ -208,6 +213,66 @@ export function resolveNextActionEffect(userId?: string): Effect.Effect<NextActi
 
 export function resolveNextAction(userId?: string): Promise<NextAction | null> {
   return Effect.runPromise(resolveNextActionEffect(userId));
+}
+
+export function getFeed(
+  userId: string,
+  deps?: Partial<ScorerDeps>,
+  limit?: number,
+): Promise<ScoredRecommendation[]> {
+  const scorerDeps: ScorerDeps = {
+    getDueCardsCount: async () => {
+      const now = Date.now();
+      const allCards = await _deps.db.flashcards.toArray();
+      return allCards.filter((c) => c.nextReview <= now).length;
+    },
+    getWeakestTopic: async () => {
+      const all = await _deps.db.competencies.toArray();
+      if (all.length === 0) return null;
+      let weakest: { subjectId: string; topicId: string; score: number } | null = null;
+      for (const c of all) {
+        const s = typeof c.score === "number" ? c.score : 0;
+        if (!weakest || s < weakest.score) weakest = { score: s, subjectId: c.subjectId, topicId: c.topicId };
+      }
+      if (!weakest) return null;
+      const sub = await _deps.db.subjects.where("code").equals(weakest.subjectId).first();
+      return { score: weakest.score, subject: sub?.name ?? weakest.subjectId, topic: weakest.topicId.replaceAll(/-/g, " ").replaceAll(/\b\w/g, (l: string) => l.toUpperCase()) };
+    },
+    getUpcomingExam: async (_uid: string) => {
+      try {
+        const slots = localStorage.getItem("lumni_exam_dates");
+        if (!slots) return null;
+        const parsed = JSON.parse(slots);
+        const session = getCurrentSession();
+        if (!session) return null;
+        const yearSlots = parsed?.[String(session.year)];
+        if (!yearSlots) return null;
+        const allSlots = Object.values(yearSlots).flat() as Record<string, unknown>[];
+        let nearest: { subject: string; date: string } | null = null;
+        const now = new Date();
+        for (const s of allSlots) {
+          if (!s.date) continue;
+          const d = new Date(s.date as string);
+          const diff = Math.ceil((d.getTime() - now.getTime()) / 86_400_000);
+          if (diff < 0) continue;
+          if (!nearest || diff < Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000)) {
+            nearest = { subject: String(s.subject), date: String(s.date) };
+          }
+        }
+        if (!nearest) return null;
+        return { subject: nearest.subject, daysUntil: Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000) };
+      } catch { return null; }
+    },
+    getHoursSinceLastPractice: async () => {
+      try {
+        const attempts = await _deps.db.quizAttempts.orderBy("completedAt").reverse().first();
+        if (!attempts?.completedAt) return 24;
+        return (Date.now() - new Date(attempts.completedAt).getTime()) / 3_600_000;
+      } catch { return 0; }
+    },
+    ...deps,
+  };
+  return getRankedRecommendations(userId, scorerDeps, limit);
 }
 
 function getDaysUntilExam(

@@ -145,6 +145,7 @@ class DexieDataAccess implements DataAccess {
   knowledgeGraph = tableAdapter(offlineDB.knowledgeGraph);
   examSessions = tableAdapter(offlineDB.examSessions);
   sharedQuestions = tableAdapter(offlineDB.sharedQuestions);
+  essayDrafts = tableAdapter(offlineDB.essayDrafts);
   examDates = tableAdapter(offlineDB.examDates);
   extractionCache = tableAdapter(offlineDB.extractionCache);
   notes = tableAdapter(offlineDB.notes);

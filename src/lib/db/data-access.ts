@@ -19,6 +19,7 @@ import type {
   CachedVisual,
   ChatMessageRecord,
   CompetitionScoreRecord,
+  EssayDraftRecord,
   ExamSessionSnapshot,
   ExtractionCache,
   FlashcardSyncState,
@@ -128,6 +129,7 @@ export interface ContentDataAccess {
   notes: DataAccessTable<NoteRecord, number>;
   bookmarks: DataAccessTable<BookmarkRecord, number>;
   sharedQuestions: DataAccessTable<SharedQuestionRecord, string>;
+  essayDrafts: DataAccessTable<EssayDraftRecord, number>;
   visuals: DataAccessTable<CachedVisual, number>;
   cachedPdfs: DataAccessTable<CachedPdf, number>;
   extractionCache: DataAccessTable<ExtractionCache, number>;

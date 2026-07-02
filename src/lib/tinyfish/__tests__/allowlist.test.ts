@@ -27,11 +27,15 @@ describe("isSubjectAllowed", () => {
     expect(isSubjectAllowed("isi-zulu-home-language")).toBe(true);
   });
 
-  test("returns false for off-grid subjects", () => {
-    expect(isSubjectAllowed("life-orientation")).toBe(false);
-    expect(isSubjectAllowed("computer-applications-technology")).toBe(false);
-    expect(isSubjectAllowed("visual-arts")).toBe(false);
-    expect(isSubjectAllowed("music")).toBe(false);
+  test("returns true for all newly added CAPS subjects", () => {
+    expect(isSubjectAllowed("life-orientation")).toBe(true);
+    expect(isSubjectAllowed("computer-applications-technology")).toBe(true);
+    expect(isSubjectAllowed("visual-arts")).toBe(true);
+    expect(isSubjectAllowed("music")).toBe(true);
+    expect(isSubjectAllowed("civil-technology")).toBe(true);
+    expect(isSubjectAllowed("tourism")).toBe(true);
+    expect(isSubjectAllowed("religion-studies")).toBe(true);
+    expect(isSubjectAllowed("hospitality-studies")).toBe(true);
   });
 
   test("returns false for null/undefined/empty", () => {

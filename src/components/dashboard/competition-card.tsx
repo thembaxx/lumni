@@ -5,23 +5,51 @@ import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { getLeaderboard, getTimeRemaining } from "@/lib/competitions/service";
+import { getTimeRemaining } from "@/lib/competitions/service";
+import { useGamification } from "@/hooks/use-gamification";
+
+interface ApiLeaderboardEntry {
+  rank: number;
+  userId: string;
+  label: string;
+  xp: number;
+  streak: number;
+  level: number;
+  subject: string | null;
+}
 
 const MEDALS = ["🥇", "🥈", "🥉"];
+
+const SUBJECT_TABS = [
+  { id: undefined, label: "All" },
+  { id: "mathematics", label: "Math" },
+  { id: "physical-sciences", label: "Physics" },
+  { id: "life-sciences", label: "Life Sci" },
+  { id: "accounting", label: "Accounting" },
+  { id: "geography", label: "Geography" },
+];
 
 export function CompetitionCard() {
   const _t = useTranslations();
   const { user } = useAuth();
   const userId = user?.$id ?? "";
+  const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
 
   const { data: leaderboard, isLoading } = useQuery({
-    queryKey: ["competition-leaderboard"],
-    queryFn: getLeaderboard,
+    queryKey: ["competition-leaderboard", activeTab],
+    queryFn: async (): Promise<ApiLeaderboardEntry[]> => {
+      const params = new URLSearchParams();
+      if (activeTab) params.set("subject", activeTab);
+      const res = await fetch(`/api/leaderboard?${params.toString()}`);
+      if (!res.ok) throw new Error("Failed to fetch leaderboard");
+      const data = await res.json();
+      return data.entries ?? [];
+    },
     refetchInterval: 60000,
   });
 
@@ -29,6 +57,20 @@ export function CompetitionCard() {
     () => (userId ? (leaderboard?.find((e) => e.userId === userId) ?? null) : null),
     [leaderboard, userId],
   );
+
+  const { checkAndUnlockAchievements, levelInfo } = useGamification();
+
+  useEffect(() => {
+    if (!myRank || !leaderboard) return;
+    const rank = myRank.rank;
+    const subjectRank = activeTab
+      ? leaderboard.find((e) => e.userId === userId)?.rank ?? 999
+      : undefined;
+    checkAndUnlockAchievements(0, 0, 0, levelInfo.level, false, {
+      leaderboardRank: rank,
+      subjectLeaderboardRank: subjectRank,
+    });
+  }, [myRank?.rank, activeTab]);
 
   const timeLeft = getTimeRemaining();
 
@@ -42,7 +84,7 @@ export function CompetitionCard() {
     );
   }
 
-  const top3 = leaderboard?.slice(0, 3) ?? [];
+  const top10 = leaderboard?.slice(0, 10) ?? [];
   const rankText = myRank
     ? `#${myRank.rank}`
     : leaderboard && leaderboard.length > 0
@@ -74,19 +116,70 @@ export function CompetitionCard() {
           <span className="font-medium tabular-nums">{rankText}</span>
         </div>
 
-        {top3.length > 0 && (
-          <div className="grid grid-cols-3 gap-2">
-            {top3.map((entry, i) => (
+        <div className="flex flex-wrap gap-1">
+          {SUBJECT_TABS.map((tab) => (
+            <button
+              key={tab.id ?? "all"}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab(tab.id);
+              }}
+              className={`rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors ${
+                activeTab === tab.id
+                  ? "bg-accent text-accent-foreground"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {top10.length > 0 && (
+          <div className="flex flex-col gap-1">
+            {top10.slice(0, 3).map((entry, i) => (
               <div
-                key={entry.userId}
-                className="flex flex-col items-center gap-0.5 rounded-lg bg-muted/40 px-2 py-1.5"
+                key={entry.userId + (i === 0 ? "-first" : "")}
+                className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-sm ${
+                  entry.userId === userId ? "bg-accent/20 font-medium" : "bg-muted/30"
+                }`}
               >
-                <span className="text-base">{MEDALS[i]}</span>
-                <span className="max-w-full truncate font-mono text-xs tabular-nums">
-                  {entry.xpEarned} XP
+                <div className="flex items-center gap-2">
+                  <span className="text-base">{MEDALS[i]}</span>
+                  <span className="max-w-[120px] truncate font-mono text-xs">
+                    {entry.label ?? entry.userId.slice(0, 8)}
+                  </span>
+                </div>
+                <span className="font-mono text-xs tabular-nums">
+                  {entry.xp} XP
                 </span>
               </div>
             ))}
+            {top10.length > 3 && (
+              <div className="flex flex-col gap-1 pt-1">
+                {top10.slice(3).map((entry) => (
+                  <div
+                    key={entry.userId}
+                    className={`flex items-center justify-between rounded-lg px-3 py-1 text-sm ${
+                      entry.userId === userId ? "bg-accent/20 font-medium" : "hover:bg-muted/20"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 text-center font-mono text-xs text-muted-foreground">
+                        {entry.rank}
+                      </span>
+                      <span className="max-w-[120px] truncate text-xs">
+                        {entry.label ?? entry.userId.slice(0, 8)}
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs tabular-nums">
+                      {entry.xp} XP
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

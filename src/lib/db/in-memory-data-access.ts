@@ -13,6 +13,7 @@ import type {
   CachedVisual,
   ChatMessageRecord,
   CompetitionScoreRecord,
+  EssayDraftRecord,
   ExamSessionSnapshot,
   PronunciationScoreRecord,
   ExtractionCache,
@@ -278,6 +279,7 @@ export class InMemoryDataAccess implements DataAccess {
   knowledgeGraph = new InMemoryTable<CachedGraph, string>();
   examSessions = new InMemoryTable<ExamSessionSnapshot>();
   sharedQuestions = new InMemoryTable<SharedQuestionRecord, string>();
+  essayDrafts = new InMemoryTable<EssayDraftRecord>();
   examDates = new InMemoryTable<CachedExamDates>();
   extractionCache = new InMemoryTable<ExtractionCache>();
   notes = new InMemoryTable<NoteRecord>();

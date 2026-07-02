@@ -20,6 +20,7 @@ import { audioEngine } from "@/lib/audio-engine";
 import { getWhisperService } from "@/lib/audio-engine/whisper-service";
 import { savePronunciationScore } from "@/lib/pronunciation-history/service";
 import { logError } from "@/lib/shared/logger";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 interface WordScore {
   word: string;
@@ -411,29 +412,22 @@ export function PronunciationClient() {
 
                     {historyStats.recentScores.length > 0 && (
                       <div className="flex flex-col gap-2">
-                        <span className="font-semibold text-sm">Recent Scores</span>
-                        <div className="flex items-end gap-1.5">
-                          {historyStats.recentScores.map((s, i) => (
-                            <div key={i} className="flex flex-1 flex-col items-center gap-1">
-                              <div
-                                className="w-full rounded-t-md transition-[height,background-color] duration-300"
-                                style={{
-                                  height: `${Math.max(s.score, 4)}px`,
-                                  backgroundColor:
-                                    s.score >= 80
-                                      ? "var(--color-success, #22c55e)"
-                                      : s.score >= 50
-                                        ? "var(--color-warning, #f59e0b)"
-                                        : "var(--color-destructive, #ef4444)",
-                                  opacity: 0.8,
-                                }}
-                              />
-                              <span className="text-(--fs-caption-3) text-muted-foreground">
-                                {s.date}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <span className="font-semibold text-sm">Score Trend</span>
+                        <ResponsiveContainer width="100%" height={160}>
+                          <BarChart data={historyStats.recentScores} barCategoryGap="20%">
+                            <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                            <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+                            <Tooltip />
+                            <Bar dataKey="score" radius={[4, 4, 0, 0]} fill="var(--color-accent, oklch(52% 0.18 146))" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                        <ResponsiveContainer width="100%" height={80}>
+                          <LineChart data={historyStats.recentScores}>
+                            <XAxis dataKey="date" hide />
+                            <YAxis domain={[0, 100]} hide />
+                            <Line type="monotone" dataKey="score" stroke="var(--color-accent)" strokeWidth={2} dot={{ r: 3 }} />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
                     )}
 

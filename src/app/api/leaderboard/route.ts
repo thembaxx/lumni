@@ -1,38 +1,42 @@
 import { Client, Databases, Query } from "appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { type NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
+import { isSubjectAllowed } from "@/lib/tinyfish/allowlist";
 
-async function fetchLeaderboard() {
+async function fetchLeaderboard(subject?: string | null) {
   const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT);
   const db = new Databases(client);
-  return db.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.USER_GAMIFICATION, [
-    Query.orderDesc("totalXp"),
-    Query.limit(100),
-  ]);
+
+  const queries = [Query.orderDesc("totalXp"), Query.limit(100)];
+
+  if (subject && isSubjectAllowed(subject)) {
+    queries.push(Query.equal("subjects", subject));
+  }
+
+  return db.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.USER_GAMIFICATION, queries);
 }
 
-export const GET = createRouteHandler({
-  auth: "optional",
-  errorLabel: "Leaderboard",
-  execute: async () => {
-    try {
-      const docs = await fetchLeaderboard();
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const subject = searchParams.get("subject");
+    const docs = await fetchLeaderboard(subject);
 
-      const entries = docs.documents.map((doc, index) => ({
-        rank: index + 1,
-        userId: doc.userId as string,
-        label: (doc.label as string) || `Student ${index + 1}`,
-        xp: (doc.totalXp as number) || 0,
-        streak: (doc.currentStreak as number) || 0,
-        level: (doc.level as number) || 1,
-      }));
+    const entries = docs.documents.map((doc, index) => ({
+      rank: index + 1,
+      userId: doc.userId as string,
+      label: (doc.label as string) || `Student ${index + 1}`,
+      xp: (doc.totalXp as number) || 0,
+      streak: (doc.currentStreak as number) || 0,
+      level: (doc.level as number) || 1,
+      subject,
+    }));
 
-      return { entries };
-    } catch (err) {
-      logError("Leaderboard", err);
-      return { entries: [] };
-    }
-  },
-});
+    return NextResponse.json({ entries, total: entries.length });
+  } catch (err) {
+    logError("Leaderboard", err);
+    return NextResponse.json({ entries: [], total: 0 });
+  }
+}
