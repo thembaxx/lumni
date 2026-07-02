@@ -8,8 +8,10 @@ import { apiFetch } from "@/lib/shared/api-fetch";
 import type { Achievement, RewardChestDef } from "@/types/gamification";
 import { ACHIEVEMENTS, calculateLevel, REWARD_CHESTS } from "@/types/gamification";
 import type { GamificationDeps, XpResult, AchievementResult, ChestResult, StreakResult, FreezeResult, StateListener } from "./service-types";
-import { persist, persistEffect, saveSnapshot, saveSnapshotEffect } from "./service-persist";
-import { scheduleSync, syncToServer, syncToLeaderboard } from "./service-sync";
+import type { MutationSelf } from "./service-mutation";
+import { addXpMutation, addAchievementMutation, updateStreakMutation, consumeStreakFreezeMutation, addStreakFreezeMutation, completeDailyChallengeMutation, checkForRewardChestsMutation, updateCounterMutation, setCounterMutation } from "./service-mutation";
+import { addXpEffect, addAchievementEffect, updateStreakEffect, consumeStreakFreezeEffect, addStreakFreezeEffect, completeDailyChallengeEffect, checkForRewardChestsEffect } from "./service-effects";
+import { syncToLeaderboard } from "./service-sync";
 
 const DEFAULT_DEPS: GamificationDeps = { db: dexieDataAccess };
 
@@ -119,146 +121,25 @@ export class GamificationService {
     );
   }
 
-  addXpEffect(
-    amount: number,
-    accuracy: number,
-    streak: number,
-    subject?: string,
-  ): Effect.Effect<XpResult> {
+  private get mutationSelf(): MutationSelf {
     // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
-    return Effect.gen(function* () {
-      const working = subject
-        ? gamificationEngine.trackSubjectQuestion(self.data, subject, amount)
-        : self.data;
-      const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
-        working,
-        amount,
-        accuracy,
-        streak,
-        subject,
-      );
-      self.data = newData;
-      yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      saveSnapshot(newData);
-      self.notify();
-      return { data: newData, leveledUp: newLevel !== null };
-    });
-  }
-
-  addAchievementEffect(achievementId: string): Effect.Effect<AchievementResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { data: newData, achievement } = gamificationEngine.addAchievement(
-        self.data,
-        achievementId,
-      );
-      self.data = newData;
-      yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      self.notify();
-      return { data: newData, achievement };
-    });
-  }
-
-  updateStreakEffect(): Effect.Effect<StreakResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
-      self.data = newData;
-      yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      self.notify();
-      return { data: newData, freezeConsumed };
-    });
-  }
-
-  consumeStreakFreezeEffect(): Effect.Effect<FreezeResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { data: newData, success } = gamificationEngine.consumeStreakFreeze(self.data);
-      if (success) {
-        self.data = newData;
-        yield* persistEffect(self.db, newData);
-        scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-        self.notify();
-      }
-      return { data: newData, success };
-    });
-  }
-
-  addStreakFreezeEffect(count?: number): Effect.Effect<void> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const newData = gamificationEngine.addStreakFreeze(self.data, count);
-      self.data = newData;
-      yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      self.notify();
-    });
-  }
-
-  completeDailyChallengeEffect(challengeId: string): Effect.Effect<void> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { data: newData } = gamificationEngine.completeDailyChallenge(self.data, challengeId);
-      self.data = newData;
-      yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      self.notify();
-    });
-  }
-
-  checkForRewardChestsEffect(): Effect.Effect<ChestResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(self.data);
-      if (newData !== self.data) {
-        yield* persistEffect(self.db, newData);
-        scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
-      }
-      self.data = newData;
-      self.notify();
-      return { data: newData, chest };
-    });
+    return {
+      get data() { return self.data; },
+      set data(v: StoredGamification) { self.data = v; },
+      db: this.db,
+      notify: () => this.notify(),
+      syncTimer: this.syncTimer,
+      setSyncTimer: (t) => { self.syncTimer = t; },
+    };
   }
 
   addXp(amount: number, accuracy: number, streak: number, subject?: string): XpResult {
-    const working = subject
-      ? gamificationEngine.trackSubjectQuestion(this.data, subject, amount)
-      : this.data;
-    const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
-      working,
-      amount,
-      accuracy,
-      streak,
-      subject,
-    );
-    this.data = newData;
-    persist(this.db, newData);
-    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    saveSnapshot(newData);
-    this.notify();
-    return { data: newData, leveledUp: newLevel !== null };
+    return addXpMutation(this.mutationSelf, amount, accuracy, streak, subject);
   }
 
   addAchievement(achievementId: string): AchievementResult {
-    const { data: newData, achievement } = gamificationEngine.addAchievement(
-      this.data,
-      achievementId,
-    );
-    this.data = newData;
-    persist(this.db, newData);
-    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    this.notify();
-    return { data: newData, achievement };
+    return addAchievementMutation(this.mutationSelf, achievementId);
   }
 
   checkAndUnlockAchievements(
@@ -296,66 +177,67 @@ export class GamificationService {
     key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
     value: number,
   ): void {
-    const prev = this.data[key] ?? 0;
-    this.data = { ...this.data, [key]: prev + value };
-    persist(this.db, this.data);
-    this.notify();
+    return updateCounterMutation(this.mutationSelf, key, value);
   }
 
   setCounter(
     key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
     value: number,
   ): void {
-    this.data = { ...this.data, [key]: value };
-    persist(this.db, this.data);
-    this.notify();
+    return setCounterMutation(this.mutationSelf, key, value);
   }
 
   updateStreak(): StreakResult {
-    const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(this.data);
-    this.data = newData;
-    persist(this.db, newData);
-    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    this.notify();
-    return { data: newData, freezeConsumed };
+    return updateStreakMutation(this.mutationSelf);
   }
 
   consumeStreakFreeze(): FreezeResult {
-    const { data: newData, success } = gamificationEngine.consumeStreakFreeze(this.data);
-    if (success) {
-      this.data = newData;
-      persist(this.db, newData);
-      scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-      this.notify();
-    }
-    return { data: newData, success };
+    return consumeStreakFreezeMutation(this.mutationSelf);
   }
 
   addStreakFreeze(count?: number): void {
-    const newData = gamificationEngine.addStreakFreeze(this.data, count);
-    this.data = newData;
-    persist(this.db, newData);
-    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    this.notify();
+    return addStreakFreezeMutation(this.mutationSelf, count);
   }
 
   completeDailyChallenge(challengeId: string): void {
-    const { data: newData } = gamificationEngine.completeDailyChallenge(this.data, challengeId);
-    this.data = newData;
-    persist(this.db, newData);
-    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    this.notify();
+    return completeDailyChallengeMutation(this.mutationSelf, challengeId);
   }
 
   checkForRewardChests(): ChestResult {
-    const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(this.data);
-    if (newData !== this.data) {
-      persist(this.db, newData);
-      scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
-    }
-    this.data = newData;
-    this.notify();
-    return { data: newData, chest };
+    return checkForRewardChestsMutation(this.mutationSelf);
+  }
+
+  addXpEffect(
+    amount: number,
+    accuracy: number,
+    streak: number,
+    subject?: string,
+  ): Effect.Effect<XpResult> {
+    return addXpEffect(this.mutationSelf, amount, accuracy, streak, subject);
+  }
+
+  addAchievementEffect(achievementId: string): Effect.Effect<AchievementResult> {
+    return addAchievementEffect(this.mutationSelf, achievementId);
+  }
+
+  updateStreakEffect(): Effect.Effect<StreakResult> {
+    return updateStreakEffect(this.mutationSelf);
+  }
+
+  consumeStreakFreezeEffect(): Effect.Effect<FreezeResult> {
+    return consumeStreakFreezeEffect(this.mutationSelf);
+  }
+
+  addStreakFreezeEffect(count?: number): Effect.Effect<void> {
+    return addStreakFreezeEffect(this.mutationSelf, count);
+  }
+
+  completeDailyChallengeEffect(challengeId: string): Effect.Effect<void> {
+    return completeDailyChallengeEffect(this.mutationSelf, challengeId);
+  }
+
+  checkForRewardChestsEffect(): Effect.Effect<ChestResult> {
+    return checkForRewardChestsEffect(this.mutationSelf);
   }
 
   getLevelInfo() {

@@ -8,8 +8,9 @@ import { logError } from "@/lib/shared/logger";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { getReadableErrorMessage } from "./errors";
 import { attemptMagicLink, attemptSignIn, recordSuccessfulSignIn } from "./rate-limit";
-
-export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
+import { type AuthAction, type AuthState, authReducer, INITIAL_AUTH_STATE } from "./auth-types";
+import { ANONYMOUS_ATTEMPTED_KEY, syncGoogleAvatar } from "./auth-helpers";
+import type { AuthStatus } from "./auth-types";
 
 interface AuthContextValue {
   user: Models.User<Models.Preferences> | null;
@@ -27,84 +28,6 @@ interface AuthContextValue {
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-
-const ANONYMOUS_ATTEMPTED_KEY = "lumni_anonymous_attempted";
-
-async function syncGoogleAvatar(user: Models.User<Models.Preferences>): Promise<void> {
-  try {
-    const prefs = user.prefs as Record<string, unknown>;
-    if (prefs?.avatarUrl) return;
-
-    const session = await account.getSession("current");
-    if (session.provider !== "google" || !session.providerAccessToken) return;
-
-    const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-      headers: { Authorization: `Bearer ${session.providerAccessToken}` },
-    });
-    if (!res.ok) return;
-
-    const data = (await res.json()) as { picture?: string };
-    if (!data.picture) return;
-
-    const freshUser = await account.get();
-    const freshPrefs = freshUser.prefs as Record<string, unknown>;
-    await account.updatePrefs({ ...freshPrefs, avatarUrl: data.picture });
-  } catch (err) {
-    logError("sync-google-avatar", err);
-  }
-}
-
-interface AuthState {
-  user: Models.User<Models.Preferences> | null;
-  status: AuthStatus;
-  isAnonymous: boolean;
-  error: string | null;
-  authReady: boolean;
-}
-
-type AuthAction =
-  | {
-      type: "SET_USER";
-      user: Models.User<Models.Preferences> | null;
-      status: AuthStatus;
-      isAnonymous: boolean;
-    }
-  | { type: "SET_ERROR"; error: string | null }
-  | { type: "SET_AUTH_READY"; authReady: boolean }
-  | { type: "RESET" };
-
-function authReducer(state: AuthState, action: AuthAction): AuthState {
-  switch (action.type) {
-    case "SET_USER":
-      return {
-        ...state,
-        user: action.user,
-        status: action.status,
-        isAnonymous: action.isAnonymous,
-        error: null,
-      };
-    case "SET_ERROR":
-      return { ...state, error: action.error };
-    case "SET_AUTH_READY":
-      return { ...state, authReady: action.authReady };
-    case "RESET":
-      return {
-        user: null,
-        status: "unauthenticated",
-        isAnonymous: false,
-        error: null,
-        authReady: true,
-      };
-  }
-}
-
-const INITIAL_AUTH_STATE: AuthState = {
-  user: null,
-  status: "loading",
-  isAnonymous: false,
-  error: null,
-  authReady: false,
-};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, INITIAL_AUTH_STATE);
@@ -127,8 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           user: null,
           status: "unauthenticated",
           isAnonymous: false,
-        });
-        dispatch({ type: "SET_AUTH_READY", authReady: true });
+        } satisfies AuthAction);
+        dispatch({ type: "SET_AUTH_READY", authReady: true } satisfies AuthAction);
         return;
       }
 
@@ -141,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           user: currentUser,
           status: "authenticated",
           isAnonymous: isAnon,
-        });
+        } satisfies AuthAction);
         if (!isAnon) {
           syncGoogleAvatar(currentUser);
         }
@@ -159,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             user: anonUser,
             status: "authenticated",
             isAnonymous: true,
-          });
+          } satisfies AuthAction);
         } catch (anonErr) {
           if (cancelled) return;
           logError("auth-anonymous", anonErr);
@@ -169,11 +92,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             user: null,
             status: "unauthenticated",
             isAnonymous: false,
-          });
+          } satisfies AuthAction);
         }
       } finally {
         if (!cancelled) {
-          dispatch({ type: "SET_AUTH_READY", authReady: true });
+          dispatch({ type: "SET_AUTH_READY", authReady: true } satisfies AuthAction);
         }
       }
     };
@@ -187,11 +110,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = useCallback(
     async (email: string, password: string) => {
-      dispatch({ type: "SET_ERROR", error: null });
+      dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
 
       const rateLimit = await attemptSignIn(email);
       if (!rateLimit.allowed) {
-        dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
+        dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage } satisfies AuthAction);
         return;
       }
 
@@ -203,10 +126,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           user,
           status: "authenticated",
           isAnonymous: false,
-        });
+        } satisfies AuthAction);
         queryClient.invalidateQueries({ queryKey: ["user"] });
       } catch (err) {
-        dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+        dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
         throw err;
       }
     },
@@ -214,7 +137,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const signUp = useCallback(async (email: string, password: string, name: string) => {
-    dispatch({ type: "SET_ERROR", error: null });
+    dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
     try {
       await Promise.all([account.updateName(name), account.updateEmail(email, password)]);
       const user = await account.get();
@@ -223,22 +146,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         status: "authenticated",
         isAnonymous: false,
-      });
+      } satisfies AuthAction);
 
       await flushOfflineData(user.$id).catch((e) => logError("flush-offline-data", e));
       return user.$id;
     } catch (err) {
-      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
       throw err;
     }
   }, []);
 
   const signInWithMagicLink = useCallback(async (email: string) => {
-    dispatch({ type: "SET_ERROR", error: null });
+    dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
 
     const rateLimit = await attemptMagicLink(email);
     if (!rateLimit.allowed) {
-      dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
+      dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage } satisfies AuthAction);
       return;
     }
 
@@ -250,13 +173,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       await account.createMagicURLToken(email, redirectUrl);
     } catch (err) {
-      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
       throw err;
     }
   }, []);
 
   const signInWithGoogle = useCallback(async () => {
-    dispatch({ type: "SET_ERROR", error: null });
+    dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
     try {
       const successUrl =
         typeof window !== "undefined"
@@ -273,7 +196,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         failure: failureUrl,
       });
     } catch (err) {
-      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
       throw err;
     }
   }, []);
@@ -284,25 +207,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
     } finally {
       localStorage.removeItem(ANONYMOUS_ATTEMPTED_KEY);
-      dispatch({ type: "RESET" });
+      dispatch({ type: "RESET" } satisfies AuthAction);
       queryClient.clear();
     }
   }, [queryClient]);
 
   const verifyEmail = useCallback(async () => {
-    dispatch({ type: "SET_ERROR", error: null });
+    dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
     try {
       const redirectUrl = typeof window !== "undefined" ? `${window.location.origin}/settings` : "";
       await account.createVerification(redirectUrl);
     } catch (err) {
-      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+      dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
       throw err;
     }
   }, []);
 
   const updateProfile = useCallback(
     async (fields: { name?: string; prefs?: Record<string, unknown> }) => {
-      dispatch({ type: "SET_ERROR", error: null });
+      dispatch({ type: "SET_ERROR", error: null } satisfies AuthAction);
       try {
         if (fields.name !== undefined) {
           await account.updateName(fields.name);
@@ -316,9 +239,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           user,
           status: "authenticated",
           isAnonymous: state.isAnonymous,
-        });
+        } satisfies AuthAction);
       } catch (err) {
-        dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+        dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) } satisfies AuthAction);
         throw err;
       }
     },

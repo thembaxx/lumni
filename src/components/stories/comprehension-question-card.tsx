@@ -1,17 +1,17 @@
 "use client";
 
-import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
-import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { fuzzyMatch } from "./helpers";
+import { ComprehensionMcq } from "./comprehension-mcq";
+import { ComprehensionBlank } from "./comprehension-blank";
+import { ComprehensionMatching } from "./comprehension-matching";
+import { ComprehensionFeedback } from "./comprehension-feedback";
 
 export interface ComprehensionQuestion {
   id: string;
@@ -28,27 +28,6 @@ interface ComprehensionQuestionCardProps {
   question: ComprehensionQuestion;
   questionNumber: number;
   onGraded?: (score: number) => void;
-}
-
-function normalize(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function fuzzyMatch(answer: string, acceptable: string[]): boolean {
-  const normAnswer = normalize(answer);
-  if (normAnswer.length < 3) return false;
-  return acceptable.some((a) => {
-    const normA = normalize(a);
-    if (normA === normAnswer) return true;
-    if (normA.includes(normAnswer) || normAnswer.includes(normA)) return true;
-    const words = normA.split(" ");
-    const matched = words.filter((w) => normAnswer.includes(w));
-    return matched.length >= Math.ceil(words.length * 0.6);
-  });
 }
 
 export function ComprehensionQuestionCard({
@@ -180,70 +159,14 @@ export function ComprehensionQuestionCard({
               case "mcq":
               case "true-false":
                 return (
-                  <div className="flex flex-col gap-2">
-                    {(question.questionType === "true-false"
-                      ? ["True", "False"]
-                      : (question.options ?? [])
-                    ).map((option) => {
-                      const isSelected = selectedOption === option;
-                      const showResult = isGraded;
-                      const isOptionCorrect = option === question.correctAnswer;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          disabled={isGraded}
-                          aria-pressed={isSelected}
-                          onClick={() => setSelectedOption(option)}
-                          className={cn(
-                            "flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors",
-                            !showResult &&
-                              isSelected &&
-                              "border-(--system-accent) bg-(--system-accent)/5",
-                            !showResult && !isSelected && "hover:bg-muted/50",
-                            showResult && isOptionCorrect && "border-success/30 bg-success/10",
-                            showResult &&
-                              isSelected &&
-                              !isOptionCorrect &&
-                              "border-destructive/30 bg-destructive/10",
-                            !showResult && !isSelected && "border-border",
-                          )}
-                        >
-                          {showResult ? (
-                            <HugeiconsIcon
-                              icon={
-                                isOptionCorrect
-                                  ? CheckmarkCircle01Icon
-                                  : isSelected
-                                    ? Cancel01Icon
-                                    : CheckmarkCircle01Icon
-                              }
-                              className={cn(
-                                "size-4 shrink-0",
-                                isOptionCorrect
-                                  ? "text-success"
-                                  : isSelected
-                                    ? "text-destructive"
-                                    : "text-muted-foreground/30",
-                              )}
-                            />
-                          ) : (
-                            <span
-                              className={cn(
-                                "flex size-5 shrink-0 items-center justify-center rounded-full border text-xs",
-                                isSelected
-                                  ? "border-(--system-accent) bg-(--system-accent) text-white"
-                                  : "border-muted-foreground/30",
-                              )}
-                            >
-                              {isSelected ? "✓" : ""}
-                            </span>
-                          )}
-                          <span className="leading-relaxed">{option}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <ComprehensionMcq
+                    questionType={question.questionType}
+                    options={question.options ?? []}
+                    correctAnswer={question.correctAnswer}
+                    selectedOption={selectedOption}
+                    isGraded={isGraded}
+                    onSelect={setSelectedOption}
+                  />
                 );
 
               case "short-answer":
@@ -260,149 +183,33 @@ export function ComprehensionQuestionCard({
                   </div>
                 );
 
-              case "fill-in-blank": {
-                const blank = (
-                  <span className="mx-1 inline-block rounded-md bg-(--system-accent)/15 px-2 py-0.5 font-semibold text-(--system-accent)">
-                    ______
-                  </span>
-                );
+              case "fill-in-blank":
                 return (
-                  <div className="flex flex-col gap-2">
-                    {question.sentenceTemplate && (
-                      <div className="rounded-xl bg-muted/30 p-3 text-sm leading-relaxed">
-                        {question.sentenceTemplate.split("___").map((part, i, arr) => (
-                          // biome-ignore lint/suspicious/noArrayIndexKey: static split array, never reordered
-                          <span key={i}>
-                            {part}
-                            {i < arr.length - 1 && blank}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <Input
-                      value={textInput}
-                      onChange={(e) => setTextInput(e.target.value)}
-                      disabled={isGraded}
-                      placeholder="Type the missing word..."
-                      className="rounded-xl text-base"
-                      aria-label={`Fill in the blank for question ${questionNumber}`}
-                    />
-                  </div>
+                  <ComprehensionBlank
+                    sentenceTemplate={question.sentenceTemplate}
+                    value={textInput}
+                    disabled={isGraded}
+                    questionNumber={questionNumber}
+                    onChange={setTextInput}
+                  />
                 );
-              }
 
-              case "matching": {
-                const correctPairs = question.pairs ?? [];
-                const leftItems = correctPairs.map((p) => p.left);
-                const rightItems = correctPairs.map((p) => p.right);
-                const showResult = isGraded;
+              case "matching":
                 return (
-                  <div className="flex flex-col gap-3">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="flex flex-col gap-2">
-                        <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
-                          Items
-                        </span>
-                        {leftItems.map((item, idx) => {
-                          const isPaired = userPairs.has(idx);
-                          const isSelected = selectedLeftIdx === idx;
-                          const pairedRightIdx = userPairs.get(idx);
-                          const rightItem =
-                            pairedRightIdx !== undefined ? rightItems[pairedRightIdx] : undefined;
-                          const isCorrectPair =
-                            showResult &&
-                            isPaired &&
-                            rightItem !== undefined &&
-                            correctPairs.some((p) => p.left === item && p.right === rightItem);
-                          return (
-                            <button
-                              key={`left-${item}`}
-                              type="button"
-                              disabled={showResult}
-                              aria-pressed={isSelected}
-                              aria-label={`Match item: ${item}`}
-                              onClick={() => handleLeftClick(idx)}
-                              className={cn(
-                                "rounded-xl border px-3 py-2 text-left text-sm transition-colors",
-                                showResult && isCorrectPair && "border-success/30 bg-success/10",
-                                showResult &&
-                                  isPaired &&
-                                  !isCorrectPair &&
-                                  "border-destructive/30 bg-destructive/10",
-                                !showResult &&
-                                  isSelected &&
-                                  "border-(--system-accent) bg-(--system-accent)/5",
-                                !showResult && isPaired && "border-muted-foreground/30 bg-muted/30",
-                                !showResult &&
-                                  !isPaired &&
-                                  !isSelected &&
-                                  "border-border hover:bg-muted/50",
-                              )}
-                            >
-                              {item}
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
-                          Matches
-                        </span>
-                        {rightItems.map((item, idx) => {
-                          const isTaken = [...userPairs.values()].includes(idx);
-                          return (
-                            <button
-                              key={`right-${item}`}
-                              type="button"
-                              disabled={showResult || isTaken}
-                              aria-label={`Match target: ${item}`}
-                              onClick={() => handleRightClick(idx)}
-                              className={cn(
-                                "rounded-xl border px-3 py-2 text-left text-sm transition-colors",
-                                showResult && "border-muted-foreground/30",
-                                !showResult &&
-                                  isTaken &&
-                                  "border-muted-foreground/30 bg-muted/30 opacity-50",
-                                !showResult && !isTaken && "border-border hover:bg-muted/50",
-                              )}
-                            >
-                              {item}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    {userPairs.size > 0 && !showResult && (
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
-                          Your pairs:
-                        </span>
-                        {[...userPairs.entries()].map(([li, ri]) => (
-                          <Badge
-                            key={li}
-                            variant="secondary"
-                            className="gap-1 rounded-full text-xs"
-                          >
-                            {leftItems[li]} ↔ {rightItems[ri]}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const next = new Map(userPairs);
-                                next.delete(li);
-                                setUserPairs(next);
-                              }}
-                              className="ml-0.5 text-muted-foreground hover:text-foreground"
-                              aria-label={`Remove pair ${leftItems[li]} ↔ ${rightItems[ri]}`}
-                            >
-                              ×
-                            </button>
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  <ComprehensionMatching
+                    pairs={question.pairs ?? []}
+                    userPairs={userPairs}
+                    selectedLeftIdx={selectedLeftIdx}
+                    isGraded={isGraded}
+                    onLeftClick={handleLeftClick}
+                    onRightClick={handleRightClick}
+                    onRemovePair={(leftIdx) => {
+                      const next = new Map(userPairs);
+                      next.delete(leftIdx);
+                      setUserPairs(next);
+                    }}
+                  />
                 );
-              }
 
               default:
                 return null;
@@ -421,47 +228,13 @@ export function ComprehensionQuestionCard({
           )}
 
           {isGraded && (
-            <div className="grid grid-rows-[1fr] transition-[grid-template-rows,opacity] duration-300 ease-(--ease-ios-decelerate)">
-              <div className="min-h-0 overflow-hidden">
-                <div
-                  className={cn(
-                    "flex items-center gap-2 rounded-xl px-4 py-3 font-medium text-sm",
-                    isCorrect ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
-                  )}
-                >
-                  <HugeiconsIcon
-                    icon={isCorrect ? CheckmarkCircle01Icon : Cancel01Icon}
-                    className="size-4 shrink-0"
-                  />
-                  {isCorrect ? "Correct!" : "Incorrect"}
-                  <span className="ml-auto text-xs tabular-nums">{score}%</span>
-                </div>
-
-                {question.explanation && (
-                  <div className="mt-3 rounded-xl bg-muted/50 p-3 text-sm leading-relaxed">
-                    <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
-                      Explanation
-                    </span>
-                    <p className="mt-1">
-                      <MarkdownRenderer content={question.explanation} />
-                    </p>
-                  </div>
-                )}
-
-                {!isCorrect && (
-                  <div className="mt-2 text-muted-foreground text-xs">
-                    {question.questionType === "matching" ? (
-                      <span>Correct pairings shown above</span>
-                    ) : question.questionType === "true-false" ||
-                      question.questionType === "mcq" ? (
-                      <span>Correct answer: {question.correctAnswer}</span>
-                    ) : (
-                      <span>Model answer: {question.correctAnswer}</span>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
+            <ComprehensionFeedback
+              isCorrect={isCorrect}
+              score={score}
+              explanation={question.explanation}
+              questionType={question.questionType}
+              correctAnswer={question.correctAnswer}
+            />
           )}
         </CardContent>
       </Card>

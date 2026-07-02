@@ -40,7 +40,7 @@ async function getWeekEntries(subjectId?: string): Promise<CompetitionScoreRecor
 }
 
 function rankEntries(entries: CompetitionScoreRecord[]): LeaderboardEntry[] {
-  const sorted = [...entries].sort(
+  const sorted = [...entries].toSorted(
     (a, b) => b.xpEarned - a.xpEarned,
   );
   return sorted.map((e, i) => ({
