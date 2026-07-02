@@ -1,9 +1,8 @@
 "use client";
 
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
-import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import FlashIcon from "@hugeicons/core-free-icons/FlashIcon";
-import TargetIcon from "@hugeicons/core-free-icons/TargetIcon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import ClockIcon from "@hugeicons/core-free-icons/Clock01Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -15,7 +14,7 @@ import { Link } from "@/i18n/navigation";
 import { StaggerList } from "@/components/shared/stagger-list";
 
 const ICONS: Record<string, ReactNode> = {
-  "exam-practice": <HugeiconsIcon icon={TargetIcon} size={16} />,
+  "exam-practice": <HugeiconsIcon icon={Target01Icon} size={16} />,
   "weakest-topic": <HugeiconsIcon icon={BrainIcon} size={16} />,
   "due-cards": <HugeiconsIcon icon={FlashIcon} size={16} />,
   "review-mistakes": <HugeiconsIcon icon={ClockIcon} size={16} />,
