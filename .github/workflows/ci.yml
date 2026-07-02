@@ -102,6 +102,7 @@ jobs:
       - run: pnpm run build
         env:
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN || '' }}
+      - run: pnpm exec playwright install chromium
       - name: Run E2E tests
         run: pnpm exec playwright test --grep-invert "WCAG AA contrast"
       - name: Start Next.js for DAST
