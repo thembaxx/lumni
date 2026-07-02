@@ -225,7 +225,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroDashboard")}
@@ -240,7 +240,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroStartFree")}

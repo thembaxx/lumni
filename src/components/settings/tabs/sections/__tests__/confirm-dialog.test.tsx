@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 vi.mock("next-intl", () => ({
@@ -43,5 +43,19 @@ describe("ConfirmDialog", () => {
   test("does not render when closed", () => {
     render(<ConfirmDialog {...defaultProps} open={false} />);
     expect(screen.queryByText("Delete item?")).toBeNull();
+  });
+
+  test("calls onConfirm when confirm button clicked", () => {
+    const onConfirm = vi.fn();
+    render(<ConfirmDialog {...defaultProps} onConfirm={onConfirm} />);
+    fireEvent.click(screen.getByText("Delete"));
+    expect(onConfirm).toHaveBeenCalledTimes(1);
+  });
+
+  test("calls onCancel when cancel button clicked", () => {
+    const onCancel = vi.fn();
+    render(<ConfirmDialog {...defaultProps} onCancel={onCancel} />);
+    fireEvent.click(screen.getByText("Cancel"));
+    expect(onCancel).toHaveBeenCalledTimes(1);
   });
 });

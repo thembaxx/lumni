@@ -72,7 +72,7 @@ export function TabNav({
               key={tab.value}
               value={tab.value}
               className={cn(
-                "relative z-elevated flex items-center justify-center gap-1.5 rounded-xl text-xs transition-colors duration-200 press-scale",
+                "relative z-elevated flex items-center justify-center gap-1.5 rounded-xl text-xs transition-[color,transform] duration-200 press-scale",
                 activeTab === tab.value
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",

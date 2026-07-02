@@ -162,7 +162,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
           <Button
             size="sm"
             variant="secondary"
-            className="w-full bg-system-fill font-extrabold text-sm transition-[background-color,opacity] hover:opacity-90 press-scale"
+            className="w-full bg-system-fill font-extrabold text-sm transition-[scale,background-color,box-shadow,color,opacity,transform] hover:opacity-90 press-scale"
             onClick={handleStart}
             disabled={showSuccess}
           >

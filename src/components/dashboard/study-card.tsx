@@ -17,7 +17,7 @@ export function StudyCard() {
   return (
     <div className="card-entrance">
       <Card
-        className="cursor-pointer overflow-hidden rounded-card shadow-level-1 transition-[background-color] duration-300 hover:bg-muted/50 press-scale"
+        className="cursor-pointer overflow-hidden rounded-card shadow-level-1 transition-[scale,box-shadow,background-color,transform] duration-300 hover:bg-muted/50 press-scale"
         onClick={() => push("/dashboard")}
         role="button"
         tabIndex={0}
