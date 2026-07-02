@@ -1,47 +1,17 @@
 import { Effect } from "effect";
-import type { ObservabilityDataAccess } from "@/lib/db";
 import { dexieDataAccess } from "@/lib/db";
+import type { ObservabilityDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
-import { getDataSharingConsent } from "@/lib/consent/ai-gate";
-import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
-import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
+import { apiFetch } from "@/lib/shared/api-fetch";
 import type { Achievement, RewardChestDef } from "@/types/gamification";
 import { ACHIEVEMENTS, calculateLevel, REWARD_CHESTS } from "@/types/gamification";
-
-export interface GamificationDeps {
-  db: ObservabilityDataAccess;
-}
+import type { GamificationDeps, XpResult, AchievementResult, ChestResult, StreakResult, FreezeResult, StateListener } from "./service-types";
+import { persist, persistEffect, saveSnapshot, saveSnapshotEffect } from "./service-persist";
+import { scheduleSync, syncToServer, syncToLeaderboard } from "./service-sync";
 
 const DEFAULT_DEPS: GamificationDeps = { db: dexieDataAccess };
-
-export interface XpResult {
-  data: StoredGamification;
-  leveledUp: boolean;
-}
-
-export interface AchievementResult {
-  data: StoredGamification;
-  achievement: Achievement | null;
-}
-
-export interface ChestResult {
-  data: StoredGamification;
-  chest: RewardChestDef | null;
-}
-
-export interface StreakResult {
-  data: StoredGamification;
-  freezeConsumed: boolean;
-}
-
-export interface FreezeResult {
-  data: StoredGamification;
-  success: boolean;
-}
-
-export type StateListener = (data: StoredGamification) => void;
 
 function succeedUndefined(): Effect.Effect<void> {
   return Effect.void;
@@ -149,27 +119,6 @@ export class GamificationService {
     );
   }
 
-  private persistEffect(data: StoredGamification): Effect.Effect<void> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    const record = { ...data, id: 1 as const };
-    return Effect.tryPromise(() => self.db.gamification.put(record)).pipe(
-      Effect.catchAll((err) => Effect.sync(() => logError("GamificationService.persist", err))),
-    );
-  }
-
-  private saveSnapshotEffect(data: StoredGamification): Effect.Effect<void> {
-    return Effect.sync(() => {
-      const label =
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("lumni_display_name") || undefined
-          : undefined;
-      setTimeout(() => {
-        saveWeeklySnapshot(label || "You", data.totalXp, data.currentStreak);
-      }, 0);
-    });
-  }
-
   addXpEffect(
     amount: number,
     accuracy: number,
@@ -190,9 +139,9 @@ export class GamificationService {
         subject,
       );
       self.data = newData;
-      yield* self.persistEffect(newData);
-      self.scheduleSync(newData);
-      self.saveSnapshot(newData);
+      yield* persistEffect(self.db, newData);
+      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
+      saveSnapshot(newData);
       self.notify();
       return { data: newData, leveledUp: newLevel !== null };
     });
@@ -207,8 +156,8 @@ export class GamificationService {
         achievementId,
       );
       self.data = newData;
-      yield* self.persistEffect(newData);
-      self.scheduleSync(newData);
+      yield* persistEffect(self.db, newData);
+      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
       self.notify();
       return { data: newData, achievement };
     });
@@ -220,8 +169,8 @@ export class GamificationService {
     return Effect.gen(function* () {
       const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
       self.data = newData;
-      yield* self.persistEffect(newData);
-      self.scheduleSync(newData);
+      yield* persistEffect(self.db, newData);
+      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
       self.notify();
       return { data: newData, freezeConsumed };
     });
@@ -234,8 +183,8 @@ export class GamificationService {
       const { data: newData, success } = gamificationEngine.consumeStreakFreeze(self.data);
       if (success) {
         self.data = newData;
-        yield* self.persistEffect(newData);
-        self.scheduleSync(newData);
+        yield* persistEffect(self.db, newData);
+        scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
         self.notify();
       }
       return { data: newData, success };
@@ -248,8 +197,8 @@ export class GamificationService {
     return Effect.gen(function* () {
       const newData = gamificationEngine.addStreakFreeze(self.data, count);
       self.data = newData;
-      yield* self.persistEffect(newData);
-      self.scheduleSync(newData);
+      yield* persistEffect(self.db, newData);
+      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
       self.notify();
     });
   }
@@ -260,8 +209,8 @@ export class GamificationService {
     return Effect.gen(function* () {
       const { data: newData } = gamificationEngine.completeDailyChallenge(self.data, challengeId);
       self.data = newData;
-      yield* self.persistEffect(newData);
-      self.scheduleSync(newData);
+      yield* persistEffect(self.db, newData);
+      scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
       self.notify();
     });
   }
@@ -272,8 +221,8 @@ export class GamificationService {
     return Effect.gen(function* () {
       const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(self.data);
       if (newData !== self.data) {
-        yield* self.persistEffect(newData);
-        self.scheduleSync(newData);
+        yield* persistEffect(self.db, newData);
+        scheduleSync(newData, self.syncTimer, (t) => { self.syncTimer = t; });
       }
       self.data = newData;
       self.notify();
@@ -293,9 +242,9 @@ export class GamificationService {
       subject,
     );
     this.data = newData;
-    this.persist(newData);
-    this.scheduleSync(newData);
-    this.saveSnapshot(newData);
+    persist(this.db, newData);
+    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
+    saveSnapshot(newData);
     this.notify();
     return { data: newData, leveledUp: newLevel !== null };
   }
@@ -306,8 +255,8 @@ export class GamificationService {
       achievementId,
     );
     this.data = newData;
-    this.persist(newData);
-    this.scheduleSync(newData);
+    persist(this.db, newData);
+    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
     this.notify();
     return { data: newData, achievement };
   }
@@ -349,7 +298,7 @@ export class GamificationService {
   ): void {
     const prev = this.data[key] ?? 0;
     this.data = { ...this.data, [key]: prev + value };
-    this.persist(this.data);
+    persist(this.db, this.data);
     this.notify();
   }
 
@@ -358,15 +307,15 @@ export class GamificationService {
     value: number,
   ): void {
     this.data = { ...this.data, [key]: value };
-    this.persist(this.data);
+    persist(this.db, this.data);
     this.notify();
   }
 
   updateStreak(): StreakResult {
     const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(this.data);
     this.data = newData;
-    this.persist(newData);
-    this.scheduleSync(newData);
+    persist(this.db, newData);
+    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
     this.notify();
     return { data: newData, freezeConsumed };
   }
@@ -375,8 +324,8 @@ export class GamificationService {
     const { data: newData, success } = gamificationEngine.consumeStreakFreeze(this.data);
     if (success) {
       this.data = newData;
-      this.persist(newData);
-      this.scheduleSync(newData);
+      persist(this.db, newData);
+      scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
       this.notify();
     }
     return { data: newData, success };
@@ -385,24 +334,24 @@ export class GamificationService {
   addStreakFreeze(count?: number): void {
     const newData = gamificationEngine.addStreakFreeze(this.data, count);
     this.data = newData;
-    this.persist(newData);
-    this.scheduleSync(newData);
+    persist(this.db, newData);
+    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
     this.notify();
   }
 
   completeDailyChallenge(challengeId: string): void {
     const { data: newData } = gamificationEngine.completeDailyChallenge(this.data, challengeId);
     this.data = newData;
-    this.persist(newData);
-    this.scheduleSync(newData);
+    persist(this.db, newData);
+    scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
     this.notify();
   }
 
   checkForRewardChests(): ChestResult {
     const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(this.data);
     if (newData !== this.data) {
-      this.persist(newData);
-      this.scheduleSync(newData);
+      persist(this.db, newData);
+      scheduleSync(newData, this.syncTimer, (t) => { this.syncTimer = t; });
     }
     this.data = newData;
     this.notify();
@@ -433,59 +382,7 @@ export class GamificationService {
     }
   }
 
-  private persist(data: StoredGamification) {
-    const record = { ...data, id: 1 as const };
-    this.db.gamification.put(record).catch((err) => logError("GamificationService.persist", err));
-  }
-
-  private scheduleSync(data: StoredGamification) {
-    if (this.syncTimer) clearTimeout(this.syncTimer);
-    this.syncTimer = setTimeout(() => {
-      this.syncToServer(data);
-    }, 2000);
-  }
-
-  private saveSnapshot(data: StoredGamification) {
-    const label =
-      typeof window !== "undefined"
-        ? window.localStorage.getItem("lumni_display_name") || undefined
-        : undefined;
-    setTimeout(() => {
-      saveWeeklySnapshot(label || "You", data.totalXp, data.currentStreak);
-    }, 0);
-  }
-
-  private async syncToServer(data: StoredGamification) {
-    if (!getDataSharingConsent()) return;
-    try {
-      const label =
-        (typeof window !== "undefined"
-          ? window.localStorage.getItem("lumni_display_name")
-          : null) || undefined;
-      await apiFetch("/api/gamification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, label }),
-      });
-    } catch (err) {
-      logError("GamificationService.syncToServer", err);
-    }
-  }
-
   async syncToLeaderboard(userId: string): Promise<void> {
-    if (!getDataSharingConsent()) return;
-    try {
-      const label =
-        (typeof window !== "undefined"
-          ? window.localStorage.getItem("lumni_display_name")
-          : null) || undefined;
-      await apiFetch("/api/gamification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...this.data, userId, label }),
-      });
-    } catch (err) {
-      logError("GamificationService.syncToLeaderboard", err);
-    }
+    return syncToLeaderboard(this.data, userId);
   }
 }

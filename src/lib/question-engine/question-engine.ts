@@ -2,28 +2,26 @@ import { Effect } from "effect";
 import type { AIClient } from "@/lib/ai";
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
-import { createCachingStrategy } from "@/lib/caching-strategy";
 import { createEnrichmentPipeline } from "./enrichment-pipeline";
 import type { EnrichmentPipeline } from "./enrichment-pipeline";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
-import type { RagContext } from "./prompt-manager";
 import { fetchRagContext } from "./rag-enricher";
 import type { RagDeps } from "./rag-enricher";
 import type {
-  BloomLevel,
   GenerateResult,
   GenerationParams,
   GradingResult,
   HintParams,
   Question,
-  QuestionBody,
   QuestionProcessor,
   QuestionType,
   UserAnswer,
   ValidationResult,
 } from "./types";
-import { logError } from "@/lib/shared/logger";
+import { mapPoolToQuestion } from "./pool-mapper";
+import { createQuestionCacheStrategy } from "./cache-config";
+import { generateBatch } from "./batch-generator";
 
 /**
  * Generates and validates questions for a given subject and topic using AI models with caching support.
@@ -62,56 +60,7 @@ export class QuestionEngine {
     this.registry = new ProcessorRegistry(this.prompts, ai);
     this.enrichmentPipeline = enrichment ?? createEnrichmentPipeline();
     this.cachingStrategy =
-      caching ??
-      createCachingStrategy<GenerateResult, GenerationParams>(
-        [
-          {
-            name: "dexie",
-            read: async (p) => {
-              const { questionCacheRepo: qRepo } =
-                await import("@/lib/db/repositories/question-cache");
-              const cached = await qRepo.get(p.subject, p.topic);
-              if (cached && cached.length >= p.count) {
-                const shuffled = this.shuffleArray(cached as Question[]);
-                return { questions: shuffled.slice(0, p.count), ragContext: null };
-              }
-              return null;
-            },
-            write: async (params, result) => {
-              const { questionCacheRepo: qRepo } =
-                await import("@/lib/db/repositories/question-cache");
-              await qRepo.cache(params.subject, result.questions as Question[], params.topic);
-            },
-          },
-          {
-            name: "appwrite",
-            read: async (p) => {
-              const { loadQuestionsFromAppwrite } = await import("./persistence");
-              const appwriteQuestions = await loadQuestionsFromAppwrite(
-                p.subject,
-                p.topic,
-                p.count,
-              );
-              if (appwriteQuestions.length >= p.count) {
-                const shuffled = this.shuffleArray(appwriteQuestions);
-                return { questions: shuffled.slice(0, p.count), ragContext: null };
-              }
-              return null;
-            },
-            write: async () => {},
-          },
-        ],
-        (params) => this.generateInternal(params),
-      );
-  }
-
-  private shuffleArray<T>(array: T[]): T[] {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
+      caching ?? createQuestionCacheStrategy((params) => this.generateInternal(params));
   }
 
   /**
@@ -164,83 +113,17 @@ export class QuestionEngine {
   private async generateInternal(params: GenerationParams): Promise<GenerateResult | null> {
     const enriched = await this.enrichParams(params);
 
-    // Serve pool questions directly (no AI generation needed)
     const poolQuestions = enriched.poolQuestions ?? [];
     const poolCount = poolQuestions.length;
     const remainingCount = Math.max(0, enriched.count - poolCount);
 
-    const mapPoolToQuestion = (
-      pq: NonNullable<GenerationParams["poolQuestions"]>[number],
-    ): Question => {
-      const qType = (pq.type as QuestionType) ?? "short-answer";
-      const bloom = (pq.bloomLevel as BloomLevel) ?? "understand";
-
-      let body: QuestionBody[typeof qType];
-      if (qType === "multiple-choice") {
-        body = {
-          allowMultiple: false,
-          correctOptionId: "a",
-          options: [
-            { id: "a", text: pq.answerText, isCorrect: true },
-            { id: "b", text: "None of the above", isCorrect: false },
-          ],
-        } as QuestionBody["multiple-choice"];
-      } else if (qType === "calculation") {
-        body = {
-          correctValue: Number.NaN,
-          formula: "",
-          tolerance: 0,
-          unit: "",
-        } as QuestionBody["calculation"];
-      } else {
-        body = {
-          acceptableAnswers: [pq.answerText],
-          maxLength: 500,
-          modelAnswer: pq.answerText,
-        } as QuestionBody["short-answer"];
-      }
-
-      return {
-        bloomTaxonomy: bloom,
-        body,
-        difficulty: "Medium" as const,
-        explanation: `From ${pq.year} Paper ${pq.paperNumber}${pq.subtopicId ? `, Q${pq.subtopicId}` : ""}`,
-        hint: "",
-        id: pq.id,
-        metadata: {
-          createdAt: Date.now(),
-          source: "imported",
-        },
-        points: pq.marks,
-        questionText: pq.questionText,
-        sourcePaperId: pq.id,
-        sourcePastPaperQuestionId: pq.id,
-        subject: enriched.subject,
-        topic: pq.topic ?? enriched.topic ?? "",
-        type: qType,
-        webSources: [
-          {
-            title: `${enriched.subject} ${pq.year} Paper ${pq.paperNumber}`,
-            url: "#",
-          },
-        ],
-        pastPaperMetadata: {
-          year: pq.year,
-          paperNumber: pq.paperNumber,
-          questionNumber: pq.subtopicId ?? undefined,
-          totalMarks: pq.marks,
-        },
-      };
-    };
-
     if (remainingCount === 0 && poolCount > 0) {
-      return { questions: poolQuestions.map(mapPoolToQuestion), ragContext: null };
+      return { questions: poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic)), ragContext: null };
     }
 
-    // When pastPaperMode is active, only return pool questions — no AI fallback
     if (enriched.pastPaperMode) {
       return poolCount > 0
-        ? { questions: poolQuestions.map(mapPoolToQuestion), ragContext: null }
+        ? { questions: poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic)), ragContext: null }
         : null;
     }
 
@@ -255,7 +138,7 @@ export class QuestionEngine {
 
     let questions: Question[] = [];
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-      const result = await this.generateBatch(enriched, ragContext, remainingCount);
+      const result = await generateBatch(this.registry, enriched, ragContext, remainingCount);
       if (result.length > questions.length) {
         questions = result;
         if (questions.length >= remainingCount) {
@@ -266,44 +149,12 @@ export class QuestionEngine {
 
     questions = questions.slice(0, remainingCount);
 
-    // Prepend pool questions
     if (poolCount > 0) {
-      const directQuestions: Question[] = poolQuestions.map(mapPoolToQuestion);
+      const directQuestions = poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic));
       questions = [...directQuestions, ...questions];
     }
 
     return questions.length > 0 ? { questions, ragContext } : null;
-  }
-
-  private async generateBatch(
-    enriched: GenerationParams,
-    ragContext: RagContext,
-    count: number,
-  ): Promise<Question[]> {
-    if (!enriched.questionType || enriched.questionType === "any") {
-      return this.generateMixed(enriched, ragContext);
-    }
-    const types = Array.isArray(enriched.questionType)
-      ? enriched.questionType
-      : [enriched.questionType];
-    const perTypeCount = Math.ceil(count / types.length);
-    const typeResults = await Promise.all(
-      types.map(async (type) => {
-        try {
-          const processor = this.registry.getProcessor(type);
-          const typeParams = {
-            ...enriched,
-            count: perTypeCount,
-            questionType: type,
-          };
-          return await processor.generate(typeParams, ragContext);
-        } catch (error) {
-          logError("QuestionEngine.generateBatch", error);
-          return [];
-        }
-      }),
-    );
-    return typeResults.flat();
   }
 
   private withProcessor<T extends QuestionType>(
@@ -391,66 +242,6 @@ export class QuestionEngine {
 
   private async enrichParams(params: GenerationParams): Promise<GenerationParams> {
     return this.enrichmentPipeline.enrich(params);
-  }
-
-  private async generateMixed(
-    params: GenerationParams,
-    ragContext: RagContext,
-  ): Promise<Question[]> {
-    const batches: QuestionType[][] = [
-      ["multiple-choice", "matching", "match-pairs"],
-      ["short-answer", "long-answer", "essay"],
-      ["calculation", "diagram", "ordering"],
-      ["fill-in-sequence", "diagram-labelling", "hot-spot"],
-      ["source-based", "data-response"],
-      ["programming"],
-      ["mixed"],
-    ];
-
-    const { count } = params;
-    const itemCount = Math.max(1, Math.ceil(count / batches.length));
-
-    const batchResults = await Promise.all(
-      batches.map(async (batch) => {
-        const available = batch.filter((t) => this.registry.hasProcessor(t));
-        if (available.length === 0) {
-          return [];
-        }
-
-        const perType = Math.floor(itemCount / available.length);
-        const remainder = itemCount - perType * available.length;
-        const batchQuestions: Question[] = [];
-
-        for (let i = 0; i < available.length && batchQuestions.length < itemCount; i++) {
-          const needed = perType + (i < remainder ? 1 : 0);
-          if (needed <= 0) {
-            continue;
-          }
-
-          let generated = false;
-          for (let j = 0; j < available.length && !generated; j++) {
-            const tryType = available[(i + j) % available.length];
-            const processor = this.registry.getProcessor(tryType);
-            try {
-              const questions = await processor.generate(
-                { ...params, count: needed, questionType: tryType },
-                ragContext,
-              );
-              if (questions.length > 0) {
-                batchQuestions.push(...questions);
-                generated = true;
-              }
-            } catch (error) {
-              logError("QuestionEngine.generateMixed", error);
-            }
-          }
-        }
-
-        return batchQuestions;
-      }),
-    );
-
-    return batchResults.flat().slice(0, count);
   }
 
   getPromptManager(): PromptManager {

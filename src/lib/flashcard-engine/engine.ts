@@ -1,8 +1,4 @@
-import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
-import { enqueue } from "@/lib/orchestrator/job-queue";
 import { logError } from "@/lib/shared/logger";
-import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import {
   calculateNextReview,
   calculateNextReviewFSRS,
@@ -10,7 +6,11 @@ import {
   checkLeech,
   initFSRS,
 } from "./algorithms";
+import { createCard, updateCard, deleteCard, convertQuizToFlashcards } from "./card-ops";
 import { createDailyLimits } from "./daily-limits";
+import type { EngineDependencies } from "./engine-deps";
+import { DEFAULT_DEPS } from "./engine-deps";
+import { subjectFilter, countConsecutivePasses, syncCardPayload } from "./engine-helpers";
 import {
   advanceLearningStep,
   computeLearningReviewTime,
@@ -22,74 +22,7 @@ import {
 import type { FlashcardReview, FlashcardSM2, FlashcardStats, SRSettings } from "./types";
 import { DEFAULT_SR_SETTINGS, SR_SETTINGS_KEY } from "./types";
 
-export interface EngineDependencies {
-  db: DataAccess;
-  enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
-  loadFromStorage: <T>(key: string, fallback: T) => T;
-  saveToStorage: (key: string, value: unknown) => void;
-  dailyLimits?: ReturnType<typeof createDailyLimits>;
-}
-
-const DEFAULT_DEPS: EngineDependencies = {
-  db: dexieDataAccess,
-  enqueue: enqueue as unknown as EngineDependencies["enqueue"],
-  loadFromStorage,
-  saveToStorage,
-};
-
-function generateId(): string {
-  return `fc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-}
-
-function subjectFilter(card: FlashcardSM2, subject?: string): boolean {
-  return !subject || card.subject === subject;
-}
-
-function pickAlgorithm(): "sm2" | "fsrs" {
-  return "fsrs";
-}
-
-async function countConsecutivePasses(
-  db: EngineDependencies["db"],
-  cardId: string,
-): Promise<number> {
-  const history = await db.reviewHistory
-    .where("cardId")
-    .equals(cardId)
-    .toReversed()
-    .sortBy("reviewedAt");
-  const recent = history.toReversed().slice(-10);
-  let count = 0;
-  for (let i = recent.length - 1; i >= 0; i--) {
-    if (recent[i].quality >= 3) {
-      count++;
-    } else {
-      break;
-    }
-  }
-  return count;
-}
-
-/**
- * Build the payload shape expected by the appwrite-flashcard-sync job.
- * Only the fields that exist in the Appwrite collection are included.
- */
-function syncCardPayload(card: FlashcardSM2): Record<string, unknown> {
-  return {
-    id: card.id,
-    front: card.front,
-    back: card.back,
-    subject: card.subject,
-    topic: card.topic,
-    easeFactor: card.easeFactor,
-    interval: card.interval,
-    repetitions: card.repetitions,
-    nextReview: card.nextReview,
-    lastReview: card.lastReview,
-    createdAt: card.createdAt,
-    updatedAt: card.updatedAt,
-  };
-}
+export type { EngineDependencies } from "./engine-deps";
 
 export class FlashcardEngine {
   private db: EngineDependencies["db"];
@@ -148,61 +81,15 @@ export class FlashcardEngine {
     subject: string,
     topic?: string,
   ): Promise<FlashcardSM2> {
-    const algorithm = pickAlgorithm();
-    const card: FlashcardSM2 = {
-      id: generateId(),
-      front,
-      back,
-      subject,
-      topic,
-      easeFactor: 2.5,
-      interval: 0,
-      repetitions: 0,
-      nextReview: Date.now(),
-      lastReview: null,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      algorithm,
-      stability: 0,
-      difficulty: 5,
-      status: "active",
-      lapses: 0,
-      learningStep: 0,
-      leeched: false,
-    };
-    await this.db.flashcards.add(card);
-
-    this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(card)).catch((e: unknown) =>
-      logError("FlashcardEngine.CreateSync", e),
-    );
-
-    return card;
+    return createCard(this.db, this.enqueueFn, front, back, subject, topic);
   }
 
   async update(id: string, updates: Partial<FlashcardSM2>): Promise<void> {
-    const merged = { ...updates, updatedAt: Date.now() };
-    await this.db.flashcards.update(id, merged);
-    this.enqueueFn("appwrite-flashcard-sync", {
-      id,
-      front: updates.front ?? "",
-      back: updates.back ?? "",
-      subject: updates.subject ?? "",
-      topic: updates.topic,
-      easeFactor: updates.easeFactor ?? 0,
-      interval: updates.interval ?? 0,
-      repetitions: updates.repetitions ?? 0,
-      nextReview: updates.nextReview ?? 0,
-      lastReview: updates.lastReview ?? null,
-      createdAt: updates.createdAt ?? 0,
-      updatedAt: Date.now(),
-    }).catch((e: unknown) => logError("FlashcardEngine.UpdateSync", e));
+    return updateCard(this.db, this.enqueueFn, id, updates);
   }
 
   async delete(id: string): Promise<void> {
-    await this.db.flashcards.delete(id);
-    this.enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
-      logError("FlashcardEngine.DeleteSync", e),
-    );
+    return deleteCard(this.db, this.enqueueFn, id);
   }
 
   async review(id: string, quality: number): Promise<FlashcardSM2 | null> {
@@ -450,14 +337,7 @@ export class FlashcardEngine {
     }>,
     subject: string,
   ): Promise<FlashcardSM2[]> {
-    const newCards = await Promise.all(
-      questions.flatMap((q) => {
-        const correctOption = q.options.find((o) => o.isCorrect);
-        if (!correctOption) return [];
-        return [this.create(q.questionText, correctOption.text, subject, q.id)];
-      }),
-    );
-    return newCards;
+    return convertQuizToFlashcards(this.db, this.enqueueFn, questions, subject);
   }
 }
 

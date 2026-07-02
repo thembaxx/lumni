@@ -1,7 +1,6 @@
 import { logError } from "@/lib/shared/logger";
 import type { RewardChestDef } from "@/types/gamification";
 import {
-  ACHIEVEMENTS,
   calculateLevel,
   generateDailyChallenges,
   REWARD_CHESTS,
@@ -10,7 +9,11 @@ import {
   XP_PER_QUESTION,
   XP_STREAK_BONUS,
 } from "@/types/gamification";
+import { ACHIEVEMENTS } from "@/types/gamification";
 import type { StoredAchievement, StoredGamification } from "./types";
+import { checkAndUnlockAchievements } from "./achievement-checks";
+import { resetExpiredChallenges, updateChallengesInAddXp, completeDailyChallenge } from "./daily-challenge-utils";
+import { updateStreak, consumeStreakFreeze, addStreakFreeze, getStreakXpReward } from "./streak-utils";
 
 const GAMIFICATION_KEY = "lumni_gamification";
 
@@ -75,25 +78,8 @@ export class GamificationEngine {
     }, 0);
   }
 
-  resetExpiredChallenges(
-    dailyChallenges: StoredGamification["dailyChallenges"],
-  ): StoredGamification["dailyChallenges"] {
-    const today = new Date().toDateString();
-    return dailyChallenges.map((challenge) => {
-      if (challenge.expiresAt !== today) {
-        return {
-          ...challenge,
-          progress: 0,
-          completed: false,
-          expiresAt: today,
-        };
-      }
-      return challenge;
-    });
-  }
-
   mergeWithDefaults(stored: StoredGamification): StoredGamification {
-    const challenges = this.resetExpiredChallenges(stored.dailyChallenges);
+    const challenges = resetExpiredChallenges(stored.dailyChallenges);
     return { ...DEFAULT_GAMIFICATION, ...stored, dailyChallenges: challenges };
   }
 
@@ -116,56 +102,8 @@ export class GamificationEngine {
     const newLevelInfo = calculateLevel(newTotalXp);
     const leveledUp = newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
 
-    let bonusXp = 0;
-    const updatedChallenges = data.dailyChallenges.map((challenge) => {
-      if (challenge.completed) return challenge;
-      let updated: typeof challenge;
-      switch (challenge.type) {
-        case "questions": {
-          const newProgress = Math.min(challenge.progress + amount, challenge.target);
-          updated = {
-            ...challenge,
-            progress: newProgress,
-            completed: newProgress >= challenge.target,
-          };
-          break;
-        }
-        case "accuracy":
-          if (accuracy > challenge.progress) {
-            updated = {
-              ...challenge,
-              progress: accuracy,
-              completed: accuracy >= challenge.target,
-            };
-          } else {
-            updated = challenge;
-          }
-          break;
-        case "streak":
-          if (streak >= challenge.target) {
-            updated = { ...challenge, progress: streak, completed: true };
-          } else {
-            updated = {
-              ...challenge,
-              progress: Math.max(challenge.progress, streak),
-            };
-          }
-          break;
-        case "subject":
-          if (subject && challenge.title.toLowerCase().includes(subject.toLowerCase())) {
-            updated = { ...challenge, progress: 1, completed: true };
-          } else {
-            updated = challenge;
-          }
-          break;
-        default:
-          updated = challenge;
-      }
-      if (updated.completed && !challenge.completed) {
-        bonusXp += challenge.xpReward;
-      }
-      return updated;
-    });
+    const { data: challengeData, bonusXp } = updateChallengesInAddXp(data, amount, accuracy, streak, subject);
+    const updatedChallenges = challengeData.dailyChallenges;
 
     return {
       data: {
@@ -211,183 +149,10 @@ export class GamificationEngine {
     };
   }
 
-  checkAndUnlockAchievements(
-    data: StoredGamification,
-    questionsAnswered: number,
-    accuracy: number,
-    streak: number,
-    currentLevel: number,
-    perfectQuiz: boolean,
-    extra?: {
-      competentTopicsCount?: number;
-      topicScoreImproved?: boolean;
-      examScoreImproved?: boolean;
-      leaderboardRank?: number;
-      subjectLeaderboardRank?: number;
-    },
-  ): string[] {
-    const newAchievements: string[] = [];
-    const earned = new Set(data.achievements.map((a) => a.id));
-
-    const checks: [string, boolean][] = [
-      ["first_question", questionsAnswered >= 1 && !earned.has("first_question")],
-      ["streak_3", streak >= 3 && !earned.has("streak_3")],
-      ["streak_7", streak >= 7 && !earned.has("streak_7")],
-      ["streak_30", streak >= 30 && !earned.has("streak_30")],
-      ["questions_50", questionsAnswered >= 50 && !earned.has("questions_50")],
-      ["questions_100", questionsAnswered >= 100 && !earned.has("questions_100")],
-      ["questions_500", questionsAnswered >= 500 && !earned.has("questions_500")],
-      ["accuracy_80", accuracy >= 80 && !earned.has("accuracy_80")],
-      ["accuracy_90", accuracy >= 90 && !earned.has("accuracy_90")],
-      ["perfect_quiz", perfectQuiz && !earned.has("perfect_quiz")],
-      ["level_5", currentLevel >= 5 && !earned.has("level_5")],
-      ["level_10", currentLevel >= 10 && !earned.has("level_10")],
-      [
-        "mistake_review_master",
-        (data.wrongAnswersReviewed ?? 0) >= 20 && !earned.has("mistake_review_master"),
-      ],
-      [
-        "flashcard_focused_50",
-        (data.consecutiveCorrectFlashcards ?? 0) >= 50 && !earned.has("flashcard_focused_50"),
-      ],
-      [
-        "study_plan_streak_7",
-        (data.studyPlanDaysCompleted ?? 0) >= 7 && !earned.has("study_plan_streak_7"),
-      ],
-    ];
-
-    const subjectCounts = data.subjectQuestionCounts;
-    const subjectsWithActivity = Object.keys(subjectCounts).filter(
-      (s) => subjectCounts[s] > 0,
-    ).length;
-
-    const subjectChecks: [string, boolean][] = [
-      ["subject_math_50", (subjectCounts.mathematics ?? 0) >= 50 && !earned.has("subject_math_50")],
-      [
-        "subject_math_200",
-        (subjectCounts.mathematics ?? 0) >= 200 && !earned.has("subject_math_200"),
-      ],
-      [
-        "subject_science_50",
-        (subjectCounts.physical_sciences ?? 0) >= 50 && !earned.has("subject_science_50"),
-      ],
-      [
-        "subject_science_200",
-        (subjectCounts.physical_sciences ?? 0) >= 200 && !earned.has("subject_science_200"),
-      ],
-      [
-        "subject_language_50",
-        (subjectCounts.english ?? 0) >= 50 && !earned.has("subject_language_50"),
-      ],
-      [
-        "subject_language_200",
-        (subjectCounts.english ?? 0) >= 200 && !earned.has("subject_language_200"),
-      ],
-      [
-        "subject_commerce_50",
-        (subjectCounts.accounting ?? 0) >= 50 && !earned.has("subject_commerce_50"),
-      ],
-      [
-        "subject_commerce_200",
-        (subjectCounts.accounting ?? 0) >= 200 && !earned.has("subject_commerce_200"),
-      ],
-      ["subjects_all_5", subjectsWithActivity >= 5 && !earned.has("subjects_all_5")],
-    ];
-
-    const extraChecks: [string, boolean][] = [
-      [
-        "competency_climber",
-        (extra?.competentTopicsCount ?? 0) >= 5 && !earned.has("competency_climber"),
-      ],
-      ["weakness_slayer", (extra?.topicScoreImproved ?? false) && !earned.has("weakness_slayer")],
-      ["exam_comeback", (extra?.examScoreImproved ?? false) && !earned.has("exam_comeback")],
-      [
-        "leaderboard_top_50",
-        (extra?.leaderboardRank ?? 999) <= 50 && !earned.has("leaderboard_top_50"),
-      ],
-      [
-        "leaderboard_top_10",
-        (extra?.leaderboardRank ?? 999) <= 10 && !earned.has("leaderboard_top_10"),
-      ],
-      [
-        "leaderboard_subject_top_10",
-        (extra?.subjectLeaderboardRank ?? 999) <= 10 && !earned.has("leaderboard_subject_top_10"),
-      ],
-    ];
-
-    for (const [id, shouldUnlock] of [...checks, ...subjectChecks, ...extraChecks]) {
-      if (shouldUnlock) newAchievements.push(id);
-    }
-
-    return newAchievements;
-  }
-
-  updateStreak(data: StoredGamification): {
-    data: StoredGamification;
-    milestoneXpGained: number;
-    freezeConsumed: boolean;
-  } {
-    const today = new Date().toDateString();
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toDateString();
-
-    let freezeConsumed = false;
-    let newStreak = data.currentStreak;
-    let newStreakFreezes = data.streakFreezes;
-
-    if (data.lastPracticeDate === yesterdayStr) {
-      newStreak = data.currentStreak + 1;
-    } else if (data.lastPracticeDate !== today) {
-      if (data.currentStreak > 1 && data.streakFreezes > 0) {
-        newStreakFreezes -= 1;
-        freezeConsumed = true;
-      } else {
-        newStreak = 1;
-      }
-    }
-
-    let milestoneXpGain = 0;
-    let milestoneFreezeGain = 0;
-    const updatedMilestones = data.streakMilestones.map((ms) => {
-      if (!ms.unlocked && newStreak >= ms.streak) {
-        const reward = this.getStreakXpReward(ms.streak);
-        milestoneXpGain += reward;
-        milestoneFreezeGain += 1;
-        return { ...ms, unlocked: true };
-      }
-      return ms;
-    });
-
-    return {
-      data: {
-        ...data,
-        currentStreak: newStreak,
-        lastPracticeDate: today,
-        streakFreezes: newStreakFreezes + milestoneFreezeGain,
-        xp: data.xp + milestoneXpGain,
-        totalXp: data.totalXp + milestoneXpGain,
-        streakMilestones: updatedMilestones,
-      },
-      milestoneXpGained: milestoneXpGain,
-      freezeConsumed,
-    };
-  }
-
-  consumeStreakFreeze(data: StoredGamification): {
-    data: StoredGamification;
-    success: boolean;
-  } {
-    if (data.streakFreezes <= 0) return { data, success: false };
-    return {
-      data: { ...data, streakFreezes: data.streakFreezes - 1 },
-      success: true,
-    };
-  }
-
-  addStreakFreeze(data: StoredGamification, count: number = 1): StoredGamification {
-    return { ...data, streakFreezes: data.streakFreezes + count };
-  }
+  checkAndUnlockAchievements = checkAndUnlockAchievements;
+  updateStreak = updateStreak;
+  consumeStreakFreeze = consumeStreakFreeze;
+  addStreakFreeze = addStreakFreeze;
 
   trackSubjectQuestion(
     data: StoredGamification,
@@ -405,48 +170,7 @@ export class GamificationEngine {
     };
   }
 
-  completeDailyChallenge(
-    data: StoredGamification,
-    challengeId: string,
-  ): { data: StoredGamification; xpReward: number } {
-    const challenge = data.dailyChallenges.find((c) => c.id === challengeId);
-    if (!challenge || challenge.completed) {
-      return { data, xpReward: 0 };
-    }
-
-    const updatedChallenges = data.dailyChallenges.map((c) =>
-      c.id === challengeId ? { ...c, completed: true, progress: c.target } : c,
-    );
-
-    return {
-      data: {
-        ...data,
-        xp: data.xp + challenge.xpReward,
-        totalXp: data.totalXp + challenge.xpReward,
-        dailyChallenges: updatedChallenges,
-      },
-      xpReward: challenge.xpReward,
-    };
-  }
-
-  getStreakXpReward(streak: number): number {
-    switch (streak) {
-      case 3:
-        return 50;
-      case 7:
-        return 100;
-      case 14:
-        return 150;
-      case 30:
-        return 200;
-      case 60:
-        return 300;
-      case 100:
-        return 500;
-      default:
-        return 0;
-    }
-  }
+  completeDailyChallenge = completeDailyChallenge;
 
   checkAndClaimRewardChest(data: StoredGamification): {
     data: StoredGamification;

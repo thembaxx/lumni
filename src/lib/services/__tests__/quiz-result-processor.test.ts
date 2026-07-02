@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import type { Question } from "@/lib/question-engine/types";
-import type { QuizResultDeps } from "../quiz-result-processor";
-import { processQuizResult } from "../quiz-result-processor";
+import type { QuizResultDeps } from "../quiz-result-processor/index";
+import { processQuizResult } from "../quiz-result-processor/index";
 
 function makeMockDeps(): QuizResultDeps {
   return {

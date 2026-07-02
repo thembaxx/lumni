@@ -2,11 +2,19 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { BloomLevel, Difficulty, Question, UserAnswer } from "@/lib/question-engine/types";
+import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
 import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import type { QuizViewProps } from "../quiz-view";
+import {
+  buildEngineParams,
+  computeTopicCompetency,
+  loadRetentionQuestions,
+  mapRetentionToQuestions,
+  type RetentionQuestion,
+  type QuizCompetencyData,
+} from "./quiz-utils";
 
 export interface QuizCompleteResult {
   reason: "completed" | "quit";
@@ -15,15 +23,6 @@ export interface QuizCompleteResult {
   correctAnswers: number;
   totalQuestions: number;
   elapsedTime: number;
-}
-
-interface RetentionQuestion {
-  id: string;
-  questionText: string;
-  correctAnswer: string;
-  explanation: string;
-  subject: string;
-  topic: string;
 }
 
 export function useQuizView({
@@ -39,12 +38,7 @@ export function useQuizView({
   const [selectedSubject, setSelectedSubject] = useState(initialSubject ?? "");
   const [sessionActive, setSessionActive] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [competencyData, setCompetencyData] = useState<{
-    topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
-    topicCompetencyScore?: number;
-    suggestedBloomLevel?: BloomLevel;
-    suggestedDifficulty?: Difficulty;
-  }>({});
+  const [competencyData, setCompetencyData] = useState<QuizCompetencyData>({});
   const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
   const [retentionQuestions, setRetentionQuestions] = useState<RetentionQuestion[]>([]);
 
@@ -53,25 +47,7 @@ export function useQuizView({
     : questionCount;
 
   const engineParams = useMemo(
-    () => ({
-      subject: selectedSubject.toLowerCase(),
-      topic: resolvedTopic,
-      count: actualCount,
-      questionType: "any" as const,
-      ...(pastPaperMode ? { pastPaperMode: true } : {}),
-      ...(competencyData.suggestedBloomLevel
-        ? { suggestedBloomLevel: competencyData.suggestedBloomLevel }
-        : {}),
-      ...(competencyData.suggestedDifficulty
-        ? { suggestedDifficulty: competencyData.suggestedDifficulty }
-        : {}),
-      ...(competencyData.topicCompetencyLevel
-        ? { topicCompetencyLevel: competencyData.topicCompetencyLevel }
-        : {}),
-      ...(competencyData.topicCompetencyScore !== undefined
-        ? { topicCompetencyScore: competencyData.topicCompetencyScore }
-        : {}),
-    }),
+    () => buildEngineParams(selectedSubject, resolvedTopic, actualCount, pastPaperMode, competencyData),
     [
       selectedSubject,
       resolvedTopic,
@@ -93,26 +69,7 @@ export function useQuizView({
   const generatedQuestions = usePreloaded ? (packQuestions as Question[]) : engineResult.questions;
 
   const retentionAsQuestions: Question[] = useMemo(
-    () =>
-      (retentionQuestions ?? []).map((rq) => ({
-        id: `ret_${rq.id}`,
-        type: "short-answer" as const,
-        subject: rq.subject,
-        topic: rq.topic,
-        difficulty: "Medium" as const,
-        bloomTaxonomy: "remember" as BloomLevel,
-        points: 1,
-        questionText: rq.questionText,
-        hint: "",
-        explanation: rq.explanation,
-        steps: ["Review the correct answer below."],
-        body: {
-          modelAnswer: rq.correctAnswer,
-          acceptableAnswers: [rq.correctAnswer],
-          maxLength: 500,
-        },
-        metadata: { source: "imported" },
-      })),
+    () => mapRetentionToQuestions(retentionQuestions ?? []),
     [retentionQuestions],
   );
 
@@ -200,45 +157,17 @@ export function useQuizView({
     async (subject: string) => {
       setSelectedSubject(subject);
 
-      let loadedCompData: {
-        topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
-        topicCompetencyScore?: number;
-        suggestedBloomLevel?: BloomLevel;
-        suggestedDifficulty?: Difficulty;
-      } = {};
+      let loadedCompData: QuizCompetencyData = {};
       let targetTopic: string | undefined = topic;
 
       try {
-        const [
-          { competencyService },
-          { computeCompetencyLevel },
-          { mapCompetencyToBloom, mapCompetencyToDifficulty },
-        ] = await Promise.all([
-          import("@/lib/competency-engine"),
-          import("@/lib/competency-engine/types"),
-          import("@/lib/question-engine/competency-mapper"),
-        ]);
-
+        const { competencyService } = await import("@/lib/competency-engine");
         const normalizedSubject = subject.toLowerCase();
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
         try {
-          const now = Date.now();
-          const items = await dexieDataAccess.retentionRecurrence
-            .where("scheduledAt")
-            .belowOrEqual(now)
-            .toArray();
-          const overdue = items.filter((i) => !i.completed && i.subject === normalizedSubject);
-          setRetentionQuestions(
-            overdue.slice(0, 3).map((i) => ({
-              id: i.questionId,
-              questionText: i.questionText,
-              correctAnswer: i.correctAnswer,
-              explanation: i.explanation,
-              subject: i.subject,
-              topic: i.topic,
-            })),
-          );
+          const items = await loadRetentionQuestions(dexieDataAccess, normalizedSubject, Date.now());
+          setRetentionQuestions(items);
         } catch (e) {
           logError("useQuizView.retention", e);
           setRetentionQuestions([]);
@@ -259,19 +188,7 @@ export function useQuizView({
           targetTopic = weakest.topicId;
         }
 
-        const topicComps = competencies.filter((c) => c.topicId === targetTopic);
-
-        if (topicComps.length > 0) {
-          const avgScore = topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length;
-          const level = computeCompetencyLevel(avgScore);
-          loadedCompData = {
-            topicCompetencyLevel: level,
-            topicCompetencyScore: Math.round(avgScore),
-            suggestedBloomLevel: mapCompetencyToBloom(level, avgScore),
-            suggestedDifficulty: mapCompetencyToDifficulty(level),
-          };
-        }
-
+        loadedCompData = computeTopicCompetency(competencies, targetTopic);
         setResolvedTopic(targetTopic);
       } catch (e) {
         logError("useQuizView.handleStartWithSubject", e);

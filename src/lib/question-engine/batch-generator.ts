@@ -1,0 +1,97 @@
+import type { GenerationParams, Question, QuestionType } from "./types";
+import type { RagContext } from "./prompt-manager";
+import { logError } from "@/lib/shared/logger";
+import type { ProcessorRegistry } from "./processor-registry";
+
+export async function generateBatch(
+  registry: ProcessorRegistry,
+  enriched: GenerationParams,
+  ragContext: RagContext,
+  count: number,
+): Promise<Question[]> {
+  if (!enriched.questionType || enriched.questionType === "any") {
+    return generateMixed(registry, enriched, ragContext);
+  }
+  const types = Array.isArray(enriched.questionType)
+    ? enriched.questionType
+    : [enriched.questionType];
+  const perTypeCount = Math.ceil(count / types.length);
+  const typeResults = await Promise.all(
+    types.map(async (type) => {
+      try {
+        const processor = registry.getProcessor(type);
+        const typeParams = {
+          ...enriched,
+          count: perTypeCount,
+          questionType: type,
+        };
+        return await processor.generate(typeParams, ragContext);
+      } catch (error) {
+        logError("QuestionEngine.generateBatch", error);
+        return [];
+      }
+    }),
+  );
+  return typeResults.flat();
+}
+
+async function generateMixed(
+  registry: ProcessorRegistry,
+  params: GenerationParams,
+  ragContext: RagContext,
+): Promise<Question[]> {
+  const batches: QuestionType[][] = [
+    ["multiple-choice", "matching", "match-pairs"],
+    ["short-answer", "long-answer", "essay"],
+    ["calculation", "diagram", "ordering"],
+    ["fill-in-sequence", "diagram-labelling", "hot-spot"],
+    ["source-based", "data-response"],
+    ["programming"],
+    ["mixed"],
+  ];
+
+  const { count } = params;
+  const itemCount = Math.max(1, Math.ceil(count / batches.length));
+
+  const batchResults = await Promise.all(
+    batches.map(async (batch) => {
+      const available = batch.filter((t) => registry.hasProcessor(t));
+      if (available.length === 0) {
+        return [];
+      }
+
+      const perType = Math.floor(itemCount / available.length);
+      const remainder = itemCount - perType * available.length;
+      const batchQuestions: Question[] = [];
+
+      for (let i = 0; i < available.length && batchQuestions.length < itemCount; i++) {
+        const needed = perType + (i < remainder ? 1 : 0);
+        if (needed <= 0) {
+          continue;
+        }
+
+        let generated = false;
+        for (let j = 0; j < available.length && !generated; j++) {
+          const tryType = available[(i + j) % available.length];
+          const processor = registry.getProcessor(tryType);
+          try {
+            const questions = await processor.generate(
+              { ...params, count: needed, questionType: tryType },
+              ragContext,
+            );
+            if (questions.length > 0) {
+              batchQuestions.push(...questions);
+              generated = true;
+            }
+          } catch (error) {
+            logError("QuestionEngine.generateMixed", error);
+          }
+        }
+      }
+
+      return batchQuestions;
+    }),
+  );
+
+  return batchResults.flat().slice(0, count);
+}
