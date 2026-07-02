@@ -1,17 +1,44 @@
 import type { Metadata } from "next";
-import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { PracticePageClient } from "./practice-page-client";
+import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { NoiseOverlay } from "@/components/shared/noise-overlay";
+import { PageContainer } from "@/components/layout/page-container";
+import { CategoryOverview } from "@/components/navigation/category-overview";
 
 export const metadata: Metadata = {
   title: "Practice - Lumni",
-  description: "Practice with exams and past papers",
 };
+
+const items = [
+  { label: "Exams", description: "Take full exam simulations", href: "/exams", icon: "File01Icon" },
+  {
+    label: "Past Papers",
+    description: "Browse past exam papers",
+    href: "/past-papers",
+    icon: "File01Icon",
+  },
+  {
+    label: "Exam Dates",
+    description: "View upcoming exam schedules",
+    href: "/exam-dates",
+    icon: "Calendar01Icon",
+  },
+  {
+    label: "Review Mistakes",
+    description: "Review and learn from mistakes",
+    href: "/review",
+    icon: "Target01Icon",
+  },
+];
 
 export default function PracticePage() {
   return (
-    <AppErrorBoundary>
-      <PracticePageClient />
-    </AppErrorBoundary>
+    <div className="relative min-h-dvh bg-system-grouped pb-24">
+      <AmbientGradient variant="dashboard" />
+      <NoiseOverlay opacity={0.015} />
+      <PageContainer className="pt-6">
+        <CategoryOverview title="Practice" items={items} />
+      </PageContainer>
+    </div>
   );
 }
 

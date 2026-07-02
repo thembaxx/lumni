@@ -229,7 +229,7 @@ export function TopNav({ title, className }: TopNavProps) {
     <header
       ref={headerRef}
       className={cn(
-"topnav-bar sticky z-header border-system-separator/30 border-b glass-thin shadow-level-1",
+        "topnav-bar sticky z-header border-system-separator/30 border-b glass-thin shadow-level-1",
         "relative before:pointer-events-none before:absolute before:inset-0 before:bg-(--system-accent-alpha-10)",
         className,
       )}

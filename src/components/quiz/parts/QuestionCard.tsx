@@ -8,7 +8,7 @@ import { useSolver } from "@/hooks/use-solver";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { useBookmarksStore } from "@/store/bookmarks";
-import { useToolsStore } from "@/store/tools";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 
 interface QuestionState {
   selectedOption: string | null;
@@ -115,6 +115,8 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const effectiveSubject = subjectProp || topicProp || "";
 
+  const { push } = useNavigationDirection();
+
   const [state, setState] = useState<QuestionState>({
     selectedOption: null,
     isCorrect: null,
@@ -136,7 +138,6 @@ export function QuestionCard({
   });
   const effectiveSubjectLower = effectiveSubject.toLowerCase();
   const isMathSubject = MATH_SUBJECTS.some((s) => effectiveSubjectLower.includes(s));
-  const openTools = useToolsStore((s) => s.openTools);
 
   const { grade } = useQuestionEngine();
 
@@ -276,7 +277,7 @@ export function QuestionCard({
         bookmarked={bookmarked}
         onBookmarkToggle={onBookmarkToggle}
         isMathSubject={isMathSubject}
-        onToolClick={() => openTools("solver", true)}
+        onToolClick={() => push("/solve?camera=1")}
         visualDescription={visualDescription}
       />
       <QuestionCardMedia

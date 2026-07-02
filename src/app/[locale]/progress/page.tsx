@@ -1,23 +1,43 @@
 import type { Metadata } from "next";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
-import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { ProgressPageClient } from "./progress-page-client";
+import { PageContainer } from "@/components/layout/page-container";
+import { CategoryOverview } from "@/components/navigation/category-overview";
 
 export const metadata: Metadata = {
   title: "Progress - Lumni",
-  description: "Track your learning progress",
 };
+
+const items = [
+  {
+    label: "Study Plan",
+    description: "Manage your study schedule",
+    href: "/study-plan",
+    icon: "Calendar01Icon",
+  },
+  {
+    label: "Bookmarks",
+    description: "View your saved bookmarks",
+    href: "/bookmarks",
+    icon: "Bookmark02Icon",
+  },
+  {
+    label: "Settings",
+    description: "Customise your app settings",
+    href: "/settings",
+    icon: "Settings01Icon",
+  },
+];
 
 export default function ProgressPage() {
   return (
-    <AppErrorBoundary>
-      <div className="relative min-h-dvh bg-system-grouped">
-        <AmbientGradient variant="dashboard" />
-        <NoiseOverlay opacity={0.015} />
-        <ProgressPageClient />
-      </div>
-    </AppErrorBoundary>
+    <div className="relative min-h-dvh bg-system-grouped pb-24">
+      <AmbientGradient variant="dashboard" />
+      <NoiseOverlay opacity={0.015} />
+      <PageContainer className="pt-6">
+        <CategoryOverview title="Progress" items={items} />
+      </PageContainer>
+    </div>
   );
 }
 

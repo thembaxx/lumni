@@ -10,7 +10,6 @@ import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { useExams } from "@/hooks/use-exams";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { useToolsStore } from "@/store/tools";
 import { ExamEmptyState } from "./exams-browse/exam-empty-state";
 import { ExamErrorState } from "./exams-browse/exam-error-state";
 import { ExamFilters } from "./exams-browse/exam-filters";
@@ -26,7 +25,6 @@ export function ExamsBrowse() {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-  const openTools = useToolsStore((s) => s.openTools);
 
   const { exams, groupedExams, isLoading, error } = useExams({
     search: searchQuery,
@@ -91,7 +89,7 @@ export function ExamsBrowse() {
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => openTools("calendar")}
+                  onClick={() => push("/exam-dates")}
                   className="gap-1.5 rounded-full border-border/60 text-xs"
                 >
                   <HugeiconsIcon icon={Calendar01Icon} className="size-3.5" />
