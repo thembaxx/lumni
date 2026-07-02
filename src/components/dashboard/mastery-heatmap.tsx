@@ -1,5 +1,7 @@
 "use client";
 
+import ChartBarBigIcon from "@hugeicons/core-free-icons/ChartBarBigIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import {
@@ -132,14 +134,14 @@ export function MasteryHeatmap() {
 
       {!selectedSubject && (
         <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
-          <span className="text-3xl">📊</span>
+          <HugeiconsIcon icon={ChartBarBigIcon} className="size-10 text-muted-foreground/40" />
           <p className="text-sm">Select a subject to see your mastery heatmap</p>
         </div>
       )}
 
       {selectedSubject && !compsErr && topics.length === 0 && (
         <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
-          <span className="text-3xl">📊</span>
+          <HugeiconsIcon icon={ChartBarBigIcon} className="size-10 text-muted-foreground/40" />
           <p className="text-sm">
             No competency data yet. Complete some quizzes to build your heatmap.
           </p>

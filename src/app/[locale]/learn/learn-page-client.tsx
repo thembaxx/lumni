@@ -96,7 +96,7 @@ export function LearnPageClient() {
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 16 }}
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: motionEase }}
-              className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-[box-shadow,transform] duration-300 hover:shadow-level-2 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary"
+              className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-[box-shadow,transform] duration-300 hover:shadow-level-2 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-primary"
             >
               <div
                 className={`pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${item.gradient}`}

@@ -2,6 +2,7 @@
 
 import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
+import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
@@ -129,7 +130,7 @@ function InteractiveQuizDemo() {
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
                           : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hover:scale-[1.01]"
-                  } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.98]"}`}
+                  } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]"}`}
                 >
                   <span
                     className={`flex size-5 shrink-0 items-center justify-center rounded-md border ios-caption-3 ${
@@ -140,7 +141,13 @@ function InteractiveQuizDemo() {
                           : "border-border/50 text-muted-foreground"
                     }`}
                   >
-                    {isCorrect ? "✓" : isWrong ? "✗" : String.fromCharCode(65 + opt.value)}
+                    {isCorrect ? (
+                      <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />
+                    ) : isWrong ? (
+                      <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+                    ) : (
+                      String.fromCharCode(65 + opt.value)
+                    )}
                   </span>
                   {opt.label}
                 </button>

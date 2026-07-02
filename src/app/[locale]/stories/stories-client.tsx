@@ -1,6 +1,7 @@
 "use client";
 
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import MagicWand01Icon from "@hugeicons/core-free-icons/MagicWand01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -226,7 +227,12 @@ export function StoriesClient() {
                         variant="default"
                         className="shrink-0 rounded-full bg-success/15 text-(--fs-caption-3) text-success"
                       >
-                        ✓ Completed
+                        <HugeiconsIcon
+                          icon={CheckmarkCircle01Icon}
+                          className="size-3.5"
+                          aria-hidden="true"
+                        />
+                        Completed
                       </Badge>
                     )}
                   </div>

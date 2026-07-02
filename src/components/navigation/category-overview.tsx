@@ -65,7 +65,7 @@ export function CategoryOverview({ title, items }: CategoryOverviewProps) {
             <Link
               key={item.href}
               href={item.href}
-              className="group flex items-start gap-4 rounded-card-lg border border-border/80 bg-card p-5 shadow-level-2 transition-all duration-200 hover:shadow-level-3 active:scale-[0.98]"
+              className="group flex items-start gap-4 rounded-card-lg border border-border/80 bg-card p-5 shadow-level-2 transition-all duration-200 hover:shadow-level-3 active:scale-[0.96]"
             >
               {Icon && (
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-system-accent/10 transition-colors duration-200 group-hover:bg-system-accent/20">

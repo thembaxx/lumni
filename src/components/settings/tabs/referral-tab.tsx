@@ -127,7 +127,7 @@ export function ReferralTab() {
           {info.referrals.map((r, i) => (
             <ListCell
               key={r.refereeId}
-              title={r.status === "rewarded" ? "✓ Premium earned" : "○ Pending verification"}
+              title={r.status === "rewarded" ? "Premium earned" : "Pending verification"}
               subtitle={new Date(r.createdAt).toLocaleDateString()}
               showSeparator={i < info.referrals.length - 1}
             />

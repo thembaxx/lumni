@@ -4,6 +4,7 @@ import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Copy02Icon from "@hugeicons/core-free-icons/Copy02Icon";
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import Minimize01Icon from "@hugeicons/core-free-icons/Minimize01Icon";
 import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -195,7 +196,8 @@ export function GroupDetail() {
                         )}
                         {member.currentStreak !== undefined && (
                           <span className="text-muted-foreground text-xs">
-                            🔥 {member.currentStreak}
+                            <HugeiconsIcon icon={FireIcon} className="size-3.5" />{" "}
+                            {member.currentStreak}
                           </span>
                         )}
                       </div>

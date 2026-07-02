@@ -1,8 +1,11 @@
 "use client";
 
+import LockIcon from "@hugeicons/core-free-icons/LockIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { AchievementIcon } from "@/components/shared/achievement-icon";
 import { rarityColors, rarityGlow } from "@/lib/utils/gamification";
 import type { Achievement } from "@/types/gamification";
 
@@ -53,7 +56,7 @@ export function Achievements({ achievements }: AchievementsProps) {
               description: achievement.description,
             })}
           >
-            <span className="text-2xl">{achievement.icon}</span>
+            <AchievementIcon emoji={achievement.icon} className="size-6" />
             {achievement.rarity === "legendary" && (
               <span
                 className="absolute inset-0 rounded-xl"
@@ -76,7 +79,7 @@ export function Achievements({ achievements }: AchievementsProps) {
               name: achievement.name,
             })}
           >
-            <span className="text-xl grayscale">🔒</span>
+            <HugeiconsIcon icon={LockIcon} className="size-5 grayscale" />
           </m.div>
         ))}
 

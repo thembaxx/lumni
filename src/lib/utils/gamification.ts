@@ -56,3 +56,44 @@ export function getStreakMessage(streak: number): string {
   }
   return "Keep going!";
 }
+
+export function mapEmojiToIcon(emoji: string): string | null {
+  const map: Record<string, string> = {
+    "🎯": "Target01Icon",
+    "🔥": "FireIcon",
+    "💪": "WorkoutSportIcon",
+    "🏆": "Award01Icon",
+    "📚": "BookOpen01Icon",
+    "🎓": "Mortarboard01Icon",
+    "⭐": "StarIcon",
+    "🌟": "StarIcon",
+    "🧠": "BrainIcon",
+    "💎": "DiamondIcon",
+    "✨": "SparklesIcon",
+    "👑": "CrownIcon",
+    "🔬": "MicroscopeIcon",
+    "🔢": "NumberIcon",
+    "🎲": "DiceIcon",
+    "🧪": "TestTubeIcon",
+    "📖": "BookOpen02Icon",
+    "🗣️": "VoiceIcon",
+    "💼": "BriefcaseIcon",
+    "📊": "ChartBarBigIcon",
+    "🌍": "GlobeIcon",
+    "🔄": "RefreshIcon",
+    "⚡": "ZapIcon",
+    "📈": "ChartLineData01Icon",
+    "📅": "Calendar01Icon",
+    "📝": "File02Icon",
+    "🥇": "MedalFirstPlaceIcon",
+    "🥈": "MedalSecondPlaceIcon",
+    "🥉": "MedalThirdPlaceIcon",
+    "🏅": "Award02Icon",
+    "🎖️": "Award03Icon",
+    "🃏": "CardIcon",
+    "🔒": "LockIcon",
+    "🌈": "RainbowIcon",
+    "🧊": "SnowflakeIcon",
+  };
+  return map[emoji] ?? null;
+}

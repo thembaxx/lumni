@@ -1,5 +1,7 @@
 "use client";
 
+import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -212,7 +214,7 @@ export function AdminGamificationClient() {
                   </div>
                   <div className={cn("flex items-center gap-3")}>
                     <span className={cn("text-muted-foreground text-xs tabular-nums")}>
-                      🔥 {user.streak}
+                      <HugeiconsIcon icon={FireIcon} className="size-3.5" /> {user.streak}
                     </span>
                     <span className={cn("font-mono tabular-nums")}>
                       {user.xp.toLocaleString()} XP

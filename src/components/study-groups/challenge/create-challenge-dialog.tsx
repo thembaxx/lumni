@@ -13,6 +13,7 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import type { ChallengeType } from "@/lib/study-groups/challenge-types";
+import { AchievementIcon } from "@/components/shared/achievement-icon";
 import { CHALLENGE_TYPE_ICONS, CHALLENGE_TYPE_LABELS } from "@/lib/study-groups/challenge-types";
 
 interface Props {
@@ -64,7 +65,7 @@ export function CreateChallengeDialog({ groupId, onCreated }: Props) {
               onClick={() => handleCreate(type)}
               disabled={loading}
             >
-              <span className="text-lg">{CHALLENGE_TYPE_ICONS[type]}</span>
+              <AchievementIcon emoji={CHALLENGE_TYPE_ICONS[type]} className="size-5" />
               <div className="flex flex-col items-start gap-0.5">
                 <span className="font-medium text-sm">{CHALLENGE_TYPE_LABELS[type]}</span>
               </div>

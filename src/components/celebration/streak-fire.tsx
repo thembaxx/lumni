@@ -1,6 +1,8 @@
 "use client";
 
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { getStreakMessage } from "@/lib/utils/gamification";
@@ -32,7 +34,10 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, type: "spring", bounce: 0 }}
           >
-            <span className="text-lg">{streak >= 30 ? "🔥" : streak >= 7 ? "🌟" : "✨"}</span>
+            <HugeiconsIcon
+              icon={streak >= 30 ? FireIcon : streak >= 7 ? StarIcon : SparklesIcon}
+              className={`size-4 ${streak >= 30 ? "text-warning" : streak >= 7 ? "text-warning/80" : "text-warning/60"}`}
+            />
           </m.div>
         )}
 

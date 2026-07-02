@@ -1,5 +1,7 @@
 "use client";
 
+import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import type { GroupChallenge, GroupChallengeEntry } from "@/lib/study-groups/challenge-types";
@@ -29,7 +31,7 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
     <div className="rounded-xl border border-(--system-accent)/20 bg-(--system-accent)/5 p-4">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-lg">🏆</span>
+          <HugeiconsIcon icon={Award01Icon} className="size-6 text-warning" />
           <div>
             <p className="font-semibold text-sm">Weekly Challenge</p>
             <p className="text-muted-foreground text-xs">{weekLabel}</p>

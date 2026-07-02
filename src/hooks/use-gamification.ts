@@ -176,7 +176,7 @@ export function useGamification() {
       const freezeTimer = setTimeout(() => {
         toast({
           type: "info",
-          message: "🧊 Streak Freeze Used",
+          message: "Streak Freeze Used",
           description:
             "Your streak was protected! Earn more freezes by reaching streak milestones.",
           duration: 4000,

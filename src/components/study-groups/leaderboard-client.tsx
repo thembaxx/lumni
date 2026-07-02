@@ -2,6 +2,9 @@
 
 import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import MedalFirstPlaceIcon from "@hugeicons/core-free-icons/MedalFirstPlaceIcon";
+import MedalSecondPlaceIcon from "@hugeicons/core-free-icons/MedalSecondPlaceIcon";
+import MedalThirdPlaceIcon from "@hugeicons/core-free-icons/MedalThirdPlaceIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { PageContainer } from "@/components/layout/page-container";
@@ -18,7 +21,7 @@ interface LeaderboardEntry {
   memberCount: number;
 }
 
-const medalIcons = ["🥇", "🥈", "🥉"];
+const medalIcons = [MedalFirstPlaceIcon, MedalSecondPlaceIcon, MedalThirdPlaceIcon];
 
 export function LeaderboardClient() {
   const { data, isLoading, isError, error } = useQuery({
@@ -83,7 +86,11 @@ export function LeaderboardClient() {
                     )}
                   >
                     <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted font-bold text-sm">
-                      {i < 3 ? medalIcons[i] : `#${i + 1}`}
+                      {i < 3 ? (
+                        <HugeiconsIcon icon={medalIcons[i]} className="size-5 text-warning" />
+                      ) : (
+                        `#${i + 1}`
+                      )}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-semibold text-sm">{entry.groupName}</p>

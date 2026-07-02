@@ -170,7 +170,7 @@ function RainbowOverlay() {
         }}
       />
       <div className="absolute right-6 bottom-6 animate-fade-in-up rounded-2xl bg-black/70 px-5 py-3 text-white text-sm backdrop-blur-xl">
-        🌈 Rainbow mode activated
+        Rainbow mode activated
       </div>
     </div>
   );

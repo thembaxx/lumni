@@ -126,7 +126,7 @@ export function FeaturesGrid() {
                   )}
                 />
 
-                <div className="relative z-10 flex flex-col gap-3">
+                <div className="relative z-elevated flex flex-col gap-3">
                   <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
                     <HugeiconsIcon icon={feature.icon} className="size-5" />
                   </div>

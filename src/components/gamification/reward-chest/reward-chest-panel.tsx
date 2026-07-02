@@ -3,6 +3,7 @@
 import GiftIcon from "@hugeicons/core-free-icons/GiftIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { AchievementIcon } from "@/components/shared/achievement-icon";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/utils";
 import { rarityBorder } from "@/lib/utils/gamification";
@@ -37,7 +38,7 @@ export function RewardChestPanel() {
                   : rarityBorder[chest.rarity as keyof typeof rarityBorder],
               )}
             >
-              <span className="text-base">{chest.icon}</span>
+              <AchievementIcon emoji={chest.icon} className="size-5" />
               <div>
                 <p
                   className={cn(

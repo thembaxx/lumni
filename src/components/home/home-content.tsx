@@ -96,7 +96,7 @@ function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: ()
         <div className="flex items-center gap-3 rounded-2xl bg-foreground/10 backdrop-blur-xl px-6 py-4 border border-border/30 shadow-level-3 animate-fade-in-scale">
           <HugeiconsIcon icon={StarIcon} className="size-8 text-primary" />
           <div>
-            <p className="font-bold text-lg">You got this! 🎉</p>
+            <p className="font-bold text-lg">You got this!</p>
             <p className="text-muted-foreground text-sm">Keep studying, you're doing great!</p>
           </div>
         </div>

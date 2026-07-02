@@ -1,5 +1,6 @@
 "use client";
 
+import { AchievementIcon } from "@/components/shared/achievement-icon";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
@@ -43,7 +44,7 @@ export function AchievementShowcase() {
                   rarityColors[achievement.rarity] || rarityColors.common,
                 )}
               >
-                <span>{achievement.icon}</span>
+                <AchievementIcon emoji={achievement.icon} className="size-4" />
                 <span>{achievement.name}</span>
               </div>
             ))}

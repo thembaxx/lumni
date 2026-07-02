@@ -1,5 +1,7 @@
 "use client";
 
+import GlobeIcon from "@hugeicons/core-free-icons/GlobeIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useLocale } from "next-intl";
 import { useCallback } from "react";
 import {
@@ -28,7 +30,7 @@ export function LocaleSwitcher() {
   return (
     <Select value={locale} onValueChange={handleSelect}>
       <SelectTrigger className="h-9 gap-2 border-none bg-transparent px-3 py-2 focus:ring-0">
-        <span className="text-base">🌐</span>
+        <HugeiconsIcon icon={GlobeIcon} className="size-4" />
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end" className="w-48">

@@ -76,7 +76,9 @@ export function ComprehensionMcq({
                     : "border-muted-foreground/30",
                 )}
               >
-                {isSelected ? "✓" : ""}
+                {isSelected ? (
+                  <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
+                ) : null}
               </span>
             )}
             <span className="leading-relaxed">{option}</span>

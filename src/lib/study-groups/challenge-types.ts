@@ -19,9 +19,9 @@ export const CHALLENGE_TYPE_LABELS: Record<ChallengeType, string> = {
 };
 
 export const CHALLENGE_TYPE_ICONS: Record<ChallengeType, string> = {
-  "most-quizzes": "📝",
-  "highest-accuracy": "🎯",
-  "most-flashcards": "🃏",
+  "most-quizzes": "File02Icon",
+  "highest-accuracy": "Target01Icon",
+  "most-flashcards": "CardIcon",
 };
 
 export interface GroupChallengeEntry {
@@ -51,37 +51,37 @@ export const BADGE_DEFS = [
   {
     name: "Challenge Champion",
     description: "1st place in weekly challenge",
-    icon: "🥇",
+    icon: "MedalFirstPlaceIcon",
     tier: "gold" as BadgeTier,
   },
   {
     name: "Challenge Runner-Up",
     description: "2nd place in weekly challenge",
-    icon: "🥈",
+    icon: "MedalSecondPlaceIcon",
     tier: "silver" as BadgeTier,
   },
   {
     name: "Challenge Third",
     description: "3rd place in weekly challenge",
-    icon: "🥉",
+    icon: "MedalThirdPlaceIcon",
     tier: "bronze" as BadgeTier,
   },
   {
     name: "Group Champions",
     description: "Winning group of the week",
-    icon: "🏆",
+    icon: "Award01Icon",
     tier: "gold" as BadgeTier,
   },
   {
     name: "Group Runners-Up",
     description: "Second-place group of the week",
-    icon: "🏅",
+    icon: "Award02Icon",
     tier: "silver" as BadgeTier,
   },
   {
     name: "Group Third Place",
     description: "Third-place group of the week",
-    icon: "🎖️",
+    icon: "Award03Icon",
     tier: "bronze" as BadgeTier,
   },
 ];

@@ -2,6 +2,9 @@
 
 import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
+import MedalFirstPlaceIcon from "@hugeicons/core-free-icons/MedalFirstPlaceIcon";
+import MedalSecondPlaceIcon from "@hugeicons/core-free-icons/MedalSecondPlaceIcon";
+import MedalThirdPlaceIcon from "@hugeicons/core-free-icons/MedalThirdPlaceIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -23,7 +26,7 @@ interface ApiLeaderboardEntry {
   subject: string | null;
 }
 
-const MEDALS = ["🥇", "🥈", "🥉"];
+const MEDAL_ICONS = [MedalFirstPlaceIcon, MedalSecondPlaceIcon, MedalThirdPlaceIcon];
 
 const SUBJECT_TABS = [
   { id: undefined, label: "All" },
@@ -146,7 +149,7 @@ export function CompetitionCard() {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-base">{MEDALS[i]}</span>
+                  <HugeiconsIcon icon={MEDAL_ICONS[i]} className="size-5 text-warning" />
                   <span className="max-w-[120px] truncate font-mono text-xs">
                     {entry.label ?? entry.userId.slice(0, 8)}
                   </span>

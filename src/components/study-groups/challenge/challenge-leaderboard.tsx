@@ -1,5 +1,10 @@
 "use client";
 
+import ChartBarBigIcon from "@hugeicons/core-free-icons/ChartBarBigIcon";
+import MedalFirstPlaceIcon from "@hugeicons/core-free-icons/MedalFirstPlaceIcon";
+import MedalSecondPlaceIcon from "@hugeicons/core-free-icons/MedalSecondPlaceIcon";
+import MedalThirdPlaceIcon from "@hugeicons/core-free-icons/MedalThirdPlaceIcon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { GroupChallengeEntry } from "@/lib/study-groups/challenge-types";
 
 interface Props {
@@ -7,7 +12,7 @@ interface Props {
   userNames?: Record<string, string>;
 }
 
-const MEDAL_ICONS = ["🥇", "🥈", "🥉"];
+const MEDAL_ICONS = [MedalFirstPlaceIcon, MedalSecondPlaceIcon, MedalThirdPlaceIcon];
 const DEFAULT_USER_NAMES = {};
 
 export function ChallengeLeaderboard({ entries, userNames = DEFAULT_USER_NAMES }: Props) {
@@ -16,7 +21,7 @@ export function ChallengeLeaderboard({ entries, userNames = DEFAULT_USER_NAMES }
   if (sorted.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-8 text-muted-foreground">
-        <span className="text-2xl">📊</span>
+        <HugeiconsIcon icon={ChartBarBigIcon} className="size-8 text-muted-foreground/40" />
         <p className="text-sm">No activity yet this week</p>
         <p className="text-xs">Complete quizzes to earn challenge points!</p>
       </div>
@@ -32,7 +37,7 @@ export function ChallengeLeaderboard({ entries, userNames = DEFAULT_USER_NAMES }
         >
           <div className="flex w-8 items-center justify-center">
             {i < 3 ? (
-              <span className="text-lg">{MEDAL_ICONS[i]}</span>
+              <HugeiconsIcon icon={MEDAL_ICONS[i]} className="size-5 text-warning" />
             ) : (
               <span className="font-mono text-muted-foreground text-xs">#{i + 1}</span>
             )}

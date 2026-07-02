@@ -4,6 +4,7 @@ import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import LockIcon from "@hugeicons/core-free-icons/LockIcon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
+import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
@@ -250,9 +251,11 @@ export function ProblemsClient() {
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
-                <span className="text-primary/60" aria-hidden="true">
-                  ✦
-                </span>
+                <HugeiconsIcon
+                  icon={StarIcon}
+                  className="size-3.5 text-primary/60"
+                  aria-hidden="true"
+                />
                 AI-curated practice
               </div>
               <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
