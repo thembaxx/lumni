@@ -30,10 +30,7 @@ export function syncCardPayload(card: FlashcardSM2): Record<string, unknown> {
   };
 }
 
-export async function countConsecutivePasses(
-  db: DataAccess,
-  cardId: string,
-): Promise<number> {
+export async function countConsecutivePasses(db: DataAccess, cardId: string): Promise<number> {
   const history = await db.reviewHistory
     .where("cardId")
     .equals(cardId)

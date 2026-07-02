@@ -16,9 +16,7 @@ export interface ScorerDeps {
   getWeakestTopic?: (
     userId: string,
   ) => Promise<{ subject: string; topic: string; score: number } | null>;
-  getUpcomingExam?: (
-    userId: string,
-  ) => Promise<{ subject: string; daysUntil: number } | null>;
+  getUpcomingExam?: (userId: string) => Promise<{ subject: string; daysUntil: number } | null>;
   getStudyPlanAdherence?: (userId: string) => Promise<number>;
   getHoursSinceLastPractice?: (userId: string) => Promise<number>;
 }
@@ -121,7 +119,5 @@ export async function getRankedRecommendations(
     });
   }
 
-  return candidates
-    .toSorted((a, b) => b.score - a.score)
-    .slice(0, limit);
+  return candidates.toSorted((a, b) => b.score - a.score).slice(0, limit);
 }

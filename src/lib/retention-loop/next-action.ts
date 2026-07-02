@@ -232,11 +232,18 @@ export function getFeed(
       let weakest: { subjectId: string; topicId: string; score: number } | null = null;
       for (const c of all) {
         const s = typeof c.score === "number" ? c.score : 0;
-        if (!weakest || s < weakest.score) weakest = { score: s, subjectId: c.subjectId, topicId: c.topicId };
+        if (!weakest || s < weakest.score)
+          weakest = { score: s, subjectId: c.subjectId, topicId: c.topicId };
       }
       if (!weakest) return null;
       const sub = await _deps.db.subjects.where("code").equals(weakest.subjectId).first();
-      return { score: weakest.score, subject: sub?.name ?? weakest.subjectId, topic: weakest.topicId.replaceAll(/-/g, " ").replaceAll(/\b\w/g, (l: string) => l.toUpperCase()) };
+      return {
+        score: weakest.score,
+        subject: sub?.name ?? weakest.subjectId,
+        topic: weakest.topicId
+          .replaceAll(/-/g, " ")
+          .replaceAll(/\b\w/g, (l: string) => l.toUpperCase()),
+      };
     },
     getUpcomingExam: async (_uid: string) => {
       try {
@@ -255,20 +262,30 @@ export function getFeed(
           const d = new Date(s.date as string);
           const diff = Math.ceil((d.getTime() - now.getTime()) / 86_400_000);
           if (diff < 0) continue;
-          if (!nearest || diff < Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000)) {
+          if (
+            !nearest ||
+            diff < Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000)
+          ) {
             nearest = { subject: String(s.subject), date: String(s.date) };
           }
         }
         if (!nearest) return null;
-        return { subject: nearest.subject, daysUntil: Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000) };
-      } catch { return null; }
+        return {
+          subject: nearest.subject,
+          daysUntil: Math.ceil((new Date(nearest.date).getTime() - now.getTime()) / 86_400_000),
+        };
+      } catch {
+        return null;
+      }
     },
     getHoursSinceLastPractice: async () => {
       try {
         const attempts = await _deps.db.quizAttempts.orderBy("completedAt").reverse().first();
         if (!attempts?.completedAt) return 24;
         return (Date.now() - new Date(attempts.completedAt).getTime()) / 3_600_000;
-      } catch { return 0; }
+      } catch {
+        return 0;
+      }
     },
     ...deps,
   };

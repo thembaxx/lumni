@@ -69,9 +69,7 @@ function FeedCard({
               {rec.title}
             </span>
           </div>
-          <p className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">
-            {rec.reason}
-          </p>
+          <p className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">{rec.reason}</p>
           <Link
             href={rec.ctaHref}
             prefetch={true}
@@ -89,11 +87,7 @@ function FeedCard({
   );
 }
 
-export function PersonalizedFeed({
-  recommendations,
-}: {
-  recommendations: ScoredRecommendation[];
-}) {
+export function PersonalizedFeed({ recommendations }: { recommendations: ScoredRecommendation[] }) {
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
   if (!recommendations.length) return null;

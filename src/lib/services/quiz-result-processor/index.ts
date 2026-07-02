@@ -5,7 +5,18 @@ import { processExamEffect } from "./exam";
 import { processFlashcardEffect } from "./flashcard";
 import type { QuizResultInput, QuizResultDeps } from "./types";
 
-export type { QuizResultInput, QuizResultDeps, WrongAnswerInput, TrackResultInput, RetentionInput, FlashcardEngine, BoltResult, QuizResults, ExamPartResult, FlashcardItem } from "./types";
+export type {
+  QuizResultInput,
+  QuizResultDeps,
+  WrongAnswerInput,
+  TrackResultInput,
+  RetentionInput,
+  FlashcardEngine,
+  BoltResult,
+  QuizResults,
+  ExamPartResult,
+  FlashcardItem,
+} from "./types";
 
 function processQuizResultEffect(
   input: QuizResultInput,

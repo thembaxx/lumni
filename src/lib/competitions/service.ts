@@ -31,18 +31,14 @@ async function getWeekEntries(subjectId?: string): Promise<CompetitionScoreRecor
   );
 
   if (subjectId) {
-    weekEntries = weekEntries.filter(
-      (e: CompetitionScoreRecord) => e.subjectId === subjectId,
-    );
+    weekEntries = weekEntries.filter((e: CompetitionScoreRecord) => e.subjectId === subjectId);
   }
 
   return weekEntries;
 }
 
 function rankEntries(entries: CompetitionScoreRecord[]): LeaderboardEntry[] {
-  const sorted = [...entries].toSorted(
-    (a, b) => b.xpEarned - a.xpEarned,
-  );
+  const sorted = [...entries].toSorted((a, b) => b.xpEarned - a.xpEarned);
   return sorted.map((e, i) => ({
     userId: e.userId,
     xpEarned: e.xpEarned,
@@ -57,7 +53,9 @@ export async function recordXp(userId: string, xp: number): Promise<void> {
     const existing = await _deps.db.competitionScores
       .where("userId")
       .equals(userId)
-      .filter((e: CompetitionScoreRecord) => e.weekStart === start && e.weekEnd === end && !e.subjectId)
+      .filter(
+        (e: CompetitionScoreRecord) => e.weekStart === start && e.weekEnd === end && !e.subjectId,
+      )
       .first();
 
     if (existing?.id != null) {
@@ -115,9 +113,7 @@ export async function recordXpPerSubject(
   }
 }
 
-export async function getLeaderboard(
-  subjectId?: string,
-): Promise<LeaderboardEntry[]> {
+export async function getLeaderboard(subjectId?: string): Promise<LeaderboardEntry[]> {
   try {
     const weekEntries = await getWeekEntries(subjectId);
     return rankEntries(weekEntries);
@@ -127,9 +123,7 @@ export async function getLeaderboard(
   }
 }
 
-export async function getLeaderboardBySubject(
-  subjectId: string,
-): Promise<LeaderboardEntry[]> {
+export async function getLeaderboardBySubject(subjectId: string): Promise<LeaderboardEntry[]> {
   return getLeaderboard(subjectId);
 }
 

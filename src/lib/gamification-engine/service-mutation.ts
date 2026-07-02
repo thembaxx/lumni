@@ -3,7 +3,13 @@ import type { StoredGamification } from "./types";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { persist, saveSnapshot } from "./service-persist";
 import { scheduleSync } from "./service-sync";
-import type { XpResult, AchievementResult, ChestResult, StreakResult, FreezeResult } from "./service-types";
+import type {
+  XpResult,
+  AchievementResult,
+  ChestResult,
+  StreakResult,
+  FreezeResult,
+} from "./service-types";
 
 export interface MutationSelf {
   data: StoredGamification;
@@ -15,7 +21,9 @@ export interface MutationSelf {
 
 function persistAndSync(self: MutationSelf, newData: StoredGamification): void {
   persist(self.db, newData);
-  scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+  scheduleSync(newData, self.syncTimer, (t) => {
+    self.setSyncTimer(t);
+  });
   saveSnapshot(newData);
 }
 
@@ -47,7 +55,10 @@ export function addXpMutation(
   return { data: newData, leveledUp: newLevel !== null };
 }
 
-export function addAchievementMutation(self: MutationSelf, achievementId: string): AchievementResult {
+export function addAchievementMutation(
+  self: MutationSelf,
+  achievementId: string,
+): AchievementResult {
   const { data: newData, achievement } = gamificationEngine.addAchievement(
     self.data,
     achievementId,
@@ -71,7 +82,9 @@ export function consumeStreakFreezeMutation(self: MutationSelf): FreezeResult {
   if (success) {
     self.data = newData;
     persist(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
   }
@@ -96,7 +109,9 @@ export function checkForRewardChestsMutation(self: MutationSelf): ChestResult {
   const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(self.data);
   if (newData !== self.data) {
     persist(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
   }
   self.data = newData;

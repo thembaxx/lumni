@@ -1,5 +1,1 @@
-export {
-  getRankedRecommendations,
-  type ScoredRecommendation,
-  type ScorerDeps,
-} from "./scorer";
+export { getRankedRecommendations, type ScoredRecommendation, type ScorerDeps } from "./scorer";

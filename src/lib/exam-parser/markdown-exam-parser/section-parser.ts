@@ -221,9 +221,7 @@ export function parseSections(lines: string[], instructionsEndLine: number): Sec
 
   if (currentSection) {
     if (currentQuestion && questionStartLine !== null) {
-      currentSection.questions.push(
-        buildQuestion(currentQuestion, lines.slice(questionStartLine)),
-      );
+      currentSection.questions.push(buildQuestion(currentQuestion, lines.slice(questionStartLine)));
     }
     if (currentSection.questions.length > 0) sections.push(currentSection);
   }

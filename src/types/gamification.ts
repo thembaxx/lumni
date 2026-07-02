@@ -1,5 +1,12 @@
-import type { Achievement, DailyChallenge, LevelInfo, RewardChestDef, StreakMilestone, UserGamification } from "./gamification-types";
-export type { Achievement, DailyChallenge, LevelInfo, RewardChestDef, StreakMilestone, UserGamification } from "./gamification-types";
+import type { DailyChallenge, LevelInfo } from "./gamification-types";
+export type {
+  Achievement,
+  DailyChallenge,
+  LevelInfo,
+  RewardChestDef,
+  StreakMilestone,
+  UserGamification,
+} from "./gamification-types";
 export { XP_PER_CORRECT, XP_PER_QUESTION, XP_STREAK_BONUS, LEVELS } from "./gamification-types";
 export { ACHIEVEMENTS, REWARD_CHESTS, STREAK_MILESTONES } from "./gamification-data";
 

@@ -1,7 +1,6 @@
 "use client";
 
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
-import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { Button } from "@/components/ui/button";
@@ -69,9 +68,7 @@ export function CoachingPanel({
         )}
 
         {coaching.lastResult && (
-          <div className="rounded-lg bg-muted/30 p-3 text-sm">
-            {coaching.lastResult.feedback}
-          </div>
+          <div className="rounded-lg bg-muted/30 p-3 text-sm">{coaching.lastResult.feedback}</div>
         )}
 
         {coaching.canRevise && (
@@ -94,9 +91,7 @@ export function CoachingPanel({
           </div>
         )}
 
-        {coaching.error && (
-          <p className="text-destructive text-xs">{coaching.error}</p>
-        )}
+        {coaching.error && <p className="text-destructive text-xs">{coaching.error}</p>}
 
         {!coaching.canRevise && (
           <p className="text-center text-muted-foreground text-xs">

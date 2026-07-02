@@ -20,9 +20,8 @@ export async function syncToServer(data: StoredGamification): Promise<void> {
   if (!getDataSharingConsent()) return;
   try {
     const label =
-      (typeof window !== "undefined"
-        ? window.localStorage.getItem("lumni_display_name")
-        : null) || undefined;
+      (typeof window !== "undefined" ? window.localStorage.getItem("lumni_display_name") : null) ||
+      undefined;
     await apiFetch("/api/gamification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,9 +36,8 @@ export async function syncToLeaderboard(data: StoredGamification, userId: string
   if (!getDataSharingConsent()) return;
   try {
     const label =
-      (typeof window !== "undefined"
-        ? window.localStorage.getItem("lumni_display_name")
-        : null) || undefined;
+      (typeof window !== "undefined" ? window.localStorage.getItem("lumni_display_name") : null) ||
+      undefined;
     await apiFetch("/api/gamification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

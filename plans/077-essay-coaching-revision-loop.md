@@ -31,7 +31,12 @@ The essay grader is a 24-line single-shot AI prompt — submit draft, get score 
   export const grade: GradeFn = (q, a, prompts, ai) => {
     const student = a.value as string;
     if (!student || student.trim().length < 20) {
-      return Promise.resolve({ correct: false, score: 0, maxScore: q.points, feedback: "Essay is too short to grade." });
+      return Promise.resolve({
+        correct: false,
+        score: 0,
+        maxScore: q.points,
+        feedback: "Essay is too short to grade.",
+      });
     }
     return aiGradeResult(q, a, prompts, ai, (q: Question, _a: UserAnswer) => {
       const b = q.body as QuestionBody["essay"];
@@ -46,6 +51,7 @@ The essay grader is a 24-line single-shot AI prompt — submit draft, get score 
 - Dexie schema is in `src/lib/db/schema.ts`.
 
 **Repo conventions to follow**:
+
 - Graders use `aiGradeResult()` from `./shared` — import and wrap the AI call
 - Prompt templates follow the `PromptTemplate` shape from `src/lib/question-engine/prompt-manager.ts`
 - Dexie table definitions go in `src/lib/db/schema.ts` — add a new table with proper key/index definitions
@@ -54,16 +60,17 @@ The essay grader is a 24-line single-shot AI prompt — submit draft, get score 
 
 ## Commands you will need
 
-| Purpose   | Command                        | Expected on success |
-|-----------|--------------------------------|---------------------|
-| Typecheck | `pnpm run typecheck`           | exit 0              |
-| Tests     | `pnpm run test`                | exit 0              |
-| Lint      | `pnpm exec oxlint --fix`       | exit 0              |
-| Format    | `pnpm exec oxfmt --check`      | exit 0              |
+| Purpose   | Command                   | Expected on success |
+| --------- | ------------------------- | ------------------- |
+| Typecheck | `pnpm run typecheck`      | exit 0              |
+| Tests     | `pnpm run test`           | exit 0              |
+| Lint      | `pnpm exec oxlint --fix`  | exit 0              |
+| Format    | `pnpm exec oxfmt --check` | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/db/schema.ts` — add `essayDrafts` table to Dexie schema
 - `src/lib/question-engine/prompts/essay-coach.ts` (new) — coaching-specific prompts
 - `src/lib/question-engine/processors/graders/essay.ts` — extend with revision support
@@ -71,6 +78,7 @@ The essay grader is a 24-line single-shot AI prompt — submit draft, get score 
 - `src/lib/question-engine/types.ts` (read only) — `RubricCriterion` reference
 
 **Out of scope**:
+
 - Long-answer coaching (same pattern, deferred)
 - Auto-saving drafts on page exit
 - Appwrite sync of essay drafts
@@ -90,7 +98,7 @@ export interface EssayDraftRecord {
   questionId: string;
   draftNumber: number;
   content: string;
-  aiFeedback: string;       // JSON string of GradingResult
+  aiFeedback: string; // JSON string of GradingResult
   score: number;
   maxScore: number;
   createdAt: number;
@@ -98,6 +106,7 @@ export interface EssayDraftRecord {
 ```
 
 Add to the Dexie schema version string (increment version number, e.g., from v41 to v42):
+
 ```
 essayDrafts: "++id, userId, questionId, [userId+questionId]"
 ```
@@ -115,7 +124,13 @@ import type { PromptTemplate } from "../prompt-manager";
 
 export const COACH_PROMPT: PromptTemplate = {
   system: `You are an experienced essay coach. Your job is to help students improve their writing through specific, actionable feedback. Always be encouraging but honest. Focus on: thesis clarity, argument structure, evidence quality, counterargument consideration, and conclusion strength. For each criterion, explain WHAT needs improvement and HOW to improve it.`,
-  user: (params: { question: string; rubric: string; modelAnswer: string; currentDraft: string; previousFeedback?: string }) =>
+  user: (params: {
+    question: string;
+    rubric: string;
+    modelAnswer: string;
+    currentDraft: string;
+    previousFeedback?: string;
+  }) =>
     `Question: ${params.question}\nRubric: ${params.rubric}\nModel answer: ${params.modelAnswer}\n` +
     (params.previousFeedback ? `Previous feedback: ${params.previousFeedback}\n` : "") +
     `Current draft: ${params.currentDraft}\n\n` +
@@ -138,6 +153,7 @@ Modify `src/lib/question-engine/processors/graders/essay.ts`:
 4. After grading, save the draft to the `essayDrafts` Dexie table via DataAccess.
 
 The modified`grade()` logic:
+
 ```ts
 export const grade: GradeFn = (q, a, prompts, ai, deps?) => {
   const student = a.value as string;

@@ -3,8 +3,18 @@ import { cleanText } from "./content-extractor";
 
 function extractExamPeriod(header: string): string | null {
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const monthPattern = months.join("|");
   const m = header.match(new RegExp(`(${monthPattern})\\s*(\\d{4})`, "i"));

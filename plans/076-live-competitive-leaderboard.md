@@ -34,6 +34,7 @@ The competition system stores weekly XP in local-only Dexie, ranks by reading AL
 - `src/lib/sync/` — cross-device sync infrastructure exists (Session 50).
 
 **Repo conventions to follow**:
+
 - API routes use `createRouteHandler()` factory from `@/lib/api/create-route-handler.ts` — see existing routes for pattern
 - Error handling uses `logError()` from `@/lib/shared/logger`
 - Achievements follow the existing shape in `src/types/gamification.ts` with `id, name, description, icon, xpReward, rarity, category, requirement`
@@ -41,15 +42,16 @@ The competition system stores weekly XP in local-only Dexie, ranks by reading AL
 
 ## Commands you will need
 
-| Purpose   | Command                        | Expected on success |
-|-----------|--------------------------------|---------------------|
-| Typecheck | `pnpm run typecheck`           | exit 0              |
-| Tests     | `pnpm run test`                | exit 0              |
-| Lint      | `pnpm exec oxlint --fix`       | exit 0              |
+| Purpose   | Command                  | Expected on success |
+| --------- | ------------------------ | ------------------- |
+| Typecheck | `pnpm run typecheck`     | exit 0              |
+| Tests     | `pnpm run test`          | exit 0              |
+| Lint      | `pnpm exec oxlint --fix` | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/competitions/service.ts` — add `recordXpPerSubject()`, `getLeaderboardBySubject()`, add sync-to-Appwrite
 - `src/app/api/leaderboard/route.ts` — new: `GET` returns ranked entries, `POST` syncs local XP
 - `src/components/dashboard/competition-card.tsx` — fetch from API, add subject filter tabs
@@ -58,6 +60,7 @@ The competition system stores weekly XP in local-only Dexie, ranks by reading AL
 - `src/lib/gamification-engine/service.ts` — forward extra params for competitive achievements
 
 **Out of scope**:
+
 - Real-time push via Appwrite Realtime (deferred to a follow-up)
 - Friend comparison / social features (deferred)
 - WhatsApp leaderboard sharing
@@ -141,6 +144,7 @@ Add to `src/types/gamification.ts` inside the `ACHIEVEMENTS` array:
 ### Step 5: Wire achievement checks
 
 In `src/lib/gamification-engine/gamification-engine.ts`, within `checkAndUnlockAchievements`:
+
 - After existing checks, if `extra` contains `leaderboardRank`, check all three leaderboard achievements:
   - `leaderboard_top_50`: `extra.leaderboardRank <= 50`
   - `leaderboard_top_10`: `extra.leaderboardRank <= 10`

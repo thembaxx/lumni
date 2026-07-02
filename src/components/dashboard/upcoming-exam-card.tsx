@@ -39,8 +39,10 @@ export function UpcomingExamCard() {
 
   const countdownVariant = useMemo(() => {
     if (!countdownText) return "bg-muted text-muted-foreground";
-    if (countdownText.startsWith("Starts in") && parseInt(countdownText) <= 7) return "bg-warning/15 text-warning";
-    if (countdownText.startsWith("Today") || countdownText.startsWith("Tomorrow")) return "bg-success/15 text-success";
+    if (countdownText.startsWith("Starts in") && parseInt(countdownText) <= 7)
+      return "bg-warning/15 text-warning";
+    if (countdownText.startsWith("Today") || countdownText.startsWith("Tomorrow"))
+      return "bg-success/15 text-success";
     if (countdownText.startsWith("Ended")) return "bg-muted text-muted-foreground";
     return "bg-muted text-muted-foreground";
   }, [countdownText]);

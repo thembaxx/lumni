@@ -68,11 +68,7 @@ export async function updateCard(
   }).catch((e: unknown) => logError("FlashcardEngine.UpdateSync", e));
 }
 
-export async function deleteCard(
-  db: DataAccess,
-  enqueueFn: EnqueueFn,
-  id: string,
-): Promise<void> {
+export async function deleteCard(db: DataAccess, enqueueFn: EnqueueFn, id: string): Promise<void> {
   await db.flashcards.delete(id);
   enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
     logError("FlashcardEngine.DeleteSync", e),

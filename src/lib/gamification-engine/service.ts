@@ -7,10 +7,36 @@ import { logError } from "@/lib/shared/logger";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import type { Achievement, RewardChestDef } from "@/types/gamification";
 import { ACHIEVEMENTS, calculateLevel, REWARD_CHESTS } from "@/types/gamification";
-import type { GamificationDeps, XpResult, AchievementResult, ChestResult, StreakResult, FreezeResult, StateListener } from "./service-types";
+import type {
+  GamificationDeps,
+  XpResult,
+  AchievementResult,
+  ChestResult,
+  StreakResult,
+  FreezeResult,
+  StateListener,
+} from "./service-types";
 import type { MutationSelf } from "./service-mutation";
-import { addXpMutation, addAchievementMutation, updateStreakMutation, consumeStreakFreezeMutation, addStreakFreezeMutation, completeDailyChallengeMutation, checkForRewardChestsMutation, updateCounterMutation, setCounterMutation } from "./service-mutation";
-import { addXpEffect, addAchievementEffect, updateStreakEffect, consumeStreakFreezeEffect, addStreakFreezeEffect, completeDailyChallengeEffect, checkForRewardChestsEffect } from "./service-effects";
+import {
+  addXpMutation,
+  addAchievementMutation,
+  updateStreakMutation,
+  consumeStreakFreezeMutation,
+  addStreakFreezeMutation,
+  completeDailyChallengeMutation,
+  checkForRewardChestsMutation,
+  updateCounterMutation,
+  setCounterMutation,
+} from "./service-mutation";
+import {
+  addXpEffect,
+  addAchievementEffect,
+  updateStreakEffect,
+  consumeStreakFreezeEffect,
+  addStreakFreezeEffect,
+  completeDailyChallengeEffect,
+  checkForRewardChestsEffect,
+} from "./service-effects";
 import { syncToLeaderboard } from "./service-sync";
 
 const DEFAULT_DEPS: GamificationDeps = { db: dexieDataAccess };
@@ -125,12 +151,18 @@ export class GamificationService {
     // oxlint-disable-next-line typescript/no-this-alias
     const self = this;
     return {
-      get data() { return self.data; },
-      set data(v: StoredGamification) { self.data = v; },
+      get data() {
+        return self.data;
+      },
+      set data(v: StoredGamification) {
+        self.data = v;
+      },
       db: this.db,
       notify: () => this.notify(),
       syncTimer: this.syncTimer,
-      setSyncTimer: (t) => { self.syncTimer = t; },
+      setSyncTimer: (t) => {
+        self.syncTimer = t;
+      },
     };
   }
 

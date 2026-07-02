@@ -12,8 +12,12 @@ import {
 import { ACHIEVEMENTS } from "@/types/gamification";
 import type { StoredAchievement, StoredGamification } from "./types";
 import { checkAndUnlockAchievements } from "./achievement-checks";
-import { resetExpiredChallenges, updateChallengesInAddXp, completeDailyChallenge } from "./daily-challenge-utils";
-import { updateStreak, consumeStreakFreeze, addStreakFreeze, getStreakXpReward } from "./streak-utils";
+import {
+  resetExpiredChallenges,
+  updateChallengesInAddXp,
+  completeDailyChallenge,
+} from "./daily-challenge-utils";
+import { updateStreak, consumeStreakFreeze, addStreakFreeze } from "./streak-utils";
 
 const GAMIFICATION_KEY = "lumni_gamification";
 
@@ -102,7 +106,13 @@ export class GamificationEngine {
     const newLevelInfo = calculateLevel(newTotalXp);
     const leveledUp = newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
 
-    const { data: challengeData, bonusXp } = updateChallengesInAddXp(data, amount, accuracy, streak, subject);
+    const { data: challengeData, bonusXp } = updateChallengesInAddXp(
+      data,
+      amount,
+      accuracy,
+      streak,
+      subject,
+    );
     const updatedChallenges = challengeData.dailyChallenges;
 
     return {

@@ -118,12 +118,22 @@ export class QuestionEngine {
     const remainingCount = Math.max(0, enriched.count - poolCount);
 
     if (remainingCount === 0 && poolCount > 0) {
-      return { questions: poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic)), ragContext: null };
+      return {
+        questions: poolQuestions.map((pq) =>
+          mapPoolToQuestion(pq, enriched.subject, enriched.topic),
+        ),
+        ragContext: null,
+      };
     }
 
     if (enriched.pastPaperMode) {
       return poolCount > 0
-        ? { questions: poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic)), ragContext: null }
+        ? {
+            questions: poolQuestions.map((pq) =>
+              mapPoolToQuestion(pq, enriched.subject, enriched.topic),
+            ),
+            ragContext: null,
+          }
         : null;
     }
 
@@ -150,7 +160,9 @@ export class QuestionEngine {
     questions = questions.slice(0, remainingCount);
 
     if (poolCount > 0) {
-      const directQuestions = poolQuestions.map((pq) => mapPoolToQuestion(pq, enriched.subject, enriched.topic));
+      const directQuestions = poolQuestions.map((pq) =>
+        mapPoolToQuestion(pq, enriched.subject, enriched.topic),
+      );
       questions = [...directQuestions, ...questions];
     }
 

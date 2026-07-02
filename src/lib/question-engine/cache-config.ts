@@ -10,9 +10,8 @@ export function createQuestionCacheStrategy(
       {
         name: "dexie",
         read: async (p) => {
-          const { questionCacheRepo: qRepo } =
-            await import("@/lib/db/repositories/question-cache");
-          const cached = await qRepo.get(p.subject, p.topic) as Question[];
+          const { questionCacheRepo: qRepo } = await import("@/lib/db/repositories/question-cache");
+          const cached = (await qRepo.get(p.subject, p.topic)) as Question[];
           if (cached && cached.length >= p.count) {
             const shuffled = shuffleArray(cached);
             return { questions: shuffled.slice(0, p.count), ragContext: null };
@@ -20,8 +19,7 @@ export function createQuestionCacheStrategy(
           return null;
         },
         write: async (params, result) => {
-          const { questionCacheRepo: qRepo } =
-            await import("@/lib/db/repositories/question-cache");
+          const { questionCacheRepo: qRepo } = await import("@/lib/db/repositories/question-cache");
           await qRepo.cache(params.subject, result.questions, params.topic);
         },
       },
@@ -29,11 +27,11 @@ export function createQuestionCacheStrategy(
         name: "appwrite",
         read: async (p) => {
           const { loadQuestionsFromAppwrite } = await import("./persistence");
-          const appwriteQuestions = await loadQuestionsFromAppwrite(
+          const appwriteQuestions = (await loadQuestionsFromAppwrite(
             p.subject,
             p.topic,
             p.count,
-          ) as Question[];
+          )) as Question[];
           if (appwriteQuestions.length >= p.count) {
             const shuffled = shuffleArray(appwriteQuestions);
             return { questions: shuffled.slice(0, p.count), ragContext: null };

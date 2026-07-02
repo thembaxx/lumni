@@ -63,15 +63,16 @@ Commit baseline: `245ba077` (current HEAD). Batch 5 plans at `53532ff1` (2026-07
 
 All plans in this batch are independent and can run in parallel:
 
-| Plan | Title                                                                 | Priority | Effort | Risk | Depends on | Status |
-| ---- | --------------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| 075  | Expand TinyFish RAG coverage to all 44 curriculum subjects            | P1       | S      | LOW  | —          | DONE   |
-| 076  | Live competitive leaderboard (individual + per-subject)                | P1       | M      | MED  | —          | DONE   |
-| 077  | Essay coaching with iterative revision loop                           | P2       | M      | MED  | —          | DONE   |
-| 078  | Personalized discovery feed (Phase 1)                                 | P2       | M      | MED  | —          | DONE   |
-| 079  | Dashboard exams countdown widget + pronunciation charts               | P2       | S      | LOW  | —          | DONE   |
+| Plan | Title                                                      | Priority | Effort | Risk | Depends on | Status |
+| ---- | ---------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 075  | Expand TinyFish RAG coverage to all 44 curriculum subjects | P1       | S      | LOW  | —          | DONE   |
+| 076  | Live competitive leaderboard (individual + per-subject)    | P1       | M      | MED  | —          | DONE   |
+| 077  | Essay coaching with iterative revision loop                | P2       | M      | MED  | —          | DONE   |
+| 078  | Personalized discovery feed (Phase 1)                      | P2       | M      | MED  | —          | DONE   |
+| 079  | Dashboard exams countdown widget + pronunciation charts    | P2       | S      | LOW  | —          | DONE   |
 
 **Execution notes**:
+
 - All 5 plans implemented in a single session. 1717 tests pass, 0 regressions.
 - Batch 4 plans (062-074) are untouched and can be worked alongside these.
 

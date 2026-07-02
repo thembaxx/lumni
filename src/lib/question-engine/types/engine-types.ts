@@ -1,14 +1,6 @@
 import type { Effect } from "effect";
 import type { Difficulty, BloomLevel, QuestionType } from "./enums";
-import type {
-  QuestionBody,
-  MediaContent,
-  Option,
-  DiagramSpec,
-  Source,
-  DataSet,
-  RubricCriterion,
-} from "./body-types";
+import type { QuestionBody, MediaContent } from "./body-types";
 
 export interface QuestionSource {
   url: string;

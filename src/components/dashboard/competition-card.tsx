@@ -64,13 +64,13 @@ export function CompetitionCard() {
     if (!myRank || !leaderboard) return;
     const rank = myRank.rank;
     const subjectRank = activeTab
-      ? leaderboard.find((e) => e.userId === userId)?.rank ?? 999
+      ? (leaderboard.find((e) => e.userId === userId)?.rank ?? 999)
       : undefined;
     checkAndUnlockAchievements(0, 0, 0, levelInfo.level, false, {
       leaderboardRank: rank,
       subjectLeaderboardRank: subjectRank,
     });
-  }, [myRank?.rank, activeTab]);
+  }, [myRank, leaderboard, userId, activeTab, checkAndUnlockAchievements, levelInfo.level]);
 
   const timeLeft = getTimeRemaining();
 
@@ -151,9 +151,7 @@ export function CompetitionCard() {
                     {entry.label ?? entry.userId.slice(0, 8)}
                   </span>
                 </div>
-                <span className="font-mono text-xs tabular-nums">
-                  {entry.xp} XP
-                </span>
+                <span className="font-mono text-xs tabular-nums">{entry.xp} XP</span>
               </div>
             ))}
             {top10.length > 3 && (
@@ -173,9 +171,7 @@ export function CompetitionCard() {
                         {entry.label ?? entry.userId.slice(0, 8)}
                       </span>
                     </div>
-                    <span className="font-mono text-xs tabular-nums">
-                      {entry.xp} XP
-                    </span>
+                    <span className="font-mono text-xs tabular-nums">{entry.xp} XP</span>
                   </div>
                 ))}
               </div>

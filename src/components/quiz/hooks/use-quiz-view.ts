@@ -47,17 +47,9 @@ export function useQuizView({
     : questionCount;
 
   const engineParams = useMemo(
-    () => buildEngineParams(selectedSubject, resolvedTopic, actualCount, pastPaperMode, competencyData),
-    [
-      selectedSubject,
-      resolvedTopic,
-      actualCount,
-      pastPaperMode,
-      competencyData.suggestedBloomLevel,
-      competencyData.suggestedDifficulty,
-      competencyData.topicCompetencyLevel,
-      competencyData.topicCompetencyScore,
-    ],
+    () =>
+      buildEngineParams(selectedSubject, resolvedTopic, actualCount, pastPaperMode, competencyData),
+    [selectedSubject, resolvedTopic, actualCount, pastPaperMode, competencyData],
   );
 
   const usePreloaded = Boolean(packQuestions && packQuestions.length > 0);
@@ -166,7 +158,11 @@ export function useQuizView({
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
         try {
-          const items = await loadRetentionQuestions(dexieDataAccess, normalizedSubject, Date.now());
+          const items = await loadRetentionQuestions(
+            dexieDataAccess,
+            normalizedSubject,
+            Date.now(),
+          );
           setRetentionQuestions(items);
         } catch (e) {
           logError("useQuizView.retention", e);

@@ -64,6 +64,7 @@ The curriculum file `src/curriculum/life-orientation.json` has full topic/subtop
 The per-user daily limit is set at `PER_USER_DAILY_LIMIT = 20` in `allowlist.ts:73`.
 
 **Repo conventions to follow**:
+
 - Array entries are alphabetical in `ALLOWED_SUBJECTS` — insert new entries in correct alphabetical position
 - All subject IDs use kebab-case matching the curriculum JSON filenames
 - Error handling uses `logError()` from `@/lib/shared/logger` — match existing pattern
@@ -72,7 +73,7 @@ The per-user daily limit is set at `PER_USER_DAILY_LIMIT = 20` in `allowlist.ts:
 ## Commands you will need
 
 | Purpose   | Command                        | Expected on success |
-|-----------|--------------------------------|---------------------|
+| --------- | ------------------------------ | ------------------- |
 | Typecheck | `pnpm run typecheck`           | exit 0, no errors   |
 | Tests     | `vitest run src/lib/tinyfish/` | all pass            |
 | Lint      | `pnpm exec oxlint --fix`       | exit 0              |
@@ -80,10 +81,12 @@ The per-user daily limit is set at `PER_USER_DAILY_LIMIT = 20` in `allowlist.ts:
 ## Scope
 
 **In scope**:
+
 - `src/lib/tinyfish/allowlist.ts` — expand `ALLOWED_SUBJECTS` to all 44 subjects
 - `src/lib/tinyfish/__tests__/allowlist.test.ts` — update tests to cover new subjects
 
 **Out of scope**:
+
 - Do NOT change any other TinyFish module (client, cache, wrap, rag-pipeline)
 - Do NOT add new search sources or adjust per-domain blocking
 - Do NOT modify curriculum JSON files
@@ -131,6 +134,7 @@ The current `PER_USER_DAILY_LIMIT = 20` was set when only 17 subject groups were
 ### Step 3: Update allowlist tests
 
 Add test cases for:
+
 1. At least 3 newly added subjects return `true` from `isSubjectAllowed()` (e.g., `life-orientation`, `computer-applications-technology`, `tourism`)
 2. A non-existent subject `"nonexistent-subject"` still returns `false`
 

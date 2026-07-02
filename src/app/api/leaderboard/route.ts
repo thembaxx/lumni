@@ -21,7 +21,13 @@ async function fetchLeaderboard(subject?: string | null) {
 export const GET = createRouteHandler({
   auth: "optional",
   errorLabel: "Leaderboard",
-  execute: async ({ params, userId }: { params?: Record<string, string>; userId: string | null }) => {
+  execute: async ({
+    params,
+    userId,
+  }: {
+    params?: Record<string, string>;
+    userId: string | null;
+  }) => {
     const subject = params?.subject;
     try {
       const docs = await fetchLeaderboard(subject);

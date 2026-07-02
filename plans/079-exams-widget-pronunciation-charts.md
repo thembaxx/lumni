@@ -27,6 +27,7 @@ Two quick-win features that improve the experience for the core user base. (A) T
 ## Current state
 
 ### A — Dashboard exams widget
+
 - `src/lib/exam-dates/service.ts` — `getUpcomingExams()` returns next exam slots with subject, date, time, duration.
 - `src/lib/exam-dates/types.ts` — `ExamSlot` interface with `subject`, `subjectId`, `paperNumber`, `date`, `startTime`, `endTime`.
 - `src/components/dashboard/today-tab.tsx:53-198` — 18 widgets in three sections. No exams card.
@@ -34,6 +35,7 @@ Two quick-win features that improve the experience for the core user base. (A) T
 - `src/components/dashboard/countdown-header.tsx` — exists but shows a generic countdown, not exam-specific.
 
 ### B — Pronunciation charts
+
 - `src/lib/pronunciation-history/service.ts:64-115` — `getPronunciationStats()` returns:
   ```ts
   { totalAttempts, averageScore, recentScores: { date, score }[], topWords: { word, count, avgScore }[] }
@@ -48,6 +50,7 @@ Two quick-win features that improve the experience for the core user base. (A) T
 - `recharts` is already in `package.json:95` (`"recharts": "3.9.0"`).
 
 **Repo conventions to follow**:
+
 - Dashboard cards use `rounded-2xl`, `press-scale`, `gap-3`, `Card` primitive — see `CompetitionCard` (`src/components/dashboard/competition-card.tsx`) as pattern
 - Charts use `"use client"` directive for dynamic import (recharts needs client rendering)
 - Import recharts components via `dynamic(() => import("recharts").then(...))` if needed to avoid SSR issues — see `src/components/ui/charts/bar-chart.tsx` for the codebase pattern
@@ -55,21 +58,23 @@ Two quick-win features that improve the experience for the core user base. (A) T
 
 ## Commands you will need
 
-| Purpose   | Command                        | Expected on success |
-|-----------|--------------------------------|---------------------|
-| Typecheck | `pnpm run typecheck`           | exit 0              |
-| Tests     | `pnpm run test`                | exit 0              |
-| Lint      | `pnpm exec oxlint --fix`       | exit 0              |
+| Purpose         | Command                  | Expected on success   |
+| --------------- | ------------------------ | --------------------- |
+| Typecheck       | `pnpm run typecheck`     | exit 0                |
+| Tests           | `pnpm run test`          | exit 0                |
+| Lint            | `pnpm exec oxlint --fix` | exit 0                |
 | Verify recharts | `pnpm ls recharts`       | exit 0, version shown |
 
 ## Scope
 
 **In scope**:
+
 - `src/components/dashboard/upcoming-exam-card.tsx` (new) — exams countdown card
 - `src/components/dashboard/today-tab.tsx` — add exams card to Priority section
 - `src/app/[locale]/pronunciation/pronunciation-client.tsx` — replace div bars with recharts
 
 **Out of scope**:
+
 - Exam push notifications from widget (deferred)
 - Per-word pronunciation charts (deferred — uses same recharts pattern)
 - Changes to the full `/exam-dates` calendar page
@@ -104,11 +109,13 @@ In `src/components/dashboard/today-tab.tsx`:
 1. Import `UpcomingExamCard` (or `dynamic`-import it with `ssr: false`).
 2. In the "Priority" section, insert after `DailyChallengeCard` and before `NextBestActionCard`/`PersonalizedFeed`:
    ```tsx
-   {isLoggedIn && (
-     <StaggeredSection>
-       <UpcomingExamCard />
-     </StaggeredSection>
-   )}
+   {
+     isLoggedIn && (
+       <StaggeredSection>
+         <UpcomingExamCard />
+       </StaggeredSection>
+     );
+   }
    ```
 
 **Verify**: Dashboard shows exam countdown card near the top. Build: `pnpm run typecheck` → exit 0.
@@ -118,35 +125,51 @@ In `src/components/dashboard/today-tab.tsx`:
 In `src/app/[locale]/pronunciation/pronunciation-client.tsx`:
 
 1. Add imports:
+
    ```tsx
    import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
    ```
+
    (recharts is already in `package.json`).
 
 2. Replace the inline bar chart section (lines 412-437, the `recentScores` div with `flex items-end gap-1.5`) with a proper `ResponsiveContainer` + `BarChart`:
+
    ```tsx
-   {historyStats.recentScores.length > 0 && (
-     <div className="flex flex-col gap-2">
-       <span className="font-semibold text-sm">Score Trend</span>
-       <ResponsiveContainer width="100%" height={160}>
-         <BarChart data={historyStats.recentScores}>
-           <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-           <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
-           <Tooltip />
-           <Bar dataKey="score" radius={[4, 4, 0, 0]} fill="var(--color-accent, oklch(52% 0.18 146))" />
-         </BarChart>
-       </ResponsiveContainer>
-     </div>
-   )}
+   {
+     historyStats.recentScores.length > 0 && (
+       <div className="flex flex-col gap-2">
+         <span className="font-semibold text-sm">Score Trend</span>
+         <ResponsiveContainer width="100%" height={160}>
+           <BarChart data={historyStats.recentScores}>
+             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+             <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+             <Tooltip />
+             <Bar
+               dataKey="score"
+               radius={[4, 4, 0, 0]}
+               fill="var(--color-accent, oklch(52% 0.18 146))"
+             />
+           </BarChart>
+         </ResponsiveContainer>
+       </div>
+     );
+   }
    ```
 
 3. Also add a line chart for overall trend. Import `LineChart, Line` from recharts and add below the bar chart or combined:
+
    ```tsx
    <ResponsiveContainer width="100%" height={120}>
      <LineChart data={historyStats.recentScores}>
        <XAxis dataKey="date" hide />
        <YAxis domain={[0, 100]} hide />
-       <Line type="monotone" dataKey="score" stroke="var(--color-accent)" strokeWidth={2} dot={{ r: 3 }} />
+       <Line
+         type="monotone"
+         dataKey="score"
+         stroke="var(--color-accent)"
+         strokeWidth={2}
+         dot={{ r: 3 }}
+       />
      </LineChart>
    </ResponsiveContainer>
    ```

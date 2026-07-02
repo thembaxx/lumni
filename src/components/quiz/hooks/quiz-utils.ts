@@ -1,7 +1,10 @@
 import type { BloomLevel, Difficulty, Question } from "@/lib/question-engine/types";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { computeCompetencyLevel } from "@/lib/competency-engine/types";
-import { mapCompetencyToBloom, mapCompetencyToDifficulty } from "@/lib/question-engine/competency-mapper";
+import {
+  mapCompetencyToBloom,
+  mapCompetencyToDifficulty,
+} from "@/lib/question-engine/competency-mapper";
 import type { RetentionRecurrence } from "@/lib/db/schema";
 import type { DataAccessTable } from "@/lib/db/data-access";
 
@@ -88,10 +91,7 @@ export async function loadRetentionQuestions(
   normalizedSubject: string,
   now: number,
 ): Promise<RetentionQuestion[]> {
-  const items = await db.retentionRecurrence
-    .where("scheduledAt")
-    .belowOrEqual(now)
-    .toArray();
+  const items = await db.retentionRecurrence.where("scheduledAt").belowOrEqual(now).toArray();
   const overdue = items.filter((i) => !i.completed && i.subject === normalizedSubject);
   return overdue.slice(0, 3).map((i) => ({
     id: i.questionId,

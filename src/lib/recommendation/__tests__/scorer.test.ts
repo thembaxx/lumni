@@ -9,9 +9,7 @@ function mockDeps(overrides: Record<string, unknown> = {}) {
         ? (overrides.weakest as { subject: string; topic: string; score: number })
         : null,
     getUpcomingExam: async () =>
-      overrides.exam != null
-        ? (overrides.exam as { subject: string; daysUntil: number })
-        : null,
+      overrides.exam != null ? (overrides.exam as { subject: string; daysUntil: number }) : null,
     getStudyPlanAdherence: async () => (overrides.adherence as number) ?? 0,
     getHoursSinceLastPractice: async () => (overrides.hoursSince as number) ?? 48,
   };
@@ -19,14 +17,20 @@ function mockDeps(overrides: Record<string, unknown> = {}) {
 
 describe("getRankedRecommendations", () => {
   it("returns exam-practice when exam is within 30 days", async () => {
-    const recs = await getRankedRecommendations("user1", mockDeps({ exam: { subject: "Math", daysUntil: 5 } }));
+    const recs = await getRankedRecommendations(
+      "user1",
+      mockDeps({ exam: { subject: "Math", daysUntil: 5 } }),
+    );
     expect(recs.length).toBeGreaterThan(0);
     expect(recs.some((r) => r.kind === "exam-practice")).toBe(true);
     expect(recs[0].kind).toBe("exam-practice");
   });
 
   it("does not include exam-practice when exam is over 30 days away", async () => {
-    const recs = await getRankedRecommendations("user1", mockDeps({ exam: { subject: "Math", daysUntil: 45 } }));
+    const recs = await getRankedRecommendations(
+      "user1",
+      mockDeps({ exam: { subject: "Math", daysUntil: 45 } }),
+    );
     expect(recs.every((r) => r.kind !== "exam-practice")).toBe(true);
   });
 
@@ -54,7 +58,11 @@ describe("getRankedRecommendations", () => {
   it("ranks exam-practice above due-cards when exam is near", async () => {
     const recs = await getRankedRecommendations(
       "user1",
-      mockDeps({ exam: { subject: "Math", daysUntil: 3 }, dueCards: 5, weakest: { subject: "Physics", topic: "Optics", score: 35 } }),
+      mockDeps({
+        exam: { subject: "Math", daysUntil: 3 },
+        dueCards: 5,
+        weakest: { subject: "Physics", topic: "Optics", score: 35 },
+      }),
     );
     expect(recs.length).toBeGreaterThanOrEqual(2);
     expect(recs[0].kind).toBe("exam-practice");

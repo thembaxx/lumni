@@ -24,22 +24,19 @@ export function useEssayCoaching(questionId: string) {
   const revisionCount = drafts.length;
   const canRevise = revisionCount < MAX_REVISIONS;
 
-  const startCoaching = useCallback(
-    (initialDraft: string, initialResult: GradingResult) => {
-      setDrafts([
-        {
-          draftNumber: 1,
-          content: initialDraft,
-          feedback: initialResult.feedback,
-          score: initialResult.score,
-          maxScore: initialResult.maxScore,
-        },
-      ]);
-      setCurrentDraft(initialDraft);
-      setIsCoaching(true);
-    },
-    [],
-  );
+  const startCoaching = useCallback((initialDraft: string, initialResult: GradingResult) => {
+    setDrafts([
+      {
+        draftNumber: 1,
+        content: initialDraft,
+        feedback: initialResult.feedback,
+        score: initialResult.score,
+        maxScore: initialResult.maxScore,
+      },
+    ]);
+    setCurrentDraft(initialDraft);
+    setIsCoaching(true);
+  }, []);
 
   const submitRevision = useCallback(
     async (draftContent: string) => {
@@ -48,7 +45,6 @@ export function useEssayCoaching(questionId: string) {
       setError(null);
 
       try {
-        const prevDraft = drafts[drafts.length - 1];
         const res = await fetch("/api/engine/grade", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -87,9 +83,8 @@ export function useEssayCoaching(questionId: string) {
   );
 
   const lastResult = drafts.length > 0 ? drafts[drafts.length - 1] : null;
-  const improvement = drafts.length >= 2
-    ? drafts[drafts.length - 1].score - drafts[drafts.length - 2].score
-    : 0;
+  const improvement =
+    drafts.length >= 2 ? drafts[drafts.length - 1].score - drafts[drafts.length - 2].score : 0;
 
   return {
     drafts,

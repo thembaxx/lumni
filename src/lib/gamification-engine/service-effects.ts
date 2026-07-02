@@ -3,7 +3,13 @@ import { persistEffect, saveSnapshot } from "./service-persist";
 import { scheduleSync } from "./service-sync";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import type { MutationSelf } from "./service-mutation";
-import type { XpResult, AchievementResult, ChestResult, StreakResult, FreezeResult } from "./service-types";
+import type {
+  XpResult,
+  AchievementResult,
+  ChestResult,
+  StreakResult,
+  FreezeResult,
+} from "./service-types";
 
 export function addXpEffect(
   self: MutationSelf,
@@ -25,7 +31,9 @@ export function addXpEffect(
     );
     self.data = newData;
     yield* persistEffect(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
     return { data: newData, leveledUp: newLevel !== null };
@@ -43,7 +51,9 @@ export function addAchievementEffect(
     );
     self.data = newData;
     yield* persistEffect(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
     return { data: newData, achievement };
@@ -55,7 +65,9 @@ export function updateStreakEffect(self: MutationSelf): Effect.Effect<StreakResu
     const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
     self.data = newData;
     yield* persistEffect(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
     return { data: newData, freezeConsumed };
@@ -68,7 +80,9 @@ export function consumeStreakFreezeEffect(self: MutationSelf): Effect.Effect<Fre
     if (success) {
       self.data = newData;
       yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+      scheduleSync(newData, self.syncTimer, (t) => {
+        self.setSyncTimer(t);
+      });
       saveSnapshot(newData);
       self.notify();
     }
@@ -81,7 +95,9 @@ export function addStreakFreezeEffect(self: MutationSelf, count?: number): Effec
     const newData = gamificationEngine.addStreakFreeze(self.data, count);
     self.data = newData;
     yield* persistEffect(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
   });
@@ -95,7 +111,9 @@ export function completeDailyChallengeEffect(
     const { data: newData } = gamificationEngine.completeDailyChallenge(self.data, challengeId);
     self.data = newData;
     yield* persistEffect(self.db, newData);
-    scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+    scheduleSync(newData, self.syncTimer, (t) => {
+      self.setSyncTimer(t);
+    });
     saveSnapshot(newData);
     self.notify();
   });
@@ -106,7 +124,9 @@ export function checkForRewardChestsEffect(self: MutationSelf): Effect.Effect<Ch
     const { data: newData, chest } = gamificationEngine.checkAndClaimRewardChest(self.data);
     if (newData !== self.data) {
       yield* persistEffect(self.db, newData);
-      scheduleSync(newData, self.syncTimer, (t) => { self.setSyncTimer(t); });
+      scheduleSync(newData, self.syncTimer, (t) => {
+        self.setSyncTimer(t);
+      });
     }
     self.data = newData;
     self.notify();

@@ -4,9 +4,7 @@ import { logError } from "@/lib/shared/logger";
 
 export const ANONYMOUS_ATTEMPTED_KEY = "lumni_anonymous_attempted";
 
-export async function syncGoogleAvatar(
-  user: Models.User<Models.Preferences>,
-): Promise<void> {
+export async function syncGoogleAvatar(user: Models.User<Models.Preferences>): Promise<void> {
   try {
     const prefs = user.prefs as Record<string, unknown>;
     if (prefs?.avatarUrl) return;

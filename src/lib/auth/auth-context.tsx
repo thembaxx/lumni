@@ -8,7 +8,7 @@ import { logError } from "@/lib/shared/logger";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { getReadableErrorMessage } from "./errors";
 import { attemptMagicLink, attemptSignIn, recordSuccessfulSignIn } from "./rate-limit";
-import { type AuthAction, type AuthState, authReducer, INITIAL_AUTH_STATE } from "./auth-types";
+import { type AuthAction, authReducer, INITIAL_AUTH_STATE } from "./auth-types";
 import { ANONYMOUS_ATTEMPTED_KEY, syncGoogleAvatar } from "./auth-helpers";
 import type { AuthStatus } from "./auth-types";
 

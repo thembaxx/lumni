@@ -1,4 +1,4 @@
-import type { ContentBlock, DataTable, Option, Question, QuestionPart, QuestionType } from "@/types/exam-paper";
+import type { ContentBlock, DataTable, Option, Question, QuestionPart } from "@/types/exam-paper";
 import {
   cleanText,
   determineAnswerFormat,

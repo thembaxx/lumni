@@ -30,14 +30,19 @@ The dashboard renders 18+ static cards in a fixed grid — DailyChallengeCard, S
 - `src/lib/retention-loop/next-action.ts:14-31` — returns ONE `NextAction` using linear priority: due-cards > review-mistakes > weakest-topic > study-plan > exam-practice.
   ```ts
   export type ActionKind =
-    | "weakest-topic" | "exam-practice" | "due-cards"
-    | "study-plan" | "flashcards" | "review-mistakes";
+    | "weakest-topic"
+    | "exam-practice"
+    | "due-cards"
+    | "study-plan"
+    | "flashcards"
+    | "review-mistakes";
   ```
 - `src/components/dashboard/next-best-action.tsx` — renders a single suggestion card from `getNextAction()`.
 - `src/components/dashboard/question-of-the-day-card.tsx` — picks random subject from hardcoded list of 9.
 - Data infrastructure available: `competencyService` (per-topic scores), `src/lib/exam-dates/service.ts` (exam proximity), `FlashcardEngine` (due card count), `studyPlannerService` (plan adherence), `next-action.ts` (existing rule engine).
 
 **Repo conventions to follow**:
+
 - New components in `src/components/dashboard/` follow the card pattern from `CompetitionCard` (`rounded-2xl`, `press-scale`, `gap-3`, `Card` primitive)
 - New lib modules in `src/lib/recommendation/` use DI pattern with `_deps` + `__setDepsForTesting()` — see `src/lib/competitions/service.ts` for exemplar
 - Error handling uses `logError()` from `@/lib/shared/logger`
@@ -45,15 +50,16 @@ The dashboard renders 18+ static cards in a fixed grid — DailyChallengeCard, S
 
 ## Commands you will need
 
-| Purpose   | Command                        | Expected on success |
-|-----------|--------------------------------|---------------------|
-| Typecheck | `pnpm run typecheck`           | exit 0              |
-| Tests     | `pnpm run test`                | exit 0              |
-| Lint      | `pnpm exec oxlint --fix`       | exit 0              |
+| Purpose   | Command                  | Expected on success |
+| --------- | ------------------------ | ------------------- |
+| Typecheck | `pnpm run typecheck`     | exit 0              |
+| Tests     | `pnpm run test`          | exit 0              |
+| Lint      | `pnpm exec oxlint --fix` | exit 0              |
 
 ## Scope
 
 **In scope**:
+
 - `src/lib/recommendation/scorer.ts` (new) — scoring model
 - `src/lib/recommendation/index.ts` (new) — barrel export
 - `src/lib/retention-loop/next-action.ts` — extend with `getFeed()` export, keep backward compat
@@ -62,6 +68,7 @@ The dashboard renders 18+ static cards in a fixed grid — DailyChallengeCard, S
 - `src/lib/recommendation/__tests__/scorer.test.ts` (new) — tests
 
 **Out of scope**:
+
 - A/B testing framework
 - Real-time personalization via WebSockets
 - Push-based feed updates (keep simple: re-query on mount and on quiz completion)
@@ -89,7 +96,9 @@ export interface ScoredRecommendation {
 export interface ScorerDeps {
   // Query functions returning a relevance score (0-100) per dimension
   getDueCardsCount?: (userId: string) => Promise<number>;
-  getWeakestTopic?: (userId: string) => Promise<{ subject: string; topic: string; score: number } | null>;
+  getWeakestTopic?: (
+    userId: string,
+  ) => Promise<{ subject: string; topic: string; score: number } | null>;
   getUpcomingExam?: (userId: string) => Promise<{ subject: string; daysUntil: number } | null>;
   getStudyPlanAdherence?: (userId: string) => Promise<number>;
   getHoursSinceLastPractice?: (userId: string) => Promise<number>;
