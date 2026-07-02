@@ -85,17 +85,15 @@ export function QuizResultsCard({
     <FadeIn direction="scale" scaleDistance={0.95} duration={0.3} className="relative">
       <Confetti trigger={isGreatScore} count={60} duration={2500} />
       {isPerfect && (
-        <m.div
-          className="absolute -top-4 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, type: "spring", stiffness: 300, bounce: 0 }}
+        <div
+          className="absolute -top-4 left-1/2 -translate-x-1/2 animate-bounce-pop"
+          style={{ animationDelay: "0.5s" }}
         >
           <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2 shadow-level-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5" />
             <span className="font-extrabold">{t("quiz.perfectScore")}</span>
           </Badge>
-        </m.div>
+        </div>
       )}
 
       <Card className={cn("relative", className)}>
@@ -126,22 +124,21 @@ export function QuizResultsCard({
             <section className="flex flex-col gap-4">
               <m.div className="grid grid-cols-12 gap-4 md:text-left" variants={itemVariants}>
                 <FadeIn distance={0} delay={0.3} className="col-span-4 rounded-lg bg-muted p-4">
-                  <FadeIn
-                    distance={0}
-                    delay={0.3}
-                    className="font-extrabold text-2xl tabular-nums"
-                    as="span"
+                  <span
+                    className="font-extrabold text-2xl tabular-nums animate-rollup"
+                    style={{ animationDelay: "0.4s" }}
                   >
                     {totalQuestions}
-                  </FadeIn>
+                  </span>
                   <p className="text-muted-foreground text-xs">{t("quiz.questions")}</p>
                 </FadeIn>
                 <FadeIn distance={0} delay={0.4} className="col-span-2 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
-                      "font-extrabold text-2xl tabular-nums",
+                      "font-extrabold text-2xl tabular-nums animate-rollup",
                       isGreatScore && "text-success",
                     )}
+                    style={{ animationDelay: "0.5s" }}
                   >
                     {correctAnswers}
                   </p>
@@ -150,9 +147,10 @@ export function QuizResultsCard({
                 <FadeIn distance={0} delay={0.5} className="col-span-3 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
-                      "font-extrabold text-2xl tabular-nums",
+                      "font-extrabold text-2xl tabular-nums animate-rollup",
                       isGreatScore && "text-success",
                     )}
+                    style={{ animationDelay: "0.6s" }}
                   >
                     {accuracy}%
                   </p>
@@ -230,14 +228,22 @@ export function QuizResultsCard({
               <m.div className="flex flex-col gap-3 pt-2" variants={itemVariants}>
                 <div className="flex gap-3">
                   {onRestart && (
-                    <Button variant="default" onClick={onRestart} className="flex-1 gap-2">
-                      <HugeiconsIcon icon={Refresh01Icon} className="size-4" />
+                    <Button
+                      variant="default"
+                      onClick={onRestart}
+                      className="flex-1 gap-2 min-h-[52px] press-scale"
+                    >
+                      <HugeiconsIcon icon={Refresh01Icon} className="size-5" />
                       {t("common.retry")}
                     </Button>
                   )}
                   {onDashboard && (
-                    <Button variant="outline" onClick={onDashboard} className="flex-1 gap-2">
-                      <HugeiconsIcon icon={DashboardSquare01Icon} className="size-4" />
+                    <Button
+                      variant="outline"
+                      onClick={onDashboard}
+                      className="flex-1 gap-2 min-h-[52px] press-scale"
+                    >
+                      <HugeiconsIcon icon={DashboardSquare01Icon} className="size-5" />
                       {t("quiz.dashboard")}
                     </Button>
                   )}

@@ -46,8 +46,9 @@ export const SwipeableCard = memo(function SwipeableCard({
 
   const x = useMotionValue(0);
 
-  const rotate = useTransform(x, [-300, 0, 300], [-15, 0, 15]);
+  const rotate = useTransform(x, [-300, 0, 300], [-18, 0, 18]);
   const opacity = useTransform(x, [-200, 0, 200], [0.85, 1, 0.85]);
+  const scale3d = useTransform(x, [-300, 0, 300], [0.94, 1, 0.94]);
   const background = useTransform(
     x,
     [-200, -100, 0, 100, 200],
@@ -110,16 +111,20 @@ export const SwipeableCard = memo(function SwipeableCard({
         "absolute inset-0 motion-reduce:animate-none motion-reduce:transition-none active:cursor-grabbing",
         isTop ? "z-elevated" : "pointer-events-none z-0",
       )}
-      style={style ? { ...style, x, rotate, opacity } : { x, rotate, opacity }}
+      style={
+        style
+          ? { ...style, x, rotate, opacity, scale: scale3d }
+          : { x, rotate, opacity, scale: scale3d }
+      }
       aria-disabled={!isTop}
       data-testid="swipeable-card"
       drag={isTop ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.7}
+      dragElastic={0.9}
       onDragEnd={isTop ? handleDragEnd : undefined}
       onTap={isTop ? handleTap : undefined}
       whileDrag={{
-        scale: 1.02,
+        scale: 1.04,
         cursor: "grabbing",
         transition: { duration: 0.1 },
       }}
@@ -134,7 +139,7 @@ export const SwipeableCard = memo(function SwipeableCard({
     >
       <m.div
         className="perspective-1000 relative h-full w-full"
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
       >
         <m.div
           className="relative h-full w-full"

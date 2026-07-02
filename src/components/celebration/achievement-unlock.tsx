@@ -36,20 +36,20 @@ export function AchievementUnlock({
             className={`relative border-2 bg-card ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-level-3 ${rarityGlowStrong[rarity]}`}
           >
             <m.div
-              initial={{ opacity: 0, scale: 0.95, rotate: -180 }}
+              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", delay: 0.2, bounce: 0 }}
+              transition={{ type: "spring", delay: 0.2, stiffness: 200, damping: 14, bounce: 0.4 }}
               className="mb-4"
             >
-              <m.div animate={{ scale: [0.95, 1.2, 1] }} transition={{ duration: 0.3 }}>
+              <m.div animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 0.4, delay: 0.5 }}>
                 <div className="mb-4 text-7xl">{icon}</div>
               </m.div>
             </m.div>
 
             <m.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.4, type: "spring", stiffness: 300, damping: 24 }}
             >
               <div className="mb-2 flex items-center justify-center gap-2">
                 <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />

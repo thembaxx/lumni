@@ -40,17 +40,20 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-11 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
+  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0 border-none bg-transparent px-4 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
     <>
-      <div className="relative mb-0.5 flex size-5 items-center justify-center">
+      <div className="relative mb-0 flex size-6 items-center justify-center">
+        {isActive && (
+          <span className="absolute inset-0 rounded-full bg-system-accent/15 animate-float-bob" />
+        )}
         <HugeiconsIcon
           icon={item.icon}
           className={cn(
-            "size-4 transition-[transform,color] duration-200 ease-ios",
-            isActive && "scale-110",
+            "size-5 transition-[transform,color] duration-200 ease-ios",
+            isActive && "scale-[1.25]",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
         />
@@ -65,7 +68,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
       </div>
       <span
         className={cn(
-          "ios-caption-3 relative z-elevated text-center font-medium uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
+          "ios-caption-3 relative z-elevated text-center font-semibold uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
           isActive ? "text-system-accent" : "text-system-text-tertiary",
         )}
       >
@@ -168,7 +171,7 @@ const BottomNav = memo(function BottomNav() {
     >
       <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
         <div className="flex items-center gap-2">
-          <div className="relative flex items-center rounded-full bg-white px-1.5 py-1 shadow-level-2 ring-1 ring-system-separator/30 dark:bg-system-background before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
+          <div className="relative flex items-center rounded-full bg-white px-2 py-1 shadow-level-2 ring-1 ring-system-separator/30 dark:bg-system-background before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
             {navItems.map((item, index) => (
               <NavItemComponent
                 key={item.id}
@@ -191,9 +194,9 @@ const BottomNav = memo(function BottomNav() {
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
-            className="flex size-11 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90"
+            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
           >
-            <HugeiconsIcon icon={GridIcon} className="size-5" />
+            <HugeiconsIcon icon={GridIcon} className="size-[22px]" />
           </m.button>
         </div>
       </div>

@@ -12,9 +12,9 @@
    ======================================== */
 
 :root {
-  /* Core Color Tokens — Airy & Warm */
+  /* Core Color Tokens — Warm & Playful (tactile reboot) */
   /* Apple semantic hierarchy: bg → bg-secondary → bg-tertiary */
-  --system-background: oklch(100% 0 0);
+  --system-background: oklch(99% 0.003 80); /* Warm cream — playful base */
   --system-background-secondary: oklch(97% 0.003 60);
   --system-background-tertiary: oklch(95% 0.005 60);
   --system-background-elevated: oklch(100% 0 0);
@@ -26,17 +26,19 @@
   --system-fill: oklch(0% 0 0 / 0.06);
   --system-fill-secondary: oklch(0% 0 0 / 0.03);
 
-  /* Energetic Accent — single emerald green, saturation <80% */
-  --system-accent: oklch(52% 0.18 146); /* Emerald Green */
+  /* Energetic Accent — punchier emerald green (playful tactile reboot) */
+  --system-accent: oklch(55% 0.22 146); /* Emerald Green — more saturated */
+  --system-accent-secondary: oklch(70% 0.22 55); /* Sunset orange — playful accent */
+  --system-accent-tertiary: oklch(55% 0.22 265); /* Deep blue — info badges, stats */
 
   --system-text-primary: oklch(20% 0.02 264);
   --system-text-secondary: oklch(20% 0.02 264 / 0.65);
   --system-text-tertiary: oklch(20% 0.02 264 / 0.35);
   --label-quaternary: oklch(20% 0.02 264 / 0.18);
 
-  --system-destructive: oklch(55% 0.18 25);
+  --system-destructive: oklch(58% 0.22 28); /* Arcade coral-red — more saturated */
   --system-destructive-foreground: oklch(100% 0 0);
-  --system-success: oklch(65% 0.2 145);
+  --system-success: oklch(68% 0.22 145); /* Brighter celebratory green */
 
   /* Semantic aliases */
   --success: var(--system-success);
@@ -94,6 +96,7 @@
 
   /* Corner Radii */
   --radius-button: 12px;
+  --radius-interactive: 16px; /* Playful tap targets — quiz options, flashcard touch points */
   --radius-card: 20px; /* More playful, slightly larger */
   --radius-card-lg: 2.5rem; /* 40px — large shell wrappers */
   --radius-sheet: 24px;
@@ -193,6 +196,10 @@
   --motion-easing-overshoot: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --motion-easing-decelerate: var(--ease-ios-decelerate);
   --motion-easing-accelerate: var(--ease-ios-accelerate);
+
+  --ease-tactile: cubic-bezier(0.34, 1.6, 0.64, 1); /* Springy press — overshoot then settle */
+  --ease-bounce: cubic-bezier(0.34, 1.8, 0.64, 1); /* Playful bounce — celebration pop-ins */
+  --ease-elastic: cubic-bezier(0.34, 1.9, 0.64, 0.85); /* Elastic snap — exit animations */
 
   /* Shadcn Compat */
   --background: var(--system-background);
@@ -342,6 +349,8 @@
   --color-system-fill: var(--system-fill);
   --color-system-fill-secondary: var(--system-fill-secondary);
   --color-system-accent: var(--system-accent);
+  --color-system-accent-secondary: var(--system-accent-secondary);
+  --color-system-accent-tertiary: var(--system-accent-tertiary);
   --color-label-quaternary: var(--label-quaternary);
 
   /* Materials (Liquid Glass) */
@@ -355,6 +364,7 @@
   /* Radii */
   --radius-sm: var(--radius-badge);
   --radius-md: var(--radius-button);
+  --radius-interactive: var(--radius-interactive);
   --radius-lg: var(--radius-card);
   --radius-xl: var(--radius-sheet);
   --radius-2xl: 28px;
@@ -406,6 +416,9 @@
   --ease-ios-accelerate: cubic-bezier(0.4, 0, 1, 1);
   --ease-ios-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-tactile: cubic-bezier(0.34, 1.6, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.8, 0.64, 1);
+  --ease-elastic: cubic-bezier(0.34, 1.9, 0.64, 0.85);
 
   /* Spacing */
   --spacing-safe-pb: env(safe-area-inset-bottom, 0px);
@@ -436,6 +449,8 @@
   --system-fill-secondary: oklch(100% 0 0 / 0.04);
 
   --system-accent: oklch(65% 0.18 146);
+  --system-accent-secondary: oklch(78% 0.22 55); /* Brighter sunset orange for dark */
+  --system-accent-tertiary: oklch(65% 0.22 265); /* Brighter blue for dark */
   --system-text-primary: oklch(95% 0.01 264);
   --system-text-secondary: oklch(95% 0.01 264 / 0.65);
   --system-text-tertiary: oklch(95% 0.01 264 / 0.35);
@@ -1102,6 +1117,126 @@
   }
 }
 
+/* ========================================
+   PLAYFUL TACTILE REBOOT KEYFRAMES
+   ======================================== */
+
+@keyframes materialize {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(10px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-4px);
+  }
+  70% {
+    transform: scale(0.97) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-6px) rotate(-1deg);
+  }
+  30% {
+    transform: translateX(5px) rotate(1deg);
+  }
+  45% {
+    transform: translateX(-4px);
+  }
+  60% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-1px);
+  }
+}
+
+@keyframes timer-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.85;
+  }
+}
+
+@keyframes rollup {
+  0% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  60% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes accent-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes confetti-pop {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* New keyframes end here */
 @keyframes magnetic-hover {
   from {
     transform: translate(0, 0);
@@ -1273,8 +1408,61 @@
   animation: shimmer 2s infinite linear;
 }
 
+/* ------------------------------------------------
+   Playful Tactile Reboot — animation utilities
+   ------------------------------------------------ */
+.animate-materialize {
+  animation: materialize 400ms var(--ease-tactile) forwards;
+}
+.animate-bounce-pop {
+  animation: bounce-pop 500ms var(--ease-bounce) forwards;
+}
+.animate-shake {
+  animation: shake 500ms var(--ease-ios) forwards;
+}
+.animate-timer-pulse {
+  animation: timer-pulse 1s ease-in-out infinite;
+}
+.animate-rollup {
+  animation: rollup 600ms var(--ease-ios) forwards;
+}
+.animate-accent-sweep {
+  background: linear-gradient(
+    90deg,
+    transparent 33%,
+    var(--system-accent-alpha-20) 50%,
+    transparent 66%
+  );
+  background-size: 200% 100%;
+  animation: accent-sweep 600ms var(--ease-ios) forwards;
+  pointer-events: none;
+}
+.animate-float-bob {
+  animation: float-bob 2.5s ease-in-out infinite;
+}
+.animate-confetti-pop {
+  animation: confetti-pop 1.2s var(--ease-ios) forwards;
+}
+
+/* Reduced motion guards for new animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-materialize,
+  .animate-bounce-pop,
+  .animate-shake,
+  .animate-timer-pulse,
+  .animate-rollup,
+  .animate-accent-sweep,
+  .animate-float-bob,
+  .animate-confetti-pop {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
 /* ========================================
-   2026 ANIMATION UTILITY CLASSES
+    2026 ANIMATION UTILITY CLASSES
    ======================================== */
 
 /* Kinetic letter reveal — apply to each letter span */
@@ -1544,6 +1732,40 @@
   border: 1px solid var(--system-separator);
 }
 
+/* Playful tactile card variants */
+.glass-card-playful {
+  background: var(--material-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--system-accent-alpha-10);
+  border-radius: var(--radius-card);
+  transition:
+    transform 200ms var(--ease-tactile),
+    box-shadow 200ms var(--ease-ios);
+}
+.glass-card-playful:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-level-2);
+}
+
+.glass-card-interactive {
+  background: var(--material-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--system-separator);
+  border-radius: var(--radius-card);
+  transition:
+    transform 200ms var(--ease-tactile),
+    box-shadow 200ms var(--ease-ios),
+    border-color 200ms var(--ease-ios);
+}
+.glass-card-interactive:hover {
+  border-color: var(--system-accent-alpha-20);
+  box-shadow: var(--shadow-level-2);
+}
+.glass-card-interactive:active {
+  transform: scale(0.97);
+  border-color: var(--system-accent-alpha-30);
+}
+
 /* Vibrancy helper — boosts text contrast on glass backgrounds */
 .vibrant-text {
   filter: brightness(var(--material-vibrancy));
@@ -1737,6 +1959,24 @@ h2:not([class*="text-"]):not(.ios-title-2) {
 }
 
 /* Press scale — micro-interaction for tappable elements */
+.press-scale {
+  transition:
+    transform 150ms var(--ease-tactile),
+    box-shadow 150ms var(--ease-ios);
+}
 .press-scale:active {
-  scale: 0.96;
+  transform: scale(0.95);
+}
+
+/* Press glow — accent flash on tap (for quiz options, nav items) */
+.press-glow {
+  transition:
+    transform 150ms var(--ease-tactile),
+    box-shadow 150ms var(--ease-ios),
+    background-color 150ms var(--ease-ios);
+}
+.press-glow:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 0 2px var(--system-accent-alpha-20);
+  background-color: var(--system-accent-alpha-10);
 }

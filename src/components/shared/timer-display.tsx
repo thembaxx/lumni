@@ -10,6 +10,7 @@ interface TimerDisplayProps {
   formatTimeFn?: (seconds: number) => string;
   variant?: TimerDisplayVariant;
   showIcon?: boolean;
+  urgent?: boolean;
   className?: string;
 }
 
@@ -36,16 +37,26 @@ export function TimerDisplay({
   formatTimeFn = formatTime,
   variant = "default",
   showIcon = true,
+  urgent,
   className,
 }: TimerDisplayProps) {
   const styles = variantStyles[variant];
 
   return (
-    <div className={cn(styles.container, className)} role="timer" aria-live="polite">
+    <div
+      className={cn(styles.container, urgent && "animate-timer-pulse text-destructive", className)}
+      role="timer"
+      aria-live="polite"
+    >
       {showIcon && (
-        <HugeiconsIcon icon={Timer01Icon} className={cn("text-muted-foreground", styles.icon)} />
+        <HugeiconsIcon
+          icon={Timer01Icon}
+          className={cn("text-muted-foreground", styles.icon, urgent && "text-destructive")}
+        />
       )}
-      <span className={styles.text}>{formatTimeFn(elapsedTime)}</span>
+      <span className={cn(styles.text, urgent && "text-destructive")}>
+        {formatTimeFn(elapsedTime)}
+      </span>
     </div>
   );
 }

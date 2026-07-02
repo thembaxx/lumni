@@ -7,6 +7,7 @@ import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
 import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { iOSEase } from "@/lib/utils/animation";
 import * as m from "motion/react-m";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SidebarHamburger } from "@/components/navigation/sidebar-nav";
@@ -44,7 +45,15 @@ const TopNavTitle = memo(function TopNavTitle({ title }: { title?: string }) {
   }, [pathname, title]);
 
   return (
-    <span className="ios-headline font-semibold text-foreground tracking-tight">{pageTitle}</span>
+    <m.span
+      key={pageTitle}
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: iOSEase }}
+      className="ios-headline font-semibold text-foreground tracking-tight"
+    >
+      {pageTitle}
+    </m.span>
   );
 });
 
@@ -67,11 +76,11 @@ const TopNavStatus = memo(function TopNavStatus() {
               Lv.{levelInfo.level}
             </span>
           </div>
-          <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
+          <div className="h-2 w-16 overflow-hidden rounded-full bg-muted">
             <m.div
               initial={{ width: 0 }}
               animate={{ width: `${levelInfo.progress}%` }}
-              transition={{ duration: 0.15, ease: "easeOut" }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, bounce: 0.3 }}
               className="h-full rounded-full bg-system-accent"
             />
           </div>
@@ -132,7 +141,7 @@ function TopNavMenu() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
+          className="h-9 rounded-full px-4 font-semibold text-sm text-system-accent hover:bg-system-accent/10 press-scale"
         >
           <HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
           Sign In

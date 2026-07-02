@@ -30,14 +30,19 @@ export const StreakCard = memo(function StreakCard() {
             <div
               className={cn(
                 "flex size-14 items-center justify-center rounded-2xl transition-colors",
-                currentStreak > 0 ? "bg-warning/15 text-warning" : "bg-muted text-muted-foreground",
+                currentStreak > 0
+                  ? "bg-warning/15 text-warning ring-1 ring-warning/30"
+                  : "bg-muted text-muted-foreground",
               )}
             >
-              <HugeiconsIcon icon={FireIcon} className="size-7" />
+              <HugeiconsIcon
+                icon={FireIcon}
+                className={cn("size-7", currentStreak > 0 && "animate-float-bob")}
+              />
             </div>
             <div className="flex-1">
               <div className="flex items-baseline gap-2">
-                <span className="font-extrabold text-3xl text-foreground tabular-nums tracking-tight">
+                <span className="font-extrabold text-4xl text-foreground tabular-nums tracking-tight">
                   {currentStreak}
                 </span>
                 <span className="font-medium text-muted-foreground text-xs">

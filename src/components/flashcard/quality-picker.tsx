@@ -47,7 +47,7 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
         <legend className="sr-only">
           {polarity === "correct" ? "Rate how well you knew it" : "Rate how much you struggled"}
         </legend>
-        <div className="flex gap-2">
+        <div className="flex gap-2.5">
           {qualities.map((q) => (
             <button
               key={q.quality}
@@ -55,7 +55,7 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
               type="button"
               onClick={() => handleSelect(q.quality)}
               className={cn(
-                "flex flex-col items-center gap-0.5 rounded-xl border px-4 py-2 text-xs transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
+                "press-glow flex flex-col items-center gap-1 rounded-(--radius-interactive) border px-5 py-3 text-sm focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
                 polarity === "correct"
                   ? "border-success/30 text-success hover:bg-success/10"
                   : "border-destructive/30 text-destructive hover:bg-destructive/10",
@@ -66,7 +66,7 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
                 selected !== null && selected !== q.quality && "opacity-30",
               )}
             >
-              <span className="font-medium">{q.label}</span>
+              <span className="font-semibold">{q.label}</span>
               <span className="ios-caption-3 opacity-60">{q.description}</span>
             </button>
           ))}

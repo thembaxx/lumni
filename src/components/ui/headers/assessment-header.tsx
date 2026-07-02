@@ -52,6 +52,7 @@ export function AssessmentHeader({
   className,
 }: AssessmentHeaderProps) {
   const isExam = timeRemaining !== undefined;
+  const isUrgent = timeRemaining !== undefined && timeRemaining <= 10;
 
   return (
     <div className={cn("flex", "flex-col", "gap-4", className)}>
@@ -78,6 +79,7 @@ export function AssessmentHeader({
             variant="inline"
             showIcon={false}
             formatTimeFn={formatTime}
+            urgent={isUrgent}
           />
 
           {isExam && timeRemaining !== undefined && (

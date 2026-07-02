@@ -26,7 +26,7 @@ export const MCQOptions = memo(function MCQOptions({
   return (
     <div
       className={cn(
-        "grid gap-2",
+        "grid gap-2.5",
         options.every((o) => o.text.length <= 30) ? "grid-cols-2" : "grid-cols-1",
       )}
     >
@@ -39,13 +39,13 @@ export const MCQOptions = memo(function MCQOptions({
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn flex min-h-12 w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-[scale,background-color] duration-150 press-scale",
+                "quiz-option-btn press-glow flex min-h-[56px] w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >
               <span
                 className={cn(
-                  "flex h-6 w-6 items-center justify-center rounded-full border font-medium text-sm",
+                  "flex h-7 w-7 items-center justify-center rounded-full border font-semibold text-sm",
                   isSelected
                     ? "border-(--system-accent) bg-(--system-accent) text-background"
                     : "border-muted-foreground/30",
@@ -61,7 +61,11 @@ export const MCQOptions = memo(function MCQOptions({
           </div>
         );
       })}
-      <Button onClick={onSubmit} disabled={!selectedOption} className="col-span-full mt-2">
+      <Button
+        onClick={onSubmit}
+        disabled={!selectedOption}
+        className="col-span-full mt-2 min-h-[48px]"
+      >
         {t("quiz.checkAnswer")}
       </Button>
     </div>
