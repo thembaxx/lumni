@@ -167,6 +167,9 @@ vi.mock("motion/react-m", () => ({
   div: ({ children, ...rest }: { children: React.ReactNode; [k: string]: unknown }) => (
     <div {...rest}>{children}</div>
   ),
+  span: ({ children, ...rest }: { children: React.ReactNode; [k: string]: unknown }) => (
+    <span {...rest}>{children}</span>
+  ),
 }));
 
 vi.mock("@hugeicons/react", () => ({
