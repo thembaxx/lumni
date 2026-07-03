@@ -16,11 +16,11 @@ All three are triggered from a single parent component (no multi-point duplicati
 
 ### Criteria check
 
-| Candidate | Multi-step / rich content | Full-screen | Data-fetching/loading | Multiple triggers | Verdict |
-|---|---|---|---|---|---|
-| Element detail | Yes — scrollable facts, shell viz, properties | No | No | No (1 trigger: periodic table) | Extract |
-| Exam detail | Yes — countdown, slots, practice CTAs | No | Yes | No (1 trigger: exam calendar) | Extract |
-| Student detail | Yes — scores, weak topics, timeline | No | Yes | No (1 trigger: teacher roster) | Extract |
+| Candidate      | Multi-step / rich content                     | Full-screen | Data-fetching/loading | Multiple triggers              | Verdict |
+| -------------- | --------------------------------------------- | ----------- | --------------------- | ------------------------------ | ------- |
+| Element detail | Yes — scrollable facts, shell viz, properties | No          | No                    | No (1 trigger: periodic table) | Extract |
+| Exam detail    | Yes — countdown, slots, practice CTAs         | No          | Yes                   | No (1 trigger: exam calendar)  | Extract |
+| Student detail | Yes — scores, weak topics, timeline           | No          | Yes                   | No (1 trigger: teacher roster) | Extract |
 
 All three are **rich content** (criterion 1 from ADR-0014). Two have data-fetching states. None are full-screen, but they are dense enough to benefit from their own URL.
 
@@ -30,11 +30,11 @@ Extract the three content-detail dialogs into standalone routes. Follow the same
 
 ### Extracted routes
 
-| Old component | New route | Category |
-|---|---|---|
-| `element-detail-modal.tsx` | `/tools/periodic/[symbol]` | Tools |
-| `exam-detail-dialog.tsx` | `/exam-dates/[id]` | Practice |
-| `student-detail-dialog.tsx` | `/teacher/students/[id]` | Teacher |
+| Old component               | New route                  | Category |
+| --------------------------- | -------------------------- | -------- |
+| `element-detail-modal.tsx`  | `/tools/periodic/[symbol]` | Tools    |
+| `exam-detail-dialog.tsx`    | `/exam-dates/[id]`         | Practice |
+| `student-detail-dialog.tsx` | `/teacher/students/[id]`   | Teacher  |
 
 ### Migration pattern (per ADR-0016)
 
@@ -58,11 +58,11 @@ Extract the three content-detail dialogs into standalone routes. Follow the same
 
 ### Trigger point updates
 
-| Current trigger | New trigger |
-|---|---|
+| Current trigger                                          | New trigger                              |
+| -------------------------------------------------------- | ---------------------------------------- |
 | Periodic table `onElementClick` → setState + open dialog | `<Link href="/tools/periodic/{symbol}">` |
-| Exam calendar `onSlotClick` → setState + open dialog | `<Link href="/exam-dates/{id}">` |
-| Teacher roster `onStudentClick` → setState + open dialog | `<Link href="/teacher/students/{id}">` |
+| Exam calendar `onSlotClick` → setState + open dialog     | `<Link href="/exam-dates/{id}">`         |
+| Teacher roster `onStudentClick` → setState + open dialog | `<Link href="/teacher/students/{id}">`   |
 
 ### Sidebar additions
 
@@ -87,11 +87,11 @@ Extract the three content-detail dialogs into standalone routes. Follow the same
 
 ## Glossary
 
-| Term | Definition |
-|---|---|
+| Term                  | Definition                                                                                                                                                                                   |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Content-detail dialog | A dialog that shows detailed information about a specific entity (element, exam, student). Distinct from action dialogs (forms, confirmations) and celebration dialogs (transient overlays). |
-| Parent page | The page from which a content-detail dialog is triggered. For all three candidates, there is exactly one parent page per dialog. |
-| Deep-linkable | Content that can be reached via a direct URL, enabling bookmarking, sharing, and browser history navigation. |
+| Parent page           | The page from which a content-detail dialog is triggered. For all three candidates, there is exactly one parent page per dialog.                                                             |
+| Deep-linkable         | Content that can be reached via a direct URL, enabling bookmarking, sharing, and browser history navigation.                                                                                 |
 
 ## Reference
 
