@@ -9,9 +9,10 @@ import { PostCard } from "./post-card";
 interface Props {
   post: GroupPost;
   groupId: string;
+  onPin?: () => void;
 }
 
-export function PostCardWithComments({ post, groupId }: Props) {
+export function PostCardWithComments({ post, groupId, onPin }: Props) {
   const { data: comments } = useGroupComments({ groupId, postId: post.$id });
   const { data: reactions } = usePostReactions(post.$id);
   const { mutate: createComment } = useCreateComment();
@@ -41,6 +42,7 @@ export function PostCardWithComments({ post, groupId }: Props) {
       onToggleReaction={handleToggleReaction}
       onCreateComment={handleCreateComment}
       onDeleteComment={(commentId) => deleteComment({ postId: post.$id, commentId })}
+      onPin={onPin}
     />
   );
 }

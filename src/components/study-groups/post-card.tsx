@@ -2,6 +2,7 @@
 
 import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
 import Message01Icon from "@hugeicons/core-free-icons/Message01Icon";
+import Pin02Icon from "@hugeicons/core-free-icons/Pin02Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { format } from "date-fns";
@@ -24,6 +25,7 @@ interface Props {
   onToggleReaction?: (postId: string, emoji: string) => void;
   onCreateComment?: (postId: string, content: string, parentId?: string) => void;
   onDeleteComment?: (commentId: string) => void;
+  onPin?: () => void;
 }
 
 export function PostCard({
@@ -34,6 +36,7 @@ export function PostCard({
   onToggleReaction,
   onCreateComment,
   onDeleteComment,
+  onPin,
 }: Props) {
   const { user } = useAuth();
   const { mutate: deletePost } = useDeletePost();
@@ -68,17 +71,33 @@ export function PostCard({
             {format(new Date(post.createdAt), "MMM d, HH:mm")}
           </span>
         </div>
-        {isOwner && (
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="relative size-7 text-muted-foreground hover:text-destructive after:absolute after:-inset-2"
-            onClick={() => deletePost(post.$id)}
-            aria-label="Delete post"
-          >
-            <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
-          </Button>
-        )}
+        <div className="flex items-center gap-1">
+          {onPin && (
+            <button
+              type="button"
+              onClick={onPin}
+              className="relative flex size-7 items-center justify-center text-muted-foreground hover:text-foreground after:absolute after:-inset-2"
+              aria-label={post.isPinned ? "Unpin post" : "Pin post"}
+              title={post.isPinned ? "Unpin post" : "Pin post"}
+            >
+              <HugeiconsIcon
+                icon={Pin02Icon}
+                className={`size-3.5 ${post.isPinned ? "text-primary" : ""}`}
+              />
+            </button>
+          )}
+          {isOwner && (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="relative size-7 text-muted-foreground hover:text-destructive after:absolute after:-inset-2"
+              onClick={() => deletePost(post.$id)}
+              aria-label="Delete post"
+            >
+              <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
+            </Button>
+          )}
+        </div>
       </div>
 
       {post.questionText && (

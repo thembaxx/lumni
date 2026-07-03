@@ -14,6 +14,25 @@ interface GroupDetailResponse {
 
 // ─── Queries ─────────────────────────────────────────────────────────────────
 
+interface DiscoverParams {
+  subjectId?: string;
+  search?: string;
+}
+
+export const useDiscoverGroups = createApiQuery<StudyGroup[], DiscoverParams | void>({
+  queryKey: (params) => ["discover-groups", params],
+  fetchFn: async (params) => {
+    const sp = new URLSearchParams();
+    if (params && "subjectId" in params && params.subjectId) sp.set("subjectId", params.subjectId);
+    if (params && "search" in params && params.search) sp.set("search", params.search);
+    const qs = sp.toString();
+    const res = await fetch(`/api/study-groups/discover${qs ? `?${qs}` : ""}`);
+    if (!res.ok) throw new Error("Failed to fetch discover groups");
+    const data = (await res.json()) as { groups: StudyGroup[] };
+    return data.groups;
+  },
+});
+
 export const useStudyGroups = createApiQuery<StudyGroup[], void>({
   queryKey: ["study-groups"],
   fetchFn: async () => {
@@ -53,6 +72,7 @@ interface CreateGroupInput {
   name: string;
   description?: string;
   subjectId?: string;
+  visibility?: "public" | "private";
 }
 
 export const useCreateGroup = createInvalidatingMutation<
@@ -123,5 +143,91 @@ export const useDeleteGroup = createInvalidatingMutation<string, { success: bool
   endpoint: (groupId) => `/api/study-groups/${groupId}`,
   method: "DELETE",
   invalidateKey: ["study-groups"],
+  transformResponse: () => undefined,
+});
+
+// ─── Admin Mutations ─────────────────────────────────────────────────────────
+
+interface UpdateGroupInput {
+  name?: string;
+  description?: string;
+  subjectId?: string;
+  visibility?: "public" | "private";
+}
+
+export const useUpdateGroup = createInvalidatingMutation<
+  { groupId: string; updates: UpdateGroupInput },
+  { group: StudyGroup },
+  StudyGroup
+>({
+  endpoint: ({ groupId }) => `/api/study-groups/${groupId}`,
+  method: "PATCH",
+  bodySerializer: ({ updates }) => updates,
+  invalidateKey: ({ groupId }) => ["study-group", groupId],
+  transformResponse: (res) => res.group,
+});
+
+export const usePinPost = createInvalidatingMutation<
+  { groupId: string; postId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId }) => `/api/study-groups/${groupId}/pin`,
+  bodySerializer: ({ postId }) => ({ postId }),
+  invalidateKey: ({ groupId }) => ["group-posts", groupId],
+  transformResponse: () => undefined,
+});
+
+export const useUnpinPost = createInvalidatingMutation<
+  { groupId: string; postId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId }) => `/api/study-groups/${groupId}/pin`,
+  method: "DELETE",
+  bodySerializer: ({ postId }) => ({ postId }),
+  invalidateKey: ({ groupId }) => ["group-posts", groupId],
+  transformResponse: () => undefined,
+});
+
+export const useMuteMember = createInvalidatingMutation<
+  { groupId: string; memberId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId, memberId }) => `/api/study-groups/${groupId}/members/${memberId}/mute`,
+  invalidateKey: ({ groupId }) => ["study-group", groupId],
+  transformResponse: () => undefined,
+});
+
+export const useUnmuteMember = createInvalidatingMutation<
+  { groupId: string; memberId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId, memberId }) => `/api/study-groups/${groupId}/members/${memberId}/mute`,
+  method: "DELETE",
+  invalidateKey: ({ groupId }) => ["study-group", groupId],
+  transformResponse: () => undefined,
+});
+
+export const useAssignCoAdmin = createInvalidatingMutation<
+  { groupId: string; memberId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId, memberId }) => `/api/study-groups/${groupId}/members/${memberId}/co-admin`,
+  invalidateKey: ({ groupId }) => ["study-group", groupId],
+  transformResponse: () => undefined,
+});
+
+export const useRemoveCoAdmin = createInvalidatingMutation<
+  { groupId: string; memberId: string },
+  { success: boolean },
+  void
+>({
+  endpoint: ({ groupId, memberId }) => `/api/study-groups/${groupId}/members/${memberId}/co-admin`,
+  method: "DELETE",
+  invalidateKey: ({ groupId }) => ["study-group", groupId],
   transformResponse: () => undefined,
 });

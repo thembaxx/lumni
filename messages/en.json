@@ -641,7 +641,28 @@
     "membersLabel": "Members",
     "leaveGroup": "Leave Group",
     "deleteGroup": "Delete Group",
-    "createdBy": "Created by"
+    "createdBy": "Created by",
+    "tab": {
+      "my-groups": "My Groups",
+      "discover": "Discover",
+      "admin": "Admin"
+    },
+    "settings": "Settings",
+    "visibility": "Visibility",
+    "public": "Public",
+    "private": "Private",
+    "searchGroups": "Search groups...",
+    "selectSubject": "All Subjects",
+    "join": "Join",
+    "pinnedPosts": "Pinned",
+    "muted": "Muted",
+    "coAdmin": "Co-Admin",
+    "makeCoAdmin": "Make Co-Admin",
+    "removeCoAdmin": "Remove Co-Admin",
+    "muteMember": "Mute",
+    "unmuteMember": "Unmute",
+    "confirmDeleteGroup": "Are you sure you want to delete this group?",
+    "typeNameToConfirm": "Type the group name to confirm"
   },
   "settings": {
     "title": "Settings",

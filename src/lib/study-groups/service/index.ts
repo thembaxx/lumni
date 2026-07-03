@@ -8,4 +8,14 @@ export {
   togglePostReaction,
   toggleCommentReaction,
 } from "./reactions";
+export {
+  updateGroup,
+  pinPost,
+  unpinPost,
+  muteMember,
+  unmuteMember,
+  assignCoAdmin,
+  removeCoAdmin,
+  discoverGroups,
+} from "./admin";
 export { generateInviteCode } from "./utils";

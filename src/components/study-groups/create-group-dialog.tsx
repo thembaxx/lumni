@@ -31,6 +31,7 @@ export function CreateGroupDialog() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [subjectId, setSubjectId] = useState("");
+  const [visibility, setVisibility] = useState<"public" | "private">("private");
   const { data: subjectsData } = useSubjects();
   const subjects = subjectsData?.subjects ?? [];
   const { mutate: createGroup, isPending } = useCreateGroup();
@@ -43,6 +44,7 @@ export function CreateGroupDialog() {
         name: name.trim(),
         description: description.trim() || undefined,
         subjectId: subjectId || undefined,
+        visibility,
       },
       {
         onSuccess: () => {
@@ -50,6 +52,7 @@ export function CreateGroupDialog() {
           setName("");
           setDescription("");
           setSubjectId("");
+          setVisibility("private");
         },
       },
     );
@@ -100,6 +103,21 @@ export function CreateGroupDialog() {
                       {s.name}
                     </SelectItem>
                   ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="create-vis">{t("studyGroups.visibility")}</FieldLabel>
+              <Select
+                value={visibility}
+                onValueChange={(v) => setVisibility(v as "public" | "private")}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="public">{t("studyGroups.public")}</SelectItem>
+                  <SelectItem value="private">{t("studyGroups.private")}</SelectItem>
                 </SelectContent>
               </Select>
             </Field>

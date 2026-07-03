@@ -21,16 +21,18 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ userId, body }) => {
-    const { name, description, subjectId } = body as {
+    const { name, description, subjectId, visibility } = body as {
       name: string;
       description?: string;
       subjectId?: string;
+      visibility?: "public" | "private";
     };
 
     const result = await createGroup(userId as string, {
       name,
       description,
       subjectId,
+      visibility,
     });
 
     if (!result.success) {

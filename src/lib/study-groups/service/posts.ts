@@ -8,7 +8,16 @@ import {
 import { logError } from "@/lib/shared/logger";
 import type { ServiceResult } from "@/lib/shared/service-result";
 import { failure, success } from "@/lib/shared/service-result";
-import type { CreatePostInput, GroupPost } from "../types";
+import type { CreatePostInput, GroupMember, GroupPost } from "../types";
+
+async function isMuted(userId: string, groupId: string): Promise<boolean> {
+  const members = await listDocuments<GroupMember>(COLLECTIONS.GROUP_MEMBERS, [
+    `groupId=${groupId}`,
+    `userId=${userId}`,
+  ]);
+  if (members.length === 0) return false;
+  return !!members[0].isMuted;
+}
 
 export async function createPost(
   userId: string,
@@ -16,6 +25,9 @@ export async function createPost(
   input: CreatePostInput,
 ): Promise<ServiceResult<GroupPost>> {
   try {
+    if (await isMuted(userId, input.groupId))
+      return failure("You are muted in this group and cannot post");
+
     const now = new Date().toISOString();
     const postId = await createDocument(COLLECTIONS.GROUP_POSTS, {
       groupId: input.groupId,
@@ -53,7 +65,16 @@ export async function deletePost(userId: string, postId: string): Promise<Servic
   try {
     const post = await getDocument<GroupPost>(COLLECTIONS.GROUP_POSTS, postId);
     if (!post) return failure("Post not found");
-    if (post.userId !== userId) return failure("Not authorized to delete this post");
+
+    if (post.userId !== userId) {
+      const members = await listDocuments<GroupMember>(COLLECTIONS.GROUP_MEMBERS, [
+        `groupId=${post.groupId}`,
+        `userId=${userId}`,
+      ]);
+      if (members.length === 0 || (members[0].role !== "admin" && members[0].role !== "co-admin"))
+        return failure("Not authorized to delete this post");
+    }
+
     await deleteDocument(COLLECTIONS.GROUP_POSTS, postId);
     return success(undefined);
   } catch (err) {

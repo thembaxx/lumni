@@ -28,6 +28,7 @@ export async function createGroup(
       createdBy: userId,
       memberCount: 1,
       createdAt: now,
+      visibility: input.visibility ?? "private",
     });
 
     await createDocument(COLLECTIONS.GROUP_MEMBERS, {
@@ -75,24 +76,40 @@ export async function getGroupById(groupId: string): Promise<ServiceResult<Study
   }
 }
 
+async function canRemoveMembers(
+  userId: string,
+  groupId: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const group = await getDocument<StudyGroup>(COLLECTIONS.STUDY_GROUPS, groupId);
+  if (!group) return { ok: false, error: "Group not found" };
+  if (group.createdBy === userId) return { ok: true };
+
+  const members = await listDocuments<GroupMember>(COLLECTIONS.GROUP_MEMBERS, [
+    `groupId=${groupId}`,
+    `userId=${userId}`,
+  ]);
+  if (members.length > 0 && members[0].role === "co-admin") return { ok: true };
+
+  return { ok: false, error: "Only admins can remove members" };
+}
+
 export async function removeMember(
   adminUserId: string,
   groupId: string,
   memberId: string,
 ): Promise<ServiceResult<void>> {
   try {
-    const group = await getDocument<StudyGroup>(COLLECTIONS.STUDY_GROUPS, groupId);
-    if (!group) return failure("Group not found");
-    if (group.createdBy !== adminUserId)
-      return failure("Only the group creator can remove members");
+    const permission = await canRemoveMembers(adminUserId, groupId);
+    if (!permission.ok) return failure(permission.error ?? "Not authorized");
 
     const member = await getDocument<GroupMember>(COLLECTIONS.GROUP_MEMBERS, memberId);
     if (!member) return failure("Member not found");
     if (member.role === "admin") return failure("Cannot remove the group creator");
 
+    const group = await getDocument<StudyGroup>(COLLECTIONS.STUDY_GROUPS, groupId);
     await deleteDocument(COLLECTIONS.GROUP_MEMBERS, memberId);
 
-    const newCount = Math.max(0, (group.memberCount ?? 1) - 1);
+    const newCount = Math.max(0, (group?.memberCount ?? 1) - 1);
     await updateDocument(COLLECTIONS.STUDY_GROUPS, groupId, {
       memberCount: newCount,
     });

@@ -14,6 +14,7 @@ import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
+import TeamWorkIcon from "@hugeicons/core-free-icons/TeamWorkIcon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import type { IconSvgElement } from "@hugeicons/react";
 export interface NavItem {
@@ -152,6 +153,17 @@ export const navConfig: NavCategory[] = [
     ],
   },
   {
+    label: "Social",
+    items: [
+      {
+        id: "study-groups",
+        label: "Study Groups",
+        icon: TeamWorkIcon,
+        route: "/study-groups",
+      },
+    ],
+  },
+  {
     label: "Progress",
     items: [
       {
@@ -260,6 +272,8 @@ export function getNavHierarchy(): Record<string, number> {
     "/chat": 2,
     "/solve": 2,
     "/study-guide": 2,
+    "/study-groups": 2,
+    "/study-groups/": 2,
     "/dictionary": 2,
     "/search": 2,
     "/upload": 2,

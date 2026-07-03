@@ -5,6 +5,9 @@ import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Copy02Icon from "@hugeicons/core-free-icons/Copy02Icon";
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
+import Lock01Icon from "@hugeicons/core-free-icons/Lock01Icon";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
+import MicOff01Icon from "@hugeicons/core-free-icons/MicOff01Icon";
 import Minimize01Icon from "@hugeicons/core-free-icons/Minimize01Icon";
 import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -17,12 +20,20 @@ import { ChallengeBanner } from "@/components/study-groups/challenge/challenge-b
 import { ChallengeLeaderboard } from "@/components/study-groups/challenge/challenge-leaderboard";
 import { CreateChallengeDialog } from "@/components/study-groups/challenge/create-challenge-dialog";
 import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
+import { GroupSettingsDialog } from "@/components/study-groups/group-settings-dialog";
 import { LiveSessionBar } from "@/components/study-groups/live-session-bar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGroupDetail, useRemoveMember } from "@/hooks/use-study-groups";
+import {
+  useAssignCoAdmin,
+  useGroupDetail,
+  useMuteMember,
+  useRemoveCoAdmin,
+  useRemoveMember,
+  useUnmuteMember,
+} from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { apiFetch } from "@/lib/shared/api-fetch";
@@ -35,6 +46,10 @@ export function GroupDetail() {
   const { data, isLoading, error } = useGroupDetail(groupId);
   const { user } = useAuth();
   const { mutate: removeMemberAction } = useRemoveMember();
+  const { mutate: muteMemberAction } = useMuteMember();
+  const { mutate: unmuteMemberAction } = useUnmuteMember();
+  const { mutate: assignCoAdminAction } = useAssignCoAdmin();
+  const { mutate: removeCoAdminAction } = useRemoveCoAdmin();
   const [copied, setCopied] = useState(false);
 
   const { data: challengeData } = useQuery<{
@@ -98,6 +113,10 @@ export function GroupDetail() {
     userNames[m.userId] = m.userName || m.userEmail || m.userId;
   }
 
+  const currentMember = members?.find((m) => m.userId === user?.$id);
+  const canAdmin = currentMember?.role === "admin" || currentMember?.role === "co-admin";
+  const isCreator = user?.$id === group.createdBy;
+
   return (
     <PageContainer>
       <div className="flex flex-col gap-6 py-6">
@@ -144,7 +163,10 @@ export function GroupDetail() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <Card className="flex flex-col gap-4 p-4">
-            <h2 className="font-semibold">{t("studyGroups.inviteCode")}</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="font-semibold">{t("studyGroups.inviteCode")}</h2>
+              {canAdmin && <GroupSettingsDialog group={group} />}
+            </div>
             <div className="flex items-center gap-2">
               <code className="flex-1 rounded bg-muted px-3 py-2 font-mono text-sm">
                 {group.inviteCode}
@@ -165,6 +187,9 @@ export function GroupDetail() {
                 {group.subjectId}
               </Badge>
             )}
+            <Badge variant="outline" className="w-fit">
+              {group.visibility === "public" ? t("studyGroups.public") : t("studyGroups.private")}
+            </Badge>
           </Card>
 
           <Card className="flex flex-col gap-4 p-4">
@@ -182,9 +207,18 @@ export function GroupDetail() {
                     className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2"
                   >
                     <div className="flex flex-col">
-                      <span className="font-medium text-sm">
-                        {member.userName || member.userEmail || member.userId}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-sm">
+                          {member.userName || member.userEmail || member.userId}
+                        </span>
+                        {member.isMuted && (
+                          <HugeiconsIcon
+                            icon={Lock01Icon}
+                            className="size-3.5 text-muted-foreground"
+                            aria-label={t("studyGroups.muted")}
+                          />
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         {member.userEmail && member.userName && (
                           <span className="text-muted-foreground text-xs">{member.userEmail}</span>
@@ -203,10 +237,83 @@ export function GroupDetail() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant={member.role === "admin" ? "default" : "secondary"}>
-                        {member.role}
+                      <Badge
+                        variant={
+                          member.role === "admin"
+                            ? "default"
+                            : member.role === "co-admin"
+                              ? "secondary"
+                              : "outline"
+                        }
+                      >
+                        {member.role === "co-admin" ? t("studyGroups.coAdmin") : member.role}
                       </Badge>
-                      {user?.$id === group.createdBy && member.role !== "admin" && (
+                      {canAdmin && member.role !== "admin" && member.role !== "co-admin" && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            assignCoAdminAction({
+                              groupId: group.$id,
+                              memberId: member.$id,
+                            })
+                          }
+                          className="text-muted-foreground hover:text-foreground"
+                          aria-label={t("studyGroups.makeCoAdmin")}
+                          title={t("studyGroups.makeCoAdmin")}
+                        >
+                          <HugeiconsIcon icon={UserGroupIcon} className="size-3.5" />
+                        </button>
+                      )}
+                      {isCreator && member.role === "co-admin" && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            removeCoAdminAction({
+                              groupId: group.$id,
+                              memberId: member.$id,
+                            })
+                          }
+                          className="text-muted-foreground hover:text-foreground"
+                          aria-label={t("studyGroups.removeCoAdmin")}
+                          title={t("studyGroups.removeCoAdmin")}
+                        >
+                          <HugeiconsIcon icon={Minimize01Icon} className="size-3.5" />
+                        </button>
+                      )}
+                      {isCreator &&
+                        member.role !== "admin" &&
+                        (member.isMuted ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              unmuteMemberAction({
+                                groupId: group.$id,
+                                memberId: member.$id,
+                              })
+                            }
+                            className="text-muted-foreground hover:text-foreground"
+                            aria-label={t("studyGroups.unmuteMember")}
+                            title={t("studyGroups.unmuteMember")}
+                          >
+                            <HugeiconsIcon icon={MicOff01Icon} className="size-3.5" />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              muteMemberAction({
+                                groupId: group.$id,
+                                memberId: member.$id,
+                              })
+                            }
+                            className="text-muted-foreground hover:text-foreground"
+                            aria-label={t("studyGroups.muteMember")}
+                            title={t("studyGroups.muteMember")}
+                          >
+                            <HugeiconsIcon icon={Mic01Icon} className="size-3.5" />
+                          </button>
+                        ))}
+                      {canAdmin && member.role !== "admin" && (
                         <button
                           type="button"
                           onClick={() =>
@@ -216,7 +323,7 @@ export function GroupDetail() {
                             })
                           }
                           className="text-destructive hover:text-destructive/80"
-                          aria-label={t("common.remove") || "Remove member"}
+                          aria-label={t("common.remove")}
                         >
                           <HugeiconsIcon icon={Minimize01Icon} className="size-3.5" />
                         </button>

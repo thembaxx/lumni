@@ -1,4 +1,4 @@
-export type GroupRole = "admin" | "member";
+export type GroupRole = "admin" | "co-admin" | "member";
 
 export type InviteStatus = "pending" | "accepted" | "expired";
 
@@ -11,6 +11,8 @@ export interface StudyGroup {
   createdBy: string;
   memberCount: number;
   createdAt: string;
+  visibility?: "public" | "private";
+  pinnedPostIds?: string[];
 }
 
 export interface GroupMember {
@@ -23,6 +25,7 @@ export interface GroupMember {
   joinedAt: string;
   questionsAnswered?: number;
   currentStreak?: number;
+  isMuted?: boolean;
 }
 
 export interface GroupInvite {
@@ -39,6 +42,14 @@ export interface CreateGroupInput {
   name: string;
   description?: string;
   subjectId?: string;
+  visibility?: "public" | "private";
+}
+
+export interface UpdateGroupInput {
+  name?: string;
+  description?: string;
+  subjectId?: string;
+  visibility?: "public" | "private";
 }
 
 export interface JoinGroupInput {
@@ -55,6 +66,7 @@ export interface GroupPost {
   subject?: string;
   topic?: string;
   createdAt: string;
+  isPinned?: boolean;
 }
 
 export interface CreatePostInput {
