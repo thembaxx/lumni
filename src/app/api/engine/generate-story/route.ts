@@ -34,7 +34,7 @@ export const POST = createRouteHandler({
     if (!isAIConfigured()) {
       initAI({
         geminiApiKey: process.env.GEMINI_API_KEY,
-        nvidiaApiKey: process.env.NVIDIA_API_KEY,
+        nvidiaApiKey: process.env.NVIDIA_NIM_API_KEY,
         groqApiKey: process.env.GROQ_API_KEY,
       });
       if (!isAIConfigured()) {

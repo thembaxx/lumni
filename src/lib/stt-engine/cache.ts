@@ -1,13 +1,13 @@
-import type { STTCacheEntry, STTResult } from "./types";
+import type { STTResult } from "./types";
 
 export async function getCachedSTTResult(key: string): Promise<STTResult | undefined> {
   if (typeof window === "undefined") return undefined;
 
-  const { offlineDB } = await import("@/lib/db/schema");
-  const entry = await offlineDB.table<STTCacheEntry>("sttCache").get(key);
+  const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
+  const entry = await dexieDataAccess.sttCache.get(key);
   if (!entry) return undefined;
   if (entry.expiresAt < Date.now()) {
-    await offlineDB.table("sttCache").delete(key);
+    await dexieDataAccess.sttCache.delete(key);
     return undefined;
   }
   return JSON.parse(entry.result) as STTResult;
@@ -20,8 +20,8 @@ export async function cacheSTTResult(
 ): Promise<void> {
   if (typeof window === "undefined") return;
 
-  const { offlineDB } = await import("@/lib/db/schema");
-  await offlineDB.table<STTCacheEntry>("sttCache").put({
+  const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
+  await dexieDataAccess.sttCache.put({
     key,
     result: JSON.stringify(result),
     expiresAt: Date.now() + ttlMs,

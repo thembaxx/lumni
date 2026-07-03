@@ -24,7 +24,12 @@
         { "id": "tsw-poetry", "name": "Poetry", "order": 1 },
         { "id": "tsw-novel", "name": "Novel", "order": 2 },
         { "id": "tsw-drama", "name": "Drama", "order": 3 },
-        { "id": "tsw-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "tsw-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["kgwedi-le-bjana", "botsalano"]
+        }
       ]
     },
     {

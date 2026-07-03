@@ -32,6 +32,7 @@ import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
+import { logError } from "@/lib/shared/logger";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import { ExamHeader } from "./exam-session/exam-header";
@@ -194,7 +195,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
             scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
             completed: false,
           })
-          .catch(() => {});
+          .catch((err) => logError("ExamSessionClient.retention", err));
       },
       flashcardEngine,
       trackQuestionResult,

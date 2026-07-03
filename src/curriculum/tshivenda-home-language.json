@@ -24,7 +24,12 @@
         { "id": "ven-poetry", "name": "Poetry", "order": 1 },
         { "id": "ven-novel", "name": "Novel", "order": 2 },
         { "id": "ven-drama", "name": "Drama", "order": 3 },
-        { "id": "ven-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "ven-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["tshifhiwo-na-phalaphala", "vhufunzi"]
+        }
       ]
     },
     {

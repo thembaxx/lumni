@@ -41,9 +41,9 @@ const mockTable = {
   count: vi.fn(async () => store.length),
 };
 
-vi.mock("@/lib/db/schema", () => ({
-  offlineDB: {
-    table: vi.fn(() => mockTable),
+vi.mock("@/lib/db/dexie-data-access", () => ({
+  dexieDataAccess: {
+    syncOutbox: mockTable,
   },
 }));
 

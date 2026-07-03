@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { serverAccount } from "@/lib/appwrite.server";
 import { REFERRAL_REWARD_DAYS } from "@/lib/referral/constants";
 import { getReferralByReferee, updateReferralStatus } from "@/lib/referral/service";
+import { logError } from "@/lib/shared/logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.redirect(new URL("/settings?verified=true", request.url));
   } catch (error) {
-    console.error("[Email Verification] Error:", error);
+    logError("EmailVerification", error);
     return NextResponse.redirect(new URL("/settings?error=verification_failed", request.url));
   }
 }

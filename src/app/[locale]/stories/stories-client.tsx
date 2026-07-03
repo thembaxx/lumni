@@ -28,7 +28,7 @@ import {
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import type { StoryProgressRecord } from "@/lib/db/schema";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
 import { cacheAllStories } from "@/lib/stories/service";
 import type { StoryMeta } from "@/lib/stories/story-data";
@@ -134,7 +134,7 @@ export function StoriesClient() {
   useEffect(() => {
     if (!userId || stories.length === 0) return;
     const storyIds = new Set(stories.map((s) => s.id));
-    offlineDB.storyProgress
+    dexieDataAccess.storyProgress
       .where("userId")
       .equals(userId)
       .toArray()

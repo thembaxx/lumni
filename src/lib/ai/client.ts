@@ -44,6 +44,7 @@ interface ProviderModel {
 }
 
 const FAILURE_RESPONSE: AIFailure = {
+  type: "failure",
   error: "All AI providers failed",
   provider: "none",
   available: false,
@@ -79,6 +80,7 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
           telemetry: makeTelemetryOptions("ai.generate"),
         });
         return {
+          type: "success" as const,
           content: text,
           provider: "gemini",
           model: modelId,
@@ -112,6 +114,7 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
           telemetry: makeTelemetryOptions("ai.generate"),
         });
         return {
+          type: "success" as const,
           content: text,
           provider: "nvidia",
           model: modelId,
@@ -145,6 +148,7 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
           telemetry: makeTelemetryOptions("ai.generate"),
         });
         return {
+          type: "success" as const,
           content: text,
           provider: "groq",
           model: modelId,
@@ -248,7 +252,7 @@ export class AIClient {
     return {
       ...FAILURE_RESPONSE,
       error: `All providers failed. Last error: ${lastError}`,
-    } as AIFailure;
+    };
   }
 }
 

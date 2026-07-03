@@ -42,7 +42,7 @@ export function initTelemetryExporter(): void {
 
     trace.setGlobalTracerProvider(provider);
 
-    provider.forceFlush().catch(() => {});
+    provider.forceFlush().catch((err) => logError("TelemetryExporter.flush", err));
   } catch (err) {
     logError("TelemetryExporter.init", err);
   }

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useMemo, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getWordOfDay, lookupWord } from "@/lib/dictionary/service";
+import { logError } from "@/lib/shared/logger";
 
 interface WordOfDayCardProps {
   language?: string;
@@ -31,7 +32,7 @@ export function WordOfDayCard({ language = "en" }: WordOfDayCardProps) {
     }
     const audio = new Audio(result.audio);
     audioRef.current = audio;
-    audio.play().catch(() => {});
+    audio.play().catch((err) => logError("WordOfDay.audio", err));
   };
 
   return (

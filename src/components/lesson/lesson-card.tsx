@@ -100,7 +100,9 @@ export const LessonCard = memo(function LessonCard({
                             className="rounded-full"
                             aria-label={`Practice pronouncing ${v.word}`}
                             onClick={() =>
-                              push(`/pronunciation?text=${encodeURIComponent(v.word)}`)
+                              push(
+                                `/pronunciation?text=${encodeURIComponent(v.word)}&lang=${encodeURIComponent(v.language ?? "en")}`,
+                              )
                             }
                           >
                             <HugeiconsIcon icon={Mic01Icon} className="size-4" />

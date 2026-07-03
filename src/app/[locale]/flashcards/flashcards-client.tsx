@@ -169,7 +169,7 @@ export function FlashcardsClient() {
             scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
             completed: false,
           })
-          .catch(() => {});
+          .catch((err) => logError("FlashcardsClient.retention", err));
       },
       flashcardEngine,
       trackQuestionResult,
@@ -441,7 +441,7 @@ export function FlashcardsClient() {
               scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
               completed: false,
             })
-            .catch(() => {});
+            .catch((err) => logError("FlashcardsClient.wrongAnswerReview", err));
         }
       }
     },

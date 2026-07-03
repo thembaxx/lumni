@@ -1,6 +1,7 @@
+import type { DataAccessTable } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { getPendingOutboxEntries, incrementRetry, removeOutboxEntries } from "./outbox";
-import type { SyncCheckpoint, SyncResult, SyncService, SyncStatus } from "./types";
+import type { SyncResult, SyncService, SyncStatus } from "./types";
 
 export function createSyncService(userId: () => string | null): SyncService {
   let state: SyncStatus["state"] = "idle";
@@ -81,11 +82,18 @@ export function createSyncService(userId: () => string | null): SyncService {
     let conflicts = 0;
 
     try {
-      const { offlineDB } = await import("@/lib/db/schema");
-      const checkpoints = await offlineDB.table<SyncCheckpoint>("syncCheckpoints").toArray();
+      const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
+      const checkpoints = await dexieDataAccess.syncCheckpoints.toArray();
       const checkpointMap = new Map(checkpoints.map((c) => [c.table, c]));
 
       const tables = ["flashcards", "notes", "competencies", "gamification"];
+
+      const tableAccessors: Record<string, DataAccessTable<unknown, string | number>> = {
+        flashcards: dexieDataAccess.flashcards,
+        notes: dexieDataAccess.notes,
+        competencies: dexieDataAccess.competencies,
+        gamification: dexieDataAccess.gamification,
+      };
 
       for (const table of tables) {
         try {
@@ -103,12 +111,13 @@ export function createSyncService(userId: () => string | null): SyncService {
           if (data.records.length === 0) continue;
 
           pulled += data.records.length;
-          const dexieTable = offlineDB.table(table);
+          const accessor = tableAccessors[table];
+          if (!accessor) continue;
           for (const record of data.records as Array<{ id: string }>) {
-            await dexieTable.put(record);
+            await accessor.put(record);
           }
 
-          await offlineDB.table<SyncCheckpoint>("syncCheckpoints").put({
+          await dexieDataAccess.syncCheckpoints.put({
             table,
             lastPulledAt: Date.now(),
             lastPulledVersion: data.version,
@@ -157,7 +166,7 @@ export function createSyncService(userId: () => string | null): SyncService {
     state = "idle";
     notify();
 
-    trigger().catch(() => {});
+    trigger().catch((err) => logError("Sync.start", err));
 
     intervalId = setInterval(
       () => {

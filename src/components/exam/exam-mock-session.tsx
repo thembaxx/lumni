@@ -8,6 +8,7 @@ import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { UserAnswer } from "@/lib/question-engine/types";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { cn } from "@/lib/utils";
+import { logError } from "@/lib/shared/logger";
 
 interface MockAnswerRecord {
   answer: UserAnswer;
@@ -133,7 +134,7 @@ export function ExamMockSession({
     if (questions.length === 0) {
       generate(generationParams)
         .then(() => setPhase("countdown"))
-        .catch(() => {});
+        .catch((err) => logError("ExamMockSession.generate", err));
     } else if (phase === "generating") {
       setPhase("countdown");
     }

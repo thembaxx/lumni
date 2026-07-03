@@ -1965,7 +1965,7 @@ h2:not([class*="text-"]):not(.ios-title-2) {
     box-shadow 150ms var(--ease-ios);
 }
 .press-scale:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 /* Press glow — accent flash on tap (for quiz options, nav items) */

@@ -24,7 +24,12 @@
         { "id": "ssw-poetry", "name": "Poetry", "order": 1 },
         { "id": "ssw-novel", "name": "Novel", "order": 2 },
         { "id": "ssw-drama", "name": "Drama", "order": 3 },
-        { "id": "ssw-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "ssw-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["indvuku-na-manja", "ubuntfu"]
+        }
       ]
     },
     {

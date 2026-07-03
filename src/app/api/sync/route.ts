@@ -36,15 +36,10 @@ const syncPostHandler = createRouteHandler({
 
 const syncGetHandler = createRouteHandler({
   auth: "required",
-  execute: async ({ userId }) => {
-    const lastSync =
-      typeof localStorage !== "undefined"
-        ? localStorage.getItem(`lumni_last_sync_${userId}`)
-        : null;
-
+  execute: async () => {
     return {
       status: "ok",
-      lastSync: lastSync ? Number(lastSync) : null,
+      lastSync: null,
       pendingChanges: 0,
     };
   },

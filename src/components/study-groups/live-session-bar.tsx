@@ -11,6 +11,7 @@ import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { logError } from "@/lib/shared/logger";
 import {
   Select,
   SelectContent,
@@ -129,7 +130,9 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
         currentMembers.length === 0 ||
         (currentMembers.length === 1 && currentMembers[0]?.clientId === userId);
       if (isLast) {
-        endSessionOnServer(session.$id, groupId).catch(() => {});
+        endSessionOnServer(session.$id, groupId).catch((err) =>
+          logError("LiveSessionBar.endSession", err),
+        );
       }
       leave();
     };

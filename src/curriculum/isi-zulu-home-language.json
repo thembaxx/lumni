@@ -24,7 +24,12 @@
         { "id": "zul-poetry", "name": "Poetry", "order": 1 },
         { "id": "zul-novel", "name": "Novel", "order": 2 },
         { "id": "zul-drama", "name": "Drama", "order": 3 },
-        { "id": "zul-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "zul-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["inkosi-yangaphandle", "umusa"]
+        }
       ]
     },
     {

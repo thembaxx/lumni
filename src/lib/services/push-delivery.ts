@@ -15,18 +15,21 @@ interface PushDeliveryDeps {
   ) => Promise<{ endpoint: string; auth: string; p256dh: string }[]>;
 }
 
-let vapidConfigured = false;
+let vapidInitPromise: Promise<void> | null = null;
 
-function ensureVapid() {
-  if (vapidConfigured) return;
+function ensureVapid(): Promise<void> {
+  if (vapidInitPromise) return vapidInitPromise;
   const pub = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const priv = process.env.VAPID_PRIVATE_KEY;
-  if (!pub || !priv) return;
-  // Lazy import to avoid bundling web-push on client
-  void import("web-push").then(({ default: webpush }) => {
+  if (!pub || !priv) {
+    vapidInitPromise = Promise.resolve();
+    return vapidInitPromise;
+  }
+  vapidInitPromise = (async () => {
+    const { default: webpush } = await import("web-push");
     webpush.setVapidDetails("mailto:study@lumni.app", pub, priv);
-    vapidConfigured = true;
-  });
+  })();
+  return vapidInitPromise;
 }
 
 async function sendToSubscription(
@@ -35,7 +38,7 @@ async function sendToSubscription(
 ): Promise<boolean> {
   try {
     const { default: webpush } = await import("web-push");
-    if (!vapidConfigured) ensureVapid();
+    await ensureVapid();
     const subscription = {
       endpoint: sub.endpoint,
       keys: { auth: sub.auth, p256dh: sub.p256dh },

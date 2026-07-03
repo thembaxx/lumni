@@ -24,7 +24,12 @@
         { "id": "tsg-poetry", "name": "Poetry", "order": 1 },
         { "id": "tsg-novel", "name": "Novel", "order": 2 },
         { "id": "tsg-drama", "name": "Drama", "order": 3 },
-        { "id": "tsg-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "tsg-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["tindzuwa-na-nhwanyana", "nhluvuko"]
+        }
       ]
     },
     {

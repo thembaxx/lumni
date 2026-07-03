@@ -150,7 +150,7 @@ export function HomeContent() {
             onClick={handleLogoClick}
             className="flex cursor-pointer items-center gap-2 py-2 font-extrabold text-lg tracking-tight transition-colors"
           >
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary transition-all duration-300 hover:rounded-lg">
+            <div className="flex size-7 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
               <HugeiconsIcon icon={StarIcon} className="size-4 text-primary-foreground" />
             </div>
             <span>{t("home.brand")}</span>

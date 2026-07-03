@@ -10,8 +10,18 @@
       "bloomTarget": "analyze",
       "subtopics": [
         { "id": "eng-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "eng-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "eng-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "eng-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": ["thoughts-on-south-africa"]
+        },
+        {
+          "id": "eng-critical",
+          "name": "Critical Reading",
+          "order": 3,
+          "stories": ["native-life-south-africa"]
+        }
       ]
     },
     {
@@ -24,7 +34,12 @@
         { "id": "eng-poetry", "name": "Poetry", "order": 1 },
         { "id": "eng-novel", "name": "Novel", "order": 2 },
         { "id": "eng-drama", "name": "Drama", "order": 3 },
-        { "id": "eng-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "eng-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["south-african-folk-tales", "outa-karels-stories", "reynard-fox-south-africa"]
+        }
       ]
     },
     {

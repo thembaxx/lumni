@@ -1,9 +1,9 @@
+import type { DataAccessTable } from "@/lib/db/data-access";
 import type { SyncOutboxEntry } from "./types";
 
-async function getTable() {
-  const { offlineDB } = await import("@/lib/db/schema");
-  // oxlint-disable-next-line typescript/no-explicit-any
-  return offlineDB.table("syncOutbox") as any;
+async function getTable(): Promise<DataAccessTable<SyncOutboxEntry, number>> {
+  const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
+  return dexieDataAccess.syncOutbox;
 }
 
 export async function enqueueOutbox(

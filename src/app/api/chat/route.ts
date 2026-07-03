@@ -9,7 +9,7 @@ import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { logError } from "@/lib/shared/logger";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
+const NVIDIA_API_KEY = process.env.NVIDIA_NIM_API_KEY;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 function getModels() {
@@ -19,8 +19,8 @@ function getModels() {
     try {
       const google = createGoogle({ apiKey: GEMINI_API_KEY });
       models.push({ provider: "gemini", model: google("gemini-2.0-flash-lite-001") });
-    } catch {
-      /* skip */
+    } catch (err) {
+      logError("Chat.getModels.gemini", err);
     }
   }
 
@@ -32,8 +32,8 @@ function getModels() {
         name: "nvidia",
       });
       models.push({ provider: "nvidia", model: nvidia.chat("meta/llama-3.3-70b-instruct") });
-    } catch {
-      /* skip */
+    } catch (err) {
+      logError("Chat.getModels.nvidia", err);
     }
   }
 
@@ -45,8 +45,8 @@ function getModels() {
         name: "groq",
       });
       models.push({ provider: "groq", model: groq.chat("llama-3.3-70b-versatile") });
-    } catch {
-      /* skip */
+    } catch (err) {
+      logError("Chat.getModels.groq", err);
     }
   }
 

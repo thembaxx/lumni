@@ -294,7 +294,7 @@ export function ProblemsClient() {
                       variant={selectedDifficulty === d ? "default" : "outline"}
                       size="sm"
                       onClick={() => setSelectedDifficulty(d)}
-                      className="h-8 shrink-0 rounded-lg px-3 text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
+                      className="h-8 shrink-0 rounded-lg px-3 text-xs focus-visible:ring-2 focus-visible:ring-primary"
                     >
                       {d === "all" ? "All Levels" : d}
                     </Button>
@@ -307,7 +307,7 @@ export function ProblemsClient() {
                         variant={problemCount === n ? "default" : "outline"}
                         size="xs"
                         onClick={() => setProblemCount(n)}
-                        className="relative size-7 rounded-lg p-0 text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+                        className="relative size-7 rounded-lg p-0 text-xs focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
                       >
                         {n}
                       </Button>

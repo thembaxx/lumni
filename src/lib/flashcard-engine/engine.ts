@@ -1,4 +1,5 @@
 import { logError } from "@/lib/shared/logger";
+import { enqueueOutbox } from "@/lib/sync/outbox";
 import {
   calculateNextReview,
   calculateNextReviewFSRS,
@@ -201,6 +202,9 @@ export class FlashcardEngine {
     this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(updatedCard)).catch((e: unknown) =>
       logError("FlashcardEngine.ReviewSync", e),
     );
+    enqueueOutbox("flashcards", updatedCard.id, "update", updatedCard).catch((e: unknown) =>
+      logError("FlashcardEngine.ReviewOutbox", e),
+    );
 
     return updatedCard;
   }
@@ -225,14 +229,32 @@ export class FlashcardEngine {
 
   async bury(id: string): Promise<void> {
     await this.db.flashcards.update(id, { status: "buried" });
+    const card = await this.db.flashcards.get(id);
+    if (card) {
+      enqueueOutbox("flashcards", id, "update", card).catch((e: unknown) =>
+        logError("FlashcardEngine.BuryOutbox", e),
+      );
+    }
   }
 
   async suspend(id: string): Promise<void> {
     await this.db.flashcards.update(id, { status: "suspended" });
+    const card = await this.db.flashcards.get(id);
+    if (card) {
+      enqueueOutbox("flashcards", id, "update", card).catch((e: unknown) =>
+        logError("FlashcardEngine.SuspendOutbox", e),
+      );
+    }
   }
 
   async activate(id: string): Promise<void> {
     await this.db.flashcards.update(id, { status: "active" });
+    const card = await this.db.flashcards.get(id);
+    if (card) {
+      enqueueOutbox("flashcards", id, "update", card).catch((e: unknown) =>
+        logError("FlashcardEngine.ActivateOutbox", e),
+      );
+    }
   }
 
   async getStats(): Promise<FlashcardStats> {

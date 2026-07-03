@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
+import { useSync } from "@/hooks/use-sync";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -61,6 +62,7 @@ const TopNavStatus = memo(function TopNavStatus() {
   const { user, status } = useAuth();
   const { levelInfo } = useGamification();
   const { isOnline, pendingCount } = useSyncStatus();
+  const { isSyncing } = useSync(user?.$id);
 
   return (
     <div className="flex items-center gap-4">
@@ -85,6 +87,12 @@ const TopNavStatus = memo(function TopNavStatus() {
             />
           </div>
         </m.div>
+      )}
+      {isSyncing && (
+        <div className="flex items-center gap-1 rounded-full bg-info/10 px-2 py-0.5 text-info">
+          <div className="size-1.5 animate-pulse rounded-full bg-info" />
+          <span className="ios-caption-3 font-medium">Syncing</span>
+        </div>
       )}
       {!isOnline && (
         <div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">

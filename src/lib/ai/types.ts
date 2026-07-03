@@ -12,6 +12,7 @@ export interface AIRequest {
 }
 
 export interface AIResponse {
+  type: "success";
   content: string;
   provider: string;
   model: string;
@@ -20,6 +21,7 @@ export interface AIResponse {
 }
 
 export interface AIFailure {
+  type: "failure";
   error: string;
   provider: string;
   available: boolean;

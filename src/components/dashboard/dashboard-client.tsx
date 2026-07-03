@@ -8,6 +8,7 @@ import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { SearchWidget } from "@/components/dashboard/search/search-widget";
 import type { TabValue } from "@/components/dashboard/types";
+import { logError } from "@/lib/shared/logger";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -77,7 +78,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
             scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
             completed: false,
           })
-          .catch(() => {});
+          .catch((err) => logError("DashboardClient.retention", err));
       },
       flashcardEngine,
       trackQuestionResult,

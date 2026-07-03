@@ -22,7 +22,7 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { trackComprehensionResult } from "@/lib/competency-engine";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
@@ -88,7 +88,7 @@ export function StoryReaderClient() {
   useEffect(() => {
     if (!storyId || !userId || loading || progressLoadedRef.current) return;
     progressLoadedRef.current = true;
-    offlineDB.storyProgress
+    dexieDataAccess.storyProgress
       .where("[userId+storyId]")
       .equals([userId, storyId])
       .first()
@@ -110,7 +110,7 @@ export function StoryReaderClient() {
       if (!userId || !storyId) return;
       const id = progressIdRef.current;
       if (id !== undefined) {
-        offlineDB.storyProgress
+        dexieDataAccess.storyProgress
           .update(id, {
             scrollPercent: pct,
             completed: done,
@@ -119,7 +119,7 @@ export function StoryReaderClient() {
           })
           .catch((err: unknown) => logError("story-reader.saveProgress", err));
       } else {
-        offlineDB.storyProgress
+        dexieDataAccess.storyProgress
           .add({
             userId,
             storyId,

@@ -408,4 +408,26 @@ export const schemaConfig: Record<string, CollectionSchema> = {
       },
     ],
   },
+  sync_entries: {
+    attributes: {
+      table: { type: "string", size: 100, required: true },
+      recordId: { type: "string", size: 255, required: true },
+      operation: { type: "string", size: 20, required: true },
+      data: { type: "string", size: 100000 },
+      userId: { type: "string", size: 100, required: true },
+      updatedAt: { type: "datetime", required: true },
+    },
+    indexes: [
+      {
+        key: "idx_sync_entries_table",
+        type: "key",
+        attributes: ["table"],
+      },
+      {
+        key: "idx_sync_entries_userId",
+        type: "key",
+        attributes: ["userId"],
+      },
+    ],
+  },
 };

@@ -40,6 +40,11 @@ const FocusTimerCard = dynamic(
   { ssr: false, loading: () => <Skeleton className="h-20 rounded-4xl" /> },
 );
 
+const StoriesProgressCard = dynamic(
+  () => import("@/components/dashboard/stories-progress-card").then((m) => m.StoriesProgressCard),
+  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+);
+
 const LessonLibraryCard = dynamic(
   () => import("@/components/dashboard/lesson-library-card").then((m) => m.LessonLibraryCard),
   { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
@@ -172,6 +177,9 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
           </StaggeredSection>
           <StaggeredSection>
             <WordOfDayCard />
+          </StaggeredSection>
+          <StaggeredSection>
+            <StoriesProgressCard />
           </StaggeredSection>
           {isLoggedIn && (
             <StaggeredSection>

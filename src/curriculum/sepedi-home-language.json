@@ -24,7 +24,12 @@
         { "id": "sep-poetry", "name": "Poetry", "order": 1 },
         { "id": "sep-novel", "name": "Novel", "order": 2 },
         { "id": "sep-drama", "name": "Drama", "order": 3 },
-        { "id": "sep-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "sep-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["thuto-ya-khuru", "tau-le-noka"]
+        }
       ]
     },
     {

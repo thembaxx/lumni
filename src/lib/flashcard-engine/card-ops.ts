@@ -1,5 +1,6 @@
 import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
+import { enqueueOutbox } from "@/lib/sync/outbox";
 import { generateId, pickAlgorithm, syncCardPayload } from "./engine-helpers";
 import type { FlashcardSM2 } from "./types";
 
@@ -40,6 +41,9 @@ export async function createCard(
   enqueueFn("appwrite-flashcard-sync", syncCardPayload(card)).catch((e: unknown) =>
     logError("FlashcardEngine.CreateSync", e),
   );
+  enqueueOutbox("flashcards", card.id, "create", card).catch((e: unknown) =>
+    logError("FlashcardEngine.CreateOutbox", e),
+  );
 
   return card;
 }
@@ -66,12 +70,22 @@ export async function updateCard(
     createdAt: updates.createdAt ?? 0,
     updatedAt: Date.now(),
   }).catch((e: unknown) => logError("FlashcardEngine.UpdateSync", e));
+
+  const card = await db.flashcards.get(id);
+  if (card) {
+    enqueueOutbox("flashcards", id, "update", card).catch((e: unknown) =>
+      logError("FlashcardEngine.UpdateOutbox", e),
+    );
+  }
 }
 
 export async function deleteCard(db: DataAccess, enqueueFn: EnqueueFn, id: string): Promise<void> {
   await db.flashcards.delete(id);
   enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
     logError("FlashcardEngine.DeleteSync", e),
+  );
+  enqueueOutbox("flashcards", id, "delete", { id }).catch((e: unknown) =>
+    logError("FlashcardEngine.DeleteOutbox", e),
   );
 }
 

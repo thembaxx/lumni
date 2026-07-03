@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { generateLesson, getCachedLesson } from "@/lib/lesson/service";
 import type { Lesson } from "@/lib/lesson/types";
+import { logError } from "@/lib/shared/logger";
 
 const EMPTY_LESSON: Lesson = {
   id: "",
@@ -34,7 +35,7 @@ export async function GET(
 
     return NextResponse.json(lesson);
   } catch (err) {
-    console.error("Lesson route error:", err);
+    logError("LessonsRoute.fetch", err);
     return NextResponse.json(EMPTY_LESSON, { status: 500 });
   }
 }

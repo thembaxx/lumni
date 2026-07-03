@@ -271,7 +271,11 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
                       size="sm"
                       className="rounded-full"
                       aria-label={`Practice pronouncing ${v.term}`}
-                      onClick={() => push(`/pronunciation?text=${encodeURIComponent(v.term)}`)}
+                      onClick={() =>
+                        push(
+                          `/pronunciation?text=${encodeURIComponent(v.term)}&lang=${encodeURIComponent(subjectId)}`,
+                        )
+                      }
                     >
                       <HugeiconsIcon icon={Mic01Icon} className="size-4" />
                     </Button>

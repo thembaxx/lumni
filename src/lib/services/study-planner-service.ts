@@ -276,7 +276,7 @@ export class StudyPlannerService {
 
   private syncToAppwrite() {
     if (!this.userId) return;
-    syncStudyPlanToAppwrite(this.userId).catch((e) => console.warn("Sync study plan failed:", e));
+    syncStudyPlanToAppwrite(this.userId).catch((e) => logError("StudyPlanner.sync", e));
   }
 }
 

@@ -6,11 +6,13 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { FadeIn } from "@/components/shared/fade-in";
+import { TTSButton } from "@/components/shared/tts-button";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { motionEase } from "@/lib/utils/animation";
+import { useAuth } from "@/lib/auth/auth-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,6 +42,9 @@ interface WordScore {
 export function PronunciationClient() {
   const searchParams = useSearchParams();
   const prefillText = searchParams.get("text") ?? "";
+  const prefillLang = searchParams.get("lang") ?? "en";
+  const { user } = useAuth();
+  const userId = user?.$id ?? "anonymous";
   const prefersReducedMotion = useReducedMotion();
   const [expectedText, setExpectedText] = useState(prefillText);
   const [isRecording, setIsRecording] = useState(false);
@@ -177,7 +182,7 @@ export function PronunciationClient() {
         const scored = service.assessPronunciation(transcriptionText, expectedText);
         setAssessment(scored);
         savePronunciationScore(
-          "anonymous",
+          userId,
           expectedText.trim().split(/\s+/)[0] || "unknown",
           scored.overallScore,
           (scored.wordScores.filter((w) => w.isCorrect).length /
@@ -185,7 +190,7 @@ export function PronunciationClient() {
             100,
           scored.phonemeAccuracy,
           scored.fluencyScore,
-          "en",
+          prefillLang,
         ).catch(() => {});
       }
     }
@@ -194,7 +199,7 @@ export function PronunciationClient() {
     if (progressInterval.current) {
       clearInterval(progressInterval.current);
     }
-  }, [expectedText, pollProgress, blobToBase64]);
+  }, [expectedText, pollProgress, blobToBase64, userId, prefillLang]);
 
   const handleReset = useCallback(() => {
     setTranscribedText(null);
@@ -211,7 +216,7 @@ export function PronunciationClient() {
       if (!prev) {
         setHistoryLoading(true);
         import("@/lib/pronunciation-history/service").then((mod) => {
-          mod.getPronunciationStats("anonymous").then((stats) => {
+          mod.getPronunciationStats(userId).then((stats) => {
             setHistoryStats(stats);
             setHistoryLoading(false);
           });
@@ -219,7 +224,7 @@ export function PronunciationClient() {
       }
       return !prev;
     });
-  }, []);
+  }, [userId]);
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
@@ -291,6 +296,11 @@ export function PronunciationClient() {
               className="min-h-20 resize-none rounded-2xl text-base"
               aria-label="Text to practice"
             />
+            {expectedText.trim() && (
+              <div className="flex justify-end px-1">
+                <TTSButton text={expectedText} lang={prefillLang} />
+              </div>
+            )}
           </CardContent>
         </Card>
 

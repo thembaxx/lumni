@@ -24,7 +24,12 @@
         { "id": "afr-gedigte", "name": "Gedigte", "order": 1 },
         { "id": "afr-roman", "name": "Roman", "order": 2 },
         { "id": "afr-drama", "name": "Drama", "order": 3 },
-        { "id": "afr-kortverhale", "name": "Kortverhale", "order": 4 }
+        {
+          "id": "afr-kortverhale",
+          "name": "Kortverhale",
+          "order": 4,
+          "stories": ["die-slim-vos", "die-mooi-rivier"]
+        }
       ]
     },
     {

@@ -24,7 +24,12 @@
         { "id": "sot-poetry", "name": "Poetry", "order": 1 },
         { "id": "sot-novel", "name": "Novel", "order": 2 },
         { "id": "sot-drama", "name": "Drama", "order": 3 },
-        { "id": "sot-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "sot-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["lekgwapa-le-phiri", "hlompho"]
+        }
       ]
     },
     {

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
+import { logError } from "@/lib/shared/logger";
 
 const QUESTION_TYPES = [
   "multiple-choice",
@@ -68,7 +69,7 @@ export default function AdminQuestionsPage() {
       }
     } catch (err) {
       showBudgetToast(err);
-      console.error("Failed to fetch questions:", err);
+      logError("AdminQuestions.fetch", err);
     }
     dispatchLoading("done");
   }, [subject]);
@@ -91,7 +92,7 @@ export default function AdminQuestionsPage() {
         }
       } catch (err) {
         showBudgetToast(err);
-        console.error(`Failed to generate ${type}:`, err);
+        logError(`AdminQuestions.generate.${type}`, err);
       }
       dispatchLoading("done");
     },

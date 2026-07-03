@@ -24,7 +24,12 @@
         { "id": "xho-poetry", "name": "Poetry", "order": 1 },
         { "id": "xho-novel", "name": "Novel", "order": 2 },
         { "id": "xho-drama", "name": "Drama", "order": 3 },
-        { "id": "xho-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "xho-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["intaka-eflayo", "ubuntu"]
+        }
       ]
     },
     {

@@ -1,9 +1,9 @@
-import type { STTUsageEntry, STTUsageReport } from "./types";
+import type { STTUsageReport } from "./types";
 
 export async function trackSTTUsage(provider: string, durationSeconds: number): Promise<void> {
   if (typeof window === "undefined") return;
 
-  const { offlineDB } = await import("@/lib/db/schema");
+  const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
   const now = new Date();
   const date = now.toISOString().slice(0, 10);
   const minutes = durationSeconds / 60;
@@ -16,7 +16,7 @@ export async function trackSTTUsage(provider: string, durationSeconds: number): 
 
   const cost = minutes * (costPerMinute[provider] ?? 0);
 
-  await offlineDB.table<STTUsageEntry>("sttUsage").add({
+  await dexieDataAccess.sttUsage.add({
     date,
     provider,
     minutes,
@@ -29,8 +29,8 @@ export async function getSTTUsageReport(): Promise<STTUsageReport> {
     return { totalMinutes: 0, totalCost: 0, byProvider: [], byDate: [] };
   }
 
-  const { offlineDB } = await import("@/lib/db/schema");
-  const all = await offlineDB.table<STTUsageEntry>("sttUsage").toArray();
+  const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
+  const all = await dexieDataAccess.sttUsage.toArray();
 
   const byProviderMap = new Map<string, { minutes: number; cost: number }>();
   const byDateMap = new Map<string, { minutes: number; cost: number }>();

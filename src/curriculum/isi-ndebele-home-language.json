@@ -24,7 +24,12 @@
         { "id": "ndb-poetry", "name": "Poetry", "order": 1 },
         { "id": "ndb-novel", "name": "Novel", "order": 2 },
         { "id": "ndb-drama", "name": "Drama", "order": 3 },
-        { "id": "ndb-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "ndb-short-stories",
+          "name": "Short Stories",
+          "order": 4,
+          "stories": ["inkabi-nengwenya", "ukukhuthala"]
+        }
       ]
     },
     {

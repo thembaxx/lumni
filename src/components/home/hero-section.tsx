@@ -122,7 +122,7 @@ function InteractiveQuizDemo() {
                   type="button"
                   onClick={() => setAnswer(opt.value)}
                   disabled={answer !== null}
-                  className={`ripple-container flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`ripple-container flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
                     isCorrect
                       ? "border-success/40 bg-success/10 text-success"
                       : isWrong
@@ -174,7 +174,7 @@ function InteractiveQuizDemo() {
           {[0, 1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className={`h-1 rounded-full transition-all duration-300 ${
+              className={`h-1 rounded-full transition-[width,background-color] duration-300 ${
                 i < 1 ? "w-4 bg-primary" : "w-1 bg-border/50"
               }`}
             />

@@ -82,7 +82,9 @@ export function useServiceWorker(): UseServiceWorkerReturn {
       })
       .catch((error) => {
         if (cancelled) return;
-        console.error("Service worker registration failed:", error);
+        import("@/lib/shared/logger").then(({ logError }) => {
+          logError("ServiceWorker.register", error);
+        });
       });
 
     return () => {

@@ -69,7 +69,7 @@ export function BentoCard({
     <ScrollReveal delay={delay} distance={20} className={cn(spanMap[span], className)}>
       <div
         className={cn(
-          "group relative flex flex-col p-4 transition-all duration-300 hover:shadow-level-2",
+          "group relative flex flex-col p-4 transition-[box-shadow,transform] duration-300 hover:shadow-level-2",
           variantStyles[variant],
         )}
       >
