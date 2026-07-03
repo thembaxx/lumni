@@ -47,7 +47,9 @@ export function CollapsibleSection({
       <div
         className={`grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
-        <div className="min-h-0 overflow-hidden opacity-0 transition-opacity duration-200">{children}</div>
+        <div className="min-h-0 overflow-hidden opacity-0 transition-opacity duration-200">
+          {children}
+        </div>
       </div>
     </div>
   );

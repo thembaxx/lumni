@@ -158,7 +158,7 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
 
       {/* Stats */}
       {isLoggedIn && (
-        <CollapsibleSection title="Your Progress" count={stats.questionsAnswered ? undefined : 0}>
+        <CollapsibleSection title="Your Progress" count={stats.questionsAnswered || undefined}>
           <section className="flex flex-col gap-4" aria-label="Your progress">
             <StaggeredSection>
               <StreakCard />
