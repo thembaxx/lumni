@@ -8,7 +8,7 @@ import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "@/i18n/navigation";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import {
   formatDuration,
   getCurrentSession,
@@ -21,7 +21,7 @@ import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/utils";
 
 export function NationalExamCalendar() {
-  const { push } = useRouter();
+  const { push } = useNavigationDirection();
   const [loading, setLoading] = useState(true);
   const [allSlots, setAllSlots] = useState<ExamSlot[]>([]);
   const [todayStr, setTodayStr] = useState("");

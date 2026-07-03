@@ -12,7 +12,7 @@ import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "@/i18n/navigation";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 
@@ -68,7 +68,7 @@ export function TeacherDashboardClient() {
 }
 
 function TeacherDashboardInner() {
-  const { push } = useRouter();
+  const { push } = useNavigationDirection();
   const queryClient = useQueryClient();
   const [linkId, setLinkId] = useState("");
 

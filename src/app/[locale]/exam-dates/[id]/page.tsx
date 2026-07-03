@@ -83,7 +83,9 @@ export default function ExamDetailPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [id, session]);
 
   const handlePractice = useCallback(() => {
@@ -177,7 +179,10 @@ export default function ExamDetailPage() {
               </div>
             </div>
             <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
-              <HugeiconsIcon icon={Clock01Icon} className="size-4 shrink-0 text-(--system-accent)" />
+              <HugeiconsIcon
+                icon={Clock01Icon}
+                className="size-4 shrink-0 text-(--system-accent)"
+              />
               <div className="min-w-0">
                 <p className="ios-caption-3 text-muted-foreground">Time</p>
                 <p className="truncate font-medium text-xs">
@@ -196,7 +201,10 @@ export default function ExamDetailPage() {
               </div>
             </div>
             <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
-              <HugeiconsIcon icon={NoteEditIcon} className="size-4 shrink-0 text-(--system-accent)" />
+              <HugeiconsIcon
+                icon={NoteEditIcon}
+                className="size-4 shrink-0 text-(--system-accent)"
+              />
               <div className="min-w-0">
                 <p className="ios-caption-3 text-muted-foreground">Paper</p>
                 <p className="truncate font-medium text-xs">Paper {exam.paperNumber}</p>
@@ -265,3 +273,5 @@ export default function ExamDetailPage() {
     </div>
   );
 }
+
+export const instant = false;

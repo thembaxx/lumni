@@ -55,7 +55,13 @@ export default function ElementDetailPage() {
   });
 
   useEffect(() => {
-    if (element) generateFact(element);
+    if (element) {
+      generateFact(element);
+      document.title = `${element.name} (${element.symbol}) - Lumni`;
+    }
+    return () => {
+      document.title = "Periodic Table - Lumni";
+    };
   }, [element, generateFact]);
 
   if (!element) {
@@ -176,3 +182,5 @@ export default function ElementDetailPage() {
     </div>
   );
 }
+
+export const instant = false;

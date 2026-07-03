@@ -7,7 +7,7 @@ import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "@/i18n/navigation";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import {
   elementCategoryConfig,
   elementCategoryVariables,
@@ -20,7 +20,7 @@ export function PeriodicTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const { push } = useRouter();
+  const { push } = useNavigationDirection();
 
   const filteredElements = useMemo(() => {
     return elements.filter((el) => {

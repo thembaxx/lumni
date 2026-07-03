@@ -32,7 +32,7 @@ export default function StudentDetailPage() {
     queryFn: async () => {
       const res = await fetch("/api/teacher/students");
       if (!res.ok) throw new Error("Failed to fetch");
-      const json = await res.json() as { students: StudentData[] };
+      const json = (await res.json()) as { students: StudentData[] };
       return json.students.find((s) => s.id === studentId) ?? null;
     },
   });
@@ -57,7 +57,9 @@ export default function StudentDetailPage() {
         <PageContainer className="flex items-start justify-center pt-10">
           <div className="flex flex-col items-center gap-3 py-20">
             <p className="font-semibold text-lg text-muted-foreground">Student not found</p>
-            <p className="text-muted-foreground/60 text-sm">This student is not linked to your account.</p>
+            <p className="text-muted-foreground/60 text-sm">
+              This student is not linked to your account.
+            </p>
           </div>
         </PageContainer>
       </div>
@@ -134,3 +136,5 @@ export default function StudentDetailPage() {
     </div>
   );
 }
+
+export const instant = false;
