@@ -2,7 +2,7 @@
 
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { animate, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import { AnimatePresence, animate, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
@@ -55,7 +55,7 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
         ))}
       </div>
       <m.span
-        key={current}
+        layoutId="question-counter"
         initial={{ opacity: 0, y: -4 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
@@ -248,24 +248,36 @@ export function QuizView({
           onQuit={handleStop}
         />
 
-        <m.div
-          key={currentIndex}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {state.currentQuestion && (
-            <QuestionCard
-              question={state.currentQuestion}
-              subject={selectedSubject}
-              questionNumber={state.questionNumber}
-              totalQuestions={state.totalQuestions}
-              onNext={handleNext}
-              onAnswered={handleAnswered}
-            />
-          )}
-        </m.div>
+        <AnimatePresence mode="popLayout">
+          <m.div
+            key={currentIndex}
+            layout
+            initial={{ opacity: 0, scale: 0.96, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{
+              opacity: 0,
+              scale: 0.94,
+              y: -6,
+              transition: { duration: prefersReducedMotion ? 0 : 0.12, ease: [0.4, 0, 1, 1] },
+            }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { type: "spring", stiffness: 300, damping: 28, mass: 0.8, bounce: 0 }
+            }
+          >
+            {state.currentQuestion && (
+              <QuestionCard
+                question={state.currentQuestion}
+                subject={selectedSubject}
+                questionNumber={state.questionNumber}
+                totalQuestions={state.totalQuestions}
+                onNext={handleNext}
+                onAnswered={handleAnswered}
+              />
+            )}
+          </m.div>
+        </AnimatePresence>
 
         <QuizFooter
           currentIndex={currentIndex}

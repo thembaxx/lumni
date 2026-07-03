@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
-import { Anim } from "@/components/shared/anim";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useSolver } from "@/hooks/use-solver";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
@@ -268,7 +267,7 @@ export function QuestionCard({
   ]);
 
   return (
-    <Anim layoutId="question-card">
+    <>
       <Confetti trigger={showConfetti} count={30} duration={1500} />
       <XPGainPopup amount={15} visible={showXPGain} />
       <QuestionCardHeader
@@ -338,6 +337,6 @@ export function QuestionCard({
         questionNumber={questionNumber}
         totalQuestions={totalQuestions}
       />
-    </Anim>
+    </>
   );
 }

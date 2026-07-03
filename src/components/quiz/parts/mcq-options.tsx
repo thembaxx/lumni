@@ -2,6 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { memo } from "react";
+import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ export const MCQOptions = memo(function MCQOptions({
   onSubmit: () => void;
 }) {
   const t = useTranslations();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <div
@@ -30,10 +33,19 @@ export const MCQOptions = memo(function MCQOptions({
         options.every((o) => o.text.length <= 30) ? "grid-cols-2" : "grid-cols-1",
       )}
     >
-      {options.map((option) => {
+      {options.map((option, idx) => {
         const isSelected = selectedOption === option.id;
         return (
-          <div key={option.id}>
+          <m.div
+            key={option.id}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { delay: 0.12 + idx * 0.04, type: "spring", stiffness: 300, damping: 26, mass: 0.8, bounce: 0 }
+            }
+          >
             <Button
               variant="ghost"
               type="button"
@@ -58,16 +70,26 @@ export const MCQOptions = memo(function MCQOptions({
               </span>
               {option.text.length > 80 && <TTSButton text={option.text} />}
             </Button>
-          </div>
+          </m.div>
         );
       })}
-      <Button
-        onClick={onSubmit}
-        disabled={!selectedOption}
-        className="col-span-full mt-2 min-h-[48px]"
+      <m.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : { delay: 0.12 + options.length * 0.04, duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+        }
       >
-        {t("quiz.checkAnswer")}
-      </Button>
+        <Button
+          onClick={onSubmit}
+          disabled={!selectedOption}
+          className="col-span-full mt-2 min-h-[48px]"
+        >
+          {t("quiz.checkAnswer")}
+        </Button>
+      </m.div>
     </div>
   );
 });
