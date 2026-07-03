@@ -19,7 +19,7 @@ export function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
           Preparing a {subjectLabel} question
         </h2>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          Sharpening today&rsquo;s target at your weakest spot.
+          We&rsquo;re checking your weakest spot and lining up a focused question.
         </p>
       </div>
       <Skeleton className="h-6 w-48 rounded-full" />
