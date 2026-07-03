@@ -43,7 +43,14 @@ export const MCQOptions = memo(function MCQOptions({
             transition={
               prefersReducedMotion
                 ? { duration: 0 }
-                : { delay: 0.12 + idx * 0.04, type: "spring", stiffness: 300, damping: 26, mass: 0.8, bounce: 0 }
+                : {
+                    delay: 0.12 + idx * 0.04,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 26,
+                    mass: 0.8,
+                    bounce: 0,
+                  }
             }
           >
             <Button

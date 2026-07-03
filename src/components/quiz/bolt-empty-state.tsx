@@ -33,8 +33,8 @@ export function BoltEmptyState({
           No {subjectLabel} question ready yet
         </h2>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          We couldn&rsquo;t pull a fresh question for you right now. Try again in a moment, or close
-          and browse your topics.
+          We couldn&rsquo;t find a fresh question right now. Try again shortly, or close and browse
+          other topics.
         </p>
       </div>
       <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">

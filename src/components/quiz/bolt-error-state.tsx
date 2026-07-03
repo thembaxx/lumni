@@ -25,11 +25,11 @@ export function BoltErrorState({ onRetry, onClose, isRetrying }: BoltErrorStateP
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="ios-title-3 text-balance text-foreground">
-          We couldn&rsquo;t load your challenge
+          Couldn&rsquo;t load your challenge
         </h2>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
-          Something tripped while loading today&rsquo;s question. Give it another try, or close and
-          pick a different start.
+          Something tripped on today&rsquo;s question. Retry in a moment, or close and pick another
+          start.
         </p>
       </div>
       <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
