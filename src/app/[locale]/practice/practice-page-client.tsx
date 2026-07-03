@@ -4,12 +4,19 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { PageContainer } from "@/components/layout/page-container";
 import { HugeiconsIcon } from "@hugeicons/react";
 import File01Icon from "@hugeicons/core-free-icons/File01Icon";
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 
 const practiceItems = [
   { icon: File01Icon, label: "Exams", route: "/exams", desc: "Take full exams" },
   { icon: File01Icon, label: "Past Papers", route: "/past-papers", desc: "Previous exam papers" },
+  {
+    icon: BookOpen01Icon,
+    label: "Question Bank",
+    route: "/practice/questions",
+    desc: "Browse past paper questions by topic",
+  },
   {
     icon: Calendar01Icon,
     label: "Exam Dates",

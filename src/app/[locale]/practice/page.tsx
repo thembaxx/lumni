@@ -17,6 +17,12 @@ const items = [
     icon: "File01Icon",
   },
   {
+    label: "Question Bank",
+    description: "Browse past paper questions by topic",
+    href: "/practice/questions",
+    icon: "BookOpen01Icon",
+  },
+  {
     label: "Exam Dates",
     description: "View upcoming exam schedules",
     href: "/exam-dates",
