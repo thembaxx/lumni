@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import type { ObservabilityDataAccess } from "@/lib/db";
 import type { StoredGamification } from "./types";
 import { logError } from "@/lib/shared/logger";
+import { enqueueOutbox } from "@/lib/sync/outbox";
 import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 
 export function persistEffect(
@@ -17,6 +18,9 @@ export function persistEffect(
 export function persist(db: ObservabilityDataAccess, data: StoredGamification): void {
   const record = { ...data, id: 1 as const };
   db.gamification.put(record).catch((err) => logError("GamificationService.persist", err));
+  enqueueOutbox("gamification", "1", "update", data).catch((err) =>
+    logError("GamificationService.persist", err),
+  );
 }
 
 export function saveSnapshot(data: StoredGamification): void {

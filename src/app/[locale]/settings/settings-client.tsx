@@ -2,7 +2,6 @@
 
 import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
-import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import Notification01Icon from "@hugeicons/core-free-icons/Notification01Icon";
 import PaintBrush01Icon from "@hugeicons/core-free-icons/PaintBrush01Icon";
@@ -19,7 +18,6 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
   AppearanceTab,
-  BetaTab,
   DataTab,
   NotificationsTab,
   PrivacyTab,
@@ -41,7 +39,7 @@ import {
   type HydratedSettings,
 } from "@/lib/db/settings-migrator";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
-import type { BetaFeatures, NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
+import type { NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
 import { cn } from "@/lib/utils";
 
 const tabDefs = [
@@ -93,7 +91,6 @@ const tabDefs = [
     icon: DatabaseIcon,
     color: "from-info/20 to-chart-5/5",
   },
-  { value: "beta", key: "settings.beta", icon: Chat01Icon, color: "from-chart-5/20 to-chart-3/5" },
 ];
 
 function TabPanel({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
@@ -140,7 +137,6 @@ function SettingsContent() {
   const [appSettings, setAppSettings] = useState<HydratedSettings>({
     studyPrefs: null as unknown as StudyPreferences,
     notifications: null as unknown as NotificationSettings,
-    betaFeatures: null as unknown as BetaFeatures,
   });
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
@@ -156,7 +152,7 @@ function SettingsContent() {
     return <SettingsLoading />;
   }
 
-  const { studyPrefs, notifications, betaFeatures } = appSettings;
+  const { studyPrefs, notifications } = appSettings;
 
   const setStudyPrefs = useCallback(
     (prefs: StudyPreferences) => setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
@@ -164,10 +160,6 @@ function SettingsContent() {
   );
   const setNotifications = useCallback(
     (notif: NotificationSettings) => setAppSettings((prev) => ({ ...prev, notifications: notif })),
-    [],
-  );
-  const setBetaFeatures = useCallback(
-    (beta: BetaFeatures) => setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
     [],
   );
 
@@ -188,7 +180,7 @@ function SettingsContent() {
     if (!user?.$id) return;
     setIsSaving(true);
     setSaved(false);
-    await saveSettings(dexieDataAccess, user.$id, { studyPrefs, notifications, betaFeatures });
+    await saveSettings(dexieDataAccess, user.$id, { studyPrefs, notifications });
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsSaving(false);
     setSaved(true);
@@ -199,7 +191,6 @@ function SettingsContent() {
     const data = {
       studyPreferences: studyPrefs,
       notificationSettings: notifications,
-      betaFeatures,
       exportedAt: new Date().toISOString(),
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -318,13 +309,7 @@ function SettingsContent() {
 
           <TabPanel isActive={activeTab === "data"}>
             <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data">
-              <DataTab
-                studyPrefs={studyPrefs}
-                notifications={notifications}
-                betaFeatures={betaFeatures}
-                onExport={handleExportData}
-                onClear={() => setShowClearConfirm(true)}
-              />
+              <DataTab onExport={handleExportData} onClear={() => setShowClearConfirm(true)} />
             </div>
           </TabPanel>
 
@@ -339,12 +324,6 @@ function SettingsContent() {
               {isLoggedIn && <ReferralTab />}
             </div>
           </TabPanel>
-
-          <TabPanel isActive={activeTab === "beta"}>
-            <div role="tabpanel" id="tabpanel-beta" aria-labelledby="tab-beta">
-              <BetaTab betaFeatures={betaFeatures} onBetaFeaturesChange={setBetaFeatures} />
-            </div>
-          </TabPanel>
         </main>
       </PageContainer>
 
@@ -352,7 +331,7 @@ function SettingsContent() {
         <ConfirmDialog
           open={showClearConfirm}
           title="Clear preferences?"
-          description="This will reset your study preferences, notification settings, and beta feature preferences. Your account data and progress are not affected."
+          description="This will reset your study preferences and notification settings. Your account data and progress are not affected."
           confirmLabel="Clear preferences"
           cancelLabel="Keep them"
           onConfirm={() => {

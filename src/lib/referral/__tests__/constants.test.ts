@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 
 const {
-  REFERRAL_REWARD_DAYS,
+  REFERRAL_REWARD_XP_REFERRER,
+  REFERRAL_REWARD_XP_REFEREE,
   REFERRAL_MONTHLY_LIMIT,
   getReferralDomain,
   buildReferralLink,
@@ -13,8 +14,12 @@ describe("referral constants", () => {
     expect(getReferralDomain()).toMatch(/^https?:\/\//);
   });
 
-  test("REFERRAL_REWARD_DAYS is 7", () => {
-    expect(REFERRAL_REWARD_DAYS).toBe(7);
+  test("REFERRAL_REWARD_XP_REFERRER is 500", () => {
+    expect(REFERRAL_REWARD_XP_REFERRER).toBe(500);
+  });
+
+  test("REFERRAL_REWARD_XP_REFEREE is 250", () => {
+    expect(REFERRAL_REWARD_XP_REFEREE).toBe(250);
   });
 
   test("REFERRAL_MONTHLY_LIMIT is 10", () => {

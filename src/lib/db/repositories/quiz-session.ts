@@ -1,6 +1,8 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { safeJsonStringify } from "@/lib/shared/json";
+import { logError } from "@/lib/shared/logger";
+import { enqueueOutbox } from "@/lib/sync/outbox";
 import type { QuizAttempt, QuizSessionState } from "../schema";
 
 export class QuizSessionRepository {
@@ -17,7 +19,7 @@ export class QuizSessionRepository {
     },
     userId?: string,
   ): Promise<number> {
-    return this.db.quizAttempts.add({
+    const id = await this.db.quizAttempts.add({
       odSubject,
       userId,
       answers: safeJsonStringify(data.answers),
@@ -27,6 +29,13 @@ export class QuizSessionRepository {
       duration: data.duration,
       completedAt: Date.now(),
     });
+    enqueueOutbox("quizAttempts", `attempt_${id}`, "create", {
+      odSubject,
+      score: data.score,
+      totalQuestions: data.totalQuestions,
+      duration: data.duration,
+    }).catch((err) => logError("QuizSession", err));
+    return id;
   }
 
   async getQuizAttempts(odSubject: string, limit = 10): Promise<QuizAttempt[]> {
@@ -45,16 +54,24 @@ export class QuizSessionRepository {
       .first();
 
     if (existing) {
-      return this.db.quizSessions.update(existing.id ?? 0, {
+      const result = await this.db.quizSessions.update(existing.id ?? 0, {
         ...session,
         lastSavedAt: Date.now(),
       });
+      enqueueOutbox("quizSessions", session.sessionId, "update", session).catch((err) =>
+        logError("QuizSession", err),
+      );
+      return result;
     }
 
-    return this.db.quizSessions.add({
+    const id = await this.db.quizSessions.add({
       ...session,
       lastSavedAt: Date.now(),
     });
+    enqueueOutbox("quizSessions", session.sessionId, "create", session).catch((err) =>
+      logError("QuizSession", err),
+    );
+    return id;
   }
 
   async get(sessionId: string): Promise<QuizSessionState | undefined> {
@@ -83,6 +100,9 @@ export class QuizSessionRepository {
       isPaused: false,
       lastSavedAt: Date.now(),
     });
+    enqueueOutbox("quizSessions", session.sessionId, "update", { isPaused: false }).catch((err) =>
+      logError("QuizSession", err),
+    );
 
     return { ...session, isPaused: false };
   }
@@ -95,10 +115,16 @@ export class QuizSessionRepository {
       isPaused: true,
       lastSavedAt: Date.now(),
     });
+    enqueueOutbox("quizSessions", session.sessionId, "update", { isPaused: true }).catch((err) =>
+      logError("QuizSession", err),
+    );
   }
 
   async delete(sessionId: string): Promise<void> {
     await this.db.quizSessions.where("sessionId").equals(sessionId).delete();
+    enqueueOutbox("quizSessions", sessionId, "delete", {}).catch((err) =>
+      logError("QuizSession", err),
+    );
   }
 
   async clearOld(maxAgeHours = 24): Promise<void> {

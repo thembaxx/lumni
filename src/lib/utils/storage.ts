@@ -26,34 +26,17 @@ export function saveToStorage<T>(key: string, value: T): void {
 export type StudyPreferences = {
   difficulty: "easy" | "medium" | "hard";
   questionCount: number;
-  timerEnabled: boolean;
-  timerDuration: number;
   showExplanations: boolean;
-};
-
-export type BetaFeatures = {
-  aiTutor: boolean;
-  voicePractice: boolean;
-  examPaperAnalysis: boolean;
 };
 
 export const DEFAULT_PREFERENCES: StudyPreferences = {
   difficulty: "medium",
   questionCount: 10,
-  timerEnabled: true,
-  timerDuration: 30,
   showExplanations: true,
-};
-
-export const DEFAULT_BETA: BetaFeatures = {
-  aiTutor: false,
-  voicePractice: false,
-  examPaperAnalysis: false,
 };
 
 export const STUDY_PREFS_KEY = "study-preferences";
 export const NOTIFICATION_SETTINGS_KEY = "lumni_notification_settings";
-export const BETA_FEATURES_KEY = "beta-features";
 
 export const DEFAULT_NOTIFICATIONS: NotificationSettings = {
   enabled: false,

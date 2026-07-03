@@ -86,13 +86,34 @@ export function createSyncService(userId: () => string | null): SyncService {
       const checkpoints = await dexieDataAccess.syncCheckpoints.toArray();
       const checkpointMap = new Map(checkpoints.map((c) => [c.table, c]));
 
-      const tables = ["flashcards", "notes", "competencies", "gamification"];
+      const tables = [
+        "flashcards",
+        "notes",
+        "competencies",
+        "gamification",
+        "retentionRecurrence",
+        "wrongAnswers",
+        "chatMessages",
+        "questionRatings",
+        "bookmarks",
+        "examSessions",
+        "quizAttempts",
+        "studyPlans",
+      ];
 
       const tableAccessors: Record<string, DataAccessTable<unknown, string | number>> = {
         flashcards: dexieDataAccess.flashcards,
         notes: dexieDataAccess.notes,
         competencies: dexieDataAccess.competencies,
         gamification: dexieDataAccess.gamification,
+        retentionRecurrence: dexieDataAccess.retentionRecurrence,
+        wrongAnswers: dexieDataAccess.wrongAnswers,
+        chatMessages: dexieDataAccess.chatMessages,
+        questionRatings: dexieDataAccess.questionRatings,
+        bookmarks: dexieDataAccess.bookmarks,
+        examSessions: dexieDataAccess.examSessions,
+        quizAttempts: dexieDataAccess.quizAttempts,
+        studyPlans: dexieDataAccess.studyPlans,
       };
 
       for (const table of tables) {

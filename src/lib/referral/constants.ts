@@ -1,4 +1,5 @@
-export const REFERRAL_REWARD_DAYS = 7;
+export const REFERRAL_REWARD_XP_REFERRER = 500;
+export const REFERRAL_REWARD_XP_REFEREE = 250;
 
 export const REFERRAL_MONTHLY_LIMIT = 10;
 

@@ -164,10 +164,15 @@ export class WhisperService {
     });
 
     const correctCount = wordScores.filter((w) => w.isCorrect).length;
-    const overallScore =
-      wordScores.length > 0 ? Math.round((correctCount / wordScores.length) * 100) : 0;
 
     const { phonemeAccuracy, phonemeDetails } = assessPhonemes(studentText, expectedText);
+
+    const overallScore =
+      phonemeAccuracy !== undefined && phonemeAccuracy !== null
+        ? phonemeAccuracy
+        : wordScores.length > 0
+          ? Math.round((correctCount / wordScores.length) * 100)
+          : 0;
 
     return {
       overallScore,

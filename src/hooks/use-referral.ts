@@ -10,7 +10,7 @@ export interface ReferralInfo {
   link: string;
   monthlyCount: number;
   monthlyLimit: number;
-  rewardDays: number;
+  xpReward: number;
   referrals: Array<{
     refereeId: string;
     status: string;

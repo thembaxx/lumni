@@ -1,8 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { GradingResult } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
+import { useAuth } from "@/lib/auth/auth-context";
+import { dexieDataAccess } from "@/lib/db";
+import type { EssayDraftRecord } from "@/lib/db/schema";
 
 const MAX_REVISIONS = 3;
 
@@ -14,7 +17,33 @@ export interface EssayDraft {
   maxScore: number;
 }
 
+function toRecord(draft: EssayDraft, userId: string, questionId: string): EssayDraftRecord {
+  return {
+    userId,
+    questionId,
+    draftNumber: draft.draftNumber,
+    content: draft.content,
+    aiFeedback: draft.feedback,
+    score: draft.score,
+    maxScore: draft.maxScore,
+    createdAt: Date.now(),
+  };
+}
+
+function toDraft(record: EssayDraftRecord): EssayDraft {
+  return {
+    draftNumber: record.draftNumber,
+    content: record.content,
+    feedback: record.aiFeedback,
+    score: record.score,
+    maxScore: record.maxScore,
+  };
+}
+
 export function useEssayCoaching(questionId: string) {
+  const { user } = useAuth();
+  const userId = user?.$id ?? "anonymous";
+
   const [drafts, setDrafts] = useState<EssayDraft[]>([]);
   const [isCoaching, setIsCoaching] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,19 +53,38 @@ export function useEssayCoaching(questionId: string) {
   const revisionCount = drafts.length;
   const canRevise = revisionCount < MAX_REVISIONS;
 
-  const startCoaching = useCallback((initialDraft: string, initialResult: GradingResult) => {
-    setDrafts([
-      {
+  useEffect(() => {
+    dexieDataAccess.essayDrafts
+      .where("questionId")
+      .equals(questionId)
+      .toArray()
+      .then((records) => {
+        records.sort((a, b) => a.draftNumber - b.draftNumber);
+        setDrafts(records.map(toDraft));
+      })
+      .catch((e) => logError("EssayCoaching.loadDrafts", e));
+  }, [questionId]);
+
+  const startCoaching = useCallback(
+    (initialDraft: string, initialResult: GradingResult) => {
+      const draft: EssayDraft = {
         draftNumber: 1,
         content: initialDraft,
         feedback: initialResult.feedback,
         score: initialResult.score,
         maxScore: initialResult.maxScore,
-      },
-    ]);
-    setCurrentDraft(initialDraft);
-    setIsCoaching(true);
-  }, []);
+      };
+
+      setDrafts([draft]);
+      setCurrentDraft(initialDraft);
+      setIsCoaching(true);
+
+      dexieDataAccess.essayDrafts
+        .add(toRecord(draft, userId, questionId))
+        .catch((e) => logError("EssayCoaching.startCoaching", e));
+    },
+    [questionId, userId],
+  );
 
   const submitRevision = useCallback(
     async (draftContent: string) => {
@@ -72,6 +120,10 @@ export function useEssayCoaching(questionId: string) {
 
         setDrafts((prev) => [...prev, newDraft]);
         setCurrentDraft(draftContent);
+
+        dexieDataAccess.essayDrafts
+          .add(toRecord(newDraft, userId, questionId))
+          .catch((e) => logError("EssayCoaching.submitRevision", e));
       } catch (err) {
         logError("EssayCoaching.submitRevision", err);
         setError("Failed to submit revision. Please try again.");
@@ -79,7 +131,7 @@ export function useEssayCoaching(questionId: string) {
         setIsSubmitting(false);
       }
     },
-    [questionId, drafts, canRevise, revisionCount],
+    [questionId, drafts, canRevise, revisionCount, userId],
   );
 
   const lastResult = drafts.length > 0 ? drafts[drafts.length - 1] : null;

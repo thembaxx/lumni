@@ -1,5 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { REFERRAL_MONTHLY_LIMIT, REFERRAL_REWARD_DAYS } from "@/lib/referral/constants";
+import { REFERRAL_MONTHLY_LIMIT, REFERRAL_REWARD_XP_REFEREE } from "@/lib/referral/constants";
 import {
   createReferral,
   getReferralByCode,
@@ -46,7 +46,7 @@ export const POST = createRouteHandler({
     return {
       ok: true,
       referrerId: codeDoc.userId,
-      rewardDays: REFERRAL_REWARD_DAYS,
+      xpReward: REFERRAL_REWARD_XP_REFEREE,
     };
   },
 });

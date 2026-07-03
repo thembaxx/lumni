@@ -80,12 +80,35 @@ All plans in this batch are independent and can run in parallel:
 
 | Plan | Title                                                      | Priority | Effort | Risk | Depends on | Status |
 | ---- | ---------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| 080  | Complete sync UX — Settings panel, auto-flush, conflict UX | P2       | S      | LOW  | —          | TODO   |
-| 081  | Implement offline Whisper WASM STT provider                | P2       | M      | MED  | —          | TODO   |
-| 082  | Add Afrikaans/isiZulu/isiXhosa Wiktionary support          | P2       | S      | LOW  | —          | TODO   |
-| 083  | Add pronunciation history trend chart to dashboard         | P3       | S      | LOW  | —          | TODO   |
+| 080  | Complete sync UX — Settings panel, auto-flush, conflict UX | P2       | S      | LOW  | —          | DONE   |
+| 081  | Implement offline Whisper WASM STT provider                | P2       | M      | MED  | —          | DONE   |
+| 082  | Add Afrikaans/isiZulu/isiXhosa Wiktionary support          | P2       | S      | LOW  | —          | DONE   |
+| 083  | Add pronunciation history trend chart to dashboard         | P3       | S      | LOW  | —          | DONE   |
 
 **Note**: Plans 072 (cross-device sync design spike) and 073 (unified STT engine design spike) have been **SUPERSEDED** by plans 080 and 081. The design exploration from those spikes was completed and the code built; the new plans cover the remaining implementation gap (sync UX surface, Whisper WASM implementation).
+
+### Phase 5 — Direction follow-up: gaps from the 2026-07-03 audit
+
+All plans are independent and parallelizable. Each addresses a gap identified in the direction audit at commit `a72e64df`.
+
+| Plan | Title                                                            | Priority | Effort | Risk | Depends on | Status  |
+| ---- | ---------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------- |
+| 084  | Extend sync push/pull coverage to remaining Dexie tables         | P2       | M      | LOW  | 080        | DONE    |
+| 085  | Remove phantom Beta toggles + Session Timer from Settings        | P2       | S      | LOW  | —          | DONE    |
+| 086  | Fix referral reward loop — replace premium with XP               | P2       | S      | LOW  | —          | DONE    |
+| 087  | Deploy custom domain `lumni.ai` via Vercel                       | P2       | M      | LOW  | —          | PARTIAL |
+| 088  | Wire essayDrafts Dexie table for cross-session essay persistence | P3       | S      | LOW  | —          | DONE    |
+| 089  | Fix pronunciation `overallScore` to use phoneme accuracy         | P2       | S      | LOW  | —          | DONE    |
+| 090  | Add question share management surface (list + revoke)            | P3       | S      | LOW  | —          | DONE    |
+
+**Execution notes**:
+
+- 084 extends sync outbox + pull coverage — the infrastructure (outbox, push API, pull API) already works; this adds `enqueueOutbox()` calls in notes, competency, gamification, retention, and quiz services, plus expands `pullRemote()` table list.
+- 085 deletes dead code (beta-tab.tsx, timer toggles) rather than implementing features — simplest of the batch.
+- 086 replaces the broken "Premium" referral reward with XP — uses the existing gamification `addXp()` path.
+- 087 is purely operational (DNS + Vercel config + env var) — no code changes beyond `app.config.ts`.
+- 089 is a 3-line fix in `whisper-service.ts` — `overallScore` currently uses character-level Levenshtein instead of already-computed `phonemeAccuracy`.
+- 090 adds two route handlers (GET list, DELETE revoke) and a small management UI component.
 
 ## Findings considered and rejected
 

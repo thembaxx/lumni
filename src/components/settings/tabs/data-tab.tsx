@@ -6,11 +6,9 @@ import { usePWAInstall } from "@/hooks/use-service-worker";
 import { useRouter } from "@/i18n/navigation";
 import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
 import { ProgressExport } from "./progress-export";
+import { ShareManager } from "@/components/share/share-manager";
 
 interface DataTabProps {
-  studyPrefs: unknown;
-  notifications: unknown;
-  betaFeatures: unknown;
   onExport: () => void;
   onClear: () => void;
 }
@@ -145,6 +143,12 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
         <RestartOnboarding />
       </ListSection>
       <InstallAppSection />
+      <ListSection
+        header="Shared Questions"
+        footer="Manage or revoke the questions you have shared"
+      >
+        <ShareManager />
+      </ListSection>
     </>
   );
 }

@@ -17,6 +17,14 @@ vi.mock("@/lib/db/dexie-data-access", () => ({
     notes: { put: vi.fn() },
     competencies: { put: vi.fn() },
     gamification: { put: vi.fn() },
+    retentionRecurrence: { put: vi.fn() },
+    wrongAnswers: { put: vi.fn() },
+    chatMessages: { put: vi.fn() },
+    questionRatings: { put: vi.fn() },
+    bookmarks: { put: vi.fn() },
+    examSessions: { put: vi.fn() },
+    quizAttempts: { put: vi.fn() },
+    studyPlans: { put: vi.fn() },
   },
 }));
 

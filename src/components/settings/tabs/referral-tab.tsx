@@ -55,7 +55,7 @@ export function ReferralTab() {
     <div className="flex flex-col gap-6">
       <ListSection
         header="Your Referral Code"
-        footer="Share this code with friends to earn rewards"
+        footer="Share this code with friends to earn bonus XP"
       >
         <div className="flex flex-col items-center gap-4 px-5 py-6">
           <div className="select-all rounded-xl border border-border/40 bg-secondary/30 px-6 py-3 font-bold font-mono text-2xl text-foreground tracking-wider">
@@ -102,7 +102,7 @@ export function ReferralTab() {
       {/* How It Works */}
       <ListSection
         header="How It Works"
-        footer={`${info.rewardDays} days of Premium per verified referral. Max ${info.monthlyLimit} referrals/month.`}
+        footer={`${info.xpReward} XP per verified referral. Max ${info.monthlyLimit} referrals/month.`}
       >
         <ListCell
           title="1. Share your code or link"
@@ -115,8 +115,8 @@ export function ReferralTab() {
           showSeparator
         />
         <ListCell
-          title="3. Both get Premium"
-          subtitle={`You and your friend each get ${info.rewardDays} days free`}
+          title="3. Both earn bonus XP on signup"
+          subtitle={`You get ${info.xpReward} XP, your friend gets ${info.xpReward} XP`}
           showSeparator={false}
         />
       </ListSection>
@@ -127,7 +127,7 @@ export function ReferralTab() {
           {info.referrals.map((r, i) => (
             <ListCell
               key={r.refereeId}
-              title={r.status === "rewarded" ? "Premium earned" : "Pending verification"}
+              title={r.status === "rewarded" ? "Reward claimed" : "Pending — verify email to claim"}
               subtitle={new Date(r.createdAt).toLocaleDateString()}
               showSeparator={i < info.referrals.length - 1}
             />

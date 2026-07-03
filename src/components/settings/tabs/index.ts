@@ -1,5 +1,4 @@
 export { AppearanceTab } from "./appearance-tab";
-export { BetaTab } from "./beta-tab";
 export { DataTab } from "./data-tab";
 export { NotificationsTab } from "./notifications-tab";
 export { PrivacyTab } from "./privacy-tab";

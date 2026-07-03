@@ -3,7 +3,7 @@ import {
   buildReferralLink,
   generateReferralCode,
   REFERRAL_MONTHLY_LIMIT,
-  REFERRAL_REWARD_DAYS,
+  REFERRAL_REWARD_XP_REFEREE,
 } from "@/lib/referral/constants";
 import {
   createReferralCode,
@@ -45,7 +45,7 @@ export const GET = withRateLimit(
         link: buildReferralLink(codeDoc.code),
         monthlyCount,
         monthlyLimit: REFERRAL_MONTHLY_LIMIT,
-        rewardDays: REFERRAL_REWARD_DAYS,
+        xpReward: REFERRAL_REWARD_XP_REFEREE,
         referrals: referrals.map((r) => ({
           refereeId: r.refereeId,
           status: r.status,

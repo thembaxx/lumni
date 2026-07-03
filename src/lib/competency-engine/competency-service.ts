@@ -3,6 +3,7 @@ import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { BloomLevel } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
+import { enqueueOutbox } from "@/lib/sync/outbox";
 import {
   type CompetencyLevel,
   type CompetencyRecord,
@@ -66,6 +67,16 @@ export class CompetencyService {
         lastAssessed: now,
         level,
       });
+      enqueueOutbox("competencies", `${subjectId}:${topicId}:${bloomLevel}`, "update", {
+        subjectId,
+        topicId,
+        bloomLevel,
+        score: newScore,
+        attempts: newAttempts,
+        lastAssessed: now,
+        level,
+        paperId,
+      }).catch((err) => logError("CompetencyService", err));
     } else {
       const record: CompetencyRecord = {
         subjectId,
@@ -78,6 +89,12 @@ export class CompetencyService {
       };
       if (paperId) record.paperId = paperId;
       await this.db.competencies.add(record);
+      enqueueOutbox(
+        "competencies",
+        `${subjectId}:${topicId}:${bloomLevel}`,
+        "create",
+        record,
+      ).catch((err) => logError("CompetencyService", err));
     }
 
     await this.enqueueFn("appwrite-competency-sync", {

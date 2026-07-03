@@ -65,7 +65,7 @@ function storeGetEffect(
   key: string,
 ): Effect.Effect<RateLimitStoreEntry | undefined> {
   return Effect.tryPromise(() => Promise.resolve(store.get(key))).pipe(
-    Effect.catchAll(() => Effect.succeed(undefined)),
+    Effect.catchAll(() => Effect.sync<RateLimitStoreEntry | undefined>(() => undefined)),
   );
 }
 

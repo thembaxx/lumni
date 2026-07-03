@@ -83,46 +83,6 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
         />
       </ListSection>
 
-      <ListSection header="Timer Settings" footer="Challenge yourself with timed sessions">
-        <LabelledSwitch
-          title="Session Timer"
-          subtitle="Enable countdown for questions"
-          checked={studyPrefs.timerEnabled}
-          onCheckedChange={(checked) =>
-            onStudyPrefsChange({ ...studyPrefs, timerEnabled: checked })
-          }
-        />
-        {studyPrefs.timerEnabled && (
-          <ListCell
-            title="Timer Duration"
-            subtitle="Seconds allowed per question"
-            showSeparator={false}
-            trailing={
-              <Select
-                value={studyPrefs.timerDuration.toString()}
-                onValueChange={(v) =>
-                  onStudyPrefsChange({
-                    ...studyPrefs,
-                    timerDuration: parseInt(v || "30", 10),
-                  })
-                }
-              >
-                <SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="15">15 seconds</SelectItem>
-                  <SelectItem value="30">30 seconds</SelectItem>
-                  <SelectItem value="45">45 seconds</SelectItem>
-                  <SelectItem value="60">60 seconds</SelectItem>
-                  <SelectItem value="90">90 seconds</SelectItem>
-                </SelectContent>
-              </Select>
-            }
-          />
-        )}
-      </ListSection>
-
       <ListSection header="Spaced Repetition" footer="Controls how flashcards schedule reviews">
         <ListCell
           title="Learning Steps (minutes)"

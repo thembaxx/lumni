@@ -399,7 +399,7 @@ export interface UserSettings {
   userId: string;
   studyPrefs: string; // JSON stringified StudyPreferences
   notifications: string; // JSON stringified NotificationSettings
-  betaFeatures: string; // JSON stringified BetaFeatures
+  betaFeatures?: string; // JSON stringified BetaFeatures (optional, removed in 085)
   updatedAt: number;
 }
 

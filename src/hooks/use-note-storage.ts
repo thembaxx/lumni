@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Note } from "@/components/tools/notes/types";
 import { type ContentDataAccess, dexieDataAccess } from "@/lib/db";
+import { enqueueOutbox } from "@/lib/sync/outbox";
+import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: ContentDataAccess } = Object.freeze({ db: dexieDataAccess });
 function __setDepsForTesting(deps: { db: ContentDataAccess }) {
@@ -52,6 +54,9 @@ export function useNoteStorage() {
                   createdAt: new Date(n.createdAt).getTime(),
                   updatedAt: new Date(n.updatedAt).getTime(),
                 });
+                enqueueOutbox("notes", n.id, "create", n).catch((err) =>
+                  logError("NoteStorage", err),
+                );
               }
             }),
           );
@@ -86,17 +91,21 @@ export function useNoteStorage() {
     await _deps.db.notes.clear();
     await Promise.all(
       notes.map((n) =>
-        _deps.db.notes.add({
-          uuid: n.id,
-          title: n.title,
-          content: n.content,
-          tags: n.tags,
-          subject: n.subject,
-          topic: n.topic,
-          isFavorite: n.isFavorite,
-          createdAt: new Date(n.createdAt).getTime(),
-          updatedAt: new Date(n.updatedAt).getTime(),
-        }),
+        _deps.db.notes
+          .add({
+            uuid: n.id,
+            title: n.title,
+            content: n.content,
+            tags: n.tags,
+            subject: n.subject,
+            topic: n.topic,
+            isFavorite: n.isFavorite,
+            createdAt: new Date(n.createdAt).getTime(),
+            updatedAt: new Date(n.updatedAt).getTime(),
+          })
+          .then(() => {
+            enqueueOutbox("notes", n.id, "create", n).catch((err) => logError("NoteStorage", err));
+          }),
       ),
     );
     setNotes(notes);
@@ -117,8 +126,10 @@ export function useNoteStorage() {
     };
     if (existing && existing.id !== undefined) {
       await _deps.db.notes.update(existing.id, record);
+      enqueueOutbox("notes", note.id, "update", note).catch((err) => logError("NoteStorage", err));
     } else {
       await _deps.db.notes.add(record);
+      enqueueOutbox("notes", note.id, "create", note).catch((err) => logError("NoteStorage", err));
     }
   }, []);
 
@@ -134,6 +145,7 @@ export function useNoteStorage() {
     setNotes((prev) => prev.filter((note) => note.id !== id));
     (async () => {
       await _deps.db.notes.where("uuid").equals(id).delete();
+      enqueueOutbox("notes", id, "delete", {}).catch((err) => logError("NoteStorage", err));
     })();
   }, []);
 
