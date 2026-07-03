@@ -105,7 +105,7 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
     <StaggerProvider baseDelay={0.02}>
       {/* Priority — always visible */}
       <CollapsibleSectionAlwaysOpen>
-        <section className="flex flex-col gap-3" aria-label="Get started">
+        <section className="flex flex-col gap-4" aria-label="Get started">
           {isLoggedIn && (
             <StaggeredSection>
               <DailyChallengeCard streak={boltStreak} />
@@ -156,7 +156,7 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
       {/* Stats */}
       {isLoggedIn && (
         <CollapsibleSection title="Your Progress" count={stats.questionsAnswered ? undefined : 0}>
-          <section className="flex flex-col gap-3" aria-label="Your progress">
+          <section className="flex flex-col gap-4" aria-label="Your progress">
             <StaggeredSection>
               <BentoStatRow questionsAnswered={stats.questionsAnswered} streak={currentStreak} />
             </StaggeredSection>
