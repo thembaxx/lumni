@@ -62,7 +62,13 @@ const TopNavStatus = memo(function TopNavStatus() {
   const { user, status } = useAuth();
   const { levelInfo } = useGamification();
   const { isOnline, pendingCount } = useSyncStatus();
-  const { isSyncing } = useSync(user?.$id);
+  const { isSyncing, triggerSync } = useSync(user?.$id);
+
+  useEffect(() => {
+    if (pendingCount > 0 && isOnline && !isSyncing) {
+      triggerSync();
+    }
+  }, [pendingCount, isOnline, isSyncing, triggerSync]);
 
   return (
     <div className="flex items-center gap-4">

@@ -3,7 +3,24 @@
 import { logError } from "@/lib/shared/logger";
 import type { DictionaryResult } from "./types";
 
-const EN_WIKTIONARY_API = "https://en.wiktionary.org/w/api.php";
+const WIKTIONARY_SUBDOMAINS: Record<string, string> = {
+  en: "en",
+  af: "af",
+  zu: "zu",
+  xh: "xh",
+  st: "st",
+  tn: "tn",
+  nso: "nso",
+  ts: "ts",
+  ss: "ss",
+  ve: "ve",
+  nd: "nd",
+};
+
+function getWiktionaryApiUrl(language: string): string {
+  const subdomain = WIKTIONARY_SUBDOMAINS[language] ?? "en";
+  return `https://${subdomain}.wiktionary.org/w/api.php`;
+}
 
 interface WiktionaryPage {
   pageid?: number;
@@ -96,22 +113,25 @@ function extractResult(response: WiktionaryResponse, word: string): DictionaryRe
   };
 }
 
+async function fetchAndExtract(apiUrl: string, word: string): Promise<DictionaryResult | null> {
+  const response = await fetchWiktionary(apiUrl, word);
+  if (!response) return null;
+  return extractResult(response, word);
+}
+
 export async function lookupWiktionary(
   word: string,
   language: string,
 ): Promise<DictionaryResult | null> {
   try {
-    const enResponse = await fetchWiktionary(EN_WIKTIONARY_API, word);
-    if (enResponse) {
-      const result = extractResult(enResponse, word);
-      if (result) return result;
-    }
+    const langApi = getWiktionaryApiUrl(language);
+    const langResult = await fetchAndExtract(langApi, word);
+    if (langResult) return langResult;
 
-    const langApi = `https://${language}.wiktionary.org/w/api.php`;
-    const langResponse = await fetchWiktionary(langApi, word);
-    if (langResponse) {
-      const result = extractResult(langResponse, word);
-      if (result) return result;
+    if (language !== "en") {
+      const enApi = getWiktionaryApiUrl("en");
+      const enResult = await fetchAndExtract(enApi, word);
+      if (enResult) return enResult;
     }
 
     return null;

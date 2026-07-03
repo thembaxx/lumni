@@ -26,6 +26,7 @@ import {
   ProfileTab,
   ReferralTab,
   StudyTab,
+  SyncTab,
 } from "@/components/settings/tabs";
 import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
@@ -85,6 +86,12 @@ const tabDefs = [
     key: "settings.data",
     icon: DatabaseIcon,
     color: "from-chart-4/20 to-chart-2/5",
+  },
+  {
+    value: "sync",
+    key: "settings.sync",
+    icon: DatabaseIcon,
+    color: "from-info/20 to-chart-5/5",
   },
   { value: "beta", key: "settings.beta", icon: Chat01Icon, color: "from-chart-5/20 to-chart-3/5" },
 ];
@@ -318,6 +325,12 @@ function SettingsContent() {
                 onExport={handleExportData}
                 onClear={() => setShowClearConfirm(true)}
               />
+            </div>
+          </TabPanel>
+
+          <TabPanel isActive={activeTab === "sync"}>
+            <div role="tabpanel" id="tabpanel-sync" aria-labelledby="tab-sync">
+              <SyncTab />
             </div>
           </TabPanel>
 

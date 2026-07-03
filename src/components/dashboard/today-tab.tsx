@@ -20,6 +20,7 @@ import { StreakCard } from "@/components/dashboard/streak-card";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import { WeakTopicsCard } from "@/components/dashboard/weak-topics-card";
 import { WordOfDayCard } from "@/components/dashboard/word-of-day";
+import { PronunciationChartCard } from "@/components/dashboard/pronunciation-chart-card";
 import { RewardChestPanel } from "@/components/gamification/reward-chest/reward-chest-panel";
 import { UpcomingExamCard } from "@/components/dashboard/upcoming-exam-card";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
@@ -177,6 +178,9 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
           </StaggeredSection>
           <StaggeredSection>
             <WordOfDayCard />
+          </StaggeredSection>
+          <StaggeredSection>
+            <PronunciationChartCard />
           </StaggeredSection>
           <StaggeredSection>
             <StoriesProgressCard />

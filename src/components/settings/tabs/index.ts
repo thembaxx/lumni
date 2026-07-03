@@ -6,3 +6,4 @@ export { PrivacyTab } from "./privacy-tab";
 export { ProfileTab } from "./profile-tab";
 export { ReferralTab } from "./referral-tab";
 export { StudyTab } from "./study-tab";
+export { SyncTab } from "./sync-tab";

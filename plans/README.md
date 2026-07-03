@@ -30,11 +30,11 @@ Commit baseline: `245ba077` (current HEAD). Batch 5 plans at `53532ff1` (2026-07
 
 ### Phase 3 — Direction / design spikes
 
-| Plan | Title                                                        | Priority | Effort | Risk | Depends on | Status |
-| ---- | ------------------------------------------------------------ | -------- | ------ | ---- | ---------- | ------ |
-| 072  | Design spike: cross-device sync layer                        | P2       | L      | LOW  | 062 (CI)   | TODO   |
-| 073  | Design spike: unified STT engine                             | P2       | M      | LOW  | —          | TODO   |
-| 074  | Reconcile ROADMAP.md + docs/roadmap.md with shipped features | P2       | S      | LOW  | —          | TODO   |
+| Plan | Title                                                        | Priority | Effort | Risk | Depends on | Status            |
+| ---- | ------------------------------------------------------------ | -------- | ------ | ---- | ---------- | ----------------- |
+| 072  | Design spike: cross-device sync layer                        | P2       | L      | LOW  | 062 (CI)   | SUPERSEDED by 080 |
+| 073  | Design spike: unified STT engine                             | P2       | M      | LOW  | —          | SUPERSEDED by 081 |
+| 074  | Reconcile ROADMAP.md + docs/roadmap.md with shipped features | P2       | S      | LOW  | —          | TODO              |
 
 ## Execution phases
 
@@ -76,8 +76,25 @@ All plans in this batch are independent and can run in parallel:
 - All 5 plans implemented in a single session. 1717 tests pass, 0 regressions.
 - Batch 4 plans (062-074) are untouched and can be worked alongside these.
 
+### Phase 4 — Direction features (July 2026)
+
+| Plan | Title                                                      | Priority | Effort | Risk | Depends on | Status |
+| ---- | ---------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 080  | Complete sync UX — Settings panel, auto-flush, conflict UX | P2       | S      | LOW  | —          | TODO   |
+| 081  | Implement offline Whisper WASM STT provider                | P2       | M      | MED  | —          | TODO   |
+| 082  | Add Afrikaans/isiZulu/isiXhosa Wiktionary support          | P2       | S      | LOW  | —          | TODO   |
+| 083  | Add pronunciation history trend chart to dashboard         | P3       | S      | LOW  | —          | TODO   |
+
+**Note**: Plans 072 (cross-device sync design spike) and 073 (unified STT engine design spike) have been **SUPERSEDED** by plans 080 and 081. The design exploration from those spikes was completed and the code built; the new plans cover the remaining implementation gap (sync UX surface, Whisper WASM implementation).
+
 ## Findings considered and rejected
 
+- **Subagent-misattributed findings (July 2026)**: Several findings from subagent reconnaissance were rejected after manual verification:
+  - **Referral flow not wired** — Actually complete: settings page at `/settings/referral`, signup referral code capture, API routes (generate, claim, info), share sheet, QR code, test suite. **Not a finding.**
+  - **Lesson→question integration dead path** — Already wired: `suggestQuestionsForLesson` is called in `lesson-view-client.tsx:113-117` and rendered at line 311-334 with a "Related Past Questions" card. **Not a finding.**
+  - **Programming/hot-spot/diagram-labelling question types missing** — All three have functional input components (`ProgrammingInput`, `HotSpotInput`, `DiagramInput`) wired in `QuestionCardInput.tsx` with graders. **Not a finding.**
+  - **Story TTS not wired** — Already uses `ListenToLesson` component in `story-reader-client.tsx:11`. **Not a finding.**
+  - **Pronunciation IPA alignment missing** — The phoneme service (`src/lib/audio-engine/phoneme-service.ts`) already provides phoneme-level assessment via grapheme-to-phoneme mapping; true IPA alignment for 11 SA languages is a research problem, not an implementation gap. **Not a finding.**
 - **Three.js for onboarding particles** (PERF-04): The 200 decorative floating particles use Three.js (~680KB bundle cost). S effort to replace with Canvas2D. Worth doing but not urgent enough for its own plan — capture as a note for when the onboarding page is next touched.
 - **Dexie 40-version schema** (PERF-02): S effort, MED risk. Worth cleaning up but requires a verification script. Deferred to avoid disrupting the active schema migration chain.
 - **Inconsistent staleTime values** (PERF-06): 34 overrides across 23 files with no convention. S effort — add convention docs to AGENTS.md and do a batch sweep. Deferred as a DX improvement; not blocking.
