@@ -7,7 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
-import { BentoStatRow } from "@/components/dashboard/bento-stat-row";
 import { CompetitionCard } from "@/components/dashboard/competition-card";
 import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
@@ -91,7 +90,7 @@ interface TodayTabProps {
 export function TodayTab({ boltStreak }: TodayTabProps) {
   const t = useTranslations();
   const { user, isAnonymous } = useAuth();
-  const { gamification, currentStreak } = useGamification();
+  const { gamification } = useGamification();
   const isLoggedIn = !!user && !isAnonymous;
 
   const stats = {
@@ -105,7 +104,7 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
     <StaggerProvider baseDelay={0.02}>
       {/* Priority — always visible */}
       <CollapsibleSectionAlwaysOpen>
-        <section className="flex flex-col gap-4" aria-label="Get started">
+        <section className="flex flex-col gap-3" aria-label="Get started">
           {isLoggedIn && (
             <StaggeredSection>
               <DailyChallengeCard streak={boltStreak} />
@@ -118,25 +117,29 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
           )}
           {isLoggedIn && boltDone && (
             <StaggeredSection>
-              <div className="flex items-center gap-3 rounded-2xl border border-success/20 bg-success/5 px-4 py-3 transition-[background-color] duration-300">
+              <div className="flex items-center gap-3 rounded-card border border-success/20 bg-success/5 px-4 py-3 transition-colors duration-200">
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
                   <HugeiconsIcon icon={SparklesIcon} className="size-5 text-success" />
                 </div>
-                <div className="flex min-w-0 flex-col gap-1">
-                  <span className="font-semibold text-sm text-success-foreground">
+                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="text-balance font-semibold text-sm text-success-foreground">
                     {t("dashboard.boltCompleteTitle")}
                   </span>
-                  <span className="text-success-foreground/70 text-xs">
+                  <span className="text-sm text-success-foreground/70">
                     {t("dashboard.boltCompleteDescription")}
                   </span>
                 </div>
-                <div className="ml-auto flex size-8 items-center justify-center rounded-full bg-warning/10">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-warning/10">
                   <HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
                 </div>
               </div>
             </StaggeredSection>
           )}
-          {isLoggedIn && <FeedSection userId={user!.$id} />}
+          {isLoggedIn && (
+            <StaggeredSection>
+              <FeedSection userId={user!.$id} />
+            </StaggeredSection>
+          )}
           {isLoggedIn && (
             <StaggeredSection>
               <TodayFocusCard />
@@ -157,9 +160,6 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
       {isLoggedIn && (
         <CollapsibleSection title="Your Progress" count={stats.questionsAnswered ? undefined : 0}>
           <section className="flex flex-col gap-4" aria-label="Your progress">
-            <StaggeredSection>
-              <BentoStatRow questionsAnswered={stats.questionsAnswered} streak={currentStreak} />
-            </StaggeredSection>
             <StaggeredSection>
               <StreakCard />
             </StaggeredSection>

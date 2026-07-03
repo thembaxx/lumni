@@ -23,14 +23,14 @@ export function CollapsibleSection({
   const toggle = useCallback(() => setOpen((v) => !v), []);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       <button
         type="button"
         onClick={toggle}
-        className="flex w-full items-center justify-between rounded-lg px-1 py-1.5 text-left transition-colors hover:bg-muted/50"
+        className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-study-green/40"
         aria-expanded={open}
       >
-        <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+        <span className="text-balance font-semibold text-muted-foreground text-xs uppercase tracking-wider">
           {title}
           {count !== undefined && (
             <span className="ml-1.5 font-normal text-muted-foreground/60">({count})</span>
@@ -39,7 +39,7 @@ export function CollapsibleSection({
         <m.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2, ease: iOSEase }}>
           <HugeiconsIcon
             icon={ArrowDown01Icon}
-            className="size-3.5 text-muted-foreground/60"
+            className="size-4 text-muted-foreground/60"
             aria-hidden="true"
           />
         </m.div>
@@ -47,12 +47,12 @@ export function CollapsibleSection({
       <div
         className={`grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
-        <div className="min-h-0 overflow-hidden opacity-1">{children}</div>
+        <div className="min-h-0 overflow-hidden opacity-0 transition-opacity duration-200">{children}</div>
       </div>
     </div>
   );
 }
 
 export function CollapsibleSectionAlwaysOpen({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-3">{children}</div>;
+  return <div className="flex flex-col gap-4">{children}</div>;
 }
