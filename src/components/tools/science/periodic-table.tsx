@@ -3,27 +3,24 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "@/i18n/navigation";
 import {
   elementCategoryConfig,
   elementCategoryVariables,
   elementEaseOutQuint,
 } from "@/lib/data/element-categories";
-import { type Element, elements } from "@/lib/data/elements";
-import { logError } from "@/lib/shared/logger";
+import { elements } from "@/lib/data/elements";
 import { ElementCard } from "./element-card";
-import { ElementDetailModal } from "./element-detail-modal";
 
 export function PeriodicTable() {
-  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [interestingFact, setInterestingFact] = useState<string | null>(null);
+  const { push } = useRouter();
 
   const filteredElements = useMemo(() => {
     return elements.filter((el) => {
@@ -40,58 +37,13 @@ export function PeriodicTable() {
   const isFiltered = searchQuery !== "" || activeCategory !== null;
 
   const _displayedElements = isFiltered ? filteredElements : elements;
-  const queryClient = useQueryClient();
-
-  const { mutate: generateFact } = useMutation({
-    mutationFn: async (el: Element) => {
-      const response = await fetch(`/api/generate-element-fact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          element: {
-            atomicNumber: el.atomicNumber,
-            name: el.name,
-            symbol: el.symbol,
-          },
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.fact as string | null;
-    },
-    onSuccess: (fact) => {
-      setInterestingFact(fact ?? null);
-      queryClient.invalidateQueries({ queryKey: ["element-facts"] });
-    },
-    onError: (error) => {
-      logError("ElementFact", error);
-      setInterestingFact(null);
-    },
-  });
-
-  const handleElementSelect = useCallback(
-    (el: Element) => {
-      setSelectedElement(el);
-      setInterestingFact(null);
-      if (el) {
-        generateFact(el);
-      }
-    },
-    [generateFact],
-  );
 
   const handleCardClick = useCallback(
     (atomicNumber: number) => {
       const el = elements.find((e) => e.atomicNumber === atomicNumber);
-      if (el) handleElementSelect(el);
+      if (el) push(`/tools/periodic/${el.symbol}`);
     },
-    [handleElementSelect],
+    [push],
   );
 
   return (
@@ -220,12 +172,6 @@ export function PeriodicTable() {
           ))}
         </m.div>
       </div>
-
-      <ElementDetailModal
-        element={selectedElement}
-        interestingFact={interestingFact}
-        onClose={() => setSelectedElement(null)}
-      />
     </div>
   );
 }

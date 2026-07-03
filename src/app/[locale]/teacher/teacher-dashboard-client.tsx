@@ -8,11 +8,11 @@ import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-pa
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
 import { LiveSessionMonitor } from "@/components/teacher/live-session-monitor";
-import { StudentDetailDialog } from "@/components/teacher/student-detail-dialog";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "@/i18n/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 
@@ -68,9 +68,9 @@ export function TeacherDashboardClient() {
 }
 
 function TeacherDashboardInner() {
+  const { push } = useRouter();
   const queryClient = useQueryClient();
   const [linkId, setLinkId] = useState("");
-  const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(null);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["teacher-students"],
@@ -204,7 +204,7 @@ function TeacherDashboardInner() {
               <TopicMasteryHeatmap topics={topicMastery} />
               <ClassRosterTable
                 students={students}
-                onStudentSelect={setSelectedStudent}
+                onStudentSelect={(student) => push(`/teacher/students/${student.id}`)}
                 onUnlink={(id) => unlinkStudent.mutate(id)}
                 unlinkingId={unlinkStudent.isPending ? unlinkStudent.variables : undefined}
               />
@@ -215,14 +215,6 @@ function TeacherDashboardInner() {
           </div>
         </>
       )}
-
-      <StudentDetailDialog
-        student={selectedStudent}
-        open={selectedStudent !== null}
-        onOpenChange={(open) => {
-          if (!open) setSelectedStudent(null);
-        }}
-      />
     </ClassShell>
   );
 }

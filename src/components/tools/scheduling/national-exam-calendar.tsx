@@ -8,6 +8,7 @@ import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "@/i18n/navigation";
 import {
   formatDuration,
   getCurrentSession,
@@ -18,13 +19,11 @@ import {
 import { buildExportFilename, downloadIcal, generateIcal } from "@/lib/exam-dates/calendar-export";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/utils";
-import { ExamDetailDialog } from "../communication/exam-detail-dialog";
 
 export function NationalExamCalendar() {
+  const { push } = useRouter();
   const [loading, setLoading] = useState(true);
   const [allSlots, setAllSlots] = useState<ExamSlot[]>([]);
-  const [selectedExam, setSelectedExam] = useState<ExamSlot | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [todayStr, setTodayStr] = useState("");
   useEffect(() => {
     setTodayStr(new Date().toDateString());
@@ -69,10 +68,12 @@ export function NationalExamCalendar() {
       .map(([date, slots]) => ({ date, slots }));
   }, [allSlots]);
 
-  const handleSlotClick = useCallback((slot: ExamSlot) => {
-    setSelectedExam(slot);
-    setDialogOpen(true);
-  }, []);
+  const handleSlotClick = useCallback(
+    (slot: ExamSlot) => {
+      push(`/exam-dates/${slot.id}`);
+    },
+    [push],
+  );
 
   const handleExportIcal = useCallback(() => {
     if (allSlots.length === 0) return;
@@ -294,8 +295,6 @@ export function NationalExamCalendar() {
           )}
         </m.div>
       </AnimatePresence>
-
-      <ExamDetailDialog exam={selectedExam} open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }
