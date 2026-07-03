@@ -56,7 +56,6 @@ function buildReportingEndpoints(): string {
 const nextConfig: NextConfig = {
   reactCompiler: true,
   productionBrowserSourceMaps: false,
-  partialPrefetching: true,
   experimental: {
     turbopackFileSystemCacheForBuild: true,
     turbopackRustReactCompiler: true,
