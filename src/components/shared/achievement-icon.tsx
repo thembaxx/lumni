@@ -6,7 +6,7 @@ import Award03Icon from "@hugeicons/core-free-icons/Award03Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
-import BriefcaseIcon from "@hugeicons/core-free-icons/BriefcaseIcon";
+import Briefcase01Icon from "@hugeicons/core-free-icons/Briefcase01Icon";
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import ChartBarBigIcon from "@hugeicons/core-free-icons/ChartBarBigIcon";
 import ChartLineData01Icon from "@hugeicons/core-free-icons/ChartLineData01Icon";
@@ -22,9 +22,9 @@ import MedalSecondPlaceIcon from "@hugeicons/core-free-icons/MedalSecondPlaceIco
 import MedalThirdPlaceIcon from "@hugeicons/core-free-icons/MedalThirdPlaceIcon";
 import MicroscopeIcon from "@hugeicons/core-free-icons/MicroscopeIcon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
-import NumberIcon from "@hugeicons/core-free-icons/NumberIcon";
+import HashIcon from "@hugeicons/core-free-icons/HashIcon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
-import SnowflakeIcon from "@hugeicons/core-free-icons/SnowflakeIcon";
+import IceCubesIcon from "@hugeicons/core-free-icons/IceCubesIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
@@ -49,12 +49,12 @@ const iconMap: Record<string, IconSvgElement> = {
   "✨": SparklesIcon,
   "👑": CrownIcon,
   "🔬": MicroscopeIcon,
-  "🔢": NumberIcon,
+  "🔢": HashIcon,
   "🎲": DiceIcon,
   "🧪": TestTubeIcon,
   "📖": BookOpen02Icon,
   "🗣️": VoiceIcon,
-  "💼": BriefcaseIcon,
+  "💼": Briefcase01Icon,
   "📊": ChartBarBigIcon,
   "🌍": GlobeIcon,
   "🔄": RefreshIcon,
@@ -69,7 +69,7 @@ const iconMap: Record<string, IconSvgElement> = {
   "🎖️": Award03Icon,
   "🔒": LockIcon,
   "🌈": GlobeIcon,
-  "🧊": SnowflakeIcon,
+  "🧊": IceCubesIcon,
   "🪵": DiamondIcon,
   "🪨": DiamondIcon,
   Award01Icon: Award01Icon,
