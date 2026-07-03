@@ -136,5 +136,3 @@ export default function StudentDetailPage() {
     </div>
   );
 }
-
-export const instant = false;

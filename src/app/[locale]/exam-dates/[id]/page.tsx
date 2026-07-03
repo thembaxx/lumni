@@ -273,5 +273,3 @@ export default function ExamDetailPage() {
     </div>
   );
 }
-
-export const instant = false;

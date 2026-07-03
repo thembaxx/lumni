@@ -5,7 +5,7 @@ import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Copy02Icon from "@hugeicons/core-free-icons/Copy02Icon";
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
-import Lock01Icon from "@hugeicons/core-free-icons/Lock01Icon";
+import Lock01Icon from "@hugeicons/core-free-icons/LockIcon";
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import MicOff01Icon from "@hugeicons/core-free-icons/MicOff01Icon";
 import Minimize01Icon from "@hugeicons/core-free-icons/Minimize01Icon";

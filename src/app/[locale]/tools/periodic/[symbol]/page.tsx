@@ -182,5 +182,3 @@ export default function ElementDetailPage() {
     </div>
   );
 }
-
-export const instant = false;
