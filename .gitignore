@@ -75,3 +75,4 @@ playwright-report/
 # generated architecture review HTML
 src/docs/architecture-review-*.html
 output/
+.impeccable
