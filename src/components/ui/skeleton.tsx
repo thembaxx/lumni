@@ -6,9 +6,9 @@ interface SkeletonProps extends React.ComponentProps<"div"> {
 }
 
 const shapeStyles = {
-  default: "rounded-md",
-  text: "h-4 w-full rounded-md",
-  card: "h-32 w-full rounded-xl",
+  default: "rounded-lg",
+  text: "h-4 w-full rounded-lg",
+  card: "h-32 w-full rounded-2xl",
   avatar: "size-10 rounded-full",
   circle: "size-8 rounded-full",
 };

@@ -133,7 +133,7 @@ export function HomeContent() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background pb-16">
-      <AmbientGradient variant="default" />
+      <AmbientGradient variant="hero" />
       <NoiseOverlay opacity={0.02} />
       <ConfettiCelebration show={showConfetti} onDismiss={dismissConfetti} />
 

@@ -39,7 +39,7 @@ const items = [
 export default function PracticePage() {
   return (
     <div className="relative min-h-dvh bg-system-grouped pb-24">
-      <AmbientGradient variant="dashboard" />
+      <AmbientGradient variant="quiz" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="pt-6">
         <CategoryOverview title="Practice" items={items} />

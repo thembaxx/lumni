@@ -276,7 +276,7 @@ export function QuestionBankClient() {
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
-      <AmbientGradient />
+      <AmbientGradient variant="quiz" />
       <PageContainer className="flex flex-col gap-6">
         <m.div
           initial={{ opacity: 0, y: 12 }}

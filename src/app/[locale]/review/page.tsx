@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ReviewPage() {
   return (
     <div className="relative min-h-dvh bg-system-grouped">
-      <AmbientGradient variant="study" />
+      <AmbientGradient variant="subtle" />
       <NoiseOverlay opacity={0.015} />
       <Suspense fallback={<PageSkeleton />}>
         <ReviewClient />

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface AmbientGradientProps {
   className?: string;
-  variant?: "default" | "subtle" | "quiz" | "auth" | "dashboard" | "study";
+  variant?: "default" | "subtle" | "quiz" | "auth" | "dashboard" | "study" | "hero";
 }
 
 function FloatDrift({ className, delay = 0 }: { className: string; delay?: number }) {
@@ -88,6 +88,23 @@ export function AmbientGradient({ className, variant = "default" }: AmbientGradi
           />
           <FloatDrift
             className="absolute top-1/4 right-1/4 size-50 rounded-full bg-chart-2/2 blur-3xl"
+            delay={-2}
+          />
+        </>
+      )}
+      {variant === "hero" && (
+        <>
+          <FloatDrift className="absolute -top-60 -right-60 size-200 rounded-full bg-primary/7 blur-3xl" />
+          <FloatDrift
+            className="absolute -bottom-60 -left-60 size-175 rounded-full bg-accent-secondary/5 blur-3xl"
+            delay={-3}
+          />
+          <FloatDrift
+            className="absolute top-1/4 left-1/3 size-100 rounded-full bg-chart-4/5 blur-3xl"
+            delay={-5}
+          />
+          <FloatDrift
+            className="absolute bottom-1/3 right-1/4 size-75 rounded-full bg-chart-2/4 blur-3xl"
             delay={-2}
           />
         </>

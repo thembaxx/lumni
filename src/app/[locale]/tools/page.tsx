@@ -51,7 +51,7 @@ const items = [
 export default function ToolsPage() {
   return (
     <div className="relative min-h-dvh bg-system-grouped pb-24">
-      <AmbientGradient variant="dashboard" />
+      <AmbientGradient variant="default" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="pt-6">
         <CategoryOverview title="Tools" items={items} />

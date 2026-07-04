@@ -115,8 +115,8 @@ export function FeaturesGrid() {
             >
               <div
                 className={cn(
-                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-6 shadow-level-1 transition-[box-shadow,border-color] duration-500 hover:shadow-level-2",
-                  "hover:border-primary/20",
+                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-7 shadow-level-1 transition-all duration-500 hover:shadow-level-3",
+                  "hover:border-primary/20 hover:-translate-y-1",
                 )}
               >
                 <div
@@ -125,21 +125,22 @@ export function FeaturesGrid() {
                     feature.color,
                   )}
                 />
+                <div className="pointer-events-none absolute -right-12 -top-12 size-32 rounded-full bg-primary/3 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:bg-primary/8" />
 
                 <div className="relative z-elevated flex flex-col gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
-                    <HugeiconsIcon icon={feature.icon} className="size-5" />
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-all duration-300 group-hover:scale-125 group-hover:rotate-[6deg] group-hover:bg-(--system-accent-alpha-20) group-hover:shadow-level-2">
+                    <HugeiconsIcon icon={feature.icon} className="size-6" />
                   </div>
-                  <h3 className="font-semibold text-base">{t(feature.titleKey)}</h3>
+                  <h3 className="font-bold text-base">{t(feature.titleKey)}</h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {t(feature.descKey)}
                   </p>
                 </div>
 
-                <div className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full border border-border/30 opacity-0 transition-[opacity,transform] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
+                <div className="absolute right-4 bottom-4 flex h-10 w-10 items-center justify-center rounded-full border border-border/30 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-(--system-accent-alpha-10) group-hover:border-primary/20">
                   <svg
-                    width="14"
-                    height="14"
+                    width="16"
+                    height="16"
                     viewBox="0 0 14 14"
                     fill="none"
                     className="text-primary"

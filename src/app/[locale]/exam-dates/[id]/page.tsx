@@ -63,8 +63,6 @@ function Countdown({ targetDate }: { targetDate: string }) {
   return <span className="text-muted-foreground text-xs tabular-nums">{text}</span>;
 }
 
-export const instant = false;
-
 export default function ExamDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { push, back } = useRouter();

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ProblemsPage() {
   return (
     <div className="relative min-h-dvh bg-system-grouped">
-      <AmbientGradient variant="study" />
+      <AmbientGradient variant="quiz" />
       <NoiseOverlay opacity={0.015} />
       <ProblemsClient />
     </div>

@@ -190,7 +190,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, prefersReducedMotion ? 1 : 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, prefersReducedMotion ? 1 : 0.97]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, prefersReducedMotion ? 1 : 0.96]);
 
   return (
     <m.section
@@ -203,7 +203,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
         <div className="grid items-center gap-12 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
             <FadeIn direction="up" distance={20} duration={0.4} className="flex flex-col gap-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-xs text-primary shadow-level-2">
+              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-4 py-1.5 text-xs text-primary shadow-level-2 border border-primary/10">
                 <span className="text-primary/60 ios-caption-3" aria-hidden="true">
                   ✦
                 </span>
@@ -232,13 +232,13 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto animate-glow-pulse"
                 >
                   <Link href="/dashboard">
                     {t("home.heroDashboard")}
                     <HugeiconsIcon
                       icon={ArrowRight01Icon}
-                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                      className="size-4 transition-transform duration-300 group-hover:translate-x-1"
                       data-icon="inline-end"
                     />
                   </Link>
@@ -247,13 +247,13 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto animate-glow-pulse"
                 >
                   <Link href="/dashboard">
                     {t("home.heroStartFree")}
                     <HugeiconsIcon
                       icon={ArrowRight01Icon}
-                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                      className="size-4 transition-transform duration-300 group-hover:translate-x-1"
                       data-icon="inline-end"
                     />
                   </Link>

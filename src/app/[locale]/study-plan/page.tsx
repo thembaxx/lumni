@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function StudyPlanPage() {
   return (
     <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
-      <AmbientGradient variant="subtle" />
+      <AmbientGradient variant="study" />
       <PageContainer>
         <StudyPlanner />
       </PageContainer>
