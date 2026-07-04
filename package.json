@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@ably/chat": "^1.4.0",
-    "@ai-sdk/google": "^4.0.2",
+    "@ai-sdk/google": "^4.0.8",
     "@ai-sdk/openai": "^4.0.3",
     "@ai-sdk/otel": "^1.0.6",
     "@base-ui/react": "1.6.0",
