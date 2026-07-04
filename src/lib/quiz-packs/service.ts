@@ -11,6 +11,7 @@ export class QuizPackService {
     this.db = deps?.db ?? dexieDataAccess;
   }
   async generatePack(subject: string, topic: string | null, count: number): Promise<QuizPack> {
+    const now = Date.now();
     const pack: QuizPack = {
       id: `pack_${nanoid(12)}`,
       subject,
@@ -20,8 +21,8 @@ export class QuizPackService {
       status: "generating",
       downloadProgress: 0,
       storageBytes: 0,
-      createdAt: Date.now(),
-      expiresAt: Date.now() + PACK_EXPIRY_DAYS * 24 * 60 * 60 * 1000,
+      createdAt: now,
+      expiresAt: now + PACK_EXPIRY_DAYS * 24 * 60 * 60 * 1000,
       lastUsedAt: null,
     };
 
