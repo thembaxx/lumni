@@ -57,14 +57,19 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.classList.add(resolvedTheme);
     root.style.colorScheme = resolvedTheme;
 
-    // Remove all existing theme-color metas and set a single one without media queries
-    for (const m of document.querySelectorAll('meta[name="theme-color"]')) {
-      m.remove();
+    // Update the theme-color meta without removing elements React may track in <head>
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute(
+        "content",
+        resolvedTheme === "dark" ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)",
+      );
+    } else {
+      const el = document.createElement("meta");
+      el.name = "theme-color";
+      el.content = resolvedTheme === "dark" ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)";
+      document.head.appendChild(el);
     }
-    const meta = document.createElement("meta");
-    meta.name = "theme-color";
-    meta.content = resolvedTheme === "dark" ? "oklch(10% 0.01 264)" : "oklch(100% 0 0)";
-    document.head.appendChild(meta);
   }, [theme]);
 
   useEffect(() => {

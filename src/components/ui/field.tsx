@@ -50,7 +50,9 @@ export function Field({
         data-disabled={dataDisabled}
         className={cn("flex flex-col gap-1.5", className)}
         {...props}
-      />
+      >
+        {_children}
+      </div>
     </FieldContext.Provider>
   );
 }

@@ -5,7 +5,9 @@ import { logError } from "@/lib/shared/logger";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
-let _deps: { db: SyncDataAccess } = Object.freeze({ db: dexieDataAccess });
+let _deps: { db: SyncDataAccess | null } = Object.freeze({
+  db: typeof window !== "undefined" ? dexieDataAccess : null,
+});
 export function __setDepsForTesting(deps: { db: SyncDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
@@ -59,8 +61,8 @@ interface PersistedState {
 const dexiePersistStorage = {
   getItem: async (name: string): Promise<{ state: PersistedState } | null> => {
     try {
-      if (!_deps.db.examSessions) return null;
-      const record = await _deps.db.examSessions.where("paperId").equals(name).first();
+      if (!_deps.db?.examSessions) return null;
+      const record = await _deps.db?.examSessions.where("paperId").equals(name).first();
       if (record) {
         return {
           state: {
@@ -84,8 +86,8 @@ const dexiePersistStorage = {
     const state = value.state;
     if (state?.paperId) {
       try {
-        if (!_deps.db.examSessions) return;
-        await _deps.db.examSessions.put({
+        if (!_deps.db?.examSessions) return;
+        await _deps.db?.examSessions.put({
           paperId: state.paperId,
           answers: JSON.stringify(state.answers || {}),
           flags: JSON.stringify(state.flags || []),
@@ -102,8 +104,8 @@ const dexiePersistStorage = {
   },
   removeItem: async (name: string): Promise<void> => {
     try {
-      if (!_deps.db.examSessions) return;
-      await _deps.db.examSessions.where("paperId").equals(name).delete();
+      if (!_deps.db?.examSessions) return;
+      await _deps.db?.examSessions.where("paperId").equals(name).delete();
     } catch (e) {
       logError("ExamSessionPersist.remove", e);
     }

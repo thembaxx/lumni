@@ -1,7 +1,7 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface MermaidDiagramProps {
   code: string;
@@ -11,15 +11,13 @@ interface MermaidDiagramProps {
 type DiagramStatus = "loading" | "ready" | "error";
 
 export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<DiagramStatus>("loading");
+  const [svgHtml, setSvgHtml] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function render() {
-      if (!containerRef.current) return;
-
       try {
         const mermaid = (await import("mermaid")).default;
         mermaid.initialize({
@@ -31,13 +29,13 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
         const id = `mermaid-${Math.random().toString(36).slice(2, 9)}`;
         const { svg } = await mermaid.render(id, code);
 
-        if (!cancelled && containerRef.current) {
+        if (!cancelled) {
           const sanitized = DOMPurify.sanitize(svg, {
             USE_PROFILES: { svg: true, svgFilters: true },
             ADD_TAGS: ["style"],
             ADD_ATTR: ["viewBox", "xmlns"],
           });
-          containerRef.current.innerHTML = sanitized;
+          setSvgHtml(sanitized);
           setStatus("ready");
         }
       } catch {
@@ -49,12 +47,8 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 
     render();
 
-    const container = containerRef.current;
     return () => {
       cancelled = true;
-      if (container) {
-        container.innerHTML = "";
-      }
     };
   }, [code]);
 
@@ -75,11 +69,9 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
             <div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
           </div>
         )}
-        <div
-          ref={containerRef}
-          className="mermaid-svg-container"
-          style={status === "loading" ? { display: "none" } : undefined}
-        />
+        {svgHtml && (
+          <div className="mermaid-svg-container" dangerouslySetInnerHTML={{ __html: svgHtml }} />
+        )}
       </div>
     </div>
   );

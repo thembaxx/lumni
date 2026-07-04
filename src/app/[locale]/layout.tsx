@@ -1,5 +1,5 @@
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { domAnimation, LazyMotion } from "motion/react";
+import { domMax, LazyMotion } from "motion/react";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
@@ -192,7 +192,7 @@ export default async function LocaleLayout({
       <ChunkLoadHandler />
       <WebVitals />
       <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
-        <LazyMotion features={domAnimation}>
+        <LazyMotion features={domMax}>
           <Suspense fallback={null}>
             <AmbientBackground variant="dashboard" orbCount={4} />
           </Suspense>

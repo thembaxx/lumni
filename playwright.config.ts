@@ -20,5 +20,8 @@ export default defineConfig({
     command: "pnpm run dev",
     port: 3000,
     reuseExistingServer: true,
+    env: {
+      NEXT_TURBOPACK_PERSIST_CACHE: "0",
+    },
   },
 });
