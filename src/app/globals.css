@@ -1365,6 +1365,360 @@
   }
 }
 
+/* ════════════════════════════════════════
+   2026 DESIGN TREND KEYFRAMES
+   Kinetic, Morph, Particle, Ambient
+   ════════════════════════════════════════ */
+
+/* Spiral float for ambient background particles */
+@keyframes spiralFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(var(--drift-x, 100px), var(--drift-y, -100px)) rotate(360deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Aurora wave for ambient backgrounds */
+@keyframes auroraWave {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+  50% {
+    transform: translate(-20px, -40px) scale(0.92);
+  }
+  75% {
+    transform: translate(-40px, 10px) scale(1.04);
+  }
+}
+
+/* Kinetic slide-in for staggered text reveals */
+@keyframes kineticSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.8);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Morph drip — blob that morphs between organic shapes */
+@keyframes morphDrip {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: scale(1);
+  }
+  25% {
+    border-radius: 40% 60% 60% 40% / 50% 60% 40% 50%;
+    transform: scale(1.05);
+  }
+  50% {
+    border-radius: 30% 70% 40% 60% / 40% 60% 60% 40%;
+    transform: scale(0.95);
+  }
+  75% {
+    border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
+    transform: scale(1.02);
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: scale(1);
+  }
+}
+
+/* Shimmer border slide for glow cards */
+@keyframes borderShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Float-sway for delicate ambient motion */
+@keyframes floatSway {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  33% {
+    transform: translateX(8px) translateY(-6px);
+  }
+  66% {
+    transform: translateX(-6px) translateY(4px);
+  }
+}
+
+/* Ripple spread for click feedback */
+@keyframes rippleSpread {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Image reveal — clip-path expand from center */
+@keyframes imageReveal {
+  0% {
+    clip-path: inset(50% 50% 50% 50%);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+/* Counter-up animation for stat numbers */
+@keyframes countUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === 2026 Animation Utility Classes === */
+
+.animate-spiral {
+  animation: spiralFloat 6s ease-in-out infinite;
+}
+.animate-aurora-wave {
+  animation: auroraWave 12s ease-in-out infinite;
+}
+.animate-kinetic-slide {
+  animation: kineticSlideIn 0.7s var(--ease-ios) forwards;
+  opacity: 0;
+}
+.animate-morph-drip {
+  animation: morphDrip 8s ease-in-out infinite;
+}
+.animate-border-shimmer {
+  background-size: 200% 200%;
+  animation: borderShimmer 3s ease infinite;
+}
+.animate-float-sway {
+  animation: floatSway 4s ease-in-out infinite;
+}
+.animate-ripple-spread {
+  animation: rippleSpread 0.5s ease-out forwards;
+}
+.animate-image-reveal {
+  animation: imageReveal 0.6s var(--ease-ios) forwards;
+}
+.animate-count-up {
+  animation: countUp 0.5s var(--ease-ios) forwards;
+}
+
+/* Kinetic stagger — children animate in sequence */
+.animate-kinetic-stagger > * {
+  opacity: 0;
+  animation: kineticSlideIn 0.6s var(--ease-ios) forwards;
+}
+.animate-kinetic-stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.animate-kinetic-stagger > *:nth-child(2) {
+  animation-delay: 100ms;
+}
+.animate-kinetic-stagger > *:nth-child(3) {
+  animation-delay: 200ms;
+}
+.animate-kinetic-stagger > *:nth-child(4) {
+  animation-delay: 300ms;
+}
+.animate-kinetic-stagger > *:nth-child(5) {
+  animation-delay: 400ms;
+}
+.animate-kinetic-stagger > *:nth-child(6) {
+  animation-delay: 500ms;
+}
+.animate-kinetic-stagger > *:nth-child(7) {
+  animation-delay: 600ms;
+}
+.animate-kinetic-stagger > *:nth-child(8) {
+  animation-delay: 700ms;
+}
+
+/* === Bento Grid 2026 Utilities === */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.bento-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--system-surface);
+  border: 1px solid var(--system-separator);
+  transition:
+    transform 200ms var(--ease-tactile),
+    box-shadow 200ms var(--ease-ios),
+    border-color 200ms var(--ease-ios);
+}
+
+.bento-tile:hover {
+  border-color: var(--system-accent-alpha-20);
+  box-shadow: var(--shadow-level-2);
+}
+
+.bento-tile:active {
+  transform: scale(0.97);
+}
+
+.bento-wide {
+  grid-column: span 2;
+}
+
+.bento-tall {
+  grid-row: span 2;
+}
+
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.bento-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .bento-wide {
+    grid-column: span 2;
+  }
+  .bento-tall {
+    grid-row: span 1;
+  }
+  .bento-large {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-wide,
+  .bento-large {
+    grid-column: 1;
+  }
+}
+
+/* Ambient Orb — floating organic glow blob */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: floatSway 8s ease-in-out infinite;
+}
+
+/* Kinetic text highlight — accent sweep on hover */
+.kinetic-highlight {
+  display: inline-block;
+  position: relative;
+  color: var(--system-text-primary);
+  transition: color 300ms var(--ease-ios);
+}
+.kinetic-highlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--system-accent-alpha-10), var(--system-accent-alpha-20));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms var(--ease-ios);
+  z-index: -1;
+  border-radius: var(--radius-badge);
+}
+.kinetic-highlight:hover {
+  color: var(--system-accent);
+}
+.kinetic-highlight:hover::after {
+  transform: scaleX(1);
+}
+
+/* Glassmorphism 2026 — refined, minimal */
+.glass-2026 {
+  background: var(--material-glass);
+  backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--system-separator);
+  border-radius: var(--radius-card);
+}
+
+/* Subtle glow dot (pulse indicator) */
+.glow-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--system-accent);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+/* Reduced motion for new animations */
+@media (prefers-reduced-motion: reduce) {
+  .bento-tile:hover,
+  .bento-tile:active {
+    transform: none;
+  }
+  .kinetic-highlight::after {
+    transition: none;
+  }
+  .kinetic-highlight:hover {
+    color: inherit;
+  }
+  .ambient-orb {
+    animation: none;
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 400ms var(--ease-ios) forwards;
 }

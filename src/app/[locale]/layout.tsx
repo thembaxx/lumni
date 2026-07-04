@@ -35,6 +35,16 @@ const BottomNav = dynamic(() =>
     default: m.BottomNav,
   })),
 );
+const AmbientBackground = dynamic(() =>
+  import("@/components/shared/ambient/ambient-background").then((m) => ({
+    default: m.AmbientBackground,
+  })),
+);
+const DynamicCursor = dynamic(() =>
+  import("@/components/shared/ambient/dynamic-cursor").then((m) => ({
+    default: m.DynamicCursor,
+  })),
+);
 const CookieBanner = dynamic(() =>
   import("@/components/consent/cookie-banner").then((m) => ({
     default: m.CookieBanner,
@@ -183,6 +193,12 @@ export default async function LocaleLayout({
       <WebVitals />
       <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
         <LazyMotion features={domAnimation}>
+          <Suspense fallback={null}>
+            <AmbientBackground variant="dashboard" orbCount={4} />
+          </Suspense>
+          <Suspense fallback={null}>
+            <DynamicCursor variant="aura" />
+          </Suspense>
           <UploadDialogRenderer />
           <Toaster />
           <NavGuard>

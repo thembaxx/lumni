@@ -44,6 +44,10 @@ const FeatureShowcaseSection = dynamic(
 const CtaSection = dynamic(() => import("./cta-section").then((m) => ({ default: m.CtaSection })), {
   ssr: false,
 });
+const AnimatedStatsSection = dynamic(
+  () => import("./animated-stats-section").then((m) => ({ default: m.AnimatedStatsSection })),
+  { ssr: false },
+);
 
 /**
  * Easter egg: type "matric" anywhere → confetti celebration
@@ -200,6 +204,9 @@ export function HomeContent() {
       <HeroSection isAuthenticated={isAuthenticated || isAnonymous} />
       <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30" />}>
         <FeaturesGrid />
+      </Suspense>
+      <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
+        <AnimatedStatsSection />
       </Suspense>
       <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30" />}>
         <HowItWorksSection />

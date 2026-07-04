@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-type EasterEgg = "konami" | "rainbow" | "zen" | "retro";
+type EasterEgg = "konami" | "rainbow" | "zen" | "retro" | "galaxy" | "spiral";
 
 interface EasterEggState {
   activeEgg: EasterEgg | null;
@@ -19,6 +19,8 @@ interface EasterEggState {
   isRainbow: boolean;
   isRetro: boolean;
   isZen: boolean;
+  isGalaxy: boolean;
+  isSpiral: boolean;
 }
 
 const EasterEggContext = createContext<EasterEggState>({
@@ -28,6 +30,8 @@ const EasterEggContext = createContext<EasterEggState>({
   isRainbow: false,
   isRetro: false,
   isZen: false,
+  isGalaxy: false,
+  isSpiral: false,
 });
 
 const KONAMI = [
@@ -79,6 +83,8 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       isRainbow: activeEgg === "rainbow",
       isRetro: activeEgg === "retro",
       isZen: activeEgg === "zen",
+      isGalaxy: activeEgg === "galaxy",
+      isSpiral: activeEgg === "spiral",
     }),
     [activeEgg, trigger, dismiss],
   );
@@ -89,6 +95,8 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       {activeEgg === "rainbow" && <RainbowOverlay />}
       {activeEgg === "zen" && <ZenOverlay />}
       {activeEgg === "retro" && <RetroOverlay />}
+      {activeEgg === "galaxy" && <GalaxyOverlay />}
+      {activeEgg === "spiral" && <SpiralOverlay />}
       {children}
     </EasterEggContext>
   );
@@ -184,6 +192,62 @@ function ZenOverlay() {
       <div className="animate-zen-ripple delay-600 absolute size-25 rounded-full border border-white/10" />
       <div className="absolute animate-fade-in-scale text-white/60 text-sm tracking-widest uppercase">
         Breathe
+      </div>
+    </div>
+  );
+}
+
+function GalaxyOverlay() {
+  const stars = Array.from({ length: 60 }, (_, i) => i);
+  return (
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) flex items-center justify-center">
+      {stars.map((i) => (
+        <div
+          key={i}
+          className="absolute rounded-full bg-white animate-spiral"
+          style={{
+            width: `${2 + Math.random() * 4}px`,
+            height: `${2 + Math.random() * 4}px`,
+            left: `${20 + Math.random() * 60}%`,
+            top: `${20 + Math.random() * 60}%`,
+            animationDelay: `${Math.random() * 2}s`,
+            animationDuration: `${3 + Math.random() * 4}s`,
+            opacity: 0.3 + Math.random() * 0.7,
+          }}
+        />
+      ))}
+      <div className="animate-fade-in-scale rounded-2xl bg-black/70 px-6 py-3 text-white text-sm font-medium backdrop-blur-xl">
+        🌌 Galaxy mode — study among the stars
+      </div>
+    </div>
+  );
+}
+
+function SpiralOverlay() {
+  const dots = Array.from({ length: 40 }, (_, i) => i);
+  return (
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) flex items-center justify-center">
+      {dots.map((i) => {
+        const angle = (i / dots.length) * 360;
+        const radius = 40 + (i / dots.length) * 120;
+        return (
+          <div
+            key={i}
+            className="absolute rounded-full animate-float-bob"
+            style={{
+              width: 6,
+              height: 6,
+              background: `oklch(55% ${0.1 + (i / dots.length) * 0.2} ${140 + angle})`,
+              left: `calc(50% + ${radius * Math.cos((angle * Math.PI) / 180)}px)`,
+              top: `calc(50% + ${radius * Math.sin((angle * Math.PI) / 180)}px)`,
+              animationDelay: `${(i / dots.length) * 2}s`,
+              opacity: 0.6,
+            }}
+          />
+        );
+      })}
+      <div className="animate-fade-in-scale absolute rounded-2xl bg-black/70 px-6 py-3 text-white text-sm font-medium backdrop-blur-xl">
+        Focus mode — breathe & centre
       </div>
     </div>
   );
