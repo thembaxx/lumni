@@ -1,5 +1,7 @@
 "use client";
 
+export const instant = false;
+
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
