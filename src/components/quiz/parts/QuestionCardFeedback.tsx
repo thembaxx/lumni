@@ -7,6 +7,7 @@ import MailSend01Icon from "@hugeicons/core-free-icons/MailSend01Icon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -15,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { iOSEase } from "@/lib/utils/animation";
 import {
   SourceAttributionPill,
   type SourceAttributionPillSource,
@@ -102,6 +102,7 @@ export function QuestionCardFeedback({
   setFollowUpInput,
 }: QuestionCardFeedbackProps) {
   const t = useTranslations();
+  const prefersReducedMotion = useReducedMotion();
   if (!state.showExplanation) {
     return null;
   }
@@ -112,9 +113,15 @@ export function QuestionCardFeedback({
   return (
     <m.div
       role="alert"
-      initial={{ opacity: 0, scale: 0.95, y: -8 }}
+      initial={{ opacity: 0, scale: 0.93, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: iOSEase }}
+      transition={{
+        type: "spring",
+        stiffness: 350,
+        damping: 28,
+        mass: 0.8,
+        duration: prefersReducedMotion ? 0 : undefined,
+      }}
       className={cn(
         "flex flex-col gap-3 rounded-lg p-4",
         isCorrectAnswer ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
@@ -122,9 +129,20 @@ export function QuestionCardFeedback({
     >
       <div className="flex items-center gap-3">
         <m.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.3 }}
+          initial={{
+            scale: isCorrectAnswer ? 0.5 : 0.5,
+            rotate: isCorrectAnswer ? -15 : 15,
+            opacity: 0,
+          }}
+          animate={{ scale: 1, rotate: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 16,
+            mass: 0.6,
+            delay: 0.05,
+            duration: prefersReducedMotion ? 0 : undefined,
+          }}
         >
           {isCorrectAnswer ? (
             <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-10 shrink-0" />
@@ -132,9 +150,20 @@ export function QuestionCardFeedback({
             <HugeiconsIcon icon={Cancel01Icon} className="size-10 shrink-0" />
           )}
         </m.div>
-        <p className="font-medium">
+        <m.p
+          initial={{ opacity: 0, x: -6 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 22,
+            delay: 0.08,
+            duration: prefersReducedMotion ? 0 : undefined,
+          }}
+          className="font-medium"
+        >
           {isCorrectAnswer ? t("quiz.correctLabel") : t("quiz.incorrectLabel")}
-        </p>
+        </m.p>
       </div>
       {feedback && (
         <div className="flex flex-col gap-1">

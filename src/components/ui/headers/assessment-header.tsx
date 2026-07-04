@@ -17,6 +17,7 @@ interface AssessmentHeaderProps {
   onQuit?: () => void;
   showAccuracy?: boolean;
   accuracy?: number;
+  accuracyLabel?: React.ReactNode;
   difficulty?: "easy" | "medium" | "hard";
   showMarks?: boolean;
   marks?: number;
@@ -42,6 +43,7 @@ export function AssessmentHeader({
   onQuit,
   showAccuracy,
   accuracy,
+  accuracyLabel,
   difficulty,
   showMarks,
   marks,
@@ -110,9 +112,11 @@ export function AssessmentHeader({
           {showAccuracy && accuracy !== undefined && (
             <>
               <HugeiconsIcon icon={Target01Icon} className="size-3.5 text-muted-foreground" />
-              <span className="font-semibold text-muted-foreground text-sm tabular-nums">
-                {accuracy}%
-              </span>
+              {accuracyLabel ?? (
+                <span className="font-semibold text-muted-foreground text-sm tabular-nums">
+                  {accuracy}%
+                </span>
+              )}
               <span className="text-muted-foreground">·</span>
             </>
           )}

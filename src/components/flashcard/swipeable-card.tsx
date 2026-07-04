@@ -1,12 +1,12 @@
 "use client";
 
-import { animate, useMotionValue, useTransform } from "motion/react";
+import { animate, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { memo, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { cn } from "@/lib/utils";
-import { iOSEase, springTransition } from "@/lib/utils/animation";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface SwipeableCardProps {
   id: string;
@@ -43,21 +43,27 @@ export const SwipeableCard = memo(function SwipeableCard({
 }: SwipeableCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const flipAnim = useMemo(() => ({ rotateY: isFlipped ? 180 : 0 }), [isFlipped]);
+  const prefersReducedMotion = useReducedMotion();
 
   const x = useMotionValue(0);
 
   const rotate = useTransform(x, [-300, 0, 300], [-18, 0, 18]);
+  const rotateY = useTransform(x, [-300, 0, 300], [6, 0, -6]);
   const opacity = useTransform(x, [-200, 0, 200], [0.85, 1, 0.85]);
   const scale3d = useTransform(x, [-300, 0, 300], [0.94, 1, 0.94]);
   const background = useTransform(
     x,
-    [-200, -100, 0, 100, 200],
+    [-300, -150, -80, -30, 0, 30, 80, 150, 300],
     [
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 25%, transparent) 0%, transparent 100%)",
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 20%, transparent) 0%, transparent 100%)",
       "linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 15%, transparent) 0%, transparent 100%)",
-      "linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 8%, transparent) 0%, transparent 100%)",
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-destructive) 5%, transparent) 0%, transparent 100%)",
       "transparent",
-      "linear-gradient(135deg, color-mix(in oklch, var(--color-success) 8%, transparent) 0%, transparent 100%)",
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-success) 5%, transparent) 0%, transparent 100%)",
       "linear-gradient(135deg, color-mix(in oklch, var(--color-success) 15%, transparent) 0%, transparent 100%)",
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-success) 20%, transparent) 0%, transparent 100%)",
+      "linear-gradient(135deg, color-mix(in oklch, var(--color-success) 25%, transparent) 0%, transparent 100%)",
     ],
   );
 
@@ -65,23 +71,34 @@ export const SwipeableCard = memo(function SwipeableCard({
     _event: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { x: number }; velocity: { x: number } },
   ) {
-    const threshold = 100;
+    if (prefersReducedMotion) {
+      const direction = info.offset.x > 0 ? "right" : "left";
+      onSwipe(direction);
+      return;
+    }
+
+    const hardThreshold = 100;
+    const magneticThreshold = 80;
     const xOffset = info.offset.x;
     const xVelocity = info.velocity.x;
+    const absOffset = Math.abs(xOffset);
 
-    if (Math.abs(xOffset) > threshold || Math.abs(xVelocity) > 500) {
+    if (absOffset > hardThreshold || Math.abs(xVelocity) > 500 || absOffset > magneticThreshold) {
       const direction = xOffset > 0 || xVelocity > 0 ? "right" : "left";
       const targetX = direction === "right" ? 600 : -600;
 
       animate(x, targetX, {
-        ...springTransition,
+        type: "spring",
+        stiffness: 400,
+        damping: 28,
+        mass: 0.7,
         onComplete: () => {
           onSwipe(direction);
           x.set(0);
         },
       });
     } else {
-      animate(x, 0, { type: "spring", stiffness: 300, damping: 26, bounce: 0 });
+      animate(x, 0, { type: "spring", stiffness: 350, damping: 28, bounce: 0 });
     }
   }
 
@@ -139,7 +156,7 @@ export const SwipeableCard = memo(function SwipeableCard({
     >
       <m.div
         className="perspective-1000 relative h-full w-full"
-        style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+        style={{ transformStyle: "preserve-3d", perspective: "1000px", rotateY }}
       >
         <m.div
           className="relative h-full w-full"

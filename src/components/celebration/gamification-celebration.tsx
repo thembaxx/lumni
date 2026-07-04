@@ -3,7 +3,7 @@
 import { useGamification } from "@/hooks/use-gamification";
 import { AchievementUnlock } from "./achievement-unlock";
 import { ChestUnlock } from "./chest-unlock";
-import { Confetti } from "./confetti";
+import { Confetti } from "./canvas-confetti";
 import { LevelUp } from "./level-up";
 
 export function GamificationCelebration() {

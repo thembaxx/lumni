@@ -88,9 +88,15 @@ export function DashboardContent({
         <LoginBanner />
         {activeTab === "today" && (
           <m.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            transition={{
+              type: "spring",
+              stiffness: 320,
+              damping: 26,
+              mass: 0.7,
+              duration: prefersReducedMotion ? 0 : undefined,
+            }}
           >
             <HeroBanner />
             {isLoggedIn && <CountdownHeader />}
@@ -99,18 +105,30 @@ export function DashboardContent({
         )}
         {activeTab === "practice" && (
           <m.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            transition={{
+              type: "spring",
+              stiffness: 320,
+              damping: 26,
+              mass: 0.7,
+              duration: prefersReducedMotion ? 0 : undefined,
+            }}
           >
             <PracticeTab onStartQuiz={onStartQuiz} />
           </m.div>
         )}
         {activeTab === "analytics" && (
           <m.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            transition={{
+              type: "spring",
+              stiffness: 320,
+              damping: 26,
+              mass: 0.7,
+              duration: prefersReducedMotion ? 0 : undefined,
+            }}
           >
             <AnalyticsTab />
           </m.div>

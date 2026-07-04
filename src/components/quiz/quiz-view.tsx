@@ -7,11 +7,12 @@ import {
   animate,
   useMotionValue,
   useReducedMotion,
+  useSpring,
   useTransform,
 } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
@@ -44,31 +45,56 @@ export interface QuizViewProps {
 
 function QuizProgressBar({ current, total }: { current: number; total: number }) {
   const prefersReducedMotion = useReducedMotion();
+  const progress = useMotionValue(0);
+  const springConfig = useMemo(
+    () => ({
+      stiffness: 280,
+      damping: 22,
+      mass: prefersReducedMotion ? 1000 : 0.5,
+    }),
+    [prefersReducedMotion],
+  );
+  const springProgress = useSpring(progress, springConfig);
+  const barWidth = useTransform(springProgress, (v) => `${v}%`);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      progress.jump((current / total) * 100);
+    } else {
+      progress.set((current / total) * 100);
+    }
+  }, [current, total, progress, prefersReducedMotion]);
+
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex h-1.5 flex-1 gap-0.5 overflow-hidden rounded-full bg-border/30">
-        {Array.from({ length: total }, (_, i) => (
-          <m.div
-            key={i}
-            initial={false}
-            animate={{
-              backgroundColor: i < current ? "var(--system-accent)" : "transparent",
-              scale: i === current ? 1.2 : 1,
-            }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-            className="h-full flex-1 rounded-full transition-colors"
-          />
-        ))}
+    <div className="flex items-center gap-3">
+      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-border/30">
+        <m.div
+          className="h-full rounded-full"
+          style={{
+            width: barWidth,
+            background:
+              "linear-gradient(90deg, var(--system-accent), color-mix(in oklch, var(--system-accent) 50%, transparent))",
+          }}
+        />
       </div>
-      <m.span
-        layoutId="question-counter"
-        initial={{ opacity: 0, y: -4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-        className="font-mono ios-caption-3 text-muted-foreground tabular-nums"
-      >
-        {current}/{total}
-      </m.span>
+      <div className="font-mono text-muted-foreground text-sm tabular-nums">
+        <m.span
+          key={current}
+          initial={{ opacity: 0, y: -6, filter: "blur(2px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            type: "spring",
+            stiffness: 350,
+            damping: 18,
+            mass: 0.6,
+            duration: prefersReducedMotion ? 0 : undefined,
+          }}
+          className="inline-block"
+        >
+          {current}
+        </m.span>
+        <span className="text-muted-foreground/40">/{total}</span>
+      </div>
     </div>
   );
 }

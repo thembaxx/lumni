@@ -51,7 +51,7 @@ const TopNavTitle = memo(function TopNavTitle({ title }: { title?: string }) {
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: iOSEase }}
-      className="ios-headline font-semibold text-foreground tracking-tight"
+      className="page-title ios-headline font-semibold text-foreground tracking-tight"
     >
       {pageTitle}
     </m.span>

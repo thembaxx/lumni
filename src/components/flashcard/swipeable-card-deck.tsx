@@ -205,6 +205,7 @@ export function SwipeableCardDeck({
                   damping: 28,
                   mass: 0.8,
                   bounce: 0,
+                  delay: idx * 0.04,
                 }}
                 layout
               >
@@ -240,9 +241,14 @@ export function SwipeableCardDeck({
         {showPicker && (
           <m.div
             className="absolute inset-0 z-overlay flex items-center justify-center rounded-card-lg bg-system-background/95"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.2, ease: iOSEase }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 28,
+              mass: 0.7,
+            }}
           >
             <QualityPicker
               polarity={pickerPolarity}

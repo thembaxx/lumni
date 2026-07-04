@@ -993,6 +993,10 @@
   animation: 120ms ease-out both fadeIn;
 }
 
+.page-title {
+  view-transition-name: page-title;
+}
+
 .sidebar-panel {
   view-transition-name: sidebar-panel;
 }
@@ -1007,8 +1011,18 @@
   animation: none;
 }
 
+.sidebar-active {
+  view-transition-name: sidebar-active;
+}
+
 ::view-transition-old(topnav-bar),
 ::view-transition-new(topnav-bar) {
+  animation: none;
+}
+
+::view-transition-old(sidebar-active),
+::view-transition-new(sidebar-active) {
+  height: auto;
   animation: none;
 }
 

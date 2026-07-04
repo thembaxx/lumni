@@ -4,6 +4,7 @@ import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
@@ -200,16 +201,21 @@ export function CompetencyOverview() {
                               key={level}
                               className="h-1.5 w-full overflow-hidden rounded-full bg-border/20"
                             >
-                              <div
+                              <motion.div
                                 className={cn(
-                                  "h-full origin-left rounded-full transition-[transform]",
+                                  "h-full origin-left rounded-full",
                                   level === "novice" && "bg-destructive",
                                   level === "developing" && "bg-warning",
                                   level === "proficient" && "bg-(--system-accent)",
                                   level === "mastered" && "bg-success",
                                 )}
-                                style={{
-                                  transform: `scaleX(${Math.max(pct, 4) / 100})`,
+                                initial={{ scaleX: 0 }}
+                                animate={{ scaleX: Math.max(pct, 4) / 100 }}
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 280,
+                                  damping: 22,
+                                  mass: 0.5,
                                 }}
                               />
                             </div>

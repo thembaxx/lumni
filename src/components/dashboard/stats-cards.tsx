@@ -3,10 +3,10 @@
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { useMotionValueEvent, useSpring } from "motion/react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useAnimatedNumber } from "@/hooks/use-animated-number";
 
 interface StatsCardsProps {
   questionsAnswered: number;
@@ -23,29 +23,37 @@ interface StatItemProps {
 }
 
 function AnimatedNumber({ value }: { value: number }) {
-  const displayValue = useAnimatedNumber(value, 400, true);
-  return <span aria-live="polite">{displayValue}</span>;
+  const springValue = useSpring(0, { stiffness: 280, damping: 22, mass: 0.5 });
+  const [display, setDisplay] = useState(0);
+
+  useMotionValueEvent(springValue, "change", (latest) => {
+    setDisplay(Math.round(latest));
+  });
+
+  useEffect(() => {
+    springValue.set(value);
+  }, [value, springValue]);
+
+  return <span aria-live="polite">{display}</span>;
 }
 
-function StatCard({ label, value, icon: Icon, colorClass, index }: StatItemProps) {
+function StatCard({ label, value, icon: Icon, colorClass }: StatItemProps) {
   return (
-    <FadeIn direction="up" distance={8} duration={0.35} delay={index * 0.05}>
-      <Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
-        <CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
-          <div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
-            <HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
-          </div>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-1 px-5 pb-0 text-center">
-          <p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
-            <AnimatedNumber value={value} />
-          </p>
-          <p className="font-extrabold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
-            {label}
-          </p>
-        </CardContent>
-      </Card>
-    </FadeIn>
+    <Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
+      <CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
+        <div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
+          <HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-1 px-5 pb-0 text-center">
+        <p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
+          <AnimatedNumber value={value} />
+        </p>
+        <p className="font-extrabold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
+          {label}
+        </p>
+      </CardContent>
+    </Card>
   );
 }
 

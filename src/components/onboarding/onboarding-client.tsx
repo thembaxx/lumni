@@ -4,7 +4,7 @@ import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Confetti } from "@/components/celebration/confetti";
+import { Confetti } from "@/components/celebration/canvas-confetti";
 import { PageContainer } from "@/components/layout/page-container";
 import rawSubjects from "@/data/subjects.json";
 import { useOnboarding } from "@/hooks/use-onboarding";

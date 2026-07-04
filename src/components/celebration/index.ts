@@ -1,5 +1,5 @@
 export { AchievementUnlock } from "./achievement-unlock";
-export { Confetti } from "./confetti";
+export { CanvasConfetti, Confetti } from "./canvas-confetti";
 export { GamificationCelebration } from "./gamification-celebration";
 export { type Celebration, type CelebrationType, JoyProvider } from "./joy-provider";
 export { LevelUp } from "./level-up";
