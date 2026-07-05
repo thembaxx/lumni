@@ -179,6 +179,7 @@ class DexieDataAccess implements DataAccess {
   syncOutbox = tableAdapter(offlineDB.syncOutbox);
   syncCheckpoints = tableAdapter(offlineDB.syncCheckpoints);
   userSettings = tableAdapter(offlineDB.userSettings);
+  experimentAssignments = tableAdapter(offlineDB.experimentAssignments);
 }
 
 export const dexieDataAccess =

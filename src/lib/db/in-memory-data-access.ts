@@ -5,6 +5,7 @@ import type {
   AnalyticsEvent,
   AssignmentMessage,
   BookmarkRecord,
+  ExperimentAssignmentRecord,
   CachedExamDates,
   CachedPdf,
   CachedProgress,
@@ -314,4 +315,5 @@ export class InMemoryDataAccess implements DataAccess {
   syncOutbox = new InMemoryTable<SyncOutboxEntry>();
   syncCheckpoints = new InMemoryTable<SyncCheckpoint, string>();
   userSettings = new InMemoryTable<UserSettings, string>();
+  experimentAssignments = new InMemoryTable<ExperimentAssignmentRecord>();
 }

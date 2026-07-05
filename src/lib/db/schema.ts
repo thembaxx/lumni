@@ -394,12 +394,20 @@ export interface SyncCheckpoint {
   lastPulledVersion: string;
 }
 
+export interface ExperimentAssignmentRecord {
+  id?: number;
+  userId: string;
+  experimentId: string;
+  variantId: string;
+  assignedAt: string;
+}
+
 export interface UserSettings {
   id?: string;
   userId: string;
-  studyPrefs: string; // JSON stringified StudyPreferences
-  notifications: string; // JSON stringified NotificationSettings
-  betaFeatures?: string; // JSON stringified BetaFeatures (optional, removed in 085)
+  studyPrefs: string;
+  notifications: string;
+  betaFeatures?: string;
   updatedAt: number;
 }
 
@@ -465,6 +473,7 @@ export class LumniOfflineDB extends Dexie {
   syncCheckpoints!: Table<SyncCheckpoint, string>;
   userSettings!: Table<UserSettings, string>;
   essayDrafts!: Table<EssayDraftRecord, number>;
+  experimentAssignments!: Table<ExperimentAssignmentRecord, number>;
 
   constructor() {
     super("lumni-offline");
@@ -566,6 +575,11 @@ export class LumniOfflineDB extends Dexie {
     // v43: essayDrafts for essay coaching revision tracking
     this.version(43).stores({
       essayDrafts: "++id, userId, questionId, [userId+questionId]",
+    });
+
+    // v44: experimentAssignments for A/B testing assignment persistence
+    this.version(44).stores({
+      experimentAssignments: "++id, &[userId+experimentId], userId, experimentId, variantId, assignedAt",
     });
   }
 }

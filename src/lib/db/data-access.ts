@@ -1,5 +1,6 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type {
+  ExperimentAssignmentRecord,
   STTCacheEntry,
   STTUsageEntry,
   SyncCheckpoint,
@@ -221,6 +222,10 @@ export interface LegacyDataAccess {
   seenPastPaperQuestions: DataAccessTable<SeenPastPaperQuestion, number>;
 }
 
+export interface ExperimentDataAccess {
+  experimentAssignments: DataAccessTable<ExperimentAssignmentRecord, number>;
+}
+
 // ──────────────────────────────────────────────
 // Composite — full 34-table access
 // ──────────────────────────────────────────────
@@ -246,4 +251,5 @@ export interface DataAccess
     EmbeddingDataAccess,
     CommunityDataAccess,
     PronunciationDataAccess,
-    LegacyDataAccess {}
+    LegacyDataAccess,
+    ExperimentDataAccess {}
