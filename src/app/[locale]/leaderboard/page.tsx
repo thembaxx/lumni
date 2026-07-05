@@ -21,5 +21,3 @@ export default function LeaderboardPage() {
     </div>
   );
 }
-
-export const instant = false;

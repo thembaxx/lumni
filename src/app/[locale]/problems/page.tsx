@@ -17,5 +17,3 @@ export default function ProblemsPage() {
     </div>
   );
 }
-
-export const instant = false;

@@ -23,5 +23,3 @@ export default function PeriodicPage() {
     </div>
   );
 }
-
-export const instant = false;

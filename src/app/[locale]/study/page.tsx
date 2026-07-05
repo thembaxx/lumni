@@ -20,5 +20,3 @@ export default function StudyPage() {
     </AppErrorBoundary>
   );
 }
-
-export const instant = false;

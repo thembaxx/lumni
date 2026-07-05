@@ -23,5 +23,3 @@ export default function SchedulerPage() {
     </div>
   );
 }
-
-export const instant = false;

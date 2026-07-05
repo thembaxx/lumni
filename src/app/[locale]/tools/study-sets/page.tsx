@@ -23,5 +23,3 @@ export default function StudySetsPage() {
     </div>
   );
 }
-
-export const instant = false;

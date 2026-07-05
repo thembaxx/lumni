@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Microphone01Icon from "@hugeicons/core-free-icons/Microphone01Icon";
+import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import { audioEngine } from "@/lib/audio-engine/audio-engine";
@@ -82,7 +82,7 @@ export function InlinePronunciationPractice({
           className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
           aria-label={`Practice pronouncing ${word}`}
         >
-          <HugeiconsIcon icon={Microphone01Icon} className="size-4" />
+          <HugeiconsIcon icon={Mic01Icon} className="size-4" />
         </button>
       )}
 

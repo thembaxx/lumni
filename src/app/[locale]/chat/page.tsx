@@ -14,5 +14,3 @@ export default function ChatPage() {
     </AppErrorBoundary>
   );
 }
-
-export const instant = false;

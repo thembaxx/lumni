@@ -15,5 +15,3 @@ export default function StudyGuidePageWrapper() {
     </div>
   );
 }
-
-export const instant = false;

@@ -20,5 +20,3 @@ export default function SearchPage() {
     </div>
   );
 }
-
-export const instant = false;

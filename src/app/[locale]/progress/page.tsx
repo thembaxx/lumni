@@ -40,5 +40,3 @@ export default function ProgressPage() {
     </div>
   );
 }
-
-export const instant = false;

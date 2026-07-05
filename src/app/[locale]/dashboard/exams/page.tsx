@@ -9,5 +9,3 @@ export default function ExamsPage() {
     </Suspense>
   );
 }
-
-export const instant = false;

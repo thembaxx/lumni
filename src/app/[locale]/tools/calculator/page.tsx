@@ -23,5 +23,3 @@ export default function CalculatorPage() {
     </div>
   );
 }
-
-export const instant = false;

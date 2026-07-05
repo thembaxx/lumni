@@ -24,5 +24,3 @@ export default function SettingsPage() {
     </AppErrorBoundary>
   );
 }
-
-export const instant = false;

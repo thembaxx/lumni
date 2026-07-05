@@ -9,5 +9,3 @@ export default function SignInPage() {
     </Suspense>
   );
 }
-
-export const instant = false;

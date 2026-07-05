@@ -23,5 +23,3 @@ export default function ResultsPage() {
     </div>
   );
 }
-
-export const instant = false;

@@ -47,5 +47,3 @@ export default function PracticePage() {
     </div>
   );
 }
-
-export const instant = false;

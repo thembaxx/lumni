@@ -58,5 +58,3 @@ export default function LearnPage() {
     </div>
   );
 }
-
-export const instant = false;

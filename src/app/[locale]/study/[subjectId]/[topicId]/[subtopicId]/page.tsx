@@ -19,5 +19,3 @@ export default function LessonPage({
     </AppErrorBoundary>
   );
 }
-
-export const instant = false;

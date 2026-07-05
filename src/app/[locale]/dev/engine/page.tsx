@@ -9,5 +9,3 @@ export default function DevEnginePageWrapper() {
     </Suspense>
   );
 }
-
-export const instant = false;

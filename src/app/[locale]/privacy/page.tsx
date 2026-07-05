@@ -131,5 +131,3 @@ export default function PrivacyPage() {
     </PageContainer>
   );
 }
-
-export const instant = false;

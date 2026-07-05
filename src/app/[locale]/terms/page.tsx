@@ -118,5 +118,3 @@ export default function TermsPage() {
     </PageContainer>
   );
 }
-
-export const instant = false;

@@ -21,5 +21,3 @@ export default function ReviewPage() {
     </div>
   );
 }
-
-export const instant = false;

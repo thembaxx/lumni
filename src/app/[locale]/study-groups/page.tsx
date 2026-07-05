@@ -17,5 +17,3 @@ export default function StudyGroupsPage() {
     </PageContainer>
   );
 }
-
-export const instant = false;

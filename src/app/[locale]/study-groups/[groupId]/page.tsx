@@ -8,5 +8,3 @@ export const metadata: Metadata = {
 export default function GroupDetailPage() {
   return <GroupDetail />;
 }
-
-export const instant = false;

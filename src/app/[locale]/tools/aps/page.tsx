@@ -23,5 +23,3 @@ export default function ApsPage() {
     </div>
   );
 }
-
-export const instant = false;

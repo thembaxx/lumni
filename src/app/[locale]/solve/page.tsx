@@ -22,5 +22,3 @@ export default function SolvePage() {
     </div>
   );
 }
-
-export const instant = false;

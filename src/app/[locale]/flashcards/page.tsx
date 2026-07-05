@@ -32,5 +32,3 @@ export default function FlashcardsPage() {
     </AppErrorBoundary>
   );
 }
-
-export const instant = false;

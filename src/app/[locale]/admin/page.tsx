@@ -13,5 +13,3 @@ export default function AdminPage() {
 async function AdminContent() {
   return <AdminPageClient />;
 }
-
-export const instant = false;
