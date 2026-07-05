@@ -135,7 +135,10 @@ export function GradebookView() {
               <TableBody>
                 {gradesData.grades.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={4} className="py-8 text-center text-muted-foreground text-sm">
+                    <TableCell
+                      colSpan={4}
+                      className="py-8 text-center text-muted-foreground text-sm"
+                    >
                       No submissions yet for this assignment.
                     </TableCell>
                   </TableRow>
@@ -150,7 +153,11 @@ export function GradebookView() {
                       <span
                         className={cn(
                           "font-medium",
-                          g.percentage >= 80 ? "text-green-600" : g.percentage >= 60 ? "text-amber-600" : "text-red-600",
+                          g.percentage >= 80
+                            ? "text-green-600"
+                            : g.percentage >= 60
+                              ? "text-amber-600"
+                              : "text-red-600",
                         )}
                       >
                         {g.percentage}%

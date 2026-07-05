@@ -17,6 +17,7 @@ This is already wired in `src/app/api/assignments/[id]/submit/route.ts`.
 ### Q2: Where does grade data live?
 
 **Decision**: Dual-write — same pattern as the rest of the app:
+
 - **Primary**: Dexie (`quiz_sessions` table) for fast client-side queries
 - **Sync target**: Appwrite (`ASSIGNMENT_SUBMISSIONS` collection and `STUDY_SESSIONS` collection)
 
@@ -25,6 +26,7 @@ The gradebook API queries from Appwrite (server-side authenticated). For offline
 ### Q3: How does the student see their grades?
 
 **Decision**: Two views:
+
 1. **Per-assignment**: In the assignment detail view, students see their score, the class average, and their percentile
 2. **Term overview**: A cumulative grade view showing all assignments with scores over time
 
@@ -33,6 +35,7 @@ The per-assignment grade view already exists in the student's assignment submiss
 ### Q4: What is the minimum viable gradebook?
 
 **Decision**: The MVP gradebook is a view over existing `ASSIGNMENT_SUBMISSIONS` data:
+
 - **Per-assignment view**: List of students with scores, average, min/max, distribution
 - **Per-student view**: All scores across all assignments, trend over time
 - **No new data storage needed** — the `ASSIGNMENT_SUBMISSIONS` and `STUDY_SESSIONS` tables already capture everything
@@ -72,6 +75,7 @@ endedAt?: string
 Returns per-student scores for a given assignment.
 
 **Response:**
+
 ```json
 {
   "assignment": {
@@ -105,6 +109,7 @@ Returns per-student scores for a given assignment.
 Returns all grades for a specific student across assignments.
 
 **Response:**
+
 ```json
 {
   "studentId": "user_abc",
@@ -137,6 +142,7 @@ Export full gradebook as CSV for download.
 ## Wire View (Teacher Dashboard Tab)
 
 A new "Gradebook" tab in the `ClassShell` component shows:
+
 - Assignment selector (dropdown of all assignments)
 - Grade table (student name, score, percentage, completion date)
 - Statistics bar (average, highest, lowest)

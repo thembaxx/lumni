@@ -8,17 +8,17 @@ A teacher with 150 students across 5 classes must currently link each student on
 
 ### Required Columns
 
-| Column | Description | Example |
-|---|---|---|
-| `student_name` | Student's full name (for preview/display) | `John Doe` |
+| Column          | Description                                       | Example           |
+| --------------- | ------------------------------------------------- | ----------------- |
+| `student_name`  | Student's full name (for preview/display)         | `John Doe`        |
 | `student_email` | Email to match against existing Appwrite accounts | `john@school.edu` |
 
 ### Optional Columns
 
-| Column | Description | Example |
-|---|---|---|
-| `grade` | Student's grade/year level | `12` |
-| `subject` | Default subject to assign | `Mathematics` |
+| Column    | Description                | Example       |
+| --------- | -------------------------- | ------------- |
+| `grade`   | Student's grade/year level | `12`          |
+| `subject` | Default subject to assign  | `Mathematics` |
 
 ### Rules
 
@@ -42,6 +42,7 @@ Jane Smith,jane@school.edu,11,Physical Sciences
 Accepts CSV as raw text body (`Content-Type: text/plain`). The client sends the CSV content directly — no multipart file upload needed, avoiding UploadThing dependency.
 
 **Request:**
+
 ```
 POST /api/teacher/roster/import
 Content-Type: text/plain
@@ -52,6 +53,7 @@ John Doe,john@school.edu,12,Mathematics
 ```
 
 **Response (201):**
+
 ```json
 {
   "matched": [

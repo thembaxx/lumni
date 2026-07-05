@@ -10,17 +10,17 @@ Dexie table `studyCommitments` (v33):
 
 ```ts
 interface StudyCommitment {
-  id: string;                // nanoid
-  userId: string;            // creator / user A
-  buddyUserId: string;       // invited user / user B
-  subject: string;           // shared study subject
+  id: string; // nanoid
+  userId: string; // creator / user A
+  buddyUserId: string; // invited user / user B
+  subject: string; // shared study subject
   targetDailyMinutes: number; // e.g. 30
-  startDate: string;         // ISO date
-  endDate: string | null;    // ISO date (null = ongoing)
+  startDate: string; // ISO date
+  endDate: string | null; // ISO date (null = ongoing)
   status: "pending" | "active" | "declined" | "ended";
-  sharedStreak: number;      // consecutive days both completed
+  sharedStreak: number; // consecutive days both completed
   lastSharedDate: string | null; // last date both practised
-  createdAt: string;         // ISO
+  createdAt: string; // ISO
 }
 ```
 
@@ -45,11 +45,11 @@ Else if one user missed:
 
 ## API Routes
 
-| Method | Path | Purpose |
-|---|---|---|
-| POST | `/api/study-buddies/commit` | Create a commitment |
-| GET | `/api/study-buddies/commitments` | List user's commitments |
-| DELETE | `/api/study-buddies/commitments/[id]` | End a commitment |
+| Method | Path                                  | Purpose                 |
+| ------ | ------------------------------------- | ----------------------- |
+| POST   | `/api/study-buddies/commit`           | Create a commitment     |
+| GET    | `/api/study-buddies/commitments`      | List user's commitments |
+| DELETE | `/api/study-buddies/commitments/[id]` | End a commitment        |
 
 ## UI Notes
 

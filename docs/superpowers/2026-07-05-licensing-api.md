@@ -52,6 +52,7 @@ const RegisterSchoolSchema = z.object({
 ```
 
 **Logic:**
+
 1. Validate domain is not already registered (unique check)
 2. Create `schools` doc with `tier: "free"`, `seatCount: 1`, `seatsUsed: 1`
 3. Create `school_admins` doc for the calling user with `role: "admin"`
@@ -96,6 +97,7 @@ const CheckoutSchema = z.object({
 **For Payfast: returns `<form>` HTML with MD5-signed fields instead.**
 
 **Logic:**
+
 1. Verify caller is authorized admin for this school
 2. Calculate price: `seatCount * unitPrice[tier][billingFrequency]` (prices from server-side config)
 3. For Stripe: Create Stripe Checkout Session with `client_reference_id=schoolId`, `mode=subscription`, metadata with tier/seatCount
@@ -146,9 +148,7 @@ Get billing history for the authenticated user's school.
         "paidAt": "2026-07-01T00:00:00Z",
         "periodStart": "2026-07-01T00:00:00Z",
         "periodEnd": "2026-08-01T00:00:00Z",
-        "lines": [
-          { "description": "10 seats × Standard", "amount": 25000 }
-        ]
+        "lines": [{ "description": "10 seats × Standard", "amount": 25000 }]
       }
     ],
     "page": 1,
@@ -189,6 +189,7 @@ const AddSeatSchema = z.object({
 ```
 
 **Logic:**
+
 1. Verify caller is authorized admin
 2. Update `schools.seatCount` (+additional)
 3. Create Stripe/Payfast invoice item for prorated amount
@@ -230,6 +231,7 @@ Exactly one of `schoolCode` or `schoolId` must be provided.
 ```
 
 **Logic:**
+
 1. If `schoolCode`: look up `school_codes` by code, verify not expired and has remaining uses
 2. If `schoolId`: verify caller was invited (school_members has status="invited")
 3. Check `schools.seatsUsed < schools.seatCount` — reject with 403 if full
@@ -267,6 +269,7 @@ const LinkStudentSchema = z.object({
 ```
 
 **Logic:**
+
 1. Same as `link-teacher` but does NOT check seat count (students unlimited)
 2. Creates `school_members` doc with `role: "student"`
 
@@ -311,6 +314,7 @@ Admin-only: list all schools with license status.
 ```
 
 **Logic:**
+
 1. Query `schools` collection with filters
 2. Aggregate stats per school from analytics data
 3. Calculate MRR from active licenses
@@ -416,13 +420,13 @@ Reusing the pattern from the original monetization spec, but adapted for schools
 
 **Events to handle:**
 
-| Event | Action |
-|---|---|
-| `checkout.session.completed` | Create `licenses` doc from metadata, activate `schools.billingStatus`, create first `invoices` doc |
-| `customer.subscription.updated` | Sync seat counts, tier changes, status changes to `schools` and `licenses` |
-| `customer.subscription.deleted` | Set `schools.billingStatus = "cancelled"`, `licenses.status = "cancelled"` |
-| `invoice.paid` | Create `invoices` doc, update `licenses` period end |
-| `invoice.payment_failed` | Set `schools.billingStatus = "past_due"`, send notification to billing contact |
+| Event                           | Action                                                                                             |
+| ------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `checkout.session.completed`    | Create `licenses` doc from metadata, activate `schools.billingStatus`, create first `invoices` doc |
+| `customer.subscription.updated` | Sync seat counts, tier changes, status changes to `schools` and `licenses`                         |
+| `customer.subscription.deleted` | Set `schools.billingStatus = "cancelled"`, `licenses.status = "cancelled"`                         |
+| `invoice.paid`                  | Create `invoices` doc, update `licenses` period end                                                |
+| `invoice.payment_failed`        | Set `schools.billingStatus = "past_due"`, send notification to billing contact                     |
 
 ## Webhook: Payfast ITN `POST /api/payfast/itn`
 
@@ -433,13 +437,13 @@ Reusing the pattern from the original monetization spec, but adapted for schools
 
 ## Error Codes
 
-| Code | HTTP | Meaning |
-|---|---|---|
-| `SCHOOL_NOT_FOUND` | 404 | School ID doesn't exist |
-| `NOT_SCHOOL_ADMIN` | 403 | User is not authorized for this school |
-| `SEATS_EXHAUSTED` | 403 | School has no available seats |
-| `DOMAIN_TAKEN` | 409 | Email domain already registered to another school |
-| `INVALID_CODE` | 404 | School code doesn't exist or expired |
-| `ALREADY_MEMBER` | 409 | User is already a member of this school |
-| `TIER_NOT_FOUND` | 400 | Invalid tier selection |
-| `CHECKOUT_FAILED` | 500 | Payment provider returned an error |
+| Code               | HTTP | Meaning                                           |
+| ------------------ | ---- | ------------------------------------------------- |
+| `SCHOOL_NOT_FOUND` | 404  | School ID doesn't exist                           |
+| `NOT_SCHOOL_ADMIN` | 403  | User is not authorized for this school            |
+| `SEATS_EXHAUSTED`  | 403  | School has no available seats                     |
+| `DOMAIN_TAKEN`     | 409  | Email domain already registered to another school |
+| `INVALID_CODE`     | 404  | School code doesn't exist or expired              |
+| `ALREADY_MEMBER`   | 409  | User is already a member of this school           |
+| `TIER_NOT_FOUND`   | 400  | Invalid tier selection                            |
+| `CHECKOUT_FAILED`  | 500  | Payment provider returned an error                |

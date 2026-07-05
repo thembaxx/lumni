@@ -63,11 +63,9 @@ export const POST = createRouteHandler({
         subjectId: doc.subjectId || null,
       });
 
-      await updateDocument(
-        COLLECTIONS.CLASSROOM_CODES,
-        (doc.$id as string),
-        { useCount: (doc.useCount as number) + 1 },
-      );
+      await updateDocument(COLLECTIONS.CLASSROOM_CODES, doc.$id as string, {
+        useCount: (doc.useCount as number) + 1,
+      });
     } catch (e) {
       logError("StudentJoinLink", e);
       return { error: "Failed to join classroom" };

@@ -24,13 +24,13 @@ Higher score = more urgently needs re-engagement.
 
 Based on user's last-active subject, weakest topic, and time of day:
 
-| Time | Condition | Template | Deep Link |
-|---|---|---|---|
-| Morning (6-12) | streak > 3 | "Your [subject] streak is waiting!" | `/dashboard?subject=X` |
-| Afternoon (12-17) | competency < 60% | "Quick quiz: [weakest topic] needs practice" | `/quiz?subject=X&topic=Y&count=5` |
-| Evening (17-22) | daily challenge incomplete | "Today's challenge is ready" | `/dashboard` |
-| Any | dormant > 7 days | "[Subject] misses you! Try a 5-question warmup" | `/quiz?subject=X&count=5` |
-| Any | dormant > 14 days | "It's been a while! Here's your personalized refresher" | `/quiz?count=3` |
+| Time              | Condition                  | Template                                                | Deep Link                         |
+| ----------------- | -------------------------- | ------------------------------------------------------- | --------------------------------- |
+| Morning (6-12)    | streak > 3                 | "Your [subject] streak is waiting!"                     | `/dashboard?subject=X`            |
+| Afternoon (12-17) | competency < 60%           | "Quick quiz: [weakest topic] needs practice"            | `/quiz?subject=X&topic=Y&count=5` |
+| Evening (17-22)   | daily challenge incomplete | "Today's challenge is ready"                            | `/dashboard`                      |
+| Any               | dormant > 7 days           | "[Subject] misses you! Try a 5-question warmup"         | `/quiz?subject=X&count=5`         |
+| Any               | dormant > 14 days          | "It's been a while! Here's your personalized refresher" | `/quiz?count=3`                   |
 
 ## Delivery
 

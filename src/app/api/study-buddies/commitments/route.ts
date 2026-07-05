@@ -28,9 +28,7 @@ function getCommitments(): StudyCommitment[] {
 export async function GET() {
   try {
     const commitments = getCommitments();
-    const active = commitments.filter(
-      (c) => c.status === "pending" || c.status === "active",
-    );
+    const active = commitments.filter((c) => c.status === "pending" || c.status === "active");
     return NextResponse.json({ commitments: active });
   } catch {
     return NextResponse.json({ error: "Failed to fetch commitments" }, { status: 500 });

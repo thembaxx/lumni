@@ -40,10 +40,7 @@ export async function POST(request: Request) {
     };
 
     if (!body.buddyUserId || !body.subject) {
-      return NextResponse.json(
-        { error: "buddyUserId and subject are required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "buddyUserId and subject are required" }, { status: 400 });
     }
 
     const commitment: StudyCommitment = {

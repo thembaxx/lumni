@@ -579,7 +579,8 @@ export class LumniOfflineDB extends Dexie {
 
     // v44: experimentAssignments for A/B testing assignment persistence
     this.version(44).stores({
-      experimentAssignments: "++id, &[userId+experimentId], userId, experimentId, variantId, assignedAt",
+      experimentAssignments:
+        "++id, &[userId+experimentId], userId, experimentId, variantId, assignedAt",
     });
   }
 }

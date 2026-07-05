@@ -8,17 +8,17 @@ Students have no way to discover and connect to their teacher. The current flow 
 
 ### Appwrite Collection: `classroom_codes`
 
-| Field | Type | Description |
-|---|---|---|
-| `code` | string (6 chars) | Unique alphanumeric code: `ABCDEFGHJKLMNPQRSTUVWXYZ23456789` (no 0/O/1/I) |
-| `teacherId` | string | Appwrite user ID of the teacher who created it |
-| `subjectId` | string (optional) | Subject scope (null = any subject) |
-| `label` | string (optional) | Human-readable label like "Gr 12 Mathematics A" |
-| `expiresAt` | number | Timestamp when the code expires |
-| `maxUses` | number (optional) | Max number of students who can use this code (null = unlimited) |
-| `useCount` | number | Current number of students who've joined with this code |
-| `createdAt` | number | Timestamp when the code was created |
-| `revoked` | boolean | Whether the teacher has manually revoked this code |
+| Field       | Type              | Description                                                               |
+| ----------- | ----------------- | ------------------------------------------------------------------------- |
+| `code`      | string (6 chars)  | Unique alphanumeric code: `ABCDEFGHJKLMNPQRSTUVWXYZ23456789` (no 0/O/1/I) |
+| `teacherId` | string            | Appwrite user ID of the teacher who created it                            |
+| `subjectId` | string (optional) | Subject scope (null = any subject)                                        |
+| `label`     | string (optional) | Human-readable label like "Gr 12 Mathematics A"                           |
+| `expiresAt` | number            | Timestamp when the code expires                                           |
+| `maxUses`   | number (optional) | Max number of students who can use this code (null = unlimited)           |
+| `useCount`  | number            | Current number of students who've joined with this code                   |
+| `createdAt` | number            | Timestamp when the code was created                                       |
+| `revoked`   | boolean           | Whether the teacher has manually revoked this code                        |
 
 ### Lexicon
 
@@ -33,6 +33,7 @@ Students have no way to discover and connect to their teacher. The current flow 
 Generate a new classroom join code.
 
 **Request:**
+
 ```json
 {
   "subjectId": "math_grade12",
@@ -43,6 +44,7 @@ Generate a new classroom join code.
 ```
 
 **Response (201):**
+
 ```json
 {
   "code": "XK3M9P",
@@ -57,6 +59,7 @@ Generate a new classroom join code.
 List active (non-expired, non-revoked) codes for the authenticated teacher.
 
 **Response:**
+
 ```json
 {
   "codes": [
@@ -78,6 +81,7 @@ List active (non-expired, non-revoked) codes for the authenticated teacher.
 Revoke a classroom code.
 
 **Request:**
+
 ```json
 {
   "code": "XK3M9P"
@@ -85,6 +89,7 @@ Revoke a classroom code.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -98,6 +103,7 @@ Revoke a classroom code.
 Student submits a join code to auto-link with the teacher.
 
 **Request:**
+
 ```json
 {
   "code": "XK3M9P"
@@ -105,6 +111,7 @@ Student submits a join code to auto-link with the teacher.
 ```
 
 **Responses:**
+
 - 200: `{ "success": true, "teacherId": "...", "subjectId": "math_grade12" }`
 - 400: `{ "error": "Invalid or expired join code" }`
 - 409: `{ "error": "Already linked to this teacher" }`

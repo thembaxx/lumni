@@ -97,14 +97,14 @@ eventType in ["session_start", "session_end"]
 
 For the MVP prototype:
 
-| Metric | Window | Granularity | Aggregation |
-|--------|--------|-------------|-------------|
-| DAU | trailing 30d | daily | distinct userId per day |
-| MAU | trailing 12mo | monthly | distinct userId per month |
-| Stickiness | current | point | DAU/MAU |
-| Retention | rolling 4wk | weekly cohorts | % retained per week |
-| Live users | trailing 15min | point | distinct session count |
-| Subject usage | current month | per subject | session count with subject metadata |
+| Metric        | Window         | Granularity    | Aggregation                         |
+| ------------- | -------------- | -------------- | ----------------------------------- |
+| DAU           | trailing 30d   | daily          | distinct userId per day             |
+| MAU           | trailing 12mo  | monthly        | distinct userId per month           |
+| Stickiness    | current        | point          | DAU/MAU                             |
+| Retention     | rolling 4wk    | weekly cohorts | % retained per week                 |
+| Live users    | trailing 15min | point          | distinct session count              |
+| Subject usage | current month  | per subject    | session count with subject metadata |
 
 ## Future Considerations
 

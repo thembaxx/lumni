@@ -3,6 +3,7 @@
 ## Data Model
 
 ### ExperimentConfig
+
 - `id`: string
 - `name`: string
 - `description`: string
@@ -11,12 +12,14 @@
 - `status`: `"draft" | "running" | "paused" | "completed"`
 
 ### ExperimentAssignment
+
 - `userId`: string
 - `experimentId`: string
 - `variantId`: string
 - `assignedAt`: ISO timestamp
 
 ### FeatureFlag
+
 - `flagKey`: string
 - `experimentId`: string
 - `variantMap`: `{ [variantId]: boolean }`

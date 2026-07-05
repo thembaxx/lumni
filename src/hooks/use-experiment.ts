@@ -55,7 +55,10 @@ export function useExperiment(experimentId: string) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const queryKey = useMemo(() => ["experiment", experimentId, user?.$id], [experimentId, user?.$id]);
+  const queryKey = useMemo(
+    () => ["experiment", experimentId, user?.$id],
+    [experimentId, user?.$id],
+  );
 
   const { data, isLoading } = useQuery({
     queryKey,

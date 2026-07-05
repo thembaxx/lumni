@@ -78,9 +78,7 @@ export function AdminMetricsDashboard() {
   const stickiness = dauMau?.stickiness ?? 0;
   const liveUsers = live?.liveUsers ?? 0;
   const dau = daily.length > 0 ? daily[daily.length - 1].dau : 0;
-  const mau = dauMau?.monthly?.length
-    ? dauMau.monthly[dauMau.monthly.length - 1].mau
-    : 0;
+  const mau = dauMau?.monthly?.length ? dauMau.monthly[dauMau.monthly.length - 1].mau : 0;
 
   return (
     <div className="flex flex-col gap-6">
@@ -139,11 +137,7 @@ export function AdminMetricsDashboard() {
                       <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                       <YAxis allowDecimals={false} />
                       <Tooltip />
-                      <Bar
-                        dataKey="count"
-                        fill="var(--color-accent)"
-                        radius={[4, 4, 0, 0]}
-                      />
+                      <Bar dataKey="count" fill="var(--color-accent)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

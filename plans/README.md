@@ -157,14 +157,14 @@ Light docs fixes first (091), then heavier follow-ups. 095 depends on 091 (docs 
 
 Plans 098-100 are foundational (monetization + B2B2C pipeline) and should be executed first. Plans 101-102 build on the measurement infrastructure. Plan 103 is independent.
 
-| Plan | Title | Priority | Effort | Risk | Depends on | Status |
-| ---- | ----- | -------- | ------ | ---- | ---------- | ------ |
-| 098 | Design spike: school/district licensing portal | P1 | L | LOW | — | DONE |
-| 099 | Design spike: teacher classroom infrastructure | P1 | L | LOW | — | DONE |
-| 100 | Design spike: business metrics dashboard | P1 | M | LOW | — | DONE |
-| 101 | Design spike: A/B testing & feature flag framework | P2 | M | LOW | — | DONE |
-| 102 | Design spike: retention ecosystem v2 | P2 | M | LOW | — | DONE |
-| 103 | Build: OCR exam timetable scraping | P2 | M | LOW | — | DONE |
+| Plan | Title                                              | Priority | Effort | Risk | Depends on | Status |
+| ---- | -------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 098  | Design spike: school/district licensing portal     | P1       | L      | LOW  | —          | DONE   |
+| 099  | Design spike: teacher classroom infrastructure     | P1       | L      | LOW  | —          | DONE   |
+| 100  | Design spike: business metrics dashboard           | P1       | M      | LOW  | —          | DONE   |
+| 101  | Design spike: A/B testing & feature flag framework | P2       | M      | LOW  | —          | DONE   |
+| 102  | Design spike: retention ecosystem v2               | P2       | M      | LOW  | —          | DONE   |
+| 103  | Build: OCR exam timetable scraping                 | P2       | M      | LOW  | —          | DONE   |
 
 ### Execution notes
 
@@ -188,14 +188,14 @@ Plans 098-100 are foundational (monetization + B2B2C pipeline) and should be exe
 
 All 6 plans executed 2026-07-05 via isolated worktrees, cherry-picked to master at `a0a308b4`. Each passed `pnpm run typecheck`, `pnpm exec oxlint`, and `pnpm run test` (1750 pass, 0 fail) in its worktree.
 
-| Plan | Worktree | Source files added/modified |
-| ---- | -------- | --------------------------- |
-| 098  | `lumni-exec-098` | `docs/superpowers/` (5 design docs) |
+| Plan | Worktree         | Source files added/modified                                                                                                                                         |
+| ---- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 098  | `lumni-exec-098` | `docs/superpowers/` (5 design docs)                                                                                                                                 |
 | 099  | `lumni-exec-099` | `docs/superpowers/` (3), `src/app/api/teacher/` (3), `src/app/api/student/join/`, `src/components/teacher/gradebook-view.tsx`, `src/lib/db/constants.ts` (modified) |
-| 100  | `lumni-exec-100` | `docs/superpowers/` (2), `src/app/api/admin/metrics/` (4), `src/components/admin/admin-metrics-dashboard.tsx` |
-| 101  | `lumni-exec-101` | `docs/superpowers/` (2), `src/lib/experiments/` (4), `src/hooks/use-experiment.ts`, `src/app/api/experiment/evaluate/`, `src/lib/db/` (5 files modified) |
-| 102  | `lumni-exec-102` | `docs/superpowers/` (3), `src/lib/gamification-engine/` (3 modified), `src/lib/retention/re-engagement.ts`, `src/app/api/study-buddies/` (3) |
-| 103  | `lumni-exec-103` | `docs/superpowers/` (2), `src/lib/exam-dates/` (3, 1 modified), `src/app/api/exam-dates/ingest/` |
+| 100  | `lumni-exec-100` | `docs/superpowers/` (2), `src/app/api/admin/metrics/` (4), `src/components/admin/admin-metrics-dashboard.tsx`                                                       |
+| 101  | `lumni-exec-101` | `docs/superpowers/` (2), `src/lib/experiments/` (4), `src/hooks/use-experiment.ts`, `src/app/api/experiment/evaluate/`, `src/lib/db/` (5 files modified)            |
+| 102  | `lumni-exec-102` | `docs/superpowers/` (3), `src/lib/gamification-engine/` (3 modified), `src/lib/retention/re-engagement.ts`, `src/app/api/study-buddies/` (3)                        |
+| 103  | `lumni-exec-103` | `docs/superpowers/` (2), `src/lib/exam-dates/` (3, 1 modified), `src/app/api/exam-dates/ingest/`                                                                    |
 
 **Key deviation notes**: Plan 099 committed to wrong worktree path (missing `org1128\`); commit rescued from orphan object `e0339a23`. Plan 100 admin metrics API routes return prototype/empty data (Dexie is client-side only; design docs document the sync-to-Appwrite path needed for production). Plan 101 added Dexie v44 migration for `experimentAssignments` table. Plan 103 calendar export code was already shipped; design doc captures the spec.
 

@@ -32,9 +32,17 @@ export const GET = createRouteHandler({
 
 ```typescript
 {
-  daily: { date: string; dau: number }[];       // trailing 30 days
-  monthly: { month: string; mau: number }[];    // trailing 12 months
-  stickiness: number;                            // DAU/MAU ratio (0–1)
+  daily: {
+    date: string;
+    dau: number;
+  }
+  []; // trailing 30 days
+  monthly: {
+    month: string;
+    mau: number;
+  }
+  []; // trailing 12 months
+  stickiness: number; // DAU/MAU ratio (0–1)
 }
 ```
 
@@ -66,13 +74,14 @@ Group results by `YYYY-MM-DD` (daily) and `YYYY-MM` (monthly), counting distinct
 ```typescript
 {
   cohorts: {
-    weekStart: string;   // ISO date string (Monday)
-    week0: number;       // always 100 (percentage)
-    week1: number;       // % retained in week +1
+    weekStart: string; // ISO date string (Monday)
+    week0: number; // always 100 (percentage)
+    week1: number; // % retained in week +1
     week2: number;
     week3: number;
     week4: number;
-  }[];
+  }
+  [];
 }
 ```
 
@@ -99,7 +108,7 @@ Each cohort row represents a group of users who were active in `weekStart` week.
 
 ```typescript
 {
-  liveUsers: number;  // count of distinct users active in last 15 min
+  liveUsers: number; // count of distinct users active in last 15 min
 }
 ```
 
@@ -130,9 +139,10 @@ Count distinct `userId` values.
 ```typescript
 {
   subjects: {
-    name: string;   // subject name from metadata
-    count: number;  // session count this month
-  }[];
+    name: string; // subject name from metadata
+    count: number; // session count this month
+  }
+  [];
 }
 ```
 
@@ -164,11 +174,11 @@ All endpoints use `auth: "admin"` mode which calls `requireAdmin()` from `@/lib/
 
 ## Route files
 
-| Endpoint | File |
-|----------|------|
-| DAU/MAU | `src/app/api/admin/metrics/dau-mau/route.ts` |
+| Endpoint  | File                                           |
+| --------- | ---------------------------------------------- |
+| DAU/MAU   | `src/app/api/admin/metrics/dau-mau/route.ts`   |
 | Retention | `src/app/api/admin/metrics/retention/route.ts` |
-| Live | `src/app/api/admin/metrics/live/route.ts` |
-| Subjects | `src/app/api/admin/metrics/subjects/route.ts` |
+| Live      | `src/app/api/admin/metrics/live/route.ts`      |
+| Subjects  | `src/app/api/admin/metrics/subjects/route.ts`  |
 
 All follow the existing pattern from `src/app/api/admin/subjects/route.ts` and `src/app/api/admin/analytics/route.ts`.

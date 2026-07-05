@@ -9,7 +9,7 @@ A single missed day resets a 30-day streak. Users report this as demotivating �
 Already in `StoredGamification` (`src/lib/gamification-engine/types.ts`):
 
 ```ts
-streakFreezes: number;          // available freeze shields
+streakFreezes: number; // available freeze shields
 ```
 
 Existing default: 3 freezes. Milestone streaks (3, 7, 14, 30, 60, 100) each grant +1 freeze when unlocked (`streak-utils.ts:34`).
@@ -23,13 +23,13 @@ freezeEvents: FreezeEvent[];    // log of freeze usage
 
 ## Earning Freezes
 
-| Source | Count | When |
-|---|---|---|
-| Initial grant | 3 | First gamification load |
-| Streak milestones | 1 each | Unlocking 3/7/14/30/60/100 day milestones (already implemented) |
-| Weekly auto-grant | 1 | Every Monday (new — `addWeeklyFreeze()` in gamification engine) |
-| Achievements | Various | Future achievement definitions |
-| In-app purchase | Via store | Future — `POST /api/retention/streak-freeze/purchase` stub |
+| Source            | Count     | When                                                            |
+| ----------------- | --------- | --------------------------------------------------------------- |
+| Initial grant     | 3         | First gamification load                                         |
+| Streak milestones | 1 each    | Unlocking 3/7/14/30/60/100 day milestones (already implemented) |
+| Weekly auto-grant | 1         | Every Monday (new — `addWeeklyFreeze()` in gamification engine) |
+| Achievements      | Various   | Future achievement definitions                                  |
+| In-app purchase   | Via store | Future — `POST /api/retention/streak-freeze/purchase` stub      |
 
 ## Auto-Application
 

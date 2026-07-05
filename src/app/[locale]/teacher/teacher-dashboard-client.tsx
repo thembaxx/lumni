@@ -161,7 +161,9 @@ function TeacherDashboardInner() {
           type="button"
           onClick={() => setActiveTab("roster")}
           className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-            activeTab === "roster" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+            activeTab === "roster"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           Roster
@@ -170,7 +172,9 @@ function TeacherDashboardInner() {
           type="button"
           onClick={() => setActiveTab("gradebook")}
           className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-            activeTab === "gradebook" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+            activeTab === "gradebook"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           Gradebook
@@ -181,67 +185,67 @@ function TeacherDashboardInner() {
         <GradebookView />
       ) : (
         <>
-      <div className="mb-6 flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-center">
-        <div className="flex-1">
-          <p className="font-medium text-sm">Link a Student</p>
-          <p className="text-muted-foreground text-xs">Paste the student&apos;s User ID</p>
-        </div>
-        <div className="flex gap-2">
-          <Input
-            value={linkId}
-            onChange={(e) => setLinkId(e.target.value)}
-            placeholder="Student user ID..."
-            className="h-9 w-64 text-base"
-          />
-          <Button
-            size="sm"
-            onClick={() => linkStudent.mutate(linkId)}
-            disabled={!linkId.trim() || linkStudent.isPending}
-          >
-            {linkStudent.isPending ? "Linking…" : "Link"}
-          </Button>
-        </div>
-      </div>
-
-      {students.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-          <p className="font-medium text-lg text-muted-foreground">No students linked yet</p>
-          <p className="max-w-md text-muted-foreground text-sm">
-            Ask your students to share their User ID from Settings &gt; Profile &gt; Share Profile,
-            then paste it above.
-          </p>
-        </div>
-      ) : (
-        <>
-          {engagement && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <EngagementCard label="Study Sessions" value={String(engagement.totalSessions)} />
-              <EngagementCard
-                label="Questions Answered"
-                value={String(engagement.totalQuestionsAnswered)}
-              />
-              <EngagementCard
-                label="Active Students"
-                value={`${engagement.activeStudents} / ${students.length}`}
-              />
+          <div className="mb-6 flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-center">
+            <div className="flex-1">
+              <p className="font-medium text-sm">Link a Student</p>
+              <p className="text-muted-foreground text-xs">Paste the student&apos;s User ID</p>
             </div>
-          )}
-          <LiveSessionMonitor />
-          <AssignmentReviewPanel />
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="flex flex-col gap-6 lg:col-span-2">
-              <TopicMasteryHeatmap topics={topicMastery} />
-              <ClassRosterTable
-                students={students}
-                onStudentSelect={(student) => push(`/teacher/students/${student.id}`)}
-                onUnlink={(id) => unlinkStudent.mutate(id)}
-                unlinkingId={unlinkStudent.isPending ? unlinkStudent.variables : undefined}
+            <div className="flex gap-2">
+              <Input
+                value={linkId}
+                onChange={(e) => setLinkId(e.target.value)}
+                placeholder="Student user ID..."
+                className="h-9 w-64 text-base"
               />
-            </div>
-            <div>
-              <AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
+              <Button
+                size="sm"
+                onClick={() => linkStudent.mutate(linkId)}
+                disabled={!linkId.trim() || linkStudent.isPending}
+              >
+                {linkStudent.isPending ? "Linking…" : "Link"}
+              </Button>
             </div>
           </div>
+
+          {students.length === 0 ? (
+            <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+              <p className="font-medium text-lg text-muted-foreground">No students linked yet</p>
+              <p className="max-w-md text-muted-foreground text-sm">
+                Ask your students to share their User ID from Settings &gt; Profile &gt; Share
+                Profile, then paste it above.
+              </p>
+            </div>
+          ) : (
+            <>
+              {engagement && (
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <EngagementCard label="Study Sessions" value={String(engagement.totalSessions)} />
+                  <EngagementCard
+                    label="Questions Answered"
+                    value={String(engagement.totalQuestionsAnswered)}
+                  />
+                  <EngagementCard
+                    label="Active Students"
+                    value={`${engagement.activeStudents} / ${students.length}`}
+                  />
+                </div>
+              )}
+              <LiveSessionMonitor />
+              <AssignmentReviewPanel />
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                <div className="flex flex-col gap-6 lg:col-span-2">
+                  <TopicMasteryHeatmap topics={topicMastery} />
+                  <ClassRosterTable
+                    students={students}
+                    onStudentSelect={(student) => push(`/teacher/students/${student.id}`)}
+                    onUnlink={(id) => unlinkStudent.mutate(id)}
+                    unlinkingId={unlinkStudent.isPending ? unlinkStudent.variables : undefined}
+                  />
+                </div>
+                <div>
+                  <AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
+                </div>
+              </div>
             </>
           )}
         </>

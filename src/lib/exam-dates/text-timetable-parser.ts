@@ -103,7 +103,10 @@ export function parseTextTimetable(
     slots.push({
       id: `text-${nanoid(8)}`,
       subject,
-      subjectId: subject.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      subjectId: subject
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, ""),
       paperNumber: paper,
       session: session as "may-june" | "oct-nov",
       year: Number.isNaN(parsedYear) ? year : parsedYear,

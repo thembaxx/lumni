@@ -80,7 +80,7 @@ export const GET = createRouteHandler({
         studentName: nameMap.get(s.studentId as string) || "Unknown",
         score: (s.score as number) || 0,
         maxScore,
-        percentage: Math.round(((s.score as number) || 0) / maxScore * 100),
+        percentage: Math.round((((s.score as number) || 0) / maxScore) * 100),
         completedAt: (s.completedAt as string) || "",
       };
     });

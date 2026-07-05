@@ -11,8 +11,8 @@ All previous premium/billing infrastructure is completely dead code. Premium gat
 
 ### Spec Documents
 
-| File | Status |
-|---|---|
+| File                                                           | Status                                                                                                                                                                                                     |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `docs/superpowers/specs/2026-05-27-monetization-end-to-end.md` | Approved spec for Stripe + Payfast integration. Describes webhook, premium sync, cancel flow, monthly pricing. Never fully implemented — the webhook route and Payfast checkout routes were never created. |
 
 ### Environment Variables (`.env.example` lines 41-54)
@@ -44,28 +44,28 @@ These vars are documented but unused — no code loads them.
 
 ### What Exists (alive, reusable)
 
-| Component | File | Lines | Notes |
-|---|---|---|---|
-| Teacher service | `src/lib/server/teacher-service.ts` | 273 | Real Appwrite-backed service. Methods: `getStudents()`, `getTopicMastery()`, `getEngagementStats()`, `assignToStudent()`, `linkStudentToTeacher()`, `getRecentActivity()` |
-| Teacher API routes | `src/app/api/teacher/` | 7 routes | Students, topics, engagement, assignments, observations, ghost links, reports |
-| Parent dashboard | `src/app/[locale]/parent/` | — | Child selector, activity timeline, weekly report panel |
-| Ghost links | `POST /api/teacher/ghost-link` | — | 30-day aggregate stats, marketing funnel for school sales |
-| Weekly digest | `POST /api/cron/weekly-digest` | — | Admin-triggered push notification digest — could extend to school-level billing reports |
+| Component          | File                                | Lines    | Notes                                                                                                                                                                     |
+| ------------------ | ----------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Teacher service    | `src/lib/server/teacher-service.ts` | 273      | Real Appwrite-backed service. Methods: `getStudents()`, `getTopicMastery()`, `getEngagementStats()`, `assignToStudent()`, `linkStudentToTeacher()`, `getRecentActivity()` |
+| Teacher API routes | `src/app/api/teacher/`              | 7 routes | Students, topics, engagement, assignments, observations, ghost links, reports                                                                                             |
+| Parent dashboard   | `src/app/[locale]/parent/`          | —        | Child selector, activity timeline, weekly report panel                                                                                                                    |
+| Ghost links        | `POST /api/teacher/ghost-link`      | —        | 30-day aggregate stats, marketing funnel for school sales                                                                                                                 |
+| Weekly digest      | `POST /api/cron/weekly-digest`      | —        | Admin-triggered push notification digest — could extend to school-level billing reports                                                                                   |
 
 ### What Does NOT Exist (gaps)
 
-| Item | Status |
-|---|---|
-| Stripe webhook route | **Never created** — spec defined it but it was never built |
-| Payfast checkout route | **Never created** — spec defined it but it was never built |
-| Payfast IPN handler | **Never created** — spec defined it but it was never built |
-| Premium sync on load | **Removed in S36** — was in `premium-context.tsx`, now deleted |
-| PremiumCancel component | **Removed in S36** |
-| PremiumGate / ContentLock | **Removed in S36** — was in 4 components, all deleted |
-| `/premium` page | **Removed in S36** — nav config has no `/premium` route |
-| `premium_subscriptions` Appwrite collection | **Never created** — no collection constant in `src/lib/db/` |
-| Billing Appwrite collections | **None** — no `schools`, `licenses`, `invoices` schemas exist |
-| Stripe SDK (`stripe` npm package) | **Not installed** |
+| Item                                        | Status                                                         |
+| ------------------------------------------- | -------------------------------------------------------------- |
+| Stripe webhook route                        | **Never created** — spec defined it but it was never built     |
+| Payfast checkout route                      | **Never created** — spec defined it but it was never built     |
+| Payfast IPN handler                         | **Never created** — spec defined it but it was never built     |
+| Premium sync on load                        | **Removed in S36** — was in `premium-context.tsx`, now deleted |
+| PremiumCancel component                     | **Removed in S36**                                             |
+| PremiumGate / ContentLock                   | **Removed in S36** — was in 4 components, all deleted          |
+| `/premium` page                             | **Removed in S36** — nav config has no `/premium` route        |
+| `premium_subscriptions` Appwrite collection | **Never created** — no collection constant in `src/lib/db/`    |
+| Billing Appwrite collections                | **None** — no `schools`, `licenses`, `invoices` schemas exist  |
+| Stripe SDK (`stripe` npm package)           | **Not installed**                                              |
 
 ## Assessment
 

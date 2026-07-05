@@ -12,7 +12,10 @@ const generateCode = customAlphabet(ALPHABET, CODE_LENGTH);
 async function generateUniqueCode(maxAttempts = 3): Promise<string | null> {
   for (let i = 0; i < maxAttempts; i++) {
     const code = generateCode();
-    const existing = await listDocuments(COLLECTIONS.CLASSROOM_CODES, [Query.equal("code", code), Query.limit(1)]);
+    const existing = await listDocuments(COLLECTIONS.CLASSROOM_CODES, [
+      Query.equal("code", code),
+      Query.limit(1),
+    ]);
     if (existing.length === 0) return code;
   }
   return null;
@@ -23,8 +26,13 @@ export const POST = createRouteHandler({
   errorLabel: "ClassroomCodeCreate",
   validate: (body) => {
     if (body.subjectId && typeof body.subjectId !== "string") return "subjectId must be a string";
-    if (body.maxUses !== undefined && (typeof body.maxUses !== "number" || body.maxUses < 1)) return "maxUses must be a positive number";
-    if (body.expiresInDays !== undefined && (typeof body.expiresInDays !== "number" || body.expiresInDays < 1)) return "expiresInDays must be a positive number";
+    if (body.maxUses !== undefined && (typeof body.maxUses !== "number" || body.maxUses < 1))
+      return "maxUses must be a positive number";
+    if (
+      body.expiresInDays !== undefined &&
+      (typeof body.expiresInDays !== "number" || body.expiresInDays < 1)
+    )
+      return "expiresInDays must be a positive number";
     return null;
   },
   execute: async ({ userId, body }) => {
@@ -122,9 +130,14 @@ export const DELETE = createRouteHandler({
       }
 
       const doc = docs[0] as Record<string, unknown>;
-      await databases.updateDocument(APPWRITE_DATABASE_ID, COLLECTIONS.CLASSROOM_CODES, doc.$id as string, {
-        revoked: true,
-      });
+      await databases.updateDocument(
+        APPWRITE_DATABASE_ID,
+        COLLECTIONS.CLASSROOM_CODES,
+        doc.$id as string,
+        {
+          revoked: true,
+        },
+      );
 
       return { success: true, code, revoked: true };
     } catch (e) {

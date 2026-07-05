@@ -10,15 +10,15 @@ A simplified onboarding flow will increase the completion rate of the onboarding
 
 ## Variants
 
-| Variant     | Traffic | Description                                 |
-|-------------|---------|---------------------------------------------|
-| control     | 50%     | Current multi-step onboarding flow          |
-| simplified  | 50%     | Reduced 3-step flow with fewer form fields  |
+| Variant    | Traffic | Description                                |
+| ---------- | ------- | ------------------------------------------ |
+| control    | 50%     | Current multi-step onboarding flow         |
+| simplified | 50%     | Reduced 3-step flow with fewer form fields |
 
 ## Feature Flag
 
-| Flag            | Experiment ID       | control | simplified |
-|-----------------|---------------------|---------|------------|
+| Flag             | Experiment ID        | control | simplified |
+| ---------------- | -------------------- | ------- | ---------- |
 | `new-onboarding` | `onboarding-flow-v1` | `false` | `true`     |
 
 ## Success Metrics

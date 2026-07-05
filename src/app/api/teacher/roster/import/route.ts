@@ -14,24 +14,37 @@ interface CsvRow {
 function parseCsv(text: string): { rows: CsvRow[]; errors: { row: number; message: string }[] } {
   const lines = text.trim().split("\n");
   if (lines.length < 2) {
-    return { rows: [], errors: [{ row: 1, message: "CSV must have a header row and at least one data row" }] };
+    return {
+      rows: [],
+      errors: [{ row: 1, message: "CSV must have a header row and at least one data row" }],
+    };
   }
 
-  const header = lines[0].toLowerCase().trim().split(",").map((h) => h.trim());
+  const header = lines[0]
+    .toLowerCase()
+    .trim()
+    .split(",")
+    .map((h) => h.trim());
   const nameIdx = header.indexOf("student_name");
   const emailIdx = header.indexOf("student_email");
   const gradeIdx = header.indexOf("grade");
   const subjectIdx = header.indexOf("subject");
 
   if (nameIdx === -1 || emailIdx === -1) {
-    return { rows: [], errors: [{ row: 1, message: "CSV must have 'student_name' and 'student_email' columns" }] };
+    return {
+      rows: [],
+      errors: [{ row: 1, message: "CSV must have 'student_name' and 'student_email' columns" }],
+    };
   }
 
   const rows: CsvRow[] = [];
   const errors: { row: number; message: string }[] = [];
 
   for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].trim().split(",").map((c) => c.trim());
+    const cols = lines[i]
+      .trim()
+      .split(",")
+      .map((c) => c.trim());
     const email = cols[emailIdx] || "";
     if (!email) {
       errors.push({ row: i + 1, message: "Missing student_email" });
@@ -70,11 +83,28 @@ export const POST = createRouteHandler({
     }
 
     if (rows.length > 500) {
-      return { matched: [], unmatched: [], errors: [{ row: 0, message: "Maximum 500 rows per import" }] };
+      return {
+        matched: [],
+        unmatched: [],
+        errors: [{ row: 0, message: "Maximum 500 rows per import" }],
+      };
     }
 
-    const matched: { row: number; studentId: string; name: string; email: string; grade?: string }[] = [];
-    const unmatched: { row: number; name: string; email: string; grade?: string; subject?: string; reason: string }[] = [];
+    const matched: {
+      row: number;
+      studentId: string;
+      name: string;
+      email: string;
+      grade?: string;
+    }[] = [];
+    const unmatched: {
+      row: number;
+      name: string;
+      email: string;
+      grade?: string;
+      subject?: string;
+      reason: string;
+    }[] = [];
 
     try {
       const usersApi = new Users(serverClient);
@@ -82,7 +112,9 @@ export const POST = createRouteHandler({
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         try {
-          const userList = await usersApi.list({ queries: [Query.equal("email", row.studentEmail)] });
+          const userList = await usersApi.list({
+            queries: [Query.equal("email", row.studentEmail)],
+          });
 
           if (userList.users.length > 0) {
             const appwriteUser = userList.users[0];
@@ -132,7 +164,16 @@ export const POST = createRouteHandler({
       }
     } catch (err) {
       logError("RosterImport", err);
-      return { matched: [], unmatched: rows.map((r, i) => ({ row: i + 2, name: r.studentName, email: r.studentEmail, reason: "server_error" })), errors: parseErrors };
+      return {
+        matched: [],
+        unmatched: rows.map((r, i) => ({
+          row: i + 2,
+          name: r.studentName,
+          email: r.studentEmail,
+          reason: "server_error",
+        })),
+        errors: parseErrors,
+      };
     }
 
     return { matched, unmatched, errors: parseErrors };

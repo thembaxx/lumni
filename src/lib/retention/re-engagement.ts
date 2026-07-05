@@ -78,10 +78,7 @@ export function selectReEngagementContent(ctx: ReEngagementContext): ReEngagemen
     return TEMPLATES["long-dormant-7"](ctx);
   }
 
-  if (
-    ctx.daysSinceLastActive <= 3 ||
-    ctx.daysSinceLastActive === 0
-  ) {
+  if (ctx.daysSinceLastActive <= 3 || ctx.daysSinceLastActive === 0) {
     return null;
   }
 

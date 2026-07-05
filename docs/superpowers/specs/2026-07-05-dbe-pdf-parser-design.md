@@ -24,12 +24,12 @@ Date: 13 October 2025
 
 **Regex patterns used**:
 
-| Pattern | Purpose |
-|---|---|
-| `\d{2}\s+(Month)\s+\d{4}` | Date header detection |
-| `(\d{2}):(\d{2})` | Time token identification |
-| `(.*?)\s+Paper\s*(\d+)` | Subject/paper extraction |
-| `(.*?)\s+P\s*(\d+)` | Short form subject/paper |
+| Pattern                   | Purpose                   |
+| ------------------------- | ------------------------- |
+| `\d{2}\s+(Month)\s+\d{4}` | Date header detection     |
+| `(\d{2}):(\d{2})`         | Time token identification |
+| `(.*?)\s+Paper\s*(\d+)`   | Subject/paper extraction  |
+| `(.*?)\s+P\s*(\d+)`       | Short form subject/paper  |
 
 ### Subject abbreviation map
 
@@ -38,6 +38,7 @@ A static `SUBJECT_ABBR_MAP` normalises common abbreviations (e.g. `"eng hl"` →
 ## OCR Fallback Strategy
 
 When the PDF is scanned:
+
 1. Use `pdf-parse` to detect page count
 2. Render first 5 pages as images (using a PDF rendering library)
 3. Run Tesseract.js on each page image
@@ -49,6 +50,7 @@ When the PDF is scanned:
 ## Type System
 
 All parsers output the existing `ExamSlot` type:
+
 ```typescript
 interface ExamSlot {
   id: string;
@@ -57,9 +59,9 @@ interface ExamSlot {
   paperNumber: number;
   session: "may-june" | "oct-nov";
   year: number;
-  date: string;       // YYYY-MM-DD
-  startTime: string;  // HH:MM
-  endTime: string;    // HH:MM
+  date: string; // YYYY-MM-DD
+  startTime: string; // HH:MM
+  endTime: string; // HH:MM
   durationHours: number;
   isSC?: boolean;
 }
@@ -80,11 +82,11 @@ src/lib/exam-dates/
 
 ## Edge Cases
 
-| Case | Handling |
-|---|---|
-| Merged cells in table | Regex tolerates extra whitespace between columns |
-| Multi-page timetable | Pages concatenated with separators; date lines carry forward |
-| "SC" marking on entries | `isSC` flag available but not auto-detected in regex (deferred) |
-| AM/PM notation | DBE uses 24h format; no handling needed |
-| Non-standard subject names | Falls through to raw string if not in abbreviation map |
-| Empty/whitespace pages | Skipped during text extraction |
+| Case                       | Handling                                                        |
+| -------------------------- | --------------------------------------------------------------- |
+| Merged cells in table      | Regex tolerates extra whitespace between columns                |
+| Multi-page timetable       | Pages concatenated with separators; date lines carry forward    |
+| "SC" marking on entries    | `isSC` flag available but not auto-detected in regex (deferred) |
+| AM/PM notation             | DBE uses 24h format; no handling needed                         |
+| Non-standard subject names | Falls through to raw string if not in abbreviation map          |
+| Empty/whitespace pages     | Skipped during text extraction                                  |

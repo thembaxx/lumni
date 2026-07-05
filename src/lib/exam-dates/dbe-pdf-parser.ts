@@ -14,7 +14,9 @@ export interface DbeParseResult {
 }
 
 function isDbeDateLine(line: string): boolean {
-  return /\d{2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}/i.test(line);
+  return /\d{2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}/i.test(
+    line,
+  );
 }
 
 function isTimeLike(token: string): boolean {
@@ -28,30 +30,30 @@ const SUBJECT_ABBR_MAP: Record<string, string> = {
   "afr hl": "Afrikaans Home Language",
   "afr fal": "Afrikaans First Additional Language",
   "afr sal": "Afrikaans Second Additional Language",
-  "math": "Mathematics",
+  math: "Mathematics",
   "maths lit": "Mathematical Literacy",
-  "phy": "Physical Sciences",
+  phy: "Physical Sciences",
   "phys sci": "Physical Sciences",
   "life sci": "Life Sciences",
   "life ori": "Life Orientation",
-  "acc": "Accounting",
+  acc: "Accounting",
   "bus stud": "Business Studies",
-  "econ": "Economics",
-  "geo": "Geography",
-  "hist": "History",
-  "cat": "Computer Applications Technology",
-  "it": "Information Technology",
-  "eng": "English",
-  "afrik": "Afrikaans",
-  "isizulu": "isiZulu",
-  "isixhosa": "isiXhosa",
-  "sepedi": "Sepedi",
-  "sesotho": "Sesotho",
-  "setswana": "Setswana",
-  "siswati": "siSwati",
-  "tshivenda": "Tshivenda",
-  "xitsonga": "Xitsonga",
-  "isindebele": "isiNdebele",
+  econ: "Economics",
+  geo: "Geography",
+  hist: "History",
+  cat: "Computer Applications Technology",
+  it: "Information Technology",
+  eng: "English",
+  afrik: "Afrikaans",
+  isizulu: "isiZulu",
+  isixhosa: "isiXhosa",
+  sepedi: "Sepedi",
+  sesotho: "Sesotho",
+  setswana: "Setswana",
+  siswati: "siSwati",
+  tshivenda: "Tshivenda",
+  xitsonga: "Xitsonga",
+  isindebele: "isiNdebele",
 };
 
 function normalizeSubject(subject: string): string {
@@ -74,13 +76,22 @@ function extractPaperNumber(text: string): { subject: string; paper: number } {
 function guessDuration(startTime: string, endTime: string): number {
   const [sh, sm] = startTime.split(":").map(Number);
   const [eh, em] = endTime.split(":").map(Number);
-  const diff = (eh * 60 + em) - (sh * 60 + sm);
+  const diff = eh * 60 + em - (sh * 60 + sm);
   return Math.round(diff / 30) * 0.5;
 }
 
 function findLanguageInfo(tokens: string[]): string | undefined {
-  const langs = new Set(["hl", "fal", "sal", "home language", "first additional", "second additional",
-    "hl?", "fal?", "sal?"]);
+  const langs = new Set([
+    "hl",
+    "fal",
+    "sal",
+    "home language",
+    "first additional",
+    "second additional",
+    "hl?",
+    "fal?",
+    "sal?",
+  ]);
   for (const token of tokens) {
     const lower = token.toLowerCase();
     if (langs.has(lower.replace(/[^a-z]/g, ""))) {
@@ -102,12 +113,23 @@ function parseDbeText(text: string, session: string, year: number): DbeParseResu
     if (!trimmed) continue;
 
     if (isDbeDateLine(trimmed)) {
-      const dateMatch = trimmed.match(/(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})/i);
+      const dateMatch = trimmed.match(
+        /(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})/i,
+      );
       if (dateMatch) {
         const months: Record<string, string> = {
-          january: "01", february: "02", march: "03", april: "04",
-          may: "05", june: "06", july: "07", august: "08",
-          september: "09", october: "10", november: "11", december: "12",
+          january: "01",
+          february: "02",
+          march: "03",
+          april: "04",
+          may: "05",
+          june: "06",
+          july: "07",
+          august: "08",
+          september: "09",
+          october: "10",
+          november: "11",
+          december: "12",
         };
         const day = dateMatch[1].padStart(2, "0");
         const month = months[dateMatch[2].toLowerCase()] ?? "01";
@@ -146,7 +168,10 @@ function parseDbeText(text: string, session: string, year: number): DbeParseResu
     slots.push({
       id: `dbe-${nanoid(8)}`,
       subject,
-      subjectId: subject.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      subjectId: subject
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, ""),
       paperNumber: paper,
       session: session as "may-june" | "oct-nov",
       year,

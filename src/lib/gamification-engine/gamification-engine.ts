@@ -17,7 +17,12 @@ import {
   updateChallengesInAddXp,
   completeDailyChallenge,
 } from "./daily-challenge-utils";
-import { updateStreak, consumeStreakFreeze, addStreakFreeze, addWeeklyFreeze } from "./streak-utils";
+import {
+  updateStreak,
+  consumeStreakFreeze,
+  addStreakFreeze,
+  addWeeklyFreeze,
+} from "./streak-utils";
 
 const GAMIFICATION_KEY = "lumni_gamification";
 

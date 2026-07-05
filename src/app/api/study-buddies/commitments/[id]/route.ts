@@ -30,10 +30,7 @@ function saveCommitments(commitments: StudyCommitment[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(commitments));
 }
 
-export async function DELETE(
-  _request: Request,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const commitments = getCommitments();
