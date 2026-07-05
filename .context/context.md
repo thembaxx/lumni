@@ -31,7 +31,7 @@ All Batch 1-6 superpowers implemented. **Exam PDF viewer migrated from `react-pd
 - **Live Session**: Real-time collaborative study session via Ably presence (enter/leave/update). Appwrite stores only metadata (startedBy, subject, startedAt, status). Route-level `ChatClientProvider` in study-groups layout. `ChatRoomProvider` wraps active session UI with `usePresence`/`usePresenceListener` hooks. Auto-ends on last departure (client-side occupancy check).
 - **SourceAttributionPill**: Inline non-collapsible pill on `QuestionCardFeedback` that surfaces per-question web sources.
 - **DataAccess**: Typed interface over all 38+ Dexie tables; `DexieDataAccess` (production) and `InMemoryDataAccess` (tests).
-- **Uniform AI Adapter**: Factory pattern for pluggable AI provider request normalizers and response parsers.
+- **AI Provider Chain**: `src/lib/ai/client.ts` — imperative `for...of`/`try/catch` fallback over Gemini → Nvidia → Groq. Effect TS proven via `cached-ai-generator.ts` (see ADR-0013).
 - **Theme Chrome**: Dynamic `theme-color` meta tag synced on theme switch; accent-tinted frosted glass on nav.
 - **GenerateResult**: Structured return from `QuestionEngine.generate()` containing `{ questions, ragContext }` — replaces old sidecar pattern.
 - **CachedAIGenerator<T>**: Generic fetch→cache→generate pattern for AI-backed resources (knowledge-graph, study-guide).
@@ -58,7 +58,7 @@ All Batch 1-6 superpowers implemented. **Exam PDF viewer migrated from `react-pd
 - [D043] **Knowledge graph**: AI-generated topic dependency graphs; 7d Dexie cache. `LearningMapCard` + `TopicGraph` UIs.
 - [D044] **Study guide generator**: AI-generated structured guides; 30d Dexie cache. `/study-guide` page.
 - [D045] **Live study sessions**: Appwrite-backed with `useLiveSession()` hook (15s polling).
-- [D046] **Uniform AI adapter**: `createUniformProvider()` factory with pluggable normalizers.
+- [D046] **Uniform AI adapter**: `createUniformProvider()` factory with pluggable normalizers — documented but never implemented. `uniform-adapter.ts` does not exist.
 - [D047] **RedisStore rate limiter**: `RedisStore` via `@upstash/redis` alongside existing `MapStore`.
 - [D048] **Wrong-answer re-encounter**: `retentionRecurrence` table; auto-insert 3 wrong answers into quiz.
 - [D049] **Public share routes**: `/q/[id]` star-gated answer; ghost links (30d); assignment sharing.
@@ -107,7 +107,7 @@ All Batch 1-6 superpowers implemented. **Exam PDF viewer migrated from `react-pd
 - `ThemeProvider` → `theme-color` meta tag → Browser chrome
 - `SidebarNav` → `SidebarStateProvider` → categorized navigation with search
 - `RateLimiter` → `MapStore | RedisStore` → API routes
-- `aiClient` → `UniformAdapter` (openaiNormalizer/geminiNormalizer) → provider chain
+- `aiClient` → `src/lib/ai/client.ts` (`for...of`/`try/catch` fallback) → Gemini → Nvidia → Groq
 - `KnowledgeGraph.fetchGraph` → `TinyFish RAG` (three-tier fallback: curriculum → RAG-grounded AI → plain AI)
 - `POST /api/engine/hint` → `TinyFish RAG` (searchWithRAG for subject+topic) → `QuestionEngine.generateHint` → `aiHintFactory` (RAG-injected AI call)
 - `TTSButton` → `useVoiceEngine` (ElevenLabs → Google → FreeTTS → browser fallback)
@@ -131,7 +131,7 @@ All Batch 1-6 superpowers implemented. **Exam PDF viewer migrated from `react-pd
 - **Service extraction**: `class ExamDownloadService { constructor(private deps: { db, config }) {} }` → route handler calls `service.execute()`
 - **DataAccess DI**: `class Service { constructor(private data: DataAccess) {} }` — inject `dexieDataAccess` (prod) or `InMemoryDataAccess` (test)
 - **Rate limiter**: `new RateLimiter(new MapStore(), config)` or `new RateLimiter(new RedisStore(redis), config)`
-- **Uniform provider**: `createUniformProvider({ name: 'gemini', model: 'gemini-2.0-flash-lite', normalizeRequest: geminiNormalizer, parseResponse: geminiResponseParser })`
+- **AI provider chain (imperative)**: `src/lib/ai/client.ts` — `for...of`/`try/catch` fallback over Gemini → Nvidia → Groq. **Effect (proven)**: `src/lib/ai/cached-ai-generator.ts` — `Effect.gen`/`Effect.catchAll`/`Effect.runPromise` for cache/generate pipeline.
 - **Live session**: `const { session, isLoading, startSession } = useLiveSession(groupId);` — Ably presence managed by `LiveSessionBar` via `usePresence({ autoEnterLeave: false })` + `usePresenceListener()`
 - **Ably token**: `GET /api/ably/token` (auth required, returns `TokenRequest`)
 - **Ably provider**: Wrap route in `<ChatClientProvider client={chatClient}>` + per-session `<ChatRoomProvider name="chat-sessions:{sessionId}">`

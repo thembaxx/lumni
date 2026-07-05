@@ -1237,10 +1237,7 @@ Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-
 - **Backward-compatible exports**: Refactored modules must retain their existing async function signatures. New Effect methods get `*Effect` suffix.
 - **No mixed patterns**: A single file should be either all-Effect or all-imperative, not both
 - **Discriminated union dispatch**: For unions with a `source` field (not `_tag`), use a plain `switch` where each case returns `Effect.Effect<void>` directly
-- **Provider chain pattern**: The AI client (`src/lib/ai/client.ts`) demonstrates the canonical pattern:
-  - Define a `ProviderError` type with `Effect.catchAll` fallback chain
-  - Use `Effect.gen` for sequential fallback, `Effect.all` for parallel calls
-  - Track side effects (latency, metrics) with `Effect.tap`
+- **Provider chain pattern**: The AI client (`src/lib/ai/client.ts`) uses a `for...of`/`try/catch` fallback chain — this is the _imperative_ pattern. The _Effect_ pattern is demonstrated in `src/lib/ai/cached-ai-generator.ts` (~5 Effect.gen blocks for cache/generate pipeline). See `docs/adr/0013-effect-adoption.md` for the current adoption status.
 
 ## PDFSlick — PDF Viewer Component
 
