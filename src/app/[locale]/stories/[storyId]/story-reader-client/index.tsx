@@ -21,16 +21,23 @@ import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import { trackComprehensionResult } from "@/lib/competency-engine";
-import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion } from "@/lib/stories/types";
-
-const COMPLETION_THRESHOLD = 90;
-const SAVE_DEBOUNCE_MS = 2000;
-const TIME_TRACK_INTERVAL_MS = 30000;
+import {
+  COMPLETION_THRESHOLD,
+  SAVE_DEBOUNCE_MS,
+  TIME_TRACK_INTERVAL_MS,
+  loadStoryProgress,
+  saveStoryProgress,
+} from "./reading-progress";
+import { extractFirstVocabularyTerm } from "./vocabulary-extractor";
+import {
+  addQuestionScore,
+  computeOverallScore,
+  trackComprehensionIfComplete,
+} from "./comprehension-state";
 
 function getLangCode(languageId: string): string {
   const map: Record<string, string> = {
@@ -87,52 +94,18 @@ export function StoryReaderClient() {
 
   useEffect(() => {
     if (!storyId || !userId || loading || progressLoadedRef.current) return;
-    progressLoadedRef.current = true;
-    dexieDataAccess.storyProgress
-      .where("[userId+storyId]")
-      .equals([userId, storyId])
-      .first()
-      .then((record) => {
-        if (record) {
-          progressIdRef.current = record.id;
-          scrollPercentRef.current = record.scrollPercent;
-          completedRef.current = record.completed;
-          timeSpentRef.current = record.timeSpentSeconds;
-          setScrollPercent(record.scrollPercent);
-          setCompleted(record.completed);
-        }
-      })
-      .catch((err: unknown) => logError("story-reader.loadProgress", err));
+    loadStoryProgress(userId, storyId, progressIdRef, progressLoadedRef).then((record) => {
+      scrollPercentRef.current = record.scrollPercent;
+      completedRef.current = record.completed;
+      timeSpentRef.current = record.timeSpentSeconds;
+      setScrollPercent(record.scrollPercent);
+      setCompleted(record.completed);
+    });
   }, [storyId, userId, loading]);
 
   const saveProgress = useCallback(
     (pct: number, done: boolean, seconds: number) => {
-      if (!userId || !storyId) return;
-      const id = progressIdRef.current;
-      if (id !== undefined) {
-        dexieDataAccess.storyProgress
-          .update(id, {
-            scrollPercent: pct,
-            completed: done,
-            lastReadAt: Date.now(),
-            timeSpentSeconds: seconds,
-          })
-          .catch((err: unknown) => logError("story-reader.saveProgress", err));
-      } else {
-        dexieDataAccess.storyProgress
-          .add({
-            userId,
-            storyId,
-            scrollPercent: pct,
-            completed: done,
-            lastReadAt: Date.now(),
-            timeSpentSeconds: seconds,
-          })
-          .then((newId) => {
-            progressIdRef.current = newId;
-          })
-          .catch((err: unknown) => logError("story-reader.saveProgress", err));
-      }
+      saveStoryProgress(userId, storyId, progressIdRef, pct, done, seconds);
     },
     [userId, storyId],
   );
@@ -209,30 +182,23 @@ export function StoryReaderClient() {
   }, [story]);
 
   const handleGraded = useCallback((questionId: string, score: number) => {
-    setScores((prev) => {
-      const next = new Map(prev);
-      next.set(questionId, score);
-      return next;
-    });
+    setScores((prev) => addQuestionScore(prev, questionId, score));
   }, []);
 
   useEffect(() => {
-    if (!questions || questions.length === 0) return;
-    const allDone = questions.every((q) => scores.has(q.id));
-    if (allDone && !allGraded) {
-      setAllGraded(true);
-      const allScores = questions.map((q) => scores.get(q.id) ?? 0);
-      trackComprehensionResult(
-        userId,
-        storyId as string,
-        story?.language ?? "english",
-        allScores,
-      ).catch((err: unknown) => logError("trackComprehensionResult", err));
-    }
+    trackComprehensionIfComplete(
+      questions,
+      scores,
+      allGraded,
+      userId,
+      storyId as string,
+      story?.language ?? "english",
+    ).then((graded) => {
+      if (graded) setAllGraded(true);
+    });
   }, [questions, scores, allGraded, userId, storyId, story?.language]);
 
-  const overallScore =
-    scores.size > 0 ? Math.round([...scores.values()].reduce((a, b) => a + b, 0) / scores.size) : 0;
+  const overallScore = computeOverallScore(scores);
 
   if (loading) {
     return (
@@ -328,7 +294,7 @@ export function StoryReaderClient() {
               <CardTitle className="font-extrabold text-lg">Vocabulary</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-2 p-5 pt-0">
-              {story.vocabulary.map((v) => (
+              {story.vocabulary.map((v: { term: string; definition: string }) => (
                 <div
                   key={v.term}
                   className="flex items-center justify-between rounded-2xl border bg-card px-4 py-3"
@@ -376,7 +342,7 @@ export function StoryReaderClient() {
                   key={q.id}
                   question={q}
                   questionNumber={i + 1}
-                  onGraded={(s) => handleGraded(q.id, s)}
+                  onGraded={(s: number) => handleGraded(q.id, s)}
                 />
               ))
             ) : (
@@ -432,7 +398,7 @@ export function StoryReaderClient() {
                             className="rounded-full"
                             onClick={() =>
                               push(
-                                `/dictionary?q=${encodeURIComponent(story.vocabulary[0]?.term ?? "")}`,
+                                `/dictionary?q=${encodeURIComponent(extractFirstVocabularyTerm(story.vocabulary))}`,
                               )
                             }
                           >

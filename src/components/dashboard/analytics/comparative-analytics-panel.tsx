@@ -27,7 +27,7 @@ export function ComparativeAnalyticsPanel() {
       return result.success ? result.data : null;
     },
     enabled: !!user?.$id,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 
   const weakSubjects = useMemo(() => {
@@ -53,7 +53,7 @@ export function ComparativeAnalyticsPanel() {
       return trends;
     },
     enabled: weakSubjects.length > 0 && !!user?.$id,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading || !analytics) {

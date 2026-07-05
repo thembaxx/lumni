@@ -1,45 +1,67 @@
 import { describe, expect, test, vi } from "vitest";
 
 const tableNames = [
-  "chatMessages",
-  "flashcards",
-  "competencies",
-  "questions",
-  "progress",
-  "quizAttempts",
-  "subjects",
-  "quizSessions",
-  "conflicts",
-  "jobs",
-  "visuals",
-  "wrongAnswers",
-  "questionRatings",
-  "examSessions",
-  "cachedPdfs",
-  "examDates",
-  "reviewHistory",
-  "extractionCache",
+  "analyticsEvents",
+  "assignmentMessages",
   "bookmarks",
-  "notes",
-  "groupPosts",
-  "groupComments",
-  "groupReactions",
+  "cachedPdfs",
+  "chatMessages",
+  "competencies",
+  "competitionScores",
+  "conflicts",
+  "dictionaryCache",
+  "essayDrafts",
+  "examDates",
+  "examSessions",
+  "extractionCache",
+  "flashcardSyncState",
+  "flashcards",
   "gamification",
-  "quizPacks",
+  "groupBadges",
+  "groupChallengeEntries",
+  "groupChallenges",
+  "groupComments",
+  "groupPosts",
+  "groupReactions",
+  "jobs",
+  "knowledgeGraph",
+  "lessonCache",
+  "lessonProgress",
+  "notes",
+  "onboardingState",
   "packQuestions",
   "pastPaperQuestions",
-  "groupChallenges",
-  "groupChallengeEntries",
-  "groupBadges",
-  "userConsents",
+  "pronunciationHistory",
+  "progress",
+  "questionEmbeddings",
+  "questionRatings",
+  "questions",
+  "quizAttempts",
+  "quizPacks",
+  "quizSessions",
+  "retentionRecurrence",
+  "reviewHistory",
+  "seenPastPaperQuestions",
+  "sharedQuestions",
+  "srDailyBudget",
+  "sttCache",
+  "sttUsage",
+  "storyCache",
+  "storyProgress",
+  "storyQuestions",
+  "studyGuides",
+  "studyPlans",
+  "subjects",
+  "syncCheckpoints",
+  "syncOutbox",
+  "teacherObservations",
   "tinyfishCache",
   "tinyfishUsage",
-  "lessonCache",
-  "dictionaryCache",
-  "storyCache",
-  "storyQuestions",
+  "userConsents",
+  "userSettings",
   "vocabularyList",
-  "lessonProgress",
+  "visuals",
+  "wrongAnswers",
 ];
 
 const mockTables = tableNames.map((name) => ({
@@ -50,7 +72,7 @@ const mockTables = tableNames.map((name) => ({
 
 class MockOfflineDB {
   readonly name = "lumni-offline";
-  readonly verno = 36;
+  readonly verno = 43;
   readonly tables = mockTables;
   table(name: string) {
     return mockTables.find((t) => t.name === name);
@@ -86,12 +108,12 @@ describe("LumniOfflineDB", () => {
     expect(offlineDB.name).toBe("lumni-offline");
   });
 
-  test("version is 36", () => {
-    expect(offlineDB.verno).toBe(36);
+  test("version is 43", () => {
+    expect(offlineDB.verno).toBe(43);
   });
 
   test("has all expected tables", () => {
-    expect(offlineDB.tables.length).toBe(39);
+    expect(offlineDB.tables.length).toBe(61);
     for (const name of tableNames) {
       const table = offlineDB.tables.find((t: { name: string }) => t.name === name);
       expect(table).toBeDefined();

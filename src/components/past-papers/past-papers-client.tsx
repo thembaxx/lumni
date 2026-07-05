@@ -76,7 +76,7 @@ export function PastPapersClient() {
     queryKey: ["past-papers", selectedSubject],
     queryFn: () => fetchPapers(selectedSubject),
     enabled: !!selectedSubject,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 
   return (

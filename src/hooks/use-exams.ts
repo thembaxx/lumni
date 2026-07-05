@@ -54,7 +54,7 @@ export function useExams(filter: ExamFilter) {
   } = useQuery({
     queryKey: ["admin-exams"],
     queryFn: fetchExams,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 
   const filteredExams = useMemo(() => {

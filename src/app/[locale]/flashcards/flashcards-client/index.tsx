@@ -17,114 +17,24 @@ import { competencyService } from "@/lib/competency-engine/competency-service";
 import { dexieDataAccess } from "@/lib/db";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { logError } from "@/lib/shared/logger";
-import type { FlashcardDeckCard } from "@/lib/flashcard-engine/deck-types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import type { Question } from "@/lib/question-engine/types";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
-import { shareFlashcardDeck } from "@/lib/share/share-service";
-import { FlashcardsActive } from "./flashcards-active";
-import { FlashcardsEmpty } from "./flashcards-empty";
-import { FlashcardsIdle } from "./flashcards-idle";
-import { FlashcardsLoading } from "./flashcards-loading";
-import { FlashcardsResults } from "./flashcards-results";
-
-interface FlashcardItem {
-  id: string;
-  front: string;
-  back: string;
-  topic: string;
-  difficulty: string;
-  hint?: string;
-  rawQuestion: Question;
-}
-
-type FlashcardSource = "ai" | "mistakes" | "vocabulary";
-
-interface SessionState {
-  selectedSubject: string;
-  source: FlashcardSource;
-  isActive: boolean;
-  sessionComplete: boolean;
-}
-
-const initialSessionState: SessionState = {
-  selectedSubject: "",
-  source: "ai",
-  isActive: false,
-  sessionComplete: false,
-};
-
-type SessionAction =
-  | {
-      type: "START_SESSION";
-      payload: { subject: string; source: FlashcardSource };
-    }
-  | { type: "STOP_SESSION" }
-  | { type: "COMPLETE_SESSION" }
-  | { type: "RESTART" };
-
-function sessionReducer(state: SessionState, action: SessionAction): SessionState {
-  switch (action.type) {
-    case "START_SESSION":
-      return {
-        ...state,
-        selectedSubject: action.payload.subject,
-        source: action.payload.source,
-        isActive: true,
-        sessionComplete: false,
-      };
-    case "STOP_SESSION":
-      return { ...state, isActive: false, selectedSubject: "" };
-    case "COMPLETE_SESSION":
-      return { ...state, sessionComplete: true };
-    case "RESTART":
-      return { ...state, sessionComplete: false };
-    default:
-      return state;
-  }
-}
-
-interface CardsState {
-  mistakeCards: FlashcardItem[];
-  sm2Cards: FlashcardItem[];
-  qualityMap: Map<string, number>;
-}
-
-const initialCardsState: CardsState = {
-  mistakeCards: [],
-  sm2Cards: [],
-  qualityMap: new Map(),
-};
-
-type CardsAction =
-  | { type: "SET_MISTAKE_CARDS"; payload: FlashcardItem[] }
-  | { type: "SET_SM2_CARDS"; payload: FlashcardItem[] }
-  | { type: "RESET" }
-  | { type: "SET_QUALITY"; payload: { cardId: string; quality: number } };
-
-function cardsReducer(state: CardsState, action: CardsAction): CardsState {
-  switch (action.type) {
-    case "SET_MISTAKE_CARDS":
-      return { ...state, mistakeCards: action.payload };
-    case "SET_SM2_CARDS":
-      return { ...state, sm2Cards: action.payload };
-    case "RESET":
-      return {
-        ...state,
-        mistakeCards: [],
-        sm2Cards: [],
-        qualityMap: new Map(),
-      };
-    case "SET_QUALITY":
-      return {
-        ...state,
-        qualityMap: new Map(state.qualityMap).set(action.payload.cardId, action.payload.quality),
-      };
-    default:
-      return state;
-  }
-}
+import { FlashcardsActive } from "../flashcards-active";
+import { FlashcardsEmpty } from "../flashcards-empty";
+import { FlashcardsIdle } from "../flashcards-idle";
+import { FlashcardsLoading } from "../flashcards-loading";
+import { FlashcardsResults } from "../flashcards-results";
+import {
+  initialCardsState,
+  initialSessionState,
+  sessionReducer,
+  cardsReducer,
+} from "./session-state";
+import { computeConsecutiveCorrect, isSm2Session } from "./session-results";
+import { shareFlashcardSession } from "./share-deck";
+import type { FlashcardItem, FlashcardSource } from "./types";
 
 export function FlashcardsClient() {
   const t = useTranslations();
@@ -199,17 +109,8 @@ export function FlashcardsClient() {
 
   const processSessionResults = useCallback(
     async (sessionCards: FlashcardItem[], qualities: Map<string, number>, subject: string) => {
-      const isSm2Session = sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
-      const allCorrect = Array.from(qualities.values()).every((q) => q >= 3);
-      const anyCorrect = Array.from(qualities.values()).some((q) => q >= 3);
-
-      if (allCorrect) {
-        consecutiveCorrectRef.current += sessionCards.length;
-      } else {
-        consecutiveCorrectRef.current = anyCorrect
-          ? Array.from(qualities.values()).filter((q) => q >= 3).length
-          : 0;
-      }
+      const sm2Session = isSm2Session(sessionCards);
+      consecutiveCorrectRef.current = computeConsecutiveCorrect(qualities, sessionCards.length);
 
       gamification.setCounter("consecutiveCorrectFlashcards", consecutiveCorrectRef.current);
 
@@ -219,7 +120,7 @@ export function FlashcardsClient() {
           cards: sessionCards,
           qualities,
           subject,
-          isSm2: isSm2Session,
+          isSm2: sm2Session,
         },
         quizResultDeps,
       );
@@ -272,21 +173,11 @@ export function FlashcardsClient() {
   const { user } = useAuth();
 
   const handleShareDeck = useCallback(async () => {
-    const shareCards: FlashcardDeckCard[] = displayCards.map((c) => ({
-      front: c.front,
-      back: c.back,
-    }));
-    const shareId = await shareFlashcardDeck(
-      {
-        title: `${session.selectedSubject} Flashcard Session`,
-        subject: session.selectedSubject,
-        cards: shareCards,
-        cardCount: shareCards.length,
-        createdBy: user?.$id ?? "anonymous",
-      },
+    const url = await shareFlashcardSession(
+      displayCards,
+      session.selectedSubject,
       user?.$id ?? "anonymous",
     );
-    const url = `${window.location.origin}/shared/deck/${shareId}`;
     await navigator.clipboard.writeText(url);
     toast({ type: "success", message: "Deck link copied to clipboard!" });
   }, [displayCards, session.selectedSubject, user?.$id]);

@@ -35,7 +35,7 @@ export function PastPaperClient() {
     queryKey: ["exam-markdown", exam?.fileUrl],
     queryFn: () => getExamMarkdown(exam?.fileUrl ?? ""),
     enabled: !!exam?.fileUrl,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 
   const headerChildren = useMemo(

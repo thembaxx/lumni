@@ -19,6 +19,7 @@ import {
 import { buildExportFilename, downloadIcal, generateIcal } from "@/lib/exam-dates/calendar-export";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/utils";
+import { TimetableUpload } from "./timetable-upload";
 
 export function NationalExamCalendar() {
   const { push } = useNavigationDirection();
@@ -82,6 +83,10 @@ export function NationalExamCalendar() {
     downloadIcal(ical, filename);
   }, [allSlots, sessionLabel, session.session, session.year]);
 
+  const handleTimetableParsed = useCallback((newSlots: ExamSlot[]) => {
+    setAllSlots(newSlots);
+  }, []);
+
   const countdownText = useMemo(() => {
     if (nextExams.length === 0) {
       if (allSlots.length === 0) return "";
@@ -122,17 +127,24 @@ export function NationalExamCalendar() {
           National Exams
         </h2>
         <p className="ios-subhead mt-1 text-(--system-text-secondary)">{sessionLabel}</p>
-        {allSlots.length > 0 && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleExportIcal}
-            className="mt-2 gap-1.5 text-xs"
-          >
-            <HugeiconsIcon icon={Download02Icon} className="size-3.5" />
-            Export Calendar
-          </Button>
-        )}
+        <div className="mt-2 flex flex-wrap gap-2">
+          {allSlots.length > 0 && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportIcal}
+              className="gap-1.5 text-xs"
+            >
+              <HugeiconsIcon icon={Download02Icon} className="size-3.5" />
+              Export Calendar
+            </Button>
+          )}
+          <TimetableUpload
+            session={session.session}
+            year={session.year}
+            onParsed={handleTimetableParsed}
+          />
+        </div>
       </div>
 
       <AnimatePresence mode="wait" initial={false}>

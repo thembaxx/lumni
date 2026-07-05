@@ -14,5 +14,8 @@ export {
   syncExamDatesToAppwrite,
 } from "./service";
 export { getSubjectAbbr, getSubjectColor } from "./subject-maps";
+export { extractTextFromPdf } from "./pdf-text";
+export { parseTimetableOcr } from "./timetable-parser";
+export type { TimetableParseResult } from "./timetable-parser";
 export type { ExamDateCollection, ExamSlot } from "./types";
 export { getCurrentSession } from "./types";

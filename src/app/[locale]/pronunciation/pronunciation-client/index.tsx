@@ -16,28 +16,18 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { audioEngine } from "@/lib/audio-engine";
-import { getWhisperService } from "@/lib/audio-engine/whisper-service";
-import { savePronunciationScore } from "@/lib/pronunciation-history/service";
-import { logError } from "@/lib/shared/logger";
+import { HistoryChart } from "./history-chart";
+import { createProgressPoller } from "./whisper-loader";
+import type { AssessmentResult } from "./scoring";
 import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-
-interface WordScore {
-  word: string;
-  accuracy: number;
-  isCorrect: boolean;
-}
+  requestMicPermission,
+  toggleRecording,
+  transcribeAndAssess,
+  resetAll,
+} from "./recording-orchestrator";
+import type { ModelState } from "./whisper-loader";
 
 export function PronunciationClient() {
   const searchParams = useSearchParams();
@@ -50,18 +40,7 @@ export function PronunciationClient() {
   const [isRecording, setIsRecording] = useState(false);
   const [hasRecording, setHasRecording] = useState(false);
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
-  const [assessment, setAssessment] = useState<{
-    overallScore: number;
-    wordScores: WordScore[];
-    fluencyScore: number;
-    phonemeAccuracy: number;
-    phonemeDetails: {
-      expected: string;
-      actual: string;
-      correct: boolean;
-      position: number;
-    }[];
-  } | null>(null);
+  const [assessment, setAssessment] = useState<AssessmentResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [historyStats, setHistoryStats] = useState<{
@@ -73,8 +52,7 @@ export function PronunciationClient() {
   const [historyLoading, setHistoryLoading] = useState(false);
   const permissionRef = useRef(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
-  const [modelState, setModelState] = useState<"idle" | "downloading" | "loaded" | "error">("idle");
-  const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [modelState, setModelState] = useState<ModelState>("idle");
 
   useEffect(() => {
     const unsub = audioEngine.subscribe(() => {
@@ -85,130 +63,29 @@ export function PronunciationClient() {
     return unsub;
   }, []);
 
-  const pollProgress = useCallback(() => {
-    const svc = getWhisperService();
-    svc.onDownloadProgress((pct) => {
-      setDownloadProgress(pct);
-    });
-    progressInterval.current = setInterval(() => {
-      const pct = svc.getDownloadProgress();
-      setDownloadProgress(pct);
-      if (pct >= 100 || svc.getLoadState() === "loaded") {
-        setModelState("loaded");
-        if (progressInterval.current) {
-          clearInterval(progressInterval.current);
-        }
-      }
-    }, 200);
-  }, []);
-
-  const requestPermission = useCallback(async () => {
-    try {
-      await audioEngine.requestPermission();
-      permissionRef.current = true;
-    } catch {
-      logError("PronunciationClient.permission", new Error("Mic denied"));
-    }
-  }, []);
-
   const handleRecord = useCallback(async () => {
-    if (!permissionRef.current) {
-      await requestPermission();
-    }
-    const state = audioEngine.getState();
-    if (state.isRecording) {
-      audioEngine.stopRecording();
-      return;
-    }
-    try {
-      audioEngine.resetRecording();
-      await audioEngine.startRecording();
-    } catch (err) {
-      logError("PronunciationClient.record", err);
-    }
-  }, [requestPermission]);
-
-  const blobToBase64 = useCallback((blob: Blob): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        resolve(result.split(",")[1]);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
+    await toggleRecording(permissionRef, () => requestMicPermission(permissionRef));
   }, []);
 
   const handleTranscribe = useCallback(async () => {
-    const result = audioEngine.getRecordingResult();
-    if (!result) return;
-
-    setLoading(true);
-    let transcriptionText: string | null = null;
-
-    try {
-      const base64 = await blobToBase64(result.blob);
-      const res = await fetch("/api/engine/transcribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ audio: base64, format: result.blob.type }),
-      });
-      const data = await res.json();
-
-      if (data.text) {
-        transcriptionText = data.text;
-      }
-    } catch {
-      // server unavailable, fall through to whisper
-    }
-
-    if (!transcriptionText) {
-      setModelState("downloading");
-      pollProgress();
-      try {
-        const service = getWhisperService();
-        const whisperResult = await service.transcribe(result.blob);
-        transcriptionText = whisperResult?.text ?? null;
-      } catch (err) {
-        logError("PronunciationClient.whisper", err);
-      }
-    }
-
-    if (transcriptionText) {
-      setTranscribedText(transcriptionText);
-      if (expectedText.trim()) {
-        const service = getWhisperService();
-        const scored = service.assessPronunciation(transcriptionText, expectedText);
-        setAssessment(scored);
-        savePronunciationScore(
-          userId,
-          expectedText.trim().split(/\s+/)[0] || "unknown",
-          scored.overallScore,
-          (scored.wordScores.filter((w) => w.isCorrect).length /
-            Math.max(scored.wordScores.length, 1)) *
-            100,
-          scored.phonemeAccuracy,
-          scored.fluencyScore,
-          prefillLang,
-        ).catch(() => {});
-      }
-    }
-
-    setLoading(false);
-    if (progressInterval.current) {
-      clearInterval(progressInterval.current);
-    }
-  }, [expectedText, pollProgress, blobToBase64, userId, prefillLang]);
+    await transcribeAndAssess(
+      expectedText,
+      userId,
+      prefillLang,
+      () => createProgressPoller(setDownloadProgress, () => setModelState("loaded")),
+      { setLoading, setTranscribedText, setAssessment, setModelState, setDownloadProgress },
+    );
+  }, [expectedText, userId, prefillLang]);
 
   const handleReset = useCallback(() => {
-    setTranscribedText(null);
-    setAssessment(null);
-    setExpectedText("");
-    audioEngine.resetRecording();
-    setHasRecording(false);
-    setModelState("idle");
-    setDownloadProgress(0);
+    resetAll({
+      setTranscribedText,
+      setAssessment,
+      setExpectedText,
+      setHasRecording,
+      setModelState,
+      setDownloadProgress,
+    });
   }, []);
 
   const handleLoadHistory = useCallback(async () => {
@@ -324,7 +201,7 @@ export function PronunciationClient() {
               disabled={loading}
               className="rounded-full"
             >
-              {loading ? "Transcribing…" : "Analyze Pronunciation"}
+              {loading ? "Transcribing\u2026" : "Analyze Pronunciation"}
             </Button>
           )}
 
@@ -406,82 +283,7 @@ export function PronunciationClient() {
                 <CardTitle className="font-semibold text-base">Pronunciation History</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-5 p-5 pt-0">
-                {historyLoading ? (
-                  <div className="flex flex-col gap-3">
-                    <Skeleton className="h-8 w-24 rounded-2xl" />
-                    <Skeleton className="h-4 w-48 rounded-2xl" />
-                    <Skeleton className="h-24 w-full rounded-3xl" />
-                  </div>
-                ) : historyStats && historyStats.totalAttempts > 0 ? (
-                  <>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-2xl bg-card p-4 text-center">
-                        <div className="font-extrabold text-3xl tabular-nums">
-                          {historyStats.totalAttempts}
-                        </div>
-                        <div className="mt-1 text-muted-foreground text-xs">Total Attempts</div>
-                      </div>
-                      <div className="rounded-2xl bg-card p-4 text-center">
-                        <div className="font-extrabold text-3xl tabular-nums">
-                          {historyStats.averageScore}%
-                        </div>
-                        <div className="mt-1 text-muted-foreground text-xs">Average Score</div>
-                      </div>
-                    </div>
-
-                    {historyStats.recentScores.length > 0 && (
-                      <div className="flex flex-col gap-2">
-                        <span className="font-semibold text-sm">Score Trend</span>
-                        <ResponsiveContainer width="100%" height={160}>
-                          <BarChart data={historyStats.recentScores} barCategoryGap="20%">
-                            <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                            <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
-                            <Tooltip />
-                            <Bar
-                              dataKey="score"
-                              radius={[4, 4, 0, 0]}
-                              fill="var(--color-accent, oklch(52% 0.18 146))"
-                            />
-                          </BarChart>
-                        </ResponsiveContainer>
-                        <ResponsiveContainer width="100%" height={80}>
-                          <LineChart data={historyStats.recentScores}>
-                            <XAxis dataKey="date" hide />
-                            <YAxis domain={[0, 100]} hide />
-                            <Line
-                              type="monotone"
-                              dataKey="score"
-                              stroke="var(--color-accent)"
-                              strokeWidth={2}
-                              dot={{ r: 3 }}
-                            />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    )}
-
-                    {historyStats.topWords.length > 0 && (
-                      <div className="flex flex-col gap-2">
-                        <span className="font-semibold text-sm">Most Practiced Words</span>
-                        <div className="flex flex-wrap gap-2">
-                          {historyStats.topWords.map((w) => (
-                            <Badge
-                              key={w.word}
-                              variant="outline"
-                              className="rounded-full px-3 py-1 text-xs"
-                            >
-                              {w.word} — {w.count}x ({w.avgScore}%)
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-muted-foreground text-sm">
-                    No pronunciation history yet. Practice some words to see your progress!
-                  </p>
-                )}
+                <HistoryChart stats={historyStats} loading={historyLoading} />
               </CardContent>
             </Card>
           </FadeIn>

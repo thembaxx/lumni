@@ -15,7 +15,7 @@ export function RecentQuestionsCard() {
   const { data: entries = [], isLoading } = useQuery({
     queryKey: ["recent-questions"],
     queryFn: () => getWrongAnswers(undefined, undefined, 5),
-    staleTime: 30000,
+    staleTime: 30_000,
   });
 
   if (entries.length === 0 && !isLoading) return null;

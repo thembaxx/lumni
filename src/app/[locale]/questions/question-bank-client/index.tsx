@@ -26,15 +26,15 @@ import type { SubjectCurriculum } from "@/curriculum/types";
 import { usePastQuestions } from "@/hooks/use-past-questions";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-
-const QUESTION_TYPES = [
-  { value: "", label: "All Types" },
-  { value: "multiple-choice", label: "Multiple Choice" },
-  { value: "short-answer", label: "Short Answer" },
-  { value: "long-answer", label: "Long Answer" },
-  { value: "calculation", label: "Calculation" },
-  { value: "essay", label: "Essay" },
-];
+import {
+  QUESTION_TYPES,
+  filtersReducer,
+  INITIAL_FILTERS,
+  hasActiveFilters,
+  buildYearsRange,
+  findCurrentTopic,
+} from "./filters-state";
+import { buildQueryConfig } from "./pagination";
 
 function QuestionCard({
   question,
@@ -135,76 +135,12 @@ function QuestionCard({
   );
 }
 
-type FiltersState = {
-  selectedSubject: string;
-  selectedTopic: string;
-  selectedSubtopic: string;
-  selectedType: string;
-  selectedYear: number | undefined;
-  curriculum: SubjectCurriculum | null;
-};
-
-type FiltersAction =
-  | { type: "setSubject"; subject: string }
-  | { type: "curriculumLoaded"; subject: string; curriculum: SubjectCurriculum }
-  | { type: "setTopic"; topic: string }
-  | { type: "setSubtopic"; subtopic: string }
-  | { type: "setType"; type_: string }
-  | { type: "setYear"; year: number | undefined }
-  | { type: "clearFilters" };
-
-function filtersReducer(state: FiltersState, action: FiltersAction): FiltersState {
-  switch (action.type) {
-    case "setSubject":
-      return {
-        ...state,
-        selectedSubject: action.subject,
-        selectedTopic: "",
-        selectedSubtopic: "",
-        curriculum: null,
-      };
-    case "curriculumLoaded":
-      return {
-        ...state,
-        curriculum: action.curriculum,
-        selectedTopic: "",
-        selectedSubtopic: "",
-      };
-    case "setTopic":
-      return { ...state, selectedTopic: action.topic };
-    case "setSubtopic":
-      return { ...state, selectedSubtopic: action.subtopic };
-    case "setType":
-      return { ...state, selectedType: action.type_ };
-    case "setYear":
-      return { ...state, selectedYear: action.year };
-    case "clearFilters":
-      return {
-        ...state,
-        selectedTopic: "",
-        selectedSubtopic: "",
-        selectedType: "",
-        selectedYear: undefined,
-      };
-    default:
-      return state;
-  }
-}
-
-const INITIAL_FILTERS: FiltersState = {
-  selectedSubject: "",
-  selectedTopic: "",
-  selectedSubtopic: "",
-  selectedType: "",
-  selectedYear: undefined,
-  curriculum: null,
-};
-
 export function QuestionBankClient() {
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
   const { push } = useRouter();
   const [filters, dispatch] = useReducer(filtersReducer, INITIAL_FILTERS);
+  const years = useMemo(() => buildYearsRange(), []);
 
   const {
     selectedSubject,
@@ -214,12 +150,6 @@ export function QuestionBankClient() {
     selectedYear,
     curriculum,
   } = filters;
-
-  const years = useMemo(() => {
-    const y: number[] = [];
-    for (let i = 2026; i >= 2015; i--) y.push(i);
-    return y;
-  }, []);
 
   useEffect(() => {
     if (!selectedSubject) return;
@@ -232,29 +162,18 @@ export function QuestionBankClient() {
     });
   }, [selectedSubject]);
 
-  const currentTopic = useMemo(() => {
-    if (!curriculum || !selectedTopic) return null;
-    return curriculum.topics.find((t) => t.id === selectedTopic) ?? null;
-  }, [curriculum, selectedTopic]);
+  const currentTopic = useMemo(
+    () => findCurrentTopic(curriculum, selectedTopic),
+    [curriculum, selectedTopic],
+  );
 
-  const {
-    data,
-    isPending,
-    error: queryError,
-  } = usePastQuestions({
-    subject: selectedSubject || undefined,
-    subtopicId: selectedSubtopic || undefined,
-    type: selectedType || undefined,
-    year: selectedYear,
-    limit: 50,
-    enabled: !!selectedSubject,
-  });
+  const { data, isPending, error: queryError } = usePastQuestions(buildQueryConfig(filters));
 
   const clearFilters = useCallback(() => {
     dispatch({ type: "clearFilters" });
   }, []);
 
-  const hasFilters = selectedTopic || selectedSubtopic || selectedType || selectedYear;
+  const filterActive = hasActiveFilters(filters);
 
   if (!isLoggedIn) {
     return (
@@ -316,7 +235,7 @@ export function QuestionBankClient() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__all">All Topics</SelectItem>
-                    {curriculum.topics.map((t) => (
+                    {curriculum.topics.map((t: { id: string; name: string }) => (
                       <SelectItem key={t.id} value={t.id}>
                         {t.name}
                       </SelectItem>
@@ -342,7 +261,7 @@ export function QuestionBankClient() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__all">All Subtopics</SelectItem>
-                    {currentTopic.subtopics.map((st) => (
+                    {currentTopic.subtopics.map((st: { id: string; name: string }) => (
                       <SelectItem key={st.id} value={st.id}>
                         {st.name}
                       </SelectItem>
@@ -366,7 +285,7 @@ export function QuestionBankClient() {
                   <SelectValue placeholder="All Types" />
                 </SelectTrigger>
                 <SelectContent>
-                  {QUESTION_TYPES.map((t) => (
+                  {QUESTION_TYPES.map((t: { value: string; label: string }) => (
                     <SelectItem key={t.value || "__all"} value={t.value || "__all"}>
                       {t.label}
                     </SelectItem>
@@ -390,7 +309,7 @@ export function QuestionBankClient() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="__all">All Years</SelectItem>
-                  {years.map((y) => (
+                  {years.map((y: number) => (
                     <SelectItem key={y} value={String(y)}>
                       {y}
                     </SelectItem>
@@ -400,7 +319,7 @@ export function QuestionBankClient() {
             </div>
           </div>
 
-          {hasFilters && (
+          {filterActive && (
             <Button
               variant="ghost"
               size="sm"

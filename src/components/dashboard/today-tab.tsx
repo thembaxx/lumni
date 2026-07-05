@@ -59,7 +59,7 @@ function FeedSection({ userId }: { userId: string }) {
   const { data: recommendations } = useQuery({
     queryKey: ["personalized-feed", userId],
     queryFn: async ({ queryKey }) => getFeed(queryKey[1] as string),
-    staleTime: 60000,
+    staleTime: 60_000,
     refetchInterval: 60000,
     refetchOnWindowFocus: true,
   });

@@ -1309,6 +1309,39 @@ Note: `useLogoEasterEgg` and `useMoonEasterEgg` hooks are wired but NOT on the d
 
 When searching for hook usage, `grep` patterns with quotes can miss matches due to shell escaping. Always verify with exact file reads or `rg` (ripgrep) over the whole `src/` tree. The `useGrep` tool and `grep` tool are both available — use the `grep` tool for quick checks but read the file for definitive confirmation.
 
+## TanStack Query staleTime Conventions
+
+### Default
+
+Configured in `src/lib/query-client.ts`: `staleTime: 60 * 1000` (60s).
+
+### Convention Tiers
+
+All custom staleTime values MUST follow these tiers. Use `1000 * 60 * X` expression style consistently.
+
+| Tier     | Value                    | Use Case                                      |
+| -------- | ------------------------ | --------------------------------------------- |
+| Fast     | `30_000` (30s)           | Live data: recent questions, next-best action |
+| Normal   | `60_000` (60s)           | Session data: auth, feed                      |
+| Standard | `1000 * 60 * 5` (5min)   | Default for all API-backed queries            |
+| Long     | `1000 * 60 * 30` (30min) | Semi-static: exam papers, exam dates          |
+| Max      | `1000 * 60 * 60` (60min) | Rarely changes: subjects, question engine     |
+
+### Prefetch Registry
+
+`src/lib/navigation/prefetch-registry.ts` MUST use `1000 * 60 * 5` (5min) for all prefetched queries unless the data has a faster refresh requirement.
+
+### Prohibited
+
+- `5 * 60 * 1000` style — use `1000 * 60 * 5` (multiply in order: ms _ sec _ min)
+- `60000 * 5` style — use `1000 * 60 * 5`
+- Bare numbers like `30000` — use `30_000` for readability
+- Inline overrides that differ from the convention tiers without a documented reason
+
+### Enforcement
+
+The `createApiQuery` factory (`src/hooks/use-hook-factories.ts`) defaults to `1000 * 60 * 5` (5min). Custom hooks should use this factory where possible. Inline `useQuery` calls must specify staleTime explicitly, preferring the factory default.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

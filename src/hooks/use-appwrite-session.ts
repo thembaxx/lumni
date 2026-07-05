@@ -22,7 +22,7 @@ async function fetchSession(): Promise<SessionUser> {
 const useSession = createApiQuery<SessionUser, void>({
   queryKey: ["appwrite-session"],
   fetchFn: fetchSession,
-  staleTime: 5 * 60 * 1000,
+  staleTime: 1000 * 60 * 5,
   retry: 0,
 });
 
