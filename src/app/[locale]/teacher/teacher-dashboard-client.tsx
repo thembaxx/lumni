@@ -7,6 +7,7 @@ import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
 import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-panel";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
+import { GradebookView } from "@/components/teacher/gradebook-view";
 import { LiveSessionMonitor } from "@/components/teacher/live-session-monitor";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
 import { Button } from "@/components/ui/button";
@@ -67,10 +68,13 @@ export function TeacherDashboardClient() {
   );
 }
 
+type TabView = "roster" | "gradebook";
+
 function TeacherDashboardInner() {
   const { push } = useNavigationDirection();
   const queryClient = useQueryClient();
   const [linkId, setLinkId] = useState("");
+  const [activeTab, setActiveTab] = useState<TabView>("roster");
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["teacher-students"],
@@ -152,6 +156,31 @@ function TeacherDashboardInner() {
 
   return (
     <ClassShell>
+      <div className="mb-4 flex gap-1 rounded-xl border bg-card p-1">
+        <button
+          type="button"
+          onClick={() => setActiveTab("roster")}
+          className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            activeTab === "roster" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Roster
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("gradebook")}
+          className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            activeTab === "gradebook" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Gradebook
+        </button>
+      </div>
+
+      {activeTab === "gradebook" ? (
+        <GradebookView />
+      ) : (
+        <>
       <div className="mb-6 flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-center">
         <div className="flex-1">
           <p className="font-medium text-sm">Link a Student</p>
@@ -213,6 +242,8 @@ function TeacherDashboardInner() {
               <AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
             </div>
           </div>
+            </>
+          )}
         </>
       )}
     </ClassShell>

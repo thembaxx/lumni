@@ -45,4 +45,5 @@ export const COLLECTIONS = {
   GHOST_LINKS: "ghost_links",
   LIVE_SESSIONS: "live_sessions",
   SYNC_ENTRIES: "sync_entries",
+  CLASSROOM_CODES: "classroom_codes",
 } as const;
