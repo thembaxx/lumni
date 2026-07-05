@@ -5,6 +5,7 @@ dependencies say otherwise. Each executor: read the plan fully before starting,
 honor its STOP conditions, and update your row when done.
 
 Commit baseline: `245ba077` (current HEAD). Batch 5 plans at `53532ff1` (2026-07-02).
+Batch 6 plans at `d4ba0811` (2026-07-05).
 
 ## Execution order & status — Batch 4 (hardening + direction)
 
@@ -109,6 +110,29 @@ All plans are independent and parallelizable. Each addresses a gap identified in
 - 087 is purely operational (DNS + Vercel config + env var) — no code changes beyond `app.config.ts`.
 - 089 is a 3-line fix in `whisper-service.ts` — `overallScore` currently uses character-level Levenshtein instead of already-computed `phonemeAccuracy`.
 - 090 adds two route handlers (GET list, DELETE revoke) and a small management UI component.
+
+## Execution order & status — Batch 6 (post-harden audit, July 2026)
+
+Light docs fixes first (091), then heavier follow-ups. 095 depends on 091 (docs must be accurate before strategy decision).
+
+| Plan | Title                                                     | Priority | Effort | Risk | Depends on | Status  |
+| ---- | --------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------- |
+| 091  | Fix ADR-0013 Effect TS documentation drift                | P2       | S      | LOW  | —          | DONE    |
+| 092  | Reconcile roadmap docs + mark plan 074 done               | P2       | S      | LOW  | —          | DONE    |
+| 093  | Diagnose and fix `pnpm run build` hang with Turbopack     | P3       | S      | LOW  | —          | TODO    |
+| 094  | Remove dead `performanceAware` prop from FadeIn component | P4       | S      | LOW  | —          | DONE    |
+| 095  | Design spike — Effect TS: adopt or abandon                | P3       | M      | LOW  | 091        | DONE    |
+| 096  | Design spike — Production deployment to custom domain     | P4       | M      | LOW  | —          | PENDING |
+| 097  | Remove unused Effect scaffolding per recommendation       | P3       | S      | LOW  | 095        | DONE    |
+
+**Execution notes**:
+
+- 091 and 092 are light docs-only fixes. 091 fixes the most impactful doc inaccuracy.
+- 093 is investigative (build hang diagnosis) — may or may not result in a code change.
+- 094 is dead-code removal, trivial but produces a clean oxlint check.
+- 095 (Effect strategy) should not start until 091 is DONE — the docs must reflect reality first for accurate analysis.
+- 096 is a deployment runbook — no code changes, pure ops documentation.
+- 097 implements the "Hold" recommendation from the Effect strategy spike — removes scaffolding, updates docs.
 
 ## Findings considered and rejected
 

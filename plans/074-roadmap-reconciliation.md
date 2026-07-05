@@ -1,3 +1,7 @@
+> **Superseded by Plan 092** (2026-07-05). The reconciliation described in this
+> plan has been executed as part of Plan 092's scope. See Plan 092 for the
+> actual changes.
+
 # Plan 074: Reconcile ROADMAP.md + docs/roadmap.md with shipped features
 
 > **Executor instructions**: This is a **documentation reconciliation plan** — you are reading source code and comparing it to documentation to find gaps. Do not change source code. The output is corrected README files.

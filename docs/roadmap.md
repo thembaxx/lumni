@@ -1,6 +1,6 @@
 # Lumni — Full Product Roadmap
 
-**Last updated:** 2026-06-29
+**Last updated:** 2026-07-05
 
 ---
 
@@ -85,14 +85,18 @@
 
 ## 🔜 Next Up
 
-| #   | Feature                                   | Priority | Description                                                |
-| --- | ----------------------------------------- | -------- | ---------------------------------------------------------- |
-| 8.1 | Shared subject color/abbreviation maps    | P2       | Extract from exam-calendar + exam-dates to shared location |
-| 8.2 | Custom domain + production deployment     | P3       | Current: Vercel preview; needs custom domain               |
-| 8.3 | OCR-based PDF scraping for DBE timetables | P3       | Automated exam date extraction                             |
-| 8.4 | Live leaderboard (Appwrite Realtime)      | P3       | Social proof during study sessions                         |
-| 8.5 | Cross-device sync layer                   | P2       | Design exploration underway (see decisions/)               |
-| 8.6 | Unified STT engine                        | P2       | Provider abstraction over Deepgram + Whisper + Browser     |
+### Recently Shipped
+
+- **8.1** Shared subject color/abbreviation maps (Session 50)
+- **8.4** Live leaderboard (WIP)
+- **8.5** Cross-device sync — Phase A (Session 50)
+- **8.6** Unified STT engine (Session 50)
+
+### Next Up
+
+- **8.2** Custom domain + production deployment → Plan 087 (partial)
+- **8.3** OCR-based PDF timetable scraping
+- **8.7** [new item] — Effect TS: adopt or abandon → Plan 095
 
 ---
 

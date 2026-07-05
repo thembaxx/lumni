@@ -1,7 +1,7 @@
 # Roadmap
 
-This file is auto-generated from the master roadmap at [`docs/roadmap.md`](./docs/roadmap.md).
-Shipped items are tracked there with ✅; update that file, not this one.
+This file is manually maintained alongside the master roadmap at [`docs/roadmap.md`](./docs/roadmap.md).
+Shipped items are tracked there with ✅; update that file, then mirror the state here.
 
 ## Short-term (next 1–2 sprints)
 
@@ -27,9 +27,12 @@ Shipped items are tracked there with ✅; update that file, not this one.
 - [ ] **Story exercises**: Fill-in-the-blank, vocabulary matching, summary writing
 - [ ] **Progress tracking**: Track stories read, comprehension scores, reading speed
 
+## Recently Shipped
+
+- [x] **Cross-device sync layer** — Phase A (Session 50)
+- [x] **Unified STT engine** — Deepgram + Browser-native + Whisper fallback (Session 50)
+
 ## Medium-term
 
-- [ ] **Cross-device sync layer**: See design exploration in `docs/decisions/`
-- [ ] **Unified STT engine**: Provider abstraction over Deepgram + Whisper + Browser
 - [ ] **Custom domain + production deployment**
 - [ ] **OCR-based PDF scraping for DBE timetables**

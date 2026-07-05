@@ -13,7 +13,6 @@ interface FadeInProps {
   scaleDistance?: number;
   className?: string;
   as?: "div" | "span";
-  performanceAware?: boolean;
   role?: string;
   "aria-label"?: string;
   "aria-live"?: "off" | "assertive" | "polite";
@@ -34,7 +33,6 @@ export function FadeIn({
   duration,
   distance,
   scaleDistance,
-  performanceAware,
   className,
   as = "div",
   ...rest
