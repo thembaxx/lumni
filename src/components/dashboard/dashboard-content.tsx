@@ -80,11 +80,11 @@ export function DashboardContent({
       onRefresh={async () => {
         window.location.reload();
       }}
-      className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8"
+      className="flex h-full w-full flex-col overflow-y-auto bg-system-grouped pt-8"
     >
       <AmbientGradient variant="dashboard" />
       <NoiseOverlay opacity={0.015} />
-      <PageContainer className="gap-6 pb-16">
+      <PageContainer className="gap-6">
         <LoginBanner />
         {activeTab === "today" && (
           <m.div

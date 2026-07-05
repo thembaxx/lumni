@@ -232,7 +232,7 @@ function SettingsContent() {
               size="sm"
               onClick={handleSave}
               disabled={isSaving}
-              className="h-10 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-[background-color,box-shadow,transform] duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
+              className="h-11 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-[background-color,box-shadow,transform] duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
             >
               {saved ? "Saved!" : isSaving ? t("common.saving") : "Save"}
             </Button>
@@ -253,7 +253,7 @@ function SettingsContent() {
                   aria-controls={`tabpanel-${tab.value}`}
                   onClick={() => handleSetActiveTab(tab.value)}
                   className={cn(
-                    "relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-[background-color,box-shadow,transform] duration-300 active:scale-[0.96]",
+                    "relative flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-[background-color,box-shadow,transform] duration-300 active:scale-[0.96]",
                     isActive
                       ? "bg-system-surface text-system-accent shadow-level-1"
                       : "text-muted-foreground hover:bg-system-surface/50 hover:text-foreground",
@@ -273,7 +273,7 @@ function SettingsContent() {
           </div>
         </nav>
 
-        <main className="flex-1 px-6 pb-24 pt-4">
+        <main className="flex-1 px-6 pt-4 md:pb-6">
           <TabPanel isActive={activeTab === "profile"}>
             <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />

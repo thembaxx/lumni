@@ -56,7 +56,7 @@ export function CategoryOverview({ title, items }: CategoryOverviewProps) {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">{title}</h1>
-        <p className="mt-1.5 text-muted-foreground/60 text-sm">Choose a section to get started</p>
+        <p className="mt-1.5 text-muted-foreground text-sm">Choose a section to get started</p>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => {

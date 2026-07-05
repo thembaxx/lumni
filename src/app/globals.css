@@ -27,7 +27,7 @@
   --system-fill-secondary: oklch(0% 0 0 / 0.03);
 
   /* Energetic Accent — bolder emerald green (playful tactile reboot v2) */
-  --system-accent: oklch(55% 0.26 146); /* Emerald Green — even more saturated */
+  --system-accent: oklch(50% 0.24 146); /* Emerald Green — WCAG AA against white */
   --system-accent-secondary: oklch(72% 0.28 55); /* Sunset orange — punchier accent */
   --system-accent-tertiary: oklch(58% 0.28 265); /* Deep blue — info badges, stats */
 

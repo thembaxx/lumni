@@ -361,7 +361,7 @@ export function FlashcardsClient() {
 
   if (!session.isActive) {
     return (
-      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
           <LocalDataNotice page="flashcards" description={t("flashcards.localDataNotice")} />
@@ -377,7 +377,7 @@ export function FlashcardsClient() {
 
   if (isLoading && session.source === "ai") {
     return (
-      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
           <FlashcardsLoading />
@@ -388,7 +388,7 @@ export function FlashcardsClient() {
 
   if (displayCards.length === 0) {
     return (
-      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
           <FlashcardsEmpty
@@ -403,7 +403,7 @@ export function FlashcardsClient() {
 
   if (session.sessionComplete) {
     return (
-      <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+      <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
           <FlashcardsResults
@@ -421,7 +421,7 @@ export function FlashcardsClient() {
   }
 
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <GamificationCelebration />

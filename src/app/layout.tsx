@@ -46,11 +46,11 @@ export default function RootLayout({
             __html: `(function(){try{var t=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var d=t?t[1]==="dark":false;if(d)document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
           }}
         />
-        <link rel="preconnect" href="https://jnb.cloud.appwrite.io" />
+        <link rel="preconnect" href="https://fra.cloud.appwrite.io" />
         <link rel="preconnect" href="https://utfs.io" />
         <link rel="preconnect" href="https://api.iconify.design" />
         <link rel="preconnect" href="https://upload.wikimedia.org" />
-        <link rel="dns-prefetch" href="https://jnb.cloud.appwrite.io" />
+        <link rel="dns-prefetch" href="https://fra.cloud.appwrite.io" />
         <link rel="dns-prefetch" href="https://utfs.io" />
         <link rel="dns-prefetch" href="https://api.iconify.design" />
         <link rel="dns-prefetch" href="https://upload.wikimedia.org" />

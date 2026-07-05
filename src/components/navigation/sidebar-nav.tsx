@@ -105,7 +105,7 @@ function SidebarContent() {
             aria-description="Cmd+K to focus"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="h-9 w-full rounded-lg border border-border/50 bg-system-fill pr-3 pl-9 text-base placeholder:text-muted-foreground/60 focus:border-system-accent focus:outline-none focus:ring-1 focus:ring-system-accent/30"
+            className="h-10 w-full rounded-lg border border-border/50 bg-system-fill pr-3 pl-9 text-base placeholder:text-muted-foreground/60 focus:border-system-accent focus:outline-none focus:ring-1 focus:ring-system-accent/30"
           />
           {query && (
             <button
@@ -163,7 +163,7 @@ function SidebarContent() {
                     className={cn(
                       "relative flex h-10 w-full items-center gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150 press-scale",
                       isActive
-                        ? "bg-system-accent/10 font-semibold text-system-accent"
+                        ? "font-semibold text-system-accent"
                         : "text-muted-foreground hover:bg-system-fill hover:text-foreground",
                     )}
                   >
@@ -206,7 +206,6 @@ export function SidebarNav() {
         aria-label="Sidebar navigation"
         className="sidebar-panel relative hidden h-dvh w-60 shrink-0 flex-col border-system-separator/30 border-r bg-system-grouped/80 pt-safe glass-ultra-thin md:flex"
       >
-        <div className="pointer-events-none absolute inset-0 bg-(--system-accent-alpha-10)" />
         <SidebarContent />
       </aside>
       <div className="md:hidden">

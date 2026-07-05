@@ -51,14 +51,14 @@ export default function AppError({
                   "Something went wrong. This might be a network issue or a temporary glitch. Try again or go back to the dashboard."}
               </p>
               {error?.digest && (
-                <p className="ios-footnote font-mono text-(--system-text-tertiary)">
+                <p className="ios-footnote font-mono text-muted-foreground">
                   Error ID: {error.digest}
                 </p>
               )}
             </div>
 
             <div className="flex flex-col gap-(--space-3) sm:flex-row">
-              <Button onClick={() => reset()} className="gap-2">
+              <Button variant="outline" onClick={() => reset()} className="gap-2">
                 <HugeiconsIcon icon={RefreshIcon} className="size-4" />
                 Try again
               </Button>
@@ -72,7 +72,7 @@ export default function AppError({
               </Button>
             </div>
 
-            <p className="ios-footnote text-(--system-text-tertiary)">
+            <p className="ios-footnote text-muted-foreground">
               If this persists, please contact support.
             </p>
           </m.div>
