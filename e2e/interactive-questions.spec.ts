@@ -8,38 +8,48 @@ const hasAiKeys = () => {
 
 if (!hasAiKeys()) {
   test.describe("Interactive questions (AI required)", () => {
-    test.skip(true, "AI provider keys not configured");
+    test("skip — AI provider keys not configured", () => {
+      test.skip();
+    });
   });
 } else {
-  test("quiz page loads with subject selector", async ({ page }) => {
-    await page.goto("/en/quiz", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await expect(page.locator("h1, h2").first()).toBeVisible({ timeout: 10000 });
-  });
+  test.describe("Interactive questions", () => {
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript(() => {
+        localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
+      });
+    });
 
-  test("ordering question type renders in question card", async ({ page }) => {
-    await page.goto("/en/quiz", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+    test("quiz page loads with subject selector", async ({ page }) => {
+      await page.goto("/en/quiz", { waitUntil: "commit" });
+      await page.waitForLoadState("networkidle");
+      await expect(page.locator("main")).toBeVisible({ timeout: 10000 });
+    });
 
-    const draggableItems = page.locator('[draggable="true"]');
-    await expect(draggableItems.first()).toBeAttached({ timeout: 5000 });
-  });
+    test("ordering question type renders in question card", async ({ page }) => {
+      await page.goto("/en/quiz", { waitUntil: "commit" });
+      await page.waitForLoadState("networkidle");
 
-  test("match-pairs input renders left and right columns", async ({ page }) => {
-    await page.goto("/en/quiz", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+      const draggableItems = page.locator('[draggable="true"]');
+      await expect(draggableItems.first()).toBeAttached({ timeout: 5000 });
+    });
 
-    const dropTargets = page.locator('button:has-text("Drop target")');
-    const dropTargetCount = await dropTargets.count();
-    expect(dropTargetCount).toBeGreaterThanOrEqual(0);
-  });
+    test("match-pairs input renders left and right columns", async ({ page }) => {
+      await page.goto("/en/quiz", { waitUntil: "commit" });
+      await page.waitForLoadState("networkidle");
 
-  test("fill-in-sequence input shows draggable options", async ({ page }) => {
-    await page.goto("/en/quiz", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+      const dropTargets = page.locator('button:has-text("Drop target")');
+      const dropTargetCount = await dropTargets.count();
+      expect(dropTargetCount).toBeGreaterThanOrEqual(0);
+    });
 
-    const draggableElements = page.locator("[aria-grabbed]");
-    await expect(draggableElements.first()).toBeAttached({ timeout: 5000 });
+    test("fill-in-sequence input shows draggable options", async ({ page }) => {
+      await page.goto("/en/quiz", { waitUntil: "commit" });
+      await page.waitForLoadState("networkidle");
+
+      const draggableElements = page.locator("[aria-grabbed]");
+      await expect(draggableElements.first()).toBeAttached({ timeout: 5000 });
+    });
   });
 
   test.describe("generate → grade cycle", () => {

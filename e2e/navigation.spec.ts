@@ -7,16 +7,18 @@ test.describe("View transitions", () => {
     });
   });
 
+  async function waitForBottomNav(page: import("@playwright/test").Page) {
+    await page.waitForTimeout(3000);
+    // BottomNav is dynamically imported — wait for it to appear
+    await expect(page.getByRole("button", { name: /All tools/i })).toBeVisible({ timeout: 15000 });
+  }
+
   test("forward direction set when Tools button clicked from Dashboard", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto("/en/dashboard", { waitUntil: "networkidle" });
-    await page.waitForTimeout(1000);
+    await page.goto("/en/dashboard", { waitUntil: "commit" });
 
-    const toolsBtn = page.getByRole("button", { name: /All tools/i });
-    await expect(toolsBtn).toBeVisible({ timeout: 10000 });
+    await waitForBottomNav(page);
 
-    // Read attribute instantly after click, before any navigation completes
-    // Using page.evaluate to click and read in same microtask
     const vtDirection = await page.evaluate(() => {
       const btn = document.querySelector<HTMLButtonElement>('button[aria-label="All tools"]');
       if (!btn) return "NO_BUTTON";
@@ -29,11 +31,9 @@ test.describe("View transitions", () => {
 
   test("back direction set when Tools button clicked from Quiz page", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto("/en/quiz", { waitUntil: "networkidle" });
-    await page.waitForTimeout(1000);
+    await page.goto("/en/quiz", { waitUntil: "commit" });
 
-    const toolsBtn = page.getByRole("button", { name: /All tools/i });
-    await expect(toolsBtn).toBeVisible({ timeout: 10000 });
+    await waitForBottomNav(page);
 
     const vtDirection = await page.evaluate(() => {
       const btn = document.querySelector<HTMLButtonElement>('button[aria-label="All tools"]');

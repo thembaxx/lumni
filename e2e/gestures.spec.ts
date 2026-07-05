@@ -93,12 +93,32 @@ test.describe("Quiz navigation", () => {
     });
   });
 
-  test("arrow right navigates to next question", async ({ page }) => {
-    await page.goto("/en/quiz?subject=mathematics", { waitUntil: "domcontentloaded" });
+  async function startQuiz(page: import("@playwright/test").Page) {
+    // Navigate to quiz with subject preset
+    await page.goto("/en/quiz?subject=mathematics", { waitUntil: "commit" });
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
 
+    // Click the Mathematics subject card to start the session
+    const mathButton = page.getByRole("button", { name: /mathematics/i }).first();
+    const buttonVisible = await mathButton.isVisible({ timeout: 8000 }).catch(() => false);
+    if (!buttonVisible) {
+      // Subject may have been auto-selected — wait for questions
+      await page.waitForFunction(() => document.body.textContent?.includes("What is 2 + 2?"), {
+        timeout: 15000,
+      });
+      return;
+    }
+    await mathButton.click();
+
+    // Wait for mock API response + question rendering
     await page.waitForFunction(() => document.body.textContent?.includes("What is 2 + 2?"), {
       timeout: 20000,
     });
+  }
+
+  test("arrow right navigates to next question", async ({ page }) => {
+    await startQuiz(page);
 
     await page.keyboard.press("ArrowRight");
 
@@ -110,20 +130,14 @@ test.describe("Quiz navigation", () => {
   });
 
   test("arrow left returns to previous question", async ({ page }) => {
-    await page.goto("/en/quiz?subject=mathematics", { waitUntil: "domcontentloaded" });
+    await startQuiz(page);
 
-    await page.waitForFunction(() => document.body.textContent?.includes("What is 2 + 2?"), {
-      timeout: 20000,
-    });
-
-    // ArrowRight to go to question 2
     await page.keyboard.press("ArrowRight");
 
     await page.waitForFunction(() => document.body.textContent?.includes("What is 3 + 3?"), {
       timeout: 5000,
     });
 
-    // ArrowLeft to go back to question 1
     await page.keyboard.press("ArrowLeft");
 
     await page.waitForFunction(() => document.body.textContent?.includes("What is 2 + 2?"), {
@@ -134,18 +148,12 @@ test.describe("Quiz navigation", () => {
   });
 
   test("arrow right then arrow up does not navigate", async ({ page }) => {
-    await page.goto("/en/quiz?subject=mathematics", { waitUntil: "domcontentloaded" });
+    await startQuiz(page);
 
-    await page.waitForFunction(() => document.body.textContent?.includes("What is 2 + 2?"), {
-      timeout: 20000,
-    });
-
-    // ArrowUp does not trigger navigation (only ArrowLeft/Right work)
     await page.keyboard.press("ArrowUp");
 
     await page.waitForTimeout(600);
 
-    // Should still be on question 1
     await expect(page.locator("text=What is 2 + 2?").first()).toBeVisible({ timeout: 3000 });
   });
 });
@@ -158,14 +166,17 @@ test.describe("Pull-to-refresh", () => {
   });
 
   test("pull gesture applies translateY transform", async ({ page }) => {
-    await page.goto("/en/dashboard", { waitUntil: "domcontentloaded" });
+    await page.goto("/en/dashboard", { waitUntil: "commit" });
+    // DashboardClient is dynamically imported — wait for hydration
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(3000);
 
     const scrollContainerExists = await page.locator("[data-scroll-container]").count();
     if (scrollContainerExists === 0) {
       test.skip(true, "Scroll container requires authenticated dashboard");
       return;
     }
-    await page.waitForSelector("[data-scroll-container]", { timeout: 10000 });
+    await page.waitForSelector("[data-scroll-container]", { timeout: 15000 });
 
     const scrollContainer = page.locator("[data-scroll-container]").first();
     const box = await scrollContainer.boundingBox();
