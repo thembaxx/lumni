@@ -1,5 +1,7 @@
 # Plan 087: Custom domain deployment — lumni.ai DNS + SSL + env config
 
+> **Superseded by Plan 096** (2026-07-05). The deployment checklist is now at `docs/deployment.md`.
+
 > **Executor instructions**: Follow this plan step by step. Run every
 > verification command and confirm the expected result before moving to the
 > next step. If anything in the "STOP conditions" section occurs, stop and

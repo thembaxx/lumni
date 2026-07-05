@@ -92,15 +92,15 @@ All plans in this batch are independent and can run in parallel:
 
 All plans are independent and parallelizable. Each addresses a gap identified in the direction audit at commit `a72e64df`.
 
-| Plan | Title                                                            | Priority | Effort | Risk | Depends on | Status  |
-| ---- | ---------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------- |
-| 084  | Extend sync push/pull coverage to remaining Dexie tables         | P2       | M      | LOW  | 080        | DONE    |
-| 085  | Remove phantom Beta toggles + Session Timer from Settings        | P2       | S      | LOW  | —          | DONE    |
-| 086  | Fix referral reward loop — replace premium with XP               | P2       | S      | LOW  | —          | DONE    |
-| 087  | Deploy custom domain `lumni.ai` via Vercel                       | P2       | M      | LOW  | —          | PARTIAL |
-| 088  | Wire essayDrafts Dexie table for cross-session essay persistence | P3       | S      | LOW  | —          | DONE    |
-| 089  | Fix pronunciation `overallScore` to use phoneme accuracy         | P2       | S      | LOW  | —          | DONE    |
-| 090  | Add question share management surface (list + revoke)            | P3       | S      | LOW  | —          | DONE    |
+| Plan | Title                                                            | Priority | Effort | Risk | Depends on | Status            |
+| ---- | ---------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ----------------- |
+| 084  | Extend sync push/pull coverage to remaining Dexie tables         | P2       | M      | LOW  | 080        | DONE              |
+| 085  | Remove phantom Beta toggles + Session Timer from Settings        | P2       | S      | LOW  | —          | DONE              |
+| 086  | Fix referral reward loop — replace premium with XP               | P2       | S      | LOW  | —          | DONE              |
+| 087  | Deploy custom domain `lumni.ai` via Vercel                       | P2       | M      | LOW  | —          | SUPERSEDED by 096 |
+| 088  | Wire essayDrafts Dexie table for cross-session essay persistence | P3       | S      | LOW  | —          | DONE              |
+| 089  | Fix pronunciation `overallScore` to use phoneme accuracy         | P2       | S      | LOW  | —          | DONE              |
+| 090  | Add question share management surface (list + revoke)            | P3       | S      | LOW  | —          | DONE              |
 
 **Execution notes**:
 
@@ -115,15 +115,15 @@ All plans are independent and parallelizable. Each addresses a gap identified in
 
 Light docs fixes first (091), then heavier follow-ups. 095 depends on 091 (docs must be accurate before strategy decision).
 
-| Plan | Title                                                     | Priority | Effort | Risk | Depends on | Status  |
-| ---- | --------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------- |
-| 091  | Fix ADR-0013 Effect TS documentation drift                | P2       | S      | LOW  | —          | DONE    |
-| 092  | Reconcile roadmap docs + mark plan 074 done               | P2       | S      | LOW  | —          | DONE    |
-| 093  | Diagnose and fix `pnpm run build` hang with Turbopack     | P3       | S      | LOW  | —          | TODO    |
-| 094  | Remove dead `performanceAware` prop from FadeIn component | P4       | S      | LOW  | —          | DONE    |
-| 095  | Design spike — Effect TS: adopt or abandon                | P3       | M      | LOW  | 091        | DONE    |
-| 096  | Design spike — Production deployment to custom domain     | P4       | M      | LOW  | —          | PENDING |
-| 097  | Remove unused Effect scaffolding per recommendation       | P3       | S      | LOW  | 095        | DONE    |
+| Plan | Title                                                     | Priority | Effort | Risk | Depends on | Status |
+| ---- | --------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 091  | Fix ADR-0013 Effect TS documentation drift                | P2       | S      | LOW  | —          | DONE   |
+| 092  | Reconcile roadmap docs + mark plan 074 done               | P2       | S      | LOW  | —          | DONE   |
+| 093  | Diagnose and fix `pnpm run build` hang with Turbopack     | P3       | S      | LOW  | —          | TODO   |
+| 094  | Remove dead `performanceAware` prop from FadeIn component | P4       | S      | LOW  | —          | DONE   |
+| 095  | Design spike — Effect TS: adopt or abandon                | P3       | M      | LOW  | 091        | DONE   |
+| 096  | Design spike — Production deployment to custom domain     | P4       | M      | LOW  | —          | DONE   |
+| 097  | Remove unused Effect scaffolding per recommendation       | P3       | S      | LOW  | 095        | DONE   |
 
 **Execution notes**:
 
