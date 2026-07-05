@@ -88,15 +88,15 @@
 ### Recently Shipped
 
 - **8.1** Shared subject color/abbreviation maps (Session 50)
-- **8.4** Live leaderboard (WIP)
+- **8.2** Custom domain + production deployment → design spike done (Plan 096)
+- **8.4** Live leaderboard (Done)
 - **8.5** Cross-device sync — Phase A (Session 50)
 - **8.6** Unified STT engine (Session 50)
+- **8.7** Effect TS strategy — Hold recommendation adopted (Plans 095/097)
 
 ### Next Up
 
-- **8.2** Custom domain + production deployment → Plan 087 (partial)
 - **8.3** OCR-based PDF timetable scraping
-- **8.7** [new item] — Effect TS: adopt or abandon → Plan 095
 
 ---
 

@@ -8,12 +8,12 @@ Shipped items are tracked there with ✅; update that file, then mirror the stat
 ### Pronunciation (C1)
 
 - [ ] **Phoneme-level assessment**: Replace Levenshtein distance with IPA phoneme alignment (STT engine tracked in `docs/decisions/`)
-- [ ] **Pronunciation history**: Track scores over time in Dexie, show improvement charts
+- [x] **Pronunciation history**: Track scores over time in Dexie, show improvement charts
 - [ ] **Lesson integration**: Surface pronunciation practice in lesson cards for vocab words
 
 ### Dictionary (C2)
 
-- [ ] **Afrikaans / isiZulu / isiXhosa support**: Wire Wiktionary API (`en.wiktionary.org/w/api.php`) for SA language word lookups
+- [x] **Afrikaans / isiZulu / isiXhosa support**: Wire Wiktionary API (`en.wiktionary.org/w/api.php`) for SA language word lookups
 - [ ] **Word of the Day**: Daily featured word on dashboard
 - [ ] **Vocabulary builder**: Save words to personal list, spaced-repetition review
 - [ ] **Lesson integration**: Link vocab words in lessons to dictionary lookup
@@ -34,5 +34,5 @@ Shipped items are tracked there with ✅; update that file, then mirror the stat
 
 ## Medium-term
 
-- [ ] **Custom domain + production deployment**
+- [x] **Custom domain + production deployment** (planning complete — see `docs/deployment.md`)
 - [ ] **OCR-based PDF scraping for DBE timetables**

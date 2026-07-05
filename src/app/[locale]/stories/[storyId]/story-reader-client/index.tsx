@@ -3,8 +3,10 @@
 import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import Lightning from "@hugeicons/core-free-icons/FlashIcon";
+import TextIcon from "@hugeicons/core-free-icons/TextIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FadeIn } from "@/components/shared/fade-in";
+import { WordHighlightText } from "@/components/stories/word-highlight-text";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -70,6 +72,8 @@ export function StoryReaderClient() {
   const [allGraded, setAllGraded] = useState(false);
   const [scrollPercent, setScrollPercent] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
+  const [showWordHighlight, setShowWordHighlight] = useState(false);
 
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timeRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -248,7 +252,23 @@ export function StoryReaderClient() {
               <Badge variant="secondary" className="rounded-full text-xs">
                 {story.language}
               </Badge>
-              <ListenToLesson text={story.content} lang={getLangCode(story.languageId)} />
+              <ListenToLesson
+                text={story.content}
+                lang={getLangCode(story.languageId)}
+                onWordIndexChange={setCurrentWordIndex}
+              />
+              {story.content && (
+                <Button
+                  variant={showWordHighlight ? "default" : "ghost"}
+                  size="sm"
+                  className="rounded-full text-xs"
+                  onClick={() => setShowWordHighlight((v) => !v)}
+                  aria-label={showWordHighlight ? "Show normal view" : "Show reading view"}
+                >
+                  <HugeiconsIcon icon={TextIcon} className="size-3.5" />
+                  Read Along
+                </Button>
+              )}
               {story.gradeLevel && (
                 <Badge variant="outline" className="rounded-full text-xs">
                   Grade {story.gradeLevel}
@@ -281,7 +301,11 @@ export function StoryReaderClient() {
           </CardHeader>
           <CardContent className="flex flex-col gap-6 p-5 pt-0">
             <div className="text-base/7 leading-[1.75]">
-              <MarkdownRenderer content={story.content} />
+              {showWordHighlight && currentWordIndex >= 0 ? (
+                <WordHighlightText text={story.content} currentWordIndex={currentWordIndex} />
+              ) : (
+                <MarkdownRenderer content={story.content} />
+              )}
             </div>
           </CardContent>
         </Card>

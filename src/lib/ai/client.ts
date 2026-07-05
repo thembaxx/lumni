@@ -6,7 +6,9 @@ import { getAICallContext } from "@/lib/ai/call-context";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { logError } from "@/lib/shared/logger";
 import { trackAILatency } from "./latency-tracker";
-import type { AIResponse, AIResult, AIFailure } from "./types";
+import { createUniformProvider, geminiNormalizer, openaiNormalizer } from "./uniform-adapter";
+import type { AIResult, AIFailure } from "./types";
+import type { AIResponse } from "./types";
 
 export interface AIConfig {
   geminiApiKey?: string;
@@ -56,39 +58,17 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
   if (config.geminiApiKey) {
     const google = createGoogle({ apiKey: config.geminiApiKey });
     const modelId = config.geminiModel ?? "gemini-2.0-flash-lite-001";
-    const model = google(modelId);
-    providers.push({
-      provider: "gemini",
-      model: modelId,
-      modelRef: model,
-      generateText: async (prompt, systemPrompt, imageUrl, options) => {
-        const messages: {
-          role: "user";
-          content: Array<{ type: "text"; text: string } | { type: "image"; image: string }>;
-        }[] = [{ role: "user", content: [{ type: "text", text: prompt }] }];
-        if (imageUrl) {
-          messages[0].content.push({ type: "image", image: imageUrl });
-        }
-        const { text, usage } = await generateText({
-          model,
-          messages,
-          system: systemPrompt,
-          temperature: options?.temperature ?? 0.7,
-          maxOutputTokens: options?.maxOutputTokens ?? options?.maxTokens ?? 2048,
-          ...(config.reasoning ? { reasoning: config.reasoning as never } : {}),
-          ...(config.timeoutMs ? { timeout: config.timeoutMs } : {}),
-          telemetry: makeTelemetryOptions("ai.generate"),
-        });
-        return {
-          type: "success" as const,
-          content: text,
-          provider: "gemini",
-          model: modelId,
-          inputTokens: usage?.inputTokens,
-          outputTokens: usage?.outputTokens,
-        };
-      },
-    });
+    providers.push(
+      createUniformProvider({
+        name: "gemini",
+        modelId,
+        createModel: () => google(modelId),
+        normalizer: geminiNormalizer,
+        supportsImages: true,
+        reasoning: config.reasoning,
+        timeoutMs: config.timeoutMs,
+      }),
+    );
   }
 
   if (config.nvidiaApiKey) {
@@ -98,31 +78,16 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
       name: "nvidia",
     });
     const modelId = config.nvidiaModel ?? "meta/llama-3.3-70b-instruct";
-    providers.push({
-      provider: "nvidia",
-      model: modelId,
-      modelRef: nvidia.chat(modelId),
-      generateText: async (prompt, systemPrompt, _imageUrl, options) => {
-        const { text, usage } = await generateText({
-          model: nvidia.chat(modelId),
-          system: systemPrompt,
-          prompt,
-          temperature: options?.temperature ?? 0.7,
-          maxOutputTokens: options?.maxOutputTokens ?? options?.maxTokens ?? 2048,
-          ...(config.reasoning ? { reasoning: config.reasoning as never } : {}),
-          ...(config.timeoutMs ? { timeout: config.timeoutMs } : {}),
-          telemetry: makeTelemetryOptions("ai.generate"),
-        });
-        return {
-          type: "success" as const,
-          content: text,
-          provider: "nvidia",
-          model: modelId,
-          inputTokens: usage?.inputTokens,
-          outputTokens: usage?.outputTokens,
-        };
-      },
-    });
+    providers.push(
+      createUniformProvider({
+        name: "nvidia",
+        modelId,
+        createModel: () => nvidia.chat(modelId),
+        normalizer: openaiNormalizer,
+        reasoning: config.reasoning,
+        timeoutMs: config.timeoutMs,
+      }),
+    );
   }
 
   if (config.groqApiKey) {
@@ -132,31 +97,16 @@ function createProviderModels(config: AIConfig): ProviderModel[] {
       name: "groq",
     });
     const modelId = config.groqModel ?? "llama-3.3-70b-versatile";
-    providers.push({
-      provider: "groq",
-      model: modelId,
-      modelRef: groq.chat(modelId),
-      generateText: async (prompt, systemPrompt, _imageUrl, options) => {
-        const { text, usage } = await generateText({
-          model: groq.chat(modelId),
-          system: systemPrompt,
-          prompt,
-          temperature: options?.temperature ?? 0.7,
-          maxOutputTokens: options?.maxOutputTokens ?? options?.maxTokens ?? 2048,
-          ...(config.reasoning ? { reasoning: config.reasoning as never } : {}),
-          ...(config.timeoutMs ? { timeout: config.timeoutMs } : {}),
-          telemetry: makeTelemetryOptions("ai.generate"),
-        });
-        return {
-          type: "success" as const,
-          content: text,
-          provider: "groq",
-          model: modelId,
-          inputTokens: usage?.inputTokens,
-          outputTokens: usage?.outputTokens,
-        };
-      },
-    });
+    providers.push(
+      createUniformProvider({
+        name: "groq",
+        modelId,
+        createModel: () => groq.chat(modelId),
+        normalizer: openaiNormalizer,
+        reasoning: config.reasoning,
+        timeoutMs: config.timeoutMs,
+      }),
+    );
   }
 
   return providers;

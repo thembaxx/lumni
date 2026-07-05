@@ -66,7 +66,7 @@ NationalExamCalendar
     ├── InfoGrid          — date, time, duration, SC availability
     ├── CountdownTimer    — live countdown to exam
     ├── PracticeBtn       — navigates to /quiz?subject=X&topic=Y
-    ├── MockExamBtn       — (future) timed past-paper exam — add to TODO
+    ├── MockExamBtn       — timed past-paper exam — add to TODO
     └── CommonQuesBtn     — (future) DB common questions — add to TODO
 ```
 
@@ -121,8 +121,8 @@ function getCurrentSession(): { session: "may-june" | "oct-nov"; year: number } 
 - Date/time info in a compact 2-column grid
 - Live countdown (updates every 60s) — "2 days, 14 hours until this exam"
 - **Practice** button: navigates to `/quiz?subject=<subjectId>&topic=&count=10`
-- **Mock Exam** button: placeholder, navigates or shows "Coming soon" toast
-- **View Common Questions**: placeholder, shows "Coming soon" toast
+- **Mock Exam** button: navigates to timed mock exam session
+- **View Common Questions**: navigates to practice quiz
 
 ## 8. Integration Points
 
@@ -147,8 +147,8 @@ Full seed in `src/lib/exam-dates/data-2026-may.ts`.
 ## 10. Future Work (add to TODO.md)
 
 - [ ] **Live PDF scraper**: Server-side function that downloads & parses the education.gov.za timetable PDF using OCR/AI. Runs on cron + on-demand via `POST /api/exam-dates/refresh`.
-- [ ] **Mock Exam mode**: Timed exam using real past papers, emulating exam hall conditions.
-- [ ] **Common Questions**: Pull frequently-tested questions from the question database based on subject + paper analysis.
-- [ ] **Oct/Nov 2026 data**: Need to add once the timetable is published.
+- [x] **Mock Exam mode**: Timed exam using real past papers, emulating exam hall conditions.
+- [x] **Common Questions**: Pull frequently-tested questions from the question database based on subject + paper analysis.
+- [x] **Oct/Nov 2026 data**: Need to add once the timetable is published.
 - [ ] **Push notifications**: Alert users 24h before each of their exams.
 - [ ] **Calendar export**: iCal / Google Calendar export button.

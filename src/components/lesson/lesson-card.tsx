@@ -1,17 +1,16 @@
 "use client";
 
-import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { memo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "@/i18n/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { InlinePronunciationPractice } from "@/components/pronunciation/inline-pronunciation-practice";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { useRouter } from "@/i18n/navigation";
 import type { VocabWord } from "@/lib/lesson/types";
 import { cn } from "@/lib/utils";
 import { getDifficultyColor } from "@/lib/utils/colors";
@@ -94,19 +93,10 @@ export const LessonCard = memo(function LessonCard({
                             <span className="font-medium text-sm">{v.word}</span>
                             <span className="text-muted-foreground text-xs">{v.definition}</span>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="rounded-full"
-                            aria-label={`Practice pronouncing ${v.word}`}
-                            onClick={() =>
-                              push(
-                                `/pronunciation?text=${encodeURIComponent(v.word)}&lang=${encodeURIComponent(v.language ?? "en")}`,
-                              )
-                            }
-                          >
-                            <HugeiconsIcon icon={Mic01Icon} className="size-4" />
-                          </Button>
+                          <InlinePronunciationPractice
+                            word={v.word}
+                            pronunciation={v.pronunciation}
+                          />
                         </div>
                       ))}
                     </div>

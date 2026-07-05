@@ -35,7 +35,7 @@ Batch 6 plans at `d4ba0811` (2026-07-05).
 | ---- | ------------------------------------------------------------ | -------- | ------ | ---- | ---------- | ----------------- |
 | 072  | Design spike: cross-device sync layer                        | P2       | L      | LOW  | 062 (CI)   | SUPERSEDED by 080 |
 | 073  | Design spike: unified STT engine                             | P2       | M      | LOW  | —          | SUPERSEDED by 081 |
-| 074  | Reconcile ROADMAP.md + docs/roadmap.md with shipped features | P2       | S      | LOW  | —          | TODO              |
+| 074  | Reconcile ROADMAP.md + docs/roadmap.md with shipped features | P2       | S      | LOW  | —          | SUPERSEDED by 092 |
 
 ## Execution phases
 
@@ -119,7 +119,7 @@ Light docs fixes first (091), then heavier follow-ups. 095 depends on 091 (docs 
 | ---- | --------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
 | 091  | Fix ADR-0013 Effect TS documentation drift                | P2       | S      | LOW  | —          | DONE   |
 | 092  | Reconcile roadmap docs + mark plan 074 done               | P2       | S      | LOW  | —          | DONE   |
-| 093  | Diagnose and fix `pnpm run build` hang with Turbopack     | P3       | S      | LOW  | —          | TODO   |
+| 093  | Diagnose and fix `pnpm run build` hang with Turbopack     | P3       | S      | LOW  | —          | DONE   |
 | 094  | Remove dead `performanceAware` prop from FadeIn component | P4       | S      | LOW  | —          | DONE   |
 | 095  | Design spike — Effect TS: adopt or abandon                | P3       | M      | LOW  | 091        | DONE   |
 | 096  | Design spike — Production deployment to custom domain     | P4       | M      | LOW  | —          | DONE   |

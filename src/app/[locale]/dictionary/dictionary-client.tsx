@@ -2,12 +2,14 @@
 
 import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
 import Bookmark03Icon from "@hugeicons/core-free-icons/Bookmark03Icon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { motionEase } from "@/lib/utils/animation";
@@ -24,7 +26,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
-import { lookupWord, preCacheCommonWords } from "@/lib/dictionary/service";
+import { getRandomWord, lookupWord, preCacheCommonWords } from "@/lib/dictionary/service";
 import type { DictionaryResult } from "@/lib/dictionary/types";
 import { logError } from "@/lib/shared/logger";
 import { isWordSaved, removeWord, saveWord } from "@/lib/vocabulary/service";
@@ -59,22 +61,39 @@ export function DictionaryClient() {
   const [searched, setSearched] = useState(false);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [recentLookups, setRecentLookups] = useState<string[]>([]);
   const langRef = useRef(language);
 
   useEffect(() => {
     preCacheCommonWords(dexieDataAccess).catch(() => {
       // background pre-cache failure is non-critical
     });
+    try {
+      const raw = localStorage.getItem("lumni_dictionary_recent");
+      if (raw) setRecentLookups(JSON.parse(raw) as string[]);
+    } catch {
+      // localStorage unavailable
+    }
   }, []);
 
   useEffect(() => {
     langRef.current = language;
   }, [language]);
 
-  const handleSearch = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      const word = query.trim();
+  const addRecentLookup = useCallback((word: string) => {
+    setRecentLookups((prev) => {
+      const next = [word, ...prev.filter((w) => w !== word)].slice(0, 10);
+      try {
+        localStorage.setItem("lumni_dictionary_recent", JSON.stringify(next));
+      } catch {
+        // localStorage unavailable
+      }
+      return next;
+    });
+  }, []);
+
+  const performLookup = useCallback(
+    async (word: string) => {
       if (!word) return;
       setLoading(true);
       setSearched(true);
@@ -82,9 +101,12 @@ export function DictionaryClient() {
         const lang = langRef.current;
         const data = await lookupWord(word, lang);
         setResult(data);
-        if (data && userId !== "anonymous") {
-          const alreadySaved = await isWordSaved(userId, word);
-          setSaved(alreadySaved);
+        if (data) {
+          addRecentLookup(word);
+          if (userId !== "anonymous") {
+            const alreadySaved = await isWordSaved(userId, word);
+            setSaved(alreadySaved);
+          }
         }
       } catch (err) {
         logError("DictionaryClient.search", err);
@@ -93,8 +115,22 @@ export function DictionaryClient() {
         setLoading(false);
       }
     },
-    [query, userId],
+    [userId, addRecentLookup],
   );
+
+  const handleSearch = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      await performLookup(query.trim());
+    },
+    [query, performLookup],
+  );
+
+  const handleRandomWord = useCallback(async () => {
+    const word = getRandomWord();
+    setQuery(word);
+    await performLookup(word);
+  }, [performLookup]);
 
   const playAudio = useCallback((url?: string) => {
     if (!url) return;
@@ -137,6 +173,32 @@ export function DictionaryClient() {
           </p>
         </m.div>
 
+        <div className="grid gap-3 sm:grid-cols-2">
+          <WordOfDayCard language={language} />
+          <m.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase, delay: 0.1 }}
+          >
+            <Button
+              variant="outline"
+              className="flex h-full w-full items-center gap-2 rounded-2xl border border-border bg-card p-4 shadow-level-1"
+              onClick={handleRandomWord}
+              disabled={loading}
+            >
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                <HugeiconsIcon icon={RefreshIcon} className="size-4 text-primary" />
+              </div>
+              <div className="flex flex-col items-start gap-0.5">
+                <span className="font-semibold text-foreground/70 text-xs uppercase tracking-wider">
+                  Random Word
+                </span>
+                <span className="text-foreground/60 text-xs">Discover a new word</span>
+              </div>
+            </Button>
+          </m.div>
+        </div>
+
         <form onSubmit={handleSearch} className="flex flex-wrap gap-2">
           <div className="relative min-w-0 flex-1">
             <HugeiconsIcon
@@ -172,6 +234,25 @@ export function DictionaryClient() {
             Search
           </Button>
         </form>
+
+        {recentLookups.length > 0 && !searched && !loading && (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-muted-foreground text-xs">Recent:</span>
+            {recentLookups.map((w) => (
+              <button
+                key={w}
+                type="button"
+                className="rounded-full bg-muted px-2.5 py-1 text-xs transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
+                onClick={() => {
+                  setQuery(w);
+                  performLookup(w);
+                }}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+        )}
 
         {loading && (
           <div className="flex flex-col gap-3">
