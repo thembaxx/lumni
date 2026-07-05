@@ -17,7 +17,7 @@ import {
   updateChallengesInAddXp,
   completeDailyChallenge,
 } from "./daily-challenge-utils";
-import { updateStreak, consumeStreakFreeze, addStreakFreeze } from "./streak-utils";
+import { updateStreak, consumeStreakFreeze, addStreakFreeze, addWeeklyFreeze } from "./streak-utils";
 
 const GAMIFICATION_KEY = "lumni_gamification";
 
@@ -35,6 +35,8 @@ const DEFAULT_GAMIFICATION: StoredGamification = {
   totalQuestionsAnswered: 0,
   claimedChests: [],
   streakFreezes: 3,
+  streakFreezeUsedToday: false,
+  freezeEvents: [],
   subjectQuestionCounts: {},
   consecutiveCorrectFlashcards: 0,
   wrongAnswersReviewed: 0,
@@ -163,6 +165,7 @@ export class GamificationEngine {
   updateStreak = updateStreak;
   consumeStreakFreeze = consumeStreakFreeze;
   addStreakFreeze = addStreakFreeze;
+  addWeeklyFreeze = addWeeklyFreeze;
 
   trackSubjectQuestion(
     data: StoredGamification,

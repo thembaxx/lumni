@@ -13,6 +13,7 @@ export function updateStreak(data: StoredGamification): {
   let freezeConsumed = false;
   let newStreak = data.currentStreak;
   let newStreakFreezes = data.streakFreezes;
+  const freezeEvents = [...(data.freezeEvents ?? [])];
 
   if (data.lastPracticeDate === yesterdayStr) {
     newStreak = data.currentStreak + 1;
@@ -20,6 +21,11 @@ export function updateStreak(data: StoredGamification): {
     if (data.currentStreak > 1 && data.streakFreezes > 0) {
       newStreakFreezes -= 1;
       freezeConsumed = true;
+      freezeEvents.push({
+        date: today,
+        streakProtected: data.currentStreak,
+        freezesRemaining: newStreakFreezes,
+      });
     } else {
       newStreak = 1;
     }
@@ -43,6 +49,8 @@ export function updateStreak(data: StoredGamification): {
       currentStreak: newStreak,
       lastPracticeDate: today,
       streakFreezes: newStreakFreezes + milestoneFreezeGain,
+      streakFreezeUsedToday: freezeConsumed,
+      freezeEvents,
       xp: data.xp + milestoneXpGain,
       totalXp: data.totalXp + milestoneXpGain,
       streakMilestones: updatedMilestones,
@@ -65,6 +73,25 @@ export function consumeStreakFreeze(data: StoredGamification): {
 
 export function addStreakFreeze(data: StoredGamification, count: number = 1): StoredGamification {
   return { ...data, streakFreezes: data.streakFreezes + count };
+}
+
+const WEEKLY_FREEZE_KEY = "lumni_last_freeze_grant_week";
+
+export function addWeeklyFreeze(data: StoredGamification): StoredGamification {
+  if (typeof window === "undefined") return data;
+  const lastGrantWeek = localStorage.getItem(WEEKLY_FREEZE_KEY);
+  const currentWeek = getWeekNumber(new Date());
+  if (lastGrantWeek === String(currentWeek)) return data;
+  localStorage.setItem(WEEKLY_FREEZE_KEY, String(currentWeek));
+  return { ...data, streakFreezes: data.streakFreezes + 1 };
+}
+
+function getWeekNumber(date: Date): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
 export function getStreakXpReward(streak: number): number {

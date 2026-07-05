@@ -20,6 +20,8 @@ export interface StoredGamification {
   totalQuestionsAnswered: number;
   claimedChests: StoredRewardChest[];
   streakFreezes: number;
+  streakFreezeUsedToday: boolean;
+  freezeEvents: { date: string; streakProtected: number; freezesRemaining: number }[];
   subjectQuestionCounts: Record<string, number>;
   consecutiveCorrectFlashcards?: number;
   wrongAnswersReviewed?: number;
