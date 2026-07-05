@@ -26,7 +26,7 @@
     "typecheck": "tsc --noEmit",
     "deadcode": "knip --no-exit-code",
     "postinstall": "patch-package",
-    "prepare": "husky && effect-language-service patch",
+    "prepare": "husky",
     "analyze": "ANALYZE=true next build",
     "todo:sync": "tsx scripts/sync-todo-to-linear.ts",
     "todo:seed": "tsx scripts/seed-linear-issues.ts",
@@ -112,7 +112,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
-    "@effect/language-service": "^0.86.2",
     "@next/bundle-analyzer": "16.3.0-preview.5",
     "@next/playwright": "16.3.0-preview.5",
     "@playwright/test": "^1.61.1",

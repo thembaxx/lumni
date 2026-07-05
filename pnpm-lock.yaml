@@ -219,9 +219,6 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.12.1
         version: 4.12.1(playwright-core@1.61.1)
-      '@effect/language-service':
-        specifier: ^0.86.2
-        version: 0.86.2
       '@next/bundle-analyzer':
         specifier: 16.3.0-preview.5
         version: 16.3.0-preview.5
@@ -1005,10 +1002,6 @@ packages:
   '@edge-runtime/vm@3.2.0':
     resolution: {integrity: sha512-0dEVyRLM/lG4gp1R/Ik5bfPl/1wX00xFwd5KcNH602tzBa09oF7pbTKETEhR1GjZ75K6OJnYFu8II2dyMhONMw==}
     engines: {node: '>=16'}
-
-  '@effect/language-service@0.86.2':
-    resolution: {integrity: sha512-SaPln+8srOqDJDUwNTDmP5e+IYpEDr9+1epGznnsLqu8xvo6VnxyWARdeLpqvZJlb0Pgy9ca7ppqvvdWbHPXAg==}
-    hasBin: true
 
   '@effect/platform@0.90.3':
     resolution: {integrity: sha512-XvQ37yzWQKih4Du2CYladd1i/MzqtgkTPNCaN6Ku6No4CK83hDtXIV/rP03nEoBg2R3Pqgz6gGWmE2id2G81HA==}
@@ -8678,8 +8671,6 @@ snapshots:
     dependencies:
       '@edge-runtime/primitives': 4.1.0
     optional: true
-
-  '@effect/language-service@0.86.2': {}
 
   '@effect/platform@0.90.3(effect@3.21.4)':
     dependencies:

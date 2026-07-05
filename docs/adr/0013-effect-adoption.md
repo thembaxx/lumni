@@ -1,6 +1,6 @@
 # ADR-0013: Effect TS Adoption Strategy
 
-**Status:** Partially Implemented — Evidence Drift (July 2026)
+**Status:** Hold — Pragmatic Adoption (July 2026)
 **Driver:** @opencode
 
 ## Context
@@ -14,7 +14,7 @@ The Lumni codebase (1387 `.ts`/`.tsx` files) uses imperative-reactive patterns: 
 
 ## Decision
 
-Adopt Effect TS as a strategic foundation, starting with a single bounded subsystem (`cached-ai-generator.ts`) before expanding.
+Effect TS is used in 17 production files for async composition (`Effect.gen` + `Effect.tryPromise` + `Effect.catchAll`) in `cached-ai-generator.ts` and downstream consumers. The broader ecosystem (`Context.Tag`, `Layer`, `@effect/platform`, `@effect/vitest`) was explored but remains unused. The scaffolding intended for a full migration has been removed per Plan 097.
 
 ### Why Effect over alternatives
 
@@ -29,18 +29,16 @@ Adopt Effect TS as a strategic foundation, starting with a single bounded subsys
 
 ### Chosen approach
 
-1. **Install** `effect`, `@effect/platform`, `@effect/language-service`
-2. **Configure** tsconfig plugin, prepare script patch, clone effect-smol for agent reference
-3. **Refactor one subsystem** — `cached-ai-generator.ts` introduces Effect in a bounded context
-4. **Document** conventions in AGENTS.md for consistent future adoption
+1. **Install** `effect` (runtime dependency)
+2. **Refactor one subsystem** — `cached-ai-generator.ts` introduces Effect in a bounded context
+3. **Document** conventions in AGENTS.md for pragmatic adoption
+4. **Remove scaffolding** per Plan 097 when full migration is ruled out
 
 ## Scope (Phase 1)
 
 ### In scope
 
-- `effect` + `@effect/platform` as runtime dependencies
-- `@effect/language-service` as dev dependency
-- tsconfig plugin registration + TypeScript patch via prepare script
+- `effect` as a runtime dependency
 - `CachedAIGenerator<T>` (`src/lib/ai/cached-ai-generator.ts`) uses Effect for cache/generate pipeline
 - ADR + AGENTS.md documentation
 - All existing typecheck, lint, and test gates pass
@@ -49,9 +47,10 @@ Adopt Effect TS as a strategic foundation, starting with a single bounded subsys
 
 - Refactoring React hooks, components, or pages to use Effect
 - Replacing Zustand or TanStack Query
-- Using `@effect/cli`, `@effect/schema` (schema lives in `effect/Schema`)
+- Using `@effect/cli`, `@effect/schema`, `@effect/platform`
 - Adopting `@effect/rpc` or `@effect/cluster`
 - Migrating existing services or repositories
+- `Context.Tag` / `Layer` DI (not used anywhere)
 
 ## Consequences
 
@@ -59,12 +58,10 @@ Adopt Effect TS as a strategic foundation, starting with a single bounded subsys
 
 - Type-safe error handling: `cached-ai-generator.ts` demonstrates `Effect.catchAll` for boundary error handling
 - Proves the seam: the isolated Effect pattern validates that Effect can be adopted incrementally without breaking consumers
-- Agent-friendly: effect-smol repo cloned locally for AI grep, effect-solutions CLI for pattern discovery
 
 ### Negative
 
 - Learning curve for developers unfamiliar with Effect/generators
-- Dual patterns during migration: imperative and effectful code coexist
 - `Effect.runPromise()` adapter calls are easy to forget, losing typed error tracking
 
 ## Implementation
@@ -72,6 +69,8 @@ Adopt Effect TS as a strategic foundation, starting with a single bounded subsys
 ### Current Reality (July 2026)
 
 The Phase 1 ambition to refactor the AI provider chain to Effect was not completed. The actual state is:
+
+> **Plan 097 (July 2026):** Removed unused Effect scaffolding — `@effect/language-service` dev dependency, tsconfig plugin, and prepare script patch. ADR-0013 status updated to "Hold — Pragmatic Adoption". AGENTS.md Effect section trimmed to match actual usage.
 
 | Claim (original ADR)               | Reality                                                               |
 | ---------------------------------- | --------------------------------------------------------------------- |
@@ -110,11 +109,11 @@ generateEffect(subject: string, topic: string): Effect.Effect<T> {
 }
 ```
 
-This is the recommended template for new Effect code: bounded, isolated, with a clean `Effect.runPromise()` adapter at the boundary. See ADR-0013 for adoption status.
+This is the recommended template for new Effect code: bounded, isolated, with a clean `Effect.runPromise()` adapter at the boundary.
 
 ## References
 
 - https://effect.website — official docs
 - https://www.effect.solutions — best practices & patterns
-- `~/.local/share/effect-solutions/effect` — cloned Effect v4 source for AI agent reference
 - `src/lib/ai/cached-ai-generator.ts` — Effect pattern reference (cache/generate pipeline)
+- `docs/decisions/2026-07-05-effect-strategy-recommendation.md` — Plan 095 recommendation (Hold)

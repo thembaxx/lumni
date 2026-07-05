@@ -1195,33 +1195,14 @@ Always ask which category the user cares about before starting.
 
 ## Effect TS — Functional Effect System
 
-Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-effect-adoption.md`.
+Used in 17 production files for async composition. See `docs/adr/0013-effect-adoption.md` (status: Hold — Pragmatic Adoption).
 
-### Installation & Tooling
-
-- **Runtime**: `effect` v3.21.4, `@effect/platform` v0.96.2
-- **Language service**: `@effect/language-service` (tsconfig plugin + prepare script patch)
-- **Reference source**: Effect v4 repo cloned to `~/.local/share/effect-solutions/effect` for AI agent grep
-- **Package scripts**: `prepare` runs both `husky` and `effect-language-service patch`
-
-### Best Practices
-
-**Always consult effect-solutions before writing Effect code:**
-
-1. Patterns are documented at https://www.effect.solutions
-2. CLI: `bunx effect-solutions list` / `effect-solutions show <topic>`
-3. Search `~/.local/share/effect-solutions/effect` for real implementations
-
-**Conventions:**
+### Conventions
 
 - Use `Effect<TSuccess, TError, TRequirements>` for all new effectful functions
 - Use `Effect.gen(function* () { ... })` with `yield*` for imperative-style composition
-- Use `Context.Tag` + `Layer` for dependency injection (not global singletons)
 - Use `Effect.catchAll`/`Effect.catchTag` for error handling (not try/catch)
 - Keep React/Next.js boundary clean: `Effect.runPromise()` at the adapter layer
-- Schema lives in `effect/Schema` — do NOT install `@effect/schema` (deprecated since Effect 3.10)
-- HTTP: use `@effect/platform` `HttpClient` for typed HTTP effects
-- Testing: use `@effect/vitest` for Effect-specific test helpers
 
 ### Gotchas (from real incidents)
 
@@ -1231,13 +1212,24 @@ Adopted as a strategic foundation in Session 46 (June 2026). See `docs/adr/0013-
 - **`Effect.catchAll` + `Effect.flatMap` type trap**: `catchAll(() => Effect.sync(() => logError(...)))` produces `void` success type, creating `T | void` union that breaks `flatMap`. Fix: call `logError` synchronously in the callback body and return `Effect.succeed(undefined)`.
 - **`Effect.all` with promises**: Replace `Promise.all(array)` with `Effect.all(array, { concurrency: "unbounded" })` — the concurrency option is required for parallel execution.
 
-### Migration Conventions
+### Pattern Reference
 
-- **Bounded subsystems only**: New Effect code should be isolated to a single module until proven
-- **Backward-compatible exports**: Refactored modules must retain their existing async function signatures. New Effect methods get `*Effect` suffix.
-- **No mixed patterns**: A single file should be either all-Effect or all-imperative, not both
-- **Discriminated union dispatch**: For unions with a `source` field (not `_tag`), use a plain `switch` where each case returns `Effect.Effect<void>` directly
-- **Provider chain pattern**: The AI client (`src/lib/ai/client.ts`) uses a `for...of`/`try/catch` fallback chain — this is the _imperative_ pattern. The _Effect_ pattern is demonstrated in `src/lib/ai/cached-ai-generator.ts` (~5 Effect.gen blocks for cache/generate pipeline). See `docs/adr/0013-effect-adoption.md` for the current adoption status.
+The Effect pattern is demonstrated in `src/lib/ai/cached-ai-generator.ts` (~5 Effect.gen blocks, 108 lines).
+
+```ts
+import { Effect } from "effect";
+
+generateEffect(subject: string, topic: string): Effect.Effect<T> {
+  const self = this;
+  return Effect.gen(function* () {
+    const result = yield* Effect.tryPromise(() => ...)
+      .pipe(Effect.catchAll(() => Effect.succeed(null)));
+    // ...
+  });
+}
+```
+
+Effect is for async composition only — no Context.Tag/Layer/@effect/platform/@effect/vitest in use.
 
 ## PDFSlick — PDF Viewer Component
 
