@@ -21,6 +21,7 @@ import { AdminExamUploadZone } from "./admin-exam-upload-zone";
 import { AdminStatCards } from "./admin-stat-cards";
 import { SubjectForm } from "./admin-subject-form";
 import { SubjectTable } from "./admin-subject-table";
+import { AdminMetricsDashboard } from "./admin-metrics-dashboard";
 import { adminReducer, adminInitialState, type Subject } from "./admin-reducer";
 
 export function AdminDashboard() {
@@ -270,6 +271,10 @@ export function AdminDashboard() {
             )}
           </TabSwitcher>
         </AnimatedCard>
+      </div>
+
+      <div className="p-4">
+        <AdminMetricsDashboard />
       </div>
     </div>
   );
