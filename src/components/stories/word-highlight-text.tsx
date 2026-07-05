@@ -33,7 +33,7 @@ export const WordHighlightText = memo(function WordHighlightText({
                   data-word-index={globalIndex}
                   className={`transition-colors duration-150 ${
                     isCurrent
-                      ? "rounded-sm bg-(--system-accent)/20 font-semibold text-(--system-accent) shadow-[0_0_0_2px_var(--system-accent-alpha-20)]"
+                      ? "rounded-sm bg-(--system-accent)/20 font-semibold text-(--system-accent) ring-2 ring-(--system-accent-alpha-20)"
                       : currentWordIndex >= 0 && globalIndex < currentWordIndex
                         ? "text-foreground/40"
                         : ""

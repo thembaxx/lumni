@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageContainer } from "@/components/layout/page-container";
 import { appConfig } from "../../../../app.config";
 
 export const metadata: Metadata = {
@@ -99,7 +100,7 @@ Support: ${appConfig.contact.supportEmail}`,
 
 export default function TermsPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <PageContainer className="py-12">
       <h1 className="font-extrabold text-4xl tracking-tight mb-2">Terms of Service</h1>
       <p className="text-muted-foreground text-sm mb-8">
         Last updated: June 2026 | Version {appConfig.legal.tosVersion}
@@ -114,7 +115,7 @@ export default function TermsPage() {
           </section>
         ))}
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

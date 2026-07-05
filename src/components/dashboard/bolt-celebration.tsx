@@ -93,7 +93,7 @@ export function BoltCelebration({
         <Button
           onClick={onContinue}
           size="lg"
-          className="min-h-[56px] gap-2 px-10 text-base press-scale"
+          className="min-h-14 gap-2 px-10 text-base press-scale"
         >
           Continue
         </Button>

@@ -169,7 +169,7 @@ export function AdminExamList() {
             </EmptyContent>
           </Empty>
         ) : (
-          <ScrollArea className="max-h-[31.25rem]">
+          <ScrollArea className="max-h-96">
             <div className="divide-y">
               {exams.map((exam) => (
                 <div

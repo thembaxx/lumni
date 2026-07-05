@@ -150,7 +150,7 @@ export function CompetitionCard() {
               >
                 <div className="flex items-center gap-2">
                   <HugeiconsIcon icon={MEDAL_ICONS[i]} className="size-5 text-warning" />
-                  <span className="max-w-[120px] truncate font-mono text-xs">
+                  <span className="max-w-28 truncate font-mono text-xs">
                     {entry.label ?? entry.userId.slice(0, 8)}
                   </span>
                 </div>
@@ -170,7 +170,7 @@ export function CompetitionCard() {
                       <span className="w-5 text-center font-mono text-xs text-muted-foreground">
                         {entry.rank}
                       </span>
-                      <span className="max-w-[120px] truncate text-xs">
+                      <span className="max-w-28 truncate text-xs">
                         {entry.label ?? entry.userId.slice(0, 8)}
                       </span>
                     </div>

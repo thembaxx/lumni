@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageContainer } from "@/components/layout/page-container";
 import { appConfig } from "../../../../app.config";
 
 export const metadata: Metadata = {
@@ -114,7 +115,7 @@ Email: enquiries@inforegulator.org.za`,
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <PageContainer className="py-12">
       <h1 className="font-extrabold text-4xl tracking-tight mb-2">Privacy Policy</h1>
       <p className="text-muted-foreground text-sm mb-8">Last updated: June 2026</p>
       <div className="flex flex-col gap-8">
@@ -127,7 +128,7 @@ export default function PrivacyPage() {
           </section>
         ))}
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

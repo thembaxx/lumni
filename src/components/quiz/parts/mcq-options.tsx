@@ -58,7 +58,7 @@ export const MCQOptions = memo(function MCQOptions({
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn press-glow flex min-h-[56px] w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left",
+                "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >
@@ -92,7 +92,7 @@ export const MCQOptions = memo(function MCQOptions({
         <Button
           onClick={onSubmit}
           disabled={!selectedOption}
-          className="col-span-full mt-2 min-h-[48px]"
+          className="col-span-full mt-2 min-h-12"
         >
           {t("quiz.checkAnswer")}
         </Button>

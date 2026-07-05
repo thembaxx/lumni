@@ -231,7 +231,7 @@ export function QuizResultsCard({
                     <Button
                       variant="default"
                       onClick={onRestart}
-                      className="flex-1 gap-2 min-h-[52px] press-scale"
+                      className="flex-1 gap-2 min-h-14 press-scale"
                     >
                       <HugeiconsIcon icon={Refresh01Icon} className="size-5" />
                       {t("common.retry")}
@@ -241,7 +241,7 @@ export function QuizResultsCard({
                     <Button
                       variant="outline"
                       onClick={onDashboard}
-                      className="flex-1 gap-2 min-h-[52px] press-scale"
+                      className="flex-1 gap-2 min-h-14 press-scale"
                     >
                       <HugeiconsIcon icon={DashboardSquare01Icon} className="size-5" />
                       {t("quiz.dashboard")}

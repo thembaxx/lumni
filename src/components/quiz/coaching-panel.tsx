@@ -78,7 +78,7 @@ export function CoachingPanel({
               onChange={(e) => coaching.setCurrentDraft(e.target.value)}
               rows={4}
               aria-label="Revised essay draft"
-              className="min-h-[80px] resize-y text-sm"
+              className="min-h-20 resize-y text-sm"
             />
             <Button
               onClick={() => coaching.submitRevision(coaching.currentDraft)}
