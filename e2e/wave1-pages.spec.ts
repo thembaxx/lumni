@@ -3,15 +3,15 @@ import { test, expect } from "@playwright/test";
 test.describe("Dictionary page", () => {
   test("loads and shows search input", async ({ page }) => {
     await page.goto("/en/dictionary", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await expect(page.locator("input").first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("input").first()).toBeVisible({ timeout: 15000 });
   });
 
   test("search input is interactive", async ({ page }) => {
     await page.goto("/en/dictionary", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+    // Dictionary page pre-caches common words, so networkidle may never
+    // settle. Wait for the input element directly instead.
     const input = page.locator("input").first();
-    await expect(input).toBeVisible({ timeout: 10000 });
+    await expect(input).toBeVisible({ timeout: 15000 });
     await input.fill("hello");
     await expect(input).toHaveValue("hello");
   });

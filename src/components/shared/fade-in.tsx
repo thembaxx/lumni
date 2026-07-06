@@ -30,9 +30,9 @@ export function FadeIn({
   children,
   direction = "up",
   delay = 0,
-  _duration,
-  _distance,
-  _scaleDistance,
+  duration: _duration,
+  distance: _distance,
+  scaleDistance: _scaleDistance,
   className,
   as = "div",
   ...rest

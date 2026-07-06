@@ -50,7 +50,7 @@ test.describe("Home page visual regression", () => {
 
   test("footer contains navigation links", async ({ page }) => {
     await page.waitForTimeout(2000);
-    const footer = page.locator("footer");
+    const footer = page.locator('footer[class*="border-border"]');
     await expect(footer).toBeVisible();
     const links = footer.locator("a");
     expect(await links.count()).toBeGreaterThan(0);

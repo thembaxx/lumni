@@ -66,7 +66,7 @@ test.describe("Redesigned homepage", () => {
 
   test("footer is visible with navigation links", async ({ page }) => {
     await page.waitForTimeout(2000);
-    const footer = page.locator("footer");
+    const footer = page.locator('footer[class*="border-border"]');
     await expect(footer).toBeVisible({ timeout: 10000 });
     const links = footer.locator("a");
     expect(await links.count()).toBeGreaterThan(0);

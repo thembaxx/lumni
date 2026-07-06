@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
-import { connection } from "next/server";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
@@ -64,8 +63,7 @@ const UploadDialogRenderer = dynamic(() =>
   })),
 );
 
-async function Utssr() {
-  await connection();
+function Utssr() {
   return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
 }
 
