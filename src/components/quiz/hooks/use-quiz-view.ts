@@ -7,11 +7,13 @@ import { useQuizSession } from "@/lib/quiz-session";
 import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import type { QuizViewProps } from "../quiz-view";
+import { competencyService } from "@/lib/competency-engine";
 import {
   buildEngineParams,
   computeTopicCompetency,
   loadRetentionQuestions,
   mapRetentionToQuestions,
+  markRetentionCompleted,
   type RetentionQuestion,
   type QuizCompetencyData,
 } from "./quiz-utils";
@@ -153,12 +155,10 @@ export function useQuizView({
       let targetTopic: string | undefined = topic;
 
       try {
-        const { competencyService } = await import("@/lib/competency-engine");
         const normalizedSubject = subject.toLowerCase();
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
         try {
-          // TODO: Extract DB calls to service layer
           const items = await loadRetentionQuestions(
             dexieDataAccess,
             normalizedSubject,
@@ -218,12 +218,7 @@ export function useQuizView({
   useEffect(() => {
     if (state.isComplete && retentionQuestions.length > 0) {
       const ids = retentionQuestions.map((rq) => rq.id);
-      // TODO: Extract DB calls to service layer
-      dexieDataAccess.retentionRecurrence
-        .where("questionId")
-        .anyOf(ids)
-        .modify({ completed: true })
-        .catch((e) => logError("useQuizView.markRetentionComplete", e));
+      markRetentionCompleted(dexieDataAccess, ids);
     }
   }, [state.isComplete, retentionQuestions]);
 

@@ -168,6 +168,25 @@ export class CompetencyService {
     const avgScore = topicRecords.reduce((s, r) => s + r.score, 0) / topicRecords.length;
     return computeCompetencyLevel(avgScore);
   }
+
+  async getCompetentTopicsCount(): Promise<number> {
+    try {
+      const records = await this.db.competencies.toArray();
+      const topicScores = new Map<string, number[]>();
+      for (const r of records) {
+        const key = `${r.subjectId}:${r.topicId}`;
+        const scores = topicScores.get(key) ?? [];
+        scores.push(r.score);
+        topicScores.set(key, scores);
+      }
+      return Array.from(topicScores.values()).filter(
+        (scores) => scores.reduce((a, b) => a + b, 0) / scores.length >= 70,
+      ).length;
+    } catch (err) {
+      logError("getCompetentTopicsCount", err);
+      return 0;
+    }
+  }
 }
 
 export const competencyService = new CompetencyService();

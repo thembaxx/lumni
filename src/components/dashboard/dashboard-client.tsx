@@ -16,6 +16,7 @@ import { useTrackQuizEvents } from "@/hooks/use-analytics-tracking";
 import { useGamification } from "@/hooks/use-gamification";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { competencyService } from "@/lib/competency-engine";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
@@ -110,18 +111,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
     await processQuizResult({ source: "quiz", results }, quizResultDeps);
 
     try {
-      // TODO: Extract DB calls to service layer
-      const records = await dexieDataAccess.competencies.toArray();
-      const topicScores = new Map<string, number[]>();
-      for (const r of records) {
-        const key = `${r.subjectId}:${r.topicId}`;
-        const scores = topicScores.get(key) ?? [];
-        scores.push(r.score);
-        topicScores.set(key, scores);
-      }
-      const competentTopicsCount = Array.from(topicScores.values()).filter(
-        (scores) => scores.reduce((a, b) => a + b, 0) / scores.length >= 70,
-      ).length;
+      const competentTopicsCount = await competencyService.getCompetentTopicsCount();
       if (competentTopicsCount >= 5) {
         checkAndUnlockAchievements(
           totalQuestionsAnswered + results.totalQuestions,

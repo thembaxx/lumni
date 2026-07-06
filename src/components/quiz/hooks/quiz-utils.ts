@@ -7,6 +7,7 @@ import {
 } from "@/lib/question-engine/competency-mapper";
 import type { RetentionRecurrence } from "@/lib/db/schema";
 import type { DataAccessTable } from "@/lib/db/data-access";
+import { logError } from "@/lib/shared/logger";
 
 export interface RetentionQuestion {
   id: string;
@@ -101,6 +102,17 @@ export async function loadRetentionQuestions(
     subject: i.subject,
     topic: i.topic,
   }));
+}
+
+export async function markRetentionCompleted(
+  db: { retentionRecurrence: DataAccessTable<RetentionRecurrence, number> },
+  ids: string[],
+): Promise<void> {
+  try {
+    await db.retentionRecurrence.where("questionId").anyOf(ids).modify({ completed: true });
+  } catch (e) {
+    logError("markRetentionCompleted", e);
+  }
 }
 
 export function computeTopicCompetency(
