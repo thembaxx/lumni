@@ -2,6 +2,7 @@
 
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
@@ -44,15 +45,18 @@ export function CollapsibleSection({
           />
         </m.div>
       </button>
-      <div
-        className={`grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
-      >
-        <div
-          className={`min-h-0 overflow-hidden transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0"}`}
-        >
-          {children}
-        </div>
-      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: iOSEase }}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

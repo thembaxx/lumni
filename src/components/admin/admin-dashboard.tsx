@@ -171,10 +171,14 @@ export function AdminDashboard() {
             <Button variant="ghost" size="sm" onClick={() => push("/admin/observability")}>
               Observability
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => {
-              const el = document.getElementById("admin-metrics");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                const el = document.getElementById("admin-metrics");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
               Metrics
             </Button>
             <Button variant="ghost" size="icon-sm" onClick={handleSignOut} aria-label="Sign out">

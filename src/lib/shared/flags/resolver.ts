@@ -9,11 +9,7 @@ export function djb2Hash(str: string): number {
   return hash >>> 0;
 }
 
-export function bucketUser(
-  userId: string,
-  bucketKey: string,
-  totalBuckets: number,
-): number {
+export function bucketUser(userId: string, bucketKey: string, totalBuckets: number): number {
   const hash = djb2Hash(`${userId}:${bucketKey}`);
   return hash % totalBuckets;
 }
@@ -34,9 +30,7 @@ export function isFlagEnabled(
     );
     if (userOverride !== undefined) return userOverride.enabled;
 
-    const globalOverride = overrides.find(
-      (o) => o.key === flagKey && !o.userId,
-    );
+    const globalOverride = overrides.find((o) => o.key === flagKey && !o.userId);
     if (globalOverride !== undefined) return globalOverride.enabled;
   }
 

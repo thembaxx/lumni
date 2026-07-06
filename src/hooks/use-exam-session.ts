@@ -11,16 +11,24 @@ import { getAnswerText, getCorrectAnswerText, parseDuration } from "@/lib/exam/h
 import { processQuizResult } from "@/lib/services/quiz-result-processor";
 import { useExamSessionStore } from "@/store/exam-session";
 import { useAutoSave } from "@/app/[locale]/exam/[id]/exam-session/auto-save";
-import { useAnswerTracking, useTabFocusWarning } from "@/app/[locale]/exam/[id]/exam-session/answer-tracking";
+import {
+  useAnswerTracking,
+  useTabFocusWarning,
+} from "@/app/[locale]/exam/[id]/exam-session/answer-tracking";
 import type { SessionPhase } from "@/app/[locale]/exam/[id]/exam-session/session-reducer";
-import { useTimerEffect, useTimeExpiryHandler } from "@/app/[locale]/exam/[id]/exam-session/timer-logic";
+import {
+  useTimerEffect,
+  useTimeExpiryHandler,
+} from "@/app/[locale]/exam/[id]/exam-session/timer-logic";
 import { useQuizResultDeps } from "@/app/[locale]/exam/[id]/exam-session/gamification-wiring";
 
 export function useExamSession(id: string, mode: "timed" | "practice" | "mock") {
   const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 
   const [phase, setPhase] = useState<SessionPhase>("loading");
-  const [sessionModeOverride, setSessionModeOverride] = useState<"timed" | "practice" | "mock" | null>(null);
+  const [sessionModeOverride, setSessionModeOverride] = useState<
+    "timed" | "practice" | "mock" | null
+  >(null);
   const sessionMode = sessionModeOverride ?? mode;
   const isMock = sessionMode === "mock";
   const [showPalette, setShowPalette] = useState(false);
@@ -85,7 +93,9 @@ export function useExamSession(id: string, mode: "timed" | "practice" | "mock") 
       currentPartId,
       setCurrentPart,
       setAnswer,
-      paperData ? { metadata: { subject: paperData.metadata.subject, id: paperData.metadata.id } } : undefined,
+      paperData
+        ? { metadata: { subject: paperData.metadata.subject, id: paperData.metadata.id } }
+        : undefined,
       trackExamStart,
       isMock,
       setPhase,

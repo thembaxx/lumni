@@ -9,7 +9,10 @@ interface FlagsResponse {
   overrides: FlagOverride[];
 }
 
-export function useFeatureFlag(flagKey: string, userId?: string): { enabled: boolean; isLoading: boolean } {
+export function useFeatureFlag(
+  flagKey: string,
+  userId?: string,
+): { enabled: boolean; isLoading: boolean } {
   const { data, isPending } = useQuery<FlagsResponse>({
     queryKey: ["admin-flags"],
     queryFn: async () => {

@@ -153,12 +153,9 @@ describe("DELETE /api/teacher/classroom/code", () => {
     expect(res.status).toBe(200);
     expect(body.success).toBe(true);
     expect(body.revoked).toBe(true);
-    expect(mockDbUpdateDocument).toHaveBeenCalledWith(
-      "test-db",
-      "classroom_codes",
-      "doc-1",
-      { revoked: true },
-    );
+    expect(mockDbUpdateDocument).toHaveBeenCalledWith("test-db", "classroom_codes", "doc-1", {
+      revoked: true,
+    });
   });
 
   test("returns error when code not found", async () => {

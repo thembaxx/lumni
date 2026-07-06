@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import { bucketUser, djb2Hash, isFlagEnabled } from "../resolver";
 import type { FlagDefinition, FlagOverride } from "../types";
 
-function makeFlags(overrides: Record<string, Partial<FlagDefinition>>): Record<string, FlagDefinition> {
+function makeFlags(
+  overrides: Record<string, Partial<FlagDefinition>>,
+): Record<string, FlagDefinition> {
   const base: Record<string, FlagDefinition> = {
     "test-flag": {
       key: "test-flag",
@@ -121,18 +123,14 @@ describe("isFlagEnabled", () => {
 
   it("global override is used when no user override exists", () => {
     const flags = makeFlags({});
-    const overrides: FlagOverride[] = [
-      { key: "test-flag", enabled: true },
-    ];
+    const overrides: FlagOverride[] = [{ key: "test-flag", enabled: true }];
     expect(isFlagEnabled("test-flag", "user-1", overrides, flags)).toBe(true);
   });
 
   it("experiment bucketing returns treatment for some users", () => {
     const flags = makeFlags({});
     const users = Array.from({ length: 100 }, (_, i) => `user-${i}`);
-    const treatmentUsers = users.filter(
-      (u) => isFlagEnabled("test-experiment", u, [], flags),
-    );
+    const treatmentUsers = users.filter((u) => isFlagEnabled("test-experiment", u, [], flags));
     expect(treatmentUsers.length).toBeGreaterThan(30);
     expect(treatmentUsers.length).toBeLessThan(70);
   });
@@ -170,9 +168,7 @@ describe("isFlagEnabled", () => {
   it("rolloutPercentage gates users", () => {
     const flags = makeFlags({});
     const users = Array.from({ length: 100 }, (_, i) => `user-${i}`);
-    const enabledUsers = users.filter(
-      (u) => isFlagEnabled("test-rollout", u, [], flags),
-    );
+    const enabledUsers = users.filter((u) => isFlagEnabled("test-rollout", u, [], flags));
     expect(enabledUsers.length).toBeGreaterThan(30);
     expect(enabledUsers.length).toBeLessThan(70);
   });
@@ -189,9 +185,7 @@ describe("isFlagEnabled", () => {
 
   it("override beats rollout percentage", () => {
     const flags = makeFlags({});
-    const overrides: FlagOverride[] = [
-      { key: "test-rollout", enabled: false },
-    ];
+    const overrides: FlagOverride[] = [{ key: "test-rollout", enabled: false }];
     expect(isFlagEnabled("test-rollout", "any-user", overrides, flags)).toBe(false);
   });
 

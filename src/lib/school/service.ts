@@ -70,11 +70,9 @@ export async function createSchool(
 
   try {
     if (input.domain) {
-      const existing = await databases.listDocuments(
-        APPWRITE_DATABASE_ID,
-        COLLECTIONS.SCHOOLS,
-        [Query.equal("domain", input.domain)],
-      );
+      const existing = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.SCHOOLS, [
+        Query.equal("domain", input.domain),
+      ]);
       if (existing.total > 0) {
         throw Object.assign(new Error("Domain already registered"), { code: "DOMAIN_TAKEN" });
       }
@@ -192,9 +190,11 @@ export async function listSchools(
   }
 }
 
-export async function getSchoolMembers(
-  schoolId: string,
-): Promise<{ admins: SchoolMemberResult[]; teachers: SchoolMemberResult[]; students: SchoolMemberResult[] }> {
+export async function getSchoolMembers(schoolId: string): Promise<{
+  admins: SchoolMemberResult[];
+  teachers: SchoolMemberResult[];
+  students: SchoolMemberResult[];
+}> {
   try {
     const response = await databases.listDocuments(
       APPWRITE_DATABASE_ID,
@@ -216,7 +216,9 @@ export async function getSchoolMembers(
     );
 
     return {
-      admins: members.filter((m) => m.role === "admin" || m.role === "billing" || m.role === "teacher_manager"),
+      admins: members.filter(
+        (m) => m.role === "admin" || m.role === "billing" || m.role === "teacher_manager",
+      ),
       teachers: members.filter((m) => m.role === "teacher"),
       students: members.filter((m) => m.role === "student"),
     };
@@ -248,7 +250,11 @@ export async function addSchoolMember(
     );
 
     if (role === "teacher") {
-      const school = await databases.getDocument(APPWRITE_DATABASE_ID, COLLECTIONS.SCHOOLS, schoolId);
+      const school = await databases.getDocument(
+        APPWRITE_DATABASE_ID,
+        COLLECTIONS.SCHOOLS,
+        schoolId,
+      );
       const currentUsed = (school.seatsUsed as number) || 0;
       await databases.updateDocument(APPWRITE_DATABASE_ID, COLLECTIONS.SCHOOLS, schoolId, {
         seatsUsed: currentUsed + 1,
@@ -277,7 +283,11 @@ export async function isUserSchoolMember(
     const response = await databases.listDocuments(
       APPWRITE_DATABASE_ID,
       COLLECTIONS.SCHOOL_MEMBERS,
-      [Query.equal("schoolId", schoolId), Query.equal("userId", userId), Query.equal("status", "active")],
+      [
+        Query.equal("schoolId", schoolId),
+        Query.equal("userId", userId),
+        Query.equal("status", "active"),
+      ],
     );
     if (response.total === 0) return { isMember: false };
     const member = response.documents[0];
@@ -288,13 +298,13 @@ export async function isUserSchoolMember(
   }
 }
 
-export async function lookupSchoolByCode(code: string): Promise<{ school: SchoolResult | null; type: string | null }> {
+export async function lookupSchoolByCode(
+  code: string,
+): Promise<{ school: SchoolResult | null; type: string | null }> {
   try {
-    const codeDoc = await databases.listDocuments(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.SCHOOL_CODES,
-      [Query.equal("code", code.toUpperCase())],
-    );
+    const codeDoc = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.SCHOOL_CODES, [
+      Query.equal("code", code.toUpperCase()),
+    ]);
     if (codeDoc.total === 0) return { school: null, type: null };
 
     const entry = codeDoc.documents[0];
@@ -313,13 +323,13 @@ export async function lookupSchoolByCode(code: string): Promise<{ school: School
   }
 }
 
-export async function checkDomain(domain: string): Promise<{ registered: boolean; schoolName?: string; schoolId?: string }> {
+export async function checkDomain(
+  domain: string,
+): Promise<{ registered: boolean; schoolName?: string; schoolId?: string }> {
   try {
-    const response = await databases.listDocuments(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.SCHOOLS,
-      [Query.equal("domain", domain.toLowerCase().trim())],
-    );
+    const response = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.SCHOOLS, [
+      Query.equal("domain", domain.toLowerCase().trim()),
+    ]);
     if (response.total === 0) return { registered: false };
     const doc = response.documents[0];
     return {
@@ -350,15 +360,12 @@ export async function getBillingInfo(
     const licenseResponse = await databases.listDocuments(
       APPWRITE_DATABASE_ID,
       COLLECTIONS.LICENSES,
-      [
-        Query.equal("schoolId", schoolId),
-        Query.orderDesc("startDate"),
-        Query.limit(1),
-      ],
+      [Query.equal("schoolId", schoolId), Query.orderDesc("startDate"), Query.limit(1)],
     );
-    const currentLicense = licenseResponse.total > 0
-      ? (licenseResponse.documents[0] as unknown as Record<string, unknown>)
-      : null;
+    const currentLicense =
+      licenseResponse.total > 0
+        ? (licenseResponse.documents[0] as unknown as Record<string, unknown>)
+        : null;
 
     const invoiceResponse = await databases.listDocuments(
       APPWRITE_DATABASE_ID,

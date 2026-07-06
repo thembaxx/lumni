@@ -23,9 +23,15 @@ import {
   sessionReducer,
   cardsReducer,
 } from "@/app/[locale]/flashcards/flashcards-client/session-state";
-import { computeConsecutiveCorrect, isSm2Session } from "@/app/[locale]/flashcards/flashcards-client/session-results";
+import {
+  computeConsecutiveCorrect,
+  isSm2Session,
+} from "@/app/[locale]/flashcards/flashcards-client/session-results";
 import { shareFlashcardSession } from "@/app/[locale]/flashcards/flashcards-client/share-deck";
-import type { FlashcardItem, FlashcardSource } from "@/app/[locale]/flashcards/flashcards-client/types";
+import type {
+  FlashcardItem,
+  FlashcardSource,
+} from "@/app/[locale]/flashcards/flashcards-client/types";
 
 export function useFlashcardSession() {
   const searchParams = useSearchParams();

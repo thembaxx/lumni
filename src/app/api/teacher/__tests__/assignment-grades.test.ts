@@ -76,7 +76,7 @@ describe("GET /api/teacher/assignments/[id]/grades", () => {
     mockGetDocument.mockResolvedValue({
       $id: "assign-1",
       teacherId: "teacher-123",
-      topicIds: "[\"algebra\"]",
+      topicIds: '["algebra"]',
       status: "active",
       dueDate: "2026-07-15",
     });
@@ -100,7 +100,7 @@ describe("GET /api/teacher/assignments/[id]/grades", () => {
     mockGetDocument.mockResolvedValue({
       $id: "assign-1",
       teacherId: "teacher-123",
-      topicIds: "[\"algebra\"]",
+      topicIds: '["algebra"]',
       status: "active",
     });
     mockListDocuments.mockResolvedValue([

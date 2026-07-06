@@ -17,7 +17,10 @@ export const POST = createRouteHandler({
 
     const parsed = schema.safeParse(body);
     if (!parsed.success) {
-      throw new HttpError(400, parsed.error.issues.map((e: { message: string }) => e.message).join(", "));
+      throw new HttpError(
+        400,
+        parsed.error.issues.map((e: { message: string }) => e.message).join(", "),
+      );
     }
 
     const { schoolId, immediate } = parsed.data;

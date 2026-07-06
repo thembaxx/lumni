@@ -7,7 +7,10 @@ export const GET = createRouteHandler({
   execute: async ({ req }) => {
     const url = new URL(req.url);
     const page = Math.max(1, Number.parseInt(url.searchParams.get("page") ?? "1", 10));
-    const limit = Math.min(100, Math.max(1, Number.parseInt(url.searchParams.get("limit") ?? "20", 10)));
+    const limit = Math.min(
+      100,
+      Math.max(1, Number.parseInt(url.searchParams.get("limit") ?? "20", 10)),
+    );
     const status = url.searchParams.get("status") || undefined;
     const search = url.searchParams.get("search") || undefined;
 

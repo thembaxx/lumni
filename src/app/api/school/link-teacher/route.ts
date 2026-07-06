@@ -1,13 +1,20 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { addSchoolMember, getSchool, isUserSchoolMember, lookupSchoolByCode } from "@/lib/school/service";
+import {
+  addSchoolMember,
+  getSchool,
+  isUserSchoolMember,
+  lookupSchoolByCode,
+} from "@/lib/school/service";
 import { z } from "zod";
 
-const schema = z.object({
-  schoolCode: z.string().length(6).optional(),
-  schoolId: z.string().optional(),
-}).refine((data) => data.schoolCode || data.schoolId, {
-  message: "Either schoolCode or schoolId must be provided",
-});
+const schema = z
+  .object({
+    schoolCode: z.string().length(6).optional(),
+    schoolId: z.string().optional(),
+  })
+  .refine((data) => data.schoolCode || data.schoolId, {
+    message: "Either schoolCode or schoolId must be provided",
+  });
 
 export const POST = createRouteHandler({
   auth: "required",
@@ -18,7 +25,10 @@ export const POST = createRouteHandler({
 
     const parsed = schema.safeParse(body);
     if (!parsed.success) {
-      throw new HttpError(400, parsed.error.issues.map((e: { message: string }) => e.message).join(", "));
+      throw new HttpError(
+        400,
+        parsed.error.issues.map((e: { message: string }) => e.message).join(", "),
+      );
     }
 
     let schoolId = parsed.data.schoolId;

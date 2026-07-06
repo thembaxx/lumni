@@ -12,7 +12,10 @@ export const GET = createRouteHandler({
     if (!schoolId) throw new HttpError(400, "schoolId query parameter is required");
 
     const page = Math.max(1, Number.parseInt(url.searchParams.get("page") ?? "1", 10));
-    const limit = Math.min(50, Math.max(1, Number.parseInt(url.searchParams.get("limit") ?? "20", 10)));
+    const limit = Math.min(
+      50,
+      Math.max(1, Number.parseInt(url.searchParams.get("limit") ?? "20", 10)),
+    );
 
     const result = await getBillingInfo(schoolId, page, limit);
     if (!result.school) throw new HttpError(404, "School not found");

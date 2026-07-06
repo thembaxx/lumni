@@ -43,12 +43,8 @@ export const GET = createRouteHandler({
       monthly.push({ month: d.toISOString().slice(0, 7), mau });
     }
 
-    const avgDau = totalDau.length > 0
-      ? totalDau.reduce((a, b) => a + b, 0) / totalDau.length
-      : 0;
-    const avgMau = monthly.length > 0
-      ? monthly.reduce((a, b) => a + b.mau, 0) / monthly.length
-      : 0;
+    const avgDau = totalDau.length > 0 ? totalDau.reduce((a, b) => a + b, 0) / totalDau.length : 0;
+    const avgMau = monthly.length > 0 ? monthly.reduce((a, b) => a + b.mau, 0) / monthly.length : 0;
 
     return { daily, monthly, stickiness: avgMau > 0 ? avgDau / avgMau : 0 };
   },

@@ -1,6 +1,9 @@
 import { describe, expect, test } from "vitest";
 
-function parseCsv(text: string): { rows: Array<{ studentName: string; studentEmail: string; grade?: string; subject?: string }>; errors: Array<{ row: number; message: string }> } {
+function parseCsv(text: string): {
+  rows: Array<{ studentName: string; studentEmail: string; grade?: string; subject?: string }>;
+  errors: Array<{ row: number; message: string }>;
+} {
   const lines = text.trim().split("\n");
   if (lines.length < 2) {
     return {
@@ -9,7 +12,11 @@ function parseCsv(text: string): { rows: Array<{ studentName: string; studentEma
     };
   }
 
-  const header = lines[0].toLowerCase().trim().split(",").map((h) => h.trim());
+  const header = lines[0]
+    .toLowerCase()
+    .trim()
+    .split(",")
+    .map((h) => h.trim());
   const nameIdx = header.indexOf("student_name");
   const emailIdx = header.indexOf("student_email");
   const gradeIdx = header.indexOf("grade");
@@ -22,11 +29,19 @@ function parseCsv(text: string): { rows: Array<{ studentName: string; studentEma
     };
   }
 
-  const rows: Array<{ studentName: string; studentEmail: string; grade?: string; subject?: string }> = [];
+  const rows: Array<{
+    studentName: string;
+    studentEmail: string;
+    grade?: string;
+    subject?: string;
+  }> = [];
   const errors: Array<{ row: number; message: string }> = [];
 
   for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].trim().split(",").map((c) => c.trim());
+    const cols = lines[i]
+      .trim()
+      .split(",")
+      .map((c) => c.trim());
     const email = cols[emailIdx] || "";
     if (!email) {
       errors.push({ row: i + 1, message: "Missing student_email" });

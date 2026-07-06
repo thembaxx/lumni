@@ -19,7 +19,10 @@ export const POST = createRouteHandler({
 
     const parsed = schema.safeParse(body);
     if (!parsed.success) {
-      throw new HttpError(400, parsed.error.issues.map((e: { message: string }) => e.message).join(", "));
+      throw new HttpError(
+        400,
+        parsed.error.issues.map((e: { message: string }) => e.message).join(", "),
+      );
     }
 
     const { schoolId, tier, billingFrequency, seatCount, returnUrl } = parsed.data;
@@ -29,7 +32,13 @@ export const POST = createRouteHandler({
       throw new HttpError(403, "Not authorized to manage billing for this school");
     }
 
-    const result = await createStripeCheckoutSession(schoolId, tier, billingFrequency, seatCount, returnUrl);
+    const result = await createStripeCheckoutSession(
+      schoolId,
+      tier,
+      billingFrequency,
+      seatCount,
+      returnUrl,
+    );
 
     if (!result) {
       if (!process.env.STRIPE_SECRET_KEY) {

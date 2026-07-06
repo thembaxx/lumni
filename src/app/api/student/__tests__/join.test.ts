@@ -71,9 +71,7 @@ describe("POST /api/student/join", () => {
   });
 
   test("rejects revoked code", async () => {
-    mockListDocuments.mockResolvedValue([
-      makeValidDoc({ revoked: true }),
-    ]);
+    mockListDocuments.mockResolvedValue([makeValidDoc({ revoked: true })]);
 
     const req = makePost("ABC123");
     const res = await POST(req);
@@ -85,9 +83,7 @@ describe("POST /api/student/join", () => {
   });
 
   test("rejects expired code", async () => {
-    mockListDocuments.mockResolvedValue([
-      makeValidDoc({ expiresAt: Date.now() - 1000 }),
-    ]);
+    mockListDocuments.mockResolvedValue([makeValidDoc({ expiresAt: Date.now() - 1000 })]);
 
     const req = makePost("ABC123");
     const res = await POST(req);
@@ -99,9 +95,7 @@ describe("POST /api/student/join", () => {
   });
 
   test("rejects max-uses exceeded", async () => {
-    mockListDocuments.mockResolvedValue([
-      makeValidDoc({ maxUses: 5, useCount: 5 }),
-    ]);
+    mockListDocuments.mockResolvedValue([makeValidDoc({ maxUses: 5, useCount: 5 })]);
 
     const req = makePost("ABC123");
     const res = await POST(req);
@@ -113,9 +107,7 @@ describe("POST /api/student/join", () => {
   });
 
   test("prevents teacher from joining own classroom", async () => {
-    mockListDocuments.mockResolvedValue([
-      makeValidDoc({ teacherId: "student-789" }),
-    ]);
+    mockListDocuments.mockResolvedValue([makeValidDoc({ teacherId: "student-789" })]);
 
     const req = makePost("ABC123");
     const res = await POST(req);

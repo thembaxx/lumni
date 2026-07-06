@@ -199,38 +199,40 @@ export function BoltQuiz() {
             </m.section>
           )}
 
-          {boltResult && !isCelebrating && (useDailyBoltV2 ? (
-            <m.section
-              key="bolt-branch-v2"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: iOSDecelerate }}
-              className="flex flex-1 items-center justify-center pt-2"
-            >
-              <BoltBranchV2
-                correct={boltResult.correct}
-                subjectLabel={subjectLabel}
-                streak={currentStreak}
-                onContinue={handleContinue}
-                onPracticeMore={subject ? handlePracticeMore : undefined}
-                onSeeResults={handleSeeResults}
-              />
-            </m.section>
-          ) : (
-            <div className="sticky bottom-0 z-content mt-auto border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
-              <div className="mx-auto w-full max-w-2xl">
-                <Button
-                  onClick={handleFinish}
-                  size="lg"
-                  className="w-full gap-2 text-base"
-                  disabled={processing}
-                >
-                  {processing ? "Saving\u2026" : "Finish"}
-                </Button>
+          {boltResult &&
+            !isCelebrating &&
+            (useDailyBoltV2 ? (
+              <m.section
+                key="bolt-branch-v2"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4, ease: iOSDecelerate }}
+                className="flex flex-1 items-center justify-center pt-2"
+              >
+                <BoltBranchV2
+                  correct={boltResult.correct}
+                  subjectLabel={subjectLabel}
+                  streak={currentStreak}
+                  onContinue={handleContinue}
+                  onPracticeMore={subject ? handlePracticeMore : undefined}
+                  onSeeResults={handleSeeResults}
+                />
+              </m.section>
+            ) : (
+              <div className="sticky bottom-0 z-content mt-auto border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
+                <div className="mx-auto w-full max-w-2xl">
+                  <Button
+                    onClick={handleFinish}
+                    size="lg"
+                    className="w-full gap-2 text-base"
+                    disabled={processing}
+                  >
+                    {processing ? "Saving\u2026" : "Finish"}
+                  </Button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           {isCelebrating && (
             <m.section

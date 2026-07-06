@@ -15,11 +15,19 @@ interface FlagsData {
   overrides: FlagOverride[];
 }
 
-function getOverride(overrides: FlagOverride[], key: string, userId?: string): FlagOverride | undefined {
+function getOverride(
+  overrides: FlagOverride[],
+  key: string,
+  userId?: string,
+): FlagOverride | undefined {
   return overrides.find((o) => o.key === key && (userId ? o.userId === userId : !o.userId));
 }
 
-function isEnabled(flag: FlagDefinition, overrides: FlagOverride[], userId: string | undefined): boolean {
+function isEnabled(
+  flag: FlagDefinition,
+  overrides: FlagOverride[],
+  userId: string | undefined,
+): boolean {
   const userOv = getOverride(overrides, flag.key, userId);
   if (userOv !== undefined) return userOv.enabled;
   const globalOv = getOverride(overrides, flag.key);
@@ -141,7 +149,9 @@ export function FlagsAdminClient() {
                           updateMutation.mutate({
                             key,
                             enabled: checked,
-                            ...(flag.rolloutPercentage !== undefined && { rolloutPercentage: globalOv.rolloutPercentage }),
+                            ...(flag.rolloutPercentage !== undefined && {
+                              rolloutPercentage: globalOv.rolloutPercentage,
+                            }),
                           });
                         } else {
                           updateMutation.mutate({ key, enabled: checked });
@@ -210,11 +220,13 @@ export function FlagsAdminClient() {
                 {flag.isExperiment && (
                   <div className="mt-3 flex flex-col gap-1">
                     <span className="text-muted-foreground text-xs">
-                      Experiment &mdash; bucketKey: <code className="text-foreground">{flag.bucketKey}</code>
-                      , ratio: <code className="text-foreground">{flag.experimentRatio}</code>
+                      Experiment &mdash; bucketKey:{" "}
+                      <code className="text-foreground">{flag.bucketKey}</code>, ratio:{" "}
+                      <code className="text-foreground">{flag.experimentRatio}</code>
                     </span>
                     <span className="text-muted-foreground text-xs">
-                      User bucket: <code className="text-foreground">
+                      User bucket:{" "}
+                      <code className="text-foreground">
                         {effectiveUserId
                           ? `${key} → ${effectiveUserId.slice(0, 8)}... : ${flag.bucketKey}`
                           : "No user"}
