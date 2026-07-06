@@ -6,6 +6,7 @@ import type {
   AssignmentMessage,
   BookmarkRecord,
   ExperimentAssignmentRecord,
+  StudyCommitmentRecord,
   CachedExamDates,
   CachedPdf,
   CachedProgress,
@@ -316,4 +317,5 @@ export class InMemoryDataAccess implements DataAccess {
   syncCheckpoints = new InMemoryTable<SyncCheckpoint, string>();
   userSettings = new InMemoryTable<UserSettings, string>();
   experimentAssignments = new InMemoryTable<ExperimentAssignmentRecord>();
+  studyCommitments = new InMemoryTable<StudyCommitmentRecord>();
 }

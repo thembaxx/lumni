@@ -196,7 +196,7 @@ export async function parseDbePdf(
 ): Promise<DbeParseResult> {
   const buf = Buffer.from(pdfBuffer);
 
-  const { text, pageCount } = await extractTextFromPdf(buf);
+  const { text } = await extractTextFromPdf(buf);
 
   if (text.trim().length > 50) {
     const result = parseDbeText(text, session, year);
@@ -205,28 +205,10 @@ export async function parseDbePdf(
     }
   }
 
-  const { tryLocalOcr } = await import("@/lib/ocr/local-ocr");
-
-  const ocrResults: string[] = [];
-  for (let i = 0; i < Math.min(pageCount, 5); i++) {
-    const imgBuffer = await extractPageAsImage(pdfBuffer, i);
-    const ocrText = await tryLocalOcr(imgBuffer.toString("base64"));
-    if (ocrText) ocrResults.push(ocrText);
+  if (text.trim().length <= 50) {
+    console.warn("parseDbePdf: PDF text extraction returned < 50 chars; no OCR fallback available");
   }
 
-  if (ocrResults.length > 0) {
-    const combined = ocrResults.join("\n--- Page Break ---\n");
-    const result = parseDbeText(combined, session, year);
-    result.method = ocrResults.length > 0 ? "ocr" : "text";
-    if (result.slots.length > 0) return result;
-  }
-
-  const fullText = text || ocrResults.join("\n");
-  return parseDbeText(fullText, session, year);
+  return parseDbeText(text, session, year);
 }
-
-async function extractPageAsImage(_pdfBuffer: ArrayBuffer, _pageIndex: number): Promise<Buffer> {
-  return Buffer.alloc(0);
-}
-
 export { parseDbeText as parseDbeTimetableText };

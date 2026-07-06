@@ -81,7 +81,7 @@ export function AdminMetricsDashboard() {
   const mau = dauMau?.monthly?.length ? dauMau.monthly[dauMau.monthly.length - 1].mau : 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div id="admin-metrics" className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>Business Metrics</CardTitle>

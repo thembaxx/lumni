@@ -14,43 +14,43 @@ Commit baseline: `e02ad4fc` (2026-07-03).
 
 | Plan | Title                                    | Priority | Effort | Risk | Depends on | Status |
 | ---- | ---------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| P001 | Fix push VAPID race condition            | P0       | S      | LOW  | —          | TODO   |
-| P002 | Add auth guard to chat endpoint          | P0       | S      | LOW  | —          | TODO   |
-| P003 | Fix localStorage in sync route           | P1       | S      | LOW  | —          | TODO   |
-| P004 | Fix stale next.config.ts flags           | P1       | S      | LOW  | —          | TODO   |
-| P005 | Fix NVIDIA API key env var mismatch      | P1       | S      | LOW  | —          | TODO   |
-| P006 | Fix sync outbox `as any` type escape     | P1       | S      | LOW  | —          | TODO   |
-| P007 | Add discriminant union to AIResult type  | P1       | S      | MED  | —          | TODO   |
-| P008 | Replace `.catch(() => {})` with logError | P1       | S      | LOW  | —          | TODO   |
+| P001 | Fix push VAPID race condition            | P0       | S      | LOW  | —          | DONE   |
+| P002 | Add auth guard to chat endpoint          | P0       | S      | LOW  | —          | DONE   |
+| P003 | Fix localStorage in sync route           | P1       | S      | LOW  | —          | DONE   |
+| P004 | Fix stale next.config.ts flags           | P1       | S      | LOW  | —          | DONE   |
+| P005 | Fix NVIDIA API key env var mismatch      | P1       | S      | LOW  | —          | DONE   |
+| P006 | Fix sync outbox `as any` type escape     | P1       | S      | LOW  | —          | DONE   |
+| P007 | Add discriminant union to AIResult type  | P1       | S      | MED  | —          | DONE   |
+| P008 | Replace `.catch(() => {})` with logError | P1       | S      | LOW  | —          | DONE   |
 
 ### Phase 2 — Security fix
 
 | Plan | Title                                             | Priority | Effort | Risk | Depends on | Status |
 | ---- | ------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| P009 | Replace `new Function()` with safe math evaluator | P0       | M      | MED  | —          | TODO   |
+| P009 | Replace `new Function()` with safe math evaluator | P0       | M      | MED  | —          | DONE   |
 
 ### Phase 3 — Test coverage (M effort)
 
 | Plan | Title                                        | Priority | Effort | Risk | Depends on         | Status |
 | ---- | -------------------------------------------- | -------- | ------ | ---- | ------------------ | ------ |
-| P010 | Add AI provider chain characterization tests | P1       | M      | LOW  | P007 (recommended) | TODO   |
-| P011 | Add QuestionEngine.generate() tests          | P1       | M      | LOW  | —                  | TODO   |
+| P010 | Add AI provider chain characterization tests | P1       | M      | LOW  | P007 (recommended) | DONE   |
+| P011 | Add QuestionEngine.generate() tests          | P1       | M      | LOW  | —                  | DONE   |
 
 ### Phase 4 — Tech debt sweep (S-M effort)
 
 | Plan | Title                                    | Priority | Effort | Risk | Depends on                  | Status |
 | ---- | ---------------------------------------- | -------- | ------ | ---- | --------------------------- | ------ |
-| P012 | Sweep empty catch blocks with logError   | P2       | L      | LOW  | —                           | TODO   |
-| P013 | Extract hooks from large page components | P2       | M      | MED  | —                           | TODO   |
-| P014 | Fix chat provider silent failure         | P2       | S      | LOW  | P002 (strongly recommended) | TODO   |
-| P015 | Replace remaining console.error/warn     | P2       | S      | LOW  | —                           | TODO   |
+| P012 | Sweep empty catch blocks with logError   | P2       | L      | LOW  | —                           | DONE   |
+| P013 | Extract hooks from large page components | P2       | M      | MED  | —                           | DONE   |
+| P014 | Fix chat provider silent failure         | P2       | S      | LOW  | P002 (strongly recommended) | DONE   |
+| P015 | Replace remaining console.error/warn     | P2       | S      | LOW  | —                           | DONE   |
 
 ### Phase 5 — Architecture (M effort)
 
 | Plan | Title                                   | Priority | Effort | Risk | Depends on         | Status |
 | ---- | --------------------------------------- | -------- | ------ | ---- | ------------------ | ------ |
-| P016 | Migrate 19 DataAccess bypass consumers  | P2       | M      | MED  | —                  | TODO   |
-| P017 | Extract DB queries from 7 UI components | P2       | M      | MED  | P016 (recommended) | TODO   |
+| P016 | Migrate 19 DataAccess bypass consumers  | P2       | M      | MED  | —                  | DONE   |
+| P017 | Extract DB queries from 7 UI components | P2       | M      | MED  | P016 (recommended) | DONE   |
 
 ## Dependency notes
 

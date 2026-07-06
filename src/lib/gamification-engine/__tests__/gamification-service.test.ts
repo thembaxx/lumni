@@ -26,6 +26,7 @@ const {
   addStreakFreezeMock,
   completeDailyChallengeMock,
   checkAndUnlockAchievementsMock,
+  addWeeklyFreezeMock,
   mockPut,
   mockGet,
   logErrorMock,
@@ -81,6 +82,7 @@ const {
       xpReward: 0,
     })),
     checkAndUnlockAchievementsMock: vi.fn(() => []),
+    addWeeklyFreezeMock: vi.fn((data: Record<string, unknown>) => data),
     mockPut: vi.fn(async () => 1),
     mockGet: vi.fn(async () => undefined),
     logErrorMock: vi.fn(),
@@ -102,6 +104,7 @@ vi.mock("@/lib/gamification-engine", () => ({
     addStreakFreeze: addStreakFreezeMock,
     completeDailyChallenge: completeDailyChallengeMock,
     checkAndUnlockAchievements: checkAndUnlockAchievementsMock,
+    addWeeklyFreeze: addWeeklyFreezeMock,
   },
 }));
 

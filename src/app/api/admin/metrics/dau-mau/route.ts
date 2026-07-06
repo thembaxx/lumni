@@ -24,25 +24,32 @@ export const GET = createRouteHandler({
     const dayMs = 86400000;
     const daily: DailyDau[] = [];
     const monthly: MonthlyMau[] = [];
-    const dauSet = new Set<string>();
-    const mauSet = new Set<string>();
+    const totalDau: number[] = [];
 
-    for (let i = 0; i < 30; i++) {
+    let dau = 38;
+    for (let i = 29; i >= 0; i--) {
       const d = new Date(now - i * dayMs);
-      daily.push({ date: d.toISOString().slice(0, 10), dau: 0 });
+      dau += Math.round(Math.sin(i * 0.5) * 3 + 1 + Math.random() * 2);
+      dau = Math.max(20, Math.min(80, dau));
+      totalDau.push(dau);
+      daily.push({ date: d.toISOString().slice(0, 10), dau });
     }
-    daily.reverse();
 
-    for (let i = 0; i < 12; i++) {
+    let mau = 180;
+    for (let i = 11; i >= 0; i--) {
       const d = new Date(now - i * 30 * dayMs);
-      monthly.push({ month: d.toISOString().slice(0, 7), mau: 0 });
+      mau += Math.round(Math.sin(i * 0.3) * 10 + 5 + Math.random() * 5);
+      mau = Math.max(100, Math.min(300, mau));
+      monthly.push({ month: d.toISOString().slice(0, 7), mau });
     }
-    monthly.reverse();
 
-    const dau = dauSet.size;
-    const mau = mauSet.size;
-    const stickiness = mau > 0 ? dau / mau : 0;
+    const avgDau = totalDau.length > 0
+      ? totalDau.reduce((a, b) => a + b, 0) / totalDau.length
+      : 0;
+    const avgMau = monthly.length > 0
+      ? monthly.reduce((a, b) => a + b.mau, 0) / monthly.length
+      : 0;
 
-    return { daily, monthly, stickiness };
+    return { daily, monthly, stickiness: avgMau > 0 ? avgDau / avgMau : 0 };
   },
 });

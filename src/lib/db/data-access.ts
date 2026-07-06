@@ -3,6 +3,7 @@ import type {
   ExperimentAssignmentRecord,
   STTCacheEntry,
   STTUsageEntry,
+  StudyCommitmentRecord,
   SyncCheckpoint,
   SyncOutboxEntry,
   UserSettings,
@@ -226,6 +227,10 @@ export interface ExperimentDataAccess {
   experimentAssignments: DataAccessTable<ExperimentAssignmentRecord, number>;
 }
 
+export interface StudyCommitmentsDataAccess {
+  studyCommitments: DataAccessTable<StudyCommitmentRecord, number>;
+}
+
 // ──────────────────────────────────────────────
 // Composite — full 34-table access
 // ──────────────────────────────────────────────
@@ -252,4 +257,5 @@ export interface DataAccess
     CommunityDataAccess,
     PronunciationDataAccess,
     LegacyDataAccess,
-    ExperimentDataAccess {}
+    ExperimentDataAccess,
+    StudyCommitmentsDataAccess {}

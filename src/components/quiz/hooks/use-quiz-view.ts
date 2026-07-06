@@ -158,6 +158,7 @@ export function useQuizView({
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
         try {
+          // TODO: Extract DB calls to service layer
           const items = await loadRetentionQuestions(
             dexieDataAccess,
             normalizedSubject,
@@ -217,6 +218,7 @@ export function useQuizView({
   useEffect(() => {
     if (state.isComplete && retentionQuestions.length > 0) {
       const ids = retentionQuestions.map((rq) => rq.id);
+      // TODO: Extract DB calls to service layer
       dexieDataAccess.retentionRecurrence
         .where("questionId")
         .anyOf(ids)

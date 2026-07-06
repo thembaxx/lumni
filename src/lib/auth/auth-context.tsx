@@ -204,7 +204,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = useCallback(async () => {
     try {
       await account.deleteSession("current");
-    } catch {
+    } catch (err) {
+      logError("AuthContext.signOut", err);
     } finally {
       localStorage.removeItem(ANONYMOUS_ATTEMPTED_KEY);
       dispatch({ type: "RESET" } satisfies AuthAction);

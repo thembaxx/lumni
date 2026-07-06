@@ -62,6 +62,11 @@ const tableNames = [
   "vocabularyList",
   "visuals",
   "wrongAnswers",
+  "schools",
+  "schoolMembers",
+  "schoolCodes",
+  "licenses",
+  "invoices",
 ];
 
 const mockTables = tableNames.map((name) => ({
@@ -72,7 +77,7 @@ const mockTables = tableNames.map((name) => ({
 
 class MockOfflineDB {
   readonly name = "lumni-offline";
-  readonly verno = 43;
+  readonly verno = 46;
   readonly tables = mockTables;
   table(name: string) {
     return mockTables.find((t) => t.name === name);
@@ -108,12 +113,12 @@ describe("LumniOfflineDB", () => {
     expect(offlineDB.name).toBe("lumni-offline");
   });
 
-  test("version is 43", () => {
-    expect(offlineDB.verno).toBe(43);
+  test("version is 46", () => {
+    expect(offlineDB.verno).toBe(46);
   });
 
   test("has all expected tables", () => {
-    expect(offlineDB.tables.length).toBe(61);
+    expect(offlineDB.tables.length).toBe(66);
     for (const name of tableNames) {
       const table = offlineDB.tables.find((t: { name: string }) => t.name === name);
       expect(table).toBeDefined();

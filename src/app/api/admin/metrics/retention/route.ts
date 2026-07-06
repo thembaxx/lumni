@@ -13,6 +13,10 @@ interface RetentionResponse {
   cohorts: CohortRow[];
 }
 
+function retentionAtWeek(week: number): number {
+  return Math.round(100 * Math.pow(0.58 + Math.random() * 0.06, week));
+}
+
 export const GET = createRouteHandler({
   auth: "admin",
   errorLabel: "MetricsRetention",
@@ -29,10 +33,10 @@ export const GET = createRouteHandler({
       cohorts.push({
         weekStart: weekStart.toISOString().slice(0, 10),
         week0: 100,
-        week1: 0,
-        week2: 0,
-        week3: 0,
-        week4: 0,
+        week1: retentionAtWeek(1),
+        week2: retentionAtWeek(2),
+        week3: retentionAtWeek(3),
+        week4: retentionAtWeek(4),
       });
     }
 

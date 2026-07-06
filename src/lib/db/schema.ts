@@ -394,12 +394,100 @@ export interface SyncCheckpoint {
   lastPulledVersion: string;
 }
 
+export interface StudyCommitmentRecord {
+  id?: number;
+  userId: string;
+  buddyUserId: string;
+  subject: string;
+  targetDailyMinutes: number;
+  startDate: string;
+  endDate: string | null;
+  status: "pending" | "active" | "declined" | "ended";
+  sharedStreak: number;
+  lastSharedDate: string | null;
+  createdAt: string;
+}
+
 export interface ExperimentAssignmentRecord {
   id?: number;
   userId: string;
   experimentId: string;
   variantId: string;
   assignedAt: string;
+}
+
+export interface SchoolRecord {
+  id: string;
+  name: string;
+  domain?: string;
+  licenseTier: "free" | "standard" | "premium";
+  billingStatus: "active" | "trialing" | "past_due" | "cancelled" | "suspended";
+  seatCount: number;
+  seatsUsed: number;
+  contactEmail: string;
+  contactPhone?: string;
+  address?: string;
+  trialEndsAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SchoolMemberRecord {
+  id?: number;
+  schoolId: string;
+  userId: string;
+  role: "admin" | "teacher" | "student" | "billing" | "teacher_manager";
+  status: "active" | "invited" | "removed";
+  invitedBy?: string;
+  grade?: string;
+  joinedAt: string;
+  createdAt: string;
+}
+
+export interface SchoolCodeRecord {
+  code: string;
+  schoolId: string;
+  type: "teacher" | "student";
+  maxUses?: number;
+  useCount: number;
+  expiresAt?: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface LicenseRecord {
+  id: string;
+  schoolId: string;
+  tier: "standard" | "premium";
+  status: "active" | "trialing" | "past_due" | "cancelled" | "expired" | "pending";
+  startDate: string;
+  endDate: string;
+  autoRenew: boolean;
+  stripeSubscriptionId?: string;
+  payfastToken?: string;
+  provider?: "stripe" | "payfast";
+  seatCount: number;
+  unitPrice: number;
+  totalPrice: number;
+  cancelledAt?: string;
+  createdAt: string;
+}
+
+export interface InvoiceRecord {
+  id: string;
+  schoolId: string;
+  licenseId: string;
+  amount: number;
+  currency: string;
+  status: "paid" | "pending" | "failed" | "refunded";
+  paidAt?: string;
+  periodStart: string;
+  periodEnd: string;
+  stripeInvoiceId?: string;
+  payfastPaymentId?: string;
+  lines?: string;
+  downloadUrl?: string;
+  createdAt: string;
 }
 
 export interface UserSettings {
@@ -474,6 +562,12 @@ export class LumniOfflineDB extends Dexie {
   userSettings!: Table<UserSettings, string>;
   essayDrafts!: Table<EssayDraftRecord, number>;
   experimentAssignments!: Table<ExperimentAssignmentRecord, number>;
+  studyCommitments!: Table<StudyCommitmentRecord, number>;
+  schools!: Table<SchoolRecord, string>;
+  schoolMembers!: Table<SchoolMemberRecord, number>;
+  schoolCodes!: Table<SchoolCodeRecord, string>;
+  licenses!: Table<LicenseRecord, string>;
+  invoices!: Table<InvoiceRecord, string>;
 
   constructor() {
     super("lumni-offline");
@@ -581,6 +675,21 @@ export class LumniOfflineDB extends Dexie {
     this.version(44).stores({
       experimentAssignments:
         "++id, &[userId+experimentId], userId, experimentId, variantId, assignedAt",
+    });
+
+    // v45: studyCommitments for study buddy accountability
+    this.version(45).stores({
+      studyCommitments:
+        "++id, &[userId+buddyUserId+subject], userId, buddyUserId, status, createdAt",
+    });
+
+    // v46: school licensing tables
+    this.version(46).stores({
+      schools: "&id, domain, name, licenseTier, billingStatus, createdAt",
+      schoolMembers: "++id, &[schoolId+userId], schoolId, userId, role, status",
+      schoolCodes: "&code, schoolId, type, expiresAt",
+      licenses: "&id, schoolId, status, tier, startDate, endDate, stripeSubscriptionId",
+      invoices: "&id, schoolId, status, licenseId, createdAt",
     });
   }
 }

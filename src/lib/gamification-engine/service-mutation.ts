@@ -70,7 +70,8 @@ export function addAchievementMutation(
 }
 
 export function updateStreakMutation(self: MutationSelf): StreakResult {
-  const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
+  const withWeeklyFreeze = gamificationEngine.addWeeklyFreeze(self.data);
+  const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(withWeeklyFreeze);
   self.data = newData;
   persistAndSync(self, newData);
   self.notify();

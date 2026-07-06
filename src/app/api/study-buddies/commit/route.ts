@@ -1,68 +1,34 @@
-import { NextResponse } from "next/server";
-import { nanoid } from "nanoid";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { dexieDataAccess } from "@/lib/db";
+import { StudyBuddyService } from "@/lib/services/study-buddy-service";
 
-interface StudyCommitment {
-  id: string;
-  userId: string;
-  buddyUserId: string;
-  subject: string;
-  targetDailyMinutes: number;
-  startDate: string;
-  endDate: string | null;
-  status: "pending" | "active" | "declined" | "ended";
-  sharedStreak: number;
-  lastSharedDate: string | null;
-  createdAt: string;
-}
+const service = new StudyBuddyService({ db: dexieDataAccess });
 
-const STORAGE_KEY = "lumni_study_commitments";
-
-function getCommitments(): StudyCommitment[] {
-  if (typeof window === "undefined") return [];
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveCommitments(commitments: StudyCommitment[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(commitments));
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = (await request.json()) as {
+export const POST = createRouteHandler({
+  auth: "required",
+  errorLabel: "StudyBuddyCommit",
+  execute: async ({ userId, body }) => {
+    const { buddyUserId, subject, targetDailyMinutes } = body as {
       buddyUserId: string;
       subject: string;
       targetDailyMinutes?: number;
     };
 
-    if (!body.buddyUserId || !body.subject) {
-      return NextResponse.json({ error: "buddyUserId and subject are required" }, { status: 400 });
+    if (!buddyUserId || !subject) {
+      throw new HttpError(400, "buddyUserId and subject are required");
     }
 
-    const commitment: StudyCommitment = {
-      id: nanoid(12),
-      userId: "current-user",
-      buddyUserId: body.buddyUserId,
-      subject: body.subject,
-      targetDailyMinutes: body.targetDailyMinutes ?? 30,
-      startDate: new Date().toISOString(),
-      endDate: null,
-      status: "pending",
-      sharedStreak: 0,
-      lastSharedDate: null,
-      createdAt: new Date().toISOString(),
-    };
+    if (buddyUserId === userId) {
+      throw new HttpError(400, "Cannot create a commitment with yourself");
+    }
 
-    const commitments = getCommitments();
-    commitments.push(commitment);
-    saveCommitments(commitments);
+    const commitment = await service.createCommitment(
+      userId as string,
+      buddyUserId,
+      subject,
+      targetDailyMinutes,
+    );
 
-    return NextResponse.json({ commitment }, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "Failed to create commitment" }, { status: 500 });
-  }
-}
+    return { commitment };
+  },
+});

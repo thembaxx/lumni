@@ -110,6 +110,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
     await processQuizResult({ source: "quiz", results }, quizResultDeps);
 
     try {
+      // TODO: Extract DB calls to service layer
       const records = await dexieDataAccess.competencies.toArray();
       const topicScores = new Map<string, number[]>();
       for (const r of records) {

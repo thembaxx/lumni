@@ -62,7 +62,8 @@ export function addAchievementEffect(
 
 export function updateStreakEffect(self: MutationSelf): Effect.Effect<StreakResult> {
   return Effect.gen(function* () {
-    const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(self.data);
+    const withWeeklyFreeze = gamificationEngine.addWeeklyFreeze(self.data);
+    const { data: newData, freezeConsumed } = gamificationEngine.updateStreak(withWeeklyFreeze);
     self.data = newData;
     yield* persistEffect(self.db, newData);
     scheduleSync(newData, self.syncTimer, (t) => {

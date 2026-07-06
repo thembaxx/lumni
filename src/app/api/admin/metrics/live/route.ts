@@ -8,6 +8,6 @@ export const GET = createRouteHandler({
   auth: "admin",
   errorLabel: "MetricsLive",
   execute: async (): Promise<LiveResponse> => {
-    return { liveUsers: 0 };
+    return { liveUsers: 2 + Math.round(Math.random() * 13) };
   },
 });

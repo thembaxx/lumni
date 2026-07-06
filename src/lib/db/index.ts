@@ -17,6 +17,7 @@ export type {
   SettingsDataAccess,
   SocialDataAccess,
   StoryDataAccess,
+  StudyCommitmentsDataAccess,
   StudyDataAccess,
   SyncDataAccess,
   VocabularyDataAccess,

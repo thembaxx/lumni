@@ -1,48 +1,44 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { dexieDataAccess } from "@/lib/db";
+import { StudyBuddyService } from "@/lib/services/study-buddy-service";
 
-const STORAGE_KEY = "lumni_study_commitments";
+const service = new StudyBuddyService({ db: dexieDataAccess });
 
-interface StudyCommitment {
-  id: string;
-  userId: string;
-  buddyUserId: string;
-  subject: string;
-  targetDailyMinutes: number;
-  startDate: string;
-  endDate: string | null;
-  status: "pending" | "active" | "declined" | "ended";
-  sharedStreak: number;
-  lastSharedDate: string | null;
-  createdAt: string;
-}
-
-function getCommitments(): StudyCommitment[] {
-  if (typeof window === "undefined") return [];
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveCommitments(commitments: StudyCommitment[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(commitments));
-}
-
-export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await params;
-    const commitments = getCommitments();
-    const idx = commitments.findIndex((c) => c.id === id);
-    if (idx === -1) {
-      return NextResponse.json({ error: "Commitment not found" }, { status: 404 });
+export const DELETE = createRouteHandler({
+  auth: "required",
+  errorLabel: "StudyBuddyEnd",
+  execute: async ({ userId, params }) => {
+    const id = Number(params?.id);
+    if (!id || Number.isNaN(id)) {
+      throw new HttpError(400, "Valid commitment id is required");
     }
-    commitments[idx].status = "ended";
-    commitments[idx].endDate = new Date().toISOString();
-    saveCommitments(commitments);
-    return NextResponse.json({ commitment: commitments[idx] });
-  } catch {
-    return NextResponse.json({ error: "Failed to end commitment" }, { status: 500 });
-  }
-}
+
+    await service.endCommitment(id, userId as string);
+    return { success: true };
+  },
+});
+
+export const PATCH = createRouteHandler({
+  auth: "required",
+  errorLabel: "StudyBuddyRespond",
+  execute: async ({ userId, params, body }) => {
+    const id = Number(params?.id);
+    if (!id || Number.isNaN(id)) {
+      throw new HttpError(400, "Valid commitment id is required");
+    }
+
+    const { action } = body as { action: "accept" | "decline" };
+
+    if (action === "accept") {
+      const commitment = await service.acceptCommitment(id, userId as string);
+      return { commitment };
+    }
+
+    if (action === "decline") {
+      await service.declineCommitment(id, userId as string);
+      return { declined: true };
+    }
+
+    throw new HttpError(400, 'action must be "accept" or "decline"');
+  },
+});

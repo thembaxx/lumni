@@ -46,4 +46,9 @@ export const COLLECTIONS = {
   LIVE_SESSIONS: "live_sessions",
   SYNC_ENTRIES: "sync_entries",
   CLASSROOM_CODES: "classroom_codes",
+  SCHOOLS: "schools",
+  SCHOOL_MEMBERS: "school_members",
+  SCHOOL_CODES: "school_codes",
+  LICENSES: "licenses",
+  INVOICES: "invoices",
 } as const;
