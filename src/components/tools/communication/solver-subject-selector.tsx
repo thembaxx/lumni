@@ -31,7 +31,7 @@ export function SolverSubjectSelector({ subject, onChange }: SolverSubjectSelect
           className={cn(
             "relative h-7 rounded-lg border px-2.5 font-medium text-xs transition-colors after:absolute after:-inset-2",
             subject === s.id
-              ? "border-(--system-accent) bg-(--system-accent) text-white"
+              ? "border-(--system-accent) bg-(--system-accent) text-white dark:bg-transparent dark:text-(--system-accent)"
               : "border-border bg-system-fill text-(--system-text-secondary) hover:border-(--system-accent)/40",
           )}
         >

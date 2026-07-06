@@ -24,7 +24,7 @@ export function WelcomeState() {
           initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ delay: 0.2, duration: 0.35, ease: iOSEase }}
-          className="text-pretty font-medium ios-footnote text-muted-foreground/60"
+          className="text-pretty font-medium ios-footnote text-muted-foreground"
         >
           Ask me anything about your studies!
         </m.p>

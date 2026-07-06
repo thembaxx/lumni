@@ -35,12 +35,14 @@ export function JoinGroupDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button variant="outline">
-          <HugeiconsIcon icon={UserGroupIcon} className="size-4" />
-          {t("studyGroups.joinGroup")}
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button variant="outline">
+            <HugeiconsIcon icon={UserGroupIcon} className="size-4" />
+            {t("studyGroups.joinGroup")}
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("studyGroups.joinGroup")}</DialogTitle>

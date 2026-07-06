@@ -203,7 +203,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
         <div className="grid items-center gap-12 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
             <FadeIn direction="up" distance={20} duration={0.4} className="flex flex-col gap-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-4 py-1.5 text-xs text-primary shadow-level-2 border border-primary/10">
+              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-4 py-1.5 text-xs text-foreground shadow-level-2 border border-primary/10">
                 <span className="text-primary/60 ios-caption-3" aria-hidden="true">
                   ✦
                 </span>

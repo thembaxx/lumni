@@ -181,13 +181,14 @@ export async function preCacheCommonWords(db: DataAccess): Promise<void> {
     return;
   }
 
-  for (const word of COMMON_WORDS) {
-    try {
-      await lookupWord(word);
-    } catch {
-      // individual word failure is ok
+  const BATCH_SIZE = 5;
+  const BATCH_GAP_MS = 600;
+
+  for (let i = 0; i < COMMON_WORDS.length; i += BATCH_SIZE) {
+    const batch = COMMON_WORDS.slice(i, i + BATCH_SIZE);
+    await Promise.allSettled(batch.map((word) => lookupWord(word).catch(() => {})));
+    if (i + BATCH_SIZE < COMMON_WORDS.length) {
+      await new Promise((resolve) => setTimeout(resolve, BATCH_GAP_MS));
     }
-    // small delay to avoid rate limiting
-    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 }

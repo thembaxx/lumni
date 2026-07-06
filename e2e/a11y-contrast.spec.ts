@@ -73,6 +73,11 @@ test.describe("WCAG AA contrast audit", () => {
       await page.goto(`/en${route.path}`, { waitUntil: "commit" });
       await page.waitForLoadState("networkidle");
       await page.emulateMedia({ colorScheme: "light" });
+      await page
+        .waitForFunction(() => !document.documentElement.classList.contains("dark"), {
+          timeout: 5000,
+        })
+        .catch(() => {});
       const violations = await getContrastViolations(page);
       if (violations.length > 0) {
         console.log(`Contrast violations on ${route.path} (light):`);
@@ -89,6 +94,9 @@ test.describe("WCAG AA contrast audit", () => {
       await page.goto(`/en${route.path}`, { waitUntil: "commit" });
       await page.waitForLoadState("networkidle");
       await page.emulateMedia({ colorScheme: "dark" });
+      await page.waitForFunction(() => document.documentElement.classList.contains("dark"), {
+        timeout: 5000,
+      });
       const violations = await getContrastViolations(page);
       if (violations.length > 0) {
         console.log(`Contrast violations on ${route.path} (dark):`);

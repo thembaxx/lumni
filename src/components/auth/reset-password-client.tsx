@@ -120,7 +120,7 @@ function Form() {
     return (
       <FadeIn direction="up" distance={12} className="flex flex-col items-center gap-6 text-center">
         <h1 className="font-heading font-semibold text-2xl">{t("auth.invalidResetLink")}</h1>
-        <p className="text-muted-foreground text-sm">{t("auth.invalidResetLinkSubtitle")}</p>
+        <p className="text-muted-foreground text-sm">{t("auth.invalidResetLinkDesc")}</p>
         <Link
           href="/auth/forgot-password"
           className="font-semibold text-sm text-system-accent hover:underline"
