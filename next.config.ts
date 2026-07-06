@@ -17,13 +17,10 @@ const CSP_REPORT_PATH = "/api/csp-violation";
 
 const SENTRY_HOSTS = ["https://o4510925914963968.ingest.us.sentry.io"];
 
-function buildCsp(isDev: boolean): string {
-  const scriptSrc = [
-    "'self'",
-    "'unsafe-inline'",
-    isDev ? "'unsafe-eval'" : "",
-    __impeccableLiveDev,
-  ].filter(Boolean);
+function buildCsp(): string {
+  const scriptSrc = ["'self'", "'unsafe-inline'", "'unsafe-eval'", __impeccableLiveDev].filter(
+    Boolean,
+  );
 
   const connectSrc = [
     "'self'",
@@ -147,7 +144,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: buildCsp(isDev),
+            value: buildCsp(),
           },
           {
             key: "Reporting-Endpoints",

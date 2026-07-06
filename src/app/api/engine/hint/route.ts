@@ -4,7 +4,7 @@ import type { Question } from "@/lib/question-engine/types";
 import { searchWithRAG } from "@/lib/tinyfish";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   budget: "hint",
   errorLabel: "Hint",
   useRateLimit: true,

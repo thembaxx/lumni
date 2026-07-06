@@ -2,7 +2,7 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { voiceEngine } from "@/lib/voice-engine";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   errorLabel: "Voice",
   useRateLimit: true,
   aiContext: { consentGranted: true },

@@ -2,7 +2,7 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   budget: "visual",
   errorLabel: "Visual",
   useRateLimit: true,

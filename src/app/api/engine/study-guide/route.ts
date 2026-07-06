@@ -6,7 +6,7 @@ import type { StudyGuide } from "@/lib/study-guide/types";
 const EMPTY_GUIDE: StudyGuide = { sections: [], summary: "" };
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   validate: (body: { subject?: string; topic?: string }) => {
     if (!body.subject || !body.topic) return "subject and topic are required";
     return null;

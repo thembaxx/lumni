@@ -4,7 +4,7 @@ import { generateStoryContent, storeGeneratedStory } from "@/lib/stories/service
 import type { Story } from "@/lib/stories/types";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   validate: (body: {
     language?: string;
     languageId?: string;

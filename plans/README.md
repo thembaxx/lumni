@@ -213,11 +213,11 @@ Phase 1 plans are S-effort, independent, and can run in any order. Phase 2 build
 
 | Plan | Title                                                   | Priority | Effort | Risk | Depends on | Status |
 | ---- | ------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
-| 104  | Wire re-engagement engine into notification schedulers  | P1       | S      | LOW  | —          | TODO   |
-| 105  | Remove freeTTS third-party data sharing fallback        | P1       | S      | LOW  | —          | TODO   |
-| 106  | Seal offlineDB seam bypasses in offline-client.tsx      | P1       | S      | LOW  | —          | TODO   |
-| 107  | Add auth guard to chat route                            | P1       | S      | LOW  | —          | TODO   |
-| 108  | School service — characterization tests + billing split | P2       | M      | MED  | —          | TODO   |
+| 104  | Wire re-engagement engine into notification schedulers  | P1       | S      | LOW  | —          | DONE   |
+| 105  | Remove freeTTS third-party data sharing fallback        | P1       | S      | LOW  | —          | DONE   |
+| 106  | Seal offlineDB seam bypasses in offline-client.tsx      | P1       | S      | LOW  | —          | DONE   |
+| 107  | Add auth guard to chat route                            | P1       | S      | LOW  | —          | DONE   |
+| 108  | School service — characterization tests + billing split | P2       | M      | MED  | —          | DONE   |
 
 **Phase 1 — P1 fixes (independent, parallelizable)**:
 
@@ -251,3 +251,29 @@ Commit `7bb0d688`. Verification commands and expected results are documented in 
 - Plans in Phase 1 change only 1-2 files each with no external dependencies. Each takes under 15 minutes.
 - Plan 108 requires `vi.mock()` for Appwrite SDK; check for module resolution issues before starting.
 - After all Phase 1 plans are done, run `pnpm run deadcode` to check for any orphaned imports from the `offlineDB` bypass or freeTTS route removal.
+
+## Execution order & status — Batch 9 (July 2026 security + hardening)
+
+All plans are independent and can run in any order. Priority determined by risk (auth fixes first, UX polish last).
+
+| Plan | Title                                                       | Priority | Effort | Risk   | Depends on | Status |
+| ---- | ----------------------------------------------------------- | -------- | ------ | ------ | ---------- | ------ |
+| 109  | Fix UploadThing auth: bearer token → getAuthenticatedUserId | P0       | S      | HIGH   | —          | DONE   |
+| 110  | Add auth guards to 10 unauthenticated AI-cost endpoints     | P0       | M      | MEDIUM | —          | DONE   |
+| 111  | Fix AudioEngine microphone stream leak on error             | P1       | S      | LOW    | —          | DONE   |
+| 112  | Add Dexie schema migration tests                            | P1       | M      | MEDIUM | —          | DONE   |
+| 113  | Build school licensing UI                                   | P2       | M      | LOW    | —          | DONE   |
+| 114  | Wire past paper question browser page                       | P3       | S      | LOW    | —          | DONE   |
+| 115  | Wire classroom join codes UI                                | P3       | S      | LOW    | —          | DONE   |
+
+**Execution notes**:
+
+- Plan 109: Replaced bearer-token heuristic with `getAuthenticatedUserId()` from Appwrite session cookie. Removed `getSessionUser()` function.
+- Plan 110: Changed `auth: "none"` → `"required"` in 10 route configs. Added auth mocks to 2 test files.
+- Plan 111: Moved `stream` variable outside `try`; added track cleanup in `catch` block.
+- Plan 112: Created `src/lib/db/__tests__/schema-migration.test.ts` — 11 tests covering version chain, table names, compound indexes, and data round-trips. Uses `fake-indexeddb` for in-memory IndexedDB emulation.
+- Plans 109-112 executed at HEAD `d3446bd7`. Verification: `tsc --noEmit` 0 errors, `oxlint` 0 warnings, `vitest run` 1874 pass (0 fail).
+
+### STOP conditions not encountered
+
+None of the STOP conditions from any executed plan were triggered:

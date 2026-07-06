@@ -3,7 +3,7 @@ import { createSTTEngine } from "@/lib/stt-engine";
 import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   errorLabel: "Transcribe",
   useRateLimit: true,
   parseBody: async (req) => {

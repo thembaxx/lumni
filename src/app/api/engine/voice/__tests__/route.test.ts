@@ -4,6 +4,9 @@ const mockSynthesize = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/voice-engine", () => ({
   voiceEngine: { synthesize: mockSynthesize },
 }));
+vi.mock("@/lib/server/auth", () => ({
+  getAuthenticatedUserId: vi.fn(() => Promise.resolve("test-user")),
+}));
 
 import { NextRequest } from "next/server";
 import { POST } from "@/app/api/engine/voice/route";

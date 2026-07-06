@@ -4,6 +4,9 @@ const mockFetch = vi.hoisted(() => vi.fn());
 vi.stubGlobal("fetch", mockFetch);
 
 vi.mock("@/lib/shared/logger", () => ({ logError: vi.fn() }));
+vi.mock("@/lib/server/auth", () => ({
+  getAuthenticatedUserId: vi.fn(() => Promise.resolve("test-user")),
+}));
 
 import { NextRequest } from "next/server";
 import { POST } from "@/app/api/engine/transcribe/route";

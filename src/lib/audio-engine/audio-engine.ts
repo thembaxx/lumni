@@ -97,8 +97,9 @@ class AudioEngine {
       return;
     }
 
+    let stream: MediaStream | null = null;
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this.permissionStatus = "granted";
       this._error = null;
 
@@ -116,7 +117,7 @@ class AudioEngine {
         const blob = new Blob(this.audioChunks, { type: "audio/webm" });
         this._audioBlob = blob;
         this._totalDuration = this._duration;
-        for (const t of stream.getTracks()) t.stop();
+        for (const t of stream!.getTracks()) t.stop();
         this.notify();
       };
 
@@ -136,6 +137,9 @@ class AudioEngine {
 
       this.notify();
     } catch (err) {
+      if (stream) {
+        for (const t of stream.getTracks()) t.stop();
+      }
       logError("AudioEngineStartRecording", err);
       const error = err instanceof Error ? err : undefined;
       if (error?.name === "NotAllowedError" || error?.name === "PermissionDeniedError") {

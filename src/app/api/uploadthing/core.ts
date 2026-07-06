@@ -1,32 +1,17 @@
 import { createUploadthing, type FileRouter, UploadThingError } from "uploadthing/server";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 const f = createUploadthing();
 
-async function getSessionUser(req: Request): Promise<{ id: string } | null> {
-  try {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader?.startsWith("Bearer ")) {
-      return null;
-    }
-    const token = authHeader.slice(7);
-    if (!token || token === "demo-session" || token === "guest") {
-      return null;
-    }
-    return { id: token.split(":")[0] || token };
-  } catch {
-    return null;
-  }
-}
-
-async function requireAuth(req: Request): Promise<{ id: string }> {
-  const user = await getSessionUser(req);
-  if (!user) {
+async function requireAuth(_req: Request): Promise<{ id: string }> {
+  const userId = await getAuthenticatedUserId();
+  if (!userId) {
     throw new UploadThingError({
       code: "FORBIDDEN",
       message: "Authentication required",
     });
   }
-  return user;
+  return { id: userId };
 }
 
 export const ourFileRouter = {

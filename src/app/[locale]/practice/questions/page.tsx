@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { PastQuestionBrowser } from "./past-question-browser";
-
-export const metadata: Metadata = {
-  title: "Question Bank - Lumni",
-};
+import { PageContainer } from "@/components/layout/page-container";
+import { PracticeQuestionsClient } from "./practice-questions-client";
 
 export default function PracticeQuestionsPage() {
-  return <PastQuestionBrowser />;
+  return (
+    <PageContainer>
+      <PracticeQuestionsClient />
+    </PageContainer>
+  );
 }

@@ -2,7 +2,7 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { searchWeb } from "@/lib/services/web-search-service";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   errorLabel: "WebSearch",
   validate: (body) => {
     if (!body.query || typeof body.query !== "string" || body.query.trim().length < 2) {

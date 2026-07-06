@@ -7,7 +7,7 @@ interface ChatImageBody {
 }
 
 export const POST = createRouteHandler<ChatImageBody>({
-  auth: "none",
+  auth: "required",
   budget: "generate",
   errorLabel: "ChatImage",
   useRateLimit: true,

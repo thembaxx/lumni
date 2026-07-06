@@ -3,7 +3,7 @@ import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   budget: "grade",
   errorLabel: "Grade",
   useRateLimit: true,

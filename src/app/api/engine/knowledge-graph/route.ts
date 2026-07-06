@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { initAI, isAIConfigured } from "@/lib/ai/client";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { fetchGraph, getCachedGraph, storeGraph } from "@/lib/knowledge-graph/service";
 import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
 
@@ -33,6 +34,10 @@ async function handleGraphFetch(subject: string, topic: string) {
 }
 
 export const GET = async (request: NextRequest) => {
+  const userId = await getAuthenticatedUserId();
+  if (!userId) {
+    return Response.json({ error: "Authentication required" }, { status: 401 });
+  }
   const subject = request.nextUrl.searchParams.get("subject");
   const topic = request.nextUrl.searchParams.get("topic");
   if (!subject || !topic) {
@@ -43,7 +48,7 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   validate: (body: { subject?: string; topic?: string }) => {
     if (!body.subject || !body.topic) return "subject and topic are required";
     return null;
