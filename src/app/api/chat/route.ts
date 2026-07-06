@@ -6,6 +6,7 @@ import { CHAT_SYSTEM_PROMPT } from "@/lib/ai/client";
 import { buildChatContext } from "@/lib/ai/chat-context";
 import { runWithAICallContext } from "@/lib/ai/call-context";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -91,11 +92,15 @@ async function tryStreamWithModels(userPrompt: string, systemPrompt: string) {
 }
 
 export async function POST(req: NextRequest) {
+  const sessionUserId = await getAuthenticatedUserId();
+  if (!sessionUserId) {
+    return Response.json({ error: "Authentication required" }, { status: 401 });
+  }
+
   const budgetResult = await checkBudget(req, "generate");
   if (!budgetResult.allowed) {
     return budgetResult.response ?? new Response("Budget exceeded", { status: 429 });
   }
-  const userId = budgetResult.userId;
 
   let body: { message: string; history?: { role: string; content: string }[] };
   try {
@@ -136,7 +141,7 @@ export async function POST(req: NextRequest) {
       );
 
       try {
-        await trackUsage("generate", userId ?? "anonymous");
+        await trackUsage("generate", sessionUserId);
       } catch {
         /* best-effort */
       }
@@ -186,7 +191,7 @@ export async function POST(req: NextRequest) {
         );
 
         try {
-          await trackUsage("generate", userId ?? "anonymous");
+          await trackUsage("generate", sessionUserId);
         } catch {
           /* best-effort */
         }

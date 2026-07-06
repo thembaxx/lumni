@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { offlineDB } from "@/lib/db/schema";
+import { dexieDataAccess } from "@/lib/db";
 import type { CachedStory } from "@/lib/stories/types";
 import type { QuizPack } from "@/lib/quiz-packs/types";
 import type { StoryProgressRecord } from "@/lib/db/schema";
@@ -17,17 +17,17 @@ import { OfflineTracker } from "./offline-tracker";
 
 export default function OfflinePage() {
   const recentStories = useLiveQuery(() =>
-    offlineDB.storyProgress.orderBy("lastReadAt").reverse().limit(5).toArray(),
+    dexieDataAccess.storyProgress.orderBy("lastReadAt").reverse().limit(5).toArray(),
   );
 
   const readyPacks = useLiveQuery(() =>
-    offlineDB.quizPacks.where("status").equals("ready").reverse().sortBy("createdAt"),
+    dexieDataAccess.quizPacks.where("status").equals("ready").reverse().sortBy("createdAt"),
   );
 
   const storyTitles = useLiveQuery(async () => {
     if (!recentStories || recentStories.length === 0) return [];
     const keys = recentStories.map((r) => r.storyId);
-    const cached = await offlineDB.storyCache.where("key").anyOf(keys).toArray();
+    const cached = await dexieDataAccess.storyCache.where("key").anyOf(keys).toArray();
     const map = new Map(cached.map((c: CachedStory) => [c.story.id, c.story.title]));
     return recentStories.map((r: StoryProgressRecord) => ({
       storyId: r.storyId,

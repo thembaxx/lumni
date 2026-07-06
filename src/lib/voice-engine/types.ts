@@ -1,4 +1,4 @@
-export type TTSProviderName = "elevenlabs" | "google-cloud-tts" | "freetts" | "browser";
+export type TTSProviderName = "elevenlabs" | "google-cloud-tts" | "browser";
 
 export interface TTSOptions {
   voice?: string;

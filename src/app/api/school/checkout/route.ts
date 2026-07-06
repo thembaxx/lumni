@@ -1,5 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { createStripeCheckoutSession, isUserSchoolMember } from "@/lib/school/service";
+import { createStripeCheckoutSession } from "@/lib/school/billing-service";
+import { isUserSchoolMember } from "@/lib/school/service";
 import { z } from "zod";
 
 const schema = z.object({

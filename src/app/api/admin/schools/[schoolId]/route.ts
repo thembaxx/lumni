@@ -1,5 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { getSchool, getSchoolMembers, getBillingInfo } from "@/lib/school/service";
+import { getBillingInfo } from "@/lib/school/billing-service";
+import { getSchool, getSchoolMembers } from "@/lib/school/service";
 
 export const GET = createRouteHandler({
   auth: "admin",

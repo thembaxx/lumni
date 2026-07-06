@@ -206,3 +206,48 @@ All 6 plans executed 2026-07-05 via isolated worktrees, cherry-picked to master 
 - **Cross-user data moat (aggregated analytics)**: L effort, but requires backend aggregation infrastructure (server-side cron job, aggregation pipeline, anonymization). Deferred — the business metrics dashboard (plan 100) is the prerequisite.
 - **Collaborative whiteboard / tutor-led sessions**: L-XL effort. Ably is already paid for, but shared problem-solving tools are a significant build. Deferred until live session adoption justifies the investment.
 - **Story content depth**: Infrastructure exists, content is minimal. L-XL effort. Deferred — stories are a differentiator for language learning but not core to the exam-prep value proposition.
+
+## Execution order & status — Batch 8 (July 2026 audit)
+
+Phase 1 plans are S-effort, independent, and can run in any order. Phase 2 builds on Phase 1's test coverage.
+
+| Plan | Title                                                   | Priority | Effort | Risk | Depends on | Status |
+| ---- | ------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 104  | Wire re-engagement engine into notification schedulers  | P1       | S      | LOW  | —          | TODO   |
+| 105  | Remove freeTTS third-party data sharing fallback        | P1       | S      | LOW  | —          | TODO   |
+| 106  | Seal offlineDB seam bypasses in offline-client.tsx      | P1       | S      | LOW  | —          | TODO   |
+| 107  | Add auth guard to chat route                            | P1       | S      | LOW  | —          | TODO   |
+| 108  | School service — characterization tests + billing split | P2       | M      | MED  | —          | TODO   |
+
+**Phase 1 — P1 fixes (independent, parallelizable)**:
+
+- **104**: Wire `ReEngagementService.selectReEngagementContent(userId)` into `initializeNotificationSchedulers()` in `alert-schedulers.ts`. ~3 lines of glue code. Today: the `ReEngagementService` class exists but is never called. After: re-engagement push notifications fire on the same schedule as the other 6 alert types.
+- **105**: Remove freeTTS fallback from `VoiceEngine.buildProviderChain()` and delete `src/app/api/tts/route.ts`. Today: user-submitted text (PII, answers) sent to `api.freetts.org` with zero data-processing agreement. After: VoiceEngine returns null when both ElevenLabs and Google TTS keys are absent; no unconsented third-party data send.
+- **106**: Replace 3 `offlineDB` direct imports in `offline-client.tsx` with `dexieDataAccess` from `@/lib/db`. Today: bypasses `DataAccess` seam introduced in Sessions 23-24. After: all Dexie access in the offline page goes through the typed interface.
+- **107**: Add `getAuthenticatedUserId()` guard at top of `POST /api/chat` handler. Today: any unauthenticated caller can burn AI credits against the shared "anonymous" budget bucket. After: returns 401 when no session cookie is present.
+
+**Phase 2 — P2 test coverage + architecture**:
+
+- **108**: Add characterization tests for `src/lib/school/service.ts` (528-line god module), then extract 3 Stripe billing functions into `billing-service.ts`. Today: zero test coverage, Stripe and Appwrite CRUD mixed in one file. After: ~8 characterization tests capture current behaviour; billing functions are in a separate module with clear seam.
+
+### Dependency graph
+
+```
+104 ──► (re-engagement notifications)
+105 ──► (no data sharing)
+106 ──► (cleaner DataAccess seam)
+107 ──► (auth for AI routes)
+108 ──► (school test coverage)
+```
+
+All Phase 1 plans (104-107) are independent. Phase 2 (108) is independent of Phase 1.
+
+### Baseline
+
+Commit `7bb0d688`. Verification commands and expected results are documented in each plan.
+
+### Execution notes
+
+- Plans in Phase 1 change only 1-2 files each with no external dependencies. Each takes under 15 minutes.
+- Plan 108 requires `vi.mock()` for Appwrite SDK; check for module resolution issues before starting.
+- After all Phase 1 plans are done, run `pnpm run deadcode` to check for any orphaned imports from the `offlineDB` bypass or freeTTS route removal.

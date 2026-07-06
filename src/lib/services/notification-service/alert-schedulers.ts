@@ -1,10 +1,14 @@
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { dexieDataAccess } from "@/lib/db";
+import { ReEngagementService } from "@/lib/services/re-engagement-service";
 import { getDeps } from "./deps";
 import { sendLocalNotification } from "./push";
 import { getSettings } from "./settings";
 import { getGamificationData } from "./reminder-builder";
 import { scheduleStudyReminder } from "./study-scheduler";
+
+const reEngagementService = new ReEngagementService({ db: dexieDataAccess });
 import {
   ASSIGNMENT_ALERT_KEY,
   DAILY_DIGEST_KEY,
@@ -215,12 +219,41 @@ export async function scheduleExamAlerts(
   }
 }
 
+async function scheduleReEngagement(settings: NotificationSettings): Promise<void> {
+  if (!settings.enabled || !settings.streakAlerts) return;
+  if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
+  if (typeof window === "undefined" || !("indexedDB" in window)) return;
+
+  try {
+    const events = await dexieDataAccess.analyticsEvents
+      .orderBy("timestamp")
+      .reverse()
+      .limit(1)
+      .toArray();
+    const userId = events.length > 0 ? events[0].userId : null;
+    if (!userId) return;
+
+    const result = await reEngagementService.checkAndNotify(userId);
+    if (result.notified) {
+      sendLocalNotification(
+        "Keep Learning!",
+        result.message ?? "",
+        result.deepLink ?? "/dashboard",
+      );
+    }
+  } catch (err) {
+    logError("ScheduleReEngagement", err);
+  }
+}
+
 export function initializeNotificationSchedulers(): void {
   const settings = getSettings();
   if (!settings.enabled) return;
 
   scheduleStudyReminder(settings);
   scheduleStreakAlert(settings);
+  scheduleReEngagement(settings);
 
   if (typeof window !== "undefined" && "indexedDB" in window) {
     scheduleWeeklyProgress(settings);

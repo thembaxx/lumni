@@ -35,8 +35,6 @@ export class VoiceEngine {
       });
     }
 
-    chain.push({ name: "freetts", synthesize: (t, o) => this.freeTtsSynthesize(t, o) });
-
     return chain;
   }
 
@@ -124,29 +122,6 @@ export class VoiceEngine {
 
     const data = await response.json();
     return { audio: data.audioContent, format: "mp3", provider: "google-cloud-tts" };
-  }
-
-  private async freeTtsSynthesize(text: string, options: TTSOptions): Promise<TTSResult | null> {
-    const truncatedText = text.slice(0, 1000);
-    const response = await fetch("https://api.freetts.org/v1/synthesizes", {
-      method: "POST",
-      cache: "no-store",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: truncatedText,
-        voice: options.voice || "en_us_guy",
-        lang: options.lang || "en",
-      }),
-    });
-
-    if (!response.ok) {
-      logError("VoiceEngine.freeTts", new Error(`Status ${response.status}`));
-      return null;
-    }
-
-    const arrayBuffer = await response.arrayBuffer();
-    const audio = Buffer.from(arrayBuffer).toString("base64");
-    return { audio, format: "mp3", provider: "freetts" };
   }
 }
 
