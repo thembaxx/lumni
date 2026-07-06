@@ -23,10 +23,52 @@ const items = [
     icon: "BookOpen01Icon",
   },
   {
+    label: "Periodic Table",
+    description: "Interactive periodic table of elements",
+    href: "/tools/periodic",
+    icon: "Atom01Icon",
+  },
+  {
+    label: "Calculator",
+    description: "Scientific calculator",
+    href: "/tools/calculator",
+    icon: "CalculatorIcon",
+  },
+  {
+    label: "APS Calculator",
+    description: "Calculate your APS score",
+    href: "/tools/aps",
+    icon: "CalculateIcon",
+  },
+  {
     label: "Dictionary",
     description: "Look up word definitions",
     href: "/dictionary",
     icon: "Search01Icon",
+  },
+  {
+    label: "Results",
+    description: "Search past exam results",
+    href: "/tools/results",
+    icon: "Award01Icon",
+  },
+  {
+    label: "Scheduler",
+    description: "Plan your study schedule",
+    href: "/tools/scheduler",
+    icon: "Calendar01Icon",
+  },
+  {
+    label: "Notes",
+    description: "Create and manage study notes",
+    href: "/tools/notes",
+    icon: "Note01Icon",
+  },
+  {
+    label: "Study Sets",
+    description: "Create flashcard study sets",
+    href: "/tools/study-sets",
+    icon: "BookOpen02Icon",
   },
   {
     label: "Search",
