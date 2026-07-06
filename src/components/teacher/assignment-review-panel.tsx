@@ -48,7 +48,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
         if (!r.ok) throw new Error("Failed to fetch");
         return r.json();
       }),
-    staleTime: 1000 * 60 * 2,
+    staleTime: 30_000,
   });
 
   const submitComment = useMutation({

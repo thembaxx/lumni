@@ -5,7 +5,7 @@ import Download03Icon from "@hugeicons/core-free-icons/Download03Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Button } from "@/components/ui/button";
@@ -47,10 +47,6 @@ function StudyPlannerInner() {
 
   const [showAddSession, setShowAddSession] = useState(false);
   const [showAddExam, setShowAddExam] = useState(false);
-  const _nowRef = useRef<number | null>(null);
-  if (_nowRef.current === null) _nowRef.current = Date.now();
-  const _now = _nowRef.current;
-
   const handleStartSession = useCallback(
     (session: StudySession) => {
       if (session.type === "flashcard") {

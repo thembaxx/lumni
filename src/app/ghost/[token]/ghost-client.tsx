@@ -36,7 +36,7 @@ function GhostContent({ token }: { token: string }) {
     );
   if (isError)
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-dvh items-center justify-center">
         <p className="text-muted-foreground">Invalid or expired link</p>
       </div>
     );

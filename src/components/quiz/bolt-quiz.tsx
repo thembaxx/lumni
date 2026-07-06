@@ -180,21 +180,22 @@ export function BoltQuiz() {
                   onAnswered={handleAnswered}
                 />
               </div>
-              {boltResult && (
-                <div className="sticky bottom-0 z-content -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
-                  <div className="mx-auto w-full max-w-2xl">
-                    <Button
-                      onClick={handleFinish}
-                      size="lg"
-                      className="w-full gap-2 text-base"
-                      disabled={processing}
-                    >
-                      {processing ? "Saving\u2026" : "Finish"}
-                    </Button>
-                  </div>
-                </div>
-              )}
             </m.section>
+          )}
+
+          {boltResult && !isCelebrating && (
+            <div className="sticky bottom-0 z-content mt-auto border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
+              <div className="mx-auto w-full max-w-2xl">
+                <Button
+                  onClick={handleFinish}
+                  size="lg"
+                  className="w-full gap-2 text-base"
+                  disabled={processing}
+                >
+                  {processing ? "Saving\u2026" : "Finish"}
+                </Button>
+              </div>
+            </div>
           )}
 
           {isCelebrating && (

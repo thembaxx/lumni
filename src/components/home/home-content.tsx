@@ -54,7 +54,7 @@ const AnimatedStatsSection = dynamic(
  */
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
-  const [_buffer, setBuffer] = useState("");
+  const [, setBuffer] = useState("");
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -136,7 +136,7 @@ export function HomeContent() {
   const { showConfetti, dismissConfetti } = useMatricEasterEgg();
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background pb-16">
+    <div className="min-h-dvh overflow-x-clip bg-background pb-16">
       <AmbientGradient variant="hero" />
       <NoiseOverlay opacity={0.02} />
       <ConfettiCelebration show={showConfetti} onDismiss={dismissConfetti} />

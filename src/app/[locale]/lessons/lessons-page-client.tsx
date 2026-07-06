@@ -10,7 +10,7 @@ import { LessonLibrary } from "@/components/lesson/lesson-library";
 export function LessonsPageClient() {
   const prefersReducedMotion = useReducedMotion();
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="study" />
       <PageContainer className="flex flex-col gap-6">
         <m.div

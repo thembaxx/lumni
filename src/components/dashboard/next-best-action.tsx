@@ -23,8 +23,8 @@ export function NextBestActionCard() {
       return resolveNextAction(userId as string);
     },
     enabled: !!user?.$id,
-    staleTime: 60_000,
-    refetchInterval: 60000,
+    staleTime: 30_000,
+    refetchInterval: 30_000,
     refetchOnWindowFocus: true,
   });
 

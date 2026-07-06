@@ -40,7 +40,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 
   if (!resumeChecked) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="flex min-h-dvh items-center justify-center bg-background">
         <Skeleton className="h-4 w-48" />
       </div>
     );
@@ -48,7 +48,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 
   if (resumeData) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="flex min-h-dvh items-center justify-center bg-background p-4">
         <Dialog open modal>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -222,7 +222,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
   if (paperLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="flex min-h-dvh items-center justify-center bg-background">
         <Skeleton className="h-4 w-32" />
       </div>
     );
@@ -230,7 +230,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
   if (!paperData && !paperLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="flex min-h-dvh items-center justify-center bg-background p-4">
         <Card>
           <CardContent className="p-8 text-center">
             <p className="font-medium text-destructive">{t("exam.notFound")}</p>
@@ -267,7 +267,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
   if (phase === "mock-confirm") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="flex min-h-dvh items-center justify-center bg-background p-4">
         <Dialog open modal>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -328,7 +328,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
   const totalPartsCount = getTotalPartsCount();
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-dvh flex-col bg-background">
       {tabFocusWarn && (
         <div className="sticky top-0 z-modal flex items-center justify-center bg-warning p-2 text-center font-medium text-sm text-warning-foreground">
           {t("exam.mockTabFocusWarn")}
@@ -361,6 +361,7 @@ function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
               setCurrentPart(partId);
               setShowPalette(false);
             }}
+            onClose={() => setShowPalette(false)}
           />
         )}
 

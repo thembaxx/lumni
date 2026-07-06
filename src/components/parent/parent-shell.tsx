@@ -21,7 +21,7 @@ export function ParentShell({
 }: ParentShellProps) {
   if (isLoading) {
     return (
-      <div className={cn("flex min-h-screen flex-col gap-6 p-4 md:p-8", className)}>
+      <div className={cn("flex min-h-dvh flex-col gap-6 p-4 md:p-8", className)}>
         <Skeleton className="h-12 w-3/4 rounded-xl" />
         <Skeleton className="h-64 rounded-3xl" />
         <Skeleton className="h-96 rounded-3xl" />
@@ -31,7 +31,7 @@ export function ParentShell({
 
   return (
     <AppErrorBoundary>
-      <div className={cn("flex min-h-screen flex-col gap-6 bg-background p-4 md:p-8", className)}>
+      <div className={cn("flex min-h-dvh flex-col gap-6 bg-background p-4 md:p-8", className)}>
         {!hasConsent && (
           <Card className="border-warning bg-warning/10 p-4">
             <p className="text-sm text-warning-foreground">

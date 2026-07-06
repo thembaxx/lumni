@@ -133,7 +133,14 @@ export function useMoonEasterEgg() {
 }
 
 function ConfettiParticle({ index }: { index: number }) {
-  const colors = ["#22c55e", "#3b82f6", "#f59e0b", "#ef4444", "#a855f7", "#ec4899"];
+  const colors = [
+    "oklch(62% 0.19 145)",
+    "oklch(55% 0.22 260)",
+    "oklch(72% 0.18 75)",
+    "oklch(58% 0.24 25)",
+    "oklch(59% 0.23 290)",
+    "oklch(62% 0.25 350)",
+  ];
   return (
     <div
       className="pointer-events-none fixed animate-float-down"
@@ -173,7 +180,7 @@ function RainbowOverlay() {
         className="absolute inset-0 animate-rainbow-shift opacity-[0.08]"
         style={{
           background:
-            "linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #8b00ff)",
+            "linear-gradient(90deg, oklch(50% 0.32 30), oklch(65% 0.24 55), oklch(90% 0.25 100), oklch(80% 0.30 140), oklch(50% 0.25 250), oklch(45% 0.30 295))",
           backgroundSize: "600% 100%",
         }}
       />

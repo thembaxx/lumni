@@ -159,7 +159,7 @@ export function CanvasConfetti({
             ctx.globalAlpha = Math.max(0, p.opacity);
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size * 0.15, 0, Math.PI * 2);
-            ctx.fillStyle = "#fff";
+            ctx.fillStyle = "oklch(100% 0 0)";
             ctx.fill();
             ctx.restore();
             break;

@@ -64,21 +64,21 @@ export function PronunciationChartCard() {
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <Chart data={stats.recentScores}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border, #e5e5ea)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border, #e5e5ea)" />
                   <XAxis
                     dataKey="date"
                     tick={{ fontSize: 11 }}
-                    stroke="var(--color-muted-foreground, #8e8e93)"
+                    stroke="var(--muted-foreground, #8e8e93)"
                   />
                   <YAxis
                     domain={[0, 100]}
                     tick={{ fontSize: 11 }}
-                    stroke="var(--color-muted-foreground, #8e8e93)"
+                    stroke="var(--muted-foreground, #8e8e93)"
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "var(--color-surface-primary, #fff)",
-                      border: "1px solid var(--color-border, #e5e5ea)",
+                      background: "var(--card, #fff)",
+                      border: "1px solid var(--border, #e5e5ea)",
                       borderRadius: 12,
                       fontSize: 13,
                     }}
@@ -86,9 +86,9 @@ export function PronunciationChartCard() {
                   <Line
                     type="monotone"
                     dataKey="score"
-                    stroke="var(--color-accent, oklch(52% 0.18 146))"
+                    stroke="var(--primary, oklch(52% 0.18 146))"
                     strokeWidth={2}
-                    dot={{ r: 3, fill: "var(--color-accent, oklch(52% 0.18 146))" }}
+                    dot={{ r: 3, fill: "var(--primary, oklch(52% 0.18 146))" }}
                     activeDot={{ r: 5 }}
                   />
                 </Chart>

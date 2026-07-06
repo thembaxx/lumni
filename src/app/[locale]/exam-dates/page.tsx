@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ExamDatesPage() {
   return (
-    <div className="relative min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="relative min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="default" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer>

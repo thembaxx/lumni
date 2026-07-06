@@ -35,10 +35,7 @@ export function ModeSelectScreen({
   const t = useTranslations();
 
   return (
-    <FadeIn
-      distance={0}
-      className="flex min-h-screen items-center justify-center bg-background p-4"
-    >
+    <FadeIn distance={0} className="flex min-h-dvh items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="font-extrabold text-xl tracking-tight">

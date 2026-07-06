@@ -13,7 +13,7 @@ export type StatsData = {
 export function StatsRow({ stats }: { stats: StatsData }) {
   const t = useTranslations();
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
       <div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
         <div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
           <div className="font-extrabold text-2xl">{stats.completedSessions}</div>

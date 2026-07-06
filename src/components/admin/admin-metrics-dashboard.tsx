@@ -87,7 +87,7 @@ export function AdminMetricsDashboard() {
           <CardTitle>Business Metrics</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-6">
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatCard label="DAU" value={dau} variant="admin" delay={0} />
             <StatCard label="MAU" value={mau} variant="admin" delay={0.05} />
             <StatCard

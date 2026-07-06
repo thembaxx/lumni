@@ -244,7 +244,7 @@ export function ProblemsClient() {
   }
 
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="subtle" />
       <PageContainer className="flex flex-col gap-8">
         <Anim>

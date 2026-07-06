@@ -1,5 +1,5 @@
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
-import type { JobType } from "@/lib/orchestrator/types";
+import type { JobPayloadByType, JobType } from "@/lib/orchestrator/types";
 import type { BloomLevel, Question, QuestionType } from "@/lib/question-engine/types";
 import type { StudySession } from "@/lib/utils/study-planner";
 
@@ -57,8 +57,7 @@ export interface QuizResultDeps {
   addRetentionItem?: (entry: RetentionInput) => void;
   flashcardEngine: FlashcardEngine;
   trackQuestionResult: (params: TrackResultInput) => void;
-  // oxlint-disable-next-line typescript/no-explicit-any
-  enqueue: (type: JobType, payload: any) => void;
+  enqueue: <T extends JobType>(type: T, payload: JobPayloadByType[T]) => void;
   addStudySession: (session: Omit<StudySession, "id">) => void;
   markPlanStale: () => void;
   currentStreak: number;

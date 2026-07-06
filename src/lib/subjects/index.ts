@@ -84,7 +84,7 @@ export function getSubjectName(id: string): string {
 }
 
 export function getSubjectHexColor(id: string): string {
-  return subjectMap.get(id)?.color ?? "#6b7280";
+  return subjectMap.get(id)?.color ?? "oklch(50% 0.02 265)";
 }
 
 export function getSubjectTailwindColor(id: string): string {

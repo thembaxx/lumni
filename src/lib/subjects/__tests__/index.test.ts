@@ -42,11 +42,11 @@ describe("getSubjectHexColor", () => {
   });
 
   test("returns fallback gray for an unknown subject", () => {
-    expect(getSubjectHexColor("unknown-subject")).toBe("#6b7280");
+    expect(getSubjectHexColor("unknown-subject")).toBe("oklch(50% 0.02 265)");
   });
 
   test("returns fallback gray for empty string", () => {
-    expect(getSubjectHexColor("")).toBe("#6b7280");
+    expect(getSubjectHexColor("")).toBe("oklch(50% 0.02 265)");
   });
 
   test("each known subject has a hex color", () => {

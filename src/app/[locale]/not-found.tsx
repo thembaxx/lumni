@@ -23,7 +23,7 @@ function NotFoundContent() {
       <FadeIn
         direction="up"
         distance={12}
-        className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7"
+        className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7"
       >
         <main className="flex max-w-md flex-col gap-6 text-left">
           <m.div
@@ -51,7 +51,7 @@ function NotFoundContent() {
         </main>
       </FadeIn>
 
-      <div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
+      <div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 hidden md:block md:col-span-5 md:col-start-8">
         <div className="absolute inset-0 bg-linear-to-br from-(--system-accent)/5 via-transparent to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center p-8">
           <div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-(--system-accent)/10 blur-2xl" />

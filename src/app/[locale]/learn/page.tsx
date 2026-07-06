@@ -49,7 +49,7 @@ const items = [
 
 export default function LearnPage() {
   return (
-    <div className="relative min-h-dvh bg-system-grouped pb-24">
+    <div className="relative min-h-dvh bg-system-grouped">
       <AmbientGradient variant="study" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="pt-6">

@@ -90,14 +90,14 @@ export function ReviewClient() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="flex min-h-dvh items-center justify-center bg-background">
         <Skeleton shape="text" className="w-32" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <LocalDataNotice

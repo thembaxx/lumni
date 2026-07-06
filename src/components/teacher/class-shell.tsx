@@ -78,7 +78,7 @@ export function ClassShell({
 
   if (isLoading) {
     return (
-      <div className={cn("flex min-h-screen flex-col gap-6 p-4 md:p-8", className)}>
+      <div className={cn("flex min-h-dvh flex-col gap-6 p-4 md:p-8", className)}>
         <Skeleton className="h-12 w-3/4 rounded-xl" />
         <Skeleton className="h-64 rounded-3xl" />
         <Skeleton className="h-96 rounded-3xl" />
@@ -88,7 +88,7 @@ export function ClassShell({
 
   return (
     <AppErrorBoundary>
-      <div className={cn("flex min-h-screen flex-col gap-6 bg-background py-4 md:py-8", className)}>
+      <div className={cn("flex min-h-dvh flex-col gap-6 bg-background py-4 md:py-8", className)}>
         <PageContainer variant="wide" className="gap-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">

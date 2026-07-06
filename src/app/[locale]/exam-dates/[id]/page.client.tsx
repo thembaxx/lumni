@@ -138,7 +138,7 @@ export function ExamDetailClient() {
   const isPast = new Date(`${exam.date}T23:59:59`) < new Date();
 
   return (
-    <div className="relative min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="relative min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="dashboard" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="flex items-start justify-center pt-10">

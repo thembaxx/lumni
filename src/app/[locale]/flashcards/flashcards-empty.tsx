@@ -28,7 +28,7 @@ export function FlashcardsEmpty({ subject, onGoBack, mode }: FlashcardsEmptyProp
       : t("flashcards.uploadPrompt", { subject });
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle>{t("flashcards.deckEmpty")}</CardTitle>

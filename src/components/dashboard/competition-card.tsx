@@ -7,7 +7,6 @@ import MedalSecondPlaceIcon from "@hugeicons/core-free-icons/MedalSecondPlaceIco
 import MedalThirdPlaceIcon from "@hugeicons/core-free-icons/MedalThirdPlaceIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,7 +37,6 @@ const SUBJECT_TABS = [
 ];
 
 export function CompetitionCard() {
-  const _t = useTranslations();
   const { user } = useAuth();
   const userId = user?.$id ?? "";
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);

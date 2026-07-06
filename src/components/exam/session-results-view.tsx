@@ -57,7 +57,7 @@ export function SessionResultsView({
     <FadeIn
       direction="up"
       distance={20}
-      className="flex min-h-screen flex-col gap-6 bg-background p-4 pb-24"
+      className="flex min-h-dvh flex-col gap-6 bg-background p-4"
     >
       <Confetti trigger={accuracy >= 70} count={60} duration={2500} />
       <Card>
@@ -78,7 +78,7 @@ export function SessionResultsView({
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div
               className="rounded-lg bg-muted p-3 text-center"
               aria-label={`${correctCount} correct`}

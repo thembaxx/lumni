@@ -12,7 +12,7 @@ export const routePrefetchMap: Record<string, PrefetchFn | undefined> = {
     qc.prefetchQuery({ queryKey: ["competency-overview"], staleTime: 1000 * 60 * 5 });
     qc.prefetchQuery({ queryKey: ["bloom-taxonomy-widget"], staleTime: 1000 * 60 * 5 });
     if (userId) {
-      qc.prefetchQuery({ queryKey: ["next-best-action", userId], staleTime: 1000 * 60 * 2 });
+      qc.prefetchQuery({ queryKey: ["next-best-action", userId], staleTime: 30_000 });
       qc.prefetchQuery({
         queryKey: ["lesson-progress-dashboard", userId],
         staleTime: 1000 * 60 * 5,

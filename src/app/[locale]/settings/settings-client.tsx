@@ -240,36 +240,39 @@ function SettingsContent() {
         </header>
 
         <nav className="sticky top-28 z-sticky bg-system-grouped/80 px-6 py-3 backdrop-blur-xl">
-          <div className="scrollbar-hide -mx-2 flex gap-1.5 overflow-x-auto px-2" role="tablist">
-            {visibleTabs.map((tab) => {
-              const isActive = activeTab === tab.value;
-              return (
-                <button
-                  key={tab.value}
-                  type="button"
-                  role="tab"
-                  id={`tab-${tab.value}`}
-                  aria-selected={isActive}
-                  aria-controls={`tabpanel-${tab.value}`}
-                  onClick={() => handleSetActiveTab(tab.value)}
-                  className={cn(
-                    "relative flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-[background-color,box-shadow,transform] duration-300 active:scale-[0.96]",
-                    isActive
-                      ? "bg-system-surface text-system-accent shadow-level-1"
-                      : "text-muted-foreground hover:bg-system-surface/50 hover:text-foreground",
-                  )}
-                >
-                  <HugeiconsIcon
-                    icon={tab.icon}
+          <div className="relative">
+            <div className="scrollbar-hide -mx-2 flex gap-1.5 overflow-x-auto px-2" role="tablist">
+              {visibleTabs.map((tab) => {
+                const isActive = activeTab === tab.value;
+                return (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    role="tab"
+                    id={`tab-${tab.value}`}
+                    aria-selected={isActive}
+                    aria-controls={`tabpanel-${tab.value}`}
+                    onClick={() => handleSetActiveTab(tab.value)}
                     className={cn(
-                      "size-4 transition-colors duration-300",
-                      isActive && "text-primary",
+                      "relative flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-[background-color,box-shadow,transform] duration-300 active:scale-[0.96]",
+                      isActive
+                        ? "bg-system-surface text-system-accent shadow-level-1"
+                        : "text-muted-foreground hover:bg-system-surface/50 hover:text-foreground",
                     )}
-                  />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
+                  >
+                    <HugeiconsIcon
+                      icon={tab.icon}
+                      className={cn(
+                        "size-4 transition-colors duration-300",
+                        isActive && "text-primary",
+                      )}
+                    />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-10 bg-linear-to-l from-system-grouped to-transparent md:hidden" />
           </div>
         </nav>
 

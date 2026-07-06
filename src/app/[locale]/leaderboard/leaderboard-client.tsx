@@ -21,7 +21,7 @@ export function LeaderboardClient() {
   const { entries, isLoading } = useLeaderboard(user?.$id);
 
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <m.div

@@ -82,7 +82,7 @@ export function ElementDetailClient() {
   }
 
   return (
-    <div className="relative min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="relative min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="dashboard" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="flex items-start justify-center pt-10">

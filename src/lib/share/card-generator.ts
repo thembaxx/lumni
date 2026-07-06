@@ -10,19 +10,14 @@ export interface ShareCardParams {
 }
 
 const GRADIENTS: Record<CardType, [string, string]> = {
-  quiz: ["#4f46e5", "#7c3aed"],
-  exam: ["#059669", "#10b981"],
-  flashcard: ["#d97706", "#f59e0b"],
+  quiz: ["oklch(45% 0.24 270)", "oklch(45% 0.28 295)"],
+  exam: ["oklch(50% 0.18 165)", "oklch(55% 0.20 160)"],
+  flashcard: ["oklch(55% 0.20 75)", "oklch(65% 0.22 80)"],
 };
 
 const WIDTH = 600;
 const HEIGHT = 315;
 const CONTENT_TOP = 70;
-
-function hexToRgb(hex: string): [number, number, number] {
-  const val = Number.parseInt(hex.replace("#", ""), 16);
-  return [(val >> 16) & 255, (val >> 8) & 255, val & 255];
-}
 
 function drawRoundedRect(
   ctx: CanvasRenderingContext2D,
@@ -57,23 +52,22 @@ function drawGradientBackground(ctx: CanvasRenderingContext2D, type: CardType) {
 
 function drawGlow(ctx: CanvasRenderingContext2D, type: CardType) {
   const [, c2] = GRADIENTS[type];
-  const [r, g, b] = hexToRgb(c2);
   const glow = ctx.createRadialGradient(WIDTH / 2, HEIGHT / 2, 10, WIDTH / 2, HEIGHT / 2, 200);
-  glow.addColorStop(0, `rgba(${r},${g},${b},0.15)`);
-  glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+  glow.addColorStop(0, c2.replace(")", " / 0.15)"));
+  glow.addColorStop(1, c2.replace(")", " / 0)"));
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
 }
 
 function drawHeader(ctx: CanvasRenderingContext2D) {
-  ctx.fillStyle = "rgba(255,255,255,0.5)";
+  ctx.fillStyle = "oklch(100% 0 0 / 0.5)";
   ctx.font = "500 10px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.fillText("LUMNI", WIDTH / 2, 35);
 }
 
 function drawPercentage(ctx: CanvasRenderingContext2D, pct: number) {
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "oklch(100% 0 0)";
   ctx.font = "700 56px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -81,7 +75,7 @@ function drawPercentage(ctx: CanvasRenderingContext2D, pct: number) {
 }
 
 function drawDetail(ctx: CanvasRenderingContext2D, text: string) {
-  ctx.fillStyle = "rgba(255,255,255,0.75)";
+  ctx.fillStyle = "oklch(100% 0 0 / 0.75)";
   ctx.font = "400 16px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -89,7 +83,7 @@ function drawDetail(ctx: CanvasRenderingContext2D, text: string) {
 }
 
 function drawDivider(ctx: CanvasRenderingContext2D) {
-  ctx.strokeStyle = "rgba(255,255,255,0.15)";
+  ctx.strokeStyle = "oklch(100% 0 0 / 0.15)";
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo((WIDTH - 120) / 2, CONTENT_TOP + 120);
@@ -98,7 +92,7 @@ function drawDivider(ctx: CanvasRenderingContext2D) {
 }
 
 function drawTitle(ctx: CanvasRenderingContext2D, text: string) {
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "oklch(100% 0 0)";
   ctx.font = "600 18px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -106,7 +100,7 @@ function drawTitle(ctx: CanvasRenderingContext2D, text: string) {
 }
 
 function drawSubtitle(ctx: CanvasRenderingContext2D, text: string) {
-  ctx.fillStyle = "rgba(255,255,255,0.55)";
+  ctx.fillStyle = "oklch(100% 0 0 / 0.55)";
   ctx.font = "400 13px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";

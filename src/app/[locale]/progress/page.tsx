@@ -31,7 +31,7 @@ const items = [
 
 export default function ProgressPage() {
   return (
-    <div className="relative min-h-dvh bg-system-grouped pb-24">
+    <div className="relative min-h-dvh bg-system-grouped">
       <AmbientGradient variant="dashboard" />
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="pt-6">

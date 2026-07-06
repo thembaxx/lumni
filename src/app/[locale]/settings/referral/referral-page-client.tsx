@@ -8,7 +8,7 @@ import { ReferralTab } from "@/components/settings/tabs/referral-tab";
 
 export function ReferralPageClient() {
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4 pb-24">
+    <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <m.div

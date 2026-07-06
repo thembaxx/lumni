@@ -100,9 +100,13 @@ export function ExamHeader({
               type="button"
               onClick={onTogglePalette}
               className="relative rounded-xl p-2 transition-colors hover:bg-muted"
+              aria-label={`Question ${currentPartIndex + 1} of ${totalPartsCount}`}
             >
               <span className="font-mono text-sm tabular-nums">
-                {currentPartIndex + 1}/{totalPartsCount}
+                <span className="sm:hidden">{currentPartIndex + 1}</span>
+                <span className="hidden sm:inline">
+                  {currentPartIndex + 1}/{totalPartsCount}
+                </span>
               </span>
             </button>
           )}
