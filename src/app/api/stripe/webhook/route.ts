@@ -1,8 +1,20 @@
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
 import { Query } from "appwrite";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/constants";
 import { logError } from "@/lib/shared/logger";
+
+interface StripeWebhookDeps {
+  constructEvent: (body: string, sig: string, secret: string) => Stripe.Event;
+}
+
+async function getDefaultDeps(): Promise<StripeWebhookDeps> {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2026-05-27.dahlia",
+  });
+  return { constructEvent: stripe.webhooks.constructEvent };
+}
 
 export async function POST(req: Request, deps?: StripeWebhookDeps) {
   const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -17,7 +29,7 @@ export async function POST(req: Request, deps?: StripeWebhookDeps) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
-  let event: { type: string; data: { object: Record<string, unknown> } };
+  let event: Stripe.Event;
   try {
     const d = deps ?? (await getDefaultDeps());
     event = d.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET);
@@ -82,8 +94,8 @@ export async function POST(req: Request, deps?: StripeWebhookDeps) {
       }
 
       case "invoice.payment_failed": {
-        const invoice = event.data.object;
-        const subscriptionId = invoice.subscription as string;
+        const invoice = event.data.object as { subscription?: string };
+        const subscriptionId = invoice.subscription;
 
         if (!subscriptionId) break;
 
