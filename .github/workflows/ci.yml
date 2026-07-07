@@ -2,7 +2,7 @@ name: CI
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 on:
   push:
@@ -75,7 +75,7 @@ jobs:
         id: next-cache
         with:
           path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml', 'src/**/*.{ts,tsx}', 'next.config.ts', 'tsconfig.json') }}
           restore-keys: |
             ${{ runner.os }}-next-
       - run: pnpm install --frozen-lockfile
@@ -104,7 +104,7 @@ jobs:
         id: next-cache
         with:
           path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml', 'src/**/*.{ts,tsx}', 'next.config.ts', 'tsconfig.json') }}
           restore-keys: |
             ${{ runner.os }}-next-
       - uses: actions/cache@v4
@@ -145,7 +145,7 @@ jobs:
         id: next-cache
         with:
           path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml', 'src/**/*.{ts,tsx}', 'next.config.ts', 'tsconfig.json') }}
           restore-keys: |
             ${{ runner.os }}-next-
       - uses: actions/cache@v4
@@ -190,7 +190,7 @@ jobs:
         id: next-cache
         with:
           path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml', 'src/**/*.{ts,tsx}', 'next.config.ts', 'tsconfig.json') }}
           restore-keys: |
             ${{ runner.os }}-next-
       - run: pnpm install --frozen-lockfile
