@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { logError } from "@/lib/shared/logger";
+import { getClientIp } from "@/lib/shared/get-client-ip";
 import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 
 export async function checkBudget(
@@ -11,16 +12,8 @@ export async function checkBudget(
   response?: NextResponse;
   userId: string;
 }> {
-  const forwardedFor = req.headers.get("x-forwarded-for");
-  if (forwardedFor?.includes(",")) {
-    logError("Budget.MultipleForwardedFor", new Error(`Multiple X-Forwarded-For: ${forwardedFor}`));
-  }
-
-  const userId =
-    sessionUserId ||
-    forwardedFor?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip")?.trim() ||
-    "anonymous";
+  const ip = getClientIp(req);
+  const userId = sessionUserId || (ip !== "unknown" ? ip : "anonymous");
 
   const result = await dailyCallTracker.check(type, userId);
 

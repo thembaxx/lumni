@@ -18,12 +18,15 @@ export async function fetchRagContext(
   if (!subject || !topic?.trim()) return emptyRagContext();
 
   try {
+    let timer: ReturnType<typeof setTimeout>;
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error("RAG fetch timeout")), RAG_TIMEOUT_MS);
+    });
     const result = await Promise.race([
       fetch({ subject, topic, userId: userId ?? undefined }),
-      new Promise<ReturnType<typeof emptyRagContext>>((_, reject) =>
-        setTimeout(() => reject(new Error("RAG fetch timeout")), RAG_TIMEOUT_MS),
-      ),
+      timeout,
     ]);
+    clearTimeout(timer!);
     return result;
   } catch (err) {
     logError("FetchRagContext", err);

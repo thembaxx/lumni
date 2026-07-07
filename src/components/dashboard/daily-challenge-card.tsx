@@ -7,14 +7,14 @@ import { useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 
 interface DailyChallengeCardProps {
   streak: number;
 }
 
 export function DailyChallengeCard({ streak }: DailyChallengeCardProps) {
-  const { gamification } = useGamification();
+  const { gamification } = useGamificationContext();
   const { push } = useNavigationDirection();
 
   const todayStr = useMemo(() => new Date().toDateString(), []);

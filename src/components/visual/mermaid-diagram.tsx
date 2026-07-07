@@ -1,7 +1,7 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface MermaidDiagramProps {
   code: string;
@@ -10,12 +10,22 @@ interface MermaidDiagramProps {
 
 type DiagramStatus = "loading" | "ready" | "error";
 
+const svgCache = new Map<string, string>();
+
 export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
   const [status, setStatus] = useState<DiagramStatus>("loading");
   const [svgHtml, setSvgHtml] = useState<string | null>(null);
+  const cancelledRef = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
+    cancelledRef.current = false;
+
+    const cached = svgCache.get(code);
+    if (cached) {
+      setSvgHtml(cached);
+      setStatus("ready");
+      return;
+    }
 
     async function render() {
       try {
@@ -26,20 +36,21 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
           fontFamily: "inherit",
         });
 
-        const id = `mermaid-${Math.random().toString(36).slice(2, 9)}`;
+        const id = `mermaid-${code.length}-${code.charCodeAt(0)}`;
         const { svg } = await mermaid.render(id, code);
 
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           const sanitized = DOMPurify.sanitize(svg, {
             USE_PROFILES: { svg: true, svgFilters: true },
             ADD_TAGS: ["style"],
             ADD_ATTR: ["viewBox", "xmlns"],
           });
+          svgCache.set(code, sanitized);
           setSvgHtml(sanitized);
           setStatus("ready");
         }
       } catch {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setStatus("error");
         }
       }
@@ -48,7 +59,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
     render();
 
     return () => {
-      cancelled = true;
+      cancelledRef.current = true;
     };
   }, [code]);
 

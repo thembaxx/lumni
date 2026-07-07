@@ -15,6 +15,11 @@ vi.mock("@/hooks/use-gamification", () => ({
   useGamification: (...args: unknown[]) => mockUseGamification(...args),
 }));
 
+vi.mock("@/contexts/gamification-provider", () => ({
+  useGamificationContext: (...args: unknown[]) => mockUseGamification(...args),
+  GamificationProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+
 vi.mock("@/components/dashboard/countdown-header", () => ({
   CountdownHeader: () => null,
 }));

@@ -7,7 +7,7 @@ const magicLinkSchema = z.object({
 });
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "admin",
   errorLabel: "MagicLink",
   validate: (body) => {
     const result = magicLinkSchema.safeParse(body);

@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { getTimeRemaining } from "@/lib/competitions/service";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 
 interface ApiLeaderboardEntry {
   rank: number;
@@ -59,7 +59,7 @@ export function CompetitionCard() {
     [leaderboard, userId],
   );
 
-  const { checkAndUnlockAchievements, levelInfo } = useGamification();
+  const { checkAndUnlockAchievements, levelInfo } = useGamificationContext();
 
   useEffect(() => {
     if (!myRank || !leaderboard) return;
@@ -98,7 +98,7 @@ export function CompetitionCard() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />
-            <h3 className="font-semibold text-sm">Weekly Competition</h3>
+            <h3 className="font-extrabold text-sm tracking-tight">Weekly Competition</h3>
           </div>
           <HugeiconsIcon
             icon={ArrowRight01Icon}

@@ -256,8 +256,8 @@ export class StudyPlannerService {
         });
       }
       existingPlan.generatedAt = Date.now();
-      clearPlanStale();
       saveStudyPlan(existingPlan);
+      clearPlanStale();
       schedulePlanAwareReminder();
       this.plan = existingPlan;
       this.syncToAppwrite();

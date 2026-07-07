@@ -11,11 +11,11 @@ interface SolveBody {
 }
 
 export const POST = createRouteHandler<SolveBody>({
-  auth: "none",
+  auth: "required",
   budget: "generate",
   errorLabel: "Solve",
   useRateLimit: true,
-  aiContext: { consentGranted: true },
+
   parseBody: async (req) => {
     const body: SolveBody = await req.json();
     return body;

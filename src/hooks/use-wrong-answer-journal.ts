@@ -9,36 +9,9 @@ function __setDepsForTesting(deps: { db: SyncDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 
-export type ErrorType =
-  | "concept-misunderstanding"
-  | "calculation-error"
-  | "misread-question"
-  | "careless-mistake"
-  | "time-pressure"
-  | "unknown";
-
-export interface WrongAnswerEntry {
-  id?: number;
-  questionId: string;
-  questionText: string;
-  subject: string;
-  topic: string;
-  correctAnswer: string;
-  userAnswer: string;
-  explanation: string;
-  createdAt: number;
-  reviewed: boolean;
-  errorType?: ErrorType;
-}
-
-export const ERROR_TYPE_LABELS: Record<ErrorType, string> = {
-  "concept-misunderstanding": "Concept Misunderstanding",
-  "calculation-error": "Calculation Error",
-  "misread-question": "Misread Question",
-  "careless-mistake": "Careless Mistake",
-  "time-pressure": "Time Pressure",
-  unknown: "Unknown",
-};
+export type { ErrorType, WrongAnswerEntry } from "@/lib/db/schema";
+export { ERROR_TYPE_LABELS } from "@/lib/db/schema";
+import type { ErrorType, WrongAnswerEntry } from "@/lib/db/schema";
 
 export function useWrongAnswerJournal() {
   const addWrongAnswer = useCallback(

@@ -5,7 +5,7 @@ export const POST = createRouteHandler({
   auth: "required",
   errorLabel: "Voice",
   useRateLimit: true,
-  aiContext: { consentGranted: true },
+
   parseBody: async (req) => {
     const body: { text: string; options?: Record<string, unknown> } = await req.json();
     return body;

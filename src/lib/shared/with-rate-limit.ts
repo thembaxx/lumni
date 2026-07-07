@@ -2,18 +2,16 @@ import { type NextRequest, NextResponse } from "next/server";
 import type { RateLimitConfig } from "@/lib/rate-limiter/core";
 import { logError } from "@/lib/shared/logger";
 import { checkRateLimit, getRateLimitHeaders } from "./rate-limit";
+import { getClientIp } from "./get-client-ip";
 
 export type RouteHandler = (
   req: NextRequest,
-) => Promise<NextResponse<unknown>> | NextResponse<unknown>;
+) => Promise<NextResponse<unknown> | Response> | NextResponse<unknown> | Response;
 
 export function withRateLimit(handler: RouteHandler, config?: RateLimitConfig): RouteHandler {
   const apiConfig = config ?? { max: 10, windowMs: 60 * 1000 };
   return async (req: NextRequest) => {
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0] ||
-      req.headers.get("x-real-ip") ||
-      "unknown";
+    const ip = getClientIp(req);
 
     let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
     try {

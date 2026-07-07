@@ -4,7 +4,6 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -69,7 +68,7 @@ export function LessonLibraryCard() {
           <HugeiconsIcon icon={GraduationCapIcon} className="size-5 text-muted-foreground" />
         </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3 p-5 pt-0">
+      <CardContent className="flex flex-col gap-2 p-5 pt-0">
         {hasProgress ? (
           recentLessons.map((lesson: LessonProgressRow) => {
             const { subjectId, topicId, subtopicId } = parseLessonId(lesson.lessonId);
@@ -80,13 +79,11 @@ export function LessonLibraryCard() {
             const label = subtopicId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
             return (
-              <FadeIn
+              <div
                 key={lesson.lessonId}
-                direction="up"
-                distance={8}
-                className="flex items-center gap-3 rounded-2xl border bg-card p-3"
+                className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-all duration-300 hover:shadow-level-2 press-scale"
               >
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-(--system-accent)/10">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                   <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-(--system-accent)" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -106,12 +103,12 @@ export function LessonLibraryCard() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="shrink-0 rounded-full text-xs"
+                  className="shrink-0 rounded-full text-xs press-scale"
                   onClick={() => push(`/study/${subjectId}/${topicId}/${subtopicId}`)}
                 >
                   Resume
                 </Button>
-              </FadeIn>
+              </div>
             );
           })
         ) : (
@@ -123,7 +120,7 @@ export function LessonLibraryCard() {
             <Button
               variant="outline"
               size="sm"
-              className="rounded-full"
+              className="rounded-full press-scale"
               onClick={() => push("/study")}
             >
               Browse Lessons

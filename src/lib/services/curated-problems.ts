@@ -1,5 +1,5 @@
 import { curriculumRegistry } from "@/curriculum";
-import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import { generateWithSystem, ensureAI } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import { HttpError } from "@/lib/api/create-route-handler";
 import type { AIResponse } from "@/lib/ai/types";
@@ -74,12 +74,7 @@ export const curatedProblemsService = {
   async execute(body: CuratedBody) {
     const { subject, topic, count = 5 } = body;
 
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-    }
+    ensureAI();
 
     const curriculum = await curriculumRegistry.getSubject(subject);
     const topicInfo = topic ? await curriculumRegistry.getTopic(subject, topic) : null;

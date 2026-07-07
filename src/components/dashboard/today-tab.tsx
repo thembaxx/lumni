@@ -32,27 +32,27 @@ import {
 import { StaggerList } from "@/components/shared/stagger-list";
 import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useAuth } from "@/lib/auth/auth-context";
 
 const FocusTimerCard = dynamic(
   () => import("@/components/dashboard/focus-timer-card").then((m) => m.FocusTimerCard),
-  { ssr: false, loading: () => <Skeleton className="h-20 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-20 rounded-card" /> },
 );
 
 const StoriesProgressCard = dynamic(
   () => import("@/components/dashboard/stories-progress-card").then((m) => m.StoriesProgressCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
 );
 
 const LessonLibraryCard = dynamic(
   () => import("@/components/dashboard/lesson-library-card").then((m) => m.LessonLibraryCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
 );
 
 const VocabularyListCard = dynamic(
   () => import("@/components/vocabulary/vocabulary-list-card").then((m) => m.VocabularyListCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
 );
 
 function FeedSection({ userId }: { userId: string }) {
@@ -83,6 +83,10 @@ function FeedSection({ userId }: { userId: string }) {
   );
 }
 
+function GridCell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={className}>{children}</div>;
+}
+
 interface TodayTabProps {
   boltStreak: number;
 }
@@ -90,7 +94,7 @@ interface TodayTabProps {
 export function TodayTab({ boltStreak }: TodayTabProps) {
   const t = useTranslations();
   const { user, isAnonymous } = useAuth();
-  const { gamification } = useGamification();
+  const { gamification } = useGamificationContext();
   const isLoggedIn = !!user && !isAnonymous;
 
   const stats = {
@@ -102,13 +106,17 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
 
   return (
     <StaggerProvider baseDelay={0.02}>
-      {/* Priority — always visible */}
       <CollapsibleSectionAlwaysOpen>
-        <section className="flex flex-col gap-3" aria-label="Get started">
+        <div
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
+          aria-label="Get started"
+        >
           {isLoggedIn && (
-            <StaggeredSection>
-              <DailyChallengeCard streak={boltStreak} />
-            </StaggeredSection>
+            <GridCell className="sm:col-span-2 lg:col-span-3">
+              <StaggeredSection>
+                <DailyChallengeCard streak={boltStreak} />
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
             <StaggeredSection>
@@ -116,34 +124,40 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
             </StaggeredSection>
           )}
           {isLoggedIn && boltDone && (
-            <StaggeredSection>
-              <div className="flex items-center gap-3 rounded-card border border-success/20 bg-success/5 px-4 py-3 transition-colors duration-200">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
-                  <HugeiconsIcon icon={SparklesIcon} className="size-5 text-success" />
+            <GridCell className="sm:col-span-2 lg:col-span-3">
+              <StaggeredSection>
+                <div className="flex items-center gap-3 rounded-card border border-success/20 bg-success/5 px-4 py-3 transition-colors duration-200">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/20">
+                    <HugeiconsIcon icon={SparklesIcon} className="size-5 text-success" />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="text-balance font-semibold text-sm text-success-foreground">
+                      {t("dashboard.boltCompleteTitle")}
+                    </span>
+                    <span className="text-sm text-success-foreground/70">
+                      {t("dashboard.boltCompleteDescription")}
+                    </span>
+                  </div>
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-warning/10">
+                    <HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
+                  </div>
                 </div>
-                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="text-balance font-semibold text-sm text-success-foreground">
-                    {t("dashboard.boltCompleteTitle")}
-                  </span>
-                  <span className="text-sm text-success-foreground/70">
-                    {t("dashboard.boltCompleteDescription")}
-                  </span>
-                </div>
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-warning/10">
-                  <HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
-                </div>
-              </div>
-            </StaggeredSection>
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
-            <StaggeredSection>
-              <FeedSection userId={user!.$id} />
-            </StaggeredSection>
+            <GridCell className="lg:col-span-2">
+              <StaggeredSection>
+                <FeedSection userId={user!.$id} />
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
-            <StaggeredSection>
-              <TodayFocusCard />
-            </StaggeredSection>
+            <GridCell className="sm:col-span-2 lg:col-span-3">
+              <StaggeredSection>
+                <TodayFocusCard />
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
             <StaggeredSection>
@@ -153,53 +167,66 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
           <StaggeredSection>
             <NotificationNudge />
           </StaggeredSection>
-        </section>
+        </div>
       </CollapsibleSectionAlwaysOpen>
 
-      {/* Stats */}
       {isLoggedIn && (
         <CollapsibleSection title="Your Progress" count={stats.questionsAnswered || undefined}>
-          <section className="flex flex-col gap-4" aria-label="Your progress">
+          <div
+            className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
+            aria-label="Your progress"
+          >
             <StaggeredSection>
               <StreakCard />
             </StaggeredSection>
-          </section>
+          </div>
         </CollapsibleSection>
       )}
 
-      {/* Study Tools */}
       <CollapsibleSection title="Study Tools" defaultOpen={true}>
-        <section className="flex flex-col gap-3" aria-label="Study tools">
-          <StaggeredSection>
-            <FocusTimerCard />
-          </StaggeredSection>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4" aria-label="Study tools">
+          <GridCell className="sm:col-span-2">
+            <StaggeredSection>
+              <FocusTimerCard />
+            </StaggeredSection>
+          </GridCell>
           <StaggeredSection>
             <QuestionOfTheDayCard />
           </StaggeredSection>
           <StaggeredSection>
             <WordOfDayCard />
           </StaggeredSection>
-          <StaggeredSection>
-            <PronunciationChartCard />
-          </StaggeredSection>
-          <StaggeredSection>
-            <StoriesProgressCard />
-          </StaggeredSection>
-          {isLoggedIn && (
+          <GridCell className="sm:col-span-2">
             <StaggeredSection>
-              <WeakTopicsCard />
+              <PronunciationChartCard />
             </StaggeredSection>
+          </GridCell>
+          <GridCell className="sm:col-span-2">
+            <StaggeredSection>
+              <StoriesProgressCard />
+            </StaggeredSection>
+          </GridCell>
+          {isLoggedIn && (
+            <GridCell className="sm:col-span-2">
+              <StaggeredSection>
+                <WeakTopicsCard />
+              </StaggeredSection>
+            </GridCell>
           )}
-        </section>
+        </div>
       </CollapsibleSection>
 
-      {/* Learning & More */}
       <CollapsibleSection title="More">
-        <section className="flex flex-col gap-3" aria-label="More resources">
+        <div
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
+          aria-label="More resources"
+        >
           {isLoggedIn && (
-            <StaggeredSection>
-              <LessonLibraryCard />
-            </StaggeredSection>
+            <GridCell className="sm:col-span-2">
+              <StaggeredSection>
+                <LessonLibraryCard />
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
             <StaggeredSection>
@@ -207,11 +234,13 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
             </StaggeredSection>
           )}
           {isLoggedIn && (
-            <StaggeredSection>
-              <AppErrorBoundary>
-                <LearningMapCard />
-              </AppErrorBoundary>
-            </StaggeredSection>
+            <GridCell className="lg:col-span-3">
+              <StaggeredSection>
+                <AppErrorBoundary>
+                  <LearningMapCard />
+                </AppErrorBoundary>
+              </StaggeredSection>
+            </GridCell>
           )}
           {isLoggedIn && (
             <StaggeredSection>
@@ -223,12 +252,14 @@ export function TodayTab({ boltStreak }: TodayTabProps) {
               <CompetitionCard />
             </StaggeredSection>
           )}
-          <StaggeredSection>
-            <StaggerList>
-              <QuickActions />
-            </StaggerList>
-          </StaggeredSection>
-        </section>
+          <GridCell className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <StaggerList>
+                <QuickActions />
+              </StaggerList>
+            </StaggeredSection>
+          </GridCell>
+        </div>
       </CollapsibleSection>
 
       {isAnonymous && (

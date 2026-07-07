@@ -5,7 +5,7 @@ import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "VisualTest",
-  aiContext: { consentGranted: true },
+
   execute: async () => {
     noStore();
     const results: Record<string, unknown> = {

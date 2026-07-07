@@ -1,4 +1,4 @@
-import { initAI, isAIConfigured } from "@/lib/ai";
+import { ensureAI } from "@/lib/ai";
 import { type CachingStrategy, createCachingStrategy } from "@/lib/caching-strategy";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { makeCacheKey, visualCacheRepo } from "@/lib/db/repositories/visual-cache";
@@ -63,12 +63,7 @@ export class VisualEngine {
    * default provider chain with keys from environment variables.
    */
   static initialize(): void {
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-    }
+    ensureAI();
   }
 
   /**

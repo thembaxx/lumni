@@ -94,7 +94,9 @@ export function BloomTaxonomyWidget() {
     return (
       <Card className="rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-semibold text-base">Bloom's Taxonomy Progress</CardTitle>
+          <CardTitle className="font-extrabold text-sm tracking-tight">
+            Bloom's Taxonomy Progress
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="py-4 text-center text-destructive text-xs">
@@ -111,7 +113,9 @@ export function BloomTaxonomyWidget() {
     return (
       <Card className="rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-semibold text-base">Bloom's Taxonomy Progress</CardTitle>
+          <CardTitle className="font-extrabold text-sm tracking-tight">
+            Bloom's Taxonomy Progress
+          </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -144,7 +148,9 @@ export function BloomTaxonomyWidget() {
   return (
     <Card className="rounded-card shadow-level-1">
       <CardHeader>
-        <CardTitle className="font-semibold text-base">Bloom's Taxonomy Progress</CardTitle>
+        <CardTitle className="font-extrabold text-sm tracking-tight">
+          Bloom's Taxonomy Progress
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         {topicData.slice(0, 4).map((topic) => {

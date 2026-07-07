@@ -25,12 +25,12 @@ const PracticeTab = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex flex-col gap-4 px-4">
-        <Skeleton className="h-32 rounded-2xl" />
+        <Skeleton className="h-32 rounded-card" />
         <div className="grid grid-cols-2 gap-3">
-          <Skeleton className="h-24 rounded-2xl" />
-          <Skeleton className="h-24 rounded-2xl" />
+          <Skeleton className="h-24 rounded-card" />
+          <Skeleton className="h-24 rounded-card" />
         </div>
-        <Skeleton className="h-40 rounded-2xl" />
+        <Skeleton className="h-40 rounded-card" />
       </div>
     ),
   },
@@ -43,12 +43,12 @@ const AnalyticsTab = dynamic(
     loading: () => (
       <div className="flex flex-col gap-4 px-4">
         <div className="grid grid-cols-3 gap-3">
-          <Skeleton className="h-20 rounded-2xl" />
-          <Skeleton className="h-20 rounded-2xl" />
-          <Skeleton className="h-20 rounded-2xl" />
+          <Skeleton className="h-20 rounded-card" />
+          <Skeleton className="h-20 rounded-card" />
+          <Skeleton className="h-20 rounded-card" />
         </div>
-        <Skeleton className="h-48 rounded-2xl" />
-        <Skeleton className="h-64 rounded-2xl" />
+        <Skeleton className="h-48 rounded-card" />
+        <Skeleton className="h-64 rounded-card" />
       </div>
     ),
   },
@@ -58,10 +58,12 @@ export function DashboardContent({
   onStartQuiz,
   activeTab,
   id,
+  boltStreak = 0,
 }: {
   onStartQuiz: (subject: string) => void;
   activeTab: TabValue;
   id?: string;
+  boltStreak?: number;
 }) {
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
@@ -84,7 +86,7 @@ export function DashboardContent({
     >
       <AmbientGradient variant="dashboard" />
       <NoiseOverlay opacity={0.015} />
-      <PageContainer className="gap-6">
+      <PageContainer className="gap-4 sm:gap-5 lg:gap-6">
         <LoginBanner />
         {activeTab === "today" && (
           <m.div
@@ -100,7 +102,7 @@ export function DashboardContent({
           >
             <HeroBanner />
             {isLoggedIn && <CountdownHeader />}
-            <TodayTab boltStreak={0} />
+            <TodayTab boltStreak={boltStreak} />
           </m.div>
         )}
         {activeTab === "practice" && (

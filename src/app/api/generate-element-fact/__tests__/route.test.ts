@@ -10,6 +10,7 @@ vi.mock("@/lib/ai", () => ({
   generateWithSystem: mockGenerateWithSystem,
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,
+  ensureAI: vi.fn(),
 }));
 
 vi.mock("@/lib/ai/with-budget", () => ({
@@ -19,6 +20,10 @@ vi.mock("@/lib/ai/with-budget", () => ({
 
 vi.mock("@/lib/shared/with-rate-limit", () => ({
   withRateLimit: (handler: unknown) => handler,
+}));
+
+vi.mock("@/lib/server/auth", () => ({
+  getAuthenticatedUserId: vi.fn().mockResolvedValue("test-user"),
 }));
 
 const { NextRequest } = await import("next/server");
@@ -65,7 +70,7 @@ describe("POST /api/generate-element-fact", () => {
 
   test("AI not configured returns static [FIXED] fact", async () => {
     mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-    mockIsAIConfigured.mockReturnValueOnce(true).mockReturnValueOnce(false);
+    mockIsAIConfigured.mockReturnValue(false);
 
     const req = new NextRequest("http://localhost/api/generate-element-fact", {
       method: "POST",

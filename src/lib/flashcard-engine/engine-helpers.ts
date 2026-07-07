@@ -31,12 +31,8 @@ export function syncCardPayload(card: FlashcardSM2): Record<string, unknown> {
 }
 
 export async function countConsecutivePasses(db: DataAccess, cardId: string): Promise<number> {
-  const history = await db.reviewHistory
-    .where("cardId")
-    .equals(cardId)
-    .toReversed()
-    .sortBy("reviewedAt");
-  const recent = history.toReversed().slice(-10);
+  const history = await db.reviewHistory.where("cardId").equals(cardId).sortBy("reviewedAt");
+  const recent = history.slice(-10);
   let count = 0;
   for (let i = recent.length - 1; i >= 0; i--) {
     if (recent[i].quality >= 3) {

@@ -16,7 +16,7 @@ export function AnonymousUpsell() {
     push("/auth/sign-up?redirect=/dashboard");
   }, [push]);
   return (
-    <div className="rounded-4xl border border-dashed bg-system-surface p-8 shadow-level-1">
+    <div className="rounded-card border border-dashed bg-system-surface p-8 shadow-level-1">
       <EmptyStateWithIllustration
         icon={Login01Icon}
         title={t("dashboard.signInTitle")}

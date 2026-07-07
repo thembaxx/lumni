@@ -3,15 +3,14 @@
 import GridIcon from "@hugeicons/core-free-icons/GridIcon";
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { memo, Suspense, useCallback, useMemo } from "react";
+import { memo, Suspense, useMemo } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { SnapFab } from "@/components/tools/core/snap-fab";
 import { Badge } from "@/components/ui/badge";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useDataPrefetch } from "@/hooks/use-data-prefetch";
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { usePathname, Link } from "@/i18n/navigation";
+import { usePathname, Link, useRouter } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
 import { getPrimaryItems } from "@/lib/navigation/config";
 import { cn } from "@/lib/utils";
@@ -57,6 +56,9 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
         />
+        {isActive && (
+          <span className="absolute -bottom-[3px] left-1/2 h-[3px] w-4 -translate-x-1/2 rounded-full bg-system-accent" />
+        )}
         {item.badge !== undefined && item.badge > 0 && (
           <Badge
             variant="destructive"
@@ -68,7 +70,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
       </div>
       <span
         className={cn(
-          "ios-caption-3 relative z-elevated text-center font-semibold uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
+          "ios-caption-3 relative z-elevated text-center font-semibold leading-none transition-colors duration-200",
           isActive ? "text-system-accent" : "text-system-text-tertiary",
         )}
       >
@@ -81,37 +83,16 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
 const NavItemComponent = memo(function NavItemComponent({
   item,
   isActive,
-  onNavigate,
   onPrefetch,
 }: {
   item: BottomNavItem;
   isActive: boolean;
-  onNavigate?: (href: string) => void;
   onPrefetch?: (href: string) => void;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
   const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
   const springTransition = { type: "spring" as const, stiffness: 400, damping: 26, bounce: 0 };
-
-  const content = <ItemContent item={item} isActive={isActive} />;
-
-  if (item.href === "/chat") {
-    return (
-      <m.button
-        type="button"
-        onClick={() => onNavigate?.(item.href)}
-        onMouseEnter={() => onPrefetch?.(item.href)}
-        aria-label={item.label}
-        aria-current={isActive ? "page" : undefined}
-        whileTap={tapScale}
-        transition={springTransition}
-        className={baseItemClass}
-      >
-        {content}
-      </m.button>
-    );
-  }
 
   return (
     <Link
@@ -123,7 +104,7 @@ const NavItemComponent = memo(function NavItemComponent({
       className={baseItemClass}
     >
       <m.span whileTap={tapScale} transition={springTransition}>
-        {content}
+        <ItemContent item={item} isActive={isActive} />
       </m.span>
     </Link>
   );
@@ -131,19 +112,12 @@ const NavItemComponent = memo(function NavItemComponent({
 
 const BottomNav = memo(function BottomNav() {
   const pathname = usePathname();
-  const { push } = useNavigationDirection();
+  const router = useRouter();
   const { isImmersive } = useImmersiveMode();
 
   const isAuthPage = pathname.startsWith("/auth");
   const isLanding = pathname === "/";
   const isHidden = isAuthPage || isLanding || isImmersive;
-
-  const handleNavigate = useCallback(
-    (href: string) => {
-      push(href);
-    },
-    [push],
-  );
 
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
@@ -163,7 +137,9 @@ const BottomNav = memo(function BottomNav() {
   if (isHidden) return null;
 
   return (
-    <div
+    <nav
+      role="navigation"
+      aria-label="Main navigation"
       className="pointer-events-none fixed right-0 bottom-0 left-0 z-header md:hidden"
       style={{
         height: "calc(64px + env(safe-area-inset-bottom, 0px))",
@@ -177,7 +153,6 @@ const BottomNav = memo(function BottomNav() {
                 key={item.id}
                 item={item}
                 isActive={index === activeIndex}
-                onNavigate={item.href === "/chat" ? handleNavigate : undefined}
                 onPrefetch={prefetch}
               />
             ))}
@@ -189,7 +164,7 @@ const BottomNav = memo(function BottomNav() {
 
           <m.button
             type="button"
-            onClick={() => push("/tools")}
+            onClick={() => router.push("/tools")}
             aria-label="All tools"
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
@@ -200,7 +175,7 @@ const BottomNav = memo(function BottomNav() {
           </m.button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 });
 export { BottomNav };

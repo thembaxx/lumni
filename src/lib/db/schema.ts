@@ -1,5 +1,35 @@
 import Dexie, { type Table } from "dexie";
-import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
+
+export type ErrorType =
+  | "concept-misunderstanding"
+  | "calculation-error"
+  | "misread-question"
+  | "careless-mistake"
+  | "time-pressure"
+  | "unknown";
+
+export interface WrongAnswerEntry {
+  id?: number;
+  questionId: string;
+  questionText: string;
+  subject: string;
+  topic: string;
+  correctAnswer: string;
+  userAnswer: string;
+  explanation: string;
+  createdAt: number;
+  reviewed: boolean;
+  errorType?: ErrorType;
+}
+
+export const ERROR_TYPE_LABELS: Record<ErrorType, string> = {
+  "concept-misunderstanding": "Concept Misunderstanding",
+  "calculation-error": "Calculation Error",
+  "misread-question": "Misread Question",
+  "careless-mistake": "Careless Mistake",
+  "time-pressure": "Time Pressure",
+  unknown: "Unknown",
+};
 
 export interface AnalyticsEvent {
   id?: number;
@@ -690,6 +720,12 @@ export class LumniOfflineDB extends Dexie {
       schoolCodes: "&code, schoolId, type, expiresAt",
       licenses: "&id, schoolId, status, tier, startDate, endDate, stripeSubscriptionId",
       invoices: "&id, schoolId, status, licenseId, createdAt",
+    });
+
+    // v47: compound index on vocabularyList for efficient single-record lookups
+    this.version(47).stores({
+      vocabularyList:
+        "++id, &[userId+word], userId, word, language, sourceType, sourceId, addedAt, reviewCount",
     });
   }
 }

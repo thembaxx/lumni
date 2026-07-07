@@ -3,7 +3,7 @@
 import { AchievementIcon } from "@/components/shared/achievement-icon";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 import { cn } from "@/lib/utils";
 
 const rarityColors: Record<string, string> = {
@@ -14,7 +14,7 @@ const rarityColors: Record<string, string> = {
 };
 
 export function AchievementShowcase() {
-  const { gamification } = useGamification();
+  const { gamification } = useGamificationContext();
 
   const earned = gamification.achievements.filter((a) => a.earnedAt);
   if (earned.length === 0) return null;

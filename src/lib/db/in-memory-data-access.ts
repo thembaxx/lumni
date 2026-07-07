@@ -126,12 +126,36 @@ class InMemoryWhereClause<T> implements WhereClause<T> {
   ) {}
 
   private filterBy(pred: (val: unknown) => boolean): InMemoryCollection<T> {
+    const index = this.index;
+    // Handle compound index syntax: [key1+key2] → access item[key1] and item[key2]
+    const isCompound = index.startsWith("[") && index.endsWith("]");
+    const compoundKeys = isCompound ? index.slice(1, -1).split("+") : null;
+
     return new InMemoryCollection(() =>
-      this.getItems().filter((item) => pred((item as Record<string, unknown>)[this.index])),
+      this.getItems().filter((item) => {
+        const rec = item as Record<string, unknown>;
+        if (compoundKeys) {
+          // For compound index, the value is an array — match all keys
+          return pred(compoundKeys.map((k) => rec[k]));
+        }
+        return pred(rec[index]);
+      }),
     );
   }
 
   equals(val: unknown): Collection<T> {
+    const index = this.index;
+    const isCompound = index.startsWith("[") && index.endsWith("]");
+    if (isCompound) {
+      const keys = index.slice(1, -1).split("+");
+      const vals = val as unknown[];
+      return new InMemoryCollection(() =>
+        this.getItems().filter((item) => {
+          const rec = item as Record<string, unknown>;
+          return keys.every((k, i) => rec[k] === vals[i]);
+        }),
+      );
+    }
     return this.filterBy((v) => v === val);
   }
 

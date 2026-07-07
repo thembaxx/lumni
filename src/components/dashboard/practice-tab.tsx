@@ -21,38 +21,48 @@ import { useAuth } from "@/lib/auth/auth-context";
 
 const BloomTaxonomyWidget = dynamic(
   () => import("@/components/dashboard/bloom-taxonomy-widget").then((m) => m.BloomTaxonomyWidget),
-  { ssr: false, loading: () => <Skeleton className="h-48 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
 );
 
 const CompetencyOverview = dynamic(
   () => import("@/components/dashboard/competency-overview").then((m) => m.CompetencyOverview),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
 );
 
 const FocusTimerCard = dynamic(
   () => import("@/components/dashboard/focus-timer-card").then((m) => m.FocusTimerCard),
-  { ssr: false, loading: () => <Skeleton className="h-20 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-20 rounded-card" /> },
 );
 
 const LessonLibraryCard = dynamic(
   () => import("@/components/dashboard/lesson-library-card").then((m) => m.LessonLibraryCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-52 rounded-card" /> },
 );
 
 const MyAssignments = dynamic(
   () => import("@/components/dashboard/my-assignments").then((m) => m.MyAssignments),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
 );
 
 const OfflinePackManager = dynamic(
   () => import("@/components/dashboard/offline-packs").then((m) => m.OfflinePackManager),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-56 rounded-card" /> },
 );
 
 const VocabularyListCard = dynamic(
   () => import("@/components/vocabulary/vocabulary-list-card").then((m) => m.VocabularyListCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-4xl" /> },
+  { ssr: false, loading: () => <Skeleton className="h-44 rounded-card" /> },
 );
+
+function GridSection({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={className}>{children}</div>;
+}
 
 interface PracticeTabProps {
   onStartQuiz: (subject: string) => void;
@@ -64,97 +74,143 @@ export function PracticeTab({ onStartQuiz }: PracticeTabProps) {
 
   return (
     <StaggerProvider baseDelay={0.02}>
-      <StaggeredSection>
-        <FocusTimerCard />
-      </StaggeredSection>
-      {isAnonymous && (
-        <StaggeredSection>
-          <AnonymousUpsell />
-        </StaggeredSection>
-      )}
-      <StaggeredSection>
-        <QuestionOfTheDayCard />
-      </StaggeredSection>
-      {isLoggedIn && (
-        <StaggeredSection>
-          <AppErrorBoundary>
-            <NextBestActionCard />
-          </AppErrorBoundary>
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <TodayFocusCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <LessonLibraryCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <VocabularyListCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <AppErrorBoundary>
-            <LearningMapCard />
-          </AppErrorBoundary>
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <MyAssignments />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <StudyCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <StreakCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <RecentQuestionsCard />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <StudyPlanOverview />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <CompetencyOverview />
-        </StaggeredSection>
-      )}
-      {isLoggedIn && (
-        <StaggeredSection>
-          <BloomTaxonomyWidget />
-        </StaggeredSection>
-      )}
-      <StaggeredSection>
-        <OfflinePackManager />
-      </StaggeredSection>
-      {isLoggedIn && (
-        <StaggeredSection>
-          <WeakTopicsCard />
-        </StaggeredSection>
-      )}
-      <StaggeredSection>
-        <StaggerList>
-          <QuickActions />
-        </StaggerList>
-      </StaggeredSection>
-      <StaggeredSection>
-        <QuizStartCard onStart={onStartQuiz} />
-      </StaggeredSection>
+      <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+        <GridSection className="sm:col-span-2 lg:col-span-3">
+          <StaggeredSection>
+            <FocusTimerCard />
+          </StaggeredSection>
+        </GridSection>
+
+        {isAnonymous && (
+          <GridSection className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <AnonymousUpsell />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        <GridSection className="sm:col-span-2 lg:col-span-3">
+          <StaggeredSection>
+            <QuestionOfTheDayCard />
+          </StaggeredSection>
+        </GridSection>
+
+        {isLoggedIn && (
+          <GridSection className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <AppErrorBoundary>
+                <NextBestActionCard />
+              </AppErrorBoundary>
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <GridSection className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <TodayFocusCard />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <GridSection className="lg:col-span-2">
+            <StaggeredSection>
+              <LessonLibraryCard />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <VocabularyListCard />
+          </StaggeredSection>
+        )}
+
+        {isLoggedIn && (
+          <GridSection className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <AppErrorBoundary>
+                <LearningMapCard />
+              </AppErrorBoundary>
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <MyAssignments />
+          </StaggeredSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <StudyCard />
+          </StaggeredSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <StreakCard />
+          </StaggeredSection>
+        )}
+
+        {isLoggedIn && (
+          <GridSection className="lg:col-span-2">
+            <StaggeredSection>
+              <RecentQuestionsCard />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <GridSection className="sm:col-span-2 lg:col-span-3">
+            <StaggeredSection>
+              <StudyPlanOverview />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <CompetencyOverview />
+          </StaggeredSection>
+        )}
+
+        {isLoggedIn && (
+          <StaggeredSection>
+            <BloomTaxonomyWidget />
+          </StaggeredSection>
+        )}
+
+        <GridSection className="sm:col-span-2 lg:col-span-3">
+          <StaggeredSection>
+            <OfflinePackManager />
+          </StaggeredSection>
+        </GridSection>
+
+        {isLoggedIn && (
+          <GridSection className="lg:col-span-2">
+            <StaggeredSection>
+              <WeakTopicsCard />
+            </StaggeredSection>
+          </GridSection>
+        )}
+
+        <GridSection className="sm:col-span-2 lg:col-span-3">
+          <StaggeredSection>
+            <StaggerList>
+              <QuickActions />
+            </StaggerList>
+          </StaggeredSection>
+        </GridSection>
+
+        <GridSection className="sm:col-span-2 lg:col-span-3">
+          <StaggeredSection>
+            <QuizStartCard onStart={onStartQuiz} />
+          </StaggeredSection>
+        </GridSection>
+      </div>
     </StaggerProvider>
   );
 }

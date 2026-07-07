@@ -1,4 +1,4 @@
-import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import { generateWithSystem, ensureAI, isAIConfigured } from "@/lib/ai";
 import { HttpError } from "@/lib/api/create-route-handler";
 import type { AIResponse } from "@/lib/ai/types";
 
@@ -14,12 +14,7 @@ export const elementFactService = {
   async execute(body: ElementFactBody) {
     const { element } = body;
 
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-    }
+    ensureAI();
 
     if (!isAIConfigured()) {
       return {

@@ -5,14 +5,14 @@ import { ProgressChart } from "@/components/dashboard/progress-chart";
 import { Achievements } from "@/components/gamification";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useUserProgress } from "@/hooks/use-user-progress";
 import { useAuth } from "@/lib/auth/auth-context";
 
 export function StatsRow() {
   const { user } = useAuth();
   const userId = user?.$id ?? "";
-  const { gamification, currentStreak, isLoaded: isGamificationLoaded } = useGamification();
+  const { gamification, currentStreak, isLoaded: isGamificationLoaded } = useGamificationContext();
   const { data: progressData, isLoading: isProgressLoading } = useUserProgress(userId);
 
   if (!userId) {

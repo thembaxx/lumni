@@ -23,6 +23,7 @@ import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
+import { GamificationProvider } from "@/contexts/gamification-provider";
 
 const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) => m.QuizView), {
   ssr: false,
@@ -122,8 +123,8 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
           { competentTopicsCount },
         );
       }
-    } catch {
-      // Competency check is non-critical
+    } catch (err) {
+      logError("DashboardClient.competencyCheck", err);
     }
 
     setQuizActive(false);
@@ -140,56 +141,59 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
   };
 
   return (
-    <AppErrorBoundary>
-      <a
-        href="#dashboard-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-skip-link focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:shadow-lg focus:outline-none"
-      >
-        Skip to content
-      </a>
-      <ScrollAmbient />
-      <div className="flex h-full flex-col">
-        {!isLoaded ? (
-          <div className="flex min-h-dvh items-center justify-center px-4">
-            <div className="flex w-full max-w-md flex-col gap-3">
-              <Skeleton className="h-24 rounded-3xl" />
-              <div className="grid grid-cols-12 gap-3">
-                <Skeleton className="col-span-8 h-24 rounded-3xl" />
-                <Skeleton className="col-span-4 h-24 rounded-3xl" />
-              </div>
-              <Skeleton className="h-32 rounded-3xl" />
-              <Skeleton className="h-20 rounded-3xl" />
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="px-4 pt-2 pb-4">
-              <SearchWidget />
-              <TabNav activeTab={activeTab} onTabChange={handleTabChange} />
-            </div>
-
-            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-              {quizActive ? (
-                <div className="card-entrance">
-                  <QuizView
-                    initialSubject={quizSubject}
-                    variant="full"
-                    onQuit={handleQuitQuiz}
-                    onFinish={handleFinishQuiz}
-                  />
+    <GamificationProvider>
+      <AppErrorBoundary>
+        <a
+          href="#dashboard-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-skip-link focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:shadow-lg focus:outline-none"
+        >
+          Skip to content
+        </a>
+        <ScrollAmbient />
+        <div className="flex h-full flex-col">
+          {!isLoaded ? (
+            <div className="flex min-h-dvh items-center justify-center px-4">
+              <div className="flex w-full max-w-md flex-col gap-3">
+                <Skeleton className="h-24 rounded-3xl" />
+                <div className="grid grid-cols-12 gap-3">
+                  <Skeleton className="col-span-8 h-24 rounded-3xl" />
+                  <Skeleton className="col-span-4 h-24 rounded-3xl" />
                 </div>
-              ) : (
-                <DashboardContent
-                  id="dashboard-content"
-                  onStartQuiz={handleStartQuiz}
-                  activeTab={activeTab}
-                />
-              )}
+                <Skeleton className="h-32 rounded-3xl" />
+                <Skeleton className="h-20 rounded-3xl" />
+              </div>
             </div>
-          </>
-        )}
-      </div>
-      <GamificationCelebration />
-    </AppErrorBoundary>
+          ) : (
+            <>
+              <div className="px-4 pt-2 pb-4">
+                <SearchWidget />
+                <TabNav activeTab={activeTab} onTabChange={handleTabChange} />
+              </div>
+
+              <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                {quizActive ? (
+                  <div className="card-entrance">
+                    <QuizView
+                      initialSubject={quizSubject}
+                      variant="full"
+                      onQuit={handleQuitQuiz}
+                      onFinish={handleFinishQuiz}
+                    />
+                  </div>
+                ) : (
+                  <DashboardContent
+                    id="dashboard-content"
+                    onStartQuiz={handleStartQuiz}
+                    activeTab={activeTab}
+                    boltStreak={currentStreak}
+                  />
+                )}
+              </div>
+            </>
+          )}
+        </div>
+        <GamificationCelebration />
+      </AppErrorBoundary>
+    </GamificationProvider>
   );
 }

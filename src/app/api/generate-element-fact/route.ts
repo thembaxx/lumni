@@ -10,11 +10,11 @@ interface GenerateFactBody {
 }
 
 export const POST = createRouteHandler<GenerateFactBody>({
-  auth: "none",
+  auth: "required",
   budget: "generate",
   errorLabel: "ElementFact",
   useRateLimit: true,
-  aiContext: { consentGranted: true },
+
   parseBody: async (req) => {
     const body: GenerateFactBody = await req.json();
     return body;

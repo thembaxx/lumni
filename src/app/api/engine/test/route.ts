@@ -7,7 +7,7 @@ import type { Question } from "@/lib/question-engine/types";
 export const GET = createRouteHandler({
   auth: "none",
   errorLabel: "EngineTest",
-  aiContext: { consentGranted: true },
+
   execute: async () => {
     noStore();
     const results: Record<string, unknown> = {

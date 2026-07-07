@@ -8,7 +8,7 @@ import { serverAccount } from "@/lib/appwrite.server";
 import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "admin",
   errorLabel: "Resend",
   validate: (body) => {
     if (!body.email) return "Email is required";

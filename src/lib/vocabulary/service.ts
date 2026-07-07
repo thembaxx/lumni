@@ -22,8 +22,10 @@ export async function saveWord(
   partOfSpeech?: string,
 ): Promise<VocabularyEntry | null> {
   try {
-    const all = await _deps.db.vocabularyList.where("userId").equals(userId).toArray();
-    const existing = all.find((e) => e.word === word.toLowerCase());
+    const existing = await _deps.db.vocabularyList
+      .where("[userId+word]")
+      .equals([userId, word.toLowerCase()])
+      .first();
 
     if (existing?.id) {
       await _deps.db.vocabularyList.update(existing.id, {
@@ -73,8 +75,10 @@ export async function getSavedWords(
 
 export async function removeWord(userId: string, word: string): Promise<boolean> {
   try {
-    const all = await _deps.db.vocabularyList.where("userId").equals(userId).toArray();
-    const existing = all.find((e) => e.word === word.toLowerCase());
+    const existing = await _deps.db.vocabularyList
+      .where("[userId+word]")
+      .equals([userId, word.toLowerCase()])
+      .first();
     if (existing?.id) {
       await _deps.db.vocabularyList.delete(existing.id);
       return true;
@@ -88,8 +92,11 @@ export async function removeWord(userId: string, word: string): Promise<boolean>
 
 export async function isWordSaved(userId: string, word: string): Promise<boolean> {
   try {
-    const all = await _deps.db.vocabularyList.where("userId").equals(userId).toArray();
-    return all.some((e) => e.word === word.toLowerCase());
+    const existing = await _deps.db.vocabularyList
+      .where("[userId+word]")
+      .equals([userId, word.toLowerCase()])
+      .first();
+    return !!existing;
   } catch {
     return false;
   }

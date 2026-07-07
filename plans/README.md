@@ -277,3 +277,47 @@ All plans are independent and can run in any order. Priority determined by risk 
 ### STOP conditions not encountered
 
 None of the STOP conditions from any executed plan were triggered:
+
+## Execution order & status — Batch 9 (deep audit — security, bugs, perf, tech-debt, direction)
+
+All plans independent unless noted. Execute in any order.
+
+| Plan | Title                                                                   | Priority | Effort | Risk | Depends on | Status |
+| ---- | ----------------------------------------------------------------------- | -------- | ------ | ---- | ---------- | ------ |
+| 116  | Replace hardcoded admin key with proper auth in flags route             | P0       | S      | LOW  | —          | DONE   |
+| 117  | Remove hardcoded consent bypass from AI route configs                   | P0       | M      | MED  | —          | DONE   |
+| 118  | Add auth to five unauthenticated AI-generating endpoints                | P0       | S      | LOW  | —          | DONE   |
+| 119  | Add admin auth to magic-link and resend endpoints                       | P0       | S      | LOW  | —          | DONE   |
+| 120  | Fix spoofable rate-limit and budget keys                                | P0       | M      | MED  | —          | DONE   |
+| 121  | Fix flashcard consecutive-pass counter ordering                         | P1       | S      | MED  | —          | DONE   |
+| 122  | Fix RAG timeout timer leak in fetchRagContext                           | P1       | S      | LOW  | —          | DONE   |
+| 123  | Fix study planner stale-flag persistence ordering                       | P1       | S      | MED  | —          | DONE   |
+| 124  | Add compound index to vocabulary service for single-record lookups      | P1       | S      | LOW  | —          | DONE   |
+| 125  | Wrap useGamification in React context to eliminate N subscriptions      | P1       | M      | MED  | —          | DONE   |
+| 126  | Memoize Mermaid diagram rendering to avoid redundant re-renders         | P2       | S      | LOW  | —          | DONE   |
+| 127  | Migrate chat route to createRouteHandler                                | P1       | M      | MED  | —          | DONE   |
+| 128  | Extract AI provider initialization to a shared singleton                | P1       | S      | LOW  | —          | DONE   |
+| 129  | Fix data-access.ts layering violation — move WrongAnswerEntry to schema | P2       | S      | LOW  | —          | DONE   |
+| 130  | Migrate 11 remaining routes to createRouteHandler                       | P2       | M      | LOW  | 127        | TODO   |
+| 131  | Wire admin metrics routes to real Appwrite data                         | P1       | M      | LOW  | —          | TODO   |
+| 132  | Create Stripe webhook handler to activate school licenses               | P1       | M      | MED  | —          | DONE   |
+
+**Execution notes**:
+
+- Plans 116-120 are P0 security fixes — prioritize these first
+- Plans 121-123 are P1 bug fixes — independent of each other
+- Plans 124-126 are performance improvements — independent
+- Plans 127-130 are tech-debt cleanup — 130 depends on 127
+- Plans 131-132 are direction features — independent
+
+## Dependency notes
+
+- 130 (migrate routes) depends on 127 (chat route) because the chat route is the most complex migration and should be done separately first
+- All other plans are independent
+
+## Findings considered and rejected
+
+- `__setDepsForTesting` exports (48 sites) — intentional DI pattern for testing, not dead code
+- `createSealedModule` unused — abandoned experiment, the manual `_deps` pattern works fine
+- `useOnlineStatus.tsx` naming — cosmetic, not worth a plan
+- Duplicate `caching-strategy.ts` barrel files — low impact, cosmetic

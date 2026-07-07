@@ -8,6 +8,7 @@ vi.mock("@/lib/ai", () => ({
   generateWithSystem: mockGenerateWithSystem,
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,
+  ensureAI: vi.fn(),
 }));
 
 const { aiSolver } = await import("../ai-solver");

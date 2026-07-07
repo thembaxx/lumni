@@ -4,11 +4,11 @@ import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   budget: "generate",
   errorLabel: "Generate",
   useRateLimit: true,
-  aiContext: { consentGranted: true },
+
   parseBody: async (req) => {
     const body: GenerationParams = await req.json();
     return body;

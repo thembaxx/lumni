@@ -1,4 +1,4 @@
-import { generateWithSystem, getAI, initAI, isAIConfigured } from "@/lib/ai";
+import { generateWithSystem, getAI, ensureAI } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
 import { HttpError } from "@/lib/api/create-route-handler";
@@ -61,12 +61,7 @@ export const aiSolver = {
     const fetchSources = deps?.getSourceForQuestion ?? getSourceForQuestion;
     const buildInstruction = deps?.buildPromptInstruction ?? buildPromptInstruction;
 
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-    }
+    ensureAI();
 
     const isImageMode = !!imageUrl;
     const subjectKey = subject && SUBJECT_PROMPTS[subject] ? subject : null;

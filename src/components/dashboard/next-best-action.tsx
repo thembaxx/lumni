@@ -48,7 +48,7 @@ export function NextBestActionCard() {
         <div className="flex size-8 items-center justify-center rounded-lg bg-system-accent/10">
           <HugeiconsIcon icon={GraduationCapIcon} size={16} className="text-system-accent" />
         </div>
-        <CardTitle className="font-semibold text-sm">{action.title}</CardTitle>
+        <CardTitle className="font-extrabold text-sm tracking-tight">{action.title}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 pr-6">
         <p className="text-muted-foreground text-xs leading-relaxed">{action.reason}</p>

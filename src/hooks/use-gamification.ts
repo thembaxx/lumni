@@ -276,3 +276,5 @@ export function useGamification() {
     syncToLeaderboard,
   };
 }
+
+export type UseGamificationReturn = ReturnType<typeof useGamification>;

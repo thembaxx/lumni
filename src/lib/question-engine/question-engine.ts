@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import type { AIClient } from "@/lib/ai";
-import { initAI, isAIConfigured } from "@/lib/ai";
+import { ensureAI } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createEnrichmentPipeline } from "./enrichment-pipeline";
 import type { EnrichmentPipeline } from "./enrichment-pipeline";
@@ -74,12 +74,7 @@ export class QuestionEngine {
    * @returns A Promise that resolves to a new QuestionEngine instance.
    */
   static async initialize(ragDeps?: RagDeps, ai?: AIClient): Promise<QuestionEngine> {
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-    }
+    ensureAI();
     return new QuestionEngine(ragDeps, undefined, ai);
   }
 

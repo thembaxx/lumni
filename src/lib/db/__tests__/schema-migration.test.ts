@@ -80,6 +80,7 @@ const COMPOUND_INDEX_TABLES = [
   { table: "storyProgress", key: { userId: "test", storyId: "story-1" } },
   { table: "experimentAssignments", key: { userId: "test", experimentId: "exp-1" } },
   { table: "schoolMembers", key: { schoolId: "s-1", userId: "u-1" } },
+  { table: "vocabularyList", key: { userId: "test", word: "hello" } },
 ];
 
 describe("Dexie schema migration", () => {
@@ -96,7 +97,7 @@ describe("Dexie schema migration", () => {
     db = new LumniOfflineDB();
     await db.open();
     expect(db.isOpen()).toBe(true);
-    expect(db.verno).toBe(46);
+    expect(db.verno).toBe(47);
   });
 
   it("all table names are accessible after opening", () => {

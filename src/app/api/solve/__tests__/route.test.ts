@@ -13,6 +13,7 @@ vi.mock("@/lib/ai", () => ({
   }),
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,
+  ensureAI: vi.fn(),
 }));
 
 vi.mock("@/lib/ai/with-budget", () => ({
@@ -22,6 +23,16 @@ vi.mock("@/lib/ai/with-budget", () => ({
 
 vi.mock("@/lib/shared/with-rate-limit", () => ({
   withRateLimit: (handler: unknown) => handler,
+}));
+
+vi.mock("next/headers", () => ({
+  cookies: vi.fn().mockResolvedValue({
+    get: vi.fn().mockReturnValue({ value: "session-token" }),
+  }),
+}));
+
+vi.mock("@/lib/server/auth", () => ({
+  getAuthenticatedUserId: vi.fn().mockResolvedValue("test-user"),
 }));
 
 vi.mock("@/lib/solver/math-solver", () => ({

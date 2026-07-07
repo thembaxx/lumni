@@ -34,7 +34,7 @@ export function MyAssignments() {
 
   if (isError) {
     return (
-      <Card>
+      <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
@@ -52,7 +52,7 @@ export function MyAssignments() {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
@@ -69,7 +69,7 @@ export function MyAssignments() {
 
   if (assignments.length === 0) {
     return (
-      <Card>
+      <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
@@ -84,7 +84,7 @@ export function MyAssignments() {
   }
 
   return (
-    <Card>
+    <Card className="overflow-hidden rounded-card shadow-level-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
           <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
@@ -94,7 +94,7 @@ export function MyAssignments() {
       <CardContent className="flex flex-col gap-2">
         {assignments.map((a) => (
           <div key={a.id}>
-            <div className="flex items-start gap-3 rounded-xl bg-muted/30 p-3">
+            <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-all duration-300 hover:shadow-level-2 press-scale">
               <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                 <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-(--system-accent)" />
               </div>
@@ -136,7 +136,7 @@ export function MyAssignments() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 gap-1.5 text-xs"
+                  className="h-8 gap-1.5 text-xs press-scale"
                   onClick={() => setQuestionOpen(questionOpen === a.id ? null : a.id)}
                 >
                   <HugeiconsIcon icon={Chat01Icon} className="size-3.5" />
@@ -150,7 +150,7 @@ export function MyAssignments() {
                   <Button
                     size="sm"
                     variant="default"
-                    className="h-8 gap-1.5 text-xs"
+                    className="h-8 gap-1.5 text-xs press-scale"
                     onClick={() =>
                       router.push(
                         `/quiz?subject=${a.topics[0]?.toLowerCase() ?? ""}&count=10&assignmentId=${a.id}`,

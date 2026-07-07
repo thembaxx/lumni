@@ -8,11 +8,11 @@ interface CuratedBody {
 }
 
 export const POST = createRouteHandler<CuratedBody>({
-  auth: "none",
+  auth: "required",
   budget: "generate",
   errorLabel: "CuratedProblems",
   useRateLimit: true,
-  aiContext: { consentGranted: true },
+
   parseBody: async (req) => {
     const body: CuratedBody = await req.json();
     return body;

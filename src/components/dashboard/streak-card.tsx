@@ -6,12 +6,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useGamification } from "@/hooks/use-gamification";
+import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export const StreakCard = memo(function StreakCard() {
-  const { gamification, currentStreak } = useGamification();
+  const { gamification, currentStreak } = useGamificationContext();
   const { push } = useRouter();
 
   const today = new Date().toDateString();
@@ -21,7 +21,7 @@ export const StreakCard = memo(function StreakCard() {
     <div className="card-entrance">
       <Card
         className={cn(
-          "overflow-hidden rounded-card shadow-level-1 transition-colors",
+          "overflow-hidden rounded-card shadow-level-1 transition-[background-color,box-shadow] hover:bg-muted/30 hover:shadow-level-2",
           currentStreak > 0 ? "border border-warning/20 bg-warning/5" : "border border-border/80",
         )}
       >

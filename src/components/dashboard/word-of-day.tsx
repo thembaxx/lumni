@@ -5,7 +5,7 @@ import SpeakerIcon from "@hugeicons/core-free-icons/SpeakerIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getWordOfDay, lookupWord } from "@/lib/dictionary/service";
 import { logError } from "@/lib/shared/logger";
@@ -14,12 +14,39 @@ interface WordOfDayCardProps {
   language?: string;
 }
 
+function msUntilMidnight(): number {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setDate(midnight.getDate() + 1);
+  midnight.setHours(0, 0, 0, 0);
+  return midnight.getTime() - now.getTime();
+}
+
 export function WordOfDayCard({ language = "en" }: WordOfDayCardProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const word = useMemo(() => getWordOfDay(language), [language]);
+  const [todayKey, setTodayKey] = useState(() => new Date().toISOString().slice(0, 10));
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTodayKey(new Date().toISOString().slice(0, 10));
+    }, msUntilMidnight());
+    return () => clearTimeout(timer);
+  }, [todayKey]);
+
+  useEffect(() => {
+    const handler = () => {
+      if (document.visibilityState === "visible") {
+        setTodayKey(new Date().toISOString().slice(0, 10));
+      }
+    };
+    document.addEventListener("visibilitychange", handler);
+    return () => document.removeEventListener("visibilitychange", handler);
+  }, []);
+
+  const word = useMemo(() => getWordOfDay(language, new Date(todayKey)), [language, todayKey]);
 
   const { data: result, isLoading } = useQuery({
-    queryKey: ["word-of-day", word, language],
+    queryKey: ["word-of-day", todayKey, word, language],
     queryFn: () => lookupWord(word, language),
     staleTime: 1000 * 60 * 60,
   });
