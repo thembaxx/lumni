@@ -241,7 +241,7 @@ export function ExamMockSession({
     <div className="flex min-h-dvh flex-col bg-background">
       <header className="flex items-center justify-between border-b border-border bg-card px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="ios-caption-3 rounded-md bg-system-accent px-2 py-0.5 font-semibold text-white text-xs">
+          <span className="ios-caption-3 rounded-md bg-system-accent px-2 py-0.5 font-semibold text-system-accent-foreground text-xs">
             Mock
           </span>
           <span className="text-muted-foreground text-xs">
@@ -299,7 +299,7 @@ export function ExamMockSession({
                         className={cn(
                           "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium",
                           isSelected
-                            ? "border-system-accent bg-system-accent text-white"
+                            ? "border-system-accent bg-system-accent text-system-accent-foreground"
                             : "border-muted-foreground/30 text-muted-foreground",
                         )}
                       >

@@ -1,6 +1,6 @@
 # ADR-0013: Effect TS Adoption Strategy
 
-**Status:** Hold — Pragmatic Adoption (July 2026)
+**Status:** Accepted — Pragmatic Adoption (July 2026)
 **Driver:** @opencode
 
 ## Context

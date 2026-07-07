@@ -2,6 +2,7 @@ import type { StoredGamification } from "./types";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import { logError } from "@/lib/shared/logger";
+import { ls, StorageKeys } from "@/lib/shared/storage";
 
 export function scheduleSync(
   data: StoredGamification,
@@ -19,9 +20,7 @@ export function scheduleSync(
 export async function syncToServer(data: StoredGamification): Promise<void> {
   if (!getDataSharingConsent()) return;
   try {
-    const label =
-      (typeof window !== "undefined" ? window.localStorage.getItem("lumni_display_name") : null) ||
-      undefined;
+    const label = ls.getString(StorageKeys.DisplayName) || undefined;
     await apiFetch("/api/gamification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,9 +34,7 @@ export async function syncToServer(data: StoredGamification): Promise<void> {
 export async function syncToLeaderboard(data: StoredGamification, userId: string): Promise<void> {
   if (!getDataSharingConsent()) return;
   try {
-    const label =
-      (typeof window !== "undefined" ? window.localStorage.getItem("lumni_display_name") : null) ||
-      undefined;
+    const label = ls.getString(StorageKeys.DisplayName) || undefined;
     await apiFetch("/api/gamification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

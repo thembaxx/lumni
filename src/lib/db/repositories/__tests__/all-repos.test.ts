@@ -610,20 +610,20 @@ describe("conflicts repository", () => {
   });
 
   test("getUnresolvedConflicts returns only unresolved", async () => {
-    getStore("conflicts").push({ id: 1, resolvedAt: null } as StoreItem);
+    getStore("conflicts").push({ id: 1, resolvedAt: 0 } as StoreItem);
     getStore("conflicts").push({ id: 2, resolvedAt: Date.now() } as StoreItem);
     const result = await getUnresolvedConflicts();
     expect(result).toHaveLength(1);
   });
 
   test("resolveConflict updates status", async () => {
-    getStore("conflicts").push({ id: 1, resolvedAt: null } as StoreItem);
+    getStore("conflicts").push({ id: 1, resolvedAt: 0 } as StoreItem);
     await resolveConflict(1, "local");
     expect((getStore("conflicts")[0] as StoreItem).resolution).toBe("local");
   });
 
   test("clearResolvedConflicts removes resolved", async () => {
-    getStore("conflicts").push({ id: 1, resolvedAt: null } as StoreItem);
+    getStore("conflicts").push({ id: 1, resolvedAt: 0 } as StoreItem);
     getStore("conflicts").push({ id: 2, resolvedAt: Date.now() } as StoreItem);
     await clearResolvedConflicts();
     expect(getStore("conflicts")).toHaveLength(1);

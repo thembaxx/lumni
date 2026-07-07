@@ -41,7 +41,7 @@ export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
           }
         }}
         disabled={copying}
-        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
+        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground hover:bg-system-accent/90 disabled:opacity-50"
         aria-label="Copy user ID"
       >
         <HugeiconsIcon icon={Copy01Icon} className="size-4" />

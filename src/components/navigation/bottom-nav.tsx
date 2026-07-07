@@ -169,7 +169,7 @@ const BottomNav = memo(function BottomNav() {
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
-            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-white shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
+            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
           >
             <HugeiconsIcon icon={GridIcon} className="size-[22px]" />
           </m.button>

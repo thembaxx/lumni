@@ -1,16 +1,34 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+
+const RechartsBarChart = dynamic(() => import("recharts").then((m) => ({ default: m.BarChart })), {
+  ssr: false,
+});
+const RechartsLineChart = dynamic(
+  () => import("recharts").then((m) => ({ default: m.LineChart })),
+  { ssr: false },
+);
+const RechartsBar = dynamic(() => import("recharts").then((m) => ({ default: m.Bar })), {
+  ssr: false,
+});
+const RechartsLine = dynamic(() => import("recharts").then((m) => ({ default: m.Line })), {
+  ssr: false,
+});
+const RechartsXAxis = dynamic(() => import("recharts").then((m) => ({ default: m.XAxis })), {
+  ssr: false,
+});
+const RechartsYAxis = dynamic(() => import("recharts").then((m) => ({ default: m.YAxis })), {
+  ssr: false,
+});
+const RechartsTooltip = dynamic(() => import("recharts").then((m) => ({ default: m.Tooltip })), {
+  ssr: false,
+});
+const RechartsResponsiveContainer = dynamic(
+  () => import("recharts").then((m) => ({ default: m.ResponsiveContainer })),
+  { ssr: false },
+);
 
 interface HistoryStats {
   totalAttempts: number;
@@ -54,31 +72,31 @@ export function HistoryChart({ stats, loading }: { stats: HistoryStats | null; l
       {stats.recentScores.length > 0 && (
         <div className="flex flex-col gap-2">
           <span className="font-semibold text-sm">Score Trend</span>
-          <ResponsiveContainer width="100%" height={160}>
-            <BarChart data={stats.recentScores} barCategoryGap="20%">
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
-              <Tooltip />
-              <Bar
+          <RechartsResponsiveContainer width="100%" height={160}>
+            <RechartsBarChart data={stats.recentScores} barCategoryGap="20%">
+              <RechartsXAxis dataKey="date" tick={{ fontSize: 10 }} />
+              <RechartsYAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+              <RechartsTooltip />
+              <RechartsBar
                 dataKey="score"
                 radius={[4, 4, 0, 0]}
                 fill="var(--color-accent, oklch(52% 0.18 146))"
               />
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={80}>
-            <LineChart data={stats.recentScores}>
-              <XAxis dataKey="date" hide />
-              <YAxis domain={[0, 100]} hide />
-              <Line
+            </RechartsBarChart>
+          </RechartsResponsiveContainer>
+          <RechartsResponsiveContainer width="100%" height={80}>
+            <RechartsLineChart data={stats.recentScores}>
+              <RechartsXAxis dataKey="date" hide />
+              <RechartsYAxis domain={[0, 100]} hide />
+              <RechartsLine
                 type="monotone"
                 dataKey="score"
                 stroke="var(--color-accent)"
                 strokeWidth={2}
                 dot={{ r: 3 }}
               />
-            </LineChart>
-          </ResponsiveContainer>
+            </RechartsLineChart>
+          </RechartsResponsiveContainer>
         </div>
       )}
 

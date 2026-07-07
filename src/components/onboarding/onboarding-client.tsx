@@ -276,7 +276,7 @@ export default function OnboardingClient() {
               type="button"
               onClick={handleContinue}
               disabled={submitted || (step === 0 && selectedSubjects.length === 0)}
-              className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-white transition-[background-color,opacity] hover:bg-system-accent/90 disabled:opacity-50"
+              className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-system-accent-foreground transition-[background-color,opacity] hover:bg-system-accent/90 disabled:opacity-50"
             >
               {step === MAX_STEPS - 1 ? "Get Started" : "Continue"}
             </button>

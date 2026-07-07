@@ -75,7 +75,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
           onClick={handleSave}
           disabled={saving || !draft.trim()}
           aria-label="Save profile changes"
-          className="relative size-8 shrink-0 rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50 after:absolute after:-inset-2"
+          className="relative size-8 shrink-0 rounded-full bg-system-accent text-system-accent-foreground hover:bg-system-accent/90 disabled:opacity-50 after:absolute after:-inset-2"
         >
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
         </Button>

@@ -4,11 +4,22 @@ import { getSettings } from "./settings";
 import { buildReminder, getTodayPlanSessions } from "./reminder-builder";
 import type { NotificationSettings, StudyReminder } from "./types";
 
+let currentTimer: ReturnType<typeof setTimeout> | null = null;
+
+function clearCurrentTimer(): void {
+  if (currentTimer !== null) {
+    clearTimeout(currentTimer);
+    currentTimer = null;
+  }
+}
+
 function scheduleTimeout(reminder: StudyReminder, settings: NotificationSettings): void {
   const delay = reminder.scheduledAt - Date.now();
   if (delay <= 0) return;
 
-  setTimeout(() => {
+  clearCurrentTimer();
+  currentTimer = setTimeout(() => {
+    currentTimer = null;
     sendLocalNotification(reminder.title, reminder.body, reminder.url);
     localStorage.removeItem("lumni_next_reminder");
     scheduleStudyReminder(settings);
@@ -46,4 +57,8 @@ export async function schedulePlanAwareReminder(settings = getSettings()): Promi
       scheduleTimeout(reminder, settings);
     }
   }
+}
+
+export function clearAllTimers(): void {
+  clearCurrentTimer();
 }

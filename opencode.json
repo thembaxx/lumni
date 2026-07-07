@@ -3,12 +3,12 @@
   "mcp": {
     "Sentry": {
       "type": "remote",
-      "url": "https://mcp.sentry.dev/mcp/org1128/lumni",
-      "oauth": {}
+      "url": "https://mcp.sentry.dev/mcp/org1128/lumni"
     },
     "mdn": {
       "type": "remote",
       "url": "https://mcp.mdn.mozilla.net/"
     }
-  }
+  },
+  "snapshot": false
 }

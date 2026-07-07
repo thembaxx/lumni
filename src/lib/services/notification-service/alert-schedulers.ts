@@ -6,7 +6,7 @@ import { getDeps } from "./deps";
 import { sendLocalNotification } from "./push";
 import { getSettings } from "./settings";
 import { getGamificationData } from "./reminder-builder";
-import { scheduleStudyReminder } from "./study-scheduler";
+import { clearAllTimers, scheduleStudyReminder } from "./study-scheduler";
 
 const reEngagementService = new ReEngagementService({ db: dexieDataAccess });
 import {
@@ -47,8 +47,10 @@ async function scheduleWeeklyProgress(settings = getSettings()): Promise<void> {
 
   try {
     const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
-    const allAttempts = await getDeps().db.quizAttempts.toArray();
-    const attempts = allAttempts.filter((a) => a.completedAt >= sevenDaysAgo);
+    const attempts = await getDeps()
+      .db.quizAttempts.where("completedAt")
+      .above(sevenDaysAgo)
+      .toArray();
 
     const totalAttempts = attempts.length;
     let totalScore = 0;
@@ -100,8 +102,10 @@ async function scheduleDailyDigest(settings = getSettings()): Promise<void> {
     todayStart.setHours(0, 0, 0, 0);
     const todayMs = todayStart.getTime();
 
-    const allAttempts = await getDeps().db.quizAttempts.toArray();
-    const todayAttempts = allAttempts.filter((a) => a.completedAt >= todayMs);
+    const todayAttempts = await getDeps()
+      .db.quizAttempts.where("completedAt")
+      .above(todayMs)
+      .toArray();
 
     const totalScore = todayAttempts.reduce((s, a) => s + a.score, 0);
     const avgScore = todayAttempts.length > 0 ? Math.round(totalScore / todayAttempts.length) : 0;
@@ -248,6 +252,7 @@ async function scheduleReEngagement(settings: NotificationSettings): Promise<voi
 }
 
 export function initializeNotificationSchedulers(): void {
+  clearAllTimers();
   const settings = getSettings();
   if (!settings.enabled) return;
 

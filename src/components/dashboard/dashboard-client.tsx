@@ -1,28 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { SearchWidget } from "@/components/dashboard/search/search-widget";
 import type { TabValue } from "@/components/dashboard/types";
-import { logError } from "@/lib/shared/logger";
-import type { QuizResults } from "@/components/quiz/quiz-view";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTrackQuizEvents } from "@/hooks/use-analytics-tracking";
 import { useGamification } from "@/hooks/use-gamification";
-import { useViewTransition } from "@/hooks/use-view-transition";
-import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { competencyService } from "@/lib/competency-engine";
-import { flashcardEngine } from "@/lib/flashcard-engine";
-import { dexieDataAccess } from "@/lib/db";
-import { enqueue } from "@/lib/orchestrator/job-queue";
-import { trackQuestionResult } from "@/lib/orchestrator/track-result";
-import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
-import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
+import { useDashboardQuiz } from "@/hooks/use-dashboard-quiz";
 import { GamificationProvider } from "@/contexts/gamification-provider";
 
 const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) => m.QuizView), {
@@ -35,8 +24,6 @@ const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) =>
 });
 
 export function DashboardClient({ initialTab = "today" }: { initialTab?: string }) {
-  const [quizActive, setQuizActive] = useState(false);
-  const [quizSubject, setQuizSubject] = useState("");
   const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
   const {
     isLoaded,
@@ -49,92 +36,16 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
     totalQuestionsAnswered,
   } = useGamification();
 
-  const { addWrongAnswer } = useWrongAnswerJournal();
-  const { startViewTransition } = useViewTransition();
-  const { trackQuizStart, trackQuizComplete } = useTrackQuizEvents();
-
-  const handleStartQuiz = (subject: string) => {
-    trackQuizStart(subject, 10);
-    startViewTransition(() => {
-      setQuizSubject(subject);
-      setQuizActive(true);
+  const { quizActive, quizSubject, handleStartQuiz, handleFinishQuiz, handleQuitQuiz } =
+    useDashboardQuiz({
+      currentStreak,
+      totalQuestionsAnswered,
+      updateStreak,
+      addXp,
+      checkAndUnlockAchievements,
+      checkForRewardChests,
+      levelInfo,
     });
-  };
-
-  const quizResultDeps: QuizResultDeps = useMemo(
-    () => ({
-      updateStreak,
-      addXp,
-      checkAndUnlockAchievements,
-      checkForRewardChests,
-      addWrongAnswer,
-      addRetentionItem: (entry) => {
-        dexieDataAccess.retentionRecurrence
-          .add({
-            questionId: entry.questionId,
-            subject: entry.subject,
-            topic: entry.topic,
-            questionText: entry.questionText,
-            correctAnswer: entry.correctAnswer,
-            explanation: entry.explanation,
-            scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
-            completed: false,
-          })
-          .catch((err) => logError("DashboardClient.retention", err));
-      },
-      flashcardEngine,
-      trackQuestionResult,
-      enqueue,
-      addStudySession,
-      markPlanStale,
-      currentStreak,
-      totalQuestionsAnswered,
-      levelInfo,
-    }),
-    [
-      updateStreak,
-      addXp,
-      checkAndUnlockAchievements,
-      checkForRewardChests,
-      addWrongAnswer,
-      currentStreak,
-      totalQuestionsAnswered,
-      levelInfo,
-    ],
-  );
-
-  const handleFinishQuiz = async (results: QuizResults) => {
-    trackQuizComplete(
-      results.questions[0]?.subject ?? quizSubject,
-      results.correctAnswers,
-      results.totalQuestions,
-    );
-    await processQuizResult({ source: "quiz", results }, quizResultDeps);
-
-    try {
-      const competentTopicsCount = await competencyService.getCompetentTopicsCount();
-      if (competentTopicsCount >= 5) {
-        checkAndUnlockAchievements(
-          totalQuestionsAnswered + results.totalQuestions,
-          Math.round((results.correctAnswers / results.totalQuestions) * 100),
-          currentStreak,
-          levelInfo.level,
-          results.correctAnswers === results.totalQuestions,
-          { competentTopicsCount },
-        );
-      }
-    } catch (err) {
-      logError("DashboardClient.competencyCheck", err);
-    }
-
-    setQuizActive(false);
-    setQuizSubject("");
-  };
-
-  const handleQuitQuiz = () => {
-    setQuizActive(false);
-    setQuizSubject("");
-  };
 
   const handleTabChange = (tab: TabValue) => {
     setActiveTab(tab);

@@ -260,7 +260,7 @@ export function SignInForm() {
           <Button
             type="submit"
             disabled={loading || !email}
-            className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-white transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
+            className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-system-accent-foreground transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
           >
             {loading
               ? t("auth.signingIn")

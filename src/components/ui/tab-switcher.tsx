@@ -81,7 +81,8 @@ export function TabSwitcher({
           className={cn(
             variant === "tabs"
               ? "relative inline-flex gap-1 rounded-lg bg-muted p-1"
-              : "relative inline-flex items-center rounded-md bg-(--system-surface-secondary) p-[3px]",
+              : // impeccable-disable-next-line arbitrary-value -- intentional tight tab indicator padding
+                "relative inline-flex items-center rounded-md bg-(--system-surface-secondary) p-[3px]",
             listClassName,
           )}
         >

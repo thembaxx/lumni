@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { logError } from "@/lib/shared/logger";
 import { getClientIp } from "@/lib/shared/get-client-ip";
 import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 

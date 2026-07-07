@@ -3,6 +3,7 @@ import type { StoredGamification } from "./types";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { persist, saveSnapshot } from "./service-persist";
 import { scheduleSync } from "./service-sync";
+import { logError } from "@/lib/shared/logger";
 import type {
   XpResult,
   AchievementResult,
@@ -25,11 +26,6 @@ function persistAndSync(self: MutationSelf, newData: StoredGamification): void {
     self.setSyncTimer(t);
   });
   saveSnapshot(newData);
-}
-
-function persistAndNotify(self: MutationSelf, newData: StoredGamification): void {
-  persist(self.db, newData);
-  self.notify();
 }
 
 export function addXpMutation(
@@ -125,9 +121,19 @@ export function updateCounterMutation(
   key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
   value: number,
 ): void {
-  const prev = self.data[key] ?? 0;
-  self.data = { ...self.data, [key]: prev + value };
-  persistAndNotify(self, self.data);
+  self.db.gamification
+    .where(":id")
+    .equals(1)
+    .modify((record) => {
+      const rec = record as unknown as Record<string, number>;
+      rec[key] = (rec[key] ?? 0) + value;
+    })
+    .then(() => {
+      const prev = self.data[key] ?? 0;
+      self.data = { ...self.data, [key]: prev + value };
+      self.notify();
+    })
+    .catch((err: unknown) => logError("GamificationService.updateCounter", err));
 }
 
 export function setCounterMutation(
@@ -135,6 +141,15 @@ export function setCounterMutation(
   key: "consecutiveCorrectFlashcards" | "wrongAnswersReviewed" | "studyPlanDaysCompleted",
   value: number,
 ): void {
-  self.data = { ...self.data, [key]: value };
-  persistAndNotify(self, self.data);
+  self.db.gamification
+    .where(":id")
+    .equals(1)
+    .modify((record) => {
+      (record as unknown as Record<string, number>)[key] = value;
+    })
+    .then(() => {
+      self.data = { ...self.data, [key]: value };
+      self.notify();
+    })
+    .catch((err: unknown) => logError("GamificationService.setCounter", err));
 }

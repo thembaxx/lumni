@@ -208,7 +208,7 @@ export function ChatInput({ onSend, onSendImage, isLoading, uploadState }: ChatI
               <Button
                 type="submit"
                 disabled={!input.trim() || isLoading || isUploading}
-                className="size-10 rounded-md bg-system-accent text-white shadow-level-2 hover:bg-system-accent/90"
+                className="size-10 rounded-md bg-system-accent text-system-accent-foreground shadow-level-2 hover:bg-system-accent/90"
                 aria-label="Send message"
               >
                 <HugeiconsIcon icon={MailSend01Icon} data-icon />
