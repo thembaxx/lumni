@@ -1,9 +1,9 @@
 "use client";
 
-import CloudTimeIcon from "@hugeicons/core-free-icons/CloudTimeIcon";
+import CloudAlertIcon from "@hugeicons/core-free-icons/CloudAlertIcon";
 import Delete02Icon from "@hugeicons/core-free-icons/Delete02Icon";
 import FileDownloadIcon from "@hugeicons/core-free-icons/FileDownloadIcon";
-import Loader03Icon from "@hugeicons/core-free-icons/Loader03Icon";
+import Loading03Icon from "@hugeicons/core-free-icons/Loading03Icon";
 import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import Time03Icon from "@hugeicons/core-free-icons/Time03Icon";
@@ -26,7 +26,7 @@ function StatusBadge({ status }: { status: QuizPack["status"] }) {
           variant="outline"
           className="gap-1.5 border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-400"
         >
-          <HugeiconsIcon icon={Loader03Icon} className="size-3 animate-spin" />
+          <HugeiconsIcon icon={Loading03Icon} className="size-3 animate-spin" />
           Generating
         </Badge>
       );
@@ -39,7 +39,7 @@ function StatusBadge({ status }: { status: QuizPack["status"] }) {
     case "expired":
       return (
         <Badge variant="secondary" className="text-muted-foreground">
-          <HugeiconsIcon icon={CloudTimeIcon} className="mr-1 size-3" />
+          <HugeiconsIcon icon={CloudAlertIcon} className="mr-1 size-3" />
           Expired
         </Badge>
       );
