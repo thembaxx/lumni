@@ -69,7 +69,6 @@ const EXPECTED_TABLES = [
   "schoolCodes",
   "licenses",
   "invoices",
-  "experimentAssignments",
   "studyCommitments",
 ];
 
@@ -78,7 +77,6 @@ const COMPOUND_INDEX_TABLES = [
   { table: "tinyfishUsage", key: { userId: "test", date: "2026-01-01" } },
   { table: "lessonProgress", key: { userId: "test", lessonId: "lesson-1" } },
   { table: "storyProgress", key: { userId: "test", storyId: "story-1" } },
-  { table: "experimentAssignments", key: { userId: "test", experimentId: "exp-1" } },
   { table: "schoolMembers", key: { schoolId: "s-1", userId: "u-1" } },
   { table: "vocabularyList", key: { userId: "test", word: "hello" } },
 ];

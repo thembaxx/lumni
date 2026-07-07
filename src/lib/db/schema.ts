@@ -438,14 +438,6 @@ export interface StudyCommitmentRecord {
   createdAt: string;
 }
 
-export interface ExperimentAssignmentRecord {
-  id?: number;
-  userId: string;
-  experimentId: string;
-  variantId: string;
-  assignedAt: string;
-}
-
 export interface SchoolRecord {
   id: string;
   name: string;
@@ -591,7 +583,6 @@ export class LumniOfflineDB extends Dexie {
   syncCheckpoints!: Table<SyncCheckpoint, string>;
   userSettings!: Table<UserSettings, string>;
   essayDrafts!: Table<EssayDraftRecord, number>;
-  experimentAssignments!: Table<ExperimentAssignmentRecord, number>;
   studyCommitments!: Table<StudyCommitmentRecord, number>;
   schools!: Table<SchoolRecord, string>;
   schoolMembers!: Table<SchoolMemberRecord, number>;
@@ -699,12 +690,6 @@ export class LumniOfflineDB extends Dexie {
     // v43: essayDrafts for essay coaching revision tracking
     this.version(43).stores({
       essayDrafts: "++id, userId, questionId, [userId+questionId]",
-    });
-
-    // v44: experimentAssignments for A/B testing assignment persistence
-    this.version(44).stores({
-      experimentAssignments:
-        "++id, &[userId+experimentId], userId, experimentId, variantId, assignedAt",
     });
 
     // v45: studyCommitments for study buddy accountability

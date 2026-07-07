@@ -1,8 +1,10 @@
 "use client";
 
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
 import Quiz03Icon from "@hugeicons/core-free-icons/Quiz03Icon";
+import SyncIcon from "@hugeicons/core-free-icons/SyncIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
@@ -13,9 +15,11 @@ import { dexieDataAccess } from "@/lib/db";
 import type { CachedStory } from "@/lib/stories/types";
 import type { QuizPack } from "@/lib/quiz-packs/types";
 import type { StoryProgressRecord } from "@/lib/db/schema";
+import { useOfflineStats } from "@/hooks/use-offline-stats";
 import { OfflineTracker } from "./offline-tracker";
 
 export default function OfflinePage() {
+  const stats = useOfflineStats();
   const recentStories = useLiveQuery(() =>
     dexieDataAccess.storyProgress.orderBy("lastReadAt").reverse().limit(5).toArray(),
   );
@@ -79,6 +83,48 @@ export default function OfflinePage() {
           </Link>
         </Button>
       </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <Link
+          href="/quiz"
+          className="flex flex-col gap-1 rounded-xl border border-border p-4 transition-colors hover:bg-muted"
+        >
+          <HugeiconsIcon icon={DatabaseIcon} className="size-4 text-muted-foreground" />
+          <span className="font-semibold text-lg tabular-nums">{stats.questions}</span>
+          <span className="text-muted-foreground text-xs">questions cached</span>
+        </Link>
+        <Link
+          href="/flashcards"
+          className="flex flex-col gap-1 rounded-xl border border-border p-4 transition-colors hover:bg-muted"
+        >
+          <HugeiconsIcon icon={NoteIcon} className="size-4 text-muted-foreground" />
+          <span className="font-semibold text-lg tabular-nums">{stats.flashcards}</span>
+          <span className="text-muted-foreground text-xs">flashcards to review</span>
+        </Link>
+        <Link
+          href="/study-guide"
+          className="flex flex-col gap-1 rounded-xl border border-border p-4 transition-colors hover:bg-muted"
+        >
+          <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-muted-foreground" />
+          <span className="font-semibold text-lg tabular-nums">{stats.guides}</span>
+          <span className="text-muted-foreground text-xs">study guides</span>
+        </Link>
+        <Link
+          href="/quiz"
+          className="flex flex-col gap-1 rounded-xl border border-border p-4 transition-colors hover:bg-muted"
+        >
+          <HugeiconsIcon icon={Quiz03Icon} className="size-4 text-muted-foreground" />
+          <span className="font-semibold text-lg tabular-nums">{stats.packs}</span>
+          <span className="text-muted-foreground text-xs">quiz packs</span>
+        </Link>
+      </div>
+
+      {stats.pendingSync > 0 && (
+        <div className="flex items-center justify-center gap-2 rounded-lg bg-muted px-4 py-3 text-muted-foreground text-xs">
+          <HugeiconsIcon icon={SyncIcon} className="size-3" />
+          {stats.pendingSync} change{stats.pendingSync !== 1 ? "s" : ""} pending sync
+        </div>
+      )}
 
       {storyTitles && storyTitles.length > 0 && (
         <Card>

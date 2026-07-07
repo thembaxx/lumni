@@ -1,6 +1,5 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type {
-  ExperimentAssignmentRecord,
   STTCacheEntry,
   STTUsageEntry,
   StudyCommitmentRecord,
@@ -75,7 +74,9 @@ export interface Collection<T> {
 
 export interface WhereClause<T> {
   equals(val: unknown): Collection<T>;
+  aboveOrEqual(val: unknown): Collection<T>;
   belowOrEqual(val: unknown): Collection<T>;
+  above(val: unknown): Collection<T>;
   below(val: unknown): Collection<T>;
   startsWith(val: string): Collection<T>;
   anyOf(vals: unknown[]): Collection<T>;
@@ -223,10 +224,6 @@ export interface LegacyDataAccess {
   seenPastPaperQuestions: DataAccessTable<SeenPastPaperQuestion, number>;
 }
 
-export interface ExperimentDataAccess {
-  experimentAssignments: DataAccessTable<ExperimentAssignmentRecord, number>;
-}
-
 export interface StudyCommitmentsDataAccess {
   studyCommitments: DataAccessTable<StudyCommitmentRecord, number>;
 }
@@ -257,5 +254,4 @@ export interface DataAccess
     CommunityDataAccess,
     PronunciationDataAccess,
     LegacyDataAccess,
-    ExperimentDataAccess,
     StudyCommitmentsDataAccess {}

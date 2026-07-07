@@ -5,7 +5,6 @@ import type {
   AnalyticsEvent,
   AssignmentMessage,
   BookmarkRecord,
-  ExperimentAssignmentRecord,
   StudyCommitmentRecord,
   CachedExamDates,
   CachedPdf,
@@ -157,6 +156,14 @@ class InMemoryWhereClause<T> implements WhereClause<T> {
       );
     }
     return this.filterBy((v) => v === val);
+  }
+
+  aboveOrEqual(val: unknown): Collection<T> {
+    return this.filterBy((v) => typeof v === "number" && typeof val === "number" && v >= val);
+  }
+
+  above(val: unknown): Collection<T> {
+    return this.filterBy((v) => typeof v === "number" && typeof val === "number" && v > val);
   }
 
   belowOrEqual(val: unknown): Collection<T> {
@@ -340,6 +347,5 @@ export class InMemoryDataAccess implements DataAccess {
   syncOutbox = new InMemoryTable<SyncOutboxEntry>();
   syncCheckpoints = new InMemoryTable<SyncCheckpoint, string>();
   userSettings = new InMemoryTable<UserSettings, string>();
-  experimentAssignments = new InMemoryTable<ExperimentAssignmentRecord>();
   studyCommitments = new InMemoryTable<StudyCommitmentRecord>();
 }

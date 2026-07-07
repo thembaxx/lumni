@@ -8,7 +8,6 @@ export type {
   DataAccessTable,
   DictionaryDataAccess,
   EmbeddingDataAccess,
-  ExperimentDataAccess,
   FlashcardDataAccess,
   LegacyDataAccess,
   LessonDataAccess,

@@ -1,5 +1,6 @@
 import { Query } from "appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 interface SubmissionSummary {
@@ -25,6 +26,7 @@ export const GET = createRouteHandler({
   auth: "required",
   errorLabel: "TeacherAssignments",
   execute: async ({ userId }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const assignments = await listDocuments(COLLECTIONS.TEACHER_ASSIGNMENTS, [
       Query.equal("teacherId", userId as string),
       Query.orderDesc("createdAt"),

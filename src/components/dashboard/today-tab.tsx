@@ -34,6 +34,7 @@ import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-p
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useAuth } from "@/lib/auth/auth-context";
+import { useFeatureFlag } from "@/hooks/use-feature-flag";
 
 const FocusTimerCard = dynamic(
   () => import("@/components/dashboard/focus-timer-card").then((m) => m.FocusTimerCard),
@@ -56,15 +57,18 @@ const VocabularyListCard = dynamic(
 );
 
 function FeedSection({ userId }: { userId: string }) {
+  const { enabled: showPersonalizedFeed } = useFeatureFlag("personalized-feed", userId);
+
   const { data: recommendations } = useQuery({
     queryKey: ["personalized-feed", userId],
     queryFn: async ({ queryKey }) => getFeed(queryKey[1] as string),
     staleTime: 60_000,
     refetchInterval: 60000,
     refetchOnWindowFocus: true,
+    enabled: showPersonalizedFeed,
   });
 
-  if (!recommendations || recommendations.length === 0) {
+  if (!showPersonalizedFeed || !recommendations || recommendations.length === 0) {
     return (
       <StaggeredSection>
         <AppErrorBoundary>

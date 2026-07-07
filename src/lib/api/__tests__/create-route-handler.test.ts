@@ -25,10 +25,6 @@ vi.mock("@/lib/ai/call-context", () => ({
   runWithAICallContext: vi.fn(async (_ctx: unknown, fn: () => Promise<unknown>) => fn()),
 }));
 
-vi.mock("uuid", () => ({
-  v4: () => "test-uuid-1234",
-}));
-
 import {
   createRouteHandler,
   HttpError,
@@ -178,7 +174,7 @@ describe("createRouteHandler", () => {
     });
     const res = await handler(makeGetRequest());
     const json = await res.json();
-    expect(json.requestId).toBe("test-uuid-1234");
+    expect(json.requestId).toMatch(/^[0-9a-f-]+$/);
   });
 
   it("serializes array results into { data: [...] }", async () => {

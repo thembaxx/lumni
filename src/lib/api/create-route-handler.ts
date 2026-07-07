@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import type { AICallContext } from "@/lib/ai/call-context";
 import { runWithAICallContext } from "@/lib/ai/call-context";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
@@ -126,7 +125,7 @@ export function createRouteHandler<
       params?: Promise<Record<string, string>> | Record<string, string>;
     },
   ) => {
-    const requestId = generateRequestId ? uuidv4() : undefined;
+    const requestId = generateRequestId ? crypto.randomUUID() : undefined;
 
     try {
       let userId: string | null = null;

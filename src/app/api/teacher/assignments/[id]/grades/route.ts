@@ -1,5 +1,6 @@
 import { Query, Users } from "node-appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { serverClient } from "@/lib/appwrite.server";
 import { COLLECTIONS, getDocument, listDocuments } from "@/lib/db/client";
 
@@ -16,6 +17,7 @@ export const GET = createRouteHandler({
   auth: "required",
   errorLabel: "AssignmentGrades",
   execute: async ({ userId, params }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const assignmentId = params?.id;
     if (!assignmentId) {
       return { error: "Assignment ID required" };

@@ -1,5 +1,6 @@
 import { Query } from "appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
@@ -7,6 +8,7 @@ import { logError } from "@/lib/shared/logger";
 export const POST = createRouteHandler({
   auth: "required",
   execute: async ({ userId }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const token = crypto.randomUUID();
     const link = {
       token,
@@ -32,7 +34,7 @@ export const POST = createRouteHandler({
 export const DELETE = createRouteHandler({
   auth: "required",
   execute: async ({ body, userId }: { body: { token?: string }; userId: string | null }) => {
-    if (!userId) return { success: false, error: "Unauthorized" };
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     if (body.token) {
       try {
         const docs = await databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.GHOST_LINKS, [

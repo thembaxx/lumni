@@ -23,6 +23,8 @@ export async function GET(request: NextRequest) {
       results,
       year,
       total: results.length,
+      isDemoData: true,
+      disclaimer: "Demo data — not real matric results. Official DBE results pending integration.",
     });
   } catch (err) {
     logError("matric-results.GET", err);

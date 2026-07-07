@@ -1,4 +1,5 @@
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { COLLECTIONS, createDocument } from "@/lib/db/client";
 
 export const POST = createRouteHandler({
@@ -10,6 +11,7 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ userId, body }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const { topics, dueDate } = body as { topics: string[]; dueDate?: string };
 
     await createDocument(COLLECTIONS.TEACHER_ASSIGNMENTS, {

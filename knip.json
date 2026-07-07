@@ -21,11 +21,11 @@
     "dependencies": "warn",
     "unlisted": "warn",
     "devDependencies": "off",
-    "exports": "off",
-    "types": "off",
-    "nsExports": "off",
-    "nsTypes": "off",
-    "duplicates": "off",
-    "enumMembers": "off"
+    "exports": "warn",
+    "types": "warn",
+    "nsExports": "warn",
+    "nsTypes": "warn",
+    "duplicates": "warn",
+    "enumMembers": "warn"
   }
 }

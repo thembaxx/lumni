@@ -20,7 +20,7 @@ function isValidRequest(request: Request): boolean {
   if (
     origin &&
     host &&
-    !origin.includes(host) &&
+    new URL(origin).hostname !== host.split(":")[0] &&
     !origin.includes("localhost") &&
     !origin.includes("127.0.0.1")
   ) {

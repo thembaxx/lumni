@@ -1,7 +1,5 @@
 name: Daily Context Sync
 on:
-  schedule:
-    - cron: "0 6 * * *" # 6 AM daily
   workflow_dispatch:
 jobs:
   sync:
@@ -12,7 +10,7 @@ jobs:
           fetch-depth: 0
       - name: Generate Context
         run: |
-          echo "::notice title=Context Sync::Skipped — run manually via scripts/sync-context.sh"
+          echo "::notice title=Context Sync::Manual trigger — no sync script implemented yet"
       - name: Commit Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

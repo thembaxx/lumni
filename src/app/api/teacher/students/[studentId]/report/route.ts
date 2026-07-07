@@ -1,5 +1,6 @@
 import { Query } from "appwrite";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
 
@@ -13,9 +14,7 @@ export const GET = createRouteHandler({
     userId: string | null;
     params?: Record<string, string>;
   }) => {
-    if (!userId) {
-      return { competencies: [], quizAttempts: [], subjects: [] };
-    }
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const studentId = params?.studentId;
     if (!studentId) return { competencies: [], quizAttempts: [], subjects: [] };
 

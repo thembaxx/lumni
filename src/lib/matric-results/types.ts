@@ -11,4 +11,6 @@ export interface MatricResultsResponse {
   results: MatricResult[];
   year: number;
   total: number;
+  isDemoData?: boolean;
+  disclaimer?: string;
 }
