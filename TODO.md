@@ -995,11 +995,12 @@ pnpm run test            → 1631 pass, 0 fail (176 test files)
 - [x] **Add stale issue/PR workflow** — `.github/workflows/stale.yml` — 60d inactivity → stale → 14d → close
 - [x] **Pre-push hook optimized** — Reduced from `pnpm run test` to `pnpm run lint:fix && pnpm run format && pnpm run typecheck` (fast gating, full CI on push)
 
-### GitHub Issues Created
+### Remaining (blocked on manual GitHub UI)
 
-- [#84](https://github.com/thembaxx/lumni/issues/84) — Set up branch protection rules for dev + master (requires status checks: quality, build, unit-tests; require PR review)
-- [#85](https://github.com/thembaxx/lumni/issues/85) — Raise test coverage thresholds (30% statements, 20% branches target)
-- [#86](https://github.com/thembaxx/lumni/issues/86) — Fix context-sync.yml placeholder workflow (remove or wire up)
+- [#84](https://github.com/thembaxx/lumni/issues/84) — **Set up branch protection rules** — GitHub.com → Settings → Branches → Add rules for `dev` (require status checks: quality, build, unit-tests; require review) and `master` (same + linear history, only PRs from dev)
+- [#85](https://github.com/thembaxx/lumni/issues/85) — **Raise test coverage thresholds** — Add `coverage.thresholds` to vitest config (30% statements, 20% branches)
+- [#86](https://github.com/thembaxx/lumni/issues/86) — **Fix context-sync.yml placeholder** — Remove no-op workflow or wire it up
+- [ ] **Verify Sentry→Linear integration** — Trigger test error, confirm Linear issue auto-created with correct labels
 
 ### Verification
 
