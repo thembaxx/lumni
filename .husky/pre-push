@@ -1,1 +1,2 @@
-pnpm run test
+pnpm run lint:fix && pnpm run format
+pnpm run typecheck
