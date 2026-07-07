@@ -127,7 +127,7 @@ export function QuizSubjectPrompt({ onSelect, hasSubject }: QuizSubjectPromptPro
         <button
           type="button"
           onClick={onSelect}
-          className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
+          className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-system-accent-foreground hover:bg-system-accent/90"
         >
           {hasSubject ? t("quiz.startQuiz") : t("quiz.selectSubject")}
         </button>

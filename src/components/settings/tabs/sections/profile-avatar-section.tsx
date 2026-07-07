@@ -36,12 +36,12 @@ export function ProfileAvatarSection({
               }
               alt={name || "User"}
             />
-            <AvatarFallback className="bg-system-accent font-extrabold text-3xl text-white">
+            <AvatarFallback className="bg-system-accent font-extrabold text-3xl text-system-accent-foreground">
               {name?.charAt(0)?.toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
           <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-black/10" />
-          <div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-white shadow-level-2 transition-transform">
+          <div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-system-accent-foreground shadow-level-2 transition-transform">
             {uploading ? (
               <div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
             ) : (

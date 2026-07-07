@@ -61,12 +61,15 @@ export async function getSavedWords(
   filters?: { language?: string; sourceType?: string },
 ): Promise<VocabularyEntry[]> {
   try {
-    const all = await _deps.db.vocabularyList.where("userId").equals(userId).toArray();
-    return all.filter((e) => {
-      if (filters?.language && e.language !== filters.language) return false;
-      if (filters?.sourceType && e.sourceType !== filters.sourceType) return false;
-      return true;
-    });
+    let collection = _deps.db.vocabularyList.where("userId").equals(userId);
+    if (filters?.language) {
+      const langFilter = await collection.filter((e) => e.language === filters.language).toArray();
+      return filters?.sourceType
+        ? langFilter.filter((e) => e.sourceType === filters.sourceType)
+        : langFilter;
+    }
+    const all = await collection.toArray();
+    return filters?.sourceType ? all.filter((e) => e.sourceType === filters.sourceType) : all;
   } catch (err) {
     logError("VocabularyService.getSavedWords", err);
     return [];

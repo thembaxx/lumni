@@ -1,49 +1,12 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode } from "react";
+import { useLazySyntaxHighlighter } from "@/lib/shared/lazy-syntax-highlighter";
 
-interface LazySyntaxHighlighterProps {
-  language: string;
-  children: ReactNode;
-}
+function LazySyntaxHighlighter({ language, children }: { language: string; children: ReactNode }) {
+  const { SyntaxHighlighter, style, loaded } = useLazySyntaxHighlighter("light");
 
-function LazySyntaxHighlighter({ language, children }: LazySyntaxHighlighterProps) {
-  const ref = useRef<{
-    SyntaxHighlighter: React.ComponentType<Record<string, unknown>>;
-    style: Record<string, unknown>;
-  } | null>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all([
-      import("react-syntax-highlighter"),
-      import("react-syntax-highlighter/dist/esm/styles/prism"),
-    ])
-      .then(([highlighterMod, styleMod]) => {
-        if (cancelled) return;
-        type HighlighterMod = {
-          Prism: React.ComponentType<Record<string, unknown>>;
-        };
-        type StyleMod = { oneLight: Record<string, unknown> };
-        ref.current = {
-          SyntaxHighlighter: (highlighterMod as unknown as HighlighterMod).Prism,
-          style: (styleMod as unknown as StyleMod).oneLight,
-        };
-        setLoaded(true);
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        logError("SyntaxHighlighter", error);
-        setLoaded(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (!loaded || !ref.current) {
+  if (!loaded || !SyntaxHighlighter || !style) {
     return (
       <pre className="m-0 max-h-50 overflow-auto bg-muted p-3 text-xs">
         <code>{children}</code>
@@ -51,7 +14,6 @@ function LazySyntaxHighlighter({ language, children }: LazySyntaxHighlighterProp
     );
   }
 
-  const { SyntaxHighlighter, style } = ref.current;
   return (
     <SyntaxHighlighter
       language={language}
@@ -66,7 +28,6 @@ function LazySyntaxHighlighter({ language, children }: LazySyntaxHighlighterProp
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { logError } from "@/lib/shared/logger";
 import { cn } from "@/lib/utils";
 
 interface ProgrammingInputProps {

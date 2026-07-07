@@ -1,4 +1,8 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
+
+vi.mock("@/lib/db", () => ({
+  dexieDataAccess: null,
+}));
 
 describe("exam-dates service", () => {
   test("getSessionLabel formats may-june", async () => {

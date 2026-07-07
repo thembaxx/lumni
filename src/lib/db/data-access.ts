@@ -75,6 +75,8 @@ export interface Collection<T> {
 
 export interface WhereClause<T> {
   equals(val: unknown): Collection<T>;
+  above(val: unknown): Collection<T>;
+  aboveOrEqual(val: unknown): Collection<T>;
   belowOrEqual(val: unknown): Collection<T>;
   below(val: unknown): Collection<T>;
   startsWith(val: string): Collection<T>;

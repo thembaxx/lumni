@@ -36,7 +36,7 @@ export function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
           disabled={setRole.isPending}
           className={`rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors ${
             currentRole === role
-              ? "bg-system-accent text-white"
+              ? "bg-system-accent text-system-accent-foreground"
               : "bg-system-fill text-muted-foreground hover:bg-system-fill/80"
           }`}
         >

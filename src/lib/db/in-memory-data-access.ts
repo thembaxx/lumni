@@ -159,6 +159,14 @@ class InMemoryWhereClause<T> implements WhereClause<T> {
     return this.filterBy((v) => v === val);
   }
 
+  above(val: unknown): Collection<T> {
+    return this.filterBy((v) => typeof v === "number" && typeof val === "number" && v > val);
+  }
+
+  aboveOrEqual(val: unknown): Collection<T> {
+    return this.filterBy((v) => typeof v === "number" && typeof val === "number" && v >= val);
+  }
+
   belowOrEqual(val: unknown): Collection<T> {
     return this.filterBy((v) => typeof v === "number" && typeof val === "number" && v <= val);
   }

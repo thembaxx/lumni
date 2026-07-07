@@ -4,7 +4,7 @@ import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import TeamWorkIcon from "@hugeicons/core-free-icons/TeamWorkIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -39,10 +39,17 @@ export function DiscoverGroups() {
   const t = useTranslations();
   const [subjectFilter, setSubjectFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const effectiveSubject = subjectFilter && subjectFilter !== "all" ? subjectFilter : undefined;
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const { data: groups, isLoading } = useDiscoverGroups({
     subjectId: effectiveSubject,
-    search: search || undefined,
+    search: debouncedSearch || undefined,
   });
   const joinGroup = useJoinGroup();
 

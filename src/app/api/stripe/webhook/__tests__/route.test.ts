@@ -165,4 +165,99 @@ describe("POST /api/stripe/webhook", () => {
     expect(res.status).toBe(500);
     process.env.STRIPE_WEBHOOK_SECRET = original;
   });
+
+  describe("edge cases", () => {
+    it("handles checkout.session.completed without client_reference_id", async () => {
+      const deps = makeDeps({
+        type: "checkout.session.completed",
+        data: { object: { subscription: "sub_abc" } },
+      });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+
+    it("handles checkout.session.completed with no matching license", async () => {
+      const deps = makeDeps({
+        type: "checkout.session.completed",
+        data: { object: { client_reference_id: "school-999", subscription: "sub_abc" } },
+      });
+      mockListDocuments.mockResolvedValue({ total: 0, documents: [] });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+
+    it("handles subscription.deleted with no matching active license", async () => {
+      const deps = makeDeps({
+        type: "customer.subscription.deleted",
+        data: { object: { id: "sub_unknown" } },
+      });
+      mockListDocuments.mockResolvedValue({ total: 0, documents: [] });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+
+    it("handles invoice.payment_failed without subscription in invoice", async () => {
+      const deps = makeDeps({
+        type: "invoice.payment_failed",
+        data: { object: {} },
+      });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+
+    it("handles invoice.payment_failed with no matching subscription", async () => {
+      const deps = makeDeps({
+        type: "invoice.payment_failed",
+        data: { object: { subscription: "sub_nonexistent" } },
+      });
+      mockListDocuments.mockResolvedValue({ total: 0, documents: [] });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+
+    it("handles unknown event type gracefully", async () => {
+      const deps = makeDeps({
+        type: "unknown.event.type",
+        data: { object: {} },
+      });
+      const req = new Request("http://localhost/api/stripe/webhook", {
+        method: "POST",
+        body: "{}",
+        headers: { "stripe-signature": "valid" },
+      });
+      const res = await POST(req, deps);
+      expect(res.status).toBe(200);
+      expect(mockUpdateDocument).not.toHaveBeenCalled();
+    });
+  });
 });

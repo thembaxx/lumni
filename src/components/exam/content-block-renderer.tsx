@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { type ComponentType, useEffect, useRef, useState } from "react";
+import { useLazySyntaxHighlighter } from "@/lib/shared/lazy-syntax-highlighter";
 import { Equation } from "@/components/ui/equation";
 import {
   Table,
@@ -18,31 +18,9 @@ interface ContentBlockRendererProps {
 }
 
 function LazyCodeBlock({ language, value }: { language?: string; value: string }) {
-  const [loaded, setLoaded] = useState(false);
-  const HighlighterRef = useRef<ComponentType<Record<string, unknown>> | null>(null);
-  const styleRef = useRef<Record<string, unknown> | null>(null);
+  const { SyntaxHighlighter, style, loaded } = useLazySyntaxHighlighter("light");
 
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all([
-      import("react-syntax-highlighter"),
-      import("react-syntax-highlighter/dist/esm/styles/prism"),
-    ]).then(([highlighterMod, styleMod]) => {
-      type HighlighterModule = {
-        Prism: ComponentType<Record<string, unknown>>;
-      };
-      type StyleModule = { oneLight: Record<string, unknown> };
-      if (cancelled) return;
-      HighlighterRef.current = (highlighterMod as unknown as HighlighterModule).Prism;
-      styleRef.current = (styleMod as unknown as StyleModule).oneLight;
-      setLoaded(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (!loaded || !HighlighterRef.current || !styleRef.current) {
+  if (!loaded || !SyntaxHighlighter || !style) {
     return (
       <pre className="overflow-wrap-anywhere my-3 overflow-hidden rounded border bg-muted p-4 font-mono text-sm">
         <code>{value}</code>
@@ -50,15 +28,14 @@ function LazyCodeBlock({ language, value }: { language?: string; value: string }
     );
   }
 
-  const Highlighter = HighlighterRef.current;
   return (
-    <Highlighter
+    <SyntaxHighlighter
       language={language || "text"}
-      style={styleRef.current}
+      style={style}
       customStyle={{ margin: 0, fontSize: "0.8rem" }}
     >
       {value}
-    </Highlighter>
+    </SyntaxHighlighter>
   );
 }
 

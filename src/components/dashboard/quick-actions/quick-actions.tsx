@@ -52,7 +52,7 @@ function ActionButton({
       aria-label={label}
     >
       {primary ? (
-        <Button className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-white">
+        <Button className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-system-accent-foreground">
           <span>
             <HugeiconsIcon icon={icon} className="size-4" data-icon aria-hidden="true" />
           </span>

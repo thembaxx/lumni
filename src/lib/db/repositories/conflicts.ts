@@ -6,11 +6,11 @@ export class ConflictRepository {
   constructor(private db: DataAccess) {}
 
   async save(conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">): Promise<number> {
-    return this.db.conflicts.add(conflict as SyncConflict);
+    return this.db.conflicts.add({ ...conflict, resolvedAt: 0 } as SyncConflict);
   }
 
   async getUnresolved(): Promise<SyncConflict[]> {
-    return (await this.db.conflicts.toArray()).filter((c) => !c.resolvedAt);
+    return this.db.conflicts.where("resolvedAt").equals(0).toArray();
   }
 
   async resolve(id: number, resolution: "local" | "server" | "merged"): Promise<void> {

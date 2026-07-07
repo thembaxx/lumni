@@ -31,9 +31,10 @@ export class DigestService {
     let topSubjects = "";
 
     try {
-      const attempts = (await this.deps.db.quizAttempts.toArray()).filter(
-        (a) => a.completedAt >= sevenDaysAgo,
-      );
+      const attempts = await this.deps.db.quizAttempts
+        .where("completedAt")
+        .above(sevenDaysAgo)
+        .toArray();
       totalAttempts = attempts.length;
       avgScore =
         totalAttempts > 0

@@ -62,7 +62,7 @@ export function PastQuestionCard({ question }: PastQuestionCardProps) {
             <button
               type="button"
               onClick={() => setPracticeMode(true)}
-              className="self-start rounded-lg bg-system-accent px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-system-accent/90"
+              className="self-start rounded-lg bg-system-accent px-4 py-1.5 text-xs font-medium text-system-accent-foreground transition-colors hover:bg-system-accent/90"
             >
               Practice
             </button>

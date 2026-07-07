@@ -11,6 +11,8 @@
    Liquid Glass + Organic Motion + Kinetic Typography
    ======================================== */
 
+/* impeccable-disable bounce-easing -- intentional design-system pop (bounce-pop / typing-bounce keyframes) */
+
 :root {
   /* Core Color Tokens — Warm & Playful (tactile reboot) */
   /* Apple semantic hierarchy: bg → bg-secondary → bg-tertiary */
@@ -30,6 +32,9 @@
   --system-accent: oklch(50% 0.24 146); /* Emerald Green — WCAG AA against white */
   --system-accent-secondary: oklch(72% 0.28 55); /* Sunset orange — punchier accent */
   --system-accent-tertiary: oklch(58% 0.28 265); /* Deep blue — info badges, stats */
+  /* Foreground text on accent surfaces: white in light mode; dark in dark mode
+     because --system-accent lightens to oklch(68%) there and white fails WCAG AA. */
+  --system-accent-foreground: oklch(100% 0 0);
 
   --system-text-primary: oklch(20% 0.02 264);
   --system-text-secondary: oklch(20% 0.02 264 / 0.65);
@@ -352,6 +357,7 @@
   --color-system-accent: var(--system-accent);
   --color-system-accent-secondary: var(--system-accent-secondary);
   --color-system-accent-tertiary: var(--system-accent-tertiary);
+  --color-system-accent-foreground: var(--system-accent-foreground);
   --color-label-quaternary: var(--label-quaternary);
 
   /* Materials (Liquid Glass) */
@@ -452,6 +458,7 @@
   --system-accent: oklch(68% 0.22 146);
   --system-accent-secondary: oklch(80% 0.26 55); /* Brighter sunset orange for dark */
   --system-accent-tertiary: oklch(68% 0.26 265); /* Brighter blue for dark */
+  --system-accent-foreground: oklch(17% 0.03 146); /* Dark on the lighter dark-mode accent */
   --system-text-primary: oklch(95% 0.01 264);
   --system-text-secondary: oklch(95% 0.01 264 / 0.65);
   --system-text-tertiary: oklch(95% 0.01 264 / 0.35);

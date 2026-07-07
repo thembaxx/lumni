@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { KatexCSS } from "@/components/katex-css";
@@ -13,58 +13,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useLazySyntaxHighlighter } from "@/lib/shared/lazy-syntax-highlighter";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { getSubjectOklchColor } from "@/lib/subjects";
 import { cn } from "@/lib/utils";
 
 function LazyCodeBlock({ language, children }: { language: string; children: string }) {
-  const [loaded, setLoaded] = useState(false);
-  const modRef = useRef<{
-    SyntaxHighlighter: React.ComponentType<Record<string, unknown>>;
-    style: Record<string, unknown>;
-  } | null>(null);
+  const { SyntaxHighlighter, style, loaded } = useLazySyntaxHighlighter("dark");
 
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all([
-      import("react-syntax-highlighter"),
-      import("react-syntax-highlighter/dist/esm/styles/prism"),
-    ]).then(([highlighterMod, styleMod]) => {
-      type HighlighterModule = {
-        Prism: React.ComponentType<Record<string, unknown>>;
-      };
-      type StyleModule = { oneDark: Record<string, unknown> };
-      const hMod = highlighterMod as unknown as HighlighterModule;
-      const sMod = styleMod as unknown as StyleModule;
-      if (cancelled) return;
-      modRef.current = {
-        SyntaxHighlighter: hMod.Prism,
-        style: sMod.oneDark,
-      };
-      setLoaded(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (!loaded) {
+  if (!loaded || !SyntaxHighlighter || !style) {
     return (
       <pre className="my-3 overflow-hidden rounded-lg bg-system-background-tertiary p-4 font-mono text-sm text-system-text-primary">
         <code>{children}</code>
       </pre>
     );
   }
-
-  const mod = modRef.current;
-  if (!mod) {
-    return (
-      <pre className="my-3 overflow-hidden rounded-lg bg-system-background-tertiary p-4 font-mono text-sm text-system-text-primary">
-        <code>{children}</code>
-      </pre>
-    );
-  }
-  const { SyntaxHighlighter, style } = mod;
   return (
     <SyntaxHighlighter
       language={language}

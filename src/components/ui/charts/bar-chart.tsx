@@ -8,17 +8,22 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const RechartsBarChart = dynamic(() => import("recharts").then((m) => m.BarChart), { ssr: false });
-const CartesianGrid = dynamic(() => import("recharts").then((m) => m.CartesianGrid), {
+const RechartsBarChart = dynamic(() => import("recharts").then((m) => ({ default: m.BarChart })), {
   ssr: false,
 });
-const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), {
+const CartesianGrid = dynamic(
+  () => import("recharts").then((m) => ({ default: m.CartesianGrid })),
+  {
+    ssr: false,
+  },
+);
+const XAxis = dynamic(() => import("recharts").then((m) => ({ default: m.XAxis })), {
   ssr: false,
 });
-const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), {
+const YAxis = dynamic(() => import("recharts").then((m) => ({ default: m.YAxis })), {
   ssr: false,
 });
-const Bar = dynamic(() => import("recharts").then((m) => m.Bar), {
+const Bar = dynamic(() => import("recharts").then((m) => ({ default: m.Bar })), {
   ssr: false,
 });
 

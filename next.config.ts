@@ -1,5 +1,6 @@
-// Dev-only allowance so impeccable live mode can load. Guarded by NODE_ENV.
+// Dev-only allowances guarded by NODE_ENV.
 const __impeccableLiveDev = process.env.NODE_ENV === "development" ? " http://localhost:8400" : "";
+const __unsafeEvalDev = process.env.NODE_ENV === "development" ? "'unsafe-eval'" : "";
 
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
@@ -18,7 +19,7 @@ const CSP_REPORT_PATH = "/api/csp-violation";
 const SENTRY_HOSTS = ["https://o4510925914963968.ingest.us.sentry.io"];
 
 function buildCsp(): string {
-  const scriptSrc = ["'self'", "'unsafe-inline'", "'unsafe-eval'", __impeccableLiveDev].filter(
+  const scriptSrc = ["'self'", "'unsafe-inline'", __unsafeEvalDev, __impeccableLiveDev].filter(
     Boolean,
   );
 

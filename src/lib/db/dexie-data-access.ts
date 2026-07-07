@@ -64,6 +64,16 @@ class DexieWhereClauseAdapter<T> implements WhereClause<T> {
     return new DexieCollectionAdapter(this.table.where(this.index).equals(val as IndexableType));
   }
 
+  above(val: unknown): Collection<T> {
+    return new DexieCollectionAdapter(this.table.where(this.index).above(val as IndexableType));
+  }
+
+  aboveOrEqual(val: unknown): Collection<T> {
+    return new DexieCollectionAdapter(
+      this.table.where(this.index).aboveOrEqual(val as IndexableType),
+    );
+  }
+
   belowOrEqual(val: unknown): Collection<T> {
     return new DexieCollectionAdapter(
       this.table.where(this.index).belowOrEqual(val as IndexableType),

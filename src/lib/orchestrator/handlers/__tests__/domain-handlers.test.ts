@@ -112,6 +112,39 @@ describe("visualGeneration", () => {
   });
 });
 
+describe("sync handlers", () => {
+  test("appwrite-flashcard-delete runs without error", async () => {
+    const handler = getHandler("appwrite-flashcard-delete");
+    await expect(handler({ id: "fc-1" })).resolves.toBeUndefined();
+  });
+
+  test("appwrite-bookmark-sync runs without error", async () => {
+    const handler = getHandler("appwrite-bookmark-sync");
+    await expect(
+      handler({
+        userId: "u1",
+        questionId: "q1",
+        questionText: "test",
+        subject: "math",
+        topic: "algebra",
+        savedAt: Date.now(),
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  test("prune-stale-questions runs without error", async () => {
+    const handler = getHandler("prune-stale-questions");
+    await expect(handler({})).resolves.toBeUndefined();
+  });
+
+  test("generate-embedding runs without error", async () => {
+    const handler = getHandler("generate-embedding");
+    await expect(
+      handler({ questionId: "q1", questionText: "test", subject: "math" }),
+    ).resolves.toBeUndefined();
+  });
+});
+
 describe("handler registry", () => {
   test("getHandler returns a function for every job type", () => {
     const types = [
@@ -124,12 +157,22 @@ describe("handler registry", () => {
       "appwrite-attempt-sync",
       "appwrite-competency-sync",
       "appwrite-flashcard-sync",
+      "appwrite-flashcard-pull",
+      "appwrite-flashcard-delete",
       "appwrite-wrong-answer-sync",
+      "appwrite-bookmark-sync",
+      "appwrite-bookmark-delete",
       "appwrite-chat-sync",
       "appwrite-rating-sync",
       "appwrite-study-plan-sync",
       "appwrite-question-flag",
       "question-regen",
+      "appwrite-exam-dates-sync",
+      "appwrite-consent-sync",
+      "appwrite-shared-question-sync",
+      "appwrite-visual-sync",
+      "prune-stale-questions",
+      "generate-embedding",
     ] as const;
 
     for (const type of types) {

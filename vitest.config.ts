@@ -9,6 +9,30 @@ export default defineConfig({
     exclude: ["src/**/*.int-test.ts", "node_modules"],
     hookTimeout: 30000,
     testTimeout: 15000,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json-summary", "html"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/**/*.test.{ts,tsx}",
+        "src/**/*.spec.{ts,tsx}",
+        "src/**/__tests__/**",
+        "src/**/__mocks__/**",
+        "src/app/**/layout.tsx",
+        "src/app/**/page.tsx",
+        "src/app/**/loading.tsx",
+        "src/app/**/error.tsx",
+        "src/types/**",
+        "src/instrumentation.ts",
+        "next.config.ts",
+      ],
+      thresholds: {
+        statements: 10,
+        branches: 5,
+        functions: 8,
+        lines: 10,
+      },
+    },
   },
   resolve: {
     alias: {

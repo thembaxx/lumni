@@ -52,7 +52,7 @@ export function ProgressExport() {
     try {
       const [quizAttempts, examSessions] = await Promise.all([
         _deps.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
-        _deps.db.examSessions.toArray(),
+        _deps.db.examSessions.limit(100).toArray(),
       ]);
       const csv = exportService.toCSV(quizAttempts, examSessions);
       const blob = new Blob([csv], { type: "text/csv" });
