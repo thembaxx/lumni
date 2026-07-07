@@ -5,6 +5,18 @@ import { classifyQuestions } from "@/lib/exam-paper-ingestion/question-classifie
 import { requireAdmin } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  );
+  return response;
+}
+
 function createClassifyHandler(db: DataAccess = dexieDataAccess) {
   return withRateLimit(
     async (req: NextRequest) => {
@@ -13,21 +25,25 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
       } catch (err) {
         const msg = err instanceof Error ? err.message : "Admin access required";
         if (msg.includes("Authentication required")) {
-          return NextResponse.json({ error: msg }, { status: 401 });
+          return addSecurityHeaders(NextResponse.json({ error: msg }, { status: 401 }));
         }
-        return NextResponse.json({ error: msg }, { status: 403 });
+        return addSecurityHeaders(NextResponse.json({ error: msg }, { status: 403 }));
       }
 
       let body: { subject?: string };
       try {
         body = await req.json();
       } catch {
-        return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
+        return addSecurityHeaders(
+          NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 }),
+        );
       }
 
       const subject = body?.subject;
       if (!subject) {
-        return NextResponse.json({ error: "subject is required" }, { status: 400 });
+        return addSecurityHeaders(
+          NextResponse.json({ error: "subject is required" }, { status: 400 }),
+        );
       }
 
       const pastPaperQuestions = db.pastPaperQuestions;
@@ -35,29 +51,24 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
 
       const allById = new Map(all.map((q) => [q.id, q]));
 
-      const unclassified = all.reduce<
-        {
-          id: string;
-          questionText: string;
-          subject: string;
-        }[]
-      >((acc, q) => {
-        if (!q.subtopicId) {
-          acc.push({
-            id: q.id,
-            questionText: q.questionText,
-            subject: q.subject,
-          });
-        }
-        return acc;
-      }, []);
+      const unclassified = all.reduce<{ id: string; questionText: string; subject: string }[]>(
+        (acc, q) => {
+          if (!q.subtopicId) {
+            acc.push({ id: q.id, questionText: q.questionText, subject: q.subject });
+          }
+          return acc;
+        },
+        [],
+      );
 
       if (unclassified.length === 0) {
-        return NextResponse.json({
-          total: 0,
-          classified: 0,
-          message: "All questions already classified",
-        });
+        return addSecurityHeaders(
+          NextResponse.json({
+            total: 0,
+            classified: 0,
+            message: "All questions already classified",
+          }),
+        );
       }
 
       const curriculumTopics = all.reduce<
@@ -79,10 +90,12 @@ function createClassifyHandler(db: DataAccess = dexieDataAccess) {
         }
       }
 
-      return NextResponse.json({
-        total: unclassified.length,
-        classified: classifications.size,
-      });
+      return addSecurityHeaders(
+        NextResponse.json({
+          total: unclassified.length,
+          classified: classifications.size,
+        }),
+      );
     },
     { max: 3, windowMs: 120000 },
   );

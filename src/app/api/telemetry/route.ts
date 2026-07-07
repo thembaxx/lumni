@@ -1,6 +1,19 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(request: NextRequest) {
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  );
+  return response;
+}
+
+async function telemetryHandler(request: NextRequest): Promise<NextResponse> {
   try {
     const envelope = await request.text();
     const pieces = envelope.split("\n");
@@ -17,12 +30,14 @@ export async function POST(request: NextRequest) {
           body: envelope,
           headers: { "Content-Type": "application/x-sentry-envelope" },
         });
-        return new NextResponse(null, { status: 200 });
+        return addSecurityHeaders(new NextResponse(null, { status: 200 }));
       }
     }
 
-    return new NextResponse(null, { status: 200 });
+    return addSecurityHeaders(new NextResponse(null, { status: 200 }));
   } catch {
-    return new NextResponse(null, { status: 200 });
+    return addSecurityHeaders(new NextResponse(null, { status: 200 }));
   }
 }
+
+export const POST = withRateLimit(telemetryHandler);

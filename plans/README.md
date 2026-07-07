@@ -298,8 +298,8 @@ All plans independent unless noted. Execute in any order.
 | 127  | Migrate chat route to createRouteHandler                                | P1       | M      | MED  | —          | DONE   |
 | 128  | Extract AI provider initialization to a shared singleton                | P1       | S      | LOW  | —          | DONE   |
 | 129  | Fix data-access.ts layering violation — move WrongAnswerEntry to schema | P2       | S      | LOW  | —          | DONE   |
-| 130  | Migrate 11 remaining routes to createRouteHandler                       | P2       | M      | LOW  | 127        | TODO   |
-| 131  | Wire admin metrics routes to real Appwrite data                         | P1       | M      | LOW  | —          | TODO   |
+| 130  | Migrate 11 remaining routes to createRouteHandler                       | P2       | M      | LOW  | 127        | DONE   |
+| 131  | Wire admin metrics routes to real Appwrite data                         | P1       | M      | LOW  | —          | DONE   |
 | 132  | Create Stripe webhook handler to activate school licenses               | P1       | M      | MED  | —          | DONE   |
 
 **Execution notes**:
