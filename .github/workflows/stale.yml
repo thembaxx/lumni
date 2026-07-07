@@ -1,0 +1,25 @@
+name: Stale Issues & PRs
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: "This issue has been inactive for 60 days. Remove the `stale` label or comment to keep it open. It will be closed in 14 days."
+          stale-pr-message: "This PR has been inactive for 60 days. Remove the `stale` label or comment to keep it open. It will be closed in 14 days."
+          close-issue-message: "This issue was closed due to 60 days of inactivity."
+          close-pr-message: "This PR was closed due to 60 days of inactivity."
+          days-before-stale: 60
+          days-before-close: 14
+          stale-issue-label: stale
+          stale-pr-label: stale
