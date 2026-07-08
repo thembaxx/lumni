@@ -48,7 +48,7 @@ export function OtpVerificationForm({
           opacity: 1,
           y: 0,
           transition: {
-            duration: 0.3,
+            duration: 0.4,
             ease: iOSEase,
           },
         }}
@@ -56,7 +56,7 @@ export function OtpVerificationForm({
           opacity: 0,
           y: -8,
           transition: {
-            duration: 0.2,
+            duration: 0.3,
             ease: iOSEase,
           },
         }}

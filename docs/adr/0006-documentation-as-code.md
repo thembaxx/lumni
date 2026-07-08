@@ -21,8 +21,22 @@ Lumni has zero Storybook coverage and no component-level documentation. New engi
 - **Positive:** Living documentation; visual regression testing possible; consistent code quality
 - **Negative:** ~10% documentation overhead per PR; initial Storybook setup time
 
+## Disposition (Session 41 — June 2026)
+
+The tooling and workflow diverged from this ADR:
+
+1. **Biome.js** → was briefly configured but replaced by **oxlint** (`pnpm exec oxlint`) and **oxfmt** (`pnpm exec oxfmt --check`) for lint/format. These are faster (Rust-based) and catch more rules.
+2. **Package manager: Bun** → was used briefly but replaced by **pnpm** (better workspace support, more stable lockfile format `pnpm-lock.yaml`).
+3. **Storybook** → installed (`storybook@10.4.1`), has 18 stories, builds successfully. But **deploy is manual** — no CI/CD deploy on merge. Stories are centralized in `src/components/stories/` (not co-located `.stories.mdx`). Used for development reference, not living documentation.
+4. **MDX sync** → never implemented. Components have no MDX documentation.
+5. **Code review checklist** → never formalized.
+
+The ADR was correct in *intent* (Storybook coverage is valuable) but the specific tool choices and workflow mechanics were wrong.
+
+**Verdict:** Toolchain evolved differently. ADR-0006 is formally **Rejected**.
+
 ## Related
 
-- `.github/workflows/ci.yml`
-- `biome.json`
-- `package.json` scripts
+- `.github/workflows/ci.yml` — uses `oxlint`, `oxfmt --check`, `vitest`
+- `src/components/stories/` — 18 Storybook stories
+- `package.json` — scripts: `lint`, `typecheck`, `test`, `format:check`, `deadcode`

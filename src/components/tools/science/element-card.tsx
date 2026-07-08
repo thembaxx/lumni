@@ -55,7 +55,7 @@ export const ElementCard = memo(
           y: 0,
         }}
         transition={{
-          duration: 0.35,
+          duration: 0.4,
           delay: (el.atomicNumber % 20) * 0.015,
           ease: elementEaseOutQuint,
         }}

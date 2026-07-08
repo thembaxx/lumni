@@ -28,8 +28,19 @@ Adopt **domain-driven atomic design**:
 - **Negative:** More files to navigate; stricter code review discipline required
 - **Migration path:** Legacy components in `src/components/[domain]/` remain functional; new work uses `src/components/atoms/`, `molecules/`, `organisms/`, `templates/`
 
+## Disposition (Session 41 — June 2026)
+
+The atomic `atoms/molecules/organisms/templates` directory structure was **never adopted**. The codebase instead evolved a **domain-grouped** structure (`quiz/`, `dashboard/`, `flashcard/`, `navigation/`, `celebration/`, `onboarding/`, `tools/core|communication|math|science|scheduling`). This happened organically because:
+
+1. Educational UI concepts (flashcard decks, quiz views, exam sessions) cross-cut atomic boundaries — a single flashcard deck is simultaneously an atom (card), molecule (deck), and organism (study session).
+2. Domain grouping made imports predictable: `import { X } from "@/components/flashcard/X"` — no guessing which atomic tier something lives in.
+3. Size constraints proved less useful than **cohesion**: a 300-line file with clear internal structure (`quiz-view.tsx`) is easier to maintain than 6 scattered 50-line files.
+
+**Verdict:** The domain-grouped structure was the right call. ADR-0002 is formally **Rejected**.
+
 ## Related
 
-- `src/components/atoms/consent-status-badge.tsx`
-- `src/components/molecules/quiz-launcher.tsx`
-- `src/components/organisms/parent-shell.tsx`
+- `src/components/quiz/` — largest domain, question engine + view + results + feedback
+- `src/components/dashboard/` — homepage orchestration, gamification, analytics
+- `src/components/flashcard/` — swipeable card deck, SM-2 quality picker
+- `src/components/tools/` — split into `core/`, `communication/`, `math/`, `science/`, `scheduling/`

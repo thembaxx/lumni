@@ -68,7 +68,7 @@ export function CategoryOverview({ title, items }: CategoryOverviewProps) {
       <m.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">{title}</h1>
         <p className="mt-1.5 text-muted-foreground text-sm">Choose a section to get started</p>
@@ -81,7 +81,7 @@ export function CategoryOverview({ title, items }: CategoryOverviewProps) {
               key={item.href}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.4, delay: 0.05 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
                 href={item.href}

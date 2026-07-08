@@ -206,7 +206,7 @@ function SettingsContent() {
   return (
     <div className="flex min-h-dvh flex-col bg-system-grouped antialiased">
       <PageContainer className="flex-1">
-        <header className="sticky top-0 z-header bg-system-grouped/80 px-6 pt-4 pb-2 backdrop-blur-xl">
+        <header className="sticky top-0 z-header bg-system-grouped/80 pt-4 pb-2 backdrop-blur-xl">
           <div className="flex h-14 items-center justify-between">
             <div className="flex items-center gap-3">
               <Link
@@ -240,9 +240,9 @@ function SettingsContent() {
           </div>
         </header>
 
-        <nav className="sticky top-28 z-sticky bg-system-grouped/80 px-6 py-3 backdrop-blur-xl">
+        <nav className="sticky top-28 z-sticky bg-system-grouped/80 py-3 backdrop-blur-xl">
           <div className="relative">
-            <div className="scrollbar-hide -mx-2 flex gap-1.5 overflow-x-auto px-2" role="tablist">
+            <div className="scrollbar-hide flex gap-1.5 overflow-x-auto" role="tablist">
               {visibleTabs.map((tab) => {
                 const isActive = activeTab === tab.value;
                 return (
@@ -277,7 +277,7 @@ function SettingsContent() {
           </div>
         </nav>
 
-        <SpotlightCard className="flex-1 px-6 pt-4 md:pb-6" radius={500}>
+        <SpotlightCard className="flex-1 pt-4 md:pb-6" radius={500}>
           <TabPanel isActive={activeTab === "profile"}>
             <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />

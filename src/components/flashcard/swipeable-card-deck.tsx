@@ -197,12 +197,12 @@ export function SwipeableCardDeck({
                   opacity: 0,
                   x: swipeDirection === "right" ? 400 : -400,
                   rotate: swipeDirection === "right" ? 20 : -20,
-                  transition: { duration: 0.25, ease: iOSEase },
+                  transition: { duration: 0.4, ease: iOSEase },
                 }}
                 transition={{
                   type: "spring",
-                  stiffness: 350,
-                  damping: 28,
+                  stiffness: 300,
+                  damping: 26,
                   mass: 0.8,
                   bounce: 0,
                   delay: idx * 0.04,
@@ -245,8 +245,8 @@ export function SwipeableCardDeck({
             animate={{ opacity: 1, scale: 1 }}
             transition={{
               type: "spring",
-              stiffness: 400,
-              damping: 28,
+              stiffness: 350,
+              damping: 26,
               mass: 0.7,
             }}
           >

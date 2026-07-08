@@ -36,8 +36,22 @@ Rules:
 - **Positive:** Clear mental model; offline-first by design; testable repositories
 - **Negative:** Sync conflict resolution needs explicit strategy (last-write-wins vs. merge)
 
+## Disposition (Session 41 — June 2026)
+
+The decision was **substantially implemented and validated**:
+
+1. **TanStack Query** is the default data-fetching layer. The `createApiQuery` factory (`src/hooks/use-hook-factories.ts`) generates consistent 5-minute staleTime queries. All API routes return data through this path.
+2. **Dexie DataAccess** (`src/lib/db/data-access.ts`) provides 33 typed table accessors across 10 domain sub-interfaces. `CompetencyService`, `FlashcardEngine`, `AnalyticsEngine`, and 15+ other services inject `DataAccess` via constructor DI. Offline-first works — Dexie is the write target, Appwrite sync is a background job.
+3. **Zustand** is used sparingly for ephemeral state: `useExamSessionStore` (draft draft), UI toggles, toast queue. No Zustand slice persists to storage.
+4. **Sync layer** (`src/lib/sync/`) with outbox + checkpoints tables (Dexie v41) cross-device sync is in Phase A (stubs for push/pull API exist, Appwrite integration not yet wired).
+5. The typed repository pattern (`src/lib/db/repositories/`) has 38 tests validating all 14 repositories.
+
+**Verdict:** Architecture validated. ADR-0004 is formally **Accepted**.
+
 ## Related
 
-- `src/lib/db/schema.ts`
-- `src/store/main.ts`
-- `src/lib/orchestrator/job-queue.ts`
+- `src/lib/db/data-access.ts` — DataAccess interface + 10 sub-interfaces
+- `src/lib/db/dexie-data-access.ts` — Dexie implementation
+- `src/lib/db/in-memory-data-access.ts` — InMemory for tests
+- `src/store/main.ts` — Zustand stores
+- `src/lib/orchestrator/job-queue.ts` — background sync triggers

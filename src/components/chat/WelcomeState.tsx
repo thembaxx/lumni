@@ -15,7 +15,7 @@ export function WelcomeState() {
         <m.h2
           initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ delay: 0.1, duration: 0.35, ease: iOSEase }}
+          transition={{ delay: 0.1, duration: 0.4, ease: iOSEase }}
           className="mb-2 font-semibold text-2xl text-foreground tracking-tight"
         >
           Hi! I&apos;m your study assistant
@@ -23,7 +23,7 @@ export function WelcomeState() {
         <m.p
           initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ delay: 0.2, duration: 0.35, ease: iOSEase }}
+          transition={{ delay: 0.2, duration: 0.4, ease: iOSEase }}
           className="text-pretty font-medium ios-footnote text-muted-foreground"
         >
           Ask me anything about your studies!

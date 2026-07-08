@@ -127,7 +127,7 @@ export function GettingStartedCard() {
           initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? {} : { opacity: 0, y: -8, scale: 0.97 }}
-          transition={{ duration: 0.25, ease: iOSEase }}
+          transition={{ duration: 0.4, ease: iOSEase }}
         >
           <Card className="overflow-hidden border border-system-accent/20 bg-system-accent/3">
             <div className="p-5">
@@ -199,7 +199,7 @@ export function GettingStartedCard() {
                                 }}
                                 transition={{
                                   type: "spring",
-                                  duration: 0.3,
+                                  duration: 0.4,
                                   bounce: 0,
                                 }}
                                 className="absolute inset-0"
@@ -226,7 +226,7 @@ export function GettingStartedCard() {
                                 }}
                                 transition={{
                                   type: "spring",
-                                  duration: 0.3,
+                                  duration: 0.4,
                                   bounce: 0,
                                 }}
                                 className="absolute inset-0"

@@ -51,7 +51,7 @@ export function SendButton({
               initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+              transition={{ type: "spring", duration: 0.4, bounce: 0 }}
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
               <span>Sent!</span>
@@ -63,7 +63,7 @@ export function SendButton({
               initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+              transition={{ type: "spring", duration: 0.4, bounce: 0 }}
             >
               <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
               <span>Sending…</span>
@@ -75,7 +75,7 @@ export function SendButton({
               initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+              transition={{ type: "spring", duration: 0.4, bounce: 0 }}
             >
               <HugeiconsIcon icon={MailSend01Icon} className="size-4" />
               <span>Send Voice Message</span>

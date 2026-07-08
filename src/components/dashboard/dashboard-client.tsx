@@ -76,7 +76,7 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
             </div>
           ) : (
             <>
-              <div className="px-4 pt-2 pb-4">
+              <div className="px-4 pt-2 pb-4 sm:px-6">
                 <SearchWidget />
                 <TabNav activeTab={activeTab} onTabChange={handleTabChange} />
               </div>

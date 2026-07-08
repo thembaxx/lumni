@@ -125,7 +125,7 @@ export default function OnboardingClient() {
         <m.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, ease: iOSEase }}
+          transition={{ duration: 0.4, ease: iOSEase }}
         >
           <CompleteStep
             selectedSubjects={selectedSubjects}
@@ -137,7 +137,7 @@ export default function OnboardingClient() {
         <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.3 }}
+          transition={{ delay: 0.8, duration: 0.4 }}
           className="flex items-center gap-2 text-muted-foreground text-xs"
         >
           <span className="size-1.5 animate-pulse rounded-full bg-(--system-accent)" />
@@ -172,7 +172,7 @@ export default function OnboardingClient() {
                       initial: { opacity: 0, x: 20 },
                       animate: { opacity: 1, x: 0 },
                       exit: { opacity: 0, x: -20 },
-                      transition: { duration: 0.3, ease: iOSEase },
+                      transition: { duration: 0.4, ease: iOSEase },
                     })}
               >
                 {step === 0 && (

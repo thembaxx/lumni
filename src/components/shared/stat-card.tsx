@@ -48,7 +48,7 @@ export function StatCard({
         initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={
-          prefersReducedMotion ? { duration: 0 } : { delay, duration: 0.3, ease: iOSEase }
+          prefersReducedMotion ? { duration: 0 } : { delay, duration: 0.4, ease: iOSEase }
         }
         className={cn("rounded-lg bg-muted/50 p-3", className)}
       >

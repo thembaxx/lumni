@@ -132,7 +132,7 @@ export function PeriodicTable() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{
                 delay: 0.3 + index * 0.03,
-                duration: 0.3,
+                duration: 0.4,
                 ease: elementEaseOutQuint,
               }}
               className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale ${

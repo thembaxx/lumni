@@ -214,7 +214,7 @@ export function AdminDashboard() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.4 }}
                 className="flex flex-col gap-4"
               >
                 <AnimatedCard delay={0.15}>
@@ -238,7 +238,7 @@ export function AdminDashboard() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.4 }}
                 className="flex flex-col gap-4"
               >
                 <AnimatedCard delay={0.15}>

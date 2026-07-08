@@ -75,7 +75,7 @@ export function ElectronShellVisual({ electronConfig }: { electronConfig: string
             animate={{ opacity: 1, x: 0 }}
             transition={{
               delay: 0.3 + i * 0.06,
-              duration: 0.3,
+              duration: 0.4,
               ease: elementEaseOutQuart,
             }}
             className="flex items-center gap-3"
@@ -90,7 +90,7 @@ export function ElectronShellVisual({ electronConfig }: { electronConfig: string
                 animate={{ width: `${pct}%` }}
                 transition={{
                   delay: 0.4 + i * 0.06,
-                  duration: 0.5,
+                  duration: 0.6,
                   ease: elementEaseOutQuart,
                 }}
               />

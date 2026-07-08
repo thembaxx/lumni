@@ -41,7 +41,7 @@ export function StepIndicator({ step, totalSteps, labels }: StepIndicatorProps) 
                 delay: i <= step ? (step - i) * 0.04 : 0,
               },
               scale: {
-                duration: 0.3,
+                duration: 0.4,
                 ease: iOSEase,
                 delay: 0.1,
               },

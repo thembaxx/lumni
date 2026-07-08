@@ -250,11 +250,11 @@ export function QuizView({
       <AmbientGradient variant="quiz" />
 
       <m.main
-        className="mx-auto flex w-full max-w-2xl flex-col gap-5 p-4 md:p-6"
+        className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
         tabIndex={-1}
         drag={isQuizActive ? "x" : false}
         dragElastic={0.2}
-        whileDrag={{ scale: 0.97, transition: { duration: 0.1 } }}
+        whileDrag={{ scale: 0.97, transition: { duration: 0.2 } }}
         style={{ transform: dragTransform }}
         onDragEnd={handleDragEnd}
       >

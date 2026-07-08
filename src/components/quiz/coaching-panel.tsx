@@ -36,7 +36,7 @@ export function CoachingPanel({
       <m.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: iOSEase }}
+        transition={{ duration: 0.4, ease: iOSEase }}
         className="flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-4"
       >
         <div className="flex items-center justify-between">

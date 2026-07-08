@@ -109,7 +109,7 @@ export function FeaturesGrid() {
               transition={
                 prefersReducedMotion
                   ? undefined
-                  : { delay: i * 0.08, duration: 0.5, ease: motionEase }
+                  : { delay: i * 0.08, duration: 0.6, ease: motionEase }
               }
               className={feature.span}
             >

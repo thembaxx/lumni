@@ -10,7 +10,7 @@ export function BoltMark() {
     <m.div
       initial={{ scale: 0.6, rotate: -10, opacity: 0 }}
       animate={{ scale: 1, rotate: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: iOSEase }}
+      transition={{ duration: 0.4, ease: iOSEase }}
       className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-warning/15 shadow-level-1 ring-1 ring-warning/25"
       aria-hidden="true"
     >

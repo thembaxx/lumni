@@ -143,7 +143,7 @@ export const SwipeableCard = memo(function SwipeableCard({
       whileDrag={{
         scale: 1.04,
         cursor: "grabbing",
-        transition: { duration: 0.1 },
+        transition: { duration: 0.2 },
       }}
       layout
       tabIndex={isTop ? 0 : -1}
@@ -162,7 +162,7 @@ export const SwipeableCard = memo(function SwipeableCard({
           className="relative h-full w-full"
           style={{ transformStyle: "preserve-3d" }}
           animate={flipAnim}
-          transition={{ duration: 0.15, ease: iOSEase }}
+          transition={{ duration: 0.2, ease: iOSEase }}
         >
           {/* Front */}
           <div
