@@ -6,6 +6,18 @@ import { REFERRAL_REWARD_XP_REFEREE, REFERRAL_REWARD_XP_REFERRER } from "@/lib/r
 import { getReferralByReferee, updateReferralStatus } from "@/lib/referral/service";
 import { logError } from "@/lib/shared/logger";
 
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  );
+  return response;
+}
+
 async function awardReferralXp(userId: string, amount: number): Promise<void> {
   try {
     const docs = await databases.listDocuments(
@@ -32,7 +44,9 @@ export async function GET(request: NextRequest) {
     const secret = searchParams.get("secret");
 
     if (!userId || !secret) {
-      return NextResponse.redirect(new URL("/settings?error=missing_params", request.url));
+      return addSecurityHeaders(
+        NextResponse.redirect(new URL("/settings?error=missing_params", request.url)),
+      );
     }
 
     await serverAccount.updateVerification(userId, secret);
@@ -46,17 +60,23 @@ export async function GET(request: NextRequest) {
         awardReferralXp(referral.referrerId, REFERRAL_REWARD_XP_REFERRER),
       ]);
 
-      return NextResponse.redirect(
-        new URL(
-          `/settings?verified=true&xpReward=${REFERRAL_REWARD_XP_REFEREE}&rewarded_by=${referral.referrerId}`,
-          request.url,
+      return addSecurityHeaders(
+        NextResponse.redirect(
+          new URL(
+            `/settings?verified=true&xpReward=${REFERRAL_REWARD_XP_REFEREE}&rewarded_by=${referral.referrerId}`,
+            request.url,
+          ),
         ),
       );
     }
 
-    return NextResponse.redirect(new URL("/settings?verified=true", request.url));
+    return addSecurityHeaders(
+      NextResponse.redirect(new URL("/settings?verified=true", request.url)),
+    );
   } catch (error) {
     logError("EmailVerification", error);
-    return NextResponse.redirect(new URL("/settings?error=verification_failed", request.url));
+    return addSecurityHeaders(
+      NextResponse.redirect(new URL("/settings?error=verification_failed", request.url)),
+    );
   }
 }

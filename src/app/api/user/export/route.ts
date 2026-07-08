@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { Query } from "node-appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const INTERNAL_KEYS = new Set(["$id", "$collectionId", "$permissions"]);
 
@@ -29,7 +30,19 @@ const EXPORT_COLLECTIONS = [
   COLLECTIONS.USER_CONSENTS,
 ];
 
-export async function GET() {
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  );
+  return response;
+}
+
+async function exportHandler(_req: NextRequest): Promise<NextResponse> {
   try {
     const userId = await auth();
 
@@ -52,14 +65,20 @@ export async function GET() {
       collections: Object.fromEntries(entries),
     };
 
-    return new NextResponse(JSON.stringify(exportData, null, 2), {
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Disposition": `attachment; filename="lumni-export-${new Date().toISOString().split("T")[0]}.json"`,
-      },
-    });
+    return addSecurityHeaders(
+      new NextResponse(JSON.stringify(exportData, null, 2), {
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Disposition": `attachment; filename="lumni-export-${new Date().toISOString().split("T")[0]}.json"`,
+        },
+      }),
+    );
   } catch (error) {
     logError("UserExport", error);
-    return NextResponse.json({ error: "Failed to export data" }, { status: 500 });
+    return addSecurityHeaders(
+      NextResponse.json({ error: "Failed to export data" }, { status: 500 }),
+    );
   }
 }
+
+export const GET = withRateLimit(exportHandler);

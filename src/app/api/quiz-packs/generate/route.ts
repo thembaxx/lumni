@@ -1,25 +1,22 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import type { Question } from "@/lib/question-engine/types";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { safeJsonStringify } from "@/lib/shared/json";
-import { logError } from "@/lib/shared/logger";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
-import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-async function generateHandler(req: Request): Promise<NextResponse> {
-  try {
-    const userId = await getAuthenticatedUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
-    }
-    const body = await req.json();
-    const { packId, subject, topic, count } = body;
+export const POST = createRouteHandler({
+  auth: "required",
+  useRateLimit: true,
+  errorLabel: "QuizPacksGenerate",
+  execute: async ({ body }) => {
+    const { packId, subject, topic, count } = body as {
+      packId?: string;
+      subject?: string;
+      topic?: string;
+      count?: number;
+    };
 
     if (!packId || !subject || !count) {
-      return NextResponse.json(
-        { error: "packId, subject, and count are required" },
-        { status: 400 },
-      );
+      throw new HttpError(400, "packId, subject, and count are required");
     }
 
     const [{ QuestionEngine }, { quizPackService }] = await Promise.all([
@@ -51,17 +48,6 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 
     const storageBytes = new TextEncoder().encode(JSON.stringify(questionData)).length;
 
-    return NextResponse.json({ success: true, storageBytes });
-  } catch (error) {
-    logError("QuizPacksGenerate", error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Generation failed" },
-      { status: 500 },
-    );
-  }
-}
-
-export const POST = withRateLimit(generateHandler, {
-  max: 10,
-  windowMs: 60 * 1000,
+    return { success: true, storageBytes };
+  },
 });

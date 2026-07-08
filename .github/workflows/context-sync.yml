@@ -1,0 +1,23 @@
+name: Daily Context Sync
+on:
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate Context
+        run: |
+          echo "::notice title=Context Sync::Manual trigger — no sync script implemented yet"
+      - name: Commit Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! git diff --cached --quiet; then
+            git add .context/
+            git commit -m "chore: daily context sync $(date +%Y-%m-%d)"
+            git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
+            git push
+          fi

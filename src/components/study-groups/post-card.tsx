@@ -5,7 +5,6 @@ import Message01Icon from "@hugeicons/core-free-icons/Message01Icon";
 import Pin02Icon from "@hugeicons/core-free-icons/Pin02Icon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { format } from "date-fns";
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -68,7 +67,13 @@ export function PostCard({
           </div>
           <span className="font-medium text-sm">{post.userName || post.userId}</span>
           <span className="text-muted-foreground text-xs">
-            {format(new Date(post.createdAt), "MMM d, HH:mm")}
+            {new Intl.DateTimeFormat("en", {
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            }).format(new Date(post.createdAt))}
           </span>
         </div>
         <div className="flex items-center gap-1">

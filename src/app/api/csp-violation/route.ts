@@ -1,7 +1,20 @@
 import { type NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(request: NextRequest) {
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  );
+  return response;
+}
+
+async function cspHandler(request: NextRequest): Promise<NextResponse> {
   try {
     const report = await request.json();
 
@@ -10,8 +23,10 @@ export async function POST(request: NextRequest) {
       tags: { type: "csp-violation" },
     });
 
-    return new NextResponse(null, { status: 204 });
+    return addSecurityHeaders(new NextResponse(null, { status: 204 }));
   } catch {
-    return new NextResponse(null, { status: 204 });
+    return addSecurityHeaders(new NextResponse(null, { status: 204 }));
   }
 }
+
+export const POST = withRateLimit(cspHandler);

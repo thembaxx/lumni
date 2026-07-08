@@ -83,6 +83,8 @@ export function useQuizSession({
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const correctAnswersRef = useRef(correctAnswers);
   correctAnswersRef.current = correctAnswers;
+  const elapsedTimeRef = useRef(elapsedTime);
+  elapsedTimeRef.current = elapsedTime;
 
   useInterval(
     () => {
@@ -114,8 +116,8 @@ export function useQuizSession({
 
   const handleStop = useCallback(() => {
     setIsRunning(false);
-    onFinish?.({ correctAnswers, elapsedTime });
-  }, [onFinish, correctAnswers, elapsedTime]);
+    onFinish?.({ correctAnswers: correctAnswersRef.current, elapsedTime: elapsedTimeRef.current });
+  }, [onFinish]);
 
   const handleRestart = useCallback(() => {
     setPoints(0);

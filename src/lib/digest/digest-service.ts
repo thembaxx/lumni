@@ -33,7 +33,7 @@ export class DigestService {
     try {
       const attempts = await this.deps.db.quizAttempts
         .where("completedAt")
-        .above(sevenDaysAgo)
+        .aboveOrEqual(sevenDaysAgo)
         .toArray();
       totalAttempts = attempts.length;
       avgScore =

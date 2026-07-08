@@ -1,6 +1,7 @@
 import { Query } from "appwrite";
 import { customAlphabet } from "nanoid";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
@@ -36,6 +37,7 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ userId, body }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const { subjectId, label, maxUses, expiresInDays } = body as {
       subjectId?: string;
       label?: string;
@@ -80,6 +82,7 @@ export const GET = createRouteHandler({
   auth: "required",
   errorLabel: "ClassroomCodeList",
   execute: async ({ userId }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const now = Date.now();
     const docs = await listDocuments(COLLECTIONS.CLASSROOM_CODES, [
       Query.equal("teacherId", userId as string),
@@ -116,6 +119,7 @@ export const DELETE = createRouteHandler({
     return null;
   },
   execute: async ({ userId, body }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const { code } = body as { code: string };
 
     try {

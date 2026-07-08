@@ -6,6 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { useState } from "react";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/shared/empty-state";
+import AlertTriangleIcon from "@hugeicons/core-free-icons/AlertTriangleIcon";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -60,6 +61,18 @@ export function ResultsSearch() {
         <p className="ios-subhead mt-1 text-(--system-text-secondary)">
           Search past matric results by name and year.
         </p>
+      </div>
+
+      <div className="px-5 pb-3">
+        <div className="flex items-start gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+          <HugeiconsIcon
+            icon={AlertTriangleIcon}
+            className="mt-0.5 size-4 shrink-0 text-amber-500"
+          />
+          <p className="text-foreground/80 text-xs leading-relaxed">
+            Demo data — not real matric results. Official DBE results pending integration.
+          </p>
+        </div>
       </div>
 
       <div className="px-5 pb-5">

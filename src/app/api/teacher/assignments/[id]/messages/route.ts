@@ -2,14 +2,18 @@ import { Query } from "appwrite";
 import { NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { auth } from "@/lib/server/auth";
+import { auth, isTeacher } from "@/lib/server/auth";
 import { logError } from "@/lib/shared/logger";
 
 const VALID_ROLES = new Set(["teacher", "student", "parent"]);
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  let userId: string;
   try {
-    await auth();
+    userId = await auth();
+    if (!isTeacher(userId)) {
+      return NextResponse.json({ error: "Teacher access required" }, { status: 403 });
+    }
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -36,6 +40,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   let userId: string;
   try {
     userId = await auth();
+    if (!isTeacher(userId)) {
+      return NextResponse.json({ error: "Teacher access required" }, { status: 403 });
+    }
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

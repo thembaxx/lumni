@@ -1,19 +1,15 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { dexieDataAccess } from "@/lib/db";
 import { DigestService } from "@/lib/digest";
 
-export async function POST() {
-  try {
-    const { requireAdmin } = await import("@/lib/server/auth");
-    await requireAdmin();
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const service = new DigestService({ db: dexieDataAccess });
-  const stats = await service.computeWeeklyStats();
-  const { title, body } = service.formatDigestMessage(stats);
-  const result = await service.sendPushNotifications(title, body);
-
-  return NextResponse.json({ success: true, ...result });
-}
+export const POST = createRouteHandler({
+  auth: "admin",
+  errorLabel: "WeeklyDigest",
+  execute: async () => {
+    const service = new DigestService({ db: dexieDataAccess });
+    const stats = await service.computeWeeklyStats();
+    const { title, body } = service.formatDigestMessage(stats);
+    const result = await service.sendPushNotifications(title, body);
+    return { success: true, ...result };
+  },
+});

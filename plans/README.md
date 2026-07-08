@@ -298,8 +298,8 @@ All plans independent unless noted. Execute in any order.
 | 127  | Migrate chat route to createRouteHandler                                | P1       | M      | MED  | —          | DONE   |
 | 128  | Extract AI provider initialization to a shared singleton                | P1       | S      | LOW  | —          | DONE   |
 | 129  | Fix data-access.ts layering violation — move WrongAnswerEntry to schema | P2       | S      | LOW  | —          | DONE   |
-| 130  | Migrate 11 remaining routes to createRouteHandler                       | P2       | M      | LOW  | 127        | TODO   |
-| 131  | Wire admin metrics routes to real Appwrite data                         | P1       | M      | LOW  | —          | TODO   |
+| 130  | Migrate 11 remaining routes to createRouteHandler                       | P2       | M      | LOW  | 127        | DONE   |
+| 131  | Wire admin metrics routes to real Appwrite data                         | P1       | M      | LOW  | —          | DONE   |
 | 132  | Create Stripe webhook handler to activate school licenses               | P1       | M      | MED  | —          | DONE   |
 
 **Execution notes**:
@@ -314,6 +314,42 @@ All plans independent unless noted. Execute in any order.
 
 - 130 (migrate routes) depends on 127 (chat route) because the chat route is the most complex migration and should be done separately first
 - All other plans are independent
+
+## Execution order & status — Batch 10 (July 2026 audit sweep)
+
+All plans independent unless noted. Executed 2026-07-08 from commit `6c00cdcd`.
+
+| Plan | Title                                            | Priority | Effort | Risk | Depends on | Status |
+| ---- | ------------------------------------------------ | -------- | ------ | ---- | ---------- | ------ |
+| 133  | Fix teacher endpoint role authorization          | P0       | M      | MED  | —          | DONE   |
+| 134  | Fix useQuizSession stale closure bug             | P1       | S      | LOW  | —          | DONE   |
+| 135  | Fix seed CSRF origin substring check             | P2       | S      | LOW  | —          | DONE   |
+| 136  | Fix unbounded Dexie toArray() in digest          | P1       | M      | LOW  | —          | DONE   |
+| 137  | Add demo-data disclaimer to matric results       | P1       | S      | LOW  | —          | DONE   |
+| 138  | Enforce personalized-feed feature flag           | P2       | S      | LOW  | —          | DONE   |
+| 139  | Remove uuid + date-fns unused dependencies       | P3       | S      | LOW  | —          | DONE   |
+| 140  | Consolidate dual flag/experiment systems         | P3       | S      | LOW  | —          | DONE   |
+| 141  | Enable knip dead-code detection rules            | P3       | S      | LOW  | —          | DONE   |
+| 142  | Fix context-sync.yml no-op CI workflow           | P3       | S      | LOW  | —          | DONE   |
+| 143  | Verify Sentry→Linear integration (investigation) | P2       | S      | LOW  | —          | DONE   |
+| 144  | Update ROADMAP.md to match shipped features      | P3       | S      | LOW  | —          | DONE   |
+| 145  | Enrich offline page with cached-content summary  | P2       | M      | LOW  | —          | DONE   |
+
+**Execution notes**:
+
+- **Plan 133** (teacher auth): Added `isTeacher()`/`requireTeacher()` to `auth.ts`. Fixed `share-assignment` auth `"none"`→`"required"`. Added `isTeacher()` guard to all 12 teacher route files. Updated 2 test files. Verification: 0 typecheck errors, 1890 tests pass, 0 lint errors.
+- **Plan 134** (stale closure): Added `elapsedTimeRef`. Changed `handleStop` to read from refs. Removed `correctAnswers`/`elapsedTime` from deps array. Verification: 0 typecheck errors, 21 quiz-session tests pass.
+- **Plan 135** (seed CSRF): Replaced `origin.includes(host)` substring check with `new URL(origin).hostname !== host.split(":")[0]`. Added `SEED_CSRF_TOKEN` to `.env.example`. Verification: 0 typecheck errors.
+- **Plan 136** (Dexie toArray): Changed `toArray().filter()` to `.where("completedAt").aboveOrEqual()` in digest-service. Added `aboveOrEqual`/`above` methods to `DataAccess.WhereClause` interface + both adapters. Verification: 0 typecheck errors, 36 schema tests pass.
+- **Plan 137** (matric results): Added `isDemoData: true` + `disclaimer` field to API response. Added warning banner to results-search component. Added TODO documenting DBE integration. Added `isDemoData`/`disclaimer` to types. Verification: 0 typecheck errors.
+- **Plan 138** (feed flag): Wired `useFeatureFlag("personalized-feed")` into `FeedSection`. When flag off: no API call (query `enabled: false`), renders `NextBestActionCard` fallback. Verification: 0 typecheck errors.
+- **Plan 139** (dep pruning): Replaced `uuid` with `crypto.randomUUID()` in `create-route-handler.ts`. Replaced `date-fns/formatDistanceToNow` with `Intl.RelativeTimeFormat` in `post-card.tsx`. Removed both packages. Verification: 0 typecheck errors, 1885 tests pass.
+- **Plan 140** (flag consolidation): Deleted `src/lib/experiments/` (4 files) + `src/app/api/experiment/evaluate/` route. Removed `experimentAssignments` from Dexie schema (v44), DataAccess interface, both adapters, barrel, and schema migration tests. Verification: 0 typecheck errors, 1889 tests pass.
+- **Plan 141** (knip rules): Enabled 6 rules (`exports`, `types`, `nsExports`, `nsTypes`, `duplicates`, `enumMembers`) from `"off"`→`"warn"`. 565 warnings baseline (barrel re-exports, public APIs).
+- **Plan 142** (context-sync): Changed workflow trigger from `schedule` (daily cron) to `workflow_dispatch` (manual). Removed broken script reference. Verification: no wasted CI minutes.
+- **Plan 143** (Sentry→Linear): Investigation complete — Sentry→Linear is a **SaaS dashboard configuration** (OAuth workspace connection), not a code-level integration. No code changes needed. Next step: connect in Sentry dashboard UI at `sentry.io` → Settings → Integrations → Linear.
+- **Plan 144** (roadmap): Moved shipped items (Stories/D1, Dictionary/C2, Pronunciation/C1, Vocabulary) to "Recently Shipped — July 2026". Created focused "Next Up" section. Removed stale/duplicate sections. Verification: 42 lines, accurate to codebase.
+- **Plan 145** (offline page): Created `useOfflineStats()` hook querying 6 Dexie tables via `useLiveQuery`. Added 4 stat cards (questions, flashcards, study guides, quiz packs) with links. Added pending-sync banner. Verification: 0 typecheck errors.
 
 ## Findings considered and rejected
 

@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 const mockGetAuthenticatedUserId = vi.fn<() => Promise<string | null>>();
 vi.mock("@/lib/server/auth", () => ({
   getAuthenticatedUserId: mockGetAuthenticatedUserId,
+  isTeacher: vi.fn((userId: string) => userId === "teacher-123"),
 }));
 
 vi.mock("@/lib/shared/logger", () => ({ logError: vi.fn() }));

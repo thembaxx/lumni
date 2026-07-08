@@ -2,13 +2,14 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { shareAssignment } from "@/lib/share/share-service";
 
 export const POST = createRouteHandler({
-  auth: "none",
+  auth: "required",
   validate: (body: { assignmentId?: string; topic?: string }) => {
     if (!body.assignmentId || !body.topic) return "assignmentId and topic required";
     return null;
   },
   execute: async ({
     body,
+    userId,
   }: {
     body: {
       assignmentId: string;
@@ -16,12 +17,14 @@ export const POST = createRouteHandler({
       questionCount?: number;
       dueDate?: string;
     };
+    userId: string | null;
   }) => {
     const result = await shareAssignment(
       body.assignmentId,
       body.topic,
       body.questionCount ?? 10,
       body.dueDate,
+      userId ?? undefined,
     );
     return result;
   },

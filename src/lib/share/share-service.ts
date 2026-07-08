@@ -149,6 +149,7 @@ export async function shareAssignment(
   topic: string,
   questionCount: number,
   dueDate?: string,
+  userId?: string,
 ): Promise<{ shareId: string; url: string }> {
   const shareId = crypto.randomUUID();
   const record: SharedRecord = {
@@ -164,7 +165,7 @@ export async function shareAssignment(
     } as unknown as Question,
     subject: topic,
     topic,
-    sharedById: "teacher",
+    sharedById: userId ?? "teacher",
     sharedAt: Date.now(),
     viewCount: 0,
   };

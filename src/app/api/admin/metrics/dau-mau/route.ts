@@ -1,4 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { Query } from "appwrite";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 interface DailyDau {
   date: string;
@@ -22,29 +24,55 @@ export const GET = createRouteHandler({
   execute: async (): Promise<DauMauResponse> => {
     const now = Date.now();
     const dayMs = 86400000;
-    const daily: DailyDau[] = [];
-    const monthly: MonthlyMau[] = [];
-    const totalDau: number[] = [];
+    const thirtyDaysAgo = new Date(now - 30 * dayMs).toISOString();
 
-    let dau = 38;
+    const sessions = await listDocuments<Record<string, unknown>>(COLLECTIONS.STUDY_SESSIONS, [
+      Query.greaterThan("startedAt", thirtyDaysAgo),
+    ]);
+
+    // Build day buckets for DAU (last 30 days)
+    const dayBuckets: Record<string, Set<string>> = {};
     for (let i = 29; i >= 0; i--) {
       const d = new Date(now - i * dayMs);
-      dau += Math.round(Math.sin(i * 0.5) * 3 + 1 + Math.random() * 2);
-      dau = Math.max(20, Math.min(80, dau));
-      totalDau.push(dau);
-      daily.push({ date: d.toISOString().slice(0, 10), dau });
+      dayBuckets[d.toISOString().slice(0, 10)] = new Set();
     }
 
-    let mau = 180;
+    // Build month buckets for MAU (last 12 months)
+    const nowDate = new Date();
+    const monthBuckets: Record<string, Set<string>> = {};
     for (let i = 11; i >= 0; i--) {
-      const d = new Date(now - i * 30 * dayMs);
-      mau += Math.round(Math.sin(i * 0.3) * 10 + 5 + Math.random() * 5);
-      mau = Math.max(100, Math.min(300, mau));
-      monthly.push({ month: d.toISOString().slice(0, 7), mau });
+      const d = new Date(nowDate.getFullYear(), nowDate.getMonth() - i, 1);
+      monthBuckets[d.toISOString().slice(0, 7)] = new Set();
     }
 
-    const avgDau = totalDau.length > 0 ? totalDau.reduce((a, b) => a + b, 0) / totalDau.length : 0;
-    const avgMau = monthly.length > 0 ? monthly.reduce((a, b) => a + b.mau, 0) / monthly.length : 0;
+    for (const s of sessions) {
+      const startedAt = s.startedAt as string | undefined;
+      if (!startedAt) continue;
+      const userId = String(s.userId ?? "");
+      if (!userId) continue;
+
+      const dayKey = startedAt.slice(0, 10);
+      if (dayBuckets[dayKey]) {
+        dayBuckets[dayKey].add(userId);
+      }
+
+      const monthKey = startedAt.slice(0, 7);
+      if (monthBuckets[monthKey]) {
+        monthBuckets[monthKey].add(userId);
+      }
+    }
+
+    const daily: DailyDau[] = Object.entries(dayBuckets)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, users]) => ({ date, dau: users.size }));
+
+    const monthly: MonthlyMau[] = Object.entries(monthBuckets)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([month, users]) => ({ month, mau: users.size }));
+
+    const avgDau = daily.length > 0 ? daily.reduce((sum, d) => sum + d.dau, 0) / daily.length : 0;
+    const avgMau =
+      monthly.length > 0 ? monthly.reduce((sum, m) => sum + m.mau, 0) / monthly.length : 0;
 
     return { daily, monthly, stickiness: avgMau > 0 ? avgDau / avgMau : 0 };
   },
