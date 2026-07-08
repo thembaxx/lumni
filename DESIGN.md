@@ -21,19 +21,19 @@ to make the content clearer. The typography and layout do all the work.
 
 Pure grayscale (oklch chroma 0 throughout):
 
-| Token               | Light            | Dark               |
-| ------------------- | ---------------- | ------------------ |
-| Background          | oklch(99% 0 0)   | oklch(8% 0 0)      |
-| Background Sec.     | oklch(97% 0 0)   | oklch(12% 0 0)     |
-| Surface (cards)     | oklch(100% 0 0)  | oklch(14% 0 0)     |
-| Surface Sec.        | oklch(97% 0 0)   | oklch(18% 0 0)     |
-| Separator           | oklch(0% 0 0 / 0.08) | oklch(100% 0 0 / 0.12) |
-| Text Primary        | oklch(12% 0 0)   | oklch(92% 0 0)     |
-| Text Secondary      | oklch(12% 0 0 / 0.6) | oklch(92% 0 0 / 0.6) |
-| Text Tertiary       | oklch(12% 0 0 / 0.35) | oklch(92% 0 0 / 0.35) |
-| Selected / Accent   | oklch(12% 0 0)   | oklch(100% 0 0)    |
-| Destructive         | oklch(45% 0 0)   | oklch(45% 0 0)     |
-| Success             | oklch(40% 0 0)   | oklch(40% 0 0)     |
+| Token             | Light                 | Dark                   |
+| ----------------- | --------------------- | ---------------------- |
+| Background        | oklch(99% 0 0)        | oklch(8% 0 0)          |
+| Background Sec.   | oklch(97% 0 0)        | oklch(12% 0 0)         |
+| Surface (cards)   | oklch(100% 0 0)       | oklch(14% 0 0)         |
+| Surface Sec.      | oklch(97% 0 0)        | oklch(18% 0 0)         |
+| Separator         | oklch(0% 0 0 / 0.08)  | oklch(100% 0 0 / 0.12) |
+| Text Primary      | oklch(12% 0 0)        | oklch(92% 0 0)         |
+| Text Secondary    | oklch(12% 0 0 / 0.6)  | oklch(92% 0 0 / 0.6)   |
+| Text Tertiary     | oklch(12% 0 0 / 0.35) | oklch(92% 0 0 / 0.35)  |
+| Selected / Accent | oklch(12% 0 0)        | oklch(100% 0 0)        |
+| Destructive       | oklch(45% 0 0)        | oklch(45% 0 0)         |
+| Success           | oklch(40% 0 0)        | oklch(40% 0 0)         |
 
 ### Typography
 
@@ -41,11 +41,11 @@ Pure grayscale (oklch chroma 0 throughout):
 
 Three sizes only:
 
-| Token       | Size    | Usage                     |
-| ----------- | ------- | ------------------------- |
-| Large Heading | 1.5rem (24px) | Page titles, section headers |
+| Token         | Size            | Usage                           |
+| ------------- | --------------- | ------------------------------- |
+| Large Heading | 1.5rem (24px)   | Page titles, section headers    |
 | Small Heading | 1.125rem (18px) | Card headers, subsection titles |
-| Body        | 1rem (16px) | All text, labels, captions |
+| Body          | 1rem (16px)     | All text, labels, captions      |
 
 ### Border Radius
 
@@ -63,13 +63,13 @@ Three levels, pure grayscale (oklch 0% chroma):
 
 Mac-like smooth. Eased transitions at 300-400ms.
 
-| Token    | Duration | Curve                                |
-| -------- | -------- | ------------------------------------ |
-| Fast     | 200ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Normal   | 300ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Slow     | 400ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Decelerate | —      | cubic-bezier(0, 0, 0.2, 1)           |
-| Accelerate | —      | cubic-bezier(0.4, 0, 1, 1)         |
+| Token      | Duration | Curve                                |
+| ---------- | -------- | ------------------------------------ |
+| Fast       | 200ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
+| Normal     | 300ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
+| Slow       | 400ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
+| Decelerate | —        | cubic-bezier(0, 0, 0.2, 1)           |
+| Accelerate | —        | cubic-bezier(0.4, 0, 1, 1)           |
 
 ### Spacing
 

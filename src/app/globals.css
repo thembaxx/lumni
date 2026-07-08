@@ -296,8 +296,12 @@
   --z-skip-link: 999;
   --z-background: -1;
 
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans:
+    var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
   --font-heading: var(--font-heading);
 
   --color-sidebar: var(--sidebar);
@@ -410,7 +414,12 @@
     @apply min-h-dvh flex flex-col;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     line-height: 1.3;
@@ -419,15 +428,20 @@
     text-wrap: balance;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-size: var(--fs-heading);
   }
 
-  h3, h4 {
+  h3,
+  h4 {
     font-size: var(--fs-subheading);
   }
 
-  p, li, figcaption, blockquote {
+  p,
+  li,
+  figcaption,
+  blockquote {
     line-height: 1.7;
     text-wrap: pretty;
   }
@@ -513,56 +527,112 @@
    ======================================== */
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes shimmer {
-  from { background-position: -200% 0; }
-  to { background-position: 200% 0; }
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes skeleton-wave {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
 }
 
 @keyframes fadeOut {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes vt-slide-from-right {
-  from { transform: translateX(100%); opacity: 0; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 @keyframes vt-slide-to-left {
-  to { transform: translateX(-100%); opacity: 0; }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 @keyframes vt-slide-from-left {
-  from { transform: translateX(-100%); opacity: 0; }
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 @keyframes vt-slide-to-right {
-  to { transform: translateX(100%); opacity: 0; }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 @keyframes vt-morph-in {
-  from { transform: scale(0.92); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 @keyframes vt-morph-out {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(0.92); opacity: 0; }
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.92);
+    opacity: 0;
+  }
 }
 @keyframes confettiFall {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 ::view-transition-old(practice-trigger) {
@@ -580,10 +650,18 @@
   animation: 120ms ease-out both fadeIn;
 }
 
-.page-title { view-transition-name: page-title; }
-.sidebar-panel { view-transition-name: sidebar-panel; }
-.topnav-bar { view-transition-name: topnav-bar; }
-.sidebar-active { view-transition-name: sidebar-active; }
+.page-title {
+  view-transition-name: page-title;
+}
+.sidebar-panel {
+  view-transition-name: sidebar-panel;
+}
+.topnav-bar {
+  view-transition-name: topnav-bar;
+}
+.sidebar-active {
+  view-transition-name: sidebar-active;
+}
 
 ::view-transition-old(sidebar-panel),
 ::view-transition-new(sidebar-panel),
@@ -625,7 +703,12 @@
   animation: shimmer 2s infinite linear;
 }
 .animate-skeleton-wave {
-  background: linear-gradient(90deg, var(--system-surface) 25%, var(--system-surface-secondary) 50%, var(--system-surface) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--system-surface) 25%,
+    var(--system-surface-secondary) 50%,
+    var(--system-surface) 75%
+  );
   background-size: 200px 100%;
   animation: skeleton-wave 1.5s ease-in-out infinite;
 }
@@ -645,11 +728,21 @@
   opacity: 0;
   animation: fadeInUp var(--motion-slow) var(--ease-default) forwards;
 }
-.animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
-.animate-stagger > *:nth-child(2) { animation-delay: 50ms; }
-.animate-stagger > *:nth-child(3) { animation-delay: 100ms; }
-.animate-stagger > *:nth-child(4) { animation-delay: 150ms; }
-.animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 50ms;
+}
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 100ms;
+}
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 150ms;
+}
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 200ms;
+}
 
 /* ========================================
    TOUCH TARGET & ACCESSIBILITY
@@ -700,13 +793,25 @@
 }
 
 /* Section spacing */
-.section-gap { padding-top: var(--space-4); padding-bottom: var(--space-4); }
-.section-gap-lg { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+.section-gap {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+.section-gap-lg {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
 
 /* Shadow utilities */
-.shadow-level-1 { box-shadow: var(--shadow-level-1); }
-.shadow-level-2 { box-shadow: var(--shadow-level-2); }
-.shadow-level-3 { box-shadow: var(--shadow-level-3); }
+.shadow-level-1 {
+  box-shadow: var(--shadow-level-1);
+}
+.shadow-level-2 {
+  box-shadow: var(--shadow-level-2);
+}
+.shadow-level-3 {
+  box-shadow: var(--shadow-level-3);
+}
 
 /* ========================================
    PWA TITLEBAR — window-controls-overlay
@@ -800,7 +905,9 @@ span.math:not(:empty)::after {
 
 /* Press micro-interaction */
 .press-scale {
-  transition: transform var(--motion-fast) var(--ease-default), box-shadow var(--motion-fast) var(--ease-default);
+  transition:
+    transform var(--motion-fast) var(--ease-default),
+    box-shadow var(--motion-fast) var(--ease-default);
 }
 .press-scale:active {
   transform: scale(0.96);

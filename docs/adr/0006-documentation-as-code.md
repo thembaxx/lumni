@@ -31,7 +31,7 @@ The tooling and workflow diverged from this ADR:
 4. **MDX sync** → never implemented. Components have no MDX documentation.
 5. **Code review checklist** → never formalized.
 
-The ADR was correct in *intent* (Storybook coverage is valuable) but the specific tool choices and workflow mechanics were wrong.
+The ADR was correct in _intent_ (Storybook coverage is valuable) but the specific tool choices and workflow mechanics were wrong.
 
 **Verdict:** Toolchain evolved differently. ADR-0006 is formally **Rejected**.
 
