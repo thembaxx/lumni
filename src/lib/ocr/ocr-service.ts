@@ -44,14 +44,6 @@ export async function recognizeImage(
   return { text, confidence: data.confidence, mode };
 }
 
-async function resetOcrWorker() {
-  if (worker) {
-    await worker.terminate();
-    worker = null;
-    workerInitPromise = null;
-  }
-}
-
 function postProcessMath(text: string): string {
   return text
     .replace(/\bO\b/g, "0")

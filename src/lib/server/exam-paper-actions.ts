@@ -175,45 +175,6 @@ export async function uploadExamPaper(options: UploadExamPaperOptions): Promise<
   return appwriteDocToRecord(doc as unknown as Record<string, unknown>);
 }
 
-async function getExamPapers(subjectCode: string, year?: number): Promise<ExamPaperRecord[]> {
-  const _userId = await auth();
-
-  const queries: string[] = [Query.equal("subjectCode", subjectCode)];
-  if (year) {
-    queries.push(Query.equal("year", year));
-  }
-
-  const response = await databases.listDocuments(
-    APPWRITE_DATABASE_ID,
-    COLLECTIONS.EXAM_PAPERS,
-    queries,
-  );
-
-  return response.documents.map((doc) =>
-    appwriteDocToRecord(doc as unknown as Record<string, unknown>),
-  );
-}
-
-async function getExamPaperUrl(
-  subjectCode: string,
-  year: number,
-  paperNumber: number,
-  type: "paper" | "memo",
-): Promise<string | null> {
-  const [_userId, response] = await Promise.all([
-    auth(),
-    databases.listDocuments(APPWRITE_DATABASE_ID, COLLECTIONS.EXAM_PAPERS, [
-      Query.equal("subjectCode", subjectCode),
-      Query.equal("year", year),
-      Query.equal("paperNumber", paperNumber),
-      Query.equal("type", type),
-      Query.limit(1),
-    ]),
-  ]);
-
-  return (response.documents[0]?.fileUrl as string) || null;
-}
-
 export async function deleteExamPaper(id: string): Promise<void> {
   const _userId = await requireAdmin();
 

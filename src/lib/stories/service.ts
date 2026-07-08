@@ -193,16 +193,3 @@ export async function storeGeneratedStory(story: Story): Promise<void> {
     // IndexedDB unavailable (server-side)
   }
 }
-
-async function getCachedStoryById(storyId: string): Promise<Story | null> {
-  try {
-    const key = `story:${storyId}`;
-    const cached = await _deps.db.storyCache.get(key);
-    if (cached && cached.expiresAt > Date.now()) {
-      return cached.story;
-    }
-  } catch {
-    // IndexedDB unavailable (server-side)
-  }
-  return null;
-}

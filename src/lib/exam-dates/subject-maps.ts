@@ -1,10 +1,4 @@
-import {
-  getSubjectHexColor,
-  getSubjectName,
-  getSubjectOklchColor,
-  getSubjectTailwindColor,
-  getSubjectAbbr as getUnifiedAbbr,
-} from "@/lib/subjects";
+import { getSubjectTailwindColor, getSubjectAbbr as getUnifiedAbbr } from "@/lib/subjects";
 
 export function getSubjectColor(subjectId: string): string {
   return getSubjectTailwindColor(subjectId);

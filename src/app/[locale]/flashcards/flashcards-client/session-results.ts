@@ -17,7 +17,3 @@ export function computeConsecutiveCorrect(
 export function isSm2Session(sessionCards: { id: string }[]): boolean {
   return sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
 }
-
-function allCorrect(qualities: Map<string, number>): boolean {
-  return Array.from(qualities.values()).every((q) => q >= 3);
-}

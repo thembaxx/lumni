@@ -72,21 +72,6 @@ export async function getNextExams(session: string, year: number, count = 2): Pr
     .slice(0, count);
 }
 
-async function getExamsGroupedByDate(
-  session: string,
-  year: number,
-): Promise<{ date: string; slots: ExamSlot[] }[]> {
-  const all = await getExamDates(session, year);
-  const grouped: Record<string, ExamSlot[]> = {};
-  for (const slot of all) {
-    if (!grouped[slot.date]) grouped[slot.date] = [];
-    grouped[slot.date].push(slot);
-  }
-  return Object.entries(grouped)
-    .toSorted(([a], [b]) => a.localeCompare(b))
-    .map(([date, slots]) => ({ date, slots }));
-}
-
 export function getSessionLabel(session: string, year: number): string {
   if (session === "may-june") return `May/June ${year}`;
   return `Oct/Nov ${year}`;
@@ -115,10 +100,6 @@ export function formatDuration(hours: number): string {
   return `${hours}h`;
 }
 
-function refreshExamDatesFromAppwrite(session: string, year: number): Promise<ExamSlot[]> {
-  return getExamDates(session, year);
-}
-
 export async function syncExamDatesToAppwrite(
   session: string,
   year: number,
@@ -136,26 +117,5 @@ export async function syncExamDatesToAppwrite(
     });
   } catch (err) {
     logError("ExamDates.EnqueueSync", err);
-  }
-}
-
-async function syncExamDatesDirect(
-  session: string,
-  year: number,
-  slots: ExamSlot[],
-): Promise<void> {
-  try {
-    const { upsertDocument } = await import("@/lib/orchestrator/handlers/sync-factory");
-    const key = `${session}_${year}`;
-    const { Query } = await import("appwrite");
-    await upsertDocument("exam_dates", [Query.equal("cacheKey", key)], {
-      cacheKey: key,
-      session,
-      year,
-      slots: JSON.stringify(slots),
-      source: "seed",
-    });
-  } catch (err) {
-    logError("ExamDates.DirectSync", err);
   }
 }

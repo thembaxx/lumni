@@ -1,6 +1,6 @@
 import type { StudyDataAccess } from "@/lib/db/data-access";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
-import { enqueue } from "@/lib/orchestrator/job-queue";
+
 import { logError } from "@/lib/shared/logger";
 import { loadFromStorage, saveToStorage } from "./storage";
 
@@ -249,16 +249,6 @@ export function autoScheduleSessions(
   saveStudyPlan(plan);
 
   return plan;
-}
-
-async function syncStudyPlanToAppwrite(userId: string): Promise<void> {
-  const plan = loadStudyPlan();
-  await enqueue("appwrite-study-plan-sync", {
-    userId,
-    sessions: plan.sessions,
-    examDates: plan.examDates,
-    generatedAt: plan.generatedAt,
-  });
 }
 
 export function getStudyStats(): {

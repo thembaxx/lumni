@@ -173,18 +173,6 @@ export async function getAuthenticatedUserName(): Promise<string | null> {
   }
 }
 
-async function isCurrentUserAdmin(): Promise<boolean> {
-  try {
-    const userId = await getAuthenticatedUserId();
-    if (!userId) return false;
-
-    await requireAdmin();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export function isTeacher(userId: string): boolean {
   if (!userId) return false;
   const teacherIds = process.env.TEACHER_USER_IDS;
@@ -194,13 +182,4 @@ export function isTeacher(userId: string): boolean {
     return trimmed ? [trimmed] : [];
   });
   return ids.includes(userId);
-}
-
-async function requireTeacher(): Promise<string> {
-  const userId = await auth();
-  if (!isTeacher(userId)) {
-    logError("RequireTeacher.Unauthorized", new Error(`User ${userId} attempted teacher access`));
-    throw new Error("Teacher access required");
-  }
-  return userId;
 }

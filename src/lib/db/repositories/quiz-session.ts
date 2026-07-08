@@ -1,5 +1,4 @@
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
-import type { DataAccess } from "@/lib/db/data-access";
 import type { QuizSessionState } from "@/lib/db/schema";
 
 export class QuizSessionRepository {

@@ -30,7 +30,3 @@ export function saveSnapshot(data: StoredGamification): void {
     saveWeeklySnapshot(label || "You", data.totalXp, data.currentStreak);
   }, 0);
 }
-
-function saveSnapshotEffect(data: StoredGamification): Effect.Effect<void> {
-  return Effect.sync(() => saveSnapshot(data));
-}
