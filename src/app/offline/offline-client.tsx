@@ -4,7 +4,7 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import DatabaseIcon from "@hugeicons/core-free-icons/DatabaseIcon";
 import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
 import Quiz03Icon from "@hugeicons/core-free-icons/Quiz03Icon";
-import SyncIcon from "@hugeicons/core-free-icons/SyncIcon";
+import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
@@ -121,7 +121,7 @@ export default function OfflinePage() {
 
       {stats.pendingSync > 0 && (
         <div className="flex items-center justify-center gap-2 rounded-lg bg-muted px-4 py-3 text-muted-foreground text-xs">
-          <HugeiconsIcon icon={SyncIcon} className="size-3" />
+          <HugeiconsIcon icon={RefreshIcon} className="size-3" />
           {stats.pendingSync} change{stats.pendingSync !== 1 ? "s" : ""} pending sync
         </div>
       )}
