@@ -90,7 +90,7 @@ export function PullToRefresh({
     <div ref={ref} className={className} style={{ overscrollBehaviorY: "contain" }} {...rest}>
       {refreshing && (
         <div className="flex h-14 items-center justify-center" style={{ marginTop: "-3.5rem" }}>
-          <div className="size-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div className="size-6 animate-spin rounded-full border-2 border-(--system-accent) border-t-transparent" />
         </div>
       )}
       {children}

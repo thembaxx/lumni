@@ -100,7 +100,7 @@ export async function SiteFooter() {
             </div>
           </div>
         </div>
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
           <p className="text-muted-foreground text-xs">
             &copy; {CURRENT_YEAR} Lumni. All rights reserved.
           </p>

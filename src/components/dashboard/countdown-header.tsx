@@ -127,7 +127,7 @@ export function CountdownHeader() {
             </div>
           )}
 
-          <div className="relative z-elevated">
+          <div className="relative z-elevated flex flex-col gap-3">
             <h1 className="balance text-wrap font-heading font-semibold text-2xl text-foreground leading-tight tracking-tight sm:text-3xl">
               {greeting}
               {isLoggedIn && name ? (
@@ -135,7 +135,7 @@ export function CountdownHeader() {
               ) : null}
             </h1>
 
-            <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               {_sessionLoading || !mounted ? (
                 <Skeleton className="h-8 w-24 rounded-md" />
               ) : (
@@ -161,14 +161,14 @@ export function CountdownHeader() {
             </div>
 
             <progress
-              className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40 [&::-moz-progress-bar]:bg-primary [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-primary"
+              className="h-1.5 w-full overflow-hidden rounded-full bg-border/40 [&::-moz-progress-bar]:bg-primary [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-primary"
               value={mounted ? Math.round(yearProgress * 100) : 0}
               max={100}
               aria-label="Year progress: days studied vs total"
             />
 
             {mounted && (
-              <p className="card-entrance mt-1 text-pretty font-medium text-muted-foreground text-xs leading-snug">
+              <p className="card-entrance text-pretty font-medium text-muted-foreground text-xs leading-snug">
                 <span className="font-extrabold text-foreground/80">{msg.primary}</span>.{" "}
                 {msg.subtitle}
               </p>

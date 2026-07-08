@@ -88,10 +88,10 @@ export function LeaderboardCard() {
           />
           Weekly Leaderboard
           {liveSince && (
-            <span className="ios-caption-3 ml-auto flex items-center gap-1.5 font-medium text-emerald-500 uppercase tracking-wider">
+            <span className="ios-caption-3 ml-auto flex items-center gap-1.5 font-medium text-(--system-success) uppercase tracking-wider">
               <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-(--system-success) opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-(--system-success)" />
               </span>
               LIVE
             </span>

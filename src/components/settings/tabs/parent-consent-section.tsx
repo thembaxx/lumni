@@ -27,9 +27,7 @@ export function ParentConsentSection({ userId }: { userId: string }) {
         <Badge
           variant={requests.status === "granted" ? "default" : "secondary"}
           className={
-            requests.status === "granted"
-              ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300"
-              : ""
+            requests.status === "granted" ? "bg-(--system-success)/10 text-(--system-success)" : ""
           }
         >
           {requests.status}

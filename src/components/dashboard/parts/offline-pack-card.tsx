@@ -24,7 +24,7 @@ function StatusBadge({ status }: { status: QuizPack["status"] }) {
       return (
         <Badge
           variant="outline"
-          className="gap-1.5 border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-400"
+          className="gap-1.5 border-(--system-warning)/30 bg-(--system-warning)/10 text-(--system-warning)"
         >
           <HugeiconsIcon icon={Loading03Icon} className="size-3 animate-spin" />
           Generating
@@ -47,7 +47,7 @@ function StatusBadge({ status }: { status: QuizPack["status"] }) {
       return (
         <Badge
           variant="destructive"
-          className="bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400"
+          className="bg-(--system-destructive)/10 text-(--system-destructive)"
         >
           Failed
         </Badge>

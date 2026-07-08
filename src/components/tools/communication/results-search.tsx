@@ -64,10 +64,10 @@ export function ResultsSearch() {
       </div>
 
       <div className="px-5 pb-3">
-        <div className="flex items-start gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+        <div className="flex items-start gap-2.5 rounded-xl border border-(--system-warning)/30 bg-(--system-warning)/10 p-3">
           <HugeiconsIcon
             icon={AlertTriangleIcon}
-            className="mt-0.5 size-4 shrink-0 text-amber-500"
+            className="mt-0.5 size-4 shrink-0 text-(--system-warning)"
           />
           <p className="text-foreground/80 text-xs leading-relaxed">
             Demo data — not real matric results. Official DBE results pending integration.

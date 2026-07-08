@@ -163,7 +163,7 @@ export function CompetencyOverview() {
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {subjectCompetencies.map((sc) => (
-            <div key={sc.subjectId}>
+            <div key={sc.subjectId} className="flex flex-col gap-2">
               <button
                 type="button"
                 onClick={() =>
@@ -234,7 +234,7 @@ export function CompetencyOverview() {
 
               {sc.topics.length > 0 && (
                 <div
-                  className="mt-1 mb-2 ml-4 grid transition-[grid-template-rows,opacity] duration-300 ease-(--ease-ios)"
+                  className="ml-4 grid transition-[grid-template-rows,opacity] duration-300 ease-(--ease-ios)"
                   style={{
                     gridTemplateRows: expandedSubject === sc.subjectId ? "1fr" : "0fr",
                     opacity: expandedSubject === sc.subjectId ? 1 : 0,

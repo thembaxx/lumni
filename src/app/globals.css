@@ -44,11 +44,12 @@
   --system-destructive: oklch(58% 0.26 28); /* Arcade coral-red — punchier */
   --system-destructive-foreground: oklch(100% 0 0);
   --system-success: oklch(68% 0.26 145); /* Brighter celebratory green */
+  --system-warning: oklch(75% 0.15 70); /* Amber — pending/developing states */
 
   /* Semantic aliases */
   --success: var(--system-success);
   --success-foreground: oklch(100% 0 0);
-  --warning: oklch(75% 0.15 70);
+  --warning: var(--system-warning);
   --warning-foreground: oklch(100% 0 0);
   --info: oklch(60% 0.15 240);
 

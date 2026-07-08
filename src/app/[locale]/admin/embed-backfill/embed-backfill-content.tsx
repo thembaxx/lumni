@@ -113,11 +113,11 @@ export default function EmbedBackfillPage() {
               </div>
               <div>
                 <span className="text-muted-foreground">Already embedded: </span>
-                <span className="font-medium text-emerald-500">{stats.embedded}</span>
+                <span className="font-medium text-(--system-success)">{stats.embedded}</span>
               </div>
               <div>
                 <span className="text-muted-foreground">Pending: </span>
-                <span className="font-medium text-amber-500">{stats.pending}</span>
+                <span className="font-medium text-(--system-warning)">{stats.pending}</span>
               </div>
             </div>
           ) : null}
@@ -132,7 +132,7 @@ export default function EmbedBackfillPage() {
           <CardContent className="flex flex-col gap-3">
             <div className="h-2 w-full rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-emerald-500 transition-[width] duration-500"
+                className="h-full rounded-full bg-(--system-success) transition-[width] duration-500"
                 style={{
                   width: `${progress.total > 0 ? (progress.done / progress.total) * 100 : 0}%`,
                 }}
@@ -141,7 +141,7 @@ export default function EmbedBackfillPage() {
             <div className="text-muted-foreground text-sm">
               {progress.done} / {progress.total} processed
               {progress.failed > 0 && (
-                <span className="text-red-500"> ({progress.failed} failed)</span>
+                <span className="text-(--system-destructive)"> ({progress.failed} failed)</span>
               )}
             </div>
           </CardContent>

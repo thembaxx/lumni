@@ -64,9 +64,9 @@ export function ExamCard({ exam }: ExamCardProps) {
       distance={6}
       className="flex w-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-0 bg-secondary/40 p-3 transition-colors hover:bg-secondary/60"
     >
-      <div className="min-w-0 flex-1 pr-2">
+      <div className="flex min-w-0 flex-1 flex-col gap-1 pr-2">
         <p className="truncate font-medium text-sm">{exam.title}</p>
-        <div className="mt-1 flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5">
           <span className="text-muted-foreground text-xs">{exam.year}</span>
           <span className="text-muted-foreground/50 text-xs">·</span>
           <Badge

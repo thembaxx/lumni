@@ -30,9 +30,9 @@ export function RequestsBreakdownCard({
       <h2 className={cn("font-heading", "font-medium", "text-lg", "mb-4")}>Requests Breakdown</h2>
       <div className={cn("flex flex-col gap-3")}>
         {[
-          { label: "Generate", count: generateCount, color: "bg-blue-500" },
-          { label: "Grade", count: gradeCount, color: "bg-green-500" },
-          { label: "Hint", count: hintCount, color: "bg-amber-500" },
+          { label: "Generate", count: generateCount, color: "bg-(--system-accent)" },
+          { label: "Grade", count: gradeCount, color: "bg-(--system-success)" },
+          { label: "Hint", count: hintCount, color: "bg-(--system-destructive)" },
         ].map(({ label, count, color }) => (
           <div key={label} className={cn("flex items-center gap-3")}>
             <div className={cn("h-2 w-24 rounded-full bg-muted")}>

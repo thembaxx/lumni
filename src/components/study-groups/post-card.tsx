@@ -148,13 +148,13 @@ export function PostCard({
       </div>
 
       {showComments && (
-        <div className="border-border/50 border-t pt-3">
+        <div className="border-border/50 border-t pt-3 flex flex-col gap-3">
           <CommentForm
             postId={post.$id}
             onSubmit={(content, parentId) => onCreateComment?.(post.$id, content, parentId)}
           />
           {comments && comments.length > 0 && (
-            <div className="mt-3">
+            <div>
               <CommentThread
                 comments={comments}
                 reactions={reactions ?? []}

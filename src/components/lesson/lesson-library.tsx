@@ -132,22 +132,22 @@ export function LessonLibrary() {
                 {
                   label: "Novice",
                   value: summary.novice,
-                  color: "text-red-500",
+                  color: "text-(--system-destructive)",
                 },
                 {
                   label: "Developing",
                   value: summary.developing,
-                  color: "text-amber-500",
+                  color: "text-(--system-warning)",
                 },
                 {
                   label: "Proficient",
                   value: summary.proficient,
-                  color: "text-blue-500",
+                  color: "text-(--system-accent)",
                 },
                 {
                   label: "Mastered",
                   value: summary.mastered,
-                  color: "text-emerald-500",
+                  color: "text-(--system-success)",
                 },
               ] as const
             ).map((s) => (
@@ -162,7 +162,7 @@ export function LessonLibrary() {
 
           {summary.averageScore > 0 && (
             <div className="flex items-center gap-2 text-muted-foreground text-sm">
-              <HugeiconsIcon icon={Award01Icon} className="size-4 text-amber-500" />
+              <HugeiconsIcon icon={Award01Icon} className="size-4 text-(--system-warning)" />
               Average competency score:{" "}
               <span className="tabular-nums">{Math.round(summary.averageScore)}%</span>
             </div>
@@ -224,7 +224,7 @@ export function LessonLibrary() {
           {!isLoading && recommendations.length === 0 && selectedSubject && (
             <Card className="rounded-3xl text-center">
               <CardContent className="flex flex-col items-center gap-2 p-6">
-                <HugeiconsIcon icon={Award01Icon} className="size-8 text-emerald-500" />
+                <HugeiconsIcon icon={Award01Icon} className="size-8 text-(--system-success)" />
                 <p className="text-muted-foreground text-sm">
                   No recommendations available. All topics may be mastered.
                 </p>

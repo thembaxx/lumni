@@ -1,41 +1,34 @@
-export const NODE_COLORS: Record<string, string> = {
-  prerequisite: "fill-amber-500 stroke-amber-600",
-  core: "fill-blue-500 stroke-blue-600",
-  advanced: "fill-emerald-500 stroke-emerald-600",
-};
+import type { DiagramColors } from "@/components/quiz/diagrams/diagram-theme";
 
-export const MASTERY_COLORS: Record<string, { fill: string; stroke: string; text: string }> = {
-  novice: {
-    fill: "fill-red-400 stroke-red-500",
-    stroke: "stroke-red-500",
-    text: "oklch(55% 0.18 25)",
-  },
-  developing: {
-    fill: "fill-amber-400 stroke-amber-500",
-    stroke: "stroke-amber-500",
-    text: "oklch(75% 0.15 70)",
-  },
-  proficient: {
-    fill: "fill-blue-400 stroke-blue-500",
-    stroke: "stroke-blue-500",
-    text: "oklch(60% 0.15 240)",
-  },
-  mastered: {
-    fill: "fill-emerald-400 stroke-emerald-500",
-    stroke: "stroke-emerald-500",
-    text: "oklch(65% 0.2 145)",
-  },
-  untested: {
-    fill: "fill-slate-300 stroke-slate-400",
-    stroke: "stroke-slate-400",
-    text: "oklch(70% 0 0)",
-  },
-};
+export interface NodeColorSet {
+  fill: string;
+  stroke: string;
+  text: string;
+}
 
 export const LAYER_KEYS = ["prerequisite", "core", "advanced"] as const;
 
-export const NODE_TEXT_COLORS: Record<string, string> = {
-  prerequisite: "oklch(70% 0.15 70)",
-  core: "oklch(55% 0.15 240)",
-  advanced: "oklch(60% 0.15 145)",
-};
+/**
+ * Layer (topic-type) colors, derived from the shared diagram palette so the
+ * knowledge graph is light/dark aware instead of hardcoded Tailwind classes.
+ */
+export function getNodeColors(palette: DiagramColors): Record<string, NodeColorSet> {
+  return {
+    prerequisite: { fill: palette.chart5, stroke: palette.chart5, text: palette.chart5 },
+    core: { fill: palette.chart1, stroke: palette.chart1, text: palette.chart1 },
+    advanced: { fill: palette.chart3, stroke: palette.chart3, text: palette.chart3 },
+  };
+}
+
+/**
+ * Mastery-tier colors, derived from the shared diagram palette.
+ */
+export function getMasteryColors(palette: DiagramColors): Record<string, NodeColorSet> {
+  return {
+    novice: { fill: palette.chart2, stroke: palette.chart2, text: palette.chart2 },
+    developing: { fill: palette.chart5, stroke: palette.chart5, text: palette.chart5 },
+    proficient: { fill: palette.chart1, stroke: palette.chart1, text: palette.chart1 },
+    mastered: { fill: palette.chart3, stroke: palette.chart3, text: palette.chart3 },
+    untested: { fill: palette.line, stroke: palette.line, text: palette.textSecondary },
+  };
+}

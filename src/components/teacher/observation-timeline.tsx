@@ -90,9 +90,9 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
       ) : (
         <div className="flex flex-col gap-2">
           {observations.map((obs, i) => (
-            <div key={obs.id ?? i} className="rounded-lg border p-3">
+            <div key={obs.id ?? i} className="flex flex-col gap-1 rounded-lg border p-3">
               <p className="text-sm">{obs.content}</p>
-              <p className="mt-1 text-(--fs-caption-3) text-muted-foreground">
+              <p className="text-(--fs-caption-3) text-muted-foreground">
                 {new Date(obs.createdAt).toLocaleDateString()}
               </p>
             </div>

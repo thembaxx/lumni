@@ -20,10 +20,10 @@ export function SourceBasedInput({ body, effectiveSubject, onGrade }: SourceBase
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="rounded-lg bg-muted/30 p-4 text-sm">
+      <div className="flex flex-col gap-2 rounded-lg bg-muted/30 p-4 text-sm">
         <MarkdownRenderer content={(source?.content as string) ?? ""} subject={effectiveSubject} />
         {!!source?.attribution && (
-          <p className="mt-2 text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-xs">
             {t("quiz.sourceAttribution", {
               attribution: String(source.attribution),
             })}

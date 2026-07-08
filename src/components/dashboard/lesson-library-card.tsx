@@ -86,9 +86,9 @@ export function LessonLibraryCard() {
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                   <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-(--system-accent)" />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
                   <p className="truncate font-semibold text-sm">{label}</p>
-                  <div className="mt-1 flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                       <div
                         className="h-full origin-left rounded-full bg-(--system-accent) transition-[transform]"

@@ -288,7 +288,7 @@ export function StudySetForm({ onSubmit, onCancel, initialValues }: StudySetForm
             id="favorite"
             checked={formData.isFavorite ?? false}
             onChange={(e) => setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))}
-            className="size-4 rounded border-zinc-300 text-primary"
+            className="size-4 rounded border-border text-primary"
           />
           Mark as favorite
         </label>

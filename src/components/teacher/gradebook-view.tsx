@@ -154,10 +154,10 @@ export function GradebookView() {
                         className={cn(
                           "font-medium",
                           g.percentage >= 80
-                            ? "text-green-600"
+                            ? "text-(--system-success)"
                             : g.percentage >= 60
-                              ? "text-amber-600"
-                              : "text-red-600",
+                              ? "text-(--system-accent)"
+                              : "text-(--system-destructive)",
                         )}
                       >
                         {g.percentage}%

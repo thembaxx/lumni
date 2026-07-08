@@ -90,10 +90,10 @@ export function InlinePronunciationPractice({
         <button
           type="button"
           onClick={stopAndAssess}
-          className="flex size-8 items-center justify-center rounded-full bg-red-100 text-red-600 transition-colors hover:bg-red-200"
+          className="flex size-8 items-center justify-center rounded-full bg-(--system-destructive)/10 text-(--system-destructive) transition-colors hover:bg-(--system-destructive)/20"
           aria-label="Stop recording"
         >
-          <span className="size-3 animate-pulse rounded-full bg-red-600" />
+          <span className="size-3 animate-pulse rounded-full bg-(--system-destructive)" />
         </button>
       )}
 
@@ -102,12 +102,15 @@ export function InlinePronunciationPractice({
       {state === "result" && (
         <div className="flex items-center gap-1.5">
           {score >= 70 ? (
-            <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-green-600" />
+            <HugeiconsIcon
+              icon={CheckmarkCircle01Icon}
+              className="size-4 text-(--system-success)"
+            />
           ) : (
-            <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-red-500" />
+            <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-(--system-destructive)" />
           )}
           <span
-            className={`text-xs font-semibold ${score >= 70 ? "text-green-600" : "text-red-500"}`}
+            className={`text-xs font-semibold ${score >= 70 ? "text-(--system-success)" : "text-(--system-destructive)"}`}
           >
             {score}%
           </span>

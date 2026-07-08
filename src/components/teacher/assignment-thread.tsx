@@ -82,10 +82,10 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
           messages.map((msg, i) => (
             <div
               key={msg.id ?? i}
-              className={`rounded-lg border p-3 ${msg.senderRole === "teacher" ? "bg-muted/30" : ""}`}
+              className={`flex flex-col gap-1 rounded-lg border p-3 ${msg.senderRole === "teacher" ? "bg-muted/30" : ""}`}
             >
               <p className="text-sm">{msg.content}</p>
-              <p className="mt-1 text-(--fs-caption-3) text-muted-foreground">
+              <p className="text-(--fs-caption-3) text-muted-foreground">
                 {msg.senderRole === "teacher" ? "Teacher" : "Student"} ·{" "}
                 {new Date(msg.createdAt).toLocaleDateString()}
               </p>

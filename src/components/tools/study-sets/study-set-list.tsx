@@ -28,18 +28,18 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
           transition={{ duration: 0.2, ease: iOSEase }}
-          className="cursor-pointer rounded-3xl border p-4 transition-colors hover:bg-accent/5"
+          className="flex flex-col gap-3 cursor-pointer rounded-3xl border p-4 transition-colors hover:bg-accent/5"
           tabIndex={0}
           role="button"
           aria-label={`Study set: ${set.title}`}
         >
           <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h3 className="mb-1 font-semibold">{set.title}</h3>
+            <div className="flex flex-1 flex-col gap-2">
+              <h3 className="font-semibold">{set.title}</h3>
               {set.description && (
                 <p className="line-clamp-2 text-muted-foreground text-sm">{set.description}</p>
               )}
-              <div className="mt-2 flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1">
                 {set.tags &&
                   set.tags.length > 0 &&
                   set.tags.map((tag) => (
@@ -58,7 +58,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
                   </Badge>
                 )}
               </div>
-              <div className="mt-1 flex items-center gap-1 text-xs">
+              <div className="flex items-center gap-1 text-xs">
                 <span className="text-xs">
                   {set.flashcardIds.length} flashcards • {set.noteIds.length} notes
                 </span>
@@ -95,7 +95,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
               </span>
             </div>
           </div>
-          <div className="mt-3 flex justify-end gap-x-2">
+          <div className="flex justify-end gap-x-2">
             <Button
               variant="ghost"
               size="icon"

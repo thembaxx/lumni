@@ -95,9 +95,9 @@ export function QuestionReviewPanel({
               </span>
             </button>
             {isExpanded && (
-              <div className="border-t px-4 py-3">
+              <div className="border-t px-4 py-3 flex flex-col gap-3">
                 <MarkdownRenderer content={q.questionText} subject={subject} />
-                <div className="mt-3 grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   {userAns && (
                     <div className="rounded-lg bg-muted p-3">
                       <p className="mb-1 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider">
@@ -119,7 +119,7 @@ export function QuestionReviewPanel({
                   </div>
                 </div>
                 {q.explanation && (
-                  <div className="mt-3 rounded-lg bg-muted/50 p-3">
+                  <div className="rounded-lg bg-muted/50 p-3">
                     <p className="mb-1 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wider">
                       Explanation
                     </p>
@@ -132,7 +132,7 @@ export function QuestionReviewPanel({
         );
       })}
       {totalQuestions - correctAnswers > 0 && onPracticeMistakes && (
-        <Button variant="secondary" size="sm" onClick={onPracticeMistakes} className="mt-2 gap-2">
+        <Button variant="secondary" size="sm" onClick={onPracticeMistakes} className="gap-2">
           <HugeiconsIcon icon={Refresh01Icon} className="size-4" />
           Practice These Topics
         </Button>

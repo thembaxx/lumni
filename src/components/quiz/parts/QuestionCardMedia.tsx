@@ -64,14 +64,14 @@ export function QuestionCardMedia({
         </Button>
       </div>
       {showDiagram && (
-        <div>
+        <div className="flex flex-col gap-2">
           {visual ? (
-            <div className="mt-2">
+            <div>
               <VisualContent visual={visual} isLoading={isLoading} />
             </div>
           ) : (
             questionMedia.map((m) => (
-              <div key={`media-${m.label}`} className="mt-2">
+              <div key={`media-${m.label}`}>
                 {m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
               </div>
             ))

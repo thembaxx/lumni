@@ -64,21 +64,17 @@ export function PronunciationChartCard() {
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <Chart data={stats.recentScores}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border, #e5e5ea)" />
-                  <XAxis
-                    dataKey="date"
-                    tick={{ fontSize: 11 }}
-                    stroke="var(--muted-foreground, #8e8e93)"
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                  <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" />
                   <YAxis
                     domain={[0, 100]}
                     tick={{ fontSize: 11 }}
-                    stroke="var(--muted-foreground, #8e8e93)"
+                    stroke="var(--muted-foreground)"
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "var(--card, #fff)",
-                      border: "1px solid var(--border, #e5e5ea)",
+                      background: "var(--card)",
+                      border: "1px solid var(--border)",
                       borderRadius: 12,
                       fontSize: 13,
                     }}

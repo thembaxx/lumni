@@ -1,4 +1,5 @@
-import { MASTERY_COLORS, NODE_COLORS, NODE_TEXT_COLORS } from "./visual-constants";
+import type { DiagramColors } from "@/components/quiz/diagrams/diagram-theme";
+import { getMasteryColors, getNodeColors } from "./visual-constants";
 
 export const LAYOUT = {
   nodeW: 100,
@@ -37,17 +38,25 @@ export function getNodeMastery(nodeId: string, masteryMap: Map<string, string>):
   return masteryMap.get(nodeId) ?? "untested";
 }
 
-export function getNodeStyle(nodeId: string, nodeType: string, masteryMap: Map<string, string>) {
+export function getNodeStyle(
+  nodeId: string,
+  nodeType: string,
+  masteryMap: Map<string, string>,
+  palette: DiagramColors,
+) {
   const mastery = getNodeMastery(nodeId, masteryMap);
-  const masteryStyle = MASTERY_COLORS[mastery];
+  const masteryStyle = getMasteryColors(palette)[mastery];
   if (mastery !== "untested") {
     return {
-      fillClass: masteryStyle.fill,
+      fill: masteryStyle.fill,
+      stroke: masteryStyle.stroke,
       textColor: masteryStyle.text,
     };
   }
+  const nodeStyle = getNodeColors(palette)[nodeType] ?? getNodeColors(palette).core;
   return {
-    fillClass: NODE_COLORS[nodeType] ?? NODE_COLORS.core,
-    textColor: NODE_TEXT_COLORS[nodeType] ?? "oklch(55% 0.15 240)",
+    fill: nodeStyle.fill,
+    stroke: nodeStyle.stroke,
+    textColor: nodeStyle.text,
   };
 }

@@ -118,7 +118,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
           const topics = parseTopicIds(a.topicIds);
           const isOpen = expanded === a.id;
           return (
-            <div key={a.id} className="rounded-lg border bg-muted/20 p-3">
+            <div key={a.id} className="flex flex-col gap-3 rounded-lg border bg-muted/20 p-3">
               <button
                 type="button"
                 onClick={() => setExpanded(isOpen ? null : a.id)}
@@ -138,11 +138,14 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
                 />
               </button>
               {isOpen && (
-                <div className="mt-3 flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                   {a.submissions.map((s) => {
                     const commentKey = `${a.id}_${s.studentId}`;
                     return (
-                      <div key={commentKey} className="rounded-lg border bg-card p-3">
+                      <div
+                        key={commentKey}
+                        className="flex flex-col gap-2 rounded-lg border bg-card p-3"
+                      >
                         <div className="flex items-center justify-between gap-2">
                           <div>
                             <p className="font-medium text-xs">
@@ -155,11 +158,11 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
                           </div>
                         </div>
                         {s.teacherComment && (
-                          <p className="mt-2 ios-caption-2 text-muted-foreground italic">
+                          <p className="ios-caption-2 text-muted-foreground italic">
                             Your comment: &ldquo;{s.teacherComment}&rdquo;
                           </p>
                         )}
-                        <div className="mt-2 flex gap-2">
+                        <div className="flex gap-2">
                           <Input
                             value={comments[commentKey] ?? ""}
                             onChange={(e) =>

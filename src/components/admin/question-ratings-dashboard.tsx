@@ -112,7 +112,7 @@ export function QuestionRatingsDashboard() {
                 key={`${r.questionId}-${r.createdAt}`}
                 className="flex items-center gap-2 font-mono text-xs"
               >
-                <span className="font-bold text-amber-500">{r.rating}/5</span>
+                <span className="font-bold text-(--system-warning)">{r.rating}/5</span>
                 <span className="max-w-48 truncate text-muted-foreground">{r.questionId}</span>
                 <span className="text-muted-foreground">{r.subject}</span>
                 {r.feedback && (

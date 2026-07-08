@@ -83,7 +83,7 @@ export function SmartScheduler() {
               <FieldLabel>Select Subjects</FieldLabel>
               <div className="grid grid-cols-2 gap-2">
                 {SUBJECT_OPTIONS.map((subject) => (
-                  <div key={subject.id}>
+                  <div key={subject.id} className="flex flex-col gap-1.5">
                     <Button
                       variant={selectedSubjects.includes(subject.id) ? "default" : "ghost"}
                       onClick={() => toggleSubject(subject.id)}
@@ -92,7 +92,7 @@ export function SmartScheduler() {
                       {subject.name}
                     </Button>
                     {selectedSubjects.includes(subject.id) && (
-                      <div className="mt-1.5 flex gap-1">
+                      <div className="flex gap-1">
                         {(["easy", "medium", "hard"] as const).map((diff) => (
                           <Button
                             key={diff}
@@ -112,7 +112,7 @@ export function SmartScheduler() {
 
             <Field>
               <FieldLabel>Study Hours Per Day</FieldLabel>
-              <div className="mt-2 flex gap-2">
+              <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((h) => (
                   <Button
                     key={h}

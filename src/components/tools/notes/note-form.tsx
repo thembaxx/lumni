@@ -148,7 +148,7 @@ export function NoteForm({
                   isFavorite: e.target.checked,
                 }))
               }
-              className="size-4 rounded border-zinc-300 text-primary"
+              className="size-4 rounded border-border text-primary"
             />
             Mark as favorite
           </label>

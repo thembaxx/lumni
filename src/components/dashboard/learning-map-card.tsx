@@ -16,7 +16,7 @@ import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type { KnowledgeGraph, KnowledgeNode } from "@/lib/knowledge-graph/types";
-import { MASTERY_COLORS, LAYER_KEYS } from "@/lib/knowledge-graph/visual-constants";
+import { LAYER_KEYS, getMasteryColors } from "@/lib/knowledge-graph/visual-constants";
 import {
   LAYOUT,
   getSvgDimensions,
@@ -25,12 +25,14 @@ import {
   getNodeCenter,
   getNodeStyle,
 } from "@/lib/knowledge-graph/svg-layout";
+import { useDiagramTheme } from "@/components/quiz/diagrams/diagram-theme";
 
 export function LearningMapCard() {
   const { push } = useRouter();
   const { isAnonymous } = useAuth();
   const { enrolledSubjects } = useEnrolledSubjects();
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const diagramTheme = useDiagramTheme();
 
   const subjectForQuery = selectedSubject ?? enrolledSubjects[0]?.name;
 
@@ -198,7 +200,7 @@ export function LearningMapCard() {
               const nodeIndex = row.indexOf(node);
               const _x = getNodeX(nodeIndex, row.length, svgW);
               const _y = getNodeY(rowIndex);
-              const style = getNodeStyle(node.id, node.type, masteryMap);
+              const style = getNodeStyle(node.id, node.type, masteryMap, diagramTheme);
               return (
                 <a
                   key={node.id}
@@ -223,7 +225,7 @@ export function LearningMapCard() {
                     width={LAYOUT.nodeW}
                     height={LAYOUT.nodeH}
                     rx={6}
-                    className={style.fillClass}
+                    style={{ fill: style.fill, stroke: style.stroke }}
                     fillOpacity={0.15}
                     strokeWidth={1.5}
                   />
@@ -243,7 +245,7 @@ export function LearningMapCard() {
           </svg>
           {competencies && competencies.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-3 text-(--fs-caption-3)">
-              {Object.entries(MASTERY_COLORS).map(([level, colors]) => (
+              {Object.entries(getMasteryColors(diagramTheme)).map(([level, colors]) => (
                 <span key={level} className="flex items-center gap-1">
                   <span
                     className="inline-block size-2 rounded-full"

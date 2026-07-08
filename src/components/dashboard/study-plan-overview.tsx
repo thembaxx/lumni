@@ -110,7 +110,7 @@ export function StudyPlanOverview() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-6 px-2 text-xs"
+                className="relative h-6 px-2 text-xs after:absolute after:-inset-2"
                 onClick={() => setShowForm(true)}
               >
                 Regenerate
@@ -135,7 +135,7 @@ export function StudyPlanOverview() {
           progress={stats.progress}
         />
         {bookmarksBySubject.size > 0 && (
-          <div className="mt-2 flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1.5">
             <p className="flex items-center gap-1 font-medium text-muted-foreground text-xs">
               <HugeiconsIcon icon={Bookmark02Icon} className="size-3" />
               Bookmarked questions

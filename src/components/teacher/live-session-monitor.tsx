@@ -30,8 +30,8 @@ function getDurationLabel(minutes: number): string {
 }
 
 function getColorClass(minutes: number): string {
-  if (minutes >= 10) return "border-emerald-500/30 bg-emerald-500/5";
-  if (minutes >= 5) return "border-amber-500/30 bg-amber-500/5";
+  if (minutes >= 10) return "border-(--system-success)/30 bg-(--system-success)/5";
+  if (minutes >= 5) return "border-(--system-warning)/30 bg-(--system-warning)/5";
   return "border-muted-foreground/30 bg-muted/30";
 }
 

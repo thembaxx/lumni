@@ -30,30 +30,29 @@ export function GoalsStep({
         delay: 0.15,
         ease: iOSEase,
       }}
+      className="flex flex-col gap-6"
     >
-      <div className="mb-6">
-        <div className="mb-1 font-extrabold text-4xl text-foreground tabular-nums">{targetAps}</div>
+      <div className="flex flex-col gap-2">
+        <div className="font-extrabold text-4xl text-foreground tabular-nums">{targetAps}</div>
         <p className="ios-subhead text-muted-foreground">Target APS</p>
-        <div className="mt-2">
+        <div>
           <Slider
             min={20}
             max={50}
             value={[targetAps]}
             onValueChange={(v) => onTargetApsChange(Array.isArray(v) ? v[0] : v)}
           />
-          <div className="mt-1 flex justify-between text-muted-foreground text-xs">
+          <div className="flex justify-between text-muted-foreground text-xs">
             <span>20 (Minimum)</span>
             <span>50 (Top)</span>
           </div>
         </div>
       </div>
 
-      <div className="mb-6">
-        <div className="mb-1 font-extrabold text-4xl text-foreground tabular-nums">
-          {dailyMinutes}
-        </div>
+      <div className="flex flex-col gap-2">
+        <div className="font-extrabold text-4xl text-foreground tabular-nums">{dailyMinutes}</div>
         <p className="ios-subhead text-muted-foreground">Minutes per day</p>
-        <div className="mt-2">
+        <div>
           <Slider
             min={10}
             max={120}
@@ -61,12 +60,12 @@ export function GoalsStep({
             value={[dailyMinutes]}
             onValueChange={(v) => onDailyMinutesChange(Array.isArray(v) ? v[0] : v)}
           />
-          <div className="mt-1 flex justify-between text-muted-foreground text-xs">
+          <div className="flex justify-between text-muted-foreground text-xs">
             <span>10 min</span>
             <span>120 min</span>
           </div>
         </div>
-        <div className="mt-3 flex gap-2">
+        <div className="flex gap-2">
           {[15, 30, 45, 60].map((m) => (
             <Button
               key={m}

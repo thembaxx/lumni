@@ -98,9 +98,9 @@ export function MyAssignments() {
               <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                 <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-(--system-accent)" />
               </div>
-              <div className="min-w-0 flex-1">
+              <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <p className="font-medium text-sm">{a.topics.join(", ") || "General"}</p>
-                <div className="mt-0.5 flex flex-wrap gap-x-3 gap-y-1 text-muted-foreground text-xs">
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-muted-foreground text-xs">
                   <span>Assigned {new Date(a.createdAt).toLocaleDateString()}</span>
                   {a.dueDate && (
                     <span className={isOverdue(a.dueDate) ? "text-destructive" : ""}>
@@ -109,7 +109,7 @@ export function MyAssignments() {
                   )}
                 </div>
                 {a.submission && (
-                  <div className="mt-2 flex flex-col gap-1">
+                  <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-xs">
                         Score:{" "}

@@ -27,7 +27,7 @@ export function WizardFooter({
   ctaLabel,
 }: WizardFooterProps) {
   return (
-    <div className="mt-8 flex items-center justify-between border-border/40 border-t pt-4">
+    <div className="flex items-center justify-between border-border/40 border-t pt-4">
       <div>
         {step > 0 && step < totalSteps - 1 && (
           <Button variant="ghost" onClick={onBack}>

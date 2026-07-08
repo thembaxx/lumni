@@ -53,7 +53,7 @@ export function PastQuestionList({
               <div className="h-4 w-20 rounded bg-muted" />
               <div className="h-4 w-16 rounded bg-muted" />
             </div>
-            <div className="mb-3 space-y-1.5">
+            <div className="flex flex-col gap-1.5">
               <div className="h-3 w-full rounded bg-muted" />
               <div className="h-3 w-3/4 rounded bg-muted" />
             </div>

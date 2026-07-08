@@ -43,8 +43,8 @@ function ParticipantAvatar({ participant }: { participant: LiveParticipant }) {
   const initial = (participant.userName ?? "?")[0]?.toUpperCase() ?? "?";
   return (
     <div className="flex items-center gap-1.5" title={participant.userName ?? "Anonymous"}>
-      <Avatar className="size-7 border-2 border-green-400/50">
-        <AvatarFallback className="bg-green-500/10 text-(--fs-caption-3) text-green-600">
+      <Avatar className="size-7 border-2 border-(--system-success)/50">
+        <AvatarFallback className="bg-(--system-success)/10 text-(--fs-caption-3) text-(--system-success)">
           {initial}
         </AvatarFallback>
       </Avatar>
@@ -142,15 +142,19 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
     <div
       className={cn(
         "rounded-xl border p-3 transition-[border-color,background-color]",
-        "border-green-400/30 bg-green-500/5",
+        "border-(--system-success)/30 bg-(--system-success)/5",
       )}
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <HugeiconsIcon icon={UserGroupIcon} className="size-5 text-green-500" data-icon />
-            <span className="absolute -end-0.5 -top-0.5 block size-2 rounded-full bg-green-500">
-              <span className="absolute inset-0 animate-ping rounded-full bg-green-500" />
+            <HugeiconsIcon
+              icon={UserGroupIcon}
+              className="size-5 text-(--system-success)"
+              data-icon
+            />
+            <span className="absolute -end-0.5 -top-0.5 block size-2 rounded-full bg-(--system-success)">
+              <span className="absolute inset-0 animate-ping rounded-full bg-(--system-success)" />
             </span>
           </div>
           <div>

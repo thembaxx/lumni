@@ -28,8 +28,8 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
   })();
 
   return (
-    <div className="rounded-xl border border-(--system-accent)/20 bg-(--system-accent)/5 p-4">
-      <div className="mb-2 flex items-center justify-between">
+    <div className="flex flex-col gap-3 rounded-xl border border-(--system-accent)/20 bg-(--system-accent)/5 p-4">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={Award01Icon} className="size-6 text-warning" />
           <div>
@@ -41,7 +41,7 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
           {daysLeft > 0 ? `${daysLeft}d remaining` : "Final day"}
         </span>
       </div>
-      <div className="mt-3 flex items-center gap-4">
+      <div className="flex items-center gap-4">
         <div className="flex-1">
           <div className="mb-1 flex justify-between text-muted-foreground text-xs">
             <span>Group score</span>

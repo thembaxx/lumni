@@ -35,6 +35,16 @@ export function TabNav({
   "aria-label": ariaLabel = "Main navigation",
 }: TabNavProps) {
   const prefersReducedMotion = useReducedMotion();
+  const activeIndex = Math.max(
+    0,
+    tabs.findIndex((t) => t.value === activeTab),
+  );
+  const tabCount = tabs.length || 1;
+  const segment = 100 / tabCount;
+  const indicatorStyle = {
+    left: `calc(${activeIndex * segment}% + 2px)`,
+    right: `calc(${(tabCount - 1 - activeIndex) * segment}% + 2px)`,
+  };
 
   const handleTabChange = (value: string) => {
     startTransition(() => {
@@ -62,10 +72,8 @@ export function TabNav({
             }
             className={cn(
               "absolute top-0.5 bottom-0.5 rounded-xl border border-border/20 bg-background shadow-level-1",
-              activeTab === "today" ? "left-0.5 right-[calc(66.66%+2px)]" : "",
-              activeTab === "practice" ? "left-[calc(33.33%+2px)] right-[calc(33.33%+2px)]" : "",
-              activeTab === "analytics" ? "left-[calc(66.66%+2px)] right-0.5" : "",
             )}
+            style={indicatorStyle}
           />
           {tabs.map((tab) => (
             <TabsTrigger

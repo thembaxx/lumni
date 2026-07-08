@@ -12,7 +12,11 @@ interface StoryProgressBarProps {
 export function StoryProgressBar({ scrollPercent, completed }: StoryProgressBarProps) {
   const pct = Math.min(Math.max(scrollPercent, 0), 100);
 
-  const barColor = completed ? "bg-emerald-500" : pct >= 50 ? "bg-sky-500" : "bg-emerald-500/70";
+  const barColor = completed
+    ? "bg-(--system-success)"
+    : pct >= 50
+      ? "bg-(--system-accent)"
+      : "bg-(--system-success)/70";
 
   return (
     <div className="flex items-center gap-3">
@@ -31,7 +35,7 @@ export function StoryProgressBar({ scrollPercent, completed }: StoryProgressBarP
         />
       </progress>
       {completed ? (
-        <span className="flex items-center gap-1 whitespace-nowrap font-medium text-emerald-500 text-xs">
+        <span className="flex items-center gap-1 whitespace-nowrap font-medium text-(--system-success) text-xs">
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />
           Completed
         </span>

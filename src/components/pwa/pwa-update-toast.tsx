@@ -72,7 +72,7 @@ export function PWAInstallPrompt() {
 
   return (
     <div className="fixed right-4 bottom-4 left-4 z-toast md:right-4 md:left-auto md:max-w-sm">
-      <div className="rounded-card-lg border border-border/50 bg-background/80 p-5 shadow-level-2 backdrop-blur-xl">
+      <div className="rounded-card-lg border border-border/50 bg-background/80 p-5 shadow-level-2 backdrop-blur-xl flex flex-col gap-4">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0">
             <Image
@@ -91,7 +91,7 @@ export function PWAInstallPrompt() {
           </div>
         </div>
 
-        <ul className="mt-4 flex flex-col gap-2">
+        <ul className="flex flex-col gap-2">
           {FEATURES.map((f) => (
             <li key={f} className="flex items-start gap-2 text-foreground/80 text-xs">
               <svg
@@ -109,7 +109,7 @@ export function PWAInstallPrompt() {
           ))}
         </ul>
 
-        <div className="mt-4 flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Checkbox
             id="pwa-dont-show-again"
             checked={dontShowAgain}
@@ -123,7 +123,7 @@ export function PWAInstallPrompt() {
           </label>
         </div>
 
-        <div className="mt-4 flex gap-2">
+        <div className="flex gap-2">
           <Button
             size="sm"
             className="flex-1"

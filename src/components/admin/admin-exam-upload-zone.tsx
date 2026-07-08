@@ -99,14 +99,11 @@ export function AdminExamUploadZone({ onUploadComplete }: AdminExamUploadZonePro
       )}
 
       {state === "success" && (
-        <div className="flex items-center gap-3 rounded-lg border bg-emerald-50 p-4 dark:bg-emerald-950/30">
-          <HugeiconsIcon
-            icon={CheckmarkCircle01Icon}
-            className="size-5 text-emerald-600 dark:text-emerald-300"
-          />
+        <div className="flex items-center gap-3 rounded-lg border bg-(--system-success)/10 p-4">
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-5 text-(--system-success)" />
           <div>
-            <p className="font-medium text-emerald-700 text-sm dark:text-emerald-300">Success!</p>
-            <p className="text-emerald-600 text-xs dark:text-emerald-300">{message}</p>
+            <p className="font-medium text-(--system-success) text-sm">Success!</p>
+            <p className="text-(--system-success) text-xs">{message}</p>
           </div>
         </div>
       )}

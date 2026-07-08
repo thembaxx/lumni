@@ -45,7 +45,7 @@ export function RecentQualityRecordsCard({ records }: RecentQualityRecordsCardPr
                   r.score >= 80
                     ? "text-success"
                     : r.score >= 50
-                      ? "text-amber-500"
+                      ? "text-(--system-warning)"
                       : "text-destructive",
                 )}
               >

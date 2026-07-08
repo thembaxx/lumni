@@ -17,8 +17,8 @@ export function StorageRing({ used, limit, size = 48, strokeWidth = 4 }: Storage
     percentage < 50
       ? "stroke-(--system-accent)"
       : percentage < 80
-        ? "stroke-amber-500"
-        : "stroke-red-500";
+        ? "stroke-(--system-warning)"
+        : "stroke-(--system-destructive)";
 
   function formatBytes(bytes: number): string {
     if (bytes < 1024) return `${bytes} B`;

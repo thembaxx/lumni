@@ -42,7 +42,7 @@ const AnalyticsTab = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex flex-col gap-4 px-4">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <Skeleton className="h-20 rounded-card" />
           <Skeleton className="h-20 rounded-card" />
           <Skeleton className="h-20 rounded-card" />

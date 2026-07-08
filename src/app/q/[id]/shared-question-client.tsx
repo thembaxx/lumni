@@ -158,7 +158,7 @@ export function SharedQuestionClient() {
                   onClick={() => handleRate(star)}
                   className={cn(
                     "size-8 rounded-lg p-1 transition-colors",
-                    star <= rating ? "text-yellow-500" : "text-muted-foreground/30",
+                    star <= rating ? "text-(--system-warning)" : "text-muted-foreground/30",
                   )}
                   aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
                 >
@@ -203,7 +203,7 @@ export function SharedQuestionClient() {
                     onClick={() => handleRate(star)}
                     className={cn(
                       "size-6 rounded p-0.5 transition-colors",
-                      star <= rating ? "text-yellow-500" : "text-muted-foreground/20",
+                      star <= rating ? "text-(--system-warning)" : "text-muted-foreground/20",
                     )}
                     aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
                   >

@@ -23,7 +23,7 @@ export function ComprehensionFeedback({
 }: ComprehensionFeedbackProps) {
   return (
     <div className="grid grid-rows-[1fr] transition-[grid-template-rows,opacity] duration-300 ease-(--ease-ios-decelerate)">
-      <div className="min-h-0 overflow-hidden">
+      <div className="min-h-0 overflow-hidden flex flex-col gap-3">
         <div
           className={cn(
             "flex items-center gap-2 rounded-xl px-4 py-3 font-medium text-sm",
@@ -39,18 +39,18 @@ export function ComprehensionFeedback({
         </div>
 
         {explanation && (
-          <div className="mt-3 rounded-xl bg-muted/50 p-3 text-sm leading-relaxed">
+          <div className="flex flex-col gap-1 rounded-xl bg-muted/50 p-3 text-sm leading-relaxed">
             <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wide">
               Explanation
             </span>
-            <p className="mt-1">
+            <p>
               <MarkdownRenderer content={explanation} />
             </p>
           </div>
         )}
 
         {!isCorrect && (
-          <div className="mt-2 text-muted-foreground text-xs">
+          <div className="text-muted-foreground text-xs">
             {questionType === "matching" ? (
               <span>Correct pairings shown above</span>
             ) : questionType === "true-false" || questionType === "mcq" ? (
