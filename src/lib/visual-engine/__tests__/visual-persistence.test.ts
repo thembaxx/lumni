@@ -135,6 +135,6 @@ describe("loadVisualFromAppwrite", () => {
 
     await loadVisualFromAppwrite("q-test", "life-sciences");
 
-    expect(mockGetDocument).toHaveBeenCalledWith("test-db-id", "visuals", "q-test-life-sciences");
+    expect(mockGetDocument).toHaveBeenCalledWith("test-db-id", "visuals", "life-sciences:q-test");
   });
 });

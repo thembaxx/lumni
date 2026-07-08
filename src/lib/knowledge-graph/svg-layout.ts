@@ -34,7 +34,7 @@ export function getNodeCenter(rowIndex: number, index: number, total: number, sv
   };
 }
 
-export function getNodeMastery(nodeId: string, masteryMap: Map<string, string>): string {
+function getNodeMastery(nodeId: string, masteryMap: Map<string, string>): string {
   return masteryMap.get(nodeId) ?? "untested";
 }
 

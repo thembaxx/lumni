@@ -31,6 +31,6 @@ export function saveSnapshot(data: StoredGamification): void {
   }, 0);
 }
 
-export function saveSnapshotEffect(data: StoredGamification): Effect.Effect<void> {
+function saveSnapshotEffect(data: StoredGamification): Effect.Effect<void> {
   return Effect.sync(() => saveSnapshot(data));
 }

@@ -756,7 +756,7 @@ const RECORDS_PER_YEAR = rawRecords.length;
 
 export const matricResultsYears = YEARS;
 
-export function getMatricResultsForYear(year: number): MatricResult[] {
+function getMatricResultsForYear(year: number): MatricResult[] {
   if (!(YEARS as readonly number[]).includes(year)) return [];
 
   const _yearIndex = YEARS.indexOf(year as (typeof YEARS)[number]);

@@ -1,33 +1,23 @@
-import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
-import type { CachedPdf } from "../schema";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import type { CachedPdf } from "@/lib/db/schema";
 
 export class PdfCacheRepository {
-  constructor(private db: DataAccess) {}
+  private get db() {
+    return dexieDataAccess.cachedPdfs;
+  }
 
   async cache(paperId: string, pdfData: Blob, fileName: string): Promise<void> {
-    const existing = await this.db.cachedPdfs.where("paperId").equals(paperId).first();
-
-    const entry: Omit<CachedPdf, "id"> = {
-      paperId,
-      pdfData,
-      fileName,
-      cachedAt: Date.now(),
-    };
-
-    if (existing) {
-      await this.db.cachedPdfs.update(existing.id ?? 0, entry);
+    const existing = await this.db.where("paperId").equals(paperId).first();
+    const entry: CachedPdf = { paperId, pdfData, fileName, cachedAt: Date.now() };
+    if (existing?.id != null) {
+      await this.db.update(existing.id, entry);
     } else {
-      await this.db.cachedPdfs.add(entry);
+      await this.db.add(entry);
     }
   }
 
   async get(paperId: string): Promise<CachedPdf | undefined> {
-    return this.db.cachedPdfs.where("paperId").equals(paperId).first();
-  }
-
-  async remove(paperId: string): Promise<void> {
-    await this.db.cachedPdfs.where("paperId").equals(paperId).delete();
+    return this.db.where("paperId").equals(paperId).first();
   }
 
   async isCached(paperId: string): Promise<boolean> {
@@ -41,17 +31,16 @@ export class PdfCacheRepository {
     return URL.createObjectURL(entry.pdfData);
   }
 
-  async clearOld(maxAgeHours = 168): Promise<void> {
+  async remove(paperId: string): Promise<void> {
+    await this.db.where("paperId").equals(paperId).delete();
+  }
+
+  async clearOld(maxAgeHours: number): Promise<void> {
     const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
-    const old = await this.db.cachedPdfs.where("cachedAt").below(cutoff).toArray();
-    for (const entry of old) {
-      URL.revokeObjectURL(entry.paperId);
-    }
-    await this.db.cachedPdfs.where("cachedAt").below(cutoff).delete();
+    const all = await this.db.toArray();
+    const old = all.filter((e) => e.cachedAt < cutoff);
+    await Promise.all(old.map((e) => e.id != null && this.db.delete(e.id)));
   }
 }
 
-export function createPdfCacheRepository(db: DataAccess = dexieDataAccess) {
-  return new PdfCacheRepository(db);
-}
-export const pdfCacheRepo = createPdfCacheRepository();
+export const pdfCacheRepo = new PdfCacheRepository();

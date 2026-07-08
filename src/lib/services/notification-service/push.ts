@@ -24,7 +24,7 @@ async function syncSubscriptionToServer(subscription: PushSubscription): Promise
   }
 }
 
-export async function subscribeToPush(): Promise<PushSubscription | null> {
+async function subscribeToPush(): Promise<PushSubscription | null> {
   if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
     logError("Notif.PushNotSupported", new Error("Push not supported"));
     return null;
@@ -53,7 +53,7 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
   }
 }
 
-export async function unsubscribeFromPush(): Promise<boolean> {
+async function unsubscribeFromPush(): Promise<boolean> {
   try {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
@@ -78,7 +78,7 @@ export async function unsubscribeFromPush(): Promise<boolean> {
   }
 }
 
-export async function requestPermission(): Promise<boolean> {
+async function requestPermission(): Promise<boolean> {
   if (!("Notification" in window)) return false;
 
   const result = await Notification.requestPermission();

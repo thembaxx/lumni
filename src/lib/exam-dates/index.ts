@@ -6,11 +6,8 @@ export {
   formatFriendlyDate,
   formatTimeRange,
   getExamDates,
-  getExamsGroupedByDate,
   getNextExams,
   getSessionLabel,
-  refreshExamDatesFromAppwrite,
-  syncExamDatesDirect,
   syncExamDatesToAppwrite,
 } from "./service";
 export { getSubjectAbbr, getSubjectColor } from "./subject-maps";

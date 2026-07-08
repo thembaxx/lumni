@@ -173,7 +173,7 @@ export async function getAuthenticatedUserName(): Promise<string | null> {
   }
 }
 
-export async function isCurrentUserAdmin(): Promise<boolean> {
+async function isCurrentUserAdmin(): Promise<boolean> {
   try {
     const userId = await getAuthenticatedUserId();
     if (!userId) return false;
@@ -196,7 +196,7 @@ export function isTeacher(userId: string): boolean {
   return ids.includes(userId);
 }
 
-export async function requireTeacher(): Promise<string> {
+async function requireTeacher(): Promise<string> {
   const userId = await auth();
   if (!isTeacher(userId)) {
     logError("RequireTeacher.Unauthorized", new Error(`User ${userId} attempted teacher access`));

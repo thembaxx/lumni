@@ -9,6 +9,6 @@ export function getSettings(): NotificationSettings {
   };
 }
 
-export function saveSettings(settings: NotificationSettings): void {
+function saveSettings(settings: NotificationSettings): void {
   saveToStorage(NOTIF_SETTINGS_KEY, settings);
 }

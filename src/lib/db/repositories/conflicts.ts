@@ -21,8 +21,10 @@ export class ConflictRepository {
   }
 
   async clearResolved(): Promise<void> {
-    const resolved = (await this.db.conflicts.toArray()).filter((c) => !!c.resolvedAt);
-    await Promise.all(resolved.map((c) => this.db.conflicts.delete(c.id)));
+    const resolved = (await this.db.conflicts.toArray()).filter(
+      (c: SyncConflict) => !!c.resolvedAt,
+    );
+    await Promise.all(resolved.map((c: SyncConflict) => this.db.conflicts.delete(c.id)));
   }
 }
 

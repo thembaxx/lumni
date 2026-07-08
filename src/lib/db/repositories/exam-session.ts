@@ -1,57 +1,55 @@
-import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import type { ExamSessionSnapshot } from "@/lib/db/schema";
 import { safeJsonStringify } from "@/lib/shared/json";
-import type { ExamSessionSnapshot } from "../schema";
 
 export class ExamSessionRepository {
-  constructor(private db: DataAccess) {}
+  private get db() {
+    return dexieDataAccess.examSessions;
+  }
 
   async save(
     paperId: string,
     data: {
-      answers: Record<string, { value: string | string[]; answeredAt: string }>;
-      flags: string[];
+      answers: Record<string, unknown> | string;
+      flags: unknown[] | string;
       currentPartId: string | null;
       timeRemaining: number;
       startedAt: number;
       completed: boolean;
     },
   ): Promise<void> {
-    const existing = await this.db.examSessions.where("paperId").equals(paperId).first();
-
-    const snapshot: Omit<ExamSessionSnapshot, "id"> = {
+    const existing = await this.db.where("paperId").equals(paperId).first();
+    const record: ExamSessionSnapshot = {
       paperId,
-      answers: safeJsonStringify(data.answers),
-      flags: safeJsonStringify(data.flags),
+      answers: typeof data.answers === "string" ? data.answers : safeJsonStringify(data.answers),
+      flags: typeof data.flags === "string" ? data.flags : safeJsonStringify(data.flags),
       currentPartId: data.currentPartId,
       timeRemaining: data.timeRemaining,
       startedAt: data.startedAt,
-      lastSavedAt: Date.now(),
       completed: data.completed,
+      lastSavedAt: Date.now(),
     };
-
-    if (existing) {
-      await this.db.examSessions.update(existing.id ?? 0, snapshot);
+    if (existing?.id != null) {
+      await this.db.update(existing.id, record);
     } else {
-      await this.db.examSessions.add(snapshot);
+      await this.db.add(record);
     }
   }
 
   async get(paperId: string): Promise<ExamSessionSnapshot | undefined> {
-    return this.db.examSessions.where("paperId").equals(paperId).first();
+    return this.db.where("paperId").equals(paperId).first();
   }
 
   async clear(paperId: string): Promise<void> {
-    await this.db.examSessions.where("paperId").equals(paperId).delete();
+    await this.db.where("paperId").equals(paperId).delete();
   }
 
-  async clearOld(maxAgeHours = 24): Promise<void> {
+  async clearOld(maxAgeHours: number): Promise<void> {
     const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
-    await this.db.examSessions.where("lastSavedAt").below(cutoff).delete();
+    const all = await this.db.toArray();
+    const old = all.filter((s) => s.lastSavedAt < cutoff);
+    await Promise.all(old.map((s) => s.id != null && this.db.delete(s.id)));
   }
 }
 
-export function createExamSessionRepository(db: DataAccess = dexieDataAccess) {
-  return new ExamSessionRepository(db);
-}
-export const examSessionRepo = createExamSessionRepository();
+export const examSessionRepo = new ExamSessionRepository();

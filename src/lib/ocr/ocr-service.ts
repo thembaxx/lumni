@@ -44,7 +44,7 @@ export async function recognizeImage(
   return { text, confidence: data.confidence, mode };
 }
 
-export async function resetOcrWorker() {
+async function resetOcrWorker() {
   if (worker) {
     await worker.terminate();
     worker = null;

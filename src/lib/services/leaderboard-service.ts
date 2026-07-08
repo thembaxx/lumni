@@ -13,7 +13,7 @@ export interface LeaderboardEntry {
 
 const LEADERBOARD_KEY = "lumni_leaderboard_history";
 
-export async function fetchLeaderboardFromServer(): Promise<LeaderboardEntry[]> {
+async function fetchLeaderboardFromServer(): Promise<LeaderboardEntry[]> {
   try {
     const res = await fetch("/api/leaderboard");
     if (!res.ok) throw new Error("Server unavailable");
@@ -32,7 +32,7 @@ export async function getWeeklyLeaderboard(): Promise<LeaderboardEntry[]> {
   return getLocalLeaderboard();
 }
 
-export function getLocalLeaderboard(): LeaderboardEntry[] {
+function getLocalLeaderboard(): LeaderboardEntry[] {
   const currentXp = loadFromStorage<number>("lumni_total_xp", 0);
   const currentStreak = loadFromStorage<number>("lumni_streak", 0);
 

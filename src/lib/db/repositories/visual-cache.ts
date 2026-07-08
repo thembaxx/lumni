@@ -1,20 +1,15 @@
-import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
-import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import type { CachedVisual } from "@/lib/db/schema";
+import { safeJsonStringify, safeJsonParse } from "@/lib/shared/json";
 import type { VisualContent } from "@/lib/visual-engine/types";
-import type { CachedVisual } from "../schema";
-
-const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function makeCacheKey(questionId: string, subject: string): string {
-  return `${questionId}-${subject}`.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 36);
+  return `${subject}:${questionId}`;
 }
 
 export class VisualCacheRepository {
-  constructor(private db: DataAccess) {}
-
-  private get dbAvailable(): boolean {
-    return !!this.db && typeof this.db.visuals !== "undefined";
+  private get db() {
+    return dexieDataAccess.visuals;
   }
 
   async cacheVisual(
@@ -22,41 +17,30 @@ export class VisualCacheRepository {
     subject: string,
     visual: VisualContent | null,
   ): Promise<void> {
-    if (!this.dbAvailable) return;
-    const now = Date.now();
-    const existing = await this.db.visuals.where("cacheKey").equals(cacheKey).first();
-
-    const record: Omit<CachedVisual, "id"> = {
+    const existing = await this.db.where("cacheKey").equals(cacheKey).first();
+    const entry: CachedVisual = {
       cacheKey,
       subject,
       visual: safeJsonStringify(visual),
-      createdAt: now,
-      expiresAt: now + CACHE_TTL_MS,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
     };
-
-    if (existing) {
-      await this.db.visuals.update(existing.id ?? 0, record);
+    if (existing?.id != null) {
+      await this.db.update(existing.id, entry);
     } else {
-      await this.db.visuals.add(record as CachedVisual);
+      await this.db.add(entry);
     }
   }
 
   async getVisual(cacheKey: string): Promise<VisualContent | null> {
-    if (!this.dbAvailable) return null;
-    const entry = await this.db.visuals.where("cacheKey").equals(cacheKey).first();
-
+    const entry = await this.db.where("cacheKey").equals(cacheKey).first();
     if (!entry) return null;
-
     if (Date.now() > entry.expiresAt) {
-      await this.db.visuals.delete(entry.id ?? 0);
+      if (entry.id != null) await this.db.delete(entry.id);
       return null;
     }
-
-    return safeJsonParse(entry.visual, null) as VisualContent | null;
+    return safeJsonParse<VisualContent>(entry.visual, null);
   }
 }
 
-export function createVisualCacheRepository(db: DataAccess = dexieDataAccess) {
-  return new VisualCacheRepository(db);
-}
-export const visualCacheRepo = createVisualCacheRepository();
+export const visualCacheRepo = new VisualCacheRepository();

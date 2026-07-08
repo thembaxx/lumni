@@ -717,7 +717,7 @@ export class LumniOfflineDB extends Dexie {
 
 let _offlineDB: LumniOfflineDB | undefined;
 
-export function getDB(): LumniOfflineDB {
+function getDB(): LumniOfflineDB {
   if (typeof window === "undefined") {
     throw new Error("Dexie is only available on the client side");
   }

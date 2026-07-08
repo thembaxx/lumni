@@ -1,6 +1,6 @@
 let openUploadHandler: ((files: File[], endpoint?: "generalUploader") => void) | null = null;
 
-export function openUploadDialog(files: File[], endpoint: "generalUploader" = "generalUploader") {
+function openUploadDialog(files: File[], endpoint: "generalUploader" = "generalUploader") {
   openUploadHandler?.(files, endpoint);
 }
 

@@ -72,7 +72,7 @@ export async function getNextExams(session: string, year: number, count = 2): Pr
     .slice(0, count);
 }
 
-export async function getExamsGroupedByDate(
+async function getExamsGroupedByDate(
   session: string,
   year: number,
 ): Promise<{ date: string; slots: ExamSlot[] }[]> {
@@ -115,7 +115,7 @@ export function formatDuration(hours: number): string {
   return `${hours}h`;
 }
 
-export function refreshExamDatesFromAppwrite(session: string, year: number): Promise<ExamSlot[]> {
+function refreshExamDatesFromAppwrite(session: string, year: number): Promise<ExamSlot[]> {
   return getExamDates(session, year);
 }
 
@@ -139,7 +139,7 @@ export async function syncExamDatesToAppwrite(
   }
 }
 
-export async function syncExamDatesDirect(
+async function syncExamDatesDirect(
   session: string,
   year: number,
   slots: ExamSlot[],

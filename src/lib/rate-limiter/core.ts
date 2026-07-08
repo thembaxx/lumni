@@ -218,7 +218,7 @@ export function getRateLimitHeaders(result: RateLimitResult) {
   };
 }
 
-export function createRateLimitStore(): RateLimitStore {
+function createRateLimitStore(): RateLimitStore {
   if (process.env.REDIS_URL && process.env.REDIS_TOKEN) {
     return new RedisStore();
   }

@@ -175,10 +175,7 @@ export async function uploadExamPaper(options: UploadExamPaperOptions): Promise<
   return appwriteDocToRecord(doc as unknown as Record<string, unknown>);
 }
 
-export async function getExamPapers(
-  subjectCode: string,
-  year?: number,
-): Promise<ExamPaperRecord[]> {
+async function getExamPapers(subjectCode: string, year?: number): Promise<ExamPaperRecord[]> {
   const _userId = await auth();
 
   const queries: string[] = [Query.equal("subjectCode", subjectCode)];
@@ -197,7 +194,7 @@ export async function getExamPapers(
   );
 }
 
-export async function getExamPaperUrl(
+async function getExamPaperUrl(
   subjectCode: string,
   year: number,
   paperNumber: number,

@@ -6,7 +6,8 @@
     "src/hooks/__tests__/test-utils.tsx",
     "src/lib/server/__tests__/setup.ts",
     "src/lib/z-integration/integration.int-test.ts",
-    "src/lib/caching-strategy/index.ts"
+    "src/lib/caching-strategy/index.ts",
+    "**/__setDepsForTesting"
   ],
 
   "ignoreDependencies": [

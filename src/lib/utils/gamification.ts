@@ -57,7 +57,7 @@ export function getStreakMessage(streak: number): string {
   return "Keep going!";
 }
 
-export function mapEmojiToIcon(emoji: string): string | null {
+function mapEmojiToIcon(emoji: string): string | null {
   const map: Record<string, string> = {
     "🎯": "Target01Icon",
     "🔥": "FireIcon",

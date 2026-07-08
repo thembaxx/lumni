@@ -17,7 +17,7 @@ export interface SchedulerInput {
   startDate: Date;
 }
 
-export const TOPIC_SUGGESTIONS: Record<string, string[]> = {
+const TOPIC_SUGGESTIONS: Record<string, string[]> = {
   mathematics: ["Algebra", "Calculus", "Geometry", "Statistics", "Trigonometry"],
   "physical-sciences": ["Mechanics", "Waves", "Optics", "Chemistry", "Thermodynamics"],
   "life-sciences": ["Cell Biology", "Genetics", "Evolution", "Ecology", "Human Anatomy"],

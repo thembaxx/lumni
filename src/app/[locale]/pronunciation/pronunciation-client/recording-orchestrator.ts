@@ -5,7 +5,7 @@ import { logError } from "@/lib/shared/logger";
 import type { AssessmentResult } from "./scoring";
 import { calcAccuracy } from "./scoring";
 
-export function blobToBase64(blob: Blob): Promise<string> {
+function blobToBase64(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {

@@ -17,7 +17,7 @@ export interface HydratedSettings {
   notifications: NotificationSettings;
 }
 
-export function hydrateFromRecord(record: UserSettings | undefined): HydratedSettings {
+function hydrateFromRecord(record: UserSettings | undefined): HydratedSettings {
   if (!record) {
     return {
       studyPrefs: DEFAULT_PREFERENCES,
@@ -30,10 +30,7 @@ export function hydrateFromRecord(record: UserSettings | undefined): HydratedSet
   };
 }
 
-export function dehydrateToRecord(
-  userId: string,
-  settings: HydratedSettings,
-): Omit<UserSettings, "id"> {
+function dehydrateToRecord(userId: string, settings: HydratedSettings): Omit<UserSettings, "id"> {
   return {
     userId,
     studyPrefs: JSON.stringify(settings.studyPrefs),

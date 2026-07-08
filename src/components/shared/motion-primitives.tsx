@@ -109,8 +109,3 @@ export function SpotlightCard({
     </Tag>
   );
 }
-
-/** Animated gradient-text headline. */
-export function GradientText({ children, className }: { children: ReactNode; className?: string }) {
-  return <span className={cn("animate-text-shimmer font-bold", className)}>{children}</span>;
-}

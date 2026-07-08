@@ -1,4 +1,4 @@
-export function normalize(text: string): string {
+function normalize(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "")

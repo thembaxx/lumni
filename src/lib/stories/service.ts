@@ -194,7 +194,7 @@ export async function storeGeneratedStory(story: Story): Promise<void> {
   }
 }
 
-export async function getCachedStoryById(storyId: string): Promise<Story | null> {
+async function getCachedStoryById(storyId: string): Promise<Story | null> {
   try {
     const key = `story:${storyId}`;
     const cached = await _deps.db.storyCache.get(key);

@@ -80,5 +80,5 @@ export const elementCategoryVariables = `
 
 export const elementEaseOutQuart = [0.25, 1, 0.5, 1] as const;
 export const elementEaseOutQuint = [0.22, 1, 0.36, 1] as const;
-export const elementEaseOutExpo = [0.16, 1, 0.3, 1] as const;
-export const elementEaseOutBack = [0.34, 1.56, 0.64, 1] as const;
+const elementEaseOutExpo = [0.16, 1, 0.3, 1] as const;
+const elementEaseOutBack = [0.34, 1.56, 0.64, 1] as const;

@@ -251,7 +251,7 @@ export function autoScheduleSessions(
   return plan;
 }
 
-export async function syncStudyPlanToAppwrite(userId: string): Promise<void> {
+async function syncStudyPlanToAppwrite(userId: string): Promise<void> {
   const plan = loadStudyPlan();
   await enqueue("appwrite-study-plan-sync", {
     userId,
