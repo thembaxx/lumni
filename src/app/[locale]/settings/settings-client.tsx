@@ -28,6 +28,7 @@ import {
 } from "@/components/settings/tabs";
 import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -276,7 +277,7 @@ function SettingsContent() {
           </div>
         </nav>
 
-        <main className="flex-1 px-6 pt-4 md:pb-6">
+        <SpotlightCard className="flex-1 px-6 pt-4 md:pb-6" radius={500}>
           <TabPanel isActive={activeTab === "profile"}>
             <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />
@@ -327,7 +328,7 @@ function SettingsContent() {
               {isLoggedIn && <ReferralTab />}
             </div>
           </TabPanel>
-        </main>
+        </SpotlightCard>
       </PageContainer>
 
       {showClearConfirm && (

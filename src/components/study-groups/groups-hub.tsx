@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStudyGroups } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -91,7 +92,7 @@ export function GroupsHub() {
   const visibleTabs = TABS.filter((tab) => tab !== "admin" || isAdmin);
 
   return (
-    <div className="flex flex-col gap-6 py-6">
+    <SpotlightCard className="flex flex-col gap-6 py-6 rounded-card-lg">
       <div className="flex items-center justify-between">
         <h1 className="font-bold text-2xl">{t("studyGroups.title")}</h1>
       </div>
@@ -121,6 +122,6 @@ export function GroupsHub() {
       {activeTab === "my-groups" && <MyGroupsTab />}
       {activeTab === "discover" && <DiscoverGroups />}
       {activeTab === "admin" && <AdminTab />}
-    </div>
+    </SpotlightCard>
   );
 }

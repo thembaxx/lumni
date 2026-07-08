@@ -14,6 +14,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Anim } from "@/components/shared/anim";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { SubjectSelect } from "@/components/ui/subject-select";
@@ -247,177 +248,181 @@ export function ProblemsClient() {
     <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient variant="subtle" />
       <PageContainer className="flex flex-col gap-8">
-        <Anim>
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
-                <HugeiconsIcon
-                  icon={StarIcon}
-                  className="size-3.5 text-primary/60"
-                  aria-hidden="true"
-                />
-                AI-curated practice
-              </div>
-              <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
-                Problem Library
-              </h1>
-              <p className="ios-subhead text-muted-foreground">
-                Browse curated practice problems with step-by-step solutions
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex-1">
-                  <SubjectSelect value={selectedSubject} onChange={setSelectedSubject} />
+        <SpotlightCard className="rounded-card-lg">
+          <Anim>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
+                  <HugeiconsIcon
+                    icon={StarIcon}
+                    className="size-3.5 text-primary/60"
+                    aria-hidden="true"
+                  />
+                  AI-curated practice
                 </div>
-                <Button
-                  onClick={handleGenerate}
-                  disabled={!selectedSubject || isPending}
-                  className="group h-11 shrink-0 gap-2 rounded-xl transition-[background-color,box-shadow,transform] duration-300"
-                >
-                  {isPending && <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />}
-                  <span>{isPending ? "Generating..." : "Generate"}</span>
-                </Button>
+                <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+                  Problem Library
+                </h1>
+                <p className="ios-subhead text-muted-foreground">
+                  Browse curated practice problems with step-by-step solutions
+                </p>
               </div>
 
-              {selectedSubject && (
-                <m.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-                  className="scrollbar-hide flex items-center gap-2 overflow-x-auto"
-                >
-                  {DIFFICULTIES.map((d) => (
-                    <Button
-                      key={d}
-                      variant={selectedDifficulty === d ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setSelectedDifficulty(d)}
-                      className="h-8 shrink-0 rounded-lg px-3 text-xs focus-visible:ring-2 focus-visible:ring-primary"
-                    >
-                      {d === "all" ? "All Levels" : d}
-                    </Button>
-                  ))}
-                  <div className="ml-auto flex items-center gap-2">
-                    <span className="ios-caption-3 text-muted-foreground/40">Count:</span>
-                    {[3, 5, 10].map((n) => (
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <SubjectSelect value={selectedSubject} onChange={setSelectedSubject} />
+                  </div>
+                  <Button
+                    onClick={handleGenerate}
+                    disabled={!selectedSubject || isPending}
+                    className="group h-11 shrink-0 gap-2 rounded-xl transition-[background-color,box-shadow,transform] duration-300"
+                  >
+                    {isPending && (
+                      <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />
+                    )}
+                    <span>{isPending ? "Generating..." : "Generate"}</span>
+                  </Button>
+                </div>
+
+                {selectedSubject && (
+                  <m.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+                    className="scrollbar-hide flex items-center gap-2 overflow-x-auto"
+                  >
+                    {DIFFICULTIES.map((d) => (
                       <Button
-                        key={n}
-                        variant={problemCount === n ? "default" : "outline"}
-                        size="xs"
-                        onClick={() => setProblemCount(n)}
-                        className="relative size-7 rounded-lg p-0 text-xs focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+                        key={d}
+                        variant={selectedDifficulty === d ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setSelectedDifficulty(d)}
+                        className="h-8 shrink-0 rounded-lg px-3 text-xs focus-visible:ring-2 focus-visible:ring-primary"
                       >
-                        {n}
+                        {d === "all" ? "All Levels" : d}
                       </Button>
                     ))}
+                    <div className="ml-auto flex items-center gap-2">
+                      <span className="ios-caption-3 text-muted-foreground/40">Count:</span>
+                      {[3, 5, 10].map((n) => (
+                        <Button
+                          key={n}
+                          variant={problemCount === n ? "default" : "outline"}
+                          size="xs"
+                          onClick={() => setProblemCount(n)}
+                          className="relative size-7 rounded-lg p-0 text-xs focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+                        >
+                          {n}
+                        </Button>
+                      ))}
+                    </div>
+                  </m.div>
+                )}
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait" initial={false}>
+              {!fetched && !isPending && (
+                <m.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="py-20 text-center"
+                >
+                  <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-muted/40">
+                    <HugeiconsIcon
+                      icon={BookOpen01Icon}
+                      className="size-8 text-muted-foreground/30"
+                    />
+                  </div>
+                  <p className="text-muted-foreground/60 text-sm">
+                    Select a subject and generate curated problems
+                  </p>
+                </m.div>
+              )}
+
+              {isPending && (
+                <m.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col gap-4"
+                >
+                  {[1, 2, 3].map((i) => (
+                    <SkeletonCard key={`skeleton-${i}`} />
+                  ))}
+                </m.div>
+              )}
+
+              {error && (
+                <m.div
+                  key="error"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-card-lg border border-destructive/20 bg-destructive/5 p-4 text-destructive text-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    Failed to generate problems. Please try again.
                   </div>
                 </m.div>
               )}
-            </div>
-          </div>
 
-          <AnimatePresence mode="wait" initial={false}>
-            {!fetched && !isPending && (
-              <m.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="py-20 text-center"
-              >
-                <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-muted/40">
-                  <HugeiconsIcon
-                    icon={BookOpen01Icon}
-                    className="size-8 text-muted-foreground/30"
-                  />
-                </div>
-                <p className="text-muted-foreground/60 text-sm">
-                  Select a subject and generate curated problems
-                </p>
-              </m.div>
-            )}
-
-            {isPending && (
-              <m.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-col gap-4"
-              >
-                {[1, 2, 3].map((i) => (
-                  <SkeletonCard key={`skeleton-${i}`} />
-                ))}
-              </m.div>
-            )}
-
-            {error && (
-              <m.div
-                key="error"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-card-lg border border-destructive/20 bg-destructive/5 p-4 text-destructive text-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                  Failed to generate problems. Please try again.
-                </div>
-              </m.div>
-            )}
-
-            {data && !isPending && !error && (
-              <m.div
-                key="results"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex flex-col gap-4"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="ios-caption-3 text-muted-foreground/60">
-                    Showing {filteredProblems.length} of {data.problems.length} problems
-                    {selectedDifficulty !== "all" && " (filtered)"}
-                  </p>
-                </div>
-
-                {filteredProblems.length === 0 ? (
-                  <div className="flex flex-col gap-2 py-12 text-center">
-                    <p className="text-muted-foreground/40 text-sm">
-                      No problems match the selected difficulty.
+              {data && !isPending && !error && (
+                <m.div
+                  key="results"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex flex-col gap-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="ios-caption-3 text-muted-foreground/60">
+                      Showing {filteredProblems.length} of {data.problems.length} problems
+                      {selectedDifficulty !== "all" && " (filtered)"}
                     </p>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedDifficulty("all")}
-                      className=""
-                    >
-                      Clear filter
-                    </Button>
                   </div>
-                ) : (
-                  <m.div className="flex flex-col gap-4">
-                    {filteredProblems.map((problem, i) => (
-                      <ProblemCard key={problem.id} problem={problem} index={i} />
-                    ))}
-                  </m.div>
-                )}
-              </m.div>
-            )}
-          </AnimatePresence>
-        </Anim>
+
+                  {filteredProblems.length === 0 ? (
+                    <div className="flex flex-col gap-2 py-12 text-center">
+                      <p className="text-muted-foreground/40 text-sm">
+                        No problems match the selected difficulty.
+                      </p>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedDifficulty("all")}
+                        className=""
+                      >
+                        Clear filter
+                      </Button>
+                    </div>
+                  ) : (
+                    <m.div className="flex flex-col gap-4">
+                      {filteredProblems.map((problem, i) => (
+                        <ProblemCard key={problem.id} problem={problem} index={i} />
+                      ))}
+                    </m.div>
+                  )}
+                </m.div>
+              )}
+            </AnimatePresence>
+          </Anim>
+        </SpotlightCard>
       </PageContainer>
     </div>
   );

@@ -17,6 +17,7 @@ import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/shared/fade-in";
 import { KineticHeading } from "@/components/shared/kinetic-heading";
 import { MagneticCard } from "@/components/shared/magnetic-card";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
@@ -323,7 +324,9 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
             delay={0.15}
             className="relative hidden items-center justify-center lg:flex"
           >
-            <InteractiveQuizDemo />
+            <SpotlightCard className="rounded-card-lg" radius={300}>
+              <InteractiveQuizDemo />
+            </SpotlightCard>
           </FadeIn>
         </div>
       </div>

@@ -8,6 +8,7 @@ import * as m from "motion/react-m";
 import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Button } from "@/components/ui/button";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
@@ -101,7 +102,9 @@ export function AdminPageClient() {
             )}
           </Button>
         </div>
-        <AdminDashboard />
+        <SpotlightCard className="min-h-dvh">
+          <AdminDashboard />
+        </SpotlightCard>
       </m.div>
     </AnimatePresence>
   );

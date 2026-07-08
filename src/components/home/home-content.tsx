@@ -14,6 +14,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { useLogoEasterEgg } from "@/lib/shared/easter-egg-context";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
+import { MeshAurora } from "@/components/shared/ambient/mesh-aurora";
 import { HeroSection } from "./hero-section";
 
 const FeaturesGrid = dynamic(
@@ -136,7 +137,8 @@ export function HomeContent() {
   const { showConfetti, dismissConfetti } = useMatricEasterEgg();
 
   return (
-    <div className="min-h-dvh overflow-x-clip bg-background pb-16">
+    <div className="relative min-h-dvh overflow-x-clip pb-16">
+      <MeshAurora variant="hero" intensity={0.7} className="fixed inset-0 -z-10" />
       <AmbientGradient variant="hero" />
       <NoiseOverlay opacity={0.02} />
       <ConfettiCelebration show={showConfetti} onDismiss={dismissConfetti} />

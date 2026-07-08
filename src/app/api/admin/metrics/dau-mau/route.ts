@@ -63,11 +63,11 @@ export const GET = createRouteHandler({
     }
 
     const daily: DailyDau[] = Object.entries(dayBuckets)
-      .sort(([a], [b]) => a.localeCompare(b))
+      .toSorted(([a], [b]) => a.localeCompare(b))
       .map(([date, users]) => ({ date, dau: users.size }));
 
     const monthly: MonthlyMau[] = Object.entries(monthBuckets)
-      .sort(([a], [b]) => a.localeCompare(b))
+      .toSorted(([a], [b]) => a.localeCompare(b))
       .map(([month, users]) => ({ month, mau: users.size }));
 
     const avgDau = daily.length > 0 ? daily.reduce((sum, d) => sum + d.dau, 0) / daily.length : 0;

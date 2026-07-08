@@ -4,6 +4,7 @@ import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Reveal, SpotlightCard } from "@/components/shared/motion-primitives";
 import { useFilteredSubjects } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { getSubjectIcon } from "@/lib/subjects/icons";
@@ -49,41 +50,48 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {subjects.map((subject) => {
+        {subjects.map((subject, i) => {
           const Icon = getSubjectIcon(subject.icon);
           const isSelected = selected === subject.id;
 
           return (
-            <Button
-              key={subject.id}
-              variant="ghost"
-              onClick={() => handleSelect(subject.id)}
-              disabled={isGenerating}
-              className={cn(
-                "group flex h-auto w-full flex-col items-start justify-start rounded-2xl border border-border/60 p-4 text-left",
-                "hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-level-2 dark:hover:shadow-black/20",
-                "focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/30",
-                "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
-                isSelected &&
-                  "border-(--system-accent) bg-(--system-accent)/5 shadow-level-1 shadow-md dark:bg-(--system-accent)/10",
-              )}
-            >
-              <div
-                className="mb-3 flex size-11 items-center justify-center rounded-xl transition-transform duration-200"
-                style={{
-                  backgroundColor: `${subject.color}15`,
-                  boxShadow: `0 0 0 1px ${subject.color}20`,
-                }}
-              >
-                <HugeiconsIcon icon={Icon} className="size-5" style={{ color: subject.color }} />
-              </div>
-              <h3 className="font-semibold text-foreground text-sm group-hover:text-foreground/90">
-                {subject.name}
-              </h3>
-              <p className="mt-1.5 line-clamp-2 text-muted-foreground text-xs leading-relaxed">
-                {subject.description}
-              </p>
-            </Button>
+            <Reveal key={subject.id} delay={i * 45} y={14}>
+              <SpotlightCard className="rounded-2xl" radius={220}>
+                <Button
+                  variant="ghost"
+                  onClick={() => handleSelect(subject.id)}
+                  disabled={isGenerating}
+                  className={cn(
+                    "group flex h-auto w-full flex-col items-start justify-start rounded-2xl border border-border/60 p-4 text-left",
+                    "hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-level-2 dark:hover:shadow-black/20",
+                    "focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/30",
+                    "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
+                    isSelected &&
+                      "border-(--system-accent) bg-(--system-accent)/5 shadow-level-1 shadow-md dark:bg-(--system-accent)/10",
+                  )}
+                >
+                  <div
+                    className="mb-3 flex size-11 items-center justify-center rounded-xl transition-transform duration-200"
+                    style={{
+                      backgroundColor: `${subject.color}15`,
+                      boxShadow: `0 0 0 1px ${subject.color}20`,
+                    }}
+                  >
+                    <HugeiconsIcon
+                      icon={Icon}
+                      className="size-5"
+                      style={{ color: subject.color }}
+                    />
+                  </div>
+                  <h3 className="font-semibold text-foreground text-sm group-hover:text-foreground/90">
+                    {subject.name}
+                  </h3>
+                  <p className="mt-1.5 line-clamp-2 text-muted-foreground text-xs leading-relaxed">
+                    {subject.description}
+                  </p>
+                </Button>
+              </SpotlightCard>
+            </Reveal>
           );
         })}
       </div>

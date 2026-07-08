@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { PageContainer } from "@/components/layout/page-container";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 import { NationalExamCalendar } from "@/components/tools/scheduling/national-exam-calendar";
 
@@ -17,7 +18,9 @@ export default function ExamDatesPage() {
       <NoiseOverlay opacity={0.015} />
       <PageContainer>
         <Suspense fallback={<PageSkeleton />}>
-          <NationalExamCalendar />
+          <SpotlightCard className="rounded-card-lg" radius={440}>
+            <NationalExamCalendar />
+          </SpotlightCard>
         </Suspense>
       </PageContainer>
     </div>

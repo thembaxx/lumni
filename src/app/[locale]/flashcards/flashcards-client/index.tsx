@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Confetti, GamificationCelebration, XPGainPopup } from "@/components/celebration";
 import { PageContainer } from "@/components/layout/page-container";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useFlashcardSession } from "@/hooks/use-flashcard-session";
 import { FlashcardsActive } from "../flashcards-active";
@@ -37,12 +38,14 @@ export function FlashcardsClient() {
       <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
-          <LocalDataNotice page="flashcards" description={t("flashcards.localDataNotice")} />
-          <FlashcardsIdle
-            onSelect={(subject) => startSession(subject, "ai")}
-            onReviewMistakes={(subject) => startSession(subject, "mistakes")}
-            onReviewVocabulary={(subject) => startSession(subject, "vocabulary")}
-          />
+          <SpotlightCard className="rounded-card-lg">
+            <LocalDataNotice page="flashcards" description={t("flashcards.localDataNotice")} />
+            <FlashcardsIdle
+              onSelect={(subject) => startSession(subject, "ai")}
+              onReviewMistakes={(subject) => startSession(subject, "mistakes")}
+              onReviewVocabulary={(subject) => startSession(subject, "vocabulary")}
+            />
+          </SpotlightCard>
         </PageContainer>
       </div>
     );
@@ -53,7 +56,9 @@ export function FlashcardsClient() {
       <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
-          <FlashcardsLoading />
+          <SpotlightCard>
+            <FlashcardsLoading />
+          </SpotlightCard>
         </PageContainer>
       </div>
     );
@@ -64,11 +69,13 @@ export function FlashcardsClient() {
       <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
-          <FlashcardsEmpty
-            subject={session.selectedSubject}
-            onGoBack={stopSession}
-            mode={session.source}
-          />
+          <SpotlightCard className="rounded-card-lg">
+            <FlashcardsEmpty
+              subject={session.selectedSubject}
+              onGoBack={stopSession}
+              mode={session.source}
+            />
+          </SpotlightCard>
         </PageContainer>
       </div>
     );
@@ -79,15 +86,17 @@ export function FlashcardsClient() {
       <div className="min-h-dvh bg-system-grouped pt-4">
         <AmbientGradient />
         <PageContainer className="flex flex-col gap-6">
-          <FlashcardsResults
-            totalCards={totalCards}
-            knownCount={knownCount}
-            reviewCount={reviewCount}
-            subject={session.selectedSubject || "Flashcards"}
-            onGoHouse={stopSession}
-            onRestart={handleRestart}
-            onShareDeck={handleShareDeck}
-          />
+          <SpotlightCard className="rounded-card-lg">
+            <FlashcardsResults
+              totalCards={totalCards}
+              knownCount={knownCount}
+              reviewCount={reviewCount}
+              subject={session.selectedSubject || "Flashcards"}
+              onGoHouse={stopSession}
+              onRestart={handleRestart}
+              onShareDeck={handleShareDeck}
+            />
+          </SpotlightCard>
         </PageContainer>
       </div>
     );
@@ -97,17 +106,19 @@ export function FlashcardsClient() {
     <div className="min-h-dvh bg-system-grouped pt-4">
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
-        <GamificationCelebration />
-        <Confetti trigger={showConfetti} count={20} duration={1200} />
-        <XPGainPopup amount={10} visible={showXPGain} />
-        <FlashcardsActive
-          cards={displayCards}
-          knownCount={knownCount}
-          reviewCount={reviewCount}
-          onReview={handleReview}
-          onComplete={handleSessionComplete}
-          onQuit={stopSession}
-        />
+        <SpotlightCard className="rounded-card-lg">
+          <GamificationCelebration />
+          <Confetti trigger={showConfetti} count={20} duration={1200} />
+          <XPGainPopup amount={10} visible={showXPGain} />
+          <FlashcardsActive
+            cards={displayCards}
+            knownCount={knownCount}
+            reviewCount={reviewCount}
+            onReview={handleReview}
+            onComplete={handleSessionComplete}
+            onQuit={stopSession}
+          />
+        </SpotlightCard>
       </PageContainer>
     </div>
   );

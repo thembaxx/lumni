@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { ConsentGate } from "@/components/consent/consent-gate";
 import { ParentInvitationDialog } from "@/components/consent/parent-invitation-dialog";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { PageContainer } from "@/components/layout/page-container";
 import { ActivityTimeline } from "@/components/parent/activity-timeline";
 import { ChildProgressGrid } from "@/components/parent/child-progress-grid";
@@ -125,84 +126,86 @@ export function ParentDashboardClient() {
 
   return (
     <ParentShell hasConsent={children.length > 0}>
-      <PageContainer className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
-          <h1 className="font-heading font-semibold text-2xl tracking-tight">Parent Dashboard</h1>
-          {selectedId && (
-            <Button variant="outline" size="sm" onClick={() => setShowInvite(true)}>
-              Update Consent
-            </Button>
-          )}
-        </div>
-
-        {!selectedChild ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-24 text-center">
-            <p className="font-medium text-lg text-muted-foreground">No children linked yet</p>
-            <p className="max-w-md text-muted-foreground text-sm">
-              Ask your child to share their User ID from Settings &gt; Profile, then ask them to
-              grant consent from their account settings.
-            </p>
+      <SpotlightCard className="rounded-card-lg">
+        <PageContainer className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <h1 className="font-heading font-semibold text-2xl tracking-tight">Parent Dashboard</h1>
+            {selectedId && (
+              <Button variant="outline" size="sm" onClick={() => setShowInvite(true)}>
+                Update Consent
+              </Button>
+            )}
           </div>
-        ) : (
-          <>
-            <ConsentGate
-              studentName={selectedChild.student.name}
-              parentEmail={user?.email ?? ""}
-              status="granted"
-              onGrant={async () => {
-                await consentMutation.mutateAsync({
-                  studentId: selectedId,
-                  action: "grant",
-                });
-              }}
-              onRevoke={async () => {
-                await consentMutation.mutateAsync({
-                  studentId: selectedId,
-                  action: "revoke",
-                });
-              }}
-            />
-            <ChildSelector
-              students={children.map((c) => ({
-                id: c.student.id,
-                name: c.student.name,
-                initials: c.student.initials,
-                grade: c.student.grade,
-              }))}
-              selectedId={selectedId}
-              onValueChange={setSelectedChildId}
-            />
-            <ChildProgressGrid
-              childData={children.map((c) => ({
-                id: c.student.id,
-                name: c.student.name,
-                initials: c.student.initials,
-                grade: c.student.grade,
-                subjects: c.subjects,
-                overallScore:
-                  c.subjects.length > 0
-                    ? Math.round(c.subjects.reduce((a, s) => a + s.score, 0) / c.subjects.length)
-                    : 0,
-              }))}
-            />
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <div className="lg:col-span-2">
-                <WeeklyReportPanel
-                  childName={selectedChild.student.name}
-                  weekRange="This Week"
-                  subjects={selectedChild.subjects}
-                  totalMinutes={selectedChild.subjects.length * 30}
-                  quizzesCompleted={selectedChild.activities.length}
-                  streakDays={0}
-                />
-              </div>
-              <div>
-                <ActivityTimeline items={selectedChild.activities} />
-              </div>
+
+          {!selectedChild ? (
+            <div className="flex flex-col items-center justify-center gap-3 py-24 text-center">
+              <p className="font-medium text-lg text-muted-foreground">No children linked yet</p>
+              <p className="max-w-md text-muted-foreground text-sm">
+                Ask your child to share their User ID from Settings &gt; Profile, then ask them to
+                grant consent from their account settings.
+              </p>
             </div>
-          </>
-        )}
-      </PageContainer>
+          ) : (
+            <>
+              <ConsentGate
+                studentName={selectedChild.student.name}
+                parentEmail={user?.email ?? ""}
+                status="granted"
+                onGrant={async () => {
+                  await consentMutation.mutateAsync({
+                    studentId: selectedId,
+                    action: "grant",
+                  });
+                }}
+                onRevoke={async () => {
+                  await consentMutation.mutateAsync({
+                    studentId: selectedId,
+                    action: "revoke",
+                  });
+                }}
+              />
+              <ChildSelector
+                students={children.map((c) => ({
+                  id: c.student.id,
+                  name: c.student.name,
+                  initials: c.student.initials,
+                  grade: c.student.grade,
+                }))}
+                selectedId={selectedId}
+                onValueChange={setSelectedChildId}
+              />
+              <ChildProgressGrid
+                childData={children.map((c) => ({
+                  id: c.student.id,
+                  name: c.student.name,
+                  initials: c.student.initials,
+                  grade: c.student.grade,
+                  subjects: c.subjects,
+                  overallScore:
+                    c.subjects.length > 0
+                      ? Math.round(c.subjects.reduce((a, s) => a + s.score, 0) / c.subjects.length)
+                      : 0,
+                }))}
+              />
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                  <WeeklyReportPanel
+                    childName={selectedChild.student.name}
+                    weekRange="This Week"
+                    subjects={selectedChild.subjects}
+                    totalMinutes={selectedChild.subjects.length * 30}
+                    quizzesCompleted={selectedChild.activities.length}
+                    streakDays={0}
+                  />
+                </div>
+                <div>
+                  <ActivityTimeline items={selectedChild.activities} />
+                </div>
+              </div>
+            </>
+          )}
+        </PageContainer>
+      </SpotlightCard>
 
       <ParentInvitationDialog
         open={showInvite}

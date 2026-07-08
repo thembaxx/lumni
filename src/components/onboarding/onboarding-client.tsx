@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti } from "@/components/celebration/canvas-confetti";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { PageContainer } from "@/components/layout/page-container";
 import rawSubjects from "@/data/subjects.json";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -148,141 +149,143 @@ export default function OnboardingClient() {
 
   return (
     <PageContainer>
-      <div className="flex flex-col items-center justify-center py-8">
-        <m.div
-          className="flex w-full max-w-md flex-col gap-8"
-          initial={false}
-          animate={{ opacity: 1 }}
-        >
-          <StepIndicator
-            step={step}
-            totalSteps={MAX_STEPS}
-            labels={["Subjects", "Goals", "Favourites", "Review"]}
-          />
+      <SpotlightCard radius={300}>
+        <div className="flex flex-col items-center justify-center py-8">
+          <m.div
+            className="flex w-full max-w-md flex-col gap-8"
+            initial={false}
+            animate={{ opacity: 1 }}
+          >
+            <StepIndicator
+              step={step}
+              totalSteps={MAX_STEPS}
+              labels={["Subjects", "Goals", "Favourites", "Review"]}
+            />
 
-          <AnimatePresence mode="wait" initial={false}>
-            <m.div
-              key={step}
-              className="flex flex-col gap-8"
-              {...(shouldReduceMotion
-                ? {}
-                : {
-                    initial: { opacity: 0, x: 20 },
-                    animate: { opacity: 1, x: 0 },
-                    exit: { opacity: 0, x: -20 },
-                    transition: { duration: 0.3, ease: iOSEase },
-                  })}
-            >
-              {step === 0 && (
-                <div className="flex flex-col items-center gap-6">
-                  <SubjectsSVG />
-                  <div className="flex flex-col gap-2 text-center">
-                    <h1 className="font-heading font-semibold text-2xl">
-                      What subjects are you taking?
-                    </h1>
-                    <p className="text-muted-foreground text-sm">
-                      Choose the subjects you&apos;ll be studying this year.
-                    </p>
+            <AnimatePresence mode="wait" initial={false}>
+              <m.div
+                key={step}
+                className="flex flex-col gap-8"
+                {...(shouldReduceMotion
+                  ? {}
+                  : {
+                      initial: { opacity: 0, x: 20 },
+                      animate: { opacity: 1, x: 0 },
+                      exit: { opacity: 0, x: -20 },
+                      transition: { duration: 0.3, ease: iOSEase },
+                    })}
+              >
+                {step === 0 && (
+                  <div className="flex flex-col items-center gap-6">
+                    <SubjectsSVG />
+                    <div className="flex flex-col gap-2 text-center">
+                      <h1 className="font-heading font-semibold text-2xl">
+                        What subjects are you taking?
+                      </h1>
+                      <p className="text-muted-foreground text-sm">
+                        Choose the subjects you&apos;ll be studying this year.
+                      </p>
+                    </div>
+                    <SubjectSelectionStep
+                      searchTerm={searchTerm}
+                      onSearchChange={setSearchTerm}
+                      expandedCategories={expandedCategories}
+                      onToggleCategory={handleToggleCategory}
+                      selectedSubjects={selectedSubjects}
+                      onToggleSubject={handleToggleSubject}
+                      filteredSubjects={filteredSubjects}
+                      subjectsByCategory={subjectsByCategory}
+                      categoryOrder={categoryOrder}
+                      categoryLabels={CATEGORY_LABELS}
+                    />
                   </div>
-                  <SubjectSelectionStep
-                    searchTerm={searchTerm}
-                    onSearchChange={setSearchTerm}
-                    expandedCategories={expandedCategories}
-                    onToggleCategory={handleToggleCategory}
+                )}
+
+                {step === 1 && (
+                  <div className="flex flex-col items-center gap-6">
+                    <GoalsSVG />
+                    <div className="flex flex-col gap-2 text-center">
+                      <h1 className="font-heading font-semibold text-2xl">
+                        What are your learning goals?
+                      </h1>
+                      <p className="text-muted-foreground text-sm">
+                        Set your targets to help us personalise your experience.
+                      </p>
+                    </div>
+                    <GoalsStep
+                      targetAps={targetAps}
+                      dailyMinutes={dailyMinutes}
+                      onTargetApsChange={setTargetAps}
+                      onDailyMinutesChange={setDailyMinutes}
+                    />
+                  </div>
+                )}
+
+                {step === 2 && (
+                  <div className="flex flex-col items-center gap-6">
+                    <SubjectsSVG />
+                    <div className="flex flex-col gap-2 text-center">
+                      <h1 className="font-heading font-semibold text-2xl">Pick your favourites</h1>
+                      <p className="text-muted-foreground text-sm">
+                        From your enrolled subjects, choose up to 3 favourites for quick access on
+                        your dashboard.
+                      </p>
+                    </div>
+                    <SubjectSelectionStep
+                      searchTerm={searchTerm}
+                      onSearchChange={setSearchTerm}
+                      expandedCategories={expandedCategories}
+                      onToggleCategory={handleToggleCategory}
+                      selectedSubjects={selectedSubjects}
+                      onToggleSubject={(id) => {
+                        if (selectedSubjects.includes(id)) {
+                          setSelectedSubjects((prev) => prev.filter((x) => x !== id));
+                        } else if (selectedSubjects.length < 3) {
+                          setSelectedSubjects((prev) => [...prev, id]);
+                        }
+                      }}
+                      filteredSubjects={filteredSubjects}
+                      subjectsByCategory={subjectsByCategory}
+                      categoryOrder={categoryOrder}
+                      categoryLabels={CATEGORY_LABELS}
+                    />
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <CompleteStep
                     selectedSubjects={selectedSubjects}
-                    onToggleSubject={handleToggleSubject}
-                    filteredSubjects={filteredSubjects}
-                    subjectsByCategory={subjectsByCategory}
-                    categoryOrder={categoryOrder}
-                    categoryLabels={CATEGORY_LABELS}
+                    subjectsData={subjects}
+                    title="Ready to start?"
+                    body={`${selectedSubjects.length} subject${selectedSubjects.length === 1 ? "" : "s"} selected`}
                   />
-                </div>
-              )}
+                )}
+              </m.div>
+            </AnimatePresence>
 
-              {step === 1 && (
-                <div className="flex flex-col items-center gap-6">
-                  <GoalsSVG />
-                  <div className="flex flex-col gap-2 text-center">
-                    <h1 className="font-heading font-semibold text-2xl">
-                      What are your learning goals?
-                    </h1>
-                    <p className="text-muted-foreground text-sm">
-                      Set your targets to help us personalise your experience.
-                    </p>
-                  </div>
-                  <GoalsStep
-                    targetAps={targetAps}
-                    dailyMinutes={dailyMinutes}
-                    onTargetApsChange={setTargetAps}
-                    onDailyMinutesChange={setDailyMinutes}
-                  />
-                </div>
+            <div className="mt-4 flex items-center justify-between">
+              {step > 0 && (
+                <button
+                  type="button"
+                  onClick={handleBack}
+                  className="rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+                >
+                  Back
+                </button>
               )}
-
-              {step === 2 && (
-                <div className="flex flex-col items-center gap-6">
-                  <SubjectsSVG />
-                  <div className="flex flex-col gap-2 text-center">
-                    <h1 className="font-heading font-semibold text-2xl">Pick your favourites</h1>
-                    <p className="text-muted-foreground text-sm">
-                      From your enrolled subjects, choose up to 3 favourites for quick access on
-                      your dashboard.
-                    </p>
-                  </div>
-                  <SubjectSelectionStep
-                    searchTerm={searchTerm}
-                    onSearchChange={setSearchTerm}
-                    expandedCategories={expandedCategories}
-                    onToggleCategory={handleToggleCategory}
-                    selectedSubjects={selectedSubjects}
-                    onToggleSubject={(id) => {
-                      if (selectedSubjects.includes(id)) {
-                        setSelectedSubjects((prev) => prev.filter((x) => x !== id));
-                      } else if (selectedSubjects.length < 3) {
-                        setSelectedSubjects((prev) => [...prev, id]);
-                      }
-                    }}
-                    filteredSubjects={filteredSubjects}
-                    subjectsByCategory={subjectsByCategory}
-                    categoryOrder={categoryOrder}
-                    categoryLabels={CATEGORY_LABELS}
-                  />
-                </div>
-              )}
-
-              {step === 3 && (
-                <CompleteStep
-                  selectedSubjects={selectedSubjects}
-                  subjectsData={subjects}
-                  title="Ready to start?"
-                  body={`${selectedSubjects.length} subject${selectedSubjects.length === 1 ? "" : "s"} selected`}
-                />
-              )}
-            </m.div>
-          </AnimatePresence>
-
-          <div className="mt-4 flex items-center justify-between">
-            {step > 0 && (
+              <div className="flex-1" />
               <button
                 type="button"
-                onClick={handleBack}
-                className="rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+                onClick={handleContinue}
+                disabled={submitted || (step === 0 && selectedSubjects.length === 0)}
+                className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-system-accent-foreground transition-[background-color,opacity] hover:bg-system-accent/90 disabled:opacity-50"
               >
-                Back
+                {step === MAX_STEPS - 1 ? "Get Started" : "Continue"}
               </button>
-            )}
-            <div className="flex-1" />
-            <button
-              type="button"
-              onClick={handleContinue}
-              disabled={submitted || (step === 0 && selectedSubjects.length === 0)}
-              className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-system-accent-foreground transition-[background-color,opacity] hover:bg-system-accent/90 disabled:opacity-50"
-            >
-              {step === MAX_STEPS - 1 ? "Get Started" : "Continue"}
-            </button>
-          </div>
-        </m.div>
-      </div>
+            </div>
+          </m.div>
+        </div>
+      </SpotlightCard>
     </PageContainer>
   );
 }

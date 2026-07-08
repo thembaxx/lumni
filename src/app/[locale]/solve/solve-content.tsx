@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { AiSolver } from "@/components/tools/communication/ai-solver";
+import { Reveal, SpotlightCard } from "@/components/shared/motion-primitives";
 
 export function SolveContent() {
   const searchParams = useSearchParams();
@@ -16,9 +17,13 @@ export function SolveContent() {
           Snap a photo of your homework or type a question to get step-by-step help.
         </p>
       </div>
-      <div className="overflow-hidden rounded-card border border-border bg-card shadow-level-2">
-        <AiSolver initialQuestion={initialQuestion} cameraFocus={cameraFocus} />
-      </div>
+      <Reveal y={18}>
+        <SpotlightCard className="rounded-card" radius={420}>
+          <div className="overflow-hidden rounded-card border border-border bg-card shadow-level-2">
+            <AiSolver initialQuestion={initialQuestion} cameraFocus={cameraFocus} />
+          </div>
+        </SpotlightCard>
+      </Reveal>
     </div>
   );
 }

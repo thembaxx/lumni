@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSubjects } from "@/hooks/use-subjects";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import {
   ERROR_TYPE_LABELS,
   type ErrorType,
@@ -178,31 +179,33 @@ export function ReviewClient() {
         </div>
 
         {entries.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col gap-1 p-8 text-center">
-              <HugeiconsIcon
-                icon={BookOpen01Icon}
-                className="mx-auto mb-3 size-8 text-muted-foreground/40"
-              />
-              <p className="font-semibold text-base">No mistakes to review</p>
-              <p className="text-muted-foreground text-sm">
-                {filterSubject
-                  ? `No mistakes found for ${filterSubject}.`
-                  : "Wrong answers will appear here automatically after quizzes and exams."}
-              </p>
-              {filterSubject && (
-                <div className="mt-4">
-                  <Link
-                    href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
-                  >
-                    <Button size="sm" variant="outline">
-                      Practice {filterSubject}
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <SpotlightCard className="rounded-card-lg" radius={260}>
+            <Card>
+              <CardContent className="flex flex-col gap-1 p-8 text-center">
+                <HugeiconsIcon
+                  icon={BookOpen01Icon}
+                  className="mx-auto mb-3 size-8 text-muted-foreground/40"
+                />
+                <p className="font-semibold text-base">No mistakes to review</p>
+                <p className="text-muted-foreground text-sm">
+                  {filterSubject
+                    ? `No mistakes found for ${filterSubject}.`
+                    : "Wrong answers will appear here automatically after quizzes and exams."}
+                </p>
+                {filterSubject && (
+                  <div className="mt-4">
+                    <Link
+                      href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
+                    >
+                      <Button size="sm" variant="outline">
+                        Practice {filterSubject}
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </SpotlightCard>
         ) : (
           <div className="flex flex-col gap-3">
             <p className="text-muted-foreground text-sm">

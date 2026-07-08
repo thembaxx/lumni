@@ -7,6 +7,7 @@ import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { useRouter } from "@/i18n/navigation";
@@ -37,30 +38,32 @@ async function fetchPapers(subject: string): Promise<ExamPaper[]> {
 function PaperCard({ paper }: { paper: ExamPaper }) {
   const router = useRouter();
   return (
-    <Card size="sm">
-      <CardHeader>
-        <CardTitle>
-          {paper.subject} — {paper.paperCode}
-        </CardTitle>
-        <CardDescription>
-          {paper.year} &middot; {paper.examPeriod} &middot; Paper {paper.paperNumber}
-          {paper.totalMarks ? ` &middot; ${paper.totalMarks} marks` : ""}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            size="sm"
-            variant="default"
-            onClick={() => router.push(`/exam/${paper.id}`)}
-            className="gap-1.5 rounded-full text-xs"
-          >
-            <HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" />
-            View Paper
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+    <SpotlightCard className="rounded-card-lg" radius={260}>
+      <Card size="sm">
+        <CardHeader>
+          <CardTitle>
+            {paper.subject} — {paper.paperCode}
+          </CardTitle>
+          <CardDescription>
+            {paper.year} &middot; {paper.examPeriod} &middot; Paper {paper.paperNumber}
+            {paper.totalMarks ? ` &middot; ${paper.totalMarks} marks` : ""}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              variant="default"
+              onClick={() => router.push(`/exam/${paper.id}`)}
+              className="gap-1.5 rounded-full text-xs"
+            >
+              <HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" />
+              View Paper
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </SpotlightCard>
   );
 }
 

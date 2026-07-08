@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-type EasterEgg = "konami" | "rainbow" | "zen" | "retro" | "galaxy" | "spiral";
+type EasterEgg = "konami" | "rainbow" | "zen" | "retro" | "galaxy" | "spiral" | "party" | "matrix";
 
 interface EasterEggState {
   activeEgg: EasterEgg | null;
@@ -21,6 +21,8 @@ interface EasterEggState {
   isZen: boolean;
   isGalaxy: boolean;
   isSpiral: boolean;
+  isParty: boolean;
+  isMatrix: boolean;
 }
 
 const EasterEggContext = createContext<EasterEggState>({
@@ -32,6 +34,8 @@ const EasterEggContext = createContext<EasterEggState>({
   isZen: false,
   isGalaxy: false,
   isSpiral: false,
+  isParty: false,
+  isMatrix: false,
 });
 
 const KONAMI = [
@@ -50,6 +54,12 @@ const KONAMI = [
 export function EasterEggProvider({ children }: { children: React.ReactNode }) {
   const [activeEgg, setActiveEgg] = useState<EasterEgg | null>(null);
   const konamiIndex = useRef(0);
+  const typeBuffer = useRef("");
+
+  const flashEgg = useCallback((egg: EasterEgg) => {
+    setActiveEgg(egg);
+    setTimeout(() => setActiveEgg((cur) => (cur === egg ? null : cur)), 4000);
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -63,10 +73,23 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       } else {
         konamiIndex.current = 0;
       }
+
+      // Hidden typable triggers — ignored while typing into form fields.
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      typeBuffer.current = (typeBuffer.current + e.key.toLowerCase()).slice(-12);
+      if (typeBuffer.current.includes("lumni")) {
+        typeBuffer.current = "";
+        flashEgg("party");
+      } else if (typeBuffer.current.includes("matrix")) {
+        typeBuffer.current = "";
+        flashEgg("matrix");
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [flashEgg]);
 
   const trigger = useCallback((egg: EasterEgg) => {
     setActiveEgg(egg);
@@ -85,6 +108,8 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       isZen: activeEgg === "zen",
       isGalaxy: activeEgg === "galaxy",
       isSpiral: activeEgg === "spiral",
+      isParty: activeEgg === "party",
+      isMatrix: activeEgg === "matrix",
     }),
     [activeEgg, trigger, dismiss],
   );
@@ -97,6 +122,8 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       {activeEgg === "retro" && <RetroOverlay />}
       {activeEgg === "galaxy" && <GalaxyOverlay />}
       {activeEgg === "spiral" && <SpiralOverlay />}
+      {activeEgg === "party" && <PartyOverlay />}
+      {activeEgg === "matrix" && <MatrixOverlay />}
       {children}
     </EasterEggContext>
   );
@@ -271,6 +298,88 @@ function RetroOverlay() {
           backgroundSize: "100% 4px",
         }}
       />
+    </div>
+  );
+}
+
+function PartyOverlay() {
+  const hue = Math.floor(Math.random() * 360);
+  return (
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) overflow-hidden">
+      <div
+        className="absolute inset-0 animate-rainbow-shift"
+        style={{
+          background:
+            "conic-gradient(from 0deg, oklch(60% 0.28 0), oklch(70% 0.24 55), oklch(80% 0.25 120), oklch(70% 0.30 200), oklch(60% 0.28 280), oklch(60% 0.28 0))",
+          backgroundSize: "200% 200%",
+          opacity: 0.1,
+          filter: `hue-rotate(${hue}deg)`,
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="animate-bounce-pop rounded-2xl bg-black/70 px-6 py-3 text-white text-sm font-medium backdrop-blur-xl shadow-level-3">
+          🎉 Party mode — you found it! Type anything to keep the vibe going
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MatrixOverlay() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789@#$%&*<>/\\|".split("");
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    const drops = Array.from({ length: columns }, () => Math.random() * -canvas.height);
+
+    let raf = 0;
+    const draw = () => {
+      ctx.fillStyle = "rgba(4, 8, 12, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "oklch(72% 0.26 146)";
+      ctx.font = `${fontSize}px ui-monospace, monospace`;
+      columns = Math.floor(canvas.width / fontSize);
+      for (let i = 0; i < columns; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] ?? 0;
+        ctx.fillText(text, x, y);
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        } else {
+          drops[i] = y + fontSize;
+        }
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-(--z-easter-egg) bg-black/80">
+      <canvas ref={canvasRef} className="h-full w-full opacity-80" />
+      <div className="absolute right-6 bottom-6 rounded-2xl bg-black/70 px-5 py-3 text-emerald-300 text-sm backdrop-blur-xl">
+        The Matrix has you… wake up by pressing any key
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { SessionResultsView } from "@/components/exam";
 import type { QuestionPart } from "@/types/exam-paper";
+import { Reveal, SpotlightCard } from "@/components/shared/motion-primitives";
 
 interface ResultsScreenProps {
   flatParts: Array<{
@@ -40,18 +41,22 @@ export function ResultsScreen({
   });
 
   return (
-    <SessionResultsView
-      results={{ partResults }}
-      flatParts={flatParts}
-      answers={answers}
-      metadata={{
-        subject,
-        totalMarks,
-        duration,
-      }}
-      isMock={mode === "mock"}
-      onDashboard={onDashboard}
-      onReview={onReview}
-    />
+    <Reveal y={20} className="w-full">
+      <SpotlightCard className="rounded-card-lg" radius={420}>
+        <SessionResultsView
+          results={{ partResults }}
+          flatParts={flatParts}
+          answers={answers}
+          metadata={{
+            subject,
+            totalMarks,
+            duration,
+          }}
+          isMock={mode === "mock"}
+          onDashboard={onDashboard}
+          onReview={onReview}
+        />
+      </SpotlightCard>
+    </Reveal>
   );
 }

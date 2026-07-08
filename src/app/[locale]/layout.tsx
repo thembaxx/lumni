@@ -39,6 +39,7 @@ const AmbientBackground = dynamic(() =>
     default: m.AmbientBackground,
   })),
 );
+import { MeshAurora } from "@/components/shared/ambient/mesh-aurora";
 const DynamicCursor = dynamic(() =>
   import("@/components/shared/ambient/dynamic-cursor").then((m) => ({
     default: m.DynamicCursor,
@@ -193,6 +194,9 @@ export default async function LocaleLayout({
         <LazyMotion features={domMax}>
           <Suspense fallback={null}>
             <AmbientBackground variant="dashboard" orbCount={4} />
+          </Suspense>
+          <Suspense fallback={null}>
+            <MeshAurora variant="dashboard" className="fixed inset-0 -z-10" />
           </Suspense>
           <Suspense fallback={null}>
             <DynamicCursor variant="aura" />
