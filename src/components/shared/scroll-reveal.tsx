@@ -16,10 +16,24 @@ interface ScrollRevealProps {
   as?: "div" | "section" | "article" | "span";
 }
 
-/**
- * Scroll-triggered reveal animation using IntersectionObserver.
- * 2026 trend: scroll-driven animations with spring physics feel.
- */
+let globalObserver: IntersectionObserver | null = null;
+const listeners = new Map<Element, () => void>();
+
+function getGlobalObserver(threshold: number): IntersectionObserver {
+  if (!globalObserver) {
+    globalObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const cb = listeners.get(entry.target);
+          if (cb) cb();
+        }
+      },
+      { threshold },
+    );
+  }
+  return globalObserver;
+}
+
 export function ScrollReveal({
   children,
   className,
@@ -32,28 +46,29 @@ export function ScrollReveal({
   as: Tag = "div",
 }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || prefersReducedMotion) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once) observer.unobserve(el);
-        } else if (!once) {
-          setIsVisible(false);
-        }
-      },
-      { threshold },
-    );
-
+    const observer = getGlobalObserver(threshold);
+    const handler = () => {
+      setIsVisible(true);
+      if (once) {
+        listeners.delete(el);
+        observer.unobserve(el);
+      }
+    };
+    listeners.set(el, handler);
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [once, threshold]);
+
+    return () => {
+      listeners.delete(el);
+      observer.unobserve(el);
+    };
+  }, [once, threshold, prefersReducedMotion]);
 
   const getTransform = () => {
     if (prefersReducedMotion || direction === "none") return "none";

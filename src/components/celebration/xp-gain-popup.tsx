@@ -16,9 +16,9 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
     <AnimatePresence initial={false}>
       {visible && (
         <m.div
-          initial={{ opacity: 0, y: 20, scale: 0.5 }}
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.8 }}
+          exit={{ opacity: 0, y: -20, scale: 0.9 }}
           transition={springPresets.fast}
           className="pointer-events-none fixed top-1/2 left-1/2 z-modal -translate-x-1/2 -translate-y-1/2 motion-reduce:animate-none motion-reduce:transition-none"
         >

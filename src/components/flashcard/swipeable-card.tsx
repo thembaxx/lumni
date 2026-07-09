@@ -112,7 +112,7 @@ export const SwipeableCard = memo(function SwipeableCard({
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (!isTop) return;
+    if (!isTop || e.repeat) return;
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleTap();

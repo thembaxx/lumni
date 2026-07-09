@@ -144,11 +144,22 @@ export function QuizView({
   });
 
   const isQuizActive = sessionActive && questions.length > 0 && !state.isComplete;
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
     setImmersive(isQuizActive);
     return () => setImmersive(false);
   }, [isQuizActive, setImmersive]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    setIsTouchDevice(mq.matches);
+    const handler = (e: MediaQueryListEvent) => {
+      setIsTouchDevice(e.matches);
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const dragX = useMotionValue(0);
   const dragTransform = useTransform(dragX, (v) => `translateX(${v}px)`);
@@ -162,6 +173,8 @@ export function QuizView({
     },
     [handleNext, handlePrevious, dragX],
   );
+
+  const velocityThreshold = 500;
 
   if (loadError) {
     return (
@@ -248,8 +261,9 @@ export function QuizView({
       <m.main
         className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
         tabIndex={-1}
-        drag={isQuizActive ? "x" : false}
+        drag={isQuizActive && isTouchDevice ? "x" : false}
         dragElastic={0.2}
+        dragSnapToOrigin={velocityThreshold > 0}
         whileDrag={{ scale: 0.97, transition: { duration: 0.2 } }}
         style={{ transform: dragTransform }}
         onDragEnd={handleDragEnd}

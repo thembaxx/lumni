@@ -2,9 +2,8 @@
 
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "motion/react";
 import * as m from "motion/react-m";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface CollapsibleSectionProps {
@@ -22,13 +21,14 @@ export function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const [open, setOpen] = useState(defaultOpen);
   const toggle = useCallback(() => setOpen((v) => !v), []);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex flex-col gap-3">
       <button
         type="button"
         onClick={toggle}
-        className="press-scale flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-study-green/40"
+        className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/50 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-study-green/40"
         aria-expanded={open}
       >
         <span className="text-balance font-semibold text-muted-foreground text-xs uppercase tracking-wider">
@@ -45,18 +45,17 @@ export function CollapsibleSection({
           />
         </m.div>
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2, ease: iOSEase }}
-          >
-            {children}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <m.div
+        initial={false}
+        animate={{
+          height: open ? (contentRef.current?.scrollHeight ?? "auto") : 0,
+          opacity: open ? 1 : 0,
+        }}
+        transition={{ duration: 0.2, ease: iOSEase }}
+        className="overflow-hidden"
+      >
+        <div ref={contentRef}>{children}</div>
+      </m.div>
     </div>
   );
 }

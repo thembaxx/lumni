@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useCallback, useRef, type ReactNode } from "react";
+import { useCallback, useRef, type MouseEvent, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface MagneticCardProps {
@@ -32,7 +32,7 @@ export function MagneticCard({
   const ref = useRef<HTMLElement>(null);
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
+    (e: MouseEvent) => {
       if (prefersReducedMotion || !ref.current) return;
       const rect = ref.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -45,10 +45,6 @@ export function MagneticCard({
   const handleMouseLeave = useCallback(() => {
     if (!ref.current) return;
     ref.current.style.transform = `perspective(${perspective}px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
-    ref.current.style.transition = "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)";
-    setTimeout(() => {
-      if (ref.current) ref.current.style.transition = "";
-    }, 300);
   }, [perspective]);
 
   const Component = Tag as React.ElementType;
@@ -56,7 +52,7 @@ export function MagneticCard({
     <Component
       ref={ref as React.Ref<HTMLElement>}
       className={cn(
-        "tilt-card will-change-transform",
+        "tilt-card will-change-transform transition-transform duration-[400ms] motion-reduce:transition-none",
         onClick && "press-scale cursor-pointer",
         className,
       )}

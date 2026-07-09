@@ -125,7 +125,7 @@ export default function OnboardingClient() {
         <m.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: iOSEase }}
+          transition={{ duration: 0.25, ease: iOSEase }}
         >
           <CompleteStep
             selectedSubjects={selectedSubjects}

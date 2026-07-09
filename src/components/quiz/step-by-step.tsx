@@ -8,6 +8,7 @@ import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { iOSEase } from "@/lib/utils/animation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -76,7 +77,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: iOSEase }}
             className="group relative rounded-2xl border border-(--system-accent)/10 bg-card p-6 shadow-sm"
           >
             <div className="absolute top-0 left-0 h-full w-1.5 rounded-l-2xl bg-(--system-accent)/20 transition-colors group-hover:bg-(--system-accent)/40" />

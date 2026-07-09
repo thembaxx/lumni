@@ -867,7 +867,7 @@
     scroll-behavior: auto !important;
   }
 
-  /* Preserve opacity, color, shadow, and background transitions that aid comprehension */
+  /* Preserve opacity, color, shadow, blur, and background transitions that aid comprehension */
   :is(
     [class*="transition-opacity"],
     [class*="transition-colors"],
@@ -876,7 +876,9 @@
     [class*="transition-[color]"],
     [class*="transition-[shadow]"],
     [class*="transition-[background]"],
-    [class*="transition-[border]"]
+    [class*="transition-[border]"],
+    [class*="transition-[filter]"],
+    [style*="transition: filter"]
   ) {
     transition-duration: 0.2s !important;
   }
@@ -937,8 +939,8 @@ span.math:not(:empty)::after {
 /* Press micro-interaction */
 .press-scale {
   transition:
-    transform var(--motion-fast) var(--ease-default),
-    box-shadow var(--motion-fast) var(--ease-default);
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .press-scale:active {
   transform: scale(0.96);
