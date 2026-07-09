@@ -59,7 +59,7 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
         key={streak}
         initial={{ scale: 1.5 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 500, bounce: 0 }}
+        transition={{ type: "spring", stiffness: 260, bounce: 0 }}
       >
         {streak}
       </m.span>

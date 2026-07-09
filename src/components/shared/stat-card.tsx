@@ -7,6 +7,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";
 
@@ -70,7 +71,7 @@ export function StatCard({
       <m.div
         whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
+        transition={springPresets.fast}
         className={cn(
           "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2",
           className,
@@ -82,10 +83,7 @@ export function StatCard({
           animate={{ scale: 1, opacity: 1 }}
           transition={{
             delay: delay + 0.2,
-            type: "spring",
-            stiffness: 300,
-            damping: 26,
-            bounce: 0,
+            ...springPresets.standard,
           }}
         >
           {Icon && <Icon className={cn("size-5", colorClass)} />}

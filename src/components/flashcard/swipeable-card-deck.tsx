@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
 import { useSwipeDeck } from "@/hooks/use-swipe-deck";
-import { iOSEase } from "@/lib/utils/animation";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface SwipeableCardDeckProps {
   cards: FlashcardCardData[];
@@ -197,14 +197,10 @@ export function SwipeableCardDeck({
                   opacity: 0,
                   x: swipeDirection === "right" ? 400 : -400,
                   rotate: swipeDirection === "right" ? 20 : -20,
-                  transition: { duration: 0.4, ease: iOSEase },
+                  transition: springPresets.cardExit,
                 }}
                 transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 26,
-                  mass: 0.8,
-                  bounce: 0,
+                  ...springPresets.standard,
                   delay: idx * 0.04,
                 }}
                 layout
@@ -243,12 +239,7 @@ export function SwipeableCardDeck({
             className="absolute inset-0 z-overlay flex items-center justify-center rounded-card-lg bg-system-background/95"
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 350,
-              damping: 26,
-              mass: 0.7,
-            }}
+            transition={springPresets.fast}
           >
             <QualityPicker
               polarity={pickerPolarity}

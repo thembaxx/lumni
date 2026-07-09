@@ -6,6 +6,7 @@ import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
 import { memo } from "react";
 import type { IconSvgElement } from "@hugeicons/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface ToolCardProps {
   label: string;
@@ -16,7 +17,7 @@ interface ToolCardProps {
   secret?: boolean;
 }
 
-const SPRING = { type: "spring", stiffness: 400, damping: 26, bounce: 0 } as const;
+const SPRING = springPresets.fast;
 
 export const ToolCard = memo(function ToolCard({
   label,

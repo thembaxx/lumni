@@ -22,6 +22,7 @@ import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { PageContainer } from "@/components/layout/page-container";
 import { ToolCard } from "./tool-card";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface ToolDef {
   label: string;
@@ -151,7 +152,7 @@ const ZONES: ZoneDef[] = [
   },
 ];
 
-const SPRING = { type: "spring", stiffness: 400, damping: 26, bounce: 0 } as const;
+const SPRING = springPresets.fast;
 
 const VoidDot = memo(function VoidDot({ filled }: { filled: boolean }) {
   return (

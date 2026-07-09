@@ -71,13 +71,15 @@ export async function recordSeenQuestions(
 ): Promise<void> {
   try {
     const now = Date.now();
-    for (const id of questionIds) {
-      await deps.db.seenPastPaperQuestions.add({
-        questionId: id,
-        subject,
-        seenAt: now,
-      });
-    }
+    await Promise.all(
+      questionIds.map((id) =>
+        deps.db.seenPastPaperQuestions.add({
+          questionId: id,
+          subject,
+          seenAt: now,
+        }),
+      ),
+    );
   } catch (e) {
     logError("RecordSeenQuestions", e);
   }

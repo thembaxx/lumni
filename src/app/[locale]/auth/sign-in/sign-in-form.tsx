@@ -12,6 +12,7 @@ import { useCallback, useReducer, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useRouter } from "@/i18n/navigation";
+import { logError } from "@/lib/shared/logger";
 import { useAuth } from "@/lib/auth/auth-context";
 
 function safeRedirect(url: string | null): string {
@@ -94,7 +95,8 @@ export function SignInForm() {
           push(redirect);
           refresh();
         }
-      } catch {
+      } catch (e) {
+        logError("sign-in", e);
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }

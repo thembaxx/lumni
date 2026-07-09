@@ -7,6 +7,8 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
+import { haptics } from "@/lib/utils/haptics";
+import { projectMomentum, springPresets } from "@/lib/utils/spring-presets";
 
 interface SwipeableCardProps {
   id: string;
@@ -46,6 +48,7 @@ export const SwipeableCard = memo(function SwipeableCard({
   const prefersReducedMotion = useReducedMotion();
 
   const x = useMotionValue(0);
+  const HARD_THRESHOLD = 100;
 
   const rotate = useTransform(x, [-300, 0, 300], [-18, 0, 18]);
   const rotateY = useTransform(x, [-300, 0, 300], [6, 0, -6]);
@@ -77,28 +80,28 @@ export const SwipeableCard = memo(function SwipeableCard({
       return;
     }
 
-    const hardThreshold = 100;
-    const magneticThreshold = 80;
     const xOffset = info.offset.x;
     const xVelocity = info.velocity.x;
     const absOffset = Math.abs(xOffset);
 
-    if (absOffset > hardThreshold || Math.abs(xVelocity) > 500 || absOffset > magneticThreshold) {
+    if (absOffset > HARD_THRESHOLD || Math.abs(xVelocity) > 500) {
       const direction = xOffset > 0 || xVelocity > 0 ? "right" : "left";
-      const targetX = direction === "right" ? 600 : -600;
+      const projection = projectMomentum(xVelocity);
+      const baseTarget = direction === "right" ? 600 : -600;
+      const targetX = baseTarget + (direction === "right" ? projection : -projection);
+
+      haptics.light();
 
       animate(x, targetX, {
-        type: "spring",
-        stiffness: 400,
-        damping: 28,
-        mass: 0.7,
+        ...springPresets.cardExit,
+        velocity: xVelocity,
         onComplete: () => {
           onSwipe(direction);
           x.set(0);
         },
       });
     } else {
-      animate(x, 0, { type: "spring", stiffness: 350, damping: 28, bounce: 0 });
+      animate(x, 0, springPresets.standard);
     }
   }
 
@@ -137,7 +140,7 @@ export const SwipeableCard = memo(function SwipeableCard({
       data-testid="swipeable-card"
       drag={isTop ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.9}
+      dragElastic={prefersReducedMotion ? 0 : 0.3}
       onDragEnd={isTop ? handleDragEnd : undefined}
       onTap={isTop ? handleTap : undefined}
       whileDrag={{

@@ -42,6 +42,7 @@ export function DiagramLabellingInput({
   const t = useTranslations();
   const [placements, setPlacements] = useState<Record<string, string>>({});
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
+  const [keyboardSelectedId, setKeyboardSelectedId] = useState<string | null>(null);
 
   const shuffledLabels = useMemo(() => labels.toSorted(() => Math.random() - 0.5), [labels]);
 
@@ -71,6 +72,20 @@ export function DiagramLabellingInput({
         if (otherRegion) delete next[otherRegion[0]];
         return next;
       });
+    },
+    [placements],
+  );
+
+  const placeLabel = useCallback(
+    (labelId: string, regionId: string) => {
+      if (placements[regionId]) return;
+      const otherRegion = Object.entries(placements).find(([, v]) => v === labelId);
+      setPlacements((prev) => {
+        const next = { ...prev, [regionId]: labelId };
+        if (otherRegion) delete next[otherRegion[0]];
+        return next;
+      });
+      setKeyboardSelectedId(null);
     },
     [placements],
   );
@@ -125,12 +140,17 @@ export function DiagramLabellingInput({
               onKeyDown={(e) => {
                 if (label && (e.key === "Enter" || e.key === " ")) {
                   removePlacement(region.id);
+                } else if (!label && keyboardSelectedId && (e.key === "Enter" || e.key === " ")) {
+                  e.preventDefault();
+                  placeLabel(keyboardSelectedId, region.id);
                 }
               }}
               className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 ${
                 label
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20)"
-                  : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)"
+                  : keyboardSelectedId
+                    ? "border-(--system-accent) bg-(--system-accent-alpha-5) ring-2 ring-(--system-accent)/40"
+                    : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)"
               }`}
               style={{
                 left: `${scaleX(region.x)}%`,
@@ -168,14 +188,23 @@ export function DiagramLabellingInput({
                   type="button"
                   draggable
                   aria-grabbed={isDragging}
+                  aria-pressed={keyboardSelectedId === label.id}
                   onDragStart={(e: React.DragEvent) => handleDragStart(e, label.id)}
                   onDragEnd={handleDragEnd}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
+                      setKeyboardSelectedId(keyboardSelectedId === label.id ? null : label.id);
+                    }
+                    if (e.key === "Escape") {
+                      setKeyboardSelectedId(null);
                     }
                   }}
-                  className="w-full cursor-grab bg-transparent text-left active:cursor-grabbing"
+                  className={`w-full cursor-grab bg-transparent text-left active:cursor-grabbing ${
+                    keyboardSelectedId === label.id
+                      ? "ring-2 ring-(--system-accent) rounded-md"
+                      : ""
+                  }`}
                 >
                   {label.text}
                 </button>

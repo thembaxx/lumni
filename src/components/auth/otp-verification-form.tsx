@@ -15,6 +15,7 @@ import { iOSEase } from "@/lib/utils/animation";
 import { buttonStyles, countdownStyles, iconStyles } from "./auth-styles";
 import { formatCountdown } from "./countdown-utils";
 import { LoadingDots } from "./loading-dots";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface OtpVerificationFormProps {
   email: string;
@@ -67,12 +68,7 @@ export function OtpVerificationForm({
             animate={{
               scale: 1,
               opacity: 1,
-              transition: {
-                type: "spring",
-                stiffness: 350,
-                damping: 26,
-                bounce: 0,
-              },
+              transition: springPresets.fast,
             }}
           >
             <div className="rounded-full bg-success/10 p-3">

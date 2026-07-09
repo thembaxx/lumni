@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { rarityBorder } from "@/lib/utils/gamification";
 
 const rarityColors: Record<string, string> = {
-  common: "text-zinc-400 dark:text-zinc-300",
+  common: "text-zinc-500 dark:text-zinc-300",
   rare: "text-blue-400 dark:text-blue-300",
   epic: "text-purple-400 dark:text-purple-300",
   legendary: "text-amber-400 dark:text-amber-300",

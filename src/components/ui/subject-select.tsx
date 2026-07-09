@@ -7,6 +7,7 @@ import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 
 interface SubjectSelectProps {
@@ -56,14 +57,14 @@ export function SubjectSelect({
       <button
         type="button"
         onClick={handleTrigger}
-        className="flex w-full items-center gap-2 rounded-xl border border-border/60 bg-secondary/60 px-4 py-2.5 text-left font-medium text-foreground text-sm transition-colors hover:bg-secondary"
+        className="press-scale flex w-full items-center gap-2 rounded-xl border border-border/60 bg-secondary/60 px-4 py-2.5 text-left font-medium text-foreground text-sm transition-colors hover:bg-secondary"
       >
         <span className="flex-1 truncate">
           {value || <span className="text-muted-foreground">{placeholder}</span>}
         </span>
         <m.svg
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30, bounce: 0 }}
+          transition={springPresets.standard}
           width="16"
           height="16"
           viewBox="0 0 16 16"
@@ -86,7 +87,7 @@ export function SubjectSelect({
             initial={{ opacity: 0, scale: 0.95, y: -4 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -4 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30, bounce: 0 }}
+            transition={springPresets.standard}
             className="absolute z-drawer mt-2 w-full min-w-64 overflow-hidden rounded-xl border border-border/60 bg-popover shadow-level-2"
           >
             <div className="p-2 pb-0">
@@ -115,7 +116,7 @@ export function SubjectSelect({
                     key={subject.id}
                     type="button"
                     onClick={() => handleSelect(subject.name)}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-secondary/60"
+                    className="press-scale flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-secondary/60"
                   >
                     <div
                       className="flex size-7 shrink-0 items-center justify-center rounded-lg"

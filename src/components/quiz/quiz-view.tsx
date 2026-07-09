@@ -12,11 +12,12 @@ import {
 } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import type { Question } from "@/lib/question-engine/types";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useQuizView, type QuizCompleteResult } from "./hooks/use-quiz-view";
 import { QuizFooter } from "./quiz-footer";
 import { QuizHeader } from "./quiz-header";
@@ -46,15 +47,10 @@ export interface QuizViewProps {
 function QuizProgressBar({ current, total }: { current: number; total: number }) {
   const prefersReducedMotion = useReducedMotion();
   const progress = useMotionValue(0);
-  const springConfig = useMemo(
-    () => ({
-      stiffness: 280,
-      damping: 22,
-      mass: prefersReducedMotion ? 1000 : 0.5,
-    }),
-    [prefersReducedMotion],
+  const springProgress = useSpring(
+    progress,
+    prefersReducedMotion ? { stiffness: 100, damping: 26, bounce: 0 } : springPresets.fast,
   );
-  const springProgress = useSpring(progress, springConfig);
   const barWidth = useTransform(springProgress, (v) => `${v}%`);
 
   useEffect(() => {
@@ -158,11 +154,11 @@ export function QuizView({
   const dragTransform = useTransform(dragX, (v) => `translateX(${v}px)`);
 
   const handleDragEnd = useCallback(
-    (_: unknown, info: { offset: { x: number } }) => {
+    (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
       const threshold = 80;
       if (info.offset.x > threshold) handlePrevious();
       else if (info.offset.x < -threshold) handleNext();
-      animate(dragX, 0, { type: "spring", stiffness: 300, damping: 30, bounce: 0 });
+      animate(dragX, 0, { ...springPresets.standard, velocity: info.velocity.x });
     },
     [handleNext, handlePrevious, dragX],
   );
@@ -290,13 +286,9 @@ export function QuizView({
               opacity: 0,
               scale: 0.94,
               y: -6,
-              transition: { duration: prefersReducedMotion ? 0 : 0.12, ease: [0.4, 0, 1, 1] },
+              transition: springPresets.cardExit,
             }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 300, damping: 28, mass: 0.8, bounce: 0 }
-            }
+            transition={prefersReducedMotion ? { duration: 0 } : springPresets.standard}
           >
             {state.currentQuestion && (
               <QuestionCard

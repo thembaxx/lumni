@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { ListGroup } from "./list-group";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { ListSection } from "./list-section";
 
 export { ListGroup, ListSection };
@@ -62,7 +63,7 @@ function ListCell({
         onClick={onClick}
         disabled={disabled}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
-        transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
+        transition={springPresets.fast}
         className={cn(
           "flex min-h-14 w-full items-center gap-4 px-5 py-4 text-left",
           "bg-(--system-surface) transition-[background-color] duration-200",

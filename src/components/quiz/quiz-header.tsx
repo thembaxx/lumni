@@ -4,6 +4,7 @@ import { useMotionValue, useMotionValueEvent, useSpring } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface QuizHeaderProps {
   elapsedTime: number;
@@ -16,11 +17,7 @@ interface QuizHeaderProps {
 function SpringAccuracy({ accuracy }: { accuracy: number }) {
   const prevAccuracy = useRef(accuracy);
   const accuracyValue = useMotionValue(prevAccuracy.current);
-  const accuracySpring = useSpring(accuracyValue, {
-    stiffness: 220,
-    damping: 22,
-    mass: 0.4,
-  });
+  const accuracySpring = useSpring(accuracyValue, springPresets.fast);
   const [display, setDisplay] = useState(accuracy);
 
   useMotionValueEvent(accuracySpring, "change", (latest) => {

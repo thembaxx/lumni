@@ -17,6 +17,7 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
   const t = useTranslations();
   const [matches, setMatches] = useState<Record<string, string>>({});
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
+  const [keyboardSelectedId, setKeyboardSelectedId] = useState<string | null>(null);
 
   const shuffledRight = useMemo(() => rightItems.toSorted(() => Math.random() - 0.5), [rightItems]);
 
@@ -56,6 +57,15 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
       return next;
     });
   }, []);
+
+  const makeMatch = useCallback(
+    (leftId: string, rightId: string) => {
+      if (isRightUsed(rightId)) return;
+      setMatches((prev) => ({ ...prev, [leftId]: rightId }));
+      setKeyboardSelectedId(null);
+    },
+    [isRightUsed],
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -104,9 +114,21 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                     type="button"
                     draggable
                     aria-grabbed={draggedId === item.id}
+                    aria-pressed={keyboardSelectedId === item.id}
                     onDragStart={(e: React.DragEvent) => handleDragStart(e, item.id)}
                     onDragEnd={handleDragEnd}
-                    className="w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setKeyboardSelectedId(keyboardSelectedId === item.id ? null : item.id);
+                      }
+                      if (e.key === "Escape") {
+                        setKeyboardSelectedId(null);
+                      }
+                    }}
+                    className={`w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing ${
+                      keyboardSelectedId === item.id ? "ring-2 ring-(--system-accent)" : ""
+                    }`}
                   >
                     {item.text}
                   </button>
@@ -130,6 +152,12 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                 onDragOver={(e: React.DragEvent) => handleRightDragOver(e, item.id)}
                 onDragLeave={handleDragEnd}
                 onDrop={(e: React.DragEvent) => handleDropOnRight(e, item.id)}
+                onKeyDown={(e) => {
+                  if (keyboardSelectedId && !used && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    makeMatch(keyboardSelectedId, item.id);
+                  }
+                }}
                 className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-[border-color,background-color,color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
                   used
                     ? "border-muted bg-muted/50 text-muted-foreground line-through"

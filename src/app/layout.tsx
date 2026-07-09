@@ -54,6 +54,21 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://utfs.io" />
         <link rel="dns-prefetch" href="https://api.iconify.design" />
         <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
+        <link rel="prefetch" href="/en/dashboard" as="document" />
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prefetch: [
+                {
+                  source: "list",
+                  urls: ["/en/dashboard", "/en/quiz"],
+                  eagerness: "moderate",
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="flex h-full min-h-full flex-col bg-(--system-background) text-(--system-text-primary) antialiased">
         {children}

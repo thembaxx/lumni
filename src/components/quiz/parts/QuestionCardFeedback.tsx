@@ -21,6 +21,7 @@ import {
   type SourceAttributionPillSource,
 } from "../source-attribution-pill";
 import { CoachingPanel } from "../coaching-panel";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { StepByStep } from "../step-by-step";
 
 type Solver = ReturnType<typeof useSolver>;
@@ -116,10 +117,7 @@ export function QuestionCardFeedback({
       initial={{ opacity: 0, scale: 0.93, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{
-        type: "spring",
-        stiffness: 350,
-        damping: 28,
-        mass: 0.8,
+        ...springPresets.fast,
         duration: prefersReducedMotion ? 0 : undefined,
       }}
       className={cn(
@@ -154,9 +152,7 @@ export function QuestionCardFeedback({
           initial={{ opacity: 0, x: -6 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 22,
+            ...springPresets.standard,
             delay: 0.08,
             duration: prefersReducedMotion ? 0 : undefined,
           }}

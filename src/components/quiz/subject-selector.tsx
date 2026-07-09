@@ -42,6 +42,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
           />
           <Input
             type="text"
+            aria-label="Search subjects"
             placeholder="Search subjects…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

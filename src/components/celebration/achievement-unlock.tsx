@@ -38,7 +38,7 @@ export function AchievementUnlock({
             <m.div
               initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", delay: 0.2, stiffness: 200, damping: 14, bounce: 0.4 }}
+              transition={{ type: "spring", delay: 0.2, stiffness: 200, damping: 14, bounce: 0.25 }}
               className="mb-4"
             >
               <m.div animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 0.4, delay: 0.5 }}>

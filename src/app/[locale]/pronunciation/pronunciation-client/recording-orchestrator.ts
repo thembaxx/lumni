@@ -109,7 +109,7 @@ export async function transcribeAndAssess(
         scored.phonemeAccuracy,
         scored.fluencyScore,
         prefillLang,
-      ).catch(() => {});
+      ).catch((e) => logError("pronunciation-save-score", e));
     }
   }
 

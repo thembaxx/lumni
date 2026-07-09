@@ -20,6 +20,7 @@ import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "@/components/shared/fade-in";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 const CONTAINER_VARIANTS = {
   hidden: { opacity: 0 },
@@ -34,12 +35,7 @@ const ITEM_VARIANTS = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 26,
-      bounce: 0,
-    },
+    transition: springPresets.standard,
   },
 };
 

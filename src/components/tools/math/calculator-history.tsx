@@ -21,7 +21,7 @@ export function HistoryPanel({ show, history, onSelectResult }: HistoryPanelProp
               type="button"
               key={`hist-${entry}`}
               onClick={() => onSelectResult(entry)}
-              className="w-full cursor-pointer py-0.5 text-left font-mono text-muted-foreground/60 text-xs transition-colors hover:text-muted-foreground"
+              className="press-scale w-full cursor-pointer rounded py-0.5 text-left font-mono text-muted-foreground/60 text-xs transition-colors hover:text-muted-foreground"
             >
               {entry}
             </button>

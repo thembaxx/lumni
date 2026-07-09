@@ -4,6 +4,7 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { ALL_SEED_WORDS, COMMON_WORDS } from "./seed-words";
 import type { DictionaryCacheEntry, DictionaryResult } from "./types";
+import { logError } from "@/lib/shared/logger";
 import { lookupWiktionary } from "./wiktionary-service";
 
 // Dexie v33: dictionaryCache table (key, word, result, fetchedAt, expiresAt)
@@ -177,7 +178,8 @@ export async function preCacheCommonWords(db: DataAccess): Promise<void> {
   try {
     const count = await db.dictionaryCache.count();
     if (count >= 200) return;
-  } catch {
+  } catch (e) {
+    logError("dictionary-precheck-count", e);
     return;
   }
 
@@ -186,7 +188,9 @@ export async function preCacheCommonWords(db: DataAccess): Promise<void> {
 
   for (let i = 0; i < COMMON_WORDS.length; i += BATCH_SIZE) {
     const batch = COMMON_WORDS.slice(i, i + BATCH_SIZE);
-    await Promise.allSettled(batch.map((word) => lookupWord(word).catch(() => {})));
+    await Promise.allSettled(
+      batch.map((word) => lookupWord(word).catch((e) => logError("dictionary-lookup", e))),
+    );
     if (i + BATCH_SIZE < COMMON_WORDS.length) {
       await new Promise((resolve) => setTimeout(resolve, BATCH_GAP_MS));
     }

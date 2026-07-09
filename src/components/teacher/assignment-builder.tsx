@@ -59,7 +59,7 @@ export function AssignmentBuilder({
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <Command className="rounded-lg border">
-          <CommandInput placeholder="Search topics..." />
+          <CommandInput aria-label="Search topics" placeholder="Search topics..." />
           <CommandList>
             <CommandEmpty>No topics found.</CommandEmpty>
             <CommandGroup>

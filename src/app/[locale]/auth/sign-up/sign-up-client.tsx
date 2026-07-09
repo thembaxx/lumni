@@ -99,7 +99,8 @@ function SignUpForm() {
         }
         push(redirect);
         refresh();
-      } catch {
+      } catch (e) {
+        logError("sign-up", e);
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }

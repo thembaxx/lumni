@@ -81,7 +81,7 @@ export function LessonLibraryCard() {
             return (
               <div
                 key={lesson.lessonId}
-                className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-all duration-300 hover:shadow-level-2 press-scale"
+                className="flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale"
               >
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                   <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-(--system-accent)" />

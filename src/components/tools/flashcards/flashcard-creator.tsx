@@ -75,6 +75,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 flex-1">
               <Input
+                aria-label="Search flashcards"
                 placeholder="Search flashcards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

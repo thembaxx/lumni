@@ -95,7 +95,7 @@ export function AnimatedStatsSection() {
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-2 rounded-card border border-border/40 bg-card p-6 text-center transition-all duration-500 hover:border-primary/10 hover:shadow-level-2"
+              className="flex flex-col items-center gap-2 rounded-card border border-border/40 bg-card p-6 text-center transition-[border-color,box-shadow] duration-500 hover:border-primary/10 hover:shadow-level-2"
               style={{
                 opacity: 0,
                 animation: visible

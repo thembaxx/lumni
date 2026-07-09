@@ -102,14 +102,14 @@ export function FeaturesGrid() {
             >
               <div
                 className={cn(
-                  "group relative h-full rounded-card border border-border/40 bg-card p-7 shadow-level-1 transition-all duration-500 hover:shadow-level-3",
+                  "group relative h-full rounded-card border border-border/40 bg-card p-7 shadow-level-1 transition-[box-shadow,border-color,transform] duration-500 hover:shadow-level-3",
                   "hover:border-primary/20 hover:-translate-y-1",
                 )}
               >
-                <div className="pointer-events-none absolute -right-12 -top-12 size-32 rounded-full bg-primary/3 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:bg-primary/8" />
+                <div className="pointer-events-none absolute -right-12 -top-12 size-32 rounded-full bg-primary/3 blur-2xl transition-[scale,background-color] duration-500 group-hover:scale-150 group-hover:bg-primary/8" />
 
                 <div className="relative z-elevated flex flex-col gap-3">
-                  <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-all duration-300 group-hover:scale-125 group-hover:rotate-[6deg] group-hover:bg-(--system-accent-alpha-20) group-hover:shadow-level-2">
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-[scale,rotate,background-color,box-shadow] duration-300 group-hover:scale-125 group-hover:rotate-[6deg] group-hover:bg-(--system-accent-alpha-20) group-hover:shadow-level-2">
                     <HugeiconsIcon icon={feature.icon} className="size-6" />
                   </div>
                   <h3 className="font-bold text-base">{t(feature.titleKey)}</h3>
@@ -118,7 +118,7 @@ export function FeaturesGrid() {
                   </p>
                 </div>
 
-                <div className="absolute right-4 bottom-4 flex h-10 w-10 items-center justify-center rounded-full border border-border/30 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-(--system-accent-alpha-10) group-hover:border-primary/20">
+                <div className="absolute right-4 bottom-4 flex h-10 w-10 items-center justify-center rounded-full border border-border/30 opacity-0 transition-[opacity,translate,background-color,border-color] duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-(--system-accent-alpha-10) group-hover:border-primary/20">
                   <svg
                     width="16"
                     height="16"

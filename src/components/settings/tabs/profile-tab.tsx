@@ -107,7 +107,8 @@ export function ProfileTab() {
             prefs: { ...p, avatarUrl: result[0].ufsUrl },
           });
         }
-      } catch {
+      } catch (e) {
+        logError("profile-avatar-upload", e);
       } finally {
         setUploading(false);
       }

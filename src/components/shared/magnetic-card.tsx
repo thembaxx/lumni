@@ -55,7 +55,11 @@ export function MagneticCard({
   return (
     <Component
       ref={ref as React.Ref<HTMLElement>}
-      className={cn("tilt-card will-change-transform", onClick && "cursor-pointer", className)}
+      className={cn(
+        "tilt-card will-change-transform",
+        onClick && "press-scale cursor-pointer",
+        className,
+      )}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}

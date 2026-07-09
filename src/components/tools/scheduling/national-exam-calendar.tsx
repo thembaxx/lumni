@@ -20,6 +20,7 @@ import { buildExportFilename, downloadIcal, generateIcal } from "@/lib/exam-date
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/utils";
 import { TimetableUpload } from "./timetable-upload";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 export function NationalExamCalendar() {
   const { push } = useNavigationDirection();
@@ -158,7 +159,7 @@ export function NationalExamCalendar() {
             <m.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", stiffness: 120, damping: 26, bounce: 0 }}
+              transition={springPresets.slow}
               className="overflow-hidden rounded-card border border-border/60 bg-card shadow-level-1"
             >
               <div className="flex items-center justify-between border-border/40 border-b px-4 py-2.5">

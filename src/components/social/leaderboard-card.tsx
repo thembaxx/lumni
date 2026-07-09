@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 const rankColors = [
   "text-amber-400 dark:text-amber-300",
-  "text-zinc-400 dark:text-zinc-300",
+  "text-zinc-500 dark:text-zinc-300",
   "text-orange-700 dark:text-orange-400",
   "text-muted-foreground",
 ];

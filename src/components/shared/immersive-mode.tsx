@@ -50,6 +50,7 @@ function ExitFullscreenButton({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Exit full-screen mode"
+      whileTap={{ scale: 0.96 }}
       className="fixed top-3 right-3 z-modal flex items-center gap-1.5 rounded-full border border-border/60 bg-system-background/95 px-3 py-1.5 font-medium text-muted-foreground text-xs shadow-level-2"
       style={{ top: `calc(0.75rem + env(safe-area-inset-top, 0px))` }}
       initial={{ opacity: 0, y: -8 }}

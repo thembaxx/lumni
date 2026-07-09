@@ -49,7 +49,7 @@ export function StorageRing({ used, limit, size = 48, strokeWidth = 4 }: Storage
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className={`${color} transition-all duration-500 ease-(--ease-ios)`}
+          className={`${color} transition-[stroke-dashoffset] duration-500 ease-(--ease-ios)`}
         />
       </svg>
       <span className="absolute font-semibold text-[10px] tabular-nums text-muted-foreground">

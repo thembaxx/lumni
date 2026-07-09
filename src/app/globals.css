@@ -866,6 +866,37 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Preserve opacity, color, shadow, and background transitions that aid comprehension */
+  :is(
+    [class*="transition-opacity"],
+    [class*="transition-colors"],
+    [class*="transition-shadow"],
+    [class*="transition-[opacity]"],
+    [class*="transition-[color]"],
+    [class*="transition-[shadow]"],
+    [class*="transition-[background]"],
+    [class*="transition-[border]"]
+  ) {
+    transition-duration: 0.2s !important;
+  }
+
+  .press-scale {
+    transition-duration: 0.15s !important;
+  }
+}
+
+/* Reduced Transparency — make glass surfaces solid */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-ultra-thin,
+  .glass-thin,
+  .glass-regular,
+  .glass-thick,
+  .glass-card,
+  .glass-card-strong {
+    background: var(--system-background);
+    backdrop-filter: none;
+  }
 }
 
 /* ========================================

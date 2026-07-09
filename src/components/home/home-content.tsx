@@ -137,7 +137,7 @@ export function HomeContent() {
   const { showConfetti, dismissConfetti } = useMatricEasterEgg();
 
   return (
-    <div className="relative min-h-dvh overflow-x-clip pb-16">
+    <main className="relative min-h-dvh overflow-x-clip pb-16">
       <MeshAurora variant="hero" intensity={0.7} className="fixed inset-0 -z-10" />
       <AmbientGradient variant="hero" />
       <NoiseOverlay opacity={0.02} />
@@ -223,6 +223,6 @@ export function HomeContent() {
       <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
         <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
       </Suspense>
-    </div>
+    </main>
   );
 }

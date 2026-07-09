@@ -7,6 +7,7 @@ import { memo, useEffect, useState } from "react";
 import { useMotionValueEvent, useSpring } from "motion/react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface StatsCardsProps {
   questionsAnswered: number;
@@ -23,7 +24,7 @@ interface StatItemProps {
 }
 
 function AnimatedNumber({ value }: { value: number }) {
-  const springValue = useSpring(0, { stiffness: 280, damping: 22, mass: 0.5 });
+  const springValue = useSpring(0, springPresets.standard);
   const [display, setDisplay] = useState(0);
 
   useMotionValueEvent(springValue, "change", (latest) => {

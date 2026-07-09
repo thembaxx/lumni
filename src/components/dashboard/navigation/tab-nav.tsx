@@ -9,6 +9,7 @@ import * as m from "motion/react-m";
 import { startTransition } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { springPresets } from "@/lib/utils/spring-presets";
 import type { TabValue } from "../types";
 
 interface TabConfig {
@@ -65,11 +66,7 @@ export function TabNav({
         >
           <m.span
             layoutId="tab-indicator"
-            transition={
-              prefersReducedMotion
-                ? undefined
-                : { type: "spring", stiffness: 400, damping: 30, bounce: 0 }
-            }
+            transition={prefersReducedMotion ? undefined : springPresets.cardExit}
             className={cn(
               "absolute top-0.5 bottom-0.5 rounded-xl border border-border/20 bg-background shadow-level-1",
             )}

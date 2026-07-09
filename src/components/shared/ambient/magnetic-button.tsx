@@ -48,7 +48,7 @@ export function MagneticButton({
         if ((e.key === "Enter" || e.key === " ") && onClick) onClick();
       }}
       className={cn(
-        "cursor-pointer transition-[transform,box-shadow] duration-[250ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform",
+        "cursor-pointer transition-[transform,box-shadow] duration-[250ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform active:scale-[0.96]",
         className,
       )}
     >

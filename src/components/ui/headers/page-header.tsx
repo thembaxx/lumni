@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface PageHeaderProps {
   title: string;
@@ -27,7 +28,7 @@ function PageHeader({
     <m.header
       initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.5, bounce: 0 }}
+      transition={springPresets.slow}
       className={cn(
         "sticky top-0 z-elevated flex flex-col gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
         className,

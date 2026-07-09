@@ -65,7 +65,7 @@ interface OfflinePackCardProps {
 
 export function OfflinePackCard({ pack, onPlay, onRemove }: OfflinePackCardProps) {
   return (
-    <div className="group relative flex flex-col gap-2.5 rounded-card border border-border/60 bg-card p-4 shadow-level-1 transition-all duration-300 hover:shadow-level-2 press-scale">
+    <div className="group relative flex flex-col gap-2.5 rounded-card border border-border/60 bg-card p-4 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">

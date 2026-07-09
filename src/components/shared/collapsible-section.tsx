@@ -28,7 +28,7 @@ export function CollapsibleSection({
       <button
         type="button"
         onClick={toggle}
-        className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-study-green/40"
+        className="press-scale flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-study-green/40"
         aria-expanded={open}
       >
         <span className="text-balance font-semibold text-muted-foreground text-xs uppercase tracking-wider">

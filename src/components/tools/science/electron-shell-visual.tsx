@@ -85,9 +85,9 @@ export function ElectronShellVisual({ electronConfig }: { electronConfig: string
             </span>
             <div className="relative h-5 flex-1 overflow-hidden rounded-full bg-white/5 dark:bg-white/10">
               <m.div
-                className="absolute inset-y-0 left-0 rounded-full bg-(--system-accent)/60"
-                initial={{ width: 0 }}
-                animate={{ width: `${pct}%` }}
+                className="absolute inset-y-0 left-0 origin-left rounded-full bg-(--system-accent)/60"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: pct / 100 }}
                 transition={{
                   delay: 0.4 + i * 0.06,
                   duration: 0.6,

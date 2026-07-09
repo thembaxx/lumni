@@ -22,6 +22,7 @@ export function ExamSearchBar({ searchQuery, onSearchChange }: ExamSearchBarProp
       />
       <Input
         type="text"
+        aria-label="Search exams"
         placeholder="Search exams…"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}

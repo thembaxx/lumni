@@ -94,7 +94,7 @@ export function MyAssignments() {
       <CardContent className="flex flex-col gap-2">
         {assignments.map((a) => (
           <div key={a.id}>
-            <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-all duration-300 hover:shadow-level-2 press-scale">
+            <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale">
               <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
                 <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-(--system-accent)" />
               </div>

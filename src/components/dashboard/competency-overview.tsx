@@ -13,6 +13,7 @@ import { useSubjects } from "@/hooks/use-subjects";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { cn } from "@/lib/utils";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface TopicInfo {
   topicId: string;
@@ -211,12 +212,7 @@ export function CompetencyOverview() {
                                 )}
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: Math.max(pct, 4) / 100 }}
-                                transition={{
-                                  type: "spring",
-                                  stiffness: 280,
-                                  damping: 22,
-                                  mass: 0.5,
-                                }}
+                                transition={springPresets.standard}
                               />
                             </div>
                           );

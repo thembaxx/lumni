@@ -77,28 +77,28 @@ export function DynamicCursor({ variant = "dot" }: DynamicCursorProps) {
       aria-hidden
     >
       <div
-        className="rounded-full bg-(--system-accent) transition-[width,height,opacity] duration-200"
+        className="rounded-full bg-(--system-accent) transition-[scale,opacity] duration-200"
         style={{
-          width: hovered ? 32 : 8,
-          height: hovered ? 32 : 8,
-          left: pos.x - (hovered ? 16 : 4),
-          top: pos.y - (hovered ? 16 : 4),
+          width: 8,
+          height: 8,
+          left: pos.x - 4,
+          top: pos.y - 4,
+          scale: hovered ? 4 : 1,
           opacity: hovered ? 0.15 : 0.4,
           mixBlendMode: "multiply",
           position: "fixed",
         }}
       />
       <div
-        className="rounded-full border border-(--system-accent) transition-[width,height] duration-200"
+        className="rounded-full border border-(--system-accent) transition-[scale,opacity] duration-200"
         style={{
-          width: hovered ? 40 : 20,
-          height: hovered ? 40 : 20,
-          left: pos.x - (hovered ? 20 : 10),
-          top: pos.y - (hovered ? 20 : 10),
+          width: 20,
+          height: 20,
+          left: pos.x - 10,
+          top: pos.y - 10,
+          scale: hovered ? 2 : 1,
           opacity: hovered ? 0.6 : 0.3,
           position: "fixed",
-          transition:
-            "width 200ms cubic-bezier(0.34, 1.56, 0.64, 1), height 200ms cubic-bezier(0.34, 1.56, 0.64, 1)",
         }}
       />
     </div>

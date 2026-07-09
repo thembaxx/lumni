@@ -7,6 +7,7 @@ export const fontSans = localFont({
   display: "swap",
   variable: "--font-sans",
   preload: true,
+  adjustFontFallback: "Arial",
 });
 
 export const fontMono = localFont({
@@ -16,6 +17,7 @@ export const fontMono = localFont({
   display: "swap",
   variable: "--font-geist-mono",
   preload: true,
+  adjustFontFallback: "Arial",
 });
 
 export const fontHeading = localFont({
@@ -28,4 +30,5 @@ export const fontHeading = localFont({
   display: "swap",
   variable: "--font-heading",
   preload: true,
+  adjustFontFallback: "Arial",
 });

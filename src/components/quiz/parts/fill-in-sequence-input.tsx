@@ -44,6 +44,7 @@ export function FillInSequenceInput({
 
   const [assigned, setAssigned] = useState<Record<string, string>>({});
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
+  const [keyboardSelectedId, setKeyboardSelectedId] = useState<string | null>(null);
 
   const unassignedOptions = useMemo(
     () => allOptions.filter((opt) => !Object.values(assigned).includes(opt.id)),
@@ -64,6 +65,16 @@ export function FillInSequenceInput({
       }
     },
     [allOptions],
+  );
+
+  const placeOption = useCallback(
+    (optId: string, blankId: string) => {
+      if (assigned[blankId]) return;
+      if (!allOptions.find((o) => o.id === optId)) return;
+      setAssigned((prev) => ({ ...prev, [blankId]: optId }));
+      setKeyboardSelectedId(null);
+    },
+    [assigned, allOptions],
   );
 
   const handleRemoveFromBlank = useCallback((blankId: string) => {
@@ -103,6 +114,13 @@ export function FillInSequenceInput({
                 onKeyDown={(e) => {
                   if (assignedText && (e.key === "Enter" || e.key === " ")) {
                     handleRemoveFromBlank(blankId);
+                  } else if (
+                    !assignedText &&
+                    keyboardSelectedId &&
+                    (e.key === "Enter" || e.key === " ")
+                  ) {
+                    e.preventDefault();
+                    placeOption(keyboardSelectedId, blankId);
                   }
                 }}
                 className={`inline-flex min-h-9 min-w-20 items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
@@ -150,9 +168,16 @@ export function FillInSequenceInput({
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
+                      setKeyboardSelectedId(keyboardSelectedId === opt.id ? null : opt.id);
+                    }
+                    if (e.key === "Escape") {
+                      setKeyboardSelectedId(null);
                     }
                   }}
-                  className="w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing"
+                  aria-pressed={keyboardSelectedId === opt.id}
+                  className={`w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing ${
+                    keyboardSelectedId === opt.id ? "ring-2 ring-(--system-accent)" : ""
+                  }`}
                 >
                   {opt.text}
                 </button>

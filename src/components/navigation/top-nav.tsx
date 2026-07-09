@@ -86,10 +86,10 @@ const TopNavStatus = memo(function TopNavStatus() {
           </div>
           <div className="h-2 w-16 overflow-hidden rounded-full bg-muted">
             <m.div
-              initial={{ width: 0 }}
-              animate={{ width: `${levelInfo.progress}%` }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, bounce: 0.3 }}
-              className="h-full rounded-full bg-system-accent"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: levelInfo.progress / 100 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, bounce: 0 }}
+              className="h-full origin-left rounded-full bg-system-accent"
             />
           </div>
         </m.div>

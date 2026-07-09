@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SuccessBadge } from "./success-badge";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 export function OtpVerifiedView() {
   return (
@@ -15,10 +16,7 @@ export function OtpVerifiedView() {
         opacity: 1,
         scale: 1,
         transition: {
-          type: "spring",
-          stiffness: 300,
-          damping: 26,
-          bounce: 0,
+          ...springPresets.standard,
           delay: 0.05,
         },
       }}
@@ -29,12 +27,7 @@ export function OtpVerifiedView() {
           animate={{
             scale: 1,
             opacity: 1,
-            transition: {
-              type: "spring",
-              stiffness: 350,
-              damping: 26,
-              bounce: 0,
-            },
+            transition: springPresets.fast,
           }}
         >
           <div className="rounded-full bg-success/20 p-6">

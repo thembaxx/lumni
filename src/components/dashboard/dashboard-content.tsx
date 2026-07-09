@@ -16,6 +16,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggeredSection } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
 
@@ -93,10 +94,7 @@ export function DashboardContent({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              type: "spring",
-              stiffness: 320,
-              damping: 26,
-              mass: 0.7,
+              ...springPresets.standard,
               duration: prefersReducedMotion ? 0 : undefined,
             }}
           >
@@ -110,10 +108,7 @@ export function DashboardContent({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              type: "spring",
-              stiffness: 320,
-              damping: 26,
-              mass: 0.7,
+              ...springPresets.standard,
               duration: prefersReducedMotion ? 0 : undefined,
             }}
           >
@@ -125,10 +120,7 @@ export function DashboardContent({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              type: "spring",
-              stiffness: 320,
-              damping: 26,
-              mass: 0.7,
+              ...springPresets.standard,
               duration: prefersReducedMotion ? 0 : undefined,
             }}
           >

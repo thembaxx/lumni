@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { SessionQuestionNavigator } from "@/components/exam";
 import type { QuestionPart } from "@/types/exam-paper";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface QuestionNavigatorSidebarProps {
   showPalette: boolean;
@@ -81,7 +82,7 @@ export function QuestionNavigatorSidebar({
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            transition={springPresets.standard}
             className="relative h-full w-64 bg-background p-4 shadow-2xl"
           >
             {navigatorContent(t, flatParts, currentPartId, answers, flags, onNavigate)}

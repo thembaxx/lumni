@@ -204,7 +204,7 @@ export function LearningMapCard() {
               return (
                 <a
                   key={node.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer opacity-80 transition-opacity active:opacity-60"
                   tabIndex={0}
                   href={`/quiz?subject=${encodeURIComponent(subjectForQuery ?? "")}&topic=${encodeURIComponent(node.label)}`}
                   aria-label={`Practice ${node.label}`}

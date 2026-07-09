@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { FadeIn } from "@/components/shared/fade-in";
 import { SuccessBadge } from "../success-badge";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface SuccessStateProps {
   email: string;
@@ -22,12 +23,7 @@ export function SuccessState({ email, error }: SuccessStateProps) {
           animate={{
             scale: 1,
             opacity: 1,
-            transition: {
-              type: "spring",
-              stiffness: 350,
-              damping: 26,
-              bounce: 0,
-            },
+            transition: springPresets.fast,
           }}
         >
           <div className="rounded-full bg-success/10 p-4">
