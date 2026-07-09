@@ -51,7 +51,7 @@ export function PeriodicTable() {
       className="flex h-full flex-col overflow-y-auto px-5"
       style={{
         backgroundImage:
-          "radial-gradient(ellipse at 50% 0%, oklch(52.5% 0.142 274° / 0.08) 0%, transparent 60%)",
+          "radial-gradient(ellipse at 50% 0%, oklch(52% 0 0 / 0.04) 0%, transparent 60%)",
       }}
     >
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static CSS variables, no user content */}

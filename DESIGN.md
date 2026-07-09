@@ -63,13 +63,15 @@ Three levels, pure grayscale (oklch 0% chroma):
 
 Mac-like smooth. Eased transitions at 300-400ms.
 
-| Token      | Duration | Curve                                |
-| ---------- | -------- | ------------------------------------ |
-| Fast       | 200ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Normal     | 300ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Slow       | 400ms    | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
-| Decelerate | —        | cubic-bezier(0, 0, 0.2, 1)           |
-| Accelerate | —        | cubic-bezier(0.4, 0, 1, 1)           |
+The system expresses motion through Framer Motion's `spring` solver with `bounce: 0` (critically damped — no overshoot). This is the implementation of the `Decelerate` curve below; it is the accepted, consistent vocabulary across the codebase. Do not substitute raw cubic-bezier literals in isolated components — that diverges from the rest of the app.
+
+| Token      | Duration | Curve                             |
+| ---------- | -------- | --------------------------------- |
+| Fast       | 200ms    | cubic-bezier(0.25,0.46,0.45,0.94) |
+| Normal     | 300ms    | cubic-bezier(0.25,0.46,0.45,0.94) |
+| Slow       | 400ms    | cubic-bezier(0.25,0.46,0.45,0.94) |
+| Decelerate | —        | cubic-bezier(0, 0, 0.2, 1)        |
+| Accelerate | —        | cubic-bezier(0.4, 0, 1, 1)        |
 
 ### Spacing
 
@@ -80,7 +82,7 @@ Mac-like smooth. Eased transitions at 300-400ms.
 - No accent color with chroma > 0
 - No gradient text
 - No glassmorphism as default
-- No bounce/spring/elastic easings
+- No bounce/overshoot/elastic easings (spring with `bounce: 0` is allowed — it is the critically-damped decelerate the system uses)
 - No side-stripe borders
 - No gradient borders or glow effects
 - No particle/ambient effects
