@@ -156,7 +156,7 @@ export function StoriesClient() {
   return (
     <PageContainer className="gap-6 pt-8">
       <div className="flex flex-col gap-2">
-        <h1 className="font-extrabold text-2xl tracking-tight">Stories</h1>
+        <h1 className="font-bold text-2xl tracking-tight">Stories</h1>
         <p className="text-muted-foreground text-sm">
           Read short stories and practice reading comprehension
         </p>
@@ -219,9 +219,7 @@ export function StoriesClient() {
               >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="font-extrabold text-lg leading-snug">
-                      {story.title}
-                    </CardTitle>
+                    <CardTitle className="font-bold text-lg leading-snug">{story.title}</CardTitle>
                     {isCompleted && (
                       <Badge
                         variant="default"

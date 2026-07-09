@@ -91,7 +91,7 @@ export function QuizResultsCard({
         >
           <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2 shadow-level-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5" />
-            <span className="font-extrabold">{t("quiz.perfectScore")}</span>
+            <span className="font-bold">{t("quiz.perfectScore")}</span>
           </Badge>
         </div>
       )}
@@ -103,7 +103,7 @@ export function QuizResultsCard({
 
         <CardHeader className="flex flex-col gap-2 p-6 pb-0 md:text-left">
           <FadeIn direction="down" distance={10} delay={0.1}>
-            <CardTitle className="font-extrabold text-xl tracking-tight">
+            <CardTitle className="font-bold text-xl tracking-tight">
               {isPerfect
                 ? t("quiz.flawless")
                 : isGreatScore
@@ -125,7 +125,7 @@ export function QuizResultsCard({
               <m.div className="grid grid-cols-12 gap-4 md:text-left" variants={itemVariants}>
                 <FadeIn distance={0} delay={0.3} className="col-span-4 rounded-lg bg-muted p-4">
                   <span
-                    className="font-extrabold text-2xl tabular-nums animate-rollup"
+                    className="font-bold text-2xl tabular-nums animate-rollup"
                     style={{ animationDelay: "0.4s" }}
                   >
                     {totalQuestions}
@@ -135,7 +135,7 @@ export function QuizResultsCard({
                 <FadeIn distance={0} delay={0.4} className="col-span-2 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
-                      "font-extrabold text-2xl tabular-nums animate-rollup",
+                      "font-bold text-2xl tabular-nums animate-rollup",
                       isGreatScore && "text-success",
                     )}
                     style={{ animationDelay: "0.5s" }}
@@ -147,7 +147,7 @@ export function QuizResultsCard({
                 <FadeIn distance={0} delay={0.5} className="col-span-3 rounded-lg bg-muted p-4">
                   <p
                     className={cn(
-                      "font-extrabold text-2xl tabular-nums animate-rollup",
+                      "font-bold text-2xl tabular-nums animate-rollup",
                       isGreatScore && "text-success",
                     )}
                     style={{ animationDelay: "0.6s" }}
@@ -162,7 +162,7 @@ export function QuizResultsCard({
                     <FadeIn distance={0} delay={0.6} className="col-span-3 rounded-lg bg-muted p-4">
                       <p
                         className={cn(
-                          "font-extrabold text-2xl tabular-nums",
+                          "font-bold text-2xl tabular-nums",
                           aps >= 6 && "text-success",
                           aps >= 4 && aps < 6 && "text-warning",
                           aps < 4 && "text-destructive",
@@ -178,7 +178,7 @@ export function QuizResultsCard({
 
               <m.div className="grid grid-cols-12 gap-4" variants={itemVariants}>
                 <FadeIn distance={0} delay={0.7} className="col-span-12 rounded-lg bg-muted p-4">
-                  <p className="font-extrabold text-2xl tabular-nums">{formatTime(elapsedTime)}</p>
+                  <p className="font-bold text-2xl tabular-nums">{formatTime(elapsedTime)}</p>
                   <p className="text-muted-foreground text-xs">{t("quiz.time")}</p>
                 </FadeIn>
               </m.div>

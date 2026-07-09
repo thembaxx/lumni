@@ -26,7 +26,7 @@ export function QuizSubjectSelection({
       <div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-(--space-20) md:col-span-7">
         <Card size="sm" className="w-full max-w-md">
           <CardContent className="flex flex-col gap-4">
-            <CardTitle className="ios-title-2 font-extrabold tracking-tight">
+            <CardTitle className="ios-title-2 font-bold tracking-tight">
               {t("quiz.title")}
             </CardTitle>
             <div className="flex items-center justify-between gap-3 rounded-xl border border-border/60 px-4 py-2.5">

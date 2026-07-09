@@ -29,7 +29,7 @@ export function LeaderboardClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Leaderboard</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Leaderboard</h1>
           <p className="text-muted-foreground text-sm">
             See how your XP and streaks compare to other students
           </p>

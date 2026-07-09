@@ -36,7 +36,7 @@ export function MyAssignments() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
             My Assignments
           </CardTitle>
@@ -54,7 +54,7 @@ export function MyAssignments() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
             My Assignments
           </CardTitle>
@@ -71,7 +71,7 @@ export function MyAssignments() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
             <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
             My Assignments
           </CardTitle>
@@ -86,7 +86,7 @@ export function MyAssignments() {
   return (
     <Card className="overflow-hidden rounded-card shadow-level-1">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+        <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
           <HugeiconsIcon icon={BookOpen02Icon} className="size-5" />
           My Assignments
         </CardTitle>

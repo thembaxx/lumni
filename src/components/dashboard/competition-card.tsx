@@ -98,7 +98,7 @@ export function CompetitionCard() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />
-            <h3 className="font-extrabold text-sm tracking-tight">Weekly Competition</h3>
+            <h3 className="font-bold text-sm tracking-tight">Weekly Competition</h3>
           </div>
           <HugeiconsIcon
             icon={ArrowRight01Icon}

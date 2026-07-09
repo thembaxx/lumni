@@ -55,7 +55,7 @@ export function SubjectBreakdown({ subjects }: SubjectBreakdownProps) {
                 <div className="text-right">
                   <span
                     className={cn(
-                      "font-extrabold tabular-nums",
+                      "font-bold tabular-nums",
                       aps >= 6 && "text-success",
                       aps >= 4 && aps < 6 && "text-warning",
                       aps < 4 && "text-destructive",

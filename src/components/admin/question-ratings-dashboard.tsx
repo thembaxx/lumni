@@ -57,16 +57,16 @@ export function QuestionRatingsDashboard() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-6">
         <div className="rounded-2xl border border-border/80 bg-card p-4">
           <p className="text-muted-foreground text-sm">Total Ratings</p>
-          <p className="font-extrabold text-2xl">{stats.total}</p>
+          <p className="font-bold text-2xl">{stats.total}</p>
         </div>
         <div className="rounded-2xl border border-border/80 bg-card p-4">
           <p className="text-muted-foreground text-sm">Avg Rating</p>
-          <p className="font-extrabold text-2xl">{stats.average}</p>
+          <p className="font-bold text-2xl">{stats.average}</p>
         </div>
         {([1, 2, 3, 4, 5] as const).map((n) => (
           <div key={n} className="rounded-2xl border border-border/80 bg-card p-4">
             <p className="text-muted-foreground text-sm">{n} Star</p>
-            <p className="font-extrabold text-2xl">{stats.counts[n]}</p>
+            <p className="font-bold text-2xl">{stats.counts[n]}</p>
           </div>
         ))}
       </div>

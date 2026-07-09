@@ -40,7 +40,7 @@ function CompetencyRing({ score }: { score: number }) {
 
   return (
     <RadialChart value={score} size={80} color={color}>
-      <span className="font-extrabold text-sm tabular-nums">{score}%</span>
+      <span className="font-bold text-sm tabular-nums">{score}%</span>
     </RadialChart>
   );
 }
@@ -152,7 +152,7 @@ export function CompetencyOverview() {
     <div className="card-entrance">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
             <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
             Subject Mastery
           </CardTitle>

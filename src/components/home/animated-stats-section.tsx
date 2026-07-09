@@ -44,10 +44,10 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 }
 
 const STATS = [
-  { value: 14, suffix: "", label: "NSC Subjects", icon: "📚" },
-  { value: 5000, suffix: "+", label: "AI-Generated Questions", icon: "🧠" },
-  { value: 50000, suffix: "+", label: "Active Students", icon: "🎓" },
-  { value: 98, suffix: "%", label: "Satisfaction Rate", icon: "⭐" },
+  { value: 14, suffix: "", label: "NSC Subjects" },
+  { value: 5000, suffix: "+", label: "AI-Generated Questions" },
+  { value: 50000, suffix: "+", label: "Active Students" },
+  { value: 98, suffix: "%", label: "Satisfaction Rate" },
 ];
 
 export function AnimatedStatsSection() {
@@ -75,9 +75,9 @@ export function AnimatedStatsSection() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
           <p className="mb-2 font-medium text-primary text-sm tracking-widest uppercase">
-            Trusted by students across South Africa
+            Trusted by students
           </p>
-          <h2 className="font-heading text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <h2 className="font-heading text-2xl font-bold tracking-tight sm:text-3xl">
             Learning that works
           </h2>
           <p className="mt-2 text-muted-foreground">
@@ -95,7 +95,7 @@ export function AnimatedStatsSection() {
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-2 rounded-card border border-border/40 bg-card/60 p-6 text-center backdrop-blur-sm transition-all duration-500 hover:border-accent/30 hover:shadow-level-2"
+              className="flex flex-col items-center gap-2 rounded-card border border-border/40 bg-card p-6 text-center transition-all duration-500 hover:border-primary/10 hover:shadow-level-2"
               style={{
                 opacity: 0,
                 animation: visible
@@ -103,8 +103,7 @@ export function AnimatedStatsSection() {
                   : "none",
               }}
             >
-              <span className="text-2xl">{stat.icon}</span>
-              <span className="font-heading text-3xl font-extrabold tracking-tight text-primary">
+              <span className="font-heading text-3xl font-bold tracking-tight text-primary">
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} />
               </span>
               <span className="text-balance text-muted-foreground text-sm">{stat.label}</span>

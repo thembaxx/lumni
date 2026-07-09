@@ -120,7 +120,7 @@ export function CountdownHeader() {
                 >
                   {milestone.emoji}
                 </span>
-                <span className="font-extrabold text-warning text-xs uppercase tracking-tight">
+                <span className="font-bold text-warning text-xs uppercase tracking-tight">
                   {milestone.label}
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function CountdownHeader() {
               ) : (
                 <span
                   className={cn(
-                    "card-entrance inline-block font-extrabold font-mono text-4xl text-system-accent tabular-nums tracking-tighter md:text-5xl",
+                    "card-entrance inline-block font-bold font-mono text-4xl text-system-accent tabular-nums tracking-tighter md:text-5xl",
                   )}
                   aria-live="polite"
                 >
@@ -153,7 +153,7 @@ export function CountdownHeader() {
                   <p className="font-medium text-muted-foreground text-xs tabular-nums">
                     {daysLeft === 1 ? "day" : "days"}
                   </p>
-                  <p className="font-extrabold text-muted-foreground text-xs tabular-nums">
+                  <p className="font-bold text-muted-foreground text-xs tabular-nums">
                     until finals
                   </p>
                 </div>
@@ -169,8 +169,7 @@ export function CountdownHeader() {
 
             {mounted && (
               <p className="card-entrance text-pretty font-medium text-muted-foreground text-xs leading-snug">
-                <span className="font-extrabold text-foreground/80">{msg.primary}</span>.{" "}
-                {msg.subtitle}
+                <span className="font-bold text-foreground/80">{msg.primary}</span>. {msg.subtitle}
               </p>
             )}
           </div>
@@ -202,14 +201,12 @@ export function CountdownHeader() {
         style={{ viewTransitionName: "countdown-compact" }}
       >
         <div className="mx-auto flex max-w-md items-center gap-3">
-          <span className="font-extrabold text-foreground/70 text-xs">
+          <span className="font-bold text-foreground/70 text-xs">
             {greeting}
             {isLoggedIn && name ? `, ${firstName}` : ""}
           </span>
           <span className="ml-auto flex items-baseline gap-1">
-            <span className="font-extrabold text-lg text-system-accent tabular-nums">
-              {daysLeft}
-            </span>
+            <span className="font-bold text-lg text-system-accent tabular-nums">{daysLeft}</span>
             <span className="font-medium text-muted-foreground text-xs">
               {daysLeft === 1 ? "day" : "days"}
             </span>

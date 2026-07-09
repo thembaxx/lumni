@@ -174,7 +174,7 @@ export function ChatInput({ onSend, onSendImage, isLoading, uploadState }: ChatI
                       cameraInputRef.current?.click();
                     }}
                     disabled={isLoading || isUploading}
-                    className="gap-2 font-extrabold text-xs uppercase tracking-tight"
+                    className="gap-2 font-bold text-xs uppercase tracking-tight"
                   >
                     <HugeiconsIcon icon={Camera01Icon} data-icon="inline-start" />
                     Take a photo
@@ -185,7 +185,7 @@ export function ChatInput({ onSend, onSendImage, isLoading, uploadState }: ChatI
                       uploadInputRef.current?.click();
                     }}
                     disabled={isLoading || isUploading}
-                    className="gap-2 font-extrabold text-xs uppercase tracking-tight"
+                    className="gap-2 font-bold text-xs uppercase tracking-tight"
                   >
                     <HugeiconsIcon icon={Upload01Icon} data-icon="inline-start" />
                     Upload a photo

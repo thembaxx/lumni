@@ -94,7 +94,7 @@ export function BloomTaxonomyWidget() {
     return (
       <Card className="rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-extrabold text-sm tracking-tight">
+          <CardTitle className="font-bold text-sm tracking-tight">
             Bloom's Taxonomy Progress
           </CardTitle>
         </CardHeader>
@@ -113,7 +113,7 @@ export function BloomTaxonomyWidget() {
     return (
       <Card className="rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-extrabold text-sm tracking-tight">
+          <CardTitle className="font-bold text-sm tracking-tight">
             Bloom's Taxonomy Progress
           </CardTitle>
         </CardHeader>
@@ -148,7 +148,7 @@ export function BloomTaxonomyWidget() {
   return (
     <Card className="rounded-card shadow-level-1">
       <CardHeader>
-        <CardTitle className="font-extrabold text-sm tracking-tight">
+        <CardTitle className="font-bold text-sm tracking-tight">
           Bloom's Taxonomy Progress
         </CardTitle>
       </CardHeader>

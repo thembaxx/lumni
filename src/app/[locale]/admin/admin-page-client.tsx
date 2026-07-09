@@ -25,7 +25,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: 0.3 }}
     >
       <div className="flex size-12 items-center justify-center rounded-xl bg-foreground">
-        <span className="font-extrabold text-2xl text-background">L</span>
+        <span className="font-bold text-2xl text-background">L</span>
       </div>
       <div className="mt-6 h-1 w-32 overflow-hidden rounded-full bg-secondary">
         <div className="h-full w-1/2 animate-pulse rounded-full bg-foreground" />

@@ -95,9 +95,7 @@ function StudyGuideClient() {
         <Anim>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-1.5">
-              <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
-                Study Guide
-              </h1>
+              <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Study Guide</h1>
               <p className="ios-subhead text-muted-foreground/60">
                 Generate AI-powered study guides for any subject and topic
               </p>

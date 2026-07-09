@@ -43,7 +43,7 @@ export function GeneratePlanForm({ isGenerating, onGenerate, onCancel }: Generat
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+        <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
           <HugeiconsIcon icon={CheckListIcon} className="size-5" />
           Generate Study Plan
         </CardTitle>

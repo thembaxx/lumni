@@ -81,7 +81,7 @@ export default function AdminQualityPage() {
   return (
     <div className={cn("mx-auto flex min-h-dvh max-w-5xl flex-col gap-6 bg-background p-6")}>
       <div className={cn("flex items-center justify-between")}>
-        <h1 className={cn("font-extrabold text-2xl")}>Engine Quality & Analytics</h1>
+        <h1 className={cn("font-bold text-2xl")}>Engine Quality & Analytics</h1>
         <Button variant="outline" size="sm" onClick={handleClear}>
           Clear Data
         </Button>

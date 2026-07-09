@@ -36,7 +36,7 @@ export function ProfileAvatarSection({
               }
               alt={name || "User"}
             />
-            <AvatarFallback className="bg-system-accent font-extrabold text-3xl text-system-accent-foreground">
+            <AvatarFallback className="bg-system-accent font-bold text-3xl text-system-accent-foreground">
               {name?.charAt(0)?.toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>

@@ -61,12 +61,12 @@ export const ElementCard = memo(
         }}
         className={`${config?.bg} relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-white/10 p-2 text-white transition-[scale] duration-150 press-scale dark:border-white/20`}
       >
-        <span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums text-white drop-shadow-sm">
+        <span className="ios-caption-3 absolute top-1.5 left-2 font-bold tabular-nums text-white drop-shadow-sm">
           {el.atomicNumber}
         </span>
         <m.span
           style={{ scale: symbolScale }}
-          className="font-extrabold text-xl drop-shadow-lg text-white"
+          className="font-bold text-xl drop-shadow-lg text-white"
         >
           {el.symbol}
         </m.span>

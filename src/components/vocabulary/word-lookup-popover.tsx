@@ -101,7 +101,7 @@ export function WordLookupPopover({
           ) : result ? (
             <>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-base">{result.word}</span>
+                <span className="font-bold text-base">{result.word}</span>
                 {result.phonetic && (
                   <span className="text-muted-foreground text-xs">{result.phonetic}</span>
                 )}

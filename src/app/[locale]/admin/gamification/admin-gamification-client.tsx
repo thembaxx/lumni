@@ -68,7 +68,7 @@ export function AdminGamificationClient() {
   return (
     <div className={cn("mx-auto flex min-h-dvh max-w-5xl flex-col gap-6 bg-background p-6")}>
       <div className={cn("flex items-center justify-between")}>
-        <h1 className={cn("font-extrabold text-2xl")}>Gamification Admin</h1>
+        <h1 className={cn("font-bold text-2xl")}>Gamification Admin</h1>
       </div>
 
       {isError && (
@@ -110,7 +110,7 @@ export function AdminGamificationClient() {
                 </h2>
               </header>
               <div className={cn("p-4 pt-0")}>
-                <p className={cn("font-extrabold text-3xl")}>{totalUsers}</p>
+                <p className={cn("font-bold text-3xl")}>{totalUsers}</p>
               </div>
             </div>
             <div
@@ -124,7 +124,7 @@ export function AdminGamificationClient() {
                 </h2>
               </header>
               <div className={cn("p-4 pt-0")}>
-                <p className={cn("font-extrabold text-3xl")}>{totalXpAll.toLocaleString()}</p>
+                <p className={cn("font-bold text-3xl")}>{totalXpAll.toLocaleString()}</p>
               </div>
             </div>
             <div
@@ -138,7 +138,7 @@ export function AdminGamificationClient() {
                 </h2>
               </header>
               <div className={cn("p-4 pt-0")}>
-                <p className={cn("font-extrabold text-3xl")}>{avgXp.toLocaleString()}</p>
+                <p className={cn("font-bold text-3xl")}>{avgXp.toLocaleString()}</p>
               </div>
             </div>
             <div
@@ -152,7 +152,7 @@ export function AdminGamificationClient() {
                 </h2>
               </header>
               <div className={cn("p-4 pt-0")}>
-                <p className={cn("font-extrabold text-3xl")}>{avgStreak}</p>
+                <p className={cn("font-bold text-3xl")}>{avgStreak}</p>
               </div>
             </div>
           </div>

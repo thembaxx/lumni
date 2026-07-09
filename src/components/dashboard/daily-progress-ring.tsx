@@ -28,10 +28,10 @@ export function DailyProgressRing() {
         color={isComplete ? "var(--success)" : "var(--system-accent)"}
       >
         <div className="flex flex-col items-center">
-          <span className="card-entrance font-extrabold text-3xl text-foreground tabular-nums">
+          <span className="card-entrance font-bold text-3xl text-foreground tabular-nums">
             {levelInfo.level}
           </span>
-          <span className="ios-caption-2 font-extrabold text-muted-foreground uppercase tracking-wider">
+          <span className="ios-caption-2 font-bold text-muted-foreground uppercase tracking-wider">
             {levelInfo.title}
           </span>
         </div>
@@ -45,14 +45,12 @@ export function DailyProgressRing() {
               className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
             />
           </span>
-          <span className="font-extrabold text-foreground text-lg tabular-nums">
-            {currentStreak}
-          </span>
+          <span className="font-bold text-foreground text-lg tabular-nums">{currentStreak}</span>
           <span className="font-medium text-muted-foreground text-xs">day streak</span>
         </div>
         <div className="h-6 w-px bg-border/40" />
         <div className="text-right">
-          <p className="font-extrabold text-foreground text-lg tabular-nums">
+          <p className="font-bold text-foreground text-lg tabular-nums">
             {gamification.totalXp.toLocaleString("en-ZA")}
           </p>
           <p className="font-medium text-muted-foreground text-xs">total XP</p>
@@ -76,7 +74,7 @@ export function DailyProgressRing() {
         {isComplete ? (
           <div className="flex items-center gap-1">
             <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5 text-success" />
-            <span className="ios-caption-2 font-extrabold text-success">Daily goal complete</span>
+            <span className="ios-caption-2 font-bold text-success">Daily goal complete</span>
           </div>
         ) : (
           <span className="card-entrance ios-caption-2 font-medium text-muted-foreground">

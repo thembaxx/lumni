@@ -99,7 +99,7 @@ export function StatCard({
           <span className="text-muted-foreground text-xs">{label}</span>
         </m.div>
         <m.span
-          className={cn("font-extrabold text-xl tabular-nums", colorClass)}
+          className={cn("font-bold text-xl tabular-nums", colorClass)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: delay + 0.35 }}
@@ -122,9 +122,7 @@ export function StatCard({
           {Icon && <Icon className="size-4" />}
           <span className="text-xs">{label}</span>
         </div>
-        <div
-          className={cn("flex items-center gap-2 font-extrabold text-2xl tabular-nums", trendColor)}
-        >
+        <div className={cn("flex items-center gap-2 font-bold text-2xl tabular-nums", trendColor)}>
           {value}
           {trend === "up" && <HugeiconsIcon icon={ChartUpIcon} className="size-4" />}
           {trend === "down" && <HugeiconsIcon icon={ChartDownIcon} className="size-4" />}

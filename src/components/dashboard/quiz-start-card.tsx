@@ -27,7 +27,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
     <Card className="overflow-visible rounded-card border-(--system-accent)/20 bg-(--system-accent)/[0.03] shadow-level-1">
       <CardContent className="flex flex-col gap-4 p-5">
         <div className="flex items-center justify-between">
-          <h3 className="font-extrabold text-lg tracking-tight">Start a Quiz</h3>
+          <h3 className="font-bold text-lg tracking-tight">Start a Quiz</h3>
           <div className="flex items-center gap-3 rounded-full border border-muted bg-muted/30 px-3 py-1.5">
             <div className="flex items-center gap-1.5">
               <HugeiconsIcon icon={Timer01Icon} className="size-3.5 text-muted-foreground" />

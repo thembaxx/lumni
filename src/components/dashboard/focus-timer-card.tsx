@@ -75,7 +75,7 @@ export function FocusTimerCard() {
       <CardContent className="flex items-center justify-between gap-4 p-4">
         <div className="flex items-center gap-4">
           <RadialChart value={progress} size={80} color="var(--system-accent)" className="shrink-0">
-            <span className="ios-caption-2 font-extrabold font-mono tabular-nums tracking-tight">
+            <span className="ios-caption-2 font-bold font-mono tabular-nums tracking-tight">
               {formatTime(timeLeft)}
             </span>
           </RadialChart>

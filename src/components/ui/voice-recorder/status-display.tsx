@@ -58,7 +58,7 @@ export function StatusDisplay({
         {showPermissionError ? "Permission Required" : statusText}
       </span>
       {(isRecording || isPlaying || timerDisplay) && (
-        <span className="animate-fade-in-up font-extrabold font-mono text-2xl text-foreground tabular-nums">
+        <span className="animate-fade-in-up font-bold font-mono text-2xl text-foreground tabular-nums">
           {timerDisplay}
         </span>
       )}

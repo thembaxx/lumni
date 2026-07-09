@@ -64,7 +64,7 @@ export function LessonLibraryCard() {
     <Card className="overflow-hidden rounded-card shadow-level-1">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="font-extrabold text-lg">Continue Learning</CardTitle>
+          <CardTitle className="font-bold text-lg">Continue Learning</CardTitle>
           <HugeiconsIcon icon={GraduationCapIcon} className="size-5 text-muted-foreground" />
         </div>
       </CardHeader>

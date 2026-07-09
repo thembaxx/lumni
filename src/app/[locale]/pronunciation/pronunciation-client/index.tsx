@@ -53,7 +53,7 @@ export function PronunciationClient() {
           >
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-2">
-                <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+                <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
                   Pronunciation Practice
                 </h1>
                 <p className="text-muted-foreground text-sm">
@@ -182,19 +182,19 @@ export function PronunciationClient() {
                 <CardContent className="flex flex-col gap-5 p-5 pt-0">
                   <div className="grid grid-cols-3 gap-3">
                     <div className="rounded-2xl bg-info/10 p-4 text-center">
-                      <div className="font-extrabold text-3xl text-info tabular-nums">
+                      <div className="font-bold text-3xl text-info tabular-nums">
                         {assessment.overallScore}%
                       </div>
                       <div className="mt-1 text-muted-foreground text-xs">Accuracy</div>
                     </div>
                     <div className="rounded-2xl bg-success/10 p-4 text-center">
-                      <div className="font-extrabold text-3xl text-success tabular-nums">
+                      <div className="font-bold text-3xl text-success tabular-nums">
                         {assessment.phonemeAccuracy}%
                       </div>
                       <div className="mt-1 text-muted-foreground text-xs">Phonemes</div>
                     </div>
                     <div className="rounded-2xl bg-warning/10 p-4 text-center">
-                      <div className="font-extrabold text-3xl text-warning tabular-nums">
+                      <div className="font-bold text-3xl text-warning tabular-nums">
                         {assessment.fluencyScore}%
                       </div>
                       <div className="mt-1 text-muted-foreground text-xs">Fluency</div>

@@ -173,7 +173,7 @@ export function ResultsSearch() {
 
                 <div className="flex items-center justify-between border-border border-t pt-2">
                   <span className="text-muted-foreground text-sm">Overall</span>
-                  <span className="font-extrabold text-lg tabular-nums">{result.overall}%</span>
+                  <span className="font-bold text-lg tabular-nums">{result.overall}%</span>
                 </div>
               </Card>
             </m.div>

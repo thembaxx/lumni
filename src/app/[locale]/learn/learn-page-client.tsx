@@ -76,7 +76,7 @@ export function LearnPageClient() {
             </span>
             Choose your path
           </div>
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Learn</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Learn</h1>
           <p className="text-muted-foreground text-sm">Explore learning resources</p>
         </m.div>
 

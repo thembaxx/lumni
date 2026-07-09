@@ -8,10 +8,10 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
 import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -23,58 +23,12 @@ interface HeroSectionProps {
   isAuthenticated: boolean;
 }
 
-function useMousePosition(prefersReducedMotion: boolean | null) {
-  const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    const handler = (e: MouseEvent) => {
-      setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
-    };
-    window.addEventListener("mousemove", handler);
-    return () => window.removeEventListener("mousemove", handler);
-  }, [prefersReducedMotion]);
-  return pos;
-}
-
-function MorphingBlob({ prefersReducedMotion }: { prefersReducedMotion: boolean | null }) {
-  const mouse = useMousePosition(prefersReducedMotion);
+function MorphingBlob() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Primary large blob */}
-      <div
-        className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] animate-morph bg-linear-to-br from-system-accent/10 via-system-accent/5 to-transparent opacity-70 blur-3xl will-change-transform"
-        style={{
-          transform: `translate(${(mouse.x - 0.5) * 30}px, ${(mouse.y - 0.5) * 20}px)`,
-          transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      />
-      {/* Secondary blob */}
-      <div
-        className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] animate-float-drift rounded-full bg-linear-to-tr from-chart-4/10 to-transparent opacity-50 blur-3xl will-change-transform"
-        style={{
-          transform: `translate(${(mouse.x - 0.5) * -20}px, ${(mouse.y - 0.5) * -15}px)`,
-          transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      />
-      {/* Tertiary accent blob */}
-      <div
-        className="absolute top-[20%] left-[5%] h-[30%] w-[25%] animate-float-drift rounded-full bg-linear-to-br from-chart-3/8 to-transparent opacity-40 blur-3xl will-change-transform"
-        style={{
-          transform: `translate(${(mouse.x - 0.5) * 15}px, ${(mouse.y - 0.5) * -10}px)`,
-          transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
-          animationDelay: "-4s",
-        }}
-      />
-      {/* Particle-like dots */}
-      <div className="absolute top-[15%] right-[20%] size-2 rounded-full bg-primary/20 blur-sm animate-float-slow" />
-      <div
-        className="absolute bottom-[25%] left-[15%] size-1.5 rounded-full bg-chart-4/20 blur-sm animate-float-slow"
-        style={{ animationDelay: "-2s" }}
-      />
-      <div
-        className="absolute top-[40%] right-[10%] size-1 rounded-full bg-chart-3/20 blur-sm animate-float-slow"
-        style={{ animationDelay: "-4s" }}
-      />
+      {/* Subtle grayscale blob */}
+      <div className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] bg-linear-to-br from-system-accent/8 via-system-accent/3 to-transparent opacity-60 blur-3xl will-change-transform" />
+      <div className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] rounded-full bg-linear-to-tr from-system-accent/5 to-transparent opacity-40 blur-3xl will-change-transform" />
     </div>
   );
 }
@@ -91,8 +45,7 @@ function InteractiveQuizDemo() {
 
   return (
     <MagneticCard className="relative aspect-4/5 w-full max-w-sm" maxTilt={6}>
-      <div className="absolute inset-0 rounded-card-lg bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
-      <div className="relative flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-linear-to-br from-primary/3 to-background p-5 shadow-level-2 backdrop-blur-xl">
+      <div className="flex h-full w-full flex-col gap-4 rounded-card-lg border border-border/40 bg-card p-5 shadow-level-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex size-9 items-center justify-center rounded-lg bg-(--system-accent-alpha-10)">
@@ -103,7 +56,7 @@ function InteractiveQuizDemo() {
               <p className="ios-caption-3 text-muted-foreground">Physics · Grade 12</p>
             </div>
           </div>
-          <span className="animate-badge-pulse rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
+          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
             Demo
           </span>
         </div>
@@ -188,18 +141,13 @@ function InteractiveQuizDemo() {
 
 export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSectionProps) {
   const t = useTranslations();
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, prefersReducedMotion ? 1 : 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, prefersReducedMotion ? 1 : 0.96]);
 
   return (
-    <m.section
+    <section
       id="main-content"
-      style={{ opacity: heroOpacity, scale: heroScale }}
       className="relative flex min-h-dvh items-center overflow-hidden pt-14"
     >
-      <MorphingBlob prefersReducedMotion={prefersReducedMotion ?? true} />
+      <MorphingBlob />
       <div className="mx-auto w-full max-w-6xl px-4">
         <div className="grid items-center gap-12 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
@@ -233,7 +181,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto animate-glow-pulse"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroDashboard")}
@@ -248,7 +196,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 <Button
                   asChild
                   size="lg"
-                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto animate-glow-pulse"
+                  className="group relative w-full gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[scale,background-color,box-shadow,color,transform] duration-300 hover:shadow-level-3 press-scale sm:w-auto"
                 >
                   <Link href="/dashboard">
                     {t("home.heroStartFree")}
@@ -266,10 +214,9 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 </Button>
               )}
 
-              <div className="hidden items-center gap-2 rounded-full border border-border/30 bg-background/60 px-3 py-1.5 text-muted-foreground text-xs backdrop-blur-sm sm:flex">
+              <div className="hidden items-center gap-2 rounded-full border border-border/30 bg-system-background-secondary px-3 py-1.5 text-muted-foreground text-xs sm:flex">
                 <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-success" />
+                  <span className="inline-flex size-2 rounded-full bg-success" />
                 </span>
                 No credit card
               </div>
@@ -302,7 +249,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               delay={0.3}
               className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-2"
             >
-              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5 animate-badge-pulse">
+              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
                 <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
                 <span className="font-medium text-xs">CAPS Aligned</span>
               </div>
@@ -330,6 +277,6 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
           </FadeIn>
         </div>
       </div>
-    </m.section>
+    </section>
   );
 });

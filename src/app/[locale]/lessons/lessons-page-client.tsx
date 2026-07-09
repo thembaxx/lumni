@@ -19,7 +19,7 @@ export function LessonsPageClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Lessons</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Lessons</h1>
         </m.div>
         <SpotlightCard className="rounded-card-lg">
           <LessonLibrary />

@@ -42,7 +42,7 @@ export const StreakCard = memo(function StreakCard() {
             </div>
             <div className="flex-1">
               <div className="flex items-baseline gap-2">
-                <span className="font-extrabold text-4xl text-foreground tabular-nums tracking-tight">
+                <span className="font-bold text-4xl text-foreground tabular-nums tracking-tight">
                   {currentStreak}
                 </span>
                 <span className="font-medium text-muted-foreground text-xs">

@@ -19,9 +19,7 @@ export function QuizErrorState({ loadError, onRetry, onBack }: QuizErrorStatePro
       <div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-(--space-20) md:col-span-7">
         <Card size="sm" className="w-full max-w-md">
           <CardContent className="flex flex-col gap-4">
-            <CardTitle className="font-extrabold text-xl tracking-tight">
-              {t("common.error")}
-            </CardTitle>
+            <CardTitle className="font-bold text-xl tracking-tight">{t("common.error")}</CardTitle>
             <EmptyStateWithIllustration
               animation="error"
               title={t("quiz.loadError")}

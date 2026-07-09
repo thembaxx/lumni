@@ -142,7 +142,7 @@ export function FlashcardBrowseClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
             {t("flashcards.browseTitle")}
           </h1>
         </m.div>

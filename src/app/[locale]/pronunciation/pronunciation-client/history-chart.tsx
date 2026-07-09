@@ -60,11 +60,11 @@ export function HistoryChart({ stats, loading }: { stats: HistoryStats | null; l
     <>
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-2xl bg-card p-4 text-center">
-          <div className="font-extrabold text-3xl tabular-nums">{stats.totalAttempts}</div>
+          <div className="font-bold text-3xl tabular-nums">{stats.totalAttempts}</div>
           <div className="mt-1 text-muted-foreground text-xs">Total Attempts</div>
         </div>
         <div className="rounded-2xl bg-card p-4 text-center">
-          <div className="font-extrabold text-3xl tabular-nums">{stats.averageScore}%</div>
+          <div className="font-bold text-3xl tabular-nums">{stats.averageScore}%</div>
           <div className="mt-1 text-muted-foreground text-xs">Average Score</div>
         </div>
       </div>

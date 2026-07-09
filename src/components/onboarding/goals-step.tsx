@@ -33,7 +33,7 @@ export function GoalsStep({
       className="flex flex-col gap-6"
     >
       <div className="flex flex-col gap-2">
-        <div className="font-extrabold text-4xl text-foreground tabular-nums">{targetAps}</div>
+        <div className="font-bold text-4xl text-foreground tabular-nums">{targetAps}</div>
         <p className="ios-subhead text-muted-foreground">Target APS</p>
         <div>
           <Slider
@@ -50,7 +50,7 @@ export function GoalsStep({
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="font-extrabold text-4xl text-foreground tabular-nums">{dailyMinutes}</div>
+        <div className="font-bold text-4xl text-foreground tabular-nums">{dailyMinutes}</div>
         <p className="ios-subhead text-muted-foreground">Minutes per day</p>
         <div>
           <Slider

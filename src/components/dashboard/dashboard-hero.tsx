@@ -14,7 +14,7 @@ export function HeroBanner() {
         role="banner"
       >
         <div className="relative flex max-w-3xl flex-col justify-center py-4">
-          <h1 className="ios-title-1 max-w-lg font-extrabold text-foreground leading-tight tracking-tight">
+          <h1 className="ios-title-1 max-w-lg font-bold text-foreground leading-tight tracking-tight">
             {t("dashboard.title")}
           </h1>
           <p className="mt-2 max-w-md text-muted-foreground text-sm">{t("dashboard.subtitle")}</p>

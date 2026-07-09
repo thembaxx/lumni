@@ -152,31 +152,31 @@
   --ring: var(--system-accent);
   --radius: 12px;
 
-  /* Dark mode accent override — emerald stays consistent */
-  --system-accent-alpha-0: oklch(52% 0.18 146 / 0);
-  --system-accent-alpha-10: oklch(52% 0.18 146 / 0.1);
-  --system-accent-alpha-20: oklch(52% 0.18 146 / 0.2);
-  --system-accent-alpha-30: oklch(52% 0.18 146 / 0.3);
+  /* Dark mode accent override — stays grayscale */
+  --system-accent-alpha-0: color-mix(in oklch, var(--system-accent) 0%, transparent);
+  --system-accent-alpha-10: color-mix(in oklch, var(--system-accent) 10%, transparent);
+  --system-accent-alpha-20: color-mix(in oklch, var(--system-accent) 20%, transparent);
+  --system-accent-alpha-30: color-mix(in oklch, var(--system-accent) 30%, transparent);
 
-  /* Bubble hover tokens — precomputed from color-mix() for performance */
-  --bubble-tinted: oklch(93% 0.072 146);
-  --bubble-tinted-hover: oklch(88% 0.09 146);
-  --bubble-tinted-hover-dark: oklch(35% 0.09 146);
-  --secondary-hover: oklch(94.3% 0.007 60);
-  --muted-hover: oklch(94.3% 0.007 60);
+  /* Bubble hover tokens — grayscale */
+  --bubble-tinted: var(--system-surface-secondary);
+  --bubble-tinted-hover: var(--system-background-tertiary);
+  --bubble-tinted-hover-dark: oklch(30% 0 0);
+  --secondary-hover: var(--system-background-tertiary);
+  --muted-hover: var(--system-background-tertiary);
 
-  --system-success-alpha-20: oklch(65% 0.2 145 / 0.2);
-  --system-destructive-alpha-20: oklch(55% 0.18 25 / 0.2);
+  --system-success-alpha-20: color-mix(in oklch, var(--system-success) 20%, transparent);
+  --system-destructive-alpha-20: color-mix(in oklch, var(--system-destructive) 20%, transparent);
 
-  --chart-1: oklch(52% 0.18 146); /* Emerald accent */
-  --chart-2: oklch(65% 0.2 145); /* Success green */
-  --chart-3: oklch(75% 0.15 70); /* Warm amber */
-  --chart-4: oklch(60% 0.15 240); /* Cool blue */
-  --chart-5: oklch(55% 0.18 25); /* Destructive red */
+  --chart-1: oklch(40% 0 0); /* Darkest — primary data series */
+  --chart-2: oklch(55% 0 0); /* Mid-dark — secondary */
+  --chart-3: oklch(70% 0 0); /* Mid-light — tertiary */
+  --chart-4: oklch(82% 0 0); /* Light — quaternary */
+  --chart-5: oklch(30% 0 0); /* Darkest — emphasis */
 
   /* DESIGN.md Color Aliases (maps to --system-*) */
   --color-study-green: var(--system-accent);
-  --color-study-green-bright: oklch(65% 0.18 146);
+  --color-study-green-bright: var(--color-chart-2);
 
   --color-warm-paper: var(--system-background);
   --color-warm-paper-secondary: var(--system-background-secondary);

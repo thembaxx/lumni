@@ -30,9 +30,7 @@ function PastQuestionBrowserContent() {
     <PageContainer>
       <div className="flex flex-col gap-6 py-6">
         <div>
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
-            Question Bank
-          </h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Question Bank</h1>
           <p className="text-muted-foreground text-sm">
             Browse past paper questions by subject and topic
           </p>

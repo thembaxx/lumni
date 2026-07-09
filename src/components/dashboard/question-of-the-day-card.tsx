@@ -65,7 +65,7 @@ export function QuestionOfTheDayCard() {
     <div className="card-entrance">
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-extrabold text-lg">Question of the Day</CardTitle>
+          <CardTitle className="font-bold text-lg">Question of the Day</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           <div className="flex flex-wrap items-center gap-2">

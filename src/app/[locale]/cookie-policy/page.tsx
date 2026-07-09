@@ -64,7 +64,7 @@ Email: ${appConfig.contact.email}`,
 export default function CookiePolicyPage() {
   return (
     <PageContainer className="py-12">
-      <h1 className="font-extrabold text-4xl tracking-tight mb-2">Cookie Policy</h1>
+      <h1 className="font-bold text-4xl tracking-tight mb-2">Cookie Policy</h1>
       <p className="text-muted-foreground text-sm mb-8">Last updated: June 2026</p>
       <div className="flex flex-col gap-8">
         {sections.map((section) => (

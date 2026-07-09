@@ -156,7 +156,7 @@ export function BoltQuiz() {
       <header className="flex items-center gap-2.5 px-5 pt-14 pb-3">
         <BoltMark />
         <div className="flex min-w-0 flex-col">
-          <span className="font-extrabold text-base text-system-text-primary tracking-tight">
+          <span className="font-bold text-base text-system-text-primary tracking-tight">
             Today&rsquo;s Challenge
           </span>
           <span className="truncate text-muted-foreground text-xs">{subjectLabel}</span>

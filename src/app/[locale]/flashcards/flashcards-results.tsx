@@ -51,11 +51,11 @@ export function FlashcardsResults({
               </header>
               <div className="grid grid-cols-12 gap-3">
                 <div className="col-span-8 rounded-lg bg-muted p-4 sm:col-span-8">
-                  <p className="font-extrabold text-2xl">{totalCards}</p>
+                  <p className="font-bold text-2xl">{totalCards}</p>
                   <p className="text-muted-foreground text-xs">{t("flashcards.cardsStudied")}</p>
                 </div>
                 <div className="col-span-4 rounded-lg bg-success/10 p-4 sm:col-span-4 dark:bg-success/20">
-                  <p className="font-extrabold text-success text-xl dark:text-success-foreground">
+                  <p className="font-bold text-success text-xl dark:text-success-foreground">
                     {knownCount}
                   </p>
                   <p className="text-success text-xs dark:text-success-foreground">
@@ -63,7 +63,7 @@ export function FlashcardsResults({
                   </p>
                 </div>
                 <div className="col-span-12 rounded-lg bg-warning/10 p-4 sm:col-span-4 dark:bg-warning/20">
-                  <p className="font-extrabold text-warning text-xl dark:text-warning-foreground">
+                  <p className="font-bold text-warning text-xl dark:text-warning-foreground">
                     {reviewCount}
                   </p>
                   <p className="text-warning text-xs dark:text-warning-foreground">

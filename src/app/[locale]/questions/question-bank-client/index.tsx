@@ -202,7 +202,7 @@ export function QuestionBankClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
             Past Exam Questions
           </h1>
           <p className="text-muted-foreground text-sm">

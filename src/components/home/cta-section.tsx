@@ -18,7 +18,6 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
 
   return (
     <section className="relative py-16 md:py-20">
-      <div className="absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
       <div className="relative mx-auto max-w-2xl px-4 text-center">
         <m.div
           initial={{ opacity: 0, y: 20 }}

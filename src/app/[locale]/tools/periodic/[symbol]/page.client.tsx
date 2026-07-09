@@ -115,7 +115,7 @@ export function ElementDetailClient() {
                   boxShadow: `0 0 30px oklch(${elementCategoryConfig[element.category]?.rgb} / 0.5), 0 0 60px oklch(${elementCategoryConfig[element.category]?.rgb} / 0.25)`,
                 }}
               >
-                <span className="font-extrabold text-3xl">{element.symbol}</span>
+                <span className="font-bold text-3xl">{element.symbol}</span>
               </div>
               <div className="flex-1 pt-1">
                 <h2 className="mb-1 font-semibold text-2xl">{element.name}</h2>

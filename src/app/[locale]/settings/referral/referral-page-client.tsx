@@ -16,7 +16,7 @@ export function ReferralPageClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Referral</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Referral</h1>
         </m.div>
         <ReferralTab />
       </PageContainer>

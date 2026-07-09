@@ -59,7 +59,7 @@ export function BoltCelebration({
           className="animate-materialize flex flex-col gap-1.5"
           style={{ animationDelay: "0.12s" }}
         >
-          <h2 className="ios-title-2 text-balance font-extrabold text-foreground tracking-tight">
+          <h2 className="ios-title-2 text-balance font-bold text-foreground tracking-tight">
             {correct ? "Correct!" : "Not quite"}
           </h2>
           <p className="text-balance text-muted-foreground text-sm">{subjectLabel}</p>

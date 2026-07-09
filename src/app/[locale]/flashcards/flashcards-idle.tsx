@@ -42,7 +42,7 @@ export function FlashcardsIdle({
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
           <header className="pb-4 text-left">
-            <h2 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
               {t("flashcards.title")}
             </h2>
           </header>

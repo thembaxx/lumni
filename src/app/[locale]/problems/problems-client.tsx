@@ -260,7 +260,7 @@ export function ProblemsClient() {
                   />
                   AI-curated practice
                 </div>
-                <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+                <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
                   Problem Library
                 </h1>
                 <p className="ios-subhead text-muted-foreground">

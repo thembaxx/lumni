@@ -17,7 +17,6 @@ const featureConfig: {
   icon: typeof BrainIcon;
   titleKey: string;
   descKey: string;
-  color: string;
   span: string;
   highlight?: string;
 }[] = [
@@ -25,7 +24,6 @@ const featureConfig: {
     icon: BrainIcon,
     titleKey: "featureAIPractice",
     descKey: "featureAIPracticeDesc",
-    color: "from-primary/10 to-primary/5",
     span: "sm:col-span-2 lg:col-span-3",
     highlight: "AI-powered",
   },
@@ -33,7 +31,6 @@ const featureConfig: {
     icon: BookOpen01Icon,
     titleKey: "featurePastPapers",
     descKey: "featurePastPapersDesc",
-    color: "from-chart-4/10 to-chart-4/5",
     span: "lg:col-span-3",
     highlight: "Past papers",
   },
@@ -41,28 +38,24 @@ const featureConfig: {
     icon: BarChartIcon,
     titleKey: "featureTracking",
     descKey: "featureTrackingDesc",
-    color: "from-chart-2/10 to-chart-2/5",
     span: "sm:col-span-2 lg:col-span-4",
   },
   {
     icon: BulbIcon,
     titleKey: "featureFlashcards",
     descKey: "featureFlashcardsDesc",
-    color: "from-chart-3/10 to-chart-3/5",
     span: "sm:col-span-2 lg:col-span-4",
   },
   {
     icon: Target01Icon,
     titleKey: "featurePlanner",
     descKey: "featurePlannerDesc",
-    color: "from-chart-5/10 to-chart-5/5",
     span: "lg:col-span-2",
   },
   {
     icon: GlobeIcon,
     titleKey: "featureOffline",
     descKey: "featureOfflineDesc",
-    color: "from-primary/10 to-chart-4/5",
     span: "lg:col-span-2",
   },
 ];
@@ -83,15 +76,9 @@ export function FeaturesGrid() {
           className="flex flex-col gap-4 mb-14 text-center"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 text-xs text-primary">
-            <span className="relative flex size-2">
-              {!prefersReducedMotion && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-              )}
-              <span className="relative inline-flex size-2 rounded-full bg-primary" />
-            </span>
             Everything you need
           </div>
-          <h2 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+          <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
             {t("featuresHeading")}
           </h2>
           <p className="ios-body mx-auto max-w-lg text-muted-foreground">
@@ -115,16 +102,10 @@ export function FeaturesGrid() {
             >
               <div
                 className={cn(
-                  "group relative h-full overflow-hidden rounded-card border border-border/40 bg-card p-7 shadow-level-1 transition-all duration-500 hover:shadow-level-3",
+                  "group relative h-full rounded-card border border-border/40 bg-card p-7 shadow-level-1 transition-all duration-500 hover:shadow-level-3",
                   "hover:border-primary/20 hover:-translate-y-1",
                 )}
               >
-                <div
-                  className={cn(
-                    "pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                    feature.color,
-                  )}
-                />
                 <div className="pointer-events-none absolute -right-12 -top-12 size-32 rounded-full bg-primary/3 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:bg-primary/8" />
 
                 <div className="relative z-elevated flex flex-col gap-3">

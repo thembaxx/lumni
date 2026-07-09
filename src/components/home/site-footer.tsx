@@ -16,7 +16,7 @@ export async function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <Link href="/" className="py-1.5 font-extrabold text-lg tracking-tight">
+            <Link href="/" className="py-1.5 font-bold text-lg tracking-tight">
               {t("footerBrand")}
             </Link>
             <p className="mt-2 max-w-xs text-muted-foreground text-sm">{t("footerDesc")}</p>

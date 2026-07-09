@@ -291,9 +291,7 @@ export function StoryReaderClient() {
                 </Badge>
               )}
             </div>
-            <CardTitle className="mt-3 font-extrabold text-2xl tracking-tight">
-              {story.title}
-            </CardTitle>
+            <CardTitle className="mt-3 font-bold text-2xl tracking-tight">{story.title}</CardTitle>
             <p className="text-muted-foreground text-sm">by {story.author}</p>
             <div className="mt-3">
               <StoryProgressBar scrollPercent={scrollPercent} completed={completed} />
@@ -315,7 +313,7 @@ export function StoryReaderClient() {
         <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
-              <CardTitle className="font-extrabold text-lg">Vocabulary</CardTitle>
+              <CardTitle className="font-bold text-lg">Vocabulary</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-2 p-5 pt-0">
               {story.vocabulary.map((v: { term: string; definition: string }) => (
@@ -358,7 +356,7 @@ export function StoryReaderClient() {
           </Button>
         ) : (
           <FadeIn direction="up" distance={16} duration={0.4} className="flex flex-col gap-4">
-            <h2 className="font-extrabold text-lg tracking-tight">Comprehension Questions</h2>
+            <h2 className="font-bold text-lg tracking-tight">Comprehension Questions</h2>
 
             {questions && questions.length > 0 ? (
               questions.map((q, i) => (
@@ -379,16 +377,16 @@ export function StoryReaderClient() {
               <FadeIn direction="up" distance={16} duration={0.4}>
                 <Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
                   <CardHeader>
-                    <CardTitle className="font-extrabold text-lg">Results</CardTitle>
+                    <CardTitle className="font-bold text-lg">Results</CardTitle>
                   </CardHeader>
                   <CardContent className="flex flex-col gap-4 p-5 pt-0">
                     <div className="grid grid-cols-2 gap-3">
                       <div className="rounded-2xl bg-card p-4 text-center">
-                        <div className="font-extrabold text-3xl tabular-nums">{overallScore}%</div>
+                        <div className="font-bold text-3xl tabular-nums">{overallScore}%</div>
                         <div className="mt-1 text-muted-foreground text-xs">Overall Score</div>
                       </div>
                       <div className="rounded-2xl bg-card p-4 text-center">
-                        <div className="font-extrabold text-3xl tabular-nums">
+                        <div className="font-bold text-3xl tabular-nums">
                           {scores.size}/{questions?.length ?? 0}
                         </div>
                         <div className="mt-1 text-muted-foreground text-xs">Questions Answered</div>

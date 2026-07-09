@@ -94,7 +94,7 @@ export function FlagsAdminClient() {
   if (isLoading) {
     return (
       <div className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-6 bg-background p-6">
-        <h1 className="font-extrabold text-2xl">Feature Flags</h1>
+        <h1 className="font-bold text-2xl">Feature Flags</h1>
         <p className="text-muted-foreground">Loading flags...</p>
       </div>
     );
@@ -102,7 +102,7 @@ export function FlagsAdminClient() {
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-6 bg-background p-6">
-      <h1 className="font-extrabold text-2xl">Feature Flags &amp; Experiments</h1>
+      <h1 className="font-bold text-2xl">Feature Flags &amp; Experiments</h1>
 
       <div className="flex flex-col gap-1">
         <label htmlFor="ff-force-user" className="text-muted-foreground text-xs">

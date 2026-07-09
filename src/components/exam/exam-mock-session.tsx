@@ -191,7 +191,7 @@ export function ExamMockSession({
   if (phase === "countdown") {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-background gap-4 p-4">
-        <p className="font-extrabold text-7xl tracking-tight tabular-nums text-system-accent">
+        <p className="font-bold text-7xl tracking-tight tabular-nums text-system-accent">
           {countdownValue}
         </p>
         <p className="text-muted-foreground text-sm">Get ready for your mock exam</p>
@@ -207,9 +207,9 @@ export function ExamMockSession({
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-background p-6 gap-6">
         <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-border bg-card p-6 text-center">
-          <p className="font-extrabold text-2xl tracking-tight">Mock Exam Complete</p>
+          <p className="font-bold text-2xl tracking-tight">Mock Exam Complete</p>
           <div className="flex items-baseline gap-1">
-            <span className="font-extrabold text-5xl tabular-nums text-system-accent">{pct}%</span>
+            <span className="font-bold text-5xl tabular-nums text-system-accent">{pct}%</span>
             <span className="text-muted-foreground text-sm tabular-nums">
               ({correctCount}/{total})
             </span>

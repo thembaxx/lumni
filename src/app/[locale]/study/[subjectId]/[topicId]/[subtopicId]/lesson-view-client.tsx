@@ -175,7 +175,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
               &middot; {lesson.estimatedMinutes} min
             </span>
           </div>
-          <h1 className="font-extrabold text-2xl tracking-tight">{subtopic?.name ?? subtopicId}</h1>
+          <h1 className="font-bold text-2xl tracking-tight">{subtopic?.name ?? subtopicId}</h1>
         </div>
 
         {progress > 0 && (
@@ -210,7 +210,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
                   >
                     {section.type}
                   </Badge>
-                  <CardTitle className="font-extrabold text-base">{section.title}</CardTitle>
+                  <CardTitle className="font-bold text-base">{section.title}</CardTitle>
                 </div>
                 <button
                   type="button"
@@ -251,7 +251,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
         <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
-              <CardTitle className="font-extrabold text-lg">Vocabulary</CardTitle>
+              <CardTitle className="font-bold text-lg">Vocabulary</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-2 p-5 pt-0">
               {lesson.vocabulary.map((v) => (
@@ -299,7 +299,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
         <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl border-info/20 bg-info/5 shadow-level-1">
             <CardHeader>
-              <CardTitle className="font-extrabold text-lg">Summary</CardTitle>
+              <CardTitle className="font-bold text-lg">Summary</CardTitle>
             </CardHeader>
             <CardContent className="p-5 pt-0">
               <p className="text-sm leading-relaxed">{lesson.summary}</p>
@@ -312,7 +312,7 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
         <FadeIn direction="up" distance={16} duration={0.4}>
           <Card className="overflow-hidden rounded-3xl shadow-level-1">
             <CardHeader>
-              <CardTitle className="font-extrabold text-lg">Related Past Questions</CardTitle>
+              <CardTitle className="font-bold text-lg">Related Past Questions</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-2 p-5 pt-0">
               {relatedQuestions.map((q) => (

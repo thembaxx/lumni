@@ -34,7 +34,7 @@ export function UserPercentileCard({
             </svg>
             <span>Your Performance Percentile</span>
           </span>
-          <span className="font-extrabold text-2xl">{userPercentile}%</span>
+          <span className="font-bold text-2xl">{userPercentile}%</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-4">

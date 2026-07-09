@@ -19,7 +19,7 @@ export function ApsScoreCard({ totalAPS }: ApsScoreCardProps) {
         </div>
         <div
           className={cn(
-            "text-center font-extrabold text-5xl tabular-nums",
+            "text-center font-bold text-5xl tabular-nums",
             scoreLevel === "high" && "text-success",
             scoreLevel === "medium" && "text-warning",
             scoreLevel === "low" && "text-destructive",

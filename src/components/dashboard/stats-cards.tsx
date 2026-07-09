@@ -46,10 +46,10 @@ function StatCard({ label, value, icon: Icon, colorClass }: StatItemProps) {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-1 px-5 pb-0 text-center">
-        <p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
+        <p className="balance text-wrap font-bold text-2xl text-foreground tabular-nums tracking-tight">
           <AnimatedNumber value={value} />
         </p>
-        <p className="font-extrabold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
+        <p className="font-bold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
           {label}
         </p>
       </CardContent>

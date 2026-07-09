@@ -76,7 +76,7 @@ export function NavigationBar({
           <div className="min-w-0 flex-1">
             <m.h1
               className={cn(
-                "truncate font-extrabold font-heading text-system-text-primary transition-[font-size,line-height] duration-200",
+                "truncate font-bold font-heading text-system-text-primary transition-[font-size,line-height] duration-200",
                 isCollapsed
                   ? "text-base leading-6"
                   : "text-(--fs-large-title) leading-[1.2] tracking-(--tracking-large-title)",

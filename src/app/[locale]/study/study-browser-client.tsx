@@ -92,9 +92,7 @@ export function StudyBrowserClient() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
           <div className="flex flex-col gap-1">
-            <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
-              Browse Lessons
-            </h1>
+            <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Browse Lessons</h1>
             <p className="text-muted-foreground text-sm">
               Select a subject and topic to start learning
             </p>
@@ -166,7 +164,7 @@ export function StudyBrowserClient() {
                 <Card className="overflow-hidden rounded-card shadow-level-1">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="font-extrabold text-lg">{topic.name}</CardTitle>
+                      <CardTitle className="font-bold text-lg">{topic.name}</CardTitle>
                       <Badge variant="secondary" className="rounded-full text-xs">
                         {topic.subtopics.length} lessons
                       </Badge>

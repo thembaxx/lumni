@@ -65,7 +65,7 @@ export function UniversityRequirements({ totalAPS }: UniversityRequirementsProps
                 <span className="font-medium text-sm">{uni.university}</span>
                 <span
                   className={cn(
-                    "font-extrabold text-sm tabular-nums",
+                    "font-bold text-sm tabular-nums",
                     meetsMin ? "text-success" : "text-destructive",
                   )}
                 >

@@ -133,7 +133,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className={`size-5 ${cfg.iconColor}`} />
             </div>
             <div className="flex flex-col gap-0.5">
-              <CardTitle className="font-extrabold text-foreground text-sm tracking-tight">
+              <CardTitle className="font-bold text-foreground text-sm tracking-tight">
                 Today&apos;s Focus
               </CardTitle>
               <span className={`font-medium text-xs ${cfg.iconColor}`}>{cfg.tag}</span>
@@ -162,7 +162,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
           <Button
             size="sm"
             variant="secondary"
-            className="w-full bg-system-fill font-extrabold text-sm transition-[scale,background-color,box-shadow,color,opacity,transform] hover:opacity-90 press-scale"
+            className="w-full bg-system-fill font-bold text-sm transition-[scale,background-color,box-shadow,color,opacity,transform] hover:opacity-90 press-scale"
             onClick={handleStart}
             disabled={showSuccess}
           >

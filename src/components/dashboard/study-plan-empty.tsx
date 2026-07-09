@@ -15,7 +15,7 @@ export function StudyPlanEmpty({ onGenerate }: StudyPlanEmptyProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+        <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
           <HugeiconsIcon icon={CheckListIcon} className="size-5" />
           Study Plan
         </CardTitle>

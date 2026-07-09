@@ -87,7 +87,7 @@ export function HowItWorksSection() {
           transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
           className="flex flex-col gap-3 mb-16 text-center"
         >
-          <h2 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+          <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
             {t("howHeading")}
           </h2>
           <p className="ios-body mx-auto max-w-lg text-muted-foreground">{t("howSubheading")}</p>

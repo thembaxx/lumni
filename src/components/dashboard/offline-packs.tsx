@@ -41,7 +41,7 @@ export function OfflinePackManager() {
             <HugeiconsIcon icon={FileDownloadIcon} className="size-5 text-(--system-accent)" />
           </div>
           <div className="min-w-0">
-            <CardTitle className="font-extrabold text-base tracking-tight">
+            <CardTitle className="font-bold text-base tracking-tight">
               Offline Study Packs
             </CardTitle>
             <p className="text-muted-foreground text-xs leading-tight">

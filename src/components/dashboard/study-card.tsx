@@ -24,7 +24,7 @@ export function StudyCard() {
         aria-label={`Start studying ${first.name}`}
       >
         <CardHeader>
-          <CardTitle className="font-extrabold text-lg">Continue Studying</CardTitle>
+          <CardTitle className="font-bold text-lg">Continue Studying</CardTitle>
         </CardHeader>
         <CardContent className="flex items-center gap-4 p-5 pt-0">
           <div className="flex size-12 items-center justify-center rounded-2xl bg-(--system-accent)/10">

@@ -63,7 +63,7 @@ export function SessionResultsView({
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="font-extrabold text-xl">
+            <CardTitle className="font-bold text-xl">
               {accuracy >= 80
                 ? t("exam.greatJob")
                 : accuracy >= 50
@@ -88,7 +88,7 @@ export function SessionResultsView({
                 className="mx-auto mb-1 size-5 text-success"
                 aria-hidden="true"
               />
-              <p className="font-extrabold text-2xl text-success tabular-nums">{correctCount}</p>
+              <p className="font-bold text-2xl text-success tabular-nums">{correctCount}</p>
               <p className="text-muted-foreground text-xs">{t("exam.correct")}</p>
             </div>
             <div
@@ -100,7 +100,7 @@ export function SessionResultsView({
                 className="mx-auto mb-1 size-5 text-destructive"
                 aria-hidden="true"
               />
-              <p className="font-extrabold text-2xl text-destructive tabular-nums">{failedCount}</p>
+              <p className="font-bold text-2xl text-destructive tabular-nums">{failedCount}</p>
               <p className="text-muted-foreground text-xs">{t("exam.incorrect")}</p>
             </div>
             <div
@@ -120,7 +120,7 @@ export function SessionResultsView({
                   <path d="M12 8v4l2.5 2.5" />
                 </svg>
               </div>
-              <p className="font-extrabold text-2xl tabular-nums">{accuracy}%</p>
+              <p className="font-bold text-2xl tabular-nums">{accuracy}%</p>
               <p className="text-muted-foreground text-xs">{t("exam.accuracy")}</p>
             </div>
             {(() => {
@@ -146,7 +146,7 @@ export function SessionResultsView({
                   </div>
                   <p
                     className={cn(
-                      "font-extrabold text-2xl tabular-nums",
+                      "font-bold text-2xl tabular-nums",
                       aps >= 6 && "text-success",
                       aps >= 4 && aps < 6 && "text-warning",
                       aps < 4 && "text-destructive",

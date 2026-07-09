@@ -54,7 +54,7 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
                 transition={{ delay: 0.4, type: "spring", bounce: 0 }}
               >
                 <HugeiconsIcon icon={StarIcon} className="size-6 fill-white" />
-                <span className="font-extrabold text-4xl tabular-nums">{level}</span>
+                <span className="font-bold text-4xl tabular-nums">{level}</span>
               </m.div>
               <h2 className="balance mb-2 text-wrap font-semibold text-2xl">{title}</h2>
               <p className="mb-4 text-muted-foreground">

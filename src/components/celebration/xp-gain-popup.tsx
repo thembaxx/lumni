@@ -23,7 +23,7 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
         >
           <div className="flex items-center gap-2 rounded-full bg-warning px-6 py-3 text-primary-foreground shadow-level-2">
             <HugeiconsIcon icon={SparklesIcon} className="size-5" />
-            <span className="font-extrabold text-xl tabular-nums">+{amount} XP</span>
+            <span className="font-bold text-xl tabular-nums">+{amount} XP</span>
           </div>
         </m.div>
       )}

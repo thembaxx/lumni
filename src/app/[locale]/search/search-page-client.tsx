@@ -15,7 +15,7 @@ export function SearchPageClient() {
   return (
     <PageContainer className="gap-6 pt-8">
       <div className="flex flex-col gap-1">
-        <h1 className="font-extrabold text-2xl tracking-tight">Search</h1>
+        <h1 className="font-bold text-2xl tracking-tight">Search</h1>
         <p className="text-muted-foreground text-sm">
           Search across questions, flashcards, notes, stories, dictionary, and more
         </p>

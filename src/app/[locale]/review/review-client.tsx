@@ -111,7 +111,7 @@ export function ReviewClient() {
           transition={{ duration: 0.3, ease: motionEase }}
         >
           <div className="flex items-center justify-between">
-            <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+            <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
               Wrong Answer Journal
             </h1>
             <div className="flex items-center gap-2">

@@ -42,7 +42,7 @@ export function BoltBranchV2({
       className="flex flex-1 flex-col items-center justify-center gap-6 py-8"
     >
       <div className="flex flex-col items-center gap-2 text-center">
-        <h2 className="ios-title-2 font-extrabold text-foreground tracking-tight">
+        <h2 className="ios-title-2 font-bold text-foreground tracking-tight">
           {correct ? "Great job!" : "Keep practicing"}
         </h2>
         <p className="text-muted-foreground text-sm">{subjectLabel}</p>

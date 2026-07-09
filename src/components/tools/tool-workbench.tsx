@@ -244,7 +244,7 @@ export function ToolWorkbench() {
           transition={SPRING}
           className="mb-10"
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Toolbox</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Toolbox</h1>
           <p className="mt-1 text-muted-foreground text-sm">Everything you need to study smarter</p>
         </m.div>
 

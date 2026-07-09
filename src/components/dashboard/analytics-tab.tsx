@@ -120,7 +120,7 @@ export function AnalyticsTab() {
           <LazySection>
             <Card>
               <CardHeader>
-                <CardTitle className="font-extrabold text-base tracking-tight">
+                <CardTitle className="font-bold text-base tracking-tight">
                   Mastery Heatmap
                 </CardTitle>
               </CardHeader>

@@ -167,7 +167,7 @@ export function DictionaryClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
         >
-          <h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">Dictionary</h1>
+          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Dictionary</h1>
           <p className="text-muted-foreground text-sm">
             Look up word definitions and save vocabulary for review.
           </p>

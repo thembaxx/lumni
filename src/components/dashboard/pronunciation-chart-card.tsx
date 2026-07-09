@@ -37,7 +37,7 @@ export function PronunciationChartCard() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-extrabold text-lg">Pronunciation Progress</CardTitle>
+          <CardTitle className="font-bold text-lg">Pronunciation Progress</CardTitle>
         </CardHeader>
         <CardContent className="p-5 pt-0">
           <Skeleton className="h-48 rounded-2xl" />
@@ -52,7 +52,7 @@ export function PronunciationChartCard() {
     <FadeIn direction="up" distance={16} duration={0.4}>
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-extrabold text-lg">Pronunciation Progress</CardTitle>
+          <CardTitle className="font-bold text-lg">Pronunciation Progress</CardTitle>
         </CardHeader>
         <CardContent className="p-5 pt-0">
           <div className="mb-3 flex items-center gap-4 text-muted-foreground text-xs">
