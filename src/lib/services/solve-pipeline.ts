@@ -1,5 +1,3 @@
-"use server";
-
 import type { AIClient } from "@/lib/ai/client";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";

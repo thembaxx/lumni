@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { curatedProblemsService } from "@/lib/services";
+import { curatedProblemsService } from "@/lib/services/curated-problems";
 
 interface CuratedBody {
   subject: string;

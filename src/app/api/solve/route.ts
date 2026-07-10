@@ -1,6 +1,6 @@
 import { getAI } from "@/lib/ai";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { SolvePipeline, type SolveBody } from "@/lib/services";
+import { SolvePipeline, type SolveBody } from "@/lib/services/solve-pipeline";
 import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
 
 let pipeline: SolvePipeline | null = null;
