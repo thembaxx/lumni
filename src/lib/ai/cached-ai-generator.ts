@@ -1,16 +1,28 @@
 import { Effect } from "effect";
 import type { AIClient } from "@/lib/ai/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  DataAccess,
+  CacheDataAccess,
+  LessonDataAccess,
+  StoryDataAccess,
+  StudyDataAccess,
+} from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
-export interface CachedAIGeneratorConfig<T> {
+export type CachedAIGeneratorDb =
+  | CacheDataAccess
+  | LessonDataAccess
+  | StoryDataAccess
+  | StudyDataAccess;
+
+export interface CachedAIGeneratorConfig<T, TDb extends CachedAIGeneratorDb = DataAccess> {
   systemPrompt: string;
   ttlMs: number;
   buildPrompt: (subject: string, topic: string) => string;
   parseResponse: (content: string) => T;
   emptyResult: T;
   isEmpty: (result: T) => boolean;
-  getTable: (db: DataAccess) => {
+  getTable: (db: TDb) => {
     get: (key: string) => Promise<{ expiresAt: number } | undefined>;
     put: (entry: unknown) => Promise<unknown>;
   };
@@ -20,11 +32,11 @@ export interface CachedAIGeneratorConfig<T> {
   errorLabel: string;
 }
 
-export class CachedAIGenerator<T> {
+export class CachedAIGenerator<T, TDb extends CachedAIGeneratorDb = DataAccess> {
   constructor(
-    private readonly config: CachedAIGeneratorConfig<T>,
+    private readonly config: CachedAIGeneratorConfig<T, TDb>,
     private readonly ai: AIClient,
-    private readonly db: DataAccess,
+    private readonly db: TDb,
   ) {}
 
   generateEffect(subject: string, topic: string): Effect.Effect<T> {

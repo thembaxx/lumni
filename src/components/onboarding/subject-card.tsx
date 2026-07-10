@@ -25,7 +25,7 @@ export function SubjectCard({ subject, selected, onToggle }: SubjectCardProps) {
     >
       <CardContent className="flex items-center gap-3 py-3">
         <div
-          className="flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-white text-xs"
+          className="flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-system-accent-foreground text-xs"
           style={
             {
               "--subject-color": subject.color,

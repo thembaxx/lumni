@@ -4,13 +4,14 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QualityPicker } from "@/components/flashcard/quality-picker";
 import { SwipeableCard } from "@/components/flashcard/swipeable-card";
 import type { FlashcardCardData } from "@/components/flashcard/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/navigation";
 import { useSwipeDeck } from "@/hooks/use-swipe-deck";
 import { springPresets } from "@/lib/utils/spring-presets";
@@ -23,6 +24,7 @@ interface SwipeableCardDeckProps {
   onComplete?: () => void;
   knownCount?: number;
   reviewCount?: number;
+  isLoading?: boolean;
 }
 
 const CARD_OFFSET = 12;
@@ -36,6 +38,7 @@ export function SwipeableCardDeck({
   onComplete,
   knownCount,
   reviewCount,
+  isLoading = false,
 }: SwipeableCardDeckProps) {
   const router = useRouter();
   const {
@@ -58,6 +61,15 @@ export function SwipeableCardDeck({
   const [pickerPolarity, setPickerPolarity] = useState<"correct" | "incorrect">("correct");
   const lastCardRef = useRef<FlashcardCardData | null>(null);
   const lastDirectionRef = useRef<"left" | "right" | null>(null);
+  const cardStackRef = useRef<HTMLDivElement>(null);
+  const prevIndexRef = useRef(currentIndex);
+
+  useEffect(() => {
+    if (prevIndexRef.current !== currentIndex) {
+      cardStackRef.current?.focus({ preventScroll: true });
+    }
+    prevIndexRef.current = currentIndex;
+  }, [currentIndex]);
 
   function handleSwipe(direction: "left" | "right") {
     const card = cards[currentIndex];
@@ -103,6 +115,27 @@ export function SwipeableCardDeck({
     undo();
   }
 
+  if (isLoading) {
+    return (
+      <div
+        className="mx-auto flex w-full max-w-md flex-col gap-4"
+        role="status"
+        aria-label="Loading flashcards"
+      >
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-9 w-16 rounded-md" />
+          <Skeleton className="h-6 w-20 rounded-full" />
+        </div>
+        <Skeleton className="h-[min(25rem,60vh)] w-full rounded-card-lg" />
+        <div className="flex items-center justify-between px-2">
+          <Skeleton className="h-9 w-16 rounded-md" />
+          <Skeleton className="h-4 w-24" />
+          <div className="w-20" />
+        </div>
+      </div>
+    );
+  }
+
   if (cards.length === 0) {
     return (
       <Card className="mx-auto w-full max-w-md" data-testid="empty-deck-message">
@@ -139,6 +172,7 @@ export function SwipeableCardDeck({
       className="flex flex-col gap-4"
       role="application"
       aria-label="Flashcard deck"
+      aria-busy={isLoading}
       data-testid="swipeable-card-deck"
     >
       {/* Screen reader announcement for current card */}
@@ -169,7 +203,12 @@ export function SwipeableCardDeck({
       </div>
 
       {/* Card stack */}
-      <div className="relative mx-auto h-[min(25rem,60vh)] w-full max-w-md">
+      <div
+        ref={cardStackRef}
+        className="relative mx-auto h-[min(25rem,60vh)] w-full max-w-md"
+        tabIndex={-1}
+        aria-label={`Card ${currentIndex + 1} of ${cards.length}`}
+      >
         <AnimatePresence mode="popLayout" initial={false}>
           {visibleCards.map((card, idx) => {
             const isTopCard = idx === 0 && !showPicker;

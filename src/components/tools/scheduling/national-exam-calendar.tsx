@@ -191,7 +191,7 @@ export function NationalExamCalendar() {
                   >
                     <span
                       className={cn(
-                        "ios-caption-3 flex size-8 shrink-0 items-center justify-center rounded-lg font-bold text-white dark:text-system-accent-foreground",
+                        "ios-caption-3 flex size-8 shrink-0 items-center justify-center rounded-lg font-bold text-system-accent-foreground",
                         getSubjectColor(exam.subjectId),
                       )}
                     >
