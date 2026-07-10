@@ -94,7 +94,7 @@ export function ElectronShellVisual({ electronConfig }: { electronConfig: string
                   ease: elementEaseOutQuart,
                 }}
               />
-              <span className="relative z-elevated flex h-full items-center px-2 font-medium text-white text-xs tabular-nums">
+              <span className="relative z-elevated flex h-full items-center px-2 font-medium text-system-accent-foreground text-xs tabular-nums [text-shadow:0_0_4px_var(--system-background)]">
                 {shell.count}e\u207B
               </span>
             </div>

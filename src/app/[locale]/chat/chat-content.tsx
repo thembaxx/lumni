@@ -161,7 +161,7 @@ export function ChatContent() {
                                     className={cn(
                                       "flex size-8 items-center justify-center rounded-xl text-xs font-bold transition-transform duration-200",
                                       isUser
-                                        ? "bg-linear-to-br from-primary to-primary/80 text-white shadow-level-1"
+                                        ? "bg-linear-to-br from-primary to-primary/80 text-system-accent-foreground shadow-level-1"
                                         : "bg-linear-to-br from-muted to-muted/80 text-muted-foreground",
                                     )}
                                   >
