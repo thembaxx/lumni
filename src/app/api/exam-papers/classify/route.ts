@@ -18,7 +18,7 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
-function createClassifyHandler(db: DataAccess = dexieDataAccess) {
+export function createClassifyHandler(db: DataAccess = dexieDataAccess) {
   return withRateLimit(
     async (req: NextRequest) => {
       try {
