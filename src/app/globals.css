@@ -23,6 +23,7 @@
   --system-text-primary: oklch(12% 0 0);
   --system-text-secondary: oklch(12% 0 0 / 0.6);
   --system-text-tertiary: oklch(12% 0 0 / 0.35);
+  --system-text-quaternary: oklch(12% 0 0 / 0.22);
 
   /* Semantic — stark contrast, no hue */
   --system-accent: oklch(12% 0 0); /* Pure black for selected states */
@@ -31,6 +32,7 @@
   --system-destructive-foreground: oklch(100% 0 0);
   --system-success: oklch(40% 0 0);
   --system-warning: oklch(55% 0 0);
+  --system-info: oklch(50% 0 0);
   --success: var(--system-success);
   --success-foreground: oklch(100% 0 0);
   --warning: var(--system-warning);
@@ -79,6 +81,7 @@
   --radius-input: 12px;
   --radius-badge: 12px;
   --radius-tab-bar: 12px;
+  --radius-interactive: 12px;
   --radius-list-group: 12px;
   --radius-full: 9999px;
 
@@ -95,6 +98,9 @@
   --fs-heading: 1.5rem; /* 24px — large heading */
   --fs-subheading: 1.125rem; /* 18px — small heading */
   --fs-body: 1rem; /* 16px — body text */
+  --fs-caption-1: 0.875rem; /* 14px — caption / small label */
+  --fs-caption-2: 0.75rem; /* 12px — badge / metadata */
+  --fs-caption-3: 0.6875rem; /* 11px — compact badge / tiny label */
 
   --tracking-heading: -0.02em;
   --tracking-subheading: -0.015em;
@@ -195,6 +201,7 @@
   --color-ink: var(--system-text-primary);
   --color-ink-muted: var(--system-text-secondary);
   --color-ink-faint: var(--system-text-tertiary);
+  --label-quaternary: var(--system-text-quaternary);
   --color-ink-quaternary: var(--label-quaternary);
 
   --color-separator: var(--system-separator);
@@ -203,7 +210,7 @@
   --color-destructive: var(--system-destructive);
   --color-success: var(--system-success);
   --color-warning: var(--warning);
-  --color-info: var(--info);
+  --color-info: var(--system-info);
 
   --color-chart-emerald: var(--chart-1);
   --color-chart-green: var(--chart-2);
@@ -328,6 +335,14 @@
     1
   ); /* impeccable-disable bounce-easing -- intentional design-system pop */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --color-info: var(--system-info);
+
+  --radius-interactive: 12px;
+
+  --fs-caption-1: 0.875rem;
+  --fs-caption-2: 0.75rem;
+  --fs-caption-3: 0.6875rem;
 
   --spacing-safe-pb: env(safe-area-inset-bottom, 0px);
   --spacing-safe-pt: env(safe-area-inset-top, 0px);
@@ -954,4 +969,53 @@ span.math:not(:empty)::after {
 }
 .press-scale:active {
   transform: scale(0.96);
+}
+
+/* Card entrance animation — fade up slide */
+.card-entrance {
+  animation: card-entrance 400ms var(--ease-decelerate) both;
+}
+.card-entrance-sm {
+  animation: card-entrance-sm 300ms var(--ease-decelerate) both;
+}
+.reduced-motion .card-entrance,
+.reduced-motion .card-entrance-sm {
+  animation: none;
+}
+@keyframes card-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes card-entrance-sm {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gentle float bob for streak icons */
+.animate-float-bob {
+  animation: float-bob 2.4s var(--ease-decelerate) infinite;
+}
+.reduced-motion .animate-float-bob {
+  animation: none;
+}
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }

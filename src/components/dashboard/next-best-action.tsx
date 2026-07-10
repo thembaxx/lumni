@@ -31,7 +31,7 @@ export function NextBestActionCard() {
   if (!action || dismissed) return null;
 
   return (
-    <Card className="relative border border-system-accent/20 bg-system-accent/[0.04]">
+    <Card className="relative border border-system-accent/20 bg-system-accent/5">
       <Button
         variant="ghost"
         size="icon-sm"
@@ -55,7 +55,7 @@ export function NextBestActionCard() {
         <Link
           href={action.ctaHref}
           prefetch={true}
-          className="mt-0.5 inline-flex h-9 w-fit items-center rounded-lg bg-system-accent px-4 font-medium text-system-accent-foreground text-xs transition-[background-color,transform] hover:bg-system-accent/85 press-scale"
+          className="mt-0.5 inline-flex min-h-11 w-fit items-center rounded-card bg-system-accent px-4 font-medium text-system-accent-foreground text-xs transition-[background-color,transform] hover:bg-system-accent/80 press-scale"
         >
           {action.ctaLabel}
         </Link>

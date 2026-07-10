@@ -119,43 +119,46 @@ export function QuizResultsCard({
           >
             <section className="flex flex-col gap-4">
               <m.div className="grid grid-cols-12 gap-4 md:text-left" variants={itemVariants}>
-                <FadeIn distance={0} delay={0.3} className="col-span-4 rounded-lg bg-muted p-4">
-                  <span
-                    className="font-bold text-2xl tabular-nums animate-rollup"
-                    style={{ animationDelay: "0.4s" }}
-                  >
+                <FadeIn distance={0} delay={0.3} className="col-span-4 rounded-card bg-muted p-4">
+                  <span className="font-bold text-2xl tabular-nums card-entrance-sm">
                     {totalQuestions}
                   </span>
-                  <p className="text-muted-foreground text-xs">{t("quiz.questions")}</p>
+                  <p className="text-muted-foreground text-(--fs-caption-2)">
+                    {t("quiz.questions")}
+                  </p>
                 </FadeIn>
-                <FadeIn distance={0} delay={0.4} className="col-span-2 rounded-lg bg-muted p-4">
+                <FadeIn distance={0} delay={0.4} className="col-span-2 rounded-card bg-muted p-4">
                   <p
                     className={cn(
-                      "font-bold text-2xl tabular-nums animate-rollup",
+                      "font-bold text-2xl tabular-nums card-entrance-sm",
                       isGreatScore && "text-success",
                     )}
-                    style={{ animationDelay: "0.5s" }}
                   >
                     {correctAnswers}
                   </p>
-                  <p className="text-muted-foreground text-xs">{t("quiz.correct")}</p>
+                  <p className="text-muted-foreground text-(--fs-caption-2)">{t("quiz.correct")}</p>
                 </FadeIn>
-                <FadeIn distance={0} delay={0.5} className="col-span-3 rounded-lg bg-muted p-4">
+                <FadeIn distance={0} delay={0.5} className="col-span-3 rounded-card bg-muted p-4">
                   <p
                     className={cn(
-                      "font-bold text-2xl tabular-nums animate-rollup",
+                      "font-bold text-2xl tabular-nums card-entrance-sm",
                       isGreatScore && "text-success",
                     )}
-                    style={{ animationDelay: "0.6s" }}
                   >
                     {accuracy}%
                   </p>
-                  <p className="text-muted-foreground text-xs">{t("quiz.accuracy")}</p>
+                  <p className="text-muted-foreground text-(--fs-caption-2)">
+                    {t("quiz.accuracy")}
+                  </p>
                 </FadeIn>
                 {(() => {
                   const aps = getAPSForSubject(accuracy);
                   return (
-                    <FadeIn distance={0} delay={0.6} className="col-span-3 rounded-lg bg-muted p-4">
+                    <FadeIn
+                      distance={0}
+                      delay={0.6}
+                      className="col-span-3 rounded-card bg-muted p-4"
+                    >
                       <p
                         className={cn(
                           "font-bold text-2xl tabular-nums",
@@ -166,16 +169,18 @@ export function QuizResultsCard({
                       >
                         {aps}/7
                       </p>
-                      <p className="text-muted-foreground text-xs">{getGrade(accuracy)}</p>
+                      <p className="text-muted-foreground text-(--fs-caption-2)">
+                        {getGrade(accuracy)}
+                      </p>
                     </FadeIn>
                   );
                 })()}
               </m.div>
 
               <m.div className="grid grid-cols-12 gap-4" variants={itemVariants}>
-                <FadeIn distance={0} delay={0.7} className="col-span-12 rounded-lg bg-muted p-4">
+                <FadeIn distance={0} delay={0.7} className="col-span-12 rounded-card bg-muted p-4">
                   <p className="font-bold text-2xl tabular-nums">{formatTime(elapsedTime)}</p>
-                  <p className="text-muted-foreground text-xs">{t("quiz.time")}</p>
+                  <p className="text-muted-foreground text-(--fs-caption-2)">{t("quiz.time")}</p>
                 </FadeIn>
               </m.div>
             </section>
@@ -197,7 +202,7 @@ export function QuizResultsCard({
                 <button
                   type="button"
                   onClick={() => setShowReview(!showReview)}
-                  className="flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-left font-medium text-sm transition-colors hover:bg-muted"
+                  className="flex items-center justify-between rounded-card border bg-card px-4 py-3 text-left font-medium text-sm transition-colors hover:bg-muted"
                   aria-expanded={showReview}
                   aria-controls="question-review-panel"
                 >

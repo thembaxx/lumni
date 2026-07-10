@@ -54,8 +54,9 @@ export function QualityPicker({ polarity, onSelect, onTimeout }: QualityPickerPr
               data-testid={`quality-button-${q.quality}`}
               type="button"
               onClick={() => handleSelect(q.quality)}
+              aria-pressed={selected === q.quality}
               className={cn(
-                "press-glow flex flex-col items-center gap-1 rounded-(--radius-interactive) border px-5 py-3 text-sm focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
+                "press-scale flex flex-col items-center gap-1 rounded-(--radius-interactive) border px-5 py-3 focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
                 polarity === "correct"
                   ? "border-success/30 text-success hover:bg-success/10"
                   : "border-destructive/30 text-destructive hover:bg-destructive/10",

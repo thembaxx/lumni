@@ -121,7 +121,7 @@ export function QuestionCardFeedback({
         duration: prefersReducedMotion ? 0 : undefined,
       }}
       className={cn(
-        "flex flex-col gap-3 rounded-lg p-4",
+        "flex flex-col gap-3 rounded-card-lg p-4",
         isCorrectAnswer ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
       )}
     >
@@ -134,10 +134,7 @@ export function QuestionCardFeedback({
           }}
           animate={{ scale: 1, rotate: 0, opacity: 1 }}
           transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 16,
-            mass: 0.6,
+            ...springPresets.fast,
             delay: 0.05,
             duration: prefersReducedMotion ? 0 : undefined,
           }}
@@ -224,7 +221,7 @@ export function QuestionCardFeedback({
               />
             </div>
           ) : solver.data?.solution ? (
-            <div className="overflow-wrap-anywhere whitespace-pre-wrap rounded-xl border border-border/50 bg-card p-4 text-sm leading-relaxed">
+            <div className="overflow-wrap-anywhere whitespace-pre-wrap rounded-card-lg border border-border/50 bg-card p-4 text-sm leading-relaxed">
               {solver.data.solution}
             </div>
           ) : solver.isError ? (
@@ -239,7 +236,7 @@ export function QuestionCardFeedback({
                     subject: effectiveSubject,
                   })
                 }
-                className="h-8 text-xs"
+                className="min-h-11 text-xs"
               >
                 {t("common.retry")}
               </Button>
@@ -254,7 +251,7 @@ export function QuestionCardFeedback({
                   subject: effectiveSubject,
                 })
               }
-              className="h-9 gap-2 self-start text-sm"
+              className="min-h-11 gap-2 self-start text-sm"
             >
               <HugeiconsIcon icon={SparklesIcon} data-icon="inline-start" />
               {t("quiz.showSteps")}
@@ -268,7 +265,7 @@ export function QuestionCardFeedback({
             <div
               key={`followup-${msg.content}`}
               className={cn(
-                "overflow-wrap-anywhere max-w-[calc(100%-var(--space-8))] rounded-xl px-4 py-3 text-sm",
+                "overflow-wrap-anywhere max-w-[calc(100%-var(--space-8))] rounded-card-lg px-4 py-3 text-sm",
                 msg.role === "user"
                   ? "ml-auto bg-(--system-accent-alpha-10)"
                   : "mr-auto border border-border/50 bg-card",
@@ -286,7 +283,12 @@ export function QuestionCardFeedback({
           {solver.followUpError && (
             <div className="flex items-center gap-2 py-2">
               <span className="text-sm opacity-80">{t("quiz.couldNotGetAnswer")}</span>
-              <Button variant="ghost" size="sm" onClick={handleFollowUp} className="h-8 text-xs">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleFollowUp}
+                className="min-h-11 text-xs"
+              >
                 {t("common.retry")}
               </Button>
             </div>
@@ -305,7 +307,7 @@ export function QuestionCardFeedback({
                 }}
                 aria-label="Follow-up question input"
                 placeholder={t("quiz.followUpPlaceholder")}
-                className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-(--system-accent-alpha-40)"
+                className="min-h-11 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-(--system-accent-alpha-40)"
               />
               <Button
                 variant="ghost"
@@ -313,7 +315,7 @@ export function QuestionCardFeedback({
                 onClick={handleFollowUp}
                 disabled={!followUpInput.trim()}
                 aria-label={t("quiz.sendFollowUp")}
-                className="size-9 shrink-0"
+                className="min-h-11 min-w-11 shrink-0"
               >
                 <HugeiconsIcon icon={MailSend01Icon} data-icon aria-hidden="true" />
               </Button>
