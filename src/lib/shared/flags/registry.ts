@@ -7,11 +7,6 @@ export const flagRegistry = {
     bucketKey: "daily-bolt-v2-1",
     experimentRatio: 0.5,
   },
-  "swipeable-flashcards": {
-    key: "swipeable-flashcards",
-    description: "Enable swipeable flashcard deck (kill switch)",
-    defaultEnabled: true,
-  },
   "personalized-feed": {
     key: "personalized-feed",
     description: "Gradual rollout of personalized quiz feed",
