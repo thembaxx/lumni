@@ -134,7 +134,22 @@ export function createSyncService(userId: () => string | null): SyncService {
           pulled += data.records.length;
           const accessor = tableAccessors[table];
           if (!accessor) continue;
-          for (const record of data.records as Array<{ id: string }>) {
+          for (const record of data.records as Array<{ id: string; updatedAt?: string }>) {
+            // oxlint-disable-next-line typescript/no-explicit-any
+            const local = await accessor.get(record.id as any);
+            if (
+              local &&
+              typeof local === "object" &&
+              "updatedAt" in (local as Record<string, unknown>)
+            ) {
+              const localTime = new Date(
+                (local as Record<string, unknown>).updatedAt as string,
+              ).getTime();
+              const remoteTime = record.updatedAt ? new Date(record.updatedAt).getTime() : 0;
+              if (!isNaN(localTime) && !isNaN(remoteTime) && localTime >= remoteTime) {
+                continue;
+              }
+            }
             await accessor.put(record);
           }
 
