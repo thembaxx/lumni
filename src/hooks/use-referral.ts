@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { createApiQuery } from "@/hooks/use-hook-factories";
 import { useCallback, useEffect } from "react";
 
 const REFERRAL_STORAGE_KEY = "lumni_referral_source";
@@ -63,11 +63,13 @@ function getStoredReferralSource(): string | null {
   }
 }
 
+const useReferralQuery = createApiQuery<ReferralInfo | null, void>({
+  queryKey: ["referral-info"],
+  fetchFn: () => fetchReferralInfo(),
+});
+
 export function useReferral(): UseReferralReturn {
-  const { data, isPending, error, refetch } = useQuery({
-    queryKey: ["referral-info"],
-    queryFn: fetchReferralInfo,
-  });
+  const { data, isPending, error, refetch } = useReferralQuery(undefined);
 
   useEffect(() => {
     const refCode = readReferralFromUrl();

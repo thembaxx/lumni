@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { createApiQuery } from "@/hooks/use-hook-factories";
 import { budgetFetch } from "@/lib/shared/api-fetch";
 import type { Question } from "@/lib/question-engine/types";
 import type { VisualContent } from "@/lib/visual-engine/types";
@@ -26,16 +26,18 @@ function fetchVisual(question: Question): Promise<VisualResult> {
   );
 }
 
+const useVisualEngineQuery = createApiQuery<VisualResult, Question | null, VisualContent | null>({
+  queryKey: (q) => ["visualEngine", q?.id],
+  fetchFn: async (q) => {
+    if (!q) return { visual: null };
+    return fetchVisual(q);
+  },
+  enabled: (q) => !!q,
+  staleTime: 1000 * 60 * 60,
+  retry: 1,
+  select: (data) => data.visual,
+});
+
 export function useVisualEngine(question: Question | null) {
-  return useQuery({
-    queryKey: ["visualEngine", question?.id],
-    queryFn: () => {
-      if (!question) throw new Error("No question provided");
-      return fetchVisual(question);
-    },
-    enabled: !!question,
-    staleTime: 1000 * 60 * 60,
-    retry: 1,
-    select: (data: VisualResult) => data.visual,
-  });
+  return useVisualEngineQuery(question);
 }

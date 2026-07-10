@@ -7,7 +7,7 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
-import type { QuizResultDeps } from "@/lib/services/quiz-result-processor";
+import type { QuizResultDeps } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 

@@ -1,13 +1,19 @@
+import { getAI } from "@/lib/ai";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { aiSolver } from "@/lib/services/ai-solver";
+import { SolvePipeline, type SolveBody } from "@/lib/services";
+import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
 
-interface SolveBody {
-  question?: string;
-  imageUrl?: string;
-  mode?: string;
-  subject?: string;
-  context?: { role: string; content: string }[];
-  followUp?: boolean;
+let pipeline: SolvePipeline | null = null;
+
+function getPipeline(): SolvePipeline {
+  if (!pipeline) {
+    pipeline = new SolvePipeline({
+      ai: getAI(),
+      getSourceForQuestion,
+      buildPromptInstruction,
+    });
+  }
+  return pipeline;
 }
 
 export const POST = createRouteHandler<SolveBody>({
@@ -26,6 +32,8 @@ export const POST = createRouteHandler<SolveBody>({
     }
     return null;
   },
-  execute: async ({ body, userId }) =>
-    aiSolver.execute(body, userId) as Promise<Record<string, unknown>>,
+  execute: async ({ body, userId }) => {
+    const result = await getPipeline().execute(body, userId);
+    return result as unknown as Record<string, unknown>;
+  },
 });

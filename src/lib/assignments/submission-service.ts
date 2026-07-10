@@ -1,9 +1,9 @@
 import { Query } from "appwrite";
 import { COLLECTIONS, createDocument, listDocuments, updateDocument } from "@/lib/db/client";
-import { enqueueGradeSideEffects } from "@/lib/orchestrator/grading";
+import { enqueueGradeSideEffects } from "@/lib/orchestrator/ports";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { PushDeliveryService } from "@/lib/services/push-delivery";
+import { PushDeliveryService } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 
 interface AnswerEntry {

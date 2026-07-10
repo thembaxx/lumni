@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { initAI, isAIConfigured } from "@/lib/ai/client";
+import { ensureAI } from "@/lib/ai";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { fetchGraph, getCachedGraph, storeGraph } from "@/lib/knowledge-graph/service";
@@ -11,16 +11,7 @@ async function handleGraphFetch(subject: string, topic: string) {
   const cached = await getCachedGraph(subject, topic);
   if (cached) return cached;
 
-  if (!isAIConfigured()) {
-    initAI({
-      geminiApiKey: process.env.GEMINI_API_KEY,
-      nvidiaApiKey: process.env.NVIDIA_NIM_API_KEY,
-      groqApiKey: process.env.GROQ_API_KEY,
-    });
-    if (!isAIConfigured()) {
-      return EMPTY_GRAPH;
-    }
-  }
+  if (!ensureAI()) return EMPTY_GRAPH;
 
   const graph = await fetchGraph(subject, topic);
 

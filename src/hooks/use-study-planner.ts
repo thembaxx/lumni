@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
-import { type PlannerSnapshot, StudyPlannerService } from "@/lib/services/study-planner-service";
+import { type PlannerSnapshot, StudyPlannerService } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 import type { ExamDate, StudyPlan, StudySession } from "@/lib/utils/study-planner";
 

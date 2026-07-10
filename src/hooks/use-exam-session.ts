@@ -8,7 +8,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useRouter } from "@/i18n/navigation";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { getAnswerText, getCorrectAnswerText, parseDuration } from "@/lib/exam/helpers";
-import { processQuizResult } from "@/lib/services/quiz-result-processor";
+import { processQuizResult } from "@/lib/services";
 import { useExamSessionStore } from "@/store/exam-session";
 import { useAutoSave } from "@/app/[locale]/exam/[id]/exam-session/auto-save";
 import {

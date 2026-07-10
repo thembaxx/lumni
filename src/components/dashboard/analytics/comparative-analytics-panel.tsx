@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useAuth } from "@/lib/auth/auth-context";
-import { analyticsService } from "@/lib/services/analytics-service";
+import { analyticsService } from "@/lib/services";
 import { AnalyticsEmptyState } from "./comparative-analytics-panel/analytics-empty-state";
 import { PerformanceTrendsSection } from "./comparative-analytics-panel/performance-trends-section";
 import { SubjectRankingsChart } from "./comparative-analytics-panel/subject-rankings-chart";

@@ -9,7 +9,12 @@ const mockTrackUsage = vi.fn<(...args: unknown[]) => unknown>();
 vi.mock("@/lib/ai", () => ({
   generateWithSystem: mockGenerateWithSystem,
   getAI: () => ({
+    generate: vi.fn(),
+    generateWithSystem: mockGenerateWithSystem,
+    generateBatch: vi.fn(),
     getModelRef: () => ({ model: { id: "test-model" } as never }),
+    isConfigured: () => true,
+    getProviders: () => ["gemini"],
   }),
   initAI: mockInitAI,
   isAIConfigured: mockIsAIConfigured,

@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { searchWeb } from "@/lib/services/web-search-service";
+import { webSearch as searchWeb } from "@/lib/services";
 
 export const POST = createRouteHandler({
   auth: "required",

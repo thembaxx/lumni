@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { questionRatingService } from "@/lib/services/question-rating-service";
+import { questionRatingService } from "@/lib/services";
 
 const BarChartComponent = dynamic(
   () => import("@/components/ui/charts/bar-chart").then((m) => m.BarChart),

@@ -11,7 +11,7 @@ import { toast } from "@/components/ui/toast";
 import { client } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/constants";
-import { getWeeklyLeaderboard, type LeaderboardEntry } from "@/lib/services/leaderboard-service";
+import { getWeeklyLeaderboard, type LeaderboardEntry } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
 const rankColors = [

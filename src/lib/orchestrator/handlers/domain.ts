@@ -1,8 +1,7 @@
 import { Query } from "appwrite";
-import { dexieDataAccess, type QuizDataAccess } from "@/lib/db";
+import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { DataAccess } from "@/lib/db/data-access";
-import { safePersist } from "@/lib/db/persist";
 import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
@@ -10,40 +9,43 @@ import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { logError } from "@/lib/shared/logger";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
+import { createJobHandler } from "./sync-factory";
 import type { JobHandler } from "./index";
 
-type DomainDb = QuizDataAccess & Pick<DataAccess, "questionEmbeddings">;
-let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess as DomainDb });
+type DomainDb = Pick<DataAccess, "questionEmbeddings" | "questions">;
+let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DomainDb }) {
   _deps = Object.freeze({ ...deps });
 }
 
-export const analyticsSync: JobHandler = async (payload) => {
+const _analyticsSync = async (payload: unknown) => {
   const { databases } = await import("@/lib/appwrite.server");
   const { events } = payload as JobPayloadByType["analytics-sync"];
-  await safePersist("analytics sync", async () => {
-    const batchSize = 50;
-    const batchPromises = [];
-    for (let i = 0; i < events.length; i += batchSize) {
-      const batch = events.slice(i, i + batchSize);
-      batchPromises.push(
-        Promise.allSettled(
-          batch.map((event) =>
-            databases
-              .createDocument(APPWRITE_DATABASE_ID, "analytics", "unique()", {
-                event: JSON.stringify(event),
-                createdAt: new Date().toISOString(),
-              })
-              .catch((e: Error) => logError("AnalyticsWrite", e)),
-          ),
+  const batchSize = 50;
+  const batchPromises = [];
+  for (let i = 0; i < events.length; i += batchSize) {
+    const batch = events.slice(i, i + batchSize);
+    batchPromises.push(
+      Promise.allSettled(
+        batch.map((event) =>
+          databases
+            .createDocument(APPWRITE_DATABASE_ID, "analytics", "unique()", {
+              event: JSON.stringify(event),
+              createdAt: new Date().toISOString(),
+            })
+            .catch((e: Error) => logError("AnalyticsWrite", e)),
         ),
-      );
-    }
-    await Promise.all(batchPromises);
-  });
+      ),
+    );
+  }
+  await Promise.all(batchPromises);
 };
 
-export const spacedRepUpdate: JobHandler = async (payload) => {
+export const analyticsSync = createJobHandler("analyticsSync", _analyticsSync, {
+  usePersist: true,
+});
+
+const _spacedRepUpdate = async (payload: unknown) => {
   const { question, result } = payload as JobPayloadByType["spaced-rep-update"];
 
   const quality = result.correct
@@ -74,36 +76,39 @@ export const spacedRepUpdate: JobHandler = async (payload) => {
   }
 };
 
-export const progressUpdate: JobHandler = async (payload) => {
+export const spacedRepUpdate = createJobHandler("spacedRepUpdate", _spacedRepUpdate);
+
+const _progressUpdate = async (payload: unknown) => {
   const { subject, result } = payload as JobPayloadByType["progress-update"];
 
   const existing = await progressRepo.get(subject);
 
+  const questionsAttempted = (existing?.questionsAttempted ?? 0) + 1;
+  const correctCount = (existing?.correctCount ?? 0) + (result.correct ? 1 : 0);
+  const currentStreak = result.correct ? (existing?.currentStreak ?? 0) + 1 : 0;
+  const longestStreak = Math.max(existing?.longestStreak ?? 0, currentStreak);
+
   await Promise.all([
     progressRepo.save(subject, {
-      questionsAttempted: (existing?.questionsAttempted ?? 0) + 1,
-      correctCount: (existing?.correctCount ?? 0) + (result.correct ? 1 : 0),
-      currentStreak: result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-      longestStreak: Math.max(
-        existing?.longestStreak ?? 0,
-        result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-      ),
+      questionsAttempted,
+      correctCount,
+      currentStreak,
+      longestStreak,
     }),
     enqueue("appwrite-progress-sync", {
       odSubjectId: subject,
       userId: "",
-      questionsAttempted: (existing?.questionsAttempted ?? 0) + 1,
-      correctCount: (existing?.correctCount ?? 0) + (result.correct ? 1 : 0),
-      currentStreak: result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-      longestStreak: Math.max(
-        existing?.longestStreak ?? 0,
-        result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-      ),
+      questionsAttempted,
+      correctCount,
+      currentStreak,
+      longestStreak,
     }),
   ]);
 };
 
-export const visualGeneration: JobHandler = async (payload) => {
+export const progressUpdate = createJobHandler("progressUpdate", _progressUpdate);
+
+const _visualGeneration = async (payload: unknown) => {
   const { questionId, questionText, subject, topic } =
     payload as JobPayloadByType["visual-generation"];
   await visualEngine.resolve({
@@ -114,7 +119,9 @@ export const visualGeneration: JobHandler = async (payload) => {
   });
 };
 
-export const questionRegen: JobHandler = async (payload) => {
+export const visualGeneration = createJobHandler("visualGeneration", _visualGeneration);
+
+const _questionRegen = async (payload: unknown) => {
   const data = payload as JobPayloadByType["question-regen"];
 
   const existingDocs = await listDocuments<Record<string, unknown>>(COLLECTIONS.QUESTIONS, [
@@ -164,75 +171,70 @@ export const questionRegen: JobHandler = async (payload) => {
   });
 };
 
+export const questionRegen = createJobHandler("questionRegen", _questionRegen);
+
 const PRUNE_CONFIG = {
   maxAgeDays: 30,
   minRatingCount: 0,
 };
 
-export const pruneStaleQuestions: JobHandler = async () => {
-  try {
-    const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
-    const all = await _deps.db.questions.toArray();
-    const stale = all.filter((q) => {
-      const parsed = safeParseQuestions(q.questions);
-      if (!parsed) return false;
-      return (parsed as Record<string, unknown>[]).some((pq) => {
-        const createdAt = pq.createdAt as number | undefined;
-        const ratingCount = pq.ratingCount as number | undefined;
-        return (
-          createdAt &&
-          createdAt < cutoff &&
-          (!ratingCount || ratingCount <= PRUNE_CONFIG.minRatingCount)
-        );
-      });
+const _pruneStaleQuestions = async () => {
+  const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
+  const all = _deps.db.questions.toArray();
+
+  const stale = (await all).filter((q) => {
+    const parsed = safeParseQuestions(q.questions);
+    if (!parsed) return false;
+    return parsed.some((pq) => {
+      const p = pq as Record<string, unknown>;
+      const createdAt = p.createdAt as number | undefined;
+      const ratingCount = p.ratingCount as number | undefined;
+      return (
+        createdAt &&
+        createdAt < cutoff &&
+        (!ratingCount || ratingCount <= PRUNE_CONFIG.minRatingCount)
+      );
     });
+  });
 
-    if (stale.length === 0) {
-      logError("Prune.noStaleQuestions", null);
-      return;
-    }
+  if (stale.length === 0) return;
 
-    await Promise.all(
-      stale.map((entry) => {
-        if (entry.id != null) {
-          return _deps.db.questions.delete(entry.id);
-        }
-        return Promise.resolve();
-      }),
-    );
-
-    logError("Prune.removedEntries", { count: stale.length });
-  } catch (error) {
-    logError("Prune.error", error);
-  }
+  await Promise.all(
+    stale.map((entry) => {
+      if (entry.id != null) {
+        return _deps.db.questions.delete(entry.id);
+      }
+      return Promise.resolve();
+    }),
+  );
 };
 
-export const generateEmbedding: JobHandler = async (payload) => {
+export const pruneStaleQuestions = createJobHandler("pruneStaleQuestions", _pruneStaleQuestions);
+
+const _generateEmbedding = async (payload: unknown) => {
   const { questionId, questionText, subject } = payload as JobPayloadByType["generate-embedding"];
-  try {
-    const [{ embedText }, { storeEmbedding }] = await Promise.all([
-      import("@/lib/embedding/client"),
-      import("@/lib/embedding/cache"),
-    ]);
-    const values = await embedText(questionText);
-    if (!values) {
-      logError("Embedding.GenerateFailed", new Error(`Failed embedding for ${questionId}`));
-      return;
-    }
-    await storeEmbedding(
-      {
-        id: questionId,
-        questionId,
-        vector: new Float32Array(values),
-        subject,
-        updatedAt: new Date().toISOString(),
-      },
-      _deps.db.questionEmbeddings,
-    );
-  } catch (err) {
-    logError("Embedding.Generate", err);
+  const [{ embedText }, { storeEmbedding }] = await Promise.all([
+    import("@/lib/embedding/client"),
+    import("@/lib/embedding/cache"),
+  ]);
+  const values = await embedText(questionText);
+  if (!values) {
+    logError("Embedding.GenerateFailed", new Error(`Failed embedding for ${questionId}`));
+    return;
   }
+  await storeEmbedding(
+    {
+      id: questionId,
+      questionId,
+      vector: new Float32Array(values),
+      subject,
+      updatedAt: new Date().toISOString(),
+    },
+    _deps.db.questionEmbeddings,
+  );
 };
+
+export const generateEmbedding = createJobHandler("generateEmbedding", _generateEmbedding);
 
 function safeParseQuestions(json: string): unknown[] | null {
   try {

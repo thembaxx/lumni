@@ -1,4 +1,4 @@
-import type { NotificationSettings } from "@/lib/services/notification-service";
+import type { NotificationSettings } from "@/lib/services";
 
 export type { NotificationSettings };
 

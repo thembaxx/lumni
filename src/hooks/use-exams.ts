@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { createApiQuery } from "@/hooks/use-hook-factories";
 import { useMemo } from "react";
 import type { ExamFilter, ExamGroup, PaperListing } from "@/types/exam";
 
@@ -46,16 +46,14 @@ async function fetchExams(): Promise<PaperListing[]> {
   }));
 }
 
+const useExamsQuery = createApiQuery<PaperListing[], void>({
+  queryKey: ["admin-exams"],
+  fetchFn: () => fetchExams(),
+  staleTime: 1000 * 60 * 5,
+});
+
 export function useExams(filter: ExamFilter) {
-  const {
-    data: exams = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["admin-exams"],
-    queryFn: fetchExams,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: exams = [], isLoading, error } = useExamsQuery(undefined);
 
   const filteredExams = useMemo(() => {
     let results = exams;

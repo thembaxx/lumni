@@ -1,4 +1,4 @@
-import { userConsentService } from "@/lib/services/user-consent-service";
+import { userConsentService } from "@/lib/services";
 
 let _analyticsConsent = false;
 

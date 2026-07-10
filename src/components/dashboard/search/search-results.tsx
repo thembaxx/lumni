@@ -13,8 +13,7 @@ import StarSquareIcon from "@hugeicons/core-free-icons/StarSquareIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
-import type { SearchResultItem } from "@/lib/services/search-service";
-import { searchAll, searchWeb } from "@/lib/services/search-service";
+import { searchAll, searchWeb, type SearchResultItem } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 import { cn } from "@/lib/utils";
 

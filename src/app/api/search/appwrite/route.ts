@@ -2,7 +2,7 @@ import { Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import type { SearchResultItem } from "@/lib/services/search-service";
+import type { SearchResultItem } from "@/lib/services";
 
 function textRelevant(text: string, query: string): boolean {
   const q = query.toLowerCase();

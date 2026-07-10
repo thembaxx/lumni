@@ -1,6 +1,6 @@
 import type { CompetencyService } from "@/lib/competency-engine/competency-service";
 import { competencyService as defaultCompetencyService } from "@/lib/competency-engine/competency-service";
-import { sendLocalNotification } from "@/lib/services/notification-service";
+import { sendLocalNotification } from "@/lib/services";
 import type { ExamDateInfo } from "@/lib/utils/study-planner";
 import { generateStudyPlan } from "./algorithms";
 import type { StudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";

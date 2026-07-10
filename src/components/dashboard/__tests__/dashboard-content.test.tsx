@@ -98,7 +98,7 @@ vi.mock("next/dynamic", () => ({
 
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { useAuth } from "@/lib/auth/auth-context";
-import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import { initializeNotificationSchedulers } from "@/lib/services";
 
 const defaultProps = {
   onStartQuiz: vi.fn(),

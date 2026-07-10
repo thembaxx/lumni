@@ -1,6 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { dexieDataAccess } from "@/lib/db";
-import { StudyBuddyService } from "@/lib/services/study-buddy-service";
+import { StudyBuddyService } from "@/lib/services";
 
 const service = new StudyBuddyService({ db: dexieDataAccess });
 

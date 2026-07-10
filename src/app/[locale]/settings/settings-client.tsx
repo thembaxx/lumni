@@ -39,7 +39,7 @@ import {
   clearSettings,
   type HydratedSettings,
 } from "@/lib/db/settings-migrator";
-import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import { initializeNotificationSchedulers } from "@/lib/services";
 import type { NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
 import { cn } from "@/lib/utils";
 

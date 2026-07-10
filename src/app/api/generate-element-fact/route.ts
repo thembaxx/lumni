@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { elementFactService } from "@/lib/services/element-fact";
+import { elementFactService } from "@/lib/services";
 
 interface GenerateFactBody {
   element: {

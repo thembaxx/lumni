@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { userConsentService } from "@/lib/services/user-consent-service";
+import { userConsentService } from "@/lib/services";
 
 export const GET = createRouteHandler({
   auth: "required",

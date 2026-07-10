@@ -4,7 +4,7 @@ import type { StoredGamification } from "./types";
 import { logError } from "@/lib/shared/logger";
 import { ls, StorageKeys } from "@/lib/shared/storage";
 import { enqueueOutbox } from "@/lib/sync/outbox";
-import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
+import { saveWeeklySnapshot } from "@/lib/services";
 
 export function persistEffect(
   db: ObservabilityDataAccess,

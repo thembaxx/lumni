@@ -1,6 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { dexieDataAccess } from "@/lib/db";
-import { ReEngagementService } from "@/lib/services/re-engagement-service";
+import { ReEngagementService } from "@/lib/services";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const service = new ReEngagementService({ db: dexieDataAccess });

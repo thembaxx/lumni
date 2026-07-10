@@ -1,18 +1,20 @@
-export interface PushPayload {
-  title: string;
-  body: string;
-  url?: string;
-}
+import type { PushPayload, PushDeliveryResult } from "./push-types";
 
-export interface PushDeliveryResult {
-  sent: number;
-  total: number;
+export type { PushPayload, PushDeliveryResult };
+
+export interface PushDispatchPort {
+  sendToUser(userId: string, payload: PushPayload): Promise<PushDeliveryResult>;
+  sendToAll(payload: PushPayload): Promise<PushDeliveryResult>;
 }
 
 interface PushDeliveryDeps {
   fetchSubscriptions?: (
     userId?: string,
   ) => Promise<{ endpoint: string; auth: string; p256dh: string }[]>;
+  sendToSubscription?: (
+    sub: { endpoint: string; auth: string; p256dh: string },
+    payload: PushPayload,
+  ) => Promise<boolean>;
 }
 
 let vapidInitPromise: Promise<void> | null = null;
@@ -32,7 +34,7 @@ function ensureVapid(): Promise<void> {
   return vapidInitPromise;
 }
 
-async function sendToSubscription(
+async function webPushSend(
   sub: { endpoint: string; auth: string; p256dh: string },
   payload: PushPayload,
 ): Promise<boolean> {
@@ -95,32 +97,32 @@ async function fetchSubscriptionsByUser(
   }
 }
 
-export class PushDeliveryService {
+export class PushDeliveryService implements PushDispatchPort {
   private deps: PushDeliveryDeps;
 
   constructor(deps?: PushDeliveryDeps) {
-    this.deps = deps ?? {
-      fetchSubscriptions: undefined,
-    };
+    this.deps = deps ?? {};
     ensureVapid();
   }
 
   async sendToUser(userId: string, payload: PushPayload): Promise<PushDeliveryResult> {
     const fetchFn = this.deps.fetchSubscriptions ?? fetchSubscriptionsByUser;
+    const sendFn = this.deps.sendToSubscription ?? webPushSend;
     const subs = await fetchFn(userId);
     if (subs.length === 0) return { sent: 0, total: 0 };
 
-    const results = await Promise.allSettled(subs.map((sub) => sendToSubscription(sub, payload)));
+    const results = await Promise.allSettled(subs.map((sub) => sendFn(sub, payload)));
     const sent = results.filter((r) => r.status === "fulfilled" && r.value).length;
     return { sent, total: subs.length };
   }
 
   async sendToAll(payload: PushPayload): Promise<PushDeliveryResult> {
     const fetchFn = this.deps.fetchSubscriptions ?? fetchAllSubscriptions;
+    const sendFn = this.deps.sendToSubscription ?? webPushSend;
     const subs = await fetchFn();
     if (subs.length === 0) return { sent: 0, total: 0 };
 
-    const results = await Promise.allSettled(subs.map((sub) => sendToSubscription(sub, payload)));
+    const results = await Promise.allSettled(subs.map((sub) => sendFn(sub, payload)));
     const sent = results.filter((r) => r.status === "fulfilled" && r.value).length;
     return { sent, total: subs.length };
   }

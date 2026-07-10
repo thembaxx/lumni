@@ -17,7 +17,7 @@ import { resolveWeakestSubject, formatSubjectLabel } from "@/lib/bolt/resolve-we
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
-import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
+import { processQuizResult, type QuizResultDeps } from "@/lib/services";
 import { iOSDecelerate } from "@/lib/utils/animation";
 import { QuestionCard } from "./question-card";
 import { BoltMark } from "./bolt-mark";

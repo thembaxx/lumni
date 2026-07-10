@@ -1,5 +1,9 @@
+import type { JobHandler } from "./index";
+
 import { Query } from "appwrite";
 import { createDocument, deleteDocument, listDocuments, updateDocument } from "@/lib/db/client";
+import { logError } from "@/lib/shared/logger";
+import { safePersist } from "@/lib/db/persist";
 
 export async function upsertDocument(
   collection: string,
@@ -33,6 +37,25 @@ export function createUpsertHandler(
       Query.equal(queryField, data[dataField] as string),
     );
     await upsertDocument(collection, queries, toData(data));
+  };
+}
+
+export function createJobHandler(
+  name: string,
+  fn: (payload: unknown) => Promise<void>,
+  options?: { usePersist?: boolean },
+): JobHandler {
+  return async (payload: unknown) => {
+    const work = () => fn(payload);
+    if (options?.usePersist) {
+      await safePersist(name, work);
+      return;
+    }
+    try {
+      await work();
+    } catch (e) {
+      logError(`JobHandler.${name}`, e);
+    }
   };
 }
 

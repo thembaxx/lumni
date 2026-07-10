@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { AIClient } from "@/lib/ai/client";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import { evaluate } from "./evaluator";
-import type { SolverResult } from "@/lib/services/ai-solver";
+import type { SolverResult } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 
 const calculateParams = z.object({

@@ -1,7 +1,7 @@
 import type { BloomLevel, QuestionType } from "@/lib/question-engine/types";
 import { updateChallengeEntry } from "@/lib/study-groups/challenge-service";
 import { XP_PER_CORRECT, XP_PER_QUESTION } from "@/types/gamification";
-import { enqueueGradeSideEffects } from "./grading";
+import { enqueueGradeSideEffects } from "./ports";
 
 export interface TrackResultParams {
   subjectId: string;

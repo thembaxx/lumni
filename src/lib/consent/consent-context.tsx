@@ -4,7 +4,7 @@ import { createContext, use, useCallback, useEffect, useMemo, useState } from "r
 import { useAuth } from "@/lib/auth/auth-context";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 import { updateAnalyticsConsent } from "@/lib/consent/sentry-gate";
-import { userConsentService } from "@/lib/services/user-consent-service";
+import { userConsentService } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 import type { UserConsent } from "@/types/user-consent";
 import { appConfig } from "../../../app.config";

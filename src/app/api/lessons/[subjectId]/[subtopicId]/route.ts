@@ -1,41 +1,39 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { generateLesson, getCachedLesson } from "@/lib/lesson/service";
 import type { Lesson } from "@/lib/lesson/types";
-import { logError } from "@/lib/shared/logger";
 
-const EMPTY_LESSON: Lesson = {
-  id: "",
-  subjectId: "",
-  topicId: "",
-  subtopicId: "",
-  title: "",
-  order: 0,
-  prerequisites: [],
-  sections: [],
-  vocabulary: [],
-  difficulty: "medium",
-  estimatedMinutes: 0,
-};
+export const GET = createRouteHandler({
+  auth: "none",
+  execute: async ({ params }) => {
+    const subjectId = params?.subjectId;
+    const subtopicId = params?.subtopicId;
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ subjectId: string; subtopicId: string }> },
-) {
-  try {
-    const { subjectId, subtopicId } = await params;
+    if (!subjectId || !subtopicId) {
+      throw new HttpError(400, "subjectId and subtopicId are required");
+    }
 
     const cached = await getCachedLesson(subjectId, "", subtopicId);
-    if (cached) return NextResponse.json(cached);
+    if (cached) return cached;
 
     const lesson = await generateLesson(subjectId, "", subtopicId);
 
     if (lesson.sections.length === 0) {
-      return NextResponse.json(EMPTY_LESSON);
+      return {
+        id: "",
+        subjectId: "",
+        topicId: "",
+        subtopicId: "",
+        title: "",
+        order: 0,
+        prerequisites: [],
+        sections: [],
+        vocabulary: [],
+        difficulty: "medium",
+        estimatedMinutes: 0,
+      } satisfies Lesson;
     }
 
-    return NextResponse.json(lesson);
-  } catch (err) {
-    logError("LessonsRoute.fetch", err);
-    return NextResponse.json(EMPTY_LESSON, { status: 500 });
-  }
-}
+    return lesson;
+  },
+  errorLabel: "LessonsRoute",
+});

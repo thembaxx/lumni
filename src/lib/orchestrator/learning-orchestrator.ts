@@ -1,24 +1,40 @@
 import { Effect } from "effect";
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
-import { embedText } from "@/lib/embedding/client";
-import { findTopK } from "@/lib/embedding/similarity";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { GenerationParams, Question, UserAnswer } from "@/lib/question-engine/types";
-import { logError } from "@/lib/shared/logger";
 import { serializeQuestionType } from "@/lib/shared/question-type";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
-import { enqueueGradeSideEffects } from "./grading";
-import { enqueue } from "./job-queue";
+import {
+  EmbeddingDedup,
+  enqueueGradeSideEffects,
+  type DedupPort,
+  type GradingPipelineDeps,
+  type PipelinePort,
+  defaultPipelinePort,
+} from "./ports";
 import type { GenerateResult, GradeResult } from "./types";
 
 export class LearningOrchestrator {
   private engine: QuestionEngine;
-  private db: DataAccess;
+  private dedup: DedupPort;
+  private gradingDeps: GradingPipelineDeps;
+  private pipeline: PipelinePort;
 
-  constructor(engine: QuestionEngine, db: DataAccess = dexieDataAccess) {
+  constructor(
+    engine: QuestionEngine,
+    deps?: {
+      db?: DataAccess;
+      dedup?: DedupPort;
+      gradingDeps?: GradingPipelineDeps;
+      pipeline?: PipelinePort;
+    },
+  ) {
+    const db = deps?.db ?? dexieDataAccess;
     this.engine = engine;
-    this.db = db;
+    this.dedup = deps?.dedup ?? new EmbeddingDedup(db);
+    this.gradingDeps = deps?.gradingDeps ?? { enqueueSideEffects: enqueueGradeSideEffects };
+    this.pipeline = deps?.pipeline ?? defaultPipelinePort;
   }
 
   static async initialize(): Promise<LearningOrchestrator> {
@@ -44,7 +60,7 @@ export class LearningOrchestrator {
       const aiQuestions = questions.filter((q) => q.metadata?.source !== "imported");
       const dedupResults = yield* Effect.all(
         aiQuestions.map((q) =>
-          Effect.tryPromise(() => self.checkDuplicate(q, subject)).pipe(
+          Effect.tryPromise(() => self.dedup.isDuplicate(q, subject)).pipe(
             Effect.catchAll(() => Effect.succeed(false)),
           ),
         ),
@@ -55,12 +71,12 @@ export class LearningOrchestrator {
 
       const jobs = yield* Effect.all(
         [
-          Effect.tryPromise(() => enqueue("appwrite-sync", { questions, subject, topic })).pipe(
-            Effect.catchAll(() => Effect.succeed(-1)),
-          ),
+          Effect.tryPromise(() =>
+            self.pipeline.enqueueJob("appwrite-sync", { questions, subject, topic }),
+          ).pipe(Effect.catchAll(() => Effect.succeed(-1))),
           ...questions.map((q) =>
             Effect.tryPromise(() =>
-              enqueue("visual-generation", {
+              self.pipeline.enqueueJob("visual-generation", {
                 questionId: q.id,
                 questionText: q.questionText,
                 subject,
@@ -104,35 +120,12 @@ export class LearningOrchestrator {
     return Effect.runPromise(this.generateQuestionSetEffect(params));
   }
 
-  private async checkDuplicate(question: Question, subject: string): Promise<boolean> {
-    try {
-      const embedding = await embedText(question.questionText);
-      if (!embedding) return false;
-      const top = await findTopK(
-        {
-          subject,
-          queryEmbedding: new Float32Array(embedding),
-          k: 1,
-          threshold: 0.85,
-        },
-        {
-          questionEmbeddings: this.db.questionEmbeddings,
-          pastPaperQuestions: this.db.pastPaperQuestions,
-        },
-      );
-      return top.length > 0;
-    } catch (e) {
-      logError("LearningOrchestrator.dedup", e);
-      return false;
-    }
-  }
-
   async gradeAndTrack(question: Question, answer: UserAnswer): Promise<GradeResult> {
     const startTime = Date.now();
 
     const result = await this.engine.grade(question, answer);
 
-    await enqueueGradeSideEffects({
+    await this.gradingDeps.enqueueSideEffects({
       subject: question.subject,
       topic: question.topic,
       bloomLevel: question.bloomTaxonomy,

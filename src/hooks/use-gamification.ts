@@ -5,7 +5,7 @@ import { toast } from "@/components/ui/toast";
 import { dexieDataAccess, type ObservabilityDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { GamificationService } from "@/lib/gamification-engine/service";
-import { getSettings, sendLocalNotification } from "@/lib/services/notification-service";
+import { getSettings, sendLocalNotification } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: ObservabilityDataAccess } = Object.freeze({ db: dexieDataAccess });

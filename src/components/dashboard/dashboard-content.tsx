@@ -18,7 +18,7 @@ import { StaggeredSection } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { springPresets } from "@/lib/utils/spring-presets";
 import { useAuth } from "@/lib/auth/auth-context";
-import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
+import { initializeNotificationSchedulers } from "@/lib/services";
 
 const PracticeTab = dynamic(
   () => import("@/components/dashboard/practice-tab").then((m) => m.PracticeTab),

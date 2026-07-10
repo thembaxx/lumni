@@ -1,7 +1,9 @@
-import { initAI, isAIConfigured } from "@/lib/ai/client";
+import { ensureAI } from "@/lib/ai";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { generateStoryContent, storeGeneratedStory } from "@/lib/stories/service";
 import type { Story } from "@/lib/stories/types";
+
+const EMPTY_RESULT = { story: null, error: "AI not configured" };
 
 export const POST = createRouteHandler({
   auth: "required",
@@ -31,16 +33,7 @@ export const POST = createRouteHandler({
   }) => {
     const { language, languageId, gradeLevel, topic, subject } = body;
 
-    if (!isAIConfigured()) {
-      initAI({
-        geminiApiKey: process.env.GEMINI_API_KEY,
-        nvidiaApiKey: process.env.NVIDIA_NIM_API_KEY,
-        groqApiKey: process.env.GROQ_API_KEY,
-      });
-      if (!isAIConfigured()) {
-        return { story: null, error: "AI not configured" };
-      }
-    }
+    if (!ensureAI()) return EMPTY_RESULT;
 
     const content = await generateStoryContent({
       language,
@@ -54,10 +47,8 @@ export const POST = createRouteHandler({
       return { story: null, error: "Failed to generate story content" };
     }
 
-    const storyId = `ai-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-
     const story: Story = {
-      id: storyId,
+      id: `ai-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       title: topic,
       author: "Lumni AI",
       language,

@@ -15,8 +15,7 @@ import { logError } from "@/lib/shared/logger";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import type { Question } from "@/lib/question-engine/types";
-import { processQuizResult } from "@/lib/services/quiz-result-processor";
-import type { QuizResultDeps } from "@/lib/services/quiz-result-processor";
+import { processQuizResult, type QuizResultDeps } from "@/lib/services";
 import {
   initialCardsState,
   initialSessionState,

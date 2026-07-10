@@ -7,7 +7,7 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import { dexieDataAccess } from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator/track-result";
-import { processQuizResult, type QuizResultDeps } from "@/lib/services/quiz-result-processor";
+import { processQuizResult, type QuizResultDeps } from "@/lib/services";
 import { logError } from "@/lib/shared/logger";
 import { useTrackQuizEvents } from "@/hooks/use-analytics-tracking";
 import { useViewTransition } from "@/hooks/use-view-transition";

@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { chatImageService } from "@/lib/services/chat-image";
+import { chatImageService } from "@/lib/services";
 
 interface ChatImageBody {
   imageUrl: string;

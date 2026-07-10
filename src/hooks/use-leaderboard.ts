@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { client } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/constants";
-import type { LeaderboardEntry } from "@/lib/services/leaderboard-service";
+import type { LeaderboardEntry } from "@/lib/services";
 
 export function useLeaderboard(userId?: string) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
