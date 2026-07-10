@@ -7,13 +7,14 @@ import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
+import { CLIPBOARD_CONFIRMATION_DURATION } from "@/lib/shared/durations";
 import { cn } from "@/lib/utils";
 
 export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShow(false), 2000);
+    const timer = setTimeout(() => setShow(false), CLIPBOARD_CONFIRMATION_DURATION);
     return () => clearTimeout(timer);
   }, []);
 

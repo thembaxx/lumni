@@ -10,6 +10,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { CLIPBOARD_CONFIRMATION_DURATION } from "@/lib/shared/durations";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -53,7 +54,7 @@ export function StudyGroupCard({ group }: Props) {
     try {
       await navigator.clipboard.writeText(group.inviteCode);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), CLIPBOARD_CONFIRMATION_DURATION);
     } catch {
       // clipboard write failed — ignore silently
     }

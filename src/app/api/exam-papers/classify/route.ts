@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { LegacyDataAccess } from "@/lib/db/data-access";
+type DataAccess = Pick<LegacyDataAccess, "pastPaperQuestions">;
 import { classifyQuestions } from "@/lib/exam-paper-ingestion/question-classifier";
 import { requireAdmin } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";

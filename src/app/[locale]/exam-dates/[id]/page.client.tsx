@@ -147,7 +147,7 @@ export function ExamDetailClient() {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "ios-caption-3 flex size-6 items-center justify-center rounded-md font-bold text-white",
+                  "ios-caption-3 flex size-6 items-center justify-center rounded-md font-bold text-white dark:text-system-accent-foreground",
                   getSubjectColor(exam.subjectId),
                 )}
               >
@@ -223,13 +223,13 @@ export function ExamDetailClient() {
             <button
               type="button"
               onClick={handlePractice}
-              className="flex cursor-pointer items-center justify-between rounded-xl bg-(--system-accent) px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 press-scale"
+              className="flex cursor-pointer items-center justify-between rounded-xl bg-(--system-accent) px-4 py-3 text-left text-system-accent-foreground transition-[scale,background-color,box-shadow] hover:brightness-110 press-scale"
             >
               <div className="flex items-center gap-2.5">
                 <HugeiconsIcon icon={Quiz02Icon} className="size-4" />
                 <div>
                   <p className="font-medium text-xs">Practice</p>
-                  <p className="ios-caption-3 text-white/70">
+                  <p className="ios-caption-3 text-system-accent-foreground/70">
                     AI-generated questions on this subject
                   </p>
                 </div>

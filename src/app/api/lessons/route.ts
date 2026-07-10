@@ -4,7 +4,8 @@ import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const GET = withRateLimit(
   createRouteHandler({
-    auth: "none",
+    auth: "required",
+    budget: "generate",
     execute: async ({ req }) => {
       const { searchParams } = new URL(req.url);
       const subject = searchParams.get("subject");

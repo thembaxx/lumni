@@ -1,7 +1,14 @@
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  CompetencyDataAccess,
+  ObservabilityDataAccess,
+  SyncDataAccess,
+} from "@/lib/db/data-access";
+type DataAccess = ObservabilityDataAccess &
+  CompetencyDataAccess &
+  Pick<SyncDataAccess, "examSessions" | "wrongAnswers">;
 import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";

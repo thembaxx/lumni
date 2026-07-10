@@ -6,10 +6,10 @@ import { withRateLimit } from "@/lib/shared/with-rate-limit";
 const service = new ReEngagementService({ db: dexieDataAccess });
 
 const handler = createRouteHandler({
-  auth: "optional",
+  auth: "required",
   errorLabel: "ReEngagement",
-  execute: async ({ userId, body }) => {
-    const targetUserId = (body as { userId?: string }).userId ?? userId;
+  execute: async ({ userId }) => {
+    const targetUserId = userId;
 
     if (!targetUserId) {
       throw new HttpError(400, "userId is required");

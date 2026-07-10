@@ -3,7 +3,8 @@ import { generateLesson, getCachedLesson } from "@/lib/lesson/service";
 import type { Lesson } from "@/lib/lesson/types";
 
 export const GET = createRouteHandler({
-  auth: "none",
+  auth: "required",
+  budget: "generate",
   execute: async ({ params }) => {
     const subjectId = params?.subjectId;
     const subtopicId = params?.subtopicId;

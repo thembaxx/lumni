@@ -72,7 +72,7 @@ export function ComprehensionMcq({
                 className={cn(
                   "flex size-5 shrink-0 items-center justify-center rounded-full border text-xs",
                   isSelected
-                    ? "border-(--system-accent) bg-(--system-accent) text-white"
+                    ? "border-(--system-accent) bg-(--system-accent) text-system-accent-foreground"
                     : "border-muted-foreground/30",
                 )}
               >

@@ -7,6 +7,16 @@ vi.mock("@/lib/ai/client", () => ({
   generateWithSystem: mockGenerateWithSystem,
 }));
 
+vi.mock("@/lib/server/auth", () => ({
+  getAuthenticatedUserId: vi.fn(() => "test-user-id"),
+}));
+
+const mockCheckBudget = vi.fn(async () => ({ allowed: true, userId: "test-user-id" }));
+vi.mock("@/lib/ai/with-budget", () => ({
+  checkBudget: mockCheckBudget,
+  trackUsage: vi.fn(),
+}));
+
 const { NextRequest } = await import("next/server");
 const { POST } = await import("../route");
 

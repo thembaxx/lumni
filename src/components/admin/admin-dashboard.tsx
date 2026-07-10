@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
 import { TabSwitcher } from "@/components/ui/tab-switcher";
+import { SUCCESS_BANNER_DURATION } from "@/lib/shared/durations";
 import { AnimatedCard } from "@/components/ui/animated-card";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "@/i18n/navigation";
@@ -71,7 +72,9 @@ export function AdminDashboard() {
       dispatch({ type: "SET_EDIT_SUBJECT", payload: null });
       dispatch({ type: "RESET_FORM_DATA" });
       dispatch({ type: "SHOW_SUCCESS" });
-      successTimeoutRef.current.push(setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000));
+      successTimeoutRef.current.push(
+        setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), SUCCESS_BANNER_DURATION),
+      );
     },
   });
 
@@ -86,7 +89,9 @@ export function AdminDashboard() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
       dispatch({ type: "SHOW_SUCCESS" });
-      successTimeoutRef.current.push(setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000));
+      successTimeoutRef.current.push(
+        setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), SUCCESS_BANNER_DURATION),
+      );
     },
   });
 
@@ -101,7 +106,9 @@ export function AdminDashboard() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
       dispatch({ type: "SHOW_SUCCESS" });
-      successTimeoutRef.current.push(setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000));
+      successTimeoutRef.current.push(
+        setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), SUCCESS_BANNER_DURATION),
+      );
     },
   });
 

@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { EGG_DISMISS_DURATION } from "@/lib/shared/durations";
 
 type EasterEgg = "konami" | "rainbow" | "zen" | "retro" | "galaxy" | "spiral" | "party" | "matrix";
 
@@ -58,7 +59,7 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
 
   const flashEgg = useCallback((egg: EasterEgg) => {
     setActiveEgg(egg);
-    setTimeout(() => setActiveEgg((cur) => (cur === egg ? null : cur)), 4000);
+    setTimeout(() => setActiveEgg((cur) => (cur === egg ? null : cur)), EGG_DISMISS_DURATION);
   }, []);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
         if (konamiIndex.current === KONAMI.length) {
           setActiveEgg("konami");
           konamiIndex.current = 0;
-          setTimeout(() => setActiveEgg(null), 4000);
+          setTimeout(() => setActiveEgg(null), EGG_DISMISS_DURATION);
         }
       } else {
         konamiIndex.current = 0;
@@ -93,7 +94,7 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
 
   const trigger = useCallback((egg: EasterEgg) => {
     setActiveEgg(egg);
-    setTimeout(() => setActiveEgg(null), 4000);
+    setTimeout(() => setActiveEgg(null), EGG_DISMISS_DURATION);
   }, []);
 
   const dismiss = useCallback(() => setActiveEgg(null), []);

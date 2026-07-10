@@ -4,6 +4,7 @@ import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { SCHEDULER_DELAY } from "@/lib/shared/durations";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -46,7 +47,7 @@ export function SmartScheduler() {
 
     setIsGenerating(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, SCHEDULER_DELAY));
 
     const input: SchedulerInput = {
       subjects: selectedSubjects.map((id) => ({

@@ -37,9 +37,11 @@ import {
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
 import { Button } from "@/components/ui/button";
+import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
 import { useChatStream } from "@/hooks/use-chat-stream";
 import { Link } from "@/i18n/navigation";
 import { groupMessages } from "@/lib/chat/types";
+import { extractVocabularyCandidates } from "@/lib/shared/vocab-extractor";
 import { cn } from "@/lib/utils";
 
 function TypingDots() {
@@ -237,6 +239,27 @@ export function ChatContent() {
                                           <MarkdownRenderer content={msg.content} />
                                         </div>
                                       </div>
+                                      {msg.role === "assistant" &&
+                                        msg.content &&
+                                        (() => {
+                                          const words = extractVocabularyCandidates(msg.content);
+                                          if (words.length === 0) return null;
+                                          return (
+                                            <div
+                                              className="mt-2 flex flex-wrap gap-1.5"
+                                              role="group"
+                                              aria-label="Vocabulary words"
+                                            >
+                                              {words.map((word) => (
+                                                <WordLookupPopover key={word} word={word}>
+                                                  <span className="inline-flex cursor-pointer items-center rounded-full bg-system-accent/10 px-2.5 py-0.5 font-medium text-system-accent text-xs transition-colors hover:bg-system-accent/20">
+                                                    {word}
+                                                  </span>
+                                                </WordLookupPopover>
+                                              ))}
+                                            </div>
+                                          );
+                                        })()}
                                     </BubbleContent>
                                   </Bubble>
                                 )}

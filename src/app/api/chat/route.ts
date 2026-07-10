@@ -108,7 +108,7 @@ export const POST = withRateLimit(
       );
     }
 
-    const budgetResult = await checkBudget(req, "generate");
+    const budgetResult = await checkBudget(req, "generate", sessionUserId);
     if (!budgetResult.allowed) {
       return budgetResult.response ?? new Response("Budget exceeded", { status: 429 });
     }

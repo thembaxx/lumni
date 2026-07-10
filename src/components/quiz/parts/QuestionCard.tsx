@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useState } from "react";
+import { CLIPBOARD_CONFIRMATION_DURATION, SAVED_INDICATOR_DURATION } from "@/lib/shared/durations";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useSolver } from "@/hooks/use-solver";
@@ -208,8 +209,8 @@ export function QuestionCard({
         if (result.correct) {
           setShowConfetti(true);
           setShowXPGain(true);
-          setTimeout(() => setShowConfetti(false), 2000);
-          setTimeout(() => setShowXPGain(false), 1500);
+          setTimeout(() => setShowConfetti(false), CLIPBOARD_CONFIRMATION_DURATION);
+          setTimeout(() => setShowXPGain(false), SAVED_INDICATOR_DURATION);
         }
         onAnswered?.(result.correct, result.score, answer);
       } catch {

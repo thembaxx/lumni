@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { CLIPBOARD_CONFIRMATION_DURATION } from "@/lib/shared/durations";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { logError } from "@/lib/shared/logger";
@@ -68,7 +69,7 @@ export function ClassShell({
     navigator.clipboard.writeText(`${window.location.origin}${ghostUrl}`).then(
       () => {
         setGhostCopied(true);
-        setTimeout(() => setGhostCopied(false), 2000);
+        setTimeout(() => setGhostCopied(false), CLIPBOARD_CONFIRMATION_DURATION);
       },
       (err) => {
         logError("GhostLinkCopy", err);

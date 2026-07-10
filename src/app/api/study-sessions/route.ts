@@ -3,7 +3,7 @@ import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export const POST = createRouteHandler({
-  auth: "optional",
+  auth: "required",
   errorLabel: "StudySessions",
   validate: (body) => {
     if (!body.subject) return "subject is required";
@@ -24,7 +24,7 @@ export const POST = createRouteHandler({
     const now = new Date().toISOString();
 
     await databases.createDocument(APPWRITE_DATABASE_ID, COLLECTIONS.STUDY_SESSIONS, "unique()", {
-      userId: userId || "anonymous",
+      userId,
       subjectId: subject,
       questionsAnswered: questionsAnswered ?? 0,
       correctCount: correctCount ?? 0,

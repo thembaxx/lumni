@@ -9,6 +9,15 @@ import { getGamificationData } from "./reminder-builder";
 import { clearAllTimers, scheduleStudyReminder } from "./study-scheduler";
 
 const reEngagementService = new ReEngagementService({ db: dexieDataAccess });
+
+const activeTimers = new Set<ReturnType<typeof setTimeout>>();
+
+function clearActiveTimers(): void {
+  for (const timer of activeTimers) {
+    clearTimeout(timer);
+  }
+  activeTimers.clear();
+}
 import {
   ASSIGNMENT_ALERT_KEY,
   DAILY_DIGEST_KEY,
@@ -156,13 +165,15 @@ async function scheduleAssignmentReminders(settings = getSettings()): Promise<vo
       }
 
       const delay = alertTime - now;
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         sendLocalNotification(
           "Assignment Due Tomorrow!",
           `Your assignment on ${a.topics.join(", ")} is due tomorrow. Complete it now!`,
           "/dashboard",
         );
+        activeTimers.delete(timer);
       }, delay);
+      activeTimers.add(timer);
 
       existing.push({ id: a.id, scheduledAt: alertTime });
       saveToStorage(ASSIGNMENT_ALERT_KEY, existing);
@@ -210,13 +221,15 @@ export async function scheduleExamAlerts(
       continue;
     }
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       sendLocalNotification(
         `${slot.subject} exam tomorrow!`,
         `Your ${slot.subject} exam starts at ${slot.startTime}. Good luck!`,
         "/dashboard",
       );
+      activeTimers.delete(timer);
     }, delay);
+    activeTimers.add(timer);
 
     existing.push({ examSubject: slot.subject, scheduledAt: alertTime });
     saveToStorage("lumni_exam_alerts", existing);
@@ -252,6 +265,7 @@ async function scheduleReEngagement(settings: NotificationSettings): Promise<voi
 }
 
 export function initializeNotificationSchedulers(): void {
+  clearActiveTimers();
   clearAllTimers();
   const settings = getSettings();
   if (!settings.enabled) return;

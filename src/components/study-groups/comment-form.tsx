@@ -51,7 +51,7 @@ export function CommentForm({
         type="button"
         onClick={handleSubmit}
         disabled={!content.trim()}
-        className="shrink-0 rounded-lg bg-(--system-accent) px-3 py-2 font-medium text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+        className="shrink-0 rounded-lg bg-(--system-accent) px-3 py-2 font-medium text-sm text-system-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
       >
         Post
       </button>

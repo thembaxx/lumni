@@ -1,5 +1,6 @@
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess, LegacyDataAccess } from "@/lib/db/data-access";
+type DataAccess = CompetencyDataAccess & Pick<LegacyDataAccess, "seenPastPaperQuestions">;
 import type { ScoredPoolQuestion } from "@/lib/embedding/types";
 import { logError } from "@/lib/shared/logger";
 

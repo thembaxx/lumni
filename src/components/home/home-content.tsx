@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useLogoEasterEgg } from "@/lib/shared/easter-egg-context";
+import { CELEBRATION_DURATION } from "@/lib/shared/durations";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { MeshAurora } from "@/components/shared/ambient/mesh-aurora";
@@ -64,7 +65,7 @@ function useMatricEasterEgg() {
         const next = (prev + e.key).toLowerCase();
         if (next.includes("matric")) {
           setShowConfetti(true);
-          setTimeout(() => setShowConfetti(false), 4000);
+          setTimeout(() => setShowConfetti(false), CELEBRATION_DURATION);
           return "";
         }
         return next.slice(-10);

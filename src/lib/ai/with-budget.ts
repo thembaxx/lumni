@@ -1,18 +1,16 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getClientIp } from "@/lib/shared/get-client-ip";
 import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 
 export async function checkBudget(
   req: NextRequest,
   type: AICallType,
-  sessionUserId?: string | null,
+  sessionUserId: string,
 ): Promise<{
   allowed: boolean;
   response?: NextResponse;
   userId: string;
 }> {
-  const ip = getClientIp(req);
-  const userId = sessionUserId || (ip !== "unknown" ? ip : "anonymous");
+  const userId = sessionUserId;
 
   const result = await dailyCallTracker.check(type, userId);
 

@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { UPLOAD_CLOSE_DELAY } from "@/lib/shared/durations";
 import { setOpenUploadHandler } from "@/lib/upload-dialog";
 import type { UploadedFile } from "@/lib/uploadthing";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -78,7 +79,7 @@ export function UploadDialogRenderer({ children }: { children?: React.ReactNode 
     const total = fileNameToItemRef.current?.size ?? 0;
     if (total > 0 && completedCountRef.current >= total) {
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = setTimeout(() => setIsOpen(false), 1500);
+      closeTimerRef.current = setTimeout(() => setIsOpen(false), UPLOAD_CLOSE_DELAY);
     }
   }, []);
 

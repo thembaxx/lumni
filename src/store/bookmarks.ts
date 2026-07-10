@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { bookmarkService } from "@/lib/bookmark-service";
+import { logError } from "@/lib/shared/logger";
 import type { BookmarkRecord } from "@/lib/db/schema";
 
 export interface Bookmark {
@@ -102,11 +103,17 @@ export const useBookmarksStore = create<BookmarksState>()((set, get) => ({
     }
   },
 
-  updateNote: (id, note) => {
+  updateNote: async (id, note) => {
+    const prev = get().bookmarks;
     set({
       bookmarks: get().bookmarks.map((b) => (b.id === id ? { ...b, note } : b)),
     });
-    bookmarkService.updateNote(id, note);
+    try {
+      await bookmarkService.updateNote(id, note);
+    } catch (err) {
+      set({ bookmarks: prev });
+      logError("Bookmarks.updateNote", err);
+    }
   },
 
   isBookmarked: (id) => {

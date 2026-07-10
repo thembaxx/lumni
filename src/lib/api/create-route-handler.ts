@@ -135,7 +135,7 @@ export function createRouteHandler<
       }
 
       if (budget) {
-        const budgetResult = await checkBudget(req, budget, userId);
+        const budgetResult = await checkBudget(req, budget, userId!);
         if (!budgetResult.allowed) {
           return (
             budgetResult.response ??

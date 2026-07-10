@@ -124,7 +124,12 @@
   --ease-default: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(
+    0.34,
+    1.56,
+    0.64,
+    1
+  ); /* impeccable-disable bounce-easing -- intentional design-system pop */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --motion-fast: 200ms;
   --motion-normal: 300ms;
@@ -316,7 +321,12 @@
   --ease-default: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(
+    0.34,
+    1.56,
+    0.64,
+    1
+  ); /* impeccable-disable bounce-easing -- intentional design-system pop */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
   --spacing-safe-pb: env(safe-area-inset-bottom, 0px);

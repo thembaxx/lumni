@@ -6,6 +6,7 @@ import Tick01Icon from "@hugeicons/core-free-icons/Tick01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useState } from "react";
+import { CLIPBOARD_CONFIRMATION_DURATION } from "@/lib/shared/durations";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useReferral } from "@/hooks/use-referral";
 import { copyToClipboard, generateQRDataUrl, shareReferral } from "@/lib/referral/client";
@@ -38,7 +39,7 @@ export function ReferralTab() {
     const ok = await copyToClipboard(info.code);
     if (ok) {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), CLIPBOARD_CONFIRMATION_DURATION);
     }
   };
 

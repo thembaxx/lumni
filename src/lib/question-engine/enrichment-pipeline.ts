@@ -1,5 +1,12 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  CompetencyDataAccess,
+  EmbeddingDataAccess,
+  LegacyDataAccess,
+} from "@/lib/db/data-access";
+type DataAccess = EmbeddingDataAccess &
+  CompetencyDataAccess &
+  Pick<LegacyDataAccess, "pastPaperQuestions" | "seenPastPaperQuestions">;
 import { embedText } from "@/lib/embedding/client";
 import { findTopK } from "@/lib/embedding/similarity";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
