@@ -208,7 +208,7 @@ export function QuizResultsCard({
                 >
                   <span>{t("quiz.reviewAnswers")}</span>
                   <span className="text-muted-foreground text-xs">
-                    {showReview ? "Hide" : `Show ${questions.length} questions`}
+                    {showReview ? t("quiz.hide") : t("quiz.show")}
                   </span>
                 </button>
                 {showReview && (

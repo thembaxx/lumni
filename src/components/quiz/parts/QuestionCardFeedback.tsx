@@ -203,7 +203,7 @@ export function QuestionCardFeedback({
         </div>
       )}
       {!isCorrectAnswer && isSolverEnabled && (
-        <div className="flex flex-col gap-2 border-current/20 border-t pt-2">
+        <div className="flex flex-col gap-2 border-current/20 border-t pt-2" aria-live="polite">
           {solver.isPending ? (
             <div className="flex items-center justify-center gap-2 py-3">
               <HugeiconsIcon icon={RadialIcon} className="size-5 animate-spin" aria-hidden="true" />
@@ -260,7 +260,7 @@ export function QuestionCardFeedback({
         </div>
       )}
       {solver.data && (
-        <div className="flex flex-col gap-2 border-current/20 border-t pt-2">
+        <div className="flex flex-col gap-2 border-current/20 border-t pt-2" aria-live="polite">
           {followUpMsgs.map((msg) => (
             <div
               key={`followup-${msg.content}`}

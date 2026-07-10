@@ -63,7 +63,14 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
 
   return (
     <div className="flex items-center gap-3">
-      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-border/30">
+      <div
+        className="relative h-2 flex-1 overflow-hidden rounded-full bg-border/30"
+        role="progressbar"
+        aria-valuenow={current}
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-label={`Question ${current} of ${total}`}
+      >
         <m.div
           className="h-full rounded-full"
           style={{
@@ -79,10 +86,7 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
           initial={{ opacity: 0, y: -6, filter: "blur(2px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{
-            type: "spring",
-            stiffness: 350,
-            damping: 18,
-            mass: 0.6,
+            ...springPresets.fast,
             duration: prefersReducedMotion ? 0 : undefined,
           }}
           className="inline-block"

@@ -1,7 +1,7 @@
 import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { StudyDataAccess } from "@/lib/db/data-access";
 import type { CachedStudyGuide, StudyGuide } from "./types";
 
 const STUDY_GUIDE_TTL = 30 * 24 * 60 * 60 * 1000;
@@ -29,7 +29,7 @@ const config = {
   parseResponse: (content: string) => JSON.parse(content) as StudyGuide,
   emptyResult: { sections: [], summary: "" } as StudyGuide,
   isEmpty: (result: StudyGuide) => result.sections.length === 0,
-  getTable: (db: DataAccess) => ({
+  getTable: (db: StudyDataAccess) => ({
     get: (key: string) => db.studyGuides.get(key),
     put: (entry: unknown) => db.studyGuides.put(entry as CachedStudyGuide),
   }),
@@ -46,9 +46,9 @@ const config = {
   errorLabel: "StudyGuideService",
 };
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
+let _deps: { db: StudyDataAccess } = Object.freeze({ db: dexieDataAccess as StudyDataAccess });
 
-function __setDepsForTesting(deps: { db: DataAccess }) {
+function __setDepsForTesting(deps: { db: StudyDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 
