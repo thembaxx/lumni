@@ -8,6 +8,7 @@ import { I18nProvider } from "@/components/i18n/i18n-provider";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
 import { EasterEggProvider } from "@/lib/shared/easter-egg-context";
 import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
+import { SyncProvider } from "@/components/providers/sync-provider";
 import { ThemeProvider } from "@/components/theme";
 import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
 import { useJobProcessor } from "@/hooks/use-job-processor";
@@ -79,7 +80,9 @@ export function Providers({ locale, messages, timeZone, children }: ProvidersPro
               <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
                 <OnboardingProvider>
                   <ImmersiveModeProvider>
-                    <EasterEggProvider>{children}</EasterEggProvider>
+                    <SyncProvider>
+                      <EasterEggProvider>{children}</EasterEggProvider>
+                    </SyncProvider>
                   </ImmersiveModeProvider>
                 </OnboardingProvider>
               </I18nProvider>
