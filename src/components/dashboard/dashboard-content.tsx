@@ -55,6 +55,25 @@ const AnalyticsTab = dynamic(
   },
 );
 
+function TabContent({ show, children }: { show: boolean; children: React.ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (!show) return null;
+
+  return (
+    <m.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        ...springPresets.standard,
+        duration: prefersReducedMotion ? 0 : undefined,
+      }}
+    >
+      {children}
+    </m.div>
+  );
+}
+
 export function DashboardContent({
   onStartQuiz,
   activeTab,
@@ -68,7 +87,6 @@ export function DashboardContent({
 }) {
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
-  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -89,44 +107,17 @@ export function DashboardContent({
       <NoiseOverlay opacity={0.015} />
       <PageContainer className="gap-4 sm:gap-5 lg:gap-6">
         <LoginBanner />
-        {activeTab === "today" && (
-          <m.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              ...springPresets.standard,
-              duration: prefersReducedMotion ? 0 : undefined,
-            }}
-          >
-            <HeroBanner />
-            {isLoggedIn && <CountdownHeader />}
-            <TodayTab boltStreak={boltStreak} />
-          </m.div>
-        )}
-        {activeTab === "practice" && (
-          <m.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              ...springPresets.standard,
-              duration: prefersReducedMotion ? 0 : undefined,
-            }}
-          >
-            <PracticeTab onStartQuiz={onStartQuiz} />
-          </m.div>
-        )}
-        {activeTab === "analytics" && (
-          <m.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              ...springPresets.standard,
-              duration: prefersReducedMotion ? 0 : undefined,
-            }}
-          >
-            <AnalyticsTab />
-          </m.div>
-        )}
+        <TabContent show={activeTab === "today"}>
+          <HeroBanner />
+          {isLoggedIn && <CountdownHeader />}
+          <TodayTab boltStreak={boltStreak} />
+        </TabContent>
+        <TabContent show={activeTab === "practice"}>
+          <PracticeTab onStartQuiz={onStartQuiz} />
+        </TabContent>
+        <TabContent show={activeTab === "analytics"}>
+          <AnalyticsTab />
+        </TabContent>
         {(activeTab === "practice" || activeTab === "analytics") && isAnonymous && (
           <StaggeredSection>
             <AnonymousUpsell />

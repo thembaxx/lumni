@@ -65,13 +65,13 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
           {!isLoaded ? (
             <div className="flex min-h-dvh items-center justify-center px-4">
               <div className="flex w-full max-w-md flex-col gap-3">
-                <Skeleton className="h-24 rounded-3xl" />
+                <Skeleton className="h-24 rounded-card" />
                 <div className="grid grid-cols-12 gap-3">
-                  <Skeleton className="col-span-8 h-24 rounded-3xl" />
-                  <Skeleton className="col-span-4 h-24 rounded-3xl" />
+                  <Skeleton className="col-span-8 h-24 rounded-card" />
+                  <Skeleton className="col-span-4 h-24 rounded-card" />
                 </div>
-                <Skeleton className="h-32 rounded-3xl" />
-                <Skeleton className="h-20 rounded-3xl" />
+                <Skeleton className="h-32 rounded-card" />
+                <Skeleton className="h-20 rounded-card" />
               </div>
             </div>
           ) : (

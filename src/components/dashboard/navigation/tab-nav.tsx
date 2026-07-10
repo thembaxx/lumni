@@ -61,7 +61,7 @@ export function TabNav({
     >
       <Tabs value={activeTab} onValueChange={handleTabChange} aria-label={ariaLabel}>
         <TabsList
-          className="relative mx-auto grid h-12 w-full max-w-sm grid-cols-3 rounded-2xl border border-border/30 bg-system-background/80 p-1 shadow-level-1 backdrop-blur-xl"
+          className="relative mx-auto grid h-12 w-full max-w-sm grid-cols-3 rounded-card border border-border/30 bg-system-background/80 p-1 shadow-level-1 backdrop-blur-xl"
           role="tablist"
         >
           <m.span

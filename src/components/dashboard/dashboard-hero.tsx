@@ -9,7 +9,7 @@ export function HeroBanner() {
   return (
     <SpotlightCard className="card-entrance rounded-card-lg" radius={420}>
       <div
-        className="relative overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-accent)/10 via-(--system-accent)/5 to-transparent shadow-level-2"
+        className="relative overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-surface-secondary) via-(--system-surface-secondary)/50 to-transparent shadow-level-2"
         aria-label="Dashboard header showing welcome message"
         role="banner"
       >
