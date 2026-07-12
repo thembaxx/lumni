@@ -56,7 +56,7 @@ function InteractiveQuizDemo() {
               <p className="ios-caption-3 text-muted-foreground">Physics · Grade 12</p>
             </div>
           </div>
-          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-primary">
+          <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-foreground">
             Demo
           </span>
         </div>
