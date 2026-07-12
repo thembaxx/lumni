@@ -74,6 +74,7 @@ import type {
 import type { GroupPost } from "@/lib/study-groups/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type { TinyFishCacheEntry, TinyFishUsageEntry } from "@/lib/tinyfish/cache";
+import type { WebhookDelivery, WebhookEndpoint } from "@/lib/webhooks/types";
 import type { UserConsent } from "@/types/user-consent";
 
 export interface CachedQuestion {
@@ -584,6 +585,8 @@ export class LumniOfflineDB extends Dexie {
   userSettings!: Table<UserSettings, string>;
   essayDrafts!: Table<EssayDraftRecord, number>;
   studyCommitments!: Table<StudyCommitmentRecord, number>;
+  webhookEndpoints!: Table<WebhookEndpoint, string>;
+  webhookDeliveries!: Table<WebhookDelivery, number>;
   schools!: Table<SchoolRecord, string>;
   schoolMembers!: Table<SchoolMemberRecord, number>;
   schoolCodes!: Table<SchoolCodeRecord, string>;
@@ -711,6 +714,12 @@ export class LumniOfflineDB extends Dexie {
     this.version(47).stores({
       vocabularyList:
         "++id, &[userId+word], userId, word, language, sourceType, sourceId, addedAt, reviewCount",
+    });
+
+    // v48: webhook endpoint registry + delivery tracking
+    this.version(48).stores({
+      webhookEndpoints: "id, url, enabled, createdAt",
+      webhookDeliveries: "++id, endpointId, event, status, createdAt",
     });
   }
 }

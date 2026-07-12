@@ -20,6 +20,7 @@ export type {
   StudyDataAccess,
   SyncDataAccess,
   VocabularyDataAccess,
+  WebhookDataAccess,
   WhereClause,
 } from "./data-access";
 export { dexieDataAccess } from "./dexie-data-access";
