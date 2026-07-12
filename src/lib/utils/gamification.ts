@@ -3,36 +3,36 @@ export type Rarity = "common" | "rare" | "epic" | "legendary";
 export const rarityColors: Record<Rarity, string> = {
   common: "bg-muted border-border",
   rare: "bg-(--system-accent)/10 border-(--system-accent)/20",
-  epic: "bg-accent/10 border-accent/30",
-  legendary: "bg-warning/10 border-warning/30",
+  epic: "bg-(--system-accent)/20 border-(--system-accent)/30",
+  legendary: "bg-(--system-destructive)/10 border-(--system-destructive)/30",
 };
 
 export const rarityGlow: Record<Rarity, string> = {
   common: "",
   rare: "shadow-level-1",
-  epic: "shadow-accent/20",
-  legendary: "shadow-warning/30",
+  epic: "shadow-(--system-accent)/20",
+  legendary: "shadow-(--system-destructive)/30",
 };
 
 export const raritySolid: Record<Rarity, string> = {
   common: "bg-muted",
   rare: "bg-(--system-accent)",
-  epic: "bg-accent dark:bg-accent/70",
-  legendary: "bg-warning dark:bg-warning/70",
+  epic: "bg-(--system-accent) dark:bg-(--system-accent)/70",
+  legendary: "bg-(--system-destructive) dark:bg-(--system-destructive)/70",
 };
 
 export const rarityBorder: Record<Rarity, string> = {
   common: "border-border",
   rare: "border-(--system-accent)",
-  epic: "border-accent dark:border-accent/70",
-  legendary: "border-warning dark:border-warning/70",
+  epic: "border-(--system-accent) dark:border-(--system-accent)/70",
+  legendary: "border-(--system-destructive) dark:border-(--system-destructive)/70",
 };
 
 export const rarityGlowStrong: Record<Rarity, string> = {
   common: "shadow-gray-500/50 dark:shadow-gray-700/50",
   rare: "shadow-level-2",
-  epic: "shadow-accent/50 dark:shadow-accent/50",
-  legendary: "shadow-warning/70 dark:shadow-warning/70",
+  epic: "shadow-(--system-accent)/50 dark:shadow-(--system-accent)/50",
+  legendary: "shadow-(--system-destructive)/70 dark:shadow-(--system-destructive)/70",
 };
 
 const streakMessages: Record<number, string> = {

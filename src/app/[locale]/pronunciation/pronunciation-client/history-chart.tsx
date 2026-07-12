@@ -80,7 +80,7 @@ export function HistoryChart({ stats, loading }: { stats: HistoryStats | null; l
               <RechartsBar
                 dataKey="score"
                 radius={[4, 4, 0, 0]}
-                fill="var(--color-accent, oklch(52% 0.18 146))"
+                fill="var(--color-accent, var(--system-accent))"
               />
             </RechartsBarChart>
           </RechartsResponsiveContainer>
