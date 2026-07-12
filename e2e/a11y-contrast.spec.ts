@@ -70,8 +70,8 @@ test.describe("WCAG AA contrast audit", () => {
   test.use({ navigationTimeout: 60000 });
   for (const [, route] of routes.entries()) {
     test(`${route.label} (light mode)`, async ({ page }) => {
-      await page.goto(`/en${route.path}`, { waitUntil: "commit" });
-      await page.waitForLoadState("networkidle");
+      await page.goto(`/en${route.path}`, { waitUntil: "load" });
+      await page.waitForTimeout(1000);
       await page.emulateMedia({ colorScheme: "light" });
       await page
         .waitForFunction(() => !document.documentElement.classList.contains("dark"), {
@@ -91,8 +91,8 @@ test.describe("WCAG AA contrast audit", () => {
     });
 
     test(`${route.label} (dark mode)`, async ({ page }) => {
-      await page.goto(`/en${route.path}`, { waitUntil: "commit" });
-      await page.waitForLoadState("networkidle");
+      await page.goto(`/en${route.path}`, { waitUntil: "load" });
+      await page.waitForTimeout(1000);
       await page.emulateMedia({ colorScheme: "dark" });
       await page.waitForFunction(() => document.documentElement.classList.contains("dark"), {
         timeout: 5000,
