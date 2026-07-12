@@ -4,6 +4,8 @@ import { isTeacher } from "@/lib/server/auth";
 import { serverClient } from "@/lib/appwrite.server";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
+import { meetsTierRequirement } from "@/lib/school/tier-enforcer";
+import { getSchool } from "@/lib/school/service";
 
 interface CsvRow {
   studentName: string;
@@ -77,6 +79,18 @@ export const POST = createRouteHandler({
   },
   execute: async ({ userId, body }) => {
     if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
+
+    const { schoolId } = body as { schoolId?: string };
+    if (schoolId) {
+      const school = await getSchool(schoolId);
+      if (!school) throw new HttpError(404, "School not found");
+      if (!meetsTierRequirement(school.licenseTier, "standard")) {
+        throw new HttpError(
+          403,
+          "Roster import requires at least a Standard plan. Please upgrade.",
+        );
+      }
+    }
     const { csvText } = body as { csvText: string };
     const { rows, errors: parseErrors } = parseCsv(csvText);
 
