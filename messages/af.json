@@ -763,6 +763,16 @@
     "emptyFlashcards": "Nog geen flitskaarte nie. Skep of importeer sommige om te begin.",
     "emptyQuiz": "Geen kwisdata beskikbaar nie. Neem 'n kwis om resultate hier te sien."
   },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Tik 'n wiskundeprobleem of laai 'n foto op om 'n stap-vir-stap-oplossing te kry",
+    "solving": "Besig om op te los...",
+    "retry": "Skandeer nog 'n probleem",
+    "solution": "Oplossing",
+    "steps": "Stap-vir-stap",
+    "error": "Kon nie oplos nie. Probeer asseblief weer.",
+    "inputPlaceholder": "Tik jou wiskundeprobleem hier... bv. Los op x² + 5x + 6 = 0"
+  },
   "tools": {
     "title": "Gereedskap",
     "aiSolver": "KI-oplosser",

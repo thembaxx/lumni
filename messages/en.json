@@ -691,6 +691,16 @@
     "termsOfService": "Terms of service",
     "backToDashboard": "Back to dashboard"
   },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Type a math problem or upload a photo to get a step-by-step solution",
+    "solving": "Solving...",
+    "retry": "Scan another problem",
+    "solution": "Solution",
+    "steps": "Step-by-step",
+    "error": "Failed to solve. Please try again.",
+    "inputPlaceholder": "Type your math problem here... e.g. Solve x² + 5x + 6 = 0"
+  },
   "tools": {
     "title": "Tools",
     "aiSolver": "AI Solver",

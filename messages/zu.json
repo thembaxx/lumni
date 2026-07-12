@@ -761,6 +761,16 @@
       "lastUpdated": "Ubagcine ukubuyekeza: NgoMeyi 2026"
     }
   },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Bhala inkinga yezibalo noma ulayishe isithombe ukuze uthole isixazululo isinyathelo ngesinyathelo",
+    "solving": "Kuxazululwa...",
+    "retry": "Skana enye inkinga",
+    "solution": "Isixazululo",
+    "steps": "Isinyathelo ngesinyathelo",
+    "error": "Kwehlulekile ukuxazulula. Sicela uzame futhi.",
+    "inputPlaceholder": "Bhala inkinga yakho yezibalo lapha... isb. Xazulula x² + 5x + 6 = 0"
+  },
   "errors": {
     "general": "Kunzima okwenzeka",
     "notFound": "Ikhaya alibhalwe",
