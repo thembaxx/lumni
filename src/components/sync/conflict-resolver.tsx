@@ -35,8 +35,6 @@ export function ConflictResolver() {
       .catch(() => {});
   }, [open]);
 
-  if (entries.length === 0) return null;
-
   return (
     <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-3">
       <div className="mb-2 flex items-center justify-between">
@@ -47,7 +45,7 @@ export function ConflictResolver() {
           {open ? "Hide" : "Review"}
         </Button>
       </div>
-      {open && (
+      {open && entries.length > 0 && (
         <ul className="space-y-2">
           {entries.map((entry) => (
             <li
