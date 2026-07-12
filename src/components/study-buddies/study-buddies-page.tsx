@@ -7,7 +7,15 @@ import { CommitmentCard } from "@/components/study-buddies/commitment-card";
 import { BuddyFinder } from "@/components/study-buddies/buddy-finder";
 
 export function StudyBuddiesPage() {
-  const { commitments, loading, fetchCommitments, createCommitment, acceptCommitment, declineCommitment, completeCommitment } = useStudyBuddies();
+  const {
+    commitments,
+    loading,
+    fetchCommitments,
+    createCommitment,
+    acceptCommitment,
+    declineCommitment,
+    completeCommitment,
+  } = useStudyBuddies();
 
   useEffect(() => {
     fetchCommitments();
@@ -35,7 +43,12 @@ export function StudyBuddiesPage() {
           <h2 className="mb-3 text-lg font-semibold">Pending ({pending.length})</h2>
           <div className="flex flex-col gap-2" role="list">
             {pending.map((c) => (
-              <CommitmentCard key={c.id} commitment={c} onAccept={acceptCommitment} onDecline={declineCommitment} />
+              <CommitmentCard
+                key={c.id}
+                commitment={c}
+                onAccept={acceptCommitment}
+                onDecline={declineCommitment}
+              />
             ))}
           </div>
         </section>
@@ -65,7 +78,9 @@ export function StudyBuddiesPage() {
 
       {!loading && commitments.length === 0 && (
         <Card className="p-8 text-center">
-          <p className="text-muted-foreground">No study commitments yet. Find a buddy above to get started!</p>
+          <p className="text-muted-foreground">
+            No study commitments yet. Find a buddy above to get started!
+          </p>
         </Card>
       )}
     </div>

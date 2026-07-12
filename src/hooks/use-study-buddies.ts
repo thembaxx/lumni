@@ -69,5 +69,13 @@ export function useStudyBuddies() {
     return res.ok;
   }, []);
 
-  return { commitments, loading, fetchCommitments, createCommitment, acceptCommitment, declineCommitment, completeCommitment };
+  return {
+    commitments,
+    loading,
+    fetchCommitments,
+    createCommitment,
+    acceptCommitment,
+    declineCommitment,
+    completeCommitment,
+  };
 }

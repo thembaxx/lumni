@@ -12,7 +12,9 @@ export function StudyBuddyCard() {
     fetch("/api/study-buddies/commitments")
       .then((r) => r.json())
       .then((data) => {
-        const active = (data.commitments ?? []).filter((c: any) => c.status === "active");
+        const active = (data.commitments ?? []).filter(
+          (c: { status: string }) => c.status === "active",
+        );
         setActiveCount(active.length);
       })
       .catch(() => {});
@@ -35,7 +37,9 @@ export function StudyBuddyCard() {
               : "Find a study buddy"}
           </p>
         </div>
-        <span className="text-2xl" aria-hidden="true">👥</span>
+        <span className="text-2xl" aria-hidden="true">
+          👥
+        </span>
       </div>
     </Card>
   );

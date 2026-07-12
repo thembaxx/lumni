@@ -30,7 +30,9 @@ export function BuddyFinder({ onCommit }: BuddyFinderProps) {
       <h2 className="mb-3 text-lg font-semibold">Create Study Commitment</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <div>
-          <label htmlFor="buddy-id" className="mb-1 block text-sm font-medium">Buddy User ID or Email</label>
+          <label htmlFor="buddy-id" className="mb-1 block text-sm font-medium">
+            Buddy User ID or Email
+          </label>
           <input
             id="buddy-id"
             value={buddyId}
@@ -41,7 +43,9 @@ export function BuddyFinder({ onCommit }: BuddyFinderProps) {
           />
         </div>
         <div>
-          <label htmlFor="buddy-subject" className="mb-1 block text-sm font-medium">Subject</label>
+          <label htmlFor="buddy-subject" className="mb-1 block text-sm font-medium">
+            Subject
+          </label>
           <input
             id="buddy-subject"
             value={subject}
@@ -52,7 +56,9 @@ export function BuddyFinder({ onCommit }: BuddyFinderProps) {
           />
         </div>
         <div>
-          <label htmlFor="buddy-minutes" className="mb-1 block text-sm font-medium">Daily target (minutes)</label>
+          <label htmlFor="buddy-minutes" className="mb-1 block text-sm font-medium">
+            Daily target (minutes)
+          </label>
           <input
             id="buddy-minutes"
             type="number"

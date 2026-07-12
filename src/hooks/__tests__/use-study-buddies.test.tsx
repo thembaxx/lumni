@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { useStudyBuddies } from "@/hooks/use-study-buddies";
 
@@ -6,8 +6,22 @@ const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
 const mockCommitments = [
-  { id: 1, buddyUserId: "u1", buddyName: "Alice", subject: "Math", status: "pending", createdAt: "2026-07-01" },
-  { id: 2, buddyUserId: "u2", buddyName: "Bob", subject: "Science", status: "active", createdAt: "2026-07-02" },
+  {
+    id: 1,
+    buddyUserId: "u1",
+    buddyName: "Alice",
+    subject: "Math",
+    status: "pending",
+    createdAt: "2026-07-01",
+  },
+  {
+    id: 2,
+    buddyUserId: "u2",
+    buddyName: "Bob",
+    subject: "Science",
+    status: "active",
+    createdAt: "2026-07-02",
+  },
 ];
 
 describe("useStudyBuddies", () => {
