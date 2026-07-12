@@ -4,6 +4,52 @@ import { processQuizEffect } from "./quiz";
 import { processExamEffect } from "./exam";
 import { processFlashcardEffect } from "./flashcard";
 import type { QuizResultInput, QuizResultDeps } from "./types";
+import type { WebhookDispatcher } from "@/lib/webhooks";
+
+let _dispatcher: WebhookDispatcher | null = null;
+
+async function getDispatcher(): Promise<WebhookDispatcher | null> {
+  if (_dispatcher) return _dispatcher;
+  try {
+    const { createDispatcher } = await import("@/lib/webhooks");
+    const { createRegistry } = await import("@/lib/webhooks");
+    const { dexieDataAccess } = await import("@/lib/db");
+    const registry = createRegistry(dexieDataAccess);
+    _dispatcher = createDispatcher({ db: dexieDataAccess, registry });
+    return _dispatcher;
+  } catch {
+    return null;
+  }
+}
+
+function extractSubject(input: QuizResultInput): string | undefined {
+  switch (input.source) {
+    case "bolt":
+      return input.question.question.subject;
+    case "quiz":
+      return input.results.questions[0]?.subject;
+    case "exam":
+      return input.subject;
+    case "flashcard":
+      return input.subject;
+  }
+}
+
+function extractScore(input: QuizResultInput): { score: number; total: number } | undefined {
+  switch (input.source) {
+    case "bolt":
+      return { score: input.question.correct ? 1 : 0, total: 1 };
+    case "quiz":
+      return { score: input.results.correctAnswers, total: input.results.totalQuestions };
+    case "exam": {
+      const total = input.parts.length;
+      const correct = input.parts.filter((p) => p.correct).length;
+      return { score: correct, total };
+    }
+    case "flashcard":
+      return undefined;
+  }
+}
 
 export type {
   QuizResultInput,
@@ -38,5 +84,19 @@ export async function processQuizResult(
   input: QuizResultInput,
   deps: QuizResultDeps,
 ): Promise<void> {
-  return Effect.runPromise(processQuizResultEffect(input, deps));
+  await Effect.runPromise(processQuizResultEffect(input, deps));
+
+  const dispatcher = await getDispatcher();
+  if (!dispatcher) return;
+
+  const subject = extractSubject(input);
+  const scoreInfo = extractScore(input);
+
+  dispatcher
+    .dispatchWebhook("quiz.completed", {
+      subject,
+      score: scoreInfo?.score,
+      totalQuestions: scoreInfo?.total,
+    })
+    .catch(() => {});
 }
