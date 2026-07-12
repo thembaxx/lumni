@@ -6,8 +6,8 @@ test.describe("Cookie consent banner", () => {
     await page.addInitScript(() => {
       localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
     });
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+    await page.goto("/en", { waitUntil: "load" });
+    await page.waitForTimeout(1000);
   });
 
   test("cookie banner is visible on first visit", async ({ page }) => {
@@ -48,9 +48,9 @@ test.describe("Cookie settings dialog", () => {
   });
 
   test("shows category switches and save button", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await page.getByText("Cookie settings").click();
+    await page.goto("/en", { waitUntil: "load" });
+    await page.waitForTimeout(1000);
+    await page.getByRole("button", { name: "Cookie settings" }).click();
 
     await expect(page.getByRole("heading", { name: "Cookie Settings" })).toBeVisible({
       timeout: 5000,
@@ -60,10 +60,10 @@ test.describe("Cookie settings dialog", () => {
   });
 
   test("save preferences dismisses whole banner", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await page.getByText("Cookie settings").click();
-    await page.getByText("Save preferences").click();
+    await page.goto("/en", { waitUntil: "load" });
+    await page.waitForTimeout(1000);
+    await page.getByRole("button", { name: "Cookie settings" }).click();
+    await page.getByRole("button", { name: "Save preferences" }).click();
 
     const banner = page.getByText("We respect your privacy");
     await expect(banner).not.toBeVisible({ timeout: 5000 });
