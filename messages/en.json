@@ -691,6 +691,16 @@
     "termsOfService": "Terms of service",
     "backToDashboard": "Back to dashboard"
   },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Type a math problem or upload a photo to get a step-by-step solution",
+    "solving": "Solving...",
+    "retry": "Scan another problem",
+    "solution": "Solution",
+    "steps": "Step-by-step",
+    "error": "Failed to solve. Please try again.",
+    "inputPlaceholder": "Type your math problem here... e.g. Solve x² + 5x + 6 = 0"
+  },
   "tools": {
     "title": "Tools",
     "aiSolver": "AI Solver",
@@ -798,6 +808,23 @@
       "heading": "Cookie Policy",
       "lastUpdated": "Last updated: May 2026"
     }
+  },
+  "studyBuddies": {
+    "title": "Study Buddies",
+    "subtitle": "Study with friends and stay accountable",
+    "createForm": "Create Study Commitment",
+    "buddyId": "Buddy User ID or Email",
+    "subject": "Subject",
+    "dailyMinutes": "Daily target (minutes)",
+    "create": "Create Commitment",
+    "accept": "Accept",
+    "decline": "Decline",
+    "complete": "Complete",
+    "pending": "Pending",
+    "active": "Active",
+    "history": "History",
+    "empty": "No study commitments yet. Find a buddy above to get started!",
+    "activeCount": "{count} active commitment(s)"
   },
   "errors": {
     "general": "Something went wrong",

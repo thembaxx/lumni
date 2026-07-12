@@ -52,6 +52,7 @@ import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
 import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type { TinyFishCacheEntry, TinyFishUsageEntry } from "@/lib/tinyfish/cache";
+import type { WebhookDelivery, WebhookEndpoint } from "@/lib/webhooks/types";
 import type { UserConsent } from "@/types/user-consent";
 
 // ──────────────────────────────────────────────
@@ -228,6 +229,11 @@ export interface StudyCommitmentsDataAccess {
   studyCommitments: DataAccessTable<StudyCommitmentRecord, number>;
 }
 
+export interface WebhookDataAccess {
+  webhookEndpoints: DataAccessTable<WebhookEndpoint, string>;
+  webhookDeliveries: DataAccessTable<WebhookDelivery, number>;
+}
+
 // ──────────────────────────────────────────────
 // Composite — full 34-table access
 // ──────────────────────────────────────────────
@@ -254,4 +260,5 @@ export interface DataAccess
     CommunityDataAccess,
     PronunciationDataAccess,
     LegacyDataAccess,
-    StudyCommitmentsDataAccess {}
+    StudyCommitmentsDataAccess,
+    WebhookDataAccess {}

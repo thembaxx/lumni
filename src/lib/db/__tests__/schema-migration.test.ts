@@ -63,6 +63,8 @@ const EXPECTED_TABLES = [
   "userSettings",
   "vocabularyList",
   "visuals",
+  "webhookDeliveries",
+  "webhookEndpoints",
   "wrongAnswers",
   "schools",
   "schoolMembers",
@@ -95,7 +97,7 @@ describe("Dexie schema migration", () => {
     db = new LumniOfflineDB();
     await db.open();
     expect(db.isOpen()).toBe(true);
-    expect(db.verno).toBe(47);
+    expect(db.verno).toBe(48);
   });
 
   it("all table names are accessible after opening", () => {

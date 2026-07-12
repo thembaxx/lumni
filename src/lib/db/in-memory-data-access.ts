@@ -51,6 +51,7 @@ import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
 import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type { TinyFishCacheEntry, TinyFishUsageEntry } from "@/lib/tinyfish/cache";
+import type { WebhookDelivery, WebhookEndpoint } from "@/lib/webhooks/types";
 import type { UserConsent } from "@/types/user-consent";
 
 // ──────────────────────────────────────────────
@@ -348,4 +349,6 @@ export class InMemoryDataAccess implements DataAccess {
   syncCheckpoints = new InMemoryTable<SyncCheckpoint, string>();
   userSettings = new InMemoryTable<UserSettings, string>();
   studyCommitments = new InMemoryTable<StudyCommitmentRecord>();
+  webhookEndpoints = new InMemoryTable<WebhookEndpoint, string>();
+  webhookDeliveries = new InMemoryTable<WebhookDelivery>();
 }

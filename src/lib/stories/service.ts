@@ -1,7 +1,7 @@
 import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { StoryDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { getAllStoryMetas, loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
@@ -37,7 +37,7 @@ const questionsConfig = {
   parseResponse: (content: string) => JSON.parse(content) as StoryQuestion[],
   emptyResult: [] as StoryQuestion[],
   isEmpty: (result: StoryQuestion[]) => result.length === 0,
-  getTable: (db: DataAccess) => ({
+  getTable: (db: StoryDataAccess) => ({
     get: (key: string) => db.storyQuestions.get(key),
     put: (entry: unknown) => db.storyQuestions.put(entry as StoryQuestionSet),
   }),
@@ -60,9 +60,9 @@ const questionsConfig = {
   buildCacheKey: (storyId: string, _storyText: string) => `questions:${storyId}`,
 };
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
+let _deps: { db: StoryDataAccess } = Object.freeze({ db: dexieDataAccess as StoryDataAccess });
 
-function __setDepsForTesting(deps: { db: DataAccess }) {
+function __setDepsForTesting(deps: { db: StoryDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 

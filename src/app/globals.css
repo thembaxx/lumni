@@ -8,14 +8,14 @@
 @layer reset, base, components, utilities;
 
 :root {
-  /* Pure Grayscale Palette */
-  --system-background: oklch(99% 0 0);
-  --system-background-secondary: oklch(97% 0 0);
-  --system-background-tertiary: oklch(95% 0 0);
-  --system-background-elevated: oklch(100% 0 0);
-  --system-grouped-background: oklch(98% 0 0);
-  --system-surface: oklch(100% 0 0);
-  --system-surface-secondary: oklch(97% 0 0);
+  /* Warm-Tinted Neutral Palette */
+  --system-background: oklch(99% 0.008 60);
+  --system-background-secondary: oklch(97% 0.012 60);
+  --system-background-tertiary: oklch(95% 0.015 60);
+  --system-background-elevated: oklch(100% 0.005 60);
+  --system-grouped-background: oklch(98% 0.01 60);
+  --system-surface: oklch(100% 0.005 60);
+  --system-surface-secondary: oklch(97% 0.012 60);
   --system-separator: oklch(0% 0 0 / 0.08);
   --system-fill: oklch(0% 0 0 / 0.06);
   --system-fill-secondary: oklch(0% 0 0 / 0.03);
@@ -25,14 +25,14 @@
   --system-text-tertiary: oklch(12% 0 0 / 0.35);
   --system-text-quaternary: oklch(12% 0 0 / 0.22);
 
-  /* Semantic — stark contrast, no hue */
-  --system-accent: oklch(12% 0 0); /* Pure black for selected states */
+  /* Semantic — warm amber accent, restrained palette */
+  --system-accent: oklch(55% 0.2 70);
   --system-accent-foreground: oklch(100% 0 0);
-  --system-destructive: oklch(45% 0 0);
+  --system-destructive: oklch(48% 0.18 28);
   --system-destructive-foreground: oklch(100% 0 0);
-  --system-success: oklch(40% 0 0);
-  --system-warning: oklch(55% 0 0);
-  --system-info: oklch(50% 0 0);
+  --system-success: oklch(52% 0.14 145);
+  --system-warning: oklch(62% 0.16 70);
+  --system-info: oklch(52% 0.08 220);
   --success: var(--system-success);
   --success-foreground: oklch(100% 0 0);
   --warning: var(--system-warning);
@@ -124,6 +124,7 @@
   --z-modal: 500;
   --z-overlay: 600;
   --z-toast: 700;
+  --z-cookie-banner: 800;
   --z-skip-link: 999;
 
   /* Motion — Mac-like smooth */
@@ -163,7 +164,7 @@
   --ring: var(--system-accent);
   --radius: 12px;
 
-  /* Dark mode accent override — stays grayscale */
+  /* Accent alpha mixes */
   --system-accent-alpha-0: color-mix(in oklch, var(--system-accent) 0%, transparent);
   --system-accent-alpha-10: color-mix(in oklch, var(--system-accent) 10%, transparent);
   --system-accent-alpha-20: color-mix(in oklch, var(--system-accent) 20%, transparent);
@@ -172,18 +173,18 @@
   /* Bubble hover tokens — grayscale */
   --bubble-tinted: var(--system-surface-secondary);
   --bubble-tinted-hover: var(--system-background-tertiary);
-  --bubble-tinted-hover-dark: oklch(30% 0 0);
+  --bubble-tinted-hover-dark: oklch(30% 0.01 60);
   --secondary-hover: var(--system-background-tertiary);
   --muted-hover: var(--system-background-tertiary);
 
   --system-success-alpha-20: color-mix(in oklch, var(--system-success) 20%, transparent);
   --system-destructive-alpha-20: color-mix(in oklch, var(--system-destructive) 20%, transparent);
 
-  --chart-1: oklch(40% 0 0); /* Darkest — primary data series */
-  --chart-2: oklch(55% 0 0); /* Mid-dark — secondary */
-  --chart-3: oklch(70% 0 0); /* Mid-light — tertiary */
-  --chart-4: oklch(82% 0 0); /* Light — quaternary */
-  --chart-5: oklch(30% 0 0); /* Darkest — emphasis */
+  --chart-1: oklch(52% 0.14 145); /* Green — primary series, matches success */
+  --chart-2: oklch(58% 0.13 145); /* Green-light — secondary */
+  --chart-3: oklch(62% 0.18 70); /* Amber — tertiary, matches warning */
+  --chart-4: oklch(55% 0.13 230); /* Blue — quaternary */
+  --chart-5: oklch(50% 0.18 28); /* Coral — emphasis, matches destructive */
 
   /* DESIGN.md Color Aliases (maps to --system-*) */
   --color-study-green: var(--system-accent);
@@ -242,7 +243,7 @@
   --color-system-gray5: #e5e5ea;
   --color-system-gray6: #f2f2f7;
 
-  --sidebar: oklch(98.8% 0.003 60);
+  --sidebar: oklch(98.8% 0.008 60);
   --sidebar-foreground: var(--system-text-primary);
   --sidebar-primary: var(--system-accent);
   --sidebar-primary-foreground: oklch(100% 0 0);
@@ -305,6 +306,7 @@
   --z-drawer: 300;
   --z-overlay: 600;
   --z-toast: 700;
+  --z-cookie-banner: 800;
   --z-skip-link: 999;
   --z-background: -1;
 
@@ -348,27 +350,27 @@
   --spacing-safe-pt: env(safe-area-inset-top, 0px);
 }
 
-/* Dark mode — pure grayscale, inverted hierarchy */
+/* Dark mode — warm-tinted, inverted hierarchy */
 .dark {
-  --material-ultra-thin: oklch(10% 0 0 / 0.3);
-  --material-thin: oklch(12% 0 0 / 0.6);
-  --material-regular: oklch(14% 0 0 / 0.8);
-  --material-thick: oklch(16% 0 0 / 0.92);
+  --material-ultra-thin: oklch(10% 0.006 60 / 0.3);
+  --material-thin: oklch(12% 0.008 60 / 0.6);
+  --material-regular: oklch(14% 0.008 60 / 0.8);
+  --material-thick: oklch(16% 0.01 60 / 0.92);
   --material-glass: oklch(100% 0 0 / 0.08);
   --material-glass-strong: oklch(100% 0 0 / 0.15);
 
-  --system-background: oklch(8% 0 0);
-  --system-background-secondary: oklch(12% 0 0);
-  --system-background-tertiary: oklch(10% 0 0);
-  --system-background-elevated: oklch(18% 0 0);
-  --system-grouped-background: oklch(6% 0 0);
-  --system-surface: oklch(14% 0 0);
-  --system-surface-secondary: oklch(18% 0 0);
+  --system-background: oklch(8% 0.006 60);
+  --system-background-secondary: oklch(12% 0.008 60);
+  --system-background-tertiary: oklch(10% 0.006 60);
+  --system-background-elevated: oklch(18% 0.01 60);
+  --system-grouped-background: oklch(6% 0.006 60);
+  --system-surface: oklch(14% 0.008 60);
+  --system-surface-secondary: oklch(18% 0.01 60);
   --system-separator: oklch(100% 0 0 / 0.12);
   --system-fill: oklch(100% 0 0 / 0.08);
   --system-fill-secondary: oklch(100% 0 0 / 0.04);
 
-  --system-accent: oklch(100% 0 0);
+  --system-accent: oklch(72% 0.2 70);
   --system-accent-foreground: oklch(8% 0 0);
   --system-text-primary: oklch(92% 0 0);
   --system-text-secondary: oklch(92% 0 0 / 0.6);
@@ -401,11 +403,16 @@
   --input: var(--system-separator);
   --ring: var(--system-accent);
 
-  --sidebar: oklch(18% 0 0);
+  --system-destructive: oklch(58% 0.2 28);
+  --system-success: oklch(58% 0.16 145);
+  --system-warning: oklch(68% 0.18 70);
+  --system-info: oklch(56% 0.1 220);
+
+  --sidebar: oklch(18% 0.008 60);
   --sidebar-foreground: oklch(92% 0 0);
-  --sidebar-primary: oklch(92% 0 0);
+  --sidebar-primary: oklch(72% 0.2 70);
   --sidebar-primary-foreground: oklch(8% 0 0);
-  --sidebar-accent: oklch(22% 0 0);
+  --sidebar-accent: oklch(22% 0.012 60);
   --sidebar-accent-foreground: oklch(92% 0 0);
   --sidebar-border: oklch(100% 0 0 / 0.12);
   --sidebar-ring: var(--system-accent);

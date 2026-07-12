@@ -147,7 +147,7 @@ export function ExamDetailClient() {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "ios-caption-3 flex size-6 items-center justify-center rounded-md font-bold text-white dark:text-system-accent-foreground",
+                  "ios-caption-3 flex size-6 items-center justify-center rounded-md font-bold text-system-accent-foreground",
                   getSubjectColor(exam.subjectId),
                 )}
               >

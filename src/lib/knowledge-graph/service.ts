@@ -2,7 +2,7 @@ import { curriculumRegistry } from "@/curriculum";
 import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CacheDataAccess } from "@/lib/db/data-access";
 import { buildPromptInstruction, searchWithRAG } from "@/lib/tinyfish";
 import { logError } from "@/lib/shared/logger";
 import { buildKnowledgeCacheKey } from "./cache-key";
@@ -27,7 +27,7 @@ const config = {
   parseResponse: (content: string) => JSON.parse(content) as KnowledgeGraph,
   emptyResult: { nodes: [], edges: [] } as KnowledgeGraph,
   isEmpty: (result: KnowledgeGraph) => result.nodes.length === 0,
-  getTable: (db: DataAccess) => ({
+  getTable: (db: CacheDataAccess) => ({
     get: (key: string) => db.knowledgeGraph.get(key),
     put: (entry: unknown) => db.knowledgeGraph.put(entry as CachedGraph),
   }),
@@ -42,9 +42,9 @@ const config = {
   errorLabel: "KnowledgeGraphService",
 };
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
+let _deps: { db: CacheDataAccess } = Object.freeze({ db: dexieDataAccess as CacheDataAccess });
 
-function __setDepsForTesting(deps: { db: DataAccess }) {
+function __setDepsForTesting(deps: { db: CacheDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 

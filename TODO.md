@@ -8,18 +8,22 @@
 
 ### VoiceEngine API Keys (GitHub issue [#72](https://github.com/thembaxx/lumni/issues/72))
 
-- [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel environment variables.
-- [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports SA languages: af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel environment variables.
-- [ ] **Set both keys in `.env.local` for development** — Engine degrades gracefully to FreeTTS if either key is absent, but ElevenLabs is recommended for quality and Google TTS for multilingual coverage.
+- [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel env vars.
+- [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel env vars.
+- [ ] **Set both keys in `.env.local` for development** — Engine degrades gracefully to FreeTTS if absent.
 
 ### Branch Protection + Admin (GitHub)
 
-- [ ] **Set up branch protection rules** ([#84](https://github.com/thembaxx/lumni/issues/84)) — GitHub.com → Settings → Branches → Add rules for `dev` (require status checks: quality, build, unit-tests; require review) and `master` (same + linear history, only PRs from dev)
+- [x] **Set up branch protection rules** ([#84](https://github.com/thembaxx/lumni/issues/84))
+  - `dev`: required status checks (quality, unit-tests, build — strict), required PR review (1), admin enforcement
+  - `master`: same + required linear history
 - [ ] **Verify Sentry→Linear integration** — Trigger test error, confirm Linear issue auto-created with correct labels
 
 ### DataAccess Domain Split — Phase 2 Tables
 
-- [ ] **Expand to 7 remaining composite consumers** — `question-engine`, `ai/chat-context`, `search-service`, `share-service`, `export-service`, `seed`, `classify/route` — narrow from `DataAccess` to sub-interfaces
+- [x] **CachedAIGenerator generic** — Added `TDb` param, narrowed 4 consumers to `StudyDataAccess`/`StoryDataAccess`/`CacheDataAccess`
+- [x] **search-service types** — Replaced `Pick<DataAccess, ...>` with intersection of 9 sub-interfaces
+- [ ] **Remaining full DataAccess consumers** — ~20 files still on full `DataAccess` (flashcard engine, bookmark, sync, services, etc.)
 
 ---
 
@@ -45,7 +49,7 @@
 | Architecture deepening       | S37-40    | AI singleton collapsed, lastRagContext → structured return, CachedAIGenerator     |
 | Mega-component decomposition | S12+15+39 | ~2000 lines extracted across 25+ new component files                              |
 
-### Test baseline: 2013 pass, 0 fail (218 files)
+### Test baseline: 2047 pass, 0 fail (222 files)
 
 ---
 

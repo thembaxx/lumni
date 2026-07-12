@@ -15,7 +15,7 @@ export function WaveformDisplay({ isRecording, audioBlob }: WaveformDisplayProps
         active={isRecording}
         processing={!isRecording && !audioBlob}
         mode="static"
-        barColor="oklch(76.7% 0.179 65°)"
+        barColor="var(--system-accent)"
         height={64}
         barWidth={3}
         barGap={2}

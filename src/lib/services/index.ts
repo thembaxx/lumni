@@ -7,8 +7,6 @@ export {
   sendLocalNotification,
 } from "./notification-service";
 export type { NotificationSettings } from "./notification-service";
-export { PushDeliveryService } from "./push-delivery";
-export type { PushDispatchPort } from "./push-delivery";
 export type { PushPayload, PushDeliveryResult } from "./push-types";
 export { questionRatingService } from "./question-rating-service";
 export { processQuizResult } from "./quiz-result-processor";

@@ -61,7 +61,7 @@ export function Achievements({ achievements }: AchievementsProps) {
               <span
                 className="absolute inset-0 rounded-xl"
                 style={{
-                  boxShadow: "0 0 12px 2px oklch(81.9% 0.145 80° / 0.4)",
+                  boxShadow: "0 0 12px 2px var(--system-warning)",
                 }}
               />
             )}

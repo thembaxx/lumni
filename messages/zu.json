@@ -761,6 +761,33 @@
       "lastUpdated": "Ubagcine ukubuyekeza: NgoMeyi 2026"
     }
   },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Bhala inkinga yezibalo noma ulayishe isithombe ukuze uthole isixazululo isinyathelo ngesinyathelo",
+    "solving": "Kuxazululwa...",
+    "retry": "Skana enye inkinga",
+    "solution": "Isixazululo",
+    "steps": "Isinyathelo ngesinyathelo",
+    "error": "Kwehlulekile ukuxazulula. Sicela uzame futhi.",
+    "inputPlaceholder": "Bhala inkinga yakho yezibalo lapha... isb. Xazulula x² + 5x + 6 = 0"
+  },
+  "studyBuddies": {
+    "title": "Abangane Bokufunda",
+    "subtitle": "Funda nabangane uhlale unesibopho",
+    "createForm": "Dala Isibopho Sokufunda",
+    "buddyId": "I-ID Yomsebenzisi noma i-Imeyili",
+    "subject": "Isifundo",
+    "dailyMinutes": "Ithagethi yansuku zonke (imizuzu)",
+    "create": "Dala Isibopho",
+    "accept": "Yamukela",
+    "decline": "Yenqaba",
+    "complete": "Qedela",
+    "pending": "Kulindile",
+    "active": "Iyasebenza",
+    "history": "Umlando",
+    "empty": "Azikho izibopho zokufunda okwamanje. Thola umngane ngenhla ukuze uqale!",
+    "activeCount": "{count} isibopho esisebenzayo"
+  },
   "errors": {
     "general": "Kunzima okwenzeka",
     "notFound": "Ikhaya alibhalwe",

@@ -190,6 +190,8 @@ class DexieDataAccess implements DataAccess {
   syncCheckpoints = tableAdapter(offlineDB.syncCheckpoints);
   userSettings = tableAdapter(offlineDB.userSettings);
   studyCommitments = tableAdapter(offlineDB.studyCommitments);
+  webhookEndpoints = tableAdapter(offlineDB.webhookEndpoints);
+  webhookDeliveries = tableAdapter(offlineDB.webhookDeliveries);
 }
 
 export const dexieDataAccess =

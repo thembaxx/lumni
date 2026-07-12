@@ -1,19 +1,24 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  QuizDataAccess,
+  SyncDataAccess,
+  CompetencyDataAccess,
+  StudyDataAccess,
+  DictionaryDataAccess,
+  StoryDataAccess,
+  LessonDataAccess,
+  VocabularyDataAccess,
+  ContentDataAccess,
+} from "@/lib/db";
 
-export type SearchDb = Pick<
-  DataAccess,
-  | "questions"
-  | "wrongAnswers"
-  | "quizAttempts"
-  | "examSessions"
-  | "progress"
-  | "studyGuides"
-  | "dictionaryCache"
-  | "storyCache"
-  | "lessonCache"
-  | "vocabularyList"
-  | "notes"
->;
+export type SearchDb = QuizDataAccess &
+  SyncDataAccess &
+  CompetencyDataAccess &
+  StudyDataAccess &
+  DictionaryDataAccess &
+  StoryDataAccess &
+  LessonDataAccess &
+  VocabularyDataAccess &
+  ContentDataAccess;
 
 export interface SearchResultItem {
   id: string;

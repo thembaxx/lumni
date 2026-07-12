@@ -750,6 +750,23 @@
       "lastUpdated": "Laas opgedateer: Mei 2026"
     }
   },
+  "studyBuddies": {
+    "title": "Studiemaats",
+    "subtitle": "Studie saam met vriende en bly aanspreeklik",
+    "createForm": "Skep Studie-verbintenis",
+    "buddyId": "Maat Gebruiker-ID of E-pos",
+    "subject": "Vak",
+    "dailyMinutes": "Daaglikse teiken (minute)",
+    "create": "Skep Verbintenis",
+    "accept": "Aanvaar",
+    "decline": "Wys Af",
+    "complete": "Voltooi",
+    "pending": "Hangend",
+    "active": "Aktief",
+    "history": "Geskiedenis",
+    "empty": "Nog geen studie-verbintenisse nie. Kry 'n maat hier bo om te begin!",
+    "activeCount": "{count} aktiewe verbintenis(sse)"
+  },
   "errors": {
     "general": "Iets het verkeerd gegaan",
     "notFound": "Bladsy nie gevind nie",
@@ -762,6 +779,16 @@
     "emptyState": "Nog niks hier nie",
     "emptyFlashcards": "Nog geen flitskaarte nie. Skep of importeer sommige om te begin.",
     "emptyQuiz": "Geen kwisdata beskikbaar nie. Neem 'n kwis om resultate hier te sien."
+  },
+  "mathScanner": {
+    "title": "Photo Math Scanner",
+    "subtitle": "Tik 'n wiskundeprobleem of laai 'n foto op om 'n stap-vir-stap-oplossing te kry",
+    "solving": "Besig om op te los...",
+    "retry": "Skandeer nog 'n probleem",
+    "solution": "Oplossing",
+    "steps": "Stap-vir-stap",
+    "error": "Kon nie oplos nie. Probeer asseblief weer.",
+    "inputPlaceholder": "Tik jou wiskundeprobleem hier... bv. Los op x² + 5x + 6 = 0"
   },
   "tools": {
     "title": "Gereedskap",
