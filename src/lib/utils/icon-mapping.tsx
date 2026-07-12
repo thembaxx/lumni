@@ -26,12 +26,12 @@ interface IconMappingEntry {
 
 const animationPresets: Record<AnimationPreset, ComponentProps<typeof m.div>["animate"]> = {
   shake: { x: [-5, 5, -5, 5, 0] },
-  scale: { scale: [0, 1.2, 1] },
+  scale: { opacity: [0, 1], scale: [0.25, 1] },
 };
 
 const animationTransitions: Record<AnimationPreset, ComponentProps<typeof m.div>["transition"]> = {
   shake: { duration: 0.4 },
-  scale: { duration: 0.3 },
+  scale: { type: "spring", duration: 0.3, bounce: 0 },
 };
 
 const animationMapping: Record<string, IconMappingEntry> = {
