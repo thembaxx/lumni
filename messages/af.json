@@ -750,6 +750,23 @@
       "lastUpdated": "Laas opgedateer: Mei 2026"
     }
   },
+  "studyBuddies": {
+    "title": "Studiemaats",
+    "subtitle": "Studie saam met vriende en bly aanspreeklik",
+    "createForm": "Skep Studie-verbintenis",
+    "buddyId": "Maat Gebruiker-ID of E-pos",
+    "subject": "Vak",
+    "dailyMinutes": "Daaglikse teiken (minute)",
+    "create": "Skep Verbintenis",
+    "accept": "Aanvaar",
+    "decline": "Wys Af",
+    "complete": "Voltooi",
+    "pending": "Hangend",
+    "active": "Aktief",
+    "history": "Geskiedenis",
+    "empty": "Nog geen studie-verbintenisse nie. Kry 'n maat hier bo om te begin!",
+    "activeCount": "{count} aktiewe verbintenis(sse)"
+  },
   "errors": {
     "general": "Iets het verkeerd gegaan",
     "notFound": "Bladsy nie gevind nie",
