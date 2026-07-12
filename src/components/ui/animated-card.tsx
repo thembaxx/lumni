@@ -14,7 +14,7 @@ export function AnimatedCard({ children, delay = 0, className }: AnimatedCardPro
     <m.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.4, ease: iOSEase }}
+      transition={{ delay, duration: 0.3, ease: iOSEase }}
       className={className}
     >
       {children}
