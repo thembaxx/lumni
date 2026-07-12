@@ -4,6 +4,7 @@ test.describe("Cookie consent banner", () => {
   test.beforeEach(async ({ page }) => {
     // Bypass onboarding redirect so the landing page renders with cookie banner
     await page.addInitScript(() => {
+      localStorage.clear();
       localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
     });
     await page.goto("/en", { waitUntil: "load" });
@@ -43,6 +44,7 @@ test.describe("Cookie consent banner", () => {
 test.describe("Cookie settings dialog", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
+      localStorage.clear();
       localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
     });
   });
