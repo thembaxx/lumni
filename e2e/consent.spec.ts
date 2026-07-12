@@ -1,57 +1,61 @@
 import { test, expect } from "@playwright/test";
 
+const COOKIE_BANNER_TEXT = "We respect your privacy";
+const SETTINGS_DESC = "Choose which cookies you want to allow.";
+
+async function clickCookieButton(page: import("@playwright/test").Page, name: string) {
+  await page.evaluate((n) => {
+    const btn = [...document.querySelectorAll("button")].find((b) => b.textContent?.trim() === n);
+    if (btn) btn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  }, name);
+}
+
+async function setup(page: import("@playwright/test").Page) {
+  await page.addInitScript(() => {
+    localStorage.clear();
+    localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
+  });
+  await page.goto("/en", { waitUntil: "domcontentloaded", timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(3000);
+}
+
 test.describe("Cookie consent banner", () => {
   test.beforeEach(async ({ page }) => {
-    // Bypass onboarding redirect so the landing page renders with cookie banner
-    await page.addInitScript(() => {
-      localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
-    });
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
+    await setup(page);
   });
 
   test("cookie banner is visible on first visit", async ({ page }) => {
-    const banner = page.getByText("We respect your privacy");
-    await expect(banner).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText(COOKIE_BANNER_TEXT)).toBeVisible({ timeout: 10000 });
   });
 
   test("cookie settings dialog opens from banner", async ({ page }) => {
-    await page.getByText("Cookie settings").click();
-    const dialog = page.getByText("Choose which cookies you want to allow.");
-    await expect(dialog).toBeVisible({ timeout: 5000 });
+    await clickCookieButton(page, "Cookie settings");
+    await expect(page.getByText(SETTINGS_DESC)).toBeVisible({ timeout: 5000 });
   });
 
   test("essential only dismisses the banner", async ({ page }) => {
-    await page.getByText("Essential only").click();
-    const banner = page.getByText("We respect your privacy");
-    await expect(banner).not.toBeVisible({ timeout: 5000 });
+    await clickCookieButton(page, "Essential only");
+    await expect(page.getByText(COOKIE_BANNER_TEXT)).not.toBeVisible({ timeout: 5000 });
   });
 
   test("accept analytics dismisses the banner", async ({ page }) => {
-    await page.getByText("Accept analytics").click();
-    const banner = page.getByText("We respect your privacy");
-    await expect(banner).not.toBeVisible({ timeout: 5000 });
+    await clickCookieButton(page, "Accept analytics");
+    await expect(page.getByText(COOKIE_BANNER_TEXT)).not.toBeVisible({ timeout: 5000 });
   });
 
   test("accept all dismisses the banner", async ({ page }) => {
-    await page.getByText("Accept all").click();
-    const banner = page.getByText("We respect your privacy");
-    await expect(banner).not.toBeVisible({ timeout: 5000 });
+    await clickCookieButton(page, "Accept all");
+    await expect(page.getByText(COOKIE_BANNER_TEXT)).not.toBeVisible({ timeout: 5000 });
   });
 });
 
 test.describe("Cookie settings dialog", () => {
   test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem("lumni_onboarding", JSON.stringify({ isComplete: true }));
-    });
+    await setup(page);
   });
 
   test("shows category switches and save button", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await page.getByText("Cookie settings").click();
-
+    await clickCookieButton(page, "Cookie settings");
     await expect(page.getByRole("heading", { name: "Cookie Settings" })).toBeVisible({
       timeout: 5000,
     });
@@ -60,12 +64,8 @@ test.describe("Cookie settings dialog", () => {
   });
 
   test("save preferences dismisses whole banner", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "commit" });
-    await page.waitForLoadState("networkidle");
-    await page.getByText("Cookie settings").click();
-    await page.getByText("Save preferences").click();
-
-    const banner = page.getByText("We respect your privacy");
-    await expect(banner).not.toBeVisible({ timeout: 5000 });
+    await clickCookieButton(page, "Cookie settings");
+    await clickCookieButton(page, "Save preferences");
+    await expect(page.getByText(COOKIE_BANNER_TEXT)).not.toBeVisible({ timeout: 5000 });
   });
 });

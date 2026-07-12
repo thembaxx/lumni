@@ -26,7 +26,7 @@
   --system-text-quaternary: oklch(12% 0 0 / 0.22);
 
   /* Semantic — warm amber accent, restrained palette */
-  --system-accent: oklch(58% 0.2 70);
+  --system-accent: oklch(55% 0.2 70);
   --system-accent-foreground: oklch(100% 0 0);
   --system-destructive: oklch(48% 0.18 28);
   --system-destructive-foreground: oklch(100% 0 0);
@@ -124,6 +124,7 @@
   --z-modal: 500;
   --z-overlay: 600;
   --z-toast: 700;
+  --z-cookie-banner: 800;
   --z-skip-link: 999;
 
   /* Motion — Mac-like smooth */
@@ -305,6 +306,7 @@
   --z-drawer: 300;
   --z-overlay: 600;
   --z-toast: 700;
+  --z-cookie-banner: 800;
   --z-skip-link: 999;
   --z-background: -1;
 

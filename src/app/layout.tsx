@@ -43,7 +43,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var d=t?t[1]==="dark":false;if(d)document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
+            __html: `(function(){try{var t=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var d=t?t[1]==="dark":window.matchMedia("(prefers-color-scheme:dark)").matches;if(d)document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
           }}
         />
         <link rel="preconnect" href="https://fra.cloud.appwrite.io" />
