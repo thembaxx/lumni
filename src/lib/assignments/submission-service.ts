@@ -3,7 +3,7 @@ import { COLLECTIONS, createDocument, listDocuments, updateDocument } from "@/li
 import { enqueueGradeSideEffects } from "@/lib/orchestrator/ports";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { PushDeliveryService } from "@/lib/services";
+import { PushDeliveryService } from "@/lib/services/push-delivery";
 import { logError } from "@/lib/shared/logger";
 
 interface AnswerEntry {

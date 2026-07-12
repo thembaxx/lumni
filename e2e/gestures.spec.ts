@@ -166,9 +166,7 @@ test.describe("Pull-to-refresh", () => {
   });
 
   test("pull gesture applies translateY transform", async ({ page }) => {
-    await page.goto("/en/dashboard", { waitUntil: "commit" });
-    // DashboardClient is dynamically imported — wait for hydration
-    await page.waitForLoadState("networkidle");
+    await page.goto("/en/dashboard", { waitUntil: "load" });
     await page.waitForTimeout(3000);
 
     const scrollContainerExists = await page.locator("[data-scroll-container]").count();
@@ -186,14 +184,19 @@ test.describe("Pull-to-refresh", () => {
     const startY = box.y + 10;
     const endY = box.y + 200;
 
-    await page.dispatchEvent("[data-scroll-container]", "touchstart", {
-      touches: [{ identifier: 1, clientX: centerX, clientY: startY }],
+    // Component uses pointer events (not touch events) since commit be3a4dfb
+    await page.dispatchEvent("[data-scroll-container]", "pointerdown", {
+      pointerId: 1,
+      clientX: centerX,
+      clientY: startY,
     });
 
     for (let i = 1; i <= 10; i++) {
       const y = startY + (endY - startY) * (i / 10);
-      await page.dispatchEvent("[data-scroll-container]", "touchmove", {
-        touches: [{ identifier: 1, clientX: centerX, clientY: y }],
+      await page.dispatchEvent("[data-scroll-container]", "pointermove", {
+        pointerId: 1,
+        clientX: centerX,
+        clientY: y,
       });
       await page.waitForTimeout(20);
     }
@@ -201,8 +204,10 @@ test.describe("Pull-to-refresh", () => {
     const transformAfterMove = await scrollContainer.evaluate((el) => el.style.transform);
     expect(transformAfterMove).toContain("translateY");
 
-    await page.dispatchEvent("[data-scroll-container]", "touchend", {
-      changedTouches: [{ identifier: 1, clientX: centerX, clientY: endY }],
+    await page.dispatchEvent("[data-scroll-container]", "pointerup", {
+      pointerId: 1,
+      clientX: centerX,
+      clientY: endY,
     });
 
     await page.waitForTimeout(500);

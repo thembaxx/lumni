@@ -7,7 +7,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
@@ -36,14 +35,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
     return "system";
   });
-  const mounted = useRef(false);
-
   useEffect(() => {
-    mounted.current = true;
-  }, []);
-
-  useEffect(() => {
-    if (!mounted.current) return;
     try {
       localStorage.setItem("theme", theme);
       // biome-ignore lint/suspicious/noDocumentCookie: Cookie needed for server-side theme detection
@@ -73,7 +65,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   useEffect(() => {
-    if (!mounted.current) return;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
       if (theme === "system") {

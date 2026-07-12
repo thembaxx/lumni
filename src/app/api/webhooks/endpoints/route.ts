@@ -1,6 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { createRegistry } from "@/lib/webhooks";
-import { dexieDataAccess } from "@/lib/db";
+import { InMemoryDataAccess } from "@/lib/db";
 import { z } from "zod";
 
 const endpointSchema = z.object({
@@ -9,7 +9,8 @@ const endpointSchema = z.object({
   description: z.string().optional(),
 });
 
-const registry = createRegistry(dexieDataAccess);
+const serverDb = new InMemoryDataAccess();
+const registry = createRegistry(serverDb);
 
 export const GET = createRouteHandler({
   auth: "required",

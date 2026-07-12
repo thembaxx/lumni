@@ -109,7 +109,7 @@ export default function UploadContent() {
                   <div
                     className={`rounded-(--radius-button) p-(--space-3) text-center text-xs ${
                       syncStatus === "syncing"
-                        ? "bg-accent/10 text-accent"
+                        ? "bg-accent/10 text-foreground"
                         : syncStatus === "done"
                           ? "bg-success/10 text-success"
                           : "bg-destructive/10 text-destructive"

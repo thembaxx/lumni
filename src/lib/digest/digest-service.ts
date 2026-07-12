@@ -1,5 +1,5 @@
 import type { DataAccess } from "@/lib/db/data-access";
-import { PushDeliveryService } from "@/lib/services";
+import { PushDeliveryService } from "@/lib/services/push-delivery";
 import { logError } from "@/lib/shared/logger";
 
 export interface WeeklyStats {

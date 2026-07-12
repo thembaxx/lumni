@@ -10,9 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useDataPrefetch } from "@/hooks/use-data-prefetch";
-import { usePathname, Link, useRouter } from "@/i18n/navigation";
+import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
 import { getPrimaryItems } from "@/lib/navigation/config";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
 interface BottomNavItem {
@@ -112,7 +113,7 @@ const NavItemComponent = memo(function NavItemComponent({
 
 const BottomNav = memo(function BottomNav() {
   const pathname = usePathname();
-  const router = useRouter();
+  const { push: navigate } = useNavigationDirection();
   const { isImmersive } = useImmersiveMode();
 
   const isAuthPage = pathname.startsWith("/auth");
@@ -164,7 +165,7 @@ const BottomNav = memo(function BottomNav() {
 
           <m.button
             type="button"
-            onClick={() => router.push("/tools")}
+            onClick={() => navigate("/tools")}
             aria-label="All tools"
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
