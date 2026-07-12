@@ -53,7 +53,7 @@ const routes: RouteTest[] = [
   { path: "/lessons", label: "Lessons" },
 ];
 
-const authGatedPaths = new Set(["/exam", "/premium", "/dev", "/dashboard"]);
+const authGatedPaths = new Set(["/exam", "/premium", "/dev", "/dashboard", "/review"]);
 
 async function getContrastViolations(page: import("@playwright/test").Page) {
   const { AxeBuilder } = await import("@axe-core/playwright");
