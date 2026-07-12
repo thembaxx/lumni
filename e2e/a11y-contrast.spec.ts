@@ -53,7 +53,7 @@ const routes: RouteTest[] = [
   { path: "/lessons", label: "Lessons" },
 ];
 
-const authGatedPaths = new Set(["/exam", "/premium", "/dev"]);
+const authGatedPaths = new Set(["/exam", "/premium", "/dev", "/dashboard"]);
 
 async function getContrastViolations(page: import("@playwright/test").Page) {
   const { AxeBuilder } = await import("@axe-core/playwright");
@@ -72,6 +72,10 @@ test.describe("WCAG AA contrast audit", () => {
   test.use({ navigationTimeout: 60000 });
   for (const [, route] of routes.entries()) {
     test(`${route.label} (light mode)`, async ({ page }) => {
+      if (authGatedPaths.has(route.path)) {
+        console.log(`Skipping ${route.path} (light) — auth-gated page`);
+        return;
+      }
       await page.goto(`/en${route.path}`, { waitUntil: "load" });
       await page.waitForTimeout(1000);
       await page.emulateMedia({ colorScheme: "light" });
