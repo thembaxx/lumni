@@ -99,7 +99,7 @@ test.describe("WCAG AA contrast audit", () => {
       }
       await page
         .goto(`/en${route.path}`, { waitUntil: "domcontentloaded", timeout: 15000 })
-        .catch(() => {});
+        .catch((e) => console.log(`Navigation error on ${route.path} (dark): ${e}`));
       await page.waitForTimeout(1000);
       await page.emulateMedia({ colorScheme: "dark" });
       const isDark = await page
