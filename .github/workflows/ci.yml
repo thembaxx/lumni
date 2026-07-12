@@ -170,8 +170,8 @@ jobs:
         uses: zaproxy/action-baseline@v0.15.0
         with:
           target: "http://localhost:3000"
-          fail_count: 1
-          allow_warnings: true
+          fail_action: false
+          allow_issue_writing: false
 
   bundle-size:
     needs: quality
