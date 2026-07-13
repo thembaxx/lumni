@@ -12,106 +12,113 @@ export async function SiteFooter() {
   const CURRENT_YEAR = new Date().getFullYear();
 
   return (
-    <footer className="border-border/50 border-t py-12">
+    <footer className="border-border/20 border-t py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <Link href="/" className="py-1.5 font-bold text-lg tracking-tight">
+        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+          <div className="max-w-xs">
+            <Link href="/" className="font-extrabold text-lg tracking-tight">
               {t("footerBrand")}
             </Link>
-            <p className="mt-2 max-w-xs text-muted-foreground text-sm">{t("footerDesc")}</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("footerDesc")}</p>
           </div>
-          <div>
-            <h4 className="mb-3 font-semibold text-sm">{t("footerProduct")}</h4>
-            <div className="flex flex-col text-muted-foreground text-sm">
-              <Link
-                href="/quiz"
-                prefetch={true}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerQuiz")}
-              </Link>
-              <Link
-                href="/past-papers"
-                prefetch={true}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerPapers")}
-              </Link>
-              <Link
-                href="/flashcards"
-                prefetch={true}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerFlashcards")}
-              </Link>
-              <Link
-                href="/study-plan"
-                prefetch={true}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerPlan")}
-              </Link>
-              <Link
-                href="/solve"
-                prefetch={true}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerHomework")}
-              </Link>
+
+          <div className="grid grid-cols-2 gap-10 md:grid-cols-3">
+            <div>
+              <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+                {t("footerProduct")}
+              </h4>
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <Link
+                  href="/quiz"
+                  prefetch={true}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerQuiz")}
+                </Link>
+                <Link
+                  href="/past-papers"
+                  prefetch={true}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerPapers")}
+                </Link>
+                <Link
+                  href="/flashcards"
+                  prefetch={true}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerFlashcards")}
+                </Link>
+                <Link
+                  href="/study-plan"
+                  prefetch={true}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerPlan")}
+                </Link>
+                <Link
+                  href="/solve"
+                  prefetch={true}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerHomework")}
+                </Link>
+              </div>
             </div>
-          </div>
-          <div>
-            <h4 className="mb-3 font-semibold text-sm">{t("footerSupport")}</h4>
-            <div className="flex flex-col text-muted-foreground text-sm">
-              <a
-                href={appConfig.links.support}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t("footerHelp")}
-                <span className="sr-only">{t("opensInNewTab")}</span>
-              </a>
-              <a
-                href={`mailto:${appConfig.contact.supportEmail}`}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerEmail")}
-              </a>
-              <Link
-                href={appConfig.links.privacy}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerPrivacy")}
-              </Link>
-              <Link
-                href={appConfig.links.terms}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerTerms")}
-              </Link>
-              <Link
-                href={appConfig.links.cookiePolicy}
-                className="min-h-11 py-1.5 transition-colors hover:text-foreground"
-              >
-                {t("footerCookies")}
-              </Link>
+
+            <div>
+              <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+                {t("footerSupport")}
+              </h4>
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <a
+                  href={appConfig.links.support}
+                  className="transition-colors hover:text-foreground"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("footerHelp")}
+                  <span className="sr-only">{t("opensInNewTab")}</span>
+                </a>
+                <a
+                  href={`mailto:${appConfig.contact.supportEmail}`}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerEmail")}
+                </a>
+                <Link
+                  href={appConfig.links.privacy}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerPrivacy")}
+                </Link>
+                <Link
+                  href={appConfig.links.terms}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerTerms")}
+                </Link>
+                <Link
+                  href={appConfig.links.cookiePolicy}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("footerCookies")}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
-          <p className="text-muted-foreground text-xs">
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-border/20 border-t pt-8 sm:flex-row">
+          <p className="text-xs text-muted-foreground/60">
             &copy; {CURRENT_YEAR} Lumni. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <a
-              href={`mailto:${appConfig.contact.email}`}
-              className="min-h-11 py-1.5 text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <span className="text-xs">{t("footerContact")}</span>
-            </a>
-          </div>
+          <a
+            href={`mailto:${appConfig.contact.email}`}
+            className="text-xs text-muted-foreground/60 transition-colors hover:text-foreground"
+          >
+            {t("footerContact")}
+          </a>
         </div>
       </div>
     </footer>

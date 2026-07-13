@@ -125,7 +125,7 @@ function SectionHeading({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex size-8 items-center justify-center rounded-xl bg-system-accent/10">
+      <div className="flex size-9 items-center justify-center rounded-2xl bg-system-accent/10 shadow-level-1">
         <HugeiconsIcon icon={icon} size={16} className="text-system-accent" />
       </div>
       <div>
@@ -191,8 +191,8 @@ export function DashboardView({ boltStreak, onStartQuiz }: DashboardViewProps) {
 
         {isLoggedIn && (
           <>
-            <section aria-label="Today">
-              <div className="mb-4">
+            <section aria-label="Daily overview">
+              <div className="mb-5">
                 <SectionHeading
                   icon={SparklesIcon}
                   label="Today"

@@ -6,7 +6,7 @@ import Quiz01Icon from "@hugeicons/core-free-icons/Quiz01Icon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -44,9 +44,6 @@ const AnimatedStatsSection = dynamic(
   { ssr: false },
 );
 
-/**
- * Easter egg: type "matric" anywhere → confetti celebration
- */
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [, setBuffer] = useState("");
@@ -87,16 +84,16 @@ function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: ()
 
   return (
     <div
-      className="fixed inset-0 z-(--z-toast) pointer-events-none"
+      className="pointer-events-none fixed inset-0 z-(--z-toast)"
       onClick={onDismiss}
       role="presentation"
     >
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex items-center gap-3 rounded-2xl bg-foreground/10 backdrop-blur-xl px-6 py-4 border border-border/30 shadow-level-3 animate-fade-in-scale">
+        <div className="flex items-center gap-3 rounded-2xl border border-border/30 bg-foreground/10 px-6 py-4 shadow-level-3 backdrop-blur-xl animate-fade-in-scale">
           <HugeiconsIcon icon={StarIcon} className="size-8 text-primary" />
           <div>
             <p className="font-bold text-lg">You got this!</p>
-            <p className="text-muted-foreground text-sm">Keep studying, you're doing great!</p>
+            <p className="text-sm text-muted-foreground">Keep studying, you&apos;re doing great!</p>
           </div>
         </div>
       </div>
@@ -129,9 +126,25 @@ export function HomeContent() {
     authReady && status === "authenticated" && user?.labels?.includes("anonymous") === true;
   const handleLogoClick = useLogoEasterEgg();
   const { showConfetti, dismissConfetti } = useMatricEasterEgg();
+  const [scrolled, setScrolled] = useState(false);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 40);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <main className="relative min-h-dvh overflow-x-clip pb-16">
+    <main className="relative min-h-dvh w-full max-w-full overflow-x-clip">
       <MeshAurora variant="hero" intensity={0.7} className="fixed inset-0 -z-10" />
       <AmbientGradient variant="hero" />
       <NoiseOverlay opacity={0.02} />
@@ -143,57 +156,84 @@ export function HomeContent() {
       >
         {t("home.skipToContent")}
       </a>
-      <nav className="glass-thin fixed top-0 right-0 left-0 z-header border-border/50 border-b">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-          <button
-            type="button"
-            onClick={handleLogoClick}
-            className="flex cursor-pointer items-center gap-2 py-2 font-bold text-lg tracking-tight transition-colors"
+
+      <nav
+        className={`fixed top-4 right-0 left-0 z-header mx-auto flex w-fit items-center justify-center gap-6 rounded-full border px-4 py-2 transition-all duration-500 ${
+          scrolled
+            ? "border-border/20 bg-card/80 shadow-level-2 backdrop-blur-xl"
+            : "border-transparent bg-transparent"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={handleLogoClick}
+          className="flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors"
+        >
+          <div className="flex size-6 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
+            <HugeiconsIcon icon={StarIcon} className="size-3.5 text-primary-foreground" />
+          </div>
+          <span>{t("home.brand")}</span>
+        </button>
+
+        <div className="hidden items-center gap-1 md:flex" role="list">
+          <Link
+            href="/quiz"
+            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
-              <HugeiconsIcon icon={StarIcon} className="size-4 text-primary-foreground" />
-            </div>
-            <span>{t("home.brand")}</span>
-          </button>
-          <div
-            className="flex items-center gap-1.5"
-            key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}
+            Quiz
+          </Link>
+          <Link
+            href="/past-papers"
+            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
-            {isAuthenticated ? (
-              <Button asChild size="sm" className="flex items-center">
-                <Link href="/dashboard" prefetch={true}>
-                  <HugeiconsIcon icon={Activity02Icon} className="size-5" />
-                  {t("home.navDashboard")}
+            Papers
+          </Link>
+          <Link
+            href="/flashcards"
+            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Flashcards
+          </Link>
+        </div>
+
+        <div
+          className="flex items-center gap-1.5"
+          key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}
+        >
+          {isAuthenticated ? (
+            <Button asChild size="sm" className="flex items-center rounded-full">
+              <Link href="/dashboard" prefetch={true}>
+                <HugeiconsIcon icon={Activity02Icon} className="size-4" />
+                {t("home.navDashboard")}
+              </Link>
+            </Button>
+          ) : isAnonymous ? (
+            <>
+              <Button asChild size="sm" variant="ghost" className="flex items-center rounded-full">
+                <Link href="/quiz" prefetch={true}>
+                  <HugeiconsIcon icon={Quiz01Icon} className="size-4" />
+                  {t("home.navTryQuiz")}
                 </Link>
               </Button>
-            ) : isAnonymous ? (
-              <>
-                <Button asChild size="sm" variant="ghost" className="flex items-center">
-                  <Link href="/quiz" prefetch={true}>
-                    <HugeiconsIcon icon={Quiz01Icon} className="size-5" />
-                    {t("home.navTryQuiz")}
-                  </Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link href="/dashboard" prefetch={true}>
-                    {t("home.navGetStarted")}
-                  </Link>
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button asChild variant="ghost" size="sm">
-                  <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link href="/dashboard" prefetch={true}>
-                    {t("home.navGetStarted")}
-                    <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
-                  </Link>
-                </Button>
-              </>
-            )}
-          </div>
+              <Button asChild size="sm" className="rounded-full">
+                <Link href="/dashboard" prefetch={true}>
+                  {t("home.navGetStarted")}
+                </Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild variant="ghost" size="sm" className="rounded-full">
+                <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
+              </Button>
+              <Button asChild size="sm" className="rounded-full">
+                <Link href="/dashboard" prefetch={true}>
+                  {t("home.navGetStarted")}
+                  <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
       </nav>
 

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { m } from "motion/react";
 import { useTranslations } from "next-intl";
+import { useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   const [display, setDisplay] = useState(0);
@@ -32,7 +34,7 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
       { threshold: 0.3 },
     );
 
-    observer.observe(el);
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [value]);
 
@@ -45,64 +47,45 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 }
 
 const ACHIEVEMENTS = [
-  { value: 14, suffix: "", label: "statSubjects", icon: "📘" },
-  { value: 5, suffix: " years", label: "statPapers", icon: "📄" },
-  { value: 1, suffix: "M+", label: "statQuestions", icon: "🧠" },
-  { value: 0, suffix: "", label: "statFree", icon: "✓" },
+  { value: 14, suffix: "", label: "statSubjects" },
+  { value: 5, suffix: " years", label: "statPapers" },
+  { value: 1, suffix: "M+", label: "statQuestions" },
+  { value: 0, suffix: "", label: "statFree" },
 ];
 
 export function AnimatedStatsSection() {
   const t = useTranslations("home");
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section ref={ref} className="relative py-16 md:py-20">
+    <section className="relative overflow-hidden border-y border-border/20 py-20 md:py-28">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-system-accent/3 via-transparent to-system-accent/3" />
+
       <div className="mx-auto max-w-6xl px-4">
-        <div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
           {ACHIEVEMENTS.map((stat, i) => (
-            <div
+            <m.div
               key={stat.label}
-              className="flex flex-col items-center gap-2 p-4 text-center"
-              style={{
-                opacity: 0,
-                animation: visible
-                  ? `fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.12}s forwards`
-                  : "none",
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.5,
+                delay: prefersReducedMotion ? 0 : i * 0.12,
               }}
+              className="flex flex-col items-center gap-2 text-center"
             >
-              <span className="font-heading text-3xl font-bold tracking-tight text-primary">
+              <span className="font-heading text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
                 {stat.value > 0 ? (
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 ) : (
                   "Free"
                 )}
               </span>
-              <span className="text-balance text-muted-foreground text-sm">{t(stat.label)}</span>
-            </div>
+              <span className="text-balance text-sm text-muted-foreground md:text-base">
+                {t(stat.label)}
+              </span>
+            </m.div>
           ))}
         </div>
       </div>

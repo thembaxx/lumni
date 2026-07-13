@@ -29,7 +29,15 @@ export function DashboardContent({
   return (
     <div id={id} className="flex h-full w-full flex-col overflow-y-auto bg-system-grouped">
       <AmbientGradient variant="dashboard" />
-      <PageContainer className="gap-4 pb-24 sm:pb-28 lg:pb-32 sm:gap-5 lg:gap-6">
+      <div
+        className="pointer-events-none fixed top-1/4 right-0 h-96 w-96 rounded-full bg-system-accent/3 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed bottom-1/4 left-0 h-64 w-64 rounded-full bg-system-accent/3 blur-3xl"
+        aria-hidden="true"
+      />
+      <PageContainer className="relative z-elevated gap-4 pb-24 sm:pb-28 lg:pb-32 sm:gap-5 lg:gap-6">
         <LoginBanner />
         <DashboardView boltStreak={boltStreak} onStartQuiz={onStartQuiz} />
       </PageContainer>
