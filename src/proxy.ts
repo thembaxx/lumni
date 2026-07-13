@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { defaultLocale, locales } from "./i18n/locales";
+import { buildCsp } from "@/lib/csp";
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -12,7 +13,6 @@ const intlMiddleware = createMiddleware({
 
 const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
 
-// Non-locale page routes (outside [locale] directory) that should bypass intlMiddleware
 const NON_LOCALE_PAGES = ["/offline", "/q", "/ghost"];
 
 function getProjectCookieName(): string {
@@ -35,18 +35,26 @@ function stripLocale(pathname: string): string {
 }
 
 export function proxy(request: NextRequest) {
+  const nonce = crypto.randomUUID();
+
   const { pathname } = request.nextUrl;
 
   const isApiRoute = pathname.startsWith("/api/");
   if (isApiRoute) {
-    return;
+    const response = NextResponse.next({ request });
+    response.headers.set("Content-Security-Policy", buildCsp(nonce));
+    response.headers.set("x-csp-nonce", nonce);
+    return response;
   }
 
   const isNonLocalePage = NON_LOCALE_PAGES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );
   if (isNonLocalePage) {
-    return;
+    const response = NextResponse.next({ request });
+    response.headers.set("Content-Security-Policy", buildCsp(nonce));
+    response.headers.set("x-csp-nonce", nonce);
+    return response;
   }
 
   const strippedPath = stripLocale(pathname);
@@ -64,6 +72,8 @@ export function proxy(request: NextRequest) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow");
   }
 
+  response.headers.set("Content-Security-Policy", buildCsp(nonce));
+  response.headers.set("x-csp-nonce", nonce);
   return response;
 }
 
