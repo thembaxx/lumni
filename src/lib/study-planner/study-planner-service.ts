@@ -69,10 +69,7 @@ export class StudyPlannerService {
   private async getAllSubjectsCompetency(): Promise<SubjectCompetency[]> {
     const results = await Promise.allSettled(
       KNOWN_SUBJECTS.map(async (subject) => {
-        const [summary, records] = await Promise.all([
-          this.competencyService.getMasterySummary(subject.id),
-          this.competencyService.getCompetencies(subject.id),
-        ]);
+        const records = await this.competencyService.getCompetencies(subject.id);
         const topicIds: string[] = [];
         const completedTopics: string[] = [];
         for (const r of records) {
@@ -86,7 +83,8 @@ export class StudyPlannerService {
 
         return {
           subjectId: subject.id,
-          level: summary.averageScore,
+          level:
+            records.length > 0 ? records.reduce((sum, r) => sum + r.score, 0) / records.length : 50,
           targetLevel: 80,
           weight: 1 / KNOWN_SUBJECTS.length,
           topics: uniqueTopics,

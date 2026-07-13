@@ -12,8 +12,8 @@ export function parseDuration(duration: string): number {
 
 export function getCorrectAnswerText(part: QuestionPart): string {
   if (part.options) {
-    const correct = part.options.find((o) => o.isCorrect);
-    return correct ? `${correct.id}. ${correct.text}` : "";
+    const correct = part.options.filter((o) => o.isCorrect);
+    return correct.length > 0 ? correct.map((o) => `${o.id}. ${o.text}`).join("; ") : "";
   }
   return "";
 }

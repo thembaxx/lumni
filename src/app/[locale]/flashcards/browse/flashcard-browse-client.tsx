@@ -11,7 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { motionEase } from "@/lib/utils/animation";
 import { PageContainer } from "@/components/layout/page-container";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
@@ -70,7 +70,7 @@ export function FlashcardBrowseClient() {
   });
   const { search, subjectFilter, page } = filters;
   const [status, setStatus] = useState<LoadingStatus>("loading");
-  const [cards, setCards] = useState<FlashcardSM2[]>([]);
+  const [allCards, setAllCards] = useState<FlashcardSM2[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const nowRef = useRef<number | null>(null);
   if (nowRef.current === null) nowRef.current = Date.now();
@@ -82,24 +82,25 @@ export function FlashcardBrowseClient() {
     setStatus("loading");
     try {
       const all = await flashcardEngine.getAll(subjectFilter !== "all" ? subjectFilter : undefined);
-      const filtered = search
-        ? all.filter(
-            (c) =>
-              c.front.toLowerCase().includes(search.toLowerCase()) ||
-              c.back.toLowerCase().includes(search.toLowerCase()),
-          )
-        : all;
-      setCards(filtered);
+      setAllCards(all);
       const uniqueSubjects = [...new Set(all.map((c) => c.subject))].toSorted();
       setSubjects(uniqueSubjects);
     } finally {
       setStatus("idle");
     }
-  }, [search, subjectFilter]);
+  }, [subjectFilter]);
 
   useEffect(() => {
     loadCards();
   }, [loadCards]);
+
+  const cards = useMemo(() => {
+    if (!search) return allCards;
+    const q = search.toLowerCase();
+    return allCards.filter(
+      (c) => c.front.toLowerCase().includes(q) || c.back.toLowerCase().includes(q),
+    );
+  }, [allCards, search]);
 
   const handleDelete = async (id: string) => {
     await flashcardEngine.delete(id);

@@ -99,19 +99,23 @@ function TabPanel({
   children,
   isActive,
   tabKey,
+  isForward = true,
 }: {
   children: React.ReactNode;
   isActive: boolean;
   tabKey: string;
+  isForward?: boolean;
 }) {
+  const xFrom = isForward ? 20 : -20;
+  const xTo = isForward ? -20 : 20;
   return (
     <AnimatePresence mode="wait" initial={false}>
       {isActive && (
         <m.div
           key={tabKey}
-          initial={{ x: 20, opacity: 0 }}
+          initial={{ x: xFrom, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -20, opacity: 0 }}
+          exit={{ x: xTo, opacity: 0 }}
           transition={springPresets.fast}
         >
           {children}
@@ -126,6 +130,7 @@ function SettingsContent() {
   const { user, isAnonymous } = useAuth();
   const isLoggedIn = !!user && !isAnonymous;
   const [activeTab, setActiveTab] = useState("profile");
+  const [isForward, setIsForward] = useState(true);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -143,6 +148,8 @@ function SettingsContent() {
       ),
     [isLoggedIn, t],
   );
+
+  const tabOrder = useMemo(() => visibleTabs.map((t) => t.value), [visibleTabs]);
 
   const [appSettings, setAppSettings] = useState<HydratedSettings>({
     studyPrefs: null as unknown as StudyPreferences,
@@ -175,13 +182,15 @@ function SettingsContent() {
 
   const handleSetActiveTab = useCallback(
     (tab: string) => {
-      if (!isLoggedIn && tab === "referrals") {
-        setActiveTab("profile");
-      } else {
-        setActiveTab(tab);
+      const target = !isLoggedIn && tab === "referrals" ? "profile" : tab;
+      const oldIdx = tabOrder.indexOf(activeTab);
+      const newIdx = tabOrder.indexOf(target);
+      if (oldIdx !== -1 && newIdx !== -1) {
+        setIsForward(newIdx > oldIdx);
       }
+      setActiveTab(target);
     },
-    [isLoggedIn],
+    [isLoggedIn, tabOrder, activeTab],
   );
 
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -287,25 +296,29 @@ function SettingsContent() {
         </nav>
 
         <SpotlightCard className="flex-1 pt-4 md:pb-6" radius={500}>
-          <TabPanel isActive={activeTab === "profile"} tabKey="profile">
+          <TabPanel isActive={activeTab === "profile"} tabKey="profile" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "appearance"} tabKey="appearance">
+          <TabPanel isActive={activeTab === "appearance"} tabKey="appearance" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-appearance" aria-labelledby="tab-appearance">
               <AppearanceTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "study"} tabKey="study">
+          <TabPanel isActive={activeTab === "study"} tabKey="study" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-study" aria-labelledby="tab-study">
               <StudyTab studyPrefs={studyPrefs} onStudyPrefsChange={setStudyPrefs} />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "notifications"} tabKey="notifications">
+          <TabPanel
+            isActive={activeTab === "notifications"}
+            tabKey="notifications"
+            isForward={isForward}
+          >
             <div role="tabpanel" id="tabpanel-notifications" aria-labelledby="tab-notifications">
               <NotificationsTab
                 notifications={notifications}
@@ -314,25 +327,29 @@ function SettingsContent() {
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "privacy"} tabKey="privacy">
+          <TabPanel isActive={activeTab === "privacy"} tabKey="privacy" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-privacy" aria-labelledby="tab-privacy">
               <PrivacyTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "data"} tabKey="data">
+          <TabPanel isActive={activeTab === "data"} tabKey="data" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data">
               <DataTab onExport={handleExportData} onClear={() => setShowClearConfirm(true)} />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "sync"} tabKey="sync">
+          <TabPanel isActive={activeTab === "sync"} tabKey="sync" isForward={isForward}>
             <div role="tabpanel" id="tabpanel-sync" aria-labelledby="tab-sync">
               <SyncTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "referrals" && isLoggedIn} tabKey="referrals">
+          <TabPanel
+            isActive={activeTab === "referrals" && isLoggedIn}
+            tabKey="referrals"
+            isForward={isForward}
+          >
             <div role="tabpanel" id="tabpanel-referrals" aria-labelledby="tab-referrals">
               {isLoggedIn && <ReferralTab />}
             </div>
