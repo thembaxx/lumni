@@ -2,7 +2,7 @@
 
 import ArrowLeft01Icon from "@hugeicons/core-free-icons/ArrowLeft01Icon";
 import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
-import QuoteIcon from "@hugeicons/core-free-icons/QuoteIcon";
+import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import { AnimatePresence } from "motion/react";
@@ -78,7 +78,7 @@ export function TestimonialsSection() {
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex items-start gap-4">
               <div className="mt-1 shrink-0">
-                <HugeiconsIcon icon={QuoteIcon} className="size-6 text-primary/40" />
+                <HugeiconsIcon icon={Chat01Icon} className="size-6 text-primary/40" />
               </div>
               <AnimatePresence mode="wait">
                 <m.div
