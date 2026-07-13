@@ -2,6 +2,7 @@
 
 import { logError } from "@/lib/shared/logger";
 import type { SyncStatus } from "@/lib/sync";
+import { initSyncWriters } from "@/lib/sync";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseSyncReturn {
@@ -19,8 +20,14 @@ export function useSync(userId?: string | null): UseSyncReturn {
   });
   const [isSyncing, setIsSyncing] = useState(false);
   const serviceRef = useRef<ReturnType<typeof import("@/lib/sync").createSyncService> | null>(null);
+  const initRef = useRef(false);
 
   useEffect(() => {
+    if (!initRef.current) {
+      initRef.current = true;
+      initSyncWriters().catch((e) => logError("SyncWritersInit", e));
+    }
+
     if (!userId) return;
 
     let cancelled = false;

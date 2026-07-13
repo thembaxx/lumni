@@ -1,4 +1,4 @@
 export { createSyncService } from "./service";
-export { enqueueOutbox } from "./outbox";
-export { wrapTableForSync, isSyncableTable } from "./sync-writer";
+export { enqueueOutbox, enqueueOutbox as enqueue } from "./outbox";
+export { initSyncWriters, isSyncableTableName, wrapTableForSync } from "./sync-writer";
 export type { SyncStatus } from "./types";

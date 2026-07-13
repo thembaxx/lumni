@@ -11,8 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
-import { createSyncService } from "@/lib/sync";
-import { wrapTableForSync } from "@/lib/sync/sync-writer";
+import { createSyncService, initSyncWriters } from "@/lib/sync";
 import type { SyncStatus, SyncService } from "@/lib/sync/types";
 
 interface SyncContextValue {
@@ -34,34 +33,12 @@ export function SyncProvider({ children }: { children: ReactNode }) {
   });
   const [pendingCount, setPendingCount] = useState(0);
   const serviceRef = useRef<SyncService | null>(null);
-  const wrappedRef = useRef(false);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    if (wrappedRef.current || typeof window === "undefined") return;
-    wrappedRef.current = true;
-
-    import("@/lib/db/dexie-data-access")
-      .then(({ dexieDataAccess }) => {
-        // oxlint-disable-next-line typescript/no-explicit-any
-        const tables: any = [
-          { name: "flashcards", table: dexieDataAccess.flashcards },
-          { name: "notes", table: dexieDataAccess.notes },
-          { name: "competencies", table: dexieDataAccess.competencies },
-          { name: "gamification", table: dexieDataAccess.gamification },
-          { name: "retentionRecurrence", table: dexieDataAccess.retentionRecurrence },
-          { name: "wrongAnswers", table: dexieDataAccess.wrongAnswers },
-          { name: "chatMessages", table: dexieDataAccess.chatMessages },
-          { name: "questionRatings", table: dexieDataAccess.questionRatings },
-          { name: "bookmarks", table: dexieDataAccess.bookmarks },
-          { name: "examSessions", table: dexieDataAccess.examSessions },
-          { name: "quizAttempts", table: dexieDataAccess.quizAttempts },
-          { name: "studyPlans", table: dexieDataAccess.studyPlans },
-        ];
-        for (const { name, table } of tables) {
-          wrapTableForSync(name, table);
-        }
-      })
-      .catch(() => {});
+    if (initializedRef.current || typeof window === "undefined") return;
+    initializedRef.current = true;
+    initSyncWriters().catch(() => {});
   }, []);
 
   useEffect(() => {

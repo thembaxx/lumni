@@ -1,6 +1,7 @@
 import type { DataAccessTable } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { getPendingOutboxEntries, incrementRetry, removeOutboxEntries } from "./outbox";
+import { initSyncWriters } from "./sync-writer";
 import type { SyncResult, SyncService, SyncStatus } from "./types";
 
 export function createSyncService(userId: () => string | null): SyncService {
@@ -8,6 +9,7 @@ export function createSyncService(userId: () => string | null): SyncService {
   let lastSyncAt: number | null = null;
   let lastError: string | null = null;
   let intervalId: ReturnType<typeof setInterval> | null = null;
+  let cleanupOnline: (() => void) | null = null;
   const listeners = new Set<(status: SyncStatus) => void>();
 
   function notify() {
@@ -202,7 +204,19 @@ export function createSyncService(userId: () => string | null): SyncService {
     state = "idle";
     notify();
 
+    initSyncWriters().catch((err) => logError("Sync.initWriters", err));
+
+    cleanupOnline = () => {
+      trigger().catch((err) => logError("Sync.online", err));
+    };
+    window.addEventListener("online", cleanupOnline);
+
     trigger().catch((err) => logError("Sync.start", err));
+
+    const handleOnline = () => {
+      trigger().catch((err) => logError("Sync.online", err));
+    };
+    window.addEventListener("online", handleOnline);
 
     intervalId = setInterval(
       () => {
@@ -210,12 +224,22 @@ export function createSyncService(userId: () => string | null): SyncService {
       },
       5 * 60 * 1000,
     );
+
+    const cleanup = () => {
+      window.removeEventListener("online", handleOnline);
+    };
+
+    return cleanup;
   }
 
   function stop() {
     if (intervalId) {
       clearInterval(intervalId);
       intervalId = null;
+    }
+    if (cleanupOnline) {
+      window.removeEventListener("online", cleanupOnline);
+      cleanupOnline = null;
     }
     state = "idle";
     notify();
