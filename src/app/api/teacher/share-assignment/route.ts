@@ -1,4 +1,5 @@
-import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { isTeacher } from "@/lib/server/auth";
 import { shareAssignment } from "@/lib/share/share-service";
 
 export const POST = createRouteHandler({
@@ -19,6 +20,7 @@ export const POST = createRouteHandler({
     };
     userId: string | null;
   }) => {
+    if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
     const result = await shareAssignment(
       body.assignmentId,
       body.topic,

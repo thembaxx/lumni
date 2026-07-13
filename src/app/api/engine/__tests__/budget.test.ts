@@ -72,7 +72,7 @@ describe("GET /api/engine/budget", () => {
     expect(body.user.id).toBe("10.0.0.1");
   });
 
-  test("falls back to anonymous when no IP headers present", async () => {
+  test("falls back to unknown when no IP headers present", async () => {
     mockGetUsage.mockReturnValue({
       generate: { count: 0, tokens: 0 },
       grade: { count: 0, tokens: 0 },
@@ -86,10 +86,10 @@ describe("GET /api/engine/budget", () => {
     const res = await GET(req);
     const body = await res.json();
 
-    expect(body.user.id).toBe("anonymous");
+    expect(body.user.id).toBe("unknown");
   });
 
-  test("takes first IP from comma-separated x-forwarded-for", async () => {
+  test("takes rightmost IP from comma-separated x-forwarded-for", async () => {
     mockGetUsage.mockReturnValue({
       generate: { count: 0, tokens: 0 },
       grade: { count: 0, tokens: 0 },
@@ -105,7 +105,7 @@ describe("GET /api/engine/budget", () => {
     const res = await GET(req);
     const body = await res.json();
 
-    expect(body.user.id).toBe("192.168.1.1");
+    expect(body.user.id).toBe("10.0.0.1");
   });
 
   test("calls dailyCallTracker with correct user ID", async () => {

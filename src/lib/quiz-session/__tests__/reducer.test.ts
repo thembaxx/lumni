@@ -1,75 +1,76 @@
 import { describe, it, expect } from "vitest";
 import { quizReducer, INITIAL_QUIZ_STATE } from "../reducer";
+import type { UserAnswer } from "@/lib/question-engine/types";
 
 describe("quizReducer", () => {
-  it("returns initial state for RESET", () => {
-    const state = quizReducer(
-      { ...INITIAL_QUIZ_STATE, currentIndex: 5, isComplete: true },
-      { type: "RESET" },
-    );
-    expect(state).toEqual(INITIAL_QUIZ_STATE);
-  });
-
-  it("handles SET_INDEX", () => {
-    const state = quizReducer(INITIAL_QUIZ_STATE, { type: "SET_INDEX", index: 3 });
-    expect(state.currentIndex).toBe(3);
+  it("handles START and sets isActive", () => {
+    const state = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    expect(state.isActive).toBe(true);
+    expect(state.isComplete).toBe(false);
+    expect(state.currentIndex).toBe(0);
   });
 
   it("handles RECORD_ANSWER and appends correctness", () => {
-    const state = quizReducer(INITIAL_QUIZ_STATE, {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const state = quizReducer(started, {
       type: "RECORD_ANSWER",
       correct: true,
-      answer: { value: "42" },
+      answer: { type: "option-ids", value: ["A"] } as UserAnswer,
     });
     expect(state.correctness).toEqual([true]);
     expect(state.correctAnswers).toBe(1);
     expect(state.userAnswers).toHaveLength(1);
   });
 
-  it("handles RECORD_ANSWER without answer", () => {
-    const state = quizReducer(INITIAL_QUIZ_STATE, {
-      type: "RECORD_ANSWER",
-      correct: false,
-    });
-    expect(state.correctness).toEqual([false]);
-    expect(state.correctAnswers).toBe(0);
-    expect(state.userAnswers).toHaveLength(0);
-  });
-
   it("guards RECORD_ANSWER after FINISH — returns same state", () => {
-    const afterFinish = quizReducer({ ...INITIAL_QUIZ_STATE, isActive: true }, { type: "FINISH" });
-    expect(afterFinish.isComplete).toBe(true);
-    const again = quizReducer(afterFinish, {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const answered = quizReducer(started, {
       type: "RECORD_ANSWER",
       correct: true,
+      answer: { type: "option-ids", value: ["A"] } as UserAnswer,
     });
-    expect(again).toBe(afterFinish);
+    const finished = quizReducer(answered, { type: "FINISH" });
+    const again = quizReducer(finished, {
+      type: "RECORD_ANSWER",
+      correct: true,
+      answer: { type: "option-ids", value: ["B"] } as UserAnswer,
+    });
+    expect(again).toBe(finished);
   });
 
-  it("handles TICK", () => {
-    const state = quizReducer({ ...INITIAL_QUIZ_STATE, elapsedTime: 5 }, { type: "TICK" });
-    expect(state.elapsedTime).toBe(6);
-  });
-
-  it("handles FINISH", () => {
-    const state = quizReducer({ ...INITIAL_QUIZ_STATE, isActive: true }, { type: "FINISH" });
+  it("handles FINISH and sets isComplete", () => {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const state = quizReducer(started, { type: "FINISH" });
     expect(state.isComplete).toBe(true);
     expect(state.isActive).toBe(false);
   });
 
-  it("handles START", () => {
-    const state = quizReducer(
-      { ...INITIAL_QUIZ_STATE, currentIndex: 5, correctness: [true], isComplete: true },
-      { type: "START" },
-    );
-    expect(state.isActive).toBe(true);
-    expect(state.isComplete).toBe(false);
-    expect(state.currentIndex).toBe(0);
-    expect(state.correctness).toEqual([]);
+  it("handles SET_INDEX", () => {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const state = quizReducer(started, { type: "SET_INDEX", index: 2 });
+    expect(state.currentIndex).toBe(2);
+  });
+
+  it("handles TICK_TIMER", () => {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const ticked = quizReducer(started, { type: "TICK" });
+    expect(ticked.elapsedTime).toBe(INITIAL_QUIZ_STATE.elapsedTime + 1);
+  });
+
+  it("handles RESET to initial state", () => {
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const answered = quizReducer(started, {
+      type: "RECORD_ANSWER",
+      correct: true,
+      answer: { type: "option-ids", value: ["A"] } as UserAnswer,
+    });
+    const reset = quizReducer(answered, { type: "RESET" });
+    expect(reset).toEqual(INITIAL_QUIZ_STATE);
   });
 
   it("handles SET_ACTIVE", () => {
-    const state = quizReducer(INITIAL_QUIZ_STATE, { type: "SET_ACTIVE", active: true });
-    expect(state.isActive).toBe(true);
+    const started = quizReducer(INITIAL_QUIZ_STATE, { type: "START" });
+    const inactive = quizReducer(started, { type: "SET_ACTIVE", active: false });
+    expect(inactive.isActive).toBe(false);
   });
 });

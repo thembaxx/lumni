@@ -14,3 +14,12 @@ export async function syncDataSharingConsentFromService(userId: string): Promise
   const record = await userConsentService.get(userId);
   _dataSharingConsent = record?.dataSharing ?? false;
 }
+
+export async function getDataSharingConsentForUser(userId: string): Promise<boolean> {
+  try {
+    await syncDataSharingConsentFromService(userId);
+    return _dataSharingConsent;
+  } catch {
+    return false;
+  }
+}

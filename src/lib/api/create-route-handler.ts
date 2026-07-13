@@ -4,6 +4,7 @@ import { runWithAICallContext } from "@/lib/ai/call-context";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { getAuthenticatedUserId, requireAdmin } from "@/lib/server/auth";
+import { getDataSharingConsentForUser } from "@/lib/consent/ai-gate";
 import { logError } from "@/lib/shared/logger";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
@@ -209,9 +210,15 @@ export function createRouteHandler<
           params: resolvedParams,
           requestId,
         });
-      const result = aiContext
-        ? await runWithAICallContext(aiContext, invokeExecute)
-        : await invokeExecute();
+
+      // Resolve AI context: if not explicitly provided, derive consent from user record
+      const resolvedAiContext = aiContext
+        ? aiContext
+        : userId
+          ? { consentGranted: await getDataSharingConsentForUser(userId) }
+          : { consentGranted: false };
+
+      const result = await runWithAICallContext(resolvedAiContext, invokeExecute);
 
       if (budget) {
         try {
