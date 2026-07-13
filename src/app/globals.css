@@ -1098,7 +1098,6 @@ span.math:not(:empty)::after {
     opacity: 0;
   }
 }
-/* impeccable-disable bounce-easing -- intentional design-system pop */
 @keyframes bounce-pop {
   0% {
     opacity: 0;
@@ -1144,7 +1143,6 @@ span.math:not(:empty)::after {
     box-shadow: 0 0 0 8px var(--system-accent-alpha-10);
   }
 }
-/* impeccable-disable bounce-easing -- intentional design-system pop */
 @keyframes typing-bounce {
   0%,
   60%,
