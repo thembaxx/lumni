@@ -12,6 +12,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { motionEase } from "@/lib/utils/animation";
 import { PageContainer } from "@/components/layout/page-container";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { Badge } from "@/components/ui/badge";
@@ -58,8 +59,6 @@ function filtersReducer(
 }
 
 type LoadingStatus = "idle" | "loading" | "importing";
-
-const motionEase = [0.25, 0.1, 0.25, 1] as const;
 
 export function FlashcardBrowseClient() {
   const t = useTranslations();
@@ -138,9 +137,9 @@ export function FlashcardBrowseClient() {
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <m.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
         >
           <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
             {t("flashcards.browseTitle")}

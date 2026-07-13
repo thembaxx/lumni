@@ -1,11 +1,11 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { SocialDataAccess } from "@/lib/db/data-access";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 
 import type { UserConsent } from "@/types/user-consent";
 
 export interface UserConsentDependencies {
-  db: DataAccess;
+  db: SocialDataAccess;
   enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
 }
 

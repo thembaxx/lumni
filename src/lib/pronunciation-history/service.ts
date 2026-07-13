@@ -1,5 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { PronunciationDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
 export interface PronunciationScoreRecord {
@@ -15,9 +15,9 @@ export interface PronunciationScoreRecord {
 }
 
 const DEFAULT_DEPS = Object.freeze({ db: dexieDataAccess });
-let _deps: { db: Pick<DataAccess, "pronunciationHistory"> } = DEFAULT_DEPS;
+let _deps: { db: PronunciationDataAccess } = DEFAULT_DEPS;
 
-export function __setDepsForTesting(deps: { db: Pick<DataAccess, "pronunciationHistory"> }) {
+export function __setDepsForTesting(deps: { db: PronunciationDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 

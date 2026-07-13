@@ -83,7 +83,7 @@ function InteractiveQuizDemo() {
                         ? "border-destructive/40 bg-destructive/10 text-destructive"
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hover:scale-[1.01]"
+                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hoverable:scale-[1.01]"
                   } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]"}`}
                 >
                   <span

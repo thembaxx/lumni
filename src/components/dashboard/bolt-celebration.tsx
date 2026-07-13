@@ -5,6 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { m } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { XP_PER_CORRECT, XP_PER_QUESTION, XP_STREAK_BONUS } from "@/types/gamification";
 
@@ -43,7 +44,11 @@ export function BoltCelebration({
                   : "absolute inset-0 rounded-3xl bg-destructive/20 blur-xl"
               }
             />
-            <div className="animate-bounce-pop" style={{ animationDelay: "0.15s" }}>
+            <m.div
+              initial={{ scale: 0.3, opacity: 0.5 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 12, mass: 0.6, delay: 0.15 }}
+            >
               <HugeiconsIcon
                 icon={correct ? CheckmarkCircle01Icon : Cancel01Icon}
                 className={
@@ -51,7 +56,7 @@ export function BoltCelebration({
                 }
                 strokeWidth={2.25}
               />
-            </div>
+            </m.div>
           </div>
         </div>
 
@@ -65,9 +70,11 @@ export function BoltCelebration({
           <p className="text-balance text-muted-foreground text-sm">{subjectLabel}</p>
         </div>
 
-        <div
-          className="animate-bounce-pop flex items-center gap-3"
-          style={{ animationDelay: "0.28s" }}
+        <m.div
+          initial={{ scale: 0.3, opacity: 0.5 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 12, mass: 0.6, delay: 0.28 }}
+          className="flex items-center gap-3"
         >
           <div className="flex items-center gap-1.5 rounded-full bg-system-fill px-4 py-2">
             <HugeiconsIcon icon={SparklesIcon} className="size-5 text-warning" strokeWidth={2} />
@@ -83,7 +90,7 @@ export function BoltCelebration({
               <span className="font-semibold tabular-nums">{streak}-day streak</span>
             </div>
           )}
-        </div>
+        </m.div>
       </div>
 
       <div

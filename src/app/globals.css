@@ -3,6 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+
 @custom-variant motion-safe (&:not(.reduced-motion *));
 
 @layer reset, base, components, utilities;
@@ -138,6 +140,8 @@
     1
   ); /* impeccable-disable bounce-easing -- intentional design-system pop */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ios-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --motion-fast: 200ms;
   --motion-normal: 300ms;
   --motion-slow: 400ms;
@@ -691,7 +695,7 @@
   animation: vt-morph-out var(--motion-fast) var(--ease-default) both;
 }
 ::view-transition-new(practice-trigger) {
-  animation: vt-morph-in var(--motion-normal) var(--ease-default) both;
+  animation: vt-morph-in var(--motion-normal) var(--ease-decelerate) both;
   animation-delay: 50ms;
 }
 
@@ -744,10 +748,10 @@
 
 /* Base animation classes */
 .animate-fade-in-up {
-  animation: fadeInUp var(--motion-slow) var(--ease-default) forwards;
+  animation: fadeInUp var(--motion-slow) var(--ease-decelerate) forwards;
 }
 .animate-fade-in-scale {
-  animation: fadeInScale var(--motion-normal) var(--ease-default) forwards;
+  animation: fadeInScale var(--motion-normal) var(--ease-decelerate) forwards;
 }
 .animate-shimmer {
   background: linear-gradient(90deg, transparent, var(--system-surface-secondary), transparent);
@@ -778,7 +782,7 @@
 /* Stagger entrance */
 .animate-stagger > * {
   opacity: 0;
-  animation: fadeInUp var(--motion-slow) var(--ease-default) forwards;
+  animation: fadeInUp var(--motion-slow) var(--ease-decelerate) forwards;
 }
 .animate-stagger > *:nth-child(1) {
   animation-delay: 0ms;
@@ -827,20 +831,20 @@
 }
 .glass-regular {
   background: var(--material-regular);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
 }
 .glass-thick {
   background: var(--material-thick);
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(24px);
 }
 .glass-card {
   background: var(--material-glass);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--system-separator);
 }
 .glass-card-strong {
   background: var(--material-glass-strong);
-  backdrop-filter: blur(30px);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--system-separator);
 }
 
@@ -1094,6 +1098,7 @@ span.math:not(:empty)::after {
     opacity: 0;
   }
 }
+/* impeccable-disable bounce-easing -- intentional design-system pop */
 @keyframes bounce-pop {
   0% {
     opacity: 0;
@@ -1139,6 +1144,7 @@ span.math:not(:empty)::after {
     box-shadow: 0 0 0 8px var(--system-accent-alpha-10);
   }
 }
+/* impeccable-disable bounce-easing -- intentional design-system pop */
 @keyframes typing-bounce {
   0%,
   60%,

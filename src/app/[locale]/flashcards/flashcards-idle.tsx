@@ -17,8 +17,7 @@ import {
   EmptyTitle,
 } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
-
-const motionEase = [0.25, 0.1, 0.25, 1] as const;
+import { motionEase } from "@/lib/utils/animation";
 
 interface FlashcardsIdleProps {
   onSelect: (subject: string) => void;
@@ -37,9 +36,9 @@ export function FlashcardsIdle({
     <div className="flex items-center justify-center p-4">
       <div className="card-elevated w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2">
         <m.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
         >
           <header className="pb-4 text-left">
             <h2 className="ios-title-1 font-bold text-foreground tracking-tight">

@@ -1,5 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { SyncDataAccess } from "@/lib/db/data-access";
 import type { QuestionRating } from "@/lib/db/schema";
 
 export interface QuestionRatingRepository {
@@ -13,7 +13,7 @@ export interface QuestionRatingRepository {
 }
 
 class DexieQuestionRatingRepository implements QuestionRatingRepository {
-  constructor(private db: DataAccess) {}
+  constructor(private db: SyncDataAccess) {}
 
   async findByQuestionId(questionId: string): Promise<QuestionRating | undefined> {
     return this.db.questionRatings.where("questionId").equals(questionId).first() ?? undefined;
@@ -39,7 +39,7 @@ class DexieQuestionRatingRepository implements QuestionRatingRepository {
   }
 }
 
-function createQuestionRatingRepository(db: DataAccess = dexieDataAccess) {
+function createQuestionRatingRepository(db: SyncDataAccess = dexieDataAccess) {
   return new DexieQuestionRatingRepository(db);
 }
 export const questionRatingRepository = createQuestionRatingRepository();

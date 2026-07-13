@@ -1,10 +1,10 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { ContentDataAccess } from "@/lib/db/data-access";
 import type { BookmarkRecord } from "@/lib/db/schema";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { BookmarkService } from "./types";
 
 export class DexieBookmarkService implements BookmarkService {
-  constructor(private db: DataAccess) {}
+  constructor(private db: ContentDataAccess) {}
 
   getAll(): Promise<BookmarkRecord[]> {
     return this.db.bookmarks.toArray();

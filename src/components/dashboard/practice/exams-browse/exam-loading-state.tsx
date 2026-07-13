@@ -6,8 +6,8 @@ import { GroupSkeleton } from "@/components/dashboard/practice/exam-card-skeleto
 export function ExamLoadingState() {
   return (
     <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       className="flex grow flex-col gap-5"
     >

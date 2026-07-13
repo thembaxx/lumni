@@ -3,6 +3,8 @@
 import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { rarityBorder, rarityGlowStrong, raritySolid } from "@/lib/utils/gamification";
 
@@ -25,6 +27,7 @@ export function AchievementUnlock({
   rarity,
   onClose,
 }: AchievementUnlockProps) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <Dialog open={visible} onOpenChange={(o) => !o && onClose?.()}>
       <DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
@@ -38,7 +41,9 @@ export function AchievementUnlock({
             <m.div
               initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", delay: 0.2, stiffness: 200, damping: 14, bounce: 0.25 }}
+              transition={
+                prefersReducedMotion ? { duration: 0 } : { ...springPresets.bouncy, delay: 0.2 }
+              }
               className="mb-4"
             >
               <m.div animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 0.4, delay: 0.5 }}>
@@ -49,7 +54,9 @@ export function AchievementUnlock({
             <m.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, type: "spring", stiffness: 300, damping: 24 }}
+              transition={
+                prefersReducedMotion ? { duration: 0 } : { ...springPresets.standard, delay: 0.4 }
+              }
             >
               <div className="mb-2 flex items-center justify-center gap-2">
                 <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />

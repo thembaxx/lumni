@@ -85,10 +85,7 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
           key={current}
           initial={{ opacity: 0, y: -6, filter: "blur(2px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{
-            ...springPresets.fast,
-            duration: prefersReducedMotion ? 0 : undefined,
-          }}
+          transition={prefersReducedMotion ? undefined : springPresets.fast}
           className="inline-block"
         >
           {current}
@@ -274,9 +271,9 @@ export function QuizView({
       >
         {localPastPaperMode && (
           <m.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
             className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs"
           >
             <HugeiconsIcon icon={File01Icon} className="size-4" />
@@ -306,7 +303,7 @@ export function QuizView({
               y: -6,
               transition: springPresets.cardExit,
             }}
-            transition={prefersReducedMotion ? { duration: 0 } : springPresets.standard}
+            transition={prefersReducedMotion ? undefined : springPresets.standard}
           >
             {state.currentQuestion && (
               <QuestionCard

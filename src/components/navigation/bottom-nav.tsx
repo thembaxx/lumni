@@ -9,6 +9,7 @@ import { SnapFab } from "@/components/tools/core/snap-fab";
 import { Badge } from "@/components/ui/badge";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useDataPrefetch } from "@/hooks/use-data-prefetch";
 import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
@@ -93,7 +94,7 @@ const NavItemComponent = memo(function NavItemComponent({
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
   const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
-  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26, bounce: 0 };
+  const springTransition = springPresets.fast;
 
   return (
     <Link

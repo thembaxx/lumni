@@ -54,13 +54,21 @@ export function ThemeSwitcher() {
           <AnimatePresence mode="popLayout" initial={false}>
             <m.div
               key={theme}
-              initial={{ opacity: 0, scale: 0.5, filter: "blur(4px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              initial={
+                prefersReducedMotion ? undefined : { opacity: 0, scale: 0.5, filter: "blur(4px)" }
+              }
+              animate={
+                prefersReducedMotion ? undefined : { opacity: 1, scale: 1, filter: "blur(0px)" }
+              }
               exit={{ opacity: 0, scale: 0.5, filter: "blur(4px)" }}
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.15,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              transition={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      duration: 0.15,
+                      ease: [0.16, 1, 0.3, 1],
+                    }
+              }
             >
               <HugeiconsIcon icon={CurrentIcon} className="size-4 text-foreground" />
             </m.div>

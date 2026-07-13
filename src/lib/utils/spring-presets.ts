@@ -3,6 +3,7 @@ export const springPresets = {
   standard: { type: "spring" as const, stiffness: 300, damping: 26, mass: 0.8, bounce: 0 },
   slow: { type: "spring" as const, stiffness: 200, damping: 24, mass: 1, bounce: 0 },
   cardExit: { type: "spring" as const, stiffness: 400, damping: 30, mass: 0.6, bounce: 0 },
+  bouncy: { type: "spring" as const, stiffness: 200, damping: 14, mass: 1, bounce: 0.25 },
 };
 
 export function projectMomentum(velocity: number, decelerationRate = 0.998): number {

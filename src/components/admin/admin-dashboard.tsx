@@ -8,6 +8,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useEffect, useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,6 +33,7 @@ export function AdminDashboard() {
   const [admin, dispatch] = useReducer(adminReducer, adminInitialState);
   const { selectedSubjects, editSubject, newSubject, activeTab, showSuccess } = admin;
   const successTimeoutRef = useRef<NodeJS.Timeout[]>([]);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const ref = successTimeoutRef;
@@ -149,7 +152,7 @@ export function AdminDashboard() {
             <m.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 500, damping: 26, bounce: 0 }}
+              transition={prefersReducedMotion ? { duration: 0 } : springPresets.fast}
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
             </m.div>

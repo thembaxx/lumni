@@ -1,4 +1,4 @@
-import type { DataAccess } from "@/lib/db";
+import type { StudyCommitmentsDataAccess } from "@/lib/db";
 import type { StudyCommitmentRecord } from "@/lib/db/schema";
 import type { StudyCommitment } from "@/lib/services/study-commitment-types";
 import { logError } from "@/lib/shared/logger";
@@ -20,7 +20,7 @@ function toModel(record: StudyCommitmentRecord): StudyCommitment {
 }
 
 export class StudyBuddyService {
-  constructor(private deps: { db: DataAccess }) {}
+  constructor(private deps: { db: StudyCommitmentsDataAccess }) {}
 
   async createCommitment(
     userId: string,

@@ -1,13 +1,13 @@
 import { nanoid } from "nanoid";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { QuizDataAccess } from "@/lib/db/data-access";
 import type { QuizPack, QuizPackQuestion } from "./types";
 import { PACK_EXPIRY_DAYS } from "./types";
 
 export class QuizPackService {
-  private db: DataAccess;
+  private db: QuizDataAccess;
 
-  constructor(deps?: { db?: DataAccess }) {
+  constructor(deps?: { db?: QuizDataAccess }) {
     this.db = deps?.db ?? dexieDataAccess;
   }
   async generatePack(subject: string, topic: string | null, count: number): Promise<QuizPack> {

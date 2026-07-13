@@ -44,7 +44,10 @@ function NotFoundContent() {
             </p>
           </FadeIn>
           <FadeIn direction="up" distance={8} delay={0.3}>
-            <Button asChild className="bg-system-accent text-background hover:bg-system-accent/80">
+            <Button
+              asChild
+              className="bg-system-accent text-system-accent-foreground hover:bg-system-accent/80"
+            >
               <Link href="/">Back to {appConfig.name}</Link>
             </Button>
           </FadeIn>

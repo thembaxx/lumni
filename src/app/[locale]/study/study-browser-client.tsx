@@ -87,9 +87,9 @@ export function StudyBrowserClient() {
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <m.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
         >
           <div className="flex flex-col gap-1">
             <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Browse Lessons</h1>

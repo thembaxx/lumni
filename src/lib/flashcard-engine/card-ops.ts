@@ -1,4 +1,4 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { FlashcardDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { enqueueOutbox } from "@/lib/sync/outbox";
 import { generateId, pickAlgorithm, syncCardPayload } from "./engine-helpers";
@@ -7,7 +7,7 @@ import type { FlashcardSM2 } from "./types";
 type EnqueueFn = (type: string, payload: Record<string, unknown>) => Promise<unknown>;
 
 export async function createCard(
-  db: DataAccess,
+  db: FlashcardDataAccess,
   enqueueFn: EnqueueFn,
   front: string,
   back: string,
@@ -49,7 +49,7 @@ export async function createCard(
 }
 
 export async function updateCard(
-  db: DataAccess,
+  db: FlashcardDataAccess,
   enqueueFn: EnqueueFn,
   id: string,
   updates: Partial<FlashcardSM2>,
@@ -79,7 +79,11 @@ export async function updateCard(
   }
 }
 
-export async function deleteCard(db: DataAccess, enqueueFn: EnqueueFn, id: string): Promise<void> {
+export async function deleteCard(
+  db: FlashcardDataAccess,
+  enqueueFn: EnqueueFn,
+  id: string,
+): Promise<void> {
   await db.flashcards.delete(id);
   enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
     logError("FlashcardEngine.DeleteSync", e),
@@ -90,7 +94,7 @@ export async function deleteCard(db: DataAccess, enqueueFn: EnqueueFn, id: strin
 }
 
 export async function convertQuizToFlashcards(
-  db: DataAccess,
+  db: FlashcardDataAccess,
   enqueueFn: EnqueueFn,
   questions: Array<{
     id: string;

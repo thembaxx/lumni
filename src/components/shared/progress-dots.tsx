@@ -68,7 +68,7 @@ export function ProgressDots({
             className={cn(
               "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
               dotClass,
-              onDotClick && "hover:scale-125",
+              onDotClick && "hoverable:scale-125",
             )}
             disabled={!onDotClick}
           />

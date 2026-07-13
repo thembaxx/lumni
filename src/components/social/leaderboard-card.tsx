@@ -6,6 +6,8 @@ import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { m } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 import { client } from "@/lib/appwrite";
@@ -106,8 +108,12 @@ export function LeaderboardCard() {
         ) : (
           <div className="flex flex-col gap-2">
             {entries.map((entry, i) => (
-              <div
+              <m.div
                 key={entry.rank}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...springPresets.fast, delay: i * 0.05 }}
+                layout
                 className={cn(
                   "flex items-center gap-3 rounded-xl p-2.5 transition-colors",
                   entry.isCurrentUser && "bg-accent",
@@ -134,7 +140,7 @@ export function LeaderboardCard() {
                     </div>
                   )}
                 </div>
-              </div>
+              </m.div>
             ))}
           </div>
         )}

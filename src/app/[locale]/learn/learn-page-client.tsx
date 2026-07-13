@@ -65,9 +65,9 @@ export function LearnPageClient() {
     <PageContainer>
       <div className="flex flex-col gap-6 py-6">
         <m.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
         >
           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 ios-caption-3 text-primary">
             <span className="relative flex size-2">
@@ -95,14 +95,14 @@ export function LearnPageClient() {
               onClick={() => push(item.route)}
               initial={prefersReducedMotion ? undefined : { opacity: 0, y: 16 }}
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: motionEase }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.4, ease: motionEase }}
               className="group relative overflow-hidden rounded-card border border-border/40 bg-card p-5 text-left shadow-level-1 transition-[box-shadow,transform] duration-300 hover:shadow-level-2 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-primary"
             >
               <div
-                className={`pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${item.gradient}`}
+                className={`pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hoverable:opacity-100 ${item.gradient}`}
               />
               <div className="relative z-10 flex items-start gap-4">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hoverable:scale-110 group-hover:rotate-3">
                   <HugeiconsIcon icon={item.icon} className="size-5" />
                 </div>
                 <div className="flex min-w-0 flex-col gap-0.5">
@@ -110,7 +110,7 @@ export function LearnPageClient() {
                   <span className="text-muted-foreground text-xs">{item.desc}</span>
                 </div>
               </div>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-[opacity,transform] duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-[opacity,transform] duration-300 group-hoverable:opacity-100 group-hover:translate-x-0">
                 <svg
                   width="16"
                   height="16"

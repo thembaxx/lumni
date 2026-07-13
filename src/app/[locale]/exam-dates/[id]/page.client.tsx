@@ -157,7 +157,7 @@ export function ExamDetailClient() {
             </div>
             <button
               onClick={() => back()}
-              className="rounded-xl bg-white/5 p-2 transition-[scale,background-color] duration-150 hover:scale-105 hover:bg-white/10 press-scale dark:bg-white/10 dark:hover:bg-white/15"
+              className="rounded-xl bg-white/5 p-2 transition-[scale,background-color] duration-150 hoverable:scale-105 hover:bg-white/10 press-scale dark:bg-white/10 dark:hover:bg-white/15"
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon className="size-4" />
             </button>

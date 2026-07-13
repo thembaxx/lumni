@@ -71,11 +71,15 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
     <m.div
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
       animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-      transition={{
-        delay: prefersReducedMotion ? 0 : index * 0.06,
-        duration: prefersReducedMotion ? 0 : 0.4,
-        ease: motionEase,
-      }}
+      transition={
+        prefersReducedMotion
+          ? undefined
+          : {
+              delay: index * 0.06,
+              duration: 0.4,
+              ease: motionEase,
+            }
+      }
     >
       <MagneticCard className="overflow-hidden rounded-card-lg border border-border/40 bg-card shadow-level-1 transition-shadow duration-300 hover:shadow-level-2">
         <div className="flex flex-col gap-4 p-5">
@@ -125,10 +129,11 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
           <AnimatePresence initial={false}>
             {showSolution && (
               <m.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+                initial={prefersReducedMotion ? undefined : { opacity: 0, scaleY: 0 }}
+                animate={prefersReducedMotion ? undefined : { opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0 }}
+                transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
+                style={{ transformOrigin: "top center" }}
                 className="flex flex-col gap-4 overflow-hidden"
               >
                 <div className="flex flex-col gap-4 border-border/40 border-t pt-4">
@@ -287,9 +292,10 @@ export function ProblemsClient() {
 
                 {selectedSubject && (
                   <m.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+                    initial={prefersReducedMotion ? undefined : { opacity: 0, scaleY: 0 }}
+                    animate={prefersReducedMotion ? undefined : { opacity: 1, scaleY: 1 }}
+                    transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
+                    style={{ transformOrigin: "top center" }}
                     className="scrollbar-hide flex items-center gap-2 overflow-x-auto"
                   >
                     {DIFFICULTIES.map((d) => (

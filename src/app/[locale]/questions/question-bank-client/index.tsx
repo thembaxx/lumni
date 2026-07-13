@@ -116,9 +116,10 @@ function QuestionCard({
         <AnimatePresence initial={false}>
           {showAnswer && (
             <m.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, scaleY: 0 }}
+              animate={{ opacity: 1, scaleY: 1 }}
+              exit={{ opacity: 0, scaleY: 0 }}
+              style={{ transformOrigin: "top center" }}
               className="overflow-hidden"
             >
               <div className="mt-2 rounded-xl border bg-muted/30 p-4 text-sm leading-relaxed">

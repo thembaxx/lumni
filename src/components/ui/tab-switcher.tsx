@@ -103,7 +103,7 @@ export function TabSwitcher({
                   : "flex-1 rounded-sm px-4 py-2 font-medium text-sm",
                 variant === "tabs"
                   ? value === tab.value
-                    ? "text-background"
+                    ? "text-system-accent-foreground"
                     : "text-muted-foreground hover:text-foreground"
                   : value === tab.value
                     ? "text-system-accent"
@@ -118,7 +118,8 @@ export function TabSwitcher({
             className={
               variant === "tabs"
                 ? "absolute inset-y-1 left-0 z-0 rounded-md bg-system-accent"
-                : "absolute inset-y-[3px] left-0 z-0 rounded-sm bg-(--system-surface) shadow-level-1"
+                : // impeccable-disable-next-line arbitrary-value -- intentional tight tab indicator padding
+                  "absolute inset-y-[3px] left-0 z-0 rounded-sm bg-(--system-surface) shadow-level-1"
             }
             initial={false}
             animate={{

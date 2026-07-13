@@ -1,4 +1,4 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { FlashcardDataAccess } from "@/lib/db/data-access";
 import type { FlashcardSM2 } from "./types";
 
 export function generateId(): string {
@@ -30,7 +30,10 @@ export function syncCardPayload(card: FlashcardSM2): Record<string, unknown> {
   };
 }
 
-export async function countConsecutivePasses(db: DataAccess, cardId: string): Promise<number> {
+export async function countConsecutivePasses(
+  db: FlashcardDataAccess,
+  cardId: string,
+): Promise<number> {
   const history = await db.reviewHistory.where("cardId").equals(cardId).sortBy("reviewedAt");
   const recent = history.slice(-10);
   let count = 0;

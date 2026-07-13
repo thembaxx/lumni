@@ -1,6 +1,8 @@
 "use client";
 
+import { m } from "motion/react";
 import { cn } from "@/lib/utils";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 type FadeInDirection = "up" | "down" | "left" | "right" | "scale";
 
@@ -18,14 +20,6 @@ interface FadeInProps {
   "aria-live"?: "off" | "assertive" | "polite";
 }
 
-const entranceClass: Record<FadeInDirection, string> = {
-  up: "card-entrance",
-  down: "card-entrance-down",
-  left: "card-entrance-sm",
-  right: "card-entrance-sm",
-  scale: "card-entrance-sm",
-};
-
 export function FadeIn({
   children,
   direction = "up",
@@ -34,19 +28,23 @@ export function FadeIn({
   distance: _distance,
   scaleDistance: _scaleDistance,
   className,
-  as = "div",
+  as: _as,
   ...rest
 }: FadeInProps & Record<string, unknown>) {
-  const cls = entranceClass[direction];
-  const Tag = as === "span" ? "span" : "div";
-
   return (
-    <Tag
-      className={cn(cls, className)}
-      style={delay ? { animationDelay: `${delay}s` } : undefined}
+    <m.div
+      className={cn(className)}
+      initial={{
+        opacity: 0,
+        y: direction === "up" || direction === "down" ? 12 : 0,
+        x: direction === "left" ? -12 : direction === "right" ? 12 : 0,
+        scale: direction === "scale" ? 0.95 : 1,
+      }}
+      animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+      transition={{ ...springPresets.fast, delay: delay || 0 }}
       {...rest}
     >
       {children}
-    </Tag>
+    </m.div>
   );
 }
