@@ -46,7 +46,7 @@ const baseItemClass =
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
     <>
-      <div className="relative mb-0 flex size-6 items-center justify-center">
+      <div className="relative flex size-6 items-center justify-center">
         {isActive && (
           <span className="absolute inset-0 rounded-full bg-system-accent/15 animate-float-bob" />
         )}
@@ -54,7 +54,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
           icon={item.icon}
           className={cn(
             "size-5 transition-[transform,color] duration-200 ease-ios",
-            isActive && "scale-[1.25]",
+            isActive && "scale-125",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
         />
@@ -173,7 +173,7 @@ const BottomNav = memo(function BottomNav() {
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
             className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
           >
-            <HugeiconsIcon icon={GridIcon} className="size-[22px]" />
+            <HugeiconsIcon icon={GridIcon} className="size-5" />
           </m.button>
         </div>
       </div>
