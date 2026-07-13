@@ -3,6 +3,14 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
+    pool: "threads",
+    poolOptions: {
+      threads: {
+        singleThread: false,
+        minThreads: 1,
+        maxThreads: 4,
+      },
+    },
     environment: "happy-dom",
     setupFiles: ["./src/hooks/__tests__/setup.ts"],
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],

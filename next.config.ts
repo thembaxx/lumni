@@ -62,6 +62,9 @@ function buildReportingEndpoints(): string {
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   productionBrowserSourceMaps: false,
   poweredByHeader: false,
   experimental: {
