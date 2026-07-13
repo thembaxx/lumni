@@ -3,7 +3,7 @@
 import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
 import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
-import SettingsFutureIcon from "@hugeicons/core-free-icons/SettingsFutureIcon";
+import Settings03Icon from "@hugeicons/core-free-icons/Settings03Icon";
 import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -359,7 +359,7 @@ export function DashboardView({ boltStreak, onStartQuiz }: DashboardViewProps) {
             <section aria-label="Tools">
               <div className="mb-4">
                 <SectionHeading
-                  icon={SettingsFutureIcon}
+                  icon={Settings03Icon}
                   label="Tools"
                   description="Timer, offline packs, and more"
                 />
