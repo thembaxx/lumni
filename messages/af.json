@@ -148,7 +148,11 @@
     "skipToContent": "Spring na inhoud",
     "ctaHeading": "Gereed om jou eksamens te slaag?",
     "ctaDescription": "Sluit aan by duisende Matriek-studente wat reeds voorberei met Lumni. Begin gratis, geen kredietkaart nodig nie.",
-    "opensInNewTab": "(open in nuwe oortjie)"
+    "opensInNewTab": "(open in nuwe oortjie)",
+    "statSubjects": "NSC Vakke",
+    "statPapers": "Vorige Vraestelle Gedek",
+    "statQuestions": "KI Vrae Gegenereer",
+    "statFree": "Vir Altyd Gratis"
   },
   "auth": {
     "welcomeBack": "Welkom terug by Lumni",

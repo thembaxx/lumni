@@ -163,7 +163,11 @@
     "showcaseShareDesc": "Share questions, compare leaderboards, and study together with peers in real time.",
     "ctaHeading": "Ready to ace your exams?",
     "ctaDescription": "Join thousands of Matric students already preparing with Lumni. Start free, no credit card required.",
-    "opensInNewTab": "(opens in new tab)"
+    "opensInNewTab": "(opens in new tab)",
+    "statSubjects": "NSC Subjects",
+    "statPapers": "Past Papers Covered",
+    "statQuestions": "AI Questions Generated",
+    "statFree": "Free Forever"
   },
   "auth": {
     "welcomeBack": "Welcome back to Lumni",

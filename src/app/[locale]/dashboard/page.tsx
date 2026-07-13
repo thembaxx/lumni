@@ -23,7 +23,7 @@ export default async function DashboardPage() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<PageSkeleton />}>
-        <DashboardClient initialTab="today" />
+        <DashboardClient />
       </Suspense>
     </HydrationBoundary>
   );
