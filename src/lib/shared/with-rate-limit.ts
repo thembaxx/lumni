@@ -19,8 +19,8 @@ export function withRateLimit(handler: RouteHandler, config?: RateLimitConfig): 
     } catch (e) {
       logError("RateLimit", e);
       rateLimit = {
-        allowed: false,
-        remaining: 0,
+        allowed: true,
+        remaining: 1,
         resetAt: Date.now() + apiConfig.windowMs,
       };
     }

@@ -25,13 +25,13 @@ afterEach(() => {
 });
 
 describe("withRateLimit", () => {
-  test("returns 429 when checkRateLimit throws (fail-closed)", async () => {
+  test("returns 200 when checkRateLimit throws (fail-open)", async () => {
     (checkRateLimit as ReturnType<typeof vi.fn>).mockRejectedValue(new Error("store down"));
 
     const handler = withRateLimit(async () => new Response("ok"));
     const res = await handler(makeReq("1.2.3.4"));
 
-    expect(res.status).toBe(429);
+    expect(res.status).toBe(200);
     expect(logError).toHaveBeenCalledWith("RateLimit", expect.any(Error));
   });
 
