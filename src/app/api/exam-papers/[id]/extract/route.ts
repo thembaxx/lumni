@@ -3,14 +3,14 @@ import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite.server";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { LegacyDataAccess } from "@/lib/db/data-access";
 import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-extractor";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper } from "@/types/exam-paper";
 
 const utapi = new UTApi();
 
-const _deps: { db: DataAccess } = { db: dexieDataAccess };
+const _deps: { db: LegacyDataAccess } = { db: dexieDataAccess };
 
 async function fetchParsedPaper(id: string): Promise<ExamPaper | null> {
   try {

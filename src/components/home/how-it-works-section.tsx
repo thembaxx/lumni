@@ -1,5 +1,9 @@
 "use client";
 
+import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
+import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
@@ -7,68 +11,19 @@ import { motionEase } from "@/lib/utils/animation";
 
 const stepsConfig = [
   {
-    number: "01",
+    icon: BookOpen01Icon,
     titleKey: "howStep1Title",
     descKey: "howStep1Desc",
-    gradient: "from-primary/20 to-primary/5",
-    icon: (
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
-      </svg>
-    ),
   },
   {
-    number: "02",
+    icon: Target01Icon,
     titleKey: "howStep2Title",
     descKey: "howStep2Desc",
-    gradient: "from-chart-4/20 to-chart-4/5",
-    icon: (
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 16 14" />
-      </svg>
-    ),
   },
   {
-    number: "03",
+    icon: ChartUpIcon,
     titleKey: "howStep3Title",
     descKey: "howStep3Desc",
-    gradient: "from-chart-2/20 to-chart-2/5",
-    icon: (
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-        <polyline points="22 4 12 14.01 9 11.01" />
-      </svg>
-    ),
   },
 ];
 
@@ -85,20 +40,18 @@ export function HowItWorksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
-          className="flex flex-col gap-3 mb-16 text-center"
+          className="flex flex-col gap-3 mb-16 max-w-2xl"
         >
           <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
             {t("howHeading")}
           </h2>
-          <p className="ios-body mx-auto max-w-lg text-muted-foreground">{t("howSubheading")}</p>
+          <p className="ios-body max-w-lg text-muted-foreground">{t("howSubheading")}</p>
         </m.div>
 
-        <div className="relative mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
-          <div className="absolute top-12 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] hidden h-px bg-linear-to-r from-transparent via-border/50 to-transparent md:block" />
-
+        <div className="grid gap-6 md:grid-cols-3">
           {stepsConfig.map((step, i) => (
             <m.div
-              key={step.number}
+              key={step.titleKey}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -107,20 +60,13 @@ export function HowItWorksSection() {
                   ? undefined
                   : { delay: i * 0.12, duration: 0.6, ease: motionEase }
               }
-              className="relative flex flex-col items-center gap-2 text-center"
+              className="relative flex flex-col gap-4 rounded-card border border-border/30 bg-card p-6 shadow-level-1"
             >
-              <div className="relative mb-5">
-                <div
-                  className={`flex size-16 items-center justify-center rounded-2xl bg-linear-to-br ${step.gradient} shadow-level-1`}
-                >
-                  <span className="text-primary">{step.icon}</span>
-                </div>
-                <div className="absolute -top-1 -right-1 flex size-6 items-center justify-center rounded-full bg-primary ios-caption-2 text-primary-foreground shadow-level-1">
-                  {step.number}
-                </div>
+              <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10)">
+                <HugeiconsIcon icon={step.icon} className="size-6 text-primary" />
               </div>
               <h3 className="font-semibold text-lg">{t(step.titleKey)}</h3>
-              <p className="ios-body max-w-xs text-muted-foreground">{t(step.descKey)}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">{t(step.descKey)}</p>
             </m.div>
           ))}
         </div>

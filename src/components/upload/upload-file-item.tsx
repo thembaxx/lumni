@@ -112,7 +112,7 @@ export function UploadFileItem({ item, onRetry }: { item: FileUploadState; onRet
             variant="outline"
             size="xs"
             onClick={onRetry}
-            className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+            className="shrink-0 opacity-0 transition-opacity group-hoverable:opacity-100"
           >
             Try again
           </Button>

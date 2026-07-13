@@ -13,6 +13,7 @@ import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { AnimatePresence } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useTranslations } from "next-intl";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -94,16 +95,24 @@ const tabDefs = [
   },
 ];
 
-function TabPanel({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
+function TabPanel({
+  children,
+  isActive,
+  tabKey,
+}: {
+  children: React.ReactNode;
+  isActive: boolean;
+  tabKey: string;
+}) {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       {isActive && (
         <m.div
-          key="panel"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          key={tabKey}
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -20, opacity: 0 }}
+          transition={springPresets.fast}
         >
           {children}
         </m.div>
@@ -278,25 +287,25 @@ function SettingsContent() {
         </nav>
 
         <SpotlightCard className="flex-1 pt-4 md:pb-6" radius={500}>
-          <TabPanel isActive={activeTab === "profile"}>
+          <TabPanel isActive={activeTab === "profile"} tabKey="profile">
             <div role="tabpanel" id="tabpanel-profile" aria-labelledby="tab-profile">
               <ProfileTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "appearance"}>
+          <TabPanel isActive={activeTab === "appearance"} tabKey="appearance">
             <div role="tabpanel" id="tabpanel-appearance" aria-labelledby="tab-appearance">
               <AppearanceTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "study"}>
+          <TabPanel isActive={activeTab === "study"} tabKey="study">
             <div role="tabpanel" id="tabpanel-study" aria-labelledby="tab-study">
               <StudyTab studyPrefs={studyPrefs} onStudyPrefsChange={setStudyPrefs} />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "notifications"}>
+          <TabPanel isActive={activeTab === "notifications"} tabKey="notifications">
             <div role="tabpanel" id="tabpanel-notifications" aria-labelledby="tab-notifications">
               <NotificationsTab
                 notifications={notifications}
@@ -305,25 +314,25 @@ function SettingsContent() {
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "privacy"}>
+          <TabPanel isActive={activeTab === "privacy"} tabKey="privacy">
             <div role="tabpanel" id="tabpanel-privacy" aria-labelledby="tab-privacy">
               <PrivacyTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "data"}>
+          <TabPanel isActive={activeTab === "data"} tabKey="data">
             <div role="tabpanel" id="tabpanel-data" aria-labelledby="tab-data">
               <DataTab onExport={handleExportData} onClear={() => setShowClearConfirm(true)} />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "sync"}>
+          <TabPanel isActive={activeTab === "sync"} tabKey="sync">
             <div role="tabpanel" id="tabpanel-sync" aria-labelledby="tab-sync">
               <SyncTab />
             </div>
           </TabPanel>
 
-          <TabPanel isActive={activeTab === "referrals" && isLoggedIn}>
+          <TabPanel isActive={activeTab === "referrals" && isLoggedIn} tabKey="referrals">
             <div role="tabpanel" id="tabpanel-referrals" aria-labelledby="tab-referrals">
               {isLoggedIn && <ReferralTab />}
             </div>

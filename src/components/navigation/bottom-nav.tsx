@@ -9,6 +9,7 @@ import { SnapFab } from "@/components/tools/core/snap-fab";
 import { Badge } from "@/components/ui/badge";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { useDataPrefetch } from "@/hooks/use-data-prefetch";
 import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
@@ -40,12 +41,12 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0 border-none bg-transparent px-4 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
+  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
     <>
-      <div className="relative mb-0 flex size-6 items-center justify-center">
+      <div className="relative flex size-6 items-center justify-center">
         {isActive && (
           <span className="absolute inset-0 rounded-full bg-system-accent/15 animate-float-bob" />
         )}
@@ -53,7 +54,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
           icon={item.icon}
           className={cn(
             "size-5 transition-[transform,color] duration-200 ease-ios",
-            isActive && "scale-[1.25]",
+            isActive && "scale-125",
             isActive ? "text-system-accent" : "text-system-text-tertiary",
           )}
         />
@@ -93,7 +94,7 @@ const NavItemComponent = memo(function NavItemComponent({
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
   const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
-  const springTransition = { type: "spring" as const, stiffness: 400, damping: 26, bounce: 0 };
+  const springTransition = springPresets.fast;
 
   return (
     <Link
@@ -148,7 +149,7 @@ const BottomNav = memo(function BottomNav() {
     >
       <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
         <div className="flex items-center gap-2">
-          <div className="glass-regular relative flex items-center rounded-full px-2 py-1 shadow-level-2 ring-1 ring-system-separator/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
+          <div className="glass-regular relative flex items-center rounded-full px-3 py-1 shadow-level-2 ring-1 ring-system-separator/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
             {navItems.map((item, index) => (
               <NavItemComponent
                 key={item.id}
@@ -172,7 +173,7 @@ const BottomNav = memo(function BottomNav() {
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
             className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
           >
-            <HugeiconsIcon icon={GridIcon} className="size-[22px]" />
+            <HugeiconsIcon icon={GridIcon} className="size-5" />
           </m.button>
         </div>
       </div>

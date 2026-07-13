@@ -4,6 +4,7 @@ import CrownIcon from "@hugeicons/core-free-icons/CrownIcon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 interface LevelUpProps {
@@ -15,6 +16,7 @@ interface LevelUpProps {
 }
 
 export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpProps) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <Dialog open={visible} onOpenChange={(o) => !o && onClose?.()}>
       <DialogContent showCloseButton={false} className="max-w-sm sm:max-w-sm">
@@ -26,17 +28,20 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
               scale: [1, 1.1, 1],
               opacity: [0.6, 0.8, 0.6],
             }}
-            transition={{ duration: 2 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 2 }}
           />
 
           <div className="relative rounded-3xl border-2 border-warning bg-card p-8 text-center shadow-level-3 shadow-warning/30">
             <m.div
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2 }}
               className="mb-4"
             >
-              <m.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 0.6 }}>
+              <m.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
+              >
                 <HugeiconsIcon icon={CrownIcon} className="mx-auto size-16 text-warning" />
               </m.div>
             </m.div>
@@ -51,7 +56,9 @@ export function LevelUp({ visible, level, title, xpToNext, onClose }: LevelUpPro
                 className="mb-4 inline-flex items-center gap-2 rounded-full bg-warning px-8 py-3 text-primary-foreground"
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.4, type: "spring", bounce: 0 }}
+                transition={
+                  prefersReducedMotion ? { duration: 0 } : { delay: 0.4, type: "spring", bounce: 0 }
+                }
               >
                 <HugeiconsIcon icon={StarIcon} className="size-6 fill-white" />
                 <span className="font-bold text-4xl tabular-nums">{level}</span>

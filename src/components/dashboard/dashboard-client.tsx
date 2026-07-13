@@ -1,15 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
-import { TabNav } from "@/components/dashboard/navigation/tab-nav";
-import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { SearchWidget } from "@/components/dashboard/search/search-widget";
-import type { TabValue } from "@/components/dashboard/types";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { Skeleton } from "@/components/ui/skeleton";
+import { PageSkeleton } from "@/components/ui/skeletons";
 import { useGamification } from "@/hooks/use-gamification";
 import { useDashboardQuiz } from "@/hooks/use-dashboard-quiz";
 import { GamificationProvider } from "@/contexts/gamification-provider";
@@ -18,13 +14,12 @@ const QuizView = dynamic(() => import("@/components/quiz/quiz-view").then((m) =>
   ssr: false,
   loading: () => (
     <div className="flex min-h-dvh items-center justify-center">
-      <Skeleton className="size-full max-w-3xl rounded-3xl" />
+      <PageSkeleton />
     </div>
   ),
 });
 
-export function DashboardClient({ initialTab = "today" }: { initialTab?: string }) {
-  const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
+export function DashboardClient() {
   const {
     isLoaded,
     addXp,
@@ -47,10 +42,6 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
       levelInfo,
     });
 
-  const handleTabChange = (tab: TabValue) => {
-    setActiveTab(tab);
-  };
-
   return (
     <GamificationProvider>
       <AppErrorBoundary>
@@ -60,25 +51,15 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
         >
           Skip to content
         </a>
-        <ScrollAmbient />
         <div className="flex h-full flex-col">
           {!isLoaded ? (
             <div className="flex min-h-dvh items-center justify-center px-4">
-              <div className="flex w-full max-w-md flex-col gap-3">
-                <Skeleton className="h-24 rounded-card" />
-                <div className="grid grid-cols-12 gap-3">
-                  <Skeleton className="col-span-8 h-24 rounded-card" />
-                  <Skeleton className="col-span-4 h-24 rounded-card" />
-                </div>
-                <Skeleton className="h-32 rounded-card" />
-                <Skeleton className="h-20 rounded-card" />
-              </div>
+              <PageSkeleton />
             </div>
           ) : (
             <>
               <div className="px-4 pt-2 pb-4 sm:px-6">
                 <SearchWidget />
-                <TabNav activeTab={activeTab} onTabChange={handleTabChange} />
               </div>
 
               <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -95,7 +76,6 @@ export function DashboardClient({ initialTab = "today" }: { initialTab?: string 
                   <DashboardContent
                     id="dashboard-content"
                     onStartQuiz={handleStartQuiz}
-                    activeTab={activeTab}
                     boltStreak={currentStreak}
                   />
                 )}

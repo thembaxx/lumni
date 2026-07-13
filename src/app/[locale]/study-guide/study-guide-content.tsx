@@ -134,8 +134,8 @@ function StudyGuideClient() {
           <AnimatePresence mode="wait" initial={false}>
             {!fetched && !isPending && (
               <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
                 className="py-20 text-center"
               >
                 <HugeiconsIcon
@@ -151,8 +151,8 @@ function StudyGuideClient() {
             {isPending && (
               <m.div
                 key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 className="flex flex-col gap-4"
               >
@@ -170,8 +170,8 @@ function StudyGuideClient() {
             {error && (
               <m.div
                 key="error"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
                 className="rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-destructive text-sm"
               >
                 Failed to generate study guide. Please try again.
@@ -181,8 +181,8 @@ function StudyGuideClient() {
             {data && !isPending && !error && (
               <m.div
                 key="results"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-4"
               >
                 <StudyGuideContent guide={data} />

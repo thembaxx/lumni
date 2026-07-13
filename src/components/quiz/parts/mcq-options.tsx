@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { memo } from "react";
 import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -42,15 +43,8 @@ export const MCQOptions = memo(function MCQOptions({
             animate={{ opacity: 1, y: 0 }}
             transition={
               prefersReducedMotion
-                ? { duration: 0 }
-                : {
-                    delay: 0.12 + idx * 0.04,
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 26,
-                    mass: 0.8,
-                    bounce: 0,
-                  }
+                ? undefined
+                : { ...springPresets.standard, delay: 0.12 + idx * 0.04 }
             }
           >
             <Button
@@ -58,7 +52,7 @@ export const MCQOptions = memo(function MCQOptions({
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left",
+                "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left transition-all duration-200 motion-reduce:transition-none",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >
@@ -66,7 +60,7 @@ export const MCQOptions = memo(function MCQOptions({
                 className={cn(
                   "flex h-7 w-7 items-center justify-center rounded-full border font-semibold text-sm",
                   isSelected
-                    ? "border-(--system-accent) bg-(--system-accent) text-background"
+                    ? "border-(--system-accent) bg-(--system-accent) text-system-accent-foreground"
                     : "border-muted-foreground/30",
                 )}
               >
@@ -85,7 +79,7 @@ export const MCQOptions = memo(function MCQOptions({
         animate={{ opacity: 1, y: 0 }}
         transition={
           prefersReducedMotion
-            ? { duration: 0 }
+            ? undefined
             : { delay: 0.12 + options.length * 0.04, duration: 0.2, ease: [0.16, 1, 0.3, 1] }
         }
       >

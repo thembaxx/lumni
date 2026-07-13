@@ -106,7 +106,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
       </span>
       <HugeiconsIcon
         icon={PencilIcon}
-        className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
+        className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hoverable:opacity-100"
       />
     </Button>
   );

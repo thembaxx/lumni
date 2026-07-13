@@ -8,7 +8,9 @@ import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { iOSEase } from "@/lib/utils/animation";
+import { springPresets } from "@/lib/utils/spring-presets";
 import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SidebarHamburger } from "@/components/navigation/sidebar-nav";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
@@ -63,6 +65,7 @@ const TopNavStatus = memo(function TopNavStatus() {
   const { levelInfo } = useGamification();
   const { isOnline, pendingCount } = useSyncStatus();
   const { isSyncing, triggerSync } = useSync(user?.$id);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (pendingCount > 0 && isOnline && !isSyncing) {
@@ -88,7 +91,11 @@ const TopNavStatus = memo(function TopNavStatus() {
             <m.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: levelInfo.progress / 100 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, bounce: 0 }}
+              transition={
+                prefersReducedMotion
+                  ? { type: "spring", stiffness: 400, damping: 30, bounce: 0 }
+                  : springPresets.slow
+              }
               className="h-full origin-left rounded-full bg-system-accent"
             />
           </div>

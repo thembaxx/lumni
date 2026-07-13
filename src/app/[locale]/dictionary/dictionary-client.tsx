@@ -163,9 +163,9 @@ export function DictionaryClient() {
       <AmbientGradient />
       <PageContainer className="flex flex-col gap-6">
         <m.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
         >
           <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Dictionary</h1>
           <p className="text-muted-foreground text-sm">
@@ -176,9 +176,11 @@ export function DictionaryClient() {
         <div className="grid gap-3 sm:grid-cols-2">
           <WordOfDayCard language={language} />
           <m.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: motionEase, delay: 0.1 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 12 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={
+              prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase, delay: 0.1 }
+            }
           >
             <Button
               variant="outline"
@@ -265,10 +267,10 @@ export function DictionaryClient() {
           {!loading && searched && !result && (
             <m.div
               key="not-found"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 8 }}
+              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
             >
               <Card className="rounded-card">
                 <CardContent className="flex flex-col items-center gap-2 p-8 text-center">
@@ -283,10 +285,10 @@ export function DictionaryClient() {
           {!loading && result && (
             <m.div
               key={result.word}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 8 }}
+              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
             >
               <Card className="overflow-hidden rounded-card shadow-level-1">
                 <CardContent className="flex flex-col gap-4 p-5">

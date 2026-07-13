@@ -1,45 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useMotionValueEvent, useSpring } from "motion/react";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 export function useAnimatedNumber(target: number, duration = 400, shouldAnimate = true) {
   const [displayValue, setDisplayValue] = useState(shouldAnimate ? 0 : target);
-  const rafRef = useRef<number>(0);
-  const startRef = useRef(0);
-  const lastTargetRef = useRef(shouldAnimate ? 0 : target);
+  const springValue = useSpring(0, {
+    ...springPresets.standard,
+    stiffness: springPresets.standard.stiffness * (400 / duration),
+  });
 
   useEffect(() => {
     if (!shouldAnimate) {
       setDisplayValue(target);
       return;
     }
+    springValue.set(target);
+  }, [target, duration, shouldAnimate, springValue]);
 
-    const from = lastTargetRef.current;
-    lastTargetRef.current = target;
-
-    if (from === target) {
-      setDisplayValue(target);
-      return;
-    }
-
-    startRef.current = performance.now();
-
-    const animate = (now: number) => {
-      const elapsed = now - startRef.current;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(from + (target - from) * eased);
-
-      setDisplayValue(current);
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [target, duration, shouldAnimate]);
+  useMotionValueEvent(springValue, "change", (latest) => {
+    setDisplayValue(Math.round(latest));
+  });
 
   return shouldAnimate ? displayValue : target;
 }

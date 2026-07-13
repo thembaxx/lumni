@@ -95,7 +95,7 @@ export function CommentCard({
               <button
                 type="button"
                 onClick={() => onDelete(comment.$id)}
-                className="text-(--system-text-tertiary) text-xs opacity-0 transition-opacity hover:text-(--system-destructive) group-hover:opacity-100"
+                className="text-(--system-text-tertiary) text-xs opacity-0 transition-opacity hover:text-(--system-destructive) group-hoverable:opacity-100"
               >
                 Delete
               </button>

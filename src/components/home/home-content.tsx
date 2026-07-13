@@ -36,13 +36,6 @@ const TestimonialsSection = dynamic(
     })),
   { ssr: false },
 );
-const FeatureShowcaseSection = dynamic(
-  () =>
-    import("./feature-showcase-section").then((m) => ({
-      default: m.FeatureShowcaseSection,
-    })),
-  { ssr: false },
-);
 const CtaSection = dynamic(() => import("./cta-section").then((m) => ({ default: m.CtaSection })), {
   ssr: false,
 });
@@ -217,10 +210,6 @@ export function HomeContent() {
       <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30" />}>
         <TestimonialsSection />
       </Suspense>
-      <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30" />}>
-        <FeatureShowcaseSection />
-      </Suspense>
-
       <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
         <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
       </Suspense>

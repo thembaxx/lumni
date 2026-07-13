@@ -59,9 +59,9 @@ export function QuestionNavigatorSidebar({
       <AnimatePresence initial={false}>
         {showPalette && (
           <m.aside
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 260, opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
+            initial={{ x: -260, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -260, opacity: 0 }}
             className="hidden overflow-hidden border-border border-r bg-muted/20 md:block"
           >
             <div className="w-64 p-4">

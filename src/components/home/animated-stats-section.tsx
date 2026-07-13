@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   const [display, setDisplay] = useState(0);
@@ -43,14 +44,15 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
   );
 }
 
-const STATS = [
-  { value: 14, suffix: "", label: "NSC Subjects" },
-  { value: 5000, suffix: "+", label: "AI-Generated Questions" },
-  { value: 50000, suffix: "+", label: "Active Students" },
-  { value: 98, suffix: "%", label: "Satisfaction Rate" },
+const ACHIEVEMENTS = [
+  { value: 14, suffix: "", label: "statSubjects", icon: "📘" },
+  { value: 5, suffix: " years", label: "statPapers", icon: "📄" },
+  { value: 1, suffix: "M+", label: "statQuestions", icon: "🧠" },
+  { value: 0, suffix: "", label: "statFree", icon: "✓" },
 ];
 
 export function AnimatedStatsSection() {
+  const t = useTranslations("home");
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLElement>(null);
 
@@ -71,31 +73,20 @@ export function AnimatedStatsSection() {
   }, []);
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-20">
+    <section ref={ref} className="relative py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <p className="mb-2 font-medium text-primary text-sm tracking-widest uppercase">
-            Trusted by students
-          </p>
-          <h2 className="font-heading text-2xl font-bold tracking-tight sm:text-3xl">
-            Learning that works
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Real numbers from real students preparing for their Matric exams
-          </p>
-        </div>
         <div
-          className="bento-grid"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.6s ease, transform 0.6s ease",
           }}
         >
-          {STATS.map((stat, i) => (
+          {ACHIEVEMENTS.map((stat, i) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-2 rounded-card border border-border/40 bg-card p-6 text-center transition-[border-color,box-shadow] duration-500 hover:border-primary/10 hover:shadow-level-2"
+              className="flex flex-col items-center gap-2 p-4 text-center"
               style={{
                 opacity: 0,
                 animation: visible
@@ -104,9 +95,13 @@ export function AnimatedStatsSection() {
               }}
             >
               <span className="font-heading text-3xl font-bold tracking-tight text-primary">
-                <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                {stat.value > 0 ? (
+                  <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                ) : (
+                  "Free"
+                )}
               </span>
-              <span className="text-balance text-muted-foreground text-sm">{stat.label}</span>
+              <span className="text-balance text-muted-foreground text-sm">{t(stat.label)}</span>
             </div>
           ))}
         </div>

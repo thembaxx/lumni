@@ -1,7 +1,7 @@
 "use client";
 
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { DictionaryDataAccess } from "@/lib/db/data-access";
 import { ALL_SEED_WORDS, COMMON_WORDS } from "./seed-words";
 import type { DictionaryCacheEntry, DictionaryResult } from "./types";
 import { logError } from "@/lib/shared/logger";
@@ -76,8 +76,8 @@ function parseApiResponse(data: ApiEntry[]): DictionaryResult | null {
   };
 }
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+let _deps: { db: DictionaryDataAccess } = Object.freeze({ db: dexieDataAccess });
+export function __setDepsForTesting(deps: { db: DictionaryDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 
@@ -174,7 +174,7 @@ export function getRandomWord(): string {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-export async function preCacheCommonWords(db: DataAccess): Promise<void> {
+export async function preCacheCommonWords(db: DictionaryDataAccess): Promise<void> {
   try {
     const count = await db.dictionaryCache.count();
     if (count >= 200) return;

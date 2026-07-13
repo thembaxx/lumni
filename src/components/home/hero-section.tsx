@@ -3,10 +3,7 @@
 import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
 import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
-import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
-import Mortarboard01Icon from "@hugeicons/core-free-icons/Mortarboard01Icon";
-import Timer01Icon from "@hugeicons/core-free-icons/Timer01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
@@ -17,20 +14,9 @@ import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/shared/fade-in";
 import { KineticHeading } from "@/components/shared/kinetic-heading";
 import { MagneticCard } from "@/components/shared/magnetic-card";
-import { SpotlightCard } from "@/components/shared/motion-primitives";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
-}
-
-function MorphingBlob() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Subtle grayscale blob */}
-      <div className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] bg-linear-to-br from-system-accent/8 via-system-accent/3 to-transparent opacity-60 blur-3xl will-change-transform" />
-      <div className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] rounded-full bg-linear-to-tr from-system-accent/5 to-transparent opacity-40 blur-3xl will-change-transform" />
-    </div>
-  );
 }
 
 function InteractiveQuizDemo() {
@@ -38,7 +24,7 @@ function InteractiveQuizDemo() {
   const [answer, setAnswer] = useState<number | null>(null);
   const options = [
     { label: "F = ma", value: 0 },
-    { label: "E = mc²", value: 1 },
+    { label: "E = mc", value: 1 },
     { label: "PV = nRT", value: 2 },
   ];
   const correct = 0;
@@ -53,7 +39,7 @@ function InteractiveQuizDemo() {
             </div>
             <div>
               <p className="font-semibold text-sm">Quick Quiz</p>
-              <p className="ios-caption-3 text-muted-foreground">Physics · Grade 12</p>
+              <p className="ios-caption-3 text-muted-foreground">Physics - Grade 12</p>
             </div>
           </div>
           <span className="rounded-full bg-(--system-accent-alpha-10) px-2.5 py-0.5 ios-caption-3 font-medium text-foreground">
@@ -76,14 +62,14 @@ function InteractiveQuizDemo() {
                   type="button"
                   onClick={() => setAnswer(opt.value)}
                   disabled={answer !== null}
-                  className={`ripple-container flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`flex items-center gap-2.5 rounded-lg border px-3 py-3 text-left text-xs transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
                     isCorrect
                       ? "border-success/40 bg-success/10 text-success"
                       : isWrong
                         ? "border-destructive/40 bg-destructive/10 text-destructive"
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hover:scale-[1.01]"
+                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hoverable:scale-[1.01]"
                   } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]"}`}
                 >
                   <span
@@ -119,7 +105,7 @@ function InteractiveQuizDemo() {
           >
             <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 shrink-0" />
             {answer === correct
-              ? "Correct! Force equals mass × acceleration."
+              ? "Correct! Force equals mass x acceleration."
               : "Not quite. Try F = ma."}
           </m.div>
         )}
@@ -147,7 +133,10 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
       id="main-content"
       className="relative flex min-h-dvh items-center overflow-hidden pt-14"
     >
-      <MorphingBlob />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute top-[-10%] right-[-10%] h-[60%] w-[50%] bg-linear-to-br from-system-accent/8 via-system-accent/3 to-transparent opacity-60 blur-3xl will-change-transform" />
+        <div className="absolute bottom-[-5%] left-[-10%] h-[50%] w-[40%] rounded-full bg-linear-to-tr from-system-accent/5 to-transparent opacity-40 blur-3xl will-change-transform" />
+      </div>
       <div className="mx-auto w-full max-w-6xl px-4">
         <div className="grid items-center gap-12 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-8">
@@ -158,13 +147,18 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                 </span>
                 {t("home.heroTagline")}
               </div>
-              <KineticHeading
-                as="h1"
-                className="ios-large-title leading-[1.05] tracking-[0.012em] sm:text-5xl lg:text-6xl"
-                staggerMs={25}
-              >
-                {t("home.heroTitle")}
-              </KineticHeading>
+              <div className="flex flex-col gap-1">
+                <KineticHeading
+                  as="h1"
+                  className="ios-large-title leading-[1.05] tracking-[0.012em] sm:text-5xl lg:text-6xl"
+                  staggerMs={25}
+                >
+                  {t("home.heroTitle")}
+                </KineticHeading>
+                <span className="text-primary ios-large-title leading-[1.05] tracking-[0.012em] sm:text-5xl lg:text-6xl">
+                  {t("home.heroTitleHighlight")}
+                </span>
+              </div>
               <p className="max-w-lg text-lg text-muted-foreground leading-relaxed">
                 {t("home.heroDesc")}
               </p>
@@ -213,54 +207,6 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
                   <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
                 </Button>
               )}
-
-              <div className="hidden items-center gap-2 rounded-full border border-border/30 bg-system-background-secondary px-3 py-1.5 text-muted-foreground text-xs sm:flex">
-                <span className="relative flex size-2">
-                  <span className="inline-flex size-2 rounded-full bg-success" />
-                </span>
-                No credit card
-              </div>
-            </FadeIn>
-
-            <FadeIn
-              distance={0}
-              delay={0.2}
-              duration={0.4}
-              className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm"
-            >
-              <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Mortarboard01Icon} className="size-4 text-primary/60" />
-                <span>{t("home.heroBadgeCaps")}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Timer01Icon} className="size-4 text-primary/60" />
-                <span>{t("home.heroBadgePapers")}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={ChartUpIcon} className="size-4 text-primary/60" />
-                <span>{t("home.heroBadgeAi")}</span>
-              </div>
-            </FadeIn>
-
-            <FadeIn
-              direction="up"
-              distance={16}
-              duration={0.4}
-              delay={0.3}
-              className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-2"
-            >
-              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
-                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
-                <span className="font-medium text-xs">CAPS Aligned</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
-                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
-                <span className="font-medium text-xs">Covers 2020–2025 Papers</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1.5">
-                <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-primary" />
-                <span className="font-medium text-xs">14 NSC Subjects</span>
-              </div>
             </FadeIn>
           </div>
 
@@ -271,9 +217,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
             delay={0.15}
             className="relative hidden items-center justify-center lg:flex"
           >
-            <SpotlightCard className="rounded-card-lg" radius={300}>
-              <InteractiveQuizDemo />
-            </SpotlightCard>
+            <InteractiveQuizDemo />
           </FadeIn>
         </div>
       </div>

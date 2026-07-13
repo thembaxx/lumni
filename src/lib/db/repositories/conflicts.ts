@@ -1,9 +1,9 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { SyncDataAccess } from "@/lib/db/data-access";
 import type { SyncConflict } from "../schema";
 
 export class ConflictRepository {
-  constructor(private db: DataAccess) {}
+  constructor(private db: SyncDataAccess) {}
 
   async save(conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">): Promise<number> {
     return this.db.conflicts.add({ ...conflict, resolvedAt: 0 } as SyncConflict);
@@ -28,7 +28,7 @@ export class ConflictRepository {
   }
 }
 
-export function createConflictRepository(db: DataAccess = dexieDataAccess) {
+export function createConflictRepository(db: SyncDataAccess = dexieDataAccess) {
   return new ConflictRepository(db);
 }
 export const conflictRepo = createConflictRepository();

@@ -5,6 +5,7 @@ import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
 import StarIcon from "@hugeicons/core-free-icons/StarIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
+import { useReducedMotion } from "motion/react";
 import { getStreakMessage } from "@/lib/utils/gamification";
 
 interface StreakFireProps {
@@ -14,6 +15,7 @@ interface StreakFireProps {
 }
 
 export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps) {
+  const prefersReducedMotion = useReducedMotion();
   const isMilestone = showMilestone && milestone && streak >= milestone;
 
   return (
@@ -32,7 +34,9 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
             className="absolute -top-1 -right-1"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, type: "spring", bounce: 0 }}
+            transition={
+              prefersReducedMotion ? { duration: 0 } : { delay: 0.3, type: "spring", bounce: 0 }
+            }
           >
             <HugeiconsIcon
               icon={streak >= 30 ? FireIcon : streak >= 7 ? StarIcon : SparklesIcon}
@@ -59,7 +63,9 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
         key={streak}
         initial={{ scale: 1.5 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 260, bounce: 0 }}
+        transition={
+          prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 260, bounce: 0 }
+        }
       >
         {streak}
       </m.span>

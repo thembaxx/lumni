@@ -1,4 +1,4 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import { PushDeliveryService } from "@/lib/services/push-delivery";
 import { logError } from "@/lib/shared/logger";
 
@@ -14,7 +14,7 @@ export interface DigestResult {
 }
 
 export interface DigestDeps {
-  db: DataAccess;
+  db: CompetencyDataAccess;
 }
 
 export class DigestService {

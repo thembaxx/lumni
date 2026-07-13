@@ -26,9 +26,9 @@ export function SearchWidget() {
 
   return (
     <m.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+      initial={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+      animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+      transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "rounded-2xl border border-border/30 bg-secondary/60 p-3 transition-[border-color,box-shadow] duration-300",
         isFocused && "border-primary/30 shadow-level-2",

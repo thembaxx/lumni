@@ -24,24 +24,18 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={prefersReducedMotion ? undefined : { duration: 0.4 }}
+          className="flex flex-col items-center gap-6"
         >
-          <h2 className="ios-title-1 mb-4">{t("ctaHeading")}</h2>
-          <p className="ios-body mx-auto mb-8 max-w-md text-muted-foreground">
-            {t("ctaDescription")}
-          </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg">
-              <Link href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>
-                {isAuthenticated ? t("heroDashboard") : t("heroStartFree")}
-                <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
-              </Link>
-            </Button>
-            {!isAuthenticated && (
-              <Button asChild variant="ghost" size="lg">
-                <Link href="/auth/sign-in">{t("navSignIn")}</Link>
-              </Button>
-            )}
-          </div>
+          <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
+            {t("ctaHeading")}
+          </h2>
+          <p className="ios-body max-w-md text-muted-foreground">{t("ctaDescription")}</p>
+          <Button asChild size="lg">
+            <Link href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>
+              {isAuthenticated ? t("heroDashboard") : t("heroStartFree")}
+              <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
+            </Link>
+          </Button>
         </m.div>
       </div>
     </section>

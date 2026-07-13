@@ -3,6 +3,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
+    pool: "threads",
     environment: "happy-dom",
     setupFiles: ["./src/hooks/__tests__/setup.ts"],
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],

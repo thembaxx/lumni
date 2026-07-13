@@ -56,8 +56,8 @@ export function StatCard({
         <p className="text-muted-foreground text-xs">{label}</p>
         <m.p
           className="font-semibold text-xl tabular-nums"
-          initial={prefersReducedMotion ? undefined : { opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={prefersReducedMotion ? { duration: 0 } : { delay: delay + 0.15 }}
         >
           {value}
@@ -98,8 +98,8 @@ export function StatCard({
         </m.div>
         <m.span
           className={cn("font-bold text-xl tabular-nums", colorClass)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: delay + 0.35 }}
         >
           {value}
