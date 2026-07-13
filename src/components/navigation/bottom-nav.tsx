@@ -41,7 +41,7 @@ const navItems: BottomNavItem[] = [
 ];
 
 const baseItemClass =
-  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0 border-none bg-transparent px-4 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
+  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
@@ -149,7 +149,7 @@ const BottomNav = memo(function BottomNav() {
     >
       <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
         <div className="flex items-center gap-2">
-          <div className="glass-regular relative flex items-center rounded-full px-2 py-1 shadow-level-2 ring-1 ring-system-separator/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
+          <div className="glass-regular relative flex items-center rounded-full px-3 py-1 shadow-level-2 ring-1 ring-system-separator/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
             {navItems.map((item, index) => (
               <NavItemComponent
                 key={item.id}
