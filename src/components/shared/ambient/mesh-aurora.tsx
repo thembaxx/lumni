@@ -66,7 +66,7 @@ export function MeshAurora({
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, [interactive]);
+  }, [interactive, enabled]);
 
   const colors = PALETTES[variant];
   const blobs = [
