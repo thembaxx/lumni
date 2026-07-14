@@ -41,20 +41,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let cancelled = false;
 
     const init = async () => {
-      if (
-        typeof window !== "undefined" &&
-        localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true"
-      ) {
-        dispatch({
-          type: "SET_USER",
-          user: null,
-          status: "unauthenticated",
-          isAnonymous: false,
-        } satisfies AuthAction);
-        dispatch({ type: "SET_AUTH_READY", authReady: true } satisfies AuthAction);
-        return;
-      }
-
       try {
         const currentUser = await account.get();
         if (cancelled) return;
@@ -71,6 +57,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (err) {
         if (cancelled) return;
         logError("auth-init", err);
+
+        if (
+          typeof window !== "undefined" &&
+          localStorage.getItem(ANONYMOUS_ATTEMPTED_KEY) === "true"
+        ) {
+          dispatch({
+            type: "SET_USER",
+            user: null,
+            status: "unauthenticated",
+            isAnonymous: false,
+          } satisfies AuthAction);
+          dispatch({ type: "SET_AUTH_READY", authReady: true } satisfies AuthAction);
+          return;
+        }
 
         try {
           await account.createAnonymousSession();
