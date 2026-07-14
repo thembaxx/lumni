@@ -9,6 +9,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { memo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { MagneticCard } from "@/components/shared/magnetic-card";
@@ -40,9 +41,12 @@ function InteractiveQuizDemo() {
               <p className="text-muted-foreground text-[10px]">Physics - Grade 12</p>
             </div>
           </div>
-          <span className="rounded-full bg-(--system-accent-alpha-10) px-2 py-0.5 text-[10px] font-medium text-foreground">
+          <Badge
+            variant="outline"
+            className="bg-(--system-accent-alpha-10) text-foreground text-[10px]"
+          >
             Demo
-          </span>
+          </Badge>
         </div>
 
         <div className="flex flex-col gap-2">

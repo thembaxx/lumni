@@ -4,6 +4,7 @@ import Message02Icon from "@hugeicons/core-free-icons/Message02Icon";
 import Pin02Icon from "@hugeicons/core-free-icons/Pin02Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
+import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupPosts, usePinPost, useUnpinPost } from "@/hooks/use-study-groups";
 import { PostCardWithComments } from "./post-card-with-comments";
@@ -57,7 +58,7 @@ export function DiscussionFeed({ groupId }: Props) {
               onPin={() => unpinPost({ groupId, postId: post.$id })}
             />
           ))}
-          <hr className="border-border/50" />
+          <Separator className="border-border/50" />
         </>
       )}
       {regularPosts.map((post) => (

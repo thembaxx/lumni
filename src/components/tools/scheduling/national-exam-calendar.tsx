@@ -6,6 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -166,9 +167,10 @@ export function NationalExamCalendar() {
                 <span className="ios-caption-3 font-semibold text-muted-foreground uppercase tracking-wider">
                   Upcoming Exams
                 </span>
-                <span
+                <Badge
+                  variant="outline"
                   className={cn(
-                    "ios-caption-3 rounded-full px-2 py-0.5 font-medium tabular-nums",
+                    "tabular-nums",
                     countdownText.includes("Starts")
                       ? "bg-(--system-accent)/10 text-(--system-accent)"
                       : countdownText === "Ongoing"
@@ -177,7 +179,7 @@ export function NationalExamCalendar() {
                   )}
                 >
                   {countdownText}
-                </span>
+                </Badge>
               </div>
               <div className="divide-y divide-border/40">
                 {nextExams.map((exam) => (
@@ -256,9 +258,12 @@ export function NationalExamCalendar() {
                         {dayName} {dayNum} {monthName}
                       </span>
                       {isToday && (
-                        <span className="ios-caption-3 rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--system-accent)">
+                        <Badge
+                          variant="outline"
+                          className="bg-(--system-accent)/10 text-(--system-accent)"
+                        >
                           Today
-                        </span>
+                        </Badge>
                       )}
                       <div className="ml-auto h-px flex-1 bg-border/40" />
                     </div>

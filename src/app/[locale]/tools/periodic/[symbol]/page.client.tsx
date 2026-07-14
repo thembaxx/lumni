@@ -102,7 +102,7 @@ export function ElementDetailClient() {
 
           <button
             onClick={() => router.back()}
-            className="absolute top-4 right-4 z-elevated rounded-xl bg-white/5 p-2 transition-[scale,background-color] duration-150 hoverable:scale-105 hover:bg-white/10 press-scale dark:bg-white/10 dark:hover:bg-white/15"
+            className="absolute top-4 right-4 z-elevated rounded-xl bg-white/5 p-2 transition-[scale,background-color] duration-150 hoverable:scale-105 hover:bg-white/10 press-scale dark:bg-muted/20 dark:hover:bg-muted/30"
           >
             <HugeiconsIcon icon={Cancel01Icon} data-icon />
           </button>
@@ -129,15 +129,15 @@ export function ElementDetailClient() {
             </div>
 
             <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10">
+              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-border/20 dark:bg-muted/20">
                 <p className="mb-1 text-muted-foreground text-xs">Period</p>
                 <p className="font-semibold text-sm">{getPeriod(element.row)}</p>
               </div>
-              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10">
+              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-border/20 dark:bg-muted/20">
                 <p className="mb-1 text-muted-foreground text-xs">Group</p>
                 <p className="font-semibold text-sm">{getGroup(element.col, element.category)}</p>
               </div>
-              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10">
+              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-border/20 dark:bg-muted/20">
                 <p className="mb-1 text-muted-foreground text-xs">State (25&deg;C)</p>
                 <p className="flex items-center gap-1.5 font-semibold text-sm">
                   <span className="text-xs">
@@ -146,7 +146,7 @@ export function ElementDetailClient() {
                   {getStateAtRoomTemp(element.atomicNumber)}
                 </p>
               </div>
-              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-white/10 dark:bg-white/10">
+              <div className="rounded-xl border border-white/5 bg-white/5 p-3 dark:border-border/20 dark:bg-muted/20">
                 <p className="mb-1 text-muted-foreground text-xs">Category</p>
                 <p className="font-semibold text-sm">
                   {elementCategoryConfig[element.category]?.label || element.category}
@@ -154,13 +154,13 @@ export function ElementDetailClient() {
               </div>
             </div>
 
-            <div className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10">
+            <div className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-border/20 dark:bg-muted/20">
               <p className="mb-2 text-muted-foreground text-xs">Electron Configuration</p>
               <p className="mb-3 font-semibold text-sm">{element.electronConfig}</p>
               <ElectronShellVisual electronConfig={element.electronConfig} />
             </div>
 
-            <div className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10">
+            <div className="mb-4 rounded-xl border border-white/5 bg-white/5 p-4 dark:border-border/20 dark:bg-muted/20">
               <p className="mb-1.5 text-muted-foreground text-xs">Discovery</p>
               <p className="mb-1 font-semibold text-sm">{element.discoveryYear}</p>
               <p className="text-muted-foreground/70 text-xs leading-relaxed">
@@ -169,7 +169,7 @@ export function ElementDetailClient() {
             </div>
 
             {interestingFact && (
-              <div className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10">
+              <div className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-border/20 dark:bg-muted/20">
                 <p className="mb-1.5 text-muted-foreground text-xs">Did You Know?</p>
                 <p className="text-muted-foreground/80 text-sm leading-relaxed">
                   {interestingFact}

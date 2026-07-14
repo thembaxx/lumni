@@ -11,6 +11,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { Confetti } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { ShareResultButton } from "@/components/shared/share-button";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAnswerText, getCorrectAnswerText } from "@/lib/exam/helpers";
@@ -71,9 +72,9 @@ export function SessionResultsView({
                   : t("exam.keepPracticing")}
             </CardTitle>
             {isMock && (
-              <span className="rounded-full bg-warning/15 px-3 py-1 font-semibold text-warning text-xs">
+              <Badge variant="outline" className="bg-warning/15 text-warning">
                 {t("exam.mockExam")}
-              </span>
+              </Badge>
             )}
           </div>
         </CardHeader>

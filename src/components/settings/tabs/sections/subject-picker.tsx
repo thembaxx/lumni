@@ -3,6 +3,7 @@
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 interface SubjectItem {
   id: string;
@@ -25,9 +26,10 @@ export function SubjectPicker({ enrolled, available, isEnrolled, onToggle }: Sub
     <>
       <div className="flex flex-wrap gap-2 px-1">
         {enrolled.map((subject) => (
-          <span
+          <Badge
             key={subject.id}
-            className="inline-flex items-center gap-1 rounded-full bg-system-accent/10 px-3 py-1.5 font-semibold text-system-accent text-xs"
+            variant="outline"
+            className="gap-1 bg-system-accent/10 px-3 py-1.5 text-system-accent"
           >
             {subject.name}
             <button
@@ -38,7 +40,7 @@ export function SubjectPicker({ enrolled, available, isEnrolled, onToggle }: Sub
             >
               <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
             </button>
-          </span>
+          </Badge>
         ))}
         <button
           type="button"

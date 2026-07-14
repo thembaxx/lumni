@@ -46,7 +46,7 @@ export function ConflictResolver() {
         </Button>
       </div>
       {open && entries.length > 0 && (
-        <ul className="space-y-2">
+        <ul className="flex flex-col gap-2">
           {entries.map((entry) => (
             <li
               key={entry.id}

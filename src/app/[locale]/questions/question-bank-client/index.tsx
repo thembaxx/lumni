@@ -7,6 +7,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motionEase } from "@/lib/utils/animation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -336,10 +337,10 @@ export function QuestionBankClient() {
           {isPending && (
             <div className="flex flex-col gap-3">
               {[...Array(3)].map((_, i) => (
-                <div
+                <Skeleton
                   // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
                   key={i}
-                  className="h-32 animate-pulse rounded-2xl bg-muted"
+                  className="h-32 rounded-2xl"
                 />
               ))}
             </div>

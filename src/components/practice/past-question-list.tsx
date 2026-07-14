@@ -2,6 +2,7 @@
 
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { PastQuestionCard } from "@/components/practice/past-question-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface PastQuestionListProps {
   questions: PastPaperQuestion[];
@@ -48,16 +49,16 @@ export function PastQuestionList({
     return (
       <div className="flex flex-col gap-3">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="animate-pulse rounded-xl border border-border/60 bg-card p-4">
+          <div key={i} className="rounded-xl border border-border/60 bg-card p-4">
             <div className="mb-3 flex items-center gap-2">
-              <div className="h-4 w-20 rounded bg-muted" />
-              <div className="h-4 w-16 rounded bg-muted" />
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-16" />
             </div>
             <div className="flex flex-col gap-1.5">
-              <div className="h-3 w-full rounded bg-muted" />
-              <div className="h-3 w-3/4 rounded bg-muted" />
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-3/4" />
             </div>
-            <div className="h-10 w-full rounded-lg bg-muted" />
+            <Skeleton className="h-10 w-full" />
           </div>
         ))}
       </div>

@@ -5,6 +5,7 @@ import Bookmark03Icon from "@hugeicons/core-free-icons/Bookmark03Icon";
 import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Popover } from "@/components/ui/popover";
 import { PopoverContent } from "@/components/ui/popover-content";
@@ -119,9 +120,9 @@ export function WordLookupPopover({
               </div>
               {result.definitions.slice(0, 2).map((def) => (
                 <div key={def.definition} className="flex flex-col gap-1">
-                  <span className="w-fit rounded-full bg-system-accent/10 px-2 py-0.5 font-medium text-system-accent ios-caption-3">
+                  <Badge variant="outline" className="bg-system-accent/10 text-system-accent">
                     {def.partOfSpeech}
-                  </span>
+                  </Badge>
                   <p className="text-sm leading-relaxed">{def.definition}</p>
                   {def.example && (
                     <p className="text-muted-foreground text-xs italic">

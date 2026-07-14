@@ -5,6 +5,7 @@ import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { FadeIn } from "@/components/shared/fade-in";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -71,9 +72,12 @@ export function VocabularyListCard() {
                         </span>
                       </div>
                     </div>
-                    <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-(--fs-caption-3) text-muted-foreground">
+                    <Badge
+                      variant="outline"
+                      className="bg-muted text-(--fs-caption-3) text-muted-foreground"
+                    >
                       {word.language}
-                    </span>
+                    </Badge>
                   </FadeIn>
                 ))}
             </div>

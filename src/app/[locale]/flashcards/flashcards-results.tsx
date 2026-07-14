@@ -54,28 +54,17 @@ export function FlashcardsResults({
                   <p className="font-bold text-2xl">{totalCards}</p>
                   <p className="text-muted-foreground text-xs">{t("flashcards.cardsStudied")}</p>
                 </div>
-                <div className="col-span-4 rounded-lg bg-success/10 p-4 sm:col-span-4 dark:bg-success/20">
-                  <p className="font-bold text-success text-xl dark:text-success-foreground">
-                    {knownCount}
-                  </p>
-                  <p className="text-success text-xs dark:text-success-foreground">
-                    {t("flashcards.nailedIt")}
-                  </p>
+                <div className="col-span-4 rounded-lg bg-success/10 p-4 sm:col-span-4">
+                  <p className="font-bold text-success text-xl">{knownCount}</p>
+                  <p className="text-success text-xs">{t("flashcards.nailedIt")}</p>
                 </div>
-                <div className="col-span-12 rounded-lg bg-warning/10 p-4 sm:col-span-4 dark:bg-warning/20">
-                  <p className="font-bold text-warning text-xl dark:text-warning-foreground">
-                    {reviewCount}
-                  </p>
-                  <p className="text-warning text-xs dark:text-warning-foreground">
-                    {t("flashcards.stillLearning")}
-                  </p>
+                <div className="col-span-12 rounded-lg bg-warning/10 p-4 sm:col-span-4">
+                  <p className="font-bold text-warning text-xl">{reviewCount}</p>
+                  <p className="text-warning text-xs">{t("flashcards.stillLearning")}</p>
                 </div>
                 <div className="col-span-12 flex items-center gap-2">
-                  <HugeiconsIcon
-                    icon={Target01Icon}
-                    className="size-4 text-success dark:text-success-foreground"
-                  />
-                  <span className="font-medium text-sm text-success dark:text-success-foreground">
+                  <HugeiconsIcon icon={Target01Icon} className="size-4 text-success" />
+                  <span className="font-medium text-sm text-success">
                     {t("flashcards.mastery", { accuracy })}
                   </span>
                 </div>

@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import { memo, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { haptics } from "@/lib/utils/haptics";
@@ -182,17 +183,18 @@ export const SwipeableCard = memo(function SwipeableCard({
 
             <div className="mb-4 flex items-center gap-2">
               {topic && (
-                <span
+                <Badge
                   data-testid="card-topic"
-                  className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-(--system-accent)"
+                  variant="outline"
+                  className="bg-(--system-accent-alpha-10) text-(--system-accent)"
                 >
                   {topic}
-                </span>
+                </Badge>
               )}
               {difficulty && (
-                <span className="ios-caption-2 rounded-md bg-muted px-2 py-0.5 font-mono text-muted-foreground">
+                <Badge variant="outline" className="bg-muted font-mono text-muted-foreground">
                   {difficulty}
-                </span>
+                </Badge>
               )}
               <div className="ml-auto">
                 <TTSButton text={front} />
@@ -229,10 +231,7 @@ export const SwipeableCard = memo(function SwipeableCard({
             </div>
 
             {hint && (
-              <div
-                id={`${_id}-hint`}
-                className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20"
-              >
+              <div id={`${_id}-hint`} className="mt-4 rounded-lg bg-warning/10 p-3">
                 <p className="text-warning text-xs">Hint: {hint}</p>
               </div>
             )}

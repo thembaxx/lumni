@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -42,9 +43,9 @@ export function CommitmentCard({
             aria-hidden="true"
           />
           <span className="font-medium">{commitment.buddyName}</span>
-          <span className="rounded-full bg-secondary px-2 py-0.5 text-xs capitalize text-secondary-foreground">
+          <Badge variant="secondary" className="capitalize">
             {commitment.status}
-          </span>
+          </Badge>
         </div>
         <p className="text-sm text-muted-foreground">
           Subject: {commitment.subject}

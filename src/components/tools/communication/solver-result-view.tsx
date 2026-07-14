@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { VerifiedByPill } from "./verified-by-pill";
@@ -54,9 +55,9 @@ export function SolverResultView({ subject, result, onReset }: SolverResultViewP
         <div className="p-6">
           {subject !== "general" && (
             <div className="mb-4">
-              <span className="rounded-full bg-(--system-accent)/10 px-2.5 py-1 font-medium text-(--system-accent) text-xs">
+              <Badge variant="outline" className="bg-(--system-accent)/10 text-(--system-accent)">
                 {SUBJECT_LABELS[subject] || subject}
-              </span>
+              </Badge>
             </div>
           )}
           <div className="rounded-xl border border-border/50 bg-system-background p-5">

@@ -190,12 +190,12 @@ export function SwipeableCardDeck({
             {currentIndex + 1} / {cards.length}
           </Badge>
           {knownCount !== undefined && (
-            <Badge variant="secondary" className="text-success dark:text-success-foreground">
+            <Badge variant="secondary" className="text-success">
               {knownCount} known
             </Badge>
           )}
           {reviewCount !== undefined && (
-            <Badge variant="secondary" className="text-warning dark:text-warning-foreground">
+            <Badge variant="secondary" className="text-warning">
               {reviewCount} review
             </Badge>
           )}

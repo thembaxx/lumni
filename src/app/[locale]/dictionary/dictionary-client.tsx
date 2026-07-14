@@ -13,6 +13,7 @@ import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { motionEase } from "@/lib/utils/animation";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -332,9 +333,12 @@ export function DictionaryClient() {
                   <div className="flex flex-col gap-4">
                     {result.definitions.map((def) => (
                       <div key={def.definition} className="flex flex-col gap-1">
-                        <span className="w-fit rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--system-accent) text-(--fs-caption-3)">
+                        <Badge
+                          variant="outline"
+                          className="bg-(--system-accent)/10 text-(--system-accent)"
+                        >
                           {def.partOfSpeech}
-                        </span>
+                        </Badge>
                         <p className="text-sm leading-relaxed">{def.definition}</p>
                         {def.example && (
                           <p className="text-muted-foreground text-xs italic">

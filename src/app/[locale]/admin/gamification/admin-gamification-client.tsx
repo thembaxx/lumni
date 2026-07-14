@@ -4,6 +4,7 @@ import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { ACHIEVEMENTS, LEVELS } from "@/types/gamification";
 
@@ -90,7 +91,7 @@ export function AdminGamificationClient() {
                 "overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2",
               )}
             >
-              <div className={cn("h-20 w-full animate-pulse bg-muted")} />
+              <Skeleton className="h-20 w-full" />
             </div>
           ))}
         </div>
@@ -248,7 +249,7 @@ export function AdminGamificationClient() {
                         a.rarity === "legendary"
                           ? "border-warning text-warning"
                           : a.rarity === "epic"
-                            ? "border-purple-500 text-purple-500 dark:border-purple-400 dark:text-purple-400"
+                            ? "border-purple-500 text-purple-500"
                             : a.rarity === "rare"
                               ? "border-info text-info"
                               : "",

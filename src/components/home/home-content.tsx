@@ -16,6 +16,7 @@ import { CELEBRATION_DURATION } from "@/lib/shared/durations";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { MeshAurora } from "@/components/shared/ambient/mesh-aurora";
+import { Skeleton } from "@/components/ui/skeleton";
 import { HeroSection } from "./hero-section";
 
 const FeaturesGrid = dynamic(
@@ -238,19 +239,19 @@ export function HomeContent() {
       </nav>
 
       <HeroSection isAuthenticated={isAuthenticated || isAnonymous} />
-      <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30" />}>
+      <Suspense fallback={<Skeleton className="h-96 w-full rounded-3xl" />}>
         <FeaturesGrid />
       </Suspense>
-      <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
+      <Suspense fallback={<Skeleton className="h-48 w-full rounded-3xl" />}>
         <AnimatedStatsSection />
       </Suspense>
-      <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30" />}>
+      <Suspense fallback={<Skeleton className="h-64 w-full rounded-3xl" />}>
         <HowItWorksSection />
       </Suspense>
-      <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30" />}>
+      <Suspense fallback={<Skeleton className="h-80 w-full rounded-3xl" />}>
         <TestimonialsSection />
       </Suspense>
-      <Suspense fallback={<div className="h-48 animate-pulse bg-muted/30" />}>
+      <Suspense fallback={<Skeleton className="h-48 w-full rounded-3xl" />}>
         <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
       </Suspense>
     </main>

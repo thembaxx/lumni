@@ -16,6 +16,7 @@ import { Anim } from "@/components/shared/anim";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { type CuratedProblem, useCuratedProblems } from "@/hooks/use-curated-problems";
@@ -85,18 +86,13 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
         <div className="flex flex-col gap-4 p-5">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span
-                className={cn(
-                  "rounded-full border px-2.5 py-0.5 font-mono ios-caption-3 font-semibold uppercase",
-                  diffStyle,
-                )}
-              >
+              <Badge variant="outline" className={cn("font-mono uppercase", diffStyle)}>
                 {problem.difficulty}
-              </span>
+              </Badge>
               {problem.topic && (
-                <span className="rounded-full bg-muted/60 px-2.5 py-0.5 ios-caption-3 text-muted-foreground">
+                <Badge variant="outline" className="bg-muted/60 text-muted-foreground">
                   {problem.topic}
-                </span>
+                </Badge>
               )}
             </div>
             <span className="font-mono text-muted-foreground/60 text-xs">

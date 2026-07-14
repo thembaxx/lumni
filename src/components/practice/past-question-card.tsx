@@ -5,6 +5,7 @@ import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-qu
 import { formatSubjectLabel } from "@/lib/subjects";
 import { HugeiconsIcon } from "@hugeicons/react";
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
+import { Badge } from "@/components/ui/badge";
 
 interface PastQuestionCardProps {
   question: PastPaperQuestion;
@@ -34,10 +35,10 @@ export function PastQuestionCard({ question }: PastQuestionCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1 rounded-md bg-system-accent/10 px-2 py-0.5 font-medium text-system-accent">
+              <Badge variant="outline" className="gap-1 bg-system-accent/10 text-system-accent">
                 <HugeiconsIcon icon={BookOpen01Icon} className="size-3" />
                 {subjectName}
-              </span>
+              </Badge>
               <span className="tabular-nums">
                 {question.year} P{question.paperNumber}
               </span>

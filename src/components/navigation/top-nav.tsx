@@ -15,6 +15,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SidebarHamburger } from "@/components/navigation/sidebar-nav";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownList,
@@ -102,22 +103,25 @@ const TopNavStatus = memo(function TopNavStatus() {
         </m.div>
       )}
       {isSyncing && (
-        <div className="flex items-center gap-1 rounded-full bg-info/10 px-2 py-0.5 text-info">
+        <Badge variant="outline" className="gap-1 rounded-full bg-info/10 text-info">
           <div className="size-1.5 animate-pulse rounded-full bg-info" />
-          <span className="ios-caption-3 font-medium">Syncing</span>
-        </div>
+          Syncing
+        </Badge>
       )}
       {!isOnline && (
-        <div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
+        <Badge variant="outline" className="gap-1 rounded-full bg-warning/10 text-warning">
           <div className="size-1.5 rounded-full bg-warning" />
-          <span className="ios-caption-3 font-medium">Offline</span>
-        </div>
+          Offline
+        </Badge>
       )}
       {pendingCount > 0 && (
-        <div className="flex items-center gap-1 rounded-full bg-(--system-accent-alpha-10) px-2 py-0.5 text-system-accent">
+        <Badge
+          variant="outline"
+          className="gap-1 rounded-full bg-(--system-accent-alpha-10) text-system-accent"
+        >
           <div className="size-1.5 rounded-full bg-system-accent" />
-          <span className="ios-caption-3 font-medium">{pendingCount}</span>
-        </div>
+          {pendingCount}
+        </Badge>
       )}
     </div>
   );

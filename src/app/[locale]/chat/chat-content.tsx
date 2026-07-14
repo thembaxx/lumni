@@ -36,6 +36,7 @@ import {
   MessageScrollerProvider,
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
 import { useChatStream } from "@/hooks/use-chat-stream";
@@ -252,9 +253,12 @@ export function ChatContent() {
                                             >
                                               {words.map((word) => (
                                                 <WordLookupPopover key={word} word={word}>
-                                                  <span className="inline-flex cursor-pointer items-center rounded-full bg-system-accent/10 px-2.5 py-0.5 font-medium text-system-accent text-xs transition-colors hover:bg-system-accent/20">
+                                                  <Badge
+                                                    variant="outline"
+                                                    className="cursor-pointer bg-system-accent/10 text-system-accent transition-colors hover:bg-system-accent/20"
+                                                  >
                                                     {word}
-                                                  </span>
+                                                  </Badge>
                                                 </WordLookupPopover>
                                               ))}
                                             </div>

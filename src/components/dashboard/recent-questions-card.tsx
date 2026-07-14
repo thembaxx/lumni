@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -53,9 +54,12 @@ export function RecentQuestionsCard() {
           {entries.map((entry) => (
             <div key={entry.id} className="rounded-2xl border bg-card p-4 text-sm">
               <div className="mb-1 flex items-center gap-2">
-                <span className="rounded-full bg-(--system-accent)/10 px-2 py-0.5 font-medium text-(--fs-caption-3) text-muted-foreground uppercase tracking-wide">
+                <Badge
+                  variant="outline"
+                  className="bg-(--system-accent)/10 text-muted-foreground uppercase tracking-wide"
+                >
                   {entry.subject}
-                </span>
+                </Badge>
                 {entry.topic && (
                   <span className="text-(--fs-caption-3) text-muted-foreground">{entry.topic}</span>
                 )}

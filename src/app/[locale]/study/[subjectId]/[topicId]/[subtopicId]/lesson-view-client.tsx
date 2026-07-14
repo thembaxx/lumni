@@ -13,6 +13,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SaveVocabularyButton } from "@/components/vocabulary/save-vocabulary-button";
 import { WordLookupPopover } from "@/components/vocabulary/word-lookup-popover";
@@ -132,11 +133,11 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
   if (isPending) {
     return (
       <PageContainer className="gap-4 pt-8">
-        <div className="h-8 w-64 animate-pulse rounded-2xl bg-muted" />
-        <div className="h-4 w-40 animate-pulse rounded-2xl bg-muted" />
+        <Skeleton className="h-8 w-64 rounded-2xl" />
+        <Skeleton className="h-4 w-40 rounded-2xl" />
         {[...Array(3)].map((_, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
-          <div key={i} className="h-32 animate-pulse rounded-3xl bg-muted" />
+          <Skeleton key={i} className="h-32 rounded-3xl" />
         ))}
       </PageContainer>
     );

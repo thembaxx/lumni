@@ -17,9 +17,9 @@ import { getWeeklyLeaderboard, type LeaderboardEntry } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
 const rankColors = [
-  "text-amber-400 dark:text-amber-300",
-  "text-zinc-500 dark:text-zinc-300",
-  "text-orange-700 dark:text-orange-400",
+  "text-warning",
+  "text-muted-foreground",
+  "text-warning/70",
   "text-muted-foreground",
 ];
 
@@ -83,11 +83,7 @@ export function LeaderboardCard() {
     <Card className="overflow-hidden">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
-          <HugeiconsIcon
-            icon={CrownIcon}
-            size={20}
-            className="text-amber-400 dark:text-amber-300"
-          />
+          <HugeiconsIcon icon={CrownIcon} size={20} className="text-warning" />
           Weekly Leaderboard
           {liveSince && (
             <span className="ios-caption-3 ml-auto flex items-center gap-1.5 font-medium text-(--system-success) uppercase tracking-wider">

@@ -33,7 +33,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="absolute top-4 right-4 size-10 rounded-full bg-black/40 text-white hover:bg-black/60 dark:text-white"
+              className="absolute top-4 right-4 size-10 rounded-full bg-black/40 text-white hover:bg-black/60"
               aria-label="Close image viewer"
             >
               <HugeiconsIcon icon={Cancel01Icon} data-icon />
