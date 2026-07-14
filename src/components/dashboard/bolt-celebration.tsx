@@ -33,15 +33,15 @@ export function BoltCelebration({
           <div
             className={
               correct
-                ? "relative flex size-24 items-center justify-center rounded-3xl bg-success/15 ring-1 ring-success/25"
-                : "relative flex size-24 items-center justify-center rounded-3xl bg-destructive/10 ring-1 ring-destructive/20"
+                ? "relative flex size-24 items-center justify-center rounded-card-lg bg-success/15 ring-1 ring-success/25"
+                : "relative flex size-24 items-center justify-center rounded-card-lg bg-destructive/10 ring-1 ring-destructive/20"
             }
           >
             <div
               className={
                 correct
-                  ? "absolute inset-0 rounded-3xl bg-success/20 blur-xl"
-                  : "absolute inset-0 rounded-3xl bg-destructive/20 blur-xl"
+                  ? "absolute inset-0 rounded-card-lg bg-success/20 blur-xl"
+                  : "absolute inset-0 rounded-card-lg bg-destructive/20 blur-xl"
               }
             />
             <m.div

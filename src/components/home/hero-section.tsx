@@ -149,7 +149,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity"
+          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity img-outline"
           style={{ backgroundImage: "url(https://picsum.photos/seed/matric/1920/1080)" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-system-background via-system-background/80 to-system-background" />
@@ -195,7 +195,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               <Button
                 asChild
                 size="lg"
-                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 press-scale"
+                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow] duration-300 hover:shadow-level-3 press-scale"
               >
                 <Link href="/dashboard">
                   {t("home.heroDashboard")}
@@ -210,7 +210,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
               <Button
                 asChild
                 size="lg"
-                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 press-scale"
+                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow] duration-300 hover:shadow-level-3 press-scale"
               >
                 <Link href="/dashboard">
                   {t("home.heroStartFree")}

@@ -57,14 +57,14 @@ function ImageBentoCard() {
       transition={{ delay: 0, duration: 0.6, ease: motionEase }}
       className="md:col-span-2 md:row-span-2"
     >
-      <div className="group relative h-full min-h-64 overflow-hidden rounded-card border border-border/30 bg-card shadow-level-1 transition-all duration-500 hover:shadow-level-3 md:min-h-80">
+      <div className="group relative h-full min-h-64 overflow-hidden rounded-card border border-border/30 bg-card shadow-level-1 transition-[box-shadow,background-color,border-color] duration-500 hover:shadow-level-3 md:min-h-80">
         <div
-          className="absolute inset-0 scale-105 bg-cover bg-center opacity-20 mix-blend-luminosity transition-all duration-700 group-hover:scale-110"
+          className="absolute inset-0 scale-105 bg-cover bg-center opacity-20 mix-blend-luminosity transition-transform duration-700 group-hover:scale-110 img-outline"
           style={{ backgroundImage: "url(https://picsum.photos/seed/learning/800/600)" }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card/95 via-card/60 to-card/30" />
         <div className="relative flex h-full flex-col justify-end gap-3 p-6 md:p-8">
-          <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-all duration-300 group-hoverable:scale-110">
+          <div className="flex size-12 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) text-primary transition-transform duration-300 group-hoverable:scale-110">
             <HugeiconsIcon icon={BrainIcon} className="size-6" />
           </div>
           <h3 className="text-2xl font-bold text-foreground tracking-tight">
@@ -120,15 +120,15 @@ export function FeaturesGrid() {
               className={card.colSpan}
             >
               {card.panorama ? (
-                <div className="group relative h-full min-h-48 overflow-hidden rounded-card border border-border/30 bg-card shadow-level-1 transition-all duration-500 hover:shadow-level-3">
+                <div className="group relative h-full min-h-48 overflow-hidden rounded-card border border-border/30 bg-card shadow-level-1 transition-[box-shadow,background-color,border-color] duration-500 hover:shadow-level-3">
                   <div
-                    className="absolute inset-0 scale-105 bg-cover bg-center opacity-15 mix-blend-luminosity transition-all duration-700 group-hover:scale-110"
+                    className="absolute inset-0 scale-105 bg-cover bg-center opacity-15 mix-blend-luminosity transition-transform duration-700 group-hover:scale-110 img-outline"
                     style={{ backgroundImage: "url(https://picsum.photos/seed/progress/1200/400)" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/50 to-card/20" />
                   <div className="relative flex h-full flex-col justify-end gap-3 p-6 md:p-8">
                     <div
-                      className={`flex size-11 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) ${card.accentColor} transition-all duration-300 group-hoverable:scale-110`}
+                      className={`flex size-11 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) ${card.accentColor} transition-transform duration-300 group-hoverable:scale-110`}
                     >
                       <HugeiconsIcon icon={card.icon} className="size-5" />
                     </div>
@@ -141,11 +141,11 @@ export function FeaturesGrid() {
                   </div>
                 </div>
               ) : (
-                <div className="group relative h-full overflow-hidden rounded-card border border-border/30 bg-card p-6 shadow-level-1 transition-all duration-500 hover:shadow-level-3">
+                <div className="group relative h-full overflow-hidden rounded-card border border-border/30 bg-card p-6 shadow-level-1 transition-[box-shadow,background-color,border-color] duration-500 hover:shadow-level-3">
                   <div className="absolute inset-0 bg-gradient-to-br from-system-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="relative flex flex-col gap-3">
                     <div
-                      className={`flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) ${card.accentColor} transition-all duration-300 group-hoverable:scale-110`}
+                      className={`flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10) ${card.accentColor} transition-transform duration-300 group-hoverable:scale-110`}
                     >
                       <HugeiconsIcon icon={card.icon} className="size-5" />
                     </div>

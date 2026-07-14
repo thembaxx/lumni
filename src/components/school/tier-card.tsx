@@ -24,7 +24,7 @@ export function TierCard({ tier, selected, onSelect, billingFrequency }: TierCar
 
   return (
     <Card
-      className={`relative flex cursor-pointer flex-col gap-4 p-6 transition-all duration-150 hover:shadow-level-2 ${
+      className={`relative flex cursor-pointer flex-col gap-4 p-6 transition-[box-shadow,border-color] duration-150 hover:shadow-level-2 ${
         selected
           ? "border-(--system-accent) ring-2 ring-(--system-accent)"
           : "hover:border-muted-foreground/20"

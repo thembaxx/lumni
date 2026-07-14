@@ -114,10 +114,7 @@ export function CountdownHeader() {
           {milestone && (
             <div className="card-entrance-down absolute -top-px right-4 left-4 flex items-center justify-center">
               <div className="inline-flex items-center gap-1.5 rounded-b-xl border border-warning/30 bg-warning/20 px-3 py-1">
-                <span
-                  className="animate-[bounce_1s_ease-in-out_2] text-sm"
-                  style={{ animationDelay: "0.15s" }}
-                >
+                <span className="animate-float-bob text-sm" style={{ animationDelay: "0.15s" }}>
                   {milestone.emoji}
                 </span>
                 <span className="font-bold text-warning text-xs uppercase tracking-tight">

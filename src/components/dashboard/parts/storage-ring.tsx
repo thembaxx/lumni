@@ -31,7 +31,7 @@ export function StorageRing({ used, limit, size = 48, strokeWidth = 4 }: Storage
       className="relative inline-flex shrink-0 items-center justify-center"
       style={{ width: size, height: size }}
     >
-      <svg width={size} height={size} className="-rotate-90">
+      <svg width={size} height={size} className="-rotate-90" aria-hidden="true">
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -52,7 +52,7 @@ export function StorageRing({ used, limit, size = 48, strokeWidth = 4 }: Storage
           className={`${color} transition-[stroke-dashoffset] duration-500 ease-(--ease-ios)`}
         />
       </svg>
-      <span className="absolute font-semibold text-[10px] tabular-nums text-muted-foreground">
+      <span className="absolute font-semibold text-(--fs-caption-3) tabular-nums text-muted-foreground">
         {Math.round(percentage)}%
       </span>
       <span className="sr-only">

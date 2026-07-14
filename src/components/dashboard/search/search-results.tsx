@@ -211,7 +211,7 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
               key={item.id}
               onClick={onClose}
               className={cn(
-                "flex w-full items-start gap-3 rounded-xl p-2.5 text-left transition-colors",
+                "flex w-full items-start gap-3 rounded-xl p-2.5 text-left transition-[background-color,transform] press-scale",
                 i === selectedIndex ? "bg-accent" : "hover:bg-accent/50",
               )}
             >

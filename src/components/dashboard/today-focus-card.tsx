@@ -158,7 +158,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
                     (e.currentTarget as HTMLElement).click();
                   }
                 }}
-                className="flex min-h-9 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1.5 font-medium text-muted-foreground text-xs transition-[background-color,color] hover:bg-system-fill hover:text-foreground press-scale focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                className="flex min-h-11 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1.5 font-medium text-muted-foreground text-xs transition-[background-color,color,transform] hover:bg-system-fill hover:text-foreground press-scale focus-visible:ring-2 focus-visible:ring-primary"
               >
                 Change subject
                 <HugeiconsIcon icon={ArrowDown01Icon} className="ml-2 size-4" />

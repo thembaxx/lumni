@@ -52,7 +52,7 @@ export const MCQOptions = memo(function MCQOptions({
               type="button"
               onClick={() => onSelect(option.id)}
               className={cn(
-                "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left transition-all duration-200 motion-reduce:transition-none",
+                "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left transition-[border-color,background-color,color] duration-200 motion-reduce:transition-none",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",
               )}
             >

@@ -28,7 +28,7 @@ export function StudySessionList({
             type="button"
             key={session.id}
             onClick={() => onStartSession(session)}
-            className="flex w-full items-center gap-3 rounded-xl bg-muted/30 p-2.5 text-left transition-colors hover:bg-muted/50"
+            className="flex w-full items-center gap-3 rounded-xl bg-muted/30 p-2.5 text-left transition-[background-color,transform] hover:bg-muted/50 press-scale"
           >
             <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-system-accent/10">
               <HugeiconsIcon icon={Clock01Icon} className="size-4 text-system-accent" />

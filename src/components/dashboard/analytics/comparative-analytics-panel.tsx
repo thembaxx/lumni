@@ -59,7 +59,7 @@ export function ComparativeAnalyticsPanel() {
   if (isLoading || !analytics) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="size-8 animate-spin rounded-full border-foreground border-b-2" />
+        <div className="size-8 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
       </div>
     );
   }

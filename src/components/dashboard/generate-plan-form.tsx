@@ -121,6 +121,7 @@ export function GeneratePlanForm({ isGenerating, onGenerate, onCancel }: Generat
               type="number"
               min="7"
               max="90"
+              aria-label="Custom horizon days"
               placeholder="Days"
               value={horizonCustom}
               className="mt-1 h-8 w-24"

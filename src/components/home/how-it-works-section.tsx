@@ -69,7 +69,7 @@ export function HowItWorksSection() {
                   delay: prefersReducedMotion ? 0 : i * 0.15,
                 }}
               >
-                <div className="group grid gap-6 overflow-hidden rounded-card-lg border border-border/20 bg-card p-6 shadow-level-1 transition-all duration-500 hover:shadow-level-3 md:grid-cols-2 md:p-0">
+                <div className="group grid gap-6 overflow-hidden rounded-card-lg border border-border/20 bg-card p-6 shadow-level-1 transition-[box-shadow,background-color,border-color] duration-500 hover:shadow-level-3 md:grid-cols-2 md:p-0">
                   <div className="order-2 flex flex-col justify-center gap-3 px-0 pb-4 md:order-1 md:px-8 md:pb-0">
                     <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10)">
                       <HugeiconsIcon icon={step.icon} className="size-5 text-primary" />
@@ -87,7 +87,7 @@ export function HowItWorksSection() {
                   </div>
                   <div className="order-1 aspect-4/3 overflow-hidden md:order-2 md:aspect-auto">
                     <div
-                      className="h-full scale-105 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
+                      className="h-full scale-105 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 img-outline"
                       style={{ backgroundImage: `url(${step.image})` }}
                     />
                   </div>

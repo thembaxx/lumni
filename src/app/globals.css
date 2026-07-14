@@ -78,7 +78,7 @@
   --radius: 12px;
   --radius-button: 12px;
   --radius-card: 12px;
-  --radius-card-lg: 12px;
+  --radius-card-lg: 40px;
   --radius-sheet: 12px;
   --radius-input: 12px;
   --radius-badge: 12px;
@@ -300,8 +300,8 @@
   --radius-xl: 12px;
   --radius-2xl: 12px;
   --radius-3xl: 12px;
-  --radius-4xl: 12px;
-  --radius-card-lg: 12px;
+  --radius-4xl: 40px;
+  --radius-card-lg: 40px;
 
   --z-content: 0;
   --z-elevated: 10;
@@ -869,6 +869,23 @@
   box-shadow: var(--shadow-level-3);
 }
 
+/* Image outline — subtle 1px outline for consistent depth */
+.img-outline {
+  outline: 1px solid var(--color-opaque-separator);
+  outline-offset: -1px;
+}
+.dark .img-outline {
+  outline-color: var(--color-separator);
+}
+
+/* Image outline utility — subtle 1px border for consistent depth */
+.img-outline {
+  outline: 1px solid oklch(0 0 0 / 0.1);
+}
+.dark .img-outline {
+  outline: 1px solid oklch(1 0 0 / 0.1);
+}
+
 /* ========================================
    PWA TITLEBAR — window-controls-overlay
    ======================================== */
@@ -993,13 +1010,8 @@ span.math:not(:empty)::after {
 }
 
 /* Press micro-interaction */
-.press-scale {
-  transition:
-    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1);
-}
 .press-scale:active {
-  transform: scale(0.96);
+  transform: scale(0.96) !important;
 }
 
 /* Card entrance animation — fade up slide */

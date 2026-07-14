@@ -38,7 +38,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
       )}
       <CardContent>
         {data.length === 0 ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center px-6 text-center">
+          <div className="flex min-h-64 flex-col items-center justify-center px-6 text-center">
             <div className="mb-3 flex size-10 items-center justify-center rounded-full bg-muted">
               <HugeiconsIcon icon={Chart03Icon} className="size-5 text-muted-foreground" />
             </div>

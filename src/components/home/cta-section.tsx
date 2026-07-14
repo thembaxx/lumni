@@ -51,7 +51,7 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
           <Button
             asChild
             size="lg"
-            className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-all duration-300 hover:shadow-level-3 press-scale"
+            className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow] duration-300 hover:shadow-level-3 press-scale"
           >
             <Link href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>
               {isAuthenticated ? t("heroDashboard") : t("heroStartFree")}

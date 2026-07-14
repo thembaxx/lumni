@@ -154,16 +154,22 @@ export function MasteryHeatmap() {
             <table className="w-full text-xs">
               <thead>
                 <tr>
-                  <th className="w-40 p-2 text-left font-medium text-muted-foreground">Topic</th>
+                  <th scope="col" className="w-40 p-2 text-left font-medium text-muted-foreground">
+                    Topic
+                  </th>
                   {BLOOM_ORDER.map((bloom) => (
                     <th
                       key={bloom}
+                      scope="col"
                       className="min-w-20 p-2 text-center font-medium text-muted-foreground capitalize"
                     >
                       {bloom}
                     </th>
                   ))}
-                  <th className="min-w-20 p-2 text-center font-medium text-muted-foreground">
+                  <th
+                    scope="col"
+                    className="min-w-20 p-2 text-center font-medium text-muted-foreground"
+                  >
                     Overall
                   </th>
                 </tr>

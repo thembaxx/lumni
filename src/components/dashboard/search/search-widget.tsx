@@ -49,7 +49,7 @@ export function SearchWidget() {
         <SubjectsDrawer>
           <button
             type="button"
-            className="rounded-lg bg-muted/60 p-1.5 transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary"
+            className="rounded-lg bg-muted/60 p-1.5 transition-[background-color,transform] hover:bg-muted press-scale focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Browse subjects"
           >
             <HugeiconsIcon icon={Book01Icon} size={16} className="text-muted-foreground" />

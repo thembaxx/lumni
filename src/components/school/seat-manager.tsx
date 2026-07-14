@@ -41,7 +41,7 @@ export function SeatManager({
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-(--system-accent) transition-all duration-300"
+              className="h-full rounded-full bg-(--system-accent) transition-[width] duration-300"
               style={{ width: `${(seatsUsed / Math.max(seatCount, 1)) * 100}%` }}
             />
           </div>

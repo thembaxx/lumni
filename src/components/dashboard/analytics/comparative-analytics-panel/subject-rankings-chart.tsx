@@ -63,9 +63,15 @@ export function SubjectRankingsChart({ subjectRankings, userAverage }: SubjectRa
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b text-muted-foreground">
-                  <th className="py-1 pr-2 text-left">Subject</th>
-                  <th className="px-2 py-1 text-right">Accuracy</th>
-                  <th className="py-1 pl-2 text-right">Rank</th>
+                  <th scope="col" className="py-1 pr-2 text-left">
+                    Subject
+                  </th>
+                  <th scope="col" className="px-2 py-1 text-right">
+                    Accuracy
+                  </th>
+                  <th scope="col" className="py-1 pl-2 text-right">
+                    Rank
+                  </th>
                 </tr>
               </thead>
               <tbody>

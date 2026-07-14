@@ -47,7 +47,7 @@ export function DashboardClient() {
       <AppErrorBoundary>
         <a
           href="#dashboard-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-skip-link focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:shadow-lg focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-skip-link focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:shadow-level-1 focus-visible:ring-2 focus-visible:ring-primary"
         >
           Skip to content
         </a>

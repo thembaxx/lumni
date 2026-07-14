@@ -58,7 +58,7 @@ export function TestimonialsSection() {
               {TESTIMONIALS.map((_, idx) => (
                 <div
                   key={idx}
-                  className={`absolute rounded-full border-2 border-card transition-all duration-700 ${
+                  className={`absolute rounded-full border-2 border-card transition-[transform,opacity,border-color] duration-700 ${
                     idx === active
                       ? "z-elevated h-36 w-36 scale-100 opacity-100 md:h-48 md:w-48"
                       : idx === (active + 1) % TESTIMONIALS.length
@@ -67,7 +67,7 @@ export function TestimonialsSection() {
                   }`}
                 >
                   <div
-                    className="h-full w-full rounded-full bg-cover bg-center grayscale transition-all duration-500"
+                    className="h-full w-full rounded-full bg-cover bg-center grayscale transition-[filter] duration-500"
                     style={{ backgroundImage: `url(${PORTRAITS[idx]})` }}
                   />
                 </div>
@@ -108,7 +108,7 @@ export function TestimonialsSection() {
               <button
                 type="button"
                 onClick={prev}
-                className="flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-all duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95"
+                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95 after:absolute after:-inset-1"
                 aria-label="Previous testimonial"
               >
                 <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
@@ -119,7 +119,7 @@ export function TestimonialsSection() {
                     key={idx}
                     type="button"
                     onClick={() => setActive(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                    className={`relative h-1.5 rounded-full transition-[width,background-color] duration-500 after:absolute after:-inset-2 ${
                       idx === active ? "w-8 bg-primary" : "w-1.5 bg-border/40 hover:bg-border/70"
                     }`}
                     aria-label={`Go to testimonial ${idx + 1}`}
@@ -129,7 +129,7 @@ export function TestimonialsSection() {
               <button
                 type="button"
                 onClick={next}
-                className="flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-all duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95"
+                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95 after:absolute after:-inset-1"
                 aria-label="Next testimonial"
               >
                 <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />

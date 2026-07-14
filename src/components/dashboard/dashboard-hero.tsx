@@ -73,7 +73,7 @@ export function HeroBanner() {
   const milestone = mounted ? getMilestone(daysLeft) : null;
 
   return (
-    <div className="group relative overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-surface-secondary) via-(--system-surface-secondary)/50 to-transparent shadow-level-2 transition-all duration-500 hover:shadow-level-3">
+    <div className="group relative overflow-hidden rounded-card-lg bg-linear-to-br from-(--system-surface-secondary) via-(--system-surface-secondary)/50 to-transparent shadow-level-2 transition-[box-shadow] duration-500 hover:shadow-level-3">
       <div
         className="absolute inset-0 bg-gradient-to-tr from-system-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         aria-hidden="true"
@@ -82,10 +82,7 @@ export function HeroBanner() {
         {milestone && (
           <div className="absolute -top-px right-4 left-4 flex items-center justify-center">
             <div className="inline-flex items-center gap-1.5 rounded-b-xl border border-warning/30 bg-warning/20 px-3 py-1">
-              <span
-                className="animate-[bounce_1s_ease-in-out_2] text-sm"
-                style={{ animationDelay: "0.15s" }}
-              >
+              <span className="animate-float-bob text-sm" style={{ animationDelay: "0.15s" }}>
                 {milestone.emoji}
               </span>
               <span className="font-bold text-warning text-xs uppercase tracking-tight">

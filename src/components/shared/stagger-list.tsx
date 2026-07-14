@@ -33,12 +33,18 @@ export function StaggerList({
         className={cn("flex flex-col gap-0", className)}
         initial="hidden"
         animate="visible"
-        exit="hidden"
+        exit="exit"
         variants={
           variants ?? {
             visible: {
               transition: {
                 staggerChildren: delay,
+              },
+            },
+            exit: {
+              transition: {
+                staggerChildren: 0.03,
+                staggerDirection: -1,
               },
             },
           }
@@ -56,5 +62,10 @@ const _defaultItemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: 4,
+    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
   },
 };

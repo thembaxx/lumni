@@ -37,44 +37,38 @@ function ActionButton({
   onClick?: () => void;
   primary?: boolean;
 }) {
+  if (primary) {
+    return (
+      <Button
+        onClick={onClick}
+        className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-system-accent-foreground press-scale"
+        aria-label={label}
+      >
+        <span>
+          <HugeiconsIcon icon={icon} className="size-4" data-icon aria-hidden="true" />
+        </span>
+        <span className="font-medium text-sm">{label}</span>
+      </Button>
+    );
+  }
+
   return (
-    <div
-      className="motion-reduce:animate-none motion-reduce:transition-none"
-      role="button"
-      tabIndex={onClick ? 0 : -1}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick?.();
-        }
-      }}
+    <Button
+      variant="secondary"
       onClick={onClick}
+      className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent press-scale transition-[scale,background-color,box-shadow,color,transform]"
       aria-label={label}
     >
-      {primary ? (
-        <Button className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-system-accent-foreground">
-          <span>
-            <HugeiconsIcon icon={icon} className="size-4" data-icon aria-hidden="true" />
-          </span>
-          <span className="font-medium text-sm">{label}</span>
-        </Button>
-      ) : (
-        <Button
-          variant="secondary"
-          className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent press-scale transition-[scale,background-color,box-shadow,color,transform]"
-        >
-          <span>
-            <HugeiconsIcon
-              icon={icon}
-              className="size-4 text-foreground"
-              data-icon
-              aria-hidden="true"
-            />
-          </span>
-          <span className="font-medium text-sm">{label}</span>
-        </Button>
-      )}
-    </div>
+      <span>
+        <HugeiconsIcon
+          icon={icon}
+          className="size-4 text-foreground"
+          data-icon
+          aria-hidden="true"
+        />
+      </span>
+      <span className="font-medium text-sm">{label}</span>
+    </Button>
   );
 }
 

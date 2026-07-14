@@ -158,7 +158,7 @@ export function HomeContent() {
       </a>
 
       <nav
-        className={`fixed top-4 right-0 left-0 z-header mx-auto flex w-fit items-center justify-center gap-6 rounded-full border px-4 py-2 transition-all duration-500 ${
+        className={`fixed top-4 right-0 left-0 z-header mx-auto flex w-fit items-center justify-center gap-6 rounded-full border px-4 py-2 transition-[border-color,background-color,box-shadow] duration-500 ${
           scrolled
             ? "border-border/20 bg-card/80 shadow-level-2 backdrop-blur-xl"
             : "border-transparent bg-transparent"
@@ -167,7 +167,7 @@ export function HomeContent() {
         <button
           type="button"
           onClick={handleLogoClick}
-          className="flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors"
+          className="relative flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors after:absolute after:-inset-2"
         >
           <div className="flex size-6 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
             <HugeiconsIcon icon={StarIcon} className="size-3.5 text-primary-foreground" />
@@ -178,19 +178,19 @@ export function HomeContent() {
         <div className="hidden items-center gap-1 md:flex" role="list">
           <Link
             href="/quiz"
-            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
           >
             Quiz
           </Link>
           <Link
             href="/past-papers"
-            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
           >
             Papers
           </Link>
           <Link
             href="/flashcards"
-            className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
           >
             Flashcards
           </Link>

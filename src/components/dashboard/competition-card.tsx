@@ -126,7 +126,8 @@ export function CompetitionCard() {
                 e.preventDefault();
                 setActiveTab(tab.id);
               }}
-              className={`rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors ${
+              aria-pressed={activeTab === tab.id}
+              className={`rounded-full px-2.5 py-0.5 text-xs font-medium transition-[background-color,color,transform] press-scale ${
                 activeTab === tab.id
                   ? "bg-accent text-accent-foreground"
                   : "bg-muted/50 text-muted-foreground hover:bg-muted"

@@ -73,6 +73,7 @@ export function OfflinePackManager() {
             type="number"
             min={5}
             max={30}
+            aria-label="Question count"
             value={questionCount}
             onChange={(e) => setQuestionCount(e.target.value)}
             className="h-9 w-16 text-sm"

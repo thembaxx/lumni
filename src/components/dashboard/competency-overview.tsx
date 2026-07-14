@@ -170,7 +170,7 @@ export function CompetencyOverview() {
                 onClick={() =>
                   setExpandedSubject(expandedSubject === sc.subjectId ? null : sc.subjectId)
                 }
-                className="w-full text-left"
+                className="w-full text-left press-scale transition-transform"
               >
                 <div className="flex items-center gap-4 rounded-xl bg-muted/30 p-3 transition-colors hover:bg-muted/50">
                   <CompetencyRing score={sc.averageScore} />

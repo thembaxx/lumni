@@ -24,7 +24,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
   };
 
   return (
-    <Card className="overflow-visible rounded-card border-(--system-accent)/20 bg-(--system-accent)/[0.03] shadow-level-1">
+    <Card className="overflow-visible rounded-card border-system-accent/20 bg-system-accent/5 shadow-level-1">
       <CardContent className="flex flex-col gap-4 p-5">
         <div className="flex items-center justify-between">
           <h3 className="font-bold text-lg tracking-tight">Start a Quiz</h3>
