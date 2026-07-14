@@ -26,7 +26,7 @@ export default function PastPapersError({
           <HugeiconsIcon icon={Alert01Icon} className="size-10 text-destructive" />
         </div>
         <div>
-          <h2 className="ios-title-2 text-foreground">Past papers unavailable</h2>
+          <h1 className="ios-title-2 text-foreground">Past papers unavailable</h1>
           <p className="ios-callout mt-1 text-muted-foreground">
             Something went wrong fetching exam papers. Please try again.
           </p>

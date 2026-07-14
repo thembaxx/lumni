@@ -24,18 +24,16 @@ function PageShell({
   className,
   innerClassName,
 }: PageShellProps) {
-  const basePadding = "pb-[calc(var(--space-16)+var(--space-5)+var(--spacing-safe-pb,0px))]";
-
   if (!title) {
     return (
-      <div className={cn("min-h-dvh bg-system-background", basePadding, className)}>
+      <div className={cn("min-h-dvh bg-system-background", className)}>
         <div className={cn("mx-auto max-w-md", innerClassName)}>{children}</div>
       </div>
     );
   }
 
   return (
-    <div className={cn("min-h-dvh bg-system-background", basePadding, className)}>
+    <div className={cn("min-h-dvh bg-system-background", className)}>
       <NavigationBar
         title={title}
         subtitle={subtitle}

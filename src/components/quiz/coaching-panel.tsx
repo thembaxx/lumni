@@ -40,7 +40,7 @@ export function CoachingPanel({
         className="flex flex-col gap-3 rounded-lg border border-border/50 bg-card p-4"
       >
         <div className="flex items-center justify-between">
-          <h4 className="font-semibold text-sm">Essay Coach</h4>
+          <h3 className="font-semibold text-sm">Essay Coach</h3>
           <span className="text-muted-foreground text-xs">
             Revision {coaching.revisionCount} of {coaching.maxRevisions}
           </span>

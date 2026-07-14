@@ -9,7 +9,7 @@ export default function AdminError({
 }) {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8">
-      <h2 className="font-heading font-semibold text-2xl">Admin unavailable</h2>
+      <h1 className="font-heading font-semibold text-2xl">Admin unavailable</h1>
       <p className="max-w-md text-center text-muted-foreground text-sm">
         {error?.message || "Something went wrong in the admin panel."}
       </p>

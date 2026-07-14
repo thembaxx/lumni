@@ -161,7 +161,7 @@ export function SwipeableCardDeck({
         >
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-7 text-system-accent" />
         </div>
-        <h3 className="font-semibold text-xl">Deck Complete!</h3>
+        <h2 className="font-semibold text-xl">Deck Complete!</h2>
         <p className="text-muted-foreground text-sm">You reviewed all {cards.length} cards.</p>
       </div>
     );

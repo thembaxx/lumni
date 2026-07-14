@@ -19,6 +19,11 @@ import { isValidLocale, locales } from "@/i18n/locales";
 import { timeZone } from "@/i18n/request";
 import { ourFileRouter } from "../api/uploadthing/core";
 
+const BottomNavPadding = dynamic(() =>
+  import("@/components/layout/bottom-nav-padding").then((m) => ({
+    default: m.BottomNavPadding,
+  })),
+);
 const SidebarNav = dynamic(() =>
   import("@/components/navigation/sidebar-nav").then((m) => ({
     default: m.SidebarNav,
@@ -214,14 +219,14 @@ export default async function LocaleLayout({
               <NavGuard>
                 <SidebarNav />
               </NavGuard>
-              <main
-                id="main-content"
-                className="flex min-w-0 flex-1 flex-col pb-[calc(64px+env(safe-area-inset-bottom,0px))] md:pb-0"
-              >
+              <main id="main-content" className="flex min-w-0 flex-1 flex-col">
                 <NavGuard>
                   <TopNav />
                 </NavGuard>
                 <AppErrorBoundary>{children}</AppErrorBoundary>
+                <Suspense fallback={null}>
+                  <BottomNavPadding />
+                </Suspense>
               </main>
             </div>
             <NavGuard>

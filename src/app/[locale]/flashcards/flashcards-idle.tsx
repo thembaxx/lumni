@@ -41,9 +41,9 @@ export function FlashcardsIdle({
           transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: motionEase }}
         >
           <header className="pb-4 text-left">
-            <h2 className="ios-title-1 font-bold text-foreground tracking-tight">
+            <h1 className="ios-title-1 font-bold text-foreground tracking-tight">
               {t("flashcards.title")}
-            </h2>
+            </h1>
           </header>
         </m.div>
         <div className="flex flex-col gap-4">

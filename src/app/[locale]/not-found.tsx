@@ -38,7 +38,7 @@ function NotFoundContent() {
             </div>
           </m.div>
           <FadeIn direction="up" distance={8} delay={0.2} className="flex flex-col gap-2">
-            <h2 className="ios-title-2 text-(--system-text-primary)">Page not found</h2>
+            <h1 className="ios-title-2 text-(--system-text-primary)">Page not found</h1>
             <p className="ios-callout text-(--system-text-secondary)">
               The page you&apos;re looking for doesn&apos;t exist or has been moved.
             </p>

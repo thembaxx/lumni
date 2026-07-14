@@ -24,9 +24,9 @@ export function BoltErrorState({ onRetry, onClose, isRetrying }: BoltErrorStateP
         />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="ios-title-3 text-balance text-foreground">
+        <h1 className="ios-title-3 text-balance text-foreground">
           Couldn&rsquo;t load your challenge
-        </h2>
+        </h1>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
           Something tripped on today&rsquo;s question. Retry in a moment, or close and pick another
           start.

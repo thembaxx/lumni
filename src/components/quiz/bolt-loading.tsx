@@ -15,9 +15,9 @@ export function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
             Loading your challenge
           </span>
         </div>
-        <h2 className="ios-title-3 max-w-md text-balance text-foreground">
+        <h1 className="ios-title-3 max-w-md text-balance text-foreground">
           Preparing a {subjectLabel} question
-        </h2>
+        </h1>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
           We&rsquo;re checking your weakest spot and lining up a focused question.
         </p>

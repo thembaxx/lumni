@@ -26,7 +26,7 @@ export default function SolveError({
           <HugeiconsIcon icon={Alert01Icon} className="size-10 text-destructive" />
         </div>
         <div>
-          <h2 className="ios-title-2 text-foreground">AI Solver unavailable</h2>
+          <h1 className="ios-title-2 text-foreground">AI Solver unavailable</h1>
           <p className="ios-callout mt-1 text-muted-foreground">
             Couldn&apos;t load the solver. Please try again.
           </p>

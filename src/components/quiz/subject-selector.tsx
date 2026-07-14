@@ -34,6 +34,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 
   return (
     <div className={cn("flex w-full flex-col gap-4", className)}>
+      <h1 className="sr-only">Choose a subject</h1>
       <div className="pb-2">
         <div className="relative">
           <HugeiconsIcon

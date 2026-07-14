@@ -28,7 +28,7 @@ export default function FlashcardsBrowseError({
           <HugeiconsIcon icon={Alert01Icon} className="size-10 text-destructive" />
         </div>
         <div>
-          <h2 className="ios-title-2 text-foreground">{t("flashcards.browseError")}</h2>
+          <h1 className="ios-title-2 text-foreground">{t("flashcards.browseError")}</h1>
           <p className="ios-callout mt-1 text-muted-foreground">
             {t("flashcards.browseErrorDesc")}
           </p>

@@ -45,7 +45,7 @@ export default function AppError({
             </m.div>
 
             <div className="flex flex-col gap-(--space-2)">
-              <h2 className="ios-title-2 text-(--system-text-primary)">Something went wrong</h2>
+              <h1 className="ios-title-2 text-(--system-text-primary)">Something went wrong</h1>
               <p className="ios-callout text-(--system-text-secondary)">
                 {error?.message ||
                   "Something went wrong. This might be a network issue or a temporary glitch. Try again or go back to the dashboard."}

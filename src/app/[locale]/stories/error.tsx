@@ -11,7 +11,7 @@ export default function RouteError({
 }) {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8 text-center">
-      <h2 className="font-heading font-semibold text-2xl">Stories unavailable</h2>
+      <h1 className="font-heading font-semibold text-2xl">Stories unavailable</h1>
       <p className="max-w-md text-muted-foreground text-sm">
         {error?.message ||
           "Something went wrong. Please try again or contact support if this persists."}

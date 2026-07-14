@@ -161,7 +161,7 @@ function SidebarContent() {
                     onMouseEnter={() => prefetch(item.route)}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "relative flex h-10 w-full items-center gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150 press-scale",
+                      "relative flex min-h-11 w-full items-center justify-start gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150 press-scale",
                       isActive
                         ? "font-semibold text-system-accent"
                         : "text-muted-foreground hover:bg-system-fill hover:text-foreground",

@@ -109,7 +109,7 @@ const TopNavStatus = memo(function TopNavStatus() {
       )}
       {!isOnline && (
         <div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
-          <Skeleton className="size-1.5 rounded-full" />
+          <div className="size-1.5 rounded-full bg-warning" />
           <span className="ios-caption-3 font-medium">Offline</span>
         </div>
       )}

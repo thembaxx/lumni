@@ -26,7 +26,7 @@ export default function SearchError({
           <HugeiconsIcon icon={Alert01Icon} className="size-10 text-destructive" />
         </div>
         <div>
-          <h2 className="ios-title-2 text-foreground">Search unavailable</h2>
+          <h1 className="ios-title-2 text-foreground">Search unavailable</h1>
           <p className="ios-callout mt-1 text-muted-foreground">
             Couldn&apos;t load search. Please try again.
           </p>

@@ -12,7 +12,7 @@ export default function QuizError({
   const t = useTranslations();
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8">
-      <h2 className="font-semibold text-xl">{t("quiz.errorTitle")}</h2>
+      <h1 className="font-semibold text-xl">{t("quiz.errorTitle")}</h1>
       <p className="max-w-md text-center text-muted-foreground text-sm">
         {error?.message || t("quiz.errorDesc")}
       </p>

@@ -29,9 +29,9 @@ export function BoltEmptyState({
         />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="ios-title-3 text-balance text-foreground">
+        <h1 className="ios-title-3 text-balance text-foreground">
           No {subjectLabel} question ready yet
-        </h2>
+        </h1>
         <p className="max-w-sm text-balance text-muted-foreground text-sm">
           We couldn&rsquo;t find a fresh question right now. Try again shortly, or close and browse
           other topics.

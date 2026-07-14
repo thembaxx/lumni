@@ -26,7 +26,7 @@ export default function ExamsError({
           <HugeiconsIcon icon={Alert01Icon} className="size-10 text-destructive" />
         </div>
         <div>
-          <h2 className="ios-title-2 text-foreground">Exams unavailable</h2>
+          <h1 className="ios-title-2 text-foreground">Exams unavailable</h1>
           <p className="ios-callout mt-1 text-muted-foreground">
             Something went wrong loading exams. Please try again.
           </p>
