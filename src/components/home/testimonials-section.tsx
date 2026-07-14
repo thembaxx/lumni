@@ -8,6 +8,7 @@ import { useReducedMotion } from "motion/react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import { useCallback, useState } from "react";
 
 const TESTIMONIALS = [1, 2, 3] as const;
@@ -58,13 +59,14 @@ export function TestimonialsSection() {
               {TESTIMONIALS.map((_, idx) => (
                 <div
                   key={idx}
-                  className={`absolute rounded-full border-2 border-card transition-[transform,opacity,border-color] duration-700 ${
+                  className={cn(
+                    "absolute rounded-full border-2 border-card transition-[transform,opacity,border-color] duration-700",
                     idx === active
                       ? "z-elevated h-36 w-36 scale-100 opacity-100 md:h-48 md:w-48"
                       : idx === (active + 1) % TESTIMONIALS.length
                         ? "z-elevated h-28 w-28 translate-x-16 translate-y-10 scale-90 opacity-70 md:h-36 md:w-36"
-                        : "z-elevated h-24 w-24 -translate-x-16 -translate-y-8 scale-80 opacity-40 md:h-28 md:w-28"
-                  }`}
+                        : "z-elevated h-24 w-24 -translate-x-16 -translate-y-8 scale-80 opacity-40 md:h-28 md:w-28",
+                  )}
                 >
                   <div
                     className="h-full w-full rounded-full bg-cover bg-center grayscale transition-[filter] duration-500"
@@ -111,7 +113,7 @@ export function TestimonialsSection() {
                 className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95 after:absolute after:-inset-1"
                 aria-label="Previous testimonial"
               >
-                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />
+                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" data-icon />
               </button>
               <div className="flex gap-2">
                 {TESTIMONIALS.map((_, idx) => (
@@ -119,9 +121,10 @@ export function TestimonialsSection() {
                     key={idx}
                     type="button"
                     onClick={() => setActive(idx)}
-                    className={`relative h-1.5 rounded-full transition-[width,background-color] duration-500 after:absolute after:-inset-2 ${
-                      idx === active ? "w-8 bg-primary" : "w-1.5 bg-border/40 hover:bg-border/70"
-                    }`}
+                    className={cn(
+                      "relative h-1.5 rounded-full transition-[width,background-color] duration-500 after:absolute after:-inset-2",
+                      idx === active ? "w-8 bg-primary" : "w-1.5 bg-border/40 hover:bg-border/70",
+                    )}
                     aria-label={`Go to testimonial ${idx + 1}`}
                   />
                 ))}

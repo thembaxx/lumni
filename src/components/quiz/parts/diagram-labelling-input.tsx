@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDragSort } from "@/hooks/use-drag-sort";
+import { cn } from "@/lib/utils";
 
 interface DiagramRegion {
   id: string;
@@ -44,7 +45,7 @@ export function DiagramLabellingInput({
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
   const [keyboardSelectedId, setKeyboardSelectedId] = useState<string | null>(null);
 
-  const shuffledLabels = useMemo(() => labels.toSorted(() => Math.random() - 0.5), [labels]);
+  const [shuffledLabels] = useState(() => labels.toSorted(() => Math.random() - 0.5));
 
   const unplacedLabels = useMemo(
     () => shuffledLabels.filter((l) => !Object.values(placements).includes(l.id)),
@@ -145,13 +146,14 @@ export function DiagramLabellingInput({
                   placeLabel(keyboardSelectedId, region.id);
                 }
               }}
-              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 ${
+              className={cn(
+                "absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150",
                 label
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20)"
                   : keyboardSelectedId
                     ? "border-(--system-accent) bg-(--system-accent-alpha-5) ring-2 ring-(--system-accent)/40"
-                    : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)"
-              }`}
+                    : "border-(--system-accent)/40 border-dashed hover:bg-(--system-accent-alpha-5)",
+              )}
               style={{
                 left: `${scaleX(region.x)}%`,
                 top: `${scaleY(region.y)}%`,
@@ -180,9 +182,10 @@ export function DiagramLabellingInput({
                 direction="scale"
                 scaleDistance={0.9}
                 key={label.id}
-                className={`rounded-lg border px-3 py-1.5 text-sm ${
-                  isDragging ? "opacity-40" : "border-border bg-card"
-                }`}
+                className={cn(
+                  "rounded-lg border px-3 py-1.5 text-sm",
+                  isDragging ? "opacity-40" : "border-border bg-card",
+                )}
               >
                 <button
                   type="button"
@@ -200,11 +203,12 @@ export function DiagramLabellingInput({
                       setKeyboardSelectedId(null);
                     }
                   }}
-                  className={`w-full cursor-grab bg-transparent text-left active:cursor-grabbing ${
+                  className={cn(
+                    "w-full cursor-grab bg-transparent text-left active:cursor-grabbing",
                     keyboardSelectedId === label.id
                       ? "ring-2 ring-(--system-accent) rounded-md"
-                      : ""
-                  }`}
+                      : "",
+                  )}
                 >
                   {label.text}
                 </button>

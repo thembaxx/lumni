@@ -96,12 +96,14 @@ function QuizProgressBar({ current, total }: { current: number; total: number })
   );
 }
 
+const QUIZ_DEFAULT_MAX_TIME = 5400;
+
 export function QuizView({
   variant = "full",
   initialSubject,
   topic,
   questionCount = 10,
-  maxTime = 90 * 60,
+  maxTime = QUIZ_DEFAULT_MAX_TIME,
   pastPaperMode: initialPastPaperMode,
   packQuestions,
   onQuit,
@@ -154,7 +156,6 @@ export function QuizView({
 
   useEffect(() => {
     const mq = window.matchMedia("(pointer: coarse)");
-    setIsTouchDevice(mq.matches);
     const handler = (e: MediaQueryListEvent) => {
       setIsTouchDevice(e.matches);
     };

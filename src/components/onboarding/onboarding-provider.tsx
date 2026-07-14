@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useOnboarding } from "@/hooks/use-onboarding";
 
@@ -11,12 +11,15 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const { isOnboarding } = useOnboarding();
   const [checked, setChecked] = useState(false);
   const { push } = useRouter();
+  const redirectDone = useRef(false);
 
   useEffect(() => {
+    if (redirectDone.current) return;
     const hasVisited = localStorage.getItem(HAS_VISITED_KEY);
     if (!hasVisited) {
       localStorage.setItem(HAS_VISITED_KEY, "true");
       if (isOnboarding) {
+        redirectDone.current = true;
         push("/onboarding");
         return;
       }

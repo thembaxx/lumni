@@ -30,35 +30,23 @@ export default function AdminQualityPage() {
     refetchInterval: 5000,
   });
 
-  const {
-    data: events = loadEvents()
-      .toReversed()
-      .map((e) => ({ type: e.event, timestamp: e.timestamp, subject: e.subject }))
-      .slice(0, 20),
-    isError: eventsErr,
-  } = useQuery({
-    queryKey: ["engine-quality", "events"],
-    queryFn: () =>
+  const fetchEvents = useCallback(
+    async () =>
       loadEvents()
         .reverse()
         .map((e) => ({ type: e.event, timestamp: e.timestamp, subject: e.subject }))
         .slice(0, 20),
+    [],
+  );
+
+  const { data: events = [], isError: eventsErr } = useQuery({
+    queryKey: ["engine-quality", "events"],
+    queryFn: fetchEvents,
     refetchInterval: 5000,
   });
 
-  const {
-    data: recentQuality = loadQualityRecords()
-      .toReversed()
-      .map((r) => ({
-        questionType: r.questionType,
-        score: r.validationScore,
-        timestamp: r.timestamp,
-      }))
-      .slice(0, 10),
-    isError: recentErr,
-  } = useQuery({
-    queryKey: ["engine-quality", "recent"],
-    queryFn: () =>
+  const fetchRecentQuality = useCallback(
+    async () =>
       loadQualityRecords()
         .reverse()
         .map((r) => ({
@@ -67,6 +55,12 @@ export default function AdminQualityPage() {
           timestamp: r.timestamp,
         }))
         .slice(0, 10),
+    [],
+  );
+
+  const { data: recentQuality = [], isError: recentErr } = useQuery({
+    queryKey: ["engine-quality", "recent"],
+    queryFn: fetchRecentQuality,
     refetchInterval: 5000,
   });
 

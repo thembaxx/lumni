@@ -71,7 +71,7 @@ export function NextActions({
             className="h-auto justify-start gap-2 py-2"
             onClick={() => push("/flashcards")}
           >
-            <HugeiconsIcon icon={FlashIcon} className="size-4" />
+            <HugeiconsIcon icon={FlashIcon} data-icon="inline-start" />
             <span className="text-xs">{dueCount} flashcards due for review</span>
           </Button>
         )}
@@ -90,7 +90,7 @@ export function NextActions({
               }
             }}
           >
-            <HugeiconsIcon icon={TargetIcon} className="size-4" />
+            <HugeiconsIcon icon={TargetIcon} data-icon="inline-start" />
             <span className="text-xs">
               Practice {weakestTopic} ({weakestScore}%)
             </span>
@@ -103,7 +103,7 @@ export function NextActions({
             className="h-auto justify-start gap-2 py-2"
             onClick={() => push("/review")}
           >
-            <HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
+            <HugeiconsIcon icon={BookOpen01Icon} data-icon="inline-start" />
             <span className="text-xs">Review {wrongCount} wrong answers</span>
           </Button>
         )}

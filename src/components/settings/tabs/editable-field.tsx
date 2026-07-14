@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface EditableFieldProps {
   value: string;
@@ -28,20 +29,16 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
     }
   }, [editing]);
 
-  const handleSave = useCallback(async () => {
+  const handleSave = useCallback(() => {
     if (draft === value) {
       setEditing(false);
       return;
     }
     setSaving(true);
-    try {
-      await onSave(draft);
-      setEditing(false);
-    } catch {
-      setDraft(value);
-    } finally {
-      setSaving(false);
-    }
+    onSave(draft)
+      .then(() => setEditing(false))
+      .catch(() => setDraft(value))
+      .finally(() => setSaving(false));
   }, [draft, value, onSave]);
 
   const handleCancel = useCallback(() => {
@@ -67,7 +64,10 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
               if (e.key === "Escape") handleCancel();
             }}
             placeholder={placeholder}
-            className={`h-9 rounded-lg border-border/40 bg-system-surface text-sm ${icon ? "pl-9" : ""}`}
+            className={cn(
+              "h-9 rounded-lg border-border/40 bg-system-surface text-sm",
+              icon ? "pl-9" : "",
+            )}
           />
         </div>
         <Button
@@ -77,7 +77,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
           aria-label="Save profile changes"
           className="relative size-8 shrink-0 rounded-full bg-system-accent text-system-accent-foreground hover:bg-system-accent/90 disabled:opacity-50 after:absolute after:-inset-2"
         >
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
         </Button>
         <Button
           size="icon-sm"
@@ -86,7 +86,7 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
           aria-label="Cancel editing"
           className="relative size-8 shrink-0 rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80 after:absolute after:-inset-2"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+          <HugeiconsIcon icon={Cancel01Icon} data-icon />
         </Button>
       </div>
     );
@@ -106,7 +106,8 @@ export function EditableField({ value, onSave, placeholder, icon }: EditableFiel
       </span>
       <HugeiconsIcon
         icon={PencilIcon}
-        className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hoverable:opacity-100"
+        className="shrink-0 text-muted-foreground opacity-0 transition-opacity group-hoverable:opacity-100"
+        data-icon="inline-end"
       />
     </Button>
   );

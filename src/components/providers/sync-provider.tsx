@@ -12,6 +12,7 @@ import {
 } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { createSyncService, initSyncWriters } from "@/lib/sync";
+import { getOutboxCount } from "@/lib/sync/outbox";
 import type { SyncStatus, SyncService } from "@/lib/sync/types";
 
 interface SyncContextValue {
@@ -57,7 +58,6 @@ export function SyncProvider({ children }: { children: ReactNode }) {
 
     const countInterval = setInterval(async () => {
       try {
-        const { getOutboxCount } = await import("@/lib/sync/outbox");
         const count = await getOutboxCount();
         setPendingCount(count);
       } catch {

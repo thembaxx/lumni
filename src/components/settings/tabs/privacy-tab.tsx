@@ -44,17 +44,16 @@ export function PrivacyTab() {
     );
   }
 
-  const handleDeleteAccount = async () => {
+  const handleDeleteAccount = () => {
     setDeleting(true);
-    try {
-      const res = await fetch("/api/user/account", { method: "DELETE" });
-      if (res.ok) {
-        push("/");
-      }
-    } finally {
-      setDeleting(false);
-      setShowDeleteDialog(false);
-    }
+    fetch("/api/user/account", { method: "DELETE" })
+      .then((res) => {
+        if (res.ok) push("/");
+      })
+      .finally(() => {
+        setDeleting(false);
+        setShowDeleteDialog(false);
+      });
   };
 
   const handleExport = exportUserData;

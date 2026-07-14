@@ -78,17 +78,21 @@ export function FlashcardBrowseClient() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const PAGE_SIZE = 20;
 
+  const doLoadCards = useCallback(async () => {
+    const all = await flashcardEngine.getAll(subjectFilter !== "all" ? subjectFilter : undefined);
+    setAllCards(all);
+    const uniqueSubjects = [...new Set(all.map((c) => c.subject))].toSorted();
+    setSubjects(uniqueSubjects);
+  }, [subjectFilter]);
+
   const loadCards = useCallback(async () => {
     setStatus("loading");
     try {
-      const all = await flashcardEngine.getAll(subjectFilter !== "all" ? subjectFilter : undefined);
-      setAllCards(all);
-      const uniqueSubjects = [...new Set(all.map((c) => c.subject))].toSorted();
-      setSubjects(uniqueSubjects);
+      await doLoadCards();
     } finally {
       setStatus("idle");
     }
-  }, [subjectFilter]);
+  }, [doLoadCards]);
 
   useEffect(() => {
     loadCards();
@@ -111,11 +115,8 @@ export function FlashcardBrowseClient() {
     downloadCSV(cards);
   };
 
-  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setStatus("importing");
-    try {
+  const doImport = useCallback(
+    async (file: File) => {
       const text = await file.text();
       const imported = parseCSV(text);
       await Promise.all(
@@ -124,6 +125,16 @@ export function FlashcardBrowseClient() {
         ),
       );
       loadCards();
+    },
+    [loadCards],
+  );
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setStatus("importing");
+    try {
+      await doImport(file);
     } finally {
       setStatus("idle");
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -179,11 +190,11 @@ export function FlashcardBrowseClient() {
             </SelectContent>
           </Select>
           <Button variant="outline" size="sm" onClick={loadCards}>
-            <HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={FilterIcon} data-icon="inline-start" />
             {t("flashcards.refresh")}
           </Button>
           <Button variant="outline" size="sm" onClick={handleExport} disabled={cards.length === 0}>
-            <HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={Download03Icon} data-icon="inline-start" />
             {t("flashcards.exportCsv")}
           </Button>
           <Button
@@ -192,7 +203,7 @@ export function FlashcardBrowseClient() {
             onClick={() => fileInputRef.current?.click()}
             disabled={status === "importing"}
           >
-            <HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={Upload04Icon} data-icon="inline-start" />
             {status === "importing" ? t("flashcards.importing") : t("flashcards.importCsv")}
           </Button>
           <input
@@ -287,7 +298,7 @@ export function FlashcardBrowseClient() {
                         onClick={() => handleDelete(card.id)}
                         aria-label={t("flashcards.deleteCard")}
                       >
-                        <HugeiconsIcon icon={Delete02Icon} className="size-4 text-destructive" />
+                        <HugeiconsIcon icon={Delete02Icon} data-icon className="text-destructive" />
                       </Button>
                     </div>
                   </CardContent>
@@ -303,7 +314,7 @@ export function FlashcardBrowseClient() {
                   disabled={page === 0}
                   onClick={() => dispatch({ type: "SET_PAGE", payload: page - 1 })}
                 >
-                  <HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
+                  <HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />{" "}
                   {t("flashcards.previous")}
                 </Button>
                 <span className="text-muted-foreground text-sm">
@@ -316,7 +327,7 @@ export function FlashcardBrowseClient() {
                   onClick={() => dispatch({ type: "SET_PAGE", payload: page + 1 })}
                 >
                   {t("flashcards.next")}{" "}
-                  <HugeiconsIcon icon={ArrowRight01Icon} className="ml-1 size-4" />
+                  <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
                 </Button>
               </div>
             )}

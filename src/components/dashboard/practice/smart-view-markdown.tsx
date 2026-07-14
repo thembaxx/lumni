@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
 
 type MarkdownModule = {
@@ -18,26 +18,29 @@ export function SmartViewMarkdown({ content }: { content: string }) {
   const [mdModule, setMdModule] = useState<MarkdownModule | null>(null);
   const [plugins, setPlugins] = useState<Plugins | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all([
+  const loadMdPlugins = useCallback(async (signal: { cancelled: boolean }) => {
+    const [md, gfm, math, katex] = await Promise.all([
       import("react-markdown"),
       import("remark-gfm"),
       import("remark-math"),
       import("rehype-katex"),
-    ]).then(([md, gfm, math, katex]) => {
-      if (cancelled) return;
-      setMdModule(md as unknown as MarkdownModule);
-      setPlugins({
-        remarkGfm: (gfm as PluginModule).default,
-        remarkMath: (math as PluginModule).default,
-        rehypeKatex: (katex as PluginModule).default,
-      });
+    ]);
+    if (signal.cancelled) return;
+    setMdModule(md as unknown as MarkdownModule);
+    setPlugins({
+      remarkGfm: (gfm as PluginModule).default,
+      remarkMath: (math as PluginModule).default,
+      rehypeKatex: (katex as PluginModule).default,
     });
-    return () => {
-      cancelled = true;
-    };
   }, []);
+
+  useEffect(() => {
+    const signal = { cancelled: false };
+    loadMdPlugins(signal);
+    return () => {
+      signal.cancelled = true;
+    };
+  }, [loadMdPlugins]);
 
   if (!mdModule || !plugins) {
     return (

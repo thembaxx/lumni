@@ -42,7 +42,7 @@ export function NextBestActionCard() {
         className="absolute top-2 right-2 text-muted-foreground/50 hover:text-foreground"
         aria-label="Dismiss suggestion"
       >
-        <HugeiconsIcon icon={Cancel01Icon} size={14} />
+        <HugeiconsIcon icon={Cancel01Icon} data-icon />
       </Button>
       <CardHeader className="flex-row items-center gap-2">
         <div className="flex size-8 items-center justify-center rounded-lg bg-system-accent/10">

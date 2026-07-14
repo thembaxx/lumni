@@ -38,7 +38,7 @@ export function JoinGroupDialog() {
       <DialogTrigger
         render={
           <Button variant="outline">
-            <HugeiconsIcon icon={UserGroupIcon} className="size-4" />
+            <HugeiconsIcon icon={UserGroupIcon} data-icon="inline-start" />
             {t("studyGroups.joinGroup")}
           </Button>
         }

@@ -139,11 +139,12 @@ function TopNavMenu() {
   const diceBearSeed = useMemo(() => getRandomName(), []);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => {
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMenuOpen(false);
-    void pathname;
-  }, [pathname]);
+  }
 
   let imgSrc = null;
   const prefs = user?.prefs as Record<string, unknown> | undefined;
@@ -168,7 +169,7 @@ function TopNavMenu() {
           size="sm"
           className="h-9 rounded-full px-4 font-semibold text-sm text-system-accent hover:bg-system-accent/10 press-scale"
         >
-          <HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
+          <HugeiconsIcon icon={Login01Icon} data-icon="inline-start" />
           Sign In
         </Button>
       </Link>

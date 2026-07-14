@@ -38,9 +38,9 @@ export function TTSButton({ text, lang, className, visualDescription }: TTSButto
       disabled={isLoading}
     >
       {isPlaying ? (
-        <HugeiconsIcon icon={VolumeMute01Icon} />
+        <HugeiconsIcon icon={VolumeMute01Icon} data-icon />
       ) : (
-        <HugeiconsIcon icon={VolumeUpIcon} />
+        <HugeiconsIcon icon={VolumeUpIcon} data-icon />
       )}
     </Button>
   );

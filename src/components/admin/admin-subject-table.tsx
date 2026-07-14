@@ -94,7 +94,7 @@ export function SubjectTable({
                     className={cn("size-8 relative after:absolute after:-inset-2")}
                     aria-label={`Edit ${subject.name}`}
                   >
-                    <HugeiconsIcon icon={PencilIcon} className={cn("size-3")} />
+                    <HugeiconsIcon icon={PencilIcon} data-icon />
                   </Button>
                 </div>
                 <div>
@@ -107,12 +107,9 @@ export function SubjectTable({
                     aria-label={`Delete ${subject.name}`}
                   >
                     {isDeleting ? (
-                      <HugeiconsIcon icon={RadialIcon} className={cn("size-3", "animate-spin")} />
+                      <HugeiconsIcon icon={RadialIcon} className="animate-spin" data-icon />
                     ) : (
-                      <HugeiconsIcon
-                        icon={Delete02Icon}
-                        className={cn("size-3", "text-destructive")}
-                      />
+                      <HugeiconsIcon icon={Delete02Icon} className="text-destructive" data-icon />
                     )}
                   </Button>
                 </div>

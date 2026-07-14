@@ -74,6 +74,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
           <HugeiconsIcon
             icon={CloudUploadIcon}
             className="mx-auto mb-2 size-8 text-muted-foreground"
+            data-icon
           />
           <p className="text-muted-foreground text-sm">Click to upload a diagram or sketch</p>
         </button>

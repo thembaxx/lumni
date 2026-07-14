@@ -53,6 +53,21 @@ function QuizClientContent() {
   const assignmentId = searchParams.get("assignmentId") || null;
   const packId = searchParams.get("packId") || null;
 
+  const [packQuestions, setPackQuestions] = useState<Question[] | null>(null);
+
+  useEffect(() => {
+    if (!packId) return;
+    try {
+      const stored = sessionStorage.getItem(`lumni_pack_${packId}`);
+      if (stored) {
+        setPackQuestions(JSON.parse(stored));
+        sessionStorage.removeItem(`lumni_pack_${packId}`);
+      }
+    } catch (err) {
+      logError("PackQuestionLoad", err);
+    }
+  }, [packId]);
+
   if (mode === "bolt") {
     return <BoltQuiz />;
   }
@@ -68,21 +83,6 @@ function QuizClientContent() {
       />
     );
   }
-
-  const [packQuestions, setPackQuestions] = useState<Question[] | null>(null);
-
-  useEffect(() => {
-    if (!packId) return;
-    try {
-      const stored = sessionStorage.getItem(`lumni_pack_${packId}`);
-      if (stored) {
-        setPackQuestions(JSON.parse(stored));
-        sessionStorage.removeItem(`lumni_pack_${packId}`);
-      }
-    } catch (err) {
-      logError("PackQuestionLoad", err);
-    }
-  }, [packId]);
 
   return (
     <QuizView

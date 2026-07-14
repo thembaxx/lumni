@@ -68,7 +68,7 @@ export function NavigationBar({
               className="-ml-1.5 flex size-9 items-center justify-center text-system-accent transition-opacity active:opacity-60"
               aria-label="Go back"
             >
-              <HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" strokeWidth={2} />
+              <HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" strokeWidth={2} data-icon />
             </button>
           )}
 

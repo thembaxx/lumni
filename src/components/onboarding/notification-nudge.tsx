@@ -3,7 +3,7 @@
 import BellElectricIcon from "@hugeicons/core-free-icons/BellElectricIcon";
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -14,19 +14,18 @@ const NUDGE_DISMISSED_KEY = "lumni_notification_nudge_dismissed";
 export function NotificationNudge() {
   const { push } = useRouter();
   const { data } = useOnboarding();
-  const [dismissed, setDismissed] = useState(true);
+  const [userDismissed, setUserDismissed] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return localStorage.getItem(NUDGE_DISMISSED_KEY) === "true";
+  });
 
-  useEffect(() => {
-    const dismissedRaw = localStorage.getItem(NUDGE_DISMISSED_KEY);
-    const isDismissed = dismissedRaw === "true" || !(data.isComplete && !data.notificationsEnabled);
-    setDismissed(isDismissed);
-  }, [data.isComplete, data.notificationsEnabled]);
+  const dismissed = userDismissed || data.isComplete || data.notificationsEnabled;
 
   if (dismissed) return null;
 
   const handleDismiss = () => {
     localStorage.setItem(NUDGE_DISMISSED_KEY, "true");
-    setDismissed(true);
+    setUserDismissed(true);
   };
 
   const handleEnable = () => {
@@ -57,7 +56,7 @@ export function NotificationNudge() {
           className="-mr-1.5 rounded-md p-2 transition-colors hover:bg-muted/50"
           aria-label="Dismiss"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
+          <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" data-icon />
         </button>
       </div>
     </FadeIn>

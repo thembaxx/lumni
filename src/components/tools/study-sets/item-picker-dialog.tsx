@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 interface Item {
   id: string;
@@ -42,9 +43,10 @@ export function ItemPickerDialog({
                   key={item.id}
                   type="button"
                   onClick={() => onToggle(item.id)}
-                  className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted ${
-                    selected ? "bg-accent/20 font-medium" : ""
-                  }`}
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted",
+                    selected ? "bg-accent/20 font-medium" : "",
+                  )}
                 >
                   <input type="checkbox" checked={selected} readOnly className="size-4" />
                   <span className="truncate">{item.label}</span>

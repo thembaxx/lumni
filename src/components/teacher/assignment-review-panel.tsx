@@ -135,6 +135,7 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
                 <HugeiconsIcon
                   icon={isOpen ? ArrowUp01Icon : ArrowDown01Icon}
                   className="ml-2 size-4 shrink-0 text-muted-foreground"
+                  data-icon="inline-end"
                 />
               </button>
               {isOpen && (

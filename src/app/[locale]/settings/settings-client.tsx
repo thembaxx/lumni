@@ -157,20 +157,6 @@ function SettingsContent() {
   });
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!user?.$id) return;
-    loadSettings(dexieDataAccess, user.$id).then((settings) => {
-      setAppSettings(settings);
-      setSettingsLoaded(true);
-    });
-  }, [user?.$id]);
-
-  if (!settingsLoaded || !appSettings.studyPrefs) {
-    return <SettingsLoading />;
-  }
-
-  const { studyPrefs, notifications } = appSettings;
-
   const setStudyPrefs = useCallback(
     (prefs: StudyPreferences) => setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
     [],
@@ -194,6 +180,20 @@ function SettingsContent() {
   );
 
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+
+  useEffect(() => {
+    if (!user?.$id) return;
+    loadSettings(dexieDataAccess, user.$id).then((settings) => {
+      setAppSettings(settings);
+      setSettingsLoaded(true);
+    });
+  }, [user?.$id]);
+
+  if (!settingsLoaded || !appSettings.studyPrefs) {
+    return <SettingsLoading />;
+  }
+
+  const { studyPrefs, notifications } = appSettings;
 
   const handleSave = async () => {
     if (!user?.$id) return;

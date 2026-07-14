@@ -3,7 +3,7 @@
 import File02Icon from "@hugeicons/core-free-icons/File02Icon";
 import LayoutGridIcon from "@hugeicons/core-free-icons/LayoutGridIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { usePDFSlick } from "@pdfslick/react";
 import type { TUsePDFSlickStore, PDFSlickThumbProps } from "@pdfslick/react";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -94,10 +94,7 @@ export default function PDFSlickViewerSection({ pdfUrl }: Props) {
       scaleValue: "page-fit",
     });
 
-  const [loadError, setLoadError] = useState(false);
-  useEffect(() => {
-    if (error) setLoadError(true);
-  }, [error]);
+  const loadError = !!error;
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);

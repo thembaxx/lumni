@@ -171,19 +171,23 @@ export function StoryReaderClient() {
     }
   }, [scrollPercent, saveProgress]);
 
+  const doLoadQuestions = useCallback(async () => {
+    const qs = await generateComprehensionQuestions(story!);
+    setQuestions(qs);
+    setShowQuestions(true);
+    setScores(new Map());
+    setAllGraded(false);
+  }, [story]);
+
   const handleLoadQuestions = useCallback(async () => {
     if (!story) return;
     setQuestionsLoading(true);
     try {
-      const qs = await generateComprehensionQuestions(story);
-      setQuestions(qs);
-      setShowQuestions(true);
-      setScores(new Map());
-      setAllGraded(false);
+      await doLoadQuestions();
     } finally {
       setQuestionsLoading(false);
     }
-  }, [story]);
+  }, [story, doLoadQuestions]);
 
   const handleGraded = useCallback((questionId: string, score: number) => {
     setScores((prev) => addQuestionScore(prev, questionId, score));

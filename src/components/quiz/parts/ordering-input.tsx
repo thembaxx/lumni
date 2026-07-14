@@ -7,6 +7,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDragSort } from "@/hooks/use-drag-sort";
 import type { OrderingItem } from "@/lib/question-engine/types";
+import { cn } from "@/lib/utils";
 
 interface OrderingInputProps {
   items: OrderingItem[];
@@ -15,11 +16,9 @@ interface OrderingInputProps {
 
 export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
   const t = useTranslations();
-  const shuffledIds = useMemo(
-    () => items.toSorted(() => Math.random() - 0.5).map((i) => i.id),
-    [items],
+  const [orderedIds, setOrderedIds] = useState<string[]>(() =>
+    items.toSorted(() => Math.random() - 0.5).map((i) => i.id),
   );
-  const [orderedIds, setOrderedIds] = useState<string[]>(shuffledIds);
 
   const { draggedId, hoveredId, handleDragStart, handleDragOver, handleDragEnd } = useDragSort();
 
@@ -74,13 +73,14 @@ export function OrderingInput({ items, onSubmit }: OrderingInputProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className={`flex min-h-11 items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-[background-color,box-shadow] ${
+                className={cn(
+                  "flex min-h-11 items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-[background-color,box-shadow]",
                   isDragging
                     ? "border-(--system-accent) bg-(--system-accent-alpha-10) opacity-50 shadow-level-1"
                     : isOver
                       ? "border-(--system-accent) bg-(--system-accent-alpha-5)"
-                      : "border-border bg-card"
-                }`}
+                      : "border-border bg-card",
+                )}
               >
                 <button
                   type="button"

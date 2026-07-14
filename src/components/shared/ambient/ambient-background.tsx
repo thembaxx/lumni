@@ -39,12 +39,9 @@ export function AmbientBackground({
   className,
   variant = "dashboard",
 }: AmbientBackgroundProps) {
-  const [orbs, setOrbs] = useState<Orb[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
+  const [orbs] = useState<Orb[]>(() => {
     const colors = COLOR_SETS[variant] ?? COLOR_SETS.dashboard;
-    const generated: Orb[] = Array.from({ length: orbCount }, (_, i) => ({
+    return Array.from({ length: orbCount }, (_, i) => ({
       id: i,
       x: 10 + Math.random() * 80,
       y: 10 + Math.random() * 80,
@@ -53,8 +50,8 @@ export function AmbientBackground({
       delay: Math.random() * 4,
       duration: 6 + Math.random() * 6,
     }));
-    setOrbs(generated);
-  }, [orbCount, variant]);
+  });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div

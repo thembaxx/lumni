@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
+import { cn } from "@/lib/utils";
 
 const STEPS_KEY = "lumni_getting_started_steps";
 
@@ -146,7 +147,11 @@ export function GettingStartedCard() {
                   className="-mr-1 rounded-md p-3 transition-[scale,background-color] hover:bg-muted/50 press-scale"
                   aria-label="Dismiss"
                 >
-                  <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
+                  <HugeiconsIcon
+                    icon={Cancel01Icon}
+                    className="size-4 text-muted-foreground"
+                    data-icon
+                  />
                 </button>
               </div>
 
@@ -165,17 +170,19 @@ export function GettingStartedCard() {
                           markDone(item.key, item.href);
                         }
                       }}
-                      className={`flex items-center gap-3 rounded-xl p-3 transition-colors ${
-                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20 press-scale"
-                      } transition-[scale] duration-150`}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl p-3 transition-colors transition-[scale] duration-150",
+                        done ? "opacity-50" : "cursor-pointer hover:bg-muted/20 press-scale",
+                      )}
                       onClick={done ? undefined : () => markDone(item.key, item.href)}
                     >
                       <div
-                        className={`flex size-8 items-center justify-center rounded-full ${
+                        className={cn(
+                          "flex size-8 items-center justify-center rounded-full",
                           done
                             ? "bg-success/20 text-success"
-                            : "bg-system-accent/10 text-system-accent"
-                        }`}
+                            : "bg-system-accent/10 text-system-accent",
+                        )}
                       >
                         <div className="relative size-4">
                           <AnimatePresence mode="wait" initial={false}>
@@ -238,7 +245,7 @@ export function GettingStartedCard() {
                         </div>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className={`font-semibold text-sm ${done ? "line-through" : ""}`}>
+                        <p className={cn("font-semibold text-sm", done ? "line-through" : "")}>
                           {item.label}
                         </p>
                         <p className="truncate text-pretty text-muted-foreground text-xs">

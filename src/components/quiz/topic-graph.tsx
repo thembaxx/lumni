@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
 
 interface TopicGraphProps {
@@ -67,13 +68,14 @@ export function TopicGraph({ subject, topic }: TopicGraphProps) {
       {chainNodes.map((node, i) => (
         <li key={node.id} className="flex shrink-0 items-center gap-1">
           <span
-            className={`inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 font-medium ios-caption-2 leading-tight ${
+            className={cn(
+              "inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 font-medium ios-caption-2 leading-tight",
               node.id === currentTopicNode?.id
                 ? "border-foreground/20 bg-foreground/10 text-foreground"
                 : node.type === "prerequisite"
                   ? "border-warning/30 bg-warning/10 text-warning"
-                  : "border-success/30 bg-success/10 text-success"
-            }`}
+                  : "border-success/30 bg-success/10 text-success",
+            )}
           >
             {node.label}
           </span>

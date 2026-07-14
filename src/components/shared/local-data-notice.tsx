@@ -73,7 +73,7 @@ export function LocalDataNotice({
           className="-mr-1.5"
           aria-label="Dismiss"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-muted-foreground" />
+          <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground" />
         </Button>
       </div>
     </FadeIn>

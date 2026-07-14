@@ -4,6 +4,7 @@ import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
+import { useState } from "react";
 import type { GroupChallenge, GroupChallengeEntry } from "@/lib/study-groups/challenge-types";
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 
 export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Props) {
   const { push } = useRouter();
-  const now = Date.now();
+  const [now] = useState(() => Date.now());
   const weekEnd = new Date(challenge.weekEnd).getTime();
   const daysLeft = Math.max(0, Math.ceil((weekEnd - now) / (1000 * 60 * 60 * 24)));
   const totalScore = entries.reduce((s, e) => s + e.combinedScore, 0);

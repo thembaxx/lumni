@@ -178,7 +178,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
           >
             {showSuccess ? (
               <span className="card-entrance flex items-center gap-1.5">
-                <HugeiconsIcon icon={CheckmarkCircle01Icon} />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon="inline-start" />
                 Starting quiz&hellip;
               </span>
             ) : (

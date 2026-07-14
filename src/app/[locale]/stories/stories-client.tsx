@@ -77,50 +77,54 @@ export function StoriesClient() {
 
   const userId = user?.$id;
 
+  const doGenerate = useCallback(async () => {
+    const langOpt = LANG_OPTIONS.find((l) => l.id === genLanguage);
+    const res = await fetch("/api/engine/generate-story", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        language: langOpt?.label ?? "English",
+        languageId: genLanguage,
+        gradeLevel: genGrade,
+        topic: genTopic.trim(),
+        subject: genSubject,
+      }),
+    });
+    const data = await res.json();
+    if (data.story) {
+      const meta: StoryMeta = {
+        id: data.story.id,
+        title: data.story.title,
+        author: data.story.author,
+        language: data.story.language,
+        languageId: data.story.languageId,
+        gradeLevel: data.story.gradeLevel,
+        wordCount: data.story.wordCount,
+        subjects: data.story.subjects,
+        source: "ai-generated",
+        sourceUrl: "",
+        topics: data.story.topics,
+        readTimeMinutes: data.story.readTimeMinutes,
+        license: "ai-generated",
+      };
+      setStories((prev) => [meta, ...prev]);
+      push(`/stories/${data.story.id}`);
+      setGenOpen(false);
+      setGenTopic("");
+    }
+  }, [genLanguage, genGrade, genTopic, genSubject, push]);
+
   const handleGenerate = useCallback(async () => {
     if (!genTopic.trim()) return;
     setGenLoading(true);
     try {
-      const langOpt = LANG_OPTIONS.find((l) => l.id === genLanguage);
-      const res = await fetch("/api/engine/generate-story", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          language: langOpt?.label ?? "English",
-          languageId: genLanguage,
-          gradeLevel: genGrade,
-          topic: genTopic.trim(),
-          subject: genSubject,
-        }),
-      });
-      const data = await res.json();
-      if (data.story) {
-        const meta: StoryMeta = {
-          id: data.story.id,
-          title: data.story.title,
-          author: data.story.author,
-          language: data.story.language,
-          languageId: data.story.languageId,
-          gradeLevel: data.story.gradeLevel,
-          wordCount: data.story.wordCount,
-          subjects: data.story.subjects,
-          source: "ai-generated",
-          sourceUrl: "",
-          topics: data.story.topics,
-          readTimeMinutes: data.story.readTimeMinutes,
-          license: "ai-generated",
-        };
-        setStories((prev) => [meta, ...prev]);
-        push(`/stories/${data.story.id}`);
-        setGenOpen(false);
-        setGenTopic("");
-      }
+      await doGenerate();
     } catch (err) {
       logError("stories-client.generateStory", err);
     } finally {
       setGenLoading(false);
     }
-  }, [genLanguage, genGrade, genTopic, genSubject, push]);
+  }, [genTopic, doGenerate]);
 
   useEffect(() => {
     getAllStoryMetas().then((all) => {

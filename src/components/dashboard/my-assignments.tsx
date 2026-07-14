@@ -139,7 +139,7 @@ export function MyAssignments() {
                   className="h-8 gap-1.5 text-xs press-scale"
                   onClick={() => setQuestionOpen(questionOpen === a.id ? null : a.id)}
                 >
-                  <HugeiconsIcon icon={Chat01Icon} className="size-3.5" />
+                  <HugeiconsIcon icon={Chat01Icon} data-icon="inline-start" />
                   {questionOpen === a.id ? "Close" : "Ask Question"}
                 </Button>
                 {a.submission ? (
@@ -157,7 +157,7 @@ export function MyAssignments() {
                       )
                     }
                   >
-                    <HugeiconsIcon icon={PlayIcon} className="size-3.5" />
+                    <HugeiconsIcon icon={PlayIcon} data-icon="inline-start" />
                     Practice
                   </Button>
                 )}

@@ -188,11 +188,14 @@ function PieChart({ data, palette }: { data: ChartDataPoint[]; palette: DiagramC
     palette.chart5,
     palette.chart6,
   ];
-  let currentAngle = 0;
-  const slices = data.map((d, i) => {
+  const angleData = data.reduce<{ start: number; sliceAngle: number }[]>((acc, d) => {
     const sliceAngle = (d.value / total) * 360;
-    const start = currentAngle;
-    currentAngle += sliceAngle;
+    const start = acc.length === 0 ? 0 : acc[acc.length - 1].start + acc[acc.length - 1].sliceAngle;
+    acc.push({ start, sliceAngle });
+    return acc;
+  }, []);
+  const slices = data.map((d, i) => {
+    const { start, sliceAngle } = angleData[i];
     const midAngle = start + sliceAngle / 2;
     const midRad = (midAngle * Math.PI) / 180;
     const labelX = cx + Math.cos(midRad) * (radius * 0.65);

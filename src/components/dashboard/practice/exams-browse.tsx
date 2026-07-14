@@ -83,7 +83,7 @@ export function ExamsBrowse() {
                   }}
                   className="gap-1.5 rounded-full text-xs"
                 >
-                  <HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" />
+                  <HugeiconsIcon icon={BookOpen01Icon} data-icon="inline-start" />
                   Practice
                 </Button>
                 <Button
@@ -92,7 +92,7 @@ export function ExamsBrowse() {
                   onClick={() => push("/exam-dates")}
                   className="gap-1.5 rounded-full border-border/60 text-xs"
                 >
-                  <HugeiconsIcon icon={Calendar01Icon} className="size-3.5" />
+                  <HugeiconsIcon icon={Calendar01Icon} data-icon="inline-start" />
                   Exam Dates
                 </Button>
               </div>

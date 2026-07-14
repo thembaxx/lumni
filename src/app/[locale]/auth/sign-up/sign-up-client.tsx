@@ -78,34 +78,38 @@ function SignUpForm() {
 
   const referralCode = searchParams.get("ref");
 
+  const doSignUp = useCallback(async () => {
+    const userId = await signUp(email, password, name);
+    if (referralCode && userId) {
+      fetch("/api/referral/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: referralCode, refereeId: userId }),
+      }).catch((e) => {
+        logError("referral-claim", e);
+        toast({
+          type: "warning",
+          message: "Couldn't apply referral. You can add it later in Settings.",
+        });
+      });
+    }
+    push(redirect);
+    refresh();
+  }, [email, password, name, signUp, push, redirect, referralCode, refresh]);
+
   const handleSignUp = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       dispatch({ type: "SET_LOADING", payload: true });
       try {
-        const userId = await signUp(email, password, name);
-        if (referralCode && userId) {
-          fetch("/api/referral/claim", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code: referralCode, refereeId: userId }),
-          }).catch((e) => {
-            logError("referral-claim", e);
-            toast({
-              type: "warning",
-              message: "Couldn't apply referral. You can add it later in Settings.",
-            });
-          });
-        }
-        push(redirect);
-        refresh();
+        await doSignUp();
       } catch (e) {
         logError("sign-up", e);
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }
     },
-    [email, password, name, signUp, push, redirect, referralCode, refresh],
+    [doSignUp],
   );
 
   return (

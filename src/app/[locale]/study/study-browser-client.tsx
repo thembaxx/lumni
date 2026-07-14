@@ -13,6 +13,7 @@ import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { motionEase } from "@/lib/utils/animation";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -197,9 +198,10 @@ export function StudyBrowserClient() {
                             className="flex items-center gap-3 rounded-xl border bg-card p-3 text-left transition-[background-color] hover:bg-muted/50 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-primary"
                           >
                             <div
-                              className={`flex size-9 shrink-0 items-center justify-center rounded-full ${
-                                isComplete ? "bg-success/10" : "bg-(--system-accent)/10"
-                              }`}
+                              className={cn(
+                                "flex size-9 shrink-0 items-center justify-center rounded-full",
+                                isComplete ? "bg-success/10" : "bg-(--system-accent)/10",
+                              )}
                             >
                               {isComplete ? (
                                 <HugeiconsIcon

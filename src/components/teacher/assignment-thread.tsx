@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { dexieDataAccess } from "@/lib/db";
 import type { AssignmentMessage } from "@/lib/db/schema";
 import { logError } from "@/lib/shared/logger";
+import { cn } from "@/lib/utils";
 
 interface AssignmentThreadProps {
   assignmentId: string;
@@ -82,7 +83,10 @@ export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
           messages.map((msg, i) => (
             <div
               key={msg.id ?? i}
-              className={`flex flex-col gap-1 rounded-lg border p-3 ${msg.senderRole === "teacher" ? "bg-muted/30" : ""}`}
+              className={cn(
+                "flex flex-col gap-1 rounded-lg border p-3",
+                msg.senderRole === "teacher" ? "bg-muted/30" : "",
+              )}
             >
               <p className="text-sm">{msg.content}</p>
               <p className="text-(--fs-caption-3) text-muted-foreground">

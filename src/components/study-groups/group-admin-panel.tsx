@@ -56,7 +56,7 @@ export function GroupAdminPanel({ group }: Props) {
           <GroupSettingsDialog group={group} />
           <Link href={`/study-groups/${group.$id}`}>
             <Button variant="ghost" size="icon" aria-label="Open group">
-              <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
+              <HugeiconsIcon icon={ArrowRight01Icon} data-icon />
             </Button>
           </Link>
         </div>
@@ -94,7 +94,7 @@ export function GroupAdminPanel({ group }: Props) {
         <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
           <DialogTrigger>
             <Button variant="destructive" size="sm" className="w-fit">
-              <HugeiconsIcon icon={Minimize01Icon} className="size-4" />
+              <HugeiconsIcon icon={Minimize01Icon} data-icon="inline-start" />
               {t("studyGroups.deleteGroup")}
             </Button>
           </DialogTrigger>

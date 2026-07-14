@@ -20,8 +20,8 @@ export function StaggerList({
   variants,
   performanceAware = false,
 }: StaggerListProps) {
-  const animOpts = performanceAware ? useOptimizedAnimation() : null;
-  const shouldReduce = animOpts?.shouldReduceMotion ?? false;
+  const animOpts = useOptimizedAnimation();
+  const shouldReduce = performanceAware ? (animOpts?.shouldReduceMotion ?? false) : false;
 
   if (shouldReduce) {
     return <div className={cn("flex flex-col gap-0", className)}>{children}</div>;

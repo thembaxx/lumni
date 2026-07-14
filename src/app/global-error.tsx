@@ -47,7 +47,7 @@ export default function GlobalError({
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button variant="outline" onClick={() => reset()} className="gap-2">
-                  <HugeiconsIcon icon={RefreshIcon} className="size-4" />
+                  <HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
                   Try again
                 </Button>
                 <Button
@@ -55,7 +55,7 @@ export default function GlobalError({
                   onClick={() => (window.location.href = "/")}
                   className="gap-2"
                 >
-                  <HugeiconsIcon icon={Home01Icon} className="size-4" />
+                  <HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
                   Go Home
                 </Button>
               </div>

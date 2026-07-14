@@ -13,6 +13,7 @@ import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { logError } from "@/lib/shared/logger";
 import { extractSubjectFromFileName } from "@/lib/upload";
+import { cn } from "@/lib/utils";
 import { UploadButton } from "@/lib/uploadthing";
 
 export default function UploadContent() {
@@ -107,13 +108,14 @@ export default function UploadContent() {
                 )}
                 {syncStatus !== "idle" && (
                   <div
-                    className={`rounded-(--radius-button) p-(--space-3) text-center text-xs ${
+                    className={cn(
+                      "rounded-(--radius-button) p-(--space-3) text-center text-xs",
                       syncStatus === "syncing"
                         ? "bg-accent/10 text-foreground"
                         : syncStatus === "done"
                           ? "bg-success/10 text-success"
-                          : "bg-destructive/10 text-destructive"
-                    }`}
+                          : "bg-destructive/10 text-destructive",
+                    )}
                   >
                     {syncStatus === "syncing"
                       ? "Syncing subject data..."

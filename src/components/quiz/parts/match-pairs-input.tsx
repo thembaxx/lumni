@@ -3,9 +3,10 @@
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDragSort } from "@/hooks/use-drag-sort";
+import { cn } from "@/lib/utils";
 
 interface MatchPairsInputProps {
   leftItems: { id: string; text: string }[];
@@ -19,7 +20,7 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
   const [keyboardSelectedId, setKeyboardSelectedId] = useState<string | null>(null);
 
-  const shuffledRight = useMemo(() => rightItems.toSorted(() => Math.random() - 0.5), [rightItems]);
+  const [shuffledRight] = useState(() => rightItems.toSorted(() => Math.random() - 0.5));
 
   const getMatchedRight = useCallback(
     (leftId: string) => {
@@ -126,9 +127,10 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                         setKeyboardSelectedId(null);
                       }
                     }}
-                    className={`w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing ${
-                      keyboardSelectedId === item.id ? "ring-2 ring-(--system-accent)" : ""
-                    }`}
+                    className={cn(
+                      "w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing",
+                      keyboardSelectedId === item.id ? "ring-2 ring-(--system-accent)" : "",
+                    )}
                   >
                     {item.text}
                   </button>
@@ -158,11 +160,12 @@ export function MatchPairsInput({ leftItems, rightItems, onSubmit }: MatchPairsI
                     makeMatch(keyboardSelectedId, item.id);
                   }
                 }}
-                className={`w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-[border-color,background-color,color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+                className={cn(
+                  "w-full rounded-xl border-2 px-3 py-2.5 text-left text-sm transition-[border-color,background-color,color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2",
                   used
                     ? "border-muted bg-muted/50 text-muted-foreground line-through"
-                    : "border-muted-foreground/30 border-dashed bg-transparent"
-                }`}
+                    : "border-muted-foreground/30 border-dashed bg-transparent",
+                )}
               >
                 {item.text}
               </button>

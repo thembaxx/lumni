@@ -57,7 +57,7 @@ function PaperCard({ paper }: { paper: ExamPaper }) {
               onClick={() => router.push(`/exam/${paper.id}`)}
               className="gap-1.5 rounded-full text-xs"
             >
-              <HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" />
+              <HugeiconsIcon icon={BookOpen01Icon} data-icon="inline-start" />
               View Paper
             </Button>
           </div>

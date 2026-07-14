@@ -29,51 +29,55 @@ export function ProgressExport() {
   const { levelInfo } = useGamification();
   const [exportState, setExportState] = useState<ExportState>("idle");
 
-  const handleExportJson = async () => {
+  const handleExportJson = () => {
     setExportState("exporting");
-    try {
-      const report = await exportService.buildFullReport();
-      const blob = new Blob([exportService.toJSON(report)], {
-        type: "application/json",
+    exportService
+      .buildFullReport()
+      .then((report) => {
+        const blob = new Blob([exportService.toJSON(report)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .finally(() => {
+        setExportState("idle");
       });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } finally {
-      setExportState("idle");
-    }
   };
 
-  const handleExportCsv = async () => {
+  const handleExportCsv = () => {
     setExportState("csv-exporting");
-    try {
-      const [quizAttempts, examSessions] = await Promise.all([
-        _deps.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
-        _deps.db.examSessions.limit(100).toArray(),
-      ]);
-      const csv = exportService.toCSV(quizAttempts, examSessions);
-      const blob = new Blob([csv], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } finally {
-      setExportState("idle");
-    }
+    Promise.all([
+      _deps.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
+      _deps.db.examSessions.limit(100).toArray(),
+    ])
+      .then(([quizAttempts, examSessions]) => {
+        const csv = exportService.toCSV(quizAttempts, examSessions);
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .finally(() => {
+        setExportState("idle");
+      });
   };
 
-  const handlePrint = async () => {
+  const handlePrint = () => {
     setExportState("printing");
-    try {
-      const report = await exportService.buildFullReport();
-      const printWindow = window.open("", "_blank");
-      if (!printWindow) return;
-      printWindow.document.write(`
+    exportService
+      .buildFullReport()
+      .then((report) => {
+        const printWindow = window.open("", "_blank");
+        if (!printWindow) return;
+        printWindow.document.write(`
 				<!DOCTYPE html>
 				<html lang="en">
 				<head>
@@ -223,12 +227,13 @@ export function ProgressExport() {
 				</body>
 				</html>
 			`);
-      printWindow.document.close();
-      printWindow.focus();
-      setTimeout(() => printWindow.print(), 500);
-    } finally {
-      setExportState("idle");
-    }
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => printWindow.print(), 500);
+      })
+      .finally(() => {
+        setExportState("idle");
+      });
   };
 
   return (

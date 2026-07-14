@@ -46,12 +46,13 @@ export function ResendSection({ countdown, loading, onResend }: ResendSectionPro
           className={cn(buttonStyles, loading && "opacity-70")}
         >
           {loading ? (
-            <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />
+            <HugeiconsIcon icon={RadialIcon} className="animate-spin" data-icon="inline-start" />
           ) : (
             <>
               <HugeiconsIcon
                 icon={RefreshIcon}
-                className={cn("size-4", iconStyles, countdown > 0 && "animate-pulse")}
+                className={cn(iconStyles, countdown > 0 && "animate-pulse")}
+                data-icon="inline-start"
               />
               <span className="ml-2">Resend Magic Link</span>
             </>

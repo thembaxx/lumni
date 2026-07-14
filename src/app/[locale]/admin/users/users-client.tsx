@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -52,11 +52,8 @@ export function UsersClient() {
   });
 
   const users = useMemo(() => data?.users ?? [], [data?.users]);
-  const [formattedDates, setFormattedDates] = useState<
-    Record<string, { registered: string; accessed: string }>
-  >({});
 
-  useEffect(() => {
+  const formattedDates = useMemo(() => {
     const nextDates: Record<string, { registered: string; accessed: string }> = {};
     users.forEach((user) => {
       nextDates[user.$id] = {
@@ -64,7 +61,7 @@ export function UsersClient() {
         accessed: user.accessedAt ? new Date(user.accessedAt).toLocaleDateString() : "—",
       };
     });
-    setFormattedDates(nextDates);
+    return nextDates;
   }, [users]);
 
   return (

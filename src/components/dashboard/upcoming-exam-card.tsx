@@ -94,7 +94,7 @@ export function UpcomingExamCard() {
       <Link href="/exam-dates" prefetch={true} className="mt-1">
         <Button variant="outline" size="sm" className="w-full rounded-full text-xs">
           View Calendar
-          <HugeiconsIcon icon={ArrowRight01Icon} className="ml-1 size-3" />
+          <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
         </Button>
       </Link>
     </Card>

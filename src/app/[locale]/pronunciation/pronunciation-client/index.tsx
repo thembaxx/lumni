@@ -13,6 +13,7 @@ import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { PageContainer } from "@/components/layout/page-container";
 import { motionEase } from "@/lib/utils/animation";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -208,11 +209,12 @@ export function PronunciationClient() {
                         <Badge
                           key={ws.word}
                           variant="outline"
-                          className={`rounded-full px-3 py-1 text-sm ${
+                          className={cn(
+                            "rounded-full px-3 py-1 text-sm",
                             ws.isCorrect
                               ? "border-success/30 bg-success/10 text-success"
-                              : "border-destructive/30 bg-destructive/10 text-destructive"
-                          }`}
+                              : "border-destructive/30 bg-destructive/10 text-destructive",
+                          )}
                         >
                           {ws.word}
                         </Badge>

@@ -38,7 +38,7 @@ export function SubjectPicker({ enrolled, available, isEnrolled, onToggle }: Sub
               aria-label={`Remove ${subject.name}`}
               className="ml-0.5 hover:text-destructive"
             >
-              <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
+              <HugeiconsIcon icon={Cancel01Icon} className="size-3" data-icon />
             </button>
           </Badge>
         ))}

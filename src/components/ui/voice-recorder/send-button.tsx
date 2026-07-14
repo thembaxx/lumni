@@ -59,7 +59,7 @@ export function SendButton({
                   : { type: "spring", duration: 0.4, bounce: 0 }
               }
             >
-              <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
+              <HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon="inline-start" />
               <span>Sent!</span>
             </m.span>
           ) : isPaperPlaneing ? (
@@ -91,7 +91,7 @@ export function SendButton({
                   : { type: "spring", duration: 0.4, bounce: 0 }
               }
             >
-              <HugeiconsIcon icon={MailSend01Icon} className="size-4" />
+              <HugeiconsIcon icon={MailSend01Icon} data-icon="inline-start" />
               <span>Send Voice Message</span>
             </m.span>
           )}

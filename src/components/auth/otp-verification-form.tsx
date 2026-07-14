@@ -124,7 +124,7 @@ export function OtpVerificationForm({
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <HugeiconsIcon icon={FlashIcon} className="size-4" />
+              <HugeiconsIcon icon={FlashIcon} data-icon="inline-start" />
               Verify
             </span>
           )}
@@ -158,7 +158,7 @@ export function OtpVerificationForm({
             className={cn(buttonStyles, loading && "opacity-70")}
           >
             {loading ? (
-              <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />
+              <HugeiconsIcon icon={RadialIcon} className="animate-spin" data-icon="inline-start" />
             ) : (
               <>
                 <HugeiconsIcon

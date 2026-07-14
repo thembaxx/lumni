@@ -3,7 +3,7 @@
 import ChartBarBigIcon from "@hugeicons/core-free-icons/ChartBarBigIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -57,18 +57,20 @@ export function MasteryHeatmap() {
     },
   });
 
+  const fetchCompetencies = useCallback(async () => {
+    if (!selectedSubject) return [];
+    const { competencyService } = await import("@/lib/competency-engine");
+    const records = await competencyService.getCompetencies(selectedSubject);
+    return records as CompetencyRecord[];
+  }, [selectedSubject]);
+
   const {
     data: competencies = [],
     isError: compsErr,
     error,
-  } = useQuery({
+  } = useQuery<CompetencyRecord[]>({
     queryKey: ["competencies", selectedSubject],
-    queryFn: async () => {
-      if (!selectedSubject) return [];
-      const { competencyService } = await import("@/lib/competency-engine");
-      const records = await competencyService.getCompetencies(selectedSubject);
-      return records as CompetencyRecord[];
-    },
+    queryFn: fetchCompetencies,
     enabled: !!selectedSubject,
   });
 

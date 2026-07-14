@@ -11,6 +11,7 @@ import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStudyGroups } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
+import { cn } from "@/lib/utils";
 import { CreateGroupDialog } from "./create-group-dialog";
 import { DiscoverGroups } from "./discover-groups";
 import { GroupAdminPanel } from "./group-admin-panel";
@@ -105,15 +106,22 @@ export function GroupsHub() {
             role="tab"
             aria-selected={activeTab === tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors",
               activeTab === tab
                 ? "border-primary border-b-2 text-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+                : "text-muted-foreground hover:text-foreground",
+            )}
           >
-            {tab === "my-groups" && <HugeiconsIcon icon={TeamWorkIcon} className="size-4" />}
-            {tab === "discover" && <HugeiconsIcon icon={Search01Icon} className="size-4" />}
-            {tab === "admin" && <HugeiconsIcon icon={UserIcon} className="size-4" />}
+            {tab === "my-groups" && (
+              <HugeiconsIcon icon={TeamWorkIcon} className="size-4" data-icon="inline-start" />
+            )}
+            {tab === "discover" && (
+              <HugeiconsIcon icon={Search01Icon} className="size-4" data-icon="inline-start" />
+            )}
+            {tab === "admin" && (
+              <HugeiconsIcon icon={UserIcon} className="size-4" data-icon="inline-start" />
+            )}
             {t(`studyGroups.tab.${tab}`)}
           </button>
         ))}

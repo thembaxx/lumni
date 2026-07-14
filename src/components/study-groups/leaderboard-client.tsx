@@ -41,7 +41,7 @@ export function LeaderboardClient() {
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" asChild aria-label="Back to study groups">
             <Link href="/study-groups">
-              <HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
+              <HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
             </Link>
           </Button>
           <div>

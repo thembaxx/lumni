@@ -71,6 +71,7 @@ function NoteCard({
             >
               <div>
                 <svg
+                  data-icon
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
@@ -100,6 +101,7 @@ function NoteCard({
         >
           <div>
             <svg
+              data-icon
               width="18"
               height="18"
               viewBox="0 0 24 24"
@@ -119,6 +121,7 @@ function NoteCard({
         <Button variant="ghost" size="icon" onClick={() => onEdit(note.id)} aria-label="Edit note">
           <div>
             <svg
+              data-icon
               width="18"
               height="18"
               viewBox="0 0 24 24"
@@ -142,6 +145,7 @@ function NoteCard({
         >
           <div>
             <svg
+              data-icon
               width="18"
               height="18"
               viewBox="0 0 24 24"

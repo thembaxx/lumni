@@ -185,7 +185,7 @@ export function PastQuestionFilters({
             onClick={onClear}
             className="flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
-            <HugeiconsIcon icon={RefreshIcon} className="size-3" />
+            <HugeiconsIcon icon={RefreshIcon} className="size-3" data-icon="inline-start" />
             Clear
           </button>
         )}

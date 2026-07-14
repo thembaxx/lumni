@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface Subject {
   id: string;
@@ -18,9 +19,10 @@ interface SubjectCardProps {
 export function SubjectCard({ subject, selected, onToggle }: SubjectCardProps) {
   return (
     <Card
-      className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-(--system-accent) press-scale ${
-        selected ? "bg-(--system-accent)/5 ring-2 ring-(--system-accent)" : ""
-      }`}
+      className={cn(
+        "cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-(--system-accent) press-scale",
+        selected ? "bg-(--system-accent)/5 ring-2 ring-(--system-accent)" : "",
+      )}
       onClick={onToggle}
     >
       <CardContent className="flex items-center gap-3 py-3">

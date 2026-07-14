@@ -114,7 +114,7 @@ export function WordLookupPopover({
                     onClick={() => playAudio(result.audio)}
                     aria-label={`Listen to ${result.word}`}
                   >
-                    <HugeiconsIcon icon={VolumeUpIcon} className="size-3.5" />
+                    <HugeiconsIcon icon={VolumeUpIcon} data-icon />
                   </Button>
                 )}
               </div>

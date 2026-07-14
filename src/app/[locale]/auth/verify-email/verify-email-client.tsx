@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FadeIn } from "@/components/shared/fade-in";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -36,10 +36,12 @@ function VerifyEmailContent() {
     onError: (err) => setError(err instanceof Error ? err.message : "Verification failed"),
   });
 
-  if (userId && secret && !calledRef.current) {
-    calledRef.current = true;
-    mutate();
-  }
+  useEffect(() => {
+    if (userId && secret && !calledRef.current) {
+      calledRef.current = true;
+      mutate();
+    }
+  }, [userId, secret, mutate]);
 
   if (error) {
     return (

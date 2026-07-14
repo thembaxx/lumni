@@ -82,26 +82,30 @@ export function SignInForm() {
   const { email, password, showPassword, isMagicLink, magicLinkSent, loading } = state;
   const t = useTranslations();
 
+  const doSignIn = useCallback(async () => {
+    if (isMagicLink) {
+      await signInWithMagicLink(email);
+      dispatch({ type: "MAGIC_LINK_SENT" });
+    } else {
+      await signIn(email, password);
+      push(redirect);
+      refresh();
+    }
+  }, [email, password, isMagicLink, signIn, signInWithMagicLink, push, redirect, refresh]);
+
   const handleSignIn = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       dispatch({ type: "SET_LOADING", payload: true });
       try {
-        if (isMagicLink) {
-          await signInWithMagicLink(email);
-          dispatch({ type: "MAGIC_LINK_SENT" });
-        } else {
-          await signIn(email, password);
-          push(redirect);
-          refresh();
-        }
+        await doSignIn();
       } catch (e) {
         logError("sign-in", e);
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }
     },
-    [email, password, isMagicLink, signIn, signInWithMagicLink, push, redirect, refresh],
+    [doSignIn],
   );
 
   if (magicLinkSent) {

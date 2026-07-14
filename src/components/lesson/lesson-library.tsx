@@ -10,6 +10,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -178,7 +179,7 @@ export function LessonLibrary() {
                 return (
                   <Card
                     key={rec.topicId}
-                    className={`rounded-3xl ${rec.action === "skip" ? "opacity-50" : ""}`}
+                    className={cn("rounded-3xl", rec.action === "skip" ? "opacity-50" : "")}
                   >
                     <CardContent className="flex items-center justify-between gap-3 p-4">
                       <div className="flex min-w-0 items-center gap-3">

@@ -31,25 +31,27 @@ export function ShareManager() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleRevoke = useCallback(async (shareId: string) => {
+  const handleRevoke = useCallback((shareId: string) => {
     setRevoking(shareId);
     setError(null);
-    try {
-      const res = await fetch("/api/q/share", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ shareId }),
+    fetch("/api/q/share", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ shareId }),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const data = (await res.json()) as { error?: string };
+          throw new Error(data.error ?? "Failed to revoke share");
+        }
+        setShares((prev) => prev.filter((s) => s.id !== shareId));
+      })
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : "Failed to revoke share");
+      })
+      .finally(() => {
+        setRevoking(null);
       });
-      if (!res.ok) {
-        const data = (await res.json()) as { error?: string };
-        throw new Error(data.error ?? "Failed to revoke share");
-      }
-      setShares((prev) => prev.filter((s) => s.id !== shareId));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to revoke share");
-    } finally {
-      setRevoking(null);
-    }
   }, []);
 
   if (loading) {

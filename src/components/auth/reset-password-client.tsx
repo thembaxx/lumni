@@ -169,6 +169,7 @@ function Form() {
               <HugeiconsIcon
                 icon={state.showPassword ? ViewOffIcon : ViewIcon}
                 className="size-4"
+                data-icon
               />
             </button>
           </div>

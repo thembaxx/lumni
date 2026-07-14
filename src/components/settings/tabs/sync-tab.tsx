@@ -8,6 +8,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useSync } from "@/hooks/use-sync";
+import { cn } from "@/lib/utils";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
 
@@ -38,13 +39,14 @@ export function SyncTab() {
         <div className="flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
             <div
-              className={`flex size-9 items-center justify-center rounded-xl ${
-                isOnline ? "bg-system-accent/10" : "bg-warning/10"
-              }`}
+              className={cn(
+                "flex size-9 items-center justify-center rounded-xl",
+                isOnline ? "bg-system-accent/10" : "bg-warning/10",
+              )}
             >
               <HugeiconsIcon
                 icon={CloudSyncIcon}
-                className={`size-5 ${isOnline ? "text-system-accent" : "text-warning"}`}
+                className={cn("size-5", isOnline ? "text-system-accent" : "text-warning")}
               />
             </div>
             <div className="flex flex-col">
@@ -61,15 +63,17 @@ export function SyncTab() {
             type="button"
             disabled={!isOnline || isSyncing}
             onClick={handleSync}
-            className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-[background-color,transform] active:scale-[0.96] ${
+            className={cn(
+              "flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-[background-color,transform] active:scale-[0.96]",
               synced
                 ? "bg-system-accent/10 text-system-accent"
-                : "bg-secondary text-foreground hover:bg-secondary/70"
-            }`}
+                : "bg-secondary text-foreground hover:bg-secondary/70",
+            )}
           >
             <HugeiconsIcon
               icon={synced ? Tick01Icon : Refresh01Icon}
-              className={`size-4 ${isSyncing ? "animate-spin" : ""}`}
+              className={cn("size-4", isSyncing ? "animate-spin" : "")}
+              data-icon="inline-start"
             />
             {synced ? "Synced" : isSyncing ? "Syncing…" : "Sync Now"}
           </button>

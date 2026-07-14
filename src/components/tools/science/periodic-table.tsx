@@ -7,6 +7,7 @@ import * as m from "motion/react-m";
 import { useCallback, useMemo, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import {
   elementCategoryConfig,
@@ -91,8 +92,12 @@ export function PeriodicTable() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className={`w-full rounded-2xl border border-(--system-separator) bg-(--system-fill) py-3 pr-10 pl-12 text-foreground text-base placeholder-muted-foreground focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/20 ${isSearchFocused ? "border-(--system-accent)/30 bg-(--system-background-secondary)" : ""}
-            `}
+            className={cn(
+              "w-full rounded-2xl border border-(--system-separator) bg-(--system-fill) py-3 pr-10 pl-12 text-foreground text-base placeholder-muted-foreground focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/20",
+              isSearchFocused
+                ? "border-(--system-accent)/30 bg-(--system-background-secondary)"
+                : "",
+            )}
           />
           {searchQuery && (
             <m.button
@@ -115,11 +120,12 @@ export function PeriodicTable() {
         >
           <button
             onClick={() => setActiveCategory(activeCategory === null ? null : null)}
-            className={`shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale ${
+            className={cn(
+              "shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale",
               activeCategory === null
                 ? "border-(--system-separator) bg-(--system-fill) text-foreground"
-                : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
-            }`}
+                : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)",
+            )}
           >
             All
           </button>
@@ -135,11 +141,12 @@ export function PeriodicTable() {
                 duration: 0.4,
                 ease: elementEaseOutQuint,
               }}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale ${
+              className={cn(
+                "flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 press-scale",
                 activeCategory === key
                   ? "border-(--system-separator) bg-(--system-fill) text-foreground"
-                  : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)"
-              }`}
+                  : "border-(--system-separator) bg-(--system-fill-secondary) text-muted-foreground hover:bg-(--system-fill)",
+              )}
             >
               <m.span
                 className={`${config.bg} size-2.5 rounded-full`}

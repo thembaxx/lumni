@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 interface HistoryPanelProps {
   show: boolean;
   history: string[];
@@ -9,7 +11,10 @@ interface HistoryPanelProps {
 export function HistoryPanel({ show, history, onSelectResult }: HistoryPanelProps) {
   return (
     <div
-      className={`mb-3 grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${show ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+      className={cn(
+        "mb-3 grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate)",
+        show ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+      )}
     >
       <div className="min-h-0 overflow-hidden">
         <div className="flex max-h-32 flex-col gap-1 overflow-y-auto rounded-xl border border-border/50 bg-system-surface p-3">

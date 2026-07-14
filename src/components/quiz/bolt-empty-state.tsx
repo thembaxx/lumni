@@ -49,7 +49,8 @@ export function BoltEmptyState({
         <Button onClick={onRetry} className="w-full gap-2 sm:w-auto" disabled={isRetrying}>
           <HugeiconsIcon
             icon={RefreshIcon}
-            className={cn("size-4", isRetrying && "animate-spin")}
+            className={cn(isRetrying && "animate-spin")}
+            data-icon="inline-start"
           />
           {isRetrying ? "Refreshing\u2026" : "Refresh Question"}
         </Button>

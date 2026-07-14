@@ -88,7 +88,7 @@ export function SolverResultView({ subject, result, onReset }: SolverResultViewP
         >
           <HugeiconsIcon
             icon={flashcardCreated ? CheckmarkCircle01Icon : BookOpen02Icon}
-            className="size-4"
+            data-icon="inline-start"
           />
           {creatingFlashcard
             ? "Creating…"

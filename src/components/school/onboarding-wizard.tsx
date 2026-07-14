@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/toast";
 import { PRICING } from "@/lib/school/pricing";
 import type { LicenseTier } from "@/lib/school/pricing";
 import { TierCard } from "./tier-card";
+import { cn } from "@/lib/utils";
 import { SeatManager } from "./seat-manager";
 
 export function SchoolOnboardingWizard() {
@@ -30,74 +31,77 @@ export function SchoolOnboardingWizard() {
 
   const handleRegister = async () => {
     setIsLoading(true);
-    try {
-      const res = await fetch("/api/school/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          domain: form.domain || undefined,
-          contactEmail: form.contactEmail,
-          contactPhone: form.contactPhone || undefined,
-          address: form.address || undefined,
-          agreeToTerms: true,
-        }),
+    await fetch("/api/school/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: form.name,
+        domain: form.domain || undefined,
+        contactEmail: form.contactEmail,
+        contactPhone: form.contactPhone || undefined,
+        address: form.address || undefined,
+        agreeToTerms: true,
+      }),
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          toast({ type: "error", message: data.error ?? "Registration failed" });
+          return;
+        }
+        setSchoolId(data.schoolId);
+        setJoinCode(data.joinCode);
+        setRegistrationData(data);
+        if (selectedTier === "free") {
+          setStep(4);
+        } else {
+          setStep(3);
+        }
+      })
+      .catch(() => {
+        toast({ type: "error", message: "Network error. Please try again." });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      const data = await res.json();
-      if (!res.ok) {
-        toast({ type: "error", message: data.error ?? "Registration failed" });
-        return;
-      }
-      setSchoolId(data.schoolId);
-      setJoinCode(data.joinCode);
-      setRegistrationData(data);
-
-      if (selectedTier === "free") {
-        setStep(4);
-      } else {
-        setStep(3);
-      }
-    } catch {
-      toast({ type: "error", message: "Network error. Please try again." });
-    } finally {
-      setIsLoading(false);
-    }
   };
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (!schoolId || !selectedTier || selectedTier === "free") return;
     setIsLoading(true);
-    try {
-      const res = await fetch("/api/school/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          schoolId,
-          tier: selectedTier,
-          billingFrequency,
-          seatCount: PRICING[selectedTier].teacherSeatsIncluded,
-          returnUrl:
-            typeof window !== "undefined"
-              ? `${window.location.origin}/school/onboarding?success=true`
-              : "",
-        }),
+    fetch("/api/school/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        schoolId,
+        tier: selectedTier,
+        billingFrequency,
+        seatCount: PRICING[selectedTier].teacherSeatsIncluded,
+        returnUrl:
+          typeof window !== "undefined"
+            ? `${window.location.origin}/school/onboarding?success=true`
+            : "",
+      }),
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          toast({ type: "error", message: data.error ?? "Checkout failed" });
+          return;
+        }
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        } else {
+          toast({ type: "warning", message: data.message ?? "Payment provider not configured" });
+          setStep(4);
+        }
+      })
+      .catch(() => {
+        toast({ type: "error", message: "Network error. Please try again." });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      const data = await res.json();
-      if (!res.ok) {
-        toast({ type: "error", message: data.error ?? "Checkout failed" });
-        return;
-      }
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
-      } else {
-        toast({ type: "warning", message: data.message ?? "Payment provider not configured" });
-        setStep(4);
-      }
-    } catch {
-      toast({ type: "error", message: "Network error. Please try again." });
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -106,19 +110,20 @@ export function SchoolOnboardingWizard() {
         {[1, 2, 3, 4].map((s) => (
           <div key={s} className="flex items-center gap-2">
             <div
-              className={`flex size-8 items-center justify-center rounded-full text-sm font-medium ${
+              className={cn(
+                "flex size-8 items-center justify-center rounded-full text-sm font-medium",
                 s === step
                   ? "bg-(--system-accent) text-(--system-accent-foreground)"
                   : s < step
                     ? "bg-(--system-accent)/20 text-(--system-accent)"
-                    : "bg-muted text-muted-foreground"
-              }`}
+                    : "bg-muted text-muted-foreground",
+              )}
             >
               {s < step ? "✓" : s}
             </div>
             {s < 4 && (
               <div
-                className={`h-0.5 w-8 sm:w-12 ${s < step ? "bg-(--system-accent)" : "bg-muted"}`}
+                className={cn("h-0.5 w-8 sm:w-12", s < step ? "bg-(--system-accent)" : "bg-muted")}
               />
             )}
           </div>

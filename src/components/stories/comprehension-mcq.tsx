@@ -59,13 +59,12 @@ export function ComprehensionMcq({
                       : CheckmarkCircle01Icon
                 }
                 className={cn(
-                  "size-4 shrink-0",
-                  isOptionCorrect
-                    ? "text-success"
-                    : isSelected
-                      ? "text-destructive"
-                      : "text-muted-foreground/30",
+                  "size-6 shrink-0",
+                  isOptionCorrect && "text-success",
+                  isSelected && !isOptionCorrect && "text-destructive",
+                  !isSelected && "text-muted-foreground/30",
                 )}
+                data-icon
               />
             ) : (
               <span

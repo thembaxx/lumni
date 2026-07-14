@@ -192,7 +192,7 @@ export function AdminDashboard() {
               Metrics
             </Button>
             <Button variant="ghost" size="icon-sm" onClick={handleSignOut} aria-label="Sign out">
-              <HugeiconsIcon icon={Logout01Icon} className="size-4" />
+              <HugeiconsIcon icon={Logout01Icon} data-icon />
             </Button>
           </div>
         }

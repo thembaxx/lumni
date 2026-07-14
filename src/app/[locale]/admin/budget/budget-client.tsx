@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface TypeUsage {
   count: number;
@@ -111,9 +112,10 @@ export function BudgetClient() {
                     </div>
                     <div className="h-2 overflow-hidden rounded-full bg-secondary">
                       <div
-                        className={`h-full rounded-full transition-[width,background-color] duration-500 ease-ios-decelerate ${
-                          exhausted ? "bg-destructive" : warning ? "bg-warning" : "bg-foreground"
-                        }`}
+                        className={cn(
+                          "h-full rounded-full transition-[width,background-color] duration-500 ease-ios-decelerate",
+                          exhausted ? "bg-destructive" : warning ? "bg-warning" : "bg-foreground",
+                        )}
                         style={{ width: `${Math.min(100, pct)}%` }}
                       />
                     </div>

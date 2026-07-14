@@ -5,6 +5,7 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import LinkSquare01Icon from "@hugeicons/core-free-icons/LinkSquare01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface Source {
   url: string;
@@ -40,14 +41,20 @@ export function VerifiedByPill({ sources }: VerifiedByPillProps) {
         className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left transition-colors hover:bg-muted/50"
       >
         <span className="flex items-center gap-2 font-medium text-(--system-accent) text-xs">
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3.5" />
+          <HugeiconsIcon
+            icon={CheckmarkCircle01Icon}
+            className="size-3.5"
+            data-icon="inline-start"
+          />
           {label}
         </span>
         <HugeiconsIcon
           icon={ArrowDown01Icon}
-          className={`size-3.5 text-muted-foreground transition-transform ${
-            expanded ? "rotate-180" : ""
-          }`}
+          className={cn(
+            "size-3.5 text-muted-foreground transition-transform",
+            expanded ? "rotate-180" : "",
+          )}
+          data-icon="inline-end"
         />
       </button>
       {expanded && (

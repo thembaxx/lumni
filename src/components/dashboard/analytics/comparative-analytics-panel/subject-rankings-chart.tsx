@@ -41,6 +41,7 @@ export function SubjectRankingsChart({ subjectRankings, userAverage }: SubjectRa
             aria-label="Toggle subject details"
           >
             <svg
+              data-icon
               className="size-4 text-muted-foreground"
               fill="none"
               stroke="currentColor"

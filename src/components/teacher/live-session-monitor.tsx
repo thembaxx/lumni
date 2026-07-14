@@ -69,7 +69,8 @@ export function LiveSessionMonitor() {
         >
           <HugeiconsIcon
             icon={Refresh01Icon}
-            className={cn("size-3.5", isRefetching && "animate-spin")}
+            className={cn(isRefetching && "animate-spin")}
+            data-icon="inline-start"
           />
           Refresh
         </Button>

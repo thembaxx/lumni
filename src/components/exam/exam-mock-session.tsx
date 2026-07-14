@@ -49,13 +49,20 @@ export function ExamMockSession({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, MockAnswerRecord>>({});
   const [timeRemaining, setTimeRemaining] = useState(duration);
-  const startTimeRef = useRef(Date.now());
+  const startTimeRef = useRef<number>(0);
 
   const { setImmersive } = useImmersiveMode();
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const submitRef = useRef<() => void>(undefined as unknown as () => void);
   const answersRef = useRef(answers);
-  answersRef.current = answers;
+
+  useEffect(() => {
+    answersRef.current = answers;
+  }, [answers]);
+
+  useEffect(() => {
+    startTimeRef.current = Date.now();
+  }, []);
 
   const generationParams = useMemo(
     () => ({
@@ -98,7 +105,9 @@ export function ExamMockSession({
     });
   }, [questions, onFinish]);
 
-  submitRef.current = handleSubmit;
+  useEffect(() => {
+    submitRef.current = handleSubmit;
+  }, [handleSubmit]);
 
   useEffect(() => {
     if (phase !== "countdown") return;

@@ -23,6 +23,14 @@ interface Props {
 
 const CHALLENGE_TYPES: ChallengeType[] = ["most-quizzes", "highest-accuracy", "most-flashcards"];
 
+async function createChallenge(groupId: string, type: ChallengeType): Promise<void> {
+  await apiFetch(`/api/study-groups/${groupId}/challenge`, {
+    method: "POST",
+    body: JSON.stringify({ challengeType: type }),
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export function CreateChallengeDialog({ groupId, onCreated }: Props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,11 +38,7 @@ export function CreateChallengeDialog({ groupId, onCreated }: Props) {
   const handleCreate = async (type: ChallengeType) => {
     setLoading(true);
     try {
-      await apiFetch(`/api/study-groups/${groupId}/challenge`, {
-        method: "POST",
-        body: JSON.stringify({ challengeType: type }),
-        headers: { "Content-Type": "application/json" },
-      });
+      await createChallenge(groupId, type);
       toast({
         type: "success",
         message: `${CHALLENGE_TYPE_LABELS[type]} challenge created!`,

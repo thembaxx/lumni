@@ -47,7 +47,7 @@ export function ControlButtons({
         aria-label="Reset recording"
       >
         <span className="transition-transform duration-200 active:rotate-180">
-          <HugeiconsIcon icon={UndoIcon} className="size-4" />
+          <HugeiconsIcon icon={UndoIcon} data-icon />
         </span>
       </Button>
 

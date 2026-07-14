@@ -16,7 +16,7 @@ interface QuizHeaderProps {
 
 function SpringAccuracy({ accuracy }: { accuracy: number }) {
   const prevAccuracy = useRef(accuracy);
-  const accuracyValue = useMotionValue(prevAccuracy.current);
+  const accuracyValue = useMotionValue(accuracy);
   const accuracySpring = useSpring(accuracyValue, springPresets.fast);
   const [display, setDisplay] = useState(accuracy);
 

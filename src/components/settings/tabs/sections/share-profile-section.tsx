@@ -21,30 +21,27 @@ export function ShareProfileSection({ userId }: ShareProfileSectionProps) {
     () => (
       <button
         type="button"
-        onClick={async () => {
+        onClick={() => {
           if (userId && !copying) {
             setCopying(true);
-            try {
-              await navigator.clipboard.writeText(userId);
-              toast({
-                type: "success",
-                message: "User ID copied to clipboard",
+            navigator.clipboard
+              .writeText(userId)
+              .then(() => {
+                toast({ type: "success", message: "User ID copied to clipboard" });
+              })
+              .catch(() => {
+                toast({ type: "error", message: "Failed to copy" });
+              })
+              .finally(() => {
+                setCopying(false);
               });
-            } catch {
-              toast({
-                type: "error",
-                message: "Failed to copy",
-              });
-            } finally {
-              setCopying(false);
-            }
           }
         }}
         disabled={copying}
         className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground hover:bg-system-accent/90 disabled:opacity-50"
         aria-label="Copy user ID"
       >
-        <HugeiconsIcon icon={Copy01Icon} className="size-4" />
+        <HugeiconsIcon icon={Copy01Icon} className="size-4" data-icon />
       </button>
     ),
     [userId, copying],

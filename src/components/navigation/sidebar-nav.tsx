@@ -236,7 +236,7 @@ export function SidebarHamburger() {
       aria-label="Toggle navigation sidebar"
       className="mr-1 flex md:hidden"
     >
-      <HugeiconsIcon icon={Menu01Icon} className="size-5" />
+      <HugeiconsIcon icon={Menu01Icon} data-icon />
     </Button>
   );
 }

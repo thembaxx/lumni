@@ -109,7 +109,7 @@ export function ClassShell({
                 onClick={generateGhostLink}
                 className="h-8 gap-1.5 text-xs"
               >
-                <HugeiconsIcon icon={LinkSquare01Icon} className="size-3.5" />
+                <HugeiconsIcon icon={LinkSquare01Icon} data-icon="inline-start" />
                 Generate Ghost Link
               </Button>
             ) : (

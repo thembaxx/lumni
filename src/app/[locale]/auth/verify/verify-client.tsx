@@ -91,37 +91,78 @@ export function VerifyClient() {
     [otpEmail, mlEmail, redirect, router],
   );
 
+  const doSendOtp = useCallback(async () => {
+    const res = await fetch("/api/admin/auth/otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: otpEmail }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (data.locked || data.countdown) {
+        otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
+      }
+      const msg = data.error || "Could not send code";
+      otpDispatch({ type: "SET_ERROR", error: msg });
+      toast({ type: "error", message: msg });
+      return;
+    }
+    otpDispatch({ type: "SET_SENT" });
+    toast({
+      type: "success",
+      message: "Check your inbox",
+      description: `Verification code sent to ${otpEmail}`,
+    });
+  }, [otpEmail]);
+
   const handleSendOtp = useCallback(async () => {
     setLoading(true);
     otpDispatch({ type: "SET_ERROR", error: "" });
     try {
-      const res = await fetch("/api/admin/auth/otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: otpEmail }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        if (data.locked || data.countdown) {
-          otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
-        }
-        const msg = data.error || "Could not send code";
-        otpDispatch({ type: "SET_ERROR", error: msg });
-        toast({ type: "error", message: msg });
-        return;
-      }
-      otpDispatch({ type: "SET_SENT" });
-      toast({
-        type: "success",
-        message: "Check your inbox",
-        description: `Verification code sent to ${otpEmail}`,
-      });
+      await doSendOtp();
     } catch {
       otpDispatch({ type: "SET_ERROR", error: "Connection failed. Try again." });
     } finally {
       setLoading(false);
     }
-  }, [otpEmail]);
+  }, [doSendOtp]);
+
+  const doVerifyOtp = useCallback(async () => {
+    const res = await fetch("/api/admin/auth/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ otpId: otpEmail, code: otp }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (data.locked) {
+        otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockDuration });
+      }
+      if (data.remainingAttempts !== undefined) {
+        otpDispatch({
+          type: "SET_REMAINING_ATTEMPTS",
+          remainingAttempts: data.remainingAttempts,
+        });
+      }
+      const msg = data.error || "Incorrect code";
+      otpDispatch({ type: "SET_ERROR", error: msg });
+      toast({
+        type: "error",
+        message: msg,
+        description: data.remainingAttempts
+          ? `${data.remainingAttempts} attempt(s) left`
+          : "Try again or request a new code",
+      });
+      otpDispatch({ type: "SET_OTP", otp: "" });
+      return;
+    }
+    otpDispatch({ type: "SET_VERIFIED" });
+    toast({
+      type: "success",
+      message: data.isAdmin ? "Welcome back, Admin!" : "Signed in successfully",
+    });
+    setTimeout(() => onAuthSuccess(data.isAdmin), 800);
+  }, [otp, otpEmail, onAuthSuccess]);
 
   const handleVerifyOtp = useCallback(async () => {
     if (otp.length !== 6) {
@@ -131,47 +172,31 @@ export function VerifyClient() {
     setLoading(true);
     otpDispatch({ type: "SET_ERROR", error: "" });
     try {
-      const res = await fetch("/api/admin/auth/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ otpId: otpEmail, code: otp }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        if (data.locked) {
-          otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockDuration });
-        }
-        if (data.remainingAttempts !== undefined) {
-          otpDispatch({
-            type: "SET_REMAINING_ATTEMPTS",
-            remainingAttempts: data.remainingAttempts,
-          });
-        }
-        const msg = data.error || "Incorrect code";
-        otpDispatch({ type: "SET_ERROR", error: msg });
-        toast({
-          type: "error",
-          message: msg,
-          description: data.remainingAttempts
-            ? `${data.remainingAttempts} attempt(s) left`
-            : "Try again or request a new code",
-        });
-        otpDispatch({ type: "SET_OTP", otp: "" });
-        return;
-      }
-      otpDispatch({ type: "SET_VERIFIED" });
-      toast({
-        type: "success",
-        message: data.isAdmin ? "Welcome back, Admin!" : "Signed in successfully",
-      });
-      setTimeout(() => onAuthSuccess(data.isAdmin), 800);
+      await doVerifyOtp();
     } catch {
       otpDispatch({ type: "SET_ERROR", error: "Connection failed" });
       otpDispatch({ type: "SET_OTP", otp: "" });
     } finally {
       setLoading(false);
     }
-  }, [otp, otpEmail, onAuthSuccess]);
+  }, [doVerifyOtp, otp.length]);
+
+  const doResendOtp = useCallback(async () => {
+    const res = await fetch("/api/admin/auth/resend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "otp", email: otpEmail }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (data.locked || data.countdown) {
+        otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
+      }
+      otpDispatch({ type: "SET_ERROR", error: data.error || "Could not resend code" });
+      return;
+    }
+    otpDispatch({ type: "SET_COUNTDOWN", countdown: 2 * 60 * 1000 });
+  }, [otpEmail]);
 
   const handleResendOtp = useCallback(async () => {
     if (otpCountdown > 0) return;
@@ -179,50 +204,58 @@ export function VerifyClient() {
     otpDispatch({ type: "SET_ERROR", error: "" });
     otpDispatch({ type: "SET_OTP", otp: "" });
     try {
-      const res = await fetch("/api/admin/auth/resend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "otp", email: otpEmail }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        if (data.locked || data.countdown) {
-          otpDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
-        }
-        otpDispatch({ type: "SET_ERROR", error: data.error || "Could not resend code" });
-        return;
-      }
-      otpDispatch({ type: "SET_COUNTDOWN", countdown: 2 * 60 * 1000 });
+      await doResendOtp();
     } catch {
       otpDispatch({ type: "SET_ERROR", error: "Connection failed. Try again." });
     } finally {
       setLoading(false);
     }
-  }, [otpEmail, otpCountdown]);
+  }, [otpCountdown, doResendOtp]);
+
+  const doSendMagicLink = useCallback(async () => {
+    const res = await fetch("/api/admin/auth/magic-link", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: mlEmail }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (data.locked || data.countdown) {
+        mlDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
+      }
+      mlDispatch({ type: "SET_ERROR", error: data.error || "Could not send magic link" });
+      return;
+    }
+    mlDispatch({ type: "SET_SENT" });
+  }, [mlEmail, mlDispatch]);
 
   const handleSendMagicLink = useCallback(async () => {
     setLoading(true);
     mlDispatch({ type: "SET_ERROR", error: "" });
     try {
-      const res = await fetch("/api/admin/auth/magic-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: mlEmail }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        if (data.locked || data.countdown) {
-          mlDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
-        }
-        mlDispatch({ type: "SET_ERROR", error: data.error || "Could not send magic link" });
-        return;
-      }
-      mlDispatch({ type: "SET_SENT" });
+      await doSendMagicLink();
     } catch {
       mlDispatch({ type: "SET_ERROR", error: "Connection failed. Try again." });
     } finally {
       setLoading(false);
     }
+  }, [doSendMagicLink]);
+
+  const doResendMagicLink = useCallback(async () => {
+    const res = await fetch("/api/admin/auth/resend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "magic-link", email: mlEmail }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (data.locked || data.countdown) {
+        mlDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
+      }
+      mlDispatch({ type: "SET_ERROR", error: data.error || "Could not resend link" });
+      return;
+    }
+    mlDispatch({ type: "SET_COUNTDOWN", countdown: 2 * 60 * 1000 });
   }, [mlEmail, mlDispatch]);
 
   const handleResendMagicLink = useCallback(async () => {
@@ -230,26 +263,13 @@ export function VerifyClient() {
     setLoading(true);
     mlDispatch({ type: "SET_ERROR", error: "" });
     try {
-      const res = await fetch("/api/admin/auth/resend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "magic-link", email: mlEmail }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        if (data.locked || data.countdown) {
-          mlDispatch({ type: "SET_COUNTDOWN", countdown: data.lockRemaining || data.countdown });
-        }
-        mlDispatch({ type: "SET_ERROR", error: data.error || "Could not resend link" });
-        return;
-      }
-      mlDispatch({ type: "SET_COUNTDOWN", countdown: 2 * 60 * 1000 });
+      await doResendMagicLink();
     } catch {
       mlDispatch({ type: "SET_ERROR", error: "Connection failed. Try again." });
     } finally {
       setLoading(false);
     }
-  }, [mlEmail, mlCountdown, mlDispatch]);
+  }, [mlCountdown, doResendMagicLink]);
 
   useEffect(() => {
     if (otpSent && otpCountdown > 0) {

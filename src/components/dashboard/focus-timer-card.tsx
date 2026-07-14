@@ -6,7 +6,7 @@ import PlayFreeIcons from "@hugeicons/core-free-icons/PlayIcon";
 import PlusSignFreeIcons from "@hugeicons/core-free-icons/PlusSignIcon";
 import RotateClockwiseFreeIcons from "@hugeicons/core-free-icons/RotateClockwiseIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
@@ -29,18 +29,17 @@ export function FocusTimerCard() {
 
   const progress = initialTime > 0 ? (timeLeft / initialTime) * 100 : 0;
 
-  useInterval(
-    () => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          setIsRunning(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    },
-    isRunning && timeLeft > 0 ? 1000 : null,
-  );
+  useEffect(() => {
+    if (isRunning && timeLeft <= 0) {
+      setIsRunning(false);
+    }
+  }, [isRunning, timeLeft]);
+
+  const tick = useCallback(() => {
+    setTimeLeft((prev) => prev - 1);
+  }, []);
+
+  useInterval(tick, isRunning && timeLeft > 0 ? 1000 : null);
 
   const handleStart = () => {
     if (timeLeft === 0) setTimeLeft(initialTime);

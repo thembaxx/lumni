@@ -111,7 +111,7 @@ export function OfflinePackCard({ pack, onPlay, onRemove }: OfflinePackCardProps
             aria-label={`Play ${pack.title}`}
             className="gap-1.5 text-xs"
           >
-            <HugeiconsIcon icon={PlayIcon} className="size-3.5" />
+            <HugeiconsIcon icon={PlayIcon} data-icon="inline-start" />
             Play
           </Button>
         )}
@@ -123,7 +123,7 @@ export function OfflinePackCard({ pack, onPlay, onRemove }: OfflinePackCardProps
             aria-label={`Retry ${pack.title}`}
             className="gap-1.5 text-xs"
           >
-            <HugeiconsIcon icon={RefreshIcon} className="size-3.5" />
+            <HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
             Retry
           </Button>
         )}
@@ -134,7 +134,7 @@ export function OfflinePackCard({ pack, onPlay, onRemove }: OfflinePackCardProps
           aria-label={`Delete ${pack.title}`}
           className="ml-auto gap-1.5 text-xs text-muted-foreground hover:text-destructive"
         >
-          <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
+          <HugeiconsIcon icon={Delete02Icon} data-icon="inline-start" />
           Delete
         </Button>
       </div>

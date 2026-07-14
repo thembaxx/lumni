@@ -3,7 +3,7 @@
 import Mail01Icon from "@hugeicons/core-free-icons/Mail01Icon";
 import SentIcon from "@hugeicons/core-free-icons/SentIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -35,13 +35,17 @@ export function ParentInvitationDialog({
   const [canViewScores, setCanViewScores] = useState(true);
   const [isSending, setIsSending] = useState(false);
 
+  const doSend = useCallback(async () => {
+    await onSend(email.trim(), canViewProgress, canViewScores);
+    setEmail("");
+    onOpenChange(false);
+  }, [email, canViewProgress, canViewScores, onSend, onOpenChange]);
+
   const handleSend = async () => {
     if (!email.trim()) return;
     setIsSending(true);
     try {
-      await onSend(email.trim(), canViewProgress, canViewScores);
-      setEmail("");
-      onOpenChange(false);
+      await doSend();
     } finally {
       setIsSending(false);
     }
@@ -102,7 +106,7 @@ export function ParentInvitationDialog({
             Cancel
           </Button>
           <Button onClick={handleSend} disabled={!email.trim() || isSending}>
-            <HugeiconsIcon icon={SentIcon} size={16} />
+            <HugeiconsIcon icon={SentIcon} data-icon="inline-start" />
             {isSending ? "Sending…" : "Send Invitation"}
           </Button>
         </DialogFooter>

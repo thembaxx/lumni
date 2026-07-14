@@ -50,7 +50,7 @@ export function UpcomingExamsCard({
                   onClick={() => onDelete(exam.id)}
                   aria-label={t("studyPlanner.deleteSession")}
                 >
-                  <HugeiconsIcon icon={Delete02Icon} className="size-4" />
+                  <HugeiconsIcon icon={Delete02Icon} data-icon />
                 </Button>
               </div>
             ))}

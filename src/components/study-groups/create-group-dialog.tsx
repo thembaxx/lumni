@@ -62,7 +62,7 @@ export function CreateGroupDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button>
-          <HugeiconsIcon icon={UserAdd01Icon} className="size-4" />
+          <HugeiconsIcon icon={UserAdd01Icon} data-icon="inline-start" />
           {t("studyGroups.createGroup")}
         </Button>
       </DialogTrigger>

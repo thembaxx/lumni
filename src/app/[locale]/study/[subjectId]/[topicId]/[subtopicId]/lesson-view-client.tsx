@@ -8,11 +8,12 @@ import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { FadeIn } from "@/components/shared/fade-in";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SaveVocabularyButton } from "@/components/vocabulary/save-vocabulary-button";
@@ -41,12 +42,14 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
     `${subjectId}:${topicId}:${subtopicId}`,
   );
 
+  const fetchCurriculum = useCallback(async () => {
+    const mod = await import("@/curriculum");
+    return mod.curriculumRegistry.getSubject(subjectId);
+  }, [subjectId]);
+
   const { data: curriculum } = useQuery({
     queryKey: ["curriculum", subjectId],
-    queryFn: async () => {
-      const mod = await import("@/curriculum");
-      return mod.curriculumRegistry.getSubject(subjectId);
-    },
+    queryFn: fetchCurriculum,
     enabled: !!subjectId,
   });
 
@@ -199,9 +202,10 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
         return (
           <FadeIn key={section.id} direction="up" distance={16} duration={0.4} delay={i * 0.05}>
             <Card
-              className={`overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300 ${
-                isComplete ? "border-success/20 bg-success/5" : ""
-              }`}
+              className={cn(
+                "overflow-hidden rounded-3xl shadow-level-1 transition-[background-color] duration-300",
+                isComplete ? "border-success/20 bg-success/5" : "",
+              )}
             >
               <CardHeader className="flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -216,11 +220,12 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
                 <button
                   type="button"
                   onClick={() => toggleSection(section.id, lesson.sections.length)}
-                  className={`flex size-7 items-center justify-center rounded-full border transition-colors ${
+                  className={cn(
+                    "flex size-7 items-center justify-center rounded-full border transition-colors",
                     isComplete
                       ? "border-success bg-success text-success-foreground"
-                      : "border-muted-foreground/30 hover:border-muted-foreground/50"
-                  }`}
+                      : "border-muted-foreground/30 hover:border-muted-foreground/50",
+                  )}
                   aria-label={isComplete ? "Mark incomplete" : "Mark complete"}
                 >
                   <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />

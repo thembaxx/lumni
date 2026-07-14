@@ -42,7 +42,7 @@ export function OtpEmailForm({ email, error, loading, onEmailChange, onSend }: O
           </span>
         ) : (
           <span className="flex items-center gap-2">
-            <HugeiconsIcon icon={FlashIcon} className="size-4" />
+            <HugeiconsIcon icon={FlashIcon} data-icon="inline-start" />
             MailSend01Icon OTP
           </span>
         )}

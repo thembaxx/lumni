@@ -2,6 +2,8 @@
 
 import { memo, useMemo } from "react";
 
+import { cn } from "@/lib/utils";
+
 interface WordHighlightTextProps {
   text: string;
   currentWordIndex: number;
@@ -31,13 +33,14 @@ export const WordHighlightText = memo(function WordHighlightText({
                 <span
                   key={`${pi}-${wi}`}
                   data-word-index={globalIndex}
-                  className={`transition-colors duration-150 ${
+                  className={cn(
+                    "transition-colors duration-150",
                     isCurrent
                       ? "rounded-sm bg-(--system-accent)/20 font-semibold text-(--system-accent) ring-2 ring-(--system-accent-alpha-20)"
                       : currentWordIndex >= 0 && globalIndex < currentWordIndex
                         ? "text-foreground/40"
-                        : ""
-                  }`}
+                        : "",
+                  )}
                 >
                   {word}
                   {wi < words.length - 1 ? " " : ""}

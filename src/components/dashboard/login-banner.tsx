@@ -134,7 +134,7 @@ function FeatureDialog() {
               push("/auth/sign-in?redirect=/dashboard");
             }}
           >
-            <HugeiconsIcon icon={Login01Icon} className="size-4" />
+            <HugeiconsIcon icon={Login01Icon} data-icon="inline-start" />
             Log In
           </Button>
         </div>
@@ -187,7 +187,7 @@ export function LoginBanner() {
           className="relative -mr-1 size-7 after:absolute after:-inset-2"
           aria-label="Dismiss"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-3.5 text-muted-foreground" />
+          <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground" />
         </Button>
       </div>
     </div>

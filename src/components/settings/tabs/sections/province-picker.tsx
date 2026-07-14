@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const SOUTH_AFRICAN_PROVINCES = [
   "Eastern Cape",
@@ -44,7 +45,10 @@ export function ProvincePicker({ value, onSelect }: ProvincePickerProps) {
                 onSelect(p);
                 setOpen(false);
               }}
-              className={`w-full justify-start rounded-lg font-normal ${value === p ? "bg-accent font-semibold" : ""}`}
+              className={cn(
+                "w-full justify-start rounded-lg font-normal",
+                value === p ? "bg-accent font-semibold" : "",
+              )}
             >
               {p}
             </Button>

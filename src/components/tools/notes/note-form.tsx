@@ -159,6 +159,7 @@ export function NoteForm({
         <Button variant="outline" size="icon" asChild onClick={onCancel} aria-label="Cancel">
           <div>
             <svg
+              data-icon
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"

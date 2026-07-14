@@ -66,27 +66,41 @@ export function AdminExamList() {
     },
   });
 
+  const doDelete = useCallback(
+    async (id: string) => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation],
+  );
+
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this exam paper and all its files?")) return;
     setDeleting(id);
     try {
-      await deleteMutation.mutateAsync(id);
+      await doDelete(id);
     } finally {
       setDeleting(null);
     }
   };
 
+  const doExtract = useCallback(
+    async (paperId: string) => {
+      const res = await fetch("/api/admin/exams/batch-extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paperIds: [paperId] }),
+      });
+      if (!res.ok) throw new Error("Extract failed");
+      queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+    },
+    [queryClient],
+  );
+
   const handleExtract = useCallback(
     async (paperId: string) => {
       setExtracting(paperId);
       try {
-        const res = await fetch("/api/admin/exams/batch-extract", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ paperIds: [paperId] }),
-        });
-        if (!res.ok) throw new Error("Extract failed");
-        queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+        await doExtract(paperId);
       } catch {
         toast({
           type: "error",
@@ -96,33 +110,35 @@ export function AdminExamList() {
         setExtracting(null);
       }
     },
-    [queryClient],
+    [doExtract],
   );
+
+  const doBatchExtract = useCallback(async () => {
+    const res = await fetch("/api/admin/exams/batch-extract", {
+      method: "POST",
+    });
+    if (!res.ok) throw new Error("Batch extract failed");
+    const result = await res.json();
+    const successCount = result.results.filter(
+      (r: { status: string }) => r.status === "success",
+    ).length;
+    toast({
+      type: "success",
+      message: `Extraction complete: ${successCount}/${result.total} papers extracted.`,
+    });
+    queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+  }, [queryClient]);
 
   const handleBatchExtractAll = useCallback(async () => {
     if (!confirm(`Extract questions from all ${exams.length} papers? This may take a while.`))
       return;
     setExtracting("batch");
     try {
-      const res = await fetch("/api/admin/exams/batch-extract", {
-        method: "POST",
-      });
-      if (!res.ok) throw new Error("Batch extract failed");
-      const result = await res.json();
-      const successCount = result.results.filter(
-        (r: { status: string }) => r.status === "success",
-      ).length;
-      toast({
-        type: "success",
-        message: `Extraction complete: ${successCount}/${result.total} papers extracted.`,
-      });
-      queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
-    } catch {
-      toast({ type: "error", message: "Batch extraction failed." });
+      await doBatchExtract();
     } finally {
       setExtracting(null);
     }
-  }, [exams.length, queryClient]);
+  }, [exams.length, doBatchExtract]);
 
   return (
     <Card>
@@ -138,7 +154,11 @@ export function AdminExamList() {
             >
               {extracting === "batch" ? (
                 <>
-                  <HugeiconsIcon icon={RadialIcon} className="size-3.5 animate-spin" />
+                  <HugeiconsIcon
+                    icon={RadialIcon}
+                    className="animate-spin"
+                    data-icon="inline-start"
+                  />
                   Extracting…
                 </>
               ) : (
@@ -195,9 +215,9 @@ export function AdminExamList() {
                       aria-label="Extract questions"
                     >
                       {extracting === exam.id ? (
-                        <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />
+                        <HugeiconsIcon icon={RadialIcon} className="animate-spin" data-icon />
                       ) : (
-                        <HugeiconsIcon icon={File02Icon} className="size-4" />
+                        <HugeiconsIcon icon={File02Icon} data-icon />
                       )}
                     </Button>
                     <Button
@@ -207,7 +227,7 @@ export function AdminExamList() {
                       title="Take exam"
                       aria-label="Take exam"
                     >
-                      <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+                      <HugeiconsIcon icon={ArrowUpRight01Icon} data-icon />
                     </Button>
                     <Button
                       variant="ghost"
@@ -219,9 +239,9 @@ export function AdminExamList() {
                       aria-label="Delete exam"
                     >
                       {deleting === exam.id ? (
-                        <HugeiconsIcon icon={RadialIcon} className="size-4 animate-spin" />
+                        <HugeiconsIcon icon={RadialIcon} className="animate-spin" data-icon />
                       ) : (
-                        <HugeiconsIcon icon={Delete02Icon} className="size-4" />
+                        <HugeiconsIcon icon={Delete02Icon} data-icon />
                       )}
                     </Button>
                   </div>

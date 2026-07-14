@@ -50,7 +50,7 @@ export function PWAUpdateToast() {
           onClick={() => setDismissed(true)}
           aria-label="Dismiss update notification"
         >
-          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+          <HugeiconsIcon icon={Cancel01Icon} data-icon />
         </Button>
       </div>
     </div>

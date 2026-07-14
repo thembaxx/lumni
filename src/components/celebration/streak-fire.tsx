@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
 import { getStreakMessage } from "@/lib/utils/gamification";
+import { cn } from "@/lib/utils";
 
 interface StreakFireProps {
   streak: number;
@@ -24,7 +25,7 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
         <div>
           <HugeiconsIcon
             icon={FireIcon}
-            className={`size-6 ${streak >= 7 ? "fill-warning" : "fill-warning/80"}`}
+            className={cn("size-6", streak >= 7 ? "fill-warning" : "fill-warning/80")}
             fill={streak >= 7 ? "currentColor" : "none"}
           />
         </div>
@@ -40,7 +41,10 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
           >
             <HugeiconsIcon
               icon={streak >= 30 ? FireIcon : streak >= 7 ? StarIcon : SparklesIcon}
-              className={`size-4 ${streak >= 30 ? "text-warning" : streak >= 7 ? "text-warning/80" : "text-warning/60"}`}
+              className={cn(
+                "size-4",
+                streak >= 30 ? "text-warning" : streak >= 7 ? "text-warning/80" : "text-warning/60",
+              )}
             />
           </m.div>
         )}
@@ -59,7 +63,7 @@ export function StreakFire({ streak, showMilestone, milestone }: StreakFireProps
       </div>
 
       <m.span
-        className={`font-bold tabular-nums ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
+        className={cn("font-bold tabular-nums", streak >= 7 ? "text-warning" : "text-warning/80")}
         key={streak}
         initial={{ scale: 1.5 }}
         animate={{ scale: 1 }}

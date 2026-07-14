@@ -63,7 +63,7 @@ export const StreakCard = memo(function StreakCard() {
                   className="mt-3 h-10 gap-1.5 text-xs press-scale"
                   onClick={() => push("/quiz")}
                 >
-                  <HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
+                  <HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
                   Start practicing
                 </Button>
               )}

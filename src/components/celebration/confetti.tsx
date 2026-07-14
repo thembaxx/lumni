@@ -1,7 +1,7 @@
 "use client";
 
 import * as m from "motion/react-m";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useState } from "react";
 
 interface ConfettiPiece {
   id: number;
@@ -25,6 +25,19 @@ const CONFETTI_COLORS = [
   "oklch(58.1% 0.226 14°)",
 ];
 
+function generatePieces(count: number): ConfettiPiece[] {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+    rotation: Math.random() * 360,
+    scale: Math.random() * 0.5 + 0.5,
+    delay: Math.random() * 0.3,
+    borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as "round" | "square",
+    xOffset: (Math.random() - 0.5) * 30,
+  }));
+}
+
 export function Confetti({
   trigger,
   count = 50,
@@ -34,31 +47,24 @@ export function Confetti({
   count?: number;
   duration?: number;
 }) {
-  const burstCount = useRef(0);
+  const [burstKey, setBurstKey] = useState(0);
   useEffect(() => {
-    if (trigger) burstCount.current++;
+    if (trigger) setBurstKey((k) => k + 1);
   }, [trigger]);
 
-  const pieces = useMemo<ConfettiPiece[]>(() => {
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-      rotation: Math.random() * 360,
-      scale: Math.random() * 0.5 + 0.5,
-      delay: Math.random() * 0.3,
-      borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as "round" | "square",
-      xOffset: (Math.random() - 0.5) * 30,
-    }));
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, trigger]);
+  const [pieces] = useState(() => generatePieces(count));
+  const [viewportHeight, setViewportHeight] = useState(800);
+
+  useEffect(() => {
+    setViewportHeight(window.innerHeight);
+  }, []);
 
   if (!trigger) return null;
 
   return (
     <div
       suppressHydrationWarning
-      key={`burst-${burstCount.current}-${count}`}
+      key={`burst-${burstKey}-${count}`}
       className="pointer-events-none fixed inset-0 z-modal overflow-hidden"
     >
       {pieces.map((piece) => (
@@ -71,11 +77,11 @@ export function Confetti({
             backgroundColor: piece.color,
             borderRadius: piece.borderRadiusType === "round" ? "50%" : "2px",
             rotate: piece.rotation,
-            transform: `scale(${piece.scale})`,
+            scale: piece.scale,
           }}
           initial={{ y: 0, opacity: 1 }}
           animate={{
-            y: typeof window !== "undefined" ? window.innerHeight + 100 : 800,
+            y: viewportHeight + 100,
             opacity: 0,
             rotate: piece.rotation + 720,
             x: piece.x + piece.xOffset,

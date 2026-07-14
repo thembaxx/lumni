@@ -47,16 +47,14 @@ export function MeshAurora({
 }: MeshAuroraProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pointer, setPointer] = useState({ x: 50, y: 30 });
-  const [enabled, setEnabled] = useState(false);
+  const [reduced] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+  const enabled = !reduced;
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setEnabled(false);
-      return;
-    }
-    setEnabled(true);
-    if (!interactive) return;
+    if (!interactive || !enabled) return;
     const onMove = (e: PointerEvent) => {
       const el = ref.current;
       if (!el) return;

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface HotSpotRegion {
   id: string;
@@ -57,11 +58,12 @@ export function HotSpotInput({ imageUrl, width, height, regions, onSubmit }: Hot
               type="button"
               key={region.id}
               onClick={() => setSelectedId(region.id)}
-              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+              className={cn(
+                "absolute flex cursor-pointer items-center justify-center rounded-lg border-2 text-center font-medium text-xs transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2",
                 isSelected
                   ? "border-(--system-accent) bg-(--system-accent-alpha-20) ring-(--system-accent) ring-2"
-                  : "border-(--system-accent)/30 hover:bg-(--system-accent-alpha-10)"
-              }`}
+                  : "border-(--system-accent)/30 hover:bg-(--system-accent-alpha-10)",
+              )}
               style={{
                 left: `${scaleX(region.x)}%`,
                 top: `${scaleY(region.y)}%`,

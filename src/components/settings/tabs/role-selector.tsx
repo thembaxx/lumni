@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const VALID_ROLES = ["teacher", "parent", "student"] as const;
 
@@ -34,11 +35,12 @@ export function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
           type="button"
           onClick={() => setRole.mutate(role)}
           disabled={setRole.isPending}
-          className={`rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors ${
+          className={cn(
+            "rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors",
             currentRole === role
               ? "bg-system-accent text-system-accent-foreground"
-              : "bg-system-fill text-muted-foreground hover:bg-system-fill/80"
-          }`}
+              : "bg-system-fill text-muted-foreground hover:bg-system-fill/80",
+          )}
         >
           {role}
         </button>

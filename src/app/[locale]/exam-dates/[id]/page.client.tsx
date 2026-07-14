@@ -22,6 +22,7 @@ import {
   getSubjectAbbr,
   getSubjectColor,
 } from "@/lib/exam-dates";
+import { getExamDates } from "@/lib/exam-dates/service";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/utils";
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
@@ -74,7 +75,6 @@ export function ExamDetailClient() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const { getExamDates } = await import("@/lib/exam-dates/service");
       const slots = await getExamDates(session.session, session.year);
       if (!cancelled) {
         const found = slots.find((s) => s.id === id) ?? null;

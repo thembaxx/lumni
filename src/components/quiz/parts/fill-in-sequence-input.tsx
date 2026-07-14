@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDragSort } from "@/hooks/use-drag-sort";
 import type { SequenceBlank, SequenceSlot } from "@/lib/question-engine/types";
+import { cn } from "@/lib/utils";
 
 interface FillInSequenceInputProps {
   sequence: SequenceSlot[];
@@ -22,7 +23,7 @@ export function FillInSequenceInput({
 }: FillInSequenceInputProps) {
   const t = useTranslations();
 
-  const allOptions = useMemo(() => {
+  const [allOptions] = useState<Array<{ id: string; text: string; isCorrect: boolean }>>(() => {
     const correct = blanks.map((b) => ({
       id: b.id,
       text: b.correctAnswer,
@@ -40,7 +41,7 @@ export function FillInSequenceInput({
       ? [...correct, ...distractors].toSorted(() => Math.random() - 0.5)
       : [...correct, ...distractors];
     return combined;
-  }, [blanks, shuffleDistractors]);
+  });
 
   const [assigned, setAssigned] = useState<Record<string, string>>({});
   const { draggedId, handleDragStart, handleDragEnd } = useDragSort();
@@ -123,11 +124,12 @@ export function FillInSequenceInput({
                     placeOption(keyboardSelectedId, blankId);
                   }
                 }}
-                className={`inline-flex min-h-9 min-w-20 items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2 ${
+                className={cn(
+                  "inline-flex min-h-9 min-w-20 items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-sm transition-[border-color,background-color] duration-150 focus-visible:ring-(--system-accent) focus-visible:ring-2",
                   assignedText
                     ? "cursor-pointer border-(--system-accent) bg-(--system-accent-alpha-10)"
-                    : "border-muted-foreground/30"
-                }`}
+                    : "border-muted-foreground/30",
+                )}
                 aria-label={
                   assignedText
                     ? `Blank filled with ${assignedText}. Click to remove.`
@@ -155,9 +157,10 @@ export function FillInSequenceInput({
                 key={opt.id}
                 direction="scale"
                 scaleDistance={0.9}
-                className={`rounded-lg border px-3 py-1.5 text-sm ${
-                  isDragging ? "opacity-40" : "border-border bg-card"
-                }`}
+                className={cn(
+                  "rounded-lg border px-3 py-1.5 text-sm",
+                  isDragging ? "opacity-40" : "border-border bg-card",
+                )}
               >
                 <button
                   type="button"
@@ -175,9 +178,10 @@ export function FillInSequenceInput({
                     }
                   }}
                   aria-pressed={keyboardSelectedId === opt.id}
-                  className={`w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing ${
-                    keyboardSelectedId === opt.id ? "ring-2 ring-(--system-accent)" : ""
-                  }`}
+                  className={cn(
+                    "w-full cursor-grab rounded-md bg-transparent text-left focus-visible:ring-(--system-accent) focus-visible:ring-2 active:cursor-grabbing",
+                    keyboardSelectedId === opt.id ? "ring-2 ring-(--system-accent)" : "",
+                  )}
                 >
                   {opt.text}
                 </button>

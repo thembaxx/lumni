@@ -69,6 +69,9 @@ export function DictionaryClient() {
     preCacheCommonWords(dexieDataAccess).catch(() => {
       // background pre-cache failure is non-critical
     });
+  }, []);
+
+  useEffect(() => {
     try {
       const raw = localStorage.getItem("lumni_dictionary_recent");
       if (raw) setRecentLookups(JSON.parse(raw) as string[]);
@@ -81,17 +84,39 @@ export function DictionaryClient() {
     langRef.current = language;
   }, [language]);
 
-  const addRecentLookup = useCallback((word: string) => {
-    setRecentLookups((prev) => {
-      const next = [word, ...prev.filter((w) => w !== word)].slice(0, 10);
+  const addRecentLookup = useCallback(
+    (word: string) => {
+      setRecentLookups((prev) => {
+        const next = [word, ...prev.filter((w) => w !== word)].slice(0, 10);
+        return next;
+      });
       try {
-        localStorage.setItem("lumni_dictionary_recent", JSON.stringify(next));
+        localStorage.setItem(
+          "lumni_dictionary_recent",
+          JSON.stringify([word, ...recentLookups.filter((w) => w !== word)].slice(0, 10)),
+        );
       } catch {
         // localStorage unavailable
       }
-      return next;
-    });
-  }, []);
+    },
+    [recentLookups],
+  );
+
+  const doLookup = useCallback(
+    async (word: string) => {
+      const lang = langRef.current;
+      const data = await lookupWord(word, lang);
+      setResult(data);
+      if (data) {
+        addRecentLookup(word);
+        if (userId !== "anonymous") {
+          const alreadySaved = await isWordSaved(userId, word);
+          setSaved(alreadySaved);
+        }
+      }
+    },
+    [userId, addRecentLookup],
+  );
 
   const performLookup = useCallback(
     async (word: string) => {
@@ -99,16 +124,7 @@ export function DictionaryClient() {
       setLoading(true);
       setSearched(true);
       try {
-        const lang = langRef.current;
-        const data = await lookupWord(word, lang);
-        setResult(data);
-        if (data) {
-          addRecentLookup(word);
-          if (userId !== "anonymous") {
-            const alreadySaved = await isWordSaved(userId, word);
-            setSaved(alreadySaved);
-          }
-        }
+        await doLookup(word);
       } catch (err) {
         logError("DictionaryClient.search", err);
         setResult(null);
@@ -116,7 +132,7 @@ export function DictionaryClient() {
         setLoading(false);
       }
     },
-    [userId, addRecentLookup],
+    [doLookup],
   );
 
   const handleSearch = useCallback(
@@ -139,25 +155,29 @@ export function DictionaryClient() {
     void audio.play();
   }, []);
 
+  const doSave = useCallback(async () => {
+    if (saved) {
+      await removeWord(userId, result!.word);
+      setSaved(false);
+    } else {
+      const def = result!.definitions[0]?.definition ?? "";
+      const pos = result!.definitions[0]?.partOfSpeech;
+      await saveWord(userId, result!.word, def, langRef.current, "manual", "dictionary", pos);
+      setSaved(true);
+    }
+  }, [saved, userId, result]);
+
   const handleSave = useCallback(async () => {
     if (saving || !result || userId === "anonymous") return;
     setSaving(true);
     try {
-      if (saved) {
-        await removeWord(userId, result.word);
-        setSaved(false);
-      } else {
-        const def = result.definitions[0]?.definition ?? "";
-        const pos = result.definitions[0]?.partOfSpeech;
-        await saveWord(userId, result.word, def, langRef.current, "manual", "dictionary", pos);
-        setSaved(true);
-      }
+      await doSave();
     } catch (err) {
       logError("DictionaryClient.save", err);
     } finally {
       setSaving(false);
     }
-  }, [saving, saved, userId, result]);
+  }, [saving, userId, result, doSave]);
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4">

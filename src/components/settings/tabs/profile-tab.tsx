@@ -94,24 +94,26 @@ export function ProfileTab() {
   }, [prefs.school, prefs.grade, prefs.province]);
 
   const handleAvatarUpload = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
       setUploading(true);
-      try {
-        const result = await startUpload([file]);
-        if (result?.[0]?.ufsUrl) {
-          const p = (user?.prefs as Record<string, unknown>) || {};
-          await updateProfile({
-            prefs: { ...p, avatarUrl: result[0].ufsUrl },
-          });
-        }
-      } catch (e) {
-        logError("profile-avatar-upload", e);
-      } finally {
-        setUploading(false);
-      }
+      startUpload([file])
+        .then((result) => {
+          if (result?.[0]?.ufsUrl) {
+            const p = (user?.prefs as Record<string, unknown>) || {};
+            return updateProfile({
+              prefs: { ...p, avatarUrl: result[0].ufsUrl },
+            });
+          }
+        })
+        .catch((e: unknown) => {
+          logError("profile-avatar-upload", e);
+        })
+        .finally(() => {
+          setUploading(false);
+        });
     },
     [startUpload, updateProfile, user],
   );

@@ -51,7 +51,7 @@ export function SaveVocabularyButton({
       disabled={pending}
       aria-label={saved ? `Unsave ${word}` : `Save ${word}`}
     >
-      <HugeiconsIcon icon={saved ? Bookmark03Icon : Bookmark02Icon} className="size-4" />
+      <HugeiconsIcon icon={saved ? Bookmark03Icon : Bookmark02Icon} data-icon="inline-start" />
       {saved ? "Saved" : "Save"}
     </Button>
   );

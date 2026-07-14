@@ -110,13 +110,16 @@ export function StudyGroupCard({ group }: Props) {
 
       <div className="flex items-center gap-2 pt-1">
         <Button variant="outline" size="sm" onClick={copyInviteCode}>
-          <HugeiconsIcon icon={copied ? CheckmarkCircle01Icon : Copy02Icon} className="size-3.5" />
+          <HugeiconsIcon
+            icon={copied ? CheckmarkCircle01Icon : Copy02Icon}
+            data-icon="inline-start"
+          />
           {copied ? t("common.copied") : t("studyGroups.copyCode")}
         </Button>
 
         <Button variant="outline" size="sm" asChild>
           <a href={`/study-groups/${group.$id}`}>
-            <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5" />
+            <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-start" />
             {t("common.open")}
           </a>
         </Button>
@@ -124,7 +127,7 @@ export function StudyGroupCard({ group }: Props) {
         <div className="ml-auto flex gap-1">
           {!isOwner && (
             <Button variant="ghost" size="sm" onClick={() => leaveGroup(group.$id)}>
-              <HugeiconsIcon icon={Logout04Icon} className="size-3.5" />
+              <HugeiconsIcon icon={Logout04Icon} data-icon />
             </Button>
           )}
           {isOwner && (
@@ -134,7 +137,7 @@ export function StudyGroupCard({ group }: Props) {
               className="text-destructive"
               onClick={() => deleteGroup(group.$id)}
             >
-              <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
+              <HugeiconsIcon icon={Delete02Icon} data-icon />
             </Button>
           )}
         </div>

@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { getTimeRemaining } from "@/lib/competitions/service";
@@ -127,11 +128,12 @@ export function CompetitionCard() {
                 setActiveTab(tab.id);
               }}
               aria-pressed={activeTab === tab.id}
-              className={`rounded-full px-2.5 py-0.5 text-xs font-medium transition-[background-color,color,transform] press-scale ${
+              className={cn(
+                "rounded-full px-2.5 py-0.5 text-xs font-medium transition-[background-color,color,transform] press-scale",
                 activeTab === tab.id
                   ? "bg-accent text-accent-foreground"
-                  : "bg-muted/50 text-muted-foreground hover:bg-muted"
-              }`}
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted",
+              )}
             >
               {tab.label}
             </button>
@@ -143,9 +145,10 @@ export function CompetitionCard() {
             {top10.slice(0, 3).map((entry, i) => (
               <div
                 key={entry.userId + (i === 0 ? "-first" : "")}
-                className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-sm ${
-                  entry.userId === userId ? "bg-accent/20 font-medium" : "bg-muted/30"
-                }`}
+                className={cn(
+                  "flex items-center justify-between rounded-lg px-3 py-1.5 text-sm",
+                  entry.userId === userId ? "bg-accent/20 font-medium" : "bg-muted/30",
+                )}
               >
                 <div className="flex items-center gap-2">
                   <HugeiconsIcon icon={MEDAL_ICONS[i]} className="size-5 text-warning" />
@@ -161,9 +164,10 @@ export function CompetitionCard() {
                 {top10.slice(3).map((entry) => (
                   <div
                     key={entry.userId}
-                    className={`flex items-center justify-between rounded-lg px-3 py-1 text-sm ${
-                      entry.userId === userId ? "bg-accent/20 font-medium" : "hover:bg-muted/20"
-                    }`}
+                    className={cn(
+                      "flex items-center justify-between rounded-lg px-3 py-1 text-sm",
+                      entry.userId === userId ? "bg-accent/20 font-medium" : "hover:bg-muted/20",
+                    )}
                   >
                     <div className="flex items-center gap-2">
                       <span className="w-5 text-center font-mono text-xs text-muted-foreground">

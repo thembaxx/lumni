@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,22 +33,25 @@ export function QuestionOfTheDayCard() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const subjects = useMemo(() => getSubjectsForQotd(), []);
-  const randomSubject = useMemo(
-    () => subjects[Math.floor(Math.random() * subjects.length)],
-    [subjects],
-  );
+  const [randomSubject] = useState(() => {
+    const subj = getSubjectsForQotd();
+    return subj[Math.floor(Math.random() * subj.length)];
+  });
 
   const [shown, setShown] = useState(false);
 
-  // react-doctor/no-initialize-state — hydration guard + localStorage read, must run after mount
+  // hydration guard — must run after mount
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const lastShown = localStorage.getItem(QOTD_KEY);
     if (lastShown === getTodayKey()) return;
     localStorage.setItem(QOTD_KEY, getTodayKey());
     setShown(true);
-  }, []);
+  }, [mounted]);
 
   const { data, isPending } = usePastQuestions({
     subject: randomSubject,

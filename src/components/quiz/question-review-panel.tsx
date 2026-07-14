@@ -88,6 +88,7 @@ export function QuestionReviewPanel({
               <HugeiconsIcon
                 icon={isCorrect ? CheckmarkCircle01Icon : CancelCircleIcon}
                 className={cn("size-5 shrink-0", isCorrect ? "text-success" : "text-destructive")}
+                data-icon="inline-start"
               />
               <span className="flex-1 truncate font-medium text-sm">Question {i + 1}</span>
               <span className="shrink-0 text-muted-foreground text-xs">
@@ -133,7 +134,7 @@ export function QuestionReviewPanel({
       })}
       {totalQuestions - correctAnswers > 0 && onPracticeMistakes && (
         <Button variant="secondary" size="sm" onClick={onPracticeMistakes} className="gap-2">
-          <HugeiconsIcon icon={Refresh01Icon} className="size-4" />
+          <HugeiconsIcon icon={Refresh01Icon} data-icon="inline-start" />
           Practice These Topics
         </Button>
       )}

@@ -24,15 +24,14 @@ export function ShareResultButton({
 }: ShareButtonProps) {
   const [loading, setLoading] = useState(false);
 
-  async function handleShare() {
+  function handleShare() {
     setLoading(true);
-    try {
+    (async () => {
       let blob: Blob | undefined;
       try {
         blob = await generateShareCard(cardParams);
       } catch (err) {
         logError("ShareCardGenerate", err);
-        blob = undefined;
       }
 
       const shareData: ShareData = { text };
@@ -67,28 +66,30 @@ export function ShareResultButton({
       }
 
       onShare?.();
-    } catch (err) {
-      if (err instanceof DOMException && err.name === "AbortError") {
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(text);
-        toast({ type: "success", message: "Copied to clipboard" });
-      } catch {
-        toast({
-          type: "error",
-          message: "Sharing failed",
-          description: "Could not share or copy to clipboard",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
+    })()
+      .catch((err) => {
+        if (err instanceof DOMException && err.name === "AbortError") return;
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            toast({ type: "success", message: "Copied to clipboard" });
+          })
+          .catch(() => {
+            toast({
+              type: "error",
+              message: "Sharing failed",
+              description: "Could not share or copy to clipboard",
+            });
+          });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
     <Button variant="outline" onClick={handleShare} disabled={loading} className="gap-2">
-      <HugeiconsIcon icon={Share08Icon} className="size-4" />
+      <HugeiconsIcon icon={Share08Icon} data-icon="inline-start" />
       {loading ? "Generating…" : label}
     </Button>
   );

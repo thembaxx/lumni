@@ -137,7 +137,7 @@ export function NationalExamCalendar() {
               onClick={handleExportIcal}
               className="gap-1.5 text-xs"
             >
-              <HugeiconsIcon icon={Download02Icon} className="size-3.5" />
+              <HugeiconsIcon icon={Download02Icon} data-icon="inline-start" />
               Export Calendar
             </Button>
           )}

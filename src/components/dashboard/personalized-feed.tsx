@@ -46,7 +46,7 @@ function FeedCard({
         className="absolute top-2 right-2 text-muted-foreground/30 hover:text-foreground"
         aria-label="Dismiss"
       >
-        <HugeiconsIcon icon={Cancel01Icon} size={14} />
+        <HugeiconsIcon icon={Cancel01Icon} data-icon />
       </Button>
       <CardContent className="flex items-start gap-3 px-4 py-3">
         <span

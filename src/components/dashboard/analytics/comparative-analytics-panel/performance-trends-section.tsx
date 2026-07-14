@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart } from "@/components/ui/charts/line-chart";
+import { cn } from "@/lib/utils";
 
 interface SubjectTrendData {
   dates: string[];
@@ -40,13 +41,14 @@ export function PerformanceTrendsSection({ subjectTrends }: PerformanceTrendsSec
             <div className="mb-2 flex items-center justify-between">
               <h3 className="font-semibold text-lg">{subject}</h3>
               <span
-                className={`font-medium text-xs ${
+                className={cn(
+                  "font-medium text-xs",
                   trendData.trend === "improving"
                     ? "text-success"
                     : trendData.trend === "declining"
                       ? "text-destructive"
-                      : "text-muted-foreground"
-                }`}
+                      : "text-muted-foreground",
+                )}
               >
                 {trendData.trend === "improving"
                   ? "Improving"

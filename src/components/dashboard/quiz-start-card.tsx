@@ -61,7 +61,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
             disabled={!selectedSubject}
             className="gap-2 rounded-full bg-system-accent px-6 text-system-accent-foreground shadow-level-1 hover:bg-system-accent/90 hover:shadow-level-2 disabled:cursor-not-allowed disabled:opacity-50 press-scale"
           >
-            <HugeiconsIcon icon={PlayFreeIcons} className="ml-0.5 size-4 fill-current" />
+            <HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
             Start
           </Button>
         </div>

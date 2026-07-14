@@ -7,6 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { StudySession as StudySessionType } from "@/lib/utils/study-planner";
+import { cn } from "@/lib/utils";
 
 export function TodaySessionsCard({
   sessions,
@@ -49,15 +50,14 @@ export function TodaySessionsCard({
                       onComplete(session.id);
                     }}
                     aria-label={t("studyPlanner.markComplete")}
-                    className={`shrink-0 rounded-full ${
+                    className={cn(
+                      "shrink-0 rounded-full",
                       session.completed
                         ? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
-                        : "border-muted-foreground"
-                    }`}
-                  >
-                    {session.completed && (
-                      <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3" />
+                        : "border-muted-foreground",
                     )}
+                  >
+                    {session.completed && <HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />}
                   </Button>
                   <button
                     type="button"
@@ -79,7 +79,7 @@ export function TodaySessionsCard({
                   }}
                   aria-label={t("studyPlanner.deleteSession")}
                 >
-                  <HugeiconsIcon icon={Delete02Icon} className="size-4" />
+                  <HugeiconsIcon icon={Delete02Icon} data-icon />
                 </Button>
               </div>
             ))}

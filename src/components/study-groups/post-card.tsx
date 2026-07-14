@@ -87,7 +87,8 @@ export function PostCard({
             >
               <HugeiconsIcon
                 icon={Pin02Icon}
-                className={`size-3.5 ${post.isPinned ? "text-primary" : ""}`}
+                className={cn("size-3.5", post.isPinned ? "text-primary" : "")}
+                data-icon
               />
             </button>
           )}
@@ -99,7 +100,7 @@ export function PostCard({
               onClick={() => deletePost(post.$id)}
               aria-label="Delete post"
             >
-              <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
+              <HugeiconsIcon icon={Delete02Icon} data-icon />
             </Button>
           )}
         </div>
@@ -142,7 +143,7 @@ export function PostCard({
               : "text-(--system-text-secondary) hover:bg-(--system-surface-hover)",
           )}
         >
-          <HugeiconsIcon icon={Message01Icon} className="size-3" />
+          <HugeiconsIcon icon={Message01Icon} className="size-3" data-icon />
           {commentCount > 0 && <span>{commentCount}</span>}
         </button>
       </div>

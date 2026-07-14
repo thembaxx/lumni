@@ -52,7 +52,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
               className="h-8 gap-1.5 text-xs"
               onClick={() => push("/quiz")}
             >
-              <HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
+              <HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
               Take a quiz
             </Button>
           </div>

@@ -81,15 +81,15 @@ function StudyPlannerInner() {
             onClick={exportCalendar}
             aria-label={t("studyPlanner.exportCalendar")}
           >
-            <HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={Download03Icon} data-icon="inline-start" />
             {t("studyPlanner.export")}
           </Button>
           <Button variant="outline" size="sm" onClick={() => setShowAddSession(true)}>
-            <HugeiconsIcon icon={Add01Icon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
             {t("studyPlanner.addSession")}
           </Button>
           <Button variant="outline" size="sm" onClick={() => setShowAddExam(true)}>
-            <HugeiconsIcon icon={Add01Icon} className="mr-1 size-4" />
+            <HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
             {t("studyPlanner.addExam")}
           </Button>
         </div>

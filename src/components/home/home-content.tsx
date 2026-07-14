@@ -13,6 +13,7 @@ import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useLogoEasterEgg } from "@/lib/shared/easter-egg-context";
 import { CELEBRATION_DURATION } from "@/lib/shared/durations";
+import { cn } from "@/lib/utils";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { MeshAurora } from "@/components/shared/ambient/mesh-aurora";
@@ -47,24 +48,29 @@ const AnimatedStatsSection = dynamic(
 
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
-  const [, setBuffer] = useState("");
+  const [buffer, setBuffer] = useState("");
+
+  useEffect(() => {
+    if (buffer.includes("matric")) {
+      setShowConfetti(true);
+    }
+  }, [buffer]);
+
+  useEffect(() => {
+    if (!showConfetti) return;
+    const timer = setTimeout(() => setShowConfetti(false), CELEBRATION_DURATION);
+    return () => clearTimeout(timer);
+  }, [showConfetti]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      setBuffer((prev) => {
-        const next = (prev + e.key).toLowerCase();
-        if (next.includes("matric")) {
-          setShowConfetti(true);
-          setTimeout(() => setShowConfetti(false), CELEBRATION_DURATION);
-          return "";
-        }
-        return next.slice(-10);
-      });
+      const nextBuffer = (buffer + e.key).toLowerCase().slice(-10);
+      setBuffer(nextBuffer);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [buffer]);
 
   const dismissConfetti = useCallback(() => setShowConfetti(false), []);
 
@@ -72,8 +78,6 @@ function useMatricEasterEgg() {
 }
 
 function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: () => void }) {
-  if (!show) return null;
-
   const colors = [
     "bg-primary",
     "bg-chart-2",
@@ -82,6 +86,21 @@ function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: ()
     "bg-chart-5",
     "bg-success",
   ];
+
+  const [pieces] = useState(() =>
+    Array.from({ length: 30 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 20}%`,
+      background: colors[Math.floor(Math.random() * colors.length)],
+      borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+      animationDelay: `${Math.random() * 0.5}s`,
+      animationDuration: `${2 + Math.random() * 2}s`,
+      width: `${6 + Math.random() * 8}px`,
+      height: `${6 + Math.random() * 8}px`,
+    })),
+  );
+
+  if (!show) return null;
 
   return (
     <div
@@ -98,21 +117,8 @@ function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: ()
           </div>
         </div>
       </div>
-      {Array.from({ length: 30 }).map((_, i) => (
-        <div
-          key={i}
-          className="confetti-piece"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 20}%`,
-            background: colors[Math.floor(Math.random() * colors.length)],
-            borderRadius: Math.random() > 0.5 ? "50%" : "2px",
-            animationDelay: `${Math.random() * 0.5}s`,
-            animationDuration: `${2 + Math.random() * 2}s`,
-            width: `${6 + Math.random() * 8}px`,
-            height: `${6 + Math.random() * 8}px`,
-          }}
-        />
+      {pieces.map((style, i) => (
+        <div key={i} className="confetti-piece" style={style} />
       ))}
     </div>
   );
@@ -159,11 +165,12 @@ export function HomeContent() {
       </a>
 
       <nav
-        className={`fixed top-4 right-0 left-0 z-header mx-auto flex w-fit items-center justify-center gap-6 rounded-full border px-4 py-2 transition-[border-color,background-color,box-shadow] duration-500 ${
+        className={cn(
+          "fixed top-4 right-0 left-0 z-header mx-auto flex w-fit items-center justify-center gap-6 rounded-full border px-4 py-2 transition-[border-color,background-color,box-shadow] duration-500",
           scrolled
             ? "border-border/20 bg-card/80 shadow-level-2 backdrop-blur-xl"
-            : "border-transparent bg-transparent"
-        }`}
+            : "border-transparent bg-transparent",
+        )}
       >
         <button
           type="button"
@@ -171,7 +178,7 @@ export function HomeContent() {
           className="relative flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors after:absolute after:-inset-2"
         >
           <div className="flex size-6 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
-            <HugeiconsIcon icon={StarIcon} className="size-3.5 text-primary-foreground" />
+            <HugeiconsIcon icon={StarIcon} className="size-3.5 text-primary-foreground" data-icon />
           </div>
           <span>{t("home.brand")}</span>
         </button>
@@ -204,7 +211,7 @@ export function HomeContent() {
           {isAuthenticated ? (
             <Button asChild size="sm" className="flex items-center rounded-full">
               <Link href="/dashboard" prefetch={true}>
-                <HugeiconsIcon icon={Activity02Icon} className="size-4" />
+                <HugeiconsIcon icon={Activity02Icon} data-icon="inline-start" />
                 {t("home.navDashboard")}
               </Link>
             </Button>
@@ -212,7 +219,7 @@ export function HomeContent() {
             <>
               <Button asChild size="sm" variant="ghost" className="flex items-center rounded-full">
                 <Link href="/quiz" prefetch={true}>
-                  <HugeiconsIcon icon={Quiz01Icon} className="size-4" />
+                  <HugeiconsIcon icon={Quiz01Icon} data-icon="inline-start" />
                   {t("home.navTryQuiz")}
                 </Link>
               </Button>

@@ -119,7 +119,7 @@ export function TimetableUpload({ session, year, onParsed }: TimetableUploadProp
         disabled={processing}
         className="gap-1.5 text-xs"
       >
-        <HugeiconsIcon icon={Upload04Icon} className="size-3.5" />
+        <HugeiconsIcon icon={Upload04Icon} data-icon="inline-start" />
         {processing ? "Processing..." : "Upload Timetable"}
       </Button>
     </>

@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { clearAILatencyRecords, getAILatencyStats } from "@/lib/ai/latency-tracker";
 import type { CohortStats } from "@/lib/observability/events";
 import { clearEvents, getCohortStats, getEventSummary } from "@/lib/observability/events";
+import { cn } from "@/lib/utils";
 
 export default function ObservabilityPage() {
   const [aiStats, setAiStats] = useState(() => getAILatencyStats());
@@ -25,9 +26,12 @@ export default function ObservabilityPage() {
   }, []);
 
   useEffect(() => {
-    refresh();
     const interval = setInterval(refresh, 5000);
     return () => clearInterval(interval);
+  }, [refresh]);
+
+  useEffect(() => {
+    refresh();
   }, [refresh]);
 
   return (
@@ -217,7 +221,10 @@ export default function ObservabilityPage() {
                     className="flex items-center gap-3 rounded-lg bg-muted/30 px-3 py-2 text-xs"
                   >
                     <span
-                      className={`size-2 shrink-0 rounded-full ${call.success ? "bg-success" : "bg-destructive"}`}
+                      className={cn(
+                        "size-2 shrink-0 rounded-full",
+                        call.success ? "bg-success" : "bg-destructive",
+                      )}
                     />
                     <span className="w-20 text-muted-foreground capitalize">{call.provider}</span>
                     <span className="font-mono tabular-nums">{call.durationMs}ms</span>

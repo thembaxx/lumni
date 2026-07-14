@@ -8,6 +8,7 @@ import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-pa
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
 import { GradebookView } from "@/components/teacher/gradebook-view";
+import { cn } from "@/lib/utils";
 import { LiveSessionMonitor } from "@/components/teacher/live-session-monitor";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
 import { Button } from "@/components/ui/button";
@@ -162,22 +163,24 @@ function TeacherDashboardInner() {
           <button
             type="button"
             onClick={() => setActiveTab("roster")}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               activeTab === "roster"
                 ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+                : "text-muted-foreground hover:text-foreground",
+            )}
           >
             Roster
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("gradebook")}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               activeTab === "gradebook"
                 ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+                : "text-muted-foreground hover:text-foreground",
+            )}
           >
             Gradebook
           </button>

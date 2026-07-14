@@ -5,6 +5,7 @@ import FlashlightIcon from "@hugeicons/core-free-icons/FlashlightIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface CameraPreviewProps {
   onCapture: (dataUrl: string) => void;
@@ -103,7 +104,8 @@ export function CameraPreview({ onCapture, onClose }: CameraPreviewProps) {
             >
               <HugeiconsIcon
                 icon={FlashlightIcon}
-                className={`size-4 ${torchOn ? "text-warning" : ""}`}
+                className={cn("size-4", torchOn ? "text-warning" : "")}
+                data-icon
               />
             </button>
           )}
@@ -113,7 +115,7 @@ export function CameraPreview({ onCapture, onClose }: CameraPreviewProps) {
             className="flex size-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
             aria-label="Flip camera"
           >
-            <HugeiconsIcon icon={SwitchCamera} className="size-4" />
+            <HugeiconsIcon icon={SwitchCamera} className="size-4" data-icon />
           </button>
         </div>
       </div>

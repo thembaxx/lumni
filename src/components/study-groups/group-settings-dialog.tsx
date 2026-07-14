@@ -70,7 +70,7 @@ export function GroupSettingsDialog({ group }: Props) {
           className="text-muted-foreground hover:text-foreground"
           aria-label={t("studyGroups.settings")}
         >
-          <HugeiconsIcon icon={Edit01Icon} className="size-4" />
+          <HugeiconsIcon icon={Edit01Icon} className="size-4" data-icon />
         </button>
       </DialogTrigger>
       <DialogContent>

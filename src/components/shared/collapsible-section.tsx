@@ -3,7 +3,7 @@
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface CollapsibleSectionProps {
@@ -20,8 +20,15 @@ export function CollapsibleSection({
   count,
 }: CollapsibleSectionProps) {
   const [open, setOpen] = useState(defaultOpen);
+  const [contentHeight, setContentHeight] = useState(0);
   const toggle = useCallback(() => setOpen((v) => !v), []);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
+    }
+  }, [children]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -42,13 +49,14 @@ export function CollapsibleSection({
             icon={ArrowDown01Icon}
             className="size-4 text-muted-foreground/60"
             aria-hidden="true"
+            data-icon
           />
         </m.div>
       </button>
       <m.div
         initial={false}
         animate={{
-          height: open ? (contentRef.current?.scrollHeight ?? "auto") : 0,
+          height: open ? contentHeight : 0,
           opacity: open ? 1 : 0,
         }}
         transition={{ duration: 0.2, ease: iOSEase }}

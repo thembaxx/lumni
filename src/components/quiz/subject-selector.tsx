@@ -22,14 +22,10 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
   const [selected, setSelected] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleSelect = async (subjectId: string) => {
+  const handleSelect = (subjectId: string) => {
     setSelected(subjectId);
     setIsGenerating(true);
-    try {
-      onSelect(subjectId);
-    } finally {
-      setIsGenerating(false);
-    }
+    Promise.resolve(onSelect(subjectId)).finally(() => setIsGenerating(false));
   };
 
   return (

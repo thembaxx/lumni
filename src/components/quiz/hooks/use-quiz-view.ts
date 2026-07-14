@@ -27,11 +27,13 @@ export interface QuizCompleteResult {
   elapsedTime: number;
 }
 
+const DEFAULT_MAX_TIME = 5400;
+
 export function useQuizView({
   initialSubject,
   topic,
   questionCount = 10,
-  maxTime = 90 * 60,
+  maxTime = DEFAULT_MAX_TIME,
   pastPaperMode,
   packQuestions,
   onQuit,
@@ -86,10 +88,14 @@ export function useQuizView({
   const [currentAnswered, setCurrentAnswered] = useState(false);
 
   const stateRef = useRef(state);
-  stateRef.current = state;
-
   const onCompleteRef = useRef(onFinish);
-  onCompleteRef.current = onFinish;
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+  useEffect(() => {
+    onCompleteRef.current = onFinish;
+  }, [onFinish]);
 
   const handleNext = useCallback(() => {
     const s = stateRef.current;
@@ -200,7 +206,9 @@ export function useQuizView({
   );
 
   const handleStartRef = useRef(handleStartWithSubject);
-  handleStartRef.current = handleStartWithSubject;
+  useEffect(() => {
+    handleStartRef.current = handleStartWithSubject;
+  }, [handleStartWithSubject]);
   const hasAutoStarted = useRef(false);
   useEffect(() => {
     if (initialSubject && !hasAutoStarted.current) {

@@ -4,7 +4,7 @@ import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import RadialIcon from "@hugeicons/core-free-icons/RadialIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadDropzone } from "@/lib/uploadthing";
 
@@ -18,21 +18,12 @@ export function AdminExamUploadZone({ onUploadComplete }: AdminExamUploadZonePro
   const [state, setState] = useState<UploadState>("idle");
   const [message, setMessage] = useState("");
 
-  const handleUploadComplete = async (res: { key: string }[]) => {
-    if (!res?.[0]?.key) {
-      setState("error");
-      setMessage("Upload failed - no file key returned");
-      return;
-    }
-
-    setState("converting");
-    setMessage("Converting PDF to structured exam…");
-
-    try {
+  const doUpload = useCallback(
+    async (fileKey: string) => {
       const response = await fetch("/api/admin/exams/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileKey: res[0].key }),
+        body: JSON.stringify({ fileKey }),
       });
 
       if (!response.ok) {
@@ -48,6 +39,22 @@ export function AdminExamUploadZone({ onUploadComplete }: AdminExamUploadZonePro
         setState("idle");
         setMessage("");
       }, 3000);
+    },
+    [onUploadComplete],
+  );
+
+  const handleUploadComplete = async (res: { key: string }[]) => {
+    if (!res?.[0]?.key) {
+      setState("error");
+      setMessage("Upload failed - no file key returned");
+      return;
+    }
+
+    setState("converting");
+    setMessage("Converting PDF to structured exam…");
+
+    try {
+      await doUpload(res[0].key);
     } catch (err) {
       setState("error");
       setMessage(err instanceof Error ? err.message : "Conversion failed");

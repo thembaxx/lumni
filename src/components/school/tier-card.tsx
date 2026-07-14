@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Card } from "@/components/ui/card";
 import { PRICING } from "@/lib/school/pricing";
 import type { LicenseTier } from "@/lib/school/pricing";
+import { cn } from "@/lib/utils";
 
 interface TierCardProps {
   tier: LicenseTier;
@@ -24,11 +25,12 @@ export function TierCard({ tier, selected, onSelect, billingFrequency }: TierCar
 
   return (
     <Card
-      className={`relative flex cursor-pointer flex-col gap-4 p-6 transition-[box-shadow,border-color] duration-150 hover:shadow-level-2 ${
+      className={cn(
+        "relative flex cursor-pointer flex-col gap-4 p-6 transition-[box-shadow,border-color] duration-150 hover:shadow-level-2",
         selected
           ? "border-(--system-accent) ring-2 ring-(--system-accent)"
-          : "hover:border-muted-foreground/20"
-      }`}
+          : "hover:border-muted-foreground/20",
+      )}
       onClick={onSelect}
     >
       {selected && (

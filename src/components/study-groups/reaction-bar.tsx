@@ -57,7 +57,7 @@ export function ReactionBar({ reactions, currentUserId, onToggle, className }: R
             )}
           >
             {IconComponent ? (
-              <HugeiconsIcon icon={IconComponent} className="size-4" />
+              <HugeiconsIcon icon={IconComponent} className="size-4" data-icon />
             ) : (
               <span>{emoji}</span>
             )}

@@ -38,20 +38,24 @@ export function useTimeExpiryHandler(
   setPhase: (phase: SessionPhase) => void,
 ) {
   const completionRef = useRef(false);
+  const prevPhaseRef = useRef<SessionPhase>(phase);
 
-  if (
-    timeRemaining <= 0 &&
-    phase === "active" &&
-    (sessionMode === "timed" || isMock) &&
-    !completionRef.current
-  ) {
-    completionRef.current = true;
-    completeSession();
-    setPhase("submitting");
-  }
-  if (phase !== "active") {
-    completionRef.current = false;
-  }
+  useEffect(() => {
+    if (
+      timeRemaining <= 0 &&
+      phase === "active" &&
+      (sessionMode === "timed" || isMock) &&
+      !completionRef.current
+    ) {
+      completionRef.current = true;
+      completeSession();
+      setPhase("submitting");
+    }
+    if (phase !== "active") {
+      completionRef.current = false;
+    }
+    prevPhaseRef.current = phase;
+  }, [timeRemaining, phase, sessionMode, isMock, completeSession, setPhase]);
 
   return completionRef;
 }

@@ -100,12 +100,10 @@ export function PullToRefresh({
         setRefreshing(true);
         el.style.transition = "transform 0.3s var(--ease-drawer)";
         el.style.transform = `translateY(${HOLD_Y}px)`;
-        try {
-          await onRefreshEvent();
-        } finally {
+        onRefreshEvent().finally(() => {
           animateYEvent(0, true);
           setRefreshing(false);
-        }
+        });
       } else {
         animateYEvent(0);
       }

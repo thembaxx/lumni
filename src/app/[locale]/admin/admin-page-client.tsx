@@ -44,20 +44,24 @@ export function AdminPageClient() {
   const [isSeeding, setIsSeeding] = useState(false);
   const [seedStatus, setSeedStatus] = useState<"idle" | "success" | "error">("idle");
 
+  const performSeed = useCallback(async () => {
+    const res = await fetch("/api/seed", { method: "POST" });
+    const data = await res.json();
+    setSeedStatus(data.success ? "success" : "error");
+  }, []);
+
   const handleSeed = useCallback(async () => {
     setIsSeeding(true);
     setSeedStatus("idle");
     try {
-      const res = await fetch("/api/seed", { method: "POST" });
-      const data = await res.json();
-      setSeedStatus(data.success ? "success" : "error");
+      await performSeed();
     } catch {
       setSeedStatus("error");
     } finally {
       setIsSeeding(false);
       setTimeout(() => setSeedStatus("idle"), 3000);
     }
-  }, []);
+  }, [performSeed]);
 
   const handlePreloaderComplete = useCallback(() => {
     if (!isAuthenticated) {

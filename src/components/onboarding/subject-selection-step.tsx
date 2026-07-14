@@ -6,6 +6,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
+import { cn } from "@/lib/utils";
 import { SubjectCard } from "./subject-card";
 
 interface Subject {
@@ -100,9 +101,11 @@ export function SubjectSelectionStep({
                         >
                           <HugeiconsIcon
                             icon={ArrowDownIcon}
-                            className={`size-4 text-muted-foreground transition-transform duration-200 ${
-                              isExpanded ? "rotate-0" : "-rotate-90"
-                            }`}
+                            className={cn(
+                              "size-4 text-muted-foreground transition-transform duration-200",
+                              isExpanded ? "rotate-0" : "-rotate-90",
+                            )}
+                            data-icon
                           />
                           <span className="flex-1 font-semibold text-sm capitalize">
                             {categoryLabels[cat] || cat}
@@ -114,9 +117,10 @@ export function SubjectSelectionStep({
                           </span>
                         </button>
                         <div
-                          className={`grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate) ${
-                            isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                          }`}
+                          className={cn(
+                            "grid transition-[grid-template-rows,opacity] duration-200 ease-(--ease-ios-decelerate)",
+                            isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                          )}
                         >
                           <div className="min-h-0 overflow-hidden">
                             <div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">

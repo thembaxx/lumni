@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { MagneticCard } from "@/components/shared/magnetic-card";
+import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
@@ -64,29 +65,32 @@ function InteractiveQuizDemo() {
                   type="button"
                   onClick={() => setAnswer(opt.value)}
                   disabled={answer !== null}
-                  className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-[11px] transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-[11px] transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary",
                     isCorrect
                       ? "border-success/40 bg-success/10 text-success"
                       : isWrong
                         ? "border-destructive/40 bg-destructive/10 text-destructive"
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hoverable:scale-[1.01]"
-                  } ${answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]"}`}
+                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hoverable:scale-[1.01]",
+                    answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]",
+                  )}
                 >
                   <span
-                    className={`flex size-4 shrink-0 items-center justify-center rounded border text-[9px] ${
+                    className={cn(
+                      "flex size-4 shrink-0 items-center justify-center rounded border text-[9px]",
                       isCorrect
                         ? "border-success/40 bg-success text-white"
                         : isWrong
                           ? "border-destructive/40 bg-destructive text-white"
-                          : "border-border/50 text-muted-foreground"
-                    }`}
+                          : "border-border/50 text-muted-foreground",
+                    )}
                   >
                     {isCorrect ? (
-                      <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3" />
+                      <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3" data-icon />
                     ) : isWrong ? (
-                      <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
+                      <HugeiconsIcon icon={Cancel01Icon} className="size-3" data-icon />
                     ) : (
                       String.fromCharCode(65 + opt.value)
                     )}
@@ -116,9 +120,10 @@ function InteractiveQuizDemo() {
           {[0, 1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className={`h-0.5 rounded-full transition-[width,background-color] duration-300 ${
-                i < 1 ? "w-3 bg-primary" : "w-0.5 bg-border/50"
-              }`}
+              className={cn(
+                "h-0.5 rounded-full transition-[width,background-color] duration-300",
+                i < 1 ? "w-3 bg-primary" : "w-0.5 bg-border/50",
+              )}
             />
           ))}
         </div>

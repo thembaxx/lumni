@@ -9,6 +9,7 @@ import { audioEngine } from "@/lib/audio-engine/audio-engine";
 import { WhisperService } from "@/lib/audio-engine/whisper-service";
 import { assessPhonemes } from "@/lib/audio-engine/phoneme-service";
 import { ipaToArpabet } from "@/lib/phoneme/ipa-to-arpabet";
+import { cn } from "@/lib/utils";
 
 interface InlinePronunciationPracticeProps {
   word: string;
@@ -82,7 +83,7 @@ export function InlinePronunciationPractice({
           className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
           aria-label={`Practice pronouncing ${word}`}
         >
-          <HugeiconsIcon icon={Mic01Icon} className="size-4" />
+          <HugeiconsIcon icon={Mic01Icon} className="size-4" data-icon />
         </button>
       )}
 
@@ -110,7 +111,10 @@ export function InlinePronunciationPractice({
             <HugeiconsIcon icon={Cancel01Icon} className="size-4 text-(--system-destructive)" />
           )}
           <span
-            className={`text-xs font-semibold ${score >= 70 ? "text-(--system-success)" : "text-(--system-destructive)"}`}
+            className={cn(
+              "text-xs font-semibold",
+              score >= 70 ? "text-(--system-success)" : "text-(--system-destructive)",
+            )}
           >
             {score}%
           </span>

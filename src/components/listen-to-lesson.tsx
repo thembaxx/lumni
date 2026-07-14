@@ -117,9 +117,9 @@ export function ListenToLesson({
       disabled={isLoading}
     >
       {isPlaying ? (
-        <HugeiconsIcon icon={StopCircleIcon} className="mr-1.5 size-4" />
+        <HugeiconsIcon icon={StopCircleIcon} data-icon="inline-start" />
       ) : (
-        <HugeiconsIcon icon={HeadphonesIcon} className="mr-1.5 size-4" />
+        <HugeiconsIcon icon={HeadphonesIcon} data-icon="inline-start" />
       )}
       {isPlaying ? "Stop listening..." : "Listen to lesson"}
     </Button>
