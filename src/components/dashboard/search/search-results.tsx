@@ -9,7 +9,7 @@ import File01Icon from "@hugeicons/core-free-icons/File01Icon";
 import File02Icon from "@hugeicons/core-free-icons/File02Icon";
 import World from "@hugeicons/core-free-icons/GlobeIcon";
 import Mic01Icon from "@hugeicons/core-free-icons/Mic01Icon";
-import NodesIcon from "@hugeicons/core-free-icons/NodesIcon";
+import FlowConnectionIcon from "@hugeicons/core-free-icons/FlowConnectionIcon";
 import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
 import StarSquareIcon from "@hugeicons/core-free-icons/StarSquareIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -101,7 +101,7 @@ const typeConfig: Record<
   },
   "knowledge-graph": {
     label: "Knowledge Graph",
-    icon: NodesIcon,
+    icon: FlowConnectionIcon,
     color: "text-info",
   },
 };
