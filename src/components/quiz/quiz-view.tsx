@@ -261,6 +261,8 @@ export function QuizView({
       <AmbientGradient variant="quiz" />
 
       <m.main
+        id="main-content"
+        aria-label="Quiz question area"
         className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
         tabIndex={-1}
         drag={isQuizActive && isTouchDevice ? "x" : false}

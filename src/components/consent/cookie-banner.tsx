@@ -29,7 +29,7 @@ export function CookieBanner() {
   return (
     <>
       <div className="fixed right-0 bottom-0 left-0 z-cookie-banner p-3 md:p-4">
-        <Card className="mx-auto flex max-w-2xl flex-col gap-3 rounded-2xl bg-system-surface/95 p-4 shadow-level-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <Card className="mx-auto flex max-w-2xl flex-col gap-3 rounded-2xl bg-system-surface p-4 shadow-level-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <div className="min-w-0 flex-1">
             <p className="text-foreground text-sm font-semibold">
               {t("consent.cookieBanner.title")}
@@ -43,7 +43,7 @@ export function CookieBanner() {
               variant="ghost"
               size="sm"
               onClick={() => handleAccept(false, false, false)}
-              className="text-muted-foreground h-8 text-xs"
+              className="text-muted-foreground min-h-10 text-xs"
             >
               {t("consent.cookieBanner.essentialOnly")}
             </Button>
@@ -51,14 +51,14 @@ export function CookieBanner() {
               variant="outline"
               size="sm"
               onClick={() => handleAccept(true, false, false)}
-              className="h-8 text-xs"
+              className="min-h-10 text-xs"
             >
               {t("consent.cookieBanner.acceptAnalytics")}
             </Button>
             <Button
               size="sm"
               onClick={() => handleAccept(true, true, true)}
-              className="h-8 text-xs"
+              className="min-h-10 text-xs"
             >
               {t("consent.cookieBanner.acceptAll")}
             </Button>
@@ -66,7 +66,7 @@ export function CookieBanner() {
               variant="link"
               size="sm"
               onClick={() => setShowSettings(true)}
-              className="hidden h-8 p-0 text-xs text-system-accent sm:inline-flex"
+              className="hidden min-h-10 p-0 text-xs text-system-accent sm:inline-flex"
             >
               {t("consent.cookieBanner.cookieSettings")}
             </Button>

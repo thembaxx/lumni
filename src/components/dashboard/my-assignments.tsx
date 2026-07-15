@@ -136,7 +136,7 @@ export function MyAssignments() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 gap-1.5 text-xs press-scale"
+                  className="min-h-10 gap-1.5 text-xs press-scale"
                   onClick={() => setQuestionOpen(questionOpen === a.id ? null : a.id)}
                 >
                   <HugeiconsIcon icon={Chat01Icon} data-icon="inline-start" />
@@ -150,7 +150,7 @@ export function MyAssignments() {
                   <Button
                     size="sm"
                     variant="default"
-                    className="h-8 gap-1.5 text-xs press-scale"
+                    className="min-h-10 gap-1.5 text-xs press-scale"
                     onClick={() =>
                       router.push(
                         `/quiz?subject=${a.topics[0]?.toLowerCase() ?? ""}&count=10&assignmentId=${a.id}`,

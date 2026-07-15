@@ -75,8 +75,8 @@ function FeedCard({
             prefetch={true}
             className={
               isFirst
-                ? "mt-0.5 inline-flex h-8 w-fit items-center rounded-lg bg-system-accent px-3.5 font-medium text-system-accent-foreground text-xs transition-[background-color,transform] hover:bg-system-accent/85 press-scale"
-                : "mt-0.5 inline-flex h-7 w-fit items-center rounded-lg bg-secondary px-3 font-medium text-secondary-foreground text-xs transition-[background-color,transform] hover:bg-secondary/80 press-scale"
+                ? "mt-0.5 inline-flex min-h-9 w-fit items-center rounded-lg bg-system-accent px-3.5 font-medium text-system-accent-foreground text-xs transition-[background-color,transform] hover:bg-system-accent/85 press-scale"
+                : "mt-0.5 inline-flex min-h-9 w-fit items-center rounded-lg bg-secondary px-3 font-medium text-secondary-foreground text-xs transition-[background-color,transform] hover:bg-secondary/80 press-scale"
             }
           >
             {rec.ctaLabel}

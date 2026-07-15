@@ -121,11 +121,11 @@ export function AdminMetricsDashboard() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>DAU (30 days)</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-card border border-border bg-card">
+              <div className="px-6 pt-6 pb-4">
+                <h3 className="font-semibold text-lg">DAU (30 days)</h3>
+              </div>
+              <div className="px-6 pb-6">
                 <div className="h-64">
                   <RechartsResponsiveContainer width="100%" height="100%">
                     <RechartsLineChart data={daily}>
@@ -143,14 +143,14 @@ export function AdminMetricsDashboard() {
                     </RechartsLineChart>
                   </RechartsResponsiveContainer>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Subject Usage (this month)</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-card border border-border bg-card">
+              <div className="px-6 pt-6 pb-4">
+                <h3 className="font-semibold text-lg">Subject Usage (this month)</h3>
+              </div>
+              <div className="px-6 pb-6">
                 <div className="h-64">
                   <RechartsResponsiveContainer width="100%" height="100%">
                     <RechartsBarChart data={subjects?.subjects ?? []}>
@@ -166,8 +166,8 @@ export function AdminMetricsDashboard() {
                     </RechartsBarChart>
                   </RechartsResponsiveContainer>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -101,7 +101,7 @@ function FeatureDialog() {
       <Button
         size="sm"
         variant="ghost"
-        className="h-8 px-2.5 text-xs"
+        className="min-h-10 px-2.5 text-xs"
         onClick={() => setOpen(true)}
       >
         See Features
@@ -172,7 +172,7 @@ export function LoginBanner() {
         <Button
           size="sm"
           variant="default"
-          className="relative h-7 px-2.5 text-xs after:absolute after:-inset-2"
+          className="relative min-h-10 px-2.5 text-xs after:absolute after:-inset-2"
           onClick={() => {
             push("/auth/sign-in?redirect=/dashboard");
           }}
@@ -184,7 +184,7 @@ export function LoginBanner() {
           variant="ghost"
           size="icon-sm"
           onClick={handleDismiss}
-          className="relative -mr-1 size-7 after:absolute after:-inset-2"
+          className="relative -mr-1 size-10 after:absolute after:-inset-2"
           aria-label="Dismiss"
         >
           <HugeiconsIcon icon={Cancel01Icon} data-icon className="text-muted-foreground" />

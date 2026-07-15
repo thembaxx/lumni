@@ -42,13 +42,24 @@ export function ItemPickerDialog({
                 <button
                   key={item.id}
                   type="button"
+                  role="checkbox"
+                  aria-checked={selected}
                   onClick={() => onToggle(item.id)}
                   className={cn(
-                    "flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted",
+                    "flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:ring-system-accent hover:bg-muted",
                     selected ? "bg-accent/20 font-medium" : "",
                   )}
                 >
-                  <input type="checkbox" checked={selected} readOnly className="size-4" />
+                  <span
+                    className={cn(
+                      "flex size-4 shrink-0 items-center justify-center rounded border text-[10px]",
+                      selected
+                        ? "border-system-accent bg-system-accent text-system-accent-foreground"
+                        : "border-border/50",
+                    )}
+                  >
+                    {selected ? "\u2713" : ""}
+                  </span>
                   <span className="truncate">{item.label}</span>
                 </button>
               );

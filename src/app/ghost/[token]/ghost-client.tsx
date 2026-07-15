@@ -2,6 +2,7 @@
 
 import { Suspense, use } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { PageContainer } from "@/components/layout/page-container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -30,20 +31,20 @@ function GhostContent({ token }: { token: string }) {
 
   if (isLoading)
     return (
-      <div className="p-8">
+      <PageContainer className="py-8">
         <Skeleton className="h-64 rounded-xl" />
-      </div>
+      </PageContainer>
     );
   if (isError)
     return (
-      <div className="flex min-h-dvh items-center justify-center">
+      <PageContainer className="min-h-dvh items-center justify-center">
         <p className="text-muted-foreground">Invalid or expired link</p>
-      </div>
+      </PageContainer>
     );
   if (!stats) return null;
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6 p-8">
+    <PageContainer className="gap-6">
       <h1 className="font-bold font-heading text-2xl">School Dashboard</h1>
       <div className="grid grid-cols-2 gap-4">
         <Card>
@@ -89,7 +90,7 @@ function GhostContent({ token }: { token: string }) {
           ))}
         </CardContent>
       </Card>
-    </div>
+    </PageContainer>
   );
 }
 
@@ -102,9 +103,9 @@ export default function GhostDashboardPage({ params }: { params: Promise<{ token
   return (
     <Suspense
       fallback={
-        <div className="p-8">
+        <PageContainer className="py-8">
           <Skeleton className="h-64 rounded-xl" />
-        </div>
+        </PageContainer>
       }
     >
       <GhostPageInner params={params} />

@@ -42,10 +42,10 @@ export function SharedDeckClient() {
 
   if (loading) {
     return (
-      <div className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 p-6">
+      <PageContainer className="min-h-dvh gap-6">
         <Skeleton className="h-8 w-48" />
         <Skeleton className="h-32 w-full" />
-      </div>
+      </PageContainer>
     );
   }
 

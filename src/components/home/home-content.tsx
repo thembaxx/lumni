@@ -48,13 +48,7 @@ const AnimatedStatsSection = dynamic(
 
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
-  const [buffer, setBuffer] = useState("");
-
-  useEffect(() => {
-    if (buffer.includes("matric")) {
-      setShowConfetti(true);
-    }
-  }, [buffer]);
+  const bufferRef = useRef("");
 
   useEffect(() => {
     if (!showConfetti) return;
@@ -65,19 +59,28 @@ function useMatricEasterEgg() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      const nextBuffer = (buffer + e.key).toLowerCase().slice(-10);
-      setBuffer(nextBuffer);
+      const next = (bufferRef.current + e.key).toLowerCase().slice(-10);
+      bufferRef.current = next;
+      if (next.includes("matric")) {
+        setShowConfetti(true);
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [buffer]);
+  }, []);
 
   const dismissConfetti = useCallback(() => setShowConfetti(false), []);
 
   return { showConfetti, dismissConfetti };
 }
 
-function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: () => void }) {
+function ConfettiCelebration({
+  show,
+  onDismiss: _onDismiss,
+}: {
+  onDismiss: () => void;
+  show: boolean;
+}) {
   const colors = [
     "bg-primary",
     "bg-chart-2",
@@ -105,10 +108,10 @@ function ConfettiCelebration({ show, onDismiss }: { show: boolean; onDismiss: ()
   return (
     <div
       className="pointer-events-none fixed inset-0 z-(--z-toast)"
-      onClick={onDismiss}
-      role="presentation"
+      role="status"
+      aria-live="polite"
     >
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
         <div className="flex items-center gap-3 rounded-2xl border border-border/30 bg-foreground/10 px-6 py-4 shadow-level-3 backdrop-blur-xl animate-fade-in-scale">
           <HugeiconsIcon icon={StarIcon} className="size-8 text-primary" />
           <div>
@@ -175,7 +178,7 @@ export function HomeContent() {
         <button
           type="button"
           onClick={handleLogoClick}
-          className="relative flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors after:absolute after:-inset-2"
+          className="relative flex cursor-pointer items-center gap-2 py-1 font-bold text-sm tracking-tight transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset after:absolute after:-inset-2"
         >
           <div className="flex size-6 items-center justify-center rounded-md bg-primary transition-[border-radius] duration-300 hover:rounded-lg">
             <HugeiconsIcon icon={StarIcon} className="size-3.5 text-primary-foreground" data-icon />
@@ -184,24 +187,26 @@ export function HomeContent() {
         </button>
 
         <div className="hidden items-center gap-1 md:flex" role="list">
-          <Link
-            href="/quiz"
-            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
-          >
-            Quiz
-          </Link>
-          <Link
-            href="/past-papers"
-            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
-          >
-            Papers
-          </Link>
-          <Link
-            href="/flashcards"
-            className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-2"
-          >
-            Flashcards
-          </Link>
+          <span role="listitem" className="contents">
+            <Link
+              href="/quiz"
+              className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+            >
+              Quiz
+            </Link>
+            <Link
+              href="/past-papers"
+              className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+            >
+              Papers
+            </Link>
+            <Link
+              href="/flashcards"
+              className="relative rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+            >
+              Flashcards
+            </Link>
+          </span>
         </div>
 
         <div

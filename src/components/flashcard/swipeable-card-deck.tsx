@@ -67,6 +67,10 @@ export function SwipeableCardDeck({
   useEffect(() => {
     if (prevIndexRef.current !== currentIndex) {
       cardStackRef.current?.focus({ preventScroll: true });
+      const topCard = cardStackRef.current?.querySelector<HTMLElement>(
+        '[data-testid="swipeable-card"]',
+      );
+      topCard?.focus();
     }
     prevIndexRef.current = currentIndex;
   }, [currentIndex]);

@@ -23,10 +23,10 @@ export async function SiteFooter() {
           </div>
 
           <div className="grid grid-cols-2 gap-10 md:grid-cols-3">
-            <div>
-              <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+            <nav aria-label={t("footerProduct")} className="flex flex-col gap-4">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
                 {t("footerProduct")}
-              </h4>
+              </h3>
               <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                 <Link
                   href="/quiz"
@@ -64,12 +64,12 @@ export async function SiteFooter() {
                   {t("footerHomework")}
                 </Link>
               </div>
-            </div>
+            </nav>
 
-            <div>
-              <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+            <nav aria-label={t("footerSupport")} className="flex flex-col gap-4">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
                 {t("footerSupport")}
-              </h4>
+              </h3>
               <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                 <a
                   href={appConfig.links.support}
@@ -105,7 +105,7 @@ export async function SiteFooter() {
                   {t("footerCookies")}
                 </Link>
               </div>
-            </div>
+            </nav>
           </div>
         </div>
 

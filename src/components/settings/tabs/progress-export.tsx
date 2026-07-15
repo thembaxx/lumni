@@ -84,19 +84,19 @@ export function ProgressExport() {
 					<title>Lumni Progress Report</title>
 					<style>
 						:root {
-							--text-primary: #1a1a2e;
-							--text-secondary: #666;
-							--border-color: #e2e8f0;
-							--bg-secondary: #f8fafc;
-							--bg-primary: #ffffff;
+							--text-primary: oklch(12% 0 0);
+							--text-secondary: oklch(12% 0 0 / 0.6);
+							--border-color: oklch(0% 0 0 / 0.08);
+							--bg-secondary: oklch(97% 0.012 60);
+							--bg-primary: oklch(100% 0.005 60);
 						}
 						@media (prefers-color-scheme: dark) {
 							:root {
-								--text-primary: #e2e8f0;
-								--text-secondary: #94a3b8;
-								--border-color: #334155;
-								--bg-secondary: #1e293b;
-								--bg-primary: #0f172a;
+								--text-primary: oklch(92% 0 0);
+								--text-secondary: oklch(92% 0 0 / 0.6);
+								--border-color: oklch(100% 0 0 / 0.12);
+								--bg-secondary: oklch(18% 0.01 60);
+								--bg-primary: oklch(14% 0.008 60);
 							}
 						}
 						body { font-family: system-ui, sans-serif; padding: 40px; color: var(--text-primary); background: var(--bg-primary); }

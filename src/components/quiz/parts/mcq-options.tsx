@@ -29,6 +29,8 @@ export const MCQOptions = memo(function MCQOptions({
 
   return (
     <div
+      role="radiogroup"
+      aria-label="Answer choices"
       className={cn(
         "grid gap-2.5",
         options.every((o) => o.text.length <= 30) ? "grid-cols-2" : "grid-cols-1",
@@ -50,6 +52,9 @@ export const MCQOptions = memo(function MCQOptions({
             <Button
               variant="ghost"
               type="button"
+              role="radio"
+              aria-checked={isSelected}
+              tabIndex={0}
               onClick={() => onSelect(option.id)}
               className={cn(
                 "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left transition-[border-color,background-color,color] duration-200 motion-reduce:transition-none",

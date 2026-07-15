@@ -9,6 +9,7 @@ import { useCallback, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
+import { PageContainer } from "@/components/layout/page-container";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
@@ -87,17 +88,17 @@ export function SharedQuestionClient() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 p-6">
+      <PageContainer className="min-h-dvh gap-6">
         <Skeleton className="h-8 w-48" />
         <Skeleton className="h-32 w-full" />
         <Skeleton className="h-24 w-full" />
-      </div>
+      </PageContainer>
     );
   }
 
   if (isError || !data) {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-8 text-center">
+      <PageContainer className="min-h-dvh items-center justify-center gap-4 py-8 text-center">
         <div className="flex size-16 items-center justify-center rounded-full bg-muted">
           <span className="text-2xl">?</span>
         </div>
@@ -111,45 +112,89 @@ export function SharedQuestionClient() {
         >
           Go to Dashboard
         </Link>
-      </div>
+      </PageContainer>
     );
   }
 
   const q = data.question;
 
   return (
-    <main className="mx-auto min-h-dvh max-w-2xl p-6">
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary">{data.subject}</Badge>
-            {q.topic && (
-              <Badge variant="outline" className="text-xs">
-                {q.topic}
-              </Badge>
-            )}
-            <Badge
-              variant="outline"
-              className={cn(
-                "text-xs",
-                q.difficulty === "Easy" && "text-success",
-                q.difficulty === "Medium" && "text-warning",
-                q.difficulty === "Hard" && "text-destructive",
-              )}
-            >
-              {q.difficulty}
+    <PageContainer className="min-h-dvh gap-6">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary">{data.subject}</Badge>
+          {q.topic && (
+            <Badge variant="outline" className="text-xs">
+              {q.topic}
             </Badge>
+          )}
+          <Badge
+            variant="outline"
+            className={cn(
+              "text-xs",
+              q.difficulty === "Easy" && "text-success",
+              q.difficulty === "Medium" && "text-warning",
+              q.difficulty === "Hard" && "text-destructive",
+            )}
+          >
+            {q.difficulty}
+          </Badge>
+        </div>
+        <h1 className="font-bold text-2xl tracking-tight">Shared Question</h1>
+      </div>
+
+      <div className="rounded-xl border bg-card p-5">
+        <MarkdownRenderer content={q.questionText} subject={data.subject} />
+      </div>
+
+      {!isUnlocked && (
+        <div className="flex flex-col items-center gap-4 rounded-xl border bg-muted/20 p-6 text-center">
+          <p className="font-medium text-sm">Rate this question to reveal the answer</p>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => handleRate(star)}
+                className={cn(
+                  "size-8 rounded-lg p-1 transition-colors",
+                  star <= rating ? "text-(--system-warning)" : "text-muted-foreground/30",
+                )}
+                aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
+              >
+                <HugeiconsIcon icon={StarIcon} className="size-full" />
+              </button>
+            ))}
           </div>
-          <h1 className="font-bold text-2xl tracking-tight">Shared Question</h1>
         </div>
+      )}
 
-        <div className="rounded-xl border bg-card p-5">
-          <MarkdownRenderer content={q.questionText} subject={data.subject} />
-        </div>
+      {isUnlocked && (
+        <>
+          {q.explanation && (
+            <div className="rounded-xl border bg-card p-5">
+              <h2 className="mb-3 font-semibold text-sm">Explanation</h2>
+              <MarkdownRenderer content={q.explanation} subject={data.subject} />
+            </div>
+          )}
 
-        {!isUnlocked && (
-          <div className="flex flex-col items-center gap-4 rounded-xl border bg-muted/20 p-6 text-center">
-            <p className="font-medium text-sm">Rate this question to reveal the answer</p>
+          {q.steps && q.steps.length > 0 && (
+            <div className="rounded-xl border bg-card p-5">
+              <h2 className="mb-3 font-semibold text-sm">Steps</h2>
+              <ol className="flex list-inside list-decimal flex-col gap-2 text-sm">
+                {q.steps.map((step) => (
+                  <li key={step.substring(0, 32)}>
+                    <MarkdownRenderer content={step} subject={data.subject} />
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {data.sources && data.sources.length > 0 && <VerifiedByPill sources={data.sources} />}
+
+          <div className="flex items-center justify-between gap-4 rounded-xl border bg-muted/20 p-4">
+            <p className="text-muted-foreground text-xs">Was this helpful?</p>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -157,8 +202,8 @@ export function SharedQuestionClient() {
                   type="button"
                   onClick={() => handleRate(star)}
                   className={cn(
-                    "size-8 rounded-lg p-1 transition-colors",
-                    star <= rating ? "text-(--system-warning)" : "text-muted-foreground/30",
+                    "size-6 rounded p-0.5 transition-colors",
+                    star <= rating ? "text-(--system-warning)" : "text-muted-foreground/20",
                   )}
                   aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
                 >
@@ -167,54 +212,8 @@ export function SharedQuestionClient() {
               ))}
             </div>
           </div>
-        )}
-
-        {isUnlocked && (
-          <>
-            {q.explanation && (
-              <div className="rounded-xl border bg-card p-5">
-                <h2 className="mb-3 font-semibold text-sm">Explanation</h2>
-                <MarkdownRenderer content={q.explanation} subject={data.subject} />
-              </div>
-            )}
-
-            {q.steps && q.steps.length > 0 && (
-              <div className="rounded-xl border bg-card p-5">
-                <h2 className="mb-3 font-semibold text-sm">Steps</h2>
-                <ol className="flex list-inside list-decimal flex-col gap-2 text-sm">
-                  {q.steps.map((step) => (
-                    <li key={step.substring(0, 32)}>
-                      <MarkdownRenderer content={step} subject={data.subject} />
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            {data.sources && data.sources.length > 0 && <VerifiedByPill sources={data.sources} />}
-
-            <div className="flex items-center justify-between gap-4 rounded-xl border bg-muted/20 p-4">
-              <p className="text-muted-foreground text-xs">Was this helpful?</p>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    onClick={() => handleRate(star)}
-                    className={cn(
-                      "size-6 rounded p-0.5 transition-colors",
-                      star <= rating ? "text-(--system-warning)" : "text-muted-foreground/20",
-                    )}
-                    aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
-                  >
-                    <HugeiconsIcon icon={StarIcon} className="size-full" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </main>
+        </>
+      )}
+    </PageContainer>
   );
 }

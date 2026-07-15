@@ -8,6 +8,7 @@ import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
+import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +41,7 @@ export default function OfflinePage() {
   }, [recentStories]);
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-lg flex-col gap-6 bg-background p-6">
+    <PageContainer className="min-h-dvh gap-6">
       <OfflineTracker />
 
       <div className="flex flex-col items-center gap-4 pt-8 text-center">
@@ -185,6 +186,6 @@ export default function OfflinePage() {
           here when you&apos;re offline.
         </p>
       )}
-    </div>
+    </PageContainer>
   );
 }
