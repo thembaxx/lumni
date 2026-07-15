@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   description: "Study lesson content",
 };
 
-export default function LessonPage({
+export default async function LessonPage({
   params,
 }: {
-  params: { subjectId: string; topicId: string; subtopicId: string };
+  params: Promise<{ subjectId: string; topicId: string; subtopicId: string }>;
 }) {
-  const { subjectId, topicId, subtopicId } = params;
+  const { subjectId, topicId, subtopicId } = await params;
   return (
     <AppErrorBoundary>
       <LessonViewClient subjectId={subjectId} topicId={topicId} subtopicId={subtopicId} />
