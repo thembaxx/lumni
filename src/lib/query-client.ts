@@ -5,7 +5,7 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60,
       gcTime: 24 * 60 * 60 * 1000,
-      retry: 3,
+      retry: 1,
       refetchOnWindowFocus: false,
       networkMode: "offlineFirst",
     },
@@ -15,7 +15,3 @@ export const queryClient = new QueryClient({
     },
   },
 });
-
-function _getQueryClient() {
-  return queryClient;
-}

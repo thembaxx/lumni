@@ -1,31 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 
-const RechartsBarChart = dynamic(() => import("recharts").then((m) => ({ default: m.BarChart })), {
-  ssr: false,
-});
-const CartesianGrid = dynamic(
-  () => import("recharts").then((m) => ({ default: m.CartesianGrid })),
+const ChartInner = dynamic(
+  () => import("./chart-inner").then((m) => ({ default: m.BarChartInner })),
   {
     ssr: false,
   },
 );
-const XAxis = dynamic(() => import("recharts").then((m) => ({ default: m.XAxis })), {
-  ssr: false,
-});
-const YAxis = dynamic(() => import("recharts").then((m) => ({ default: m.YAxis })), {
-  ssr: false,
-});
-const Bar = dynamic(() => import("recharts").then((m) => ({ default: m.Bar })), {
-  ssr: false,
-});
 
 interface BarChartProps {
   data: Record<string, unknown>[];
@@ -36,28 +19,15 @@ interface BarChartProps {
   showGrid?: boolean;
 }
 
-export function BarChart({
-  data,
-  xKey,
-  yKey,
-  config,
-  height = 160,
-  showGrid = false,
-}: BarChartProps) {
+export function BarChart(props: BarChartProps) {
   return (
-    <ChartContainer config={config} className="w-full" style={{ height }}>
-      <RechartsBarChart data={data} margin={{ top: 10, right: 10, bottom: 24, left: 10 }}>
-        {showGrid && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
-        <XAxis dataKey={xKey} tickLine={false} axisLine={false} tickMargin={8} />
-        <YAxis hide />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" hideLabel />} />
-        <Bar
-          dataKey={yKey}
-          fill={`var(--color-${yKey})`}
-          radius={[4, 4, 0, 0]}
-          animationDuration={300}
-        />
-      </RechartsBarChart>
+    <ChartContainer
+      config={props.config}
+      className="w-full"
+      style={{ height: props.height ?? 160 }}
+    >
+      {/* @ts-expect-error — dynamic() wrapper loses inner component type info */}
+      <ChartInner {...(props as unknown as Record<string, unknown>)} />
     </ChartContainer>
   );
 }

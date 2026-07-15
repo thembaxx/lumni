@@ -43,17 +43,13 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var d=t?t[1]==="dark":window.matchMedia("(prefers-color-scheme:dark)").matches;if(d)document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
+            __html: `(function(){try{var c=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/),d=c?c[1]==="dark":matchMedia("(prefers-color-scheme:dark)").matches;d&&document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
           }}
         />
         <link rel="preconnect" href="https://fra.cloud.appwrite.io" />
         <link rel="preconnect" href="https://utfs.io" />
         <link rel="preconnect" href="https://api.iconify.design" />
         <link rel="preconnect" href="https://upload.wikimedia.org" />
-        <link rel="dns-prefetch" href="https://fra.cloud.appwrite.io" />
-        <link rel="dns-prefetch" href="https://utfs.io" />
-        <link rel="dns-prefetch" href="https://api.iconify.design" />
-        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
         <link rel="prefetch" href="/en/dashboard" as="document" />
         <script
           type="speculationrules"
@@ -62,8 +58,8 @@ export default function RootLayout({
               prefetch: [
                 {
                   source: "list",
-                  urls: ["/en/dashboard", "/en/quiz"],
-                  eagerness: "moderate",
+                  urls: ["/en/dashboard"],
+                  eagerness: "conservative",
                 },
               ],
             }),

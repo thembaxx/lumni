@@ -51,7 +51,6 @@ async function generateMixed(
   ];
 
   const { count } = params;
-  const itemCount = Math.max(1, Math.ceil(count / batches.length));
 
   const results: Question[] = [];
 

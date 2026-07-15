@@ -11,13 +11,16 @@ import type {
 
 import { cn } from "@/lib/utils";
 
-const ResponsiveContainer = dynamic(() => import("recharts").then((m) => m.ResponsiveContainer), {
+const ResponsiveContainer = dynamic(
+  () => import("./chart-inner").then((m) => m.ResponsiveContainer),
+  {
+    ssr: false,
+  },
+);
+const Legend = dynamic(() => import("./chart-inner").then((m) => m.Legend), {
   ssr: false,
 });
-const Legend = dynamic(() => import("recharts").then((m) => m.Legend), {
-  ssr: false,
-});
-const Tooltip = dynamic(() => import("recharts").then((m) => m.Tooltip), {
+const Tooltip = dynamic(() => import("./chart-inner").then((m) => m.Tooltip), {
   ssr: false,
 });
 

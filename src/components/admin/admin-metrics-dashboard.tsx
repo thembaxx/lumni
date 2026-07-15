@@ -5,34 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/shared/stat-card";
 
-const RechartsLineChart = dynamic(
-  () => import("recharts").then((m) => ({ default: m.LineChart })),
-  { ssr: false },
-);
-const RechartsBarChart = dynamic(() => import("recharts").then((m) => ({ default: m.BarChart })), {
-  ssr: false,
-});
-const RechartsLine = dynamic(() => import("recharts").then((m) => ({ default: m.Line })), {
-  ssr: false,
-});
-const RechartsBar = dynamic(() => import("recharts").then((m) => ({ default: m.Bar })), {
-  ssr: false,
-});
-const RechartsXAxis = dynamic(() => import("recharts").then((m) => ({ default: m.XAxis })), {
-  ssr: false,
-});
-const RechartsYAxis = dynamic(() => import("recharts").then((m) => ({ default: m.YAxis })), {
-  ssr: false,
-});
-const RechartsCartesianGrid = dynamic(
-  () => import("recharts").then((m) => ({ default: m.CartesianGrid })),
-  { ssr: false },
-);
-const RechartsTooltip = dynamic(() => import("recharts").then((m) => ({ default: m.Tooltip })), {
-  ssr: false,
-});
-const RechartsResponsiveContainer = dynamic(
-  () => import("recharts").then((m) => ({ default: m.ResponsiveContainer })),
+const AdminMetricsDashboardChart = dynamic(
+  () =>
+    import("./admin-metrics-dashboard-chart").then((m) => ({
+      default: m.AdminMetricsDashboardChart,
+    })),
   { ssr: false },
 );
 
@@ -121,53 +98,7 @@ export function AdminMetricsDashboard() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div className="rounded-card border border-border bg-card">
-              <div className="px-6 pt-6 pb-4">
-                <h3 className="font-semibold text-lg">DAU (30 days)</h3>
-              </div>
-              <div className="px-6 pb-6">
-                <div className="h-64">
-                  <RechartsResponsiveContainer width="100%" height="100%">
-                    <RechartsLineChart data={daily}>
-                      <RechartsCartesianGrid strokeDasharray="3 3" />
-                      <RechartsXAxis dataKey="date" tick={{ fontSize: 11 }} />
-                      <RechartsYAxis allowDecimals={false} />
-                      <RechartsTooltip />
-                      <RechartsLine
-                        type="monotone"
-                        dataKey="dau"
-                        stroke="var(--color-accent)"
-                        strokeWidth={2}
-                        dot={false}
-                      />
-                    </RechartsLineChart>
-                  </RechartsResponsiveContainer>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-card border border-border bg-card">
-              <div className="px-6 pt-6 pb-4">
-                <h3 className="font-semibold text-lg">Subject Usage (this month)</h3>
-              </div>
-              <div className="px-6 pb-6">
-                <div className="h-64">
-                  <RechartsResponsiveContainer width="100%" height="100%">
-                    <RechartsBarChart data={subjects?.subjects ?? []}>
-                      <RechartsCartesianGrid strokeDasharray="3 3" />
-                      <RechartsXAxis dataKey="name" tick={{ fontSize: 11 }} />
-                      <RechartsYAxis allowDecimals={false} />
-                      <RechartsTooltip />
-                      <RechartsBar
-                        dataKey="count"
-                        fill="var(--color-accent)"
-                        radius={[4, 4, 0, 0]}
-                      />
-                    </RechartsBarChart>
-                  </RechartsResponsiveContainer>
-                </div>
-              </div>
-            </div>
+            <AdminMetricsDashboardChart daily={daily} subjects={subjects?.subjects ?? []} />
           </div>
         </CardContent>
       </Card>
