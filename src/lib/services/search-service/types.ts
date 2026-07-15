@@ -1,4 +1,5 @@
 import type {
+  CacheDataAccess,
   QuizDataAccess,
   SyncDataAccess,
   CompetencyDataAccess,
@@ -8,12 +9,15 @@ import type {
   LessonDataAccess,
   VocabularyDataAccess,
   ContentDataAccess,
+  PronunciationDataAccess,
 } from "@/lib/db";
 
 export type SearchDb = QuizDataAccess &
   SyncDataAccess &
   CompetencyDataAccess &
   StudyDataAccess &
+  CacheDataAccess &
+  PronunciationDataAccess &
   DictionaryDataAccess &
   StoryDataAccess &
   LessonDataAccess &
@@ -37,7 +41,9 @@ export interface SearchResultItem {
     | "dictionary"
     | "story"
     | "lesson"
-    | "vocabulary";
+    | "vocabulary"
+    | "pronunciation"
+    | "knowledge-graph";
   title: string;
   snippet: string;
   subject: string;

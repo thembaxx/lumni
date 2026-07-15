@@ -209,7 +209,7 @@ export function HomeContent() {
           key={isAuthenticated ? "auth" : isAnonymous ? "anon" : "guest"}
         >
           {isAuthenticated ? (
-            <Button asChild size="sm" className="flex items-center rounded-full">
+            <Button asChild size="sm" className="flex items-center rounded-full press-scale">
               <Link href="/dashboard" prefetch={true}>
                 <HugeiconsIcon icon={Activity02Icon} data-icon="inline-start" />
                 {t("home.navDashboard")}
@@ -217,13 +217,18 @@ export function HomeContent() {
             </Button>
           ) : isAnonymous ? (
             <>
-              <Button asChild size="sm" variant="ghost" className="flex items-center rounded-full">
+              <Button
+                asChild
+                size="sm"
+                variant="ghost"
+                className="flex items-center rounded-full press-scale"
+              >
                 <Link href="/quiz" prefetch={true}>
                   <HugeiconsIcon icon={Quiz01Icon} data-icon="inline-start" />
                   {t("home.navTryQuiz")}
                 </Link>
               </Button>
-              <Button asChild size="sm" className="rounded-full">
+              <Button asChild size="sm" className="rounded-full press-scale">
                 <Link href="/dashboard" prefetch={true}>
                   {t("home.navGetStarted")}
                 </Link>
@@ -231,10 +236,10 @@ export function HomeContent() {
             </>
           ) : (
             <>
-              <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <Button asChild variant="ghost" size="sm" className="rounded-full press-scale">
                 <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
               </Button>
-              <Button asChild size="sm" className="rounded-full">
+              <Button asChild size="sm" className="rounded-full press-scale">
                 <Link href="/dashboard" prefetch={true}>
                   {t("home.navGetStarted")}
                   <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />

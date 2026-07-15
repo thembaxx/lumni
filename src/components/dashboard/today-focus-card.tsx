@@ -133,7 +133,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className={`size-5 ${cfg.iconColor}`} />
             </div>
             <div className="flex flex-col gap-0.5">
-              <CardTitle className="font-bold text-foreground text-sm tracking-tight">
+              <CardTitle className="font-bold text-foreground text-sm text-balance tracking-tight">
                 Today&apos;s Focus
               </CardTitle>
               <span className={`font-medium text-xs ${cfg.iconColor}`}>{cfg.tag}</span>

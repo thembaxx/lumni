@@ -23,7 +23,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import type { LiveSession } from "@/lib/study-groups/live-session-types";
 import { apiFetch } from "@/lib/shared/api-fetch";
+import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 import { cn } from "@/lib/utils";
+import { useGamification } from "@/hooks/use-gamification";
 import { useLiveSession } from "@/hooks/use-live-session";
 
 const ACTIVITIES = [
@@ -73,6 +75,8 @@ function ParticipantAvatars({ participants }: { participants: LiveParticipant[] 
 function LiveSessionContent({ session, groupId }: { session: LiveSession; groupId: string }) {
   const { user } = useAuth();
   const userId = user?.$id;
+  const gamification = useGamification();
+  const joinTimestampRef = useRef<number | null>(null);
 
   const { enter, leave, update } = usePresence({
     autoEnterLeave: false,
@@ -100,16 +104,36 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
   const isParticipant = !!currentParticipant;
 
   const handleJoin = useCallback(() => {
+    joinTimestampRef.current = Date.now();
     enter({
       userId: userId ?? "",
       userName: user?.name ?? "Anonymous",
       currentActivity: "Studying",
     } as Record<string, string>);
-  }, [enter, userId, user?.name]);
+    try {
+      gamification.checkAndUnlockAchievements(0, 0, 0, 0, false);
+    } catch {
+      /* best-effort */
+    }
+    saveWeeklySnapshot("Live Study Session", 0, 0);
+  }, [enter, userId, user?.name, gamification]);
 
   const handleLeave = useCallback(() => {
+    const durationMinutes = joinTimestampRef.current
+      ? (Date.now() - joinTimestampRef.current) / 60000
+      : 0;
+    if (durationMinutes > 10) {
+      const xp = Math.floor(durationMinutes / 10) * 5;
+      try {
+        gamification.addXp(xp, 100, 0);
+      } catch {
+        /* best-effort */
+      }
+      saveWeeklySnapshot("Live Study Session", xp, 0);
+    }
+    joinTimestampRef.current = null;
     leave();
-  }, [leave]);
+  }, [leave, gamification]);
 
   const handleActivityChange = useCallback(
     (value: string | null) => {
@@ -134,9 +158,22 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
           logError("LiveSessionBar.endSession", err),
         );
       }
+      const durationMinutes = joinTimestampRef.current
+        ? (Date.now() - joinTimestampRef.current) / 60000
+        : 0;
+      if (durationMinutes > 10) {
+        const xp = Math.floor(durationMinutes / 10) * 5;
+        try {
+          gamification.addXp(xp, 100, 0);
+        } catch {
+          /* best-effort */
+        }
+        saveWeeklySnapshot("Live Study Session", xp, 0);
+      }
+      joinTimestampRef.current = null;
       leave();
     };
-  }, [leave, session.$id, groupId, userId]);
+  }, [leave, session.$id, groupId, userId, gamification]);
 
   return (
     <div

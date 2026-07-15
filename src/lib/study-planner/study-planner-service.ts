@@ -1,9 +1,9 @@
 import type { CompetencyService } from "@/lib/competency-engine/competency-service";
 import { competencyService as defaultCompetencyService } from "@/lib/competency-engine/competency-service";
 import { sendLocalNotification } from "@/lib/services";
-import type { ExamDateInfo } from "@/lib/utils/study-planner";
+import type { ExamDateInfo } from "./types";
 import { generateStudyPlan } from "./algorithms";
-import type { StudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";
+import type { AlgorithmStudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";
 
 const KNOWN_SUBJECTS = [
   { id: "mathematics", name: "Mathematics" },
@@ -23,7 +23,7 @@ export class StudyPlannerService {
   async generateStudyPlan(
     settings: StudyPlanSettings,
     examDates: ExamDateInfo[] = [],
-  ): Promise<StudyPlan> {
+  ): Promise<AlgorithmStudyPlan> {
     const subjects = await this.getAllSubjectsCompetency();
     const plan = await generateStudyPlan(settings, subjects, examDates);
 
@@ -59,9 +59,9 @@ export class StudyPlannerService {
   }
 
   async updateStudyPlan(
-    currentPlan: StudyPlan,
+    currentPlan: AlgorithmStudyPlan,
     examDates: ExamDateInfo[] = [],
-  ): Promise<StudyPlan> {
+  ): Promise<AlgorithmStudyPlan> {
     const updatedSubjects = await this.getAllSubjectsCompetency();
     return generateStudyPlan(currentPlan.settings, updatedSubjects, examDates);
   }

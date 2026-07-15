@@ -5,8 +5,11 @@ import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01I
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import BookmarkAdd01Icon from "@hugeicons/core-free-icons/BookmarkAdd01Icon";
+import BookmarkCheck01Icon from "@hugeicons/core-free-icons/BookmarkCheck01Icon";
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Confetti } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -18,6 +21,7 @@ import { getAnswerText, getCorrectAnswerText } from "@/lib/exam/helpers";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { cn } from "@/lib/utils";
 import type { QuestionPart } from "@/types/exam-paper";
+import { bookmarkService } from "@/lib/services/bookmark-service";
 
 interface SessionResultsViewProps {
   results: {
@@ -41,6 +45,7 @@ export function SessionResultsView({
   onReview,
 }: SessionResultsViewProps) {
   const t = useTranslations();
+  const { push } = useRouter();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const correctCount = results.partResults.filter((r) => r.correct).length;
@@ -53,6 +58,35 @@ export function SessionResultsView({
   );
 
   const failedCount = totalCount - correctCount;
+
+  const handleBookmarkAll = useCallback(async () => {
+    for (const item of flatParts) {
+      const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+      await bookmarkService.add({
+        questionId: fullId,
+        questionText: item.part.text ?? "",
+        subject: _metadata.subject,
+        topic: item.sectionId,
+        savedAt: Date.now(),
+      });
+    }
+  }, [flatParts, _metadata.subject]);
+
+  const handleBookmarkWrong = useCallback(async () => {
+    for (const item of flatParts) {
+      const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+      const result = resultMap.get(fullId);
+      if (result && !result.correct) {
+        await bookmarkService.add({
+          questionId: fullId,
+          questionText: item.part.text ?? "",
+          subject: _metadata.subject,
+          topic: item.sectionId,
+          savedAt: Date.now(),
+        });
+      }
+    }
+  }, [flatParts, resultMap, _metadata.subject]);
 
   return (
     <FadeIn
@@ -251,6 +285,34 @@ export function SessionResultsView({
             {t("exam.reviewMistakes")}
           </Button>
         )}
+        {failedCount > 0 && (
+          <Button variant="secondary" onClick={() => push("/flashcards?mode=exam-review")}>
+            <HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
+            Study missed questions
+          </Button>
+        )}
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBookmarkAll}
+            className="rounded-full text-xs"
+          >
+            <HugeiconsIcon icon={BookmarkAdd01Icon} data-icon="inline-start" />
+            Bookmark all questions
+          </Button>
+          {failedCount > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleBookmarkWrong}
+              className="rounded-full text-xs"
+            >
+              <HugeiconsIcon icon={BookmarkCheck01Icon} data-icon="inline-start" />
+              Bookmark wrong answers
+            </Button>
+          )}
+        </div>
         <ShareResultButton
           cardParams={{
             score: correctCount,

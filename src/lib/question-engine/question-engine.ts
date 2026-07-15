@@ -149,6 +149,8 @@ export class QuestionEngine {
         if (questions.length >= remainingCount) {
           break;
         }
+      } else if (result.length === 0) {
+        break;
       }
     }
 

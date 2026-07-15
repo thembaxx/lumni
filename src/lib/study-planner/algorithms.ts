@@ -1,6 +1,11 @@
 import { getCachedGraph } from "@/lib/knowledge-graph/service";
-import type { ExamDateInfo } from "@/lib/utils/study-planner";
-import type { StudyPlan, StudyPlanSettings, SubjectCompetency, TopicPlan } from "./types";
+import type {
+  AlgorithmStudyPlan,
+  ExamDateInfo,
+  StudyPlanSettings,
+  SubjectCompetency,
+  TopicPlan,
+} from "./types";
 
 /**
  * Calculate the weight of each subject based on the target APS and the current competency.
@@ -53,7 +58,7 @@ export async function generateStudyPlan(
   settings: StudyPlanSettings,
   subjects: SubjectCompetency[],
   examDates: ExamDateInfo[] = [],
-): Promise<StudyPlan> {
+): Promise<AlgorithmStudyPlan> {
   const startDate = new Date(settings.startDate);
   let endDate = new Date(settings.endDate);
   const studyDays = settings.studyDays;

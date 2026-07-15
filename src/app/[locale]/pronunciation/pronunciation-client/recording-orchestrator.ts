@@ -2,6 +2,7 @@ import { audioEngine } from "@/lib/audio-engine";
 import { getWhisperService } from "@/lib/audio-engine/whisper-service";
 import { savePronunciationScore } from "@/lib/pronunciation-history/service";
 import { logError } from "@/lib/shared/logger";
+import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import type { AssessmentResult } from "./scoring";
 import { calcAccuracy } from "./scoring";
 
@@ -101,15 +102,27 @@ export async function transcribeAndAssess(
       const svc = getWhisperService();
       const scored = svc.assessPronunciation(transcriptionText, expectedText);
       callbacks.setAssessment(scored);
+      const word = expectedText.trim().split(/\s+/)[0] || "unknown";
       savePronunciationScore(
         userId,
-        expectedText.trim().split(/\s+/)[0] || "unknown",
+        word,
         scored.overallScore,
         calcAccuracy(scored.wordScores),
         scored.phonemeAccuracy,
         scored.fluencyScore,
         prefillLang,
       ).catch((e) => logError("pronunciation-save-score", e));
+
+      const overallScore = scored.overallScore;
+      if (overallScore != null) {
+        trackQuestionResult({
+          subjectId: "languages",
+          topicId: word,
+          bloomLevel: "apply",
+          score: overallScore >= 70 ? 1 : 0,
+          maxScore: 1,
+        }).catch(() => {});
+      }
     }
   }
 

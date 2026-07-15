@@ -218,28 +218,5 @@ async function processTable(name: string, records: unknown[], userId: string): P
         }),
       );
       break;
-    case "bookmarks":
-      await Promise.all(
-        records.map((b) => {
-          const rec = b as {
-            questionId: string;
-            questionText: string;
-            subject: string;
-            topic: string;
-            note: string;
-            savedAt: number;
-          };
-          return enqueue("appwrite-bookmark-sync", {
-            userId,
-            questionId: rec.questionId,
-            questionText: rec.questionText,
-            subject: rec.subject,
-            topic: rec.topic,
-            note: rec.note,
-            savedAt: rec.savedAt,
-          });
-        }),
-      );
-      break;
   }
 }

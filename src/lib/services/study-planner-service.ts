@@ -26,7 +26,7 @@ import {
   type StudySession,
   saveStudyPlan,
   updateStudySession,
-} from "@/lib/utils/study-planner";
+} from "@/lib/study-planner";
 
 export interface StudyPlannerDeps {
   db: StudyDataAccess;
@@ -142,7 +142,7 @@ export class StudyPlannerService {
     horizonDays?: number;
   }): Promise<void> {
     try {
-      const { getStudyPlannerService } = await import("@/lib/study-planner/study-planner-service");
+      const { getStudyPlannerService } = await import("@/lib/study-planner");
 
       const today = new Date();
       const horizonDays = settings?.horizonDays ?? 30;

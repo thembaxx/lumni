@@ -1,6 +1,6 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { dexieDataAccess } from "@/lib/db";
 import { createRegistry } from "@/lib/webhooks";
-import { InMemoryDataAccess } from "@/lib/db";
 import { z } from "zod";
 
 const endpointSchema = z.object({
@@ -9,11 +9,10 @@ const endpointSchema = z.object({
   description: z.string().optional(),
 });
 
-const serverDb = new InMemoryDataAccess();
-const registry = createRegistry(serverDb);
+const registry = createRegistry(dexieDataAccess);
 
 export const GET = createRouteHandler({
-  auth: "required",
+  auth: "admin",
   errorLabel: "WebhookList",
   execute: async () => {
     const endpoints = await registry.listEndpoints();
@@ -22,7 +21,7 @@ export const GET = createRouteHandler({
 });
 
 export const POST = createRouteHandler({
-  auth: "required",
+  auth: "admin",
   errorLabel: "WebhookCreate",
   execute: async ({ body }) => {
     const parsed = endpointSchema.safeParse(body);
@@ -33,7 +32,7 @@ export const POST = createRouteHandler({
 });
 
 export const DELETE = createRouteHandler({
-  auth: "required",
+  auth: "admin",
   errorLabel: "WebhookDelete",
   execute: async ({ body }) => {
     const { id } = body as { id: string };

@@ -1,4 +1,5 @@
 import { dexieDataAccess } from "@/lib/db";
+import { logError } from "@/lib/shared/logger";
 import { enqueueOutbox } from "./outbox";
 
 const SYNCABLE_TABLES: ReadonlySet<string> = new Set([
@@ -14,6 +15,11 @@ const SYNCABLE_TABLES: ReadonlySet<string> = new Set([
   "examSessions",
   "quizAttempts",
   "studyPlans",
+  "studyGuides",
+  "vocabularyList",
+  "pronunciationHistory",
+  "storyCache",
+  "storyQuestions",
 ]);
 
 export function isSyncableTableName(name: string): boolean {
@@ -34,20 +40,26 @@ export function wrapTableForSync(tableName: string, table: SyncableTableInterfac
   (table as unknown as Record<string, unknown>).put = async (item: Record<string, unknown>) => {
     const result = await originalPut(item);
     const recordId = String(item.id ?? result);
-    await enqueueOutbox(tableName, recordId, item.id ? "update" : "create", item).catch(() => {});
+    await enqueueOutbox(tableName, recordId, item.id ? "update" : "create", item).catch((e) =>
+      logError("SyncWriter.put", e, { table: tableName, operation: "put" }),
+    );
     return result;
   };
 
   (table as unknown as Record<string, unknown>).add = async (item: Record<string, unknown>) => {
     const result = await originalAdd(item);
     const recordId = String(result);
-    await enqueueOutbox(tableName, recordId, "create", item).catch(() => {});
+    await enqueueOutbox(tableName, recordId, "create", item).catch((e) =>
+      logError("SyncWriter.add", e, { table: tableName, operation: "add" }),
+    );
     return result;
   };
 
   (table as unknown as Record<string, unknown>).delete = async (id: string | number) => {
     await originalDelete(id);
-    await enqueueOutbox(tableName, String(id), "delete", null).catch(() => {});
+    await enqueueOutbox(tableName, String(id), "delete", null).catch((e) =>
+      logError("SyncWriter.delete", e, { table: tableName, operation: "delete" }),
+    );
     return undefined as unknown as void;
   };
 }
@@ -94,6 +106,26 @@ const SYNC_TABLES: Array<SyncTableConfig> = [
     table: dexieDataAccess.quizAttempts as unknown as SyncableTableInterface,
   },
   { name: "studyPlans", table: dexieDataAccess.studyPlans as unknown as SyncableTableInterface },
+  {
+    name: "studyGuides",
+    table: dexieDataAccess.studyGuides as unknown as SyncableTableInterface,
+  },
+  {
+    name: "vocabularyList",
+    table: dexieDataAccess.vocabularyList as unknown as SyncableTableInterface,
+  },
+  {
+    name: "pronunciationHistory",
+    table: dexieDataAccess.pronunciationHistory as unknown as SyncableTableInterface,
+  },
+  {
+    name: "storyCache",
+    table: dexieDataAccess.storyCache as unknown as SyncableTableInterface,
+  },
+  {
+    name: "storyQuestions",
+    table: dexieDataAccess.storyQuestions as unknown as SyncableTableInterface,
+  },
 ];
 
 let _initialized = false;

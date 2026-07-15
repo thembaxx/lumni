@@ -225,20 +225,6 @@ const appwriteQuestionFlag = createAppendHandler(COLLECTIONS.QUESTION_FLAGS, (da
   createdAt: new Date(data.createdAt as number).toISOString(),
 }));
 
-const appwriteBookmarkSync = createUpsertHandler(
-  COLLECTIONS.BOOKMARKS,
-  { questionId: "questionId" },
-  (data) => ({
-    userId: (data.userId as string) || "",
-    questionId: data.questionId as string,
-    questionText: data.questionText as string,
-    subject: data.subject as string,
-    topic: (data.topic as string) || "",
-    note: (data.note as string) || "",
-    savedAt: new Date(data.savedAt as number).toISOString(),
-  }),
-);
-
 const appwriteBookmarkDelete = createDeleteHandler(COLLECTIONS.BOOKMARKS, {
   questionId: "questionId",
 });
@@ -299,7 +285,6 @@ export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
   "appwrite-flashcard-pull": appwriteFlashcardPull,
   "appwrite-flashcard-delete": appwriteFlashcardDelete,
   "appwrite-wrong-answer-sync": appwriteWrongAnswerSync,
-  "appwrite-bookmark-sync": appwriteBookmarkSync,
   "appwrite-bookmark-delete": appwriteBookmarkDelete,
   "appwrite-chat-sync": appwriteChatSync,
   "appwrite-rating-sync": appwriteRatingSync,

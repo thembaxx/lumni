@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getPendingOutboxEntries, removeOutboxEntries, incrementRetry } from "@/lib/sync/outbox";
+import { logError } from "@/lib/shared/logger";
 import { Button } from "@/components/ui/button";
 
 interface StuckEntry {
@@ -32,7 +33,9 @@ export function ConflictResolver() {
             })),
         );
       })
-      .catch(() => {});
+      .catch((e) => {
+        logError("ConflictResolver.loadConflicts", e);
+      });
   }, [open]);
 
   return (

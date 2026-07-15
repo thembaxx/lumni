@@ -1,2 +1,2 @@
-export type { DigestDeps, DigestResult, WeeklyStats } from "./digest-service";
-export { DigestService } from "./digest-service";
+export { DigestService } from "@/lib/services/digest-service";
+export type { DigestDeps, DigestResult, WeeklyStats } from "@/lib/services/digest-service";

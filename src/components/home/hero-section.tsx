@@ -174,7 +174,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
           className="flex flex-1 flex-col items-center gap-6 text-center md:items-start md:text-left"
         >
           <m.h1
-            className="max-w-5xl text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground"
+            className="max-w-5xl text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground text-balance"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: 0.2 }}

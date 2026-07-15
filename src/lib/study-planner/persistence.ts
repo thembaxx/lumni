@@ -1,61 +1,12 @@
-// Persistence layer for study plan data — owned by the service layer.
-// StudyPlannerService imports from here; legacy utils re-export from here.
-
 import { dexieDataAccess } from "@/lib/db";
-
 import { logError } from "@/lib/shared/logger";
-
-// ============================================================
-// Types (shared between service class and legacy callers)
-// ============================================================
-
-export interface StudySession {
-  id: string;
-  subject: string;
-  topic?: string;
-  type: "quiz" | "flashcard" | "exam" | "review";
-  scheduledAt: number;
-  duration: number;
-  completed: boolean;
-  completedAt?: number;
-  actualDuration?: number;
-  notes?: string;
-  repeat?: "daily" | "weekly" | "none";
-}
-
-export interface ExamDate {
-  id: string;
-  subject: string;
-  paper: string;
-  date: number;
-  daysUntil: number;
-  notes?: string;
-}
-
-export interface StudyPlan {
-  sessions: StudySession[];
-  examDates: ExamDate[];
-  generatedAt: number;
-  stale: boolean;
-  lastCompetencyRefresh: number;
-  progress?: number;
-  totalActualMinutes?: number;
-}
-
-export interface ExamDateInfo {
-  subjectId: string;
-  date: string;
-}
-
-// ============================================================
-// Persistence — in-memory cache + Dexie, no localStorage
-// ============================================================
+import type { PersistenceStudyPlan, StudySession, ExamDate } from "./types";
 
 const STUDY_PLAN_DEXIE_KEY = "default";
 
-let _cachedPlan: StudyPlan | null = null;
+let _cachedPlan: PersistenceStudyPlan | null = null;
 
-function defaultStudyPlan(): StudyPlan {
+function defaultStudyPlan(): PersistenceStudyPlan {
   return {
     sessions: [],
     examDates: [],
@@ -67,16 +18,16 @@ function defaultStudyPlan(): StudyPlan {
   };
 }
 
-export function loadStudyPlan(): StudyPlan {
+export function loadStudyPlan(): PersistenceStudyPlan {
   if (!_cachedPlan) _cachedPlan = defaultStudyPlan();
   return _cachedPlan;
 }
 
-export async function loadStudyPlanFromDexie(): Promise<StudyPlan> {
+export async function loadStudyPlanFromDexie(): Promise<PersistenceStudyPlan> {
   try {
     const record = await dexieDataAccess.studyPlans.get(STUDY_PLAN_DEXIE_KEY);
     if (record) {
-      const plan = JSON.parse(record.plan) as StudyPlan;
+      const plan = JSON.parse(record.plan) as PersistenceStudyPlan;
       _cachedPlan = plan;
       return plan;
     }
@@ -86,7 +37,7 @@ export async function loadStudyPlanFromDexie(): Promise<StudyPlan> {
   return loadStudyPlan();
 }
 
-export function saveStudyPlan(plan: StudyPlan): void {
+export function saveStudyPlan(plan: PersistenceStudyPlan): void {
   _cachedPlan = plan;
   dexieDataAccess.studyPlans
     .put({
@@ -132,7 +83,7 @@ function generateRecurringSessions(session: Omit<StudySession, "id">): Omit<Stud
   return results;
 }
 
-export function addStudySession(session: Omit<StudySession, "id">): StudyPlan {
+export function addStudySession(session: Omit<StudySession, "id">): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   const sessions = generateRecurringSessions(session);
 
@@ -150,7 +101,7 @@ export function addStudySession(session: Omit<StudySession, "id">): StudyPlan {
   return plan;
 }
 
-function recalculateProgress(plan: StudyPlan): void {
+function recalculateProgress(plan: PersistenceStudyPlan): void {
   const planned = plan.sessions.filter((s) => s.duration > 0);
   const completed = planned.filter((s) => s.completed);
   const totalPlanned = planned.reduce((sum, s) => sum + s.duration, 0);
@@ -159,7 +110,10 @@ function recalculateProgress(plan: StudyPlan): void {
   plan.totalActualMinutes = completed.reduce((sum, s) => sum + (s.actualDuration ?? s.duration), 0);
 }
 
-export function updateStudySession(id: string, updates: Partial<StudySession>): StudyPlan {
+export function updateStudySession(
+  id: string,
+  updates: Partial<StudySession>,
+): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   const index = plan.sessions.findIndex((s) => s.id === id);
   if (index >= 0) {
@@ -171,7 +125,7 @@ export function updateStudySession(id: string, updates: Partial<StudySession>): 
   return plan;
 }
 
-export function deleteStudySession(id: string): StudyPlan {
+export function deleteStudySession(id: string): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   plan.sessions = plan.sessions.filter((s) => s.id !== id);
   plan.generatedAt = Date.now();
@@ -179,7 +133,7 @@ export function deleteStudySession(id: string): StudyPlan {
   return plan;
 }
 
-export function addExamDate(exam: Omit<ExamDate, "id" | "daysUntil">): StudyPlan {
+export function addExamDate(exam: Omit<ExamDate, "id" | "daysUntil">): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   const daysUntil = Math.ceil((exam.date - Date.now()) / (1000 * 60 * 60 * 24));
   const newExam: ExamDate = {
@@ -193,7 +147,7 @@ export function addExamDate(exam: Omit<ExamDate, "id" | "daysUntil">): StudyPlan
   return plan;
 }
 
-export function deleteExamDate(id: string): StudyPlan {
+export function deleteExamDate(id: string): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   plan.examDates = plan.examDates.filter((e) => e.id !== id);
   plan.generatedAt = Date.now();
@@ -227,7 +181,7 @@ export function autoScheduleSessions(
   subjects: string[],
   weakTopics: Record<string, string[]>,
   dailyGoalMinutes: number = 30,
-): StudyPlan {
+): PersistenceStudyPlan {
   const plan = loadStudyPlan();
   const now = Date.now();
   const sessions: StudySession[] = [];

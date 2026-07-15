@@ -1,8 +1,10 @@
-import { dexieDataAccess, type ObservabilityDataAccess } from "@/lib/db";
+import { dexieDataAccess, type ObservabilityDataAccess, type WebhookDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: ObservabilityDataAccess } = Object.freeze({ db: dexieDataAccess });
-export function __setDepsForTesting(deps: { db: ObservabilityDataAccess }) {
+type EventDb = ObservabilityDataAccess & WebhookDataAccess;
+
+let _deps: { db: EventDb } = Object.freeze({ db: dexieDataAccess });
+export function __setDepsForTesting(deps: { db: EventDb }) {
   _deps = Object.freeze({ ...deps });
 }
 
@@ -48,6 +50,25 @@ function saveEvents(events: TrackEvent[]): void {
   }
 }
 
+let _dispatcher: {
+  dispatchWebhook(event: string, payload: Record<string, unknown>): Promise<void>;
+} | null = null;
+
+async function fireWebhook(event: string, payload: Record<string, unknown>): Promise<void> {
+  if (typeof window === "undefined") return;
+  try {
+    if (!_dispatcher) {
+      const { createRegistry } = await import("@/lib/webhooks/registry");
+      const { createDispatcher } = await import("@/lib/webhooks/dispatcher");
+      const registry = createRegistry(_deps.db);
+      _dispatcher = createDispatcher({ db: _deps.db, registry });
+    }
+    await _dispatcher.dispatchWebhook(event, payload);
+  } catch (err) {
+    logError("FireWebhook", err);
+  }
+}
+
 export function trackEvent(
   type: EventType,
   label: string,
@@ -69,6 +90,7 @@ export async function trackSessionStart(userId: string, sessionId: string): Prom
       sessionId,
       timestamp: Date.now(),
     });
+    fireWebhook("study-session.started", { userId, sessionId, timestamp: Date.now() });
   } catch (err) {
     logError("TrackSessionStart", err);
   }
@@ -83,6 +105,7 @@ export async function trackSessionEnd(userId: string, sessionId: string): Promis
       sessionId,
       timestamp: Date.now(),
     });
+    fireWebhook("study-session.ended", { userId, sessionId, timestamp: Date.now() });
   } catch (err) {
     logError("TrackSessionEnd", err);
   }

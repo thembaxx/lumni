@@ -14,6 +14,7 @@ import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { ComprehensionQuestionCard } from "@/components/stories/comprehension-question-card";
 import { StoryProgressBar } from "@/components/stories/story-progress-bar";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +25,7 @@ import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { logError } from "@/lib/shared/logger";
+import { trackQuestionResult } from "@/lib/orchestrator/track-result";
 import { cacheStory, generateComprehensionQuestions } from "@/lib/stories";
 import { loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion } from "@/lib/stories/types";
@@ -189,9 +191,21 @@ export function StoryReaderClient() {
     }
   }, [story, doLoadQuestions]);
 
-  const handleGraded = useCallback((questionId: string, score: number) => {
-    setScores((prev) => addQuestionScore(prev, questionId, score));
-  }, []);
+  const handleGraded = useCallback(
+    (questionId: string, score: number) => {
+      setScores((prev) => addQuestionScore(prev, questionId, score));
+      if (story) {
+        trackQuestionResult({
+          subjectId: story.language,
+          topicId: `reading-${story.id}`,
+          bloomLevel: "understand",
+          score: score >= 70 ? 1 : 0,
+          maxScore: 1,
+        }).catch(() => {});
+      }
+    },
+    [story],
+  );
 
   useEffect(() => {
     trackComprehensionIfComplete(
@@ -302,6 +316,9 @@ export function StoryReaderClient() {
             </div>
           </CardHeader>
           <CardContent className="flex flex-col gap-6 p-5 pt-0">
+            <div className="flex items-center justify-end">
+              <TTSButton text={story.content} />
+            </div>
             <div className="text-base/7 leading-[1.75]">
               {showWordHighlight && currentWordIndex >= 0 ? (
                 <WordHighlightText text={story.content} currentWordIndex={currentWordIndex} />

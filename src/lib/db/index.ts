@@ -12,6 +12,7 @@ export type {
   LegacyDataAccess,
   LessonDataAccess,
   ObservabilityDataAccess,
+  PronunciationDataAccess,
   QuizDataAccess,
   SettingsDataAccess,
   SocialDataAccess,

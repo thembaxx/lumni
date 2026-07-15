@@ -1,5 +1,5 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { PlatformAnalyticsService } from "@/lib/admin/analytics-service";
+import { PlatformAnalyticsService } from "@/lib/analytics/analytics-service";
 
 interface SubjectUsage {
   name: string;

@@ -48,6 +48,9 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case "FINISH":
       return { ...state, isComplete: true, isActive: false };
     case "START":
+      if (state.isActive && !state.isComplete) {
+        return state;
+      }
       return { ...INITIAL_QUIZ_STATE, isActive: true };
     case "SET_ACTIVE":
       return { ...state, isActive: action.active };

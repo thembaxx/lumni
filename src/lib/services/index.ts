@@ -1,4 +1,17 @@
 export { analyticsService } from "./analytics-service";
+export { bookmarkService, DexieBookmarkService } from "./bookmark-service";
+export type { BookmarkService } from "./bookmark-service";
+export { DigestService } from "./digest-service";
+export type { DigestDeps, DigestResult, WeeklyStats } from "./digest-service";
+export { ttsService } from "./tts-service";
+export type { TTSOptions, TTSVoice, TTSState } from "./tts-service";
+export {
+  trackEngineEvent,
+  loadEvents,
+  getAnalyticsSummary,
+  clearAnalytics,
+} from "./analytics-events";
+export type { AnalyticsEvent } from "./analytics-events";
 export { getWeeklyLeaderboard, saveWeeklySnapshot } from "./leaderboard-service";
 export type { LeaderboardEntry } from "./leaderboard-service";
 export {

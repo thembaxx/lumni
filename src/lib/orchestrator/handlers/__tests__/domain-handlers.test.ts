@@ -118,20 +118,6 @@ describe("sync handlers", () => {
     await expect(handler({ id: "fc-1" })).resolves.toBeUndefined();
   });
 
-  test("appwrite-bookmark-sync runs without error", async () => {
-    const handler = getHandler("appwrite-bookmark-sync");
-    await expect(
-      handler({
-        userId: "u1",
-        questionId: "q1",
-        questionText: "test",
-        subject: "math",
-        topic: "algebra",
-        savedAt: Date.now(),
-      }),
-    ).resolves.toBeUndefined();
-  });
-
   test("prune-stale-questions runs without error", async () => {
     const handler = getHandler("prune-stale-questions");
     await expect(handler({})).resolves.toBeUndefined();
@@ -160,7 +146,6 @@ describe("handler registry", () => {
       "appwrite-flashcard-pull",
       "appwrite-flashcard-delete",
       "appwrite-wrong-answer-sync",
-      "appwrite-bookmark-sync",
       "appwrite-bookmark-delete",
       "appwrite-chat-sync",
       "appwrite-rating-sync",

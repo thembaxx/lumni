@@ -22,7 +22,7 @@ export function DashboardContent({
 
   useEffect(() => {
     if (isLoggedIn) {
-      initializeNotificationSchedulers();
+      return initializeNotificationSchedulers();
     }
   }, [isLoggedIn]);
 

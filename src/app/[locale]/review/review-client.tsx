@@ -13,6 +13,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
 import { motionEase } from "@/lib/utils/animation";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -115,6 +116,11 @@ export function ReviewClient() {
               Wrong Answer Journal
             </h1>
             <div className="flex items-center gap-2">
+              {entries.length > 0 && !filterSubject && (
+                <Link href="/quiz?count=10" prefetch={true}>
+                  <Button size="sm">Generate practice quiz from all mistakes</Button>
+                </Link>
+              )}
               {filterSubject && (
                 <Link
                   href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
@@ -203,6 +209,15 @@ export function ReviewClient() {
                     </Link>
                   </div>
                 )}
+                {!filterSubject && (
+                  <div className="mt-4">
+                    <Link href="/quiz?count=5">
+                      <Button size="sm" variant="outline">
+                        Start a practice quiz
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </SpotlightCard>
@@ -227,9 +242,12 @@ export function ReviewClient() {
                       onChange={(v) => handleErrorTypeChange(entry.id ?? 0, v)}
                     />
                   </div>
-                  <h3 className="font-semibold text-base">
-                    <MarkdownRenderer content={entry.questionText} />
-                  </h3>
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-base">
+                      <MarkdownRenderer content={entry.questionText} />
+                    </h3>
+                    <TTSButton text={entry.questionText} className="mt-0.5 shrink-0" />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-3 p-4 pt-0">
                   <div className="grid grid-cols-2 gap-3">

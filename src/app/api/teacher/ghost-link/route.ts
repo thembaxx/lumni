@@ -4,11 +4,21 @@ import { isTeacher } from "@/lib/server/auth";
 import { databases } from "@/lib/appwrite.server";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { logError } from "@/lib/shared/logger";
+import { meetsTierRequirement } from "@/lib/school/tier-enforcer";
+import { getSchool } from "@/lib/school/service";
 
 export const POST = createRouteHandler({
   auth: "required",
-  execute: async ({ userId }) => {
+  execute: async ({ userId, body }) => {
     if (!userId || !isTeacher(userId)) throw new HttpError(403, "Teacher access required");
+    const { schoolId } = (body ?? {}) as { schoolId?: string };
+    if (schoolId) {
+      const school = await getSchool(schoolId);
+      if (!school) throw new HttpError(404, "School not found");
+      if (!meetsTierRequirement(school.licenseTier, "standard")) {
+        throw new HttpError(403, "Ghost links require at least a Standard plan. Please upgrade.");
+      }
+    }
     const token = crypto.randomUUID();
     const link = {
       token,

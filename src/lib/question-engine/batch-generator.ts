@@ -53,45 +53,46 @@ async function generateMixed(
   const { count } = params;
   const itemCount = Math.max(1, Math.ceil(count / batches.length));
 
-  const batchResults = await Promise.all(
-    batches.map(async (batch) => {
-      const available = batch.filter((t) => registry.hasProcessor(t));
-      if (available.length === 0) {
-        return [];
+  const results: Question[] = [];
+
+  for (const batch of batches) {
+    const remaining = count - results.length;
+    if (remaining <= 0) break;
+
+    const available = batch.filter((t) => registry.hasProcessor(t));
+    if (available.length === 0) {
+      continue;
+    }
+
+    const batchItemCount = Math.max(1, Math.ceil(remaining / available.length));
+    const perType = Math.floor(batchItemCount / available.length);
+    const remainder = batchItemCount - perType * available.length;
+
+    for (let i = 0; i < available.length; i++) {
+      const needed = perType + (i < remainder ? 1 : 0);
+      if (needed <= 0) {
+        continue;
       }
 
-      const perType = Math.floor(itemCount / available.length);
-      const remainder = itemCount - perType * available.length;
-      const batchQuestions: Question[] = [];
-
-      for (let i = 0; i < available.length && batchQuestions.length < itemCount; i++) {
-        const needed = perType + (i < remainder ? 1 : 0);
-        if (needed <= 0) {
-          continue;
-        }
-
-        let generated = false;
-        for (let j = 0; j < available.length && !generated; j++) {
-          const tryType = available[(i + j) % available.length];
-          const processor = registry.getProcessor(tryType);
-          try {
-            const questions = await processor.generate(
-              { ...params, count: needed, questionType: tryType },
-              ragContext,
-            );
-            if (questions.length > 0) {
-              batchQuestions.push(...questions);
-              generated = true;
-            }
-          } catch (error) {
-            logError("QuestionEngine.generateMixed", error);
+      let generated = false;
+      for (let j = 0; j < available.length && !generated; j++) {
+        const tryType = available[(i + j) % available.length];
+        const processor = registry.getProcessor(tryType);
+        try {
+          const questions = await processor.generate(
+            { ...params, count: needed, questionType: tryType },
+            ragContext,
+          );
+          if (questions.length > 0) {
+            results.push(...questions);
+            generated = true;
           }
+        } catch (error) {
+          logError("QuestionEngine.generateMixed", error);
         }
       }
+    }
+  }
 
-      return batchQuestions;
-    }),
-  );
-
-  return batchResults.flat().slice(0, count);
+  return results.slice(0, count);
 }

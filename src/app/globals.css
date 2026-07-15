@@ -869,18 +869,10 @@
   box-shadow: var(--shadow-level-3);
 }
 
-/* Image outline — subtle 1px outline for consistent depth */
-.img-outline {
-  outline: 1px solid var(--color-opaque-separator);
-  outline-offset: -1px;
-}
-.dark .img-outline {
-  outline-color: var(--color-separator);
-}
-
-/* Image outline utility — subtle 1px border for consistent depth */
+/* Image outline — pure black/white at low opacity (never tinted neutral) */
 .img-outline {
   outline: 1px solid oklch(0 0 0 / 0.1);
+  outline-offset: -1px;
 }
 .dark .img-outline {
   outline: 1px solid oklch(1 0 0 / 0.1);

@@ -20,3 +20,9 @@ export interface WebhookDelivery {
   createdAt: number;
   completedAt?: number;
 }
+
+export type WebhookEventType =
+  | "quiz.completed"
+  | "achievement.unlocked"
+  | "study-session.started"
+  | "study-session.ended";

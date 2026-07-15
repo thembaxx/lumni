@@ -57,10 +57,22 @@ export function createSyncService(userId: () => string | null): SyncService {
         });
 
         if (response.ok) {
-          pushed.push(entry.id!);
+          if (entry.id == null) {
+            logError("SyncService.pushOutbox", new Error("Outbox entry missing id"), {
+              entry: entry.table,
+            });
+            continue;
+          }
+          pushed.push(entry.id);
         } else {
           errors.push(`Push ${entry.table}/${entry.recordId}: ${response.status}`);
-          await incrementRetry(entry.id!);
+          if (entry.id == null) {
+            logError("SyncService.pushOutbox", new Error("Outbox entry missing id on retry"), {
+              entry: entry.table,
+            });
+            continue;
+          }
+          await incrementRetry(entry.id);
         }
       } catch (err) {
         errors.push(`Push ${entry.table}/${entry.recordId}: network error`);
@@ -101,6 +113,11 @@ export function createSyncService(userId: () => string | null): SyncService {
         "examSessions",
         "quizAttempts",
         "studyPlans",
+        "studyGuides",
+        "vocabularyList",
+        "pronunciationHistory",
+        "storyCache",
+        "storyQuestions",
       ];
 
       const tableAccessors: Record<string, DataAccessTable<unknown, string | number>> = {
@@ -116,6 +133,11 @@ export function createSyncService(userId: () => string | null): SyncService {
         examSessions: dexieDataAccess.examSessions,
         quizAttempts: dexieDataAccess.quizAttempts,
         studyPlans: dexieDataAccess.studyPlans,
+        studyGuides: dexieDataAccess.studyGuides,
+        vocabularyList: dexieDataAccess.vocabularyList,
+        pronunciationHistory: dexieDataAccess.pronunciationHistory,
+        storyCache: dexieDataAccess.storyCache,
+        storyQuestions: dexieDataAccess.storyQuestions,
       };
 
       for (const table of tables) {
@@ -137,8 +159,11 @@ export function createSyncService(userId: () => string | null): SyncService {
           const accessor = tableAccessors[table];
           if (!accessor) continue;
           for (const record of data.records as Array<{ id: string; updatedAt?: string }>) {
-            // oxlint-disable-next-line typescript/no-explicit-any
-            const local = await accessor.get(record.id as any);
+            const id =
+              typeof record.id === "number" || typeof record.id === "string"
+                ? record.id
+                : String(record.id);
+            const local = await accessor.get(id);
             if (
               local &&
               typeof local === "object" &&
@@ -213,23 +238,12 @@ export function createSyncService(userId: () => string | null): SyncService {
 
     trigger().catch((err) => logError("Sync.start", err));
 
-    const handleOnline = () => {
-      trigger().catch((err) => logError("Sync.online", err));
-    };
-    window.addEventListener("online", handleOnline);
-
     intervalId = setInterval(
       () => {
         trigger().catch((err) => logError("Sync.interval", err));
       },
       5 * 60 * 1000,
     );
-
-    const cleanup = () => {
-      window.removeEventListener("online", handleOnline);
-    };
-
-    return cleanup;
   }
 
   function stop() {

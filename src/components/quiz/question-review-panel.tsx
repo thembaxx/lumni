@@ -1,14 +1,17 @@
 "use client";
 
+import BookmarkAdd01Icon from "@hugeicons/core-free-icons/BookmarkAdd01Icon";
+import BookmarkCheck01Icon from "@hugeicons/core-free-icons/BookmarkCheck01Icon";
 import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Refresh01Icon from "@hugeicons/core-free-icons/Refresh01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
+import { bookmarkService } from "@/lib/services/bookmark-service";
 import { cn } from "@/lib/utils";
 
 function getUserAnswerText(answer?: UserAnswer): string {
@@ -64,6 +67,32 @@ export function QuestionReviewPanel({
   totalQuestions,
 }: QuestionReviewPanelProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const handleBookmarkAll = useCallback(async () => {
+    for (const q of questions) {
+      await bookmarkService.add({
+        questionId: q.id,
+        questionText: q.questionText ?? "",
+        subject,
+        topic: "",
+        savedAt: Date.now(),
+      });
+    }
+  }, [questions, subject]);
+
+  const handleBookmarkWrong = useCallback(async () => {
+    for (let i = 0; i < questions.length; i++) {
+      if (!correctness[i]) {
+        await bookmarkService.add({
+          questionId: questions[i].id,
+          questionText: questions[i].questionText ?? "",
+          subject,
+          topic: "",
+          savedAt: Date.now(),
+        });
+      }
+    }
+  }, [questions, correctness, subject]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -138,6 +167,28 @@ export function QuestionReviewPanel({
           Practice These Topics
         </Button>
       )}
+      <div className="flex gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleBookmarkAll}
+          className="gap-1 rounded-full text-xs"
+        >
+          <HugeiconsIcon icon={BookmarkAdd01Icon} data-icon="inline-start" />
+          Bookmark all
+        </Button>
+        {totalQuestions - correctAnswers > 0 && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBookmarkWrong}
+            className="gap-1 rounded-full text-xs"
+          >
+            <HugeiconsIcon icon={BookmarkCheck01Icon} data-icon="inline-start" />
+            Bookmark wrong
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mockFetch = vi.hoisted(() => vi.fn());
-vi.stubGlobal("fetch", mockFetch);
+const mockTranscribeWithFallback = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/stt-engine", () => ({
+  createSTTEngine: () => ({
+    transcribeWithFallback: mockTranscribeWithFallback,
+  }),
+}));
 
 vi.mock("@/lib/shared/logger", () => ({ logError: vi.fn() }));
 vi.mock("@/lib/server/auth", () => ({
@@ -20,7 +24,7 @@ function makeRequest(body: unknown): NextRequest {
 
 describe("STT API Endpoint", () => {
   beforeEach(() => {
-    mockFetch.mockReset();
+    mockTranscribeWithFallback.mockReset();
   });
 
   it("validates that audio is required", async () => {
@@ -37,26 +41,11 @@ describe("STT API Endpoint", () => {
     expect(data.error).toBe("audio is required");
   });
 
-  it("returns null result when DEEPGRAM_API_KEY is absent (fail open)", async () => {
-    const key = process.env.DEEPGRAM_API_KEY;
-    delete process.env.DEEPGRAM_API_KEY;
-    const response = await POST(makeRequest({ audio: "dGVzdA==" }));
-    process.env.DEEPGRAM_API_KEY = key;
-    const data = await response.json();
-    expect(response.status).toBe(200);
-    expect(data).toEqual({ text: null, confidence: null, provider: null });
-  });
-
-  it("returns transcription from Deepgram on success", async () => {
-    process.env.DEEPGRAM_API_KEY = "test-key";
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: () =>
-        Promise.resolve({
-          results: {
-            channels: [{ alternatives: [{ transcript: "hello world", confidence: 0.95 }] }],
-          },
-        }),
+  it("returns transcription from STT engine on success", async () => {
+    mockTranscribeWithFallback.mockResolvedValue({
+      text: "hello world",
+      confidence: 0.95,
+      provider: "deepgram",
     });
     const response = await POST(makeRequest({ audio: "dGVzdA==" }));
     const data = await response.json();
@@ -64,17 +53,19 @@ describe("STT API Endpoint", () => {
     expect(data).toEqual({ text: "hello world", confidence: 0.95, provider: "deepgram" });
   });
 
-  it("returns null on Deepgram API error", async () => {
-    process.env.DEEPGRAM_API_KEY = "test-key";
-    mockFetch.mockResolvedValue({ ok: false, status: 500 });
+  it("returns null on STT engine failure", async () => {
+    mockTranscribeWithFallback.mockRejectedValue(new Error("stt error"));
     const response = await POST(makeRequest({ audio: "dGVzdA==" }));
     const data = await response.json();
     expect(data).toEqual({ text: null, confidence: null, provider: null });
   });
 
-  it("returns null on network error", async () => {
-    process.env.DEEPGRAM_API_KEY = "test-key";
-    mockFetch.mockRejectedValue(new Error("network error"));
+  it("handles empty result from STT engine", async () => {
+    mockTranscribeWithFallback.mockResolvedValue({
+      text: null,
+      confidence: null,
+      provider: null,
+    });
     const response = await POST(makeRequest({ audio: "dGVzdA==" }));
     const data = await response.json();
     expect(data).toEqual({ text: null, confidence: null, provider: null });

@@ -196,8 +196,13 @@ export class FlashcardEngine {
     updatedCard.lastReview = now;
     updatedCard.updatedAt = now;
 
-    await this.db.flashcards.put(updatedCard);
-    await this.saveReview(card.id, quality, updatedCard);
+    try {
+      await this.db.flashcards.put(updatedCard);
+      await this.saveReview(card.id, quality, updatedCard);
+    } catch (error) {
+      logError("FlashcardEngine.review", error, { cardId: card.id, quality });
+      throw error;
+    }
 
     this.enqueueFn("appwrite-flashcard-sync", syncCardPayload(updatedCard)).catch((e: unknown) =>
       logError("FlashcardEngine.ReviewSync", e),

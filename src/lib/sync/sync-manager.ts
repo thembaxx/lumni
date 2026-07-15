@@ -17,7 +17,6 @@ export type SyncOperation =
   | SyncOp<"appwrite-flashcard-delete">
   | SyncOp<"appwrite-wrong-answer-sync">
   | SyncOp<"appwrite-chat-sync">
-  | SyncOp<"appwrite-bookmark-sync">
   | SyncOp<"appwrite-bookmark-delete">
   | SyncOp<"appwrite-rating-sync">
   | SyncOp<"appwrite-study-plan-sync">

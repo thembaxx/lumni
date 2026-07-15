@@ -117,7 +117,7 @@ const TopNavStatus = memo(function TopNavStatus() {
       {pendingCount > 0 && (
         <Badge
           variant="outline"
-          className="gap-1 rounded-full bg-(--system-accent-alpha-10) text-system-accent"
+          className="gap-1 rounded-full bg-(--system-accent-alpha-10) text-system-accent tabular-nums"
         >
           <div className="size-1.5 rounded-full bg-system-accent" />
           {pendingCount}

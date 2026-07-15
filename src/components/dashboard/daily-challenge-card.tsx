@@ -43,7 +43,7 @@ export function DailyChallengeCard({ streak }: DailyChallengeCardProps) {
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <div className="flex items-center gap-2">
-              <h3 className="font-bold font-sans text-sm text-system-text-primary tracking-tight">
+              <h3 className="font-bold font-sans text-sm text-system-text-primary text-balance tracking-tight">
                 Today&rsquo;s Challenge
               </h3>
               {streak > 1 && (
@@ -57,7 +57,7 @@ export function DailyChallengeCard({ streak }: DailyChallengeCardProps) {
             </div>
             <p className="truncate text-muted-foreground text-xs">Your weakest subject</p>
           </div>
-          <Button size="sm" className="shrink-0 gap-1.5" onClick={handleOpen}>
+          <Button size="sm" className="shrink-0 gap-1.5 press-scale" onClick={handleOpen}>
             Take Challenge
           </Button>
         </CardContent>

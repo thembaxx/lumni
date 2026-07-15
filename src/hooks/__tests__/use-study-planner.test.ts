@@ -94,8 +94,79 @@ vi.mock("@/lib/utils/study-planner", () => ({
   syncStudyPlanToAppwrite: async () => {},
 }));
 
-vi.mock("@/lib/study-planner/study-planner-service", () => ({
-  getStudyPlannerService: () => ({
+vi.mock("@/lib/study-planner", () => ({
+  loadStudyPlanFromDexie: vi.fn(() =>
+    Promise.resolve({ sessions: [], examDates: [], generatedAt: 0 }),
+  ),
+  loadStudyPlan: vi.fn(() => ({
+    sessions: [...mockPlan.sessions],
+    examDates: [...mockPlan.examDates],
+    generatedAt: mockPlan.generatedAt,
+  })),
+  saveStudyPlan: vi.fn((plan: StudyPlan) => {
+    mockPlan = plan;
+  }),
+  addStudySession: vi.fn((session: Omit<StudySession, "id">) => {
+    const s: StudySession = { ...session, id: "session-new" };
+    mockPlan.sessions.push(s);
+    mockSessions = [...mockSessions, s];
+    mockUpcoming = [...mockUpcoming, s];
+    return {
+      sessions: [...mockPlan.sessions],
+      examDates: [...mockPlan.examDates],
+      generatedAt: mockPlan.generatedAt,
+    };
+  }),
+  updateStudySession: vi.fn((id: string, updates: Partial<StudySession>) => {
+    mockPlan.sessions = mockPlan.sessions.map((s) => (s.id === id ? { ...s, ...updates } : s));
+    return {
+      sessions: [...mockPlan.sessions],
+      examDates: [...mockPlan.examDates],
+      generatedAt: mockPlan.generatedAt,
+    };
+  }),
+  deleteStudySession: vi.fn((id: string) => {
+    mockPlan.sessions = mockPlan.sessions.filter((s) => s.id !== id);
+    mockSessions = mockSessions.filter((s) => s.id !== id);
+    mockUpcoming = mockUpcoming.filter((s) => s.id !== id);
+    return {
+      sessions: [...mockPlan.sessions],
+      examDates: [...mockPlan.examDates],
+      generatedAt: mockPlan.generatedAt,
+    };
+  }),
+  addExamDate: vi.fn((exam: Omit<ExamDate, "id" | "daysUntil">) => {
+    const e: ExamDate = { ...exam, id: "exam-new", daysUntil: 10 };
+    mockPlan.examDates.push(e);
+    mockUpcomingExams = [...mockUpcomingExams, e];
+    return {
+      sessions: [...mockPlan.sessions],
+      examDates: [...mockPlan.examDates],
+      generatedAt: mockPlan.generatedAt,
+    };
+  }),
+  deleteExamDate: vi.fn((id: string) => {
+    mockPlan.examDates = mockPlan.examDates.filter((e) => e.id !== id);
+    mockUpcomingExams = mockUpcomingExams.filter((e) => e.id !== id);
+    return {
+      sessions: [...mockPlan.sessions],
+      examDates: [...mockPlan.examDates],
+      generatedAt: mockPlan.generatedAt,
+    };
+  }),
+  getUpcomingSessions: vi.fn(() => [...mockUpcoming]),
+  getTodaySessions: vi.fn(() => [...mockSessions]),
+  getUpcomingExams: vi.fn(() => [...mockUpcomingExams]),
+  getStudyStats: vi.fn(() => ({ ...mockStats })),
+  autoScheduleSessions: vi.fn((_subjects: string[], _weakTopics: Record<string, string[]>) => ({
+    sessions: [...mockPlan.sessions],
+    examDates: [...mockPlan.examDates],
+    generatedAt: mockPlan.generatedAt,
+  })),
+  markPlanStale: vi.fn(),
+  clearPlanStale: vi.fn(),
+  syncStudyPlanToAppwrite: vi.fn(async () => {}),
+  getStudyPlannerService: vi.fn(() => ({
     generateStudyPlan: async () => ({
       topics: [
         {
@@ -107,7 +178,7 @@ vi.mock("@/lib/study-planner/study-planner-service", () => ({
         },
       ],
     }),
-  }),
+  })),
 }));
 
 const { useStudyPlanner } = await import("@/hooks/use-study-planner");

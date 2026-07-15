@@ -14,7 +14,7 @@ import { Link } from "@/i18n/navigation";
 import { logError } from "@/lib/shared/logger";
 import { getSubjectAbbr } from "@/lib/subjects";
 import { getWeekOldThreshold, loadStudyPlan } from "@/lib/utils/study-planner";
-import { useBookmarksStore } from "@/store/bookmarks";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { GeneratePlanForm } from "./generate-plan-form";
 import { StudyPlanEmpty } from "./study-plan-empty";
 import { StudySessionList } from "./study-session-list";
@@ -26,7 +26,7 @@ export function StudyPlanOverview() {
   const [dismissedStale, setDismissedStale] = useState(false);
   const autoRefreshDoneRef = useRef(false);
   const router = useRouter();
-  const bookmarks = useBookmarksStore((s) => s.bookmarks);
+  const bookmarks = useBookmarks().bookmarks;
 
   const handleStartSession = useCallback(
     (session: { subject: string; topic?: string; duration: number }) => {

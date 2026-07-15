@@ -7,7 +7,7 @@ import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useSolver } from "@/hooks/use-solver";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { useBookmarksStore } from "@/store/bookmarks";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 
 interface QuestionState {
@@ -130,7 +130,7 @@ export function QuestionCard({
 
   const [showConfetti, setShowConfetti] = useState(false);
   const [showXPGain, setShowXPGain] = useState(false);
-  const { addBookmark, removeBookmark, isBookmarked } = useBookmarksStore();
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmarks();
   const bookmarked = isBookmarked(question.id);
   const [{ gradeResult, isGrading }, dispatchGrading] = useReducer(gradingReducer, {
     gradeResult: null,
@@ -148,10 +148,6 @@ export function QuestionCard({
     followUpReducer,
     { messages: [], input: "" },
   );
-
-  useEffect(() => {
-    useBookmarksStore.getState().initialize();
-  }, []);
 
   useEffect(() => {
     if (solver.followUpData?.answer) {

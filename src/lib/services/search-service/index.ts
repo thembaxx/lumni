@@ -4,8 +4,10 @@ import {
   searchDexieDictionary,
   searchDexieExamSessions,
   searchDexieFlashcards,
+  searchDexieKnowledgeGraph,
   searchDexieLessons,
   searchDexieProgress,
+  searchDexiePronunciationHistory,
   searchDexieQuestions,
   searchDexieQuizAttempts,
   searchDexieStories,
@@ -29,6 +31,8 @@ const SEARCH_HANDLERS: Record<string, (query: string) => Promise<SearchResultIte
   story: searchDexieStories,
   lesson: searchDexieLessons,
   vocabulary: searchDexieVocabulary,
+  pronunciation: searchDexiePronunciationHistory,
+  "knowledge-graph": searchDexieKnowledgeGraph,
 };
 
 async function searchAppwrite(query: string): Promise<SearchResultItem[]> {
@@ -61,6 +65,8 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
     searchDexieStories(query),
     searchDexieLessons(query),
     searchDexieVocabulary(query),
+    searchDexiePronunciationHistory(query),
+    searchDexieKnowledgeGraph(query),
   ]);
 
   const localResults = local.flat();

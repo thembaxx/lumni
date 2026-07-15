@@ -2,8 +2,10 @@ import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+type IntegrationDb = Pick<DataAccess, "pastPaperQuestions" | "flashcards">;
+
+let _deps: { db: IntegrationDb } = Object.freeze({ db: dexieDataAccess });
+export function __setDepsForTesting(deps: { db: IntegrationDb }) {
   _deps = Object.freeze({ ...deps });
 }
 

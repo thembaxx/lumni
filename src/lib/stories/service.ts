@@ -3,6 +3,7 @@ import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { StoryDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
+import { searchWithRAG } from "@/lib/tinyfish";
 import { getAllStoryMetas, loadStoryContent } from "@/lib/stories/story-data";
 import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
@@ -118,6 +119,22 @@ export async function cacheStory(id: string, story: Story): Promise<void> {
 }
 
 export async function generateComprehensionQuestions(story: Story): Promise<StoryQuestion[]> {
+  const ragSubject = story.subjects[0] ?? "";
+  const ragTopic = story.topics[0] ?? "";
+  const ragContext = await searchWithRAG({ subject: ragSubject, topic: ragTopic }).catch(
+    () => null,
+  );
+  if (ragContext?.xml) {
+    const enrichedConfig = {
+      ...questionsConfig,
+      buildPrompt: (_storyId: string, _storyText: string) =>
+        `${ragContext.xml}\n\n---\n\n${questionsConfig.buildPrompt(_storyId, _storyText)}`,
+    };
+    return new CachedAIGenerator(enrichedConfig, getAI(), _deps.db).generate(
+      story.id,
+      story.content,
+    );
+  }
   return createQuestionsGenerator().generate(story.id, story.content);
 }
 
@@ -159,7 +176,13 @@ export async function generateStoryContent(params: {
   topic: string;
   subject: string;
 }): Promise<Pick<Story, "content" | "vocabulary" | "readTimeMinutes"> | null> {
-  const prompt = `Generate a short story for a Grade ${params.gradeLevel} student in ${params.language} about "${params.topic}". The subject is ${params.subject}. Write the story entirely in ${params.language}. Include vocabulary words with definitions.`;
+  const ragContext = await searchWithRAG({ subject: params.subject, topic: params.topic }).catch(
+    () => null,
+  );
+  let prompt = `Generate a short story for a Grade ${params.gradeLevel} student in ${params.language} about "${params.topic}". The subject is ${params.subject}. Write the story entirely in ${params.language}. Include vocabulary words with definitions.`;
+  if (ragContext?.xml) {
+    prompt = `${ragContext.xml}\n\n---\n\n${prompt}`;
+  }
 
   try {
     const ai = getAI();

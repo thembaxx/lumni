@@ -2,6 +2,7 @@ import { CachedAIGenerator } from "@/lib/ai/cached-ai-generator";
 import { getAI } from "@/lib/ai/client";
 import { dexieDataAccess } from "@/lib/db";
 import type { StudyDataAccess } from "@/lib/db/data-access";
+import { searchWithRAG } from "@/lib/tinyfish";
 import type { CachedStudyGuide, StudyGuide } from "./types";
 
 const STUDY_GUIDE_TTL = 30 * 24 * 60 * 60 * 1000;
@@ -57,6 +58,15 @@ function createGenerator() {
 }
 
 export async function generateGuide(subject: string, topic: string): Promise<StudyGuide> {
+  const ragContext = await searchWithRAG({ subject, topic }).catch(() => null);
+  if (ragContext?.xml) {
+    const enrichedConfig = {
+      ...config,
+      buildPrompt: (s: string, t: string) =>
+        `${ragContext.xml}\n\n---\n\n${config.buildPrompt(s, t)}`,
+    };
+    return new CachedAIGenerator(enrichedConfig, getAI(), _deps.db).generate(subject, topic);
+  }
   return createGenerator().generate(subject, topic);
 }
 

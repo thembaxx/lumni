@@ -264,11 +264,11 @@ async function scheduleReEngagement(settings: NotificationSettings): Promise<voi
   }
 }
 
-export function initializeNotificationSchedulers(): void {
+export function initializeNotificationSchedulers(): () => void {
   clearActiveTimers();
   clearAllTimers();
   const settings = getSettings();
-  if (!settings.enabled) return;
+  if (!settings.enabled) return () => {};
 
   scheduleStudyReminder(settings);
   scheduleStreakAlert(settings);
@@ -280,4 +280,8 @@ export function initializeNotificationSchedulers(): void {
     scheduleAssignmentReminders(settings);
     scheduleExamAlertsFromSession(settings);
   }
+
+  return () => {
+    clearActiveTimers();
+  };
 }

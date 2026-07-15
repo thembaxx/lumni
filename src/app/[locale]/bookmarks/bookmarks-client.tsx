@@ -4,7 +4,6 @@ import Bookmark01Icon from "@hugeicons/core-free-icons/Bookmark01Icon";
 import Delete01Icon from "@hugeicons/core-free-icons/Delete01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
-import { useEffect } from "react";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -12,16 +11,12 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useBookmarksStore } from "@/store/bookmarks";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { motionEase } from "@/lib/utils/animation";
 import { SpotlightCard } from "@/components/shared/motion-primitives";
 
 export function BookmarksClient() {
-  const { bookmarks, removeBookmark } = useBookmarksStore();
-
-  useEffect(() => {
-    useBookmarksStore.getState().initialize();
-  }, []);
+  const { bookmarks, removeBookmark } = useBookmarks();
 
   return (
     <div className="min-h-dvh bg-system-grouped pt-4">

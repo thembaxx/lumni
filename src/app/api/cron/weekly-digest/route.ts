@@ -1,6 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { dexieDataAccess } from "@/lib/db";
-import { DigestService } from "@/lib/digest";
+import { DigestService } from "@/lib/services/digest-service";
 
 export const POST = createRouteHandler({
   auth: "admin",

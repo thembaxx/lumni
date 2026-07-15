@@ -237,6 +237,37 @@ export async function searchDexieFlashcards(query: string): Promise<SearchResult
   return results;
 }
 
+export const searchDexiePronunciationHistory = createTableSearch(
+  "pronunciationHistory",
+  (row, query) => {
+    if (textRelevant(row.word as string, query)) {
+      return {
+        id: `ph-${row.id}`,
+        type: "pronunciation" as const,
+        title: row.word as string,
+        snippet: `Score: ${row.overallScore}% — ${row.language}`,
+        subject: row.language as string,
+        createdAt: row.attemptedAt as number,
+      };
+    }
+    return null;
+  },
+);
+
+export const searchDexieKnowledgeGraph = createTableSearch("knowledgeGraph", (row, query) => {
+  if (textRelevant(row.key as string, query)) {
+    return {
+      id: `kg-${row.key}`,
+      type: "knowledge-graph" as const,
+      title: row.key as string,
+      snippet: `${((row.graph as { nodes?: unknown[] })?.nodes ?? []).length} topics`,
+      subject: (row.key as string).split(":")[0] ?? "",
+      createdAt: row.createdAt as number,
+    };
+  }
+  return null;
+});
+
 export async function searchNotes(query: string): Promise<SearchResultItem[]> {
   const results: SearchResultItem[] = [];
   try {

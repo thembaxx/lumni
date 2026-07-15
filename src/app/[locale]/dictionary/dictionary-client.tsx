@@ -16,6 +16,7 @@ import { motionEase } from "@/lib/utils/animation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -321,6 +322,7 @@ export function DictionaryClient() {
                       )}
                     </div>
                     <div className="flex items-center gap-2">
+                      <TTSButton text={result.definitions.map((d) => d.definition).join(". ")} />
                       {result.audio && (
                         <Button
                           variant="ghost"

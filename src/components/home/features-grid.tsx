@@ -95,7 +95,7 @@ export function FeaturesGrid() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.4 }}
           className="mb-12 flex flex-col gap-3"
         >
-          <h2 className="text-3xl font-extrabold text-foreground tracking-tight md:text-4xl">
+          <h2 className="text-3xl font-extrabold text-foreground text-balance tracking-tight md:text-4xl">
             {t("featuresHeading")}
           </h2>
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground">

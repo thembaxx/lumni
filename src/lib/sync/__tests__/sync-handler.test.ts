@@ -494,37 +494,6 @@ describe("flushOfflineData", () => {
     expect(ratingCall[1]).not.toHaveProperty("userId");
   });
 
-  // --- bookmarks ---
-
-  test("enqueues bookmark sync with correct payload", async () => {
-    bookmarksStore.push({
-      questionId: "q-7",
-      questionText: "Define velocity.",
-      subject: "physical-sciences",
-      topic: "mechanics",
-      note: "Important for exam",
-      savedAt: 6000,
-    });
-    await flushOfflineData("user-1");
-    expect(enqueueMock).toHaveBeenCalledWith("appwrite-bookmark-sync", {
-      userId: "user-1",
-      questionId: "q-7",
-      questionText: "Define velocity.",
-      subject: "physical-sciences",
-      topic: "mechanics",
-      note: "Important for exam",
-      savedAt: 6000,
-    });
-  });
-
-  test("handles empty bookmarks array", async () => {
-    await flushOfflineData("user-1");
-    const bookmarkCalls = enqueueMock.mock.calls.filter(
-      (c: unknown[]) => c[0] === "appwrite-bookmark-sync",
-    );
-    expect(bookmarkCalls).toHaveLength(0);
-  });
-
   // --- Error handling ---
 
   test("table.toArray() rejection: logs error, other tables still process", async () => {
@@ -532,19 +501,25 @@ describe("flushOfflineData", () => {
       throw new Error("dexie read failure");
     };
 
-    bookmarksStore.push({
-      questionId: "q-1",
-      questionText: "Test",
+    flashcardsStore.push({
+      id: "fc-1",
+      front: "Test question",
+      back: "Test answer",
       subject: "math",
       topic: "alg",
-      note: "",
-      savedAt: 1,
+      easeFactor: 2.5,
+      interval: 0,
+      repetitions: 0,
+      nextReview: Date.now(),
+      lastReview: null,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     });
 
     await flushOfflineData("user-1");
 
     expect(logErrorMock).toHaveBeenCalledWith("SyncHandler.competencies", expect.any(Error));
-    expect(enqueueMock).toHaveBeenCalledWith("appwrite-bookmark-sync", expect.any(Object));
+    expect(enqueueMock).toHaveBeenCalledWith("appwrite-flashcard-sync", expect.any(Object));
   });
 
   test("enqueue() rejection: fire-and-forget, no propagation", async () => {

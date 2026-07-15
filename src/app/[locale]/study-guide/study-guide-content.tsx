@@ -12,6 +12,7 @@ import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -33,9 +34,12 @@ function StudyGuideContent({ guide }: { guide: StudyGuide }) {
           className="overflow-hidden rounded-card border border-border bg-card shadow-level-2"
         >
           <div className="flex flex-col gap-4 p-6">
-            <h2 className="font-semibold text-foreground text-xl tracking-tight">
-              {section.title}
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="font-semibold text-foreground text-xl tracking-tight">
+                {section.title}
+              </h2>
+              <TTSButton text={`${section.title}. ${section.content}`} />
+            </div>
             <div className="text-foreground/80 text-sm leading-relaxed">
               <MarkdownRenderer content={section.content} />
             </div>

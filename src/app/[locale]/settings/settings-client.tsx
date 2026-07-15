@@ -134,7 +134,7 @@ function SettingsContent() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      initializeNotificationSchedulers();
+      return initializeNotificationSchedulers();
     }
   }, [isLoggedIn]);
 

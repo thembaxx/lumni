@@ -2,6 +2,7 @@
 
 import { dexieDataAccess } from "@/lib/db";
 import type { DictionaryDataAccess } from "@/lib/db/data-access";
+import { searchWithRAG } from "@/lib/tinyfish";
 import { ALL_SEED_WORDS, COMMON_WORDS } from "./seed-words";
 import type { DictionaryCacheEntry, DictionaryResult } from "./types";
 import { logError } from "@/lib/shared/logger";
@@ -76,6 +77,43 @@ function parseApiResponse(data: ApiEntry[]): DictionaryResult | null {
   };
 }
 
+const AI_DICT_SYSTEM_PROMPT = `You are a dictionary lookup assistant. Given a word and language, provide a definition, part of speech, example sentence, and pronunciation. Return ONLY valid JSON with this schema:
+{
+  "word": "the word",
+  "phonetic": "phonetic transcription",
+  "definitions": [
+    {
+      "partOfSpeech": "noun|verb|adjective|adverb",
+      "definition": "clear definition",
+      "example": "example sentence"
+    }
+  ],
+  "synonyms": ["word1", "word2"],
+  "antonyms": ["word1", "word2"]
+}`;
+
+export async function aiFallbackLookup(
+  word: string,
+  language: string,
+): Promise<DictionaryResult | null> {
+  const ragContext = await searchWithRAG({ subject: language, topic: word }).catch(() => null);
+  let prompt = `Look up the word "${word}" in ${language}. Provide the definition, part of speech, example, synonyms, and antonyms.`;
+  if (ragContext?.xml) {
+    prompt = `${ragContext.xml}\n\n---\n\n${prompt}`;
+  }
+  try {
+    const { getAI } = await import("@/lib/ai/client");
+    const ai = getAI();
+    const result = await ai.generateWithSystem(AI_DICT_SYSTEM_PROMPT, prompt);
+    if (!result || !("content" in result) || !result.content) return null;
+    const parsed = JSON.parse(result.content) as DictionaryResult;
+    if (!parsed.definitions?.length) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 let _deps: { db: DictionaryDataAccess } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DictionaryDataAccess }) {
   _deps = Object.freeze({ ...deps });
@@ -134,6 +172,9 @@ export async function lookupWord(word: string, language = "en"): Promise<Diction
 
   const result = await lookupWiktionary(word, language);
   if (result) return cacheResult(word, language, result);
+
+  const aiResult = await aiFallbackLookup(word, language);
+  if (aiResult) return cacheResult(word, language, aiResult);
 
   return null;
 }

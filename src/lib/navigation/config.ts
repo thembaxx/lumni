@@ -16,6 +16,8 @@ import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import Upload01Icon from "@hugeicons/core-free-icons/Upload01Icon";
 import TeamWorkIcon from "@hugeicons/core-free-icons/TeamWorkIcon";
 import UserIcon from "@hugeicons/core-free-icons/UserIcon";
+import MathIcon from "@hugeicons/core-free-icons/MathIcon";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import type { IconSvgElement } from "@hugeicons/react";
 export interface NavItem {
   id: string;
@@ -150,6 +152,12 @@ export const navConfig: NavCategory[] = [
         icon: Share07Icon,
         route: "/settings/referral",
       },
+      {
+        id: "math-scanner",
+        label: "Math Scanner",
+        icon: MathIcon,
+        route: "/tools/math",
+      },
     ],
   },
   {
@@ -160,6 +168,12 @@ export const navConfig: NavCategory[] = [
         label: "Study Groups",
         icon: TeamWorkIcon,
         route: "/study-groups",
+      },
+      {
+        id: "study-buddies",
+        label: "Study Buddies",
+        icon: UserGroupIcon,
+        route: "/study-buddies",
       },
     ],
   },
@@ -270,6 +284,7 @@ export function getNavHierarchy(): Record<string, number> {
     "/exam-dates": 2,
     "/exam-dates/": 2,
     "/tools/periodic": 2,
+    "/tools/math": 2,
     "/teacher/students/": 2,
     "/review": 2,
     "/chat": 2,
@@ -277,6 +292,7 @@ export function getNavHierarchy(): Record<string, number> {
     "/study-guide": 2,
     "/study-groups": 2,
     "/study-groups/": 2,
+    "/study-buddies": 2,
     "/dictionary": 2,
     "/search": 2,
     "/upload": 2,

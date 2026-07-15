@@ -35,6 +35,8 @@ vi.mock("@/lib/db", () => ({
     storyCache: { toArray: () => Promise.resolve([]) },
     lessonCache: { toArray: () => Promise.resolve([]) },
     vocabularyList: { toArray: () => Promise.resolve([]) },
+    pronunciationHistory: { toArray: () => Promise.resolve([]) },
+    knowledgeGraph: { toArray: () => Promise.resolve([]) },
   },
 }));
 vi.mock("@/lib/flashcard-engine", () => ({

@@ -40,7 +40,7 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
             <HugeiconsIcon icon={SparklesIcon} className="size-7 text-primary" />
           </div>
 
-          <h2 className="max-w-2xl text-3xl font-extrabold text-foreground tracking-tight md:text-5xl">
+          <h2 className="max-w-2xl text-3xl font-extrabold text-foreground text-balance tracking-tight md:text-5xl">
             {t("ctaHeading")}
           </h2>
 

@@ -82,7 +82,7 @@ export function TestimonialsSection() {
               <div className="mt-1 shrink-0">
                 <HugeiconsIcon icon={Chat01Icon} className="size-6 text-primary/40" />
               </div>
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <m.div
                   key={active}
                   initial={{ opacity: 0, y: 12 }}
