@@ -68,7 +68,8 @@ describe("QuizPackService", () => {
 
     // InMemoryCollection.delete() throws, but deletePack and cleanupExpired
     // call packQuestions.where("packId").equals(id).delete()
-    const origWhere = (
+    // and packVisualAssets.where("packId").equals(id).delete()
+    const origQuestionsWhere = (
       rawDb.packQuestions as unknown as {
         where: (index: string) => ReturnType<typeof rawDb.packQuestions.where>;
       }
@@ -76,7 +77,7 @@ describe("QuizPackService", () => {
     (rawDb.packQuestions as unknown as { where: (index: string) => unknown }).where = (
       index: string,
     ) => {
-      const clause = origWhere(index);
+      const clause = origQuestionsWhere(index);
       return {
         ...clause,
         equals: (val: unknown) => {
@@ -85,6 +86,29 @@ describe("QuizPackService", () => {
             const items = await coll.toArray();
             for (const item of items) {
               await rawDb.packQuestions.delete((item as unknown as { id: number }).id);
+            }
+          });
+        },
+      };
+    };
+
+    const origAssetsWhere = (
+      rawDb.packVisualAssets as unknown as {
+        where: (index: string) => ReturnType<typeof rawDb.packVisualAssets.where>;
+      }
+    ).where.bind(rawDb.packVisualAssets);
+    (rawDb.packVisualAssets as unknown as { where: (index: string) => unknown }).where = (
+      index: string,
+    ) => {
+      const clause = origAssetsWhere(index);
+      return {
+        ...clause,
+        equals: (val: unknown) => {
+          const coll = clause.equals(val);
+          return new PatchedCollection(coll, async () => {
+            const items = await coll.toArray();
+            for (const item of items) {
+              await rawDb.packVisualAssets.delete((item as unknown as { id: number }).id);
             }
           });
         },

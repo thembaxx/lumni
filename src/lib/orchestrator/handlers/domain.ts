@@ -9,6 +9,8 @@ import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { logError } from "@/lib/shared/logger";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
+import { quizPackService } from "@/lib/quiz-packs";
+import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import { createJobHandler } from "./sync-factory";
 import type { JobHandler } from "./index";
 
@@ -180,9 +182,9 @@ const PRUNE_CONFIG = {
 
 const _pruneStaleQuestions = async () => {
   const cutoff = Date.now() - PRUNE_CONFIG.maxAgeDays * 24 * 60 * 60 * 1000;
-  const all = _deps.db.questions.toArray();
+  const all = await _deps.db.questions.toArray();
 
-  const stale = (await all).filter((q) => {
+  const stale = all.filter((q) => {
     const parsed = safeParseQuestions(q.questions);
     if (!parsed) return false;
     return parsed.some((pq) => {
@@ -236,6 +238,91 @@ const _generateEmbedding = async (payload: unknown) => {
 
 export const generateEmbedding = createJobHandler("generateEmbedding", _generateEmbedding);
 
+const _quizPackGenerate = async (payload: unknown) => {
+  const { packId, subject, topic, count, generateVisuals = true } = payload as JobPayloadByType["quiz-pack-generate"];
+
+  const engine = await QuestionEngine.initialize();
+  const topicParam = topic ?? undefined;
+
+  // Generate questions in batches of 20
+  const batchSize = 20;
+  const allQuestions: Awaited<ReturnType<typeof engine.generate>>["questions"] = [];
+  let remainingCount = count;
+
+  while (remainingCount > 0) {
+    const currentBatch = Math.min(batchSize, remainingCount);
+    const { questions } = await engine.generate({
+      subject,
+      topic: topicParam,
+      count: currentBatch,
+      questionType: "any",
+    });
+    allQuestions.push(...questions);
+    remainingCount -= currentBatch;
+  }
+
+  // Store questions
+  const questionData = allQuestions.map((q, i) => ({
+    questionIndex: i,
+    questionText: q.questionText,
+    options: JSON.stringify("options" in q.body ? q.body.options : []),
+    correctAnswer: extractCorrectAnswer(q) ?? "",
+    explanation: q.explanation ?? null,
+    difficulty: q.difficulty ?? "Medium",
+    type: q.type,
+  }));
+
+  await quizPackService.storeQuestions(packId, questionData);
+
+  // Pre-generate visual assets if requested
+  let visualAssetsGenerated = 0;
+  let visualBytes = 0;
+
+  if (generateVisuals) {
+    const visualAssets: Array<{
+      questionIndex: number;
+      assetId: string;
+      assetType: string;
+      assetData: string;
+    }> = [];
+
+    for (let i = 0; i < allQuestions.length; i++) {
+      try {
+        const question = allQuestions[i];
+        const visual = await visualEngine.resolve({
+          questionId: question.id,
+          questionText: question.questionText,
+          subject,
+          topic: topicParam ?? "",
+        });
+
+        if (visual && visual.type) {
+          const assetId = `visual_${Date.now()}_${i}`;
+          visualAssets.push({
+            questionIndex: i,
+            assetId,
+            assetType: visual.type,
+            assetData: JSON.stringify(visual),
+          });
+          visualAssetsGenerated++;
+        }
+      } catch (e) {
+        logError(`QuizPackVisualGen.Question${i}`, e);
+      }
+    }
+
+    if (visualAssets.length > 0) {
+      visualBytes = await quizPackService.storeVisualAssets(packId, visualAssets);
+      await quizPackService.markVisualAssetsReady(packId, visualAssetsGenerated, visualBytes);
+    }
+  }
+
+  const storageBytes = new TextEncoder().encode(JSON.stringify(questionData)).length + visualBytes;
+  await quizPackService.markReady(packId, storageBytes);
+};
+
+export const quizPackGenerate = createJobHandler("quizPackGenerate", _quizPackGenerate);
+
 function safeParseQuestions(json: string): unknown[] | null {
   try {
     const parsed = JSON.parse(json);
@@ -253,4 +340,5 @@ export const domainHandlers: Partial<Record<string, JobHandler>> = {
   "question-regen": questionRegen,
   "prune-stale-questions": pruneStaleQuestions,
   "generate-embedding": generateEmbedding,
+  "quiz-pack-generate": quizPackGenerate,
 };

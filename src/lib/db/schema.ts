@@ -64,7 +64,7 @@ import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
 import type { CachedLesson } from "@/lib/lesson/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
-import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type { QuizPack, QuizPackQuestion, QuizPackVisualAsset } from "@/lib/quiz-packs/types";
 import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type {
   GroupBadge,
@@ -550,6 +550,7 @@ export class LumniOfflineDB extends Dexie {
   gamification!: Table<StoredGamification, number>;
   quizPacks!: Table<QuizPack, string>;
   packQuestions!: Table<QuizPackQuestion, number>;
+  packVisualAssets!: Table<QuizPackVisualAsset, number>;
   pastPaperQuestions!: Table<PastPaperQuestion, string>;
   groupChallenges!: Table<GroupChallenge, string>;
   groupChallengeEntries!: Table<GroupChallengeEntry, string>;
@@ -625,6 +626,7 @@ export class LumniOfflineDB extends Dexie {
       gamification: "++id, totalXp, currentStreak, lastPracticeDate",
       quizPacks: "&id, subject, topic, status, createdAt, expiresAt",
       packQuestions: "++id, &[packId+questionIndex], packId",
+      packVisualAssets: "++id, &[packId+questionIndex], packId, createdAt",
       pastPaperQuestions: "&id, subject, year, paperNumber, questionType, createdAt",
       groupChallenges: "&id, groupId, weekStart, status",
       groupChallengeEntries: "&id, challengeId, groupId, userId",

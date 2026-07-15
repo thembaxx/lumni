@@ -29,6 +29,7 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
   "appwrite-visual-sync": 3,
   "prune-stale-questions": 1,
   "generate-embedding": 2,
+  "quiz-pack-generate": 2,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -56,6 +57,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
   "appwrite-visual-sync": 50,
   "prune-stale-questions": 10,
   "generate-embedding": 50,
+  "quiz-pack-generate": 40,
 };
 
 import { logError } from "@/lib/shared/logger";

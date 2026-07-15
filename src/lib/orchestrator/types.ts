@@ -25,7 +25,8 @@ export type JobType =
   | "appwrite-shared-question-sync"
   | "appwrite-visual-sync"
   | "prune-stale-questions"
-  | "generate-embedding";
+  | "generate-embedding"
+  | "quiz-pack-generate";
 
 export type JobPayloadByType = {
   "appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -175,6 +176,13 @@ export type JobPayloadByType = {
     questionId: string;
     subject: string;
     visual: string;
+  };
+  "quiz-pack-generate": {
+    packId: string;
+    subject: string;
+    topic?: string;
+    count: number;
+    generateVisuals?: boolean;
   };
 };
 

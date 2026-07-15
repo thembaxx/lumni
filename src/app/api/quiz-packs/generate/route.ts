@@ -1,53 +1,51 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import type { Question } from "@/lib/question-engine/types";
-import { safeJsonStringify } from "@/lib/shared/json";
-import { extractCorrectAnswer } from "@/lib/shared/question-utils";
+import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
   auth: "required",
+  budget: "generate",
+  errorLabel: "QuizPackGenerate",
   useRateLimit: true,
-  errorLabel: "QuizPacksGenerate",
-  execute: async ({ body }) => {
-    const { packId, subject, topic, count } = body as {
-      packId?: string;
-      subject?: string;
+
+  parseBody: async (req) => {
+    const body = await req.json();
+    return body;
+  },
+  validate: (body) => {
+    if (!body.subject) return "Subject is required";
+    if (!body.count || body.count < 1) return "Count must be at least 1";
+    if (body.count > 100) return "Count must be 100 or less";
+    return null;
+  },
+execute: async ({ body, userId }) => {
+    const { subject, topic, count = 50, generateVisuals = true } = body as {
+      subject: string;
       topic?: string;
       count?: number;
+      generateVisuals?: boolean;
     };
 
-    if (!packId || !subject || !count) {
-      throw new HttpError(400, "packId, subject, and count are required");
-    }
-
-    const [{ QuestionEngine }, { quizPackService }] = await Promise.all([
-      import("@/lib/question-engine/question-engine"),
+    const [{ quizPackService }, { enqueue }] = await Promise.all([
       import("@/lib/quiz-packs"),
+      import("@/lib/orchestrator/job-queue"),
     ]);
 
-    const engine = await QuestionEngine.initialize();
-    const topicParam = topic && typeof topic === "string" ? topic : undefined;
+    // Create the pack record
+    const pack = await quizPackService.generatePack(subject, topic ?? null, count);
 
-    const { questions } = await engine.generate({
+    // Enqueue the generation job
+    await enqueue("quiz-pack-generate", {
+      packId: pack.id,
       subject,
-      topic: topicParam,
-      count: Math.min(count, 20),
-      questionType: "any",
+      topic: topic ?? null,
+      count,
+      generateVisuals,
     });
 
-    const questionData = questions.map((q: Question, i: number) => ({
-      questionIndex: i,
-      questionText: q.questionText,
-      options: safeJsonStringify("options" in q.body ? q.body.options : []),
-      correctAnswer: extractCorrectAnswer(q) ?? "",
-      explanation: q.explanation ?? null,
-      difficulty: q.difficulty ?? "Medium",
-      type: q.type,
-    }));
-
-    await quizPackService.storeQuestions(packId, questionData);
-
-    const storageBytes = new TextEncoder().encode(JSON.stringify(questionData)).length;
-
-    return { success: true, storageBytes };
+    return {
+      packId: pack.id,
+      status: "generating",
+      message: "Quiz pack generation started. Check back in a few minutes.",
+    };
   },
 });

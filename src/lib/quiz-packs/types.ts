@@ -12,6 +12,8 @@ export interface QuizPack {
   createdAt: number;
   expiresAt: number;
   lastUsedAt: number | null;
+  visualAssetsGenerated: boolean;
+  visualAssetsCount: number;
 }
 
 export interface QuizPackQuestion {
@@ -23,6 +25,17 @@ export interface QuizPackQuestion {
   explanation: string | null;
   difficulty: string;
   type: string;
+  visualAssetId?: string;
+  visualAssetType?: string;
+}
+
+export interface QuizPackVisualAsset {
+  packId: string;
+  questionIndex: number;
+  assetId: string;
+  assetType: string;
+  assetData: string;
+  createdAt: number;
 }
 
 export interface PackGenerationRequest {
@@ -31,5 +44,7 @@ export interface PackGenerationRequest {
   count: number;
 }
 
-export const PACK_EXPIRY_DAYS = 7;
-export const MAX_PACK_STORAGE_BYTES = 50 * 1024 * 1024;
+export const PACK_EXPIRY_DAYS = 30;
+export const MAX_PACK_STORAGE_BYTES = 100 * 1024 * 1024;
+export const MAX_PACK_QUESTIONS = 100;
+export const DEFAULT_PACK_QUESTIONS = 50;

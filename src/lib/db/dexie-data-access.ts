@@ -143,6 +143,7 @@ class DexieDataAccess implements DataAccess {
   wrongAnswers = tableAdapter(offlineDB.wrongAnswers);
   quizPacks = tableAdapter(offlineDB.quizPacks);
   packQuestions = tableAdapter(offlineDB.packQuestions);
+  packVisualAssets = tableAdapter(offlineDB.packVisualAssets);
   competencies = tableAdapter(offlineDB.competencies);
   progress = tableAdapter(offlineDB.progress);
   quizAttempts = tableAdapter(offlineDB.quizAttempts);

@@ -1,14 +1,15 @@
 import { type AIClient, getAI } from "@/lib/ai/client";
 import { logError } from "@/lib/shared/logger";
 
-const BATCH_SIZE = 50;
-
-interface CurriculumTopic {
+export interface CurriculumTopic {
   id: string;
   subject: string;
   topic: string;
   subtopic: string;
+  bloomTarget?: string;
 }
+
+const BATCH_SIZE = 50;
 
 function buildPrompt(
   batch: Array<{ id: string; questionText: string; subject: string }>,
