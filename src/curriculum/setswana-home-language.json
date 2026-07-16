@@ -9,9 +9,48 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "tsw-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "tsw-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "tsw-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "tsw-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "koko-o-tsietsa-lenong",
+            "sekgwa-sa-dinoga",
+            "ke-rata-go-buisa",
+            "molemo-o-bua-le-dijalo",
+            "baesekele-ya-ga-palesa",
+            "motogo",
+            "letsatsi-la-ga-hamisi-la-letlhogonolo",
+            "koko-le-sebokolodi",
+            "kgwele-ya-me-e-e-khibidu",
+            "bogole-ga-se-go-palelwa",
+            "morutabana-wa-me",
+            "motlhokomedi-le-serapa-sa-gagwe-se-se-kgethegileng",
+            "morwesi-le-pule-ba-etela-nkoko",
+            "bese-e-kgolo-ya-mmala-wa-botala-jwa-legodimo",
+            "tshoswane-o-thusa-leeba",
+            "montshiwa-o-abelana-ka-maoto",
+            "tlowana-marata-go-itse",
+            "letsatsi-la-lamatlhatso-le-le-mogote"
+          ]
+        },
+        {
+          "id": "tsw-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": [
+            "bopelokgale-jwa-ga-bonolo",
+            "leeto-la-go-batla-moya-wa-boitumelo",
+            "kgosi-mothupi-le-morwadiagwe",
+            "magozwe",
+            "moipone-le-sego-sa-gagwe"
+          ]
+        },
+        {
+          "id": "tsw-critical",
+          "name": "Critical Reading",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,9 +60,21 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "tsw-poetry", "name": "Poetry", "order": 1 },
-        { "id": "tsw-novel", "name": "Novel", "order": 2 },
-        { "id": "tsw-drama", "name": "Drama", "order": 3 },
+        {
+          "id": "tsw-poetry",
+          "name": "Poetry",
+          "order": 1
+        },
+        {
+          "id": "tsw-novel",
+          "name": "Novel",
+          "order": 2
+        },
+        {
+          "id": "tsw-drama",
+          "name": "Drama",
+          "order": 3
+        },
         {
           "id": "tsw-short-stories",
           "name": "Short Stories",
@@ -39,9 +90,21 @@
       "prerequisites": [],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "tsw-essay", "name": "Essay Writing", "order": 1 },
-        { "id": "tsw-transactional", "name": "Transactional Writing", "order": 2 },
-        { "id": "tsw-creative", "name": "Creative Writing", "order": 3 }
+        {
+          "id": "tsw-essay",
+          "name": "Essay Writing",
+          "order": 1
+        },
+        {
+          "id": "tsw-transactional",
+          "name": "Transactional Writing",
+          "order": 2
+        },
+        {
+          "id": "tsw-creative",
+          "name": "Creative Writing",
+          "order": 3
+        }
       ]
     },
     {
@@ -51,9 +114,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "tsw-grammar", "name": "Grammar", "order": 1 },
-        { "id": "tsw-vocabulary", "name": "Vocabulary", "order": 2 },
-        { "id": "tsw-syntax", "name": "Syntax", "order": 3 }
+        {
+          "id": "tsw-grammar",
+          "name": "Grammar",
+          "order": 1
+        },
+        {
+          "id": "tsw-vocabulary",
+          "name": "Vocabulary",
+          "order": 2
+        },
+        {
+          "id": "tsw-syntax",
+          "name": "Syntax",
+          "order": 3
+        }
       ]
     },
     {
@@ -63,9 +138,21 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "tsw-adverts", "name": "Advertisements", "order": 1 },
-        { "id": "tsw-cartoons", "name": "Cartoons", "order": 2 },
-        { "id": "tsw-graphics", "name": "Graphics", "order": 3 }
+        {
+          "id": "tsw-adverts",
+          "name": "Advertisements",
+          "order": 1
+        },
+        {
+          "id": "tsw-cartoons",
+          "name": "Cartoons",
+          "order": 2
+        },
+        {
+          "id": "tsw-graphics",
+          "name": "Graphics",
+          "order": 3
+        }
       ]
     },
     {
@@ -75,9 +162,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "tsw-listening-speaking", "name": "Listening and Speaking", "order": 1 },
-        { "id": "tsw-presentation", "name": "Presentation Skills", "order": 2 },
-        { "id": "tsw-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+        {
+          "id": "tsw-listening-speaking",
+          "name": "Listening and Speaking",
+          "order": 1
+        },
+        {
+          "id": "tsw-presentation",
+          "name": "Presentation Skills",
+          "order": 2
+        },
+        {
+          "id": "tsw-dialogue",
+          "name": "Dialogue and Discussion",
+          "order": 3
+        }
       ]
     }
   ]

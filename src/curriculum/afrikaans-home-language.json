@@ -9,9 +9,58 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "afr-letterlik", "name": "Letterlike Begrip", "order": 1 },
-        { "id": "afr-afleidend", "name": "Afleidende Begrip", "order": 2 },
-        { "id": "afr-krities", "name": "Kritiese Lees", "order": 3 }
+        {
+          "id": "afr-letterlik",
+          "name": "Letterlike Begrip",
+          "order": 1,
+          "stories": [
+            "die-koning-van-die-vols",
+            "hen-kul-vir-arend",
+            "woud-van-slange",
+            "ek-hou-van-lees",
+            "palesa-is-lief-vir-plante",
+            "kalabushe-die-babbelkous",
+            "namu-se-fiets",
+            "pap",
+            "hamisi-se-gelukkige-dag",
+            "die-rooi-hennetjie-en-die-wurmpie",
+            "my-rooi-bal",
+            "gestremde-mense-kn",
+            "my-juffrou",
+            "die-wildwagter-en-sy-spesiale-reservaat",
+            "pendo-ons-koei",
+            "vakansies-by-ouma",
+            "groot-blou-bus",
+            "vriende",
+            "hoe-mier-vir-duif-red",
+            "juffrou-akinyi",
+            "maguru-deel-bene-uit",
+            "nuuskierige-baba-olifant",
+            "wat-ek-graag-doen",
+            "n-warm-saterdag"
+          ]
+        },
+        {
+          "id": "afr-afleidend",
+          "name": "Afleidende Begrip",
+          "order": 2,
+          "stories": [
+            "hasie-se-groot-skrik",
+            "nangila-se-dapperheid",
+            "tselane-en-die-reus",
+            "soektog-na-die-gees-van-lente",
+            "bok-die-valse-koning",
+            "koning-kaja-en-sy-dogter",
+            "nonkungu-en-die-imbulu",
+            "magozwe",
+            "khayanga-en-haar-spesiale-pot"
+          ]
+        },
+        {
+          "id": "afr-krities",
+          "name": "Kritiese Lees",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,9 +70,21 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "afr-gedigte", "name": "Gedigte", "order": 1 },
-        { "id": "afr-roman", "name": "Roman", "order": 2 },
-        { "id": "afr-drama", "name": "Drama", "order": 3 },
+        {
+          "id": "afr-gedigte",
+          "name": "Gedigte",
+          "order": 1
+        },
+        {
+          "id": "afr-roman",
+          "name": "Roman",
+          "order": 2
+        },
+        {
+          "id": "afr-drama",
+          "name": "Drama",
+          "order": 3
+        },
         {
           "id": "afr-kortverhale",
           "name": "Kortverhale",
@@ -39,9 +100,21 @@
       "prerequisites": ["begrip-lees"],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "afr-opstel", "name": "Opstel", "order": 1 },
-        { "id": "afr-transaksioneel", "name": "Transaksionele Skryfwerk", "order": 2 },
-        { "id": "afr-kreatief", "name": "Kreatiewe Skryfwerk", "order": 3 }
+        {
+          "id": "afr-opstel",
+          "name": "Opstel",
+          "order": 1
+        },
+        {
+          "id": "afr-transaksioneel",
+          "name": "Transaksionele Skryfwerk",
+          "order": 2
+        },
+        {
+          "id": "afr-kreatief",
+          "name": "Kreatiewe Skryfwerk",
+          "order": 3
+        }
       ]
     },
     {
@@ -51,9 +124,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "afr-grammatika", "name": "Grammatika", "order": 1 },
-        { "id": "afr-woordeskat", "name": "Woordeskat", "order": 2 },
-        { "id": "afr-sintaksis", "name": "Sintaksis", "order": 3 }
+        {
+          "id": "afr-grammatika",
+          "name": "Grammatika",
+          "order": 1
+        },
+        {
+          "id": "afr-woordeskat",
+          "name": "Woordeskat",
+          "order": 2
+        },
+        {
+          "id": "afr-sintaksis",
+          "name": "Sintaksis",
+          "order": 3
+        }
       ]
     },
     {
@@ -63,8 +148,16 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "afr-advertensies", "name": "Advertensies", "order": 1 },
-        { "id": "afr-strokiesprente", "name": "Strokiesprente", "order": 2 }
+        {
+          "id": "afr-advertensies",
+          "name": "Advertensies",
+          "order": 1
+        },
+        {
+          "id": "afr-strokiesprente",
+          "name": "Strokiesprente",
+          "order": 2
+        }
       ]
     }
   ]

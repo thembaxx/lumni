@@ -9,12 +9,53 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "eng-literal", "name": "Literal Comprehension", "order": 1 },
+        {
+          "id": "eng-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "i-like-to-read",
+            "porridge",
+            "my-red-ball",
+            "my-teacher",
+            "pendo-our-cow",
+            "friends",
+            "i-enjoy-doing",
+            "namukurus-bicycle",
+            "khalai-talks-to-plants",
+            "hamisis-lucky-day",
+            "keeper-and-his-special-nursery",
+            "how-ant-saved-dove",
+            "teacher-akinyi",
+            "curious-baby-elephant",
+            "big-blue-bus",
+            "disability-is-not-inability",
+            "king-of-the-birds",
+            "hen-tricks-eagle",
+            "forest-of-snakes",
+            "kalabushe-the-talkative",
+            "chicken-and-millipede",
+            "holidays-with-grandmother",
+            "maguru-gives-out-legs",
+            "one-hot-saturday-afternoon"
+          ]
+        },
         {
           "id": "eng-inferential",
           "name": "Inferential Comprehension",
           "order": 2,
-          "stories": ["thoughts-on-south-africa"]
+          "stories": [
+            "thoughts-on-south-africa",
+            "rabbit-under-the-tree",
+            "nangilas-courage",
+            "tselane-and-the-giant",
+            "searching-for-the-spirit-of-spring",
+            "goat-the-false-king",
+            "king-kayanja-and-his-daughter",
+            "nonkungu-and-the-imbulu",
+            "magozwe",
+            "khayanga-and-her-gourd"
+          ]
         },
         {
           "id": "eng-critical",
@@ -38,7 +79,15 @@
           "id": "eng-short-stories",
           "name": "Short Stories",
           "order": 4,
-          "stories": ["south-african-folk-tales", "outa-karels-stories", "reynard-fox-south-africa"]
+          "stories": [
+            "south-african-folk-tales",
+            "outa-karels-stories",
+            "reynard-fox-south-africa",
+            "king-of-the-birds",
+            "chicken-and-millipede",
+            "goat-the-false-king",
+            "how-ant-saved-dove"
+          ]
         }
       ]
     },

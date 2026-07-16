@@ -9,9 +9,48 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "ven-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "ven-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "ven-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "ven-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "khuhu-i-fhura-goni",
+            "aka-a-dziowa",
+            "ndi-funa-u-vhala",
+            "khalai-u-amba-na-zwitavhiwa",
+            "lukanyakanya-lwa-namukuru",
+            "mukapu",
+            "uvha-a-mashudu-a-hamisi",
+            "khuhu-na-dongololo",
+            "bola-yanga-tswuku",
+            "vhuholefhali-a-si-u-sa-kona",
+            "mudededzi-wanga",
+            "muthogomeli-and-fhethu-ho-khetheaho-ha-u-thogomela-phuka",
+            "holodeyi-na-makhulu",
+            "bisi-khulwane-dala",
+            "lusunzi-lu-tshidza-tshiivha",
+            "maguru-u-ekedza-milenzhe",
+            "wana-wa-nou-aoaho-u-ivha",
+            "zwine-nda-zwi-takalela",
+            "masiari-a-mugivhela-u-fhisaho"
+          ]
+        },
+        {
+          "id": "ven-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": [
+            "vhuhali-ya-nangila",
+            "u-pembelele-luavule",
+            "thovhele-kayanja-na-wananyana-wawe",
+            "magozwe"
+          ]
+        },
+        {
+          "id": "ven-critical",
+          "name": "Critical Reading",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,9 +60,21 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "ven-poetry", "name": "Poetry", "order": 1 },
-        { "id": "ven-novel", "name": "Novel", "order": 2 },
-        { "id": "ven-drama", "name": "Drama", "order": 3 },
+        {
+          "id": "ven-poetry",
+          "name": "Poetry",
+          "order": 1
+        },
+        {
+          "id": "ven-novel",
+          "name": "Novel",
+          "order": 2
+        },
+        {
+          "id": "ven-drama",
+          "name": "Drama",
+          "order": 3
+        },
         {
           "id": "ven-short-stories",
           "name": "Short Stories",
@@ -39,9 +90,21 @@
       "prerequisites": [],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "ven-essay", "name": "Essay Writing", "order": 1 },
-        { "id": "ven-transactional", "name": "Transactional Writing", "order": 2 },
-        { "id": "ven-creative", "name": "Creative Writing", "order": 3 }
+        {
+          "id": "ven-essay",
+          "name": "Essay Writing",
+          "order": 1
+        },
+        {
+          "id": "ven-transactional",
+          "name": "Transactional Writing",
+          "order": 2
+        },
+        {
+          "id": "ven-creative",
+          "name": "Creative Writing",
+          "order": 3
+        }
       ]
     },
     {
@@ -51,9 +114,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "ven-grammar", "name": "Grammar", "order": 1 },
-        { "id": "ven-vocabulary", "name": "Vocabulary", "order": 2 },
-        { "id": "ven-syntax", "name": "Syntax", "order": 3 }
+        {
+          "id": "ven-grammar",
+          "name": "Grammar",
+          "order": 1
+        },
+        {
+          "id": "ven-vocabulary",
+          "name": "Vocabulary",
+          "order": 2
+        },
+        {
+          "id": "ven-syntax",
+          "name": "Syntax",
+          "order": 3
+        }
       ]
     },
     {
@@ -63,9 +138,21 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "ven-adverts", "name": "Advertisements", "order": 1 },
-        { "id": "ven-cartoons", "name": "Cartoons", "order": 2 },
-        { "id": "ven-graphics", "name": "Graphics", "order": 3 }
+        {
+          "id": "ven-adverts",
+          "name": "Advertisements",
+          "order": 1
+        },
+        {
+          "id": "ven-cartoons",
+          "name": "Cartoons",
+          "order": 2
+        },
+        {
+          "id": "ven-graphics",
+          "name": "Graphics",
+          "order": 3
+        }
       ]
     },
     {
@@ -75,9 +162,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "ven-listening-speaking", "name": "Listening and Speaking", "order": 1 },
-        { "id": "ven-presentation", "name": "Presentation Skills", "order": 2 },
-        { "id": "ven-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+        {
+          "id": "ven-listening-speaking",
+          "name": "Listening and Speaking",
+          "order": 1
+        },
+        {
+          "id": "ven-presentation",
+          "name": "Presentation Skills",
+          "order": 2
+        },
+        {
+          "id": "ven-dialogue",
+          "name": "Dialogue and Discussion",
+          "order": 3
+        }
       ]
     }
   ]

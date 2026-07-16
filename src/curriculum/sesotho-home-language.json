@@ -9,9 +9,47 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "sot-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "sot-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "sot-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "sot-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "kgoho-o-jalletsa-ntsu",
+            "moru-wa-dinoha",
+            "baesekele-ya-seipati",
+            "motoho",
+            "letsatsi-la-tshepo-la-lehlohonolo",
+            "bolo-ya-ka-e-kgubedu",
+            "ho-ba-le-boqhwala-ha-se-ho-hloka-bokgoni",
+            "mosuwetsana-wa-ka",
+            "mohlokomedi-wa-diphoofolo-le-sebaka-sa-hae-se-ikgethang",
+            "kgomo-eso-pendo",
+            "bese-e-e-kgolo-e-mmala-wa-botala-ba-lehodimo",
+            "kokonyana-o-pholosa-leeba",
+            "maguru-o-fana-ka-maoto",
+            "nko-ya-tlou",
+            "ke-rata-ho-etsa",
+            "moqebelo-o-mong-o-tjhesang-haholo"
+          ]
+        },
+        {
+          "id": "sot-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": [
+            "mamello-ya-bonolo",
+            "tselane-le-dimo",
+            "ho-batlana-le-moya-wa-hwetla",
+            "morena-kadi-le-moradi-wa-hae",
+            "nonkungu-le-imbulu",
+            "magozwe"
+          ]
+        },
+        {
+          "id": "sot-critical",
+          "name": "Critical Reading",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,9 +59,21 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "sot-poetry", "name": "Poetry", "order": 1 },
-        { "id": "sot-novel", "name": "Novel", "order": 2 },
-        { "id": "sot-drama", "name": "Drama", "order": 3 },
+        {
+          "id": "sot-poetry",
+          "name": "Poetry",
+          "order": 1
+        },
+        {
+          "id": "sot-novel",
+          "name": "Novel",
+          "order": 2
+        },
+        {
+          "id": "sot-drama",
+          "name": "Drama",
+          "order": 3
+        },
         {
           "id": "sot-short-stories",
           "name": "Short Stories",
@@ -39,9 +89,21 @@
       "prerequisites": [],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "sot-essay", "name": "Essay Writing", "order": 1 },
-        { "id": "sot-transactional", "name": "Transactional Writing", "order": 2 },
-        { "id": "sot-creative", "name": "Creative Writing", "order": 3 }
+        {
+          "id": "sot-essay",
+          "name": "Essay Writing",
+          "order": 1
+        },
+        {
+          "id": "sot-transactional",
+          "name": "Transactional Writing",
+          "order": 2
+        },
+        {
+          "id": "sot-creative",
+          "name": "Creative Writing",
+          "order": 3
+        }
       ]
     },
     {
@@ -51,9 +113,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "sot-grammar", "name": "Grammar", "order": 1 },
-        { "id": "sot-vocabulary", "name": "Vocabulary", "order": 2 },
-        { "id": "sot-syntax", "name": "Syntax", "order": 3 }
+        {
+          "id": "sot-grammar",
+          "name": "Grammar",
+          "order": 1
+        },
+        {
+          "id": "sot-vocabulary",
+          "name": "Vocabulary",
+          "order": 2
+        },
+        {
+          "id": "sot-syntax",
+          "name": "Syntax",
+          "order": 3
+        }
       ]
     },
     {
@@ -63,9 +137,21 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "sot-adverts", "name": "Advertisements", "order": 1 },
-        { "id": "sot-cartoons", "name": "Cartoons", "order": 2 },
-        { "id": "sot-graphics", "name": "Graphics", "order": 3 }
+        {
+          "id": "sot-adverts",
+          "name": "Advertisements",
+          "order": 1
+        },
+        {
+          "id": "sot-cartoons",
+          "name": "Cartoons",
+          "order": 2
+        },
+        {
+          "id": "sot-graphics",
+          "name": "Graphics",
+          "order": 3
+        }
       ]
     },
     {
@@ -75,9 +161,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "sot-listening-speaking", "name": "Listening and Speaking", "order": 1 },
-        { "id": "sot-presentation", "name": "Presentation Skills", "order": 2 },
-        { "id": "sot-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+        {
+          "id": "sot-listening-speaking",
+          "name": "Listening and Speaking",
+          "order": 1
+        },
+        {
+          "id": "sot-presentation",
+          "name": "Presentation Skills",
+          "order": 2
+        },
+        {
+          "id": "sot-dialogue",
+          "name": "Dialogue and Discussion",
+          "order": 3
+        }
       ]
     }
   ]
