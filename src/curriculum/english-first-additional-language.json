@@ -9,9 +9,58 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "eng-fal-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "eng-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "eng-fal-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "eng-fal-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "namukurus-bicycle",
+            "king-of-the-birds",
+            "hen-tricks-eagle",
+            "forest-of-snakes",
+            "i-like-to-read",
+            "khalai-talks-to-plants",
+            "kalabushe-the-talkative",
+            "porridge",
+            "hamisis-lucky-day",
+            "chicken-and-millipede",
+            "my-red-ball",
+            "disability-is-not-inability",
+            "my-teacher",
+            "keeper-and-his-special-nursery",
+            "pendo-our-cow",
+            "holidays-with-grandmother",
+            "big-blue-bus",
+            "friends",
+            "how-ant-saved-dove",
+            "teacher-akinyi",
+            "maguru-gives-out-legs",
+            "curious-baby-elephant",
+            "i-enjoy-doing",
+            "one-hot-saturday-afternoon"
+          ]
+        },
+        {
+          "id": "eng-fal-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": [
+            "rabbit-under-the-tree",
+            "nangilas-courage",
+            "tselane-and-the-giant",
+            "searching-for-the-spirit-of-spring",
+            "goat-the-false-king",
+            "king-kayanja-and-his-daughter",
+            "nonkungu-and-the-imbulu",
+            "magozwe",
+            "khayanga-and-her-gourd"
+          ]
+        },
+        {
+          "id": "eng-fal-critical",
+          "name": "Critical Reading",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,10 +70,26 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "eng-fal-poetry", "name": "Poetry", "order": 1 },
-        { "id": "eng-fal-novel", "name": "Novel", "order": 2 },
-        { "id": "eng-fal-drama", "name": "Drama", "order": 3 },
-        { "id": "eng-fal-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "eng-fal-poetry",
+          "name": "Poetry",
+          "order": 1
+        },
+        {
+          "id": "eng-fal-novel",
+          "name": "Novel",
+          "order": 2
+        },
+        {
+          "id": "eng-fal-drama",
+          "name": "Drama",
+          "order": 3
+        },
+        {
+          "id": "eng-fal-short-stories",
+          "name": "Short Stories",
+          "order": 4
+        }
       ]
     },
     {
@@ -34,9 +99,21 @@
       "prerequisites": [],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "eng-fal-essay", "name": "Essay Writing", "order": 1 },
-        { "id": "eng-fal-transactional", "name": "Transactional Writing", "order": 2 },
-        { "id": "eng-fal-creative", "name": "Creative Writing", "order": 3 }
+        {
+          "id": "eng-fal-essay",
+          "name": "Essay Writing",
+          "order": 1
+        },
+        {
+          "id": "eng-fal-transactional",
+          "name": "Transactional Writing",
+          "order": 2
+        },
+        {
+          "id": "eng-fal-creative",
+          "name": "Creative Writing",
+          "order": 3
+        }
       ]
     },
     {
@@ -46,9 +123,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "eng-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
-        { "id": "eng-fal-vocabulary", "name": "Vocabulary", "order": 2 },
-        { "id": "eng-fal-syntax", "name": "Sentence Structure", "order": 3 }
+        {
+          "id": "eng-fal-grammar",
+          "name": "Grammar and Spelling",
+          "order": 1
+        },
+        {
+          "id": "eng-fal-vocabulary",
+          "name": "Vocabulary",
+          "order": 2
+        },
+        {
+          "id": "eng-fal-syntax",
+          "name": "Sentence Structure",
+          "order": 3
+        }
       ]
     },
     {
@@ -58,9 +147,21 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "eng-fal-adverts", "name": "Advertisements", "order": 1 },
-        { "id": "eng-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
-        { "id": "eng-fal-graphics", "name": "Graphic Texts", "order": 3 }
+        {
+          "id": "eng-fal-adverts",
+          "name": "Advertisements",
+          "order": 1
+        },
+        {
+          "id": "eng-fal-cartoons",
+          "name": "Cartoons and Comics",
+          "order": 2
+        },
+        {
+          "id": "eng-fal-graphics",
+          "name": "Graphic Texts",
+          "order": 3
+        }
       ]
     },
     {
@@ -70,9 +171,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "eng-fal-listening", "name": "Listening Comprehension", "order": 1 },
-        { "id": "eng-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
-        { "id": "eng-fal-discussion", "name": "Group Discussion", "order": 3 }
+        {
+          "id": "eng-fal-listening",
+          "name": "Listening Comprehension",
+          "order": 1
+        },
+        {
+          "id": "eng-fal-speaking",
+          "name": "Speaking and Presentation",
+          "order": 2
+        },
+        {
+          "id": "eng-fal-discussion",
+          "name": "Group Discussion",
+          "order": 3
+        }
       ]
     }
   ]

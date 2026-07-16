@@ -9,9 +9,46 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "nso-fal-literal", "name": "Literal Comprehension", "order": 1 },
-        { "id": "nso-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
-        { "id": "nso-fal-critical", "name": "Critical Reading", "order": 3 }
+        {
+          "id": "nso-fal-literal",
+          "name": "Literal Comprehension",
+          "order": 1,
+          "stories": [
+            "kgogo-e-hlalefeta-nthu",
+            "leoka-la-dinoga",
+            "ke-rata-go-bala",
+            "motepa",
+            "letati-la-kagiso-la-mahlatse",
+            "kgogo-le-legokolodi",
+            "kgwele-ya-ka-ye-hubedu",
+            "bogolofadi-ga-se-go-se-kgone",
+            "morutii-wa-ka",
+            "re-etela-koko",
+            "pese-ye-kgolo-ye-talalerata",
+            "thowane-e-pholoa-leeba",
+            "maguru-o-abela-diphoofolo-maoto",
+            "tlowana-ya-go-rata-go-tseba",
+            "teo-ke-ratago-go-dira",
+            "mokibelo-wa-go-fia-thirithiri"
+          ]
+        },
+        {
+          "id": "nso-fal-inferential",
+          "name": "Inferential Comprehension",
+          "order": 2,
+          "stories": [
+            "nangila-mosetsana-wa-sebete",
+            "lesolo-la-go-bueta-moya-wa-go-keteka-seruthwane",
+            "kgoi-kayanja-le-morwedi-wa-gagwe",
+            "magozwe",
+            "khayanga-le-nkgo-ya-gagwe"
+          ]
+        },
+        {
+          "id": "nso-fal-critical",
+          "name": "Critical Reading",
+          "order": 3
+        }
       ]
     },
     {
@@ -21,10 +58,26 @@
       "prerequisites": [],
       "bloomTarget": "evaluate",
       "subtopics": [
-        { "id": "nso-fal-poetry", "name": "Poetry", "order": 1 },
-        { "id": "nso-fal-novel", "name": "Novel", "order": 2 },
-        { "id": "nso-fal-drama", "name": "Drama", "order": 3 },
-        { "id": "nso-fal-short-stories", "name": "Short Stories", "order": 4 }
+        {
+          "id": "nso-fal-poetry",
+          "name": "Poetry",
+          "order": 1
+        },
+        {
+          "id": "nso-fal-novel",
+          "name": "Novel",
+          "order": 2
+        },
+        {
+          "id": "nso-fal-drama",
+          "name": "Drama",
+          "order": 3
+        },
+        {
+          "id": "nso-fal-short-stories",
+          "name": "Short Stories",
+          "order": 4
+        }
       ]
     },
     {
@@ -34,9 +87,21 @@
       "prerequisites": [],
       "bloomTarget": "create",
       "subtopics": [
-        { "id": "nso-fal-essay", "name": "Essay Writing", "order": 1 },
-        { "id": "nso-fal-transactional", "name": "Transactional Writing", "order": 2 },
-        { "id": "nso-fal-creative", "name": "Creative Writing", "order": 3 }
+        {
+          "id": "nso-fal-essay",
+          "name": "Essay Writing",
+          "order": 1
+        },
+        {
+          "id": "nso-fal-transactional",
+          "name": "Transactional Writing",
+          "order": 2
+        },
+        {
+          "id": "nso-fal-creative",
+          "name": "Creative Writing",
+          "order": 3
+        }
       ]
     },
     {
@@ -46,9 +111,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "nso-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
-        { "id": "nso-fal-vocabulary", "name": "Vocabulary", "order": 2 },
-        { "id": "nso-fal-syntax", "name": "Sentence Structure", "order": 3 }
+        {
+          "id": "nso-fal-grammar",
+          "name": "Grammar and Spelling",
+          "order": 1
+        },
+        {
+          "id": "nso-fal-vocabulary",
+          "name": "Vocabulary",
+          "order": 2
+        },
+        {
+          "id": "nso-fal-syntax",
+          "name": "Sentence Structure",
+          "order": 3
+        }
       ]
     },
     {
@@ -58,9 +135,21 @@
       "prerequisites": [],
       "bloomTarget": "analyze",
       "subtopics": [
-        { "id": "nso-fal-adverts", "name": "Advertisements", "order": 1 },
-        { "id": "nso-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
-        { "id": "nso-fal-graphics", "name": "Graphic Texts", "order": 3 }
+        {
+          "id": "nso-fal-adverts",
+          "name": "Advertisements",
+          "order": 1
+        },
+        {
+          "id": "nso-fal-cartoons",
+          "name": "Cartoons and Comics",
+          "order": 2
+        },
+        {
+          "id": "nso-fal-graphics",
+          "name": "Graphic Texts",
+          "order": 3
+        }
       ]
     },
     {
@@ -70,9 +159,21 @@
       "prerequisites": [],
       "bloomTarget": "apply",
       "subtopics": [
-        { "id": "nso-fal-listening", "name": "Listening Comprehension", "order": 1 },
-        { "id": "nso-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
-        { "id": "nso-fal-discussion", "name": "Group Discussion", "order": 3 }
+        {
+          "id": "nso-fal-listening",
+          "name": "Listening Comprehension",
+          "order": 1
+        },
+        {
+          "id": "nso-fal-speaking",
+          "name": "Speaking and Presentation",
+          "order": 2
+        },
+        {
+          "id": "nso-fal-discussion",
+          "name": "Group Discussion",
+          "order": 3
+        }
       ]
     }
   ]
