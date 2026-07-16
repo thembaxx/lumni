@@ -16,11 +16,10 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ body, userId }) => {
-    const { subject, topic, groupId, settings, inviteCode } = body as {
+    const { subject, topic, groupId, inviteCode } = body as {
       subject: string;
       topic?: string;
       groupId: string;
-      settings?: any;
       inviteCode?: string;
     };
 
@@ -29,16 +28,15 @@ export const POST = createRouteHandler({
     // We'll get user name from the user object in execute context
     const userName = "User"; // TODO: get from auth context
 
-    const session = await collaborativeSessionService.createSession(userId, userName, groupId, {
+    const session = await collaborativeSessionService.createSession(userId!, userName, groupId, {
       subject,
       topic,
-      settings,
       inviteCode,
     });
 
     // Get Ably token
     const { createCollaborativeToken } = await import("@/lib/collaborative/ably");
-    const ablyToken = await createCollaborativeToken(userId, session.id, "host");
+    const ablyToken = await createCollaborativeToken(userId!, session.id, "host");
 
     // Generate Yjs doc ID
     const yjsDocId = `whiteboard_${session.id}`;
@@ -49,7 +47,7 @@ export const POST = createRouteHandler({
         { urls: "stun:stun.l.google.com:19302" },
         { urls: "stun:stun1.l.google.com:19302" },
       ],
-      maxParticipants: session.settings.maxParticipants,
+      maxParticipants: session.maxParticipants,
     };
 
     return {

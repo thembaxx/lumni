@@ -22,7 +22,7 @@ export const POST = createRouteHandler({
     return {
       file: { buffer, name: file.name },
       config,
-      memo: memoBuffer ? { buffer: memoBuffer, name: memoFile.name } : null,
+      memo: memoBuffer && memoFile ? { buffer: memoBuffer, name: memoFile.name } : null,
     };
   },
   validate: (body) => {
@@ -53,12 +53,14 @@ export const POST = createRouteHandler({
 
     try {
       // Get curriculum topics for the subject
-      const { getCurriculumTopics } = await import("@/lib/exam-paper-ingestion/ingestion-service");
-      const curriculumTopics = await getCurriculumTopics(config.subject);
+      const { getCurriculumTopics: getTopics } =
+        await import("@/lib/exam-paper-ingestion/curriculum-topics");
+      const curriculumTopics = await getTopics(config.subject);
 
       const fullConfig = {
         ...config,
         curriculumTopics,
+        grade: 12,
         language: config.language || "en",
       };
 

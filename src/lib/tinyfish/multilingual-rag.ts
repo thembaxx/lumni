@@ -1,4 +1,4 @@
-import { searchWithRAG, type RagContext } from "./tinyfish";
+import { searchWithRAG, type RagContext } from "./index";
 import { buildPromptInstruction, emptyRagContext } from "@/lib/tinyfish";
 
 interface LanguageSearchConfig {
@@ -34,24 +34,17 @@ export async function searchWithRAGMultilingual(
   const language = options.language || "en";
   const config = LANGUAGE_CONFIGS[language] || LANGUAGE_CONFIGS.en;
 
-  const searchQuery = buildMultilingualQuery(options.subject, options.topic, language);
-
-  const ragContext = await searchWithRAG(searchQuery, {
+  const ragContext = await searchWithRAG({
     subject: options.subject,
-    topic: options.topic,
-    domains: config.domains,
+    topic: options.topic ?? "",
     userId: options.userId,
-    maxResults: 3,
   });
 
   if (!ragContext.sources.length && language !== "en") {
-    const fallbackQuery = buildMultilingualQuery(options.subject, options.topic, "en");
-    const fallbackContext = await searchWithRAG(fallbackQuery, {
+    const fallbackContext = await searchWithRAG({
       subject: options.subject,
-      topic: options.topic,
-      domains: LANGUAGE_CONFIGS.en.domains,
+      topic: options.topic ?? "",
       userId: options.userId,
-      maxResults: 2,
     });
     if (fallbackContext.sources.length) {
       return {
@@ -73,31 +66,16 @@ function buildMultilingualQuery(subject: string, topic?: string, language: strin
     af: `CAPS kurrikulum ${subject}${topic ? ` ${topic}` : ""} Suid-Afrika Graad 12 NSC eksamen`,
     zu: `I-CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} iNingizimu Afrika Grade 12 NSC exam`,
     xh: `I-CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Mzantsi Afrika Grade 12 NSC exam`,
-    st: {
-      st: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} Afrika Borwa Grade 12 NSC exam",
-    },
-    tn: {
-      tn: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} Aforika Borwa Grade 12 NSC exam",
-    },
-    nso: {
-      nso: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} Afrika Borwa Grade 12 NSC exam",
-    },
-    ts: {
-      ts: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} Afrika-Dzonga Grade 12 NSC exam",
-    },
-    ss: {
-      ss: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} iNingizimu Afrika Grade 12 NSC exam",
-    },
-    ve: {
-      ve: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} Afrika Tshipembe Grade 12 NSC exam",
-    },
-    nd: {
-      nd: "CAPS curriculum ${subject}${topic ? ` ${topic}` : ''} iSewula Afrika Grade 12 NSC exam",
-    },
+    st: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Afrika Borwa Grade 12 NSC exam`,
+    tn: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Aforika Borwa Grade 12 NSC exam`,
+    nso: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Afrika Borwa Grade 12 NSC exam`,
+    ts: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Afrika-Dzonga Grade 12 NSC exam`,
+    ss: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} iNingizimu Afrika Grade 12 NSC exam`,
+    ve: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} Afrika Tshipembe Grade 12 NSC exam`,
+    nd: `CAPS curriculum ${subject}${topic ? ` ${topic}` : ""} iSewula Afrika Grade 12 NSC exam`,
   };
 
-  const template = terms[language] || terms.en;
-  return typeof template === "string" ? template : template[language] || terms.en;
+  return terms[language] || terms.en;
 }
 
 function addLanguageNote(xml: string, language: string): string {

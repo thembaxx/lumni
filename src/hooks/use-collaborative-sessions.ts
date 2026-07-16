@@ -55,9 +55,10 @@ export interface JoinSessionResponse {
   };
 }
 
-function useAuthHeaders() {
+function useAuthHeaders(): Record<string, string> {
   const { data: session } = useSession();
-  return session ? { Authorization: `Bearer ${session.accessToken}` } : {};
+  const s = session as { accessToken?: string } | null;
+  return s?.accessToken ? { Authorization: `Bearer ${s.accessToken}` } : {};
 }
 
 export function useCreateCollaborativeSession() {

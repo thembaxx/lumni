@@ -19,14 +19,14 @@ interface WhiteboardProps {
   className?: string;
 }
 
-const TOOL_COLORS = {
+const TOOL_COLORS: Record<string, string> = {
   pen: "#1a1a2e",
   eraser: "#ffffff",
   highlighter: "#fef08a",
   shape: "#1a1a2e",
 };
 
-const TOOL_WIDTHS = {
+const TOOL_WIDTHS: Record<string, number> = {
   pen: 2,
   eraser: 20,
   highlighter: 10,
@@ -44,7 +44,7 @@ export function CollaborativeWhiteboard({
   const { data: sessionData } = useCollaborativeSession(sessionId);
   const ablyChat = useAblyChat();
 
-  const stageRef = useRef<Stage>(null);
+  const stageRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [tool, setTool] = useState<"pen" | "eraser" | "highlighter" | "select" | "text" | "shape">(
     "pen",
@@ -344,7 +344,7 @@ export function CollaborativeWhiteboard({
         ref={stageRef}
         width={containerRef.current?.clientWidth || 800}
         height={containerRef.current?.clientHeight || 600}
-        onContentClick={(e) => {
+        onContentClick={(e: any) => {
           if (tool === "select" && e.target === e.currentTarget) {
             // Deselect
           }

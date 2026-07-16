@@ -268,7 +268,7 @@ export async function runMultilingualEvaluation(): Promise<EvaluationSummary> {
   const bySubject: Record<string, { total: number; passed: number; avgScore: number }> = {};
 
   for (const r of results) {
-    const q = EVALUATION_SET.find((e) => e.id === result.questionId)!;
+    const q = EVALUATION_SET.find((e) => e.id === r.questionId)!;
 
     if (!byLanguage[r.language]) {
       byLanguage[r.language] = { total: 0, passed: 0, avgScore: 0 };

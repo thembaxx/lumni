@@ -67,9 +67,11 @@ const DEFAULT_CONFIG: RiskModelConfig = {
 
 export class RiskModel {
   private config: RiskModelConfig;
+  private db: DataAccess;
 
-  constructor(config: Partial<RiskModelConfig> = {}) {
+  constructor(config: Partial<RiskModelConfig> = {}, db?: DataAccess) {
     this.config = { ...DEFAULT_CONFIG, ...config };
+    this.db = db ?? dexieDataAccess;
   }
 
   computeRisk(data: StudentActivityData): RiskScore {
@@ -137,6 +139,12 @@ export class RiskModel {
       factors,
       recommendation,
     };
+  }
+
+  async computeRiskScore(userId: string, windowDays: number = 14): Promise<RiskScore | null> {
+    const data = await fetchStudentActivityData(this.db, userId, windowDays);
+    if (!data) return null;
+    return this.computeRisk(data);
   }
 
   private checkStreakBreak(data: StudentActivityData): RiskFactor | null {
@@ -287,7 +295,7 @@ export async function fetchStudentActivityData(
     const attempts = await db.quizAttempts
       .where("userId")
       .equals(userId)
-      .and((a) => a.completedAt >= since)
+      .filter((a: { completedAt: number }) => a.completedAt >= since)
       .toArray();
 
     // Fetch flashcard reviews
@@ -300,14 +308,14 @@ export async function fetchStudentActivityData(
     const examSessions = await db.examSessions
       .where("userId")
       .equals(userId)
-      .and((e) => e.startedAt >= since)
+      .filter((e: { startedAt: number }) => e.startedAt >= since)
       .toArray();
 
     // Calculate quiz streak
     const quizDates = attempts
-      .map((a) => new Date(a.completedAt).toISOString().split("T")[0])
-      .filter((v, i, a) => a.indexOf(v) === i)
-      .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+      .map((a: { completedAt: number }) => new Date(a.completedAt).toISOString().split("T")[0])
+      .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
+      .sort((a: string, b: string) => new Date(b).getTime() - new Date(a).getTime());
 
     let quizStreak = 0;
     let lastQuizAt = 0;
@@ -330,22 +338,32 @@ export async function fetchStudentActivityData(
     }
 
     // Calculate competency trends
-    const competencyTrends = competencies.map((c) => {
-      const prev = competencies.find(
-        (p) => p.topicId === c.topicId && p.subjectId === c.subjectId && p.id !== c.id,
-      );
-      const prevScore = prev ? prev.score : c.score;
-      const changePercent = prevScore > 0 ? ((c.score - prevScore) / prevScore) * 100 : 0;
-      return {
-        topicId: c.topicId,
-        subject: c.subjectId,
-        currentScore: c.score,
-        prevScore,
-        changePercent,
-        attempts: c.attempts,
-        lastAssessed: c.lastAssessed,
-      };
-    });
+    const competencyTrends = competencies.map(
+      (c: {
+        topicId: string;
+        subjectId: string;
+        id?: number;
+        score: number;
+        attempts: number;
+        lastAssessed: number;
+      }) => {
+        const prev = competencies.find(
+          (p: { topicId: string; subjectId: string; id?: number }) =>
+            p.topicId === c.topicId && p.subjectId === c.subjectId && p.id !== c.id,
+        );
+        const prevScore = prev ? prev.score : c.score;
+        const changePercent = prevScore > 0 ? ((c.score - prevScore) / prevScore) * 100 : 0;
+        return {
+          topicId: c.topicId,
+          subject: c.subjectId,
+          currentScore: c.score,
+          prevScore,
+          changePercent,
+          attempts: c.attempts,
+          lastAssessed: c.lastAssessed,
+        };
+      },
+    );
 
     // Check flashcard ease-hell
     const easeHell = reviews.some((r) => r.interval > 30 && r.easeFactor < 1.3);
@@ -354,27 +372,37 @@ export async function fetchStudentActivityData(
     const examPracticeGap =
       examSessions.length > 0
         ? Math.floor(
-            (Date.now() - Math.max(...examSessions.map((e) => e.startedAt))) /
+            (Date.now() -
+              Math.max(...examSessions.map((e: { startedAt: number }) => e.startedAt))) /
               (1000 * 60 * 60 * 24),
           )
         : 999;
 
     // Session durations
-    const durations = attempts.map((a) => a.duration).filter((d) => d > 0);
+    const durations = attempts
+      .map((a: { duration: number }) => a.duration)
+      .filter((d: number) => d > 0);
     const avgSessionDuration =
-      durations.length > 0 ? durations.reduce((a, b) => a + b, 0) / durations.length : 0;
+      durations.length > 0
+        ? durations.reduce((a: number, b: number) => a + b, 0) / durations.length
+        : 0;
     const prevDurations = attempts
-      .filter((a) => a.completedAt < Date.now() - 30 * 24 * 60 * 60 * 1000)
-      .map((a) => a.duration)
-      .filter((d) => d > 0);
+      .filter(
+        (a: { completedAt: number; duration: number }) =>
+          a.completedAt < Date.now() - 30 * 24 * 60 * 60 * 1000,
+      )
+      .map((a: { duration: number }) => a.duration)
+      .filter((d: number) => d > 0);
     const prevAvgSessionDuration =
       prevDurations.length > 0
-        ? prevDurations.reduce((a, b) => a + b, 0) / prevDurations.length
+        ? prevDurations.reduce((a: number, b: number) => a + b, 0) / prevDurations.length
         : 0;
 
     // Engagement metrics
     const activeDays = new Set(
-      attempts.map((a) => new Date(a.completedAt).toISOString().split("T")[0]),
+      attempts.map(
+        (a: { completedAt: number }) => new Date(a.completedAt).toISOString().split("T")[0],
+      ),
     ).size;
     const totalQuizzesLast30 = attempts.length;
 

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   AlertTriangle,
   TrendingDown,
@@ -18,6 +17,7 @@ import {
   ExternalLink,
   RefreshCw,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -109,7 +109,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                 <p className="text-sm text-muted-foreground">{t("highRisk")}</p>
                 <p className="text-3xl font-bold text-red-600 dark:text-red-400">{highRiskCount}</p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-red-500" />
+              <HugeiconsIcon icon={AlertTriangle} className="h-8 w-8 text-red-500" />
             </div>
           </CardContent>
         </Card>
@@ -122,7 +122,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                   {mediumRiskCount}
                 </p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-yellow-500" />
+              <HugeiconsIcon icon={AlertTriangle} className="h-8 w-8 text-yellow-500" />
             </div>
           </CardContent>
         </Card>
@@ -135,7 +135,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                   {lowRiskCount}
                 </p>
               </div>
-              <Target className="h-8 w-8 text-green-500" />
+              <HugeiconsIcon icon={Target} className="h-8 w-8 text-green-500" />
             </div>
           </CardContent>
         </Card>
@@ -146,7 +146,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                 <p className="text-sm text-muted-foreground">{t("totalStudents")}</p>
                 <p className="text-3xl font-bold">{students.length}</p>
               </div>
-              <Users className="h-8 w-8 text-muted-foreground" />
+              <HugeiconsIcon icon={Users} className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
         </Card>
@@ -197,9 +197,9 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                 aria-label={sortOrder === "asc" ? t("sortDescending") : t("sortAscending")}
               >
                 {sortOrder === "asc" ? (
-                  <TrendingUp className="h-4 w-4" />
+                  <HugeiconsIcon icon={TrendingUp} className="h-4 w-4" />
                 ) : (
-                  <TrendingDown className="h-4 w-4" />
+                  <HugeiconsIcon icon={TrendingDown} className="h-4 w-4" />
                 )}
               </Button>
             </div>
@@ -311,14 +311,14 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
                             disabled={isLoading}
                             className="gap-1"
                           >
-                            <AlertCircle className="h-3 w-3" />
+                            <HugeiconsIcon icon={AlertCircle} className="h-3 w-3" />
                             <span>{t("intervene")}</span>
                           </Button>
                           <Link
                             href={`/teacher/students/${student.studentId}`}
                             className="text-sm text-primary hover:underline flex items-center gap-1"
                           >
-                            <ExternalLink className="h-3 w-3" />
+                            <HugeiconsIcon icon={ExternalLink} className="h-3 w-3" />
                             {t("viewDetails")}
                           </Link>
                         </div>

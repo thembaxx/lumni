@@ -1,18 +1,24 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccess } from "@/lib/db/data-access";
-import type {
-  CollaborativeSession,
-  SessionParticipant,
-  CreateSessionRequest,
-  JoinSessionRequest,
-  SessionResponse,
-  SessionSettings,
-  SessionMessage,
-  WhiteboardElement,
-} from "./types";
+import type { CollaborativeSession, SessionParticipant, SessionMessage } from "./types";
 import { logError } from "@/lib/shared/logger";
 
-const DEFAULT_SETTINGS: SessionSettings = {
+interface WhiteboardElement {
+  id: string;
+  sessionId?: string;
+  type: string;
+  data: Record<string, unknown>;
+  userId: string;
+  timestamp: number;
+}
+
+type CollaborativeDb = DataAccess & {
+  studySessions: any;
+  whiteboardElements: any;
+  sessionMessages: any;
+};
+
+const DEFAULT_SETTINGS = {
   maxParticipants: 6,
   allowVoiceChat: true,
   allowWhiteboard: true,
@@ -36,21 +42,27 @@ const PARTICIPANT_COLORS = [
 ];
 
 export class CollaborativeService {
-  private db: DataAccess;
+  private db: CollaborativeDb;
 
   constructor(deps?: { db?: DataAccess }) {
-    this.db = deps?.db ?? dexieDataAccess;
+    this.db = (deps?.db ?? dexieDataAccess) as unknown as CollaborativeDb;
   }
 
   async createSession(
     userId: string,
     userName: string,
-    request: CreateSessionRequest,
+    request: {
+      subject: string;
+      topic?: string;
+      groupId: string;
+      settings?: Record<string, unknown>;
+      inviteCode?: string;
+    },
   ): Promise<CollaborativeSession> {
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
     const now = Date.now();
 
-    const hostParticipant: SessionParticipant = {
+    const hostParticipant: Record<string, unknown> = {
       userId,
       name: userName,
       role: "host",
@@ -58,7 +70,7 @@ export class CollaborativeService {
       color: PARTICIPANT_COLORS[0],
     };
 
-    const session: CollaborativeSession = {
+    const session: Record<string, unknown> = {
       id: sessionId,
       groupId: request.groupId,
       hostId: userId,
@@ -72,7 +84,7 @@ export class CollaborativeService {
     };
 
     await this.db.studySessions.add(session);
-    return session;
+    return session as unknown as CollaborativeSession;
   }
 
   async getSession(sessionId: string): Promise<CollaborativeSession | undefined> {
@@ -92,7 +104,7 @@ export class CollaborativeService {
     if (!session) return null;
     if (session.status === "ended") return null;
 
-    const existingIndex = session.participants.findIndex((p) => p.userId === userId);
+    const existingIndex = session.participants.findIndex((p: any) => p.userId === userId);
     if (existingIndex >= 0) {
       const participant = session.participants[existingIndex];
       if (participant.leftAt) {
@@ -111,25 +123,26 @@ export class CollaborativeService {
       throw new Error("Session is full");
     }
 
-    const participant: SessionParticipant = {
+    const participant: Record<string, unknown> = {
       userId,
       name: userName,
       role: "participant",
       joinedAt: Date.now(),
-      color: PARTICIPANT_COLORS[session.participants.length % PARTICIPANT_COLORS.length],
+      color:
+        PARTICIPANT_COLORS[(session.participants as unknown[]).length % PARTICIPANT_COLORS.length],
     };
 
     session.participants.push(participant);
     await this.db.studySessions.put(session);
 
-    return { session, participant };
+    return { session, participant: participant as any };
   }
 
   async leaveSession(sessionId: string, userId: string): Promise<void> {
     const session = await this.db.studySessions.get(sessionId);
     if (!session) return;
 
-    const participantIndex = session.participants.findIndex((p) => p.userId === userId);
+    const participantIndex = session.participants.findIndex((p: any) => p.userId === userId);
     if (participantIndex >= 0) {
       session.participants[participantIndex] = {
         ...session.participants[participantIndex],
@@ -139,7 +152,7 @@ export class CollaborativeService {
 
     // If host leaves, end session or transfer host
     if (session.hostId === userId && session.status === "active") {
-      const remaining = session.participants.filter((p) => p.userId !== userId && !p.leftAt);
+      const remaining = session.participants.filter((p: any) => p.userId !== userId && !p.leftAt);
       if (remaining.length > 0) {
         session.hostId = remaining[0].userId;
         session.hostName = remaining[0].name;
@@ -170,7 +183,7 @@ export class CollaborativeService {
 
     session.status = "ended";
     session.endedAt = Date.now();
-    session.participants = session.participants.map((p) => ({
+    session.participants = session.participants.map((p: any) => ({
       ...p,
       leftAt: p.leftAt ?? Date.now(),
     }));
@@ -185,7 +198,7 @@ export class CollaborativeService {
     const session = await this.db.studySessions.get(sessionId);
     if (!session) return;
 
-    const participant = session.participants.find((p) => p.userId === userId);
+    const participant = session.participants.find((p: any) => p.userId === userId);
     if (participant) {
       participant.cursor = cursor;
       await this.db.studySessions.put(session);
@@ -239,12 +252,12 @@ export class CollaborativeService {
     const oldSessions = await this.db.studySessions
       .where("createdAt")
       .below(cutoff)
-      .and((s) => s.status === "ended")
+      .and((s: any) => s.status === "ended")
       .toArray();
 
     if (oldSessions.length === 0) return 0;
 
-    await this.db.studySessions.bulkDelete(oldSessions.map((s) => s.id));
+    await this.db.studySessions.bulkDelete(oldSessions.map((s: any) => s.id));
     return oldSessions.length;
   }
 }

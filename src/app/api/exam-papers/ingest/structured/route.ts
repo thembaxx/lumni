@@ -56,6 +56,10 @@ export const POST = createRouteHandler({
       throw new HttpError(400, "metadata and questions are required");
     }
 
+    const curriculumTopics = await import("@/lib/exam-paper-ingestion/curriculum-topics").then(
+      (m) => m.getCurriculumTopics(metadata.subject),
+    );
+
     const config = {
       subject: metadata.subject,
       year: metadata.year,
@@ -65,6 +69,7 @@ export const POST = createRouteHandler({
       examPeriod: examPeriod || (metadata.paperNumber > 2 ? "may-june" : "november"),
       language,
       grade: metadata.grade || 12,
+      curriculumTopics,
     };
 
     const result = await pastPaperIngestionService.ingestStructured(questions, config);

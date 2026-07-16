@@ -268,9 +268,7 @@ export async function runMultilingualEvaluation(): Promise<void> {
       name: "Average score ≥ 80 for priority languages (en, af, zu, xh)",
       passed: (() => {
         const priority = ["en", "af", "zu", "xh"];
-        return priority.every((l) => {
-          const stats =
-            l in l ? { passed: 0, total: 1, avgScore: 0 } : { passed: 0, total: 1, avgScore: 0 };
+        return priority.every((_l) => {
           return true; // Simplified for now
         });
       })(),

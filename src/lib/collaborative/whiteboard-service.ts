@@ -66,8 +66,8 @@ export class WhiteboardService {
       console.log("Whiteboard connection status:", event.connected ? "connected" : "disconnected");
     });
 
-    this.provider.on("synced", (isSynced: boolean) => {
-      console.log("Whiteboard synced:", isSynced);
+    this.provider.on("synced", ({ synced }: { synced: boolean }) => {
+      console.log("Whiteboard synced:", synced);
     });
   }
 
@@ -140,7 +140,7 @@ export class WhiteboardService {
 
   onSync(callback: (isSynced: boolean) => void): () => void {
     if (!this.provider) return () => {};
-    const observer = (isSynced: boolean) => callback(isSynced);
+    const observer = ({ synced }: { synced: boolean }) => callback(synced);
     this.provider.on("synced", observer);
     return () => this.provider?.off("synced", observer);
   }

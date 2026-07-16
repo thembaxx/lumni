@@ -36,12 +36,14 @@ export async function createCollaborativeTokenRequest(
 
   const tokenRequest = await client.auth.createTokenRequest({
     clientId: userId,
-    capability: capabilities,
+    capability: capabilities as unknown as string,
     ttl: 60 * 60 * 1000, // 1 hour
   });
 
+  const tokenData = tokenRequest as unknown as { token: string };
+
   return {
-    token: tokenRequest.token,
+    token: tokenData.token,
     capability: capabilities,
     clientId: userId,
   };
@@ -68,12 +70,12 @@ export async function endSessionOnAbly(sessionId: string): Promise<void> {
 
 export async function getSessionParticipants(
   sessionId: string,
-): Promise<Ably.Types.PresenceMessage[]> {
+): Promise<{ clientId: string; data: unknown }[]> {
   try {
     const client = getRestClient();
     const channel = client.channels.get(`chat-sessions:${sessionId}`);
     const presence = await channel.presence.get();
-    return presence;
+    return presence as unknown as { clientId: string; data: unknown }[];
   } catch (err) {
     logError("Ably.getSessionParticipants", err);
     return [];

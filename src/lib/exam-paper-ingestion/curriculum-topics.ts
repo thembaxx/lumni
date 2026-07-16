@@ -26,16 +26,17 @@ export async function getCurriculumTopics(
   }
 
   try {
-    const db = dexieDataAccess as unknown as DataAccess & {
-      curriculumTopics: {
-        where: (index: string) => {
-          equals: (val: string) => {
-            filter: (
-              fn: (item: CurriculumTopicRecord) => boolean,
-            ) => Promise<CurriculumTopicRecord[]>;
+    type CurriculumTopicsTable = {
+      where(index: string): {
+        equals(val: string): {
+          filter(fn: (item: CurriculumTopicRecord) => boolean): {
+            toArray(): Promise<CurriculumTopicRecord[]>;
           };
         };
       };
+    };
+    const db = dexieDataAccess as unknown as DataAccess & {
+      curriculumTopics: CurriculumTopicsTable;
     };
 
     // Check if curriculum topics table exists

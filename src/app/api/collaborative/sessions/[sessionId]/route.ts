@@ -6,8 +6,8 @@ export const GET = createRouteHandler({
   auth: "required",
   errorLabel: "CollaborativeSessionGet",
   useRateLimit: true,
-  execute: async ({ params, userId, userName }) => {
-    const sessionId = params.sessionId;
+  execute: async ({ params, userId }) => {
+    const sessionId = params!.sessionId;
     if (!sessionId) throw new HttpError(400, "Session ID required");
 
     const session = await collaborativeService.getSession(sessionId);
@@ -55,8 +55,9 @@ export const PATCH = createRouteHandler({
     }
     return null;
   },
-  execute: async ({ body, params, userId, userName }) => {
-    const sessionId = params.sessionId;
+  execute: async ({ body, params, userId }) => {
+    const sessionId = params!.sessionId;
+    const userName = "User";
     if (!sessionId) throw new HttpError(400, "Session ID required");
 
     const session = await collaborativeService.getSession(sessionId);
@@ -66,12 +67,12 @@ export const PATCH = createRouteHandler({
       case "start":
         if (session.hostId !== userId) throw new HttpError(403, "Only host can start session");
         if (session.status !== "waiting") throw new HttpError(400, "Session already started");
-        await collaborativeService.startSession(sessionId);
+        await collaborativeService.startSession(sessionId, userId!);
         return { status: "active", startedAt: Date.now() };
 
       case "end":
         if (session.hostId !== userId) throw new HttpError(403, "Only host can end session");
-        await collaborativeService.endSession(sessionId);
+        await collaborativeService.endSession(sessionId, userId!);
         return { status: "ended", endedAt: Date.now() };
 
       case "join":

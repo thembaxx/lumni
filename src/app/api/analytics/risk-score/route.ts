@@ -30,6 +30,7 @@ export const POST = createRouteHandler({
 
     try {
       const riskScore = await riskModel.computeRiskScore(userId!, windowDays);
+      if (!riskScore) throw new HttpError(500, "Failed to compute risk score");
       return {
         score: riskScore.score,
         factors: riskScore.factors,
@@ -53,6 +54,7 @@ export const GET = createRouteHandler({
 
     try {
       const riskScore = await riskModel.computeRiskScore(userId!, windowDays);
+      if (!riskScore) throw new HttpError(500, "Failed to compute risk score");
       return {
         score: riskScore.score,
         factors: riskScore.factors,

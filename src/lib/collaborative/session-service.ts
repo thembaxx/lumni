@@ -202,7 +202,7 @@ export class CollaborativeSessionService {
       id: `msg_${nanoid(12)}`,
       timestamp: Date.now(),
     };
-    await this.db.sessionMessages.add({ sessionId, ...sessionMessage });
+    await this.db.sessionMessages.add({ ...sessionMessage, sessionId });
     return sessionMessage;
   }
 
@@ -235,7 +235,7 @@ export class CollaborativeSessionService {
     chunk: Omit<SessionRecording["chunks"][0], "id" | "recordingId">,
   ): Promise<void> {
     const fullChunk = { ...chunk, id: `chunk_${nanoid(12)}`, recordingId };
-    await this.db.sessionRecordings.update(recordingId, (rec) => {
+    await this.db.sessionRecordings.update(recordingId, (rec: SessionRecording | undefined) => {
       if (!rec) return;
       rec.chunks.push(fullChunk);
       rec.size += chunk.blobUrl.length; // approximate

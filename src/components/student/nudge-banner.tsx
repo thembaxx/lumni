@@ -13,6 +13,7 @@ import {
   X,
   Bell,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 
 interface Nudge {
@@ -43,12 +44,12 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
   const [activeNudge, setActiveNudge] = useState<Nudge | null>(null);
   const queryClient = useQueryClient();
 
-  const { data: nudges = [], isLoading } = useQuery({
+  const { data: nudges = [], isLoading } = useQuery<Nudge[]>({
     queryKey: ["student-nudges"],
     queryFn: async () => {
       const res = await fetch("/api/student/nudges");
       if (!res.ok) return [];
-      return res.json();
+      return res.json() as Promise<Nudge[]>;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 30 * 60 * 1000, // Refetch every 30 minutes
@@ -79,7 +80,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
 
   // Filter out dismissed nudges
   const visibleNudges = useMemo(
-    () => nudges.filter((n) => !dismissedIds.has(n.id) && !n.actionTaken),
+    () => (nudges as Nudge[]).filter((n: Nudge) => !dismissedIds.has(n.id) && !n.actionTaken),
     [nudges, dismissedIds],
   );
 
@@ -87,10 +88,14 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
   const priorityOrder = useMemo(() => ({ critical: 4, high: 3, medium: 2, low: 1 }), []);
   const topNudge = useMemo(
     () =>
-      nudges
-        .filter((n) => !dismissedIds.has(n.id) && !n.actionTaken)
-        .filter((_, i, arr) => arr.indexOf(arr.find((n) => !n.actionTaken)!) === i)
-        .sort((a, b) => priorityOrder[b.severity] - priorityOrder[a.severity])[0] || null,
+      (nudges as Nudge[])
+        .filter((n: Nudge) => !dismissedIds.has(n.id) && !n.actionTaken)
+        .filter(
+          (_: Nudge, i: number, arr: Nudge[]) =>
+            arr.indexOf(arr.find((n: Nudge) => !n.actionTaken)!) === i,
+        )
+        .sort((a: Nudge, b: Nudge) => priorityOrder[b.severity] - priorityOrder[a.severity])[0] ||
+      null,
     [nudges, dismissedIds, priorityOrder],
   );
 
@@ -113,12 +118,12 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
   };
 
   const iconMap = {
-    streak_break: <AlertTriangle className="h-5 w-5" />,
-    competency_decay: <BookOpen className="h-5 w-5" />,
-    ease_hell: <Target className="h-5 w-5" />,
-    exam_gap: <Clock className="h-5 w-5" />,
-    duration_drop: <Clock className="h-5 w-5" />,
-    engagement_drop: <AlertTriangle className="h-5 w-5" />,
+    streak_break: <HugeiconsIcon icon={AlertTriangle} className="h-5 w-5" />,
+    competency_decay: <HugeiconsIcon icon={BookOpen} className="h-5 w-5" />,
+    ease_hell: <HugeiconsIcon icon={Target} className="h-5 w-5" />,
+    exam_gap: <HugeiconsIcon icon={Clock} className="h-5 w-5" />,
+    duration_drop: <HugeiconsIcon icon={Clock} className="h-5 w-5" />,
+    engagement_drop: <HugeiconsIcon icon={AlertTriangle} className="h-5 w-5" />,
   };
 
   const handleDismiss = () => {
@@ -167,7 +172,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
               (activeNudge.type in iconMap ? (
                 iconMap[activeNudge.type as keyof typeof iconMap]
               ) : (
-                <Bell className="h-5 w-5" />
+                <HugeiconsIcon icon={Bell} className="h-5 w-5" />
               ))}
           </div>
 
@@ -200,7 +205,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
                 className="gap-1"
               >
                 <span>{activeNudge.actionLabel}</span>
-                <ChevronRight className="h-3 w-3" />
+                <HugeiconsIcon icon={ChevronRight} className="h-3 w-3" />
               </Button>
               <button
                 onClick={() => {
@@ -209,7 +214,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
                 }}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
-                <X className="h-3 w-3" />
+                <HugeiconsIcon icon={X} className="h-3 w-3" />
                 <span className="hidden sm:inline">Dismiss</span>
               </button>
             </div>
@@ -219,12 +224,3 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
     </div>
   );
 }
-
-const iconMap = {
-  streak_break: <AlertTriangle className="h-5 w-5" />,
-  competency_decay: <BookOpen className="h-5 w-5" />,
-  ease_hell: <Target className="h-5 w-5" />,
-  exam_gap: <Clock className="h-5 w-5" />,
-  duration_drop: <Clock className="h-5 w-5" />,
-  engagement_drop: <AlertTriangle className="h-5 w-5" />,
-};

@@ -184,11 +184,18 @@ export class PastPaperIngestionService {
     });
 
     return {
-      id: `paper_${config.subject}_${config.year}_p${config.paperNumber}`,
-      year: config.year,
-      session: config.examPeriod === "may-june" ? "may-june" : "october-november",
-      grade: config.grade,
-      subjects: [config.subject],
+      metadata: {
+        subject: config.subject,
+        paperCode: `p${config.paperNumber}`,
+        examPeriod: config.examPeriod === "may-june" ? "may-june" : "october-november",
+        year: config.year,
+        grade: config.grade,
+        qualification: "NSC",
+        language: "en",
+        totalMarks: config.totalMarks,
+        duration: config.duration,
+      },
+      instructions: [],
       sections: parsedSections,
     };
   }
@@ -206,7 +213,7 @@ export class PastPaperIngestionService {
         {
           id: `p0`,
           text: block.trim().slice(0, 500),
-          type: "text" as const,
+          type: "short-answer" as const,
           marks: 0,
         },
       ],

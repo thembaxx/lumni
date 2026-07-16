@@ -42,7 +42,7 @@ export const POST = createRouteHandler({
     await enqueue("quiz-pack-generate", {
       packId: pack.id,
       subject,
-      topic: topic ?? null,
+      topic: topic ?? undefined,
       count,
       generateVisuals,
     });
