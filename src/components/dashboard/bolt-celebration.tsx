@@ -67,7 +67,7 @@ export function BoltCelebration({
           <h2 className="ios-title-2 text-balance font-bold text-foreground tracking-tight">
             {correct ? "Correct!" : "Not quite"}
           </h2>
-          <p className="text-balance text-muted-foreground text-sm">{subjectLabel}</p>
+          <p className="text-pretty text-muted-foreground text-sm">{subjectLabel}</p>
         </div>
 
         <m.div

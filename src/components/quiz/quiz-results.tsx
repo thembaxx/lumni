@@ -107,7 +107,7 @@ export function QuizResultsCard({
                   : t("quiz.quizComplete")}
             </CardTitle>
           </FadeIn>
-          <p className="text-muted-foreground text-sm">{t("quiz.hereAreResults")}</p>
+          <p className="text-pretty text-muted-foreground text-sm">{t("quiz.hereAreResults")}</p>
         </CardHeader>
 
         <CardContent>

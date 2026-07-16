@@ -94,8 +94,9 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
           (_: Nudge, i: number, arr: Nudge[]) =>
             arr.indexOf(arr.find((n: Nudge) => !n.actionTaken)!) === i,
         )
-        .sort((a: Nudge, b: Nudge) => priorityOrder[b.severity] - priorityOrder[a.severity])[0] ||
-      null,
+        .toSorted(
+          (a: Nudge, b: Nudge) => priorityOrder[b.severity] - priorityOrder[a.severity],
+        )[0] || null,
     [nudges, dismissedIds, priorityOrder],
   );
 

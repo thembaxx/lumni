@@ -144,7 +144,7 @@ export function SwipeableCardDeck({
     return (
       <Card className="mx-auto w-full max-w-md" data-testid="empty-deck-message">
         <CardContent className="flex flex-col items-center justify-center gap-4 p-8">
-          <p className="text-muted-foreground">No flashcards available.</p>
+          <p className="text-pretty text-muted-foreground">No flashcards available.</p>
           <Button variant="outline" size="sm" onClick={() => router.push("/flashcards")}>
             Generate AI flashcards
           </Button>
@@ -165,8 +165,10 @@ export function SwipeableCardDeck({
         >
           <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-7 text-system-accent" />
         </div>
-        <h2 className="font-semibold text-xl">Deck Complete!</h2>
-        <p className="text-muted-foreground text-sm">You reviewed all {cards.length} cards.</p>
+        <h2 className="font-semibold text-xl text-balance">Deck Complete!</h2>
+        <p className="text-pretty text-muted-foreground text-sm">
+          You reviewed all {cards.length} cards.
+        </p>
       </div>
     );
   }
@@ -190,7 +192,7 @@ export function SwipeableCardDeck({
           Quit
         </Button>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" data-testid="card-counter">
+          <Badge variant="outline" data-testid="card-counter" className="tabular-nums">
             {currentIndex + 1} / {cards.length}
           </Badge>
           {knownCount !== undefined && (
@@ -303,7 +305,7 @@ export function SwipeableCardDeck({
           )}
         </div>
 
-        <div className="text-muted-foreground text-xs">{remainingCount} remaining</div>
+        <div className="text-muted-foreground text-xs tabular-nums">{remainingCount} remaining</div>
 
         <div className="w-20" />
       </div>

@@ -58,11 +58,13 @@ export function CoachingPanel({
                 )}
               >
                 {coaching.improvement > 0 ? "+" : ""}
-                {coaching.improvement} pts
+                <span className="tabular-nums">{coaching.improvement}</span> pts
               </span>
             )}
             <span className="text-muted-foreground">
-              Score: {coaching.lastResult.score}/{coaching.lastResult.maxScore}
+              <span className="tabular-nums">
+                Score: {coaching.lastResult.score}/{coaching.lastResult.maxScore}
+              </span>
             </span>
           </div>
         )}

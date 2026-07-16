@@ -35,7 +35,7 @@ export function SuccessState({ email, error }: SuccessStateProps) {
 
       <div className="flex flex-col gap-2 text-center">
         <p className="font-medium text-foreground text-lg">Magic link sent!</p>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-pretty text-muted-foreground text-sm">
           We&apos;ve sent a sign-in link to: <span className="font-medium">{email}</span>
         </p>
       </div>

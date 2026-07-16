@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
         </div>
         <div className="flex flex-col gap-2">
           <h1 className="font-heading font-semibold text-2xl">{t("auth.checkEmail")}</h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-pretty text-muted-foreground text-sm">
             {t.rich("auth.resetEmailSent", {
               email,
               // oxlint-disable-next-line react/no-unstable-nested-components — t.rich formatter callback, not a React component

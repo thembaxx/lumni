@@ -61,14 +61,14 @@ export function PrivacyTab() {
   return (
     <div className="flex flex-col gap-6">
       <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold">
+        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
           {t("consent.privacyTab.consentPreferences")}
         </h3>
         <div className="flex flex-col gap-4">
           <Field>
             <FieldLabel htmlFor="privacy-analytics">{t("consent.privacyTab.analytics")}</FieldLabel>
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-pretty text-muted-foreground text-sm">
                 {t("consent.privacyTab.analyticsDesc")}
               </p>
               <Switch
@@ -81,7 +81,7 @@ export function PrivacyTab() {
           <Field>
             <FieldLabel htmlFor="privacy-marketing">{t("consent.privacyTab.marketing")}</FieldLabel>
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-pretty text-muted-foreground text-sm">
                 {t("consent.privacyTab.marketingDesc")}
               </p>
               <Switch
@@ -96,7 +96,7 @@ export function PrivacyTab() {
               {t("consent.privacyTab.dataSharing")}
             </FieldLabel>
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-pretty text-muted-foreground text-sm">
                 {t("consent.privacyTab.dataSharingDesc")}
               </p>
               <Switch
@@ -110,7 +110,9 @@ export function PrivacyTab() {
       </Card>
 
       <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold">{t("consent.privacyTab.policyVersions")}</h3>
+        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
+          {t("consent.privacyTab.policyVersions")}
+        </h3>
         <div className="flex flex-col gap-2 text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">{t("consent.privacyTab.termsOfService")}</span>
@@ -130,7 +132,9 @@ export function PrivacyTab() {
       </Card>
 
       <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold">{t("consent.privacyTab.yourData")}</h3>
+        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
+          {t("consent.privacyTab.yourData")}
+        </h3>
         <div className="flex flex-col gap-3">
           <Button variant="secondary" onClick={handleExport}>
             {t("consent.privacyTab.exportData")}

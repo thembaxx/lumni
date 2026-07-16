@@ -186,7 +186,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
           </m.h1>
 
           <m.p
-            className="max-w-lg text-balance text-base leading-relaxed text-muted-foreground md:text-lg"
+            className="max-w-lg text-pretty text-base leading-relaxed text-muted-foreground md:text-lg"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 0.35 }}

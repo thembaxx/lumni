@@ -43,7 +43,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             <HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
           </div>
           <span>
-            Step {currentStep + 1} of {steps.length}
+            <span className="tabular-nums">Step {currentStep + 1}</span> of {steps.length}
           </span>
         </div>
         <div className="flex gap-2">
@@ -53,7 +53,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             onClick={prevStep}
             disabled={currentStep === 0}
             aria-label="Previous step"
-            className="size-8 hover:bg-(--system-accent)/10"
+            className="relative size-8 hover:bg-(--system-accent)/10 after:absolute after:-inset-1.5"
           >
             <HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" aria-hidden="true" />
           </Button>
@@ -63,7 +63,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             onClick={nextStep}
             disabled={currentStep === steps.length - 1}
             aria-label="Next step"
-            className="size-8 bg-(--system-accent)/5 hover:bg-(--system-accent)/10"
+            className="relative size-8 bg-(--system-accent)/5 hover:bg-(--system-accent)/10 after:absolute after:-inset-1.5"
           >
             <HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-start" aria-hidden="true" />
           </Button>
@@ -96,7 +96,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             variant="ghost"
             onClick={() => setCurrentStep(idx)}
             className={cn(
-              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2",
+              "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2 after:absolute after:-inset-2.5",
               idx === currentStep
                 ? "bg-(--system-accent) shadow-level-1 shadow-sm"
                 : "bg-muted-foreground/20 hover:bg-muted-foreground/40",

@@ -45,10 +45,10 @@ export function TestimonialsSection() {
           className="mb-12 flex flex-col gap-3"
         >
           <div className="flex h-0.5 w-12 rounded-full bg-primary" />
-          <h2 className="text-3xl font-extrabold text-foreground tracking-tight md:text-4xl">
+          <h2 className="text-3xl font-extrabold text-foreground text-balance tracking-tight md:text-4xl">
             {t("testimonialsHeading")}
           </h2>
-          <p className="max-w-lg text-base leading-relaxed text-muted-foreground">
+          <p className="max-w-lg text-pretty text-base leading-relaxed text-muted-foreground">
             {t("testimonialsSubheading")}
           </p>
         </m.div>
@@ -110,7 +110,7 @@ export function TestimonialsSection() {
               <button
                 type="button"
                 onClick={prev}
-                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95 after:absolute after:-inset-1"
+                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300                 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-[0.96] after:absolute after:-inset-1"
                 aria-label="Previous testimonial"
               >
                 <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" data-icon />
@@ -132,7 +132,7 @@ export function TestimonialsSection() {
               <button
                 type="button"
                 onClick={next}
-                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-95 after:absolute after:-inset-1"
+                className="relative flex size-10 items-center justify-center rounded-full border border-border/30 bg-card text-foreground transition-[background-color,border-color,color] duration-300                 hover:bg-system-accent hover:text-primary-foreground hover:border-primary/30 active:scale-[0.96] after:absolute after:-inset-1"
                 aria-label="Next testimonial"
               >
                 <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />

@@ -39,14 +39,16 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
           </div>
         </div>
         <span className="font-mono text-muted-foreground text-xs">
-          {daysLeft > 0 ? `${daysLeft}d remaining` : "Final day"}
+          <span className="tabular-nums">
+            {daysLeft > 0 ? `${daysLeft}d remaining` : "Final day"}
+          </span>
         </span>
       </div>
       <div className="flex items-center gap-4">
         <div className="flex-1">
           <div className="mb-1 flex justify-between text-muted-foreground text-xs">
             <span>Group score</span>
-            <span>{Math.round(totalScore)} pts</span>
+            <span className="tabular-nums">{Math.round(totalScore)} pts</span>
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
@@ -56,7 +58,7 @@ export function ChallengeBanner({ challenge, entries, subjectId, groupId }: Prop
           </div>
         </div>
         <div className="text-right">
-          <p className="font-bold text-lg">{memberCount}</p>
+          <p className="font-bold text-lg tabular-nums">{memberCount}</p>
           <p className="ios-caption-3 text-muted-foreground leading-tight">members</p>
         </div>
       </div>

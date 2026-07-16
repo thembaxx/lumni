@@ -64,7 +64,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
         {item.badge !== undefined && item.badge > 0 && (
           <Badge
             variant="destructive"
-            className="ios-caption-3 absolute -top-1 -right-1.5 h-4 min-w-4 border-0 px-1 leading-none"
+            className="ios-caption-3 absolute -top-1 -right-1.5 h-4 min-w-4 border-0 px-1 leading-none tabular-nums"
           >
             {item.badge > 99 ? "99+" : item.badge}
           </Badge>

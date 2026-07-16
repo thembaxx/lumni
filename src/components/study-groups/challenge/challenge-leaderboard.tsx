@@ -39,20 +39,20 @@ export function ChallengeLeaderboard({ entries, userNames = DEFAULT_USER_NAMES }
             {i < 3 ? (
               <HugeiconsIcon icon={MEDAL_ICONS[i]} className="size-5 text-warning" />
             ) : (
-              <span className="font-mono text-muted-foreground text-xs">#{i + 1}</span>
+              <span className="font-mono text-muted-foreground text-xs tabular-nums">#{i + 1}</span>
             )}
           </div>
 
           <div className="min-w-0 flex-1">
             <p className="truncate font-medium text-sm">{userNames[entry.userId] || "Student"}</p>
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
-              <span>{entry.questionsAnswered} Q</span>
-              <span>{(entry.accuracy || 0).toFixed(0)}%</span>
+              <span className="tabular-nums">{entry.questionsAnswered} Q</span>
+              <span className="tabular-nums">{(entry.accuracy || 0).toFixed(0)}%</span>
             </div>
           </div>
 
           <div className="text-right">
-            <p className="font-bold text-sm">{Math.round(entry.combinedScore)}</p>
+            <p className="font-bold text-sm tabular-nums">{Math.round(entry.combinedScore)}</p>
             <p className="ios-caption-3 text-muted-foreground">pts</p>
           </div>
         </div>

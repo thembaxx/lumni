@@ -104,7 +104,9 @@ function Form() {
       <FadeIn direction="up" distance={12} className="flex flex-col items-center gap-6 text-center">
         <div className="flex flex-col gap-2">
           <h1 className="font-heading font-semibold text-2xl">{t("auth.passwordResetSuccess")}</h1>
-          <p className="text-muted-foreground text-sm">{t("auth.passwordResetSuccessSubtitle")}</p>
+          <p className="text-pretty text-muted-foreground text-sm">
+            {t("auth.passwordResetSuccessSubtitle")}
+          </p>
         </div>
         <Link
           href="/auth/sign-in"

@@ -212,10 +212,10 @@ export default function OnboardingClient() {
                         <div className="flex flex-col items-center gap-6">
                           <GoalsSVG />
                           <div className="flex flex-col gap-2 text-center">
-                            <h1 className="font-heading font-semibold text-2xl">
+                            <h1 className="font-heading font-semibold text-2xl text-balance">
                               What are your learning goals?
                             </h1>
-                            <p className="text-muted-foreground text-sm">
+                            <p className="text-pretty text-muted-foreground text-sm">
                               Set your targets to help us personalise your experience.
                             </p>
                           </div>
@@ -232,10 +232,10 @@ export default function OnboardingClient() {
                         <div className="flex flex-col items-center gap-6">
                           <SubjectsSVG />
                           <div className="flex flex-col gap-2 text-center">
-                            <h1 className="font-heading font-semibold text-2xl">
+                            <h1 className="font-heading font-semibold text-2xl text-balance">
                               Pick your favourites
                             </h1>
-                            <p className="text-muted-foreground text-sm">
+                            <p className="text-pretty text-muted-foreground text-sm">
                               From your enrolled subjects, choose up to 3 favourites for quick
                               access on your dashboard.
                             </p>
@@ -277,7 +277,7 @@ export default function OnboardingClient() {
                       <button
                         type="button"
                         onClick={handleBack}
-                        className="rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+                        className="rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted active:scale-[0.96]"
                       >
                         Back
                       </button>
@@ -287,7 +287,7 @@ export default function OnboardingClient() {
                       type="button"
                       onClick={handleContinue}
                       disabled={submitted || (step === 0 && selectedSubjects.length === 0)}
-                      className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-system-accent-foreground transition-[background-color,opacity] hover:bg-system-accent/90 disabled:opacity-50"
+                      className="rounded-lg bg-system-accent px-6 py-2 text-sm font-semibold text-system-accent-foreground transition-[background-color,opacity,scale] hover:bg-system-accent/90 active:scale-[0.96] disabled:opacity-50"
                     >
                       {step === MAX_STEPS - 1 ? "Get Started" : "Continue"}
                     </button>

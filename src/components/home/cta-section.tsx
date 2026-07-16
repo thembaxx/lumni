@@ -44,7 +44,7 @@ export function CtaSection({ isAuthenticated }: CtaSectionProps) {
             {t("ctaHeading")}
           </h2>
 
-          <p className="max-w-lg text-balance text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p className="max-w-lg text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
             {t("ctaDescription")}
           </p>
 

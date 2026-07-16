@@ -93,7 +93,7 @@ export function HeroBanner() {
         )}
 
         <div className="relative z-elevated flex flex-col gap-3">
-          <h1 className="balance text-wrap font-heading font-extrabold text-(--fs-heading-2) text-foreground leading-tight tracking-tight">
+          <h1 className="text-balance font-heading font-extrabold text-(--fs-heading-2) text-foreground leading-tight tracking-tight">
             {greeting}
             {isLoggedIn && name ? <span className="text-system-accent">, {firstName}</span> : null}
           </h1>

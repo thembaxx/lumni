@@ -48,10 +48,10 @@ export function HowItWorksSection() {
               className="flex flex-col gap-4"
             >
               <div className="flex h-0.5 w-12 rounded-full bg-primary" />
-              <h2 className="text-3xl font-extrabold text-foreground tracking-tight md:text-4xl">
+              <h2 className="text-3xl font-extrabold text-foreground text-balance tracking-tight md:text-4xl">
                 {t("howHeading")}
               </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
+              <p className="text-pretty text-base leading-relaxed text-muted-foreground">
                 {t("howSubheading")}
               </p>
             </m.div>
@@ -74,7 +74,7 @@ export function HowItWorksSection() {
                     <div className="flex size-10 items-center justify-center rounded-xl bg-(--system-accent-alpha-10)">
                       <HugeiconsIcon icon={step.icon} className="size-5 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold text-foreground tracking-tight">
+                    <h3 className="text-xl font-bold text-foreground text-balance tracking-tight">
                       {t(step.titleKey)}
                     </h3>
                     <p className="text-sm leading-relaxed text-muted-foreground">

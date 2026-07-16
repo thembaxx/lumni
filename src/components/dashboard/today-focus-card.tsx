@@ -165,7 +165,7 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
               </div>
             </SubjectsDrawer>
           </div>
-          <h3 className="balance text-wrap font-semibold text-foreground text-lg leading-tight tracking-tight">
+          <h3 className="text-balance font-semibold text-foreground text-lg leading-tight tracking-tight">
             {topic}
           </h3>
           <p className="font-medium text-muted-foreground text-xs leading-relaxed">{reason}</p>

@@ -98,7 +98,7 @@ export function FeaturesGrid() {
           <h2 className="text-3xl font-extrabold text-foreground text-balance tracking-tight md:text-4xl">
             {t("featuresHeading")}
           </h2>
-          <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
+          <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
             {t("featuresSubheading")}
           </p>
         </m.div>

@@ -64,7 +64,7 @@ export function QuestionCardHeader({
             <button
               type="button"
               onClick={onToolClick}
-              className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted"
+              className="relative flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted after:absolute after:-inset-1.5"
               aria-label={t("quiz.snapPhoto")}
             >
               <HugeiconsIcon icon={Camera01Icon} className="size-4 text-muted-foreground" />
@@ -73,7 +73,7 @@ export function QuestionCardHeader({
           <button
             type="button"
             onClick={onBookmarkToggle}
-            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted"
+            className="relative flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted after:absolute after:-inset-1.5"
             aria-label={bookmarked ? t("quiz.removeBookmark") : t("quiz.bookmarkQuestion")}
           >
             <svg

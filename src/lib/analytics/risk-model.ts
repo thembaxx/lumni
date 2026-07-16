@@ -315,7 +315,7 @@ export async function fetchStudentActivityData(
     const quizDates = attempts
       .map((a: { completedAt: number }) => new Date(a.completedAt).toISOString().split("T")[0])
       .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
-      .sort((a: string, b: string) => new Date(b).getTime() - new Date(a).getTime());
+      .toSorted((a: string, b: string) => new Date(b).getTime() - new Date(a).getTime());
 
     let quizStreak = 0;
     let lastQuizAt = 0;
