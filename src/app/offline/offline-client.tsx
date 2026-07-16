@@ -17,10 +17,66 @@ import type { CachedStory } from "@/lib/stories/types";
 import type { QuizPack } from "@/lib/quiz-packs/types";
 import type { StoryProgressRecord } from "@/lib/db/schema";
 import { useOfflineStats } from "@/hooks/use-offline-stats";
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
+import { useSyncContext } from "@/components/providers/sync-provider";
+import type { SyncStatus } from "@/lib/sync/types";
 import { OfflineTracker } from "./offline-tracker";
+
+const formatTime = (ts: number | null) => {
+  if (!ts) return "Never";
+  return new Intl.DateTimeFormat("en-ZA", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(ts));
+};
+
+function SyncStatusBar() {
+  let status: SyncStatus = { state: "idle", pendingWrites: 0, lastSyncAt: null, lastError: null };
+  let triggerSync: () => void = () => {};
+  let syncContextAvailable = true;
+
+  try {
+    const ctx = useSyncContext();
+    status = ctx.status;
+    triggerSync = ctx.triggerSync;
+  } catch {
+    syncContextAvailable = false;
+  }
+
+  const { isOnline } = useOnlineStatus();
+
+  return (
+    <div className="flex items-center justify-between rounded-lg bg-muted/40 px-4 py-2.5">
+      <div className="flex items-center gap-2 text-muted-foreground text-xs">
+        <HugeiconsIcon icon={RefreshIcon} className="size-3" />
+        {syncContextAvailable ? (
+          <span>Last sync: {formatTime(status.lastSyncAt)}</span>
+        ) : (
+          <span>Sync status unavailable offline</span>
+        )}
+      </div>
+      <Button
+        variant="outline"
+        size="sm"
+        className="h-7 rounded-full text-(--fs-caption-3)"
+        onClick={() => {
+          if (isOnline) {
+            triggerSync();
+          } else {
+            window.location.reload();
+          }
+        }}
+      >
+        {isOnline ? "Sync now" : "Try reconnecting"}
+      </Button>
+    </div>
+  );
+}
 
 export default function OfflinePage() {
   const stats = useOfflineStats();
+  const { isOnline } = useOnlineStatus();
+
   const recentStories = useLiveQuery(() =>
     dexieDataAccess.storyProgress.orderBy("lastReadAt").reverse().limit(5).toArray(),
   );
@@ -85,6 +141,28 @@ export default function OfflinePage() {
         </Button>
       </div>
 
+      <div className="rounded-xl border border-border bg-muted/30 px-4 py-3">
+        <h2 className="mb-2 font-semibold text-sm">Available Offline</h2>
+        <ul className="flex flex-col gap-1.5 text-muted-foreground text-xs">
+          <li className="flex items-center gap-2">
+            <span className="size-1 rounded-full bg-success" />
+            Quiz packs you&apos;ve downloaded
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="size-1 rounded-full bg-success" />
+            Flashcards and spaced repetition
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="size-1 rounded-full bg-success" />
+            Past quiz results and progress
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="size-1 rounded-full bg-success" />
+            Downloaded stories and study guides
+          </li>
+        </ul>
+      </div>
+
       <div className="grid grid-cols-2 gap-3">
         <Link
           href="/quiz"
@@ -126,6 +204,8 @@ export default function OfflinePage() {
           {stats.pendingSync} change{stats.pendingSync !== 1 ? "s" : ""} pending sync
         </div>
       )}
+
+      <SyncStatusBar />
 
       {storyTitles && storyTitles.length > 0 && (
         <Card>

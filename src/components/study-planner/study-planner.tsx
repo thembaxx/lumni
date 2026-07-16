@@ -2,6 +2,7 @@
 
 import Add01Icon from "@hugeicons/core-free-icons/Add01Icon";
 import Download03Icon from "@hugeicons/core-free-icons/Download03Icon";
+import AiBrain01Icon from "@hugeicons/core-free-icons/AiBrain01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -43,6 +44,8 @@ function StudyPlannerInner() {
     addExam,
     removeExam,
     updateSession,
+    generateAdaptivePlan,
+    isGenerating,
   } = useStudyPlanner();
 
   const [showAddSession, setShowAddSession] = useState(false);
@@ -91,6 +94,15 @@ function StudyPlannerInner() {
           <Button variant="outline" size="sm" onClick={() => setShowAddExam(true)}>
             <HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
             {t("studyPlanner.addExam")}
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            disabled={isGenerating}
+            onClick={() => generateAdaptivePlan()}
+          >
+            <HugeiconsIcon icon={AiBrain01Icon} data-icon="inline-start" />
+            {isGenerating ? t("common.generating") : t("studyPlanner.generateAdaptive")}
           </Button>
         </div>
       </div>

@@ -1,6 +1,11 @@
 import type { DataAccessTable } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
-import { getPendingOutboxEntries, incrementRetry, removeOutboxEntries } from "./outbox";
+import {
+  getOutboxCount,
+  getPendingOutboxEntries,
+  incrementRetry,
+  removeOutboxEntries,
+} from "./outbox";
 import { initSyncWriters } from "./sync-writer";
 import type { SyncResult, SyncService, SyncStatus } from "./types";
 
@@ -8,6 +13,7 @@ export function createSyncService(userId: () => string | null): SyncService {
   let state: SyncStatus["state"] = "idle";
   let lastSyncAt: number | null = null;
   let lastError: string | null = null;
+  let pendingWritesCount = 0;
   let intervalId: ReturnType<typeof setInterval> | null = null;
   let cleanupOnline: (() => void) | null = null;
   const listeners = new Set<(status: SyncStatus) => void>();
@@ -26,7 +32,7 @@ export function createSyncService(userId: () => string | null): SyncService {
   function getStatus(): SyncStatus {
     return {
       state,
-      pendingWrites: 0,
+      pendingWrites: pendingWritesCount,
       lastSyncAt,
       lastError,
     };
@@ -37,6 +43,8 @@ export function createSyncService(userId: () => string | null): SyncService {
     if (!uid) return { pushed: 0, errors: [] };
 
     const entries = await getPendingOutboxEntries(50);
+    pendingWritesCount = entries.length;
+    notify();
     if (entries.length === 0) return { pushed: 0, errors: [] };
 
     const pushed: number[] = [];
@@ -83,6 +91,9 @@ export function createSyncService(userId: () => string | null): SyncService {
     if (pushed.length > 0) {
       await removeOutboxEntries(pushed);
     }
+
+    pendingWritesCount = await getOutboxCount();
+    notify();
 
     return { pushed: pushed.length, errors };
   }

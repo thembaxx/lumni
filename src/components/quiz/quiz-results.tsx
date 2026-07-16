@@ -3,18 +3,21 @@
 import Award01Icon from "@hugeicons/core-free-icons/Award01Icon";
 import DashboardSquare01Icon from "@hugeicons/core-free-icons/DashboardSquare01Icon";
 import Refresh01Icon from "@hugeicons/core-free-icons/Refresh01Icon";
+import UserGroupIcon from "@hugeicons/core-free-icons/UserGroupIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Confetti } from "@/components/celebration";
 import { NextActions } from "@/components/quiz/next-actions";
 import { QuestionReviewPanel } from "@/components/quiz/question-review-panel";
 import { ShareResultButton } from "@/components/shared/share-button";
+import { InviteButton } from "@/components/study-groups/invite-button";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/lib/auth/auth-context";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy, formatTime } from "@/lib/shared/time";
@@ -51,6 +54,8 @@ interface QuizResultsCardProps {
   onRestart?: () => void;
   onDashboard?: () => void;
   onPracticeMistakes?: () => void;
+  groupId?: string;
+  topic?: string;
   className?: string;
 }
 
@@ -66,13 +71,43 @@ export function QuizResultsCard({
   onRestart,
   onDashboard,
   onPracticeMistakes,
+  groupId,
+  topic,
   className,
 }: QuizResultsCardProps) {
   const t = useTranslations();
   const [showReview, setShowReview] = useState(false);
+  const [sharedChannel, setSharedChannel] = useState<{
+    channelName: string;
+    inviteCode: string;
+  } | null>(null);
+  const [isCreatingShared, setIsCreatingShared] = useState(false);
+  const { user } = useAuth();
   const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
   const isGreatScore = accuracy >= 80;
   const isPerfect = accuracy === 100;
+
+  const handleStudyTogether = useCallback(async () => {
+    if (!groupId || !user?.$id) return;
+    setIsCreatingShared(true);
+    try {
+      const res = await fetch(`/api/study-groups/${groupId}/shared-quiz`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subject, topic: topic ?? null }),
+      });
+      if (!res.ok) throw new Error("Failed to create shared quiz session");
+      const data = await res.json();
+      setSharedChannel({
+        channelName: data.channelName,
+        inviteCode: data.inviteCode,
+      });
+    } catch {
+      /* best-effort */
+    } finally {
+      setIsCreatingShared(false);
+    }
+  }, [groupId, subject, topic, user?.$id]);
 
   const containerVariants = CONTAINER_VARIANTS;
   const itemVariants = ITEM_VARIANTS;
@@ -249,6 +284,29 @@ export function QuizResultsCard({
                     </Button>
                   )}
                 </div>
+
+                {groupId && user?.$id && !sharedChannel && (
+                  <Button
+                    variant="secondary"
+                    onClick={handleStudyTogether}
+                    disabled={isCreatingShared}
+                    className="gap-2 min-h-10 rounded-xl press-scale"
+                  >
+                    <HugeiconsIcon icon={UserGroupIcon} data-icon="inline-start" />
+                    {isCreatingShared ? "Starting..." : "Study Together"}
+                  </Button>
+                )}
+
+                {sharedChannel && (
+                  <div className="flex items-center justify-center">
+                    <InviteButton
+                      channelName={sharedChannel.channelName}
+                      inviteCode={sharedChannel.inviteCode}
+                      subject={subject}
+                    />
+                  </div>
+                )}
+
                 <ShareResultButton
                   cardParams={{
                     score: correctAnswers,

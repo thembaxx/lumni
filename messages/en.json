@@ -5,6 +5,7 @@
     "success": "Success",
     "save": "Save",
     "saving": "Saving...",
+    "generating": "Generating...",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete": "Delete",
@@ -516,6 +517,7 @@
   "studyPlanner": {
     "title": "Study Planner",
     "generatePlan": "Generate plan",
+    "generateAdaptive": "Adaptive Plan",
     "myPlan": "My Plan",
     "todayFocus": "Today's Focus",
     "weeklyOverview": "Weekly overview",

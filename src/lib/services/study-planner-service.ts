@@ -2,6 +2,7 @@ import { dexieDataAccess } from "@/lib/db";
 import type { StudyDataAccess } from "@/lib/db/data-access";
 import { getCachedGraph } from "@/lib/knowledge-graph/service";
 import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
+
 import { enrichPlanWithAI } from "@/lib/services/ai-planner-enricher";
 import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
@@ -271,6 +272,54 @@ export class StudyPlannerService {
     const snapshot = this.getSnapshot();
     for (const listener of this.listeners) {
       listener(snapshot.plan);
+    }
+  }
+
+  async generateAdaptivePlan(settings?: {
+    targetAps?: number;
+    dailyStudyMinutes?: number;
+    horizonDays?: number;
+  }): Promise<void> {
+    try {
+      const { AdaptiveStudyPlanner } = await import("@/lib/study-planner/adaptive-planner");
+      const planner = new AdaptiveStudyPlanner();
+      const result = await planner.generateAdaptivePlan(
+        {
+          targetAps: settings?.targetAps ?? 25,
+          dailyMinutes: settings?.dailyStudyMinutes ?? 30,
+          horizonDays: settings?.horizonDays ?? 30,
+        },
+        this.userId,
+      );
+
+      const existingPlan = loadStudyPlan();
+      const newSessions: Omit<StudySession, "id">[] = result.sessions.map((s) => ({
+        subject: s.subjectId,
+        topic: s.topicId,
+        type: "quiz" as const,
+        scheduledAt: new Date(s.scheduledDate).getTime(),
+        duration: s.durationMinutes,
+        completed: false,
+      }));
+
+      existingPlan.sessions = existingPlan.sessions.filter(
+        (s) => s.type !== "quiz" || s.topic === undefined,
+      );
+      for (const s of newSessions) {
+        existingPlan.sessions.push({
+          ...s,
+          id: `adaptive_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        });
+      }
+      existingPlan.generatedAt = Date.now();
+      saveStudyPlan(existingPlan);
+      clearPlanStale();
+      schedulePlanAwareReminder();
+      this.plan = existingPlan;
+      this.syncToAppwrite();
+      this.notify();
+    } catch (error) {
+      logError("GenerateAdaptivePlan", error);
     }
   }
 

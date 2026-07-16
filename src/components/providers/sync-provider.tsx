@@ -21,7 +21,7 @@ interface SyncContextValue {
   pendingCount: number;
 }
 
-const SyncContext = createContext<SyncContextValue | null>(null);
+export const SyncContext = createContext<SyncContextValue | null>(null);
 
 export function SyncProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();

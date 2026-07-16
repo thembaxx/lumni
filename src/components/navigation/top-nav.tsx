@@ -33,6 +33,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { getRouteLabel } from "@/lib/navigation/config";
 import { cn } from "@/lib/utils";
 import { getRandomName } from "@/lib/utils/random-name";
+import { SyncStatusPill } from "@/components/navigation/sync-status-pill";
 
 const TopNavTitle = memo(function TopNavTitle({ title }: { title?: string }) {
   const pathname = usePathname();
@@ -277,6 +278,7 @@ export function TopNav({ title, className }: TopNavProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          <SyncStatusPill />
           <TopNavMenu />
         </div>
       </div>

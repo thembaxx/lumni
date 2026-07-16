@@ -4,7 +4,7 @@ import { SchoolOnboardingWizard } from "@/components/school/onboarding-wizard";
 export default function SchoolOnboardingPage() {
   return (
     <PageContainer>
-      <div className="py-12">
+      <div className="mx-auto max-w-2xl py-8">
         <SchoolOnboardingWizard />
       </div>
     </PageContainer>

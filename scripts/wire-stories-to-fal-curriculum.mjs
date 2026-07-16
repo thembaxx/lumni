@@ -8,13 +8,48 @@ const root = join(__dirname, "..");
 // Each FAL maps to its corresponding home-language story collection
 // Story IDs come from the HL index.ts (same language, same stories)
 const FAL_TO_HL = {
-  "afrikaans-first-additional-language": { hl: "afrikaans-home-language", literal: "afr-fal-literal", inferential: "afr-fal-inferential", shortStories: "afr-fal-short-stories" },
-  "english-first-additional-language": { hl: "english-home-language", literal: "eng-fal-literal", inferential: "eng-fal-inferential", shortStories: "eng-fal-short-stories" },
-  "isi-xhosa-first-additional-language": { hl: "isi-xhosa-home-language", literal: "xho-fal-literal", inferential: "xho-fal-inferential", shortStories: "xho-fal-short-stories" },
-  "isi-zulu-first-additional-language": { hl: "isi-zulu-home-language", literal: "zul-fal-literal", inferential: "zul-fal-inferential", shortStories: "zul-fal-short-stories" },
-  "sepedi-first-additional-language": { hl: "sepedi-home-language", literal: "nso-fal-literal", inferential: "nso-fal-inferential", shortStories: "nso-fal-short-stories" },
-  "sesotho-first-additional-language": { hl: "sesotho-home-language", literal: "sot-fal-literal", inferential: "sot-fal-inferential", shortStories: "sot-fal-short-stories" },
-  "setswana-first-additional-language": { hl: "setswana-home-language", literal: "tsn-fal-literal", inferential: "tsn-fal-inferential", shortStories: "tsn-fal-short-stories" },
+  "afrikaans-first-additional-language": {
+    hl: "afrikaans-home-language",
+    literal: "afr-fal-literal",
+    inferential: "afr-fal-inferential",
+    shortStories: "afr-fal-short-stories",
+  },
+  "english-first-additional-language": {
+    hl: "english-home-language",
+    literal: "eng-fal-literal",
+    inferential: "eng-fal-inferential",
+    shortStories: "eng-fal-short-stories",
+  },
+  "isi-xhosa-first-additional-language": {
+    hl: "isi-xhosa-home-language",
+    literal: "xho-fal-literal",
+    inferential: "xho-fal-inferential",
+    shortStories: "xho-fal-short-stories",
+  },
+  "isi-zulu-first-additional-language": {
+    hl: "isi-zulu-home-language",
+    literal: "zul-fal-literal",
+    inferential: "zul-fal-inferential",
+    shortStories: "zul-fal-short-stories",
+  },
+  "sepedi-first-additional-language": {
+    hl: "sepedi-home-language",
+    literal: "nso-fal-literal",
+    inferential: "nso-fal-inferential",
+    shortStories: "nso-fal-short-stories",
+  },
+  "sesotho-first-additional-language": {
+    hl: "sesotho-home-language",
+    literal: "sot-fal-literal",
+    inferential: "sot-fal-inferential",
+    shortStories: "sot-fal-short-stories",
+  },
+  "setswana-first-additional-language": {
+    hl: "setswana-home-language",
+    literal: "tsn-fal-literal",
+    inferential: "tsn-fal-inferential",
+    shortStories: "tsn-fal-short-stories",
+  },
 };
 
 function loadHLStoryIds(langId) {
@@ -84,9 +119,16 @@ for (const [falFile, config] of Object.entries(FAL_TO_HL)) {
 
   let curriculum = JSON.parse(readFileSync(curriculumPath, "utf-8"));
 
-  const literalCount = addToSubtopic(curriculum, config.literal, [...byBucket.foundation, ...byBucket.intermediate]);
+  const literalCount = addToSubtopic(curriculum, config.literal, [
+    ...byBucket.foundation,
+    ...byBucket.intermediate,
+  ]);
   const inferentialCount = addToSubtopic(curriculum, config.inferential, byBucket.senior);
-  const shortCount = addToSubtopic(curriculum, config.shortStories, byBucket.foundation.slice(0, 3));
+  const shortCount = addToSubtopic(
+    curriculum,
+    config.shortStories,
+    byBucket.foundation.slice(0, 3),
+  );
 
   writeFileSync(curriculumPath, JSON.stringify(curriculum, null, 2) + "\n", "utf-8");
 

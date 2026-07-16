@@ -4,6 +4,7 @@ import type { Mock } from "vitest";
 const mockGetPending = vi.fn();
 const mockIncrementRetry = vi.fn();
 const mockRemoveEntries = vi.fn();
+const mockGetOutboxCount = vi.fn().mockResolvedValue(0);
 const mockLogError = vi.fn();
 const mockInitWriters = vi.fn();
 
@@ -11,6 +12,7 @@ vi.mock("@/lib/sync/outbox", () => ({
   getPendingOutboxEntries: mockGetPending,
   incrementRetry: mockIncrementRetry,
   removeOutboxEntries: mockRemoveEntries,
+  getOutboxCount: mockGetOutboxCount,
 }));
 
 vi.mock("@/lib/shared/logger", () => ({
