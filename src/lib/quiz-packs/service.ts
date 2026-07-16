@@ -42,7 +42,11 @@ export class QuizPackService {
     });
   }
 
-  async markVisualAssetsReady(id: string, assetCount: number, additionalBytes: number): Promise<void> {
+  async markVisualAssetsReady(
+    id: string,
+    assetCount: number,
+    additionalBytes: number,
+  ): Promise<void> {
     const pack = await this.db.quizPacks.get(id);
     const totalBytes = (pack?.storageBytes ?? 0) + additionalBytes;
     await this.db.quizPacks.update(id, {
@@ -112,7 +116,10 @@ export class QuizPackService {
     return bytes;
   }
 
-  async getVisualAsset(packId: string, questionIndex: number): Promise<QuizPackVisualAsset | undefined> {
+  async getVisualAsset(
+    packId: string,
+    questionIndex: number,
+  ): Promise<QuizPackVisualAsset | undefined> {
     return this.db.packVisualAssets
       .where("[packId+questionIndex]")
       .equals([packId, questionIndex])

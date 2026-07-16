@@ -1,7 +1,9 @@
 ## Description
+
 Real-time collaborative study sessions with shared whiteboard (Konva + Yjs), voice chat (WebRTC mesh), presence (Ably), and session recording. Entry points from flashcard deck, quiz results, and study groups.
 
 ## Acceptance Criteria
+
 - [ ] `POST /api/study-groups/[groupId]/live-session` -- create session (host), returns Ably token + Yjs doc ID
 - [ ] `<LiveSessionBar>` (S45) enhanced: join/leave, participant avatars, voice toggle, whiteboard toggle, record button
 - [ ] Shared whiteboard: `<CollaborativeCanvas>` -- Konva Stage + Yjs awareness (cursors, selections), tools: pen, shapes, text, image upload, diagram templates (physics/chemistry/math from VisualEngine)
@@ -15,6 +17,7 @@ Real-time collaborative study sessions with shared whiteboard (Konva + Yjs), voi
   - Study group: "Start session" (blank canvas)
 
 ## Technical Details
+
 - Ably: `ChatClient` (S45) + `RealtimeChannel` for whiteboard (Yjs WebRTC provider or Ably PubSub)
 - Yjs: `y-websocket` or `y-webrtc` for document sync; `y-protocols/awareness` for cursors
 - WebRTC: `simple-peer` or raw `RTCPeerConnection` mesh; STUN/TURN via `twilio` or `cloudflare`
@@ -23,15 +26,18 @@ Real-time collaborative study sessions with shared whiteboard (Konva + Yjs), voi
 - Queue: `live-session-recording` job for post-processing (transcode, thumbnail)
 
 ## Dependencies
+
 - Ably real-time presence (S45) -- `src/hooks/use-ably-chat.ts`, `ably-provider.tsx`
 - VisualEngine diagram templates (S44) -- 8 Konva renderers reusable as whiteboard stamps
 - VoiceEngine TTS/STT (S50) -- optional live captioning
 - StudyPlannerService -- session scheduling integration
 
 ## Effort
+
 4-5 sprints (2-3 engineers)
 
 ## Risks
+
 - WebRTC mesh doesn't scale beyond 4-6 -- need SFU (mediasoup) for larger groups
 - Mobile Safari WebRTC limitations -- test iOS 15+ thoroughly
 - Yjs + Konva integration complexity -- prototype first

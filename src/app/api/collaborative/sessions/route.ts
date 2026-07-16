@@ -29,12 +29,12 @@ export const POST = createRouteHandler({
     // We'll get user name from the user object in execute context
     const userName = "User"; // TODO: get from auth context
 
-    const session = await collaborativeSessionService.createSession(
-      userId,
-      userName,
-      groupId,
-      { subject, topic, settings, inviteCode }
-    );
+    const session = await collaborativeSessionService.createSession(userId, userName, groupId, {
+      subject,
+      topic,
+      settings,
+      inviteCode,
+    });
 
     // Get Ably token
     const { createCollaborativeToken } = await import("@/lib/collaborative/ably");

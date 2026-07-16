@@ -239,7 +239,13 @@ const _generateEmbedding = async (payload: unknown) => {
 export const generateEmbedding = createJobHandler("generateEmbedding", _generateEmbedding);
 
 const _quizPackGenerate = async (payload: unknown) => {
-  const { packId, subject, topic, count, generateVisuals = true } = payload as JobPayloadByType["quiz-pack-generate"];
+  const {
+    packId,
+    subject,
+    topic,
+    count,
+    generateVisuals = true,
+  } = payload as JobPayloadByType["quiz-pack-generate"];
 
   const engine = await QuestionEngine.initialize();
   const topicParam = topic ?? undefined;

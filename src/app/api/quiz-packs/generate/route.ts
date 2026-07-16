@@ -17,8 +17,13 @@ export const POST = createRouteHandler({
     if (body.count > 100) return "Count must be 100 or less";
     return null;
   },
-execute: async ({ body, userId }) => {
-    const { subject, topic, count = 50, generateVisuals = true } = body as {
+  execute: async ({ body, userId }) => {
+    const {
+      subject,
+      topic,
+      count = 50,
+      generateVisuals = true,
+    } = body as {
       subject: string;
       topic?: string;
       count?: number;

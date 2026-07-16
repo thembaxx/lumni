@@ -21,9 +21,18 @@ const DEFAULT_SETTINGS: SessionSettings = {
 };
 
 const PARTICIPANT_COLORS = [
-  "#EF4444", "#F97316", "#F59E0B", "#EAB308",
-  "#84CC16", "#22C55E", "#10B981", "#14B8A6",
-  "#06B6D4", "#0EA5E9", "#3B82F6", "#6366F1",
+  "#EF4444",
+  "#F97316",
+  "#F59E0B",
+  "#EAB308",
+  "#84CC16",
+  "#22C55E",
+  "#10B981",
+  "#14B8A6",
+  "#06B6D4",
+  "#0EA5E9",
+  "#3B82F6",
+  "#6366F1",
 ];
 
 export class CollaborativeService {
@@ -36,7 +45,7 @@ export class CollaborativeService {
   async createSession(
     userId: string,
     userName: string,
-    request: CreateSessionRequest
+    request: CreateSessionRequest,
   ): Promise<CollaborativeSession> {
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
     const now = Date.now();
@@ -71,17 +80,13 @@ export class CollaborativeService {
   }
 
   async getGroupSessions(groupId: string): Promise<CollaborativeSession[]> {
-    return this.db.studySessions
-      .where("groupId")
-      .equals(groupId)
-      .reverse()
-      .sortBy("createdAt");
+    return this.db.studySessions.where("groupId").equals(groupId).reverse().sortBy("createdAt");
   }
 
   async joinSession(
     sessionId: string,
     userId: string,
-    userName: string
+    userName: string,
   ): Promise<{ session: CollaborativeSession; participant: SessionParticipant } | null> {
     const session = await this.db.studySessions.get(sessionId);
     if (!session) return null;
@@ -175,7 +180,7 @@ export class CollaborativeService {
   async updateParticipantCursor(
     sessionId: string,
     userId: string,
-    cursor: { x: number; y: number }
+    cursor: { x: number; y: number },
   ): Promise<void> {
     const session = await this.db.studySessions.get(sessionId);
     if (!session) return;
@@ -187,10 +192,7 @@ export class CollaborativeService {
     }
   }
 
-  async addWhiteboardElement(
-    sessionId: string,
-    element: WhiteboardElement
-  ): Promise<void> {
+  async addWhiteboardElement(sessionId: string, element: WhiteboardElement): Promise<void> {
     const session = await this.db.studySessions.get(sessionId);
     if (!session) return;
 
@@ -202,10 +204,7 @@ export class CollaborativeService {
   }
 
   async getWhiteboardElements(sessionId: string): Promise<WhiteboardElement[]> {
-    return this.db.whiteboardElements
-      .where("sessionId")
-      .equals(sessionId)
-      .sortBy("timestamp");
+    return this.db.whiteboardElements.where("sessionId").equals(sessionId).sortBy("timestamp");
   }
 
   async addMessage(
@@ -213,7 +212,7 @@ export class CollaborativeService {
     userId: string,
     userName: string,
     type: SessionMessage["type"],
-    content: string
+    content: string,
   ): Promise<void> {
     await this.db.sessionMessages.add({
       id: `msg_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,

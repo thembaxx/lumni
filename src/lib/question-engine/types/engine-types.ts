@@ -108,6 +108,7 @@ export interface GenerationParams {
     bloomLevel?: string;
     subtopicId?: string;
   }[];
+  language?: string; // ISO 639-1 code (en, af, zu, xh, st, tn, nso, ts, ss, ve, nd)
 }
 
 export interface HintParams {

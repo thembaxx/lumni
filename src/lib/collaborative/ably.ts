@@ -23,7 +23,7 @@ export interface CollaborativeAblyToken {
 export async function createCollaborativeTokenRequest(
   userId: string,
   sessionId: string,
-  role: "host" | "participant" = "participant"
+  role: "host" | "participant" = "participant",
 ): Promise<CollaborativeAblyToken> {
   const client = getRestClient();
 
@@ -50,7 +50,7 @@ export async function createCollaborativeTokenRequest(
 export async function createCollaborativeToken(
   userId: string,
   sessionId: string,
-  role: "host" | "participant" = "participant"
+  role: "host" | "participant" = "participant",
 ): Promise<string> {
   const tokenData = await createCollaborativeTokenRequest(userId, sessionId, role);
   return tokenData.token;
@@ -67,7 +67,7 @@ export async function endSessionOnAbly(sessionId: string): Promise<void> {
 }
 
 export async function getSessionParticipants(
-  sessionId: string
+  sessionId: string,
 ): Promise<Ably.Types.PresenceMessage[]> {
   try {
     const client = getRestClient();
@@ -83,7 +83,7 @@ export async function getSessionParticipants(
 export async function sendSystemMessage(
   sessionId: string,
   message: string,
-  type: "info" | "warning" | "error" = "info"
+  type: "info" | "warning" | "error" = "info",
 ): Promise<void> {
   try {
     const client = getRestClient();

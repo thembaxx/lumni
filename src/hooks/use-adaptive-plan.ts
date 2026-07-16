@@ -1,5 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { AdaptivePlanRequest, AdaptivePlanResponse, StudySession } from "@/lib/study-planner/adaptive-planner";
+import type {
+  AdaptivePlanRequest,
+  AdaptivePlanResponse,
+  StudySession,
+} from "@/lib/study-planner/adaptive-planner";
 
 export function useAdaptivePlan(params: AdaptivePlanRequest, enabled = true) {
   return useQuery<AdaptivePlanResponse>({
@@ -37,15 +41,18 @@ export function useGenerateAdaptivePlan() {
 
 export function useAdaptivePlanSessions(plan?: AdaptivePlanResponse): StudySession[] {
   if (!plan) return [];
-  return plan.sessions.sort((a, b) => a.scheduledDate.localeCompare(b.scheduledDate));
+  return plan.sessions.toSorted((a, b) => a.scheduledDate.localeCompare(b.scheduledDate));
 }
 
 export function useAdaptivePlanByDate(plan?: AdaptivePlanResponse): Record<string, StudySession[]> {
   if (!plan) return {};
-  return plan.sessions.reduce((acc, session) => {
-    const date = session.scheduledDate;
-    if (!acc[date]) acc[date] = [];
-    acc[date].push(session);
-    return acc;
-  }, {} as Record<string, StudySession[]>);
+  return plan.sessions.reduce(
+    (acc, session) => {
+      const date = session.scheduledDate;
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(session);
+      return acc;
+    },
+    {} as Record<string, StudySession[]>,
+  );
 }

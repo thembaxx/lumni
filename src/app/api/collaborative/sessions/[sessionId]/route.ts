@@ -1,5 +1,5 @@
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { collaborativeSessionService } from "@/lib/collaborative/service";
+import { collaborativeService } from "@/lib/collaborative/service";
 import { createCollaborativeToken } from "@/lib/collaborative/ably";
 
 export const GET = createRouteHandler({
@@ -10,7 +10,7 @@ export const GET = createRouteHandler({
     const sessionId = params.sessionId;
     if (!sessionId) throw new HttpError(400, "Session ID required");
 
-    const session = await collaborativeSessionService.getSession(sessionId);
+    const session = await collaborativeService.getSession(sessionId);
     if (!session) throw new HttpError(404, "Session not found");
 
     // Check if user is part of the group or is host
@@ -22,7 +22,7 @@ export const GET = createRouteHandler({
     const ablyToken = await createCollaborativeToken(
       userId!,
       sessionId,
-      session.hostId === userId ? "host" : "participant"
+      session.hostId === userId ? "host" : "participant",
     );
 
     return {
@@ -59,19 +59,19 @@ export const PATCH = createRouteHandler({
     const sessionId = params.sessionId;
     if (!sessionId) throw new HttpError(400, "Session ID required");
 
-    const session = await collaborativeSessionService.getSession(sessionId);
+    const session = await collaborativeService.getSession(sessionId);
     if (!session) throw new HttpError(404, "Session not found");
 
     switch (body.action) {
       case "start":
         if (session.hostId !== userId) throw new HttpError(403, "Only host can start session");
         if (session.status !== "waiting") throw new HttpError(400, "Session already started");
-        await collaborativeSessionService.startSession(sessionId);
+        await collaborativeService.startSession(sessionId);
         return { status: "active", startedAt: Date.now() };
 
       case "end":
         if (session.hostId !== userId) throw new HttpError(403, "Only host can end session");
-        await collaborativeSessionService.endSession(sessionId);
+        await collaborativeService.endSession(sessionId);
         return { status: "ended", endedAt: Date.now() };
 
       case "join":
@@ -79,11 +79,15 @@ export const PATCH = createRouteHandler({
         if (session.currentParticipants >= session.maxParticipants) {
           throw new HttpError(400, "Session is full");
         }
-        const participant = await collaborativeSessionService.joinSession(sessionId, userId!, userName || "Unknown");
+        const participant = await collaborativeService.joinSession(
+          sessionId,
+          userId!,
+          userName || "Unknown",
+        );
         return { participant, session };
 
       case "leave":
-        await collaborativeSessionService.leaveSession(sessionId, userId!);
+        await collaborativeService.leaveSession(sessionId, userId!);
         return { left: true };
 
       default:

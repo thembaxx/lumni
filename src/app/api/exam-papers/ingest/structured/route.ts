@@ -11,7 +11,12 @@ export const POST = createRouteHandler({
     return body;
   },
   validate: (body) => {
-    if (!body.metadata || !body.metadata.subject || !body.metadata.year || !body.metadata.paperNumber) {
+    if (
+      !body.metadata ||
+      !body.metadata.subject ||
+      !body.metadata.year ||
+      !body.metadata.paperNumber
+    ) {
       return "metadata with subject, year, paperNumber is required";
     }
     if (!body.questions || !Array.isArray(body.questions) || body.questions.length === 0) {
@@ -20,7 +25,12 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ body, userId }) => {
-    const { metadata, questions, examPeriod, language = "en" } = body as {
+    const {
+      metadata,
+      questions,
+      examPeriod,
+      language = "en",
+    } = body as {
       metadata: {
         subject: string;
         year: number;
@@ -57,10 +67,7 @@ export const POST = createRouteHandler({
       grade: metadata.grade || 12,
     };
 
-    const result = await pastPaperIngestionService.ingestStructured(
-      questions,
-      config,
-    );
+    const result = await pastPaperIngestionService.ingestStructured(questions, config);
 
     return {
       success: true,

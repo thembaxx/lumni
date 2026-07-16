@@ -19,14 +19,20 @@ export const POST = createRouteHandler({
     const buffer = Buffer.from(await file.arrayBuffer());
     const memoBuffer = memoFile ? Buffer.from(await memoFile.arrayBuffer()) : null;
 
-    return { file: { buffer, name: file.name }, config, memo: memoBuffer ? { buffer: memoBuffer, name: memoFile.name } : null };
+    return {
+      file: { buffer, name: file.name },
+      config,
+      memo: memoBuffer ? { buffer: memoBuffer, name: memoFile.name } : null,
+    };
   },
   validate: (body) => {
     const { config } = body;
     if (!config.subject) return "Subject is required";
     if (!config.year || config.year < 2000 || config.year > 2030) return "Valid year required";
-    if (!config.paperNumber || config.paperNumber < 1 || config.paperNumber > 3) return "Paper number must be 1-3";
-    if (!config.examPeriod || !["may-june", "november"].includes(config.examPeriod)) return "examPeriod must be may-june or november";
+    if (!config.paperNumber || config.paperNumber < 1 || config.paperNumber > 3)
+      return "Paper number must be 1-3";
+    if (!config.examPeriod || !["may-june", "november"].includes(config.examPeriod))
+      return "examPeriod must be may-june or november";
     return null;
   },
   execute: async ({ body, userId }) => {

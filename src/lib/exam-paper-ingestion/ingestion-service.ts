@@ -64,7 +64,7 @@ export class PastPaperIngestionService {
 
     // Parse markdown into ExamPaper structure
     const paper = await this.parseMarkdownToExamPaper(markerResult.markdown, config);
-    
+
     // Also try to parse memo if available
     // (This would need a separate memo PDF or marker result)
 
@@ -138,7 +138,9 @@ export class PastPaperIngestionService {
           questionType: q.questionType
             ? this.determineQuestionType(q.questionType)
             : "short-answer",
-          bloomLevel: q.bloomLevel || this.inferBloomLevel(q.questionType || "short-answer", q.marks || 0, q.questionText),
+          bloomLevel:
+            q.bloomLevel ||
+            this.inferBloomLevel(q.questionType || "short-answer", q.marks || 0, q.questionText),
           createdAt: new Date().toISOString(),
         };
 
@@ -165,19 +167,19 @@ export class PastPaperIngestionService {
     // This is a simplified parser - in production you'd use a proper markdown parser
     // For now, create a basic structure
     const sections = markdown.split(/^##\s+/m).filter(Boolean);
-    
+
     const parsedSections = sections.map((section, si) => {
       const lines = section.split("\n").filter(Boolean);
       const title = lines[0] || `Section ${si + 1}`;
       const content = lines.slice(1).join("\n");
-      
+
       // Parse questions from content (simplified)
       const questions = this.parseQuestionsFromContent(content, si);
-      
-      return { 
+
+      return {
         id: `section_${si}`,
-        title, 
-        questions 
+        title,
+        questions,
       };
     });
 
@@ -191,18 +193,23 @@ export class PastPaperIngestionService {
     };
   }
 
-  private parseQuestionsFromContent(content: string, sectionIndex: number): ExamPaper["sections"][number]["questions"] {
+  private parseQuestionsFromContent(
+    content: string,
+    sectionIndex: number,
+  ): ExamPaper["sections"][number]["questions"] {
     // Simplified question parser - split by question markers
     const questionBlocks = content.split(/(?:^|\n)(?:Question|Q)\s*\d+/i).filter(Boolean);
-    
+
     return questionBlocks.map((block, qi) => ({
       id: `q${qi}`,
-      parts: [{
-        id: `p0`,
-        text: block.trim().slice(0, 500),
-        type: "text" as const,
-        marks: 0,
-      }],
+      parts: [
+        {
+          id: `p0`,
+          text: block.trim().slice(0, 500),
+          type: "text" as const,
+          marks: 0,
+        },
+      ],
     }));
   }
 
@@ -241,7 +248,9 @@ export class PastPaperIngestionService {
     const text = questionText.toLowerCase();
 
     if (/\b(define|name|state|list|recall|identify|label)\b/.test(text)) return "remember";
-    if (/\b(explain|describe|summarise|summarize|compare|contrast|interpret|paraphrase)\b/.test(text))
+    if (
+      /\b(explain|describe|summarise|summarize|compare|contrast|interpret|paraphrase)\b/.test(text)
+    )
       return "understand";
     if (
       /\b(apply|calculate|solve|compute|demonstrate|use|perform|implement|classify|categorise|categorize)\b/.test(

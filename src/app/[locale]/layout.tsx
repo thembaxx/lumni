@@ -12,6 +12,7 @@ import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { WebVitals } from "@/components/performance/web-vitals";
 import { Providers } from "@/components/providers";
+import { NudgeProvider } from "@/components/student/NudgeProvider";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { NavGuard } from "@/components/navigation/nav-guard";
 import { CardSkeleton } from "@/components/ui/skeletons";
@@ -196,44 +197,46 @@ export default async function LocaleLayout({
       <ChunkLoadHandler />
       <WebVitals />
       <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
-        <LazyMotion features={domMax}>
-          <Suspense fallback={null}>
-            <AmbientBackground variant="dashboard" orbCount={4} />
-          </Suspense>
-          <Suspense fallback={null}>
-            <MeshAurora variant="dashboard" className="fixed inset-0 -z-10" />
-          </Suspense>
-          <Suspense fallback={null}>
-            <DynamicCursor variant="aura" />
-          </Suspense>
-          <UploadDialogRenderer />
-          <Toaster />
-          <NavGuard>
-            <CookieBanner />
-          </NavGuard>
-          <NavGuard>
-            <TosBanner />
-          </NavGuard>
-          <SidebarStateProvider>
-            <div className="flex flex-1">
-              <NavGuard>
-                <SidebarNav />
-              </NavGuard>
-              <main id="main-content" className="flex min-w-0 flex-1 flex-col">
-                <NavGuard>
-                  <TopNav />
-                </NavGuard>
-                <AppErrorBoundary>{children}</AppErrorBoundary>
-                <Suspense fallback={null}>
-                  <BottomNavPadding />
-                </Suspense>
-              </main>
-            </div>
+        <NudgeProvider>
+          <LazyMotion features={domMax}>
+            <Suspense fallback={null}>
+              <AmbientBackground variant="dashboard" orbCount={4} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <MeshAurora variant="dashboard" className="fixed inset-0 -z-10" />
+            </Suspense>
+            <Suspense fallback={null}>
+              <DynamicCursor variant="aura" />
+            </Suspense>
+            <UploadDialogRenderer />
+            <Toaster />
             <NavGuard>
-              <BottomNav />
+              <CookieBanner />
             </NavGuard>
-          </SidebarStateProvider>
-        </LazyMotion>
+            <NavGuard>
+              <TosBanner />
+            </NavGuard>
+            <SidebarStateProvider>
+              <div className="flex flex-1">
+                <NavGuard>
+                  <SidebarNav />
+                </NavGuard>
+                <main id="main-content" className="flex min-w-0 flex-1 flex-col">
+                  <NavGuard>
+                    <TopNav />
+                  </NavGuard>
+                  <AppErrorBoundary>{children}</AppErrorBoundary>
+                  <Suspense fallback={null}>
+                    <BottomNavPadding />
+                  </Suspense>
+                </main>
+              </div>
+              <NavGuard>
+                <BottomNav />
+              </NavGuard>
+            </SidebarStateProvider>
+          </LazyMotion>
+        </NudgeProvider>
       </Providers>
     </>
   );

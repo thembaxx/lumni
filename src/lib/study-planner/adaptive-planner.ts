@@ -6,7 +6,7 @@ import type { BloomLevel } from "@/lib/question-engine/types";
 const SUBJECT_WEIGHTS: Record<string, number> = {
   mathematics: 0.15,
   "physical-sciences": 0.12,
-  "life-sciences": 0.10,
+  "life-sciences": 0.1,
   geography: 0.08,
   history: 0.08,
   accounting: 0.08,
@@ -22,7 +22,7 @@ const SUBJECT_WEIGHTS: Record<string, number> = {
   "tshi-venda": 0.05,
   xitsonga: 0.05,
   "si-swati": 0.05,
-  "isindebele": 0.05,
+  isindebele: 0.05,
   "computer-applications-technology": 0.05,
   "information-technology": 0.05,
   "engineering-graphics-and-design": 0.04,
@@ -58,7 +58,7 @@ const SUBJECT_NAMES: Record<string, string> = {
   "tshi-venda": "Tshivenda Home Language",
   xitsonga: "Xitsonga Home Language",
   "si-swati": "Siswati Home Language",
-  "isindebele": "isiNdebele Home Language",
+  isindebele: "isiNdebele Home Language",
   "computer-applications-technology": "CAT",
   "information-technology": "IT",
   "engineering-graphics-and-design": "EGD",
@@ -129,10 +129,14 @@ function computeCompetencyLevel(score: number): CompetencyLevel {
 
 function competencyLevelToWeight(level: CompetencyLevel): number {
   switch (level) {
-    case "novice": return 4;
-    case "developing": return 3;
-    case "proficient": return 2;
-    case "mastered": return 1;
+    case "novice":
+      return 4;
+    case "developing":
+      return 3;
+    case "proficient":
+      return 2;
+    case "mastered":
+      return 1;
   }
 }
 
@@ -145,10 +149,14 @@ function bloomLevelToDifficulty(level: string): "Easy" | "Medium" | "Hard" {
 
 function bloomLevelToQuestionCount(difficulty: "Easy" | "Medium" | "Hard"): number {
   switch (difficulty) {
-    case "Easy": return 8;
-    case "Medium": return 6;
-    case "Hard": return 4;
-    default: return 6;
+    case "Easy":
+      return 8;
+    case "Medium":
+      return 6;
+    case "Hard":
+      return 4;
+    default:
+      return 6;
   }
 }
 
@@ -166,14 +174,14 @@ async function fetchCompetencies(
   const allRecords: ExtendedCompetencyRecord[] = [];
 
   for (const subject of subjects) {
-    const records = await db.competencies
-      .where("subjectId")
-      .equals(subject)
-      .toArray();
+    const records = await db.competencies.where("subjectId").equals(subject).toArray();
 
     if (userId) {
       for (const r of records) {
-        if ((r as ExtendedCompetencyRecord).userId === userId || !(r as ExtendedCompetencyRecord).userId) {
+        if (
+          (r as ExtendedCompetencyRecord).userId === userId ||
+          !(r as ExtendedCompetencyRecord).userId
+        ) {
           allRecords.push(r as ExtendedCompetencyRecord);
         }
       }
@@ -202,7 +210,7 @@ function detectWeakTopics(competencies: ExtendedCompetencyRecord[]): TopicGap[] 
     }
   }
 
-  return gaps.sort((a, b) => b.gap - a.gap);
+  return gaps.toSorted((a, b) => b.gap - a.gap);
 }
 
 function computeCompetencyGaps(
@@ -236,7 +244,7 @@ function computeCompetencyGaps(
     });
   }
 
-  return gaps.sort((a, b) => a.avgScore - b.avgScore);
+  return gaps.toSorted((a, b) => a.avgScore - b.avgScore);
 }
 
 function projectAps(competencyGaps: CompetencyGap[]): number {
@@ -253,7 +261,10 @@ function projectAps(competencyGaps: CompetencyGap[]): number {
   return Math.round(Math.min(100, Math.max(0, aps)));
 }
 
-function calculateConfidence(competencies: ExtendedCompetencyRecord[], totalTopicsEstimate = 150): number {
+function calculateConfidence(
+  competencies: ExtendedCompetencyRecord[],
+  totalTopicsEstimate = 150,
+): number {
   const assessedTopics = competencies.length;
   if (assessedTopics === 0) return 0;
 
@@ -285,13 +296,13 @@ function generateSessions(
 
   let dayOffset = 0;
   let currentDate = new Date(startDate);
-  const studyDays = [1, 2, 3, 4, 5];
+  const studyDays = new Set([1, 2, 3, 4, 5]);
   let topicIndex = 0;
   const totalTopics = topicQueue.length;
 
   while (dayOffset < horizonDays && topicIndex < totalTopics) {
     const dayOfWeek = currentDate.getDay();
-    if (!studyDays.includes(dayOfWeek)) {
+    if (!studyDays.has(dayOfWeek)) {
       currentDate.setDate(currentDate.getDate() + 1);
       dayOffset++;
       continue;
@@ -312,7 +323,8 @@ function generateSessions(
       const difficulty = bloomLevelToDifficulty(computeCompetencyLevel(gap.currentScore));
       const questionCount = bloomLevelToQuestionCount(difficulty);
       const sessionMinutes = Math.min(30, minutesAvailable - minutesUsed);
-      const bloomLevel = difficulty === "Easy" ? "understand" : difficulty === "Medium" ? "apply" : "analyze";
+      const bloomLevel =
+        difficulty === "Easy" ? "understand" : difficulty === "Medium" ? "apply" : "analyze";
 
       sessions.push({
         id: `session_${Date.now()}_${topicIndex}`,
@@ -341,9 +353,7 @@ function generateSessions(
 }
 
 export class AdaptiveStudyPlanner {
-  constructor(
-    private competencyDb: CompetencyDataAccess = dexieDataAccess,
-  ) {}
+  constructor(private competencyDb: CompetencyDataAccess = dexieDataAccess) {}
 
   async generateAdaptivePlan(
     config: AdaptivePlanRequest,

@@ -1,6 +1,14 @@
 import { nanoid } from "nanoid";
 import { dexieDataAccess } from "@/lib/db";
-import type { CollaborativeSession, SessionParticipant, WhiteboardObject, SessionInvite, CollaborativeSessionConfig, SessionMessage, SessionRecording } from "./types";
+import type {
+  CollaborativeSession,
+  SessionParticipant,
+  WhiteboardObject,
+  SessionInvite,
+  CollaborativeSessionConfig,
+  SessionMessage,
+  SessionRecording,
+} from "./types";
 import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
@@ -16,7 +24,9 @@ type CollaborativeDb = DataAccess & {
   sessionInvites: any;
 };
 
-let _deps: { db: CollaborativeDb } = Object.freeze({ db: dexieDataAccess as unknown as CollaborativeDb });
+let _deps: { db: CollaborativeDb } = Object.freeze({
+  db: dexieDataAccess as unknown as CollaborativeDb,
+});
 export function __setDepsForTesting(deps: { db: CollaborativeDb }) {
   _deps = Object.freeze({ ...deps });
 }
@@ -32,7 +42,7 @@ export class CollaborativeSessionService {
     hostId: string,
     hostName: string,
     groupId: string,
-    config: CollaborativeSessionConfig
+    config: CollaborativeSessionConfig,
   ): Promise<CollaborativeSession> {
     const now = Date.now();
     const session: CollaborativeSession = {
@@ -99,7 +109,7 @@ export class CollaborativeSessionService {
     sessionId: string,
     userId: string,
     userName: string,
-    avatarUrl?: string
+    avatarUrl?: string,
   ): Promise<SessionParticipant> {
     const session = await this.getSession(sessionId);
     if (!session) throw new Error("Session not found");
@@ -128,9 +138,7 @@ export class CollaborativeSessionService {
   }
 
   async leaveSession(sessionId: string, userId: string): Promise<void> {
-    await this.db.sessionParticipants
-      .where({ sessionId, userId })
-      .delete();
+    await this.db.sessionParticipants.where({ sessionId, userId }).delete();
 
     const session = await this.getSession(sessionId);
     if (session) {
@@ -147,16 +155,14 @@ export class CollaborativeSessionService {
   async updateParticipant(
     sessionId: string,
     userId: string,
-    updates: Partial<SessionParticipant>
+    updates: Partial<SessionParticipant>,
   ): Promise<void> {
-    await this.db.sessionParticipants
-      .where({ sessionId, userId })
-      .modify(updates);
+    await this.db.sessionParticipants.where({ sessionId, userId }).modify(updates);
   }
 
   async addWhiteboardObject(
     sessionId: string,
-    object: Omit<WhiteboardObject, "id" | "createdAt" | "updatedAt">
+    object: Omit<WhiteboardObject, "id" | "createdAt" | "updatedAt">,
   ): Promise<WhiteboardObject> {
     const now = Date.now();
     const whiteboardObject: WhiteboardObject = {
@@ -172,7 +178,7 @@ export class CollaborativeSessionService {
   async updateWhiteboardObject(
     sessionId: string,
     objectId: string,
-    updates: Partial<WhiteboardObject>
+    updates: Partial<WhiteboardObject>,
   ): Promise<void> {
     await this.db.whiteboardObjects
       .where({ sessionId, id: objectId })
@@ -189,7 +195,7 @@ export class CollaborativeSessionService {
 
   async addMessage(
     sessionId: string,
-    message: Omit<SessionMessage, "id" | "timestamp">
+    message: Omit<SessionMessage, "id" | "timestamp">,
   ): Promise<SessionMessage> {
     const sessionMessage: SessionMessage = {
       ...message,
@@ -226,7 +232,7 @@ export class CollaborativeSessionService {
 
   async addRecordingChunk(
     recordingId: string,
-    chunk: Omit<SessionRecording["chunks"][0], "id" | "recordingId">
+    chunk: Omit<SessionRecording["chunks"][0], "id" | "recordingId">,
   ): Promise<void> {
     const fullChunk = { ...chunk, id: `chunk_${nanoid(12)}`, recordingId };
     await this.db.sessionRecordings.update(recordingId, (rec) => {
@@ -256,7 +262,7 @@ export class CollaborativeSessionService {
     sessionId: string,
     groupId: string,
     createdBy: string,
-    maxUses = 10
+    maxUses = 10,
   ): Promise<SessionInvite> {
     const now = Date.now();
     const invite: SessionInvite = {
@@ -291,10 +297,7 @@ export class CollaborativeSessionService {
 
   async cleanupExpiredSessions(): Promise<number> {
     const expiry = Date.now() - SESSION_EXPIRY_MS;
-    const expired = await this.db.collaborativeSessions
-      .where("createdAt")
-      .below(expiry)
-      .toArray();
+    const expired = await this.db.collaborativeSessions.where("createdAt").below(expiry).toArray();
 
     for (const session of expired) {
       await this.db.collaborativeSessions.delete(session.id);
@@ -305,10 +308,7 @@ export class CollaborativeSessionService {
 
   async cleanupExpiredInvites(): Promise<number> {
     const now = Date.now();
-    const expired = await this.db.sessionInvites
-      .where("expiresAt")
-      .below(now)
-      .toArray();
+    const expired = await this.db.sessionInvites.where("expiresAt").below(now).toArray();
 
     for (const invite of expired) {
       await this.db.sessionInvites.delete(invite.code);

@@ -1,5 +1,8 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { adaptiveStudyPlanner, type AdaptivePlanRequest } from "@/lib/study-planner/adaptive-planner";
+import {
+  adaptiveStudyPlanner,
+  type AdaptivePlanRequest,
+} from "@/lib/study-planner/adaptive-planner";
 
 export const POST = createRouteHandler({
   auth: "required",

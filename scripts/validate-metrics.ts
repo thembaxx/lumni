@@ -40,7 +40,7 @@ interface SystemHealth {
 
 async function checkAIBudget(): Promise<AIBudgetMetrics> {
   console.log("\n🔍 Checking AI Budget Usage...");
-  
+
   // This would call the actual API in production
   // For now, return structure with placeholder
   return {
@@ -57,7 +57,7 @@ async function checkAIBudget(): Promise<AIBudgetMetrics> {
 
 async function checkWALBaseline(): Promise<WALMetrics> {
   console.log("\n📊 Checking WAL Baseline Metrics...");
-  
+
   // Query analyticsEvents from Dexie
   // This would be run in browser context or via Appwrite
   return {
@@ -78,7 +78,7 @@ async function checkWALBaseline(): Promise<WALMetrics> {
 
 async function checkSystemHealth(): Promise<SystemHealth> {
   console.log("\n🏥 Checking System Health...");
-  
+
   return {
     dexieTables: 38,
     dexieSizeEstimateMB: 0,
@@ -101,16 +101,20 @@ function printReport(ai: AIBudgetMetrics, wal: WALMetrics, health: SystemHealth)
 
   console.log("\n🤖 AI BUDGET (Daily Limit: 2000 calls)");
   console.log("-".repeat(40));
-  console.log(`Global: ${ai.global.used}/${ai.global.limit} (${ai.global.pctUsed.toFixed(1)}%) | Remaining: ${ai.global.remaining}`);
+  console.log(
+    `Global: ${ai.global.used}/${ai.global.limit} (${ai.global.pctUsed.toFixed(1)}%) | Remaining: ${ai.global.remaining}`,
+  );
   for (const t of ai.byType) {
     const bar = "█".repeat(Math.round(t.pctUsed / 5)) + "░".repeat(20 - Math.round(t.pctUsed / 5));
     console.log(`  ${t.type.padEnd(10)} ${bar} ${t.used}/${t.limit} (${t.pctUsed.toFixed(1)}%)`);
   }
   if (ai.perUser.length > 0) {
     console.log(`\nTop 5 Users by Usage:`);
-    ai.perUser.slice(0, 5).forEach(u => 
-      console.log(`  ${u.userId.slice(0,8)}... | ${u.type} | ${u.used}/${u.limit}`)
-    );
+    ai.perUser
+      .slice(0, 5)
+      .forEach((u) =>
+        console.log(`  ${u.userId.slice(0, 8)}... | ${u.type} | ${u.used}/${u.limit}`),
+      );
   }
 
   console.log("\n📱 WAL (Weekly Active Learners) BASELINE");
@@ -141,13 +145,33 @@ function printReport(ai: AIBudgetMetrics, wal: WALMetrics, health: SystemHealth)
   console.log("\n" + "=".repeat(60));
   console.log("🎯 DECISION GATES");
   console.log("=".repeat(60));
-  
+
   const gates = [
-    { name: "AI Budget < 80%", pass: ai.global.pctUsed < 80, value: `${ai.global.pctUsed.toFixed(1)}%` },
-    { name: "No user > 90% per-type", pass: !ai.perUser.some(u => u.used / u.limit > 0.9), value: "OK" },
-    { name: "DAU/MAU > 20%", pass: wal.dauMauRatio > 0.2, value: `${(wal.dauMauRatio * 100).toFixed(1)}%` },
-    { name: "Quiz completion > 60%", pass: wal.quizCompletionRate > 0.6, value: `${(wal.quizCompletionRate * 100).toFixed(1)}%` },
-    { name: "Zero P0 Sentry errors", pass: health.sentryErrors24h === 0, value: health.sentryErrors24h.toString() },
+    {
+      name: "AI Budget < 80%",
+      pass: ai.global.pctUsed < 80,
+      value: `${ai.global.pctUsed.toFixed(1)}%`,
+    },
+    {
+      name: "No user > 90% per-type",
+      pass: !ai.perUser.some((u) => u.used / u.limit > 0.9),
+      value: "OK",
+    },
+    {
+      name: "DAU/MAU > 20%",
+      pass: wal.dauMauRatio > 0.2,
+      value: `${(wal.dauMauRatio * 100).toFixed(1)}%`,
+    },
+    {
+      name: "Quiz completion > 60%",
+      pass: wal.quizCompletionRate > 0.6,
+      value: `${(wal.quizCompletionRate * 100).toFixed(1)}%`,
+    },
+    {
+      name: "Zero P0 Sentry errors",
+      pass: health.sentryErrors24h === 0,
+      value: health.sentryErrors24h.toString(),
+    },
     { name: "All tests passing", pass: health.testStatus === "pass", value: "2047 pass" },
     { name: "Build clean", pass: health.buildStatus === "pass", value: "OK" },
     { name: "Lint clean", pass: health.lintStatus === "pass", value: "OK" },
@@ -157,7 +181,7 @@ function printReport(ai: AIBudgetMetrics, wal: WALMetrics, health: SystemHealth)
     console.log(`  ${gate.pass ? "✅" : "❌"} ${gate.name.padEnd(30)} ${gate.value}`);
   }
 
-  const allPass = gates.every(g => g.pass);
+  const allPass = gates.every((g) => g.pass);
   console.log("\n" + (allPass ? "🎉 ALL GATES PASSED" : "⚠️  SOME GATES FAILED - INVESTIGATE"));
   console.log("=".repeat(60));
 }

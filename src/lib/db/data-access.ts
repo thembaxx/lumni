@@ -48,11 +48,7 @@ import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { CachedGraph } from "@/lib/knowledge-graph/types";
 import type { CachedLesson } from "@/lib/lesson/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
-import type {
-  QuizPack,
-  QuizPackQuestion,
-  QuizPackVisualAsset,
-} from "@/lib/quiz-packs/types";
+import type { QuizPack, QuizPackQuestion, QuizPackVisualAsset } from "@/lib/quiz-packs/types";
 import type { CachedStory, StoryQuestionSet } from "@/lib/stories/types";
 import type { CachedStudyGuide } from "@/lib/study-guide/types";
 import type { TinyFishCacheEntry, TinyFishUsageEntry } from "@/lib/tinyfish/cache";

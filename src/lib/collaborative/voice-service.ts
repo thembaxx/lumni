@@ -64,7 +64,7 @@ export class VoiceService {
       this.notifyStateChange();
     } catch (err) {
       console.error("Failed to get user media:", err);
-      throw new Error("Microphone access denied");
+      throw new Error("Microphone access denied", { cause: err });
     }
   }
 
@@ -81,7 +81,10 @@ export class VoiceService {
     return offer;
   }
 
-  async createAnswer(targetUserId: string, offer: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit> {
+  async createAnswer(
+    targetUserId: string,
+    offer: RTCSessionDescriptionInit,
+  ): Promise<RTCSessionDescriptionInit> {
     const peer = this.createPeer(targetUserId, false);
     await peer._pc.setRemoteDescription(offer);
     const answer = await peer._pc.createAnswer();

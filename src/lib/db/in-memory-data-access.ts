@@ -299,7 +299,7 @@ export class InMemoryDataAccess implements DataAccess {
   analyticsEvents = new InMemoryTable<AnalyticsEvent>();
   retentionRecurrence = new InMemoryTable<RetentionRecurrence>();
   wrongAnswers = new InMemoryTable<WrongAnswerEntry>();
-quizPacks = new InMemoryTable<QuizPack, string>();
+  quizPacks = new InMemoryTable<QuizPack, string>();
   packQuestions = new InMemoryTable<QuizPackQuestion>();
   packVisualAssets = new InMemoryTable<QuizPackVisualAsset>();
   competencies = new InMemoryTable<CompetencyRecord>();
