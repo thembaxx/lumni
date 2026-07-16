@@ -29,6 +29,7 @@ import type { SubjectCurriculum } from "@/curriculum/types";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
+import { getAllStoryMetas, getLanguageLabel } from "@/lib/stories/story-data";
 
 interface LessonProgressRow {
   userId: string;
@@ -73,6 +74,23 @@ export function StudyBrowserClient() {
       }
     },
     enabled: !!user?.$id,
+  });
+
+  const { data: storyMetaMap } = useQuery({
+    queryKey: ["story-metas-for-subject", selectedSubject],
+    queryFn: async () => {
+      if (!selectedSubject) return null;
+      const all = await getAllStoryMetas();
+      const langId = selectedSubject;
+      const map = new Map<string, { id: string; title: string }>();
+      for (const s of all) {
+        if (s.languageId === langId) {
+          map.set(s.id, { id: s.id, title: s.title });
+        }
+      }
+      return map;
+    },
+    enabled: !!selectedSubject,
   });
 
   const filteredTopics = useMemo(() => {
@@ -228,6 +246,33 @@ export function StudyBrowserClient() {
                                   <span className="text-(--fs-caption-3) text-muted-foreground tabular-nums">
                                     {pct}%
                                   </span>
+                                </div>
+                              )}
+                              {subtopic.stories && subtopic.stories.length > 0 && storyMetaMap && (
+                                <div className="mt-2 flex flex-wrap gap-1.5">
+                                  {subtopic.stories.slice(0, 3).map((sid) => {
+                                    const sm = storyMetaMap.get(sid);
+                                    if (!sm) return null;
+                                    return (
+                                      <button
+                                        key={sid}
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          push(`/stories/${sid}`);
+                                        }}
+                                        className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-card px-2.5 py-0.5 text-(--fs-caption-3) text-muted-foreground transition-colors hover:bg-(--system-accent)/10 hover:text-(--system-accent)"
+                                      >
+                                        <HugeiconsIcon icon={BookOpen01Icon} className="size-3" />
+                                        {sm.title}
+                                      </button>
+                                    );
+                                  })}
+                                  {subtopic.stories.length > 3 && (
+                                    <span className="inline-flex items-center px-1 text-(--fs-caption-3) text-muted-foreground">
+                                      +{subtopic.stories.length - 3} more
+                                    </span>
+                                  )}
                                 </div>
                               )}
                             </div>

@@ -23,6 +23,7 @@ import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { trackLessonCompletion } from "@/lib/competency-engine";
 import { suggestQuestionsForLesson } from "@/lib/integration/service";
+import { getAllStoryMetas } from "@/lib/stories/story-data";
 
 interface LessonViewProps {
   subjectId: string;
@@ -118,6 +119,24 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
     queryKey: ["related-questions", subjectId, subtopicId],
     queryFn: () => suggestQuestionsForLesson(subjectId, subtopicId),
     enabled: !!subjectId && !!subtopicId,
+  });
+
+  const { data: linkedStories } = useQuery({
+    queryKey: ["linked-stories", subjectId, subtopic?.stories],
+    queryFn: async () => {
+      if (!subtopic?.stories || subtopic.stories.length === 0) return [];
+      const all = await getAllStoryMetas();
+      const langId = subjectId;
+      const metaMap = new Map<string, { id: string; title: string }>();
+      for (const s of all) {
+        if (s.languageId === langId) metaMap.set(s.id, { id: s.id, title: s.title });
+      }
+      return subtopic.stories.map((sid: string) => metaMap.get(sid)).filter(Boolean) as {
+        id: string;
+        title: string;
+      }[];
+    },
+    enabled: !!subtopic?.stories && subtopic.stories.length > 0,
   });
 
   // react-doctor/no-event-handler — analytics tracking on completion state change
@@ -309,6 +328,32 @@ export function LessonViewClient({ subjectId, topicId, subtopicId }: LessonViewP
             </CardHeader>
             <CardContent className="p-5 pt-0">
               <p className="text-sm leading-relaxed">{lesson.summary}</p>
+            </CardContent>
+          </Card>
+        </FadeIn>
+      )}
+
+      {linkedStories && linkedStories.length > 0 && (
+        <FadeIn direction="up" distance={16} duration={0.4}>
+          <Card className="overflow-hidden rounded-3xl shadow-level-1">
+            <CardHeader>
+              <CardTitle className="font-bold text-lg">Related Reading</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2 p-5 pt-0">
+              {linkedStories.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => push(`/stories/${s.id}`)}
+                  className="flex items-center gap-3 rounded-2xl border bg-card p-3 text-left transition-[background-color] hover:bg-muted/50 active:scale-[0.96]"
+                >
+                  <HugeiconsIcon
+                    icon={BookOpen01Icon}
+                    className="size-4 shrink-0 text-(--system-accent)"
+                  />
+                  <span className="text-sm font-medium">{s.title}</span>
+                </button>
+              ))}
             </CardContent>
           </Card>
         </FadeIn>
