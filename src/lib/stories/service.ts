@@ -5,6 +5,7 @@ import type { StoryDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { searchWithRAG } from "@/lib/tinyfish";
 import { getAllStoryMetas, loadStoryContent } from "@/lib/stories/story-data";
+import { voiceEngine } from "@/lib/voice-engine/voice-engine";
 import type { Story, StoryQuestion, StoryQuestionSet } from "./types";
 
 // Dexie v33 adds storyCache + storyQuestions tables.
@@ -103,9 +104,55 @@ export async function cacheAllStories(): Promise<void> {
   }
 }
 
+function langToTtsCode(languageId: string): string {
+  const map: Record<string, string> = {
+    "english-home-language": "en",
+    "afrikaans-home-language": "af",
+    "isi-zulu-home-language": "zu",
+    "isi-xhosa-home-language": "xh",
+    "sesotho-home-language": "st",
+    "setswana-home-language": "tn",
+    "sepedi-home-language": "nso",
+    "xitsonga-home-language": "ts",
+    "siswati-home-language": "ss",
+    "tshivenda-home-language": "ve",
+    "isi-ndebele-home-language": "nr",
+  };
+  return map[languageId] ?? "en";
+}
+
+export async function populateAudioUrl(story: Story): Promise<string | undefined> {
+  if (story.audioUrl) return story.audioUrl;
+  if (!voiceEngine.hasServerProvider()) return undefined;
+  const lang = langToTtsCode(story.languageId);
+  try {
+    const result = await voiceEngine.synthesize(story.content.slice(0, 500), { lang });
+    if (result) {
+      return `data:audio/${result.format};base64,${result.audio}`;
+    }
+  } catch (err) {
+    logError("StoryService.populateAudioUrl", err);
+  }
+  return undefined;
+}
+
 export async function cacheStory(id: string, story: Story): Promise<void> {
   try {
     const key = `story:${id}`;
+    if (!story.audioUrl && voiceEngine.hasServerProvider()) {
+      populateAudioUrl(story).then((audioUrl) => {
+        if (audioUrl) {
+          story.audioUrl = audioUrl;
+          const entry = {
+            key,
+            story,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+          };
+          _deps.db.storyCache.put(entry).catch(() => {});
+        }
+      });
+    }
     const entry = {
       key,
       story,

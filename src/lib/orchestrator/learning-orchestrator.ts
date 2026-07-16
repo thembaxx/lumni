@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { EmbeddingDataAccess, LegacyDataAccess } from "@/lib/db/data-access";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { GenerationParams, Question, UserAnswer } from "@/lib/question-engine/types";
 import { serializeQuestionType } from "@/lib/shared/question-type";
@@ -24,7 +24,7 @@ export class LearningOrchestrator {
   constructor(
     engine: QuestionEngine,
     deps?: {
-      db?: DataAccess;
+      db?: EmbeddingDataAccess & Pick<LegacyDataAccess, "pastPaperQuestions">;
       dedup?: DedupPort;
       gradingDeps?: GradingPipelineDeps;
       pipeline?: PipelinePort;

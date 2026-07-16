@@ -2,6 +2,21 @@ import type { StoryMeta } from "@/lib/stories/story-data";
 
 export const storyMetas: StoryMeta[] = [
   {
+    id: "ibhayisikili-likanamakuru",
+    title: "Ibhayisikili Likanamakuru",
+    author: "Munanga ASP teachers",
+    language: "isiZulu",
+    languageId: "isi-zulu-home-language",
+    gradeLevel: "2–4",
+    wordCount: 75,
+    subjects: ["isi-zulu-home-language"],
+    source: "african-storybook",
+    sourceUrl: "https://africanstorybook.org/reader.php?id=13922",
+    readTimeMinutes: 3,
+    topics: ["reading", "literacy", "animals", "adventure"],
+    license: "cc-by",
+  },
+  {
     id: "inkosi-yangaphandle",
     title: "Inkosi Yangaphandle",
     author: "Lumni",

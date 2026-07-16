@@ -1,6 +1,11 @@
 import { Effect } from "effect";
 import { dexieDataAccess as _dexieDa } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  CompetencyDataAccess,
+  FlashcardDataAccess,
+  LegacyDataAccess,
+  SyncDataAccess,
+} from "@/lib/db/data-access";
 import { getCurrentSession } from "@/lib/exam-dates/types";
 import { logError } from "@/lib/shared/logger";
 import {
@@ -9,10 +14,15 @@ import {
   type ScorerDeps,
 } from "@/lib/recommendation";
 
-const DEFAULT_DEPS = Object.freeze({ db: _dexieDa });
-let _deps = DEFAULT_DEPS;
+type NextActionDb = FlashcardDataAccess &
+  SyncDataAccess &
+  CompetencyDataAccess &
+  Pick<LegacyDataAccess, "subjects">;
 
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+const DEFAULT_DEPS: { db: NextActionDb } = Object.freeze({ db: _dexieDa });
+let _deps: { db: NextActionDb } = DEFAULT_DEPS;
+
+export function __setDepsForTesting(deps: { db: NextActionDb }) {
   _deps = Object.freeze({ ...deps });
 }
 

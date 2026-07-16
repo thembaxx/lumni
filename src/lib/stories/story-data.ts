@@ -128,6 +128,14 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
     import("@/curriculum/stories/english-home-language/native-life-south-africa.json").then(
       (m) => ({ default: m.default as unknown as Story }),
     ),
+  "namukurus-bicycle": () =>
+    import("@/curriculum/stories/english-home-language/namukurus-bicycle.json").then((m) => ({
+      default: m.default as unknown as Story,
+    })),
+  "ibhayisikili-likanamakuru": () =>
+    import("@/curriculum/stories/isi-zulu-home-language/ibhayisikili-likanamakuru.json").then(
+      (m) => ({ default: m.default as unknown as Story }),
+    ),
 };
 
 let metasCache: StoryMeta[] | null = null;

@@ -1,7 +1,7 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { WebhookDataAccess } from "@/lib/db/data-access";
 import type { WebhookEndpoint } from "./types";
 
-export function createRegistry(db: Pick<DataAccess, "webhookEndpoints">) {
+export function createRegistry(db: WebhookDataAccess) {
   async function getEndpoints(eventType: string): Promise<WebhookEndpoint[]> {
     const all = await db.webhookEndpoints.toArray();
     return all.filter((ep) => ep.enabled && ep.events.includes(eventType));

@@ -251,7 +251,7 @@ function SettingsContent() {
               size="sm"
               onClick={handleSave}
               disabled={isSaving}
-              className="h-11 rounded-full bg-system-accent px-5 font-bold text-system-background-elevated shadow-level-2 transition-[background-color,box-shadow,transform] duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
+              className="h-11 rounded-full bg-system-accent px-5 font-bold text-system-accent-foreground shadow-level-2 transition-[background-color,box-shadow,transform] duration-200 hover:bg-system-accent/90 hover:shadow-level-3 active:scale-[0.96]"
             >
               {saved ? "Saved!" : isSaving ? t("common.saving") : "Save"}
             </Button>

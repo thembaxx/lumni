@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { EmbeddingDataAccess, QuizDataAccess } from "@/lib/db/data-access";
 import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
@@ -14,7 +14,7 @@ import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import { createJobHandler } from "./sync-factory";
 import type { JobHandler } from "./index";
 
-type DomainDb = Pick<DataAccess, "questionEmbeddings" | "questions">;
+type DomainDb = EmbeddingDataAccess & Pick<QuizDataAccess, "questions">;
 let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DomainDb }) {
   _deps = Object.freeze({ ...deps });

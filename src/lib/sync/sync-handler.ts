@@ -1,9 +1,19 @@
-import { type DataAccess, dexieDataAccess } from "@/lib/db";
+import {
+  dexieDataAccess,
+  type CompetencyDataAccess,
+  type ContentDataAccess,
+  type FlashcardDataAccess,
+  type SyncDataAccess,
+} from "@/lib/db";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { logError } from "@/lib/shared/logger";
 
-let _deps: { db: DataAccess } = Object.freeze({ db: dexieDataAccess });
-export function __setDepsForTesting(deps: { db: DataAccess }) {
+type SyncHandlerDb = CompetencyDataAccess &
+  FlashcardDataAccess &
+  SyncDataAccess &
+  Pick<ContentDataAccess, "bookmarks">;
+let _deps: { db: SyncHandlerDb } = Object.freeze({ db: dexieDataAccess });
+export function __setDepsForTesting(deps: { db: SyncHandlerDb }) {
   _deps = Object.freeze({ ...deps });
 }
 

@@ -1,5 +1,9 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type {
+  CompetencyDataAccess,
+  FlashcardDataAccess,
+  SyncDataAccess,
+} from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
 interface RiskFactor {
@@ -65,11 +69,15 @@ const DEFAULT_CONFIG: RiskModelConfig = {
   engagementDropThreshold: 30,
 };
 
+type RiskModelDb = CompetencyDataAccess &
+  FlashcardDataAccess &
+  Pick<SyncDataAccess, "examSessions">;
+
 export class RiskModel {
   private config: RiskModelConfig;
-  private db: DataAccess;
+  private db: RiskModelDb;
 
-  constructor(config: Partial<RiskModelConfig> = {}, db?: DataAccess) {
+  constructor(config: Partial<RiskModelConfig> = {}, db?: RiskModelDb) {
     this.config = { ...DEFAULT_CONFIG, ...config };
     this.db = db ?? dexieDataAccess;
   }
@@ -284,7 +292,7 @@ export class RiskModel {
 
 // Data access functions
 export async function fetchStudentActivityData(
-  db: DataAccess,
+  db: RiskModelDb,
   userId: string,
   days: number = 30,
 ): Promise<StudentActivityData | null> {

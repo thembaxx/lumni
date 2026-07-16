@@ -2,6 +2,21 @@ import type { StoryMeta } from "@/lib/stories/story-data";
 
 export const storyMetas: StoryMeta[] = [
   {
+    id: "namukurus-bicycle",
+    title: "Namukuru's Bicycle",
+    author: "Munanga ASP teachers",
+    language: "English",
+    languageId: "english-home-language",
+    gradeLevel: "2–4",
+    wordCount: 80,
+    subjects: ["english-home-language"],
+    source: "african-storybook",
+    sourceUrl: "https://africanstorybook.org/reader.php?id=13922",
+    readTimeMinutes: 3,
+    topics: ["reading", "literacy", "animals", "adventure"],
+    license: "cc-by",
+  },
+  {
     id: "south-african-folk-tales",
     title: "South-African Folk-Tales",
     author: "James A. Honeÿ",

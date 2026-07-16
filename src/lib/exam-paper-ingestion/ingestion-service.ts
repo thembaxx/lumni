@@ -1,11 +1,11 @@
 import { nanoid } from "nanoid";
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { LegacyDataAccess } from "@/lib/db/data-access";
 import { extractQuestionsFromPaper } from "./question-extractor";
 import { classifyQuestions } from "./question-classifier";
 import { getCurriculumTopics } from "./curriculum-topics";
 import type { CurriculumTopic } from "./question-classifier";
-import { convertPdfWithMarker } from "@/lib/exams/marker-client";
+import { convertPdfWithFallback } from "@/lib/exams/marker-client";
 import { getAI } from "@/lib/ai/client";
 import { logError } from "@/lib/shared/logger";
 import type { ExamPaper } from "@/types/exam-paper";
@@ -47,9 +47,9 @@ interface StructuredIngestionResult {
 }
 
 export class PastPaperIngestionService {
-  private db: DataAccess;
+  private db: LegacyDataAccess;
 
-  constructor(deps?: { db?: DataAccess }) {
+  constructor(deps?: { db?: LegacyDataAccess }) {
     this.db = deps?.db ?? dexieDataAccess;
   }
 
@@ -58,9 +58,9 @@ export class PastPaperIngestionService {
     filename: string,
     config: IngestionConfig,
   ): Promise<IngestionResult> {
-    // Convert PDF to markdown using marker
-    const { convertPdfWithMarker } = await import("@/lib/exams/marker-client");
-    const markerResult = await convertPdfWithMarker(pdfBuffer, filename);
+    // Convert PDF to markdown — tries Marker API first, falls back to pdf-parse, then Tesseract OCR
+    const { convertPdfWithFallback } = await import("@/lib/exams/marker-client");
+    const markerResult = await convertPdfWithFallback(pdfBuffer, filename);
 
     // Parse markdown into ExamPaper structure
     const paper = await this.parseMarkdownToExamPaper(markerResult.markdown, config);

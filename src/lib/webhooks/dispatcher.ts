@@ -1,9 +1,9 @@
-import type { DataAccess } from "@/lib/db/data-access";
+import type { WebhookDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import type { WebhookDelivery } from "./types";
 
 interface DispatcherDeps {
-  db: Pick<DataAccess, "webhookEndpoints" | "webhookDeliveries">;
+  db: WebhookDataAccess;
   registry: { getEndpoints(eventType: string): Promise<Array<{ id: string; url: string }>> };
 }
 

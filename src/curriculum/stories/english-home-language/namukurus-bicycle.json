@@ -1,0 +1,53 @@
+{
+  "id": "namukurus-bicycle",
+  "title": "Namukuru's Bicycle",
+  "author": "Munanga ASP teachers",
+  "language": "English",
+  "languageId": "english-home-language",
+  "gradeLevel": "2–4",
+  "wordCount": 80,
+  "subjects": ["english-home-language"],
+  "source": "african-storybook",
+  "sourceUrl": "https://africanstorybook.org/reader.php?id=13922",
+  "license": "cc-by",
+  "readTimeMinutes": 3,
+  "topics": ["reading", "literacy", "animals", "adventure"],
+  "content": "Namukuru and her brother are ready for school.\n\nNamukuru carries her brother on her bicycle.\n\nTheir friends cheer for them as they ride into school.\n\nWhile they are in the classroom, a monkey arrives outside. The monkey rides away on Namukuru's bicycle!\n\nThe children chase the monkey.\n\nThe monkey leaves the bicycle under a tree.\n\nThe monkey swims to an island in the middle of the lake. He climbs high into a tree.\n\nThe monkey waves goodbye! The children wave back. Namukuru has her bicycle again.",
+  "vocabulary": [
+    {
+      "term": "bicycle",
+      "definition": "A vehicle with two wheels that you ride by pushing pedals with your feet",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈbaɪsɪkəl/",
+      "language": "en"
+    },
+    {
+      "term": "chase",
+      "definition": "To run after someone or something in order to catch them",
+      "partOfSpeech": "verb",
+      "pronunciation": "/tʃeɪs/",
+      "language": "en"
+    },
+    {
+      "term": "cheer",
+      "definition": "To shout with joy or encouragement",
+      "partOfSpeech": "verb",
+      "pronunciation": "/tʃɪər/",
+      "language": "en"
+    },
+    {
+      "term": "wave",
+      "definition": "To move your hand from side to side as a greeting or goodbye",
+      "partOfSpeech": "verb",
+      "pronunciation": "/weɪv/",
+      "language": "en"
+    },
+    {
+      "term": "island",
+      "definition": "A piece of land completely surrounded by water",
+      "partOfSpeech": "noun",
+      "pronunciation": "/ˈaɪlənd/",
+      "language": "en"
+    }
+  ]
+}

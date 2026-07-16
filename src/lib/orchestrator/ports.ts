@@ -7,13 +7,13 @@ export interface DedupPort {
 
 import { embedText } from "@/lib/embedding/client";
 import { findTopK } from "@/lib/embedding/similarity";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { EmbeddingDataAccess, LegacyDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
 export class EmbeddingDedup implements DedupPort {
-  private db: Pick<DataAccess, "questionEmbeddings" | "pastPaperQuestions">;
+  private db: EmbeddingDataAccess & Pick<LegacyDataAccess, "pastPaperQuestions">;
 
-  constructor(db: Pick<DataAccess, "questionEmbeddings" | "pastPaperQuestions">) {
+  constructor(db: EmbeddingDataAccess & Pick<LegacyDataAccess, "pastPaperQuestions">) {
     this.db = db;
   }
 

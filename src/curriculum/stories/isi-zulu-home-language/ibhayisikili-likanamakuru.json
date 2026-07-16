@@ -1,0 +1,53 @@
+{
+  "id": "ibhayisikili-likanamakuru",
+  "title": "Ibhayisikili Likanamakuru",
+  "author": "Munanga ASP teachers",
+  "language": "isiZulu",
+  "languageId": "isi-zulu-home-language",
+  "gradeLevel": "2–4",
+  "wordCount": 75,
+  "subjects": ["isi-zulu-home-language"],
+  "source": "african-storybook",
+  "sourceUrl": "https://africanstorybook.org/reader.php?id=13922",
+  "license": "cc-by",
+  "readTimeMinutes": 3,
+  "topics": ["reading", "literacy", "animals", "adventure"],
+  "content": "UNamakuru nomfowabo sebelungele ukuya esikoleni.\n\nUNamakuru ugibelisa umfowabo ebhayisikilini lakhe.\n\nAbangani babo bayabahalalisela lapho bengena ngebhayisikili esikoleni.\n\nBathi besesendlini yokufundela, kwafika inkawu phandle. Inkawu igibela ibhayisikili likaNamakuru iyaphuma iyahamba.\n\nIzingane ziyayijaha inkawu.\n\nInkawu ishiya ibhayisikili phansi kwesihlahla.\n\nInkawu iyahlamba iya phakathi nechibi. Inombela kudekude phezulu esihlahleni.\n\nInkawu iyabathathazela ngesandla sayo! Izingane nazo ziyathathaza. Selibuyile futhi ibhayisikili lika Namakuru.",
+  "vocabulary": [
+    {
+      "term": "ibhayisikili",
+      "definition": "Imoto enamasondo amabili ogibela kuyo ngokunyathela amaphedali ngezinyawo",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iɓajisiˈciːli/",
+      "language": "zu"
+    },
+    {
+      "term": "inkawu",
+      "definition": "Isilwane esihlala ezihlahleni esifana nomuntu esinomsila",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iŋˈkaːwu/",
+      "language": "zu"
+    },
+    {
+      "term": "ukujaha",
+      "definition": "Ukugijima ulandela othile noma into ethile ukuze uyibambe",
+      "partOfSpeech": "verb",
+      "pronunciation": "/uɟuˈdʒaːha/",
+      "language": "zu"
+    },
+    {
+      "term": "isihlahla",
+      "definition": "Isitshalo esikhulu esinokhuni ncamashi namagatsha",
+      "partOfSpeech": "noun",
+      "pronunciation": "iːsiˈɬaːɬa",
+      "language": "zu"
+    },
+    {
+      "term": "ichibi",
+      "definition": "Indawo yamanzi emangele amakhulu",
+      "partOfSpeech": "noun",
+      "pronunciation": "/iːˈtʃiːbi/",
+      "language": "zu"
+    }
+  ]
+}

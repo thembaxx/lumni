@@ -1,8 +1,9 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { FlashcardDataAccess, LegacyDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
-type IntegrationDb = Pick<DataAccess, "pastPaperQuestions" | "flashcards">;
+type IntegrationDb = Pick<LegacyDataAccess, "pastPaperQuestions"> &
+  Pick<FlashcardDataAccess, "flashcards">;
 
 let _deps: { db: IntegrationDb } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: IntegrationDb }) {

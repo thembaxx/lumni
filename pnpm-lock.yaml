@@ -152,6 +152,9 @@ importers:
       pdf-parse:
         specifier: ^2.4.5
         version: 2.4.5
+      pdfjs-dist:
+        specifier: ^5.4.296
+        version: 5.4.296
       postcss:
         specifier: 8.5.15
         version: 8.5.15
