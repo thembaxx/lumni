@@ -3,6 +3,8 @@
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import MagicWand01Icon from "@hugeicons/core-free-icons/MagicWand01Icon";
+import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
+import VolumeUpIcon from "@hugeicons/core-free-icons/VolumeUpIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useEffect, useState } from "react";
@@ -30,7 +32,7 @@ import { useAuth } from "@/lib/auth/auth-context";
 import type { StoryProgressRecord } from "@/lib/db/schema";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
-import { cacheAllStories } from "@/lib/stories/service";
+import { cacheAllStories, generateAudioForAllStories } from "@/lib/stories/service";
 import type { StoryMeta } from "@/lib/stories/story-data";
 import { getAllStoryMetas, getLanguageLabel } from "@/lib/stories/story-data";
 
@@ -65,6 +67,8 @@ export function StoriesClient() {
   const { push } = useRouter();
   const { user } = useAuth();
   const [selectedLang, setSelectedLang] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("all");
   const [stories, setStories] = useState<StoryMeta[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [progressMap, setProgressMap] = useState<Map<string, StoryProgressRecord>>(new Map());
@@ -74,6 +78,7 @@ export function StoriesClient() {
   const [genTopic, setGenTopic] = useState("");
   const [genSubject, setGenSubject] = useState("English");
   const [genLoading, setGenLoading] = useState(false);
+  const [audioLoading, setAudioLoading] = useState(false);
 
   const userId = user?.$id;
 
@@ -154,8 +159,18 @@ export function StoriesClient() {
       .catch((err) => logError("stories-client.loadProgress", err));
   }, [userId, stories]);
 
-  const filtered =
-    selectedLang === "all" ? stories : stories.filter((s) => s.languageId === selectedLang);
+  const filtered = stories.filter((s) => {
+    if (selectedLang !== "all" && s.languageId !== selectedLang) return false;
+    if (selectedGrade !== "all" && !s.gradeLevel?.includes(selectedGrade)) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchTitle = s.title.toLowerCase().includes(q);
+      const matchAuthor = s.author.toLowerCase().includes(q);
+      const matchTopic = s.topics?.some((t) => t.toLowerCase().includes(q)) ?? false;
+      if (!matchTitle && !matchAuthor && !matchTopic) return false;
+    }
+    return true;
+  });
 
   return (
     <PageContainer className="gap-6 pt-8">
@@ -164,6 +179,56 @@ export function StoriesClient() {
         <p className="text-muted-foreground text-sm">
           Read short stories and practice reading comprehension
         </p>
+      </div>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="relative flex-1">
+          <HugeiconsIcon
+            icon={Search01Icon}
+            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          />
+          <Input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by title, author, or topic..."
+            className="rounded-2xl pl-9 text-xs"
+            aria-label="Search stories"
+          />
+        </div>
+        <Select
+          value={selectedGrade}
+          onValueChange={(v) => {
+            if (v) setSelectedGrade(v);
+          }}
+        >
+          <SelectTrigger className="w-32 rounded-full text-xs" aria-label="Filter by grade">
+            <SelectValue placeholder="All grades" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all" className="text-xs">
+              All grades
+            </SelectItem>
+            {["R", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].map((g) => (
+              <SelectItem key={g} value={g} className="text-xs">
+                Grade {g}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setAudioLoading(true);
+            generateAudioForAllStories().finally(() => setAudioLoading(false));
+          }}
+          disabled={audioLoading}
+          className="rounded-full text-xs"
+          aria-label="Generate audio for all stories"
+        >
+          <HugeiconsIcon icon={VolumeUpIcon} className="size-3.5" />
+          {audioLoading ? "Generating Audio..." : "Generate Audio"}
+        </Button>
       </div>
 
       {languages.length > 0 && (

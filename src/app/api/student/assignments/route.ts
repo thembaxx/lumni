@@ -1,11 +1,14 @@
 import { Query } from "appwrite";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAllStoryMetas } from "@/lib/stories/story-data";
 
 export interface StudentAssignment {
   id: string;
   teacherId: string;
   topics: string[];
+  storyIds?: string[];
+  assignmentType: "quiz" | "story";
   status: string;
   createdAt: string;
   dueDate?: string;
@@ -71,6 +74,14 @@ export const GET = createRouteHandler({
       }),
     );
 
+    const storyMetaMap = new Map<string, { id: string; title: string }>();
+    try {
+      const allMetas = await getAllStoryMetas();
+      for (const m of allMetas) storyMetaMap.set(m.id, { id: m.id, title: m.title });
+    } catch {
+      // fail open
+    }
+
     const assignmentIds = allAssignments.map((a) => (a as Record<string, unknown>).$id as string);
     const submissions =
       assignmentIds.length > 0
@@ -96,11 +107,21 @@ export const GET = createRouteHandler({
       } catch {
         parsed = [];
       }
+      const rawStoryIds = (doc.storyIds as string) || "[]";
+      let storyIds: string[] = [];
+      try {
+        storyIds = JSON.parse(rawStoryIds) as string[];
+      } catch {
+        storyIds = [];
+      }
+      const assignmentType = (doc.assignmentType as "quiz" | "story") || "quiz";
       const subDoc = submissionMap.get(doc.$id as string);
       return {
         id: doc.$id as string,
         teacherId: doc.teacherId as string,
         topics: parsed.map((tId) => topicMap.get(tId) || tId),
+        storyIds: storyIds.length > 0 ? storyIds : undefined,
+        assignmentType,
         status: (doc.status as string) || "pending",
         createdAt: (doc.createdAt as string) || "",
         dueDate: doc.dueDate as string | undefined,

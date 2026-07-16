@@ -3,6 +3,7 @@
 import BookOpen02Icon from "@hugeicons/core-free-icons/BookOpen02Icon";
 import Chat01Icon from "@hugeicons/core-free-icons/Chat01Icon";
 import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
+import FolderLibraryIcon from "@hugeicons/core-free-icons/FolderLibraryIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -96,10 +97,17 @@ export function MyAssignments() {
           <div key={a.id}>
             <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale">
               <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
-                <HugeiconsIcon icon={BookOpen02Icon} className="size-4 text-(--system-accent)" />
+                <HugeiconsIcon
+                  icon={a.assignmentType === "story" ? FolderLibraryIcon : BookOpen02Icon}
+                  className="size-4 text-(--system-accent)"
+                />
               </div>
               <div className="flex min-w-0 flex-1 flex-col gap-2">
-                <p className="font-medium text-sm">{a.topics.join(", ") || "General"}</p>
+                {a.assignmentType === "story" ? (
+                  <p className="font-medium text-sm">Reading Assignment</p>
+                ) : (
+                  <p className="font-medium text-sm">{a.topics.join(", ") || "General"}</p>
+                )}
                 <div className="flex flex-wrap gap-x-3 gap-y-1 text-muted-foreground text-xs">
                   <span>Assigned {new Date(a.createdAt).toLocaleDateString()}</span>
                   {a.dueDate && (
@@ -142,7 +150,23 @@ export function MyAssignments() {
                   <HugeiconsIcon icon={Chat01Icon} data-icon="inline-start" />
                   {questionOpen === a.id ? "Close" : "Ask Question"}
                 </Button>
-                {a.submission ? (
+                {a.assignmentType === "story" ? (
+                  a.submission ? (
+                    <Badge variant="outline" className="text-(--fs-caption-3)">
+                      Done
+                    </Badge>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="default"
+                      className="min-h-10 gap-1.5 text-xs press-scale"
+                      onClick={() => router.push(`/stories/${a.storyIds?.[0] ?? ""}`)}
+                    >
+                      <HugeiconsIcon icon={FolderLibraryIcon} data-icon="inline-start" />
+                      Read
+                    </Button>
+                  )
+                ) : a.submission ? (
                   <Badge variant="outline" className="text-(--fs-caption-3)">
                     Done
                   </Badge>

@@ -249,6 +249,35 @@ export async function generateStoryContent(params: {
   }
 }
 
+export async function generateAudioForAllStories(): Promise<number> {
+  let count = 0;
+  try {
+    const metas = await getAllStoryMetas();
+    for (const meta of metas) {
+      const key = `story:${meta.id}`;
+      const cached = await _deps.db.storyCache.get(key);
+      if (cached?.story?.audioUrl) continue;
+      const story = cached?.story ?? (await loadStoryContent(meta.id));
+      if (!story) continue;
+      const audioUrl = await populateAudioUrl(story);
+      if (audioUrl) {
+        story.audioUrl = audioUrl;
+        const entry = {
+          key,
+          story,
+          createdAt: Date.now(),
+          expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        };
+        await _deps.db.storyCache.put(entry);
+        count++;
+      }
+    }
+  } catch {
+    // fail silently
+  }
+  return count;
+}
+
 export async function storeGeneratedStory(story: Story): Promise<void> {
   try {
     const key = `story:${story.id}`;

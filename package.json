@@ -67,6 +67,7 @@
     "ably": "^2.24.0",
     "ai": "^7.0.6",
     "appwrite": "^26.1.0",
+    "canvas": "^3.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -161,6 +162,7 @@
   "packageManager": "pnpm@10.8.1",
   "trustedDependencies": [
     "@sentry/cli",
+    "canvas",
     "msgpackr-extract",
     "msw",
     "sharp",

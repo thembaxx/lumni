@@ -36,6 +36,13 @@ const LEVEL_TO_GRADE: Record<string, string> = {
   level4: "7–9",
 };
 
+const LEVEL_TO_TOPICS: Record<string, string[]> = {
+  level1: ["early-literacy", "reading", "phonics", "vocabulary"],
+  level2: ["reading", "literacy", "comprehension", "vocabulary"],
+  level3: ["reading", "comprehension", "literature", "critical-thinking"],
+  level4: ["literature", "comprehension", "critical-analysis", "creative-writing"],
+};
+
 export interface AfricanStoryInfo {
   storyId: string;
   title: string;
@@ -184,7 +191,7 @@ export function buildStoryJson(
       source: "african-storybook" as const,
       sourceUrl: imported.info.sourceUrl,
       readTimeMinutes: Math.max(1, Math.round(imported.wordCount / 150)),
-      topics: ["reading", "literacy"],
+      topics: LEVEL_TO_TOPICS[imported.info.level] ?? ["reading", "literacy"],
       license: "cc-by",
     },
     story: {
@@ -210,7 +217,7 @@ export function buildStoryJson(
       sourceUrl: imported.info.sourceUrl,
       license: "cc-by",
       readTimeMinutes: Math.max(1, Math.round(imported.wordCount / 150)),
-      topics: ["reading", "literacy"],
+      topics: LEVEL_TO_TOPICS[imported.info.level] ?? ["reading", "literacy"],
       content: imported.content,
       vocabulary: [],
     },

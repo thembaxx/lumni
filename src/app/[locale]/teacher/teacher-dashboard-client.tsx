@@ -8,6 +8,7 @@ import { AssignmentReviewPanel } from "@/components/teacher/assignment-review-pa
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
 import { GradebookView } from "@/components/teacher/gradebook-view";
+import { StoryAssignmentBuilder } from "@/components/teacher/story-assignment-builder";
 import { cn } from "@/lib/utils";
 import { LiveSessionMonitor } from "@/components/teacher/live-session-monitor";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
@@ -250,8 +251,19 @@ function TeacherDashboardInner() {
                       unlinkingId={unlinkStudent.isPending ? unlinkStudent.variables : undefined}
                     />
                   </div>
-                  <div>
+                  <div className="flex flex-col gap-4">
                     <AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
+                    <StoryAssignmentBuilder
+                      onAssign={async (storyIds, dueDate) => {
+                        const res = await fetch("/api/teacher/assign-story", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ storyIds, dueDate }),
+                        });
+                        if (!res.ok) throw new Error("Assignment failed");
+                        toast({ type: "success", message: `Assigned ${storyIds.length} stories` });
+                      }}
+                    />
                   </div>
                 </div>
               </>
