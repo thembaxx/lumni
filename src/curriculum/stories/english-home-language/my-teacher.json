@@ -1,0 +1,17 @@
+{
+  "id": "my-teacher",
+  "title": "My teacher",
+  "author": "African Storybook",
+  "language": "English",
+  "languageId": "english-home-language",
+  "gradeLevel": "R–1",
+  "wordCount": 73,
+  "subjects": ["english-home-language"],
+  "source": "african-storybook",
+  "sourceUrl": "https://africanstorybook.org/reader.php?id=8507",
+  "license": "cc-by",
+  "readTimeMinutes": 1,
+  "topics": ["reading", "literacy"],
+  "content": "I love my teacher.\n\nShe is beautiful. She is\na good teacher. She is\nkind and patient.\n\nShe has braided her\nhair very nicely today.\n\nShe has decorated her\nhair with colourful\nbeads.\n\nHer beads are green,\nwhite, red, and yellow.\n\nMom, please would you\nbraid my hair like my\nteacher’s?\n\nWhen I am older I will\nalso put beads in my\nhair.\n\nI will grow up to be just\nlike my teacher!",
+  "vocabulary": []
+}

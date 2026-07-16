@@ -1,0 +1,17 @@
+{
+  "id": "i-like-to-read",
+  "title": "I like to read!",
+  "author": "African Storybook",
+  "language": "English",
+  "languageId": "english-home-language",
+  "gradeLevel": "R–1",
+  "wordCount": 45,
+  "subjects": ["english-home-language"],
+  "source": "african-storybook",
+  "sourceUrl": "https://africanstorybook.org/reader.php?id=10547",
+  "license": "cc-by",
+  "readTimeMinutes": 1,
+  "topics": ["reading", "literacy"],
+  "content": "I like to read.\n\nWho can I read to?\n\nMy sister is asleep.\n\nWho can I read to?\n\nMy mother and grandmother are busy.\n\nWho can I read to?\n\nMy father and grandfather are busy.\n\nWho can I read to? I can read to myself!",
+  "vocabulary": []
+}

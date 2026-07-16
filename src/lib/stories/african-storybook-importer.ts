@@ -78,7 +78,10 @@ function extractMetaFromHtml(html: string): Partial<AfricanStoryInfo> {
 
 function extractTextFromHtml(html: string, defClass = "def"): string {
   const pages: string[] = [];
-  const regex = new RegExp(`class="level2-txt ${defClass}"[^>]*>\\s*<h3>([\\s\\S]*?)<\\/h3>`, "gi");
+  const regex = new RegExp(
+    `class="[^"]*level\\d+-txt ${defClass}"[^>]*>\\s*<h3>([\\s\\S]*?)<\\/h3>`,
+    "gi",
+  );
   let match: RegExpExecArray | null;
   while ((match = regex.exec(html)) !== null) {
     const text = match[1]
@@ -96,9 +99,8 @@ function extractTextFromHtml(html: string, defClass = "def"): string {
   return pages.join("\n\n");
 }
 
-export function getDefClassForLanguage(langCode: string): string {
-  if (langCode === "en") return "def";
-  return "l1";
+export function getDefClassForLanguage(_langCode: string): string {
+  return "def";
 }
 
 function codeToLanguageId(code: string): string {

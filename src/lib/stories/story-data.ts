@@ -138,8 +138,24 @@ const STORY_CONTENT_IMPORTS: Record<string, () => Promise<{ default: Story }>> =
     ),
 };
 
+const META_CONTENT_LANG_MAP: Record<string, string> = {
+  "english-home-language": "english-home-language",
+  "afrikaans-home-language": "afrikaans-home-language",
+  "isi-zulu-home-language": "isi-zulu-home-language",
+  "isi-xhosa-home-language": "isi-xhosa-home-language",
+  "sesotho-home-language": "sesotho-home-language",
+  "setswana-home-language": "setswana-home-language",
+  "sepedi-home-language": "sepedi-home-language",
+  "xitsonga-home-language": "xitsonga-home-language",
+  "siswati-home-language": "siswati-home-language",
+  "tshivenda-home-language": "tshivenda-home-language",
+  "isi-ndebele-home-language": "isi-ndebele-home-language",
+};
+
 let metasCache: StoryMeta[] | null = null;
 const metasByLang: Record<string, StoryMeta[]> = {};
+let metasById: Record<string, StoryMeta> = {};
+let metasLoaded = false;
 
 export async function getAllStoryMetas(): Promise<StoryMeta[]> {
   if (metasCache) return metasCache;
@@ -154,15 +170,36 @@ export async function getAllStoryMetas(): Promise<StoryMeta[]> {
     }
   }
   metasCache = all;
+  metasById = {};
+  for (const meta of all) {
+    metasById[meta.id] = meta;
+  }
+  metasLoaded = true;
   return all;
 }
 
 export async function loadStoryContent(id: string): Promise<Story | null> {
+  if (!metasLoaded) await getAllStoryMetas();
+
+  const staticLoader = STORY_CONTENT_IMPORTS[id];
+  if (staticLoader) {
+    try {
+      const mod = await staticLoader();
+      return mod.default as Story;
+    } catch {
+      return null;
+    }
+  }
+
+  const meta = metasById[id];
+  if (!meta) return null;
+
+  const langDir = META_CONTENT_LANG_MAP[meta.languageId];
+  if (!langDir) return null;
+
   try {
-    const loader = STORY_CONTENT_IMPORTS[id];
-    if (!loader) return null;
-    const mod = await loader();
-    return mod.default as Story;
+    const mod = await import(`@/curriculum/stories/${langDir}/${id}.json`);
+    return mod.default as unknown as Story;
   } catch {
     return null;
   }
