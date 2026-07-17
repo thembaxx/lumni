@@ -20,11 +20,13 @@ import type {
   CachedVisual,
   ChatMessageRecord,
   CompetitionScoreRecord,
+  DeprecatedQuestion,
   EssayDraftRecord,
   ExamSessionSnapshot,
   ExtractionCache,
   FlashcardSyncState,
   LessonProgress,
+  MatricResult,
   NoteRecord,
   OnboardingState,
   PronunciationScoreRecord,
@@ -197,6 +199,7 @@ export interface CacheDataAccess {
   tinyfishCache: DataAccessTable<TinyFishCacheEntry, string>;
   tinyfishUsage: DataAccessTable<TinyFishUsageEntry, number>;
   knowledgeGraph: DataAccessTable<CachedGraph, string>;
+  deprecatedQuestions: DataAccessTable<DeprecatedQuestion, string>;
 }
 
 export interface SyncDataAccessV2 {
@@ -224,6 +227,7 @@ export interface LegacyDataAccess {
   subjects: DataAccessTable<CachedSubject, number>;
   pastPaperQuestions: DataAccessTable<PastPaperQuestion, string>;
   seenPastPaperQuestions: DataAccessTable<SeenPastPaperQuestion, number>;
+  matricResults: DataAccessTable<MatricResult, number>;
 }
 
 export interface StudyCommitmentsDataAccess {

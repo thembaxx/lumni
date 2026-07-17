@@ -24,6 +24,18 @@ export interface VoiceConfig {
   userName: string;
   maxPeers: number;
   iceServers?: RTCIceServer[];
+  publishSignal?: (targetUserId: string, signal: unknown) => void;
+}
+
+export class VoiceError extends Error {
+  constructor(
+    message: string,
+    public readonly code: "MIC_DENIED" | "PEER_LIMIT" | "SIGNAL_FAILED",
+    options?: ErrorOptions,
+  ) {
+    super(message, options);
+    this.name = "VoiceError";
+  }
 }
 
 export class VoiceService {
@@ -35,12 +47,15 @@ export class VoiceService {
   private onPeerConnectedCallbacks: Set<(userId: string) => void> = new Set();
   private onPeerDisconnectedCallbacks: Set<(userId: string) => void> = new Set();
   private localAudioEnabled = true;
+  private connectedRoomId: string | null = null;
+  private initialized = false;
 
   constructor(config: VoiceConfig) {
     this.config = config;
   }
 
   async initialize(): Promise<void> {
+    if (this.initialized) return;
     try {
       this.localStream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -61,32 +76,84 @@ export class VoiceService {
         volume: 1.0,
       });
 
+      this.initialized = true;
       this.notifyStateChange();
     } catch (err) {
-      console.error("Failed to get user media:", err);
-      throw new Error("Microphone access denied", { cause: err });
+      this.initialized = false;
+      if (err instanceof DOMException && err.name === "NotAllowedError") {
+        throw new VoiceError(
+          "Microphone permission denied. Please allow microphone access in your browser settings.",
+          "MIC_DENIED",
+          { cause: err },
+        );
+      }
+      if (err instanceof DOMException && err.name === "NotFoundError") {
+        throw new VoiceError(
+          "No microphone found. Please connect a microphone and try again.",
+          "MIC_DENIED",
+          { cause: err },
+        );
+      }
+      throw new VoiceError("Failed to access microphone", "MIC_DENIED", { cause: err });
     }
   }
 
-  connect(roomId: string): void {
-    // In a real implementation, this would connect to a signaling server
-    // For now, we'll use the simple-peer mesh with a signaling mechanism
-    console.log("Voice connecting to room:", roomId);
+  async connect(roomId: string): Promise<MediaStream> {
+    await this.initialize();
+    this.connectedRoomId = roomId;
+
+    return this.localStream!;
   }
 
-  async createOffer(_targetUserId: string): Promise<RTCSessionDescriptionInit> {
-    return { type: "offer", sdp: "" };
+  async createOffer(targetUserId: string): Promise<RTCSessionDescriptionInit> {
+    if (!this.localStream) throw new Error("Local stream not available");
+    const peer = this.createPeer(targetUserId, true);
+    return new Promise<RTCSessionDescriptionInit>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error("Offer generation timed out"));
+      }, 10000);
+      peer.once("signal", (signal: unknown) => {
+        clearTimeout(timeout);
+        resolve(signal as RTCSessionDescriptionInit);
+      });
+    });
   }
 
   async createAnswer(
-    _targetUserId: string,
-    _offer: RTCSessionDescriptionInit,
+    targetUserId: string,
+    offer: RTCSessionDescriptionInit,
   ): Promise<RTCSessionDescriptionInit> {
-    return { type: "answer", sdp: "" };
+    if (!this.localStream) throw new Error("Local stream not available");
+    const peer = this.createPeer(targetUserId, false);
+    peer.signal(offer);
+    return new Promise<RTCSessionDescriptionInit>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error("Answer generation timed out"));
+      }, 10000);
+      peer.once("signal", (signal: unknown) => {
+        clearTimeout(timeout);
+        resolve(signal as RTCSessionDescriptionInit);
+      });
+    });
   }
 
   async addIceCandidate(_targetUserId: string, _candidate: RTCIceCandidateInit): Promise<void> {
-    // No-op: uses SimplePeer built-in signaling
+    // No-op: SimplePeer handles ICE via built-in signaling
+  }
+
+  handleSignal(userId: string, signal: unknown): void {
+    const existing = this.peers.get(userId);
+    if (existing) {
+      existing.peer.signal(signal as string | SimplePeer.SignalData);
+    } else if (
+      signal &&
+      typeof signal === "object" &&
+      "type" in (signal as object) &&
+      (signal as { type: string }).type === "offer"
+    ) {
+      const peer = this.createPeer(userId, false);
+      peer.signal(signal as string | SimplePeer.SignalData);
+    }
   }
 
   private createPeer(targetUserId: string, initiator: boolean): any {
@@ -155,9 +222,16 @@ export class VoiceService {
     }
   }
 
-  private sendSignal(targetUserId: string, signal: any): void {
-    // In a real implementation, send via Ably or signaling server
-    console.log("Sending signal to", targetUserId, signal.type);
+  private sendSignal(targetUserId: string, signal: unknown): void {
+    if (this.config.publishSignal) {
+      try {
+        this.config.publishSignal(targetUserId, signal);
+      } catch (err) {
+        console.error("Voice signal publish failed:", err);
+      }
+    } else {
+      console.warn("Voice: no publishSignal callback configured — signal not sent");
+    }
   }
 
   setMuted(muted: boolean): void {
@@ -193,10 +267,7 @@ export class VoiceService {
   setVolume(userId: string, volume: number): void {
     const peer = this.peers.get(userId);
     if (peer && peer.stream) {
-      peer.stream.getAudioTracks().forEach((track) => {
-        // Web Audio API would be needed for actual volume control
-        // This is a placeholder
-      });
+      // Web Audio API would be needed for actual volume control
     }
     const state = this.voiceStates.get(userId);
     if (state) {
@@ -256,6 +327,8 @@ export class VoiceService {
     this.onStateChangeCallbacks.clear();
     this.onPeerConnectedCallbacks.clear();
     this.onPeerDisconnectedCallbacks.clear();
+    this.initialized = false;
+    this.connectedRoomId = null;
   }
 }
 

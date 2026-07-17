@@ -522,6 +522,28 @@ export interface UserSettings {
   updatedAt: number;
 }
 
+export interface DeprecatedQuestion {
+  questionId: string;
+  deprecatedAt: number;
+}
+
+export interface MatricResult {
+  candidateNumber: string;
+  firstName: string;
+  lastName: string;
+  examYear: number;
+  examSession: string;
+  subject: string;
+  subjectCode?: string;
+  paperNumber?: number;
+  mark: number;
+  outOf: number;
+  level: number;
+  achievement: string;
+  schoolName?: string;
+  centreNumber?: string;
+}
+
 export class LumniOfflineDB extends Dexie {
   pronunciationHistory!: Table<PronunciationScoreRecord, number>;
   chatMessages!: Table<ChatMessageRecord, number>;
@@ -593,6 +615,8 @@ export class LumniOfflineDB extends Dexie {
   schoolCodes!: Table<SchoolCodeRecord, string>;
   licenses!: Table<LicenseRecord, string>;
   invoices!: Table<InvoiceRecord, string>;
+  deprecatedQuestions!: Table<DeprecatedQuestion, string>;
+  matricResults!: Table<MatricResult, number>;
 
   constructor() {
     super("lumni-offline");
@@ -722,6 +746,13 @@ export class LumniOfflineDB extends Dexie {
     this.version(48).stores({
       webhookEndpoints: "id, url, enabled, createdAt",
       webhookDeliveries: "++id, endpointId, event, status, createdAt",
+    });
+
+    // v49: deprecatedQuestions + matricResults
+    this.version(49).stores({
+      deprecatedQuestions: "&questionId, deprecatedAt",
+      matricResults:
+        "++id, candidateNumber, examYear, examSession, subject, &[candidateNumber+examYear+subject]",
     });
   }
 }

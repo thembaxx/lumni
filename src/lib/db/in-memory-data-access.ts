@@ -20,6 +20,7 @@ import type {
   ExtractionCache,
   FlashcardSyncState,
   LessonProgress,
+  MatricResult,
   NoteRecord,
   OnboardingState,
   QuestionRating,
@@ -38,6 +39,7 @@ import type {
   TeacherObservation,
   UserSettings,
   VocabularyEntry,
+  DeprecatedQuestion,
 } from "@/lib/db/schema";
 import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
@@ -352,4 +354,6 @@ export class InMemoryDataAccess implements DataAccess {
   studyCommitments = new InMemoryTable<StudyCommitmentRecord>();
   webhookEndpoints = new InMemoryTable<WebhookEndpoint, string>();
   webhookDeliveries = new InMemoryTable<WebhookDelivery>();
+  deprecatedQuestions = new InMemoryTable<DeprecatedQuestion, string>();
+  matricResults = new InMemoryTable<MatricResult, number>();
 }

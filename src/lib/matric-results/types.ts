@@ -1,16 +1,8 @@
-export interface MatricResult {
-  name: string;
-  examNumber: string;
-  school: string;
-  province: string;
-  subjects: { name: string; percentage: number }[];
-  overall: number;
-}
+import type { MatricResult as DbMatricResult } from "@/lib/db/schema";
+
+export type { DbMatricResult };
 
 export interface MatricResultsResponse {
-  results: MatricResult[];
-  year: number;
+  results: DbMatricResult[];
   total: number;
-  isDemoData?: boolean;
-  disclaimer?: string;
 }

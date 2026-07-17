@@ -26,7 +26,8 @@ export type JobType =
   | "appwrite-visual-sync"
   | "prune-stale-questions"
   | "generate-embedding"
-  | "quiz-pack-generate";
+  | "quiz-pack-generate"
+  | "deprecate-low-quality-questions";
 
 export type JobPayloadByType = {
   "appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -144,6 +145,7 @@ export type JobPayloadByType = {
     source: string;
   };
   "prune-stale-questions": Record<string, never>;
+  "deprecate-low-quality-questions": Record<string, never>;
   "generate-embedding": {
     questionId: string;
     questionText: string;

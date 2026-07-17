@@ -193,6 +193,8 @@ class DexieDataAccess implements DataAccess {
   studyCommitments = tableAdapter(offlineDB.studyCommitments);
   webhookEndpoints = tableAdapter(offlineDB.webhookEndpoints);
   webhookDeliveries = tableAdapter(offlineDB.webhookDeliveries);
+  deprecatedQuestions = tableAdapter(offlineDB.deprecatedQuestions);
+  matricResults = tableAdapter(offlineDB.matricResults);
 }
 
 export const dexieDataAccess =

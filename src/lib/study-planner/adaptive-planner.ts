@@ -1,5 +1,6 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { CompetencyDataAccess } from "@/lib/db/data-access";
+import { fetchGraph } from "@/lib/knowledge-graph/service";
 import type { CompetencyRecord, CompetencyLevel } from "@/lib/competency-engine/types";
 import type { BloomLevel } from "@/lib/question-engine/types";
 
@@ -352,6 +353,85 @@ export function generateSessions(
   return sessions;
 }
 
+async function sortByPrerequisites(topics: TopicGap[]): Promise<TopicGap[]> {
+  const bySubject = new Map<string, TopicGap[]>();
+  for (const t of topics) {
+    if (!bySubject.has(t.subjectId)) {
+      bySubject.set(t.subjectId, []);
+    }
+    bySubject.get(t.subjectId)!.push(t);
+  }
+
+  const result: TopicGap[] = [];
+
+  for (const [subjectId, subjectTopics] of bySubject) {
+    try {
+      const graph = await fetchGraph(subjectId, "general");
+      if (!graph || graph.edges.length === 0) {
+        result.push(...subjectTopics);
+        continue;
+      }
+
+      const edges = graph.edges.filter(
+        (e) => e.relation === "requires" || e.relation === "prerequisite",
+      );
+      if (edges.length === 0) {
+        result.push(...subjectTopics);
+        continue;
+      }
+
+      const inDegree = new Map<string, number>();
+      const adj = new Map<string, string[]>();
+      const allNodes = new Set<string>();
+
+      for (const node of graph.nodes) {
+        allNodes.add(node.id);
+        if (!inDegree.has(node.id)) inDegree.set(node.id, 0);
+        if (!adj.has(node.id)) adj.set(node.id, []);
+      }
+
+      for (const edge of edges) {
+        allNodes.add(edge.from);
+        allNodes.add(edge.to);
+        if (!inDegree.has(edge.from)) inDegree.set(edge.from, 0);
+        if (!inDegree.has(edge.to)) inDegree.set(edge.to, 0);
+        if (!adj.has(edge.from)) adj.set(edge.from, []);
+        inDegree.set(edge.to, (inDegree.get(edge.to) ?? 0) + 1);
+        adj.get(edge.from)!.push(edge.to);
+      }
+
+      const queue: string[] = [];
+      for (const node of allNodes) {
+        if ((inDegree.get(node) ?? 0) === 0) queue.push(node);
+      }
+
+      const sorted: string[] = [];
+      while (queue.length > 0) {
+        const node = queue.shift()!;
+        sorted.push(node);
+        for (const neighbor of adj.get(node) ?? []) {
+          const newDegree = (inDegree.get(neighbor) ?? 1) - 1;
+          inDegree.set(neighbor, newDegree);
+          if (newDegree === 0) queue.push(neighbor);
+        }
+      }
+
+      const topicSet = new Set(subjectTopics.map((t) => t.topicId));
+      const sortedTopics = sorted.filter((id) => topicSet.has(id));
+      const lookup = new Map(subjectTopics.map((t) => [t.topicId, t]));
+
+      const ordered = sortedTopics.map((id) => lookup.get(id)!).filter(Boolean);
+
+      const remaining = subjectTopics.filter((t) => !sortedTopics.includes(t.topicId));
+      result.push(...ordered, ...remaining);
+    } catch {
+      result.push(...subjectTopics);
+    }
+  }
+
+  return result;
+}
+
 export class AdaptiveStudyPlanner {
   constructor(private competencyDb: CompetencyDataAccess = dexieDataAccess) {}
 
@@ -361,7 +441,7 @@ export class AdaptiveStudyPlanner {
   ): Promise<AdaptivePlanResponse> {
     const competencies = await fetchCompetencies(this.competencyDb, userId, config.subjectIds);
 
-    const weakTopics = this.detectWeakTopics(competencies);
+    const weakTopics = await sortByPrerequisites(this.detectWeakTopics(competencies));
 
     const topicsToSchedule = config.weakTopicsOnly ? weakTopics : weakTopics;
 

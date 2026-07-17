@@ -1,4 +1,11 @@
-import type { MatricResult } from "./types";
+interface DemoMatricResult {
+  name: string;
+  examNumber: string;
+  school: string;
+  province: string;
+  subjects: { name: string; percentage: number }[];
+  overall: number;
+}
 
 const _provinces = [
   "Gauteng",
@@ -756,13 +763,13 @@ const RECORDS_PER_YEAR = rawRecords.length;
 
 export const matricResultsYears = YEARS;
 
-function getMatricResultsForYear(year: number): MatricResult[] {
+function getMatricResultsForYear(year: number): DemoMatricResult[] {
   if (!(YEARS as readonly number[]).includes(year)) return [];
 
   const _yearIndex = YEARS.indexOf(year as (typeof YEARS)[number]);
   const rng = seededRandom(year * 17 + 42);
 
-  const records: MatricResult[] = [];
+  const records: DemoMatricResult[] = [];
   for (let i = 0; i < RECORDS_PER_YEAR; i++) {
     const raw = rawRecords[i];
     const subjects = pickSubjects(raw, rng);
@@ -779,7 +786,7 @@ function getMatricResultsForYear(year: number): MatricResult[] {
   return records;
 }
 
-export function searchMatricResults(query: string, year: number): MatricResult[] {
+export function searchMatricResults(query: string, year: number): DemoMatricResult[] {
   const results = getMatricResultsForYear(year);
   const normalized = query.toLowerCase().trim();
   if (!normalized) return results;

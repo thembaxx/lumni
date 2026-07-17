@@ -30,6 +30,7 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
   "prune-stale-questions": 1,
   "generate-embedding": 2,
   "quiz-pack-generate": 2,
+  "deprecate-low-quality-questions": 1,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -58,6 +59,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
   "prune-stale-questions": 10,
   "generate-embedding": 50,
   "quiz-pack-generate": 40,
+  "deprecate-low-quality-questions": 10,
 };
 
 import { logError } from "@/lib/shared/logger";
