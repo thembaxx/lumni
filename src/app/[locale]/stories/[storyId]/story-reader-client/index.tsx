@@ -201,7 +201,7 @@ export function StoryReaderClient() {
           bloomLevel: "understand",
           score: score >= 70 ? 1 : 0,
           maxScore: 1,
-        }).catch(() => {});
+        }).catch((err) => logError("StoryReader.trackResult", err));
       }
     },
     [story],

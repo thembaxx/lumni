@@ -3,6 +3,7 @@ import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import { fetchGraph } from "@/lib/knowledge-graph/service";
 import type { CompetencyRecord, CompetencyLevel } from "@/lib/competency-engine/types";
 import type { BloomLevel } from "@/lib/question-engine/types";
+import { logError } from "@/lib/shared/logger";
 
 export const SUBJECT_WEIGHTS: Record<string, number> = {
   mathematics: 0.15,
@@ -138,6 +139,11 @@ function competencyLevelToWeight(level: CompetencyLevel): number {
       return 2;
     case "mastered":
       return 1;
+    default: {
+      const _exhaustive: never = level;
+      logError("adaptive-planner", new Error(`Unknown competency level: ${_exhaustive}`));
+      return 2;
+    }
   }
 }
 
@@ -420,7 +426,10 @@ async function sortByPrerequisites(topics: TopicGap[]): Promise<TopicGap[]> {
       const sortedTopics = sorted.filter((id) => topicSet.has(id));
       const lookup = new Map(subjectTopics.map((t) => [t.topicId, t]));
 
-      const ordered = sortedTopics.map((id) => lookup.get(id)!).filter(Boolean);
+      const ordered = sortedTopics.flatMap((id) => {
+        const t = lookup.get(id);
+        return t ? [t] : [];
+      });
 
       const remaining = subjectTopics.filter((t) => !sortedTopics.includes(t.topicId));
       result.push(...ordered, ...remaining);

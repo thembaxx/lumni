@@ -18,9 +18,7 @@ const SERVER_ENDPOINT = API_ENDPOINT;
 
 function getServerClient(): NodeClient | null {
   if (!APPWRITE_PROJECT) return null;
-  const c = new NodeClient()
-    .setEndpoint(SERVER_ENDPOINT)
-    .setProject(APPWRITE_PROJECT);
+  const c = new NodeClient().setEndpoint(SERVER_ENDPOINT).setProject(APPWRITE_PROJECT);
   if (APPWRITE_API_KEY) c.setKey(APPWRITE_API_KEY);
   return c;
 }
@@ -46,7 +44,10 @@ function getServerAccount(): NodeAccount | null {
 const serverClientProxy = new Proxy({} as NodeClient, {
   get(_target, prop) {
     const c = getServerClient();
-    if (!c) return () => { throw new Error("Appwrite not configured"); };
+    if (!c)
+      return () => {
+        throw new Error("Appwrite not configured");
+      };
     const value = Reflect.get(c, prop);
     if (typeof value === "function") return value.bind(c);
     return value;

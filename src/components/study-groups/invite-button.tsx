@@ -11,6 +11,7 @@ import {
   DropdownListItem,
   DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logError } from "@/lib/shared/logger";
 import { useToast } from "@/hooks/use-toast";
 
 interface InviteButtonProps {
@@ -26,9 +27,10 @@ export function InviteButton({ channelName, inviteCode, subject }: InviteButtonP
   const handleCopyCode = useCallback(() => {
     try {
       const result = navigator.clipboard.writeText(inviteCode);
-      if (result && typeof result.catch === "function") result.catch(() => {});
+      if (result && typeof result.catch === "function")
+        result.catch((err) => logError("InviteButton.clipboard", err));
     } catch {
-      /* clipboard unavailable */
+      logError("InviteButton.clipboard", new Error("Clipboard unavailable"));
     }
     toast({
       type: "success",
@@ -42,9 +44,10 @@ export function InviteButton({ channelName, inviteCode, subject }: InviteButtonP
     const url = `${window.location.origin}/quiz?shared=${channelName}&subject=${encodeURIComponent(subject)}`;
     try {
       const result = navigator.clipboard.writeText(url);
-      if (result && typeof result.catch === "function") result.catch(() => {});
+      if (result && typeof result.catch === "function")
+        result.catch((err) => logError("InviteButton.clipboard", err));
     } catch {
-      /* clipboard unavailable */
+      logError("InviteButton.clipboard", new Error("Clipboard unavailable"));
     }
     toast({
       type: "success",

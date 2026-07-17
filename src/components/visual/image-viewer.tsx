@@ -10,9 +10,10 @@ interface ImageViewerProps {
   label: string;
   attribution?: string;
   sourceUrl?: string;
+  priority?: boolean;
 }
 
-export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerProps) {
+export function ImageViewer({ url, label, attribution, sourceUrl, priority }: ImageViewerProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +37,7 @@ export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerP
           src={url}
           alt={label}
           fill
+          priority={priority}
           sizes="(max-width: 768px) 100vw, 50vw"
           className="relative! max-h-96 object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
           onLoad={() => setLoading(false)}

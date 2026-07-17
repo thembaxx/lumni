@@ -30,4 +30,4 @@ export { StudyBuddyService } from "./study-buddy-service";
 export { StudyPlannerService } from "./study-planner-service";
 export type { PlannerSnapshot } from "./study-planner-service";
 export { userConsentService } from "./user-consent-service";
-export { searchWeb as webSearch } from "./web-search-service";
+export { searchWebExa } from "./web-search-service";

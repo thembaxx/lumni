@@ -72,4 +72,5 @@ export const POST = createRouteHandler({
     return { story, error: null };
   },
   errorLabel: "GenerateStory",
+  useRateLimit: true,
 });

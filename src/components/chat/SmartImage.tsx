@@ -5,9 +5,10 @@ interface SmartImageProps {
   src: string;
   alt: string;
   className?: string;
+  priority?: boolean;
 }
 
-export function SmartImage({ src, alt, className }: SmartImageProps) {
+export function SmartImage({ src, alt, className, priority }: SmartImageProps) {
   const isDataUrl = src.startsWith("data:");
   if (isDataUrl) {
     return (
@@ -16,6 +17,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
         alt={alt}
         width={800}
         height={600}
+        priority={priority}
         className={cn(
           "outline outline-black/10 -outline-offset-1 dark:outline-white/10",
           className,
@@ -29,6 +31,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
         src={src}
         alt={alt}
         fill
+        priority={priority}
         sizes="(max-width: 768px) 100vw, 50vw"
         className="object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
       />

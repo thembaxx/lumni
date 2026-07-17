@@ -10,6 +10,7 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
+import { logError } from "@/lib/shared/logger";
 import { useAuth } from "@/lib/auth/auth-context";
 import { createSyncService, initSyncWriters } from "@/lib/sync";
 import { getOutboxCount } from "@/lib/sync/outbox";
@@ -39,7 +40,7 @@ export function SyncProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (initializedRef.current || typeof window === "undefined") return;
     initializedRef.current = true;
-    initSyncWriters().catch(() => {});
+    initSyncWriters().catch((err) => logError("SyncProvider.init", err));
   }, []);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export function SyncProvider({ children }: { children: ReactNode }) {
     service.start();
 
     const onOnline = () => {
-      service.trigger().catch(() => {});
+      service.trigger().catch((err) => logError("SyncProvider.online", err));
     };
     window.addEventListener("online", onOnline);
 
@@ -60,8 +61,8 @@ export function SyncProvider({ children }: { children: ReactNode }) {
       try {
         const count = await getOutboxCount();
         setPendingCount(count);
-      } catch {
-        /* ignore */
+      } catch (err) {
+        logError("SyncProvider.outboxCount", err);
       }
     }, 10000);
 
@@ -74,7 +75,7 @@ export function SyncProvider({ children }: { children: ReactNode }) {
   }, [userId]);
 
   const triggerSync = useCallback(() => {
-    serviceRef.current?.trigger().catch(() => {});
+    serviceRef.current?.trigger().catch((err) => logError("SyncProvider.trigger", err));
   }, []);
 
   const contextValue = useMemo(

@@ -1,5 +1,4 @@
 import { logError } from "@/lib/shared/logger";
-export { __setDepsForTesting } from "./deps";
 import {
   searchDexieDictionary,
   searchDexieExamSessions,

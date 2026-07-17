@@ -30,4 +30,5 @@ export const POST = createRouteHandler({
     return guide;
   },
   errorLabel: "StudyGuide",
+  useRateLimit: true,
 });

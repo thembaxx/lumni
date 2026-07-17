@@ -1,5 +1,5 @@
 import { createValidator } from "./multilingual-validators";
-import type { Question } from "./types";
+import type { Question, QuestionType } from "./types";
 
 interface EvaluationQuestion {
   id: string;
@@ -219,15 +219,19 @@ const EVALUATION_SET: EvaluationQuestion[] = [
 async function evaluateQuestion(question: EvaluationQuestion): Promise<EvaluationResult> {
   const validator = createValidator(question.language);
 
-  const mockQuestion = {
+  const mockQuestion: Question<QuestionType> = {
     id: question.id,
     subject: question.subject,
     topic: question.topic,
     questionText: question.questionText,
     explanation: "",
     hint: "",
-    type: question.expectedType as any,
-  } as any;
+    type: question.expectedType as QuestionType,
+    points: 0,
+    difficulty: "Easy",
+    bloomTaxonomy: "remember",
+    body: {} as Question<QuestionType>["body"],
+  };
 
   const validatorErrors = validator.validate(mockQuestion);
   const qualityCheck = validator.checkLanguageQuality(question.questionText);

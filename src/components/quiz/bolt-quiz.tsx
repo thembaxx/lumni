@@ -4,10 +4,8 @@ import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BoltCelebration } from "@/components/dashboard/bolt-celebration";
-import { BoltBranchV2 } from "@/components/dashboard/bolt-branch-v2";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
-import { useFeatureFlag } from "@/hooks/use-feature-flag";
-import { useAuth } from "@/lib/auth";
+import { logError } from "@/lib/shared/logger";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -43,8 +41,6 @@ export function BoltQuiz() {
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [resolving, setResolving] = useState(true);
-  const { user } = useAuth();
-  const { enabled: useDailyBoltV2 } = useFeatureFlag("daily-bolt-v2", user?.$id);
 
   useEffect(() => {
     setImmersive(true);
@@ -112,8 +108,8 @@ export function BoltQuiz() {
           { source: "bolt", question: { question, correct } },
           quizResultDeps,
         );
-      } catch {
-        // Non-critical; user still navigates
+      } catch (err) {
+        logError("bolt-quiz:process-result", err);
       }
     },
     [processing, question, quizResultDeps],
@@ -129,17 +125,6 @@ export function BoltQuiz() {
       setIsCelebrating(true);
     });
   }, [boltResult, processBoltResult]);
-
-  const handleSeeResults = useCallback(() => {
-    if (!boltResult) return;
-    void processBoltResult(boltResult.correct).then(() => {
-      setIsCelebrating(true);
-    });
-  }, [boltResult, processBoltResult]);
-
-  const handlePracticeMore = useCallback(() => {
-    push(`/quiz?subject=${encodeURIComponent(subject ?? "mathematics")}&count=5`);
-  }, [push, subject]);
 
   const handleContinue = useCallback(() => {
     push("/dashboard");
@@ -199,40 +184,20 @@ export function BoltQuiz() {
             </m.section>
           )}
 
-          {boltResult &&
-            !isCelebrating &&
-            (useDailyBoltV2 ? (
-              <m.section
-                key="bolt-branch-v2"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.4, ease: iOSDecelerate }}
-                className="flex flex-1 items-center justify-center pt-2"
-              >
-                <BoltBranchV2
-                  correct={boltResult.correct}
-                  subjectLabel={subjectLabel}
-                  streak={currentStreak}
-                  onContinue={handleContinue}
-                  onPracticeMore={subject ? handlePracticeMore : undefined}
-                  onSeeResults={handleSeeResults}
-                />
-              </m.section>
-            ) : (
-              <div className="sticky bottom-0 z-content mt-auto border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
-                <div className="mx-auto w-full max-w-2xl">
-                  <Button
-                    onClick={handleFinish}
-                    size="lg"
-                    className="w-full gap-2 text-base"
-                    disabled={processing}
-                  >
-                    {processing ? "Saving\u2026" : "Finish"}
-                  </Button>
-                </div>
+          {boltResult && !isCelebrating && (
+            <div className="sticky bottom-0 z-content mt-auto border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
+              <div className="mx-auto w-full max-w-2xl">
+                <Button
+                  onClick={handleFinish}
+                  size="lg"
+                  className="w-full gap-2 text-base"
+                  disabled={processing}
+                >
+                  {processing ? "Saving\u2026" : "Finish"}
+                </Button>
               </div>
-            ))}
+            </div>
+          )}
 
           {isCelebrating && (
             <m.section

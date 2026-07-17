@@ -1,7 +1,5 @@
-import type { NextRequest } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { ensureAI } from "@/lib/ai";
-import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { fetchGraph, getCachedGraph, storeGraph } from "@/lib/knowledge-graph/service";
 import type { KnowledgeGraph } from "@/lib/knowledge-graph/types";
 
@@ -24,19 +22,18 @@ async function handleGraphFetch(subject: string, topic: string) {
   return graph;
 }
 
-export const GET = async (request: NextRequest) => {
-  const userId = await getAuthenticatedUserId();
-  if (!userId) {
-    return Response.json({ error: "Authentication required" }, { status: 401 });
-  }
-  const subject = request.nextUrl.searchParams.get("subject");
-  const topic = request.nextUrl.searchParams.get("topic");
-  if (!subject || !topic) {
-    return Response.json({ error: "subject and topic are required" }, { status: 400 });
-  }
-  const graph = await handleGraphFetch(subject, topic);
-  return Response.json(graph);
-};
+export const GET = createRouteHandler({
+  auth: "required",
+  execute: async ({ userId, req }) => {
+    const subject = req.nextUrl.searchParams.get("subject");
+    const topic = req.nextUrl.searchParams.get("topic");
+    if (!subject || !topic) {
+      throw new HttpError(400, "subject and topic are required");
+    }
+    return handleGraphFetch(subject, topic);
+  },
+  errorLabel: "KnowledgeGraph",
+});
 
 export const POST = createRouteHandler({
   auth: "required",
@@ -49,4 +46,5 @@ export const POST = createRouteHandler({
     return handleGraphFetch(subject, topic);
   },
   errorLabel: "KnowledgeGraph",
+  useRateLimit: true,
 });

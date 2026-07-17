@@ -25,6 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
+import { logError } from "@/lib/shared/logger";
 import { cn } from "@/lib/utils";
 import type { StoryMeta } from "@/lib/stories/types";
 import { getAllStoryMetas, getLanguageLabel } from "@/lib/stories/story-data";
@@ -43,12 +44,20 @@ export function StoryAssignmentBuilder({
   const [dueDate, setDueDate] = useState("");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
   const [today] = useState(() => new Date().toISOString().split("T")[0]);
 
   useEffect(() => {
     getAllStoryMetas()
-      .then(setStories)
-      .catch(() => {});
+      .then((result) => {
+        setStories(result);
+        setFetchError(false);
+      })
+      .catch((err) => {
+        logError("StoryAssignmentBuilder.loadStories", err);
+        setFetchError(true);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const toggleStory = (id: string) => {

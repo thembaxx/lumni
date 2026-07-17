@@ -9,13 +9,8 @@ export const POST = createRouteHandler({
   errorLabel: "TeacherIntervention",
   useRateLimit: true,
   parseBody: async (req) => {
-    const body = await req.json();
-    return body;
-  },
-  validate: (body) => {
-    if (!body.studentId) return "studentId is required";
-    if (!body.action) return "action is required";
-    return null;
+    const raw = await req.json();
+    return { studentId: raw.studentId, action: raw.action, note: raw.note };
   },
   execute: async ({ body, userId }) => {
     const { studentId, action, note } = body as {
@@ -24,19 +19,28 @@ export const POST = createRouteHandler({
       note?: string;
     };
 
-    // Verify teacher has access to this student
-    const teacherCheck = await databases.listDocuments(
+    // Derive schoolId from teacher's own membership
+    const teacherMembership = await databases.listDocuments(
       APPWRITE_DATABASE_ID,
       COLLECTIONS.SCHOOL_MEMBERS,
-      [
-        Query.equal("schoolId", body.schoolId || ""),
-        Query.equal("userId", userId!),
-        Query.equal("role", "teacher"),
-      ],
+      [Query.equal("userId", userId!), Query.equal("role", "teacher"), Query.limit(1)],
     );
 
-    if (teacherCheck.total === 0) {
-      throw new Error("Not authorized to create interventions for this student");
+    if (teacherMembership.total === 0) {
+      throw new Error("Not authorized to create interventions");
+    }
+
+    const schoolId = teacherMembership.documents[0].schoolId;
+
+    // Verify teacher-student relationship exists
+    const relationship = await databases.listDocuments(
+      APPWRITE_DATABASE_ID,
+      COLLECTIONS.TEACHER_STUDENTS,
+      [Query.equal("userId", userId!), Query.equal("studentId", studentId), Query.limit(1)],
+    );
+
+    if (relationship.total === 0) {
+      throw new HttpError(403, "No teacher-student relationship found");
     }
 
     try {

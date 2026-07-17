@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { CLIPBOARD_CONFIRMATION_DURATION, SAVED_INDICATOR_DURATION } from "@/lib/shared/durations";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -221,22 +221,48 @@ export function QuestionCard({
     [grade, question, onAnswered],
   );
 
-  const handleMCQSelect = useCallback(
-    (optionId: string) => {
-      if (state.isSubmitted) return;
-      setState((prev) => ({ ...prev, selectedOption: optionId }));
-    },
-    [state.isSubmitted],
-  );
+  const isSubmittedRef = useRef(state.isSubmitted);
+  useEffect(() => {
+    isSubmittedRef.current = state.isSubmitted;
+  }, [state.isSubmitted]);
+
+  const selectedOptionRef = useRef(state.selectedOption);
+  useEffect(() => {
+    selectedOptionRef.current = state.selectedOption;
+  }, [state.selectedOption]);
+
+  const handleMCQSelect = useCallback((optionId: string) => {
+    if (isSubmittedRef.current) return;
+    setState((prev) => ({ ...prev, selectedOption: optionId }));
+  }, []);
 
   const handleMCQSubmit = useCallback(() => {
-    if (!state.selectedOption || question.type !== "multiple-choice") return;
+    const selected = selectedOptionRef.current;
+    if (!selected || question.type !== "multiple-choice") return;
     const body = question.body as Question<"multiple-choice">["body"];
     const opts = body?.options ?? [];
-    const selectedOpt = opts.find((opt) => opt.id === state.selectedOption);
+    const selectedOpt = opts.find((opt) => opt.id === selected);
     if (!selectedOpt) return;
     handleGrade({ type: "option-ids", value: [selectedOpt.id] });
-  }, [state.selectedOption, question, handleGrade]);
+  }, [question, handleGrade]);
+
+  const setCalcValue = useCallback(
+    (next: React.SetStateAction<string>) =>
+      setState((prev) => ({
+        ...prev,
+        calcValue: typeof next === "function" ? next(prev.calcValue) : next,
+      })),
+    [],
+  );
+
+  const setCode = useCallback(
+    (next: React.SetStateAction<string>) =>
+      setState((prev) => ({
+        ...prev,
+        code: typeof next === "function" ? next(prev.code) : next,
+      })),
+    [],
+  );
 
   const handleToggleDiagram = () => {
     setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
@@ -290,19 +316,9 @@ export function QuestionCard({
         state={state}
         options={options}
         calcValue={state.calcValue}
-        setCalcValue={(next) => {
-          setState((prev) => ({
-            ...prev,
-            calcValue: typeof next === "function" ? next(prev.calcValue) : next,
-          }));
-        }}
+        setCalcValue={setCalcValue}
         code={state.code}
-        setCode={(next) => {
-          setState((prev) => ({
-            ...prev,
-            code: typeof next === "function" ? next(prev.code) : next,
-          }));
-        }}
+        setCode={setCode}
         handleMCQSelect={handleMCQSelect}
         handleMCQSubmit={handleMCQSubmit}
         handleGrade={handleGrade}

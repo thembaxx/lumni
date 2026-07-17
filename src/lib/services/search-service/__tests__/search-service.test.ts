@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
-import { __setDepsForTesting, searchAll } from "../index";
+import { __setDepsForTesting } from "../deps";
+import { searchAll } from "../index";
 
 vi.mock("@/lib/flashcard-engine", () => ({
   flashcardEngine: {

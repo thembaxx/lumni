@@ -8,6 +8,7 @@ import {
 export const POST = createRouteHandler({
   auth: "required",
   errorLabel: "ImportStory",
+  useRateLimit: true,
 
   parseBody: async (req) => {
     const body: {

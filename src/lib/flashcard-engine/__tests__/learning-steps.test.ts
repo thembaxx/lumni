@@ -60,7 +60,7 @@ describe("advanceLearningStep", () => {
     expect(result.delayMinutes).toBe(0);
   });
 
-  test("stays graduated if called when already at -1", () => {
+  test("re-enrolls graduated card into learning step 0 when reviewed again", () => {
     const result = advanceLearningStep(-1, steps);
     expect(result.learningStep).toBe(0);
     expect(result.delayMinutes).toBe(1);

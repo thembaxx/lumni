@@ -121,7 +121,7 @@ export async function transcribeAndAssess(
           bloomLevel: "apply",
           score: overallScore >= 70 ? 1 : 0,
           maxScore: 1,
-        }).catch(() => {});
+        }).catch((err) => logError("RecordingOrchestrator.trackResult", err));
       }
     }
   }

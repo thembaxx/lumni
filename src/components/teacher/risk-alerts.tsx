@@ -17,6 +17,7 @@ import {
   ExternalLink,
   RefreshCw,
 } from "@hugeicons/core-free-icons";
+import { logError } from "@/lib/shared/logger";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -76,7 +77,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
       });
       // Refresh would happen via query invalidation
     } catch (err) {
-      console.error("Intervention failed:", err);
+      logError("risk-alerts:intervention-failed", err);
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +167,9 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
               <select
                 id="severity-filter"
                 value={filterSeverity}
-                onChange={(e) => setFilterSeverity(e.target.value as any)}
+                onChange={(e) =>
+                  setFilterSeverity(e.target.value as "all" | "high" | "medium" | "low")
+                }
                 className="px-3 py-2 border border-border rounded-lg bg-background text-sm"
               >
                 <option value="all">{t("allSeverities")}</option>
@@ -183,7 +186,7 @@ export function TeacherRiskAlerts({ students }: TeacherRiskAlertsProps) {
               <select
                 id="sort-by"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as "riskScore" | "lastActive" | "name")}
                 className="px-3 py-2 border border-border rounded-lg bg-background text-sm"
               >
                 <option value="riskScore">{t("sortByRisk")}</option>

@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 
@@ -159,7 +160,7 @@ export class WhiteboardService {
         }
       });
     } catch (err) {
-      console.error("Failed to import whiteboard state:", err);
+      logError("whiteboard-service:import-failed", err);
     }
   }
 }

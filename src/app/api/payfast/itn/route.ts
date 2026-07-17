@@ -15,7 +15,8 @@ async function parseFormData(req: Request): Promise<Record<string, string>> {
 function verifyPayfastSignature(payload: Record<string, string>, signature: string): boolean {
   const passphrase = process.env.PAYFAST_PASSPHRASE;
   if (!passphrase) {
-    return true;
+    logError("PayfastItn.missingPassphrase", new Error("PAYFAST_PASSPHRASE not configured"));
+    return false;
   }
 
   const excludedKeys = new Set(["signature"]);
@@ -41,6 +42,7 @@ function verifyPayfastSignature(payload: Record<string, string>, signature: stri
 export const POST = createRouteHandler({
   auth: "none",
   errorLabel: "PayfastItn",
+  useRateLimit: true,
 
   parseBody: async (req) => {
     return parseFormData(req);

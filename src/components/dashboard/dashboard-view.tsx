@@ -150,7 +150,6 @@ function FeedSection({ userId }: { userId: string }) {
     queryFn: async ({ queryKey }) => getFeed(queryKey[1] as string),
     staleTime: 60_000,
     refetchInterval: 60000,
-    refetchOnWindowFocus: true,
     enabled: showPersonalizedFeed,
   });
 

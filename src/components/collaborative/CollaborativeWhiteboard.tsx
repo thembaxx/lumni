@@ -303,7 +303,9 @@ export function CollaborativeWhiteboard({
         ].map((t) => (
           <button
             key={t.id}
-            onClick={() => setTool(t.id as any)}
+            onClick={() =>
+              setTool(t.id as "pen" | "eraser" | "highlighter" | "select" | "text" | "shape")
+            }
             className={`p-2 rounded transition-colors ${
               tool === t.id ? "bg-emerald-100 text-emerald-700" : "text-gray-600 hover:bg-gray-100"
             }`}

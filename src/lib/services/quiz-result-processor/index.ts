@@ -5,6 +5,7 @@ import { processExamEffect } from "./exam";
 import { processFlashcardEffect } from "./flashcard";
 import type { QuizResultInput, QuizResultDeps } from "./types";
 import type { WebhookDispatcher } from "@/lib/webhooks";
+import { logError } from "@/lib/shared/logger";
 
 let _dispatcher: WebhookDispatcher | null = null;
 
@@ -22,6 +23,10 @@ async function getDispatcher(): Promise<WebhookDispatcher | null> {
   }
 }
 
+function assertUnreachable(source: string, context: string): never {
+  throw new Error(`Unhandled source "${source}" in ${context}`);
+}
+
 function extractSubject(input: QuizResultInput): string | undefined {
   switch (input.source) {
     case "bolt":
@@ -32,6 +37,8 @@ function extractSubject(input: QuizResultInput): string | undefined {
       return input.subject;
     case "flashcard":
       return input.subject;
+    default:
+      return assertUnreachable((input as QuizResultInput).source, "extractSubject");
   }
 }
 
@@ -48,6 +55,8 @@ function extractScore(input: QuizResultInput): { score: number; total: number } 
     }
     case "flashcard":
       return undefined;
+    default:
+      return assertUnreachable((input as QuizResultInput).source, "extractScore");
   }
 }
 
@@ -77,6 +86,8 @@ function processQuizResultEffect(
       return processExamEffect(input.parts, input.subject, input.paperId, deps);
     case "flashcard":
       return processFlashcardEffect(input.cards, input.qualities, input.subject, input.isSm2, deps);
+    default:
+      return assertUnreachable((input as QuizResultInput).source, "processQuizResultEffect");
   }
 }
 
@@ -98,5 +109,5 @@ export async function processQuizResult(
       score: scoreInfo?.score,
       totalQuestions: scoreInfo?.total,
     })
-    .catch(() => {});
+    .catch((err) => logError("QuizResultProcessor.webhook", err));
 }

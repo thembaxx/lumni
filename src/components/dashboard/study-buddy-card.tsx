@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { logError } from "@/lib/shared/logger";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 
 export function StudyBuddyCard() {
@@ -17,7 +18,7 @@ export function StudyBuddyCard() {
         );
         setActiveCount(active.length);
       })
-      .catch(() => {});
+      .catch((err) => logError("StudyBuddyCard.fetch", err));
   }, []);
 
   return (

@@ -1,9 +1,10 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
-import { webSearch as searchWeb } from "@/lib/services";
+import { searchWebExa } from "@/lib/services";
 
 export const POST = createRouteHandler({
   auth: "required",
   errorLabel: "WebSearch",
+  useRateLimit: true,
   validate: (body) => {
     if (!body.query || typeof body.query !== "string" || body.query.trim().length < 2) {
       return "Query must be at least 2 characters";
@@ -15,7 +16,7 @@ export const POST = createRouteHandler({
       query?: string;
       numResults?: number;
     };
-    const results = await searchWeb(query ?? "", { numResults });
+    const results = await searchWebExa(query ?? "", { numResults });
     return { results };
   },
 });

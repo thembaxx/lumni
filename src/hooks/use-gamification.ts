@@ -62,7 +62,7 @@ export function useGamification() {
     };
   }, []);
 
-  const levelInfo = calculateLevel(data.totalXp);
+  const levelInfo = useMemo(() => calculateLevel(data.totalXp), [data.totalXp]);
 
   const clearLevelUp = useCallback(() => setLeveledUp(null), []);
   const clearAchievement = useCallback(() => setPendingAchievement(null), []);

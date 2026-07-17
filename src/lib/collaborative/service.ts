@@ -123,19 +123,21 @@ export class CollaborativeService {
       throw new Error("Session is full");
     }
 
-    const participant: Record<string, unknown> = {
+    const participant: SessionParticipant = {
       userId,
-      name: userName,
+      userName,
       role: "participant",
       joinedAt: Date.now(),
       color:
         PARTICIPANT_COLORS[(session.participants as unknown[]).length % PARTICIPANT_COLORS.length],
+      isMuted: false,
+      isVideoEnabled: false,
     };
 
     session.participants.push(participant);
     await this.db.studySessions.put(session);
 
-    return { session, participant: participant as any };
+    return { session, participant };
   }
 
   async leaveSession(sessionId: string, userId: string): Promise<void> {

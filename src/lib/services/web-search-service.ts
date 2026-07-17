@@ -29,7 +29,7 @@ function getClient(): Exa {
   return exaClient;
 }
 
-export async function searchWeb(
+export async function searchWebExa(
   query: string,
   options?: WebSearchOptions,
 ): Promise<SearchResultItem[]> {

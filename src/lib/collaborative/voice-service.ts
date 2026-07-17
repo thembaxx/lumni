@@ -1,3 +1,4 @@
+import { logError } from "@/lib/shared/logger";
 import SimplePeer from "simple-peer";
 
 export interface VoicePeer {
@@ -192,7 +193,7 @@ export class VoiceService {
     });
 
     peer.on("error", (err: Error) => {
-      console.error("Voice peer error:", err);
+      logError("voice-service:peer-error", err);
     });
 
     this.peers.set(targetUserId, {
@@ -227,7 +228,7 @@ export class VoiceService {
       try {
         this.config.publishSignal(targetUserId, signal);
       } catch (err) {
-        console.error("Voice signal publish failed:", err);
+        logError("voice-service:signal-publish-failed", err);
       }
     } else {
       console.warn("Voice: no publishSignal callback configured — signal not sent");

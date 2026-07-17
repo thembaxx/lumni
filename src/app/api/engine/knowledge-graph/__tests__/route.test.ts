@@ -46,7 +46,7 @@ describe("GET /api/engine/knowledge-graph", () => {
     const body = await res.json();
 
     expect(res.status).toBe(401);
-    expect(body).toEqual({ error: "Authentication required" });
+    expect(body).toEqual({ error: "Not authenticated" });
   });
 
   test("returns 400 when subject is missing", async () => {

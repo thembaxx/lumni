@@ -2,9 +2,10 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { storeResults } from "@/lib/matric-results";
 import type { MatricResult } from "@/lib/db/schema";
 
-function parseMatricCsv(
-  text: string,
-): { rows: MatricResult[]; errors: { row: number; message: string }[] } {
+function parseMatricCsv(text: string): {
+  rows: MatricResult[];
+  errors: { row: number; message: string }[];
+} {
   const lines = text.trim().split("\n");
   const errors: { row: number; message: string }[] = [];
   const rows: MatricResult[] = [];
@@ -21,7 +22,17 @@ function parseMatricCsv(
     .map((h) => h.trim());
 
   const colMap = new Map<string, number>();
-  const requiredCols = ["candidatenumber", "firstname", "lastname", "examyear", "session", "subject", "mark", "outof", "level"];
+  const requiredCols = [
+    "candidatenumber",
+    "firstname",
+    "lastname",
+    "examyear",
+    "session",
+    "subject",
+    "mark",
+    "outof",
+    "level",
+  ];
   for (const [i, h] of header.entries()) {
     colMap.set(h.replace(/\s+/g, ""), i);
   }
@@ -34,7 +45,10 @@ function parseMatricCsv(
   }
 
   for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].trim().split(",").map((c) => c.trim());
+    const cols = lines[i]
+      .trim()
+      .split(",")
+      .map((c) => c.trim());
     const get = (name: string) => cols[colMap.get(name)!] ?? "";
 
     const candidateNumber = get("candidatenumber");

@@ -25,6 +25,7 @@ export interface SessionParticipant {
   isVideoEnabled: boolean;
   currentTool?: string;
   cursor?: { x: number; y: number };
+  color?: string;
 }
 
 export interface WhiteboardStroke {

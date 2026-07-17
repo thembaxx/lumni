@@ -120,7 +120,9 @@ export function ResultsSearch() {
               <HugeiconsIcon icon={UserIcon} className="size-5 text-foreground" />
             </div>
             <div>
-              <h3 className="font-semibold">{studentInfo.firstName} {studentInfo.lastName}</h3>
+              <h3 className="font-semibold">
+                {studentInfo.firstName} {studentInfo.lastName}
+              </h3>
               <p className="text-muted-foreground text-xs">Candidate: {candidateNumber}</p>
             </div>
           </div>

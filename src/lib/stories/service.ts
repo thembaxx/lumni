@@ -140,18 +140,14 @@ export async function cacheStory(id: string, story: Story): Promise<void> {
   try {
     const key = `story:${id}`;
     if (!story.audioUrl && voiceEngine.hasServerProvider()) {
-      populateAudioUrl(story).then((audioUrl) => {
+      try {
+        const audioUrl = await populateAudioUrl(story);
         if (audioUrl) {
           story.audioUrl = audioUrl;
-          const entry = {
-            key,
-            story,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
-          };
-          _deps.db.storyCache.put(entry).catch(() => {});
         }
-      });
+      } catch (err) {
+        logError("StoryCache.populateAudioUrl", err);
+      }
     }
     const entry = {
       key,

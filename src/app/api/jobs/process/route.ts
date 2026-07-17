@@ -4,6 +4,7 @@ import { jobProcessor } from "@/lib/orchestrator/job-processor";
 export const POST = createRouteHandler({
   auth: "admin",
   errorLabel: "Jobs Process",
+  useRateLimit: true,
   validate: (body: Record<string, unknown>) => {
     if (!body || typeof body !== "object") return "Invalid request body";
     return null;

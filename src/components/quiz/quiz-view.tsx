@@ -5,6 +5,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   AnimatePresence,
   animate,
+  domMax,
+  LazyMotion,
   useMotionValue,
   useReducedMotion,
   useSpring,
@@ -260,78 +262,79 @@ export function QuizView({
     <section className="min-h-dvh bg-background" aria-label="Quiz Practice">
       <AmbientGradient variant="quiz" />
 
-      <m.main
-        id="main-content"
-        aria-label="Quiz question area"
-        className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
-        tabIndex={-1}
-        drag={isQuizActive && isTouchDevice ? "x" : false}
-        dragElastic={0.2}
-        dragSnapToOrigin={velocityThreshold > 0}
-        whileDrag={{ scale: 0.97, transition: { duration: 0.2 } }}
-        style={{ transform: dragTransform }}
-        onDragEnd={handleDragEnd}
-      >
-        {localPastPaperMode && (
-          <m.div
-            initial={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
-            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
-            className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs"
-          >
-            <HugeiconsIcon icon={File01Icon} className="size-4" />
-            <span>{t("quiz.pastPaperMode")}</span>
-          </m.div>
-        )}
+      <LazyMotion features={domMax}>
+        <m.main
+          id="main-content"
+          aria-label="Quiz question area"
+          className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
+          tabIndex={-1}
+          drag={isQuizActive && isTouchDevice ? "x" : false}
+          dragElastic={0.2}
+          dragSnapToOrigin={velocityThreshold > 0}
+          whileDrag={{ scale: 0.97, transition: { duration: 0.2 } }}
+          style={{ transform: dragTransform }}
+          onDragEnd={handleDragEnd}
+        >
+          {localPastPaperMode && (
+            <m.div
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={prefersReducedMotion ? undefined : { duration: 0.3 }}
+              className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2 text-warning text-xs"
+            >
+              <HugeiconsIcon icon={File01Icon} className="size-4" />
+              <span>{t("quiz.pastPaperMode")}</span>
+            </m.div>
+          )}
 
-        <QuizProgressBar current={currentIndex + 1} total={state.totalQuestions} />
+          <QuizProgressBar current={currentIndex + 1} total={state.totalQuestions} />
 
-        <QuizHeader
-          elapsedTime={state.elapsedTime}
-          currentIndex={currentIndex}
-          totalQuestions={state.totalQuestions}
-          correctAnswers={state.correctAnswers}
-          onQuit={handleStop}
-        />
+          <QuizHeader
+            elapsedTime={state.elapsedTime}
+            currentIndex={currentIndex}
+            totalQuestions={state.totalQuestions}
+            correctAnswers={state.correctAnswers}
+            onQuit={handleStop}
+          />
 
-        <AnimatePresence mode="popLayout">
-          <m.div
-            key={currentIndex}
-            layout
-            initial={{ opacity: 0, scale: 0.96, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{
-              opacity: 0,
-              scale: 0.94,
-              y: -6,
-              transition: springPresets.cardExit,
-            }}
-            transition={prefersReducedMotion ? undefined : springPresets.standard}
-          >
-            {state.currentQuestion && (
-              <QuestionCard
-                question={state.currentQuestion}
-                subject={selectedSubject}
-                questionNumber={state.questionNumber}
-                totalQuestions={state.totalQuestions}
-                onNext={handleNext}
-                onAnswered={handleAnswered}
-              />
-            )}
-          </m.div>
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <m.div
+              key={currentIndex}
+              initial={{ opacity: 0, scale: 0.96, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{
+                opacity: 0,
+                scale: 0.94,
+                y: -6,
+                transition: springPresets.cardExit,
+              }}
+              transition={prefersReducedMotion ? undefined : springPresets.standard}
+            >
+              {state.currentQuestion && (
+                <QuestionCard
+                  question={state.currentQuestion}
+                  subject={selectedSubject}
+                  questionNumber={state.questionNumber}
+                  totalQuestions={state.totalQuestions}
+                  onNext={handleNext}
+                  onAnswered={handleAnswered}
+                />
+              )}
+            </m.div>
+          </AnimatePresence>
 
-        <QuizFooter
-          currentIndex={currentIndex}
-          totalQuestions={state.totalQuestions}
-          hasSelected={currentAnswered}
-          showFeedback={currentAnswered}
-          variant={variant}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onSkip={handleSkip}
-        />
-      </m.main>
+          <QuizFooter
+            currentIndex={currentIndex}
+            totalQuestions={state.totalQuestions}
+            hasSelected={currentAnswered}
+            showFeedback={currentAnswered}
+            variant={variant}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onSkip={handleSkip}
+          />
+        </m.main>
+      </LazyMotion>
     </section>
   );
 }
