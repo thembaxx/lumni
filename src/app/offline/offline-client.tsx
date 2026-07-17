@@ -75,7 +75,6 @@ function SyncStatusBar() {
 
 export default function OfflinePage() {
   const stats = useOfflineStats();
-  const { isOnline } = useOnlineStatus();
 
   const recentStories = useLiveQuery(() =>
     dexieDataAccess.storyProgress.orderBy("lastReadAt").reverse().limit(5).toArray(),
