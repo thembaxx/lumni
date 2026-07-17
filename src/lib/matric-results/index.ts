@@ -1,6 +1,4 @@
-// TODO: Replace demo data with real DBE integration
-// DBE publishes results via https://www.education.gov.za/
-// Integration path: scrape or partner API
-// Affected files: data.ts, index.ts, route.ts
-export { matricResultsYears, searchMatricResults } from "./data";
-export type { MatricResult, MatricResultsResponse } from "./types";
+export { getResultsByCandidate as getMatricResultsByCandidate } from "./server-store";
+export { storeResults } from "./server-store";
+export type { MatricResultsResponse } from "./types";
+export type { MatricResult } from "@/lib/db/schema";

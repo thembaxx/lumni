@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import type { EmbeddingDataAccess, QuizDataAccess } from "@/lib/db/data-access";
+import type { CacheDataAccess, EmbeddingDataAccess, QuizDataAccess } from "@/lib/db/data-access";
 import { progressRepo } from "@/lib/db/repositories/progress";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
@@ -14,7 +14,7 @@ import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import { createJobHandler } from "./sync-factory";
 import type { JobHandler } from "./index";
 
-type DomainDb = EmbeddingDataAccess & Pick<QuizDataAccess, "questions">;
+type DomainDb = EmbeddingDataAccess & Pick<QuizDataAccess, "questions"> & Pick<CacheDataAccess, "deprecatedQuestions">;
 let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DomainDb }) {
   _deps = Object.freeze({ ...deps });
@@ -213,6 +213,25 @@ const _pruneStaleQuestions = async () => {
 
 export const pruneStaleQuestions = createJobHandler("pruneStaleQuestions", _pruneStaleQuestions);
 
+const _deprecateLowQuality = async () => {
+  const { questionRatingService } = await import("@/lib/services/question-rating-service");
+  const result = await questionRatingService.getLowRatedQuestions(2.5, 10);
+  if (!result.success || !result.data) return;
+
+  for (const item of result.data) {
+    try {
+      await _deps.db.deprecatedQuestions.put({
+        questionId: item.questionId,
+        deprecatedAt: Date.now(),
+      } as never);
+    } catch (err) {
+      logError("DeprecateLowQualityQuestion", err);
+    }
+  }
+};
+
+export const deprecateLowQuality = createJobHandler("deprecateLowQuality", _deprecateLowQuality);
+
 const _generateEmbedding = async (payload: unknown) => {
   const { questionId, questionText, subject } = payload as JobPayloadByType["generate-embedding"];
   const [{ embedText }, { storeEmbedding }] = await Promise.all([
@@ -345,6 +364,7 @@ export const domainHandlers: Partial<Record<string, JobHandler>> = {
   "visual-generation": visualGeneration,
   "question-regen": questionRegen,
   "prune-stale-questions": pruneStaleQuestions,
+  "deprecate-low-quality-questions": deprecateLowQuality,
   "generate-embedding": generateEmbedding,
   "quiz-pack-generate": quizPackGenerate,
 };

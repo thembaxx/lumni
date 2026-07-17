@@ -97,7 +97,7 @@ describe("Dexie schema migration", () => {
     db = new LumniOfflineDB();
     await db.open();
     expect(db.isOpen()).toBe(true);
-    expect(db.verno).toBe(48);
+    expect(db.verno).toBe(49);
   });
 
   it("all table names are accessible after opening", () => {

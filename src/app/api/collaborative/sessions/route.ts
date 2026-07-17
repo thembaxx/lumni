@@ -1,6 +1,5 @@
-import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { collaborativeSessionService } from "@/lib/collaborative/session-service";
-import { logError } from "@/lib/shared/logger";
 
 export const POST = createRouteHandler({
   auth: "required",
@@ -23,10 +22,8 @@ export const POST = createRouteHandler({
       inviteCode?: string;
     };
 
-    // Get user name from auth context
-    const { useAuth } = await import("@/lib/auth/auth-context");
-    // We'll get user name from the user object in execute context
-    const userName = "User"; // TODO: get from auth context
+    const { getAuthenticatedUserName } = await import("@/lib/server/auth");
+    const userName = (await getAuthenticatedUserName()) ?? "User";
 
     const session = await collaborativeSessionService.createSession(userId!, userName, groupId, {
       subject,

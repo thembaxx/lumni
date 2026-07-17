@@ -24,7 +24,7 @@ const mockUseSharedQuiz = vi.mocked((await import("@/hooks/use-shared-quiz")).us
 const { SharedQuizSession } = await import("@/components/study-groups/shared-quiz-session");
 
 describe("SharedQuizSession", () => {
-  test("renders nothing when no participants and not connected", () => {
+  test("renders tab interface when no participants and not connected", () => {
     mockUseSharedQuiz.mockReturnValue({
       participants: [],
       isConnected: false,
@@ -34,9 +34,9 @@ describe("SharedQuizSession", () => {
       completeQuiz: vi.fn(),
     });
 
-    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} />);
+    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />);
 
-    expect(container.textContent).toBe("");
+    expect(container.textContent).toContain("common.progressWhiteboardVoice");
   });
 
   test("renders participants when present", () => {
@@ -52,7 +52,7 @@ describe("SharedQuizSession", () => {
       completeQuiz: vi.fn(),
     });
 
-    render(<SharedQuizSession channelName="test" totalQuestions={10} />);
+    render(<SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />);
 
     expect(screen.getByText("Alice")).toBeDefined();
     expect(screen.getByText("Bob")).toBeDefined();
@@ -72,7 +72,7 @@ describe("SharedQuizSession", () => {
       completeQuiz: vi.fn(),
     });
 
-    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} />);
+    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />);
 
     expect(container.textContent).toContain("(you)");
   });

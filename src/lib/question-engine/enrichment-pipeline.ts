@@ -1,11 +1,13 @@
 import { dexieDataAccess } from "@/lib/db";
 import type {
+  CacheDataAccess,
   CompetencyDataAccess,
   EmbeddingDataAccess,
   LegacyDataAccess,
 } from "@/lib/db/data-access";
 type DataAccess = EmbeddingDataAccess &
   CompetencyDataAccess &
+  CacheDataAccess &
   Pick<LegacyDataAccess, "pastPaperQuestions" | "seenPastPaperQuestions">;
 import { embedText } from "@/lib/embedding/client";
 import { findTopK } from "@/lib/embedding/similarity";
@@ -124,8 +126,12 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
           },
         );
 
-        if (pastPaperMode && scored.length > 0) {
-          const selected = await selectAdaptiveQuestions(scored, subject, exampleCount, { db });
+        const deprecated = await db.deprecatedQuestions.toArray();
+        const deprecatedSet = new Set(deprecated.map((d) => d.questionId));
+        const filtered = scored.filter((q) => !deprecatedSet.has(q.questionId));
+
+        if (pastPaperMode && filtered.length > 0) {
+          const selected = await selectAdaptiveQuestions(filtered, subject, exampleCount, { db });
 
           await recordSeenQuestions(
             selected.map((q) => q.questionId),
@@ -149,7 +155,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
             });
           }
         } else {
-          for (const sq of scored) {
+          for (const sq of filtered) {
             if (sq.similarity > poolThreshold) {
               poolQuestions.push({
                 id: sq.questionId,
@@ -168,7 +174,7 @@ function createEmbeddingSource(db: DataAccess): EmbeddingSource {
           }
         }
 
-        pastPaperExamples = scored
+        pastPaperExamples = filtered
           .filter((q) => q.similarity >= exampleThreshold && q.similarity <= poolThreshold)
           .slice(0, exampleCount)
           .map((q) => ({

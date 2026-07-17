@@ -1,5 +1,5 @@
-import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
-import { matricResultsYears, searchMatricResults } from "@/lib/matric-results";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { getMatricResultsByCandidate } from "@/lib/matric-results";
 
 export const GET = createRouteHandler({
   auth: "none",
@@ -7,23 +7,17 @@ export const GET = createRouteHandler({
   errorLabel: "MatricResults",
   execute: async ({ req }) => {
     const { searchParams } = new URL(req.url);
-    const name = searchParams.get("name") || "";
-    const yearParam = searchParams.get("year");
+    const candidateNumber = searchParams.get("candidateNumber") || "";
 
-    const year = yearParam ? Number.parseInt(yearParam, 10) : matricResultsYears[0];
-
-    if (!matricResultsYears.includes(year as (typeof matricResultsYears)[number])) {
-      throw new HttpError(400, `Invalid year. Supported: ${matricResultsYears.join(", ")}`);
+    if (!candidateNumber.trim()) {
+      return { results: [], total: 0 };
     }
 
-    const results = searchMatricResults(name, year);
+    const results = getMatricResultsByCandidate(candidateNumber.trim());
 
     return {
       results,
-      year,
       total: results.length,
-      isDemoData: true,
-      disclaimer: "Demo data — not real matric results. Official DBE results pending integration.",
     };
   },
 });
