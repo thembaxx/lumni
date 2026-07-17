@@ -2,6 +2,11 @@ import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { logError } from "@/lib/shared/logger";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
+import {
+  getUserLicenseTier,
+  getTodayGenerateCount,
+  getSchoolTierDailyLimit,
+} from "@/lib/school/license-quota";
 
 export const POST = createRouteHandler({
   auth: "required",
@@ -20,6 +25,26 @@ export const POST = createRouteHandler({
     return null;
   },
   execute: async ({ body, userId }) => {
+    if (userId) {
+      const tier = await getUserLicenseTier(userId);
+      if (tier) {
+        const allowed = await getSchoolTierDailyLimit(tier);
+        const used = await getTodayGenerateCount(userId);
+        if (used >= allowed) {
+          return {
+            questions: [],
+            count: 0,
+            requested: body.count,
+            type: body.questionType || "any",
+            partial: true,
+            warning: "Daily question limit reached for your school tier",
+            sources: [],
+            jobIds: [],
+          };
+        }
+      }
+    }
+
     const orchestrator = await LearningOrchestrator.initialize();
     const result = await orchestrator.generateQuestionSet({
       ...body,

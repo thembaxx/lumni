@@ -28,6 +28,13 @@ vi.mock("next-intl/server", () => ({
   getRequestConfig: vi.fn(),
 }));
 
+vi.mock("@/lib/auth/auth-context", () => ({
+  useAuth: () => ({
+    user: null,
+    authReady: true,
+  }),
+}));
+
 import { QuizResultsCard } from "@/components/quiz/quiz-results";
 
 function hasText(container: HTMLElement, regex: RegExp): boolean {

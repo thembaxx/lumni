@@ -38,3 +38,13 @@ export {
 // Re-export algorithm module
 export { generateStudyPlan } from "./algorithms";
 export { getStudyPlannerService, StudyPlannerService } from "./study-planner-service";
+
+// Re-export adaptive planner
+export type {
+  AdaptivePlanRequest,
+  AdaptivePlanResponse,
+  StudySession as AdaptiveStudySession,
+  CompetencyGap,
+  TopicGap,
+} from "./adaptive-planner";
+export { AdaptiveStudyPlanner, adaptiveStudyPlanner } from "./adaptive-planner";

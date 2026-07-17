@@ -5,6 +5,7 @@
     "success": "Katleho",
     "save": "Hlophisa",
     "saving": "E hlophisa...",
+    "generating": "Generating...",
     "cancel": "Hlola",
     "confirm": "Kgetha",
     "delete": "Hapusa",
@@ -496,6 +497,7 @@
   "studyPlanner": {
     "title": "Mokhatlo wa Thuto",
     "generatePlan": "Kenya mokhatlo",
+    "generateAdaptive": "Adaptive Plan",
     "myPlan": "Mokhatlo wa ka",
     "todayFocus": "Lenaneo la hajeno",
     "weeklyOverview": "Tlhophiso ya beke",

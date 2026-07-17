@@ -13,6 +13,12 @@ export interface GeneratePlanSettings {
   horizonDays?: number;
 }
 
+export interface AdaptivePlanSettings {
+  targetAps?: number;
+  dailyStudyMinutes?: number;
+  horizonDays?: number;
+}
+
 export interface UseStudyPlannerReturn {
   plan: StudyPlan;
   todaySessions: StudySession[];
@@ -28,6 +34,7 @@ export interface UseStudyPlannerReturn {
   removeExam: (id: string) => void;
   autoSchedule: (subjects: string[], weakTopics: Record<string, string[]>) => void;
   generatePlan: (settings?: GeneratePlanSettings) => Promise<void>;
+  generateAdaptivePlan: (settings?: AdaptivePlanSettings) => Promise<void>;
   isGenerating: boolean;
   refresh: () => void;
 }
@@ -116,6 +123,18 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
     [service],
   );
 
+  const generateAdaptivePlan = useCallback(
+    async (settings?: AdaptivePlanSettings) => {
+      setIsGenerating(true);
+      try {
+        await service.generateAdaptivePlan(settings);
+      } finally {
+        setIsGenerating(false);
+      }
+    },
+    [service],
+  );
+
   const refresh = useCallback(() => service.refresh(), [service]);
 
   return {
@@ -133,6 +152,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
     removeExam,
     autoSchedule,
     generatePlan,
+    generateAdaptivePlan,
     isGenerating,
     refresh,
   };

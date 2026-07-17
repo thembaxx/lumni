@@ -1,58 +1,79 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { Suspense, useState } from "react";
+import { usePastQuestions } from "@/hooks/use-past-questions";
 import { PastQuestionFilters } from "@/components/practice/past-question-filters";
 import { PastQuestionList } from "@/components/practice/past-question-list";
-import { apiFetch } from "@/lib/shared/api-fetch";
-import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 
-export function PracticeQuestionsClient() {
-  const [subject, setSubject] = useState("");
-  const [topic, setTopic] = useState<string | undefined>();
-  const [year, setYear] = useState<string | undefined>();
+function PracticeQuestionsClientContent() {
+  const {
+    questions,
+    isLoading,
+    isFetching,
+    subject,
+    topic,
+    year,
+    hasMore,
+    loadMore,
+    setSubject,
+    setTopic,
+    setYear,
+    clearFilters,
+  } = usePastQuestions();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["past-questions", { subject, topic, year }],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-      if (subject) params.set("subject", subject);
-      if (topic) params.set("topic", topic);
-      if (year) params.set("year", year);
-      const res = await apiFetch<{ questions: PastPaperQuestion[] }>(
-        `/api/exam-papers/questions?${params}`,
-        { method: "GET" },
-      );
-      return res.questions;
-    },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const handleClear = () => {
-    setSubject("");
-    setTopic(undefined);
-    setYear(undefined);
-  };
+  const [practiceMode, setPracticeMode] = useState(false);
+  const hasSubject = !!subject;
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Past Paper Questions</h1>
+    <div className="flex flex-col gap-6 py-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Past Paper Questions</h1>
+        {hasSubject && (
+          <button
+            type="button"
+            onClick={() => setPracticeMode((prev) => !prev)}
+            className="rounded-lg border border-border/60 bg-card px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent/5"
+          >
+            {practiceMode ? "Show Answers" : "Hide Answers"}
+          </button>
+        )}
+      </div>
+
       <PastQuestionFilters
         subject={subject}
         topic={topic}
-        year={year}
+        year={year?.toString()}
         onSubjectChange={setSubject}
         onTopicChange={setTopic}
         onYearChange={setYear}
-        onClear={handleClear}
+        onClear={clearFilters}
       />
+
+      {hasSubject && (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>
+            {questions.length} question{questions.length !== 1 ? "s" : ""} found
+          </span>
+          {isFetching && <span className="ml-auto text-xs italic">Updating...</span>}
+        </div>
+      )}
+
       <PastQuestionList
-        questions={data ?? []}
+        questions={questions}
         isLoading={isLoading}
-        hasMore={false}
-        onLoadMore={() => {}}
-        hasSubject={!!subject}
+        hasMore={hasMore}
+        onLoadMore={loadMore}
+        hasSubject={hasSubject}
+        practiceMode={practiceMode || undefined}
       />
     </div>
+  );
+}
+
+export function PracticeQuestionsClient() {
+  return (
+    <Suspense fallback={null}>
+      <PracticeQuestionsClientContent />
+    </Suspense>
   );
 }

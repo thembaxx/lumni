@@ -5,6 +5,7 @@
     "success": "Tshireletso",
     "save": "Hifadza",
     "saving": "E hifadza...",
+    "generating": "Generating...",
     "cancel": "Kananela",
     "confirm": "Kgetha",
     "delete": "Tlosa",
@@ -496,6 +497,7 @@
   "studyPlanner": {
     "title": "Study Planner",
     "generatePlan": "Generate plan",
+    "generateAdaptive": "Adaptive Plan",
     "myPlan": "My Plan",
     "todayFocus": "Today's Focus",
     "weeklyOverview": "Weekly overview",

@@ -3,7 +3,7 @@ import type { CompetencyDataAccess } from "@/lib/db/data-access";
 import type { CompetencyRecord, CompetencyLevel } from "@/lib/competency-engine/types";
 import type { BloomLevel } from "@/lib/question-engine/types";
 
-const SUBJECT_WEIGHTS: Record<string, number> = {
+export const SUBJECT_WEIGHTS: Record<string, number> = {
   mathematics: 0.15,
   "physical-sciences": 0.12,
   "life-sciences": 0.1,
@@ -193,7 +193,7 @@ async function fetchCompetencies(
   return allRecords;
 }
 
-function detectWeakTopics(competencies: ExtendedCompetencyRecord[]): TopicGap[] {
+export function detectWeakTopics(competencies: ExtendedCompetencyRecord[]): TopicGap[] {
   const gaps: TopicGap[] = [];
 
   for (const c of competencies) {
@@ -213,7 +213,7 @@ function detectWeakTopics(competencies: ExtendedCompetencyRecord[]): TopicGap[] 
   return gaps.toSorted((a, b) => b.gap - a.gap);
 }
 
-function computeCompetencyGaps(
+export function computeCompetencyGaps(
   competencies: ExtendedCompetencyRecord[],
   weakTopics: TopicGap[],
 ): CompetencyGap[] {
@@ -247,7 +247,7 @@ function computeCompetencyGaps(
   return gaps.toSorted((a, b) => a.avgScore - b.avgScore);
 }
 
-function projectAps(competencyGaps: CompetencyGap[]): number {
+export function projectAps(competencyGaps: CompetencyGap[]): number {
   let totalWeightedScore = 0;
   let totalWeight = 0;
 
@@ -261,7 +261,7 @@ function projectAps(competencyGaps: CompetencyGap[]): number {
   return Math.round(Math.min(100, Math.max(0, aps)));
 }
 
-function calculateConfidence(
+export function calculateConfidence(
   competencies: ExtendedCompetencyRecord[],
   totalTopicsEstimate = 150,
 ): number {
@@ -276,7 +276,7 @@ function calculateConfidence(
   return Math.round((coverage * 0.6 + recency * 0.4) * 100) / 100;
 }
 
-function generateSessions(
+export function generateSessions(
   weakTopics: TopicGap[],
   competencyGaps: CompetencyGap[],
   dailyMinutes: number,

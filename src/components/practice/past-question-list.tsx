@@ -10,6 +10,7 @@ interface PastQuestionListProps {
   hasMore: boolean;
   onLoadMore: () => void;
   hasSubject: boolean;
+  practiceMode?: boolean;
 }
 
 export function PastQuestionList({
@@ -18,6 +19,7 @@ export function PastQuestionList({
   hasMore,
   onLoadMore,
   hasSubject,
+  practiceMode,
 }: PastQuestionListProps) {
   if (!hasSubject) {
     return (
@@ -94,7 +96,7 @@ export function PastQuestionList({
   return (
     <div className="flex flex-col gap-3">
       {questions.map((q) => (
-        <PastQuestionCard key={q.id} question={q} />
+        <PastQuestionCard key={q.id} question={q} practiceMode={practiceMode} />
       ))}
       {hasMore && (
         <button

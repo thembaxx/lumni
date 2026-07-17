@@ -5,6 +5,7 @@
     "success": "Imiphumelelo",
     "save": "Londoloza",
     "saving": "Londozwa...",
+    "generating": "Generating...",
     "cancel": "Kansela",
     "confirm": "Vumela",
     "delete": "Susa",
@@ -496,6 +497,7 @@
   "studyPlanner": {
     "title": "Iplani YokuFundisa",
     "generatePlan": "Genisa ipiani",
+    "generateAdaptive": "Adaptive Plan",
     "myPlan": "Iplani Yami",
     "todayFocus": "Kwesabasa Lento",
     "weeklyOverview": "Ukubuka KweViki",

@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 
 interface PastQuestionCardProps {
   question: PastPaperQuestion;
+  practiceMode?: boolean;
 }
 
 function difficultyLabel(marks: number): string {
@@ -23,9 +24,12 @@ function difficultyColor(marks: number): string {
   return "text-destructive";
 }
 
-export function PastQuestionCard({ question }: PastQuestionCardProps) {
-  const [practiceMode, setPracticeMode] = useState(false);
+export function PastQuestionCard({ question, practiceMode }: PastQuestionCardProps) {
+  const [localPracticeMode, setLocalPracticeMode] = useState(false);
   const [revealed, setRevealed] = useState(false);
+
+  const isExternallyControlled = practiceMode !== undefined;
+  const effectivePracticeMode = isExternallyControlled ? practiceMode : localPracticeMode;
 
   const subjectName = formatSubjectLabel(question.subject);
 
@@ -54,19 +58,24 @@ export function PastQuestionCard({ question }: PastQuestionCardProps) {
           {question.questionText}
         </p>
 
-        {!practiceMode ? (
+        {!effectivePracticeMode ? (
           <div className="flex flex-col gap-2">
             <div className="rounded-lg bg-muted/30 p-3">
               <p className="text-xs font-medium text-muted-foreground mb-1">Answer</p>
               <p className="text-sm text-foreground">{question.answerText}</p>
             </div>
-            <button
-              type="button"
-              onClick={() => setPracticeMode(true)}
-              className="self-start rounded-lg bg-system-accent px-4 py-1.5 text-xs font-medium text-system-accent-foreground transition-colors hover:bg-system-accent/90"
-            >
-              Practice
-            </button>
+            {!isExternallyControlled && (
+              <button
+                type="button"
+                onClick={() => {
+                  setLocalPracticeMode(true);
+                  setRevealed(false);
+                }}
+                className="self-start rounded-lg bg-system-accent px-4 py-1.5 text-xs font-medium text-system-accent-foreground transition-colors hover:bg-system-accent/90"
+              >
+                Practice
+              </button>
+            )}
           </div>
         ) : (
           <div className="flex flex-col gap-2">
@@ -84,16 +93,18 @@ export function PastQuestionCard({ question }: PastQuestionCardProps) {
                   <p className="text-xs font-medium text-success mb-1">Answer</p>
                   <p className="text-sm text-foreground">{question.answerText}</p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPracticeMode(false);
-                    setRevealed(false);
-                  }}
-                  className="self-start text-xs text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Back to browse
-                </button>
+                {!isExternallyControlled && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLocalPracticeMode(false);
+                      setRevealed(false);
+                    }}
+                    className="self-start text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Back to browse
+                  </button>
+                )}
               </div>
             )}
           </div>

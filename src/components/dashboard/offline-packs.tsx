@@ -15,14 +15,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { useQuizPacks } from "@/hooks/use-quiz-packs";
 import { useSubjects } from "@/hooks/use-subjects";
 import { OfflinePackCard } from "@/components/dashboard/parts/offline-pack-card";
 import { StorageRing } from "@/components/dashboard/parts/storage-ring";
 
 export function OfflinePackManager() {
-  const { packs, generating, storageBytes, storageLimit, generate, remove, playPack } =
-    useQuizPacks();
+  const {
+    packs,
+    generating,
+    storageBytes,
+    storagePercentage,
+    storageLimit,
+    generate,
+    remove,
+    playPack,
+  } = useQuizPacks();
   const { data: subjectsData } = useSubjects();
   const subjects = subjectsData?.subjects ?? [];
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -52,6 +61,37 @@ export function OfflinePackManager() {
         <StorageRing used={storageBytes} limit={storageLimit} />
       </CardHeader>
 
+      <div className="px-6 pb-0">
+        <div className="flex items-center gap-2 pb-1">
+          <div className="flex h-2 flex-1 overflow-hidden rounded-full bg-muted">
+            <div
+              className={cn(
+                "h-full rounded-full transition-[width] duration-300",
+                storagePercentage >= 95
+                  ? "bg-destructive"
+                  : storagePercentage >= 80
+                    ? "bg-warning"
+                    : "bg-system-accent",
+              )}
+              style={{ width: `${storagePercentage}%` }}
+            />
+          </div>
+          <span className="shrink-0 text-(--fs-caption-3) tabular-nums text-muted-foreground">
+            {(storageBytes / (1024 * 1024)).toFixed(1)}MB /{" "}
+            {(storageLimit / (1024 * 1024)).toFixed(0)}MB
+          </span>
+        </div>
+        {storagePercentage >= 95 && (
+          <p className="text-(--fs-caption-2) font-medium text-destructive">
+            Storage almost full. Delete old packs to free space.
+          </p>
+        )}
+        {storagePercentage >= 80 && storagePercentage < 95 && (
+          <p className="text-(--fs-caption-2) font-medium text-warning">
+            Storage running low ({Math.round(storagePercentage)}% used).
+          </p>
+        )}
+      </div>
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           <Select
