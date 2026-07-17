@@ -751,7 +751,8 @@ export class LumniOfflineDB extends Dexie {
     // v49: deprecatedQuestions + matricResults
     this.version(49).stores({
       deprecatedQuestions: "&questionId, deprecatedAt",
-      matricResults: "++id, candidateNumber, examYear, examSession, subject, &[candidateNumber+examYear+subject]",
+      matricResults:
+        "++id, candidateNumber, examYear, examSession, subject, &[candidateNumber+examYear+subject]",
     });
   }
 }

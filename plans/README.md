@@ -122,14 +122,14 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJE
 
 ### Batch 6 — Direction gaps (P2) ✅ All DONE
 
-| Plan | Title                              | Why this order                                              |
-| ---- | ---------------------------------- | ----------------------------------------------------------- |
-| 200  | RAG allowlist expansion            | XS effort, instant win — warm up                            |
-| 195  | Teacher risk alerts wire-up        | S effort, no deps — quick win for teacher dashboard         |
-| 199  | Question rating quality auto-deprecate | S effort, no deps — low-risk automation                 |
-| 198  | Knowledge graph → planner pipe     | S effort, no deps — algorithmic improvement                |
-| 196  | Matric results real data pipeline  | M effort, some risk — admin tool path is safe               |
-| 197  | Collaborative voice + whiteboard   | M effort, MED risk — 3 sub-items, most complex              |
+| Plan | Title                                  | Why this order                                      |
+| ---- | -------------------------------------- | --------------------------------------------------- |
+| 200  | RAG allowlist expansion                | XS effort, instant win — warm up                    |
+| 195  | Teacher risk alerts wire-up            | S effort, no deps — quick win for teacher dashboard |
+| 199  | Question rating quality auto-deprecate | S effort, no deps — low-risk automation             |
+| 198  | Knowledge graph → planner pipe         | S effort, no deps — algorithmic improvement         |
+| 196  | Matric results real data pipeline      | M effort, some risk — admin tool path is safe       |
+| 197  | Collaborative voice + whiteboard       | M effort, MED risk — 3 sub-items, most complex      |
 
 200 → 195 → 199 → 198 → 196 → 197 (XS-to-M effort, lowest-to-highest risk). All 6 implemented on 2026-07-17 (branch `advisor/195-200-direction-gaps`).
 

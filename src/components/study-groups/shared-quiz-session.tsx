@@ -244,20 +244,24 @@ export function SharedQuizSession({
                     {[...participants].toSorted((a, b) => b.score - a.score)[0]?.userId === userId
                       ? "You're in the lead!"
                       : `You're ${
-                          (([...participants].toSorted((a, b) => b.score - a.score)[1]?.score ??
-                            0) -
-                            ([...participants].find((p) => p.userId === userId)?.score ?? 0)) > 0
+                          ([...participants].toSorted((a, b) => b.score - a.score)[1]?.score ?? 0) -
+                            ([...participants].find((p) => p.userId === userId)?.score ?? 0) >
+                          0
                             ? "behind by"
                             : "ahead by"
                         } ${Math.abs(
                           ([...participants].find((p) => p.userId === userId)?.score ?? 0) -
                             ([...participants].toSorted((a, b) => b.score - a.score)[0]?.score ??
                               0),
-                        )} point${Math.abs(
-                          ([...participants].find((p) => p.userId === userId)?.score ?? 0) -
-                            ([...participants].toSorted((a, b) => b.score - a.score)[0]?.score ??
-                              0),
-                        ) === 1 ? "" : "s"}`}
+                        )} point${
+                          Math.abs(
+                            ([...participants].find((p) => p.userId === userId)?.score ?? 0) -
+                              ([...participants].toSorted((a, b) => b.score - a.score)[0]?.score ??
+                                0),
+                          ) === 1
+                            ? ""
+                            : "s"
+                        }`}
                   </p>
                 )}
               </>
@@ -266,11 +270,7 @@ export function SharedQuizSession({
         )}
 
         {activeTab === "whiteboard" && (
-          <div
-            id="session-panel-whiteboard"
-            role="tabpanel"
-            aria-labelledby="tab-whiteboard"
-          >
+          <div id="session-panel-whiteboard" role="tabpanel" aria-labelledby="tab-whiteboard">
             {showWhiteboard ? (
               <SharedWhiteboard className="border rounded-lg overflow-hidden" />
             ) : (
@@ -289,9 +289,7 @@ export function SharedQuizSession({
             className="flex flex-col items-center gap-4 py-6"
           >
             {!userId ? (
-              <p className="text-sm text-muted-foreground">
-                Sign in to use voice chat
-              </p>
+              <p className="text-sm text-muted-foreground">Sign in to use voice chat</p>
             ) : voiceConnected ? (
               <>
                 <div className="flex items-center gap-2 text-sm text-success">
@@ -317,9 +315,7 @@ export function SharedQuizSession({
                           )}
                         />
                         {vs.userName}
-                        {vs.isMuted && (
-                          <span className="text-xs opacity-60">(muted)</span>
-                        )}
+                        {vs.isMuted && <span className="text-xs opacity-60">(muted)</span>}
                       </div>
                     ))}
                   </div>

@@ -45,6 +45,7 @@ pnpm test
 ## Test plan
 
 The existing allowlist tests in `src/lib/tinyfish/__tests__/allowlist.test.ts` already cover:
+
 - Allowlisted subject returns search results
 - Non-allowlisted subject returns emptyRagContext
 - Case-insensitive matching

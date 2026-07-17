@@ -50,9 +50,11 @@ pnpm test
 ### Step 4: Integration check
 
 Verify the route returns real data:
+
 ```bash
 curl -X GET "http://localhost:3000/api/teacher/risk-alerts?windowDays=30" -H "Cookie: session=<test-session>"
 ```
+
 Expected: `{ students: [...], computedAt, windowDays }` with at least the requesting user's own student data.
 
 ## Test plan

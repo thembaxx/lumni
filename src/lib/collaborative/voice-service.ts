@@ -145,7 +145,12 @@ export class VoiceService {
     const existing = this.peers.get(userId);
     if (existing) {
       existing.peer.signal(signal as string | SimplePeer.SignalData);
-    } else if (signal && typeof signal === "object" && "type" in (signal as object) && (signal as { type: string }).type === "offer") {
+    } else if (
+      signal &&
+      typeof signal === "object" &&
+      "type" in (signal as object) &&
+      (signal as { type: string }).type === "offer"
+    ) {
       const peer = this.createPeer(userId, false);
       peer.signal(signal as string | SimplePeer.SignalData);
     }

@@ -353,9 +353,7 @@ export function generateSessions(
   return sessions;
 }
 
-async function sortByPrerequisites(
-  topics: TopicGap[],
-): Promise<TopicGap[]> {
+async function sortByPrerequisites(topics: TopicGap[]): Promise<TopicGap[]> {
   const bySubject = new Map<string, TopicGap[]>();
   for (const t of topics) {
     if (!bySubject.has(t.subjectId)) {

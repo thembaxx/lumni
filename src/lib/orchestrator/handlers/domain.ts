@@ -14,7 +14,9 @@ import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import { createJobHandler } from "./sync-factory";
 import type { JobHandler } from "./index";
 
-type DomainDb = EmbeddingDataAccess & Pick<QuizDataAccess, "questions"> & Pick<CacheDataAccess, "deprecatedQuestions">;
+type DomainDb = EmbeddingDataAccess &
+  Pick<QuizDataAccess, "questions"> &
+  Pick<CacheDataAccess, "deprecatedQuestions">;
 let _deps: { db: DomainDb } = Object.freeze({ db: dexieDataAccess });
 export function __setDepsForTesting(deps: { db: DomainDb }) {
   _deps = Object.freeze({ ...deps });

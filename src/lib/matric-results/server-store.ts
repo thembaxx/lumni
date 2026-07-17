@@ -22,9 +22,7 @@ export function storeResults(results: MatricResult[]): number {
   return inserted;
 }
 
-export function getResultsByCandidate(
-  candidateNumber: string,
-): MatricResult[] {
+export function getResultsByCandidate(candidateNumber: string): MatricResult[] {
   const results: MatricResult[] = [];
   for (const [key, entries] of store) {
     if (key.startsWith(`${candidateNumber}:`)) {

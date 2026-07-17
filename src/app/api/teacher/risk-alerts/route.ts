@@ -11,7 +11,13 @@ interface StudentRisk {
   studentName: string;
   studentEmail: string;
   riskScore: number;
-  factors: { type: string; severity: string; description: string; value?: number; threshold?: number }[];
+  factors: {
+    type: string;
+    severity: string;
+    description: string;
+    value?: number;
+    threshold?: number;
+  }[];
   lastActive: number;
   recommendation: string;
 }
@@ -57,7 +63,9 @@ export const GET = createRouteHandler({
 
           const lastActive = risk
             ? Math.max(
-                ...risk.factors.map((f) => (f.type === "streak_break" ? Date.now() - f.value * 86400000 : 0)),
+                ...risk.factors.map((f) =>
+                  f.type === "streak_break" ? Date.now() - f.value * 86400000 : 0,
+                ),
                 Date.now(),
               )
             : Date.now();

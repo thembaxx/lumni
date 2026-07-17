@@ -32,6 +32,7 @@ Plan 194 shipped shared quiz sessions (invite button, progress visibility, Ably 
 ## Scope
 
 **In scope**:
+
 1. `src/lib/collaborative/voice-service.ts` — implement real WebRTC + SimplePeer connect/sendSignal/createOffer
 2. `src/app/api/collaborative/sessions/route.ts` — fix hardcoded "User" to real auth
 3. `src/components/collaborative/shared-whiteboard.tsx` — new component wrapping `WhiteboardService` for mounting
@@ -39,6 +40,7 @@ Plan 194 shipped shared quiz sessions (invite button, progress visibility, Ably 
 5. Wire voice toggle button into shared quiz session (mute/unmute, "Join Voice" / "Leave Voice")
 
 **Out of scope**:
+
 - Mobile voice (WebRTC works on mobile, but the UI needs to be scroll-compact — defer)
 - Recording/transcription of voice sessions
 - Persistent whiteboard storage (Yjs ephemeral for now)
@@ -57,7 +59,7 @@ In `src/app/api/collaborative/sessions/route.ts`:
 
 In `src/lib/collaborative/voice-service.ts`:
 
-1. `connect(roomId)`: 
+1. `connect(roomId)`:
    - Request `navigator.mediaDevices.getUserMedia({ audio: true })`
    - Create a `SimplePeer` initiator peer
    - Store peer in peers Map

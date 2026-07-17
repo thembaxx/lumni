@@ -34,7 +34,9 @@ describe("SharedQuizSession", () => {
       completeQuiz: vi.fn(),
     });
 
-    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />);
+    const { container } = render(
+      <SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />,
+    );
 
     expect(container.textContent).toContain("common.progressWhiteboardVoice");
   });
@@ -72,7 +74,9 @@ describe("SharedQuizSession", () => {
       completeQuiz: vi.fn(),
     });
 
-    const { container } = render(<SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />);
+    const { container } = render(
+      <SharedQuizSession channelName="test" totalQuestions={10} sessionId="test-session" />,
+    );
 
     expect(container.textContent).toContain("(you)");
   });

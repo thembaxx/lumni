@@ -25,12 +25,14 @@ The matric results page (`src/app/[locale]/matric-results/`) shows demo data wit
 ## Scope
 
 **In scope (Path A — Recommended)**:
+
 - Admin data-entry tool: `POST /api/admin/matric-results/upload` — CSV/JSON upload endpoint
 - Dexie v42: `matricResults` table
 - Student view: `GET /api/matric-results` reads from Dexie instead of generating synthetic data
 - Keep `data.ts` as fallback when no real data exists (remove the `isDemoData` flag — just show available data or empty state)
 
 **Out of scope**:
+
 - DBE web scraping (attempted before, site is image-based, OCR unreliable)
 - Auto-fetch from DBE partner API (no known API exists)
 - Real-time results checking (DBE publishes once/year per candidate)
@@ -46,6 +48,7 @@ In `src/lib/db/schema.ts`:
 ```
 
 Add `MatricResult` type to `src/lib/matric-results/types.ts`:
+
 ```ts
 interface MatricResult {
   candidateNumber: string;

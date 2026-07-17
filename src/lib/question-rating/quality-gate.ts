@@ -43,7 +43,9 @@ export function checkQuestionQuality(
 
 export async function deprecateLowQualityQuestion(
   questionId: string,
-  db?: { deprecatedQuestions: DataAccessTable<{ questionId: string; deprecatedAt: number }, string> },
+  db?: {
+    deprecatedQuestions: DataAccessTable<{ questionId: string; deprecatedAt: number }, string>;
+  },
 ): Promise<void> {
   const store = db ?? dexieDataAccess;
   try {
