@@ -27,7 +27,7 @@ export function DailyChallengeCard({ streak }: DailyChallengeCardProps) {
   if (!isDue) return null;
 
   return (
-    <SpringCard glass index={0}>
+    <SpringCard glass>
       <div className="flex items-center gap-4 p-5">
         <div className="relative flex size-12 shrink-0 items-center justify-center rounded-2xl bg-warning/15">
           <div className="absolute inset-0 animate-halo-pulse rounded-2xl" aria-hidden="true" />

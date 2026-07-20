@@ -1,13 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
 import { DailyChallengeCard } from "@/components/dashboard/daily-challenge-card";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
 import { LearningMapCard } from "@/components/dashboard/learning-map-card";
-import { NextBestActionCard } from "@/components/dashboard/next-best-action";
-import { PersonalizedFeed } from "@/components/dashboard/personalized-feed";
 import { CompetitionCard } from "@/components/dashboard/competition-card";
 import { QuestionOfTheDayCard } from "@/components/dashboard/question-of-the-day-card";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
@@ -26,9 +23,8 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
-import { useFeatureFlag } from "@/hooks/use-feature-flag";
-import { getFeed } from "@/lib/retention-loop/next-action";
 import { BentoGrid, BentoCell } from "./parts/bento-grid";
+import { FeedSection } from "./feed-section";
 
 const FocusTimerCard = dynamic(
   () => import("@/components/dashboard/focus-timer-card").then((m) => m.FocusTimerCard),
@@ -84,36 +80,6 @@ function SectionLabel({ label }: { label: string }) {
         {label}
       </h2>
     </div>
-  );
-}
-
-function FeedSection({ userId }: { userId: string }) {
-  const { enabled: showPersonalizedFeed } = useFeatureFlag("personalized-feed", userId);
-
-  const { data: recommendations } = useQuery({
-    queryKey: ["personalized-feed", userId],
-    queryFn: async ({ queryKey }) => getFeed(queryKey[1] as string),
-    staleTime: 60_000,
-    refetchInterval: 60000,
-    enabled: showPersonalizedFeed,
-  });
-
-  if (!showPersonalizedFeed || !recommendations || recommendations.length === 0) {
-    return (
-      <StaggeredSection>
-        <AppErrorBoundary>
-          <NextBestActionCard />
-        </AppErrorBoundary>
-      </StaggeredSection>
-    );
-  }
-
-  return (
-    <StaggeredSection>
-      <AppErrorBoundary>
-        <PersonalizedFeed recommendations={recommendations} />
-      </AppErrorBoundary>
-    </StaggeredSection>
   );
 }
 

@@ -7,7 +7,6 @@ import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services";
-import { AmbientBlobs } from "./parts/ambient-blobs";
 
 export function DashboardContent({
   onStartQuiz,
@@ -30,7 +29,6 @@ export function DashboardContent({
   return (
     <div id={id} className="flex h-full w-full flex-col overflow-y-auto bg-system-grouped">
       <AmbientGradient variant="dashboard" />
-      <AmbientBlobs />
       <PageContainer className="relative z-elevated gap-4 pb-24 sm:pb-28 lg:pb-32 sm:gap-5 lg:gap-6">
         <LoginBanner />
         <DashboardView boltStreak={boltStreak} onStartQuiz={onStartQuiz} />

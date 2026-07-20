@@ -68,13 +68,13 @@ export function AmbientGradient({ className, variant = "default" }: AmbientGradi
       )}
       {variant === "dashboard" && (
         <>
-          <FloatDrift className="absolute -top-40 -right-40 size-100 rounded-full bg-primary/3 blur-3xl" />
+          <FloatDrift className="absolute -top-24 -right-24 size-96 rounded-full bg-system-accent/5 blur-3xl" />
           <FloatDrift
-            className="absolute -bottom-40 left-1/4 size-87.5 rounded-full bg-chart-2/2 blur-3xl"
+            className="absolute -bottom-32 -left-32 size-80 rounded-full bg-system-warning/5 blur-3xl"
             delay={-3}
           />
           <FloatDrift
-            className="absolute top-1/2 -right-20 size-62.5 rounded-full bg-chart-4/2 blur-3xl"
+            className="absolute top-1/3 left-1/2 size-64 rounded-full bg-system-info/4 blur-3xl"
             delay={-5}
           />
         </>

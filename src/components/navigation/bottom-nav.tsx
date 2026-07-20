@@ -37,6 +37,9 @@ const navItems: BottomNavItem[] = [
   })),
 ];
 
+const navIconClass =
+  "mx-1 flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
+
 const springBounce = {
   type: "spring" as const,
   stiffness: 500,
@@ -198,7 +201,7 @@ const BottomNav = memo(function BottomNav() {
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.94 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
-            className="flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
+            className={navIconClass}
           >
             <HugeiconsIcon icon={GridIcon} className="size-5" />
           </motion.button>
@@ -219,7 +222,7 @@ function SnapFabInline() {
       type="button"
       onClick={() => push("/solve?camera=1")}
       aria-label="Snap photo to solve"
-      className="mx-1 flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
+      className={navIconClass}
     >
       <HugeiconsIcon icon={Camera01Icon} className="size-5" data-icon />
     </button>

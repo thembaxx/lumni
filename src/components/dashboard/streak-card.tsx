@@ -1,13 +1,12 @@
 "use client";
 
-import FireIcon from "@hugeicons/core-free-icons/FireIcon";
 import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
+import { AnimatedStreakIcon } from "./parts/animated-streak-icon";
 import { SpringCard } from "./parts/spring-card";
 
 export const StreakCard = memo(function StreakCard() {
@@ -18,23 +17,10 @@ export const StreakCard = memo(function StreakCard() {
   const practicedToday = gamification.lastPracticeDate === today;
 
   return (
-    <SpringCard glass index={0}>
+    <SpringCard glass>
       <div className="p-4">
         <div className="flex items-center gap-4">
-          <div
-            className={cn(
-              "relative flex size-14 shrink-0 items-center justify-center rounded-2xl transition-colors",
-              currentStreak > 0
-                ? "bg-warning/15 text-warning ring-1 ring-warning/30"
-                : "bg-muted text-muted-foreground",
-            )}
-          >
-            <HugeiconsIcon
-              icon={FireIcon}
-              className={cn("size-7", currentStreak > 0 && "animate-float-bob")}
-              aria-hidden="true"
-            />
-          </div>
+          <AnimatedStreakIcon streak={currentStreak} />
           <div className="flex-1">
             <div className="flex items-baseline gap-2">
               <span className="font-bold text-4xl text-foreground tabular-nums tracking-tight">
