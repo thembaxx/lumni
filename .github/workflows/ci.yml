@@ -13,6 +13,7 @@ on:
 env:
   NEXT_PUBLIC_APPWRITE_ENDPOINT: ${{ vars.APPWRITE_ENDPOINT || 'https://jnb.cloud.appwrite.io/v1' }}
   NEXT_PUBLIC_APPWRITE_PROJECT_ID: ${{ vars.APPWRITE_PROJECT_ID || '' }}
+  APPWRITE_DATABASE_ID: ${{ secrets.APPWRITE_DATABASE_ID || vars.APPWRITE_DATABASE_ID || '' }}
   ZAP_API_KEY: ${{ secrets.ZAP_API_KEY || '' }}
 
 defaults:

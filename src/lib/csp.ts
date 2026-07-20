@@ -28,8 +28,7 @@ export function buildCsp(nonce?: string): string {
   return [
     "default-src 'self'",
     `script-src ${scriptSrc.join(" ")}`,
-    "style-src 'self' fonts.googleapis.com cdn.jsdelivr.net",
-    "style-src-attr 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net",
     "img-src 'self' data: blob: https://*.cloud.appwrite.io https://*.uploadthing.com https://commons.wikimedia.org https://upload.wikimedia.org https://api.dicebear.com https://api.iconify.design https://api.qrserver.com",
     "font-src 'self' data: fonts.gstatic.com cdn.jsdelivr.net",
     `connect-src ${connectSrc.join(" ")}`,
