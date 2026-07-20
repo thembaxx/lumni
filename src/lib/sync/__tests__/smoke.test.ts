@@ -1,17 +1,19 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Mock } from "vitest";
 
+const syncOutboxMock = vi.hoisted(() => ({
+  add: vi.fn(),
+  orderBy: vi.fn(() => ({ limit: vi.fn(() => ({ toArray: vi.fn() })) })),
+  get: vi.fn(),
+  update: vi.fn(),
+  bulkDelete: vi.fn(),
+  count: vi.fn(),
+  toArray: vi.fn(),
+}));
+
 vi.mock("@/lib/db/dexie-data-access", () => ({
   dexieDataAccess: {
-    syncOutbox: {
-      add: vi.fn(),
-      orderBy: vi.fn(() => ({ limit: vi.fn(() => ({ toArray: vi.fn() })) })),
-      get: vi.fn(),
-      update: vi.fn(),
-      bulkDelete: vi.fn(),
-      count: vi.fn(),
-      toArray: vi.fn(),
-    },
+    syncOutbox: syncOutboxMock,
     syncCheckpoints: { toArray: vi.fn(), put: vi.fn() },
     flashcards: { put: vi.fn(), get: vi.fn() },
     notes: { put: vi.fn(), get: vi.fn() },
@@ -51,7 +53,10 @@ describe("Sync Smoke Test", () => {
   it("enqueueOutbox creates pending entries", async () => {
     (dexieDataAccess.syncOutbox.add as Mock).mockResolvedValue(1);
 
-    await enqueueOutbox("flashcards", "fc_1", "create", { front: "hello", back: "world" });
+    await enqueueOutbox(dexieDataAccess, "flashcards", "fc_1", "create", {
+      front: "hello",
+      back: "world",
+    });
 
     expect(dexieDataAccess.syncOutbox.add).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -124,7 +129,6 @@ describe("Sync Smoke Test", () => {
   it("pullRemote fetches and stores remote records", async () => {
     (dexieDataAccess.syncCheckpoints.toArray as Mock).mockResolvedValue([]);
     const record = { id: "fc_1", front: "synced hello" };
-    // 4 tables queried + 1 push call = 5 total fetch calls
     mockFetch.mockResolvedValue({
       ok: true,
       json: async () => ({ records: [record], version: "v1" }),

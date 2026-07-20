@@ -41,13 +41,12 @@ const mockTable = {
   count: vi.fn(async () => store.length),
 };
 
-vi.mock("@/lib/db/dexie-data-access", () => ({
-  dexieDataAccess: {
-    syncOutbox: mockTable,
-  },
-}));
+const mockDb = {
+  syncOutbox: mockTable,
+};
 
 const { enqueueOutbox, getPendingOutboxEntries, removeOutboxEntries, getOutboxCount } =
+  // oxlint-disable-next-line @typescript-eslint/no-explicit-any
   await import("../outbox");
 
 describe("outbox queue", () => {
@@ -58,45 +57,51 @@ describe("outbox queue", () => {
   });
 
   test("enqueue adds an entry", async () => {
-    await enqueueOutbox("flashcards", "card-1", "update", { front: "hello" });
-    const count = await getOutboxCount();
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "flashcards", "card-1", "update", { front: "hello" });
+    const count = await getOutboxCount(mockDb as any);
     expect(count).toBe(1);
   });
 
   test("getPendingOutboxEntries returns entries ordered by createdAt", async () => {
-    await enqueueOutbox("notes", "note-1", "create", { title: "first" });
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "notes", "note-1", "create", { title: "first" });
     await new Promise((r) => setTimeout(r, 10));
-    await enqueueOutbox("notes", "note-2", "create", { title: "second" });
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "notes", "note-2", "create", { title: "second" });
 
-    const entries = await getPendingOutboxEntries(10);
+    const entries = await getPendingOutboxEntries(mockDb as any, 10);
     expect(entries.length).toBe(2);
     expect(entries[0].recordId).toBe("note-1");
   });
 
   test("removeOutboxEntries removes specified entries", async () => {
-    await enqueueOutbox("a", "1", "create", {});
-    await enqueueOutbox("a", "2", "create", {});
-    const entries = await getPendingOutboxEntries(10);
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "a", "1", "create", {});
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "a", "2", "create", {});
+    const entries = await getPendingOutboxEntries(mockDb as any, 10);
     const ids = entries.map((e) => e.id!);
 
-    await removeOutboxEntries([ids[0]]);
-    const remaining = await getPendingOutboxEntries(10);
+    await removeOutboxEntries(mockDb as any, [ids[0]]);
+    const remaining = await getPendingOutboxEntries(mockDb as any, 10);
     expect(remaining.length).toBe(1);
     expect(remaining[0].id).toBe(ids[1]);
   });
 
   test("enqueue stores serialised data", async () => {
     const data = { score: 85, topic: "algebra" };
-    await enqueueOutbox("competencies", "comp-1", "update", data);
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    await enqueueOutbox(mockDb as any, "competencies", "comp-1", "update", data);
 
-    const entries = await getPendingOutboxEntries(10);
+    const entries = await getPendingOutboxEntries(mockDb as any, 10);
     const parsed = JSON.parse(entries[0].data);
     expect(parsed.score).toBe(85);
     expect(parsed.topic).toBe("algebra");
   });
 
   test("getOutboxCount returns 0 when empty", async () => {
-    const count = await getOutboxCount();
+    const count = await getOutboxCount(mockDb as any);
     expect(count).toBe(0);
   });
 });

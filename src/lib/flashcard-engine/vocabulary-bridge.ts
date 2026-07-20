@@ -1,4 +1,4 @@
-import type { VocabularyEntry } from "@/lib/db/schema";
+import type { VocabularyEntry } from "@/lib/db/types";
 import { flashcardEngine } from "./engine";
 
 export async function createVocabularyCard(word: VocabularyEntry): Promise<void> {

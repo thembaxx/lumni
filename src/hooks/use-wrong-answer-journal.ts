@@ -9,9 +9,9 @@ function __setDepsForTesting(deps: { db: SyncDataAccess }) {
   _deps = Object.freeze({ ...deps });
 }
 
-export type { ErrorType, WrongAnswerEntry } from "@/lib/db/schema";
-export { ERROR_TYPE_LABELS } from "@/lib/db/schema";
-import type { ErrorType, WrongAnswerEntry } from "@/lib/db/schema";
+export type { ErrorType, WrongAnswerEntry } from "@/lib/db/types";
+export { ERROR_TYPE_LABELS } from "@/lib/db/types";
+import type { ErrorType, WrongAnswerEntry } from "@/lib/db/types";
 
 export function useWrongAnswerJournal() {
   const addWrongAnswer = useCallback(

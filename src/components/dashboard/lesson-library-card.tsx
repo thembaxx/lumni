@@ -3,12 +3,11 @@
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import GraduationCapIcon from "@hugeicons/core-free-icons/GraduationCapIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRecentLessonProgress } from "@/hooks/use-lesson-progress";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
-import { dexieDataAccess } from "@/lib/db";
 
 interface LessonProgressRow {
   userId: string;
@@ -33,30 +32,7 @@ export function LessonLibraryCard() {
   const { push } = useNavigationDirection();
   const userId = user?.$id ?? "anonymous";
 
-  const { data: recentLessons } = useQuery({
-    queryKey: ["lesson-progress-dashboard", userId],
-    queryFn: async () => {
-      try {
-        const records = await dexieDataAccess.lessonProgress
-          .where("userId")
-          .equals(userId)
-          .toArray();
-        return records
-          .toSorted((a: LessonProgressRow, b: LessonProgressRow) => {
-            const aKey = parseLessonId(a.lessonId);
-            const bKey = parseLessonId(b.lessonId);
-            const aId = `${aKey.subjectId}:${aKey.topicId}:${aKey.subtopicId}`;
-            const bId = `${bKey.subjectId}:${bKey.topicId}:${bKey.subtopicId}`;
-            return aId.localeCompare(bId);
-          })
-          .slice(-5)
-          .toReversed();
-      } catch {
-        return [];
-      }
-    },
-    enabled: userId !== "anonymous",
-  });
+  const { data: recentLessons } = useRecentLessonProgress(userId);
 
   const hasProgress = recentLessons && recentLessons.length > 0;
 

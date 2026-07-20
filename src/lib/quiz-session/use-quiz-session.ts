@@ -2,9 +2,10 @@
 
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
-import { quizSessionRepo } from "@/lib/db/repositories/quiz-session";
 import type { Question } from "@/lib/question-engine/types";
+import type { QuizSessionState as DbQuizSessionState } from "@/lib/db/types";
 import type {
   AnswerDetail,
   QuizSessionActions,
@@ -12,6 +13,23 @@ import type {
   QuizSessionState,
 } from "./types";
 import { quizReducer, INITIAL_QUIZ_STATE, type QuizAction } from "./reducer";
+
+async function saveQuizSession(
+  data: Omit<DbQuizSessionState, "id" | "lastSavedAt">,
+): Promise<void> {
+  const existing = data.sessionId
+    ? await dexieDataAccess.quizSessions.where("sessionId").equals(data.sessionId).first()
+    : undefined;
+
+  if (existing) {
+    const entry: DbQuizSessionState = { ...data, lastSavedAt: Date.now() };
+    if (existing?.id != null) {
+      await dexieDataAccess.quizSessions.update(existing.id, entry);
+    } else {
+      await dexieDataAccess.quizSessions.add(entry);
+    }
+  }
+}
 
 function withLocalStorageGuard(action: QuizAction): QuizAction {
   if (action.type === "FINISH" || action.type === "RESET") {
@@ -55,7 +73,7 @@ export function useQuizSession(
 
   const persist = useCallback(() => {
     const s = saveRef.current;
-    quizSessionRepo.save({
+    saveQuizSession({
       sessionId,
       subject: s.questions[0]?.subject ?? "unknown",
       topic: s.questions[0]?.topic,

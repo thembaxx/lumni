@@ -6,7 +6,6 @@ const mockIncrementRetry = vi.fn();
 const mockRemoveEntries = vi.fn();
 const mockGetOutboxCount = vi.fn().mockResolvedValue(0);
 const mockLogError = vi.fn();
-const mockInitWriters = vi.fn();
 
 vi.mock("@/lib/sync/outbox", () => ({
   getPendingOutboxEntries: mockGetPending,
@@ -19,14 +18,18 @@ vi.mock("@/lib/shared/logger", () => ({
   logError: mockLogError,
 }));
 
-vi.mock("@/lib/sync/sync-writer", () => ({
-  initSyncWriters: mockInitWriters,
-}));
-
 const dexieMock = {
   syncCheckpoints: {
     toArray: vi.fn().mockResolvedValue([]),
     put: vi.fn(),
+  },
+  syncOutbox: {
+    add: vi.fn(),
+    orderBy: vi.fn(),
+    get: vi.fn(),
+    update: vi.fn(),
+    bulkDelete: vi.fn(),
+    count: vi.fn(),
   },
   flashcards: { put: vi.fn(), get: vi.fn() },
   notes: { put: vi.fn(), get: vi.fn() },
@@ -66,11 +69,9 @@ describe("SyncService", () => {
     mockGetPending.mockReset();
     mockIncrementRetry.mockReset();
     mockRemoveEntries.mockReset();
-    mockInitWriters.mockReset();
     mockLogError.mockReset();
 
     mockGetPending.mockResolvedValue([]);
-    mockInitWriters.mockResolvedValue(undefined);
 
     Object.values(dexieMock).forEach((t: unknown) => {
       const table = t as Record<string, Mock>;
@@ -188,7 +189,7 @@ describe("SyncService", () => {
           body: expect.stringContaining("flashcards"),
         }),
       );
-      expect(mockRemoveEntries).toHaveBeenCalledWith([1]);
+      expect(mockRemoveEntries).toHaveBeenCalledWith(expect.anything(), [1]);
     });
 
     it("should retry on server error", async () => {
@@ -210,7 +211,7 @@ describe("SyncService", () => {
 
       await service.trigger();
 
-      expect(mockIncrementRetry).toHaveBeenCalledWith(1);
+      expect(mockIncrementRetry).toHaveBeenCalledWith(expect.anything(), 1);
       expect(mockRemoveEntries).not.toHaveBeenCalled();
     });
   });
@@ -323,7 +324,6 @@ describe("SyncService", () => {
 
       service.start();
 
-      expect(mockInitWriters).toHaveBeenCalled();
       await vi.advanceTimersToNextTimerAsync();
     });
 

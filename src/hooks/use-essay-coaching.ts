@@ -5,7 +5,7 @@ import type { GradingResult } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";
 import { useAuth } from "@/lib/auth/auth-context";
 import { dexieDataAccess } from "@/lib/db";
-import type { EssayDraftRecord } from "@/lib/db/schema";
+import type { EssayDraftRecord } from "@/lib/db/types";
 
 const MAX_REVISIONS = 3;
 

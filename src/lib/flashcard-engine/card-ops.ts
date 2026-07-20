@@ -1,3 +1,4 @@
+import { dexieDataAccess } from "@/lib/db";
 import type { FlashcardDataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 import { enqueueOutbox } from "@/lib/sync/outbox";
@@ -41,7 +42,7 @@ export async function createCard(
   enqueueFn("appwrite-flashcard-sync", syncCardPayload(card)).catch((e: unknown) =>
     logError("FlashcardEngine.CreateSync", e),
   );
-  enqueueOutbox("flashcards", card.id, "create", card).catch((e: unknown) =>
+  enqueueOutbox(dexieDataAccess, "flashcards", card.id, "create", card).catch((e: unknown) =>
     logError("FlashcardEngine.CreateOutbox", e),
   );
 
@@ -73,7 +74,7 @@ export async function updateCard(
 
   const card = await db.flashcards.get(id);
   if (card) {
-    enqueueOutbox("flashcards", id, "update", card).catch((e: unknown) =>
+    enqueueOutbox(dexieDataAccess, "flashcards", id, "update", card).catch((e: unknown) =>
       logError("FlashcardEngine.UpdateOutbox", e),
     );
   }
@@ -88,7 +89,7 @@ export async function deleteCard(
   enqueueFn("appwrite-flashcard-delete", { id }).catch((e: unknown) =>
     logError("FlashcardEngine.DeleteSync", e),
   );
-  enqueueOutbox("flashcards", id, "delete", { id }).catch((e: unknown) =>
+  enqueueOutbox(dexieDataAccess, "flashcards", id, "delete", { id }).catch((e: unknown) =>
     logError("FlashcardEngine.DeleteOutbox", e),
   );
 }

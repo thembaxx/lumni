@@ -5,15 +5,9 @@ import PrinterIcon from "@hugeicons/core-free-icons/PrinterIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useExportData } from "@/hooks/use-export-data";
 import { useGamification } from "@/hooks/use-gamification";
-import { dexieDataAccess } from "@/lib/db";
-import type { CompetencyDataAccess, SyncDataAccess } from "@/lib/db/data-access";
 import { exportService } from "@/lib/export";
-
-type ExportTabDb = Pick<CompetencyDataAccess, "quizAttempts"> &
-  Pick<SyncDataAccess, "examSessions">;
-
-const _deps: { db: ExportTabDb } = { db: dexieDataAccess };
 
 type ExportState = "idle" | "exporting" | "printing" | "csv-exporting";
 
@@ -28,6 +22,7 @@ function escapeHtml(str: string): string {
 export function ProgressExport() {
   const { levelInfo } = useGamification();
   const [exportState, setExportState] = useState<ExportState>("idle");
+  const { getQuizAttempts, getExamSessions } = useExportData();
 
   const handleExportJson = () => {
     setExportState("exporting");
@@ -51,10 +46,7 @@ export function ProgressExport() {
 
   const handleExportCsv = () => {
     setExportState("csv-exporting");
-    Promise.all([
-      _deps.db.quizAttempts.orderBy("completedAt").toReversed().limit(100).toArray(),
-      _deps.db.examSessions.limit(100).toArray(),
-    ])
+    Promise.all([getQuizAttempts(100), getExamSessions(100)])
       .then(([quizAttempts, examSessions]) => {
         const csv = exportService.toCSV(quizAttempts, examSessions);
         const blob = new Blob([csv], { type: "text/csv" });

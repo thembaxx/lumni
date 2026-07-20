@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { dexieDataAccess } from "@/lib/db";
-import type { AssignmentMessage } from "@/lib/db/schema";
-import { logError } from "@/lib/shared/logger";
+import { useAssignmentMessages } from "@/hooks/use-assignment-messages";
 import { cn } from "@/lib/utils";
 
 interface AssignmentThreadProps {
@@ -13,47 +11,14 @@ interface AssignmentThreadProps {
 }
 
 export function AssignmentThread({ assignmentId }: AssignmentThreadProps) {
-  const [messages, setMessages] = useState<AssignmentMessage[]>([]);
-  const [_loading, setLoading] = useState(true);
+  const { messages, loading: _loading, sendMessage: sendMsg } = useAssignmentMessages(assignmentId);
   const [newMessage, setNewMessage] = useState("");
   const [sending, setSending] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    dexieDataAccess.assignmentMessages
-      .where("assignmentId")
-      .equals(assignmentId)
-      .toArray()
-      .then((all) => {
-        if (cancelled) return;
-        all.sort((a, b) => a.createdAt - b.createdAt);
-        setMessages(all);
-      })
-      .catch((err) => logError("AssignmentThreadLoad", err))
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [assignmentId]);
 
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
     setSending(true);
-    await dexieDataAccess.assignmentMessages.add({
-      assignmentId,
-      senderId: "current",
-      senderRole: "teacher",
-      content: newMessage.trim(),
-      createdAt: Date.now(),
-    });
-    const all = await dexieDataAccess.assignmentMessages
-      .where("assignmentId")
-      .equals(assignmentId)
-      .toArray();
-    all.sort((a, b) => a.createdAt - b.createdAt);
-    setMessages(all);
+    await sendMsg(newMessage.trim());
     setNewMessage("");
     setSending(false);
   };

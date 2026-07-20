@@ -1,4 +1,4 @@
-import type { MatricResult as DbMatricResult } from "@/lib/db/schema";
+import type { MatricResult as DbMatricResult } from "@/lib/db/types";
 
 export type { DbMatricResult };
 

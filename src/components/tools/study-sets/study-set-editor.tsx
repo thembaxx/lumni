@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { dexieDataAccess } from "@/lib/db";
-import type { FlashcardDataAccess } from "@/lib/db/data-access";
-
-const _deps: { db: FlashcardDataAccess } = { db: dexieDataAccess };
+import { useAvailableFlashcards } from "@/hooks/use-available-flashcards";
+import { useAvailableNotes } from "@/hooks/use-available-notes";
 
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -61,37 +59,22 @@ export function StudySetForm({ onSubmit, onCancel, initialValues }: StudySetForm
   );
   const [availableNotes, setAvailableNotes] = useState<{ id: string; title: string }[]>([]);
 
+  const { getFlashcards } = useAvailableFlashcards();
+  const { getNotes } = useAvailableNotes();
+
   useEffect(() => {
     if (showFlashcardPicker) {
-      _deps.db.flashcards.toArray().then((cards) =>
-        setAvailableFlashcards(
-          cards.map((c) => ({
-            id: c.id,
-            front: c.front,
-          })),
-        ),
-      );
+      getFlashcards().then(setAvailableFlashcards);
     }
-  }, [showFlashcardPicker]);
+  }, [showFlashcardPicker, getFlashcards]);
 
   useEffect(() => {
     if (showNotesPicker) {
-      (async () => {
-        try {
-          const { dexieDataAccess } = await import("@/lib/db");
-          const notes = await dexieDataAccess.notes.toArray();
-          setAvailableNotes(
-            notes.map((n) => ({
-              id: n.uuid,
-              title: n.title,
-            })),
-          );
-        } catch {
-          setAvailableNotes([]);
-        }
-      })();
+      getNotes()
+        .then(setAvailableNotes)
+        .catch(() => setAvailableNotes([]));
     }
-  }, [showNotesPicker]);
+  }, [showNotesPicker, getNotes]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

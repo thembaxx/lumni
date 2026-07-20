@@ -1,4 +1,5 @@
-import type { DataAccessTable } from "@/lib/db/data-access";
+import type { DataAccess, DataAccessTable } from "@/lib/db/data-access";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
 import {
   getOutboxCount,
@@ -6,21 +7,28 @@ import {
   incrementRetry,
   removeOutboxEntries,
 } from "./outbox";
-import { initSyncWriters } from "./sync-writer";
+import { SYNCABLE_TABLES } from "./sync-writer";
 import type { SyncResult, SyncService, SyncStatus } from "./types";
 
-export function createSyncService(userId: () => string | null): SyncService {
-  let state: SyncStatus["state"] = "idle";
-  let lastSyncAt: number | null = null;
-  let lastError: string | null = null;
-  let pendingWritesCount = 0;
-  let intervalId: ReturnType<typeof setInterval> | null = null;
-  let cleanupOnline: (() => void) | null = null;
-  const listeners = new Set<(status: SyncStatus) => void>();
+export class SyncServiceClass implements SyncService {
+  private state: SyncStatus["state"] = "idle";
+  private lastSyncAt: number | null = null;
+  private lastError: string | null = null;
+  private pendingWritesCount = 0;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
+  private cleanupOnline: (() => void) | null = null;
+  private readonly listeners = new Set<(status: SyncStatus) => void>();
+  private readonly db: DataAccess;
+  private readonly getUserId: () => string | null;
 
-  function notify() {
-    const status = getStatus();
-    for (const cb of listeners) {
+  constructor(opts: { db: DataAccess; userId: () => string | null }) {
+    this.db = opts.db;
+    this.getUserId = opts.userId;
+  }
+
+  private notify(): void {
+    const status = this.status();
+    for (const cb of this.listeners) {
       try {
         cb(status);
       } catch {
@@ -29,22 +37,22 @@ export function createSyncService(userId: () => string | null): SyncService {
     }
   }
 
-  function getStatus(): SyncStatus {
+  status(): SyncStatus {
     return {
-      state,
-      pendingWrites: pendingWritesCount,
-      lastSyncAt,
-      lastError,
+      state: this.state,
+      pendingWrites: this.pendingWritesCount,
+      lastSyncAt: this.lastSyncAt,
+      lastError: this.lastError,
     };
   }
 
-  async function pushOutbox(): Promise<{ pushed: number; errors: string[] }> {
-    const uid = userId();
+  private async pushOutbox(): Promise<{ pushed: number; errors: string[] }> {
+    const uid = this.getUserId();
     if (!uid) return { pushed: 0, errors: [] };
 
-    const entries = await getPendingOutboxEntries(50);
-    pendingWritesCount = entries.length;
-    notify();
+    const entries = await getPendingOutboxEntries(this.db, 50);
+    this.pendingWritesCount = entries.length;
+    this.notify();
     if (entries.length === 0) return { pushed: 0, errors: [] };
 
     const pushed: number[] = [];
@@ -80,7 +88,7 @@ export function createSyncService(userId: () => string | null): SyncService {
             });
             continue;
           }
-          await incrementRetry(entry.id);
+          await incrementRetry(this.db, entry.id);
         }
       } catch (err) {
         errors.push(`Push ${entry.table}/${entry.recordId}: network error`);
@@ -89,69 +97,52 @@ export function createSyncService(userId: () => string | null): SyncService {
     }
 
     if (pushed.length > 0) {
-      await removeOutboxEntries(pushed);
+      await removeOutboxEntries(this.db, pushed);
     }
 
-    pendingWritesCount = await getOutboxCount();
-    notify();
+    this.pendingWritesCount = await getOutboxCount(this.db);
+    this.notify();
 
     return { pushed: pushed.length, errors };
   }
 
-  async function pullRemote(): Promise<{ pulled: number; conflicts: number; errors: string[] }> {
-    const uid = userId();
+  private async pullRemote(): Promise<{
+    pulled: number;
+    conflicts: number;
+    errors: string[];
+  }> {
+    const uid = this.getUserId();
     if (!uid) return { pulled: 0, conflicts: 0, errors: [] };
 
     const errors: string[] = [];
     let pulled = 0;
-    let conflicts = 0;
+    const conflicts = 0;
 
     try {
-      const { dexieDataAccess } = await import("@/lib/db/dexie-data-access");
-      const checkpoints = await dexieDataAccess.syncCheckpoints.toArray();
+      const checkpoints = await this.db.syncCheckpoints.toArray();
       const checkpointMap = new Map(checkpoints.map((c) => [c.table, c]));
 
-      const tables = [
-        "flashcards",
-        "notes",
-        "competencies",
-        "gamification",
-        "retentionRecurrence",
-        "wrongAnswers",
-        "chatMessages",
-        "questionRatings",
-        "bookmarks",
-        "examSessions",
-        "quizAttempts",
-        "studyPlans",
-        "studyGuides",
-        "vocabularyList",
-        "pronunciationHistory",
-        "storyCache",
-        "storyQuestions",
-      ];
-
       const tableAccessors: Record<string, DataAccessTable<unknown, string | number>> = {
-        flashcards: dexieDataAccess.flashcards,
-        notes: dexieDataAccess.notes,
-        competencies: dexieDataAccess.competencies,
-        gamification: dexieDataAccess.gamification,
-        retentionRecurrence: dexieDataAccess.retentionRecurrence,
-        wrongAnswers: dexieDataAccess.wrongAnswers,
-        chatMessages: dexieDataAccess.chatMessages,
-        questionRatings: dexieDataAccess.questionRatings,
-        bookmarks: dexieDataAccess.bookmarks,
-        examSessions: dexieDataAccess.examSessions,
-        quizAttempts: dexieDataAccess.quizAttempts,
-        studyPlans: dexieDataAccess.studyPlans,
-        studyGuides: dexieDataAccess.studyGuides,
-        vocabularyList: dexieDataAccess.vocabularyList,
-        pronunciationHistory: dexieDataAccess.pronunciationHistory,
-        storyCache: dexieDataAccess.storyCache,
-        storyQuestions: dexieDataAccess.storyQuestions,
+        flashcards: this.db.flashcards,
+        notes: this.db.notes,
+        competencies: this.db.competencies,
+        gamification: this.db.gamification,
+        retentionRecurrence: this.db.retentionRecurrence,
+        wrongAnswers: this.db.wrongAnswers,
+        chatMessages: this.db.chatMessages,
+        questionRatings: this.db.questionRatings,
+        bookmarks: this.db.bookmarks,
+        examSessions: this.db.examSessions,
+        quizAttempts: this.db.quizAttempts,
+        studyPlans: this.db.studyPlans,
+        studyGuides: this.db.studyGuides,
+        vocabularyList: this.db.vocabularyList,
+        pronunciationHistory: this.db.pronunciationHistory,
+        storyCache: this.db.storyCache,
+        storyQuestions: this.db.storyQuestions,
       };
 
-      for (const table of tables) {
+      for (const table of SYNCABLE_TABLES) {
         try {
           const checkpoint = checkpointMap.get(table);
           const since = checkpoint?.lastPulledAt ?? 0;
@@ -167,9 +158,14 @@ export function createSyncService(userId: () => string | null): SyncService {
           if (data.records.length === 0) continue;
 
           pulled += data.records.length;
+
           const accessor = tableAccessors[table];
           if (!accessor) continue;
-          for (const record of data.records as Array<{ id: string; updatedAt?: string }>) {
+
+          for (const record of data.records as Array<{
+            id: string | number;
+            updatedAt?: string;
+          }>) {
             const id =
               typeof record.id === "number" || typeof record.id === "string"
                 ? record.id
@@ -191,7 +187,7 @@ export function createSyncService(userId: () => string | null): SyncService {
             await accessor.put(record);
           }
 
-          await dexieDataAccess.syncCheckpoints.put({
+          await this.db.syncCheckpoints.put({
             table,
             lastPulledAt: Date.now(),
             lastPulledVersion: data.version,
@@ -208,24 +204,24 @@ export function createSyncService(userId: () => string | null): SyncService {
     return { pulled, conflicts, errors };
   }
 
-  async function trigger(): Promise<SyncResult> {
-    if (state === "syncing") return { pushed: 0, pulled: 0, conflicts: 0, errors: [] };
+  async trigger(): Promise<SyncResult> {
+    if (this.state === "syncing") return { pushed: 0, pulled: 0, conflicts: 0, errors: [] };
 
-    state = "syncing";
-    notify();
+    this.state = "syncing";
+    this.notify();
 
-    const pushResult = await pushOutbox();
-    const pullResult = await pullRemote();
+    const pushResult = await this.pushOutbox();
+    const pullResult = await this.pullRemote();
 
     if (pushResult.errors.length === 0 && pullResult.errors.length === 0) {
-      state = "idle";
-      lastSyncAt = Date.now();
-      lastError = null;
+      this.state = "idle";
+      this.lastSyncAt = Date.now();
+      this.lastError = null;
     } else {
-      state = "error";
-      lastError = [...pushResult.errors, ...pullResult.errors].join("; ");
+      this.state = "error";
+      this.lastError = [...pushResult.errors, ...pullResult.errors].join("; ");
     }
-    notify();
+    this.notify();
 
     return {
       pushed: pushResult.pushed,
@@ -235,49 +231,45 @@ export function createSyncService(userId: () => string | null): SyncService {
     };
   }
 
-  function start() {
-    if (intervalId) return;
-    state = "idle";
-    notify();
+  start(): void {
+    if (this.intervalId) return;
+    this.state = "idle";
+    this.notify();
 
-    initSyncWriters().catch((err) => logError("Sync.initWriters", err));
-
-    cleanupOnline = () => {
-      trigger().catch((err) => logError("Sync.online", err));
+    this.cleanupOnline = () => {
+      this.trigger().catch((err) => logError("Sync.online", err));
     };
-    window.addEventListener("online", cleanupOnline);
+    window.addEventListener("online", this.cleanupOnline);
 
-    trigger().catch((err) => logError("Sync.start", err));
+    this.trigger().catch((err) => logError("Sync.start", err));
 
-    intervalId = setInterval(
+    this.intervalId = setInterval(
       () => {
-        trigger().catch((err) => logError("Sync.interval", err));
+        this.trigger().catch((err) => logError("Sync.interval", err));
       },
       5 * 60 * 1000,
     );
   }
 
-  function stop() {
-    if (intervalId) {
-      clearInterval(intervalId);
-      intervalId = null;
+  stop(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
     }
-    if (cleanupOnline) {
-      window.removeEventListener("online", cleanupOnline);
-      cleanupOnline = null;
+    if (this.cleanupOnline) {
+      window.removeEventListener("online", this.cleanupOnline);
+      this.cleanupOnline = null;
     }
-    state = "idle";
-    notify();
+    this.state = "idle";
+    this.notify();
   }
 
-  return {
-    start,
-    stop,
-    status: getStatus,
-    trigger,
-    onStatusChange: (cb) => {
-      listeners.add(cb);
-      return () => listeners.delete(cb);
-    },
-  };
+  onStatusChange(cb: (status: SyncStatus) => void): () => void {
+    this.listeners.add(cb);
+    return () => this.listeners.delete(cb);
+  }
+}
+
+export function createSyncService(userId: () => string | null): SyncService {
+  return new SyncServiceClass({ db: dexieDataAccess, userId });
 }

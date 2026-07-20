@@ -10,6 +10,7 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
+import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { useAuth } from "@/lib/auth/auth-context";
 import { createSyncService, initSyncWriters } from "@/lib/sync";
@@ -59,7 +60,7 @@ export function SyncProvider({ children }: { children: ReactNode }) {
 
     const countInterval = setInterval(async () => {
       try {
-        const count = await getOutboxCount();
+        const count = await getOutboxCount(dexieDataAccess);
         setPendingCount(count);
       } catch (err) {
         logError("SyncProvider.outboxCount", err);

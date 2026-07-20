@@ -1,4 +1,4 @@
-import type { AnalyticsEvent } from "@/lib/db/schema";
+import type { AnalyticsEvent } from "@/lib/db/types";
 import type { ObservabilityDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 

@@ -1,6 +1,6 @@
 import type { Collection as DexieCollection, IndexableType, Table, UpdateSpec } from "dexie";
 import type { Collection, DataAccess, DataAccessTable, WhereClause } from "@/lib/db/data-access";
-import { offlineDB } from "@/lib/db/schema";
+import { offlineDB } from "@/lib/db/ssr-proxy";
 
 // ──────────────────────────────────────────────
 // Dexie adapter wrappers

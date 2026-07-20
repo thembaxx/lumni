@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import type { AIClient } from "@/lib/ai";
 import { ensureAI } from "@/lib/ai";
 import type { CacheResolver } from "@/lib/caching-strategy";
@@ -90,19 +89,13 @@ export class QuestionEngine {
    * @returns A Promise that resolves to an object containing the generated questions
    *          and optional RAG context for web source attribution.
    */
-  generateEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const result = yield* Effect.tryPromise(() => self.cachingStrategy.resolve(params)).pipe(
-        Effect.catchAll(() => Effect.succeed(null)),
-      );
-      return result ?? { questions: [], ragContext: null };
-    });
-  }
-
   async generate(params: GenerationParams): Promise<GenerateResult> {
-    return Effect.runPromise(this.generateEffect(params));
+    try {
+      const result = await this.cachingStrategy.resolve(params);
+      return result ?? { questions: [], ragContext: null };
+    } catch {
+      return { questions: [], ragContext: null };
+    }
   }
 
   private async generateInternal(params: GenerationParams): Promise<GenerateResult | null> {
@@ -186,18 +179,10 @@ export class QuestionEngine {
    *                optional RAG XML for web-grounded content.
    * @returns A Promise that resolves to a string containing the generated hint.
    */
-  generateHintEffect(params: HintParams): Effect.Effect<string> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { question } = params;
-      const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
-      return yield* processor.generateHintEffect(typed, params.ragXml);
-    });
-  }
-
   async generateHint(params: HintParams): Promise<string> {
-    return Effect.runPromise(this.generateHintEffect(params));
+    const { question } = params;
+    const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
+    return processor.generateHint(typed, params.ragXml);
   }
 
   /**
@@ -210,17 +195,9 @@ export class QuestionEngine {
    * @returns A Promise that resolves to a GradingResult containing the score,
    *         feedback, and grading details.
    */
-  gradeEffect(question: Question, answer: UserAnswer): Effect.Effect<GradingResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const { processor, typed } = self.withProcessor(question, question.type as QuestionType);
-      return yield* processor.gradeEffect(typed, answer);
-    });
-  }
-
   async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
-    return Effect.runPromise(this.gradeEffect(question, answer));
+    const { processor, typed } = this.withProcessor(question, question.type as QuestionType);
+    return processor.grade(typed, answer);
   }
 
   /**

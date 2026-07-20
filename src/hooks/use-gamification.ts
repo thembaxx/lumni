@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
 import { dexieDataAccess, type ObservabilityDataAccess } from "@/lib/db";
-import type { StoredGamification } from "@/lib/gamification-engine";
 import { GamificationService } from "@/lib/gamification-engine/service";
 import { getSettings, sendLocalNotification } from "@/lib/services";
+import { createSubscriberHook } from "@/lib/shared/hook-utils";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: ObservabilityDataAccess } = Object.freeze({ db: dexieDataAccess });
@@ -29,31 +29,27 @@ import {
   type UserGamification,
 } from "@/types/gamification";
 
-export function useGamification() {
-  const service = useMemo(() => getService(), []);
-  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+const useGamificationState = createSubscriberHook({
+  getService,
+  subscribe: (s, cb) => s.subscribe(cb),
+  getState: (s) => s.getState(),
+  onInit: (s) => {
+    s.loadFromDexie().catch((err) => logError("useGamificationLoadDexie", err));
+    const syncedKey = "__gamification_synced";
+    if (!sessionStorage.getItem(syncedKey)) {
+      sessionStorage.setItem(syncedKey, "1");
+      s.syncFromServer().catch((err) => logError("useGamificationSyncFromServer", err));
+    }
+  },
+});
 
-  const [data, setData] = useState<StoredGamification>(() => service.getState());
+export function useGamification() {
+  const { state: data, service } = useGamificationState();
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const prevLevelRef = useRef<number>(calculateLevel(data.totalXp).level);
   const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
   const [pendingAchievement, setPendingAchievement] = useState<Achievement | null>(null);
   const [pendingChest, setPendingChest] = useState<RewardChestDef | null>(null);
-
-  useEffect(() => {
-    const unsub = service.subscribe((newData) => {
-      setData(newData);
-    });
-    return unsub;
-  }, [service]);
-
-  useEffect(() => {
-    service.loadFromDexie().catch((err) => logError("useGamificationLoadDexie", err));
-    const syncedKey = "__gamification_synced";
-    if (!sessionStorage.getItem(syncedKey)) {
-      sessionStorage.setItem(syncedKey, "1");
-      service.syncFromServer().catch((err) => logError("useGamificationSyncFromServer", err));
-    }
-  }, [service]);
 
   useEffect(() => {
     const timersAtMount = timersRef.current;

@@ -40,7 +40,7 @@ import type {
   UserSettings,
   VocabularyEntry,
   DeprecatedQuestion,
-} from "@/lib/db/schema";
+} from "@/lib/db/types";
 import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";

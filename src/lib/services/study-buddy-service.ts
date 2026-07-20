@@ -1,5 +1,5 @@
 import type { StudyCommitmentsDataAccess } from "@/lib/db";
-import type { StudyCommitmentRecord } from "@/lib/db/schema";
+import type { StudyCommitmentRecord } from "@/lib/db/types";
 import type { StudyCommitment } from "@/lib/services/study-commitment-types";
 import { logError } from "@/lib/shared/logger";
 

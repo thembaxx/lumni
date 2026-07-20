@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { dexieDataAccess } from "@/lib/db";
 import { getPendingOutboxEntries, removeOutboxEntries, incrementRetry } from "@/lib/sync/outbox";
 import { logError } from "@/lib/shared/logger";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ export function ConflictResolver() {
 
   useEffect(() => {
     if (!open) return;
-    getPendingOutboxEntries(100)
+    getPendingOutboxEntries(dexieDataAccess, 100)
       .then((all) => {
         setEntries(
           all
@@ -64,7 +65,7 @@ export function ConflictResolver() {
                   variant="default"
                   size="sm"
                   onClick={async () => {
-                    await incrementRetry(entry.id);
+                    await incrementRetry(dexieDataAccess, entry.id);
                     fetch("/api/sync/push", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -83,7 +84,7 @@ export function ConflictResolver() {
                   variant="destructive"
                   size="sm"
                   onClick={async () => {
-                    await removeOutboxEntries([entry.id]);
+                    await removeOutboxEntries(dexieDataAccess, [entry.id]);
                     setEntries((prev) => prev.filter((e) => e.id !== entry.id));
                   }}
                 >

@@ -1,13 +1,49 @@
 import { ensureAI } from "@/lib/ai";
 import { type CachingStrategy, createCachingStrategy } from "@/lib/caching-strategy";
 import { getDataSharingConsent } from "@/lib/consent/ai-gate";
-import { makeCacheKey, visualCacheRepo } from "@/lib/db/repositories/visual-cache";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import { safeJsonStringify, safeJsonParse } from "@/lib/shared/json";
 import { logError } from "@/lib/shared/logger";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
+import type { CachedVisual } from "@/lib/db/types";
 import type { VisualContent, VisualEngineParams } from "./types";
 import { STEM_SUBJECTS } from "./types";
 import { loadVisualFromAppwrite, saveVisualToAppwrite } from "./visual-persistence";
+
+export function makeCacheKey(questionId: string, subject: string): string {
+  return `${subject}:${questionId}`;
+}
+
+async function getCachedVisual(cacheKey: string): Promise<VisualContent | null> {
+  const entry = await dexieDataAccess.visuals.where("cacheKey").equals(cacheKey).first();
+  if (!entry) return null;
+  if (Date.now() > entry.expiresAt) {
+    if (entry.id != null) await dexieDataAccess.visuals.delete(entry.id);
+    return null;
+  }
+  return safeJsonParse<VisualContent>(entry.visual, null);
+}
+
+async function cacheVisual(
+  cacheKey: string,
+  subject: string,
+  visual: VisualContent | null,
+): Promise<void> {
+  const existing = await dexieDataAccess.visuals.where("cacheKey").equals(cacheKey).first();
+  const entry: CachedVisual = {
+    cacheKey,
+    subject,
+    visual: safeJsonStringify(visual),
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+  };
+  if (existing?.id != null) {
+    await dexieDataAccess.visuals.update(existing.id, entry);
+  } else {
+    await dexieDataAccess.visuals.add(entry);
+  }
+}
 
 /**
  * Generates visual content (diagrams or images) for questions based on the subject classification.
@@ -30,11 +66,11 @@ export class VisualEngine {
           name: "dexie",
           read: async (params) => {
             const cacheKey = makeCacheKey(params.questionId, params.subject);
-            return visualCacheRepo.getVisual(cacheKey);
+            return getCachedVisual(cacheKey);
           },
           write: async (params, visual) => {
             const cacheKey = makeCacheKey(params.questionId, params.subject);
-            await visualCacheRepo.cacheVisual(cacheKey, params.subject, visual);
+            await cacheVisual(cacheKey, params.subject, visual);
           },
         },
         {

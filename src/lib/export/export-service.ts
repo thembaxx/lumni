@@ -9,7 +9,7 @@ import type {
 type DataAccess = ObservabilityDataAccess &
   CompetencyDataAccess &
   Pick<SyncDataAccess, "examSessions" | "wrongAnswers">;
-import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/schema";
+import type { ExamSessionSnapshot, QuizAttempt } from "@/lib/db/types";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import type { StoredAchievement, StoredGamification } from "@/lib/gamification-engine/types";

@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { type PlannerSnapshot, StudyPlannerService } from "@/lib/services";
+import { createSubscriberHook } from "@/lib/shared/hook-utils";
 import { logError } from "@/lib/shared/logger";
 import type { ExamDate, StudyPlan, StudySession } from "@/lib/utils/study-planner";
 
@@ -47,27 +48,23 @@ function getService(): StudyPlannerService {
   return _serviceInstance;
 }
 
+const usePlannerState = createSubscriberHook({
+  getService,
+  subscribe: (s, cb) => s.subscribe(cb),
+  getState: (s) => s.getSnapshot(),
+  onInit: (s) => {
+    s.loadFromDexie().catch((err) => logError("useStudyPlannerLoadDexie", err));
+  },
+});
+
 export function useStudyPlanner(): UseStudyPlannerReturn {
   const { user } = useAuth();
-  const service = useMemo(() => getService(), []);
-
-  const [snapshot, setSnapshot] = useState<PlannerSnapshot>(() => service.getSnapshot());
+  const { state: snapshot, service } = usePlannerState();
   const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     service.setUserId(user?.$id ?? null);
   }, [service, user?.$id]);
-
-  useEffect(() => {
-    const unsub = service.subscribe(() => {
-      setSnapshot(service.getSnapshot());
-    });
-    return unsub;
-  }, [service]);
-
-  useEffect(() => {
-    service.loadFromDexie().catch((err) => logError("useStudyPlannerLoadDexie", err));
-  }, [service]);
 
   useEffect(() => {
     const interval = setInterval(() => service.refresh(), 60000);

@@ -1,6 +1,6 @@
 import { dexieDataAccess } from "@/lib/db";
 import type { DataAccessTable } from "@/lib/db/data-access";
-import type { CachedQuestion } from "@/lib/db/schema";
+import type { CachedQuestion } from "@/lib/db/types";
 import { logError } from "@/lib/shared/logger";
 
 export interface QualityGateConfig {

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
-import type { RetentionRecurrence } from "@/lib/db/schema";
+import type { RetentionRecurrence } from "@/lib/db/types";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import { __setDepsForTesting, resolveNextAction } from "../next-action";
 

@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { dexieDataAccess as _dexieDa } from "@/lib/db";
 import type {
   CompetencyDataAccess,
@@ -76,10 +75,6 @@ export function dismissAction(kind: ActionKind): void {
   setDismissed(kind, 24 * 60 * 60 * 1000);
 }
 
-export function dismissActionEffect(kind: ActionKind): Effect.Effect<void> {
-  return Effect.sync(() => setDismissed(kind, 24 * 60 * 60 * 1000));
-}
-
 function getTimeOfDay(): "morning" | "afternoon" | "evening" {
   const h = new Date().getHours();
   if (h < 12) {
@@ -91,16 +86,18 @@ function getTimeOfDay(): "morning" | "afternoon" | "evening" {
   return "evening";
 }
 
-function getDueCardCountEffect(): Effect.Effect<number> {
-  return Effect.tryPromise(async () => {
+async function getDueCardCount(): Promise<number> {
+  try {
     const now = Date.now();
     const allCards = await _deps.db.flashcards.toArray();
     return allCards.filter((c) => c.nextReview <= now).length;
-  }).pipe(Effect.catchAll(() => Effect.succeed(0)));
+  } catch {
+    return 0;
+  }
 }
 
-function getOverdueRetentionItemsEffect(): Effect.Effect<{ subject: string; topic: string }[]> {
-  return Effect.tryPromise(async () => {
+async function getOverdueRetentionItems(): Promise<{ subject: string; topic: string }[]> {
+  try {
     const now = Date.now();
     const items = await _deps.db.retentionRecurrence
       .where("scheduledAt")
@@ -113,15 +110,17 @@ function getOverdueRetentionItemsEffect(): Effect.Effect<{ subject: string; topi
       }
     }
     return result;
-  }).pipe(Effect.catchAll(() => Effect.succeed([])));
+  } catch {
+    return [];
+  }
 }
 
-function getWeakestTopicEffect(_userId?: string): Effect.Effect<{
+async function getWeakestTopic(_userId?: string): Promise<{
   subject: string;
   topic: string;
   score: number;
 } | null> {
-  return Effect.tryPromise(async () => {
+  try {
     const competencies = await _deps.db.competencies.toArray();
     if (competencies.length === 0) {
       return null;
@@ -145,84 +144,80 @@ function getWeakestTopicEffect(_userId?: string): Effect.Effect<{
       .replaceAll(/\b\w/g, (l: string) => l.toUpperCase());
 
     return { score: weakest.score, subject: subjectName, topic: topicName };
-  }).pipe(Effect.catchAll(() => Effect.succeed(null)));
-}
-
-export function resolveNextActionEffect(userId?: string): Effect.Effect<NextAction | null> {
-  return Effect.gen(function* () {
-    const tod = getTimeOfDay();
-
-    const dueCount = yield* getDueCardCountEffect();
-    if (dueCount > 5 && !isDismissed("due-cards")) {
-      return {
-        ctaHref: "/flashcards",
-        ctaLabel: `Review ${dueCount} cards`,
-        expiresAt: Date.now() + 3600000,
-        kind: "due-cards" as ActionKind,
-        reason: `You have ${dueCount} cards waiting — a quick review keeps your streak alive`,
-        title: `${dueCount} flashcards due!`,
-      };
-    }
-
-    const overdueItems = yield* getOverdueRetentionItemsEffect();
-    if (overdueItems.length > 0 && !isDismissed("review-mistakes")) {
-      const { subject } = overdueItems[0];
-      return {
-        ctaHref: "/review",
-        ctaLabel: "Review mistakes",
-        expiresAt: Date.now() + 3600000,
-        kind: "review-mistakes" as ActionKind,
-        reason: "You have overdue review items",
-        subject,
-        title: "Review mistakes",
-      };
-    }
-
-    const weakest = yield* getWeakestTopicEffect(userId);
-    if (weakest && !isDismissed("weakest-topic")) {
-      const session = getCurrentSession();
-      const daysUntil = session ? getDaysUntilExam(session, weakest.subject) : null;
-      const daysSuffix = daysUntil != null ? ` · ${daysUntil} days to exam` : "";
-      return {
-        ctaHref: `/quiz?subject=${encodeURIComponent(weakest.subject)}&topic=${encodeURIComponent(weakest.topic)}&count=10`,
-        ctaLabel: tod === "morning" ? "Drill 10 questions" : "Practice now",
-        expiresAt: Date.now() + 3600000,
-        kind: "weakest-topic" as ActionKind,
-        reason: `${weakest.topic} in ${weakest.subject} is your weakest area at ${weakest.score}%${daysSuffix}`,
-        subject: weakest.subject,
-        title: `Strengthen ${weakest.topic}`,
-        topic: weakest.topic,
-      };
-    }
-
-    if (dueCount > 0 && !isDismissed("flashcards")) {
-      return {
-        ctaHref: "/flashcards",
-        ctaLabel: "Review cards",
-        expiresAt: Date.now() + 3600000,
-        kind: "flashcards" as ActionKind,
-        reason: "Quick card review — pick up where you left off",
-        title: `${dueCount} flashcards due`,
-      };
-    }
-
-    if (tod === "evening" && !isDismissed("study-plan")) {
-      return {
-        ctaHref: "/study-plan",
-        ctaLabel: "Open study planner",
-        expiresAt: Date.now() + 7200000,
-        kind: "study-plan" as ActionKind,
-        reason: "Evenings are great for planning tomorrow's study session",
-        title: "Plan your next session",
-      };
-    }
-
+  } catch {
     return null;
-  });
+  }
 }
 
-export function resolveNextAction(userId?: string): Promise<NextAction | null> {
-  return Effect.runPromise(resolveNextActionEffect(userId));
+export async function resolveNextAction(userId?: string): Promise<NextAction | null> {
+  const tod = getTimeOfDay();
+
+  const dueCount = await getDueCardCount();
+  if (dueCount > 5 && !isDismissed("due-cards")) {
+    return {
+      ctaHref: "/flashcards",
+      ctaLabel: `Review ${dueCount} cards`,
+      expiresAt: Date.now() + 3600000,
+      kind: "due-cards" as ActionKind,
+      reason: `You have ${dueCount} cards waiting — a quick review keeps your streak alive`,
+      title: `${dueCount} flashcards due!`,
+    };
+  }
+
+  const overdueItems = await getOverdueRetentionItems();
+  if (overdueItems.length > 0 && !isDismissed("review-mistakes")) {
+    const { subject } = overdueItems[0];
+    return {
+      ctaHref: "/review",
+      ctaLabel: "Review mistakes",
+      expiresAt: Date.now() + 3600000,
+      kind: "review-mistakes" as ActionKind,
+      reason: "You have overdue review items",
+      subject,
+      title: "Review mistakes",
+    };
+  }
+
+  const weakest = await getWeakestTopic(userId);
+  if (weakest && !isDismissed("weakest-topic")) {
+    const session = getCurrentSession();
+    const daysUntil = session ? getDaysUntilExam(session, weakest.subject) : null;
+    const daysSuffix = daysUntil != null ? ` · ${daysUntil} days to exam` : "";
+    return {
+      ctaHref: `/quiz?subject=${encodeURIComponent(weakest.subject)}&topic=${encodeURIComponent(weakest.topic)}&count=10`,
+      ctaLabel: tod === "morning" ? "Drill 10 questions" : "Practice now",
+      expiresAt: Date.now() + 3600000,
+      kind: "weakest-topic" as ActionKind,
+      reason: `${weakest.topic} in ${weakest.subject} is your weakest area at ${weakest.score}%${daysSuffix}`,
+      subject: weakest.subject,
+      title: `Strengthen ${weakest.topic}`,
+      topic: weakest.topic,
+    };
+  }
+
+  if (dueCount > 0 && !isDismissed("flashcards")) {
+    return {
+      ctaHref: "/flashcards",
+      ctaLabel: "Review cards",
+      expiresAt: Date.now() + 3600000,
+      kind: "flashcards" as ActionKind,
+      reason: "Quick card review — pick up where you left off",
+      title: `${dueCount} flashcards due`,
+    };
+  }
+
+  if (tod === "evening" && !isDismissed("study-plan")) {
+    return {
+      ctaHref: "/study-plan",
+      ctaLabel: "Open study planner",
+      expiresAt: Date.now() + 7200000,
+      kind: "study-plan" as ActionKind,
+      reason: "Evenings are great for planning tomorrow's study session",
+      title: "Plan your next session",
+    };
+  }
+
+  return null;
 }
 
 export function getFeed(

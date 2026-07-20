@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { dexieDataAccess } from "@/lib/db";
 import type { CachedStory } from "@/lib/stories/types";
 import type { QuizPack } from "@/lib/quiz-packs/types";
-import type { StoryProgressRecord } from "@/lib/db/schema";
+import type { StoryProgressRecord } from "@/lib/db/types";
 import { useOfflineStats } from "@/hooks/use-offline-stats";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import { useSyncContext } from "@/components/providers/sync-provider";

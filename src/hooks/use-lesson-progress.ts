@@ -1,13 +1,36 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { dexieDataAccess, type VocabularyDataAccess } from "@/lib/db";
-import type { LessonProgress } from "@/lib/db/schema";
+import type { LessonProgress } from "@/lib/db/types";
 import { logError } from "@/lib/shared/logger";
 
 let _deps: { db: VocabularyDataAccess } = Object.freeze({ db: dexieDataAccess });
-function __setDepsForTesting(deps: { db: VocabularyDataAccess }) {
+export function __setDepsForTesting(deps: { db: VocabularyDataAccess }) {
   _deps = Object.freeze({ ...deps });
+}
+
+export function useRecentLessonProgress(userId: string) {
+  return useQuery({
+    queryKey: ["lesson-progress-dashboard", userId],
+    queryFn: async () => {
+      try {
+        const records = await _deps.db.lessonProgress.where("userId").equals(userId).toArray();
+        return records
+          .toSorted((a: LessonProgress, b: LessonProgress) => {
+            const aId = `${a.lessonId}`;
+            const bId = `${b.lessonId}`;
+            return aId.localeCompare(bId);
+          })
+          .slice(-5)
+          .toReversed();
+      } catch {
+        return [];
+      }
+    },
+    enabled: userId !== "anonymous",
+  });
 }
 
 function buildLessonKey(userId: string, lessonId: string): string {

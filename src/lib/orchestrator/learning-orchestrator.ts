@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { dexieDataAccess } from "@/lib/db";
 import type { EmbeddingDataAccess, LegacyDataAccess } from "@/lib/db/data-access";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
@@ -42,82 +41,80 @@ export class LearningOrchestrator {
     return new LearningOrchestrator(engine);
   }
 
-  generateQuestionSetEffect(params: GenerationParams): Effect.Effect<GenerateResult> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
+  async generateQuestionSet(params: GenerationParams): Promise<GenerateResult> {
     const startTime = Date.now();
     const { questionType, subject, topic, count } = params;
 
-    return Effect.gen(function* () {
-      const { questions: rawQuestions, ragContext } = yield* Effect.tryPromise(() =>
-        self.engine.generate(params),
-      ).pipe(
-        Effect.catchAll(() => Effect.succeed({ questions: [] as Question[], ragContext: null })),
-      );
-      let questions: Question[] = rawQuestions;
+    let rawQuestions: Question[] = [];
+    let ragContext: { sources?: { url: string; title: string }[] } | null = null;
+    try {
+      const result = await this.engine.generate(params);
+      rawQuestions = result.questions;
+      ragContext = result.ragContext;
+    } catch {
+      rawQuestions = [];
+    }
+    let questions: Question[] = rawQuestions;
 
-      const poolQuestions = questions.filter((q) => q.metadata?.source === "imported");
-      const aiQuestions = questions.filter((q) => q.metadata?.source !== "imported");
-      const dedupResults = yield* Effect.all(
-        aiQuestions.map((q) =>
-          Effect.tryPromise(() => self.dedup.isDuplicate(q, subject)).pipe(
-            Effect.catchAll(() => Effect.succeed(false)),
-          ),
-        ),
-        { concurrency: "unbounded" },
-      );
-      const aiDeduped = aiQuestions.filter((_, i) => !dedupResults[i]);
-      questions = [...poolQuestions, ...aiDeduped].slice(0, count);
+    const poolQuestions = questions.filter((q) => q.metadata?.source === "imported");
+    const aiQuestions = questions.filter((q) => q.metadata?.source !== "imported");
+    const dedupResults = await Promise.all(
+      aiQuestions.map(async (q) => {
+        try {
+          return await this.dedup.isDuplicate(q, subject);
+        } catch {
+          return false;
+        }
+      }),
+    );
+    const aiDeduped = aiQuestions.filter((_, i) => !dedupResults[i]);
+    questions = [...poolQuestions, ...aiDeduped].slice(0, count);
 
-      const jobs = yield* Effect.all(
-        [
-          Effect.tryPromise(() =>
-            self.pipeline.enqueueJob("appwrite-sync", { questions, subject, topic }),
-          ).pipe(Effect.catchAll(() => Effect.succeed(-1))),
-          ...questions.map((q) =>
-            Effect.tryPromise(() =>
-              self.pipeline.enqueueJob("visual-generation", {
-                questionId: q.id,
-                questionText: q.questionText,
-                subject,
-                topic,
-              }),
-            ).pipe(Effect.catchAll(() => Effect.succeed(-1))),
-          ),
-        ],
-        { concurrency: "unbounded" },
-      );
-      const jobIds = jobs.filter((id): id is number => id !== -1);
+    const jobResults = await Promise.all([
+      (async () => {
+        try {
+          return await this.pipeline.enqueueJob("appwrite-sync", { questions, subject, topic });
+        } catch {
+          return -1;
+        }
+      })(),
+      ...questions.map(async (q) => {
+        try {
+          return await this.pipeline.enqueueJob("visual-generation", {
+            questionId: q.id,
+            questionText: q.questionText,
+            subject,
+            topic,
+          });
+        } catch {
+          return -1;
+        }
+      }),
+    ]);
+    const jobIds = jobResults.filter((id): id is number => id !== -1);
 
-      yield* Effect.sync(() =>
-        trackEngineEvent({
-          event: "generate",
-          subject,
-          questionType: serializeQuestionType(questionType),
-          count: questions.length,
-          success: true,
-          duration: Date.now() - startTime,
-        }),
-      );
-
-      const sources: { url: string; title: string }[] =
-        ragContext?.sources?.map((s: { url: string; title: string }) => ({
-          url: s.url,
-          title: s.title,
-        })) ?? [];
-
-      return {
-        questions,
-        count: questions.length,
-        type: serializeQuestionType(questionType),
-        jobIds,
-        sources,
-      };
+    trackEngineEvent({
+      event: "generate",
+      subject,
+      questionType: serializeQuestionType(questionType),
+      count: questions.length,
+      success: true,
+      duration: Date.now() - startTime,
     });
-  }
 
-  async generateQuestionSet(params: GenerationParams): Promise<GenerateResult> {
-    return Effect.runPromise(this.generateQuestionSetEffect(params));
+    const sources: { url: string; title: string }[] =
+      ragContext?.sources?.map((s: { url: string; title: string }) => ({
+        url: s.url,
+        title: s.title,
+      })) ?? [];
+
+    return {
+      questions,
+      count: questions.length,
+      type: serializeQuestionType(questionType),
+      jobIds,
+      sources,
+    };
   }
 
   async gradeAndTrack(question: Question, answer: UserAnswer): Promise<GradeResult> {

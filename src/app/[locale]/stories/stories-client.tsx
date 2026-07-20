@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
-import type { StoryProgressRecord } from "@/lib/db/schema";
+import type { StoryProgressRecord } from "@/lib/db/types";
 import { dexieDataAccess } from "@/lib/db/dexie-data-access";
 import { logError } from "@/lib/shared/logger";
 import { cacheAllStories, generateAudioForAllStories } from "@/lib/stories/service";

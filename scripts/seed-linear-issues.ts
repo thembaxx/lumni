@@ -1,5 +1,5 @@
 #! /usr/bin/env tsx
-export {}; // Module-scoped TS to avoid collision with other script main()
+// Module-scoped TS to avoid collision with other script main()
 
 const API_KEY = process.env.LINEAR_API_KEY ?? "";
 const TEAM_ID = "86d9eadf-8428-4e38-8bdf-4028e66e0037";

@@ -3,46 +3,19 @@
 import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
 import OpenBookIcon from "@hugeicons/core-free-icons/Book01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useQuery } from "@tanstack/react-query";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useAuth } from "@/lib/auth/auth-context";
-import { dexieDataAccess } from "@/lib/db";
+import { useStoryProgress } from "@/hooks/use-story-progress";
 
 export function StoriesProgressCard() {
   const { user } = useAuth();
   const { push } = useNavigationDirection();
   const userId = user?.$id ?? "anonymous";
 
-  const { data: recentStories, isLoading } = useQuery({
-    queryKey: ["stories-progress-dashboard", userId],
-    queryFn: async () => {
-      const progress = await dexieDataAccess.storyProgress.where("userId").equals(userId).toArray();
-
-      const recent = progress
-        .toSorted((a, b) => (b.lastReadAt ?? 0) - (a.lastReadAt ?? 0))
-        .slice(0, 3);
-
-      if (recent.length === 0) return [];
-
-      const storyKeys = recent.map((p) => `story:${p.storyId}`);
-      const cached = await dexieDataAccess.storyCache.where("key").anyOf(storyKeys).toArray();
-      const cacheMap = new Map(cached.map((c) => [c.key, c.story]));
-
-      return recent.map((p) => ({
-        storyId: p.storyId,
-        title:
-          (cacheMap.get(`story:${p.storyId}`) as { title?: string } | undefined)?.title ??
-          p.storyId,
-        scrollPercent: p.scrollPercent ?? 0,
-        completed: p.completed ?? false,
-        lastReadAt: p.lastReadAt,
-      }));
-    },
-    enabled: userId !== "anonymous",
-  });
+  const { data: recentStories, isLoading } = useStoryProgress(userId);
 
   const hasStories = recentStories && recentStories.length > 0;
 

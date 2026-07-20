@@ -2,7 +2,7 @@ import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { COLLECTIONS } from "@/lib/db/constants";
 import type { ContentDataAccess } from "@/lib/db/data-access";
-import type { SharedQuestionRecord } from "@/lib/db/schema";
+import type { SharedQuestionRecord } from "@/lib/db/types";
 import type { FlashcardDeck } from "@/lib/flashcard-engine/deck-types";
 import type { Question } from "@/lib/question-engine/types";
 import { logError } from "@/lib/shared/logger";

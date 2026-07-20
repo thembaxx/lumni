@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { dexieDataAccess } from "@/lib/db";
 import type { ObservabilityDataAccess } from "@/lib/db";
 import type { StoredGamification } from "@/lib/gamification-engine";
@@ -28,22 +27,10 @@ import {
   updateCounterMutation,
   setCounterMutation,
 } from "./service-mutation";
-import {
-  addXpEffect,
-  addAchievementEffect,
-  updateStreakEffect,
-  consumeStreakFreezeEffect,
-  addStreakFreezeEffect,
-  completeDailyChallengeEffect,
-  checkForRewardChestsEffect,
-} from "./service-effects";
 import { syncToLeaderboard } from "./service-sync";
 
 const DEFAULT_DEPS: GamificationDeps = { db: dexieDataAccess };
 
-function succeedUndefined(): Effect.Effect<void> {
-  return Effect.void;
-}
 export class GamificationService {
   private data: StoredGamification;
   private listeners: Set<StateListener> = new Set();
@@ -81,26 +68,6 @@ export class GamificationService {
     }
   }
 
-  loadFromDexieEffect(): Effect.Effect<void> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.tryPromise(() => self.db.gamification.get(1)).pipe(
-      Effect.catchAll((err) => {
-        logError("GamificationService.loadFromDexie", err);
-        return Effect.void;
-      }),
-      Effect.flatMap((dexieData) => {
-        if (!dexieData) return succeedUndefined();
-        const merged = gamificationEngine.mergeWithDefaults(dexieData);
-        if (merged !== self.data) {
-          self.data = merged;
-          self.notify();
-        }
-        return succeedUndefined();
-      }),
-    );
-  }
-
   async syncFromServer(): Promise<void> {
     try {
       const res = await apiFetch<{ gamification: StoredGamification | null }>(
@@ -120,31 +87,6 @@ export class GamificationService {
     } catch (err) {
       logError("GamificationService.syncFromServer", err);
     }
-  }
-
-  syncFromServerEffect(): Effect.Effect<void> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.tryPromise(() =>
-      apiFetch<{ gamification: StoredGamification | null }>("/api/gamification", {}),
-    ).pipe(
-      Effect.catchAll((err) => {
-        logError("GamificationService.syncFromServer", err);
-        return Effect.void;
-      }),
-      Effect.flatMap((res) => {
-        if (!res || !res.gamification) return succeedUndefined();
-        const merged = gamificationEngine.mergeWithDefaults({
-          ...self.data,
-          ...res.gamification,
-        });
-        if (merged !== self.data) {
-          self.data = merged;
-          self.notify();
-        }
-        return succeedUndefined();
-      }),
-    );
   }
 
   private get mutationSelf(): MutationSelf {
@@ -237,39 +179,6 @@ export class GamificationService {
 
   checkForRewardChests(): ChestResult {
     return checkForRewardChestsMutation(this.mutationSelf);
-  }
-
-  addXpEffect(
-    amount: number,
-    accuracy: number,
-    streak: number,
-    subject?: string,
-  ): Effect.Effect<XpResult> {
-    return addXpEffect(this.mutationSelf, amount, accuracy, streak, subject);
-  }
-
-  addAchievementEffect(achievementId: string): Effect.Effect<AchievementResult> {
-    return addAchievementEffect(this.mutationSelf, achievementId);
-  }
-
-  updateStreakEffect(): Effect.Effect<StreakResult> {
-    return updateStreakEffect(this.mutationSelf);
-  }
-
-  consumeStreakFreezeEffect(): Effect.Effect<FreezeResult> {
-    return consumeStreakFreezeEffect(this.mutationSelf);
-  }
-
-  addStreakFreezeEffect(count?: number): Effect.Effect<void> {
-    return addStreakFreezeEffect(this.mutationSelf, count);
-  }
-
-  completeDailyChallengeEffect(challengeId: string): Effect.Effect<void> {
-    return completeDailyChallengeEffect(this.mutationSelf, challengeId);
-  }
-
-  checkForRewardChestsEffect(): Effect.Effect<ChestResult> {
-    return checkForRewardChestsEffect(this.mutationSelf);
   }
 
   getLevelInfo() {

@@ -2,7 +2,7 @@ import { Query } from "appwrite";
 import { dexieDataAccess } from "@/lib/db";
 import { APPWRITE_DATABASE_ID, COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import type { CacheDataAccess, EmbeddingDataAccess, QuizDataAccess } from "@/lib/db/data-access";
-import { progressRepo } from "@/lib/db/repositories/progress";
+import type { CachedProgress } from "@/lib/db/types";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
@@ -49,6 +49,33 @@ export const analyticsSync = createJobHandler("analyticsSync", _analyticsSync, {
   usePersist: true,
 });
 
+async function _saveProgress(
+  odSubjectId: string,
+  data: {
+    questionsAttempted: number;
+    correctCount: number;
+    currentStreak: number;
+    longestStreak: number;
+  },
+  userId?: string,
+): Promise<number> {
+  const existing = await dexieDataAccess.progress.where("odSubjectId").equals(odSubjectId).first();
+  if (existing?.id != null) {
+    return dexieDataAccess.progress.update(existing.id, { ...data, updatedAt: Date.now() });
+  }
+  return dexieDataAccess.progress.add({ odSubjectId, userId, ...data, updatedAt: Date.now() });
+}
+
+async function _getProgress(
+  odSubjectId: string,
+  userId?: string,
+): Promise<CachedProgress | undefined> {
+  const item = await dexieDataAccess.progress.where("odSubjectId").equals(odSubjectId).first();
+  if (!item) return undefined;
+  if (userId && item.userId && item.userId !== userId) return undefined;
+  return item;
+}
+
 const _spacedRepUpdate = async (payload: unknown) => {
   const { question, result } = payload as JobPayloadByType["spaced-rep-update"];
 
@@ -85,7 +112,7 @@ export const spacedRepUpdate = createJobHandler("spacedRepUpdate", _spacedRepUpd
 const _progressUpdate = async (payload: unknown) => {
   const { subject, result } = payload as JobPayloadByType["progress-update"];
 
-  const existing = await progressRepo.get(subject);
+  const existing = await _getProgress(subject);
 
   const questionsAttempted = (existing?.questionsAttempted ?? 0) + 1;
   const correctCount = (existing?.correctCount ?? 0) + (result.correct ? 1 : 0);
@@ -93,7 +120,7 @@ const _progressUpdate = async (payload: unknown) => {
   const longestStreak = Math.max(existing?.longestStreak ?? 0, currentStreak);
 
   await Promise.all([
-    progressRepo.save(subject, {
+    _saveProgress(subject, {
       questionsAttempted,
       correctCount,
       currentStreak,

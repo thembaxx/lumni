@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { getAI } from "@/lib/ai";
 import type { AIClient } from "@/lib/ai/client";
 import { ensureArray, parseAIResponse } from "@/lib/ai/parse-response";
@@ -55,58 +54,24 @@ export class TypedQuestionProcessor<T extends QuestionType> implements QuestionP
   }
 
   async generateHint(question: Question<T>, ragXml?: string): Promise<string> {
-    return this.hintFn(question, this.prompts, this.ai, ragXml);
+    try {
+      return await this.hintFn(question, this.prompts, this.ai, ragXml);
+    } catch {
+      return "";
+    }
   }
 
   async grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult> {
-    return this.gradeFn(question, answer, this.prompts, this.ai);
-  }
-
-  gradeEffect(question: Question<T>, answer: UserAnswer): Effect.Effect<GradingResult> {
-    return Effect.tryPromise(async () =>
-      this.gradeFn(question, answer, this.prompts, this.ai),
-    ).pipe(
-      Effect.catchAll(() =>
-        Effect.succeed({
-          correct: false,
-          feedback: "Grading failed.",
-          maxScore: question.points,
-          score: 0,
-        } as GradingResult),
-      ),
-    );
-  }
-
-  generateEffect(params: GenerationParams, ragContext?: RagContext): Effect.Effect<Question<T>[]> {
-    // oxlint-disable-next-line typescript/no-this-alias
-    const self = this;
-    return Effect.gen(function* () {
-      const prompt = self.prompts.getPrompt(self.type, params, ragContext);
-      const result = yield* Effect.tryPromise(() =>
-        self.ai.generateWithSystem(prompt.system, prompt.user, {
-          maxTokens: 4096,
-          temperature: self.config.generateTemperature,
-        }),
-      ).pipe(Effect.catchAll(() => Effect.succeed(null as never)));
-      if (!result) {
-        return [];
-      }
-      const parsed = parseAIResponse<Question<T>[]>(result, []);
-      if (!parsed) {
-        return [];
-      }
-      const questions = ensureArray(parsed.data) as (Question<T> & { sourceRefs?: unknown })[];
-      for (const q of questions) {
-        attachWebSources(q, ragContext);
-      }
-      return questions;
-    });
-  }
-
-  generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string> {
-    return Effect.tryPromise(async () => this.hintFn(question, this.prompts, this.ai, ragXml)).pipe(
-      Effect.catchAll(() => Effect.succeed("")),
-    );
+    try {
+      return await this.gradeFn(question, answer, this.prompts, this.ai);
+    } catch {
+      return {
+        correct: false,
+        feedback: "Grading failed.",
+        maxScore: question.points,
+        score: 0,
+      } as GradingResult;
+    }
   }
 
   validate(question: Question<T>): ValidationResult {

@@ -1,30 +1,32 @@
-import { Effect } from "effect";
-import { processBoltEffect } from "./bolt";
-import { processQuizEffect } from "./quiz";
-import { processExamEffect } from "./exam";
-import { processFlashcardEffect } from "./flashcard";
-import type { QuizResultInput, QuizResultDeps } from "./types";
-import type { WebhookDispatcher } from "@/lib/webhooks";
 import { logError } from "@/lib/shared/logger";
+import { flashcardCreate, flashcardReview } from "./effects";
+import { handleBolt, handleExam, handleFlashcard, handleQuiz } from "./handlers";
+import type { HandlerResult, QuizResultDeps, QuizResultInput } from "./types";
 
-let _dispatcher: WebhookDispatcher | null = null;
+export type {
+  QuizResultInput,
+  QuizResultDeps,
+  WrongAnswerInput,
+  TrackResultInput,
+  RetentionInput,
+  FlashcardEngine,
+  BoltResult,
+  QuizResults,
+  ExamPartResult,
+  FlashcardItem,
+} from "./types";
 
-async function getDispatcher(): Promise<WebhookDispatcher | null> {
-  if (_dispatcher) return _dispatcher;
-  try {
-    const { createDispatcher } = await import("@/lib/webhooks");
-    const { createRegistry } = await import("@/lib/webhooks");
-    const { dexieDataAccess } = await import("@/lib/db");
-    const registry = createRegistry(dexieDataAccess);
-    _dispatcher = createDispatcher({ db: dexieDataAccess, registry });
-    return _dispatcher;
-  } catch {
-    return null;
+function dispatchHandler(input: QuizResultInput): HandlerResult {
+  switch (input.source) {
+    case "bolt":
+      return handleBolt(input.question);
+    case "quiz":
+      return handleQuiz(input.results);
+    case "exam":
+      return handleExam(input.parts, input.subject, input.paperId);
+    case "flashcard":
+      return handleFlashcard(input.cards, input.qualities, input.subject, input.isSm2);
   }
-}
-
-function assertUnreachable(source: string, context: string): never {
-  throw new Error(`Unhandled source "${source}" in ${context}`);
 }
 
 function extractSubject(input: QuizResultInput): string | undefined {
@@ -37,8 +39,6 @@ function extractSubject(input: QuizResultInput): string | undefined {
       return input.subject;
     case "flashcard":
       return input.subject;
-    default:
-      return assertUnreachable((input as QuizResultInput).source, "extractSubject");
   }
 }
 
@@ -55,39 +55,6 @@ function extractScore(input: QuizResultInput): { score: number; total: number } 
     }
     case "flashcard":
       return undefined;
-    default:
-      return assertUnreachable((input as QuizResultInput).source, "extractScore");
-  }
-}
-
-export type {
-  QuizResultInput,
-  QuizResultDeps,
-  WrongAnswerInput,
-  TrackResultInput,
-  RetentionInput,
-  FlashcardEngine,
-  BoltResult,
-  QuizResults,
-  ExamPartResult,
-  FlashcardItem,
-} from "./types";
-
-function processQuizResultEffect(
-  input: QuizResultInput,
-  deps: QuizResultDeps,
-): Effect.Effect<void> {
-  switch (input.source) {
-    case "bolt":
-      return processBoltEffect(input.question, deps);
-    case "quiz":
-      return processQuizEffect(input.results, deps);
-    case "exam":
-      return processExamEffect(input.parts, input.subject, input.paperId, deps);
-    case "flashcard":
-      return processFlashcardEffect(input.cards, input.qualities, input.subject, input.isSm2, deps);
-    default:
-      return assertUnreachable((input as QuizResultInput).source, "processQuizResultEffect");
   }
 }
 
@@ -95,19 +62,69 @@ export async function processQuizResult(
   input: QuizResultInput,
   deps: QuizResultDeps,
 ): Promise<void> {
-  await Effect.runPromise(processQuizResultEffect(input, deps));
+  const result = dispatchHandler(input);
 
-  const dispatcher = await getDispatcher();
-  if (!dispatcher) return;
+  deps.updateStreak();
+  deps.addXp(result.totalCount, result.accuracy, deps.currentStreak);
+  deps.checkAndUnlockAchievements(
+    deps.totalQuestionsAnswered + result.totalCount,
+    result.accuracy,
+    deps.currentStreak,
+    deps.levelInfo.level,
+    result.perfectQuiz,
+  );
+  deps.checkForRewardChests();
 
-  const subject = extractSubject(input);
-  const scoreInfo = extractScore(input);
+  for (const item of result.trackItems) {
+    deps.trackQuestionResult(item);
+  }
 
-  dispatcher
-    .dispatchWebhook("quiz.completed", {
+  const flashcardPromises: Promise<void>[] = [];
+
+  for (let i = 0; i < result.wrongItems.length; i++) {
+    const wrong = result.wrongItems[i];
+    const retention = result.retentionItems[i];
+    const flashcard = result.flashcardItems[i];
+
+    deps.addWrongAnswer(wrong);
+    if (retention) {
+      deps.addRetentionItem?.(retention);
+    }
+    if (flashcard) {
+      flashcardPromises.push(
+        flashcardCreate(
+          deps.flashcardEngine,
+          flashcard.front,
+          flashcard.back,
+          flashcard.subject,
+          flashcard.topic,
+        ),
+      );
+    }
+  }
+
+  for (const review of result.flashcardReviews) {
+    flashcardPromises.push(flashcardReview(deps.flashcardEngine, review.id, review.quality));
+  }
+
+  await Promise.all(flashcardPromises);
+
+  if (result.shouldMarkPlanStale) {
+    deps.markPlanStale();
+  }
+
+  if (result.wrongCount > 0) {
+    const subject = extractSubject(input) ?? "unknown";
+    deps.addStudySession({
       subject,
-      score: scoreInfo?.score,
-      totalQuestions: scoreInfo?.total,
-    })
-    .catch((err) => logError("QuizResultProcessor.webhook", err));
+      type: input.source === "exam" ? "exam" : "quiz",
+      scheduledAt: Date.now() + 24 * 60 * 60 * 1000,
+      duration: Math.min(result.wrongCount * 5, 45),
+      completed: false,
+    });
+  }
+
+  deps.enqueue("analytics-sync", {
+    events: result.events,
+  });
 }

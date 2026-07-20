@@ -1,5 +1,5 @@
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { makeCacheKey } from "@/lib/db/repositories/visual-cache";
+import { makeCacheKey } from "./visual-engine";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import { logError } from "@/lib/shared/logger";
 import { syncManager } from "@/lib/sync/sync-manager";

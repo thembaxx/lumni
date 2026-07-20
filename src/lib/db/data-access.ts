@@ -6,7 +6,7 @@ import type {
   SyncCheckpoint,
   SyncOutboxEntry,
   UserSettings,
-} from "@/lib/db/schema";
+} from "@/lib/db/types";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
   AnalyticsEvent,
@@ -41,7 +41,7 @@ import type {
   SyncConflict,
   TeacherObservation,
   VocabularyEntry,
-} from "@/lib/db/schema";
+} from "@/lib/db/types";
 import type { DictionaryCacheEntry } from "@/lib/dictionary/types";
 import type { QuestionEmbedding } from "@/lib/embedding/types";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";

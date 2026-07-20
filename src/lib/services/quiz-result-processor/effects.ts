@@ -1,26 +1,30 @@
-import { Effect } from "effect";
-import type { QuizResultDeps, ExamPartResult } from "./types";
+import { logError } from "@/lib/shared/logger";
+import type { ExamPartResult, FlashcardEngine, QuizResultDeps } from "./types";
 
-export function flashcardCreateEffect(
-  deps: QuizResultDeps,
+export async function flashcardCreate(
+  engine: FlashcardEngine,
   front: string,
   back: string,
   subject: string,
   topic?: string,
-): Effect.Effect<void> {
-  return Effect.tryPromise(() => deps.flashcardEngine.create(front, back, subject, topic)).pipe(
-    Effect.catchAll(() => Effect.void),
-  );
+): Promise<void> {
+  try {
+    await engine.create(front, back, subject, topic);
+  } catch {
+    // Silent — flashcard creation is best-effort
+  }
 }
 
-export function flashcardReviewEffect(
-  deps: QuizResultDeps,
+export async function flashcardReview(
+  engine: FlashcardEngine,
   id: string,
   quality: number,
-): Effect.Effect<void> {
-  return Effect.tryPromise(() => deps.flashcardEngine.review(id, quality)).pipe(
-    Effect.catchAll(() => Effect.void),
-  );
+): Promise<void> {
+  try {
+    await engine.review(id, quality);
+  } catch {
+    // Silent — flashcard review is best-effort
+  }
 }
 
 export function getCorrectAnswerText(part: ExamPartResult["part"]): string {

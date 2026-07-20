@@ -1,66 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { dexieDataAccess } from "@/lib/db";
-import { logError } from "@/lib/shared/logger";
-
-interface Observation {
-  id?: number;
-  studentId: string;
-  teacherId: string;
-  content: string;
-  subject?: string;
-  createdAt: number;
-}
+import { useTeacherObservations } from "@/hooks/use-teacher-observations";
 
 interface ObservationTimelineProps {
   studentId: string;
 }
 
 export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
-  const [observations, setObservations] = useState<Observation[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { observations, loading, addObservation } = useTeacherObservations(studentId);
   const [newNote, setNewNote] = useState("");
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    dexieDataAccess.teacherObservations
-      .where("studentId")
-      .equals(studentId)
-      .toArray()
-      .then((all) => {
-        if (cancelled) return;
-        all.sort((a, b) => b.createdAt - a.createdAt);
-        setObservations(all);
-      })
-      .catch((err) => logError("ObservationTimelineLoad", err))
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [studentId]);
-
-  const addObservation = async () => {
+  const addObservationHandler = async () => {
     if (!newNote.trim()) return;
     setSaving(true);
-    await dexieDataAccess.teacherObservations.add({
-      studentId,
-      teacherId: "current",
-      content: newNote.trim(),
-      createdAt: Date.now(),
-    } as Observation);
-    const all = await dexieDataAccess.teacherObservations
-      .where("studentId")
-      .equals(studentId)
-      .toArray();
-    all.sort((a, b) => b.createdAt - a.createdAt);
-    setObservations(all);
+    await addObservation(newNote.trim());
     setNewNote("");
     setSaving(false);
   };
@@ -77,7 +35,7 @@ export function ObservationTimeline({ studentId }: ObservationTimelineProps) {
           className="min-h-14 text-sm"
         />
         <Button
-          onClick={addObservation}
+          onClick={addObservationHandler}
           disabled={!newNote.trim() || saving}
           size="sm"
           className="shrink-0"

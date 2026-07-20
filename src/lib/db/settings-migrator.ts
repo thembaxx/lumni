@@ -1,7 +1,7 @@
 "use client";
 
 import type { SettingsDataAccess } from "@/lib/db/data-access";
-import type { UserSettings } from "@/lib/db/schema";
+import type { UserSettings } from "@/lib/db/types";
 import type { NotificationSettings, StudyPreferences } from "@/lib/utils/storage";
 import {
   DEFAULT_NOTIFICATIONS,

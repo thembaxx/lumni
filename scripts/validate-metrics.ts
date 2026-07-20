@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-export {}; // Module-scoped TS to avoid collision with other script main()
+// Module-scoped TS to avoid collision with other script main()
 /**
  * Metrics Validation Script
  * Validates current AI budget usage, WAL baseline, and other key metrics

@@ -1,4 +1,4 @@
-import type { MatricResult } from "@/lib/db/schema";
+import type { MatricResult } from "@/lib/db/types";
 
 const store = new Map<string, MatricResult[]>();
 

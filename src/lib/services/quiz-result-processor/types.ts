@@ -102,6 +102,27 @@ export interface FlashcardItem {
   rawQuestion: Question;
 }
 
+export interface HandlerResult {
+  accuracy: number;
+  totalCount: number;
+  wrongCount: number;
+  perfectQuiz: boolean;
+  trackItems: TrackResultInput[];
+  wrongItems: WrongAnswerInput[];
+  retentionItems: RetentionInput[];
+  flashcardItems: Array<{ front: string; back: string; subject: string; topic?: string }>;
+  flashcardReviews: Array<{ id: string; quality: number }>;
+  events: Array<{
+    event: string;
+    timestamp: number;
+    subject: string;
+    questionType: string;
+    success: boolean;
+    duration: number;
+  }>;
+  shouldMarkPlanStale: boolean;
+}
+
 export type QuizResultInput =
   | { source: "bolt"; question: BoltResult }
   | { source: "quiz"; results: QuizResults }

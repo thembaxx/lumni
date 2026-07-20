@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import type { QuestionRatingRepository } from "@/lib/db/repositories/question-rating-repository";
-import type { QuestionRating } from "@/lib/db/schema";
+import type { QuestionRatingRepository } from "../question-rating-service";
+import type { QuestionRating } from "@/lib/db/types";
 
 const enqueueMock = vi.fn(async () => 1);
 const ratingStore: QuestionRating[] = [];

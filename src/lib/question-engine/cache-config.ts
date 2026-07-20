@@ -1,6 +1,40 @@
 import type { CacheResolver } from "@/lib/caching-strategy";
 import { createCachingStrategy } from "@/lib/caching-strategy";
+import { dexieDataAccess } from "@/lib/db/dexie-data-access";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import type { GenerateResult, GenerationParams, Question } from "./types";
+
+async function _getCachedQuestions(
+  subject: string,
+  topic?: string,
+): Promise<unknown[] | undefined> {
+  const key = topic ? `${subject}-${topic}` : subject;
+  const cached = await dexieDataAccess.questions.where("subject").equals(key).first();
+  if (!cached) return undefined;
+  if (Date.now() - cached.cachedAt > 24 * 60 * 60 * 1000) return undefined;
+  return safeJsonParse(cached.questions, []) as unknown[];
+}
+
+async function _cacheQuestions(
+  subject: string,
+  questions: unknown[],
+  topic?: string,
+): Promise<number> {
+  const key = topic ? `${subject}-${topic}` : subject;
+  const existing = await dexieDataAccess.questions.where("subject").equals(key).first();
+  if (existing?.id != null) {
+    return dexieDataAccess.questions.update(existing.id, {
+      questions: safeJsonStringify(questions),
+      cachedAt: Date.now(),
+    });
+  }
+  return dexieDataAccess.questions.add({
+    subject: key,
+    topic,
+    questions: safeJsonStringify(questions),
+    cachedAt: Date.now(),
+  });
+}
 
 export function createQuestionCacheStrategy(
   generateInternal: (params: GenerationParams) => Promise<GenerateResult | null>,
@@ -10,8 +44,7 @@ export function createQuestionCacheStrategy(
       {
         name: "dexie",
         read: async (p) => {
-          const { questionCacheRepo: qRepo } = await import("@/lib/db/repositories/question-cache");
-          const cached = (await qRepo.get(p.subject, p.topic)) as Question[];
+          const cached = (await _getCachedQuestions(p.subject, p.topic)) as Question[];
           if (cached && cached.length >= p.count) {
             const shuffled = shuffleArray(cached);
             return { questions: shuffled.slice(0, p.count), ragContext: null };
@@ -19,8 +52,7 @@ export function createQuestionCacheStrategy(
           return null;
         },
         write: async (params, result) => {
-          const { questionCacheRepo: qRepo } = await import("@/lib/db/repositories/question-cache");
-          await qRepo.cache(params.subject, result.questions, params.topic);
+          await _cacheQuestions(params.subject, result.questions, params.topic);
         },
       },
       {

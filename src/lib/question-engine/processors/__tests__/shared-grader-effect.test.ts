@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { describe, expect, test, vi, beforeEach, afterEach } from "vitest";
 
 const mockGenerateObject = vi.hoisted(() => vi.fn());
@@ -17,7 +16,7 @@ vi.mock("@/lib/ai", () => ({
 
 import { PromptManager } from "../../prompt-manager";
 import type { Question, UserAnswer } from "../../types";
-import { aiGradeResultEffect, aiHintFactoryEffect } from "../graders/shared";
+import { aiGradeResult, aiHintFactory } from "../graders/shared";
 
 const mockModelRef = { id: "mock-model", provider: "mock-provider" } as never;
 
@@ -44,10 +43,6 @@ function makeAnswer(value: unknown): UserAnswer {
   return { type: "text", value };
 }
 
-function runEffect<A>(effect: Effect.Effect<A>): Promise<A> {
-  return Effect.runPromise(effect);
-}
-
 beforeEach(() => {
   mockGenerateObject.mockReset();
 });
@@ -56,12 +51,10 @@ afterEach(() => {
   mockGenerateObject.mockReset();
 });
 
-describe("aiGradeResultEffect", () => {
+describe("aiGradeResult", () => {
   test("empty answer returns failure without AI call", async () => {
     const q = makeQuestion();
-    const result = await runEffect(
-      aiGradeResultEffect(q, makeAnswer(""), prompts, undefined as never, () => ""),
-    );
+    const result = await aiGradeResult(q, makeAnswer(""), prompts, undefined as never, () => "");
     expect(result.correct).toBe(false);
     expect(result.score).toBe(0);
     expect(result.feedback).toContain("No answer");
@@ -69,18 +62,14 @@ describe("aiGradeResultEffect", () => {
 
   test("null answer returns failure without AI call", async () => {
     const q = makeQuestion();
-    const result = await runEffect(
-      aiGradeResultEffect(q, makeAnswer(null), prompts, undefined as never, () => ""),
-    );
+    const result = await aiGradeResult(q, makeAnswer(null), prompts, undefined as never, () => "");
     expect(result.correct).toBe(false);
     expect(result.feedback).toContain("No answer");
   });
 
   test("empty array answer returns failure without AI call", async () => {
     const q = makeQuestion();
-    const result = await runEffect(
-      aiGradeResultEffect(q, makeAnswer([]), prompts, undefined as never, () => ""),
-    );
+    const result = await aiGradeResult(q, makeAnswer([]), prompts, undefined as never, () => "");
     expect(result.correct).toBe(false);
     expect(result.feedback).toContain("No answer");
   });
@@ -88,15 +77,13 @@ describe("aiGradeResultEffect", () => {
   test("falls back when model not configured and fallback returns result", async () => {
     const q = makeQuestion();
     const ai = { getModelRef: () => null };
-    const result = await runEffect(
-      aiGradeResultEffect(
-        q,
-        makeAnswer("4"),
-        prompts,
-        ai as never,
-        () => "context string",
-        () => ({ correct: true, score: 5, maxScore: 5, feedback: "Fallback OK" }),
-      ),
+    const result = await aiGradeResult(
+      q,
+      makeAnswer("4"),
+      prompts,
+      ai as never,
+      () => "context string",
+      () => ({ correct: true, score: 5, maxScore: 5, feedback: "Fallback OK" }),
     );
     expect(result.correct).toBe(true);
     expect(result.feedback).toContain("Fallback");
@@ -105,8 +92,12 @@ describe("aiGradeResultEffect", () => {
   test("returns default failure when model not configured and no fallback", async () => {
     const q = makeQuestion();
     const ai = { getModelRef: () => null };
-    const result = await runEffect(
-      aiGradeResultEffect(q, makeAnswer("4"), prompts, ai as never, () => "context string"),
+    const result = await aiGradeResult(
+      q,
+      makeAnswer("4"),
+      prompts,
+      ai as never,
+      () => "context string",
     );
     expect(result.correct).toBe(false);
     expect(result.feedback).toContain("Unable to grade");
@@ -119,8 +110,12 @@ describe("aiGradeResultEffect", () => {
       usage: { inputTokens: 10, outputTokens: 20 },
     });
     const ai = { getModelRef: () => ({ model: mockModelRef }) };
-    const result = await runEffect(
-      aiGradeResultEffect(q, makeAnswer("4"), prompts, ai as never, () => "context string"),
+    const result = await aiGradeResult(
+      q,
+      makeAnswer("4"),
+      prompts,
+      ai as never,
+      () => "context string",
     );
     expect(result.correct).toBe(true);
     expect(result.score).toBe(5);
@@ -135,15 +130,13 @@ describe("aiGradeResultEffect", () => {
       usage: { inputTokens: 10, outputTokens: 20 },
     });
     const ai = { getModelRef: () => ({ model: mockModelRef }) };
-    const result = await runEffect(
-      aiGradeResultEffect(
-        q,
-        makeAnswer("4"),
-        prompts,
-        ai as never,
-        () => "context string",
-        () => ({ correct: true, score: 3, maxScore: 5, feedback: "Partial credit" }),
-      ),
+    const result = await aiGradeResult(
+      q,
+      makeAnswer("4"),
+      prompts,
+      ai as never,
+      () => "context string",
+      () => ({ correct: true, score: 3, maxScore: 5, feedback: "Partial credit" }),
     );
     expect(result.correct).toBe(true);
     expect(result.score).toBe(3);
@@ -151,7 +144,7 @@ describe("aiGradeResultEffect", () => {
   });
 });
 
-describe("aiHintFactoryEffect", () => {
+describe("aiHintFactory", () => {
   test("returns AI generated hint", async () => {
     const q = makeQuestion();
     const ai = {
@@ -161,8 +154,8 @@ describe("aiHintFactoryEffect", () => {
         model: "mock",
       }),
     };
-    const factory = aiHintFactoryEffect();
-    const result = await runEffect(factory(q, prompts, ai as never));
+    const factory = aiHintFactory();
+    const result = await factory(q, prompts, ai as never);
     expect(result).toBe("Try thinking about addition.");
   });
 
@@ -173,8 +166,8 @@ describe("aiHintFactoryEffect", () => {
         available: false,
       }),
     };
-    const factory = aiHintFactoryEffect();
-    const result = await runEffect(factory(q, prompts, ai as never));
+    const factory = aiHintFactory();
+    const result = await factory(q, prompts, ai as never);
     expect(result).toBe("Basic arithmetic");
   });
 
@@ -183,8 +176,8 @@ describe("aiHintFactoryEffect", () => {
     const ai = {
       generateWithSystem: vi.fn().mockRejectedValue(new Error("AI unavailable")),
     };
-    const factory = aiHintFactoryEffect();
-    const result = await runEffect(factory(q, prompts, ai as never));
+    const factory = aiHintFactory();
+    const result = await factory(q, prompts, ai as never);
     expect(result).toBe("Basic arithmetic");
   });
 
@@ -199,21 +192,20 @@ describe("aiHintFactoryEffect", () => {
         return { content: "A hint from RAG.", provider: "mock", model: "mock" };
       }),
     };
-    const factory = aiHintFactoryEffect();
-    const result = await runEffect(factory(q, prompts, ai as never, "<ref>source</ref>"));
+    const factory = aiHintFactory();
+    const result = await factory(q, prompts, ai as never, "<ref>source</ref>");
     expect(result).toBe("A hint from RAG.");
     expect(capturedUser).toContain("<ref>source</ref>");
     expect(capturedSystem).toContain("reference_material");
   });
 });
 
-describe("TypedQuestionProcessor effect integration", () => {
-  test("gradeEffect returns result via Effect", async () => {
+describe("TypedQuestionProcessor grade integration", () => {
+  test("grade returns result correctly", async () => {
     const { TypedQuestionProcessor } = await import("../processor");
     const processor = new TypedQuestionProcessor(
       "short-answer",
       { generateTemperature: 0.7 },
-      // oxlint-disable-next-line typescript/no-this-alias
       (_q, _a, _pm, _ai) =>
         Promise.resolve({
           correct: true,
@@ -225,40 +217,23 @@ describe("TypedQuestionProcessor effect integration", () => {
       prompts,
     );
     const q = makeQuestion();
-    const result = await Effect.runPromise(processor.gradeEffect(q, makeAnswer("4")));
+    const result = await processor.grade(q, makeAnswer("4"));
     expect(result.correct).toBe(true);
     expect(result.score).toBe(5);
   });
 
-  test("gradeEffect handles synchronous gradeFn", async () => {
+  test("grade handles synchronous gradeFn", async () => {
     const { TypedQuestionProcessor } = await import("../processor");
     const processor = new TypedQuestionProcessor(
       "short-answer",
       { generateTemperature: 0.7 },
-      // oxlint-disable-next-line typescript/no-this-alias
       (q, _a, _pm, _ai) =>
         ({ correct: false, score: 0, maxScore: q.points, feedback: "Sync fail" }) as never,
       () => "",
       prompts,
     );
-    const result = await Effect.runPromise(processor.gradeEffect(makeQuestion(), makeAnswer("x")));
+    const result = await processor.grade(makeQuestion(), makeAnswer("x"));
     expect(result.correct).toBe(false);
     expect(result.feedback).toBe("Sync fail");
-  });
-
-  test("gradeEffect catches thrown errors from gradeFn", async () => {
-    const { TypedQuestionProcessor } = await import("../processor");
-    const processor = new TypedQuestionProcessor(
-      "short-answer",
-      { generateTemperature: 0.7 },
-      () => {
-        throw new Error("gradeFn crash");
-      },
-      () => "",
-      prompts,
-    );
-    const result = await Effect.runPromise(processor.gradeEffect(makeQuestion(), makeAnswer("x")));
-    expect(result.correct).toBe(false);
-    expect(result.feedback).toContain("Grading failed");
   });
 });

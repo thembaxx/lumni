@@ -2,18 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { useRetentionQuestions } from "@/hooks/use-quiz-data";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
-import { dexieDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import type { QuizViewProps } from "../quiz-view";
 import { competencyService } from "@/lib/competency-engine";
 import {
   buildEngineParams,
   computeTopicCompetency,
-  loadRetentionQuestions,
   mapRetentionToQuestions,
-  markRetentionCompleted,
   type RetentionQuestion,
   type QuizCompetencyData,
 } from "./quiz-utils";
@@ -45,6 +43,8 @@ export function useQuizView({
   const [competencyData, setCompetencyData] = useState<QuizCompetencyData>({});
   const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
   const [retentionQuestions, setRetentionQuestions] = useState<RetentionQuestion[]>([]);
+
+  const { loadRetention, markCompleted } = useRetentionQuestions();
 
   const actualCount = retentionQuestions.length
     ? Math.max(1, questionCount - retentionQuestions.length)
@@ -165,11 +165,7 @@ export function useQuizView({
         const competencies = await competencyService.getCompetencies(normalizedSubject);
 
         try {
-          const items = await loadRetentionQuestions(
-            dexieDataAccess,
-            normalizedSubject,
-            Date.now(),
-          );
+          const items = await loadRetention(normalizedSubject);
           setRetentionQuestions(items);
         } catch (e) {
           logError("useQuizView.retention", e);
@@ -202,7 +198,7 @@ export function useQuizView({
       setSessionActive(true);
       setLoadError(null);
     },
-    [topic],
+    [topic, loadRetention],
   );
 
   const handleStartRef = useRef(handleStartWithSubject);
@@ -226,9 +222,9 @@ export function useQuizView({
   useEffect(() => {
     if (state.isComplete && retentionQuestions.length > 0) {
       const ids = retentionQuestions.map((rq) => rq.id);
-      markRetentionCompleted(dexieDataAccess, ids);
+      markCompleted(ids);
     }
-  }, [state.isComplete, retentionQuestions]);
+  }, [state.isComplete, retentionQuestions, markCompleted]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

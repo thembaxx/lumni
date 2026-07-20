@@ -1,7 +1,7 @@
 "use client";
 
 import { dexieDataAccess, type VocabularyDataAccess } from "@/lib/db";
-import type { VocabularyEntry } from "@/lib/db/schema";
+import type { VocabularyEntry } from "@/lib/db/types";
 import { createVocabularyCard } from "@/lib/flashcard-engine/vocabulary-bridge";
 import { logError } from "@/lib/shared/logger";
 

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
 import { ExportService } from "../export-service";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
-import type { QuizAttempt, ExamSessionSnapshot } from "@/lib/db/schema";
+import type { QuizAttempt, ExamSessionSnapshot } from "@/lib/db/types";
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { StoredGamification, StoredAchievement } from "@/lib/gamification-engine/types";
 

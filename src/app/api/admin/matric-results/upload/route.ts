@@ -1,6 +1,6 @@
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { storeResults } from "@/lib/matric-results";
-import type { MatricResult } from "@/lib/db/schema";
+import type { MatricResult } from "@/lib/db/types";
 
 function parseMatricCsv(text: string): {
   rows: MatricResult[];

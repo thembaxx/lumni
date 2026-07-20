@@ -67,16 +67,22 @@ export class CompetencyService {
         lastAssessed: now,
         level,
       });
-      enqueueOutbox("competencies", `${subjectId}:${topicId}:${bloomLevel}`, "update", {
-        subjectId,
-        topicId,
-        bloomLevel,
-        score: newScore,
-        attempts: newAttempts,
-        lastAssessed: now,
-        level,
-        paperId,
-      }).catch((err) => logError("CompetencyService", err));
+      enqueueOutbox(
+        dexieDataAccess,
+        "competencies",
+        `${subjectId}:${topicId}:${bloomLevel}`,
+        "update",
+        {
+          subjectId,
+          topicId,
+          bloomLevel,
+          score: newScore,
+          attempts: newAttempts,
+          lastAssessed: now,
+          level,
+          paperId,
+        },
+      ).catch((err) => logError("CompetencyService", err));
     } else {
       const record: CompetencyRecord = {
         subjectId,
@@ -90,6 +96,7 @@ export class CompetencyService {
       if (paperId) record.paperId = paperId;
       await this.db.competencies.add(record);
       enqueueOutbox(
+        dexieDataAccess,
         "competencies",
         `${subjectId}:${topicId}:${bloomLevel}`,
         "create",

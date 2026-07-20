@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { VocabularyEntry } from "@/lib/db/schema";
+import type { VocabularyEntry } from "@/lib/db/types";
 import { logError } from "@/lib/shared/logger";
 import {
   getSavedWords,

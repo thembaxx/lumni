@@ -1,4 +1,3 @@
-import type { Effect } from "effect";
 import type { Difficulty, BloomLevel, QuestionType } from "./enums";
 import type { QuestionBody, MediaContent } from "./body-types";
 
@@ -133,12 +132,6 @@ export interface QuestionProcessor<T extends QuestionType = QuestionType> {
   grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
   validate(question: Question<T>): ValidationResult;
   generateFromSource?(source: string, params: GenerationParams): Promise<Question<T>[]>;
-  generateEffect(
-    params: GenerationParams,
-    ragContext?: { sources: unknown[]; xml: string; domainsQueried: string[] },
-  ): Effect.Effect<Question<T>[]>;
-  gradeEffect(question: Question<T>, answer: UserAnswer): Effect.Effect<GradingResult>;
-  generateHintEffect(question: Question<T>, ragXml?: string): Effect.Effect<string>;
 }
 
 export interface ValidationError {

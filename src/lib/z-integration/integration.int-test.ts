@@ -110,19 +110,6 @@ vi.mock("@/lib/db/schema", () => ({
   LumniOfflineDB: class {},
 }));
 
-const mockGetCachedQuestions = mock(() => null);
-const mockCacheQuestions = mock(() => {});
-
-vi.mock("@/lib/db/repositories/question-cache", () => ({
-  questionCacheRepo: {
-    get: mockGetCachedQuestions,
-    cache: mockCacheQuestions,
-    constructor: class {},
-  },
-  makeCacheKey: (s: string, t: string) => `${s}:${t}`,
-  QuestionCacheRepository: class {},
-}));
-
 const mockLoadFromAppwrite = mock(() => []);
 const mockSyncToAppwrite = mock(() => {});
 

@@ -1,6 +1,6 @@
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { ContentDataAccess } from "@/lib/db/data-access";
-import type { BookmarkRecord } from "@/lib/db/schema";
+import type { BookmarkRecord } from "@/lib/db/types";
 
 export interface BookmarkService {
   getAll(): Promise<BookmarkRecord[]>;

@@ -1,10 +1,50 @@
-import {
-  type QuestionRatingRepository,
-  questionRatingRepository,
-} from "@/lib/db/repositories/question-rating-repository";
+import { dexieDataAccess } from "@/lib/db";
+import type { SyncDataAccess } from "@/lib/db/data-access";
+import type { QuestionRating } from "@/lib/db/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { logError } from "@/lib/shared/logger";
 import { failure, type ServiceResult, success } from "@/lib/shared/service-result";
+
+export interface QuestionRatingRepository {
+  findByQuestionId(questionId: string): Promise<QuestionRating | undefined>;
+  upsert(
+    id: number | undefined,
+    record: Partial<QuestionRating> & { createdAt: number },
+  ): Promise<void>;
+  getAll(): Promise<QuestionRating[]>;
+  getBySubject(subject: string): Promise<QuestionRating[]>;
+}
+
+class DexieQuestionRatingRepository implements QuestionRatingRepository {
+  constructor(private db: SyncDataAccess) {}
+
+  async findByQuestionId(questionId: string): Promise<QuestionRating | undefined> {
+    return this.db.questionRatings.where("questionId").equals(questionId).first() ?? undefined;
+  }
+
+  async upsert(
+    id: number | undefined,
+    record: Partial<QuestionRating> & { createdAt: number },
+  ): Promise<void> {
+    if (id) {
+      await this.db.questionRatings.update(id, record);
+    } else {
+      await this.db.questionRatings.add(record as QuestionRating);
+    }
+  }
+
+  async getAll(): Promise<QuestionRating[]> {
+    return this.db.questionRatings.orderBy("createdAt").toReversed().toArray();
+  }
+
+  async getBySubject(subject: string): Promise<QuestionRating[]> {
+    return this.db.questionRatings.where("subject").equals(subject).toReversed().toArray();
+  }
+}
+
+const questionRatingRepository: QuestionRatingRepository = new DexieQuestionRatingRepository(
+  dexieDataAccess,
+);
 
 export class QuestionRatingService {
   constructor(private repo: QuestionRatingRepository = questionRatingRepository) {}
@@ -42,9 +82,7 @@ export class QuestionRatingService {
     }
   }
 
-  async getRatingsForSubject(
-    subject: string,
-  ): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+  async getRatingsForSubject(subject: string): Promise<ServiceResult<QuestionRating[]>> {
     try {
       const ratings = await this.repo.getBySubject(subject);
       return success(ratings);
@@ -54,7 +92,7 @@ export class QuestionRatingService {
     }
   }
 
-  async getAllRatings(): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+  async getAllRatings(): Promise<ServiceResult<QuestionRating[]>> {
     try {
       const ratings = await this.repo.getAll();
       return success(ratings);

@@ -5,7 +5,7 @@ import {
   mapCompetencyToBloom,
   mapCompetencyToDifficulty,
 } from "@/lib/question-engine/competency-mapper";
-import type { RetentionRecurrence } from "@/lib/db/schema";
+import type { RetentionRecurrence } from "@/lib/db/types";
 import type { DataAccessTable } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 

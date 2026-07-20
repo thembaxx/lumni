@@ -49,65 +49,253 @@ function buildMockDataAccess() {
   };
 }
 
-// Import all repos (class-based with DataAccess DI)
-const pdfRepoModule = await import("../pdf-cache");
-const examRepoModule = await import("../exam-session");
-const quizRepoModule = await import("../quiz-session");
-const visCacheModule = await import("../visual-cache");
-const qCacheModule = await import("../question-cache");
-const progModule = await import("../progress");
-const conflictModule = await import("../conflicts");
+// --- Inlined pdf-cache functions ---
+async function cachePdf(paperId: string, pdfData: Blob, fileName: string): Promise<void> {
+  const store = getStore("cachedPdfs") as Record<string, unknown>[];
+  const existing = store.find((s) => s.paperId === paperId);
+  const entry: Record<string, unknown> = { paperId, pdfData, fileName, cachedAt: Date.now() };
+  if (existing?.id != null) Object.assign(existing, entry);
+  else {
+    entry.id = Date.now() + Math.random();
+    store.push(entry);
+  }
+}
 
-const { pdfCacheRepo } = pdfRepoModule;
-const { examSessionRepo } = examRepoModule;
-const { QuizSessionRepository } = quizRepoModule;
-void visCacheModule; // visualCacheRepo used indirectly via dynamic imports
-const { questionCacheRepo } = qCacheModule;
-const { progressRepo } = progModule;
-const { conflictRepo } = conflictModule;
+async function getCachedPdf(paperId: string): Promise<Record<string, unknown> | undefined> {
+  return (getStore("cachedPdfs") as Record<string, unknown>[]).find((s) => s.paperId === paperId);
+}
 
-// Create quizSessionRepo inline with the in-memory mock to avoid
-// process-wide mock.module pollution from @/lib/db (other test files
-// import @/lib/db before this file runs, permanently caching the real
-// DexieDataAccess instance).
-const quizSessionRepo = new QuizSessionRepository(buildMockDataAccess());
+async function isPdfCached(paperId: string): Promise<boolean> {
+  return !!(await getCachedPdf(paperId));
+}
 
-// Bind method names for backward-compat with test bodies below
-const cachePdf = pdfCacheRepo.cache.bind(pdfCacheRepo);
-const getCachedPdf = pdfCacheRepo.get.bind(pdfCacheRepo);
-const isPdfCached = pdfCacheRepo.isCached.bind(pdfCacheRepo);
-const removeCachedPdf = pdfCacheRepo.remove.bind(pdfCacheRepo);
-const clearOldPdfCache = pdfCacheRepo.clearOld.bind(pdfCacheRepo);
+async function removeCachedPdf(paperId: string): Promise<void> {
+  const store = getStore("cachedPdfs") as Record<string, unknown>[];
+  for (let i = store.length - 1; i >= 0; i--) {
+    if (store[i].paperId === paperId) store.splice(i, 1);
+  }
+}
 
-const saveExamSession = examSessionRepo.save.bind(examSessionRepo);
-const getExamSession = examSessionRepo.get.bind(examSessionRepo);
-const clearExamSession = examSessionRepo.clear.bind(examSessionRepo);
-const clearOldExamSessions = examSessionRepo.clearOld.bind(examSessionRepo);
+async function clearOldPdfCache(maxAgeHours: number): Promise<void> {
+  const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
+  const store = getStore("cachedPdfs") as Record<string, unknown>[];
+  for (let i = store.length - 1; i >= 0; i--) {
+    if ((store[i].cachedAt as number) < cutoff) store.splice(i, 1);
+  }
+}
 
-const saveQuizSession = quizSessionRepo.save.bind(quizSessionRepo);
-const getQuizSession = quizSessionRepo.get.bind(quizSessionRepo);
-const getActiveQuizSession = quizSessionRepo.getActive.bind(quizSessionRepo);
-const getAllPausedSessions = quizSessionRepo.getAllPaused.bind(quizSessionRepo);
-const resumeQuizSession = quizSessionRepo.resume.bind(quizSessionRepo);
-const pauseQuizSession = quizSessionRepo.pause.bind(quizSessionRepo);
-const deleteQuizSession = quizSessionRepo.delete.bind(quizSessionRepo);
-const clearOldQuizSessions = quizSessionRepo.clearOld.bind(quizSessionRepo);
+// --- Inlined exam-session functions ---
+async function saveExamSession(paperId: string, data: Record<string, unknown>): Promise<void> {
+  const store = getStore("examSessions") as Record<string, unknown>[];
+  const existing = store.find((s) => s.paperId === paperId);
+  const entry: Record<string, unknown> = { ...data, paperId, lastSavedAt: Date.now() };
+  if (existing?.id != null) Object.assign(existing, entry);
+  else {
+    entry.id = Date.now() + Math.random();
+    store.push(entry);
+  }
+}
 
-const { makeCacheKey, VisualCacheRepository } = visCacheModule;
-const visualRepo = new VisualCacheRepository(buildMockDataAccess());
-const cacheVisual = visualRepo.cacheVisual.bind(visualRepo);
-const getCachedVisual = visualRepo.getVisual.bind(visualRepo);
+async function getExamSession(paperId: string): Promise<Record<string, unknown> | undefined> {
+  return (getStore("examSessions") as Record<string, unknown>[]).find((s) => s.paperId === paperId);
+}
 
-const cacheQuestions = questionCacheRepo.cache.bind(questionCacheRepo);
-const getCachedQuestions = questionCacheRepo.get.bind(questionCacheRepo);
+async function clearExamSession(paperId: string): Promise<void> {
+  const store = getStore("examSessions") as Record<string, unknown>[];
+  for (let i = store.length - 1; i >= 0; i--) {
+    if (store[i].paperId === paperId) store.splice(i, 1);
+  }
+}
 
-const saveProgress = progressRepo.save.bind(progressRepo);
-const getProgress = progressRepo.get.bind(progressRepo);
+async function clearOldExamSessions(maxAgeHours: number): Promise<void> {
+  const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
+  const store = getStore("examSessions") as Record<string, unknown>[];
+  for (let i = store.length - 1; i >= 0; i--) {
+    if ((store[i].lastSavedAt as number) < cutoff) store.splice(i, 1);
+  }
+}
 
-const saveConflict = conflictRepo.save.bind(conflictRepo);
-const getUnresolvedConflicts = conflictRepo.getUnresolved.bind(conflictRepo);
-const resolveConflict = conflictRepo.resolve.bind(conflictRepo);
-const clearResolvedConflicts = conflictRepo.clearResolved.bind(conflictRepo);
+// --- Inlined quiz-session functions ---
+const _qsStore = () => getStore("quizSessions") as Record<string, unknown>[];
+
+async function saveQuizSession(data: Record<string, unknown>): Promise<void> {
+  const store = _qsStore();
+  const existing = data.sessionId ? store.find((s) => s.sessionId === data.sessionId) : undefined;
+  const entry: Record<string, unknown> = { ...data, lastSavedAt: Date.now() };
+  if (existing?.id != null) Object.assign(existing, entry);
+  else {
+    entry.id = Date.now() + Math.random();
+    store.push(entry);
+  }
+}
+
+async function getQuizSession(sessionId: string): Promise<Record<string, unknown> | undefined> {
+  return _qsStore().find((s) => s.sessionId === sessionId);
+}
+
+async function getActiveQuizSession(subject: string): Promise<Record<string, unknown> | undefined> {
+  const store = _qsStore();
+  const active = store.find((s) => s.subject === subject && !s.isPaused);
+  if (active) return active;
+  return store.reduce((a, b) => ((a.lastSavedAt as number) > (b.lastSavedAt as number) ? a : b));
+}
+
+async function getAllPausedSessions(): Promise<Record<string, unknown>[]> {
+  return _qsStore().filter((s) => s.isPaused);
+}
+
+async function resumeQuizSession(sessionId: string): Promise<Record<string, unknown> | undefined> {
+  const store = _qsStore();
+  const session = store.find((s) => s.sessionId === sessionId);
+  if (!session) return undefined;
+  session.isPaused = false;
+  session.lastSavedAt = Date.now();
+  return { ...session, isPaused: false };
+}
+
+async function pauseQuizSession(sessionId: string): Promise<void> {
+  const store = _qsStore();
+  const session = store.find((s) => s.sessionId === sessionId);
+  if (session) {
+    session.isPaused = true;
+    session.lastSavedAt = Date.now();
+  }
+}
+
+async function deleteQuizSession(sessionId: string): Promise<void> {
+  const store = _qsStore();
+  for (let i = store.length - 1; i >= 0; i--) {
+    if (store[i].sessionId === sessionId) store.splice(i, 1);
+  }
+}
+
+async function clearOldQuizSessions(maxAgeHours: number): Promise<void> {
+  const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
+  const store = _qsStore();
+  for (let i = store.length - 1; i >= 0; i--) {
+    if ((store[i].lastSavedAt as number) < cutoff) store.splice(i, 1);
+  }
+}
+
+// --- Inlined visual-cache functions ---
+function makeCacheKey(questionId: string, subject: string): string {
+  return `${subject}:${questionId}`;
+}
+
+async function cacheVisual(
+  cacheKey: string,
+  _subject: string,
+  visual: Record<string, unknown> | null,
+): Promise<void> {
+  const store = getStore("visuals") as Record<string, unknown>[];
+  const existing = store.find((s) => s.cacheKey === cacheKey);
+  const entry: Record<string, unknown> = {
+    cacheKey,
+    visual: safeJsonStringify(visual),
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+  };
+  if (existing?.id != null) Object.assign(existing, entry);
+  else {
+    entry.id = Date.now() + Math.random();
+    store.push(entry);
+  }
+}
+
+async function getCachedVisual(cacheKey: string): Promise<Record<string, unknown> | null> {
+  const entry = (getStore("visuals") as Record<string, unknown>[]).find(
+    (s) => s.cacheKey === cacheKey,
+  );
+  if (!entry) return null;
+  if (Date.now() > (entry.expiresAt as number)) {
+    const idx = (getStore("visuals") as Record<string, unknown>[]).indexOf(entry);
+    if (idx >= 0) (getStore("visuals") as Record<string, unknown>[]).splice(idx, 1);
+    return null;
+  }
+  return entry;
+}
+
+// --- Inlined question-cache functions ---
+async function cacheQuestions(
+  subject: string,
+  questions: unknown[],
+  topic?: string,
+): Promise<number> {
+  const key = topic ? `${subject}-${topic}` : subject;
+  const store = getStore("questions") as Record<string, unknown>[];
+  const existing = store.find((s) => s.subject === key);
+  const entry: Record<string, unknown> = {
+    subject: key,
+    topic,
+    questions: safeJsonStringify(questions),
+    cachedAt: Date.now(),
+  };
+  if (existing?.id != null) {
+    Object.assign(existing, entry);
+    return 1;
+  }
+  entry.id = Date.now() + Math.random();
+  store.push(entry);
+  return store.length;
+}
+
+async function getCachedQuestions(subject: string, topic?: string): Promise<unknown[] | undefined> {
+  const key = topic ? `${subject}-${topic}` : subject;
+  const store = getStore("questions") as Record<string, unknown>[];
+  const cached = store.find((s) => s.subject === key);
+  if (!cached) return undefined;
+  if (Date.now() - (cached.cachedAt as number) > 24 * 60 * 60 * 1000) return undefined;
+  const parsed = JSON.parse(cached.questions as string);
+  return Array.isArray(parsed) ? parsed : undefined;
+}
+
+// --- Inlined progress functions ---
+async function saveProgress(odSubjectId: string, data: Record<string, unknown>): Promise<number> {
+  const store = getStore("progress") as Record<string, unknown>[];
+  const existing = store.find((s) => s.odSubjectId === odSubjectId);
+  const entry: Record<string, unknown> = { ...data, odSubjectId, updatedAt: Date.now() };
+  if (existing?.id != null) {
+    Object.assign(existing, entry);
+    return 1;
+  }
+  entry.id = Date.now() + Math.random();
+  store.push(entry);
+  return store.length;
+}
+
+async function getProgress(odSubjectId: string): Promise<Record<string, unknown> | undefined> {
+  return (getStore("progress") as Record<string, unknown>[]).find(
+    (s) => s.odSubjectId === odSubjectId,
+  );
+}
+
+// --- Inlined conflict functions ---
+async function saveConflict(data: Record<string, unknown>): Promise<number> {
+  const store = getStore("conflicts") as Record<string, unknown>[];
+  const entry: Record<string, unknown> = { ...data };
+  entry.id = Date.now() + Math.random();
+  store.push(entry);
+  return store.length;
+}
+
+async function getUnresolvedConflicts(): Promise<Record<string, unknown>[]> {
+  return (getStore("conflicts") as Record<string, unknown>[]).filter((s) => s.resolvedAt === 0);
+}
+
+async function resolveConflict(id: number, resolution: string): Promise<void> {
+  const entry = (getStore("conflicts") as Record<string, unknown>[]).find((s) => s.id === id);
+  if (entry) {
+    entry.resolvedAt = Date.now();
+    entry.resolution = resolution;
+  }
+}
+
+async function clearResolvedConflicts(): Promise<void> {
+  const store = getStore("conflicts") as Record<string, unknown>[];
+  for (let i = store.length - 1; i >= 0; i--) {
+    if (store[i].resolvedAt) store.splice(i, 1);
+  }
+}
 
 // Clear stores before each test
 beforeEach(() => {

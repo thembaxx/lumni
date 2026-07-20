@@ -45,11 +45,6 @@ vi.mock("@/lib/competency-engine", () => ({
   computeBloomWeight: () => 1.0,
 }));
 
-vi.mock("@/lib/db/repositories/progress", () => ({
-  getProgress: async () => undefined,
-  saveProgress: async () => 1,
-}));
-
 vi.mock("@/lib/visual-engine/visual-engine", () => ({
   visualEngine: { resolve: async () => null },
 }));
@@ -90,6 +85,8 @@ vi.mock("@/lib/db/schema", () => ({
       toArray: async () => [],
     },
   },
+  LumniOfflineDB: class {},
+  CachedProgress: class {},
 }));
 
 const { analyticsSync, visualGeneration } = await import("../domain");

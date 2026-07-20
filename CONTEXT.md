@@ -92,29 +92,12 @@ Appwrite Cloud
 
 ## Active Surface
 
-| File/Dir                                           | What I'm touching                                             |
-| -------------------------------------------------- | ------------------------------------------------------------- |
-| `src/lib/services/quiz-result-processor.ts`        | New — quiz completion orchestration (4 sources)               |
-| `src/lib/question-engine/enrichment-pipeline.ts`   | New — 3-port enrichment (Curriculum/Embedding/PastPaper)      |
-| `src/lib/tinyfish/rag-pipeline.ts`                 | New — withRagGuards HOF, barrel separation                    |
-| `src/lib/services/push-delivery.ts`                | New — PushDeliveryService (lazy VAPID, consolidated web-push) |
-| `src/lib/services/study-planner-service.ts`        | New — StudyPlannerService (state/sync/mutations)              |
-| `src/lib/gamification-engine/service.ts`           | New — GamificationService (state/persist/sync)                |
-| `src/lib/ai/cached-ai-generator.ts`                | Generic CachedAIGenerator<T>                                  |
-| `src/lib/question-engine/`                         | GenerateResult structured return, AIClient threading          |
-| `src/lib/analytics/analytics-service.ts`           | SessionStore interface, extracted from routes                 |
-| `src/lib/assignments/submission-service.ts`        | Uses PushDeliveryService                                      |
-| `src/lib/digest/digest-service.ts`                 | Uses PushDeliveryService                                      |
-| `src/lib/ably/client.ts`                           | Server-side Rest client for Ably token minting                |
-| `src/app/api/ably/token/route.ts`                  | Token endpoint with namespace-scoped capabilities             |
-| `src/hooks/use-ably-chat.ts`                       | ChatClient singleton tied to user auth state                  |
-| `src/components/study-groups/ably-provider.tsx`    | `ChatClientProvider` wrapper                                  |
-| `src/app/[locale]/study-groups/layout.tsx`         | Route-level Ably provider                                     |
-| `src/components/study-groups/live-session-bar.tsx` | Ably presence hooks (usePresence + usePresenceListener)       |
-| `src/hooks/use-live-session.ts`                    | Simplified — one-time GET + start mutation (no polling)       |
-| `src/lib/study-groups/live-session-service.ts`     | Appwrite metadata only (no participant CRUD)                  |
-| `src/lib/study-groups/live-session-types.ts`       | Reduced — no participantCount                                 |
-| `src/app/api/study-groups/[groupId]/live-session/` | GET returns `{ session }` only; PATCH only `action: "end"`    |
+| File/Dir                   | What I'm touching                                        |
+| -------------------------- | -------------------------------------------------------- |
+| `src/lib/db/types.ts`      | New — types split from schema.ts (44 interfaces)         |
+| `src/lib/db/ssr-proxy.ts`  | New — offlineDB singleton split from schema.ts           |
+| `src/lib/db/schema.ts`     | Rewritten — only LumniOfflineDB class + version() blocks |
+| `src/lib/db/repositories/` | **Deleted** — 8 files inlined into consumers             |
 
 ## Background Knowledge
 
@@ -135,7 +118,7 @@ Appwrite Cloud
 - **Study guides**: `src/lib/study-guide/` — AI generates structured guides with sections + summary. Cached 30d in Dexie v32. `/study-guide` page with subject/topic input.
 - **Live sessions**: `useLiveSession()` hook for start + metadata query. Ably real-time presence via `usePresence`/`usePresenceListener` in `LiveSessionBar` (no polling). Appwrite stores only session metadata (startedBy, subject, startedAt, status). Auto-ends on last departure (client-side occupancy check).
 - **Dexie schema**: v32 — 38+ tables. v27 added `analyticsEvents`. v28 added `sharedQuestions`. v29 added `knowledgeGraph`. v30 added `teacherObservations` + `assignmentMessages`. v31 added `studyPlans` + `onboardingState` + `srDailyBudget` + `flashcardSyncState`. v32 added `studyGuides`.
-- **DataAccess seam**: All 33 accessors via typed `DataAccess` interface (10 domain sub-interfaces: FlashcardDataAccess, CompetencyDataAccess, QuizDataAccess, ContentDataAccess, StudyDataAccess, SyncDataAccess, ObservabilityDataAccess, SocialDataAccess, CacheDataAccess, LegacyDataAccess). 11 dead accessors removed. Two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests). `seed()` for test setup. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain consumers kept on composite `DataAccess`. `Collection<T>` now supports `.offset(n)` for pagination. See ADR-0011.
+- **DataAccess seam**: All 33 accessors via typed `DataAccess` interface (10 domain sub-interfaces: FlashcardDataAccess, CompetencyDataAccess, QuizDataAccess, ContentDataAccess, StudyDataAccess, SyncDataAccess, ObservabilityDataAccess, SocialDataAccess, CacheDataAccess, LegacyDataAccess). 11 dead accessors removed. Two implementations: `DexieDataAccess` (production) and `InMemoryDataAccess` (tests). `seed()` for test setup. 19 consumers narrowed from `DataAccess` to sub-interfaces. 7 cross-domain consumers kept on composite `DataAccess`. `Collection<T>` now supports `.offset(n)` for pagination. See ADR-0011. **Repository files** (`src/lib/db/repositories/`) were a competing abstraction seam — all 8 inlined into consumers (June 2026). **schema.ts split** into 3 files: `types.ts` (44 interfaces), `schema.ts` (LumniOfflineDB only), `ssr-proxy.ts` (offlineDB singleton).
 - **E2E testing**: Playwright 1.60.0 — smoke tests + visual regression tests (homepage sections).
 - **Storybook**: 10.4.1 with 18 stories (Button, Card, Switch, Checkbox, Progress, Skeleton, Avatar, Separator, ShareButton, Badge, Dialog, Input, Textarea, Select, Tabs, Popover, DropdownMenu, Toast).
 - **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules. Injects CAPS/DBE sources into solve + quiz prompts. XML `<reference_material>` block + `buildPromptInstruction()` framing. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent-gated. DI pattern (`deps?` arg). `getLastRagContext()` surfaces batch RAG context. Per-question `Question.webSources` via hybrid AI-cite + fallback. See ADR-0010.
