@@ -56,7 +56,11 @@ export function useEnrolledSubjects() {
   const prefsSubjects = (prefs?.subjects as string[]) ?? [];
 
   const subjectIdsRef = useRef(prefsSubjects);
-  subjectIdsRef.current = prefsSubjects;
+
+  useEffect(() => {
+    subjectIdsRef.current = prefsSubjects;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(prefsSubjects)]);
 
   const migratePrefsSubjects = useCallback(async () => {
     if (!user || !data || data.selectedSubjectIds.length > 0) return;
@@ -81,7 +85,10 @@ export function useEnrolledSubjects() {
   }, [user, data, queryClient]);
 
   const migrateRef = useRef(migratePrefsSubjects);
-  migrateRef.current = migratePrefsSubjects;
+
+  useEffect(() => {
+    migrateRef.current = migratePrefsSubjects;
+  }, [migratePrefsSubjects]);
 
   useEffect(() => {
     if (!migrated.current && prefsSubjects.length > 0) {

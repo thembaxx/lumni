@@ -76,19 +76,17 @@ export function usePronunciationSession() {
   }, []);
 
   const handleLoadHistory = useCallback(async () => {
-    setShowHistory((prev) => {
-      if (!prev) {
-        setHistoryLoading(true);
-        import("@/lib/pronunciation-history/service").then((mod) => {
-          mod.getPronunciationStats(userId).then((stats) => {
-            setHistoryStats(stats);
-            setHistoryLoading(false);
-          });
+    setShowHistory((prev) => !prev);
+    if (!showHistory) {
+      setHistoryLoading(true);
+      import("@/lib/pronunciation-history/service").then((mod) => {
+        mod.getPronunciationStats(userId).then((stats) => {
+          setHistoryStats(stats);
+          setHistoryLoading(false);
         });
-      }
-      return !prev;
-    });
-  }, [userId]);
+      });
+    }
+  }, [userId, showHistory]);
 
   return {
     expectedText,

@@ -75,29 +75,28 @@ export function useLessonProgress(userId: string, lessonId: string) {
         const next = new Set(prev);
         if (next.has(sectionId)) next.delete(sectionId);
         else next.add(sectionId);
-
-        const score = total > 0 ? Math.round((next.size / total) * 100) : 0;
-        const record: LessonProgress = {
-          id: key,
-          userId,
-          lessonId,
-          completedSections: next.size,
-          completedSectionIds: JSON.stringify([...next]),
-          totalSections: total,
-          completedAt: next.size >= total ? Date.now() : 0,
-          score,
-        };
-        _deps.db.lessonProgress.put(record).catch((err) => {
-          logError("LessonProgress.put", err);
-        });
-
-        if (next.size >= total) setIsComplete(true);
-        else setIsComplete(false);
-
         return next;
       });
+      const currentSet = new Set(completedSectionIds);
+      if (currentSet.has(sectionId)) currentSet.delete(sectionId);
+      else currentSet.add(sectionId);
+      const score = total > 0 ? Math.round((currentSet.size / total) * 100) : 0;
+      const record: LessonProgress = {
+        id: key,
+        userId,
+        lessonId,
+        completedSections: currentSet.size,
+        completedSectionIds: JSON.stringify([...currentSet]),
+        totalSections: total,
+        completedAt: currentSet.size >= total ? Date.now() : 0,
+        score,
+      };
+      _deps.db.lessonProgress.put(record).catch((err) => {
+        logError("LessonProgress.put", err);
+      });
+      setIsComplete(currentSet.size >= total);
     },
-    [userId, lessonId, key],
+    [userId, lessonId, key, completedSectionIds],
   );
 
   const progress =

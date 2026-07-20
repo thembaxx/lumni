@@ -2,7 +2,7 @@
 
 import AlertCircleIcon from "@hugeicons/core-free-icons/AlertCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -83,7 +83,9 @@ export function UploadDialogRenderer({ children }: { children?: React.ReactNode 
     }
   }, []);
 
-  startUploadRef.current = startUpload;
+  useEffect(() => {
+    startUploadRef.current = startUpload;
+  }, [startUpload]);
 
   const open = useCallback((files: File[], ep?: "generalUploader") => {
     if (ep) setEndpoint(ep);

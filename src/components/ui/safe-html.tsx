@@ -19,12 +19,13 @@ export function SafeHTML({ html, className, as: Tag = "div" }: SafeHTMLProps) {
   const sanitizedRef = useRef<string | null>(null);
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
 
-  if (!HAS_HTML_TAGS.test(html)) {
-    sanitizedRef.current = html;
-  }
-
   useEffect(() => {
-    if (sanitizedRef.current !== null) return;
+    if (!HAS_HTML_TAGS.test(html)) {
+      sanitizedRef.current = html;
+      forceUpdate();
+      return;
+    }
+    sanitizedRef.current = null;
     if (!purifyPromise) {
       purifyPromise = import("dompurify");
     }

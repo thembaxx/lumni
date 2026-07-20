@@ -2,32 +2,30 @@
 
 import * as Ably from "ably";
 import { ChatClient, LogLevel } from "@ably/chat";
-import { useRef, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 
 export function useAblyChat(): ChatClient | null {
   const { user, authReady } = useAuth();
+  const [chatClient, setChatClient] = useState<ChatClient | null>(null);
   const clientRef = useRef<ChatClient | null>(null);
   const userIdRef = useRef<string | null>(null);
 
-  const chatClient = useMemo(() => {
+  useEffect(() => {
     const userId = user?.$id ?? null;
 
     if (!authReady || !userId) {
-      if (clientRef.current) {
-        clientRef.current = null;
-        userIdRef.current = null;
-      }
-      return null;
+      clientRef.current = null;
+      userIdRef.current = null;
+      setChatClient(null);
+      return;
     }
 
     if (clientRef.current && userIdRef.current === userId) {
-      return clientRef.current;
+      return;
     }
 
-    if (clientRef.current) {
-      clientRef.current = null;
-    }
+    clientRef.current = null;
 
     const realtime = new Ably.Realtime({
       authCallback: async (_tokenParams, callback) => {
@@ -53,7 +51,7 @@ export function useAblyChat(): ChatClient | null {
     const chat = new ChatClient(realtime, { logLevel: LogLevel.Error });
     clientRef.current = chat;
     userIdRef.current = userId;
-    return chat;
+    setChatClient(chat);
   }, [user?.$id, authReady]);
 
   return chatClient;

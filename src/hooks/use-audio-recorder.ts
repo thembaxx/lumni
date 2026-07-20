@@ -31,7 +31,10 @@ export function useAudioRecorder(options: UseAudioRecorderOptions = {}): UseAudi
   const { onRecordingComplete, minDuration = 1, maxDuration = 300 } = options;
   const [state, setState] = useState<AudioEngineState>(() => audioEngine.getState());
   const onCompleteRef = useRef(onRecordingComplete);
-  onCompleteRef.current = onRecordingComplete;
+
+  useEffect(() => {
+    onCompleteRef.current = onRecordingComplete;
+  }, [onRecordingComplete]);
 
   useEffect(() => {
     const unsubscribe = audioEngine.subscribe(() => {

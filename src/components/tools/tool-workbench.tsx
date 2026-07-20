@@ -171,12 +171,10 @@ export function ToolWorkbench() {
 
   const onVoidClick = useCallback(() => {
     if (showVoid) return;
-    setVoidClicks((prev) => {
-      const next = prev + 1;
-      if (next >= 10) setShowVoid(true);
-      return next;
-    });
-  }, [showVoid]);
+    const next = voidClicks + 1;
+    setVoidClicks(next);
+    if (next >= 10) setShowVoid(true);
+  }, [showVoid, voidClicks]);
 
   const onGridKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const arrows = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Home", "End"];

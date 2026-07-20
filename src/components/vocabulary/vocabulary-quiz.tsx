@@ -29,7 +29,6 @@ export function VocabularyQuiz({ words, onComplete }: VocabularyQuizProps) {
   }, [words]);
 
   const question = shuffled[current];
-  if (!question) return null;
 
   const handleSelect = useCallback(
     (word: string) => {
@@ -49,6 +48,8 @@ export function VocabularyQuiz({ words, onComplete }: VocabularyQuizProps) {
     },
     [current, question, shuffled.length, score, onComplete],
   );
+
+  if (!question) return null;
 
   if (showResult) {
     return (

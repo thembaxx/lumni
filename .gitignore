@@ -79,3 +79,8 @@ src/docs/architecture-review-*.html
 output/
 .impeccable
 .kilo/
+
+# react-doctor reports
+doctor-report.json
+full-report.json
+verbose*.txt

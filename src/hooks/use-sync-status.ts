@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { dexieDataAccess, type SyncDataAccess } from "@/lib/db";
 import { logError } from "@/lib/shared/logger";
 import { useInterval } from "./use-interval";
@@ -16,7 +16,7 @@ export function useSyncStatus() {
   const { isOnline } = useOnlineStatus();
   const [pendingCount, setPendingCount] = useState(0);
 
-  useInterval(async () => {
+  const checkPending = useCallback(async () => {
     try {
       const items = await _deps.db.jobs.where("status").equals("pending").count();
       setPendingCount(items);
@@ -24,7 +24,9 @@ export function useSyncStatus() {
       logError("UseSyncStatus", err);
       setPendingCount(0);
     }
-  }, 10000);
+  }, []);
+
+  useInterval(checkPending, 10000);
 
   return { isOnline, pendingCount };
 }

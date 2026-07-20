@@ -39,7 +39,10 @@ export function useChatStream() {
   });
   const loadedRef = useRef(false);
   const messagesRef = useRef(messages);
-  messagesRef.current = messages;
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
   const lastCountRef = useRef(0);
 
   useEffect(() => {

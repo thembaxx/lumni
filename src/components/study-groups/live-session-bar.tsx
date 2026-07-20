@@ -98,7 +98,9 @@ function LiveSessionContent({ session, groupId }: { session: LiveSession; groupI
   );
 
   const presenceDataRef = useRef(presenceData);
-  presenceDataRef.current = presenceData;
+  useEffect(() => {
+    presenceDataRef.current = presenceData;
+  }, [presenceData]);
 
   const currentParticipant = participants.find((p) => p.userId === userId);
   const isParticipant = !!currentParticipant;

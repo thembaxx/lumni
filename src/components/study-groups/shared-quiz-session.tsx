@@ -95,6 +95,11 @@ export function SharedQuizSession({
   const [isMuted, setIsMuted] = useState(false);
 
   const voiceServiceRef = useRef<VoiceService | null>(null);
+  const voiceChannelRef = useRef<{
+    unsubscribe: (event: string, handler: (msg: unknown) => void) => void;
+    subscribe: (event: string, handler: (msg: unknown) => void) => void;
+  } | null>(null);
+  const signalHandlerRef = useRef<((msg: unknown) => void) | null>(null);
 
   const userId = user?.$id ?? "";
   const userName = user?.name ?? "";
@@ -134,14 +139,19 @@ export function SharedQuizSession({
       setVoiceConnected(true);
       setVoiceError(null);
 
-      const channel = realtime?.channels.get(`voice:${sessionId}`);
+      const channel = realtime?.channels.get(`voice:${sessionId}`) ?? null;
+      voiceChannelRef.current = channel;
       if (channel) {
-        channel.subscribe("signal", (msg) => {
-          const data = msg.data as { from?: string; target?: string; signal?: unknown } | undefined;
-          if (data?.target === userId) {
-            service.handleSignal(data.from ?? "", data.signal);
+        const handler = (msg: unknown) => {
+          const data = msg as
+            | { data?: { from?: string; target?: string; signal?: unknown } }
+            | undefined;
+          if (data?.data?.target === userId) {
+            service.handleSignal(data.data.from ?? "", data.data.signal);
           }
-        });
+        };
+        signalHandlerRef.current = handler;
+        channel.subscribe("signal", handler);
       }
     } catch (err) {
       setVoiceError(err instanceof Error ? err.message : "Failed to join voice");
@@ -150,6 +160,13 @@ export function SharedQuizSession({
   }, [userId, userName, sessionId, ablyChat]);
 
   const handleLeaveVoice = useCallback(() => {
+    const channel = voiceChannelRef.current;
+    const handler = signalHandlerRef.current;
+    if (channel && handler) {
+      channel.unsubscribe("signal", handler);
+    }
+    voiceChannelRef.current = null;
+    signalHandlerRef.current = null;
     voiceServiceRef.current?.destroy();
     voiceServiceRef.current = null;
     setVoiceConnected(false);

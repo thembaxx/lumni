@@ -61,7 +61,10 @@ export function useExamSessionAutoSave(paperId: string | null) {
   }, [paperId]);
 
   const persistRef = useRef(persist);
-  persistRef.current = persist;
+
+  useEffect(() => {
+    persistRef.current = persist;
+  }, [persist]);
 
   useEffect(() => {
     const handleVisibility = () => {

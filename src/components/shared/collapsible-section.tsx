@@ -2,8 +2,9 @@
 
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface CollapsibleSectionProps {
@@ -20,15 +21,7 @@ export function CollapsibleSection({
   count,
 }: CollapsibleSectionProps) {
   const [open, setOpen] = useState(defaultOpen);
-  const [contentHeight, setContentHeight] = useState(0);
   const toggle = useCallback(() => setOpen((v) => !v), []);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [children]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -53,17 +46,20 @@ export function CollapsibleSection({
           />
         </m.div>
       </button>
-      <m.div
-        initial={false}
-        animate={{
-          height: open ? contentHeight : 0,
-          opacity: open ? 1 : 0,
-        }}
-        transition={{ duration: 0.2, ease: iOSEase }}
-        className="overflow-hidden"
-      >
-        <div ref={contentRef}>{children}</div>
-      </m.div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <m.div
+            key="content"
+            initial={{ opacity: 0, scaleY: 0.95 }}
+            animate={{ opacity: 1, scaleY: 1 }}
+            exit={{ opacity: 0, scaleY: 0.95 }}
+            transition={{ duration: 0.2, ease: iOSEase }}
+            className="origin-top"
+          >
+            {children}
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

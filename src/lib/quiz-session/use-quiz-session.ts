@@ -61,10 +61,14 @@ export function useQuizSession(
   } = quizState;
 
   const prevQuestionsLength = useRef(questions.length);
+
+  useEffect(() => {
+    prevQuestionsLength.current = questions.length;
+  }, [questions.length]);
+
   if (questions.length === 0 && prevQuestionsLength.current > 0) {
     dispatch({ type: "RESET" });
   }
-  prevQuestionsLength.current = questions.length;
 
   const saveRef = useRef({ ...quizState, userAnswers, questions });
   useEffect(() => {
@@ -105,15 +109,21 @@ export function useQuizSession(
     };
   }, [persist]);
 
-  useInterval(
-    () => {
-      dispatch({ type: "TICK" });
-      if (quizState.elapsedTime + 1 >= maxTime) {
-        dispatch(withLocalStorageGuard({ type: "FINISH" }));
-      }
-    },
-    isActive && questions.length > 0 && !isComplete ? 1000 : null,
-  );
+  const maxTimeRef = useRef(maxTime);
+
+  useEffect(() => {
+    maxTimeRef.current = maxTime;
+  }, [maxTime]);
+
+  const onTick = useCallback(() => {
+    dispatch({ type: "TICK" });
+    const nextElapsed = quizState.elapsedTime + 1;
+    if (nextElapsed >= maxTimeRef.current) {
+      dispatch(withLocalStorageGuard({ type: "FINISH" }));
+    }
+  }, [quizState.elapsedTime]);
+
+  useInterval(onTick, isActive && questions.length > 0 && !isComplete ? 1000 : null);
 
   const currentQuestion = questions?.[currentIndex] ?? null;
   const totalQuestions = questions.length;

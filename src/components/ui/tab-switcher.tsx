@@ -124,8 +124,8 @@ export function TabSwitcher({
             initial={false}
             animate={{
               x: indicator.left,
-              width: indicator.width,
             }}
+            style={{ width: indicator.width }}
             transition={springPresets.cardExit}
           />
         </div>

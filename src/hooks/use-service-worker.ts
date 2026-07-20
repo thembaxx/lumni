@@ -45,56 +45,49 @@ export function useServiceWorker(): UseServiceWorkerReturn {
       return;
     }
 
-    let cancelled = false;
-    let activeReg: ServiceWorkerRegistration | null = null;
-    let trackedWorker: ServiceWorker | null = null;
-    let trackedStateHandler: (() => void) | null = null;
+    const abortController = new AbortController();
+    const { signal } = abortController;
 
     const updateFoundHandler = () => {
-      const newWorker = activeReg?.installing;
-      if (newWorker) {
-        if (trackedWorker && trackedStateHandler) {
-          trackedWorker.removeEventListener("statechange", trackedStateHandler);
-        }
-        trackedStateHandler = () => {
-          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-            if (!cancelled) dispatch({ type: "UPDATED" });
-          }
-        };
-        newWorker.addEventListener("statechange", trackedStateHandler);
-        trackedWorker = newWorker;
-      }
+      /* handled via reg.addEventListener below */
     };
 
     navigator.serviceWorker
       .register("/sw.js")
       .then((reg) => {
-        if (cancelled) return;
-        activeReg = reg;
+        if (signal.aborted) return;
         dispatch({ type: "REGISTERED", registration: reg });
 
         if (reg.waiting) {
           dispatch({ type: "UPDATED" });
         }
 
-        reg.addEventListener("updatefound", updateFoundHandler);
+        reg.addEventListener(
+          "updatefound",
+          () => {
+            const newWorker = reg.installing;
+            if (newWorker) {
+              const stateHandler = () => {
+                if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                  if (!signal.aborted) dispatch({ type: "UPDATED" });
+                }
+              };
+              newWorker.addEventListener("statechange", stateHandler, { signal });
+            }
+          },
+          { signal },
+        );
         dispatch({ type: "READY" });
       })
       .catch((error) => {
-        if (cancelled) return;
+        if (signal.aborted) return;
         import("@/lib/shared/logger").then(({ logError }) => {
           logError("ServiceWorker.register", error);
         });
       });
 
     return () => {
-      cancelled = true;
-      if (activeReg) {
-        activeReg.removeEventListener("updatefound", updateFoundHandler);
-      }
-      if (trackedWorker && trackedStateHandler) {
-        trackedWorker.removeEventListener("statechange", trackedStateHandler);
-      }
+      abortController.abort();
     };
   }, []);
 

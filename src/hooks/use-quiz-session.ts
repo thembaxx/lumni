@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Question } from "@/lib/question-engine/types";
 import { useInterval } from "./use-interval";
 import { useQuestionEngine } from "./use-question-engine";
@@ -82,25 +82,30 @@ export function useQuizSession({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const correctAnswersRef = useRef(correctAnswers);
-  correctAnswersRef.current = correctAnswers;
   const elapsedTimeRef = useRef(elapsedTime);
-  elapsedTimeRef.current = elapsedTime;
 
-  useInterval(
-    () => {
-      setElapsedTime((prev) => {
-        if (prev >= maxTime) {
-          onFinish?.({
-            correctAnswers: correctAnswersRef.current,
-            elapsedTime: prev,
-          });
-          return prev;
-        }
-        return prev + 1;
-      });
-    },
-    isRunning ? 1000 : null,
-  );
+  useEffect(() => {
+    correctAnswersRef.current = correctAnswers;
+  }, [correctAnswers]);
+
+  useEffect(() => {
+    elapsedTimeRef.current = elapsedTime;
+  }, [elapsedTime]);
+
+  const tick = useCallback(() => {
+    setElapsedTime((prev) => {
+      if (prev >= maxTime) {
+        onFinish?.({
+          correctAnswers: correctAnswersRef.current,
+          elapsedTime: prev,
+        });
+        return prev;
+      }
+      return prev + 1;
+    });
+  }, [maxTime, onFinish]);
+
+  useInterval(tick, isRunning ? 1000 : null);
 
   const handleStart = useCallback(() => {
     setIsRunning(true);

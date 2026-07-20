@@ -102,12 +102,15 @@ export function useExamSession(id: string, mode: "timed" | "practice" | "mock") 
     );
 
   const initializedPaperIdRef = useRef<string | null>(null);
-  if (!paperLoading && paperData && paperData.metadata.id !== initializedPaperIdRef.current) {
-    initializedPaperIdRef.current = paperData.metadata.id;
-    const durationMinutes = parseDuration(paperData.exam.metadata.duration);
-    initSession(paperData.exam, paperData.metadata.id, durationMinutes);
-    setPhase("mode-select");
-  }
+
+  useEffect(() => {
+    if (!paperLoading && paperData && paperData.metadata.id !== initializedPaperIdRef.current) {
+      initializedPaperIdRef.current = paperData.metadata.id;
+      const durationMinutes = parseDuration(paperData.exam.metadata.duration);
+      initSession(paperData.exam, paperData.metadata.id, durationMinutes);
+      setPhase("mode-select");
+    }
+  }, [paperLoading, paperData, initSession, setPhase]);
 
   useEffect(() => {
     setImmersive(phase === "active");

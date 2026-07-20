@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { usePWAInstall } from "@/hooks/use-service-worker";
 import { useRouter } from "@/i18n/navigation";
@@ -62,8 +62,11 @@ const clearTrailing = (
 function InstallAppSection() {
   const { isInstallable, install, dismissed, resetPwaDismiss } = usePWAInstall();
 
-  const wasDismissed =
-    typeof window !== "undefined" && localStorage.getItem("pwa-install-dismissed");
+  const [wasDismissed, setWasDismissed] = useState<string | null>(null);
+
+  useEffect(() => {
+    setWasDismissed(localStorage.getItem("pwa-install-dismissed"));
+  }, []);
 
   const installTrailing = useMemo(
     () =>

@@ -6,6 +6,7 @@ import NoteIcon from "@hugeicons/core-free-icons/NoteIcon";
 import Quiz03Icon from "@hugeicons/core-free-icons/Quiz03Icon";
 import RefreshIcon from "@hugeicons/core-free-icons/RefreshIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useContext } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
 import { PageContainer } from "@/components/layout/page-container";
@@ -18,7 +19,7 @@ import type { QuizPack } from "@/lib/quiz-packs/types";
 import type { StoryProgressRecord } from "@/lib/db/types";
 import { useOfflineStats } from "@/hooks/use-offline-stats";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
-import { useSyncContext } from "@/components/providers/sync-provider";
+import { SyncContext } from "@/components/providers/sync-provider";
 import type { SyncStatus } from "@/lib/sync/types";
 import { OfflineTracker } from "./offline-tracker";
 
@@ -31,17 +32,15 @@ const formatTime = (ts: number | null) => {
 };
 
 function SyncStatusBar() {
-  let status: SyncStatus = { state: "idle", pendingWrites: 0, lastSyncAt: null, lastError: null };
-  let triggerSync: () => void = () => {};
-  let syncContextAvailable = true;
-
-  try {
-    const ctx = useSyncContext();
-    status = ctx.status;
-    triggerSync = ctx.triggerSync;
-  } catch {
-    syncContextAvailable = false;
-  }
+  const syncCtx = useContext(SyncContext);
+  const syncContextAvailable = !!syncCtx;
+  const status: SyncStatus = syncCtx?.status ?? {
+    state: "idle",
+    pendingWrites: 0,
+    lastSyncAt: null,
+    lastError: null,
+  };
+  const triggerSync: () => void = syncCtx?.triggerSync ?? (() => {});
 
   const { isOnline } = useOnlineStatus();
 

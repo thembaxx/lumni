@@ -33,6 +33,7 @@ export function ScientificCalculator() {
   });
   const [history, setHistory] = useState<string[]>([]);
   const lastResult = useRef<number | null>(null);
+  const lastExpression = useRef<string | null>(null);
 
   const evaluateExpression = useCallback(
     (expr: string): string => {
@@ -93,10 +94,15 @@ export function ScientificCalculator() {
         case "=":
           setState((prev) => {
             if (!prev.expression || prev.result === "Error") return prev;
-            const entry = `${prev.expression} = ${prev.result}`;
-            setHistory((h) => [entry, ...h].slice(0, 50));
-            lastResult.current = Number.parseFloat(prev.result);
             return { ...prev, expression: prev.result, result: prev.result };
+          });
+          lastResult.current = Number.parseFloat(state.result);
+          lastExpression.current = state.expression;
+          setHistory((h) => {
+            const expr = lastExpression.current;
+            const res = lastResult.current;
+            if (!expr || res === null) return h;
+            return [`${expr} = ${res}`, ...h].slice(0, 50);
           });
           break;
         case "±":
@@ -152,7 +158,7 @@ export function ScientificCalculator() {
           appendToExpr(id);
       }
     },
-    [appendToExpr, evaluateExpression, state.memory],
+    [appendToExpr, evaluateExpression, state.expression, state.memory, state.result],
   );
 
   const handleCopy = useCallback(() => {

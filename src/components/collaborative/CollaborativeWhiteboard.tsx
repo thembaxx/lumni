@@ -84,7 +84,7 @@ export function CollaborativeWhiteboard({
       currentTool: tool,
     });
 
-    awareness.on("change", () => {
+    const handleAwarenessChange = () => {
       const states = new Map<number, any>();
       awareness.getStates().forEach((state: any, clientId: number) => {
         if (clientId !== awareness.clientID && state.user) {
@@ -92,21 +92,27 @@ export function CollaborativeWhiteboard({
         }
       });
       setAwareness(states);
-    });
+    };
+    awareness.on("change", handleAwarenessChange);
 
-    provider.on("status", (event: { connected: boolean }) => {
+    const handleStatus = (event: { connected: boolean }) => {
       console.log("Whiteboard connection:", event.connected ? "connected" : "disconnected");
-    });
+    };
+    provider.on("status", handleStatus);
 
-    objectsMap.observe(() => {
+    const handleObjectsChange = () => {
       const newObjects = new Map<string, any>();
       objectsMap.forEach((value, key) => {
         newObjects.set(key, value);
       });
       setObjects(newObjects);
-    });
+    };
+    objectsMap.observe(handleObjectsChange);
 
     return () => {
+      awareness.off("change", handleAwarenessChange);
+      provider.off("status", handleStatus);
+      objectsMap.unobserve(handleObjectsChange);
       provider.destroy();
       doc.destroy();
     };
