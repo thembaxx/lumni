@@ -86,6 +86,9 @@ export function EasterEggProvider({ children }: { children: React.ReactNode }) {
       } else if (typeBuffer.current.includes("matrix")) {
         typeBuffer.current = "";
         flashEgg("matrix");
+      } else if (typeBuffer.current.includes("finals")) {
+        typeBuffer.current = "";
+        flashEgg("konami");
       }
     };
     window.addEventListener("keydown", handler);

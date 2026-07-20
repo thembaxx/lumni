@@ -1,11 +1,5 @@
 "use client";
 
-import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
-import ChartUpIcon from "@hugeicons/core-free-icons/ChartUpIcon";
-import BookOpen01Icon from "@hugeicons/core-free-icons/BookOpen01Icon";
-import Settings03Icon from "@hugeicons/core-free-icons/Settings03Icon";
-import SparklesIcon from "@hugeicons/core-free-icons/SparklesIcon";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { AnonymousUpsell } from "@/components/dashboard/anonymous-upsell";
@@ -25,36 +19,20 @@ import { StudyPlanOverview } from "@/components/dashboard/study-plan-overview";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import { UpcomingExamCard } from "@/components/dashboard/upcoming-exam-card";
 import { WeakTopicsCard } from "@/components/dashboard/weak-topics-card";
-import { WordOfDayCard } from "@/components/dashboard/word-of-day";
 import { RewardChestPanel } from "@/components/gamification/reward-chest/reward-chest-panel";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
-import { StaggerList } from "@/components/shared/stagger-list";
 import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useFeatureFlag } from "@/hooks/use-feature-flag";
 import { getFeed } from "@/lib/retention-loop/next-action";
+import { BentoGrid, BentoCell } from "./parts/bento-grid";
 
 const FocusTimerCard = dynamic(
   () => import("@/components/dashboard/focus-timer-card").then((m) => m.FocusTimerCard),
   { ssr: false, loading: () => <Skeleton className="h-20 rounded-card" /> },
-);
-
-const StoriesProgressCard = dynamic(
-  () => import("@/components/dashboard/stories-progress-card").then((m) => m.StoriesProgressCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
-);
-
-const LessonLibraryCard = dynamic(
-  () => import("@/components/dashboard/lesson-library-card").then((m) => m.LessonLibraryCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
-);
-
-const VocabularyListCard = dynamic(
-  () => import("@/components/vocabulary/vocabulary-list-card").then((m) => m.VocabularyListCard),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
 );
 
 const ComparativeAnalyticsPanel = dynamic(
@@ -68,19 +46,9 @@ const ComparativeAnalyticsPanel = dynamic(
   },
 );
 
-const StatsRow = dynamic(() => import("@/components/dashboard/stats-row").then((m) => m.StatsRow), {
-  ssr: false,
-  loading: () => <Skeleton className="h-32 rounded-card" />,
-});
-
-const LeaderboardCard = dynamic(
-  () => import("@/components/social/leaderboard-card").then((m) => m.LeaderboardCard),
-  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
-);
-
 const AchievementShowcase = dynamic(
   () => import("@/components/dashboard/achievement-showcase").then((m) => m.AchievementShowcase),
-  { ssr: false, loading: () => <Skeleton className="h-32 rounded-card" /> },
+  { ssr: false, loading: () => <Skeleton className="h-20 rounded-card" /> },
 );
 
 const MasteryHeatmap = dynamic(
@@ -88,10 +56,9 @@ const MasteryHeatmap = dynamic(
   { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
 );
 
-const PronunciationChartCard = dynamic(
-  () =>
-    import("@/components/dashboard/pronunciation-chart-card").then((m) => m.PronunciationChartCard),
-  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
+const WordOfDayCard = dynamic(
+  () => import("@/components/dashboard/word-of-day").then((m) => m.WordOfDayCard),
+  { ssr: false, loading: () => <Skeleton className="h-24 rounded-card" /> },
 );
 
 const MyAssignments = dynamic(
@@ -109,37 +76,15 @@ const CompetencyOverview = dynamic(
   { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
 );
 
-const BloomTaxonomyWidget = dynamic(
-  () => import("@/components/dashboard/bloom-taxonomy-widget").then((m) => m.BloomTaxonomyWidget),
-  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
-);
-
-function SectionHeading({
-  icon,
-  label,
-  description,
-}: {
-  icon: typeof SparklesIcon;
-  label: string;
-  description?: string;
-}) {
+function SectionLabel({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex size-9 items-center justify-center rounded-2xl bg-system-accent/10 shadow-level-1">
-        <HugeiconsIcon icon={icon} size={16} className="text-system-accent" />
-      </div>
-      <div>
-        <h2 className="font-extrabold text-(--fs-heading-3) text-foreground tracking-tight">
-          {label}
-        </h2>
-        {description && <p className="text-muted-foreground text-xs">{description}</p>}
-      </div>
+    <div className="mb-2 flex items-center gap-2 sm:mb-3">
+      <div className="h-1.5 w-1.5 rounded-full bg-system-accent" aria-hidden="true" />
+      <h2 className="font-semibold text-(--fs-caption-1) text-muted-foreground uppercase tracking-widest">
+        {label}
+      </h2>
     </div>
   );
-}
-
-function GridCell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={className}>{children}</div>;
 }
 
 function FeedSection({ userId }: { userId: string }) {
@@ -183,214 +128,155 @@ export function DashboardView({ boltStreak, onStartQuiz }: DashboardViewProps) {
 
   return (
     <StaggerProvider baseDelay={0.02}>
-      <div className="flex flex-col gap-6 sm:gap-7 lg:gap-8">
-        <StaggeredSection>
+      <div className="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+        {/* ZONE 1: TODAY */}
+        <section aria-label="Today" className="animate-section-reveal">
           <HeroBanner />
-        </StaggeredSection>
+          {isLoggedIn && (
+            <div className="mt-3 sm:mt-4">
+              <BentoGrid>
+                <BentoCell span="full">
+                  <DailyChallengeCard streak={boltStreak} />
+                </BentoCell>
+              </BentoGrid>
+            </div>
+          )}
+        </section>
 
         {isLoggedIn && (
           <>
-            <section aria-label="Daily overview">
-              <div className="mb-5">
-                <SectionHeading
-                  icon={SparklesIcon}
-                  label="Today"
-                  description="Your daily challenge and focus"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+            {/* ZONE 2: FOCUS */}
+            <section aria-label="Focus" className="animate-section-reveal">
+              <SectionLabel label="Focus" />
+              <BentoGrid>
+                <BentoCell span="full">
                   <StaggeredSection>
-                    <DailyChallengeCard streak={boltStreak} />
+                    <FeedSection userId={user!.$id} />
                   </StaggeredSection>
-                </GridCell>
-                {isLoggedIn && (
-                  <GridCell className="lg:col-span-2">
-                    <StaggeredSection>
-                      <FeedSection userId={user!.$id} />
-                    </StaggeredSection>
-                  </GridCell>
-                )}
-                <StaggeredSection>
-                  <UpcomingExamCard />
-                </StaggeredSection>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+                </BentoCell>
+                <BentoCell span="2col">
                   <StaggeredSection>
                     <TodayFocusCard />
                   </StaggeredSection>
-                </GridCell>
-                {isLoggedIn && (
-                  <StaggeredSection>
-                    <GettingStartedCard />
-                  </StaggeredSection>
-                )}
+                </BentoCell>
+                <StaggeredSection>
+                  <UpcomingExamCard />
+                </StaggeredSection>
+                <StaggeredSection>
+                  <GettingStartedCard />
+                </StaggeredSection>
                 <StaggeredSection>
                   <NotificationNudge />
                 </StaggeredSection>
+              </BentoGrid>
+
+              <div className="mt-3 sm:mt-4">
+                <QuickActions />
               </div>
             </section>
 
-            <section aria-label="Quick Actions">
-              <StaggeredSection>
-                <StaggerList>
-                  <QuickActions />
-                </StaggerList>
-              </StaggeredSection>
-            </section>
-
-            <section aria-label="Your Plan">
-              <div className="mb-4">
-                <SectionHeading
-                  icon={Calendar01Icon}
-                  label="Your Plan"
-                  description="Study plan and weak spots"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+            {/* ZONE 3: PLAN + PROGRESS */}
+            <section aria-label="Plan and Progress" className="animate-section-reveal">
+              <SectionLabel label="Your Plan" />
+              <BentoGrid>
+                <BentoCell span="full">
                   <StaggeredSection>
                     <StudyPlanOverview />
                   </StaggeredSection>
-                </GridCell>
-                <GridCell className="lg:col-span-2">
+                </BentoCell>
+                <BentoCell span="2col">
                   <StaggeredSection>
                     <WeakTopicsCard />
                   </StaggeredSection>
-                </GridCell>
+                </BentoCell>
                 <StaggeredSection>
                   <StudyCard />
                 </StaggeredSection>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+              </BentoGrid>
+
+              <div className="mt-4 sm:mt-5">
+                <SectionLabel label="Progress" />
+                <BentoGrid>
+                  <BentoCell span="2col">
+                    <StaggeredSection>
+                      <CompetencyOverview />
+                    </StaggeredSection>
+                  </BentoCell>
                   <StaggeredSection>
-                    <MyAssignments />
+                    <StreakCard />
                   </StaggeredSection>
-                </GridCell>
-                <GridCell className="lg:col-span-2">
-                  <StaggeredSection>
-                    <CompetencyOverview />
-                  </StaggeredSection>
-                </GridCell>
-                <StaggeredSection>
-                  <BloomTaxonomyWidget />
-                </StaggeredSection>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <AchievementShowcase />
+                    </StaggeredSection>
+                  </BentoCell>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <AppErrorBoundary>
+                        <CompetitionCard />
+                      </AppErrorBoundary>
+                    </StaggeredSection>
+                  </BentoCell>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <ComparativeAnalyticsPanel />
+                    </StaggeredSection>
+                  </BentoCell>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <RewardChestPanel />
+                    </StaggeredSection>
+                  </BentoCell>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <MyAssignments />
+                    </StaggeredSection>
+                  </BentoCell>
+                  <BentoCell span="full">
+                    <StaggeredSection>
+                      <MasteryHeatmap />
+                    </StaggeredSection>
+                  </BentoCell>
+                </BentoGrid>
               </div>
             </section>
 
-            <section aria-label="Keep Learning">
-              <div className="mb-4">
-                <SectionHeading
-                  icon={BookOpen01Icon}
-                  label="Keep Learning"
-                  description="Lessons, questions, and resources"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
+            {/* ZONE 4: EXPLORE */}
+            <section aria-label="Explore" className="animate-section-reveal">
+              <SectionLabel label="Explore" />
+              <BentoGrid>
                 <StaggeredSection>
                   <QuestionOfTheDayCard />
                 </StaggeredSection>
-                <GridCell className="lg:col-span-2">
+                <BentoCell span="2col">
                   <StaggeredSection>
                     <RecentQuestionsCard />
                   </StaggeredSection>
-                </GridCell>
-                <GridCell className="sm:col-span-2">
-                  <StaggeredSection>
-                    <LessonLibraryCard />
-                  </StaggeredSection>
-                </GridCell>
-                <StaggeredSection>
-                  <VocabularyListCard />
-                </StaggeredSection>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+                </BentoCell>
+                <BentoCell span="full">
                   <StaggeredSection>
                     <AppErrorBoundary>
                       <LearningMapCard />
                     </AppErrorBoundary>
                   </StaggeredSection>
-                </GridCell>
-              </div>
-            </section>
-
-            <section aria-label="Your Progress">
-              <div className="mb-4">
-                <SectionHeading
-                  icon={ChartUpIcon}
-                  label="Your Progress"
-                  description="Stats, achievements, and leaderboard"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-                <GridCell className="sm:col-span-2 lg:col-span-3">
-                  <StaggeredSection>
-                    <StatsRow />
-                  </StaggeredSection>
-                </GridCell>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
-                  <StaggeredSection>
-                    <ComparativeAnalyticsPanel />
-                  </StaggeredSection>
-                </GridCell>
-                <StaggeredSection>
-                  <StreakCard />
-                </StaggeredSection>
-                <GridCell className="lg:col-span-2">
-                  <StaggeredSection>
-                    <LeaderboardCard />
-                  </StaggeredSection>
-                </GridCell>
-                <StaggeredSection>
-                  <AchievementShowcase />
-                </StaggeredSection>
-                <StaggeredSection>
-                  <RewardChestPanel />
-                </StaggeredSection>
-                <StaggeredSection>
-                  <CompetitionCard />
-                </StaggeredSection>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
-                  <StaggeredSection>
-                    <MasteryHeatmap />
-                  </StaggeredSection>
-                </GridCell>
-              </div>
-            </section>
-
-            <section aria-label="Tools">
-              <div className="mb-4">
-                <SectionHeading
-                  icon={Settings03Icon}
-                  label="Tools"
-                  description="Timer, offline packs, and more"
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-                <GridCell className="sm:col-span-2 lg:col-span-3">
-                  <StaggeredSection>
-                    <FocusTimerCard />
-                  </StaggeredSection>
-                </GridCell>
+                </BentoCell>
                 <StaggeredSection>
                   <WordOfDayCard />
                 </StaggeredSection>
                 <StaggeredSection>
-                  <StoriesProgressCard />
+                  <FocusTimerCard />
                 </StaggeredSection>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
-                  <StaggeredSection>
-                    <PronunciationChartCard />
-                  </StaggeredSection>
-                </GridCell>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+                <BentoCell span="full">
                   <StaggeredSection>
                     <OfflinePackManager />
                   </StaggeredSection>
-                </GridCell>
-                <GridCell className="sm:col-span-2 lg:col-span-3">
+                </BentoCell>
+                <BentoCell span="full">
                   <StaggeredSection>
                     <QuizStartCard onStart={onStartQuiz} />
                   </StaggeredSection>
-                </GridCell>
-              </div>
+                </BentoCell>
+              </BentoGrid>
             </section>
           </>
         )}

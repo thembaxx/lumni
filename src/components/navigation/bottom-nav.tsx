@@ -1,22 +1,19 @@
 "use client";
 
+import Camera01Icon from "@hugeicons/core-free-icons/Camera01Icon";
 import GridIcon from "@hugeicons/core-free-icons/GridIcon";
 import Home01Icon from "@hugeicons/core-free-icons/Home01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { memo, Suspense, useMemo } from "react";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
-import { SnapFab } from "@/components/tools/core/snap-fab";
 import { Badge } from "@/components/ui/badge";
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { springPresets } from "@/lib/utils/spring-presets";
 import { useDataPrefetch } from "@/hooks/use-data-prefetch";
 import { usePathname, Link } from "@/i18n/navigation";
 import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
 import { getPrimaryItems } from "@/lib/navigation/config";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { cn } from "@/lib/utils";
-
 interface BottomNavItem {
   id: string;
   label: string;
@@ -40,27 +37,52 @@ const navItems: BottomNavItem[] = [
   })),
 ];
 
-const baseItemClass =
-  "relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
+const springBounce = {
+  type: "spring" as const,
+  stiffness: 500,
+  damping: 22,
+  mass: 0.6,
+  bounce: 0.15,
+};
+
+function ActiveGlow() {
+  return (
+    <motion.span
+      layoutId="activeGlow"
+      transition={springBounce}
+      className="absolute inset-0 rounded-full bg-system-accent/12"
+      style={{ originX: 0.5, originY: 0.5 }}
+    />
+  );
+}
+
+function ActiveDot() {
+  return (
+    <motion.span
+      layoutId="activeDot"
+      transition={springBounce}
+      className="absolute -bottom-[3px] left-1/2 h-[3px] w-4 -translate-x-1/2 rounded-full bg-system-accent"
+    />
+  );
+}
 
 function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolean }) {
   return (
-    <>
-      <div className="relative flex size-6 items-center justify-center">
-        {isActive && (
-          <span className="absolute inset-0 rounded-full bg-system-accent/15 animate-float-bob" />
-        )}
-        <HugeiconsIcon
-          icon={item.icon}
-          className={cn(
-            "size-5 transition-[transform,color] duration-200 ease-ios",
-            isActive && "scale-125",
-            isActive ? "text-system-accent" : "text-system-text-tertiary",
-          )}
-        />
-        {isActive && (
-          <span className="absolute -bottom-[3px] left-1/2 h-[3px] w-4 -translate-x-1/2 rounded-full bg-system-accent" />
-        )}
+    <span className="relative flex flex-col items-center gap-0.5">
+      <span className="relative flex size-6 items-center justify-center">
+        {isActive && <ActiveGlow />}
+        <motion.span
+          animate={
+            isActive
+              ? { scale: 1.25, color: "var(--system-accent)" }
+              : { scale: 1, color: "var(--system-text-tertiary)" }
+          }
+          transition={isActive ? springBounce : { duration: 0.2, ease: "easeOut" }}
+          className="relative flex items-center justify-center"
+        >
+          <HugeiconsIcon icon={item.icon} className="size-5" />
+        </motion.span>
+        <AnimatePresence>{isActive && <ActiveDot />}</AnimatePresence>
         {item.badge !== undefined && item.badge > 0 && (
           <Badge
             variant="destructive"
@@ -69,16 +91,19 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
             {item.badge > 99 ? "99+" : item.badge}
           </Badge>
         )}
-      </div>
-      <span
-        className={cn(
-          "ios-caption-3 relative z-elevated text-center font-semibold leading-none transition-colors duration-200",
-          isActive ? "text-system-accent" : "text-system-text-tertiary",
-        )}
+      </span>
+      <motion.span
+        animate={
+          isActive
+            ? { color: "var(--system-accent)", letterSpacing: "0.01em" }
+            : { color: "var(--system-text-tertiary)", letterSpacing: "0em" }
+        }
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="ios-caption-3 relative z-elevated text-center font-semibold leading-none"
       >
         {item.label}
-      </span>
-    </>
+      </motion.span>
+    </span>
   );
 }
 
@@ -93,8 +118,7 @@ const NavItemComponent = memo(function NavItemComponent({
 }) {
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
-  const tapScale = shouldAnimate ? { scale: 0.96 } : undefined;
-  const springTransition = springPresets.fast;
+  const tapScale = shouldAnimate ? { scale: 0.94 } : undefined;
 
   return (
     <Link
@@ -103,11 +127,11 @@ const NavItemComponent = memo(function NavItemComponent({
       onMouseEnter={() => onPrefetch?.(item.href)}
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
-      className={baseItemClass}
+      className="relative m-0 flex h-14 min-w-0 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
     >
-      <m.span whileTap={tapScale} transition={springTransition}>
+      <motion.span whileTap={tapScale} transition={springPresets.fast} className="contents">
         <ItemContent item={item} isActive={isActive} />
-      </m.span>
+      </motion.span>
     </Link>
   );
 });
@@ -149,37 +173,58 @@ const BottomNav = memo(function BottomNav() {
       }}
     >
       <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
-        <div className="flex items-center gap-2">
-          <div className="glass-regular relative flex items-center rounded-full px-3 py-1 shadow-level-2 ring-1 ring-system-separator/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-full before:bg-(--system-accent-alpha-10)">
-            {navItems.map((item, index) => (
-              <NavItemComponent
-                key={item.id}
-                item={item}
-                isActive={index === activeIndex}
-                onPrefetch={prefetch}
-              />
-            ))}
-          </div>
-
+        <div className="relative flex items-center rounded-2xl bg-system-background/75 shadow-level-3 ring-1 ring-system-separator/20 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-(--system-accent-alpha-10)">
           <Suspense fallback={null}>
-            <SnapFab inline />
+            <SnapFabInline />
           </Suspense>
 
-          <m.button
+          <span className="h-6 w-px shrink-0 bg-system-separator/40" aria-hidden="true" />
+
+          {navItems.map((item, index) => (
+            <NavItemComponent
+              key={item.id}
+              item={item}
+              isActive={index === activeIndex}
+              onPrefetch={prefetch}
+            />
+          ))}
+
+          <span className="h-6 w-px shrink-0 bg-system-separator/40" aria-hidden="true" />
+
+          <motion.button
             type="button"
             onClick={() => navigate("/tools")}
             aria-label="All tools"
             whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
-            whileTap={shouldAnimate ? { scale: 0.96 } : undefined}
+            whileTap={shouldAnimate ? { scale: 0.94 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 26, bounce: 0 }}
-            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-system-accent text-system-accent-foreground shadow-level-3 hover:bg-system-accent/90 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
+            className="flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
           >
             <HugeiconsIcon icon={GridIcon} className="size-5" />
-          </m.button>
+          </motion.button>
         </div>
       </div>
     </nav>
   );
 });
+
+function SnapFabInline() {
+  const pathname = usePathname();
+  const { push } = useNavigationDirection();
+  const isOnQuizOrFlashcards = pathname.startsWith("/quiz") || pathname.startsWith("/flashcards");
+  const isOnExam = pathname.startsWith("/exam/");
+  if (!isOnExam && !isOnQuizOrFlashcards) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => push("/solve?camera=1")}
+      aria-label="Snap photo to solve"
+      className="mx-1 flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset"
+    >
+      <HugeiconsIcon icon={Camera01Icon} className="size-5" data-icon />
+    </button>
+  );
+}
+
 export { BottomNav };
 export default BottomNav;

@@ -19,8 +19,11 @@ export function SearchWidget() {
   const { trigger } = useEasterEgg();
 
   useEffect(() => {
-    if (query.toLowerCase().includes("42")) {
+    const q = query.toLowerCase();
+    if (q.includes("42")) {
       trigger("retro");
+    } else if (q.includes("finals")) {
+      trigger("konami");
     }
   }, [query, trigger]);
 

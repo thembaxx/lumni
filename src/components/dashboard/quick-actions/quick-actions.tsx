@@ -8,9 +8,11 @@ import Calendar02FreeIcons from "@hugeicons/core-free-icons/Calendar02Icon";
 import DocumentValidationFreeIcons from "@hugeicons/core-free-icons/DocumentValidationIcon";
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useRef } from "react";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { cn } from "@/lib/utils";
 
 const quickActions = [
   { icon: Brain02FreeIcons, label: "Practice", route: "/quiz", primary: true },
@@ -26,73 +28,40 @@ const quickActions = [
   { icon: Share07Icon, label: "Invite Friend", route: "/settings/referral" },
 ];
 
-function ActionButton({
-  icon,
-  label,
-  onClick,
-  primary,
-}: {
-  icon: readonly (readonly [string, { readonly [key: string]: string | number }])[];
-  label: string;
-  onClick?: () => void;
-  primary?: boolean;
-}) {
-  if (primary) {
-    return (
-      <Button
-        onClick={onClick}
-        className="h-11 justify-start gap-2.5 rounded-card-lg px-5 text-system-accent-foreground press-scale"
-        aria-label={label}
-      >
-        <span>
-          <HugeiconsIcon icon={icon} className="size-4" data-icon aria-hidden="true" />
-        </span>
-        <span className="font-medium text-sm">{label}</span>
-      </Button>
-    );
-  }
-
-  return (
-    <Button
-      variant="secondary"
-      onClick={onClick}
-      className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent press-scale transition-[scale,background-color,box-shadow,color,transform]"
-      aria-label={label}
-    >
-      <span>
-        <HugeiconsIcon
-          icon={icon}
-          className="size-4 text-foreground"
-          data-icon
-          aria-hidden="true"
-        />
-      </span>
-      <span className="font-medium text-sm">{label}</span>
-    </Button>
-  );
-}
-
 export function QuickActions() {
   const { push } = useNavigationDirection();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full">
-      <ul className="scrollbar-hide flex items-center gap-3 overflow-x-auto py-1">
-        {quickActions.map((action) => (
-          <li key={action.label} className="shrink-0">
-            {action.label === "Study Plan" ? (
-              <StudyPlanSheet />
-            ) : (
-              <ActionButton
+    <div ref={scrollRef} className="w-full overflow-x-auto scrollbar-hide">
+      <div className="flex items-center gap-2 py-1">
+        {quickActions.map((action) =>
+          action.label === "Study Plan" ? (
+            <StudyPlanSheet key={action.label} />
+          ) : (
+            <Button
+              key={action.label}
+              variant={action.primary ? "default" : "secondary"}
+              onClick={() => push(action.route ?? "/")}
+              className={cn(
+                "pill-chip flex-nowrap",
+                action.primary
+                  ? "bg-(--system-accent) text-(--system-accent-foreground)"
+                  : "bg-(--material-glass) text-(--system-text-primary)",
+              )}
+              aria-label={action.label}
+            >
+              <HugeiconsIcon
                 icon={action.icon}
-                label={action.label}
-                onClick={() => push(action.route ?? "/")}
-                primary={action.primary}
+                className="size-4 shrink-0"
+                data-icon
+                aria-hidden="true"
               />
-            )}
-          </li>
-        ))}
-      </ul>
+              <span className="whitespace-nowrap">{action.label}</span>
+            </Button>
+          ),
+        )}
+      </div>
     </div>
   );
 }

@@ -1263,3 +1263,173 @@ span.math:not(:empty)::after {
     filter: blur(0);
   }
 }
+
+/* ========================================
+   2026 BENTO + MOTION ADDITIONS
+   ======================================== */
+
+/* Glass card with stronger frosted effect */
+.glass-bento {
+  background: oklch(100% 0 0 / 0.55);
+  backdrop-filter: blur(24px);
+  border: 1px solid oklch(0% 0 0 / 0.06);
+}
+.dark .glass-bento {
+  background: oklch(100% 0 0 / 0.06);
+  border: 1px solid oklch(100% 0 0 / 0.08);
+}
+
+.glass-bento-strong {
+  background: oklch(100% 0 0 / 0.72);
+  backdrop-filter: blur(28px);
+  border: 1px solid oklch(0% 0 0 / 0.08);
+}
+.dark .glass-bento-strong {
+  background: oklch(100% 0 0 / 0.1);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+}
+
+/* Bento card hover lift */
+.bento-card {
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bento-card:hover {
+  transform: translateY(-2px);
+}
+.dark .bento-card:hover {
+  transform: translateY(-1px);
+}
+
+/* Ambient blob animation */
+@keyframes blob-orbit {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  50% {
+    transform: translate(-10px, 15px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 10px) scale(1.02);
+  }
+}
+.animate-blob {
+  animation: blob-orbit 12s ease-in-out infinite;
+}
+.animate-blob-delayed {
+  animation: blob-orbit 16s ease-in-out infinite reverse;
+}
+
+/* Count up number tick */
+@keyframes count-tick {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-count-tick {
+  animation: count-tick 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Section entrance */
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.animate-section-reveal {
+  view-timeline-name: --section;
+  view-timeline-axis: block;
+  animation: section-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+/* Pill chip for quick actions */
+.pill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.pill-chip:active {
+  transform: scale(0.94);
+}
+
+/* Reduced motion overrides for new animations */
+.reduced-motion .animate-section-reveal,
+.reduced-motion .animate-blob,
+.reduced-motion .animate-blob-delayed,
+.reduced-motion .animate-count-tick {
+  animation: none;
+}
+.reduced-motion .bento-card:hover {
+  transform: none;
+}
+
+@keyframes fire-burst {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  40% {
+    transform: scale(3);
+    opacity: 0.6;
+    filter: blur(4px);
+  }
+  70% {
+    transform: scale(5);
+    opacity: 0.3;
+    filter: blur(8px);
+  }
+  100% {
+    transform: scale(6);
+    opacity: 0;
+    filter: blur(12px);
+  }
+}
+.animate-fire-burst {
+  animation: fire-burst 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes halo-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--system-accent-alpha-15);
+  }
+  50% {
+    box-shadow: 0 0 0 12px var(--system-accent-alpha-5);
+  }
+}
+.animate-halo-pulse {
+  animation: halo-pulse 2s ease-in-out infinite;
+}
