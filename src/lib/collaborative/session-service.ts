@@ -9,20 +9,19 @@ import type {
   SessionMessage,
   SessionRecording,
 } from "./types";
-import type { DataAccess } from "@/lib/db/data-access";
 import { logError } from "@/lib/shared/logger";
 
 const SESSION_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const INVITE_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-type CollaborativeDb = DataAccess & {
+interface CollaborativeDb {
   collaborativeSessions: any;
   sessionParticipants: any;
   whiteboardObjects: any;
   sessionMessages: any;
   sessionRecordings: any;
   sessionInvites: any;
-};
+}
 
 let _deps: { db: CollaborativeDb } = Object.freeze({
   db: dexieDataAccess as unknown as CollaborativeDb,

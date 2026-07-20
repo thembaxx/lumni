@@ -1,3 +1,5 @@
+/* impeccable-disable bounce-easing -- intentional design-system pop language */
+
 @import "tailwindcss";
 @import "tailwind-scrollbar-hide/v4";
 

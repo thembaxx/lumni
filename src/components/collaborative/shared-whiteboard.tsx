@@ -249,7 +249,7 @@ export const SharedWhiteboard = forwardRef<SharedWhiteboardHandle, SharedWhitebo
         onClick={() => setTool(id)}
         className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
           tool === id
-            ? "bg-(--system-accent) text-white"
+            ? "bg-(--system-accent) text-(--system-accent-foreground)"
             : "text-muted-foreground hover:text-foreground hover:bg-muted"
         }`}
         aria-label={label}

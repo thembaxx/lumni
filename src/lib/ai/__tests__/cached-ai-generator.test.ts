@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, test, vi } from "vitest";
 import type { AIClient } from "@/lib/ai/client";
-import type { DataAccess } from "@/lib/db/data-access";
+import type { CacheDataAccess } from "@/lib/db/data-access";
 import { CachedAIGenerator, type CachedAIGeneratorConfig } from "../cached-ai-generator";
 
-function mockDb(): DataAccess {
+function mockDb(): CacheDataAccess {
   const store = new Map<string, { expiresAt: number; data: string }>();
   return {
     knowledgeGraph: {
@@ -14,7 +14,7 @@ function mockDb(): DataAccess {
         return Promise.resolve("");
       }),
     },
-  } as unknown as DataAccess;
+  } as unknown as CacheDataAccess;
 }
 
 function mockAi(content: string): AIClient {
@@ -57,7 +57,7 @@ const numericConfig: CachedAIGeneratorConfig<number> = {
   },
   emptyResult: 0,
   isEmpty: (result: number) => result === 0,
-  getTable: (db: DataAccess) => ({
+  getTable: (db: CacheDataAccess) => ({
     get: (key: string) => db.knowledgeGraph.get(key),
     put: (entry: unknown) => db.knowledgeGraph.put(entry),
   }),
@@ -79,7 +79,7 @@ const testConfig: CachedAIGeneratorConfig<string> = {
   parseResponse: (content: string) => content,
   emptyResult: "",
   isEmpty: (result: string) => result === "",
-  getTable: (db: DataAccess) => ({
+  getTable: (db: CacheDataAccess) => ({
     get: (key: string) => db.knowledgeGraph.get(key),
     put: (entry: unknown) => db.knowledgeGraph.put(entry),
   }),

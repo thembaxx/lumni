@@ -1,5 +1,4 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
 import type { CurriculumTopic } from "./question-classifier";
 
 interface CurriculumTopicRecord {
@@ -35,7 +34,7 @@ export async function getCurriculumTopics(
         };
       };
     };
-    const db = dexieDataAccess as unknown as DataAccess & {
+    const db = dexieDataAccess as unknown as {
       curriculumTopics: CurriculumTopicsTable;
     };
 

@@ -369,7 +369,7 @@ export function SharedQuizSession({
                 <button
                   type="button"
                   onClick={handleJoinVoice}
-                  className="px-6 py-2 rounded-full text-sm font-medium bg-(--system-accent) text-white hover:opacity-90 transition-opacity"
+                  className="px-6 py-2 rounded-full text-sm font-medium bg-(--system-accent) text-(--system-accent-foreground) hover:opacity-90 transition-opacity"
                   aria-label="Join voice chat"
                 >
                   Join Voice

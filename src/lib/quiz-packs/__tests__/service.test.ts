@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import type { Collection, DataAccess } from "@/lib/db/data-access";
+import type { Collection, QuizDataAccess } from "@/lib/db/data-access";
 import { InMemoryDataAccess } from "@/lib/db/in-memory-data-access";
 import { QuizPackService } from "../service";
 import type { QuizPack } from "../types";
@@ -44,7 +44,7 @@ class PatchedCollection<T> implements Collection<T> {
 }
 
 describe("QuizPackService", () => {
-  let db: DataAccess;
+  let db: QuizDataAccess;
   let service: QuizPackService;
 
   function seedPack(overrides: Partial<QuizPack> & { id: string }): QuizPack {
@@ -115,7 +115,7 @@ describe("QuizPackService", () => {
       };
     };
 
-    db = rawDb as unknown as DataAccess;
+    db = rawDb as unknown as QuizDataAccess;
     service = new QuizPackService({ db });
   });
 

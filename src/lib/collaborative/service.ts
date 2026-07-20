@@ -1,5 +1,4 @@
 import { dexieDataAccess } from "@/lib/db";
-import type { DataAccess } from "@/lib/db/data-access";
 import type { CollaborativeSession, SessionParticipant, SessionMessage } from "./types";
 import { logError } from "@/lib/shared/logger";
 
@@ -12,11 +11,11 @@ interface WhiteboardElement {
   timestamp: number;
 }
 
-type CollaborativeDb = DataAccess & {
+interface CollaborativeDb {
   studySessions: any;
   whiteboardElements: any;
   sessionMessages: any;
-};
+}
 
 const DEFAULT_SETTINGS = {
   maxParticipants: 6,
@@ -44,8 +43,8 @@ const PARTICIPANT_COLORS = [
 export class CollaborativeService {
   private db: CollaborativeDb;
 
-  constructor(deps?: { db?: DataAccess }) {
-    this.db = (deps?.db ?? dexieDataAccess) as unknown as CollaborativeDb;
+  constructor(deps?: { db?: CollaborativeDb }) {
+    this.db = deps?.db ?? (dexieDataAccess as unknown as CollaborativeDb);
   }
 
   async createSession(
