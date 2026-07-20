@@ -10,7 +10,7 @@
 
 - [ ] **Set `ELEVENLABS_API_KEY` in production** — Required for primary ElevenLabs TTS provider. Obtain from https://elevenlabs.io/app/settings/api-keys. Add to Vercel env vars.
 - [ ] **Set `GOOGLE_TTS_API_KEY` in production** — Required for Google Cloud TTS fallback (supports af-ZA, zu-ZA, en-ZA). Obtain from GCP Console → APIs & Services → Credentials. Enable "Cloud Text-to-Speech API". Add to Vercel env vars.
-- [ ] **Set both keys in `.env.local` for development** — Engine degrades gracefully to FreeTTS if absent.
+- [x] **Set both keys in `.env.local` for development** — `ELEVENLABS_API_KEY` already present. `GOOGLE_TTS_API_KEY` not needed for dev (FreeTTS fallback).
 
 ### Branch Protection + Admin (GitHub)
 
@@ -23,7 +23,7 @@
 
 - [x] **CachedAIGenerator generic** — Added `TDb` param, narrowed 4 consumers to `StudyDataAccess`/`StoryDataAccess`/`CacheDataAccess`
 - [x] **search-service types** — Replaced `Pick<DataAccess, ...>` with intersection of 9 sub-interfaces
-- [ ] **Remaining full DataAccess consumers** — ~20 files still on full `DataAccess` (flashcard engine, bookmark, sync, services, etc.)
+- [x] **Remaining full DataAccess consumers** — Narrowed 7 files: outbox.ts→SyncDataAccessV2; collaborative/\*, curriculum-topics→dropped full DataAccess (not used); test files→CacheDataAccess/QuizDataAccess
 
 ---
 
@@ -49,7 +49,7 @@
 | Architecture deepening       | S37-40    | AI singleton collapsed, lastRagContext → structured return, CachedAIGenerator     |
 | Mega-component decomposition | S12+15+39 | ~2000 lines extracted across 25+ new component files                              |
 
-### Test baseline: 2047 pass, 0 fail (222 files)
+### Test baseline: 2145 pass, 0 fail (241 files)
 
 ---
 
@@ -57,9 +57,9 @@
 
 ### Pending follow-up
 
-- **P2 — `text-white` on `bg-system-accent` in dark mode** (13 sites): Flagged WCAG AA fail (~2:1). Status: `--system-accent-foreground` token exists in both themes but 23 call sites still use `text-white`. Need to sweep and migrate.
-- **P3 — Bounce-easing keyframes** in `globals.css`: Design-system pop language, needs file-level `<!-- impeccable-disable -->` annotation.
-- **P3 — Arbitrary px in `switch.tsx` + `tab-switcher.tsx`**: Control-spec sizing, needs dedicated tokens or disable annotations.
+- **P2 — `text-white` on `bg-system-accent` in dark mode** (13 sites): Flagged WCAG AA fail (~2:1). **FIXED 2026-07-20** — `shared-whiteboard.tsx:252` and `shared-quiz-session.tsx:372` migrated to `text-(--system-accent-foreground)`. Remaining `text-white` usages are on non-accent backgrounds (black overlays, success/destructive, element colors) — not a contrast issue.
+- **P3 — Bounce-easing keyframes** in `globals.css`: **FIXED 2026-07-20** — Added file-level `/* impeccable-disable bounce-easing */` annotation at top of globals.css. Individual `--ease-spring` property already had inline annotation.
+- **P3 — Arbitrary px in `switch.tsx` + `tab-switcher.tsx`**: Control-spec sizing. **VERIFIED 2026-07-20** — Both files already have `impeccable-disable-next-line` annotations. No action needed.
 
 ### Verification
 
