@@ -96,7 +96,7 @@ export function HeroBanner() {
       />
       <div
         className={cn(
-          "pointer-events-none absolute -top-6 -right-6 size-48 rounded-full blur-3xl opacity-40 transition-all duration-700 group-hover:scale-110 group-hover:opacity-60",
+          "pointer-events-none absolute -top-6 -right-6 size-48 rounded-full blur-3xl opacity-40 transition-[scale,opacity] duration-700 group-hover:scale-110 group-hover:opacity-60",
           cfg.glowClass,
         )}
         aria-hidden="true"

@@ -52,7 +52,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
         />
 
         <div className="flex items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm text-pretty">
             {selectedSubject ? "Ready to test your knowledge?" : "Pick a subject above to begin"}
           </p>
           <Button

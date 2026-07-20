@@ -62,7 +62,7 @@ export function UpcomingExamCard() {
       <Card className="flex flex-col gap-2 p-4">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={Calendar03Icon} className="size-5 text-muted-foreground" />
-          <h3 className="font-semibold text-sm">Upcoming Exams</h3>
+          <h3 className="font-semibold text-sm text-balance">Upcoming Exams</h3>
         </div>
         <p className="text-muted-foreground text-xs">No upcoming exams scheduled</p>
       </Card>
@@ -74,7 +74,7 @@ export function UpcomingExamCard() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={Calendar03Icon} className="size-5 text-system-accent" />
-          <h3 className="font-semibold text-sm">Upcoming Exam</h3>
+          <h3 className="font-semibold text-sm text-balance">Upcoming Exam</h3>
         </div>
         <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${countdownVariant}`}>
           {countdownText}

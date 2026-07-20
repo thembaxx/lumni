@@ -30,7 +30,7 @@ export const StreakCard = memo(function StreakCard() {
                 {currentStreak === 1 ? "day" : "days"}
               </span>
             </div>
-            <p className="mt-0.5 text-muted-foreground text-xs">
+            <p className="mt-0.5 text-muted-foreground text-xs text-pretty">
               {practicedToday
                 ? "Studied today! Keep it going."
                 : currentStreak > 0

@@ -101,7 +101,7 @@ export function PersonalizedFeed({ recommendations }: { recommendations: ScoredR
 
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-muted-foreground/70 text-xs font-medium uppercase tracking-wider">
+      <h3 className="text-muted-foreground/70 text-xs font-medium uppercase tracking-wider text-balance">
         Recommended
       </h3>
       <StaggerList>

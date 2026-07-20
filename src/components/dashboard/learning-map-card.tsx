@@ -107,7 +107,9 @@ export function LearningMapCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="font-bold text-sm tracking-tight">Learning Map</CardTitle>
+          <CardTitle className="font-bold text-sm tracking-tight text-balance">
+            Learning Map
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Skeleton className="h-48 w-full rounded-xl" />
@@ -120,7 +122,9 @@ export function LearningMapCard() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="font-bold text-sm tracking-tight">Learning Map</CardTitle>
+          <CardTitle className="font-bold text-sm tracking-tight text-balance">
+            Learning Map
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-xs">Could not load</p>
@@ -141,7 +145,9 @@ export function LearningMapCard() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="font-bold text-sm tracking-tight">Learning Map</CardTitle>
+        <CardTitle className="font-bold text-sm tracking-tight text-balance">
+          Learning Map
+        </CardTitle>
         {enrolledSubjects.length > 1 && (
           <Select
             value={subjectForQuery ?? ""}

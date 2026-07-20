@@ -68,7 +68,7 @@ export function QuestionOfTheDayCard() {
     <div className="card-entrance">
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-bold text-lg">Question of the Day</CardTitle>
+          <CardTitle className="font-bold text-lg text-balance">Question of the Day</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -98,7 +98,7 @@ export function QuestionOfTheDayCard() {
               variant="ghost"
               size="sm"
               onClick={() => setShowAnswer(!showAnswer)}
-              className="text-xs"
+              className="text-xs press-scale"
             >
               {showAnswer ? "Hide Answer" : "Reveal Answer"}
             </Button>
@@ -106,7 +106,7 @@ export function QuestionOfTheDayCard() {
               variant="outline"
               size="sm"
               onClick={() => push(`/quiz?subject=${encodeURIComponent(question.subject)}&count=5`)}
-              className="text-xs"
+              className="text-xs press-scale"
             >
               Practice
             </Button>

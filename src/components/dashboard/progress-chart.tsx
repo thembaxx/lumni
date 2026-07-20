@@ -49,7 +49,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
             <Button
               size="sm"
               variant="outline"
-              className="h-8 gap-1.5 text-xs"
+              className="min-h-10 gap-1.5 text-xs press-scale"
               onClick={() => push("/quiz")}
             >
               <HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />

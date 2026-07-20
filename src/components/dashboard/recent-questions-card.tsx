@@ -25,7 +25,7 @@ export function RecentQuestionsCard() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-bold text-lg">Recent Questions</CardTitle>
+          <CardTitle className="font-bold text-lg text-balance">Recent Questions</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -48,7 +48,7 @@ export function RecentQuestionsCard() {
     <div className="card-entrance">
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-bold text-lg">Recent Questions</CardTitle>
+          <CardTitle className="font-bold text-lg text-balance">Recent Questions</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           {entries.map((entry) => (
@@ -73,7 +73,7 @@ export function RecentQuestionsCard() {
             variant="outline"
             size="sm"
             onClick={() => push("/review")}
-            className="self-start text-xs"
+            className="self-start text-xs press-scale"
           >
             Review all
           </Button>

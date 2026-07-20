@@ -84,7 +84,7 @@ export function StudyPlanOverview() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
+        <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight text-balance">
           <HugeiconsIcon icon={CheckListIcon} className="size-5" />
           Today's Plan
         </CardTitle>
@@ -110,7 +110,7 @@ export function StudyPlanOverview() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="relative h-6 px-2 text-xs after:absolute after:-inset-2"
+                className="relative h-6 px-2 text-xs after:absolute after:-inset-2 press-scale"
                 onClick={() => setShowForm(true)}
               >
                 Regenerate
@@ -120,7 +120,7 @@ export function StudyPlanOverview() {
                 size="icon"
                 onClick={() => setDismissedStale(true)}
                 aria-label="Dismiss"
-                className="relative size-6 after:absolute after:-inset-2"
+                className="relative size-6 after:absolute after:-inset-2 press-scale"
               >
                 <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
               </Button>

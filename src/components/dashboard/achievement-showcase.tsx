@@ -25,7 +25,7 @@ export function AchievementShowcase() {
     <FadeIn direction="up" distance={16}>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
+          <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight text-balance">
             Achievements
           </CardTitle>
         </CardHeader>

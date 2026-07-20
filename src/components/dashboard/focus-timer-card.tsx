@@ -91,7 +91,7 @@ export function FocusTimerCard() {
             size="icon-sm"
             onClick={handleMinusFive}
             disabled={isRunning || timeLeft <= 60}
-            className="size-8 rounded-full"
+            className="relative size-8 rounded-full after:absolute after:-inset-2 press-scale"
             aria-label="Subtract 5 minutes"
           >
             <HugeiconsIcon icon={MinusSignFreeIcons} data-icon="inline-start" />
@@ -102,7 +102,7 @@ export function FocusTimerCard() {
             size="icon-sm"
             onClick={isRunning ? handleStop : handleStart}
             className={cn(
-              "size-10 rounded-full",
+              "size-10 rounded-full press-scale",
               !isRunning && "bg-system-accent hover:bg-system-accent/90",
             )}
             aria-label={isRunning ? "Pause timer" : "Start timer"}
@@ -119,7 +119,7 @@ export function FocusTimerCard() {
             size="icon-sm"
             onClick={handleAddFive}
             disabled={isRunning || timeLeft >= MAX_TIME}
-            className="size-8 rounded-full"
+            className="relative size-8 rounded-full after:absolute after:-inset-2 press-scale"
             aria-label="Add 5 minutes"
           >
             <HugeiconsIcon icon={PlusSignFreeIcons} data-icon="inline-start" />
@@ -129,7 +129,7 @@ export function FocusTimerCard() {
             variant="ghost"
             size="icon-sm"
             onClick={handleReset}
-            className="size-8 rounded-full text-muted-foreground"
+            className="relative size-8 rounded-full text-muted-foreground after:absolute after:-inset-2 press-scale"
             aria-label="Reset timer"
           >
             <HugeiconsIcon icon={RotateClockwiseFreeIcons} data-icon="inline-start" />

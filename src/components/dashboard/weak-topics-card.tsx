@@ -57,7 +57,7 @@ export function WeakTopicsCard() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-bold text-lg">Practice Weak Topics</CardTitle>
+          <CardTitle className="font-bold text-lg text-balance">Practice Weak Topics</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           <Skeleton className="h-16 w-full rounded-xl" />
@@ -71,7 +71,7 @@ export function WeakTopicsCard() {
     return (
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
-          <CardTitle className="font-bold text-lg">Practice Weak Topics</CardTitle>
+          <CardTitle className="font-bold text-lg text-balance">Practice Weak Topics</CardTitle>
         </CardHeader>
         <CardContent className="p-5 pt-0">
           <p className="text-muted-foreground text-sm">Could not load weak topics.</p>
@@ -90,7 +90,7 @@ export function WeakTopicsCard() {
       <Card className="overflow-hidden rounded-card shadow-level-1">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="font-bold text-lg">Practice Weak Topics</CardTitle>
+            <CardTitle className="font-bold text-lg text-balance">Practice Weak Topics</CardTitle>
             <HugeiconsIcon
               icon={Target01Icon}
               className="size-5 text-muted-foreground"
@@ -121,7 +121,7 @@ export function WeakTopicsCard() {
               <Button
                 variant="outline"
                 size="sm"
-                className="shrink-0 text-xs"
+                className="shrink-0 text-xs press-scale"
                 aria-label={`Practice ${topic.topicId}`}
                 onClick={() =>
                   push(

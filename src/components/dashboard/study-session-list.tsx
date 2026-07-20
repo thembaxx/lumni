@@ -45,7 +45,7 @@ export function StudySessionList({
       ) : (
         <div className="flex items-center gap-3 rounded-xl bg-muted/30 p-2.5">
           <HugeiconsIcon icon={Calendar01Icon} className="size-4 text-muted-foreground" />
-          <p className="text-muted-foreground text-sm">No sessions scheduled today</p>
+          <p className="text-muted-foreground text-sm text-pretty">No sessions scheduled today</p>
         </div>
       )}
       {completedSessions > 0 && (
@@ -61,7 +61,7 @@ export function StudySessionList({
               {progress}%
             </span>
           </div>
-          <p className="pt-1 text-muted-foreground text-xs">
+          <p className="pt-1 text-muted-foreground text-xs tabular-nums">
             {completedSessions} session
             {completedSessions !== 1 ? "s" : ""} completed · {studyTimeMinutes} min studied
           </p>
