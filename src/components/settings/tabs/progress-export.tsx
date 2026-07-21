@@ -78,17 +78,17 @@ export function ProgressExport() {
 						:root {
 							--text-primary: oklch(12% 0 0);
 							--text-secondary: oklch(12% 0 0 / 0.6);
-							--border-color: oklch(0% 0 0 / 0.08);
-							--bg-secondary: oklch(97% 0.012 60);
-							--bg-primary: oklch(100% 0.005 60);
+							--border-color: oklch(0% 0 0 / 0.1);
+							--bg-secondary: oklch(97% 0.01 240);
+							--bg-primary: oklch(100% 0.004 240);
 						}
 						@media (prefers-color-scheme: dark) {
 							:root {
 								--text-primary: oklch(92% 0 0);
 								--text-secondary: oklch(92% 0 0 / 0.6);
 								--border-color: oklch(100% 0 0 / 0.12);
-								--bg-secondary: oklch(18% 0.01 60);
-								--bg-primary: oklch(14% 0.008 60);
+								--bg-secondary: oklch(18% 0.01 240);
+								--bg-primary: oklch(12% 0.008 240);
 							}
 						}
 						body { font-family: system-ui, sans-serif; padding: 40px; color: var(--text-primary); background: var(--bg-primary); }

@@ -134,7 +134,7 @@ export function ResultsSearch() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
               >
-                <Card className="rounded-xl border-border p-4 shadow-sm">
+                <Card className="rounded-xl border-border p-4 shadow-level-1">
                   <div className="flex items-baseline justify-between">
                     <div>
                       <p className="font-medium">{result.subject}</p>

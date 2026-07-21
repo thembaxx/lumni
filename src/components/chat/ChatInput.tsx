@@ -159,7 +159,7 @@ export function ChatInput({ onSend, onSendImage, isLoading, uploadState }: ChatI
                 <DropdownListTrigger
                   className={cn(
                     "inline-flex size-10 shrink-0 items-center justify-center rounded-md",
-                    "cursor-pointer border border-border/30 text-muted-foreground shadow-sm hover:bg-secondary",
+                    "cursor-pointer border border-border/30 text-muted-foreground shadow-level-1 hover:bg-secondary",
                     "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
                     (isLoading || isUploading) && "pointer-events-none opacity-50",
                   )}

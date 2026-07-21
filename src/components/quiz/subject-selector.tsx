@@ -64,8 +64,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
                     "hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-level-2 dark:hover:shadow-black/20",
                     "focus-visible:border-(--system-accent)/50 focus-visible:ring-2 focus-visible:ring-(--system-accent)/30",
                     "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
-                    isSelected &&
-                      "border-(--system-accent) bg-(--system-accent)/5 shadow-level-1 shadow-md",
+                    isSelected && "border-(--system-accent) bg-(--system-accent)/5 shadow-level-2",
                   )}
                 >
                   <div

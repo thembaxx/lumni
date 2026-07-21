@@ -288,7 +288,12 @@ export function CollaborativeWhiteboard({
       tabIndex={0}
       onKeyDown={() => {}}
       className={`relative ${className}`}
-      style={{ width: "100%", height: "100%", minHeight: "500px", backgroundColor: "#fafafa" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        minHeight: "500px",
+        backgroundColor: "var(--system-background-secondary)",
+      }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -298,7 +303,7 @@ export function CollaborativeWhiteboard({
       onTouchEnd={handleTouchEnd}
     >
       {/* Toolbar */}
-      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-200">
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/90 dark:bg-system-surface/90 backdrop-blur-sm rounded-lg p-2 shadow-level-3 border border-gray-200 dark:border-system-border">
         {[
           { id: "select", label: "Select", icon: "🖱️" },
           { id: "pen", label: "Pen", icon: "✏️" },
@@ -313,7 +318,9 @@ export function CollaborativeWhiteboard({
               setTool(t.id as "pen" | "eraser" | "highlighter" | "select" | "text" | "shape")
             }
             className={`p-2 rounded transition-colors ${
-              tool === t.id ? "bg-emerald-100 text-emerald-700" : "text-gray-600 hover:bg-gray-100"
+              tool === t.id
+                ? "bg-system-accent/10 text-system-accent"
+                : "text-gray-600 dark:text-system-text-secondary hover:bg-gray-100 dark:hover:bg-system-fill"
             }`}
             title={t.label}
             aria-label={t.label}

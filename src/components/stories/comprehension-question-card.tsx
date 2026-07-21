@@ -136,7 +136,7 @@ export function ComprehensionQuestionCard({
     <FadeIn direction="up" distance={12} duration={0.3}>
       <Card
         className={cn(
-          "overflow-hidden rounded-2xl border shadow-sm transition-[border-color] duration-300",
+          "overflow-hidden rounded-2xl border shadow-level-1 transition-[border-color] duration-300",
           isGraded &&
             (isCorrect
               ? "border-success/30 bg-success/5"

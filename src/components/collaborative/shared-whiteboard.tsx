@@ -25,7 +25,7 @@ interface DrawingStroke {
   text?: string;
 }
 
-const COLORS: ColorOption[] = ["#1a1a2e", "#e94560", "#0f3460", "#16a34a", "#f59e0b"];
+const COLORS: ColorOption[] = ["#1a1a2e", "#e94560", "#0f3460", "#16a34a", "#4f7dff"];
 
 function generateId(): string {
   return `draw_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;

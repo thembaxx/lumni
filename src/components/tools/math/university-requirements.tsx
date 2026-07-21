@@ -56,7 +56,7 @@ export function UniversityRequirements({ totalAPS }: UniversityRequirementsProps
               direction="up"
               distance={10}
               delay={idx * 0.05}
-              className="relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm"
+              className="relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-level-1"
             >
               {meetsMin && (
                 <div className="absolute top-0 bottom-0 left-0 w-1 rounded-r-full bg-success" />

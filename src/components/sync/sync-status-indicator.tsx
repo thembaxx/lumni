@@ -21,7 +21,7 @@ export function SyncStatusIndicator() {
         ? "bg-yellow-500"
         : status.state === "error"
           ? "bg-red-500"
-          : "bg-gray-500";
+          : "bg-muted-foreground/40";
 
   return (
     <button

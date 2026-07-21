@@ -78,7 +78,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: iOSEase }}
-            className="group relative rounded-2xl border border-(--system-accent)/10 bg-card p-6 shadow-sm"
+            className="group relative rounded-2xl border border-(--system-accent)/10 bg-card p-6 shadow-level-1"
           >
             <div className="absolute top-0 left-0 h-full w-1.5 rounded-l-2xl bg-(--system-accent)/20 transition-colors group-hover:bg-(--system-accent)/40" />
             <div className="font-medium text-foreground/90 text-sm leading-relaxed">
@@ -98,7 +98,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
             className={cn(
               "size-6 rounded-full focus-visible:ring-2 focus-visible:ring-(--system-accent) focus-visible:ring-offset-2 after:absolute after:-inset-2.5",
               idx === currentStep
-                ? "bg-(--system-accent) shadow-level-1 shadow-sm"
+                ? "bg-(--system-accent) shadow-level-1"
                 : "bg-muted-foreground/20 hover:bg-muted-foreground/40",
             )}
             aria-label={`Go to step ${idx + 1}`}

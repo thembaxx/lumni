@@ -54,12 +54,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (meta) {
       meta.setAttribute(
         "content",
-        resolvedTheme === "dark" ? "oklch(10% 0.006 60)" : "oklch(99% 0.008 60)",
+        resolvedTheme === "dark" ? "oklch(5% 0.003 240)" : "oklch(99% 0.006 240)",
       );
     } else {
       const el = document.createElement("meta");
       el.name = "theme-color";
-      el.content = resolvedTheme === "dark" ? "oklch(10% 0.006 60)" : "oklch(99% 0.008 60)";
+      el.content = resolvedTheme === "dark" ? "oklch(5% 0.003 240)" : "oklch(99% 0.006 240)";
       document.head.appendChild(el);
     }
   }, [theme]);

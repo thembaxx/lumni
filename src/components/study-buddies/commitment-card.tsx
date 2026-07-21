@@ -24,8 +24,8 @@ interface CommitmentCardProps {
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-500",
   active: "bg-green-500",
-  completed: "bg-gray-400",
-  declined: "bg-red-500",
+  completed: "bg-muted-foreground/40",
+  declined: "bg-destructive",
 };
 
 export function CommitmentCard({
@@ -39,7 +39,7 @@ export function CommitmentCard({
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <span
-            className={`h-2 w-2 rounded-full ${statusColors[commitment.status] ?? "bg-gray-400"}`}
+            className={`h-2 w-2 rounded-full ${statusColors[commitment.status] ?? "bg-muted-foreground/40"}`}
             aria-hidden="true"
           />
           <span className="font-medium">{commitment.buddyName}</span>

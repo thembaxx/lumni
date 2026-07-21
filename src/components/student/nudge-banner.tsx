@@ -144,7 +144,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
     >
       <div
         className={cn(
-          "rounded-xl border shadow-xl p-4 backdrop-blur-sm",
+          "rounded-xl border shadow-level-3 p-4 backdrop-blur-sm",
           activeNudge.severity === "critical" &&
             "bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800",
           activeNudge.severity === "high" &&
