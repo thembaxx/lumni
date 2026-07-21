@@ -43,8 +43,6 @@ export const StorageKeys = {
   ExamDates: "lumni_exam_dates",
   // Referral
   ReferralSource: "lumni_referral_source",
-  // Consent
-  Consent: "lumni-consent",
   // QOTD
   QotdShown: "lumni_qotd_shown",
   // Login banner

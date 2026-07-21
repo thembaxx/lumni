@@ -51,16 +51,6 @@ const DynamicCursor = dynamic(() =>
     default: m.DynamicCursor,
   })),
 );
-const CookieBanner = dynamic(() =>
-  import("@/components/consent/cookie-banner").then((m) => ({
-    default: m.CookieBanner,
-  })),
-);
-const TosBanner = dynamic(() =>
-  import("@/components/consent/tos-banner").then((m) => ({
-    default: m.TosBanner,
-  })),
-);
 const Toaster = dynamic(() =>
   import("@/components/ui/toast").then((m) => ({ default: m.Toaster })),
 );
@@ -210,12 +200,6 @@ export default async function LocaleLayout({
             </Suspense>
             <UploadDialogRenderer />
             <Toaster />
-            <NavGuard>
-              <CookieBanner />
-            </NavGuard>
-            <NavGuard>
-              <TosBanner />
-            </NavGuard>
             <SidebarStateProvider>
               <div className="flex flex-1">
                 <NavGuard>

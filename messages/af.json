@@ -699,33 +699,6 @@
     "boltCompleteDescription": "Môre terug om aan te hou leer"
   },
   "consent": {
-    "cookieBanner": {
-      "title": "Ons respekteer jou privaatheid",
-      "description": "Ons gebruik noodsaaklike koekies vir die app om te funksioneer. Analitiese koekies help ons om te verbeter. Jy kan kies wat jy toelaat.",
-      "essentialOnly": "Slegs noodsaaklik",
-      "acceptAnalytics": "Aanvaar analities",
-      "acceptAll": "Aanvaar alles",
-      "cookieSettings": "Koekie-instellings"
-    },
-    "cookieSettings": {
-      "title": "Koekie-instellings",
-      "description": "Kies watter koekies jy wil toelaat.",
-      "essential": "Noodsaaklik",
-      "essentialDesc": "Vereis vir die app om te funksioneer (sessie, locale).",
-      "analytics": "Analities",
-      "analyticsDesc": "Help ons om te verbeter met gebruiksdata (Sentry, bladsybesoeke).",
-      "marketing": "Bemarking",
-      "marketingDesc": "Promosiekommunikasie oor funksies en opdaterings.",
-      "dataSharing": "Data Deling",
-      "dataSharingDesc": "Deel data met derdeparty KI-verskaffers vir personalisering.",
-      "savePreferences": "Stoor voorkeure"
-    },
-    "tosBanner": {
-      "title": "Ons bepalings is opgedateer",
-      "description": "Hersien asseblief en aanvaar die opgedateerde Diensbepalings om voort te gaan om Lumni te gebruik.",
-      "accept": "Aanvaar",
-      "viewChanges": "Bekyk veranderinge"
-    },
     "privacyTab": {
       "noConsent": "Stel jou koekie-voorkeure om privaatheidsinstellings te bestuur.",
       "consentPreferences": "Toestemmingsvoorkeure",

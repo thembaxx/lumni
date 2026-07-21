@@ -706,33 +706,6 @@
     "boltCompleteDescription": "Come back tomorrow to keep learning"
   },
   "consent": {
-    "cookieBanner": {
-      "title": "We respect your privacy",
-      "description": "We use essential cookies for the app to function. Analytics cookies help us improve. You can choose what to allow.",
-      "essentialOnly": "Essential only",
-      "acceptAnalytics": "Accept analytics",
-      "acceptAll": "Accept all",
-      "cookieSettings": "Cookie settings"
-    },
-    "cookieSettings": {
-      "title": "Cookie Settings",
-      "description": "Choose which cookies you want to allow.",
-      "essential": "Essential",
-      "essentialDesc": "Required for the app to function (session, locale).",
-      "analytics": "Analytics",
-      "analyticsDesc": "Help us improve with usage data (Sentry, page views).",
-      "marketing": "Marketing",
-      "marketingDesc": "Promotional communications about features and updates.",
-      "dataSharing": "Data Sharing",
-      "dataSharingDesc": "Share data with third-party AI providers for personalization.",
-      "savePreferences": "Save preferences"
-    },
-    "tosBanner": {
-      "title": "Our terms have been updated",
-      "description": "Please review and accept the updated Terms of Service to continue using Lumni.",
-      "accept": "Accept",
-      "viewChanges": "View changes"
-    },
     "privacyTab": {
       "noConsent": "Set your cookie preferences to manage privacy settings.",
       "consentPreferences": "Consent Preferences",

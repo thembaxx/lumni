@@ -706,33 +706,6 @@
     "boltCompleteDescription": "Buyela ngomuso ukuze uqhubeke nokufunda"
   },
   "consent": {
-    "cookieBanner": {
-      "title": "Siyahlonipha ubumfihlo bakho",
-      "description": "Sisebenzisa amakhukhi adingekayo ukuze uhlelo lusebenze. Amakhukhi okuhlaziya asisiza ukuthi sithuthukise. Ungakhetha lokho ovumela ukuba kwenzeke.",
-      "essentialOnly": "Adingekayo kuphela",
-      "acceptAnalytics": "Yamukela amakhukhi okuhlaziya",
-      "acceptAll": "Yamukela wonke",
-      "cookieSettings": "Izilungiselelo zamakhukhi"
-    },
-    "cookieSettings": {
-      "title": "Izilungiselelo zamakhukhi",
-      "description": "Khetha amakhukhi ofuna ukuwavumela.",
-      "essential": "Adingekayo",
-      "essentialDesc": "Ayadingeka ukuze uhlelo lusebenze (iseshini, ulimi).",
-      "analytics": "Okuhlaziya",
-      "analyticsDesc": "Asisize sithuthukise ngemininingwane yokusetshenziswa (i-Sentry, ukubukwa kwamakhasi).",
-      "marketing": "Ezokumaketha",
-      "marketingDesc": "Ukuxhumana mayelana nezici nezibuyekezo.",
-      "dataSharing": "Ukwabelana ngedatha",
-      "dataSharingDesc": "Yabelana ngedatha nabahlinzeki be-AI ukuze kwenziwe okuthandwa nguwe.",
-      "savePreferences": "Londoloza okuthandwayo"
-    },
-    "tosBanner": {
-      "title": "Imithetho yethu ibuyekeziwe",
-      "description": "Sicela ubuyekeze futhi wamukele Imithetho Yesevisi ebuyekeziwe ukuze uqhubeke nokusebenzisa i-Lumni.",
-      "accept": "Yamukela",
-      "viewChanges": "Buka izinguquko"
-    },
     "privacyTab": {
       "noConsent": "Setha okuthandayo mayelana namakhukhi ukuze ulawule izilungiselelo zobumfihlo.",
       "consentPreferences": "Izintandokazi zemvume",

@@ -117,7 +117,6 @@ export const tokens = {
     sticky: "var(--z-sticky)",
     header: "var(--z-header)",
     drawer: "var(--z-drawer)",
-    cookieBanner: "var(--z-cookie-banner)",
     modal: "var(--z-modal)",
     overlay: "var(--z-overlay)",
     toast: "var(--z-toast)",

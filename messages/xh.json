@@ -706,33 +706,6 @@
     "boltCompleteDescription": "Buya ngomso ukuze uqhubeke nokufunda"
   },
   "consent": {
-    "cookieBanner": {
-      "title": "Siyayihlonipha imfihlo yakho",
-      "description": "Sisebenzisa iicookies eziyimfuneko ukuze i-app isebenze. Iicookies zohlalutyo zisinceda siphucule. Ungakhetha into ovumela yona.",
-      "essentialOnly": "Eziyimfuneko kuphela",
-      "acceptAnalytics": "Yamkela  uhlalutyo",
-      "acceptAll": "Yamkela zonke",
-      "cookieSettings": "Useto lwecookies"
-    },
-    "cookieSettings": {
-      "title": "Useto lweeCookies",
-      "description": "Khetha eziphi iicookies ofuna ukuvuma zona.",
-      "essential": "Eziyimfuneko",
-      "essentialDesc": "Ziyafuneka ukuze i-app isebenze (iseshoni, ulwimi).",
-      "analytics": "Uhlalutyo",
-      "analyticsDesc": "Zinceda ukuphucula ngedatha yokusetyenziswa (Sentry, ukujonga amaphepha).",
-      "marketing": "Ukuthengisa",
-      "marketingDesc": "Unxibelelwano lwentengiso malunga neempawu kunye nohlaziyo.",
-      "dataSharing": "Ukwahlula iDatha",
-      "dataSharingDesc": "Yabelana ngedatha nababoneleli be-AI besithathu ukuze wenziwe ngokwakho.",
-      "savePreferences": "Gcina izinto ozikhethayo"
-    },
-    "tosBanner": {
-      "title": "Imigaqo yethu ihlaziyiwe",
-      "description": "Nceda uhlonze kwaye wamkele iMigaqo yeNkonzo ehlaziyiweyo ukuze uqhubeke usebenzisa iLumni.",
-      "accept": "Yamkela",
-      "viewChanges": "Jonga utshintsho"
-    },
     "privacyTab": {
       "noConsent": "Cwangcisa izinto ozikhethayo zeCookie ukuze ulawule useto lwemfihlo.",
       "consentPreferences": "Izinto ozikhethayo zesiVumelwano",

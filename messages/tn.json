@@ -706,33 +706,6 @@
     "boltCompleteDescription": "Booya kamoso go tswelela ka go ithuta"
   },
   "consent": {
-    "cookieBanner": {
-      "title": "Re tlotla sephiri sa gago",
-      "description": "Re dirisa di-cookie tsa botlhokwa gore app e dire. Di-cookie tsa tlhatlhobo di re thusa go tokafatsa. O ka kgetha se o dumelang go sona.",
-      "essentialOnly": "Tsa botlhokwa fela",
-      "acceptAnalytics": "Amogela tlhatlhobo",
-      "acceptAll": "Amogela tsotlhe",
-      "cookieSettings": "Dikgetho tsa di-cookie"
-    },
-    "cookieSettings": {
-      "title": "Dikgetho tsa Di-cookie",
-      "description": "Kgetha dipampi tsa di-cookie tse o batlang go di dumela.",
-      "essential": "Tsa botlhokwa",
-      "essentialDesc": "Di a tlhokega gore app e dire (seshene, puo).",
-      "analytics": "Tlhatlhobo",
-      "analyticsDesc": "Di thusa go tokafatsa ka datha ya tirisiso (Sentry, maqephe a a tshegetsweng).",
-      "marketing": "Papatso",
-      "marketingDesc": "Dipuisano tsa papatso ka ga dikarolo le dintlafatso.",
-      "dataSharing": "Kabo ya Datha",
-      "dataSharingDesc": "Kabelano ya datha le bafani ba AI ba boraro bakeng sa botho.",
-      "savePreferences": "Boloka dikgetho"
-    },
-    "tosBanner": {
-      "title": "Dipeelo tsa rona di ntlafaditswe",
-      "description": "Ka kopo, sekaseka o bo o amogele Dipeelo tsa Tirelo tse di ntlafaditsweng go tswelela go dirisa Lumni.",
-      "accept": "Amogela",
-      "viewChanges": "Bona diphetogo"
-    },
     "privacyTab": {
       "noConsent": "Bea dikgetho tsa gago tsa di-cookie go laola tshireletso ya sephiri.",
       "consentPreferences": "Dikgetho tsa Tumalano",
