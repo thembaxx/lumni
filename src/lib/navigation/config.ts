@@ -266,6 +266,7 @@ export function getNavHierarchy(): Record<string, number> {
   return {
     "/": 0,
     "/dashboard": 0,
+    "/explore": 1,
     "/learn": 1,
     "/practice": 1,
     "/tools": 1,

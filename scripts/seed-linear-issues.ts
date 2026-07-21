@@ -1,4 +1,5 @@
 #! /usr/bin/env tsx
+export {};
 // Module-scoped TS to avoid collision with other script main()
 
 const API_KEY = process.env.LINEAR_API_KEY ?? "";

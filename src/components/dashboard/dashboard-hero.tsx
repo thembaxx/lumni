@@ -150,21 +150,8 @@ export function HeroBanner() {
           )}
         </div>
 
-        <div className="flex shrink-0 items-center gap-4 sm:flex-col">
+        <div className="flex shrink-0 items-center gap-3">
           <YearRingProgress progress={yearProgress} />
-          <div
-            className="hidden h-12 w-px bg-border/30 sm:block"
-            role="separator"
-            aria-label="Separator"
-          />
-          <div className="flex flex-col items-center">
-            <progress
-              className="h-2 w-full overflow-hidden rounded-full bg-border/30 [&::-moz-progress-bar]:bg-system-accent [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-system-accent"
-              value={mounted ? Math.round(yearProgress * 100) : 0}
-              max={100}
-              aria-label="Year progress"
-            />
-          </div>
         </div>
       </div>
     </div>

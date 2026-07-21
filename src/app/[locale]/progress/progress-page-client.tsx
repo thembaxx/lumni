@@ -1,47 +1,118 @@
 "use client";
 
-import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { PageContainer } from "@/components/layout/page-container";
-import { HugeiconsIcon } from "@hugeicons/react";
-import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
-import Bookmark02Icon from "@hugeicons/core-free-icons/Bookmark02Icon";
-import Settings01Icon from "@hugeicons/core-free-icons/Settings01Icon";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+import { BentoGrid, BentoCell } from "@/components/dashboard/parts/bento-grid";
+import { StaggeredSection, StaggerProvider } from "@/components/shared/stagger-provider";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { useAuth } from "@/lib/auth/auth-context";
 
-const progressItems = [
-  { icon: Calendar01Icon, label: "Study Plan", route: "/study-plan", desc: "Your study schedule" },
-  { icon: Bookmark02Icon, label: "Bookmarks", route: "/bookmarks", desc: "Saved bookmarks" },
-  { icon: Settings01Icon, label: "Settings", route: "/settings", desc: "App settings" },
-];
+const StreakCard = dynamic(
+  () => import("@/components/dashboard/streak-card").then((m) => m.StreakCard),
+  { ssr: false, loading: () => <Skeleton className="h-24 rounded-card" /> },
+);
+
+const AchievementShowcase = dynamic(
+  () => import("@/components/dashboard/achievement-showcase").then((m) => m.AchievementShowcase),
+  { ssr: false, loading: () => <Skeleton className="h-20 rounded-card" /> },
+);
+
+const CompetencyOverview = dynamic(
+  () => import("@/components/dashboard/competency-overview").then((m) => m.CompetencyOverview),
+  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
+);
+
+const MasteryHeatmap = dynamic(
+  () => import("@/components/dashboard/mastery-heatmap").then((m) => m.MasteryHeatmap),
+  { ssr: false, loading: () => <Skeleton className="h-48 rounded-card" /> },
+);
+
+const ComparativeAnalyticsPanel = dynamic(
+  () =>
+    import("@/components/dashboard/analytics/comparative-analytics-panel").then(
+      (mod) => mod.ComparativeAnalyticsPanel,
+    ),
+  { ssr: false, loading: () => <Skeleton className="h-64 rounded-card" /> },
+);
+
+function SectionLabel({ label }: { label: string }) {
+  return (
+    <div className="mb-2 flex items-center gap-2 sm:mb-3">
+      <div className="h-1.5 w-1.5 rounded-full bg-system-accent" aria-hidden="true" />
+      <h2 className="font-semibold text-(--fs-caption-1) text-muted-foreground uppercase tracking-widest">
+        {label}
+      </h2>
+    </div>
+  );
+}
 
 export function ProgressPageClient() {
-  const { push } = useNavigationDirection();
+  const { user, isAnonymous } = useAuth();
+  const isLoggedIn = !!user && !isAnonymous;
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <p className="text-muted-foreground">Sign in to see your progress</p>
+      </div>
+    );
+  }
 
   return (
-    <PageContainer>
-      <div className="flex flex-col gap-6 py-6">
+    <StaggerProvider baseDelay={0.03}>
+      <div className="flex flex-col gap-8">
         <div>
-          <h1 className="ios-title-1 font-bold text-foreground tracking-tight">Progress</h1>
-          <p className="text-muted-foreground text-sm">Track your learning progress</p>
+          <h1 className="font-heading font-extrabold text-(--fs-heading-2) text-foreground tracking-tight">
+            Progress
+          </h1>
+          <p className="mt-1 text-muted-foreground text-sm">
+            Track your achievements, mastery, and learning journey
+          </p>
         </div>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {progressItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              onClick={() => push(item.route)}
-              className="flex items-start gap-4 rounded-xl border border-border/60 bg-card p-4 text-left transition-colors hover:bg-accent/5"
-            >
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-system-accent/10">
-                <HugeiconsIcon icon={item.icon} className="size-5 text-system-accent" />
-              </div>
-              <div className="flex min-w-0 flex-col gap-0.5">
-                <span className="font-semibold text-sm text-foreground">{item.label}</span>
-                <span className="text-muted-foreground text-xs">{item.desc}</span>
-              </div>
-            </button>
-          ))}
-        </div>
+
+        <section aria-label="Overview">
+          <SectionLabel label="Overview" />
+          <BentoGrid>
+            <StaggeredSection>
+              <StreakCard />
+            </StaggeredSection>
+            <BentoCell span="2col">
+              <StaggeredSection>
+                <AchievementShowcase />
+              </StaggeredSection>
+            </BentoCell>
+          </BentoGrid>
+        </section>
+
+        <section aria-label="Subject Mastery">
+          <SectionLabel label="Subject Mastery" />
+          <BentoGrid>
+            <BentoCell span="2col">
+              <StaggeredSection>
+                <CompetencyOverview />
+              </StaggeredSection>
+            </BentoCell>
+            <BentoCell span="full">
+              <StaggeredSection>
+                <MasteryHeatmap />
+              </StaggeredSection>
+            </BentoCell>
+          </BentoGrid>
+        </section>
+
+        <section aria-label="Analytics">
+          <SectionLabel label="Analytics" />
+          <BentoGrid>
+            <BentoCell span="full">
+              <StaggeredSection>
+                <AppErrorBoundary>
+                  <ComparativeAnalyticsPanel />
+                </AppErrorBoundary>
+              </StaggeredSection>
+            </BentoCell>
+          </BentoGrid>
+        </section>
       </div>
-    </PageContainer>
+    </StaggerProvider>
   );
 }
