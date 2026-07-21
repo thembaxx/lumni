@@ -111,7 +111,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors",
+        "overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-[scale,box-shadow,background-color,transform] hover:shadow-level-3 hover:-translate-y-px press-scale",
         className,
       )}
     >

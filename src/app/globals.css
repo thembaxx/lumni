@@ -70,6 +70,9 @@
   --space-40: 80px;
   --space-44: 88px;
 
+  /* Bottom nav */
+  --bottom-nav-height: 64px;
+
   --touch-min: 28px;
   --touch-default: 44px;
   --touch-target-min: 44px;
@@ -114,7 +117,7 @@
 
   /* Font Family — Open Runde is the only UI font */
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-heading, "Open Runde"), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", "Fira Code", monospace;
 
   /* Z-Index Scale */

@@ -76,14 +76,16 @@ export function UpcomingExamCard() {
           <HugeiconsIcon icon={Calendar03Icon} className="size-5 text-system-accent" />
           <h3 className="font-semibold text-sm text-balance">Upcoming Exam</h3>
         </div>
-        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${countdownVariant}`}>
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-medium tabular-nums ${countdownVariant}`}
+        >
           {countdownText}
         </span>
       </div>
 
       <div className="flex flex-col gap-1">
         <span className="font-medium text-sm">
-          {nextExam.subject} Paper {nextExam.paperNumber}
+          {nextExam.subject} <span className="tabular-nums">Paper {nextExam.paperNumber}</span>
         </span>
         <span className="text-muted-foreground text-xs">{formatFriendlyDate(nextExam.date)}</span>
         <span className="text-muted-foreground text-xs">

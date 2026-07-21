@@ -32,7 +32,8 @@ export function AchievementShowcase() {
         <CardContent className="flex flex-col gap-2">
           {earned.length > 0 && (
             <p className="mb-1 text-muted-foreground text-xs">
-              {earned.length} of {gamification.achievements.length} unlocked
+              <span className="tabular-nums">{earned.length}</span> of{" "}
+              <span className="tabular-nums">{gamification.achievements.length}</span> unlocked
             </p>
           )}
           <div className="flex flex-wrap gap-2">
@@ -49,7 +50,7 @@ export function AchievementShowcase() {
               </div>
             ))}
             {earned.length > 3 && (
-              <div className="flex items-center rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground text-xs">
+              <div className="flex items-center rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground text-xs tabular-nums">
                 +{earned.length - 3} more
               </div>
             )}

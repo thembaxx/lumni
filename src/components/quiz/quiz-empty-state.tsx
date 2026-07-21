@@ -124,13 +124,9 @@ export function QuizSubjectPrompt({ onSelect, hasSubject }: QuizSubjectPromptPro
         </div>
       </div>
       <div className="flex justify-center md:justify-start">
-        <button
-          type="button"
-          onClick={onSelect}
-          className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-system-accent-foreground hover:bg-system-accent/90"
-        >
+        <Button variant="default" onClick={onSelect}>
           {hasSubject ? t("quiz.startQuiz") : t("quiz.selectSubject")}
-        </button>
+        </Button>
       </div>
     </div>
   );

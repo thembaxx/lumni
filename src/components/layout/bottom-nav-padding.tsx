@@ -15,7 +15,7 @@ export function BottomNavPadding() {
   return (
     <div
       className="md:hidden"
-      style={{ height: "calc(64px + env(safe-area-inset-bottom, 0px))" }}
+      style={{ height: "calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px))" }}
     />
   );
 }

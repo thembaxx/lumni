@@ -23,6 +23,8 @@ export const fontMono = localFont({
 export const fontHeading = localFont({
   src: [
     { path: "../fonts/open-runde-latin-400-normal.woff2", weight: "400" },
+    { path: "../fonts/open-runde-latin-500-normal.woff2", weight: "500" },
+    { path: "../fonts/open-runde-latin-600-normal.woff2", weight: "600" },
     { path: "../fonts/open-runde-latin-700-normal.woff2", weight: "700" },
   ],
   display: "swap",

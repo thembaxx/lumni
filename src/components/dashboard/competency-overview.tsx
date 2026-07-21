@@ -180,12 +180,12 @@ export function CompetencyOverview() {
                     <div className="mt-1 flex items-center gap-2">
                       <div className="flex items-center gap-1">
                         {sc.mastered > 0 && (
-                          <span className="font-medium text-success text-xs">
+                          <span className="font-medium text-success text-xs tabular-nums">
                             {sc.mastered} mastered
                           </span>
                         )}
                         {sc.novice > 0 && (
-                          <span className="font-medium text-destructive text-xs">
+                          <span className="font-medium text-destructive text-xs tabular-nums">
                             {sc.novice} weak
                           </span>
                         )}
