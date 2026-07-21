@@ -5,6 +5,23 @@ vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/dashboard",
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn() }),
+}));
+
+vi.mock("next-intl/navigation", () => {
+  const createNavigation = () => ({
+    usePathname: () => "/dashboard",
+    useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn() }),
+    Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
+      <a href={href}>{children}</a>
+    ),
+    redirect: (url: string) => url,
+  });
+  return { createNavigation };
+});
+
 vi.mock("@/lib/auth/auth-context", () => ({
   useAuth: vi.fn(() => ({
     user: { $id: "user-1", name: "Test User", labels: [] },
