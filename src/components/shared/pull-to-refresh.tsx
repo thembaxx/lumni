@@ -48,19 +48,19 @@ export function PullToRefresh({
 
     if (useSpring && y === 0) {
       // Spring back with interruptible physics — allows re-grab mid-animation
-      const animation = animate(
-        (progress) => {
-          el.style.transform = progress > 0 ? `translateY(${progress}px)` : "";
-        },
-        { from: parseFloat(el.style.transform.match(/(\d+\.?\d*)/)?.[0] ?? "0"), to: 0 },
-        {
+      const currentY = parseFloat(el.style.transform.match(/(\d+\.?\d*)/)?.[0] ?? "0");
+      if (currentY > 0) {
+        const animation = animate(currentY, 0, {
           ...springPresets.appleSheet,
+          onUpdate: (latest: number) => {
+            el.style.transform = latest > 0.5 ? `translateY(${latest}px)` : "";
+          },
           onComplete: () => {
             el.style.transform = "";
           },
-        },
-      );
-      springRef.current = animation;
+        });
+        springRef.current = animation;
+      }
     } else {
       el.style.transform = y > 0 ? `translateY(${y}px)` : "";
     }
