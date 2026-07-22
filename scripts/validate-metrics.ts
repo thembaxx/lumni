@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-export {};
+
 // Module-scoped TS to avoid collision with other script main()
 /**
  * Metrics Validation Script

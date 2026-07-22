@@ -40,13 +40,9 @@ const navItems: BottomNavItem[] = [
 const navIconClass =
   "mx-1 flex size-11 shrink-0 items-center justify-center rounded-xl text-system-text-tertiary hover:text-system-accent hover:bg-system-accent/10 press-scale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent focus-visible:ring-inset";
 
-const springBounce = {
-  type: "spring" as const,
-  stiffness: 500,
-  damping: 22,
-  mass: 0.6,
-  bounce: 0.15,
-};
+// Apple-inspired spring for bottom nav active indicator
+// Maps to: damping ~0.8, response ~0.3 — slight bounce from the tap gesture's momentum
+const springBounce = springPresets.appleSheet;
 
 function ActiveGlow() {
   return (
@@ -80,7 +76,7 @@ function ItemContent({ item, isActive }: { item: BottomNavItem; isActive: boolea
               ? { scale: 1.25, color: "var(--system-accent)" }
               : { scale: 1, color: "var(--system-text-tertiary)" }
           }
-          transition={isActive ? springBounce : { duration: 0.2, ease: "easeOut" }}
+          transition={isActive ? springBounce : springPresets.fast}
           className="relative flex items-center justify-center"
         >
           <HugeiconsIcon icon={item.icon} className="size-5" />

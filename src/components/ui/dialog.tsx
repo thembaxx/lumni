@@ -3,8 +3,10 @@
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion } from "motion/react";
 import type * as React from "react";
 import { Button } from "@/components/ui/button";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { cn } from "@/lib/utils";
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
@@ -55,7 +57,14 @@ function DialogContent({
         )}
         {...props}
       >
-        {children}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={springPresets.materialize}
+          className="flex w-full flex-col gap-4"
+        >
+          {children}
+        </motion.div>
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"

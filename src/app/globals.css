@@ -470,6 +470,8 @@
     line-height: 1.6;
     letter-spacing: var(--tracking-body);
     font-weight: 400;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
     @apply min-h-dvh flex flex-col;
   }
 
@@ -484,6 +486,7 @@
     line-height: 1.3;
     letter-spacing: var(--tracking-heading);
     color: var(--system-text-primary);
+    font-optical-sizing: auto;
     text-wrap: balance;
   }
 
@@ -524,16 +527,18 @@
   font-family: var(--font-heading);
   font-size: var(--fs-heading);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.2;
   letter-spacing: var(--tracking-heading);
+  font-optical-sizing: auto;
 }
 
 .heading-small {
   font-family: var(--font-heading);
   font-size: var(--fs-subheading);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.3;
   letter-spacing: var(--tracking-subheading);
+  font-optical-sizing: auto;
 }
 
 .text-body {
@@ -541,6 +546,7 @@
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: var(--tracking-body);
+  font-optical-sizing: auto;
 }
 
 /* Legacy ios-* aliases — map to new 3-size system */
@@ -551,15 +557,17 @@
   font-family: var(--font-heading);
   font-size: var(--fs-heading);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.2;
   letter-spacing: var(--tracking-heading);
+  font-optical-sizing: auto;
 }
 .ios-headline {
   font-family: var(--font-heading);
   font-size: var(--fs-subheading);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.3;
   letter-spacing: var(--tracking-subheading);
+  font-optical-sizing: auto;
 }
 .ios-body,
 .ios-callout,
@@ -572,6 +580,7 @@
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: var(--tracking-body);
+  font-optical-sizing: auto;
 }
 
 .pb-safe {
@@ -963,9 +972,19 @@
   .glass-regular,
   .glass-thick,
   .glass-card,
-  .glass-card-strong {
+  .glass-card-strong,
+  .glass-bento,
+  .glass-bento-strong {
     background: var(--system-background);
     backdrop-filter: none;
+  }
+
+  /* Sheet/dialog overlays — solid black when transparency reduced */
+  [data-slot="sheet-overlay"],
+  [data-slot="dialog-overlay"],
+  [data-slot="drawer-overlay"] {
+    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.9) !important;
   }
 }
 
@@ -1004,7 +1023,11 @@ span.math:not(:empty)::after {
   outline: none;
 }
 
-/* Press micro-interaction */
+/* Press micro-interaction — Apple-like: instant on pointer-down, subtle scale */
+.press-scale {
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
 .press-scale:active {
   transform: scale(0.96) !important;
 }
@@ -1268,6 +1291,25 @@ span.math:not(:empty)::after {
 }
 
 /* ========================================
+   WILL-CHANGE — compositor hints for fluent motion
+   ======================================== */
+
+/* Hint the browser to promote these elements to their own compositor layer
+   before motion starts. Apply to elements that animate frequently. */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+.will-change-filter {
+  will-change: filter;
+}
+.will-change-contents {
+  will-change: transform, opacity;
+}
+
+/* ========================================
    2026 BENTO + MOTION ADDITIONS
    ======================================== */
 
@@ -1292,11 +1334,32 @@ span.math:not(:empty)::after {
   border: 1px solid oklch(100% 0 0 / 0.1);
 }
 
-/* Bento card hover lift */
+/* Glass materialize — scale + blur + opacity entrance for frosted surfaces
+   Apply to glass elements that mount into view (sheets, cards, panels).
+   The blur transition makes the surface read as real material arriving,
+   rather than a plain opacity fade. */
+@keyframes glass-materialize {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+.animate-glass-materialize {
+  animation: glass-materialize 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Bento card hover lift — iOS spring-like easing */
 .bento-card {
   transition:
     transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 .bento-card:hover {
   transform: translateY(-2px);
@@ -1364,7 +1427,7 @@ span.math:not(:empty)::after {
   animation-range: entry 0% entry 40%;
 }
 
-/* Pill chip for quick actions */
+/* Pill chip for quick actions — Apple-style */
 .pill-chip {
   display: inline-flex;
   align-items: center;
@@ -1376,12 +1439,13 @@ span.math:not(:empty)::after {
   white-space: nowrap;
   cursor: pointer;
   transition:
-    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    color 0.2s ease;
+    transform 0.1s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  will-change: transform;
 }
 .pill-chip:active {
   transform: scale(0.94);
@@ -1391,10 +1455,14 @@ span.math:not(:empty)::after {
 .reduced-motion .animate-section-reveal,
 .reduced-motion .animate-blob,
 .reduced-motion .animate-blob-delayed,
-.reduced-motion .animate-count-tick {
+.reduced-motion .animate-count-tick,
+.reduced-motion .animate-glass-materialize {
   animation: none;
 }
 .reduced-motion .bento-card:hover {
+  transform: none;
+}
+.reduced-motion .pill-chip:active {
   transform: none;
 }
 

@@ -3,8 +3,10 @@
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import CancelCircleIcon from "@hugeicons/core-free-icons/CancelCircleIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion } from "motion/react";
 import type * as React from "react";
 import { Button } from "@/components/ui/button";
+import { springPresets } from "@/lib/utils/spring-presets";
 import { cn } from "@/lib/utils";
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
@@ -58,16 +60,23 @@ function SheetContent({
         )}
         {...props}
       >
-        {children}
-        {showCloseButton && (
-          <SheetPrimitive.Close
-            data-slot="sheet-close"
-            render={<Button variant="ghost" className="absolute top-4 right-4" size="icon-sm" />}
-          >
-            <HugeiconsIcon icon={CancelCircleIcon} className="size-4" />
-            <span className="sr-only">Close</span>
-          </SheetPrimitive.Close>
-        )}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97, filter: "blur(4px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={springPresets.materialize}
+          className="flex flex-1 flex-col"
+        >
+          {children}
+          {showCloseButton && (
+            <SheetPrimitive.Close
+              data-slot="sheet-close"
+              render={<Button variant="ghost" className="absolute top-4 right-4" size="icon-sm" />}
+            >
+              <HugeiconsIcon icon={CancelCircleIcon} className="size-4" />
+              <span className="sr-only">Close</span>
+            </SheetPrimitive.Close>
+          )}
+        </motion.div>
       </SheetPrimitive.Popup>
     </SheetPortal>
   );

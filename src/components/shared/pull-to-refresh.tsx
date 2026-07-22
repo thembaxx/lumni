@@ -1,7 +1,9 @@
 "use client";
 
+import { animate } from "motion";
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import { haptics } from "@/lib/utils/haptics";
+import { springPresets } from "@/lib/utils/spring-presets";
 
 interface PullToRefreshProps {
   children: React.ReactNode;
@@ -34,11 +36,34 @@ export function PullToRefresh({
     tracking: false,
   });
 
-  const animateY = useCallback((y: number, smooth = false) => {
+  const springRef = useRef<{ stop: () => void } | null>(null);
+
+  const animateY = useCallback((y: number, useSpring = false) => {
     const el = ref.current;
     if (!el) return;
-    el.style.transition = smooth || y > 0 ? "transform 0.3s var(--ease-drawer)" : "none";
-    el.style.transform = y > 0 ? `translateY(${y}px)` : "";
+
+    // Cancel any in-flight spring to avoid conflicts
+    springRef.current?.stop();
+    springRef.current = null;
+
+    if (useSpring && y === 0) {
+      // Spring back with interruptible physics — allows re-grab mid-animation
+      const animation = animate(
+        (progress) => {
+          el.style.transform = progress > 0 ? `translateY(${progress}px)` : "";
+        },
+        { from: parseFloat(el.style.transform.match(/(\d+\.?\d*)/)?.[0] ?? "0"), to: 0 },
+        {
+          ...springPresets.appleSheet,
+          onComplete: () => {
+            el.style.transform = "";
+          },
+        },
+      );
+      springRef.current = animation;
+    } else {
+      el.style.transform = y > 0 ? `translateY(${y}px)` : "";
+    }
   }, []);
 
   const onRefreshEvent = useEffectEvent(onRefresh);
@@ -98,14 +123,14 @@ export function PullToRefresh({
       if (currentPx >= COMMIT_THRESHOLD || velocity > 200) {
         haptics.medium();
         setRefreshing(true);
-        el.style.transition = "transform 0.3s var(--ease-drawer)";
+        el.style.transition = "none";
         el.style.transform = `translateY(${HOLD_Y}px)`;
         onRefreshEvent().finally(() => {
           animateYEvent(0, true);
           setRefreshing(false);
         });
       } else {
-        animateYEvent(0);
+        animateYEvent(0, true);
       }
     };
 
