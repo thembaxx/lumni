@@ -109,7 +109,7 @@ function ProblemCard({ problem, index }: { problem: CuratedProblem; index: numbe
               variant="ghost"
               size="sm"
               onClick={() => setShowSolution(!showSolution)}
-              className="h-8 gap-1.5 rounded-lg px-3 text-xs"
+              className="h-8 gap-1.5 rounded-md px-3 text-xs"
             >
               {showSolution ? "Hide" : "View"} solution
               <HugeiconsIcon
@@ -300,7 +300,7 @@ export function ProblemsClient() {
                         variant={selectedDifficulty === d ? "default" : "outline"}
                         size="sm"
                         onClick={() => setSelectedDifficulty(d)}
-                        className="h-8 shrink-0 rounded-lg px-3 text-xs focus-visible:ring-2 focus-visible:ring-primary"
+                        className="h-8 shrink-0 rounded-md px-3 text-xs focus-visible:ring-2 focus-visible:ring-primary"
                       >
                         {d === "all" ? "All Levels" : d}
                       </Button>
@@ -313,7 +313,7 @@ export function ProblemsClient() {
                           variant={problemCount === n ? "default" : "outline"}
                           size="xs"
                           onClick={() => setProblemCount(n)}
-                          className="relative size-7 rounded-lg p-0 text-xs focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
+                          className="relative size-7 rounded-sm p-0 text-xs focus-visible:ring-2 focus-visible:ring-primary after:absolute after:-inset-2"
                         >
                           {n}
                         </Button>

@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { Switch } from "@/components/ui/switch";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useConsent } from "@/lib/consent/consent-context";
@@ -38,9 +37,9 @@ export function PrivacyTab() {
 
   if (!consent) {
     return (
-      <Card className="p-6">
+      <div className="flex items-center justify-center p-6">
         <p className="text-muted-foreground">{t("consent.privacyTab.noConsent")}</p>
-      </Card>
+      </div>
     );
   }
 
@@ -59,95 +58,72 @@ export function PrivacyTab() {
   const handleExport = exportUserData;
 
   return (
-    <div className="flex flex-col gap-6">
-      <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
-          {t("consent.privacyTab.consentPreferences")}
-        </h3>
-        <div className="flex flex-col gap-4">
-          <Field>
-            <FieldLabel htmlFor="privacy-analytics">{t("consent.privacyTab.analytics")}</FieldLabel>
-            <div className="flex items-center justify-between">
-              <p className="text-pretty text-muted-foreground text-sm">
-                {t("consent.privacyTab.analyticsDesc")}
-              </p>
-              <Switch
-                id="privacy-analytics"
-                checked={consent.analytics}
-                onCheckedChange={(v) => updateConsent({ analytics: v })}
-              />
-            </div>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="privacy-marketing">{t("consent.privacyTab.marketing")}</FieldLabel>
-            <div className="flex items-center justify-between">
-              <p className="text-pretty text-muted-foreground text-sm">
-                {t("consent.privacyTab.marketingDesc")}
-              </p>
-              <Switch
-                id="privacy-marketing"
-                checked={consent.marketing}
-                onCheckedChange={(v) => updateConsent({ marketing: v })}
-              />
-            </div>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="privacy-data-sharing">
-              {t("consent.privacyTab.dataSharing")}
-            </FieldLabel>
-            <div className="flex items-center justify-between">
-              <p className="text-pretty text-muted-foreground text-sm">
-                {t("consent.privacyTab.dataSharingDesc")}
-              </p>
-              <Switch
-                id="privacy-data-sharing"
-                checked={consent.dataSharing}
-                onCheckedChange={(v) => updateConsent({ dataSharing: v })}
-              />
-            </div>
-          </Field>
-        </div>
-      </Card>
+    <div className="flex flex-col gap-2">
+      <ListSection header={t("consent.privacyTab.consentPreferences")}>
+        <ListCell
+          title={t("consent.privacyTab.analytics")}
+          subtitle={t("consent.privacyTab.analyticsDesc")}
+          trailing={
+            <Switch
+              id="privacy-analytics"
+              checked={consent.analytics}
+              onCheckedChange={(v) => updateConsent({ analytics: v })}
+            />
+          }
+        />
+        <ListCell
+          title={t("consent.privacyTab.marketing")}
+          subtitle={t("consent.privacyTab.marketingDesc")}
+          trailing={
+            <Switch
+              id="privacy-marketing"
+              checked={consent.marketing}
+              onCheckedChange={(v) => updateConsent({ marketing: v })}
+            />
+          }
+        />
+        <ListCell
+          title={t("consent.privacyTab.dataSharing")}
+          subtitle={t("consent.privacyTab.dataSharingDesc")}
+          trailing={
+            <Switch
+              id="privacy-data-sharing"
+              checked={consent.dataSharing}
+              onCheckedChange={(v) => updateConsent({ dataSharing: v })}
+            />
+          }
+        />
+      </ListSection>
 
-      <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
-          {t("consent.privacyTab.policyVersions")}
-        </h3>
-        <div className="flex flex-col gap-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">{t("consent.privacyTab.termsOfService")}</span>
-            <span>
+      <ListSection header={t("consent.privacyTab.policyVersions")}>
+        <ListCell
+          title={t("consent.privacyTab.termsOfService")}
+          trailing={
+            <span className="text-sm tabular-nums text-muted-foreground">
               {consent.tosVersion ?? t("consent.privacyTab.notAccepted")} /{" "}
               {t("consent.privacyTab.currentLabel")}: {appConfig.legal.tosVersion}
             </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">{t("consent.privacyTab.privacyPolicy")}</span>
-            <span>
+          }
+        />
+        <ListCell
+          title={t("consent.privacyTab.privacyPolicy")}
+          trailing={
+            <span className="text-sm tabular-nums text-muted-foreground">
               {consent.privacyVersion ?? t("consent.privacyTab.notAcknowledged")} /{" "}
               {t("consent.privacyTab.currentLabel")}: {appConfig.legal.privacyVersion}
             </span>
-          </div>
-        </div>
-      </Card>
+          }
+        />
+      </ListSection>
 
-      <Card className="p-6">
-        <h3 className="ios-title-3 mb-4 font-semibold text-balance">
-          {t("consent.privacyTab.yourData")}
-        </h3>
-        <div className="flex flex-col gap-3">
-          <Button variant="secondary" onClick={handleExport}>
-            {t("consent.privacyTab.exportData")}
-          </Button>
-          <Button
-            variant="outline"
-            className="border-destructive/30 text-destructive hover:bg-destructive/10"
-            onClick={() => setShowDeleteDialog(true)}
-          >
-            {t("consent.privacyTab.deleteAccount")}
-          </Button>
-        </div>
-      </Card>
+      <ListSection header={t("consent.privacyTab.yourData")}>
+        <ListCell title={t("consent.privacyTab.exportData")} onClick={handleExport} />
+        <ListCell
+          title={t("consent.privacyTab.deleteAccount")}
+          destructive
+          onClick={() => setShowDeleteDialog(true)}
+        />
+      </ListSection>
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent>

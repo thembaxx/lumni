@@ -40,7 +40,7 @@ export function SyncTab() {
           <div className="flex items-center gap-3">
             <div
               className={cn(
-                "flex size-9 items-center justify-center rounded-xl",
+                "flex size-9 items-center justify-center rounded-lg",
                 isOnline ? "bg-system-accent/10" : "bg-warning/10",
               )}
             >

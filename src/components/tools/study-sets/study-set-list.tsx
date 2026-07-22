@@ -28,7 +28,7 @@ export function StudySetList({ studySets, onEdit, onDelete, onToggleFavorite }: 
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
           transition={{ duration: 0.2, ease: iOSEase }}
-          className="flex flex-col gap-3 cursor-pointer rounded-3xl border p-4 transition-colors hover:bg-accent/5"
+          className="flex flex-col gap-3 cursor-pointer rounded-2xl border p-4 transition-colors hover:bg-accent/5"
           tabIndex={0}
           role="button"
           aria-label={`Study set: ${set.title}`}

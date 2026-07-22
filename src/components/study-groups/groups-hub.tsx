@@ -6,7 +6,9 @@ import UserIcon from "@hugeicons/core-free-icons/UserIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import * as m from "motion/react-m";
 import { Card } from "@/components/ui/card";
+import { SegmentedControl } from "@/components/ui/segmented-control";
 import { SpotlightCard } from "@/components/shared/motion-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStudyGroups } from "@/hooks/use-study-groups";
@@ -98,34 +100,22 @@ export function GroupsHub() {
         <h1 className="font-bold text-2xl">{t("studyGroups.title")}</h1>
       </div>
 
-      <div className="flex gap-1 border-border border-b" role="tablist">
-        {visibleTabs.map((tab) => (
-          <button
-            key={tab}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === tab}
-            onClick={() => setActiveTab(tab)}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors",
-              activeTab === tab
-                ? "border-primary border-b-2 text-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {tab === "my-groups" && (
-              <HugeiconsIcon icon={TeamWorkIcon} className="size-4" data-icon="inline-start" />
-            )}
-            {tab === "discover" && (
-              <HugeiconsIcon icon={Search01Icon} className="size-4" data-icon="inline-start" />
-            )}
-            {tab === "admin" && (
-              <HugeiconsIcon icon={UserIcon} className="size-4" data-icon="inline-start" />
-            )}
-            {t(`studyGroups.tab.${tab}`)}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        segments={visibleTabs.map((tab) => ({
+          value: tab,
+          label: t(`studyGroups.tab.${tab}`),
+          icon:
+            tab === "my-groups" ? (
+              <HugeiconsIcon icon={TeamWorkIcon} className="size-4" />
+            ) : tab === "discover" ? (
+              <HugeiconsIcon icon={Search01Icon} className="size-4" />
+            ) : (
+              <HugeiconsIcon icon={UserIcon} className="size-4" />
+            ),
+        }))}
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as Tab)}
+      />
 
       {activeTab === "my-groups" && <MyGroupsTab />}
       {activeTab === "discover" && <DiscoverGroups />}

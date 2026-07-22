@@ -94,7 +94,7 @@ export function LessonLibrary() {
       </div>
 
       {!selectedSubject && (
-        <Card className="rounded-3xl text-center">
+        <Card className="rounded-2xl text-center">
           <CardContent className="flex flex-col items-center gap-3 p-8">
             <HugeiconsIcon icon={Mortarboard01Icon} className="size-10 text-muted-foreground" />
             <p className="text-muted-foreground text-sm">
@@ -113,7 +113,7 @@ export function LessonLibrary() {
       )}
 
       {error && selectedSubject && (
-        <Card className="rounded-3xl text-center">
+        <Card className="rounded-2xl text-center">
           <CardContent className="p-6">
             <p className="text-destructive text-sm">Failed to load recommendations.</p>
           </CardContent>
@@ -179,7 +179,7 @@ export function LessonLibrary() {
                 return (
                   <Card
                     key={rec.topicId}
-                    className={cn("rounded-3xl", rec.action === "skip" ? "opacity-50" : "")}
+                    className={cn("rounded-2xl", rec.action === "skip" ? "opacity-50" : "")}
                   >
                     <CardContent className="flex items-center justify-between gap-3 p-4">
                       <div className="flex min-w-0 items-center gap-3">
@@ -223,7 +223,7 @@ export function LessonLibrary() {
           )}
 
           {!isLoading && recommendations.length === 0 && selectedSubject && (
-            <Card className="rounded-3xl text-center">
+            <Card className="rounded-2xl text-center">
               <CardContent className="flex flex-col items-center gap-2 p-6">
                 <HugeiconsIcon icon={Award01Icon} className="size-8 text-(--system-success)" />
                 <p className="text-muted-foreground text-sm">
@@ -248,7 +248,7 @@ function NextUpCard({
   const { push } = useRouter();
   const NextActionIcon = actionIcons[nextUp.action];
   return (
-    <Card className="rounded-3xl border-system-accent/20 bg-system-accent/5">
+    <Card className="rounded-2xl border-system-accent/20 bg-system-accent/5">
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-col gap-1">

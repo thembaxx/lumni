@@ -109,7 +109,7 @@ export function ListenToLesson({
       variant="outline"
       onClick={handleListen}
       className={cn(
-        "rounded-lg px-3 text-xs",
+        "rounded-md px-3 text-xs",
         "transition-transform press-scale",
         "transition-colors duration-150 ease-(--ease-ios)",
         className,

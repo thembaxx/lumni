@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { DashboardView } from "@/components/dashboard/dashboard-view";
 import { DashboardTabs } from "@/components/dashboard/dashboard-tabs";
 import { LoginBanner } from "@/components/dashboard/login-banner";
 import { AmbientGradient } from "@/components/shared/ambient-gradient";
 import { PageContainer } from "@/components/layout/page-container";
+import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { useAuth } from "@/lib/auth/auth-context";
 import { initializeNotificationSchedulers } from "@/lib/services";
 
@@ -27,14 +28,23 @@ export function DashboardContent({
     }
   }, [isLoggedIn]);
 
+  const handleRefresh = useCallback(async () => {
+    window.location.reload();
+  }, []);
+
   return (
-    <div id={id} className="flex h-full w-full flex-col overflow-y-auto bg-system-grouped">
-      <AmbientGradient variant="dashboard" />
-      <PageContainer className="relative z-elevated flex flex-col gap-4 pb-24 sm:gap-5 sm:pb-28 lg:gap-6 lg:pb-32">
-        <LoginBanner />
-        {isLoggedIn && <DashboardTabs />}
-        <DashboardView boltStreak={boltStreak} onStartQuiz={onStartQuiz} />
-      </PageContainer>
-    </div>
+    <PullToRefresh
+      onRefresh={handleRefresh}
+      className="flex h-full w-full flex-col bg-system-grouped"
+    >
+      <div id={id} className="flex-1 overflow-y-auto">
+        <AmbientGradient variant="dashboard" />
+        <PageContainer className="relative z-elevated flex flex-col gap-4 pb-24 sm:gap-5 sm:pb-28 lg:gap-6 lg:pb-32">
+          <LoginBanner />
+          {isLoggedIn && <DashboardTabs />}
+          <DashboardView boltStreak={boltStreak} onStartQuiz={onStartQuiz} />
+        </PageContainer>
+      </div>
+    </PullToRefresh>
   );
 }

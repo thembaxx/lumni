@@ -65,7 +65,7 @@ export function SubjectPicker({ enrolled, available, isEnrolled, onToggle }: Sub
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
                   >
                     <div
-                      className="flex size-7 shrink-0 items-center justify-center rounded-lg font-bold text-system-accent-foreground text-xs"
+                      className="flex size-7 shrink-0 items-center justify-center rounded-md font-bold text-system-accent-foreground text-xs"
                       style={{ backgroundColor: s.color }}
                     >
                       {s.name[0]}

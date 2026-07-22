@@ -191,7 +191,7 @@ export function StoriesClient() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by title, author, or topic..."
-            className="rounded-2xl pl-9 text-xs"
+            className="rounded-xl pl-9 text-xs"
             aria-label="Search stories"
           />
         </div>
@@ -415,7 +415,7 @@ export function StoriesClient() {
                 value={genTopic}
                 onChange={(e) => setGenTopic(e.target.value)}
                 placeholder="e.g. The Water Cycle, Nelson Mandela, Fractions"
-                className="rounded-2xl text-xs"
+                className="rounded-xl text-xs"
                 aria-label="Story topic"
               />
             </div>

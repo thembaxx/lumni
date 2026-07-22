@@ -115,7 +115,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
     high: "bg-orange-50 border-orange-200 text-orange-900 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-200",
     medium:
       "bg-yellow-50 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-200",
-    low: "bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-200",
+    low: "bg-primary/10 border-primary/20 text-primary dark:bg-primary/15 dark:border-primary/30 dark:text-primary",
   };
 
   const iconMap = {
@@ -152,7 +152,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
           activeNudge.severity === "medium" &&
             "bg-yellow-50 border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800",
           activeNudge.severity === "low" &&
-            "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800",
+            "bg-primary/10 border-primary/20 dark:bg-primary/15 dark:border-primary/30",
         )}
       >
         <div className="flex items-start gap-3">
@@ -166,7 +166,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
               activeNudge.severity === "medium" &&
                 "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400",
               activeNudge.severity === "low" &&
-                "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
+                "bg-primary/20 text-primary dark:bg-primary/25 dark:text-primary",
             )}
           >
             {activeNudge.type &&
@@ -190,7 +190,7 @@ export function StudentNudgeBanner({ className }: StudentNudgeProps) {
                   activeNudge.severity === "medium" &&
                     "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
                   activeNudge.severity === "low" &&
-                    "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+                    "bg-primary/20 text-primary dark:bg-primary/25 dark:text-primary",
                 )}
               >
                 {activeNudge.severity.toUpperCase()}

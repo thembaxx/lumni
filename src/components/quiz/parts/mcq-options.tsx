@@ -5,6 +5,7 @@ import { memo } from "react";
 import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
 import { springPresets } from "@/lib/utils/spring-presets";
+import { haptics } from "@/lib/utils/haptics";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -55,7 +56,10 @@ export const MCQOptions = memo(function MCQOptions({
               role="radio"
               aria-checked={isSelected}
               tabIndex={0}
-              onClick={() => onSelect(option.id)}
+              onClick={() => {
+                haptics.light();
+                onSelect(option.id);
+              }}
               className={cn(
                 "quiz-option-btn press-glow flex min-h-14 w-full items-center gap-3 rounded-(--radius-interactive) border border-border bg-card p-4 text-left transition-[border-color,background-color,color] duration-200 motion-reduce:transition-none",
                 isSelected && "border-(--system-accent) bg-(--system-accent-alpha-10)",

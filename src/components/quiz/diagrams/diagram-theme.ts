@@ -62,7 +62,7 @@ const DARK: DiagramColors = {
   textPrimary: "oklch(98% 0.01 264)",
   textSecondary: "oklch(98% 0.01 264 / 0.65)",
   textOnFill: "oklch(100% 0 0)",
-  accent: "oklch(72% 0.22 235)",
+  accent: "oklch(68% 0.22 235)",
   chart1: "oklch(70% 0.18 170)",
   chart2: "oklch(72% 0.17 170)",
   chart3: "oklch(72% 0.18 50)",

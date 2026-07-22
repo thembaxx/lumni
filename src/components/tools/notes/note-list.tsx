@@ -36,7 +36,7 @@ function NoteCard({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -10 }}
       transition={{ duration: 0.2, ease: iOSEase }}
-      className="rounded-3xl border p-4 transition-colors hover:bg-accent/5"
+      className="rounded-2xl border p-4 transition-colors hover:bg-accent/5"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">

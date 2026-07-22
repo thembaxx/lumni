@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 import { appConfig } from "../../../app.config";
 import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
+import { DynamicTypeProvider } from "@/components/shared/dynamic-type-provider";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { WebVitals } from "@/components/performance/web-vitals";
 import { Providers } from "@/components/providers";
@@ -189,36 +190,38 @@ export default async function LocaleLayout({
       <Providers locale={locale} messages={messages || {}} timeZone={timeZone}>
         <NudgeProvider>
           <LazyMotion features={domAnimation}>
-            <Suspense fallback={null}>
-              <AmbientBackground variant="dashboard" orbCount={4} />
-            </Suspense>
-            <Suspense fallback={null}>
-              <MeshAurora variant="dashboard" className="fixed inset-0 -z-10" />
-            </Suspense>
-            <Suspense fallback={null}>
-              <DynamicCursor variant="aura" />
-            </Suspense>
-            <UploadDialogRenderer />
-            <Toaster />
-            <SidebarStateProvider>
-              <div className="flex flex-1">
-                <NavGuard>
-                  <SidebarNav />
-                </NavGuard>
-                <main id="main-content" className="flex min-w-0 flex-1 flex-col">
+            <DynamicTypeProvider>
+              <Suspense fallback={null}>
+                <AmbientBackground variant="dashboard" orbCount={4} />
+              </Suspense>
+              <Suspense fallback={null}>
+                <MeshAurora variant="dashboard" className="fixed inset-0 -z-10" />
+              </Suspense>
+              <Suspense fallback={null}>
+                <DynamicCursor variant="aura" />
+              </Suspense>
+              <UploadDialogRenderer />
+              <Toaster />
+              <SidebarStateProvider>
+                <div className="flex flex-1">
                   <NavGuard>
-                    <TopNav />
+                    <SidebarNav />
                   </NavGuard>
-                  <AppErrorBoundary>{children}</AppErrorBoundary>
-                  <Suspense fallback={null}>
-                    <BottomNavPadding />
-                  </Suspense>
-                </main>
-              </div>
-              <NavGuard>
-                <BottomNav />
-              </NavGuard>
-            </SidebarStateProvider>
+                  <main id="main-content" className="flex min-w-0 flex-1 flex-col">
+                    <NavGuard>
+                      <TopNav />
+                    </NavGuard>
+                    <AppErrorBoundary>{children}</AppErrorBoundary>
+                    <Suspense fallback={null}>
+                      <BottomNavPadding />
+                    </Suspense>
+                  </main>
+                </div>
+                <NavGuard>
+                  <BottomNav />
+                </NavGuard>
+              </SidebarStateProvider>
+            </DynamicTypeProvider>
           </LazyMotion>
         </NudgeProvider>
       </Providers>

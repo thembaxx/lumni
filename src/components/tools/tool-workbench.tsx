@@ -257,7 +257,7 @@ export function ToolWorkbench() {
             className="mb-10 last:mb-0"
           >
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex size-9 items-center justify-center rounded-xl bg-secondary border border-border/60">
+              <div className="flex size-9 items-center justify-center rounded-lg bg-secondary border border-border/60">
                 <HugeiconsIcon icon={zone.icon} className="size-4.5 text-foreground/70" />
               </div>
               <div>
@@ -299,7 +299,7 @@ export function ToolWorkbench() {
             className="mt-10"
           >
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex size-9 items-center justify-center rounded-xl bg-secondary border border-border/60">
+              <div className="flex size-9 items-center justify-center rounded-lg bg-secondary border border-border/60">
                 <HugeiconsIcon
                   icon={Target01Icon}
                   className="size-4.5 text-foreground/70"

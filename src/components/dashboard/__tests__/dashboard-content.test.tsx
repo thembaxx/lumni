@@ -88,8 +88,9 @@ describe("DashboardContent", () => {
 
   it("passes id to root element", () => {
     const { container } = render(<DashboardContent {...defaultProps} id="dashboard-content" />);
-    const root = container.firstChild as HTMLElement;
-    expect(root.getAttribute("id")).toBe("dashboard-content");
+    const elements = container.getElementsByTagName("div");
+    const found = Array.from(elements).find((el) => el.id === "dashboard-content");
+    expect(found).toBeTruthy();
   });
 
   describe("notification schedulers", () => {

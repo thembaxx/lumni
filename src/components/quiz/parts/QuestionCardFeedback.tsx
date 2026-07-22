@@ -121,7 +121,7 @@ export function QuestionCardFeedback({
         duration: prefersReducedMotion ? 0 : undefined,
       }}
       className={cn(
-        "flex flex-col gap-3 rounded-card-lg p-4",
+        "flex flex-col gap-3 rounded-2xl p-4",
         isCorrectAnswer ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
       )}
     >
@@ -221,7 +221,7 @@ export function QuestionCardFeedback({
               />
             </div>
           ) : solver.data?.solution ? (
-            <div className="overflow-wrap-anywhere whitespace-pre-wrap rounded-card-lg border border-border/50 bg-card p-4 text-sm leading-relaxed">
+            <div className="overflow-wrap-anywhere whitespace-pre-wrap rounded-2xl border border-border/50 bg-card p-4 text-sm leading-relaxed">
               {solver.data.solution}
             </div>
           ) : solver.isError ? (
@@ -265,7 +265,7 @@ export function QuestionCardFeedback({
             <div
               key={`followup-${msg.content}`}
               className={cn(
-                "overflow-wrap-anywhere max-w-[calc(100%-var(--space-8))] rounded-card-lg px-4 py-3 text-sm",
+                "overflow-wrap-anywhere max-w-[calc(100%-var(--space-8))] rounded-2xl px-4 py-3 text-sm",
                 msg.role === "user"
                   ? "ml-auto bg-(--system-accent-alpha-10)"
                   : "mr-auto border border-border/50 bg-card",

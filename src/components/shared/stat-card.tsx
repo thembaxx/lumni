@@ -73,7 +73,7 @@ export function StatCard({
         whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
         transition={springPresets.fast}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card-lg border border-border/80 bg-card p-4 shadow-level-2",
+          "flex flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-border/80 bg-card p-4 shadow-level-2",
           className,
         )}
       >
@@ -111,7 +111,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-[scale,box-shadow,background-color,transform] hover:shadow-level-3 hover:-translate-y-px press-scale",
+        "overflow-hidden rounded-2xl border border-border/80 bg-card shadow-level-2 transition-[scale,box-shadow,background-color,transform] hover:shadow-level-3 hover:-translate-y-px press-scale",
         className,
       )}
     >

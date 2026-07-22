@@ -120,7 +120,7 @@ export function SubjectSelect({
                     className="press-scale flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-secondary/60"
                   >
                     <div
-                      className="flex size-7 shrink-0 items-center justify-center rounded-lg"
+                      className="flex size-7 shrink-0 items-center justify-center rounded-md"
                       style={{
                         backgroundColor: `${subject.color}20`,
                       }}
