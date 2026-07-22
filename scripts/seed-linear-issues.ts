@@ -162,7 +162,7 @@ async function createIssue(
   return result.data.issueCreate.issue.identifier;
 }
 
-async function main() {
+async function seedMain() {
   const results: { id: string; section: string; title: string }[] = [];
 
   for (const [section, items] of Object.entries(TODO_ITEMS)) {
@@ -183,4 +183,4 @@ async function main() {
   }
 }
 
-main().catch(console.error);
+seedMain().catch(console.error);

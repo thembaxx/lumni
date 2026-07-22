@@ -189,7 +189,7 @@ function printReport(ai: AIBudgetMetrics, wal: WALMetrics, health: SystemHealth)
 }
 
 // Main
-async function main() {
+async function validateMain() {
   try {
     const [ai, wal, health] = await Promise.all([
       checkAIBudget(),
@@ -204,4 +204,4 @@ async function main() {
   }
 }
 
-main();
+validateMain();
