@@ -96,7 +96,7 @@ export function AmbientGradient({ className, variant = "default" }: AmbientGradi
         <>
           <FloatDrift className="absolute -top-60 -right-60 size-200 rounded-full bg-primary/7 blur-3xl" />
           <FloatDrift
-            className="absolute -bottom-60 -left-60 size-175 rounded-full bg-accent-secondary/5 blur-3xl"
+            className="absolute -bottom-60 -left-60 size-175 rounded-full             bg-chart-4/5 blur-3xl"
             delay={-3}
           />
           <FloatDrift

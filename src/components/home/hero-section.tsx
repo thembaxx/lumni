@@ -9,7 +9,6 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { useTranslations } from "next-intl";
 import { memo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { MagneticCard } from "@/components/shared/magnetic-card";
@@ -31,23 +30,14 @@ function InteractiveQuizDemo() {
 
   return (
     <MagneticCard className="relative w-full" maxTilt={4}>
-      <div className="flex h-full w-full flex-col gap-3 rounded-card-lg border border-border/30 bg-card/90 p-5 shadow-level-2 backdrop-blur-sm">
+      <div className="glass-bento-strong flex h-full w-full flex-col gap-3 rounded-2xl p-5 shadow-level-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex size-8 items-center justify-center rounded-lg bg-(--system-accent-alpha-10)">
               <HugeiconsIcon icon={BrainIcon} className="size-4 text-primary" />
             </div>
-            <div>
-              <p className="font-semibold text-xs">Quick Quiz</p>
-              <p className="text-muted-foreground text-[10px]">Physics - Grade 12</p>
-            </div>
+            <p className="font-semibold text-xs text-muted-foreground/80">Quick Quiz</p>
           </div>
-          <Badge
-            variant="outline"
-            className="bg-(--system-accent-alpha-10) text-foreground text-[10px]"
-          >
-            Demo
-          </Badge>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -73,7 +63,7 @@ function InteractiveQuizDemo() {
                         ? "border-destructive/40 bg-destructive/10 text-destructive"
                         : isSelected
                           ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30 hoverable:scale-[1.01]",
+                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30",
                     answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]",
                   )}
                 >
@@ -115,28 +105,15 @@ function InteractiveQuizDemo() {
               : "Not quite. Try F = ma."}
           </m.div>
         )}
-
-        <div className="mt-auto flex items-center justify-center gap-1.5">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className={cn(
-                "h-0.5 rounded-full transition-[width,background-color] duration-300",
-                i < 1 ? "w-3 bg-primary" : "w-0.5 bg-border/50",
-              )}
-            />
-          ))}
-        </div>
       </div>
     </MagneticCard>
   );
 }
 
-// Inline image pill rendered inside the heading
 function InlineImagePill() {
   return (
     <span
-      className="relative mx-2 inline-block h-7 w-16 overflow-hidden rounded-full align-middle md:h-8 md:w-20"
+      className="relative mx-2 inline-block h-7 w-16 overflow-hidden rounded-full align-middle md:h-9 md:w-24"
       aria-hidden="true"
     >
       <span
@@ -154,27 +131,28 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
   return (
     <section
       id="main-content"
-      className="relative flex min-h-[90dvh] items-center justify-center overflow-hidden pt-14"
+      className="relative flex min-h-[95dvh] items-center justify-center overflow-hidden pt-16"
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity img-outline"
-          style={{ backgroundImage: "url(https://picsum.photos/seed/matric/1920/1080)" }}
+          className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity img-outline grayscale contrast-125"
+          style={{ backgroundImage: "url(https://picsum.photos/seed/matric-exam/1920/1080)" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-system-background via-system-background/80 to-system-background" />
-        <div className="absolute top-1/4 right-1/4 h-96 w-96 rounded-full bg-system-accent/8 blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/3 h-64 w-64 rounded-full bg-system-accent/5 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-system-background via-system-background/85 to-system-background" />
+        <div className="absolute top-1/4 right-1/3 h-96 w-96 rounded-full bg-system-accent/10 blur-3xl animate-float-drift" />
+        <div className="absolute bottom-1/3 left-1/4 h-80 w-80 rounded-full bg-chart-3/8 blur-3xl animate-float-slow" />
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-chart-4/6 blur-3xl animate-float-sway" />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-4 py-20 md:flex-row md:gap-16 lg:py-24">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-4 py-24 md:gap-14 md:py-32 lg:py-40">
         <m.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.1 }}
-          className="flex flex-1 flex-col items-center gap-6 text-center md:items-start md:text-left"
+          className="flex w-full max-w-4xl flex-col items-center gap-6 text-center"
         >
           <m.h1
-            className="max-w-5xl text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground text-balance"
+            className="text-[clamp(2rem,5.5vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground text-balance"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: 0.2 }}
@@ -186,7 +164,7 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
           </m.h1>
 
           <m.p
-            className="max-w-lg text-pretty text-base leading-relaxed text-muted-foreground md:text-lg"
+            className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 0.35 }}
@@ -240,10 +218,10 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSe
         </m.div>
 
         <m.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.4 }}
-          className="w-full max-w-xs shrink-0 md:max-w-sm"
+          initial={{ opacity: 0, scale: 0.92, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.5 }}
+          className="w-full max-w-xs md:max-w-sm"
         >
           <InteractiveQuizDemo />
         </m.div>

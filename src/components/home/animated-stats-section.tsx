@@ -18,7 +18,7 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
-          const duration = 1500;
+          const duration = 1800;
           const start = performance.now();
           const animate = (now: number) => {
             const elapsed = now - start;
@@ -59,10 +59,12 @@ export function AnimatedStatsSection() {
 
   return (
     <section className="relative overflow-hidden border-y border-border/20 py-20 md:py-28">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-system-accent/3 via-transparent to-system-accent/3" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-chart-4/3" />
+      <div className="pointer-events-none absolute top-1/2 left-1/3 h-40 w-40 rounded-full bg-primary/8 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/2 right-1/3 h-40 w-40 rounded-full bg-chart-3/6 blur-3xl" />
 
       <div className="mx-auto max-w-6xl px-4">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 md:gap-16">
           {ACHIEVEMENTS.map((stat, i) => (
             <m.div
               key={stat.label}
@@ -75,14 +77,14 @@ export function AnimatedStatsSection() {
               }}
               className="flex flex-col items-center gap-2 text-center"
             >
-              <span className="font-heading text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
+              <span className="font-heading text-5xl font-extrabold tracking-tight text-primary md:text-6xl">
                 {stat.value > 0 ? (
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 ) : (
                   "Free"
                 )}
               </span>
-              <span className="text-balance text-sm text-muted-foreground md:text-base">
+              <span className="max-w-28 text-balance text-sm text-muted-foreground md:text-base">
                 {t(stat.label)}
               </span>
             </m.div>

@@ -45,6 +45,10 @@ const AnimatedStatsSection = dynamic(
   () => import("./animated-stats-section").then((m) => ({ default: m.AnimatedStatsSection })),
   { ssr: false },
 );
+const MarqueeSection = dynamic(
+  () => import("./marquee-section").then((m) => ({ default: m.MarqueeSection })),
+  { ssr: false },
+);
 
 function useMatricEasterEgg() {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -256,18 +260,27 @@ export function HomeContent() {
       </nav>
 
       <HeroSection isAuthenticated={isAuthenticated || isAnonymous} />
+
       <Suspense fallback={<Skeleton className="h-96 w-full rounded-3xl" />}>
         <FeaturesGrid />
       </Suspense>
+
       <Suspense fallback={<Skeleton className="h-48 w-full rounded-3xl" />}>
         <AnimatedStatsSection />
       </Suspense>
+
       <Suspense fallback={<Skeleton className="h-64 w-full rounded-3xl" />}>
+        <MarqueeSection />
+      </Suspense>
+
+      <Suspense fallback={<Skeleton className="h-80 w-full rounded-3xl" />}>
         <HowItWorksSection />
       </Suspense>
+
       <Suspense fallback={<Skeleton className="h-80 w-full rounded-3xl" />}>
         <TestimonialsSection />
       </Suspense>
+
       <Suspense fallback={<Skeleton className="h-48 w-full rounded-3xl" />}>
         <CtaSection isAuthenticated={isAuthenticated || isAnonymous} />
       </Suspense>
