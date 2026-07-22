@@ -37,7 +37,7 @@ export function AnimatedStreakIcon({ streak, className }: AnimatedStreakIconProp
       type="button"
       onClick={handleClick}
       className={cn(
-        "relative flex size-14 shrink-0 items-center justify-center rounded-2xl transition-colors",
+        "relative flex size-14 shrink-0 items-center justify-center rounded-card transition-colors",
         streak > 0
           ? "bg-warning/15 text-warning ring-1 ring-warning/30"
           : "bg-muted text-muted-foreground",

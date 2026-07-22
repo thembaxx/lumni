@@ -28,9 +28,9 @@ export function StudySessionList({
             type="button"
             key={session.id}
             onClick={() => onStartSession(session)}
-            className="flex w-full items-center gap-3 rounded-xl bg-muted/30 p-2.5 text-left transition-[background-color,transform] hover:bg-muted/50 press-scale"
+            className="flex w-full items-center gap-3 rounded-card bg-muted/30 p-2.5 text-left transition-[background-color,transform] hover:bg-muted/50 press-scale"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-system-accent/10">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-card bg-system-accent/10">
               <HugeiconsIcon icon={Clock01Icon} className="size-4 text-system-accent" />
             </div>
             <div className="min-w-0 flex-1">
@@ -43,7 +43,7 @@ export function StudySessionList({
           </button>
         ))
       ) : (
-        <div className="flex items-center gap-3 rounded-xl bg-muted/30 p-2.5">
+        <div className="flex items-center gap-3 rounded-card bg-muted/30 p-2.5">
           <HugeiconsIcon icon={Calendar01Icon} className="size-4 text-muted-foreground" />
           <p className="text-muted-foreground text-sm text-pretty">No sessions scheduled today</p>
         </div>

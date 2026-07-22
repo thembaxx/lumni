@@ -35,8 +35,8 @@ function FeedCard({
     <Card
       className={
         isFirst
-          ? "relative border-system-accent/20 bg-system-accent/5"
-          : "relative border-border/40"
+          ? "relative rounded-card border-system-accent/20 bg-system-accent/5"
+          : "relative rounded-card border-border/40"
       }
     >
       <Button

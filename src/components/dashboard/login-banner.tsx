@@ -115,7 +115,7 @@ function FeatureDialog() {
           {LOCKED_FEATURES.map((feature) => (
             <div
               key={feature.title}
-              className="flex items-start gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-muted/40"
+              className="flex items-start gap-3 rounded-card px-2 py-2.5 transition-colors hover:bg-muted/40 press-scale"
             >
               <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-system-accent/10">
                 <HugeiconsIcon icon={feature.icon} className="size-4 text-system-accent" />
@@ -161,7 +161,7 @@ export function LoginBanner() {
   if (isLoggedIn || localDismissed) return null;
 
   return (
-    <div className="card-entrance-down flex w-full items-center gap-3 rounded-xl border border-system-accent/15 bg-system-accent/8 px-3 py-2 sm:px-4 sm:py-2.5">
+    <div className="card-entrance-down flex w-full items-center gap-3 rounded-card border border-system-accent/15 bg-system-accent/8 px-3 py-2 sm:px-4 sm:py-2.5 press-scale">
       <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
         <HugeiconsIcon icon={Login01Icon} className="size-3.5 text-system-accent" />
       </div>

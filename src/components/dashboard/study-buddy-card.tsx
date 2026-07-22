@@ -23,7 +23,7 @@ export function StudyBuddyCard() {
 
   return (
     <Card
-      className="cursor-pointer p-4 transition-colors hover:bg-secondary/50"
+      className="cursor-pointer rounded-card p-4 transition-colors hover:bg-secondary/50"
       onClick={() => push("/study-buddies")}
       role="button"
       tabIndex={0}

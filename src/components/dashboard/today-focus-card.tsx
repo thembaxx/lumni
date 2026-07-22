@@ -124,11 +124,11 @@ export const TodayFocusCard = memo(function TodayFocusCard() {
 
   return (
     <div className="card-entrance-sm">
-      <Card className="border border-border/80 transition-colors hover:border-foreground/15">
+      <Card className="rounded-card border border-border/80 transition-colors hover:border-foreground/15">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div
-              className={`flex size-10 items-center justify-center rounded-xl border ${cfg.bgAlpha}`}
+              className={`flex size-10 items-center justify-center rounded-card border ${cfg.bgAlpha}`}
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className={`size-5 ${cfg.iconColor}`} />
             </div>

@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-13  
 **Status**: Approved for implementation  
-**Design read**: Full-overhaul dashboard redesign for Lumni (Matric EdTech). Same brand language as landing page (warm amber accent, Open Runde, clean ambient depth). Single scroll — no tabs.
+**Design read**: Full-overhaul dashboard redesign for Lumni (Matric EdTech). Same brand language as landing page (slate blue accent, Geist, clean ambient depth). Single scroll — no tabs.
 
 ---
 

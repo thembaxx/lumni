@@ -120,7 +120,7 @@ export function BloomTaxonomyWidget() {
         <CardContent className="flex flex-col gap-4">
           {Array.from({ length: 3 }).map((_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
-            <div key={i} className="rounded-xl bg-muted/40 p-3">
+            <div key={i} className="rounded-card bg-muted/40 p-3">
               <div className="mb-2 flex items-center justify-between">
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-5 w-16 rounded-full" />
@@ -168,7 +168,7 @@ export function BloomTaxonomyWidget() {
                   ? "developing"
                   : "novice";
           return (
-            <div key={topic.topicId} className="rounded-xl bg-muted/40 p-3">
+            <div key={topic.topicId} className="rounded-card bg-muted/40 p-3">
               <div className="mb-2 flex items-center justify-between">
                 <p className="font-medium text-sm capitalize">{topic.topicId.replace(/-/g, " ")}</p>
                 <span

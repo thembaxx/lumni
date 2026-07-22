@@ -9,38 +9,36 @@ import DocumentValidationFreeIcons from "@hugeicons/core-free-icons/DocumentVali
 import Share07Icon from "@hugeicons/core-free-icons/Share07Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
-const quickActions = [
-  { icon: Brain02FreeIcons, label: "Practice", route: "/quiz", primary: true },
-  {
-    icon: DocumentValidationFreeIcons,
-    label: "Exam Papers",
-    route: "/past-papers",
-  },
-  { icon: Calendar02FreeIcons, label: "Study Plan" },
-  { icon: Book02FreeIcons, label: "Bookmarks", route: "/bookmarks" },
-  { icon: BookOpenCheckFreeIcons, label: "Review", route: "/review" },
-  { icon: Book03FreeIcons, label: "Lessons", route: "/lessons" },
-  { icon: Share07Icon, label: "Invite Friend", route: "/settings/referral" },
-];
-
 export function QuickActions() {
   const { push } = useNavigationDirection();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("dashboard.quickActions");
+
+  const quickActions = [
+    { icon: Brain02FreeIcons, labelKey: "practice", route: "/quiz", primary: true },
+    { icon: DocumentValidationFreeIcons, labelKey: "examPapers", route: "/past-papers" },
+    { icon: Calendar02FreeIcons, labelKey: "studyPlan" },
+    { icon: Book02FreeIcons, labelKey: "bookmarks", route: "/bookmarks" },
+    { icon: BookOpenCheckFreeIcons, labelKey: "review", route: "/review" },
+    { icon: Book03FreeIcons, labelKey: "lessons", route: "/lessons" },
+    { icon: Share07Icon, labelKey: "inviteFriend", route: "/settings/referral" },
+  ];
 
   return (
     <div ref={scrollRef} className="w-full overflow-x-auto scrollbar-hide">
       <div className="flex items-center gap-2 py-1">
         {quickActions.map((action) =>
-          action.label === "Study Plan" ? (
-            <StudyPlanSheet key={action.label} />
+          action.labelKey === "studyPlan" ? (
+            <StudyPlanSheet key={action.labelKey} />
           ) : (
             <Button
-              key={action.label}
+              key={action.labelKey}
               variant={action.primary ? "default" : "secondary"}
               onClick={() => push(action.route ?? "/")}
               className={cn(
@@ -49,7 +47,7 @@ export function QuickActions() {
                   ? "bg-(--system-accent) text-(--system-accent-foreground)"
                   : "bg-(--material-glass) text-(--system-text-primary)",
               )}
-              aria-label={action.label}
+              aria-label={t(action.labelKey)}
             >
               <HugeiconsIcon
                 icon={action.icon}
@@ -57,7 +55,7 @@ export function QuickActions() {
                 data-icon
                 aria-hidden="true"
               />
-              <span className="whitespace-nowrap">{action.label}</span>
+              <span className="whitespace-nowrap">{t(action.labelKey)}</span>
             </Button>
           ),
         )}

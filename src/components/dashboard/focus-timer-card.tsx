@@ -67,9 +67,9 @@ export function FocusTimerCard() {
   };
 
   return (
-    <Card className="overflow-hidden rounded-xl">
+    <Card className="overflow-hidden rounded-card press-scale">
       <CardHeader>
-        <CardTitle className="font-semibold text-xs">Focus Timer</CardTitle>
+        <CardTitle className="font-bold text-xs">Focus Timer</CardTitle>
       </CardHeader>
       <CardContent className="flex items-center justify-between gap-4 p-4">
         <div className="flex items-center gap-4">

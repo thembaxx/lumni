@@ -119,7 +119,7 @@ export function CompetencyOverview() {
 
   if (isError) {
     return (
-      <Card>
+      <Card className="rounded-card">
         <CardContent>
           <p className="py-6 text-center text-destructive text-sm">
             Failed to load competencies: {error?.message}
@@ -131,14 +131,14 @@ export function CompetencyOverview() {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="rounded-card">
         <CardHeader>
           <Skeleton className="h-6 w-32" />
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-3">
-            <Skeleton className="h-16 rounded-xl" />
-            <Skeleton className="h-16 rounded-xl" />
+            <Skeleton className="h-16 rounded-card" />
+            <Skeleton className="h-16 rounded-card" />
           </div>
         </CardContent>
       </Card>
@@ -151,7 +151,7 @@ export function CompetencyOverview() {
 
   return (
     <div className="card-entrance">
-      <Card>
+      <Card className="rounded-card">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight text-balance">
             <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
@@ -172,7 +172,7 @@ export function CompetencyOverview() {
                 }
                 className="w-full text-left press-scale transition-transform"
               >
-                <div className="flex items-center gap-4 rounded-xl bg-muted/30 p-3 transition-colors hover:bg-muted/50">
+                <div className="flex items-center gap-4 rounded-card bg-muted/30 p-3 transition-colors hover:bg-muted/50">
                   <CompetencyRing score={sc.averageScore} />
 
                   <div className="min-w-0 flex-1">

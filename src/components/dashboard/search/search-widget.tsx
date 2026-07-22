@@ -33,7 +33,7 @@ export function SearchWidget() {
       animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
       transition={prefersReducedMotion ? undefined : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "rounded-2xl border border-border/30 bg-secondary/60 p-3 transition-[border-color,box-shadow] duration-300",
+        "rounded-card border border-border/30 bg-secondary/60 p-3 transition-[border-color,box-shadow] duration-300",
         isFocused && "border-primary/30 shadow-level-2",
       )}
     >

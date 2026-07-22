@@ -78,7 +78,7 @@ export function CompetitionCard() {
 
   if (isLoading) {
     return (
-      <Card className="flex flex-col gap-3 p-4">
+      <Card className="flex flex-col gap-3 rounded-card p-4">
         <Skeleton className="h-5 w-32" />
         <Skeleton className="h-4 w-48" />
         <Skeleton className="h-10 w-full" />
@@ -95,7 +95,7 @@ export function CompetitionCard() {
 
   return (
     <Link href="/study-groups" prefetch={true}>
-      <Card className="group flex flex-col gap-3 p-4 transition-[scale,box-shadow,background-color,transform] duration-300 press-scale">
+      <Card className="group flex flex-col gap-3 rounded-card p-4 transition-[scale,box-shadow,background-color,transform] duration-300 press-scale">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <HugeiconsIcon icon={Award01Icon} className="size-5 text-warning" />

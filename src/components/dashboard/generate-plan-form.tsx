@@ -41,7 +41,7 @@ export function GeneratePlanForm({ isGenerating, onGenerate, onCancel }: Generat
   }, [targetAps, dailyMinutes, includeWeekends, horizonDays, horizonCustom, onGenerate]);
 
   return (
-    <Card>
+    <Card className="rounded-card">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight">
           <HugeiconsIcon icon={CheckListIcon} className="size-5" />

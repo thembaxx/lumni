@@ -36,7 +36,7 @@ export function StoriesProgressCard() {
               key={story.storyId}
               direction="up"
               distance={8}
-              className="flex items-center gap-3 rounded-2xl border bg-card p-3"
+              className="flex items-center gap-3 rounded-card border bg-card p-3"
             >
               <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-(--system-accent)/10">
                 <HugeiconsIcon icon={BookOpen01Icon} className="size-4 text-(--system-accent)" />

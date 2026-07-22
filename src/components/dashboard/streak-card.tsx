@@ -4,10 +4,10 @@ import PlayIcon from "@hugeicons/core-free-icons/PlayIcon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useGamificationContext } from "@/contexts/gamification-provider";
 import { useRouter } from "@/i18n/navigation";
 import { AnimatedStreakIcon } from "./parts/animated-streak-icon";
-import { SpringCard } from "./parts/spring-card";
 
 export const StreakCard = memo(function StreakCard() {
   const { gamification, currentStreak } = useGamificationContext();
@@ -17,8 +17,8 @@ export const StreakCard = memo(function StreakCard() {
   const practicedToday = gamification.lastPracticeDate === today;
 
   return (
-    <SpringCard glass>
-      <div className="p-4">
+    <Card>
+      <CardContent className="p-4">
         <div className="flex items-center gap-4">
           <AnimatedStreakIcon streak={currentStreak} />
           <div className="flex-1">
@@ -50,7 +50,7 @@ export const StreakCard = memo(function StreakCard() {
             )}
           </div>
         </div>
-      </div>
-    </SpringCard>
+      </CardContent>
+    </Card>
   );
 });

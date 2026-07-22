@@ -15,7 +15,7 @@ export function DashboardTabs() {
 
   return (
     <div
-      className="flex gap-1 rounded-2xl bg-muted/50 p-1 ring-1 ring-border/30"
+      className="flex gap-1 rounded-card bg-muted/50 p-1 ring-1 ring-border/30"
       role="tablist"
       aria-label="Dashboard sections"
     >
@@ -29,7 +29,7 @@ export function DashboardTabs() {
             role="tab"
             aria-selected={isActive}
             className={cn(
-              "rounded-xl px-3 py-1.5 font-medium text-sm transition-all duration-200",
+              "rounded-card px-3 py-1.5 font-medium text-sm transition-all duration-200 press-scale",
               isActive
                 ? "bg-background text-foreground shadow-level-1"
                 : "text-muted-foreground hover:text-foreground",

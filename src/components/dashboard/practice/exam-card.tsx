@@ -62,7 +62,7 @@ export function ExamCard({ exam }: ExamCardProps) {
     <FadeIn
       duration={0.25}
       distance={6}
-      className="flex w-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-0 bg-secondary/40 p-3 transition-colors hover:bg-secondary/60"
+      className="flex w-full flex-col justify-between gap-3 overflow-hidden rounded-card border-0 bg-secondary/40 p-3 transition-colors hover:bg-secondary/60"
     >
       <div className="flex min-w-0 flex-1 flex-col gap-1 pr-2">
         <p className="truncate font-medium text-sm">{exam.title}</p>

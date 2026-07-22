@@ -23,7 +23,7 @@ export function AchievementShowcase() {
 
   return (
     <FadeIn direction="up" distance={16}>
-      <Card>
+      <Card className="rounded-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight text-balance">
             Achievements

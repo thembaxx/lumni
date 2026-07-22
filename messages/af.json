@@ -696,7 +696,16 @@
     "createAccount": "Skep Rekening",
     "localDataDescription": "Jou vordering, XP en reekse word op hierdie toestel gestoor. Teken in om dit oor al jou toestelle te hou.",
     "boltCompleteTitle": "Daaglikse uitdaging voltooi",
-    "boltCompleteDescription": "Môre terug om aan te hou leer"
+    "boltCompleteDescription": "Môre terug om aan te hou leer",
+    "quickActions": {
+      "practice": "Oefen",
+      "examPapers": "Eksamenvraestelle",
+      "studyPlan": "Studieplan",
+      "bookmarks": "Bladwysers",
+      "review": "Hersien",
+      "lessons": "Lesse",
+      "inviteFriend": "Nooi Vriend"
+    }
   },
   "consent": {
     "privacyTab": {

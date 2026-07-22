@@ -12,7 +12,7 @@ const PronunciationChartInner = dynamic(
   () => import("./pronunciation-chart-inner").then((m) => ({ default: m.PronunciationChartInner })),
   {
     ssr: false,
-    loading: () => <Skeleton className="h-48 rounded-2xl" />,
+    loading: () => <Skeleton className="h-48 rounded-card" />,
   },
 );
 
@@ -33,7 +33,7 @@ export function PronunciationChartCard() {
           <CardTitle className="font-bold text-lg">Pronunciation Progress</CardTitle>
         </CardHeader>
         <CardContent className="p-5 pt-0">
-          <Skeleton className="h-48 rounded-2xl" />
+          <Skeleton className="h-48 rounded-card" />
         </CardContent>
       </Card>
     );

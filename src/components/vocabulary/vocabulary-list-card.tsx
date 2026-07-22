@@ -26,7 +26,7 @@ export function VocabularyListCard() {
   const hasWords = words && words.length > 0;
 
   return (
-    <Card className="overflow-hidden rounded-3xl shadow-level-1">
+    <Card className="overflow-hidden rounded-card shadow-level-1">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="font-bold text-lg">Saved Vocabulary</CardTitle>
@@ -58,7 +58,7 @@ export function VocabularyListCard() {
                     key={word.id}
                     direction="up"
                     distance={4}
-                    className="flex items-center justify-between rounded-2xl border bg-card px-3 py-2"
+                    className="flex items-center justify-between rounded-card border bg-card px-3 py-2"
                   >
                     <div className="flex items-center gap-2">
                       <HugeiconsIcon

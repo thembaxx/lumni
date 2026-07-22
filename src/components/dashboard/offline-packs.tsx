@@ -43,10 +43,10 @@ export function OfflinePackManager() {
   };
 
   return (
-    <Card>
+    <Card className="rounded-card">
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-(--system-accent)/10">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-card bg-(--system-accent)/10">
             <HugeiconsIcon icon={FileDownloadIcon} className="size-5 text-(--system-accent)" />
           </div>
           <div className="min-w-0">
@@ -133,8 +133,8 @@ export function OfflinePackManager() {
         <div className="h-px bg-border/60" />
 
         {packs.length === 0 ? (
-          <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border/60 bg-muted/20 px-6 py-8 text-center">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-muted/40">
+          <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-border/60 bg-muted/20 px-6 py-8 text-center">
+            <div className="flex size-12 items-center justify-center rounded-card bg-muted/40">
               <HugeiconsIcon icon={CloudOffIcon} className="size-6 text-muted-foreground/60" />
             </div>
             <div className="flex flex-col gap-1">

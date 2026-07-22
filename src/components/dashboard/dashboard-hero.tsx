@@ -1,6 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import Flag01Icon from "@hugeicons/core-free-icons/Flag01Icon";
+import Calendar01Icon from "@hugeicons/core-free-icons/Calendar01Icon";
+import Clock01Icon from "@hugeicons/core-free-icons/Clock01Icon";
+import Time01Icon from "@hugeicons/core-free-icons/Time01Icon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { useEasterEgg } from "@/lib/shared/easter-egg-context";
@@ -49,6 +54,7 @@ export function HeroBanner() {
   const { mounted, daysLeft, yearProgress } = cdState;
   const logoClickCount = useRef(0);
   const { trigger } = useEasterEgg();
+  const easterEggRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     dispatchCd({ type: "MOUNT" });
@@ -64,7 +70,7 @@ export function HeroBanner() {
     };
   }, []);
 
-  const handleLogoClick = useCallback(() => {
+  const handleEasterEggClick = useCallback(() => {
     logoClickCount.current++;
     if (logoClickCount.current >= 7) {
       logoClickCount.current = 0;
@@ -79,17 +85,17 @@ export function HeroBanner() {
   const cfg = phaseConfigs[phase];
   const milestone = mounted ? getMilestone(daysLeft) : null;
 
+  const milestoneIcon = milestone
+    ? ((
+        { 90: Flag01Icon, 30: Calendar01Icon, 14: Clock01Icon, 7: Time01Icon } as Record<
+          number,
+          typeof Flag01Icon
+        >
+      )[milestone.days] ?? null)
+    : null;
+
   return (
-    <div
-      className="group relative overflow-hidden rounded-card-lg glass-bento-strong shadow-level-2 transition-[box-shadow] duration-500 hover:shadow-level-3"
-      onClick={handleLogoClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") handleLogoClick();
-      }}
-      aria-label="Dashboard hero — click 7 times for a surprise"
-    >
+    <div className="group relative overflow-hidden rounded-card-lg glass-bento-strong shadow-level-2 transition-[box-shadow] duration-500 hover:shadow-level-3">
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-system-accent/6 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         aria-hidden="true"
@@ -111,10 +117,10 @@ export function HeroBanner() {
 
       <div className="relative flex flex-col gap-4 px-5 py-5 sm:flex-row sm:items-start sm:justify-between sm:px-6 sm:py-6">
         <div className="flex flex-col gap-3">
-          {milestone && (
+          {milestone && milestoneIcon && (
             <div className="inline-flex w-fit items-center gap-1.5 rounded-full border border-warning/30 bg-warning/15 px-3 py-1">
-              <span className="animate-float-bob text-sm" style={{ animationDelay: "0.15s" }}>
-                {milestone.emoji}
+              <span className="animate-float-bob flex" style={{ animationDelay: "0.15s" }}>
+                <HugeiconsIcon icon={milestoneIcon} size={14} className="text-warning" />
               </span>
               <span className="font-bold text-warning text-xs uppercase tracking-tight">
                 {milestone.label}
@@ -152,6 +158,13 @@ export function HeroBanner() {
 
         <div className="flex shrink-0 items-center gap-3">
           <YearRingProgress progress={yearProgress} />
+          <button
+            ref={easterEggRef}
+            type="button"
+            onClick={handleEasterEggClick}
+            className="size-3 rounded-full border border-border/20 bg-transparent opacity-0 transition-opacity duration-300 hover:opacity-40 focus-visible:opacity-40 focus-visible:outline-none"
+            aria-label="Secret trigger"
+          />
         </div>
       </div>
     </div>

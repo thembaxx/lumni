@@ -65,7 +65,7 @@ export function WordOfDayCard({ language = "en" }: WordOfDayCardProps) {
   return (
     <Link
       href={`/dictionary?q=${encodeURIComponent(word)}`}
-      className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-4 shadow-level-1 transition-[background-color,transform] duration-200 press-scale"
+      className="group flex flex-col gap-2 rounded-card border border-border bg-card p-4 shadow-level-1 transition-[background-color,transform] duration-200 press-scale"
     >
       <div className="flex items-center gap-2">
         <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10">

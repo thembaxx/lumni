@@ -82,7 +82,7 @@ export function StudyPlanOverview() {
   }
 
   return (
-    <Card>
+    <Card className="rounded-card">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2 font-bold text-base tracking-tight text-balance">
           <HugeiconsIcon icon={CheckListIcon} className="size-5" />
@@ -98,7 +98,7 @@ export function StudyPlanOverview() {
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         {stale && !dismissedStale && !showForm && (
-          <div className="flex items-center justify-between gap-2 rounded-xl bg-warning/10 px-3 py-2 text-foreground">
+          <div className="flex items-center justify-between gap-2 rounded-card bg-warning/10 px-3 py-2 text-foreground">
             <div className="flex items-center gap-2 text-xs">
               <HugeiconsIcon icon={RefreshIcon} className="size-3.5 shrink-0 text-warning" />
               <span>

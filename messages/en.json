@@ -755,7 +755,16 @@
     "createAccount": "Create Account",
     "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices.",
     "boltCompleteTitle": "Daily Challenge complete",
-    "boltCompleteDescription": "Come back tomorrow to keep learning"
+    "boltCompleteDescription": "Come back tomorrow to keep learning",
+    "quickActions": {
+      "practice": "Practice",
+      "examPapers": "Exam Papers",
+      "studyPlan": "Study Plan",
+      "bookmarks": "Bookmarks",
+      "review": "Review",
+      "lessons": "Lessons",
+      "inviteFriend": "Invite Friend"
+    }
   },
   "consent": {
     "privacyTab": {

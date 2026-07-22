@@ -105,14 +105,14 @@ export function LearningMapCard() {
 
   if (isPending) {
     return (
-      <Card>
+      <Card className="rounded-card">
         <CardHeader>
           <CardTitle className="font-bold text-sm tracking-tight text-balance">
             Learning Map
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Skeleton className="h-48 w-full rounded-xl" />
+          <Skeleton className="h-48 w-full rounded-card" />
         </CardContent>
       </Card>
     );
@@ -120,7 +120,7 @@ export function LearningMapCard() {
 
   if (isError || !graph || graph.nodes.length === 0) {
     return (
-      <Card>
+      <Card className="rounded-card">
         <CardHeader>
           <CardTitle className="font-bold text-sm tracking-tight text-balance">
             Learning Map
@@ -143,7 +143,7 @@ export function LearningMapCard() {
   const { svgW, svgH } = getSvgDimensions(maxNodes);
 
   return (
-    <Card>
+    <Card className="rounded-card">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="font-bold text-sm tracking-tight text-balance">
           Learning Map

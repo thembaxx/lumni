@@ -18,7 +18,7 @@ export function PerformanceTrendsSection({ subjectTrends }: PerformanceTrendsSec
   if (Object.keys(subjectTrends).length === 0) return null;
 
   return (
-    <Card size="sm">
+    <Card size="sm" className="rounded-card">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-2">

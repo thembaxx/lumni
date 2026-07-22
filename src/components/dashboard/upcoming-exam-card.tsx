@@ -49,7 +49,7 @@ export function UpcomingExamCard() {
 
   if (isLoading) {
     return (
-      <Card className="flex flex-col gap-3 p-4">
+      <Card className="flex flex-col gap-3 rounded-card p-4">
         <Skeleton className="h-5 w-40" />
         <Skeleton className="h-4 w-56" />
         <Skeleton className="h-4 w-32" />
@@ -59,7 +59,7 @@ export function UpcomingExamCard() {
 
   if (!nextExam) {
     return (
-      <Card className="flex flex-col gap-2 p-4">
+      <Card className="flex flex-col gap-2 rounded-card p-4">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={Calendar03Icon} className="size-5 text-muted-foreground" />
           <h3 className="font-semibold text-sm text-balance">Upcoming Exams</h3>
@@ -70,7 +70,7 @@ export function UpcomingExamCard() {
   }
 
   return (
-    <Card className="group flex flex-col gap-3 p-4 transition-[scale,box-shadow,background-color,transform] duration-300 press-scale">
+    <Card className="group flex flex-col gap-3 rounded-card p-4 transition-[scale,box-shadow,background-color,transform] duration-300 press-scale">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={Calendar03Icon} className="size-5 text-system-accent" />

@@ -1,5 +1,6 @@
 "use client";
 
+import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
 import Target01Icon from "@hugeicons/core-free-icons/Target01Icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -60,8 +61,8 @@ export function WeakTopicsCard() {
           <CardTitle className="font-bold text-lg text-balance">Practice Weak Topics</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
-          <Skeleton className="h-16 w-full rounded-xl" />
-          <Skeleton className="h-16 w-full rounded-xl" />
+          <Skeleton className="h-16 w-full rounded-card" />
+          <Skeleton className="h-16 w-full rounded-card" />
         </CardContent>
       </Card>
     );
@@ -83,7 +84,33 @@ export function WeakTopicsCard() {
     );
   }
 
-  if (!weakTopics || weakTopics.length === 0) return null;
+  if (!weakTopics || weakTopics.length === 0) {
+    return (
+      <Card className="overflow-hidden rounded-card shadow-level-1">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="font-bold text-lg text-balance">Practice Weak Topics</CardTitle>
+            <HugeiconsIcon
+              icon={Target01Icon}
+              className="size-5 text-muted-foreground"
+              aria-hidden="true"
+            />
+          </div>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center gap-3 px-5 pb-6 pt-0 text-center">
+          <div className="flex size-10 items-center justify-center rounded-full bg-success/10">
+            <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-5 text-success" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <p className="font-semibold text-sm text-foreground/80">All topics looking strong</p>
+            <p className="text-muted-foreground text-xs text-pretty">
+              No weak topics right now. Keep up the great work!
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="card-entrance">
@@ -102,7 +129,7 @@ export function WeakTopicsCard() {
           {weakTopics.map((topic) => (
             <div
               key={`${topic.subjectId}-${topic.topicId}`}
-              className="flex items-center justify-between rounded-xl border bg-card p-3"
+              className="flex items-center justify-between rounded-card border bg-card p-3"
             >
               <div className="flex min-w-0 flex-col gap-1">
                 <div className="flex items-center gap-2">

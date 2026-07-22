@@ -22,7 +22,7 @@ export function StatsRow() {
   if (!isGamificationLoaded || isProgressLoading) {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card className="overflow-hidden rounded-xl">
+        <Card className="overflow-hidden rounded-card">
           <CardContent className="flex flex-col gap-4 p-5">
             <Skeleton className="h-12 w-full rounded-lg" />
             <div className="flex gap-2">
@@ -33,7 +33,7 @@ export function StatsRow() {
             </div>
           </CardContent>
         </Card>
-        <Card className="overflow-hidden rounded-xl">
+        <Card className="overflow-hidden rounded-card">
           <CardContent className="flex flex-col gap-4 p-5">
             <Skeleton className="h-4 w-36" />
             <Skeleton className="h-24 w-full rounded-lg" />
@@ -55,7 +55,7 @@ export function StatsRow() {
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <Card className="overflow-hidden rounded-xl">
+      <Card className="overflow-hidden rounded-card">
         <CardContent className="flex flex-col gap-4 p-5">
           <StreakFire streak={currentStreak} showMilestone />
           <Achievements achievements={gamification.achievements} />

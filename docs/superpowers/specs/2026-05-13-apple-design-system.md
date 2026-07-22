@@ -68,9 +68,9 @@ Dark mode raises lightness (`oklch(98%)` base) and reverses luminosity stacking:
 
 ### Accent Colors
 
-| Token             | OKLCH Value           | Role                                             |
-| ----------------- | --------------------- | ------------------------------------------------ |
-| `--system-accent` | `oklch(52% 0.18 146)` | Emerald — interactive elements, active tab, link |
+| Token             | OKLCH Value           | Role                                                |
+| ----------------- | --------------------- | --------------------------------------------------- |
+| `--system-accent` | `oklch(55% 0.22 235)` | Slate Blue — interactive elements, active tab, link |
 
 Alpha variants: `--system-accent-alpha-10/20/30` for backgrounds, selected states, hover fills.
 

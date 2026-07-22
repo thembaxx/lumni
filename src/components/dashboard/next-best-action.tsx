@@ -31,7 +31,7 @@ export function NextBestActionCard() {
   if (!action || dismissed) return null;
 
   return (
-    <Card className="relative border border-system-accent/20 bg-system-accent/5">
+    <Card className="rounded-card relative border border-system-accent/20 bg-system-accent/5">
       <Button
         variant="ghost"
         size="icon-sm"

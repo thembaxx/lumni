@@ -30,7 +30,7 @@ export function RecentQuestionsCard() {
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           {Array.from({ length: 3 }).map((_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
-            <div key={i} className="rounded-2xl border bg-card p-4">
+            <div key={i} className="rounded-card border bg-card p-4">
               <div className="mb-2 flex items-center gap-2">
                 <Skeleton className="h-4 w-16 rounded-full" />
                 <Skeleton className="h-3 w-20" />
@@ -52,7 +52,7 @@ export function RecentQuestionsCard() {
         </CardHeader>
         <CardContent className="flex flex-col gap-3 p-5 pt-0">
           {entries.map((entry) => (
-            <div key={entry.id} className="rounded-2xl border bg-card p-4 text-sm">
+            <div key={entry.id} className="rounded-card border bg-card p-4 text-sm">
               <div className="mb-1 flex items-center gap-2">
                 <Badge
                   variant="outline"

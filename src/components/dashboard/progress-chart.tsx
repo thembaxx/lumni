@@ -30,7 +30,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
   const chartConfig = CHART_CONFIG;
 
   return (
-    <Card className="w-full overflow-hidden">
+    <Card className="w-full overflow-hidden rounded-card">
       {title && (
         <CardHeader>
           <CardTitle className="balance text-wrap font-semibold text-lg">{title}</CardTitle>

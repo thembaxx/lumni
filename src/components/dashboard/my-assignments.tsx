@@ -61,8 +61,8 @@ export function MyAssignments() {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
-          <Skeleton className="h-16 w-full rounded-xl" />
-          <Skeleton className="h-16 w-full rounded-xl" />
+          <Skeleton className="h-16 w-full rounded-card" />
+          <Skeleton className="h-16 w-full rounded-card" />
         </CardContent>
       </Card>
     );
@@ -95,8 +95,8 @@ export function MyAssignments() {
       <CardContent className="flex flex-col gap-2">
         {assignments.map((a) => (
           <div key={a.id}>
-            <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-(--system-accent)/10">
+            <div className="flex items-start gap-3 rounded-card border border-border/60 bg-card p-3 shadow-level-1 transition-shadow duration-300 hover:shadow-level-2 press-scale">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-card bg-(--system-accent)/10">
                 <HugeiconsIcon
                   icon={a.assignmentType === "story" ? FolderLibraryIcon : BookOpen02Icon}
                   className="size-4 text-(--system-accent)"
@@ -188,7 +188,7 @@ export function MyAssignments() {
               </div>
             </div>
             {questionOpen === a.id && (
-              <div className="mt-2 rounded-xl border bg-card p-3">
+              <div className="mt-2 rounded-card border bg-card p-3">
                 <AssignmentThread assignmentId={a.id} />
               </div>
             )}
