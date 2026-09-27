@@ -148,7 +148,10 @@ export function SignInForm() {
 
       <form onSubmit={handleSignIn} className="flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)">
+          <label
+            htmlFor="email"
+            className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)"
+          >
             {t("auth.emailLabel")}
           </label>
           <div className="relative">
@@ -170,7 +173,10 @@ export function SignInForm() {
 
         {!isMagicLink && (
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)">
+            <label
+              htmlFor="password"
+              className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)"
+            >
               {t("auth.passwordLabel")}
             </label>
             <div className="relative">
@@ -219,11 +225,7 @@ export function SignInForm() {
           size="lg"
           className="w-full mt-2"
         >
-          {loading
-            ? t("auth.signingIn")
-            : isMagicLink
-              ? t("auth.sendMagicLink")
-              : t("auth.signIn")}
+          {loading ? t("auth.signingIn") : isMagicLink ? t("auth.sendMagicLink") : t("auth.signIn")}
         </Button>
 
         <div className="relative my-2">

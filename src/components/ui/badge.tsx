@@ -11,10 +11,13 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "bg-[var(--surface)] text-[var(--fg)] px-2.5 py-1 rounded-[var(--radius-sm)]",
-        highlight: "bg-[var(--highlight-bg)] text-[var(--highlight-fg)] px-3 py-1.5 rounded-[var(--radius-lg)] font-bold normal-case tracking-normal",
-        outline: "border border-[var(--fg)] text-[var(--fg)] bg-transparent px-2.5 py-1 rounded-[var(--radius-sm)]",
+        highlight:
+          "bg-[var(--highlight-bg)] text-[var(--highlight-fg)] px-3 py-1.5 rounded-[var(--radius-lg)] font-bold normal-case tracking-normal",
+        outline:
+          "border border-[var(--fg)] text-[var(--fg)] bg-transparent px-2.5 py-1 rounded-[var(--radius-sm)]",
         colorBlock: "text-[var(--accent-green)] font-bold px-0 py-0 normal-case tracking-normal",
-        secondary: "bg-[var(--surface)] text-[var(--fg-muted)] px-2.5 py-1 rounded-[var(--radius-sm)]",
+        secondary:
+          "bg-[var(--surface)] text-[var(--fg-muted)] px-2.5 py-1 rounded-[var(--radius-sm)]",
         destructive: "bg-[var(--accent-red)] text-white px-2.5 py-1 rounded-[var(--radius-sm)]",
       },
     },

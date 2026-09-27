@@ -123,7 +123,10 @@ function SignUpForm() {
 
       <form onSubmit={handleSignUp} className="flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="name" className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)">
+          <label
+            htmlFor="name"
+            className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)"
+          >
             {t("auth.displayNameLabel")}
           </label>
           <div className="relative">
@@ -144,7 +147,10 @@ function SignUpForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)">
+          <label
+            htmlFor="email"
+            className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)"
+          >
             {t("auth.emailLabel")}
           </label>
           <div className="relative">
@@ -165,7 +171,10 @@ function SignUpForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="password" className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)">
+          <label
+            htmlFor="password"
+            className="font-body font-bold text-xs uppercase tracking-wider text-(--fg)"
+          >
             {t("auth.passwordLabel")}
           </label>
           <div className="relative">

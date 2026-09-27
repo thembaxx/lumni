@@ -5,11 +5,7 @@ export interface CardProps extends React.ComponentProps<"div"> {
   variant?: "hero" | "flat" | "default";
 }
 
-function Card({
-  className,
-  variant = "flat",
-  ...props
-}: CardProps) {
+function Card({ className, variant = "flat", ...props }: CardProps) {
   return (
     <div
       data-slot="card"
@@ -27,11 +23,7 @@ function Card({
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="card-header"
-      className={cn("flex flex-col gap-1 mb-3", className)}
-      {...props}
-    />
+    <div data-slot="card-header" className={cn("flex flex-col gap-1 mb-3", className)} {...props} />
   );
 }
 
@@ -56,30 +48,21 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn("ml-auto self-start", className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card-action" className={cn("ml-auto self-start", className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("font-body text-sm", className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card-content" className={cn("font-body text-sm", className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-footer"
-      className={cn("mt-4 flex items-center justify-between pt-3 border-t border-[var(--border-soft)]", className)}
+      className={cn(
+        "mt-4 flex items-center justify-between pt-3 border-t border-[var(--border-soft)]",
+        className,
+      )}
       {...props}
     />
   );

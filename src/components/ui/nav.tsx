@@ -70,7 +70,10 @@ export function Nav() {
             className="flex size-10 items-center justify-center rounded border-2 border-foreground p-1.5 md:hidden"
             aria-label="Toggle Navigation Menu"
           >
-            <HugeiconsIcon icon={mobileMenuOpen ? Cancel01Icon : Menu01Icon} className="size-6 text-foreground" />
+            <HugeiconsIcon
+              icon={mobileMenuOpen ? Cancel01Icon : Menu01Icon}
+              className="size-6 text-foreground"
+            />
           </button>
         </div>
       </div>

@@ -10,7 +10,9 @@ interface HeroSectionProps {
   isAuthenticated: boolean;
 }
 
-export const HeroSection = memo(function HeroSection({ isAuthenticated: _isAuthenticated }: HeroSectionProps) {
+export const HeroSection = memo(function HeroSection({
+  isAuthenticated: _isAuthenticated,
+}: HeroSectionProps) {
   return (
     <section
       id="main-content"
@@ -36,7 +38,8 @@ export const HeroSection = memo(function HeroSection({ isAuthenticated: _isAuthe
           </h1>
 
           <p className="mt-5 max-w-lg font-body text-base md:text-lg text-[var(--fg-muted)] leading-relaxed">
-            Quizzes, flashcards, real past papers and a planner built for how South African students actually study.
+            Quizzes, flashcards, real past papers and a planner built for how South African students
+            actually study.
           </p>
 
           <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

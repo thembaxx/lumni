@@ -9,33 +9,33 @@
 
 :root {
   /* Surfaces */
-  --bg: #FFFFFF;
-  --surface: #F6F6F4;
+  --bg: #ffffff;
+  --surface: #f6f6f4;
   --fg: #111111;
-  --fg-muted: #4B4B4B;
+  --fg-muted: #4b4b4b;
   --border: #111111;
-  --border-soft: #E4E4E0;
+  --border-soft: #e4e4e0;
 
   /* Accents */
-  --accent-green: #1F8A54;
-  --accent-gold: #F2B705;
-  --accent-red: #D6432E;
+  --accent-green: #1f8a54;
+  --accent-gold: #f2b705;
+  --accent-red: #d6432e;
 
   /* Attention / due highlight */
-  --highlight-bg: #FFF7DE;
-  --highlight-fg: #8A6D00;
+  --highlight-bg: #fff7de;
+  --highlight-fg: #8a6d00;
 
   /* Typography */
-  --font-display: var(--font-display, 'Sora', sans-serif);
-  --font-body: var(--font-body, 'Public Sans', sans-serif);
-  --font-sans: var(--font-body, 'Public Sans', sans-serif);
-  --font-heading: var(--font-display, 'Sora', sans-serif);
+  --font-display: var(--font-display, "Sora", sans-serif);
+  --font-body: var(--font-body, "Public Sans", sans-serif);
+  --font-sans: var(--font-body, "Public Sans", sans-serif);
+  --font-heading: var(--font-display, "Sora", sans-serif);
   --font-mono: var(--font-mono, monospace);
 
   /* Shape */
-  --radius-sm: 4px;   /* buttons */
-  --radius-md: 8px;   /* outlined hero cards */
-  --radius-lg: 10px;  /* flat surface cards */
+  --radius-sm: 4px; /* buttons */
+  --radius-md: 8px; /* outlined hero cards */
+  --radius-lg: 10px; /* flat surface cards */
   --border-width: 2px;
   --radius: 8px;
 
@@ -46,35 +46,35 @@
   --flag-4: var(--accent-red);
 
   /* Component Mapping */
-  --background: #FFFFFF;
+  --background: #ffffff;
   --foreground: #111111;
-  --card: #F6F6F4;
+  --card: #f6f6f4;
   --card-foreground: #111111;
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: #111111;
-  --primary: #D6432E;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F6F6F4;
+  --primary: #d6432e;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f6f4;
   --secondary-foreground: #111111;
-  --muted: #F6F6F4;
-  --muted-foreground: #4B4B4B;
-  --accent: #F6F6F4;
+  --muted: #f6f6f4;
+  --muted-foreground: #4b4b4b;
+  --accent: #f6f6f4;
   --accent-foreground: #111111;
-  --destructive: #D6432E;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #d6432e;
+  --destructive-foreground: #ffffff;
   --input: #111111;
   --ring: #111111;
 
   /* Legacy / Backward Compat Mapping */
-  --system-background: #FFFFFF;
-  --system-surface: #F6F6F4;
-  --system-surface-secondary: #F6F6F4;
+  --system-background: #ffffff;
+  --system-surface: #f6f6f4;
+  --system-surface-secondary: #f6f6f4;
   --system-text-primary: #111111;
-  --system-text-secondary: #4B4B4B;
-  --system-text-tertiary: #4B4B4B;
+  --system-text-secondary: #4b4b4b;
+  --system-text-tertiary: #4b4b4b;
   --system-separator: #111111;
-  --system-accent: #1F8A54;
-  --system-accent-foreground: #FFFFFF;
+  --system-accent: #1f8a54;
+  --system-accent-foreground: #ffffff;
 
   /* Dynamic Type Scale */
   --fs-large-title: 2.125rem;
@@ -92,48 +92,48 @@
 }
 
 .dark {
-  --bg: #0E0E0C;
-  --surface: #17170F;
-  --fg: #F5F5F0;
-  --fg-muted: #B0AFA8;
-  --border: #2C2C24;
-  --border-soft: #2C2C24;
+  --bg: #0e0e0c;
+  --surface: #17170f;
+  --fg: #f5f5f0;
+  --fg-muted: #b0afa8;
+  --border: #2c2c24;
+  --border-soft: #2c2c24;
 
-  --accent-green: #4CAF7D;
-  --accent-gold: #FFD23F;
-  --accent-red: #E8604A;
+  --accent-green: #4caf7d;
+  --accent-gold: #ffd23f;
+  --accent-red: #e8604a;
 
-  --highlight-bg: #2A2612;
-  --highlight-fg: #FFD23F;
+  --highlight-bg: #2a2612;
+  --highlight-fg: #ffd23f;
 
-  --background: #0E0E0C;
-  --foreground: #F5F5F0;
-  --card: #17170F;
-  --card-foreground: #F5F5F0;
-  --popover: #0E0E0C;
-  --popover-foreground: #F5F5F0;
-  --primary: #E8604A;
-  --primary-foreground: #FFFFFF;
-  --secondary: #17170F;
-  --secondary-foreground: #F5F5F0;
-  --muted: #17170F;
-  --muted-foreground: #B0AFA8;
-  --accent: #17170F;
-  --accent-foreground: #F5F5F0;
-  --destructive: #E8604A;
-  --destructive-foreground: #FFFFFF;
-  --input: #2C2C24;
-  --ring: #F5F5F0;
+  --background: #0e0e0c;
+  --foreground: #f5f5f0;
+  --card: #17170f;
+  --card-foreground: #f5f5f0;
+  --popover: #0e0e0c;
+  --popover-foreground: #f5f5f0;
+  --primary: #e8604a;
+  --primary-foreground: #ffffff;
+  --secondary: #17170f;
+  --secondary-foreground: #f5f5f0;
+  --muted: #17170f;
+  --muted-foreground: #b0afa8;
+  --accent: #17170f;
+  --accent-foreground: #f5f5f0;
+  --destructive: #e8604a;
+  --destructive-foreground: #ffffff;
+  --input: #2c2c24;
+  --ring: #f5f5f0;
 
-  --system-background: #0E0E0C;
-  --system-surface: #17170F;
-  --system-surface-secondary: #17170F;
-  --system-text-primary: #F5F5F0;
-  --system-text-secondary: #B0AFA8;
-  --system-text-tertiary: #B0AFA8;
-  --system-separator: #2C2C24;
-  --system-accent: #4CAF7D;
-  --system-accent-foreground: #FFFFFF;
+  --system-background: #0e0e0c;
+  --system-surface: #17170f;
+  --system-surface-secondary: #17170f;
+  --system-text-primary: #f5f5f0;
+  --system-text-secondary: #b0afa8;
+  --system-text-tertiary: #b0afa8;
+  --system-separator: #2c2c24;
+  --system-accent: #4caf7d;
+  --system-accent-foreground: #ffffff;
 }
 
 @theme inline {
@@ -158,7 +158,7 @@
   --color-popover: var(--bg);
   --color-popover-foreground: var(--fg);
   --color-primary: var(--accent-red);
-  --color-primary-foreground: #FFFFFF;
+  --color-primary-foreground: #ffffff;
   --color-secondary: var(--surface);
   --color-secondary-foreground: var(--fg);
   --color-muted: var(--surface);
@@ -321,14 +321,22 @@
 .lumni-flag-bar > span {
   flex: 1;
 }
-.lumni-flag-bar > span:nth-child(4n+1) { background: var(--flag-1); }
-.lumni-flag-bar > span:nth-child(4n+2) { background: var(--flag-2); }
-.lumni-flag-bar > span:nth-child(4n+3) { background: var(--flag-3); }
-.lumni-flag-bar > span:nth-child(4n+4) { background: var(--flag-4); }
+.lumni-flag-bar > span:nth-child(4n + 1) {
+  background: var(--flag-1);
+}
+.lumni-flag-bar > span:nth-child(4n + 2) {
+  background: var(--flag-2);
+}
+.lumni-flag-bar > span:nth-child(4n + 3) {
+  background: var(--flag-3);
+}
+.lumni-flag-bar > span:nth-child(4n + 4) {
+  background: var(--flag-4);
+}
 
 .lumni-btn-primary {
   background: var(--accent-red);
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
   border-radius: var(--radius-sm);
   font-family: var(--font-body);

@@ -21,10 +21,10 @@ const TestimonialsSection = dynamic(
   () => import("./testimonials-section").then((m) => ({ default: m.TestimonialsSection })),
   { ssr: false, loading: () => <Skeleton className="h-80 w-full rounded-lg" /> },
 );
-const CtaSection = dynamic(
-  () => import("./cta-section").then((m) => ({ default: m.CtaSection })),
-  { ssr: false, loading: () => <Skeleton className="h-48 w-full rounded-lg" /> },
-);
+const CtaSection = dynamic(() => import("./cta-section").then((m) => ({ default: m.CtaSection })), {
+  ssr: false,
+  loading: () => <Skeleton className="h-48 w-full rounded-lg" />,
+});
 const AnimatedStatsSection = dynamic(
   () => import("./animated-stats-section").then((m) => ({ default: m.AnimatedStatsSection })),
   { ssr: false, loading: () => <Skeleton className="h-48 w-full rounded-lg" /> },
