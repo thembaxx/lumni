@@ -7,7 +7,7 @@ import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SpotlightCard } from "@/components/shared/motion-primitives";
+import { FlagBar } from "@/components/ui/flag-bar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { useRouter } from "@/i18n/navigation";
@@ -38,32 +38,28 @@ async function fetchPapers(subject: string): Promise<ExamPaper[]> {
 function PaperCard({ paper }: { paper: ExamPaper }) {
   const router = useRouter();
   return (
-    <SpotlightCard className="rounded-card-lg" radius={260}>
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle>
-            {paper.subject} — {paper.paperCode}
-          </CardTitle>
-          <CardDescription>
-            {paper.year} &middot; {paper.examPeriod} &middot; Paper {paper.paperNumber}
-            {paper.totalMarks ? ` &middot; ${paper.totalMarks} marks` : ""}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              size="sm"
-              variant="default"
-              onClick={() => router.push(`/exam/${paper.id}`)}
-              className="gap-1.5 rounded-full text-xs"
-            >
-              <HugeiconsIcon icon={BookOpen01Icon} data-icon="inline-start" />
-              View Paper
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </SpotlightCard>
+    <Card variant="flat">
+      <CardHeader>
+        <CardTitle className="text-base font-bold text-(--fg)">
+          {paper.subject} — {paper.paperCode}
+        </CardTitle>
+        <CardDescription className="text-xs text-(--fg-muted)">
+          {paper.year} &middot; {paper.examPeriod} &middot; Paper {paper.paperNumber}
+          {paper.totalMarks ? ` &middot; ${paper.totalMarks} marks` : ""}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="mt-2">
+        <Button
+          size="sm"
+          variant="primary"
+          onClick={() => router.push(`/exam/${paper.id}`)}
+          className="gap-1.5"
+        >
+          <HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
+          View Paper
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -83,11 +79,14 @@ export function PastPapersClient() {
   });
 
   return (
-    <div className="min-h-dvh bg-system-grouped pt-4">
-      <PageContainer className="flex flex-col gap-8">
+    <div className="min-h-dvh bg-(--bg) text-(--fg)">
+      <FlagBar height={8} />
+      <PageContainer className="flex flex-col gap-8 py-8">
         <div>
-          <h1 className="ios-title-1 font-semibold text-foreground tracking-tight">Past Papers</h1>
-          <p className="ios-subhead mt-1.5 text-muted-foreground/60">
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-(--fg)">
+            Past Papers
+          </h1>
+          <p className="font-body text-sm text-(--fg-muted) mt-1">
             Browse and practice with past exam papers
           </p>
         </div>
@@ -104,38 +103,40 @@ export function PastPapersClient() {
           <div className="py-20 text-center">
             <HugeiconsIcon
               icon={BookOpen01Icon}
-              className="mx-auto mb-4 size-12 text-muted-foreground/20"
+              className="mx-auto mb-4 size-12 text-(--fg-muted)/40"
             />
-            <p className="text-muted-foreground/40 text-sm">
+            <p className="font-body text-sm text-(--fg-muted)">
               Select a subject to browse past exam papers
             </p>
           </div>
         )}
 
         {isLoading && (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-28 rounded-card-lg" />
+              <Skeleton key={i} className="h-28 rounded-lg" />
             ))}
           </div>
         )}
 
         {isError && (
           <div className="py-20 text-center">
-            <p className="text-destructive text-sm">Failed to load papers: {error?.message}</p>
+            <p className="font-body text-sm font-bold text-(--accent-red)">
+              Failed to load papers: {error?.message}
+            </p>
           </div>
         )}
 
         {!isLoading && !isError && selectedSubject && papers.length === 0 && (
           <div className="py-20 text-center">
-            <p className="text-muted-foreground/40 text-sm">
+            <p className="font-body text-sm text-(--fg-muted)">
               No exam papers found for this subject
             </p>
           </div>
         )}
 
         {!isLoading && papers.length > 0 && (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {papers.map((paper) => (
               <PaperCard key={paper.id} paper={paper} />
             ))}

@@ -6,7 +6,8 @@ const CSP_REPORT_PATH = "/api/csp-violation";
 const CSP_REPORT_GROUP = "csp-endpoint";
 
 export function buildCsp(nonce?: string): string {
-  const scriptNonce = nonce ? `'nonce-${nonce}'` : "'unsafe-inline'";
+  const isDev = process.env.NODE_ENV === "development";
+  const scriptNonce = !isDev && nonce ? `'nonce-${nonce}'` : "'unsafe-inline'";
 
   const scriptSrc = ["'self'", scriptNonce, __unsafeEvalDev, __impeccableLiveDev].filter(Boolean);
 

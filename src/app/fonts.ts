@@ -1,34 +1,27 @@
-import localFont from "next/font/local";
+import { Geist_Mono, Public_Sans, Sora } from "next/font/google";
 
-export const fontSans = localFont({
-  src: "../fonts/open-runde-latin-400-normal.woff2",
-  weight: "400",
-  style: "normal",
+export const sora = Sora({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-display",
   display: "swap",
-  variable: "--font-sans",
-  preload: true,
-  adjustFontFallback: "Arial",
 });
 
-export const fontMono = localFont({
-  src: "../fonts/geist-mono-latin.woff2",
-  weight: "400",
-  style: "normal",
+export const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
   display: "swap",
-  variable: "--font-geist-mono",
-  preload: true,
-  adjustFontFallback: "Arial",
 });
 
-export const fontHeading = localFont({
-  src: [
-    { path: "../fonts/open-runde-latin-400-normal.woff2", weight: "400" },
-    { path: "../fonts/open-runde-latin-500-normal.woff2", weight: "500" },
-    { path: "../fonts/open-runde-latin-600-normal.woff2", weight: "600" },
-    { path: "../fonts/open-runde-latin-700-normal.woff2", weight: "700" },
-  ],
+export const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-mono",
   display: "swap",
-  variable: "--font-heading",
-  preload: true,
-  adjustFontFallback: "Arial",
 });
+
+// Backward compatibility exports mapping to the new design tokens
+export const fontSans = publicSans;
+export const fontHeading = sora;
+export const fontMono = geistMono;

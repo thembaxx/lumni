@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import { fontHeading, fontMono, fontSans } from "./fonts";
+import { geistMono, publicSans, sora } from "./fonts";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
@@ -16,32 +17,28 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafcfe" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b12" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0e0c" },
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-csp-nonce") ?? undefined;
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      data-scroll-behavior="smooth"
-      className={cn(
-        "h-full",
-        "antialiased",
-        fontSans.variable,
-        fontMono.variable,
-        fontHeading.variable,
-      )}
+      className={cn("h-full antialiased", sora.variable, publicSans.variable, geistMono.variable)}
       style={{ colorScheme: "light dark" }}
     >
       <head>
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var c=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/),d=c?c[1]==="dark":matchMedia("(prefers-color-scheme:dark)").matches;d&&document.documentElement.classList.add("dark");document.documentElement.style.colorScheme=d?"dark":"light"}catch(e){}})();`,
           }}
@@ -51,22 +48,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://api.iconify.design" />
         <link rel="preconnect" href="https://upload.wikimedia.org" />
         <link rel="prefetch" href="/en/dashboard" as="document" />
-        <script
-          type="speculationrules"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              prefetch: [
-                {
-                  source: "list",
-                  urls: ["/en/dashboard"],
-                  eagerness: "conservative",
-                },
-              ],
-            }),
-          }}
-        />
       </head>
-      <body className="flex h-full min-h-full flex-col bg-(--system-background) text-(--system-text-primary) antialiased">
+      <body className="flex h-full min-h-full flex-col bg-background text-foreground antialiased font-body">
         {children}
       </body>
     </html>

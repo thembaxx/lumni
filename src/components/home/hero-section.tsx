@@ -1,230 +1,119 @@
 "use client";
 
-import ArrowRight01Icon from "@hugeicons/core-free-icons/ArrowRight01Icon";
-import BrainIcon from "@hugeicons/core-free-icons/BrainIcon";
-import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
-import CheckmarkCircle01Icon from "@hugeicons/core-free-icons/CheckmarkCircle01Icon";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
-import { useTranslations } from "next-intl";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress, ProgressIndicator, ProgressTrack } from "@/components/ui/progress";
 import { Link } from "@/i18n/navigation";
-import { MagneticCard } from "@/components/shared/magnetic-card";
-import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
 }
 
-function InteractiveQuizDemo() {
-  const prefersReducedMotion = useReducedMotion();
-  const [answer, setAnswer] = useState<number | null>(null);
-  const options = [
-    { label: "F = ma", value: 0 },
-    { label: "E = mc", value: 1 },
-    { label: "PV = nRT", value: 2 },
-  ];
-  const correct = 0;
-
-  return (
-    <MagneticCard className="relative w-full" maxTilt={4}>
-      <div className="glass-bento-strong flex h-full w-full flex-col gap-3 rounded-2xl p-5 shadow-level-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-(--system-accent-alpha-10)">
-              <HugeiconsIcon icon={BrainIcon} className="size-4 text-primary" />
-            </div>
-            <p className="font-semibold text-xs text-muted-foreground/80">Quick Quiz</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <p className="font-medium text-xs leading-relaxed">
-            What is Newton&apos;s second law of motion?
-          </p>
-          <div className="flex flex-col gap-1.5">
-            {options.map((opt) => {
-              const isSelected = answer === opt.value;
-              const isCorrect = answer !== null && opt.value === correct;
-              const isWrong = answer !== null && isSelected && !isCorrect;
-              return (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setAnswer(opt.value)}
-                  disabled={answer !== null}
-                  className={cn(
-                    "flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-[11px] transition-[border-color,background-color,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-primary",
-                    isCorrect
-                      ? "border-success/40 bg-success/10 text-success"
-                      : isWrong
-                        ? "border-destructive/40 bg-destructive/10 text-destructive"
-                        : isSelected
-                          ? "border-primary/40 bg-(--system-accent-alpha-10)"
-                          : "border-border/40 bg-system-background-secondary/60 hover:border-primary/30",
-                    answer !== null ? "cursor-default" : "cursor-pointer active:scale-[0.96]",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "flex size-4 shrink-0 items-center justify-center rounded border text-[9px]",
-                      isCorrect
-                        ? "border-success/40 bg-success text-white"
-                        : isWrong
-                          ? "border-destructive/40 bg-destructive text-white"
-                          : "border-border/50 text-muted-foreground",
-                    )}
-                  >
-                    {isCorrect ? (
-                      <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3" data-icon />
-                    ) : isWrong ? (
-                      <HugeiconsIcon icon={Cancel01Icon} className="size-3" data-icon />
-                    ) : (
-                      String.fromCharCode(65 + opt.value)
-                    )}
-                  </span>
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {answer !== null && (
-          <m.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
-            className="flex items-center gap-1.5 rounded-lg bg-success/10 px-2.5 py-1.5 text-success text-[10px]"
-          >
-            <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-3 shrink-0" />
-            {answer === correct
-              ? "Correct! Force = mass x acceleration."
-              : "Not quite. Try F = ma."}
-          </m.div>
-        )}
-      </div>
-    </MagneticCard>
-  );
-}
-
-function InlineImagePill() {
-  return (
-    <span
-      className="relative mx-2 inline-block h-7 w-16 overflow-hidden rounded-full align-middle md:h-9 md:w-24"
-      aria-hidden="true"
-    >
-      <span
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(https://picsum.photos/seed/graduate/200/80)" }}
-      />
-    </span>
-  );
-}
-
-export const HeroSection = memo(function HeroSection({ isAuthenticated }: HeroSectionProps) {
-  const t = useTranslations();
-  const prefersReducedMotion = useReducedMotion();
-
+export const HeroSection = memo(function HeroSection({ isAuthenticated: _isAuthenticated }: HeroSectionProps) {
   return (
     <section
       id="main-content"
-      className="relative flex min-h-[95dvh] items-center justify-center overflow-hidden pt-16"
+      className="relative mx-auto max-w-6xl px-4 pt-10 pb-16 md:pt-16 md:pb-24"
     >
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity img-outline grayscale contrast-125"
-          style={{ backgroundImage: "url(https://picsum.photos/seed/matric-exam/1920/1080)" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-system-background via-system-background/85 to-system-background" />
-        <div className="absolute top-1/4 right-1/3 h-96 w-96 rounded-full bg-system-accent/10 blur-3xl animate-float-drift" />
-        <div className="absolute bottom-1/3 left-1/4 h-80 w-80 rounded-full bg-chart-3/8 blur-3xl animate-float-slow" />
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-chart-4/6 blur-3xl animate-float-sway" />
+      {/* Hero Top Grid: Copy left, visual right */}
+      <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-8">
+        {/* Left Copy Column */}
+        <div className="flex flex-col items-start lg:col-span-7">
+          {/* Green color-block badge */}
+          <div className="mb-4 flex items-center gap-2">
+            <span className="inline-block size-3 bg-[var(--accent-green)]" aria-hidden="true" />
+            <span className="font-body font-bold text-xs uppercase tracking-wider text-[var(--accent-green)]">
+              <span className="hidden sm:inline">PROUDLY SOUTH AFRICAN</span>
+              <span className="sm:hidden">PROUDLY SA</span>
+            </span>
+          </div>
+
+          <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[var(--fg)] leading-[1.05]">
+            Your Matric.
+            <br />
+            Your mark.
+          </h1>
+
+          <p className="mt-5 max-w-lg font-body text-base md:text-lg text-[var(--fg-muted)] leading-relaxed">
+            Quizzes, flashcards, real past papers and a planner built for how South African students actually study.
+          </p>
+
+          <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
+              <Link href="/dashboard">Start free</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
+              <a href="#features">See how it works</a>
+            </Button>
+          </div>
+        </div>
+
+        {/* Right Side Visual Block */}
+        <div className="flex flex-col gap-4 lg:col-span-5">
+          {/* Top row: Green and Gold blocks */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="h-24 sm:h-28 rounded-lg bg-[var(--accent-green)]" />
+            <div className="h-24 sm:h-28 rounded-lg bg-[var(--accent-gold)]" />
+          </div>
+
+          {/* Middle hero card: Outlined Newton's Laws Card */}
+          <Card variant="hero" className="flex flex-col justify-center">
+            <span className="font-body font-bold text-[11px] uppercase tracking-wider text-[var(--accent-red)]">
+              PHYSICAL SCIENCES
+            </span>
+            <h3 className="mt-1 font-display font-bold text-base sm:text-lg text-[var(--fg)]">
+              Newton&apos;s Laws — Quiz 3
+            </h3>
+            <div className="mt-3">
+              <Progress value={65}>
+                <ProgressTrack className="h-2 bg-[var(--border-soft)]">
+                  <ProgressIndicator className="bg-[var(--accent-green)]" />
+                </ProgressTrack>
+              </Progress>
+            </div>
+          </Card>
+
+          {/* Bottom row: Solid black block and Attention highlight card */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
+            <div className="h-20 sm:h-auto rounded-lg bg-[var(--fg)] sm:col-span-1" />
+            <div className="flex items-center justify-center rounded-lg bg-[var(--highlight-bg)] p-4 sm:col-span-2">
+              <span className="font-body font-semibold text-xs sm:text-sm text-[var(--highlight-fg)]">
+                Flashcards due today
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-4 py-24 md:gap-14 md:py-32 lg:py-40">
-        <m.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.1 }}
-          className="flex w-full max-w-4xl flex-col items-center gap-6 text-center"
-        >
-          <m.h1
-            className="text-[clamp(2rem,5.5vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground text-balance"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: 0.2 }}
-          >
-            Pass your Matric
-            <br />
-            <InlineImagePill />
-            with confidence
-          </m.h1>
+      {/* Feature Summaries Row */}
+      <div id="features" className="mt-16 sm:mt-24 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Card variant="flat">
+          <CardHeader>
+            <CardTitle>Smart quizzes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>Adjusts to what you keep getting wrong.</CardDescription>
+          </CardContent>
+        </Card>
 
-          <m.p
-            className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 0.35 }}
-          >
-            {t("home.heroDesc")}
-          </m.p>
+        <Card variant="flat">
+          <CardHeader>
+            <CardTitle>Flashcards</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>Spaced repetition, from your syllabus.</CardDescription>
+          </CardContent>
+        </Card>
 
-          <m.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 0.5 }}
-            className="flex flex-col gap-3 sm:flex-row"
-          >
-            {isAuthenticated ? (
-              <Button
-                asChild
-                size="lg"
-                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow] duration-300 hover:shadow-level-3 press-scale"
-              >
-                <Link href="/dashboard">
-                  {t("home.heroDashboard")}
-                  <HugeiconsIcon
-                    icon={ArrowRight01Icon}
-                    className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                    data-icon="inline-end"
-                  />
-                </Link>
-              </Button>
-            ) : (
-              <Button
-                asChild
-                size="lg"
-                className="group relative gap-2 bg-primary text-primary-foreground shadow-level-2 transition-[box-shadow] duration-300 hover:shadow-level-3 press-scale"
-              >
-                <Link href="/dashboard">
-                  {t("home.heroStartFree")}
-                  <HugeiconsIcon
-                    icon={ArrowRight01Icon}
-                    className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                    data-icon="inline-end"
-                  />
-                </Link>
-              </Button>
-            )}
-            {!isAuthenticated && (
-              <Button asChild variant="outline" size="lg" className="border-border/40 press-scale">
-                <Link href="/auth/sign-in">{t("home.navSignIn")}</Link>
-              </Button>
-            )}
-          </m.div>
-        </m.div>
-
-        <m.div
-          initial={{ opacity: 0, scale: 0.92, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: 0.5 }}
-          className="w-full max-w-xs md:max-w-sm"
-        >
-          <InteractiveQuizDemo />
-        </m.div>
+        <Card variant="flat">
+          <CardHeader>
+            <CardTitle>Past papers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>Every NSC paper, marked line by line.</CardDescription>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

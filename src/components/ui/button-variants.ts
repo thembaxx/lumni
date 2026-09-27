@@ -1,37 +1,37 @@
 import { cva } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "group/button relative inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-clip-padding font-medium text-xs/relaxed outline-none transition-[scale,background-color,box-shadow,color,border-color] duration-100 active:not-aria-[haspopup]:translate-y-px active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&::after]:[background:inherit] [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-sm)] font-body font-bold text-xs uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--fg)] disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        default:
+          "bg-[var(--accent-red)] text-white hover:bg-[var(--accent-red)]/90 border-none",
+        primary:
+          "bg-[var(--accent-red)] text-white hover:bg-[var(--accent-red)]/90 border-none",
         outline:
-          "border-border hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-input/30",
+          "border-2 border-[var(--fg)] bg-transparent text-[var(--fg)] hover:bg-[var(--surface)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "border-2 border-[var(--fg)] bg-transparent text-[var(--fg)] hover:bg-[var(--surface)]",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "bg-transparent text-[var(--fg)] hover:bg-[var(--surface)] border-none normal-case tracking-normal font-semibold",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 dark:hover:bg-destructive/30",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[var(--accent-red)] text-white hover:bg-[var(--accent-red)]/90 border-none",
+        link: "text-[var(--fg)] underline-offset-4 hover:underline border-none normal-case tracking-normal",
       },
       size: {
-        default:
-          "h-11 gap-2 px-4 text-sm/relaxed has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-4",
-        xs: "h-5 gap-1 rounded-sm px-2 text-(--fs-caption-3) after:absolute after:-inset-6 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-2.5",
-        sm: "h-9 gap-1.5 px-3 text-xs/relaxed after:absolute after:-inset-1 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-4",
-        lg: "h-12 gap-2.5 px-5 text-sm/relaxed has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5 [&_svg:not([class*='size-'])]:size-5",
-        icon: "size-11 after:absolute after:-inset-2 [&_svg:not([class*='size-'])]:size-4",
-        "icon-xs":
-          "size-5 rounded-sm after:absolute after:-inset-6 [&_svg:not([class*='size-'])]:size-2.5",
-        "icon-sm": "size-6 after:absolute after:-inset-5 [&_svg:not([class*='size-'])]:size-3",
-        "icon-lg": "size-12 after:absolute after:-inset-2 [&_svg:not([class*='size-'])]:size-5",
+        default: "h-11 px-6 py-3 text-sm",
+        xs: "h-6 px-2 text-[10px]",
+        sm: "h-9 px-4 text-xs",
+        lg: "h-13 px-8 text-base",
+        icon: "size-11 p-0",
+        "icon-xs": "size-6 p-0",
+        "icon-sm": "size-9 p-0",
+        "icon-lg": "size-13 p-0",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
     },
   },
 );
