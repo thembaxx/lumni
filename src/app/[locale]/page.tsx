@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { createElement } from "react";
 import { HomeContent } from "@/components/home/home-content";
-import { SiteFooter } from "@/components/home/site-footer";
 import { appConfig } from "../../../app.config";
 
 export const metadata: Metadata = {
@@ -80,21 +80,22 @@ const jsonLdWebApp = {
   },
 };
 
-function JsonLdScript({ data }: { data: object }) {
+function JsonLdScript({ data, nonce }: { data: object; nonce?: string }) {
   return createElement("script", {
     type: "application/ld+json",
-    // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, safe static object
+    nonce,
     dangerouslySetInnerHTML: { __html: JSON.stringify(data) },
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const nonce = (await headers()).get("x-csp-nonce") ?? undefined;
+
   return (
     <>
-      <JsonLdScript data={jsonLdOrganization} />
-      <JsonLdScript data={jsonLdWebApp} />
+      <JsonLdScript data={jsonLdOrganization} nonce={nonce} />
+      <JsonLdScript data={jsonLdWebApp} nonce={nonce} />
       <HomeContent />
-      <SiteFooter />
     </>
   );
 }

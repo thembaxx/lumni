@@ -20,7 +20,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 function getSystemTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
@@ -49,17 +49,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.classList.add(resolvedTheme);
     root.style.colorScheme = resolvedTheme;
 
-    // Update the theme-color meta without removing elements React may track in <head>
     let meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
-      meta.setAttribute(
-        "content",
-        resolvedTheme === "dark" ? "oklch(5% 0.003 240)" : "oklch(99% 0.006 240)",
-      );
+      meta.setAttribute("content", resolvedTheme === "dark" ? "#0e0e0c" : "#ffffff");
     } else {
       const el = document.createElement("meta");
       el.name = "theme-color";
-      el.content = resolvedTheme === "dark" ? "oklch(5% 0.003 240)" : "oklch(99% 0.006 240)";
+      el.content = resolvedTheme === "dark" ? "#0e0e0c" : "#ffffff";
       document.head.appendChild(el);
     }
   }, [theme]);
