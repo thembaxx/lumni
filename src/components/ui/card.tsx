@@ -3,17 +3,21 @@ import { cn } from "@/lib/utils";
 
 export interface CardProps extends React.ComponentProps<"div"> {
   variant?: "hero" | "flat" | "default";
+  size?: "sm" | "md" | "lg" | string;
 }
 
-function Card({ className, variant = "flat", ...props }: CardProps) {
+function Card({ className, variant = "flat", size, ...props }: CardProps) {
   return (
     <div
       data-slot="card"
       data-variant={variant}
+      data-size={size}
       className={cn(
         variant === "hero"
           ? "bg-[var(--bg)] border-2 border-[var(--fg)] rounded-[var(--radius-md)] p-5.5 text-[var(--fg)]"
           : "bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 text-[var(--fg)] border-none",
+        size === "sm" && "p-4",
+        size === "lg" && "p-8",
         className,
       )}
       {...props}
