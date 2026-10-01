@@ -31,7 +31,7 @@ export function NextBestActionCard() {
   if (!action || dismissed) return null;
 
   return (
-    <Card className="rounded-card relative border border-system-accent/20 bg-system-accent/5">
+    <Card className="relative rounded-[20px] border border-accent-green/20 bg-accent-green/5 shadow-level-1">
       <Button
         variant="ghost"
         size="icon-sm"
@@ -39,23 +39,23 @@ export function NextBestActionCard() {
           dismissAction(action.kind);
           setDismissed(true);
         }}
-        className="absolute top-2 right-2 text-muted-foreground/50 hover:text-foreground"
+        className="absolute top-2 right-2 text-fg-muted/50 hover:text-fg"
         aria-label="Dismiss suggestion"
       >
         <HugeiconsIcon icon={Cancel01Icon} data-icon />
       </Button>
       <CardHeader className="flex-row items-center gap-2">
-        <div className="flex size-8 items-center justify-center rounded-lg bg-system-accent/10">
-          <HugeiconsIcon icon={GraduationCapIcon} size={16} className="text-system-accent" />
+        <div className="flex size-8 items-center justify-center rounded-lg bg-accent-green/15 text-accent-green">
+          <HugeiconsIcon icon={GraduationCapIcon} size={16} />
         </div>
         <CardTitle className="font-bold text-sm tracking-tight">{action.title}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 pr-6">
-        <p className="text-muted-foreground text-xs leading-relaxed">{action.reason}</p>
+        <p className="text-fg-muted text-xs leading-relaxed">{action.reason}</p>
         <Link
           href={action.ctaHref}
           prefetch={true}
-          className="mt-0.5 inline-flex min-h-11 w-fit items-center rounded-card bg-system-accent px-4 font-medium text-system-accent-foreground text-xs transition-[background-color,transform] hover:bg-system-accent/80 press-scale"
+          className="mt-1 inline-flex min-h-11 w-fit items-center rounded-lg bg-accent-green px-4 font-semibold text-white text-xs transition-all hover:opacity-90 active:scale-[0.98]"
         >
           {action.ctaLabel}
         </Link>

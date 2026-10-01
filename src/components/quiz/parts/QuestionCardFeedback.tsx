@@ -121,8 +121,10 @@ export function QuestionCardFeedback({
         duration: prefersReducedMotion ? 0 : undefined,
       }}
       className={cn(
-        "flex flex-col gap-3 rounded-2xl p-4",
-        isCorrectAnswer ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
+        "flex flex-col gap-3 rounded-[20px] border p-5 shadow-level-1 transition-all",
+        isCorrectAnswer
+          ? "border-accent-green/30 bg-accent-green/10 text-accent-green dark:bg-accent-green/15"
+          : "border-accent-red/30 bg-accent-red/10 text-accent-red dark:bg-accent-red/15",
       )}
     >
       <div className="flex items-center gap-3">
