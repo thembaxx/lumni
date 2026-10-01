@@ -95,9 +95,15 @@ export function HeroBanner() {
     : null;
 
   return (
-    <div className="group relative overflow-hidden rounded-card-lg glass-bento-strong shadow-level-2 transition-[box-shadow] duration-500 hover:shadow-level-3">
+    <div className="group relative overflow-hidden rounded-[20px] bg-surface border border-border-soft shadow-level-2 transition-all duration-300 hover:shadow-level-3">
+      <div className="lumni-flag-bar">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-system-accent/6 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-accent-green/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         aria-hidden="true"
       />
       <div

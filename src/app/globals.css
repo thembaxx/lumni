@@ -8,18 +8,30 @@
 @layer reset, base, components, utilities;
 
 :root {
-  /* Surfaces */
-  --bg: #ffffff;
-  --surface: #f6f6f4;
-  --fg: #111111;
-  --fg-muted: #4b4b4b;
-  --border: #111111;
-  --border-soft: #e4e4e0;
+  /* Surfaces - Warm Paper palette */
+  --bg: #faf9f6;
+  --surface: #f3f1ec;
+  --fg: #1a1a18;
+  --fg-muted: #52504a;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-soft: rgba(0, 0, 0, 0.05);
 
   /* Accents */
-  --accent-green: #1f8a54;
+  --accent-green: #2a8e5c;
   --accent-gold: #f2b705;
   --accent-red: #d6432e;
+
+  /* Elevation & Ambient Shadows */
+  --shadow-level-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  --shadow-level-2:
+    0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.02);
+  --shadow-level-3:
+    0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04), 0 16px 48px rgba(0, 0, 0, 0.03);
+  --shadow-solver: 0 2px 12px rgba(42, 142, 92, 0.2);
+
+  /* Easing */
+  --ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ios-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Attention / due highlight */
   --highlight-bg: #fff7de;
@@ -92,16 +104,21 @@
 }
 
 .dark {
-  --bg: #0e0e0c;
-  --surface: #17170f;
-  --fg: #f5f5f0;
-  --fg-muted: #b0afa8;
-  --border: #2c2c24;
-  --border-soft: #2c2c24;
+  --bg: #0f0e0c;
+  --surface: #181714;
+  --fg: #f5f4ef;
+  --fg-muted: #b0aea6;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-soft: rgba(255, 255, 255, 0.06);
 
   --accent-green: #4caf7d;
   --accent-gold: #ffd23f;
   --accent-red: #e8604a;
+
+  --shadow-level-1: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-level-2: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-level-3: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-solver: 0 2px 12px rgba(76, 175, 125, 0.25);
 
   --highlight-bg: #2a2612;
   --highlight-fg: #ffd23f;

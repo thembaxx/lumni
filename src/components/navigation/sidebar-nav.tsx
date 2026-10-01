@@ -161,20 +161,20 @@ function SidebarContent() {
                     onMouseEnter={() => prefetch(item.route)}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "relative flex min-h-11 w-full items-center justify-start gap-3 rounded-lg px-2 text-left text-sm no-underline transition-colors duration-150 press-scale",
+                      "relative flex min-h-11 w-full items-center justify-start gap-3 rounded-lg px-2.5 text-left text-sm no-underline transition-all duration-200 active:scale-[0.98]",
                       isActive
-                        ? "font-semibold text-system-accent"
-                        : "text-muted-foreground hover:bg-system-fill hover:text-foreground",
+                        ? "bg-accent-green/10 font-semibold text-accent-green dark:bg-accent-green/15"
+                        : "text-fg-muted hover:bg-black/5 hover:text-fg dark:hover:bg-white/5",
                     )}
                   >
                     {isActive && (
-                      <span className="sidebar-active absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-system-accent" />
+                      <span className="sidebar-active absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-accent-green" />
                     )}
                     <HugeiconsIcon
                       icon={Icon}
                       className={cn(
-                        "size-5 shrink-0",
-                        isActive ? "text-system-accent" : "text-muted-foreground/60",
+                        "size-5 shrink-0 transition-colors",
+                        isActive ? "text-accent-green" : "text-fg-muted/60",
                       )}
                     />
                     <span>{item.label}</span>

@@ -172,7 +172,7 @@ const BottomNav = memo(function BottomNav() {
       }}
     >
       <div className="pointer-events-auto mx-auto flex h-full max-w-md items-end justify-center px-4 pb-4">
-        <div className="relative flex items-center rounded-2xl bg-system-background/75 shadow-level-3 ring-1 ring-system-separator/20 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-(--system-accent-alpha-10)">
+        <div className="relative flex items-center rounded-2xl bg-surface/90 shadow-level-3 border border-border-soft backdrop-blur-xl transition-all duration-200">
           <Suspense fallback={null}>
             <SnapFabInline />
           </Suspense>
