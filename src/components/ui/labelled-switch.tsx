@@ -9,14 +9,25 @@ interface LabelledSwitchProps {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   disabled?: boolean;
+  "aria-label"?: string;
 }
 
 const MemoSwitch = memo(function MemoSwitch({
   checked,
   onCheckedChange,
   disabled,
-}: Pick<LabelledSwitchProps, "checked" | "onCheckedChange" | "disabled">) {
-  return <Switch checked={checked} onCheckedChange={onCheckedChange} disabled={disabled} />;
+  ariaLabel,
+}: Pick<LabelledSwitchProps, "checked" | "onCheckedChange" | "disabled"> & {
+  ariaLabel: string;
+}) {
+  return (
+    <Switch
+      checked={checked}
+      onCheckedChange={onCheckedChange}
+      disabled={disabled}
+      aria-label={ariaLabel}
+    />
+  );
 });
 
 export function LabelledSwitch({
@@ -26,6 +37,7 @@ export function LabelledSwitch({
   checked,
   onCheckedChange,
   disabled,
+  "aria-label": ariaLabel,
 }: LabelledSwitchProps) {
   return (
     <ListCell
@@ -33,7 +45,12 @@ export function LabelledSwitch({
       subtitle={subtitle}
       showSeparator={showSeparator}
       trailing={
-        <MemoSwitch checked={checked} onCheckedChange={onCheckedChange} disabled={disabled} />
+        <MemoSwitch
+          checked={checked}
+          onCheckedChange={onCheckedChange}
+          disabled={disabled}
+          ariaLabel={ariaLabel ?? title}
+        />
       }
     />
   );
