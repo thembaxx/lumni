@@ -124,8 +124,8 @@ importers:
         specifier: ^0.18.3
         version: 0.18.3
       konva:
-        specifier: ^10.3.0
-        version: 10.3.0
+        specifier: ^10.8.0
+        version: 10.8.0(canvas@3.2.3)
       mermaid:
         specifier: ^11.16.1
         version: 11.16.1
@@ -161,7 +161,7 @@ importers:
         version: 19.2.7(react@19.2.7)
       react-konva:
         specifier: ^19.2.5
-        version: 19.2.5(@types/react@19.2.17)(konva@10.3.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 19.2.5(@types/react@19.2.17)(konva@10.8.0(canvas@3.2.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.17)(react@19.2.7)
@@ -5639,8 +5639,16 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  konva@10.3.0:
-    resolution: {integrity: sha512-gt19K2gzY4lHbnkvsku7eSmB+A9PTS2jG4F9coBMsdjM1UKfJNxJbDbXVpeCW1wjEGRwBD3nBamcHnqJhAeKlg==}
+  konva@10.8.0:
+    resolution: {integrity: sha512-+GKNmVdC9CsAan0BALtBUCgi4l2tQvEwIvO/1kprkzbcI15DZfcGpV0HfXQ17P8iFaW/WZMWeGJWCKLCmvh2Bg==}
+    peerDependencies:
+      canvas: ^3.0.0
+      skia-canvas: ^3.0.0
+    peerDependenciesMeta:
+      canvas:
+        optional: true
+      skia-canvas:
+        optional: true
 
   layout-base@1.0.2:
     resolution: {integrity: sha512-8h2oVEZNktL4BH2JCOI90iD1yXwL6iNW7KcCKT2QZgQJR2vbqDsldCTPRU9NifTCqHZci57XvQQ15YTu+sTYPg==}
@@ -13371,7 +13379,9 @@ snapshots:
       yaml: 2.9.0
       zod: 4.4.3
 
-  konva@10.3.0: {}
+  konva@10.8.0(canvas@3.2.3):
+    optionalDependencies:
+      canvas: 3.2.3
 
   layout-base@1.0.2: {}
 
@@ -14832,11 +14842,11 @@ snapshots:
 
   react-is@19.2.7: {}
 
-  react-konva@19.2.5(@types/react@19.2.17)(konva@10.3.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  react-konva@19.2.5(@types/react@19.2.17)(konva@10.8.0(canvas@3.2.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       '@types/react-reconciler': 0.33.0(@types/react@19.2.17)
       its-fine: 2.0.0(@types/react@19.2.17)(react@19.2.7)
-      konva: 10.3.0
+      konva: 10.8.0(canvas@3.2.3)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
       react-reconciler: 0.33.0(react@19.2.7)
